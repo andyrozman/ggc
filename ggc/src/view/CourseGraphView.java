@@ -137,7 +137,7 @@ public class CourseGraphView extends AbstractGraphView
         CourseGraphFrame cGF = CourseGraphFrame.getInstance();
 
         GeneralPath plBG = new GeneralPath();
-        GeneralPath plAvgBGDay = new GeneralPath();
+        //GeneralPath plAvgBGDay = new GeneralPath();
         GeneralPath plSumBU = new GeneralPath();
         GeneralPath plMeals = new GeneralPath();
         GeneralPath plSumIns1 = new GeneralPath();
@@ -146,7 +146,7 @@ public class CourseGraphView extends AbstractGraphView
         GeneralPath plInsPerBU = new GeneralPath();
 
         boolean firstBG = true;
-        boolean firstAvgBGDay = true;
+        //boolean firstAvgBGDay = true;
         boolean firstMeals = true;
         boolean firstSumBU = true;
         boolean firstSumIns1 = true;
@@ -155,6 +155,8 @@ public class CourseGraphView extends AbstractGraphView
         boolean firstInsPerBU = true;
 
         DailyValues dV;
+
+        g2D.setPaint(props.getColorAvgBG());
 
         for (int i = 0; i < dayCount; i++) {
             dV = gV.getDailyValuesForDay(i);
@@ -178,11 +180,15 @@ public class CourseGraphView extends AbstractGraphView
 
 
             //draw avgBGDay
-            if (firstAvgBGDay) {
-                plAvgBGDay.moveTo(offset, BGtoCoord(dV.getAvgBG()));
-                firstAvgBGDay = false;
-            } else
-                plAvgBGDay.lineTo(offset, BGtoCoord(dV.getAvgBG()));
+            //            if (firstAvgBGDay) {
+            //                plAvgBGDay.moveTo(offset, BGtoCoord(dV.getAvgBG()));
+            //                firstAvgBGDay = false;
+            //            } else
+            //                plAvgBGDay.lineTo(offset, BGtoCoord(dV.getAvgBG()));
+            if (cGF.getDrawAvgBGDay()) {
+                int tmp = BGtoCoord(dV.getAvgBG());
+                g2D.drawLine((int)multiWidth + leftSpace, tmp, (int)(multiWidth + dayWidthC + leftSpace), tmp);
+            }
 
             //draw sumBU
             if (firstSumBU) {
@@ -231,10 +237,10 @@ public class CourseGraphView extends AbstractGraphView
             g2D.setPaint(props.getColorBG());
             g2D.draw(plBG);
         }
-        if (cGF.getDrawAvgBGDay()) {
-            g2D.setPaint(props.getColorAvgBG());
-            g2D.draw(plAvgBGDay);
-        }
+        //        if (cGF.getDrawAvgBGDay()) {
+        //            g2D.setPaint(props.getColorAvgBG());
+        //            g2D.draw(plAvgBGDay);
+        //        }
         if (cGF.getDrawSumBU()) {
             g2D.setPaint(props.getColorBU());
             g2D.draw(plSumBU);

@@ -156,10 +156,6 @@ public class MainFrame extends JFrame
         statusPanel.setDataSourceText(props.getDataSource() + "[no Connection]");
         statusPanel.setStatusMessage("Initialising");
 
-        //Information Portal Setup
-        JPanel informationPanel = new InfoPanel();
-        getContentPane().add(informationPanel, BorderLayout.CENTER);
-
         dbH = DataBaseHandler.getInstance();
         dbH.connect();
 
@@ -173,6 +169,10 @@ public class MainFrame extends JFrame
 
         } else
             setActionEnabledStateDisconnected();
+
+        //Information Portal Setup
+        JPanel informationPanel = new InfoPanel();
+        getContentPane().add(informationPanel, BorderLayout.CENTER);
     }
 
     private void setActionEnabledStateDisconnected()

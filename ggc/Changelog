@@ -1,3 +1,9 @@
+2002-07-29  Dieter Schultschik  <schultd@users.sourceforge.net>
+
+	* Added a new SpreadView.
+	* Added a new FrequencyView.
+	* Added a new HbA1cView.
+
 2002-07-26  Dieter Schultschik  <schultd@users.sourceforge.net>
 
 	* Added a new CourseView. (will get more options in the future)

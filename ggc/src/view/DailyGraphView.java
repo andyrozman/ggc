@@ -73,10 +73,11 @@ public class DailyGraphView extends AbstractGraphView
         GeneralPath polyline = new GeneralPath();
         int tmpC = 0;
         for (int i = 0; i < dayData.getRowCount(); i++) {
-            float tmpBG = dayData.getBGAt(i);
+            int X = TimetoCoord(dayData.getDateTimeAt(i));
 
+            //draw BG
+            float tmpBG = dayData.getBGAt(i);
             if (tmpBG != 0) {
-                int X = TimetoCoord(dayData.getDateTimeAt(i));
                 int Y = BGtoCoord(tmpBG);
                 if (tmpC == 0)
                     polyline.moveTo(X, Y);
@@ -84,7 +85,39 @@ public class DailyGraphView extends AbstractGraphView
                     polyline.lineTo(X, Y);
                 tmpC++;
             }
+
+            //draw Ins1
+            float tmpIns1 = dayData.getIns1At(i);
+            if(tmpIns1 != 0) {
+                int Y = InstoCoord(tmpIns1);
+                g2D.setPaint(props.getColorIns1());
+                g2D.fillRect(X-4,Y,3,(int)drawableHeight-Y+upperSpace);
+            }
+
+            //draw Ins2
+            float tmpIns2 = dayData.getIns2At(i);
+            if(tmpIns2 != 0) {
+                int Y = InstoCoord(tmpIns2);
+                g2D.setPaint(props.getColorIns2());
+                g2D.fillRect(X-1,Y,3,(int)drawableHeight-Y+upperSpace);
+            }
+
+            //draw BU
+            float tmpBU = dayData.getBUAt(i);
+            if(tmpBU != 0) {
+                int Y = BUtoCoord(tmpBU);
+                g2D.setPaint(props.getColorBU());
+                g2D.fillRect(X+1,Y,3,(int)drawableHeight-Y+upperSpace);
+            }
+
         }
+
+        //draw avg BG
+        g2D.setPaint(props.getColorAvgBG());
+        int tmp = BGtoCoord(dayData.getAvgBG());
+        g2D.drawLine(leftSpace,tmp,viewWidth-rightSpace,tmp);
+
+        //paint BG
         g2D.setPaint(props.getColorBG());
         g2D.draw(polyline);
     }
