@@ -1,3 +1,8 @@
+2002-07-17  Dieter Schultschik  <schultd@users.sourceforge.net>
+
+	* Better DB Handling (Ability to Connect and Disconnect)
+	* Added a StatusBar to the Mainframe
+
 2002-07-16  Dieter Schultschik  <schultd@users.sourceforge.net>
 	
 	* Added sources to sourceforge cvs.
