@@ -68,6 +68,6 @@ public class StatusBar extends JPanel
 
     public void setDataSourceText(String text)
     {
-        lblDataSource.setText(" DataSource: " + text);
+        lblDataSource.setText(" " + text);
     }
 }
