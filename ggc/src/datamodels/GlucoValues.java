@@ -68,11 +68,13 @@ public class GlucoValues extends DailyValues
 
     public void addRow(DailyValuesRow dRow)
     {
+        String s1 = dRow.getDateAsString();
+
         for (int i = 0; i < dayValues.size(); i++) {
             DailyValues dV = (DailyValues)dayValues.elementAt(i);
-            //System.out.println("date1:" + dV.getDate().getTime() + "");
-            //System.out.println("date2:" + dRow.getDate().getTime() + "");
-            if (dV.getDate().equals(dRow.getDateTime())) {
+            //System.out.println("date1:" + s1 + "");
+            //System.out.println("date2:" + dV.getDateAsString() + "");
+            if (s1.equals(dV.getDateAsString())) {
                 dV.setNewRow(dRow);
                 return;
             }

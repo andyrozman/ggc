@@ -48,7 +48,7 @@ public class prefDataStoringPane extends AbstractPrefOptionsPanel
         Box a = Box.createHorizontalBox();
         a.add(new JLabel("Data Source:"));
 
-        String[] choices = {"MySQL", "Dummy1", "Dummy2"};
+        String[] choices = {"MySQL", "Textfile"};
 
         comboDataSource = new JComboBox(choices);
         comboDataSource.setSelectedItem(props.getDataSource());

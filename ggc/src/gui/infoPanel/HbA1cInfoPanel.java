@@ -78,10 +78,12 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
         HbA1cValues hbVal = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
         DecimalFormat df = new DecimalFormat("#0.00");
 
-        lblHbA1c.setText(df.format(hbVal.getHbA1c_Method1()) + " %");
-        lblVal.setText(hbVal.getValuation());
-        lblAvgBG.setText(df.format(hbVal.getAvgBG()));
-        lblReadings.setText(hbVal.getReadings() + "");
-        lblReadingsPerDay.setText(df.format(hbVal.getReadingsPerDay()));
+        if (hbVal != null) {
+            lblHbA1c.setText(df.format(hbVal.getHbA1c_Method1()) + " %");
+            lblVal.setText(hbVal.getValuation());
+            lblAvgBG.setText(df.format(hbVal.getAvgBG()));
+            lblReadings.setText(hbVal.getReadings() + "");
+            lblReadingsPerDay.setText(df.format(hbVal.getReadingsPerDay()));
+        }
     }
 }

@@ -29,12 +29,13 @@ package datamodels;
 
 
 import javax.swing.*;
-import java.util.Date;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
-public class DailyValuesRow
+public class DailyValuesRow implements Serializable
 {
     private Date datetime;
     private Float BG;
@@ -121,6 +122,11 @@ public class DailyValuesRow
         tmp[6] = Comment;
 
         return tmp;
+    }
+
+    public String toString()
+    {
+        return datetime.getTime() + ";" + BG + ";" + Ins1 + ";" + Ins2 + ";" + BE + ";" + Act + ";" + Comment + ";";
     }
 
     public Date getDateTime()

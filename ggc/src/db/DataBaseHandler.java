@@ -43,7 +43,7 @@ public abstract class DataBaseHandler
     static boolean connected = false;
 
     private static DataBaseHandler singleton = null;
-    GGCProperties props = GGCProperties.getInstance();
+    static GGCProperties props = GGCProperties.getInstance();
     String dbName;
 
     public DataBaseHandler()
@@ -53,9 +53,19 @@ public abstract class DataBaseHandler
 
     public static DataBaseHandler getInstance()
     {
-        if (singleton == null)
-            singleton = MySQLHandler.getInstance();
+        if (singleton == null) {
+            String s = props.getDataSource();
+            if (s.equals("MySQL"))
+                singleton = MySQLHandler.getInstance();
+            else if (s.equals("Textfile"))
+                singleton = new TextFileHandler();
+        }
         return singleton;
+    }
+
+    public static void killHandler()
+    {
+        singleton = null;
     }
 
     public boolean isConnected()

@@ -8,14 +8,15 @@ package datamodels;
 
 import db.DataBaseHandler;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
-import java.text.SimpleDateFormat;
 
 
-public class DailyValues
+public class DailyValues implements Serializable
 {
-    String[] columnNames = new String[0];
+    String[] columnNames = {"Time", "BG", "Ins1", "Ins2", "BU", "Act", "Comment"};
     Vector dataRows = new Vector();
     static DataBaseHandler dbH;
     private static DailyValues singleton = null;
@@ -38,55 +39,6 @@ public class DailyValues
     float lowestBG = Float.MAX_VALUE;
     float stdDev = 0;
 
-    public void setSumBG(float sumBG)
-    {
-        this.sumBG = sumBG;
-    }
-
-    public void setSumIns1(float sumIns1)
-    {
-        this.sumIns1 = sumIns1;
-    }
-
-    public void setSumIns2(float sumIns2)
-    {
-        this.sumIns2 = sumIns2;
-    }
-
-    public void setSumBE(float sumBE)
-    {
-        this.sumBE = sumBE;
-    }
-
-    public void setCounterBG(int counterBG)
-    {
-        this.counterBG = counterBG;
-    }
-
-    public void setCounterBE(int counterBE)
-    {
-        this.counterBE = counterBE;
-    }
-
-    public void setCounterIns1(int counterIns1)
-    {
-        this.counterIns1 = counterIns1;
-    }
-
-    public void setCounterIns2(int counterIns2)
-    {
-        this.counterIns2 = counterIns2;
-    }
-
-    public void setHighestBG(float highestBG)
-    {
-        this.highestBG = highestBG;
-    }
-
-    public void setLowestBG(float lowestBG)
-    {
-        this.lowestBG = lowestBG;
-    }
 
     public void setStdDev(float stdDev)
     {
@@ -140,6 +92,28 @@ public class DailyValues
             } else
                 dataRows.add(dVR);
         }
+        sumBG += dVR.getBG();
+        if (dVR.getBG() != 0) {
+            if (highestBG < dVR.getBG())
+                highestBG = dVR.getBG();
+            if (lowestBG > dVR.getBG())
+                lowestBG = dVR.getBG();
+            counterBG++;
+        }
+        sumIns1 += dVR.getIns1();
+        if (dVR.getIns1() != 0)
+            counterIns1++;
+        sumIns2 += dVR.getIns2();
+        if (dVR.getIns2() != 0)
+            counterIns2++;
+        sumBE += dVR.getBE();
+        if (dVR.getBE() != 0)
+            counterBE++;
+    }
+
+    public DailyValuesRow getRowAt(int i)
+    {
+        return (DailyValuesRow)dataRows.elementAt(i);
     }
 
     public void deleteRow(int i)
@@ -204,6 +178,12 @@ public class DailyValues
     public Date getDate()
     {
         return date;
+    }
+
+    public String getDateAsString()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
     }
 
     public Date getDateTimeAt(int row)
@@ -352,6 +332,15 @@ public class DailyValues
 
     public float getStdDev()
     {
-        return stdDev;
+        float tmp = 0;
+        int c = 0;
+        for (int i = 0; i < getRowCount(); i++) {
+            float bg = getBGAt(i);
+            if (bg != 0) {
+                tmp += (bg - getAvgBG()) * (bg - getAvgBG());
+                c++;
+            }
+        }
+        return (float)Math.sqrt(tmp / --c);
     }
 }

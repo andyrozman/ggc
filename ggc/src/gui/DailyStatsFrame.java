@@ -259,6 +259,9 @@ public class DailyStatsFrame extends JFrame
 
     public void updateLabels()
     {
+        if (dayData == null)
+            return;
+
         DecimalFormat df = new DecimalFormat("#0.0");
         sumIns1.setText(df.format(dayData.getSumIns1()));
         sumIns2.setText(df.format(dayData.getSumIns2()));

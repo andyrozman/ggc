@@ -212,6 +212,10 @@ public class MainFrame extends JFrame
         newAction.setEnabled(!opened);
 
         viewDailyAction.setEnabled(opened);
+        viewSpreadGraphAction.setEnabled(opened);
+        viewCourseGraphAction.setEnabled(opened);
+        viewFrequencyGraphAction.setEnabled(opened);
+        viewHbA1cAction.setEnabled(opened);
 
         readMeterAction.setEnabled(opened);
     }
@@ -223,6 +227,10 @@ public class MainFrame extends JFrame
         newAction.setEnabled(false);
 
         viewDailyAction.setEnabled(false);
+        viewSpreadGraphAction.setEnabled(false);
+        viewCourseGraphAction.setEnabled(false);
+        viewFrequencyGraphAction.setEnabled(false);
+        viewHbA1cAction.setEnabled(false);
 
         readMeterAction.setEnabled(false);
     }
@@ -336,6 +344,7 @@ public class MainFrame extends JFrame
                 close();
             } else if (command.equals("Connect")) {
 
+                dbH = DataBaseHandler.getInstance();
                 dbH.connect();
                 if (dbH.isConnected())
                     setActionEnabledStateConnected();
@@ -348,6 +357,7 @@ public class MainFrame extends JFrame
                     setActionEnabledStateConnected();
                 else
                     setActionEnabledStateDisconnected();
+                DataBaseHandler.killHandler();
             } else if (command.equals("New")) {
 
                 String tmpName = JOptionPane.showInputDialog("Enter DB Name to create:");

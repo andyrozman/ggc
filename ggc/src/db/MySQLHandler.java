@@ -38,11 +38,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
+import util.GGCProperties;
+
 
 public class MySQLHandler extends DataBaseHandler
 {
     Connection con = null;
     private static MySQLHandler singleton = null;
+    private GGCProperties props = GGCProperties.getInstance();
 
     private MySQLHandler()
     {
@@ -121,19 +124,6 @@ public class MySQLHandler extends DataBaseHandler
     {
         ResultSet results = null;
         DailyValues dV = new DailyValues();
-        float sumBG = 0;
-        float sumIns1 = 0;
-        float sumIns2 = 0;
-        float sumBE = 0;
-
-        int counterBG = 0;
-        int counterBE = 0;
-        int counterIns1 = 0;
-        int counterIns2 = 0;
-
-        float highestBG = 0;
-        float lowestBG = Float.MAX_VALUE;
-        float stdDev = 0;
 
         if (con != null) {
             try {
@@ -142,18 +132,6 @@ public class MySQLHandler extends DataBaseHandler
                 String query = "SELECT * FROM DayValues WHERE date_format(datetime, '%Y-%m-%d') = '" + sDay + "' ORDER BY datetime";
                 Statement statement = con.createStatement();
                 results = statement.executeQuery(query);
-
-
-                ResultSetMetaData metadata = results.getMetaData();
-                int columns = metadata.getColumnCount();
-
-                String[] columnNames = new String[columns];
-                for (int i = 0; i < columns; i++)
-                    columnNames[i] = metadata.getColumnLabel(i + 1);
-
-                dV.setColumnNames(columnNames);
-
-                Vector BGdata = new Vector();
 
                 while (results.next()) {
                     sdf.applyPattern("yyyy-MM-dd HH:mm");
@@ -164,73 +142,21 @@ public class MySQLHandler extends DataBaseHandler
                     } catch (SQLException e) {
                     }
 
-                    //bg
                     float rBG = results.getFloat(2);
-                    if (rBG != 0) {
-                        sumBG += rBG;
-                        BGdata.addElement(new Float(rBG));
-                        counterBG++;
-                        if (highestBG < rBG)
-                            highestBG = rBG;
-                        if (lowestBG > rBG)
-                            lowestBG = rBG;
-                    }
-                    //ins1
                     float rIns1 = results.getFloat(3);
-                    if (rIns1 != 0) {
-                        sumIns1 += rIns1;
-                        counterIns1++;
-                    }
-
-                    //ins2
                     float rIns2 = results.getFloat(4);
-                    if (rIns2 != 0) {
-                        sumIns2 += rIns2;
-                        counterIns2++;
-                    }
-
-                    //be
                     float rBE = results.getFloat(5);
-                    if (rBE != 0) {
-                        sumBE += rBE;
-                        counterBE++;
-                    }
-
                     int rAct = results.getInt(6);
                     String rComment = results.getString(7);
 
                     DailyValuesRow dVR = new DailyValuesRow(rDate, rBG, rIns1, rIns2, rBE, rAct, rComment);
                     dV.setNewRow(dVR);
                 }
-                float avgBG = 0;
-                if (counterBG != 0)
-                    avgBG = sumBG / counterBG;
 
-                float tmp = 0;
-                for (int i = 0; i < BGdata.size(); i++)
-                    tmp += Math.pow(((Float)(BGdata.get(i))).floatValue() - avgBG, 2.0);
-
-                if (BGdata.size() > 1)
-                    stdDev = (float)Math.sqrt(tmp / (BGdata.size() - 1));
-                else
-                    stdDev = 0;
             } catch (Exception e) {
                 System.err.println(e);
             }
             dV.setDate(day);
-
-            dV.setCounterBE(counterBE);
-            dV.setCounterBG(counterBG);
-            dV.setCounterIns1(counterIns1);
-            dV.setCounterIns2(counterIns2);
-
-            dV.setHighestBG(highestBG);
-            dV.setLowestBG(lowestBG);
-            dV.setStdDev(stdDev);
-            dV.setSumBE(sumBE);
-            dV.setSumBG(sumBG);
-            dV.setSumIns1(sumIns1);
-            dV.setSumIns2(sumIns2);
         }
         return dV;
     }

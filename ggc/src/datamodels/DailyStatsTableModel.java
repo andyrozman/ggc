@@ -54,11 +54,17 @@ public class DailyStatsTableModel extends AbstractTableModel
 
     public int getColumnCount()
     {
+        if(dayData == null)
+            return 0;
+
         return dayData.getColumnCount();
     }
 
     public int getRowCount()
     {
+        if(dayData == null)
+            return 0;
+
         return dayData.getRowCount();
     }
 

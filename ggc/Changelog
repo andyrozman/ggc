@@ -1,3 +1,10 @@
+2002-07-30  Dieter Schultschik  <schultd@users.sourceforge.net>
+	
+	* Added option to store data in a textfile.
+	* lots of small fixes and improvements.
+	* some stuff doesn't work very smooth at the moment.
+	  (will be fixed in the next days)
+	  
 2002-07-29  Dieter Schultschik  <schultd@users.sourceforge.net>
 
 	* Added a new SpreadView.

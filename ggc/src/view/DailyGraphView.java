@@ -70,6 +70,9 @@ public class DailyGraphView extends AbstractGraphView
 
     protected void drawValues(Graphics2D g2D)
     {
+        if(dayData == null)
+            return;
+
         GeneralPath polyline = new GeneralPath();
         int tmpC = 0;
         for (int i = 0; i < dayData.getRowCount(); i++) {
