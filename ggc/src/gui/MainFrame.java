@@ -419,7 +419,8 @@ public class MainFrame extends JFrame
             } else if (command.equals("Preferences")) {
                 PropertiesFrame.showMe();
             } else if (command.equals("from Meter")) {
-                ReadMeterFrame.showMe();
+                //ReadMeterFrame.showMe();
+                ReadMeterDialog.showMe(MainFrame.this);
             } else if (command.equals("About")) {
                 JOptionPane.showMessageDialog(null, "GNU Gluco Control v0.0.1", "About GGC", JOptionPane.INFORMATION_MESSAGE);
             }
