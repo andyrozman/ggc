@@ -47,6 +47,8 @@ public class DailyGraphView extends JComponent implements Observer
     int upperSpace = 10, lowerSpace = 30, leftSpace = 40, rightSpace = 30;
     int maxGoodBG = 120, minGoodBG = 60;
 
+    Object oAA, oCR, oTAA, oR, oD, oFM, oI;
+
     DailyValues dayData;
 
     GGCProperties props;
@@ -55,6 +57,7 @@ public class DailyGraphView extends JComponent implements Observer
     {
         dayData = DailyValues.getInstance();
         props = GGCProperties.getInstance();
+        setRenderingQuality();
     }
 
     public void paint(Graphics g)
@@ -108,39 +111,15 @@ public class DailyGraphView extends JComponent implements Observer
 		lowerSpace
 		*/
 
-        /*
-        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-		g2D.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-		g2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-		g2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-		g2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        */
-
         Object o;
-        switch (props.getAntiAliasing()) {
-            case 0:
-                o = RenderingHints.VALUE_ANTIALIAS_DEFAULT;
-                break;
-            case 1:
-                o = RenderingHints.VALUE_ANTIALIAS_OFF;
-                break;
-            case 2:
-                o = RenderingHints.VALUE_ANTIALIAS_ON;
-                break;
-            default:
-                o = RenderingHints.VALUE_ANTIALIAS_OFF;
-        }
-        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,o);
-        System.out.println("rendering"+ o);
 
-        g2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
-        g2D.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
-        g2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
-        g2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-        g2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
-        g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oAA);
+        g2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, oCR);
+        g2D.setRenderingHint(RenderingHints.KEY_DITHERING, oD);
+        g2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, oFM);
+        g2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, oI);
+        g2D.setRenderingHint(RenderingHints.KEY_RENDERING, oR);
+        g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, oTAA);
 
 
         g2D.setBackground(Color.white);
@@ -184,5 +163,97 @@ public class DailyGraphView extends JComponent implements Observer
         int timeM = time.getMinutes();
 
         return (int)(leftSpace + timeH * hourW + timeM * minW);
+    }
+
+    private void setRenderingQuality()
+    {
+        switch (props.getAntiAliasing()) {
+            case 1:
+                oAA = RenderingHints.VALUE_ANTIALIAS_OFF;
+                break;
+            case 2:
+                oAA = RenderingHints.VALUE_ANTIALIAS_ON;
+                break;
+            default:
+                oAA = RenderingHints.VALUE_ANTIALIAS_DEFAULT;
+        }
+        //System.out.println("rendering " + oAA);
+
+        switch (props.getColorRendering()) {
+            case 1:
+                oCR = RenderingHints.VALUE_COLOR_RENDER_QUALITY;
+                break;
+            case 2:
+                oCR = RenderingHints.VALUE_COLOR_RENDER_SPEED;
+                break;
+            default:
+                oCR = RenderingHints.VALUE_COLOR_RENDER_DEFAULT;
+        }
+        //System.out.println("colorrend " + oCR);
+
+        switch (props.getDithering()) {
+            case 1:
+                oD = RenderingHints.VALUE_DITHER_DISABLE;
+                break;
+            case 2:
+                oD = RenderingHints.VALUE_DITHER_ENABLE;
+                break;
+            default:
+                oD = RenderingHints.VALUE_DITHER_DEFAULT;
+        }
+        //System.out.println("dithering " + oD);
+
+        switch (props.getFractionalMetrics()) {
+            case 1:
+                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
+                break;
+            case 2:
+                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_ON;
+                break;
+            default:
+                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT;
+        }
+        //System.out.println("fractional " + oFM);
+
+        switch (props.getInterpolation()) {
+            case 1:
+                oI = RenderingHints.VALUE_INTERPOLATION_BICUBIC;
+                break;
+            case 2:
+                oI = RenderingHints.VALUE_INTERPOLATION_BILINEAR;
+                break;
+            default:
+                oI = RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR;
+        }
+        //System.out.println("interpolation " + oI);
+
+        switch (props.getRendering()) {
+            case 1:
+                oR = RenderingHints.VALUE_RENDER_QUALITY;
+                break;
+            case 2:
+                oR = RenderingHints.VALUE_RENDER_SPEED;
+                break;
+            default:
+                oR = RenderingHints.VALUE_RENDER_DEFAULT;
+        }
+        //System.out.println("rendering " + oR);
+
+        switch (props.getTextAntiAliasing()) {
+            case 1:
+                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;
+                break;
+            case 2:
+                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
+                break;
+            default:
+                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT;
+        }
+        //System.out.println("text AA " + oTAA);
+    }
+
+    public void setNewRenderingQuality()
+    {
+        setRenderingQuality();
     }
 }
