@@ -83,7 +83,6 @@ public class DailyGraphView extends AbstractGraphView
                 else
                     polyline.lineTo(X, Y);
                 tmpC++;
-                System.out.println("x,y:" + X + "," + Y);
             }
         }
         g2D.setPaint(props.getColorBG());

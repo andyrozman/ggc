@@ -158,15 +158,15 @@ public class CourseGraphView extends AbstractGraphView
 
         for (int i = 0; i < dayCount; i++) {
             dV = gV.getDailyValuesForDay(i);
-            float multiWidth = dayWidth * i;
-            float offset = multiWidth + leftSpace + dayWidth / 2;
+            float multiWidth = dayWidthC * i;
+            float offset = multiWidth + leftSpace + dayWidthC / 2;
 
             //draw BG
             for (int j = 0; j < dV.getRowCount(); j++) {
                 float tmpBG = dV.getBGAt(j);
 
                 if (tmpBG != 0) {
-                    int X = (int)(multiWidth + TimetoCoord(dV.getDateTimeAt(j)));
+                    int X = (int)(multiWidth + DateTimetoCoord(dV.getDateTimeAt(j)));
                     int Y = BGtoCoord(tmpBG);
                     if (firstBG) {
                         plBG.moveTo(X, Y);

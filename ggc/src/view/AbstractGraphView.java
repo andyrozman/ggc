@@ -51,6 +51,9 @@ public abstract class AbstractGraphView extends JComponent
     int viewHeight = 0;
     float drawableWidth = 0;
     float drawableHeight = 0;
+    float dayWidthC = 0;
+    float hourWidthC = 0;
+    float minuteWidthC = 0;
     float dayWidth = 0;
     float hourWidth = 0;
     float minuteWidth = 0;
@@ -73,7 +76,14 @@ public abstract class AbstractGraphView extends JComponent
         viewHeight = dim.height;
         drawableWidth = viewWidth - rightSpace - leftSpace;
         drawableHeight = viewHeight - lowerSpace - upperSpace;
-        dayWidth = drawableWidth / (dayCount > 0 ? dayCount : 1);
+
+        //continuous drawing
+        dayWidthC = drawableWidth / (dayCount > 0 ? dayCount : 1);
+        hourWidthC = dayWidthC / 24;
+        minuteWidthC = hourWidthC / 60;
+
+        //whole width is one day
+        dayWidth = drawableWidth;
         hourWidth = dayWidth / 24;
         minuteWidth = hourWidth / 60;
     }
@@ -96,6 +106,14 @@ public abstract class AbstractGraphView extends JComponent
     protected int InsPerBUtoCoord(float factor)
     {
         return (int)(drawableHeight + upperSpace - drawableHeight / 4 * factor);
+    }
+
+    protected int DateTimetoCoord(java.util.Date time)
+    {
+        int timeH = time.getHours();
+        int timeM = time.getMinutes();
+
+        return (int)(leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
     }
 
     protected int TimetoCoord(java.util.Date time)

@@ -46,7 +46,7 @@ public class MainFrame extends JFrame
     private GGCAction connectAction, disconnectAction, newAction, openAction, closeAction, quitAction;
     private GGCAction prefAction;
     private GGCAction readMeterAction;
-    private GGCAction viewDailyAction, viewCourseGraphAction;
+    private GGCAction viewDailyAction, viewCourseGraphAction, viewSpreadGraphAction;
     private GGCAction aboutAction;
     private DailyStatsFrame dailyStatsWindow;
     private StatusBar statusPanel;
@@ -88,6 +88,8 @@ public class MainFrame extends JFrame
         viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/daily.png"));
         viewCourseGraphAction = new GGCAction("Course", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "View Course");
         viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/course.png"));
+        viewSpreadGraphAction = new GGCAction("Spread", "View Spread");
+        viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/spread.png"));
 
         readMeterAction = new GGCAction("from Meter", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "Read Data From Meter");
         readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/readmeter.png"));
@@ -107,6 +109,7 @@ public class MainFrame extends JFrame
 
         addMenuItem(viewMenu, viewDailyAction);
         addMenuItem(viewMenu, viewCourseGraphAction);
+        addMenuItem(viewMenu, viewSpreadGraphAction);
 
         addMenuItem(readMenu, readMeterAction);
 
@@ -131,6 +134,7 @@ public class MainFrame extends JFrame
         addToolBarSpacer();
         addToolBarButton(viewDailyAction);
         addToolBarButton(viewCourseGraphAction);
+        addToolBarButton(viewSpreadGraphAction);
         addToolBarSpacer();
         addToolBarButton(readMeterAction);
 
@@ -367,6 +371,8 @@ public class MainFrame extends JFrame
                 DailyStatsFrame.showMe();
             } else if (command.equals("Course")) {
                 CourseGraphFrame.showMe();
+            } else if (command.equals("Spread")) {
+                SpreadGraphFrame.showMe();
             } else if (command.equals("Preferences")) {
                 PropertiesFrame.showMe();
             } else if (command.equals("from Meter")) {
