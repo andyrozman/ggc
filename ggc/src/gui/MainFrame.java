@@ -34,6 +34,8 @@ import util.GGCProperties;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class MainFrame extends JFrame
@@ -55,7 +57,8 @@ public class MainFrame extends JFrame
     {
         setTitle(title);
         setJMenuBar(menuBar);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new CloseListener())
 
         JMenu fileMenu = new JMenu("File");
         JMenu viewMenu = new JMenu("View");
@@ -121,6 +124,16 @@ public class MainFrame extends JFrame
         }
     }
 
+    private void close()
+    {
+        //write to prefs to file on close.
+        GGCProperties p = GGCProperties.getInstance();
+        p.write();
+
+        dispose();
+        System.exit(0);
+    }
+
     private JMenuItem addMenuItem(JMenu menu, Action action)
     {
         JMenuItem item = menu.add(action);
@@ -170,12 +183,7 @@ public class MainFrame extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             if (e.getActionCommand().equals("Quit")) {
-                //write to prefs to file on close.
-                GGCProperties p = GGCProperties.getInstance();
-                p.write();
-
-                dispose();
-                System.exit(0);
+                close();
             } else if (e.getActionCommand().equals("New")) {
                 String tmpName = JOptionPane.showInputDialog("Enter DB Name to create:");
                 if (tmpName != null && !tmpName.equals("")) {
@@ -209,6 +217,14 @@ public class MainFrame extends JFrame
             } else if (e.getActionCommand().equals("About")) {
                 JOptionPane.showMessageDialog(null, "GNU Gluco Control v0.0.1", "About GGC", JOptionPane.INFORMATION_MESSAGE);
             }
+        }
+    }
+
+    private class CloseListener extends WindowAdapter
+    {
+        public void windowClosing(WindowEvent e)
+        {
+            close();
         }
     }
 }
