@@ -93,7 +93,7 @@ public class HbA1cValues
     public float getReadingsPerDay()
     {
         if (dayCount != 0)
-            return readings / dayCount;
+            return readings / (float)dayCount;
         else
             return 0;
     }
