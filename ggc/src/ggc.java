@@ -77,7 +77,7 @@ public class ggc
 
     public void init()
     {
-        mainWindow = new MainFrame("ggc");
+        mainWindow = new MainFrame("GGC - GNU Gluco Control");
         Toolkit theKit = mainWindow.getToolkit();
         Dimension wndSize = theKit.getScreenSize();
 
