@@ -348,6 +348,11 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+    public float getSumBG()
+    {
+        return sumBG;
+    }
+
     public float getSumIns1()
     {
         return sumIns1;
