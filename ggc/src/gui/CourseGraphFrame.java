@@ -29,6 +29,7 @@ package gui;
 
 
 import datamodels.GlucoValues;
+import gui.calendar.DateRangeSelectionPanel;
 import util.GGCProperties;
 import view.CourseGraphView;
 
@@ -38,8 +39,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 
 public class CourseGraphFrame extends JFrame
@@ -49,8 +48,6 @@ public class CourseGraphFrame extends JFrame
 
     private GGCProperties props = GGCProperties.getInstance();
 
-    private JTextField fieldStartDate;
-    private JTextField fieldEndDate;
     private JCheckBox chkBG;
     private JCheckBox chkAvgBGDay;
     private JCheckBox chkSumBU;
@@ -59,6 +56,7 @@ public class CourseGraphFrame extends JFrame
     private JCheckBox chkSumIns2;
     private JCheckBox chkSumIns;
     private JCheckBox chkInsPerBU;
+    private DateRangeSelectionPanel dRS;
 
 
     public CourseGraphFrame()
@@ -81,14 +79,7 @@ public class CourseGraphFrame extends JFrame
     {
         JPanel cPanel = new JPanel(new BorderLayout());
 
-        JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        datePanel.add(new JLabel("Starting Date:"));
-        fieldStartDate = new JTextField("01.07.2002", 10);
-        datePanel.add(fieldStartDate);
-        datePanel.add(Box.createHorizontalStrut(10));
-        datePanel.add(new JLabel("Ending Date:"));
-        fieldEndDate = new JTextField("26.07.2002", 10);
-        datePanel.add(fieldEndDate);
+        dRS = new DateRangeSelectionPanel();
 
         JPanel selectionPanel = new JPanel(new GridLayout(2, 4));
         selectionPanel.setBorder(BorderFactory.createTitledBorder("To be drawn:"));
@@ -125,7 +116,7 @@ public class CourseGraphFrame extends JFrame
         buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);
 
-        cPanel.add(datePanel, BorderLayout.NORTH);
+        cPanel.add(dRS, BorderLayout.WEST);
         cPanel.add(selectionPanel, BorderLayout.CENTER);
         cPanel.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -134,12 +125,7 @@ public class CourseGraphFrame extends JFrame
 
     private void setNewDateRange()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            cGV.setGlucoValues(new GlucoValues(sdf.parse(fieldStartDate.getText()), sdf.parse(fieldEndDate.getText())));
-        } catch (ParseException e) {
-            System.out.println(e);
-        }
+        cGV.setGlucoValues(new GlucoValues(dRS.getStartDate(), dRS.getEndDate()));
     }
 
     public static void showMe()

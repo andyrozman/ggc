@@ -29,6 +29,7 @@ package gui;
 
 
 import datamodels.GlucoValues;
+import gui.calendar.DateRangeSelectionPanel;
 import util.GGCProperties;
 import view.SpreadGraphView;
 
@@ -38,8 +39,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 
 public class SpreadGraphFrame extends JFrame
@@ -49,13 +48,12 @@ public class SpreadGraphFrame extends JFrame
 
     private GGCProperties props = GGCProperties.getInstance();
 
-    private JTextField fieldStartDate;
-    private JTextField fieldEndDate;
     private JCheckBox chkBG;
     private JCheckBox chkBU;
     private JCheckBox chkIns1;
     private JCheckBox chkIns2;
     private JCheckBox chkConnect;
+    private DateRangeSelectionPanel dRS;
 
     public SpreadGraphFrame()
     {
@@ -77,14 +75,7 @@ public class SpreadGraphFrame extends JFrame
     {
         JPanel cPanel = new JPanel(new BorderLayout());
 
-        JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        datePanel.add(new JLabel("Starting Date:"));
-        fieldStartDate = new JTextField("01.07.2002", 10);
-        datePanel.add(fieldStartDate);
-        datePanel.add(Box.createHorizontalStrut(10));
-        datePanel.add(new JLabel("Ending Date:"));
-        fieldEndDate = new JTextField("26.07.2002", 10);
-        datePanel.add(fieldEndDate);
+        dRS = new DateRangeSelectionPanel();
 
         JPanel selectionPanel = new JPanel(new GridLayout(2, 4));
         selectionPanel.setBorder(BorderFactory.createTitledBorder("To be drawn:"));
@@ -121,7 +112,7 @@ public class SpreadGraphFrame extends JFrame
         buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);
 
-        cPanel.add(datePanel, BorderLayout.NORTH);
+        cPanel.add(dRS, BorderLayout.WEST);
         cPanel.add(selectionPanel, BorderLayout.CENTER);
         cPanel.add(optionsPanel, BorderLayout.EAST);
         cPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -131,12 +122,7 @@ public class SpreadGraphFrame extends JFrame
 
     private void setNewDateRange()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            sGV.setGlucoValues(new GlucoValues(sdf.parse(fieldStartDate.getText()), sdf.parse(fieldEndDate.getText())));
-        } catch (ParseException e) {
-            System.out.println(e);
-        }
+        sGV.setGlucoValues(new GlucoValues(dRS.getStartDate(), dRS.getEndDate()));
     }
 
     public static void showMe()
