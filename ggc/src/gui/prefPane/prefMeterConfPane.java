@@ -28,10 +28,16 @@
 package gui.prefPane;
 
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import meter.SerialMeterReader;
 
-import javax.swing.*;
-import java.awt.*;
+import data.imports.SerialMeterImport;
 
 
 public class prefMeterConfPane extends AbstractPrefOptionsPanel
@@ -48,7 +54,8 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
     {
         setLayout(new BorderLayout());
 
-        String[] choicesMeterType = {"GlucoCard"};
+        //String[] choicesMeterType = {"GlucoCard"};
+        String[] choicesMeterType = SerialMeterImport.getAvailableMeters();
         comboMeterType = new JComboBox(choicesMeterType);
         comboPortId = new JComboBox(SerialMeterReader.getAvaibleSerialPorts());
 
