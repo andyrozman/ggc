@@ -29,6 +29,7 @@ package gui;
 
 
 import datamodels.DailyGraphModel;
+import datamodels.DailyValues;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +38,8 @@ import java.util.Observer;
 
 public class DailyGraphFrame extends JFrame
 {
-    private DailyGraphModel dGM;
-    private DailyGraphView dGV;
+    private DailyGraphModel dGM = new DailyGraphModel();
+    private static DailyGraphView dGV = new DailyGraphView();
     private static DailyGraphFrame singleton = null;
 
     public DailyGraphFrame()
@@ -47,12 +48,18 @@ public class DailyGraphFrame extends JFrame
         setBounds(300, 300, 300, 300);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setBackground(Color.white);
-        dGM = new DailyGraphModel();
-        dGV = new DailyGraphView();
+        //dGM = new DailyGraphModel();
+        //dGV = new DailyGraphView();
         dGM.addObserver((Observer)dGV);
         getContentPane().add(dGV, BorderLayout.CENTER);
         getContentPane().setBackground(Color.white);
         setVisible(true);
+    }
+
+    public static void setDailyValues(DailyValues dV)
+    {
+        dGV.setDailyValues(dV);
+        redraw();
     }
 
     public static void showMe()

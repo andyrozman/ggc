@@ -48,7 +48,7 @@ public class GlucoTableModel extends AbstractTableModel
 
     public int getColumnCount()
     {
-        return 8;
+        return 7;
     }
 
     public int getRowCount()
@@ -59,8 +59,8 @@ public class GlucoTableModel extends AbstractTableModel
     public Object getValueAt(int row, int column)
     {
         Object o = dayData.getValueAt(row, column);
-        if (o != null && column == 1) {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        if (o != null && column == 0) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             return sdf.format(o);
         }
 
@@ -69,7 +69,7 @@ public class GlucoTableModel extends AbstractTableModel
 
     public String getColumnName(int column)
     {
-        String[] s = {"Date", "Time", "BG", props.getIns1Abbr(), props.getIns2Abbr(), "BE", "Act", "Comment"};
+        String[] s = {"Datetime", "BG", props.getIns1Abbr(), props.getIns2Abbr(), "BE", "Act", "Comment"};
         return s[column];
     }
 

@@ -70,6 +70,11 @@ public class DailyGraphView extends JComponent implements Observer
         drawValues(g2D);
     }
 
+    public void setDailyValues(DailyValues dV)
+    {
+        dayData = dV;
+    }
+
     public void update(Observable o, Object rectangle)
     {
     }
@@ -82,7 +87,7 @@ public class DailyGraphView extends JComponent implements Observer
             float tmpBG = dayData.getBGAt(i);
 
             if (tmpBG != 0) {
-                int X = TimetoCoord(dayData.getTimeAt(i));
+                int X = TimetoCoord(dayData.getDateTimeAt(i));
                 int Y = BGtoCoord(tmpBG);
                 if (tmpC == 0)
                     polyline.moveTo(X, Y);
@@ -154,7 +159,7 @@ public class DailyGraphView extends JComponent implements Observer
         return (int)(diffH + upperSpace - diffH / diffBG * BG);
     }
 
-    private int TimetoCoord(Time time)
+    private int TimetoCoord(java.util.Date time)
     {
         Dimension dim = getSize();
         int w = dim.width;

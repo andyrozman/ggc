@@ -33,10 +33,13 @@ import db.DataBaseHandler;
 
 import java.util.Vector;
 
+import gui.ReadMeterFrame;
+
 
 public class GlucoValues extends DailyValues
 {
     Vector dayValues = null;
+    private ReadMeterFrame rMF = ReadMeterFrame.getInstance();
 
     public GlucoValues()
     {
@@ -47,19 +50,19 @@ public class GlucoValues extends DailyValues
     {
         for (int i = 0; i < dayValues.size(); i++) {
             DailyValues dV = (DailyValues)dayValues.elementAt(i);
-            //System.out.println("date1:" + dV.getDate());
-            //System.out.println("date2:" + dRow.getDate());
-            if (dV.getDate().equals(dRow.getDate())) {
+            //System.out.println("date1:" + dV.getDate().getTime() + "");
+            //System.out.println("date2:" + dRow.getDate().getTime() + "");
+            if (dV.getDate().equals(dRow.getDateTime())) {
                 dV.setNewRow(dRow);
                 return;
             }
         }
 
-        if (dRow.getDate() != null && dRow.getTime() != null) {
+        if (dRow.getDateTime() != null) {
             DailyValues dV = new DailyValues();
 
             dV.setNewRow(dRow);
-            dV.setDate(dRow.getDate().getTime());
+            dV.setDate(dRow.getDateTime());
             dV.setIsNew(true);
 
             dayValues.add(dV);
@@ -69,8 +72,9 @@ public class GlucoValues extends DailyValues
     public void setNewRow(DailyValuesRow dRow)
     {
         DataBaseHandler dbH = DataBaseHandler.getInstance();
-        if (!dbH.dateTimeExists(dRow.getDate(), dRow.getTime())) {
+        if (!dbH.dateTimeExists(dRow.getDateTime())) {
             addRow(dRow);
+            //rMF.getResTableModel().fireTableChanged(null);
         }
     }
 

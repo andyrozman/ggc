@@ -46,6 +46,12 @@ public class DailyStatsTableModel extends AbstractTableModel
         fireTableChanged(null);
     }
 
+    public void setDailyValues(DailyValues dayData)
+    {
+        this.dayData = dayData;
+        fireTableChanged(null);
+    }
+
     public int getColumnCount()
     {
         return dayData.getColumnCount();
@@ -59,7 +65,7 @@ public class DailyStatsTableModel extends AbstractTableModel
     public Object getValueAt(int row, int column)
     {
         Object o = dayData.getValueAt(row, column);
-        if (o != null && column == 1) {
+        if (o != null && column == 0) {
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             return sdf.format(o);
         }
@@ -69,9 +75,9 @@ public class DailyStatsTableModel extends AbstractTableModel
 
     public String getColumnName(int column)
     {
-        if (column == 3)
+        if (column == 2)
             return props.getIns1Abbr();
-        if (column == 4)
+        if (column == 3)
             return props.getIns2Abbr();
 
         return dayData.getColumnName(column);

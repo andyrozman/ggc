@@ -34,13 +34,18 @@ import java.util.GregorianCalendar;
 
 public class CalendarEvent
 {
+    public static final int DAY_CHANGED = 101;
+    public static final int MONTH_CHANGED = 102;
+    public static final int YEAR_CHANGED = 103;
+    public static final int DATE_CHANGED = 105;
 
     GregorianCalendar date;
+    private int event = 0;
 
-    public CalendarEvent(GregorianCalendar date)
+    public CalendarEvent(GregorianCalendar date, int event)
     {
         this.date = date;
-        //System.out.println("gregcal in calevent: " + date.toString());
+        this.event = event;
     }
 
     public int getNewMonth()
@@ -61,5 +66,10 @@ public class CalendarEvent
     public long getNewDate()
     {
         return date.getTime().getTime();
+    }
+
+    public int getEvent()
+    {
+        return event;
     }
 }

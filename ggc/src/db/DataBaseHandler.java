@@ -33,9 +33,7 @@ import datamodels.DailyValues;
 import util.GGCProperties;
 
 import javax.swing.*;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.Time;
+import java.util.Date;
 
 
 public abstract class DataBaseHandler
@@ -58,6 +56,7 @@ public abstract class DataBaseHandler
             singleton = MySQLHandler.getInstance();
         return singleton;
     }
+
     public boolean isConnected()
     {
         return connected;
@@ -76,11 +75,11 @@ public abstract class DataBaseHandler
             JOptionPane.showMessageDialog(null, "Invalid Name for a Database", "GGC Error - Invalid Name", JOptionPane.ERROR_MESSAGE);
     }
 
-    public abstract ResultSet getDayStats(String day);
+    public abstract DailyValues getDayStats(Date day);
 
     public abstract void saveDayStats(DailyValues dV);
 
-    public abstract boolean dateTimeExists(Date date, Time time);
+    public abstract boolean dateTimeExists(java.util.Date date);
 
     public abstract void createNewDataBase(String name);
 

@@ -177,5 +177,10 @@ public class ReadMeterFrame extends JFrame
         }
     }
 
+    public GlucoTableModel getResTableModel()
+    {
+        return model;
+    }
+
 
 }

@@ -44,8 +44,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import util.GGCProperties;
+import db.DataBaseHandler;
 
 
 public class DailyStatsFrame extends JFrame
@@ -65,6 +67,7 @@ public class DailyStatsFrame extends JFrame
     JButton saveButton;
     private DailyGraphFrame dailyGraphWindow;
     DailyValues dayData;
+    private DataBaseHandler dbH = DataBaseHandler.getInstance();
     private static DailyStatsFrame singleton = null;
 
     private GGCProperties props = GGCProperties.getInstance();
@@ -175,11 +178,11 @@ public class DailyStatsFrame extends JFrame
         {
             public void dateHasChanged(CalendarEvent e)
             {
-                dayData.setDateAndUpdate(e.getNewDate());
-                model.fireTableChanged(null);
+                dayData = dbH.getDayStats(new Date(e.getNewDate()));
+                model.setDailyValues(dayData);
                 saveButton.setEnabled(false);
                 updateLabels();
-                DailyGraphFrame.redraw();
+                DailyGraphFrame.setDailyValues(dayData);
             }
         });
         dayCalendar.add(calPane);
@@ -188,8 +191,9 @@ public class DailyStatsFrame extends JFrame
         dayHeader.add(dayCalendar, BorderLayout.WEST);
         dayHeader.add(dayStats, BorderLayout.CENTER);
 
-        dayData = DailyValues.getInstance();
-        dayData.setDateAndUpdate(System.currentTimeMillis());
+        dayData = dbH.getDayStats(new Date(System.currentTimeMillis()));
+        DailyGraphFrame.setDailyValues(dayData);
+
         model = new DailyStatsTableModel(dayData);
         model.addTableModelListener(new TableModelListener()
         {

@@ -8,9 +8,7 @@ package datamodels;
 
 import db.DataBaseHandler;
 
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 
@@ -18,10 +16,9 @@ public class DailyValues
 {
     String[] columnNames = new String[0];
     Vector dataRows = new Vector();
-    ResultSet results;
     static DataBaseHandler dbH;
     private static DailyValues singleton = null;
-    Date date;
+    java.util.Date date;
 
     boolean bHasChangedValues = false;
     boolean bOnlyInsert = false;
@@ -40,6 +37,61 @@ public class DailyValues
     float lowestBG = Float.MAX_VALUE;
     float stdDev = 0;
 
+    public void setSumBG(float sumBG)
+    {
+        this.sumBG = sumBG;
+    }
+
+    public void setSumIns1(float sumIns1)
+    {
+        this.sumIns1 = sumIns1;
+    }
+
+    public void setSumIns2(float sumIns2)
+    {
+        this.sumIns2 = sumIns2;
+    }
+
+    public void setSumBE(float sumBE)
+    {
+        this.sumBE = sumBE;
+    }
+
+    public void setCounterBG(int counterBG)
+    {
+        this.counterBG = counterBG;
+    }
+
+    public void setCounterBE(int counterBE)
+    {
+        this.counterBE = counterBE;
+    }
+
+    public void setCounterIns1(int counterIns1)
+    {
+        this.counterIns1 = counterIns1;
+    }
+
+    public void setCounterIns2(int counterIns2)
+    {
+        this.counterIns2 = counterIns2;
+    }
+
+    public void setHighestBG(float highestBG)
+    {
+        this.highestBG = highestBG;
+    }
+
+    public void setLowestBG(float lowestBG)
+    {
+        this.lowestBG = lowestBG;
+    }
+
+    public void setStdDev(float stdDev)
+    {
+        this.stdDev = stdDev;
+    }
+
     public DailyValues()
     {
         dbH = DataBaseHandler.getInstance();
@@ -57,103 +109,9 @@ public class DailyValues
         this.date = new Date(date);
     }
 
-    public void setDateAndUpdate(long date)
+    public void setDate(Date date)
     {
-        setDate(date);
-        getDayStats(this.date.toString());
-    }
-
-    private void getDayStats(String date)
-    {
-        sumBG = 0;
-        sumIns1 = 0;
-        sumIns2 = 0;
-        sumBE = 0;
-
-        counterBG = 0;
-        counterBE = 0;
-        counterIns1 = 0;
-        counterIns2 = 0;
-
-        highestBG = 0;
-        lowestBG = Float.MAX_VALUE;
-        stdDev = 0;
-
-
-        SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            this.date = new Date(sf.parse(date).getTime());
-        } catch (ParseException e) {
-        }
-
-        results = dbH.getDayStats(date);
-        try {
-            ResultSetMetaData metadata = results.getMetaData();
-            int columns = metadata.getColumnCount();
-
-            columnNames = new String[columns];
-            for (int i = 0; i < columns; i++)
-                columnNames[i] = metadata.getColumnLabel(i + 1);
-
-            dataRows = new Vector();
-            Vector BGdata = new Vector();
-
-            while (results.next()) {
-                Date rDate = results.getDate(1);
-                Time rTime = results.getTime(2);
-                //bg
-                float rBG = results.getFloat(3);
-                if (rBG != 0) {
-                    sumBG += rBG;
-                    BGdata.addElement(new Float(rBG));
-                    counterBG++;
-                    if (highestBG < rBG)
-                        highestBG = rBG;
-                    if (lowestBG > rBG)
-                        lowestBG = rBG;
-                }
-                //ins1
-                float rIns1 = results.getFloat(4);
-                if (rIns1 != 0) {
-                    sumIns1 += rIns1;
-                    counterIns1++;
-                }
-
-                //ins2
-                float rIns2 = results.getFloat(5);
-                if (rIns2 != 0) {
-                    sumIns2 += rIns2;
-                    counterIns2++;
-                }
-
-                //be
-                float rBE = results.getFloat(6);
-                if (rBE != 0) {
-                    sumBE += rBE;
-                    counterBE++;
-                }
-
-                int rAct = results.getInt(7);
-                String rComment = results.getString(8);
-
-                DailyValuesRow dVR = new DailyValuesRow(rDate, rTime, rBG, rIns1, rIns2, rBE, rAct, rComment);
-                dataRows.addElement(dVR);
-            }
-            float avgBG = 0;
-            if (counterBG != 0)
-                avgBG = sumBG / counterBG;
-
-            float tmp = 0;
-            for (int i = 0; i < BGdata.size(); i++)
-                tmp += Math.pow(((Float)(BGdata.get(i))).floatValue() - avgBG, 2.0);
-
-            if (BGdata.size() != 0)
-                stdDev = (float)Math.sqrt(tmp / (BGdata.size() - 1));
-            else
-                stdDev = 0;
-        } catch (SQLException sqle) {
-            System.err.println(sqle);
-        }
+        this.date = date;
     }
 
     public void saveDay()
@@ -163,17 +121,17 @@ public class DailyValues
 
     public void setNewRow(DailyValuesRow dVR)
     {
-        Time time = dVR.getTime();
+        Date time = dVR.getDateTime();
         int size = dataRows.size();
 
-        if (time != null && dVR.getDate() != null) {
+        if (time != null && dVR.getDateTime() != null) {
             bHasChangedValues = true;
             //insert in the right place...
             //System.err.println(size + "");
             if (size > 0) {
                 int i = 0;
                 for (i = 0; i < size; i++)
-                    if (getTimeAt(i).after(time)) {
+                    if (getDateTimeAt(i).after(time)) {
                         dataRows.add(i, dVR);
                         return;
                     }
@@ -241,9 +199,15 @@ public class DailyValues
         return date;
     }
 
-    public Time getTimeAt(int row)
+    public Date getDateTimeAt(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getTime();
+        return ((DailyValuesRow)(dataRows.elementAt(row))).getDateTime();
+    }
+
+    public String getDateTimeAsStringAt(int row)
+    {
+        DailyValuesRow dv = (DailyValuesRow)(dataRows.elementAt(row));
+        return dv.getDateAsString() + " " + dv.getTimeAsString();
     }
 
     public float getBGAt(int row)

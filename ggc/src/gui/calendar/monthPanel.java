@@ -59,6 +59,7 @@ public class monthPanel extends JPanel implements CalendarListener
 
     public void dateHasChanged(CalendarEvent e)
     {
-        monthCombo.setSelectedIndex(e.getNewMonth());
+        if(e.getEvent() > CalendarEvent.MONTH_CHANGED)
+            monthCombo.setSelectedIndex(e.getNewMonth());
     }
 }

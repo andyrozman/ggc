@@ -99,7 +99,7 @@ public class dayPanel extends JPanel implements CalendarListener
     {
         JButton button = new JButton(j + "");
         button.setBorder(BorderFactory.createEmptyBorder());
-        button.setPreferredSize(new Dimension(22, 20));
+        button.setPreferredSize(new Dimension(20, 18));
         button.setFont(new Font("Dialog", Font.PLAIN, 12));
         button.addActionListener(new ActionListener()
         {
@@ -113,6 +113,7 @@ public class dayPanel extends JPanel implements CalendarListener
 
     public void dateHasChanged(CalendarEvent e)
     {
-        doLayoutButtons();
+        //if(e.getEvent() > CalendarEvent.DAY_CHANGED)
+            doLayoutButtons();
     }
 }

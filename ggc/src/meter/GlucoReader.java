@@ -195,19 +195,20 @@ public class GlucoReader implements Runnable, SerialPortEventListener
 
                             SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
                             Date date = null;
-                            Time time = null;
                             float bgvalue = 0;
                             try {
                                 date = new Date(sf.parse(datetime).getTime());
-                                time = new Time(sf.parse(datetime).getTime());
+                                date.setTime(date.getTime() - (date.getTime() % 60000L));
+
                                 bgvalue = (new Float(value).floatValue());
                             } catch (ParseException e) {
+                                System.out.println(e);
                             }
 
-                            System.out.println("Got value: " + value + " for timestamp: " + date + "@" + time);
+                            System.out.println("Got value: " + value + " for timestamp: " + date);
 
-                            if (date != null && time != null) {
-                                DailyValuesRow dVR = new DailyValuesRow(date, time, bgvalue, 0, 0, 0, 0, "");
+                            if (date != null) {
+                                DailyValuesRow dVR = new DailyValuesRow(date, bgvalue, 0, 0, 0, 0, "");
                                 gV.setNewRow(dVR);
                             }
 

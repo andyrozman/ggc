@@ -51,25 +51,25 @@ public class CalendarModel
     public void setDate(Date date)
     {
         gc.setTime(date);
-        cp.notifyListeners();
+        cp.notifyListeners(CalendarEvent.DATE_CHANGED);
     }
 
     public void setYear(int year)
     {
         gc.set(Calendar.YEAR, year);
-        cp.notifyListeners();
+        cp.notifyListeners(CalendarEvent.YEAR_CHANGED);
     }
 
     public void setMonth(int month)
     {
         gc.set(Calendar.MONTH, month);
-        cp.notifyListeners();
+        cp.notifyListeners(CalendarEvent.MONTH_CHANGED);
     }
 
     public void setDay(int day)
     {
         gc.set(Calendar.DAY_OF_MONTH, day);
-        cp.notifyListeners();
+        cp.notifyListeners(CalendarEvent.DAY_CHANGED);
     }
 
     public int getYear()

@@ -88,9 +88,9 @@ public class calendarPane extends JPanel
         listeners.removeElement(l);
     }
 
-    public void notifyListeners()
+    public void notifyListeners(int event)
     {
-        notifyListeners(new CalendarEvent(new GregorianCalendar(cModel.getYear(), cModel.getMonth(), cModel.getDay())));
+        notifyListeners(new CalendarEvent(new GregorianCalendar(cModel.getYear(), cModel.getMonth(), cModel.getDay()),event));
     }
 
     public void notifyListeners(CalendarEvent e)
