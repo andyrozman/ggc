@@ -33,9 +33,7 @@ import util.GGCProperties;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 
 public class MainFrame extends JFrame
@@ -73,16 +71,23 @@ public class MainFrame extends JFrame
         helpMenu.setMnemonic('H');
 
         connectAction = new GGCAction("Connect", "Connect to DataBase");
+        connectAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/connect.png"));
         disconnectAction = new GGCAction("Disconnect", "Disconnect from DataBase");
+        disconnectAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/disconnect.png"));
 
         newAction = new GGCAction("New", KeyStroke.getKeyStroke('N', Event.CTRL_MASK), "Create a new DataBase");
+        newAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/new.png"));
         openAction = new GGCAction("Open", KeyStroke.getKeyStroke('O', Event.CTRL_MASK), "Open existing DataBase");
+        openAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/open.png"));
         closeAction = new GGCAction("Close", KeyStroke.getKeyStroke('C', Event.CTRL_MASK), "Close current DataBase");
+        closeAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/close.png"));
         quitAction = new GGCAction("Quit", KeyStroke.getKeyStroke('Q', Event.CTRL_MASK), "Quit ggc");
 
         viewDailyAction = new GGCAction("Daily", KeyStroke.getKeyStroke('D', Event.CTRL_MASK), "View Daily Stats");
+        viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/daily.png"));
 
         readMeterAction = new GGCAction("from Meter", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "Read Data From Meter");
+        readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/readmeter.png"));
 
         prefAction = new GGCAction("Preferences", KeyStroke.getKeyStroke('P', Event.CTRL_MASK), "Preferences");
 
@@ -111,18 +116,18 @@ public class MainFrame extends JFrame
         menuBar.add(optionMenu);
         menuBar.add(helpMenu);
 
+        toolBar.setFloatable(false);
+        toolBar.setLayout(new FlowLayout(FlowLayout.LEFT,1,1));
         addToolBarButton(connectAction);
         addToolBarButton(disconnectAction);
-        toolBar.addSeparator();
+        addToolBarSpacer();
         addToolBarButton(newAction);
         addToolBarButton(openAction);
         addToolBarButton(closeAction);
-        toolBar.addSeparator();
+        addToolBarSpacer();
         addToolBarButton(viewDailyAction);
-        toolBar.addSeparator();
+        addToolBarSpacer();
         addToolBarButton(readMeterAction);
-        toolBar.addSeparator();
-        addToolBarButton(prefAction);
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
 
@@ -135,24 +140,22 @@ public class MainFrame extends JFrame
         dbH = DataBaseHandler.getInstance();
         dbH.connect();
 
-        if(dbH.isConnected())
-        {
+        if (dbH.isConnected()) {
             if (props.getAutoConnect())
                 dbH.openDataBase();
-            if(dbH.isConnectedToDB())
+            if (dbH.isConnectedToDB())
                 setActionEnabledStateDBOpened();
             else
                 setActionEnabledStateDBClosed();
 
-        }
-        else
+        } else
             setActionEnabledStateDisconnected();
     }
 
     private void setActionEnabledStateDisconnected()
     {
         setConActions(false);
-        setDBActions(false);
+        setDBActionsAllFalse();
     }
 
     private void setActionEnabledStateConnected()
@@ -188,6 +191,15 @@ public class MainFrame extends JFrame
         viewDailyAction.setEnabled(opened);
     }
 
+    private void setDBActionsAllFalse()
+    {
+        openAction.setEnabled(false);
+        closeAction.setEnabled(false);
+        newAction.setEnabled(false);
+
+        viewDailyAction.setEnabled(false);
+    }
+
     private void close()
     {
         //write to prefs to file on close.
@@ -207,19 +219,67 @@ public class MainFrame extends JFrame
         return item;
     }
 
+    private void addToolBarSpacer()
+    {
+        JLabel lbl = new JLabel(new ImageIcon("ggc/icons/spacer.png"));
+        lbl.setEnabled(false);
+        toolBar.add(lbl);
+    }
+
     private JButton addToolBarButton(Action action)
     {
-        JButton button = toolBar.add(action);
-        button.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        final JButton button = toolBar.add(action);
+
+        button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        button.setFocusPainted(false);
+
+        button.setPreferredSize(new Dimension(24,24));
+
+        button.addMouseListener(new MouseListener()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                if (button.isEnabled()) {
+                    button.setBorder(BorderFactory.createLineBorder(new Color(8, 36, 106), 1));
+                    button.setBackground(new Color(180, 190, 213));
+                }
+            }
+
+            public void mouseExited(MouseEvent e)
+            {
+                button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                button.setBackground(new Color(213, 210, 205));
+            }
+
+            public void mouseClicked(MouseEvent e)
+            {
+            }
+
+            public void mousePressed(MouseEvent e)
+            {
+            }
+
+            public void mouseReleased(MouseEvent e)
+            {
+            }
+
+        });
+
+
+        //button.setRolloverIcon(new ImageIcon("ggc/icons/connect.png"));
+
         //button.setRolloverEnabled(true);
         return button;
     }
 
     class GGCAction extends AbstractAction
     {
+        private String command = null;
+
         GGCAction(String name)
         {
             super(name);
+            command = name;
         }
 
         GGCAction(String name, KeyStroke keystroke)
@@ -245,39 +305,35 @@ public class MainFrame extends JFrame
 
         public void actionPerformed(ActionEvent e)
         {
-            if (e.getActionCommand().equals("Quit")){
+            if (command.equals("Quit")) {
                 close();
-            }
-            else if (e.getActionCommand().equals("Connect")) {
+            } else if (command.equals("Connect")) {
 
                 dbH.connect();
-                if(dbH.isConnected())
+                if (dbH.isConnected())
                     setActionEnabledStateConnected();
                 else
                     setActionEnabledStateDisconnected();
-            }
-            else if (e.getActionCommand().equals("Disconnect")){
+            } else if (command.equals("Disconnect")) {
 
                 dbH.closeConnection();
-                if(dbH.isConnected())
+                if (dbH.isConnected())
                     setActionEnabledStateConnected();
                 else
                     setActionEnabledStateDisconnected();
-            }
-            else if (e.getActionCommand().equals("New")) {
+            } else if (command.equals("New")) {
 
                 String tmpName = JOptionPane.showInputDialog("Enter DB Name to create:");
                 if (tmpName != null && !tmpName.equals("")) {
                     dbH.createNewDataBase(tmpName);
-                    if(dbH.isConnectedToDB())
+                    if (dbH.isConnectedToDB())
                         setActionEnabledStateDBOpened();
                     else
                         setActionEnabledStateDBClosed();
                 } else
                     JOptionPane.showMessageDialog(null, "Invalid Name for Database", "GGC Error - Invalid Name", JOptionPane.ERROR_MESSAGE);
 
-            }
-            else if (e.getActionCommand().equals("Open")) {
+            } else if (command.equals("Open")) {
 
                 dbH.setDBName(JOptionPane.showInputDialog("Enter DB Name to open:"));
                 dbH.openDataBase();
@@ -286,8 +342,7 @@ public class MainFrame extends JFrame
                 else
                     setActionEnabledStateDBClosed();
 
-            }
-            else if (e.getActionCommand().equals("Close")) {
+            } else if (command.equals("Close")) {
 
                 dbH.closeDataBase();
                 if (dbH.isConnectedToDB())
@@ -295,17 +350,13 @@ public class MainFrame extends JFrame
                 else
                     setActionEnabledStateDBClosed();
 
-            }
-            else if (e.getActionCommand().equals("Daily")) {
+            } else if (command.equals("Daily")) {
                 DailyStatsFrame.showMe();
-            }
-            else if (e.getActionCommand().equals("Preferences")) {
+            } else if (command.equals("Preferences")) {
                 PropertiesFrame.showMe();
-            }
-            else if (e.getActionCommand().equals("from Meter")) {
+            } else if (command.equals("from Meter")) {
                 ReadMeterFrame.showMe();
-            }
-            else if (e.getActionCommand().equals("About")) {
+            } else if (command.equals("About")) {
                 JOptionPane.showMessageDialog(null, "GNU Gluco Control v0.0.1", "About GGC", JOptionPane.INFORMATION_MESSAGE);
             }
         }
