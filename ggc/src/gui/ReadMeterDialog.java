@@ -25,6 +25,8 @@ import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 /**
@@ -138,6 +140,8 @@ public class ReadMeterDialog extends JDialog
 
         meterImport.addImportEventListener(startImportAction);
 
+        this.addWindowListener(new CloseListener());
+
         glucoValues = new GlucoValues();
         model = new GlucoTableModel(glucoValues);
         model.addTableModelListener(new TableModelListener()
@@ -225,6 +229,14 @@ public class ReadMeterDialog extends JDialog
         content.add(buttonPanel, "South");
 
         pack();
+    }
+
+    private class CloseListener extends WindowAdapter
+    {
+        public void windowClosing(WindowEvent e)
+        {
+            close();
+        }
     }
 
 
