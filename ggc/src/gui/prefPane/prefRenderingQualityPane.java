@@ -148,7 +148,9 @@ public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
 
     public void itemStateChanged(ItemEvent e)
     {
+        saveProps();
         changed = true;
+        dgv.setNewRenderingQuality();
         dgv.repaint();
     }
 
