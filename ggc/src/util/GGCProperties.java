@@ -64,6 +64,14 @@ public class GGCProperties extends GGCPropertiesHelper
         setDefault("TextAntiAliasing", "0");
         setDefault("ColorTargetBG","0");
         setDefault("ColorBG", "0");
+        setDefault("ColorAvgBG", "0");
+        setDefault("ColorHighBG", "0");
+        setDefault("ColorLowBG", "0");
+        setDefault("ColorBE", "0");
+        setDefault("ColorIns1", "0");
+        setDefault("ColorIns2","0");
+        setDefault("ColorIns","0");
+        setDefault("ColorInsPerBU","0");
     }
 
     public static GGCProperties getInstance()
@@ -226,5 +234,45 @@ public class GGCProperties extends GGCPropertiesHelper
     public Color getColorByName(String identifier)
     {
         return getColor(identifier);
+    }
+
+    public Color getColorHighBG()
+    {
+        return getColor("ColorHighBG");
+    }
+
+    public Color getColorLowBG()
+    {
+        return getColor("ColorLowBG");
+    }
+
+    public Color getColorAvgBG()
+    {
+        return getColor("ColorAvgBG");
+    }
+
+    public Color getColorBU()
+    {
+        return getColor("ColorBU");
+    }
+
+    public Color getColorIns1()
+    {
+        return getColor("ColorIns1");
+    }
+
+    public Color getColorIns2()
+    {
+        return getColor("ColorIns2");
+    }
+
+    public Color getColorIns()
+    {
+        return getColor("ColorIns");
+    }
+
+    public Color getColorInsPerBU()
+    {
+        return getColor("ColorInsPerBU");
     }
 }

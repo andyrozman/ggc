@@ -38,7 +38,7 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
     public ScheduleInfoPanel()
     {
         super("Schedule");
-        setLayout(new GridLayout(0,2));
+        setLayout(new GridLayout(0, 2));
         init();
         refreshInfo();
     }

@@ -114,6 +114,6 @@ public class dayPanel extends JPanel implements CalendarListener
     public void dateHasChanged(CalendarEvent e)
     {
         //if(e.getEvent() > CalendarEvent.DAY_CHANGED)
-            doLayoutButtons();
+        doLayoutButtons();
     }
 }

@@ -45,18 +45,18 @@ public class StatusBar extends JPanel
         lblMessage.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
 
         lblDataSource = new JLabel();
-        lblDataSource.setBorder(BorderFactory.createLineBorder(Color.gray,1));
-        lblDataSource.setPreferredSize(new Dimension(300,14));
+        lblDataSource.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+        lblDataSource.setPreferredSize(new Dimension(300, 14));
 
-        setLayout(new BorderLayout(2,2));
-        this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-        add(lblMessage,BorderLayout.CENTER);
-        add(lblDataSource,BorderLayout.EAST);
+        setLayout(new BorderLayout(2, 2));
+        this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+        add(lblMessage, BorderLayout.CENTER);
+        add(lblDataSource, BorderLayout.EAST);
     }
 
     public static StatusBar getInstance()
     {
-        if(singleton == null)
+        if (singleton == null)
             singleton = new StatusBar();
         return singleton;
     }

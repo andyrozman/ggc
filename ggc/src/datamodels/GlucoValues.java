@@ -32,6 +32,10 @@ package datamodels;
 import db.DataBaseHandler;
 
 import java.util.Vector;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 import gui.ReadMeterFrame;
 
@@ -41,9 +45,25 @@ public class GlucoValues extends DailyValues
     Vector dayValues = null;
     private ReadMeterFrame rMF = ReadMeterFrame.getInstance();
 
+    //private int recordCount = 0;
+
     public GlucoValues()
     {
         dayValues = new Vector();
+    }
+
+    public GlucoValues(Date sDate, Date eDate)
+    {
+        this();
+        GregorianCalendar gC = new GregorianCalendar();
+        gC.setTime(sDate);
+        while(gC.getTime().compareTo(eDate) <= 0)
+        {
+            DailyValues dv = dbH.getDayStats(gC.getTime());
+            //recordCount += dv.getRowCount();
+            dayValues.add(dv);
+            gC.add(Calendar.DATE,1);
+        }
     }
 
     public void addRow(DailyValuesRow dRow)
@@ -123,6 +143,11 @@ public class GlucoValues extends DailyValues
         return o;
     }
 
+    public DailyValues getDailyValuesForDay(int day)
+    {
+        return (DailyValues)dayValues.elementAt(day);
+    }
+
     public void setValueAt(Object aValue, int row, int column)
     {
         int c = 0;
@@ -135,5 +160,17 @@ public class GlucoValues extends DailyValues
                 dV.setValueAt(aValue, row - old, column);
             }
         }
+    }
+
+    public int getDayCount()
+    {
+        if(dayValues != null)
+            return dayValues.size();
+        return 0;
+    }
+
+    public String getDateForDayAt(int i)
+    {
+        return ((DailyValues)dayValues.elementAt(i)).getDayAndMonthAsString();
     }
 }

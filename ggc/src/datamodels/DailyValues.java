@@ -10,6 +10,7 @@ import db.DataBaseHandler;
 
 import java.util.Date;
 import java.util.Vector;
+import java.text.SimpleDateFormat;
 
 
 public class DailyValues
@@ -192,6 +193,12 @@ public class DailyValues
     public boolean onlyInsert()
     {
         return bOnlyInsert;
+    }
+
+    public String getDayAndMonthAsString()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
+        return sdf.format(date);
     }
 
     public Date getDate()

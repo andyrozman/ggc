@@ -191,6 +191,7 @@ public class MySQLHandler extends DataBaseHandler
             } catch (Exception e) {
                 System.err.println(e);
             }
+            dV.setDate(day);
 
             dV.setCounterBE(counterBE);
             dV.setCounterBG(counterBG);

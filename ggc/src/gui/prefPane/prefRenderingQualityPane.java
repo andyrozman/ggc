@@ -28,7 +28,7 @@
 package gui.prefPane;
 
 
-import gui.DailyGraphView;
+import view.DailyGraphView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,39 +67,25 @@ public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
 
         JPanel b = new JPanel(new GridLayout(0, 1));
 
-        Object[] o1 = {RenderingHints.VALUE_ANTIALIAS_DEFAULT,
-                      RenderingHints.VALUE_ANTIALIAS_OFF,
-                      RenderingHints.VALUE_ANTIALIAS_ON};
+        Object[] o1 = {RenderingHints.VALUE_ANTIALIAS_DEFAULT, RenderingHints.VALUE_ANTIALIAS_OFF, RenderingHints.VALUE_ANTIALIAS_ON};
         b.add(comboAntiAliasing = new JComboBox(o1));
 
-        Object[] o2 = {RenderingHints.VALUE_COLOR_RENDER_DEFAULT,
-             RenderingHints.VALUE_COLOR_RENDER_QUALITY,
-             RenderingHints.VALUE_COLOR_RENDER_SPEED};
+        Object[] o2 = {RenderingHints.VALUE_COLOR_RENDER_DEFAULT, RenderingHints.VALUE_COLOR_RENDER_QUALITY, RenderingHints.VALUE_COLOR_RENDER_SPEED};
         b.add(comboColorRendering = new JComboBox(o2));
 
-        Object[] o3 = {RenderingHints.VALUE_DITHER_DEFAULT,
-             RenderingHints.VALUE_DITHER_DISABLE,
-             RenderingHints.VALUE_DITHER_ENABLE};
+        Object[] o3 = {RenderingHints.VALUE_DITHER_DEFAULT, RenderingHints.VALUE_DITHER_DISABLE, RenderingHints.VALUE_DITHER_ENABLE};
         b.add(comboDithering = new JComboBox(o3));
 
-        Object[] o4 = {RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT,
-             RenderingHints.VALUE_FRACTIONALMETRICS_OFF,
-             RenderingHints.VALUE_FRACTIONALMETRICS_ON};
+        Object[] o4 = {RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT, RenderingHints.VALUE_FRACTIONALMETRICS_OFF, RenderingHints.VALUE_FRACTIONALMETRICS_ON};
         b.add(comboFractionalMetrics = new JComboBox(o4));
 
-        Object[] o5 = {RenderingHints.VALUE_INTERPOLATION_BICUBIC,
-             RenderingHints.VALUE_INTERPOLATION_BILINEAR,
-             RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR};
+        Object[] o5 = {RenderingHints.VALUE_INTERPOLATION_BICUBIC, RenderingHints.VALUE_INTERPOLATION_BILINEAR, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR};
         b.add(comboInterpolation = new JComboBox(o5));
 
-        Object[] o6 = {RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT,
-             RenderingHints.VALUE_TEXT_ANTIALIAS_OFF,
-             RenderingHints.VALUE_TEXT_ANTIALIAS_ON};
+        Object[] o6 = {RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF, RenderingHints.VALUE_TEXT_ANTIALIAS_ON};
         b.add(comboTextAntiAliasing = new JComboBox(o6));
 
-        Object[] o7 = {RenderingHints.VALUE_RENDER_DEFAULT,
-             RenderingHints.VALUE_RENDER_QUALITY,
-             RenderingHints.VALUE_RENDER_SPEED};
+        Object[] o7 = {RenderingHints.VALUE_RENDER_DEFAULT, RenderingHints.VALUE_RENDER_QUALITY, RenderingHints.VALUE_RENDER_SPEED};
         b.add(comboRendering = new JComboBox(o7));
 
         Box myBox = Box.createHorizontalBox();
@@ -131,19 +117,19 @@ public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
 
         dgv = new DailyGraphView();
 
-        testingPanel.add(dgv,BorderLayout.CENTER);
-        add(dgv,BorderLayout.CENTER);
+        testingPanel.add(dgv, BorderLayout.CENTER);
+        add(dgv, BorderLayout.CENTER);
     }
 
     public void saveProps()
     {
-        props.set("AntiAliasing",comboAntiAliasing.getSelectedIndex());
+        props.set("AntiAliasing", comboAntiAliasing.getSelectedIndex());
         props.set("ColorRendering", comboColorRendering.getSelectedIndex());
         props.set("Dithering", comboDithering.getSelectedIndex());
         props.set("FractionalMetrics", comboFractionalMetrics.getSelectedIndex());
         props.set("Interpolation", comboInterpolation.getSelectedIndex());
-        props.set("TextAntiAliasing",comboTextAntiAliasing.getSelectedIndex());
-        props.set("Rendering",comboRendering.getSelectedIndex());
+        props.set("TextAntiAliasing", comboTextAntiAliasing.getSelectedIndex());
+        props.set("Rendering", comboRendering.getSelectedIndex());
     }
 
     public void itemStateChanged(ItemEvent e)

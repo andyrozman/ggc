@@ -29,10 +29,11 @@ package gui.prefPane;
 
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 
@@ -45,8 +46,17 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
     public prefFontsAndColorPane()
     {
         items = new Vector();
-        items.add(new NameAndColor("TargetBG",props.getColorTargetBG()));
-        items.add(new NameAndColor("BG",props.getColorBG()));
+        items.add(new NameAndColor("BG High Zone", "HighBG", props.getColorHighBG()));
+        items.add(new NameAndColor("BG Target Zone", "TargetBG", props.getColorTargetBG()));
+        items.add(new NameAndColor("BG Low Zone", "LowBG", props.getColorLowBG()));
+        items.add(new NameAndColor("BG", "BG", props.getColorBG()));
+        items.add(new NameAndColor("BG Average", "AvgBG", props.getColorAvgBG()));
+        items.add(new NameAndColor("Bread Units", "BU", props.getColorBU()));
+        items.add(new NameAndColor("Insulin " + props.getIns1Abbr(), "Ins1", props.getColorIns1()));
+        items.add(new NameAndColor("Insulin " + props.getIns2Abbr(), "Ins2", props.getColorIns2()));
+        items.add(new NameAndColor("Insulin", "Ins", props.getColorIns()));
+        items.add(new NameAndColor("Ins / BU Quotient", "InsPerBU", props.getColorInsPerBU()));
+
         init();
     }
 
@@ -55,9 +65,10 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
         setLayout(new BorderLayout());
         itemList = new JList(items);
         itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        itemList.setPreferredSize(new Dimension(150,200));
+        itemList.setPreferredSize(new Dimension(150, 200));
 
-        itemList.addListSelectionListener(new ListSelectionListener(){
+        itemList.addListSelectionListener(new ListSelectionListener()
+        {
             public void valueChanged(ListSelectionEvent e)
             {
                 lblcolor.setBackground(((NameAndColor)items.elementAt(itemList.getSelectedIndex())).getColor());
@@ -67,20 +78,20 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
         JPanel colorPanel = new JPanel(new BorderLayout());
         colorPanel.setBorder(BorderFactory.createTitledBorder("Color"));
 
-        JPanel a = new JPanel(new GridLayout(2,1));
+        JPanel a = new JPanel(new GridLayout(2, 1));
         a.add(new JLabel("Color:"));
         a.add(lblcolor = new JLabel(" "));
 
         lblcolor.setOpaque(true);
-        lblcolor.setPreferredSize(new Dimension(200,25));
+        lblcolor.setPreferredSize(new Dimension(200, 25));
         lblcolor.setBorder(BorderFactory.createLineBorder(Color.black));
 
         lblcolor.addMouseListener(new MouseClicker());
 
-        colorPanel.add(itemList,BorderLayout.WEST);
-        colorPanel.add(a,BorderLayout.CENTER);
+        colorPanel.add(itemList, BorderLayout.WEST);
+        colorPanel.add(a, BorderLayout.CENTER);
 
-        add(colorPanel,BorderLayout.NORTH);
+        add(colorPanel, BorderLayout.NORTH);
 
         itemList.setSelectedIndex(0);
     }
@@ -89,9 +100,8 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
     {
         public void mouseClicked(MouseEvent e)
         {
-            Color col = JColorChooser.showDialog(null,"Choose a color",Color.black);
-            if (col != null)
-            {
+            Color col = JColorChooser.showDialog(null, "Choose a color", Color.black);
+            if (col != null) {
                 ((NameAndColor)items.elementAt(itemList.getSelectedIndex())).setColor(col);
                 lblcolor.setBackground(col);
                 changed = true;
@@ -102,12 +112,14 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
     private class NameAndColor
     {
         String name;
+        String id;
         Color color;
 
-        public NameAndColor(String name, Color color)
+        public NameAndColor(String name, String id, Color color)
         {
             this.name = name;
             this.color = color;
+            this.id = id;
         }
 
         public String getName()
@@ -120,9 +132,19 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
             return color;
         }
 
+        public String getID()
+        {
+            return id;
+        }
+
         public void setName(String name)
         {
             this.name = name;
+        }
+
+        public void setID(String id)
+        {
+            this.id = id;
         }
 
         public void setColor(Color color)
@@ -138,9 +160,8 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
 
     public void saveProps()
     {
-        for(int i=0; i< items.size(); i++)
-        {
-            String name = "Color" + ((NameAndColor)items.elementAt(i)).getName();
+        for (int i = 0; i < items.size(); i++) {
+            String name = "Color" + ((NameAndColor)items.elementAt(i)).getID();
             Color color = ((NameAndColor)items.elementAt(i)).getColor();
 
             props.set(name, color);

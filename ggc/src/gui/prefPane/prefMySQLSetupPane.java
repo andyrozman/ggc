@@ -60,7 +60,7 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         b.add(fieldPort = new JTextField(props.getMySQLPort(), 10));
         b.add(fieldUser = new JTextField(props.getMySQLUser(), 10));
         b.add(fieldPass = new JTextField(props.getMySQLPass(), 10));
-        b.add(fieldDB   = new JTextField(props.getMySQLDBName(), 10));
+        b.add(fieldDB = new JTextField(props.getMySQLDBName(), 10));
 
         fieldHost.getDocument().addDocumentListener(this);
         fieldPort.getDocument().addDocumentListener(this);

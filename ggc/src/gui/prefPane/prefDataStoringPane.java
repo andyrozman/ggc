@@ -55,7 +55,7 @@ public class prefDataStoringPane extends AbstractPrefOptionsPanel
         comboDataSource.addItemListener(this);
         a.add(comboDataSource);
 
-        chkAutoConnect = new JCheckBox("AutoConnect to default DataBase on Startup",props.getAutoConnect());
+        chkAutoConnect = new JCheckBox("AutoConnect to default DataBase on Startup", props.getAutoConnect());
         chkAutoConnect.addActionListener(this);
 
         Box b = Box.createVerticalBox();
@@ -68,6 +68,6 @@ public class prefDataStoringPane extends AbstractPrefOptionsPanel
     public void saveProps()
     {
         props.set("DataSource", comboDataSource.getSelectedItem().toString());
-        props.set("AutoConnect",chkAutoConnect.isSelected());
+        props.set("AutoConnect", chkAutoConnect.isSelected());
     }
 }

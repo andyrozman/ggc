@@ -29,13 +29,12 @@ package gui;
 
 
 import db.DataBaseHandler;
+import gui.infoPanel.InfoPanel;
 import util.GGCProperties;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
-import gui.infoPanel.InfoPanel;
 
 
 public class MainFrame extends JFrame
@@ -47,7 +46,7 @@ public class MainFrame extends JFrame
     private GGCAction connectAction, disconnectAction, newAction, openAction, closeAction, quitAction;
     private GGCAction prefAction;
     private GGCAction readMeterAction;
-    private GGCAction viewDailyAction;
+    private GGCAction viewDailyAction, viewCourseGraphAction;
     private GGCAction aboutAction;
     private DailyStatsFrame dailyStatsWindow;
     private StatusBar statusPanel;
@@ -87,6 +86,8 @@ public class MainFrame extends JFrame
 
         viewDailyAction = new GGCAction("Daily", KeyStroke.getKeyStroke('D', Event.CTRL_MASK), "View Daily Stats");
         viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/daily.png"));
+        viewCourseGraphAction = new GGCAction("Course", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "View Course");
+        viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/course.png"));
 
         readMeterAction = new GGCAction("from Meter", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "Read Data From Meter");
         readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/readmeter.png"));
@@ -105,6 +106,7 @@ public class MainFrame extends JFrame
         addMenuItem(fileMenu, quitAction);
 
         addMenuItem(viewMenu, viewDailyAction);
+        addMenuItem(viewMenu, viewCourseGraphAction);
 
         addMenuItem(readMenu, readMeterAction);
 
@@ -119,7 +121,7 @@ public class MainFrame extends JFrame
         menuBar.add(helpMenu);
 
         toolBar.setFloatable(false);
-        toolBar.setLayout(new FlowLayout(FlowLayout.LEFT,1,1));
+        toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
         addToolBarButton(connectAction);
         addToolBarButton(disconnectAction);
         addToolBarSpacer();
@@ -128,6 +130,7 @@ public class MainFrame extends JFrame
         addToolBarButton(closeAction);
         addToolBarSpacer();
         addToolBarButton(viewDailyAction);
+        addToolBarButton(viewCourseGraphAction);
         addToolBarSpacer();
         addToolBarButton(readMeterAction);
 
@@ -243,7 +246,7 @@ public class MainFrame extends JFrame
         button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         button.setFocusPainted(false);
 
-        button.setPreferredSize(new Dimension(24,24));
+        button.setPreferredSize(new Dimension(24, 24));
 
         button.addMouseListener(new MouseListener()
         {
@@ -362,6 +365,8 @@ public class MainFrame extends JFrame
 
             } else if (command.equals("Daily")) {
                 DailyStatsFrame.showMe();
+            } else if (command.equals("Course")) {
+                CourseGraphFrame.showMe();
             } else if (command.equals("Preferences")) {
                 PropertiesFrame.showMe();
             } else if (command.equals("from Meter")) {

@@ -30,8 +30,8 @@ package gui.infoPanel;
 
 
 import javax.swing.*;
-import java.util.Vector;
 import java.awt.*;
+import java.util.Vector;
 
 
 public class InfoPanel extends JPanel
@@ -40,7 +40,7 @@ public class InfoPanel extends JPanel
 
     public InfoPanel()
     {
-        setLayout(new GridLayout(0,2));
+        setLayout(new GridLayout(0, 2));
         setBackground(Color.white);
 
         vInfoPanels.add(new GeneralInfoPanel());
@@ -53,19 +53,19 @@ public class InfoPanel extends JPanel
 
     private void addPanels()
     {
-        for(int i=0; i< vInfoPanels.size(); i++)
+        for (int i = 0; i < vInfoPanels.size(); i++)
             add((AbstractInfoPanel)vInfoPanels.get(i));
     }
 
     public void refreshPanels()
     {
-        for(int i=0; i< vInfoPanels.size(); i++)
+        for (int i = 0; i < vInfoPanels.size(); i++)
             ((AbstractInfoPanel)vInfoPanels.get(i)).refreshInfo();
     }
 
     public void addPanelAt(int index, AbstractInfoPanel panel)
     {
-        vInfoPanels.add(index,panel);
+        vInfoPanels.add(index, panel);
         removeAll();
         addPanels();
     }

@@ -30,13 +30,12 @@ package gui;
 
 import datamodels.DailyValues;
 import datamodels.DailyValuesRow;
+import util.GGCProperties;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.*;
-
-import util.GGCProperties;
 
 
 public class AddRowFrame extends JFrame
@@ -100,54 +99,58 @@ public class AddRowFrame extends JFrame
             DateField.setEditable(false);
         }
         b.add(DateField);
-        DateField.addKeyListener(new KeyAdapter(){
+        DateField.addKeyListener(new KeyAdapter()
+        {
             public void keyPressed(KeyEvent e)
             {
-                if(e.getKeyCode() == KeyEvent.VK_DOWN)
+                if (e.getKeyCode() == KeyEvent.VK_DOWN)
                     BGField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+                else if (e.getKeyCode() == KeyEvent.VK_RIGHT)
                     TimeField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     AddButton.doClick();
             }
         });
         b.add(BGField = new JTextField());
-        BGField.addKeyListener(new KeyAdapter(){
+        BGField.addKeyListener(new KeyAdapter()
+        {
             public void keyPressed(KeyEvent e)
             {
-                if(e.getKeyCode() == KeyEvent.VK_DOWN)
+                if (e.getKeyCode() == KeyEvent.VK_DOWN)
                     Ins1Field.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_UP)
+                else if (e.getKeyCode() == KeyEvent.VK_UP)
                     DateField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+                else if (e.getKeyCode() == KeyEvent.VK_RIGHT)
                     BUField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     AddButton.doClick();
             }
         });
         b.add(Ins1Field = new JTextField());
-        Ins1Field.addKeyListener(new KeyAdapter(){
+        Ins1Field.addKeyListener(new KeyAdapter()
+        {
             public void keyPressed(KeyEvent e)
             {
-                if(e.getKeyCode() == KeyEvent.VK_DOWN)
+                if (e.getKeyCode() == KeyEvent.VK_DOWN)
                     ActField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_UP)
+                else if (e.getKeyCode() == KeyEvent.VK_UP)
                     BGField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+                else if (e.getKeyCode() == KeyEvent.VK_RIGHT)
                     Ins2Field.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     AddButton.doClick();
             }
         });
         b.add(ActField = new JTextField());
-        ActField.addKeyListener(new KeyAdapter(){
+        ActField.addKeyListener(new KeyAdapter()
+        {
             public void keyPressed(KeyEvent e)
             {
-                if(e.getKeyCode() == KeyEvent.VK_UP)
+                if (e.getKeyCode() == KeyEvent.VK_UP)
                     Ins1Field.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+                else if (e.getKeyCode() == KeyEvent.VK_RIGHT)
                     CommentField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     AddButton.doClick();
             }
         });
@@ -160,54 +163,58 @@ public class AddRowFrame extends JFrame
 
         JPanel d = new JPanel(new GridLayout(0, 1));
         d.add(TimeField = new JTextField(10));
-        TimeField.addKeyListener(new KeyAdapter(){
+        TimeField.addKeyListener(new KeyAdapter()
+        {
             public void keyPressed(KeyEvent e)
             {
-                if(e.getKeyCode() == KeyEvent.VK_DOWN)
+                if (e.getKeyCode() == KeyEvent.VK_DOWN)
                     BUField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+                else if (e.getKeyCode() == KeyEvent.VK_LEFT)
                     DateField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     AddButton.doClick();
             }
         });
         d.add(BUField = new JTextField());
-        BUField.addKeyListener(new KeyAdapter(){
+        BUField.addKeyListener(new KeyAdapter()
+        {
             public void keyPressed(KeyEvent e)
             {
-                if(e.getKeyCode() == KeyEvent.VK_DOWN)
+                if (e.getKeyCode() == KeyEvent.VK_DOWN)
                     Ins2Field.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_UP)
+                else if (e.getKeyCode() == KeyEvent.VK_UP)
                     TimeField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+                else if (e.getKeyCode() == KeyEvent.VK_LEFT)
                     BGField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     AddButton.doClick();
             }
         });
         d.add(Ins2Field = new JTextField());
-        Ins2Field.addKeyListener(new KeyAdapter(){
+        Ins2Field.addKeyListener(new KeyAdapter()
+        {
             public void keyPressed(KeyEvent e)
             {
-                if(e.getKeyCode() == KeyEvent.VK_DOWN)
+                if (e.getKeyCode() == KeyEvent.VK_DOWN)
                     CommentField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_UP)
+                else if (e.getKeyCode() == KeyEvent.VK_UP)
                     BUField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+                else if (e.getKeyCode() == KeyEvent.VK_LEFT)
                     Ins1Field.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     AddButton.doClick();
             }
         });
         d.add(CommentField = new JTextField());
-        CommentField.addKeyListener(new KeyAdapter(){
+        CommentField.addKeyListener(new KeyAdapter()
+        {
             public void keyPressed(KeyEvent e)
             {
-                if(e.getKeyCode() == KeyEvent.VK_UP)
+                if (e.getKeyCode() == KeyEvent.VK_UP)
                     Ins2Field.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_LEFT)
+                else if (e.getKeyCode() == KeyEvent.VK_LEFT)
                     ActField.requestFocus();
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     AddButton.doClick();
             }
         });

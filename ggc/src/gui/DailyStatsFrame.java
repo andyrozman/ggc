@@ -28,11 +28,13 @@
 package gui;
 
 
-import datamodels.calendar.CalendarEvent;
-import datamodels.calendar.CalendarListener;
 import datamodels.DailyStatsTableModel;
 import datamodels.DailyValues;
+import datamodels.calendar.CalendarEvent;
+import datamodels.calendar.CalendarListener;
+import db.DataBaseHandler;
 import gui.calendar.calendarPane;
+import util.GGCProperties;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -45,9 +47,6 @@ import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import util.GGCProperties;
-import db.DataBaseHandler;
 
 
 public class DailyStatsFrame extends JFrame
@@ -112,7 +111,7 @@ public class DailyStatsFrame extends JFrame
         addWindowListener(new CloseListener());
 
         //Panel for Insulin Stats
-        JPanel InsPanel = new JPanel(new GridLayout(3,6));
+        JPanel InsPanel = new JPanel(new GridLayout(3, 6));
         InsPanel.setBorder(BorderFactory.createTitledBorder("Insulin:"));
 
         InsPanel.add(new JLabel(props.getIns1Abbr() + ":"));
@@ -137,7 +136,7 @@ public class DailyStatsFrame extends JFrame
         InsPanel.add(doseIns = new JLabel());
 
         //Panel for BU Stats
-        JPanel BUPanel = new JPanel(new GridLayout(1,6));
+        JPanel BUPanel = new JPanel(new GridLayout(1, 6));
         BUPanel.setBorder(BorderFactory.createTitledBorder("Bread Units:"));
 
         BUPanel.add(new JLabel("Sum:"));
@@ -148,7 +147,7 @@ public class DailyStatsFrame extends JFrame
         BUPanel.add(meals = new JLabel());
 
         //Panel for BG Stats
-        JPanel BGPanel = new JPanel(new GridLayout(0,6));
+        JPanel BGPanel = new JPanel(new GridLayout(0, 6));
         BGPanel.setBorder(BorderFactory.createTitledBorder("Blood Glucose:"));
 
         BGPanel.add(new JLabel("Avg BG:"));
@@ -207,8 +206,8 @@ public class DailyStatsFrame extends JFrame
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         resultsPane = new JScrollPane(table);
 
-        JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT,1,2));
-        Dimension dim = new Dimension(120,20);
+        JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 1, 2));
+        Dimension dim = new Dimension(120, 20);
 
         JButton addButton = new JButton("Add Row");
         addButton.setPreferredSize(dim);

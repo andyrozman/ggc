@@ -66,13 +66,6 @@ public class DailyValuesRow
                 JOptionPane.showMessageDialog(null, "Date must be in form: 'dd.MM.yyyy'", "Error Parsing Date", JOptionPane.ERROR_MESSAGE);
                 this.datetime = null;
             }
-//            df = new SimpleDateFormat("HH:mm");
-//            try {
-//                this.datetime = new Time(df.parse(time).getTime());
-//            } catch (ParseException e) {
-//                JOptionPane.showMessageDialog(null, "Time must be in form: 'HH:mm'", "Error Parsing Time", JOptionPane.ERROR_MESSAGE);
-//                this.time = null;
-//            }
             if (BG.trim().equals(""))
                 this.BG = new Float(0);
             else
