@@ -35,6 +35,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import gui.infoPanel.InfoPanel;
+
 
 public class MainFrame extends JFrame
 {
@@ -136,6 +138,10 @@ public class MainFrame extends JFrame
 
         statusPanel.setDataSourceText(props.getDataSource() + "[no Connection]");
         statusPanel.setStatusMessage("Initialising");
+
+        //Information Portal Setup
+        JPanel informationPanel = new InfoPanel();
+        getContentPane().add(informationPanel, BorderLayout.CENTER);
 
         dbH = DataBaseHandler.getInstance();
         dbH.connect();
