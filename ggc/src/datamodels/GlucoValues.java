@@ -29,7 +29,6 @@
 package datamodels;
 
 
-import gui.ReadMeterFrame;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -45,7 +44,6 @@ import event.GlucoValueEventListener;
 public class GlucoValues extends DailyValues
 {
     Vector dayValues = null;
-    private ReadMeterFrame rMF = ReadMeterFrame.getInstance();
     
     private EventListenerList listenerList = new EventListenerList();
 
@@ -93,7 +91,6 @@ public class GlucoValues extends DailyValues
             dV.setNewRow(dRow);
             dV.setDate(dRow.getDateTime());
             dV.setIsNew(true);
-
             dayValues.add(dV);
             
             GlucoValueEvent event = new GlucoValueEvent(this, dayValues.size(), dayValues.size(), 0, GlucoValueEvent.INSERT);

@@ -189,8 +189,9 @@ public class MySQLHandler extends DataBaseHandler
         try {
             if (!con.isClosed() && dV.hasChanged()) {
                 statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                System.out.println(dV.getDateAsString());
                 if (!dV.onlyInsert())
-                    statement.execute("DELETE FROM DayValues where date_format(datetime, '%Y-%m-%d') = '" + dV.getDate().toString() + "'");
+                    statement.execute("DELETE FROM DayValues where date_format(datetime, '%Y-%m-%d') = '" + dV.getDateAsString() + "'");
 
                 ResultSet rs = statement.executeQuery("SELECT * from DayValues limit 1");
                 for (int i = 0; i < dV.getRowCount(); i++) {

@@ -23,7 +23,7 @@ public class DailyValues implements Serializable
     java.util.Date date;
 
     boolean bHasChangedValues = false;
-    boolean bOnlyInsert = false;
+    boolean bOnlyInsert = true;
 
     float sumBG = 0;
     float sumIns1 = 0;
@@ -112,6 +112,8 @@ public class DailyValues implements Serializable
         sumBE += dVR.getBE();
         if (dVR.getBE() != 0)
             counterBE++;
+
+        bOnlyInsert = false;
     }
 
     public DailyValuesRow getRowAt(int i)
@@ -152,6 +154,7 @@ public class DailyValues implements Serializable
             }
         } catch (Exception e) {
         }
+        bOnlyInsert = false;
     }
 
     public void setColumnNames(String[] Names)
@@ -229,6 +232,7 @@ public class DailyValues implements Serializable
         }
 
         bHasChangedValues = true;
+        bOnlyInsert = false;
     }
 
     public void setIsNew(boolean b)
