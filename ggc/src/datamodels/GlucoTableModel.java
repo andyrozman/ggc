@@ -32,10 +32,14 @@ package datamodels;
 import util.GGCProperties;
 
 import javax.swing.table.AbstractTableModel;
+
+import event.GlucoValueEvent;
+import event.GlucoValueEventListener;
+
 import java.text.SimpleDateFormat;
 
 
-public class GlucoTableModel extends AbstractTableModel
+public class GlucoTableModel extends AbstractTableModel implements GlucoValueEventListener
 {
     GlucoValues dayData;
     GGCProperties props = GGCProperties.getInstance();
@@ -43,7 +47,8 @@ public class GlucoTableModel extends AbstractTableModel
     public GlucoTableModel(GlucoValues dayData)
     {
         this.dayData = dayData;
-        fireTableChanged(null);
+        //fireTableChanged(null);
+        dayData.addGlucoValueEventListener(this);
     }
 
     public int getColumnCount()
@@ -93,4 +98,29 @@ public class GlucoTableModel extends AbstractTableModel
         dayData.setValueAt(aValue, row, column);
         fireTableChanged(null);
     }
+	/**
+	 * @see event.GlucoValueEventListener#glucoValuesChanged(GlucoValueEvent)
+	 */
+	public void glucoValuesChanged(GlucoValueEvent event) {
+		switch (event.getType()) {
+			case GlucoValueEvent.INSERT :
+				fireTableRowsInserted(event.getFirstRow(), event.getLastRow());
+				break;
+			case GlucoValueEvent.DELETE :
+				fireTableRowsDeleted(event.getFirstRow(), event.getLastRow());
+				break;
+			case GlucoValueEvent.UPDATE :
+				fireTableCellUpdated(event.getFirstRow(), event.getColumn());
+				break;
+		}
+	}
+
+	/**
+	 * Returns the dayData.
+	 * @return GlucoValues
+	 */
+	public GlucoValues getDayData() {
+		return dayData;
+	}
+
 }
