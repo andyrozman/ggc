@@ -58,7 +58,7 @@ public class MainFrame extends JFrame
         setTitle(title);
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new CloseListener())
+        addWindowListener(new CloseListener());
 
         JMenu fileMenu = new JMenu("File");
         JMenu viewMenu = new JMenu("View");
