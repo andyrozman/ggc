@@ -8,7 +8,8 @@
 package gui;
 
 
-import data.imports.*;
+import data.imports.ImportException;
+import data.imports.SerialMeterImport;
 import datamodels.DailyValuesRow;
 import datamodels.GlucoTableModel;
 import datamodels.GlucoValues;
@@ -122,7 +123,6 @@ public class ReadMeterDialog extends JDialog
     {
 
         String meterClassName = SerialMeterImport.getMeterClassName(GGCProperties.getInstance().getMeterType());
-        System.out.println("meterClassName: " + meterClassName);
         if (meterClassName == null || meterClassName.equals(""))
             throw new NullPointerException("No class for meter definiened.");
 
@@ -134,7 +134,7 @@ public class ReadMeterDialog extends JDialog
 
         //meterImport = new EuroFlashImport();
         //meterImport = new FreeStyleImport();
-        meterImport = new GlucoCardImport();
+        //meterImport = new GlucoCardImport();
 
         meterImport.addImportEventListener(startImportAction);
 
