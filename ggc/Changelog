@@ -1,3 +1,9 @@
+2002-07-26  Dieter Schultschik  <schultd@users.sourceforge.net>
+
+	* Added a new CourseView. (will get more options in the future)
+	* Many small improvements.
+	* Added Options to customize colors in the Views.
+	
 2002-07-18  Dieter Schultschik  <schultd@users.sourceforge.net>
 
 	* Added Icons to ToolBar.
