@@ -77,6 +77,10 @@ public class GGCProperties extends GGCPropertiesHelper
         setDefault("ColorInsPerBU","-6711040");
         setDefault("MeterType","GlucoCard");
         setDefault("MeterPort","none");
+        setDefault("Meter", "GlucoCard;EuroFlash;FreeStyle");
+        setDefault("Meter.GlucoCard.class", "data.imports.GlucoCardImport");
+        setDefault("Meter.EuroFlash.class", "data.imports.EuroFlashImport");
+        setDefault("Meter.FreeStyle.class", "data.imports.FreeStyleImport");
     }
 
     public static GGCProperties getInstance()
