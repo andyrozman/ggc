@@ -75,6 +75,8 @@ public class GGCProperties extends GGCPropertiesHelper
         setDefault("ColorIns2","-16776961");
         setDefault("ColorIns","-16724788");
         setDefault("ColorInsPerBU","-6711040");
+        setDefault("MeterType","GlucoCard");
+        setDefault("MeterPort","none");
     }
 
     public static GGCProperties getInstance()
@@ -292,5 +294,15 @@ public class GGCProperties extends GGCPropertiesHelper
     public Color getColorInsPerBU()
     {
         return getColor("ColorInsPerBU");
+    }
+
+    public String getMeterType()
+    {
+        return get("MeterType");
+    }
+
+    public String getMeterPort()
+    {
+        return get("MeterPort");
     }
 }

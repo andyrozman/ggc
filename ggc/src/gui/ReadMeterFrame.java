@@ -30,7 +30,8 @@ package gui;
 
 import datamodels.GlucoTableModel;
 import datamodels.GlucoValues;
-import meter.GlucoReader;
+import meter.GlucoCardReader;
+import meter.SerialMeterReader;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -98,7 +99,7 @@ public class ReadMeterFrame extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                GlucoReader gReader = new GlucoReader();
+                SerialMeterReader gReader = new GlucoCardReader();
             }
         });
         JButton saveButton = new JButton("Save");

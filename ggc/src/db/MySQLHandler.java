@@ -122,7 +122,7 @@ public class MySQLHandler extends DataBaseHandler
                 String eDay = sdf.format(day);
                 String sDay = sdf.format(new Date(day.getTime() - 1000L * 60L * 60L * 24L * 90L));
 
-                String query = "SELECT avg(bg), count(bg) from DayValues WHERE bg <> 0 and date_format(datetime, '%Y-%m-%d') > '" + sDay + "' and date_format(datetime, '%Y-%m-%d') < '" + eDay + "' group by date_format(datetime, '%Y-%m-%d');";
+                String query = "SELECT avg(bg), count(bg) from DayValues WHERE bg <> 0 and date_format(datetime, '%Y-%m-%d') >= '" + sDay + "' and date_format(datetime, '%Y-%m-%d') <= '" + eDay + "' group by date_format(datetime, '%Y-%m-%d');";
                 Statement statement = con.createStatement();
                 results = statement.executeQuery(query);
                 while (results.next()) {
