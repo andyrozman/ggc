@@ -91,7 +91,7 @@ public class DailyGraphView extends JComponent implements Observer
                 tmpC++;
             }
         }
-        g2D.setPaint(Color.black);
+        g2D.setPaint(props.getColorBG());
         g2D.draw(polyline);
     }
 
@@ -139,7 +139,7 @@ public class DailyGraphView extends JComponent implements Observer
             g2D.drawString(4 * i + ":00", markPos - 10, h - lowerSpace + 20);
         }
         Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxGoodBG), diffW, BGtoCoord(minGoodBG) - BGtoCoord(maxGoodBG));
-        g2D.setPaint(Color.lightGray);
+        g2D.setPaint(props.getColorTargetBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
     }

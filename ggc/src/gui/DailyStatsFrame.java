@@ -45,6 +45,8 @@ import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
+import util.GGCProperties;
+
 
 public class DailyStatsFrame extends JFrame
 {
@@ -59,12 +61,13 @@ public class DailyStatsFrame extends JFrame
     JLabel avgBG, highestBG, lowestBG;
     JLabel readings, stdDev;
 
-
     JLabel lblDate;
     JButton saveButton;
     private DailyGraphFrame dailyGraphWindow;
     DailyValues dayData;
     private static DailyStatsFrame singleton = null;
+
+    private GGCProperties props = GGCProperties.getInstance();
 
     private DailyStatsFrame()
     {
@@ -106,8 +109,8 @@ public class DailyStatsFrame extends JFrame
         addWindowListener(new CloseListener());
 
         Box boxInsSumTxt = Box.createVerticalBox();
-        boxInsSumTxt.add(new JLabel("Insulin 1:"));
-        boxInsSumTxt.add(new JLabel("Insulin 2:"));
+        boxInsSumTxt.add(new JLabel(props.getIns1Name() + ":"));
+        boxInsSumTxt.add(new JLabel(props.getIns2Name() + ":"));
         boxInsSumTxt.add(new JLabel("Total Ins:"));
 
         Box boxInsSumVal = Box.createVerticalBox();
@@ -128,8 +131,8 @@ public class DailyStatsFrame extends JFrame
         boxInsSum.add(Box.createGlue());
 
         Box boxInsAvgTxt = Box.createVerticalBox();
-        boxInsAvgTxt.add(new JLabel("Avg Ins1:"));
-        boxInsAvgTxt.add(new JLabel("Avg Ins2:"));
+        boxInsAvgTxt.add(new JLabel("Avg " + props.getIns1Abbr() + ":"));
+        boxInsAvgTxt.add(new JLabel("Avg " + props.getIns2Abbr() + ":"));
         boxInsAvgTxt.add(new JLabel("Avg Ins:"));
 
         Box boxInsAvgVal = Box.createVerticalBox();
@@ -150,8 +153,8 @@ public class DailyStatsFrame extends JFrame
         boxInsAvg.add(Box.createGlue());
 
         Box boxInsDoseTxt = Box.createVerticalBox();
-        boxInsDoseTxt.add(new JLabel("Dose Ins1:"));
-        boxInsDoseTxt.add(new JLabel("Dose Ins2:"));
+        boxInsDoseTxt.add(new JLabel("Dose " + props.getIns1Abbr() + ":"));
+        boxInsDoseTxt.add(new JLabel("Dose " + props.getIns2Abbr() + ":"));
         boxInsDoseTxt.add(new JLabel("Dose Ins:"));
 
         Box boxInsDoseVal = Box.createVerticalBox();
@@ -281,7 +284,7 @@ public class DailyStatsFrame extends JFrame
         JPanel dayCalendar = new JPanel();
         dayCalendar.setBorder(BorderFactory.createTitledBorder("Date:"));
 
-        calendarPane calPane = new calendarPane();
+        final calendarPane calPane = new calendarPane();
         calPane.addCalendarListener(new CalendarListener()
         {
             public void dateHasChanged(CalendarEvent e)
@@ -314,21 +317,24 @@ public class DailyStatsFrame extends JFrame
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         resultsPane = new JScrollPane(table);
 
-        Box EntryBox = Box.createHorizontalBox();
+        JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT,1,2));
+        Dimension dim = new Dimension(120,20);
 
         JButton addButton = new JButton("Add Row");
+        addButton.setPreferredSize(dim);
         addButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-                //                AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(cp.getDate()));
-                //                aRF.show();
+                AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
+                aRF.show();
             }
         });
         EntryBox.add(addButton);
 
         JButton delButton = new JButton("Delete Row");
+        delButton.setPreferredSize(dim);
         delButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -340,6 +346,7 @@ public class DailyStatsFrame extends JFrame
         EntryBox.add(delButton);
 
         saveButton = new JButton("Save");
+        saveButton.setPreferredSize(dim);
         saveButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -349,6 +356,7 @@ public class DailyStatsFrame extends JFrame
         });
         saveButton.setEnabled(false);
         EntryBox.add(saveButton);
+
         getContentPane().add(resultsPane, BorderLayout.CENTER);
         getContentPane().add(dayHeader, BorderLayout.NORTH);
         getContentPane().add(EntryBox, BorderLayout.SOUTH);

@@ -30,6 +30,7 @@ package util;
 
 import java.io.*;
 import java.util.Properties;
+import java.awt.*;
 
 
 public class GGCPropertiesHelper
@@ -132,6 +133,11 @@ public class GGCPropertiesHelper
         }
     }
 
+    public Color getColor(String key)
+    {
+        return new Color(getInt(key));
+    }
+
     public String get(String key)
     {
         return props.getProperty(key, "");
@@ -160,6 +166,11 @@ public class GGCPropertiesHelper
     public void set(String key, float newValue)
     {
         props.setProperty(key, newValue + "");
+    }
+
+    public void set(String key, Color newColor)
+    {
+        props.setProperty(key, newColor.getRGB() + "");
     }
 
     public void setDefault(String key, String defValue)

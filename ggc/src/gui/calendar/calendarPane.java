@@ -73,6 +73,11 @@ public class calendarPane extends JPanel
         this.addCalendarListener(yPanel);
     }
 
+    public Date getSelectedDate()
+    {
+        return cModel.getDate();
+    }
+
     public void addCalendarListener(CalendarListener l)
     {
         listeners.addElement(l);

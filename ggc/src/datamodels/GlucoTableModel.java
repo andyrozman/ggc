@@ -29,6 +29,8 @@
 package datamodels;
 
 
+import util.GGCProperties;
+
 import javax.swing.table.AbstractTableModel;
 import java.text.SimpleDateFormat;
 
@@ -36,6 +38,7 @@ import java.text.SimpleDateFormat;
 public class GlucoTableModel extends AbstractTableModel
 {
     GlucoValues dayData;
+    GGCProperties props = GGCProperties.getInstance();
 
     public GlucoTableModel(GlucoValues dayData)
     {
@@ -66,7 +69,7 @@ public class GlucoTableModel extends AbstractTableModel
 
     public String getColumnName(int column)
     {
-        String[] s = {"Date", "Time", "BG", "Ins1", "Ins2", "BE", "Act", "Comment"};
+        String[] s = {"Date", "Time", "BG", props.getIns1Abbr(), props.getIns2Abbr(), "BE", "Act", "Comment"};
         return s[column];
     }
 

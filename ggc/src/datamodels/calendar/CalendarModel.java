@@ -87,6 +87,11 @@ public class CalendarModel
         return gc.get(Calendar.DAY_OF_MONTH);
     }
 
+    public Date getDate()
+    {
+        return gc.getTime();
+    }
+
     public int getFirstDayInMonth()
     {
         int old = getDay();

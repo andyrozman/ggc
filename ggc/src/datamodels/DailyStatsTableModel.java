@@ -29,6 +29,8 @@
 package datamodels;
 
 
+import util.GGCProperties;
+
 import javax.swing.table.AbstractTableModel;
 import java.text.SimpleDateFormat;
 
@@ -36,6 +38,7 @@ import java.text.SimpleDateFormat;
 public class DailyStatsTableModel extends AbstractTableModel
 {
     DailyValues dayData;
+    GGCProperties props = GGCProperties.getInstance();
 
     public DailyStatsTableModel(DailyValues dayData)
     {
@@ -66,6 +69,11 @@ public class DailyStatsTableModel extends AbstractTableModel
 
     public String getColumnName(int column)
     {
+        if (column == 3)
+            return props.getIns1Abbr();
+        if (column == 4)
+            return props.getIns2Abbr();
+
         return dayData.getColumnName(column);
     }
 

@@ -28,6 +28,9 @@
 package util;
 
 
+import java.awt.*;
+
+
 public class GGCProperties extends GGCPropertiesHelper
 {
     private static GGCProperties singleton = null;
@@ -59,6 +62,8 @@ public class GGCProperties extends GGCPropertiesHelper
         setDefault("FractionalMetrics", "0");
         setDefault("Interpolation", "0");
         setDefault("TextAntiAliasing", "0");
+        setDefault("ColorTargetBG","0");
+        setDefault("ColorBG", "0");
     }
 
     public static GGCProperties getInstance()
@@ -206,5 +211,20 @@ public class GGCProperties extends GGCPropertiesHelper
     public int getTextAntiAliasing()
     {
         return getInt("TextAntiAliasing");
+    }
+
+    public Color getColorTargetBG()
+    {
+        return getColor("ColorTargetBG");
+    }
+
+    public Color getColorBG()
+    {
+        return getColor("ColorBG");
+    }
+
+    public Color getColorByName(String identifier)
+    {
+        return getColor(identifier);
     }
 }
