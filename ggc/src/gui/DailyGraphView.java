@@ -45,7 +45,7 @@ public class DailyGraphView extends JComponent implements Observer
     int maxBG = 300, minBG = 0;
     int counter = 10;
     int upperSpace = 10, lowerSpace = 30, leftSpace = 40, rightSpace = 30;
-    int maxGoodBG = 120, minGoodBG = 60;
+    float maxGoodBG, minGoodBG;
 
     Object oAA, oCR, oTAA, oR, oD, oFM, oI;
 
@@ -57,6 +57,8 @@ public class DailyGraphView extends JComponent implements Observer
     {
         dayData = DailyValues.getInstance();
         props = GGCProperties.getInstance();
+        maxGoodBG = props.getTargetHighBG();
+        minGoodBG = props.getTargetLowBG();
         setRenderingQuality();
     }
 
