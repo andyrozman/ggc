@@ -30,6 +30,7 @@ package db;
 
 
 import datamodels.DailyValues;
+import datamodels.HbA1cValues;
 import util.GGCProperties;
 
 import javax.swing.*;
@@ -76,6 +77,8 @@ public abstract class DataBaseHandler
     }
 
     public abstract DailyValues getDayStats(Date day);
+
+    public abstract HbA1cValues getHbA1c(Date day);
 
     public abstract void saveDayStats(DailyValues dV);
 

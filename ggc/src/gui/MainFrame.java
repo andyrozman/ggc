@@ -46,7 +46,8 @@ public class MainFrame extends JFrame
     private GGCAction connectAction, disconnectAction, newAction, openAction, closeAction, quitAction;
     private GGCAction prefAction;
     private GGCAction readMeterAction;
-    private GGCAction viewDailyAction, viewCourseGraphAction, viewSpreadGraphAction;
+    private GGCAction viewDailyAction, viewCourseGraphAction, viewSpreadGraphAction, viewFrequencyGraphAction;
+    private GGCAction viewHbA1cAction;
     private GGCAction aboutAction;
     private DailyStatsFrame dailyStatsWindow;
     private StatusBar statusPanel;
@@ -90,6 +91,9 @@ public class MainFrame extends JFrame
         viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/course.png"));
         viewSpreadGraphAction = new GGCAction("Spread", "View Spread");
         viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/spread.png"));
+        viewFrequencyGraphAction = new GGCAction("Frequency", "View frequency of values");
+        viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/frequency.png"));
+        viewHbA1cAction = new GGCAction("HbA1c", "View your HbA1c");
 
         readMeterAction = new GGCAction("from Meter", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "Read Data From Meter");
         readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/readmeter.png"));
@@ -110,6 +114,9 @@ public class MainFrame extends JFrame
         addMenuItem(viewMenu, viewDailyAction);
         addMenuItem(viewMenu, viewCourseGraphAction);
         addMenuItem(viewMenu, viewSpreadGraphAction);
+        addMenuItem(viewMenu, viewFrequencyGraphAction);
+        viewMenu.addSeparator();
+        addMenuItem(viewMenu, viewHbA1cAction);
 
         addMenuItem(readMenu, readMeterAction);
 
@@ -135,6 +142,9 @@ public class MainFrame extends JFrame
         addToolBarButton(viewDailyAction);
         addToolBarButton(viewCourseGraphAction);
         addToolBarButton(viewSpreadGraphAction);
+        addToolBarButton(viewFrequencyGraphAction);
+        addToolBarSpacer();
+        addToolBarButton(viewHbA1cAction);
         addToolBarSpacer();
         addToolBarButton(readMeterAction);
 
@@ -373,6 +383,10 @@ public class MainFrame extends JFrame
                 CourseGraphFrame.showMe();
             } else if (command.equals("Spread")) {
                 SpreadGraphFrame.showMe();
+            } else if (command.equals("Frequency")) {
+                FrequencyGraphFrame.showMe();
+            } else if (command.equals("HbA1c")) {
+                HbA1cFrame.showMe();
             } else if (command.equals("Preferences")) {
                 PropertiesFrame.showMe();
             } else if (command.equals("from Meter")) {

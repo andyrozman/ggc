@@ -30,6 +30,7 @@ package db;
 
 import datamodels.DailyValues;
 import datamodels.DailyValuesRow;
+import datamodels.HbA1cValues;
 import gui.StatusBar;
 
 import java.sql.*;
@@ -89,6 +90,31 @@ public class MySQLHandler extends DataBaseHandler
     {
         connectedToDB = false;
         StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] no DataBase");
+    }
+
+    public HbA1cValues getHbA1c(java.util.Date day)
+    {
+        ResultSet results = null;
+        HbA1cValues hbVal = new HbA1cValues();
+
+        if (con != null) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String eDay = sdf.format(day);
+                String sDay = sdf.format(new Date(day.getTime() - 1000L * 60L * 60L * 24L * 90L));
+
+                String query = "SELECT avg(bg), count(bg) from DayValues WHERE bg <> 0 and date_format(datetime, '%Y-%m-%d') > '" + sDay + "' and date_format(datetime, '%Y-%m-%d') < '" + eDay + "' group by date_format(datetime, '%Y-%m-%d');";
+                Statement statement = con.createStatement();
+                results = statement.executeQuery(query);
+                while (results.next()) {
+                    hbVal.addDay(results.getFloat(1), results.getInt(2));
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+
+        return hbVal;
     }
 
     public DailyValues getDayStats(java.util.Date day)
