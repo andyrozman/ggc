@@ -63,7 +63,7 @@ public class CourseGraphFrame extends JFrame
 
     public CourseGraphFrame()
     {
-        super("CourseGraphFrame");
+        super("Course Graph");
         setBounds(200, 400, 700, 300);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
