@@ -45,19 +45,19 @@ public class ggc
         }
         UIDefaults UIDef = UIManager.getDefaults();
 
-        Color bgGray = new Color(213,210,205);
+        Color bgGray = new Color(213, 210, 205);
 
-        Font stdFont = new Font("Dialog", Font.PLAIN,12);
+        Font stdFont = new Font("Dialog", Font.PLAIN, 12);
 
         UIDef.put("Label.font", stdFont);
         UIDef.put("Label.foreground", Color.black);
 
-        UIDef.put("Button.font",stdFont);
-        UIDef.put("Menu.font",stdFont);
-        UIDef.put("MenuItem.font",stdFont);
+        UIDef.put("Button.font", stdFont);
+        UIDef.put("Menu.font", stdFont);
+        UIDef.put("MenuItem.font", stdFont);
         UIDef.put("ComboBox.font", stdFont);
         UIDef.put("CheckBox.font", stdFont);
-        UIDef.put("RadioButton.font",stdFont);
+        UIDef.put("RadioButton.font", stdFont);
         UIDef.put("TitledBorder.font", stdFont);
         //UIDef.put("TitledBorder.fontcolor", Color.black);
 
@@ -67,7 +67,7 @@ public class ggc
         UIDef.put("Frame.background", bgGray);
         UIDef.put("Button.background", bgGray);
         UIDef.put("ComboBox.background", bgGray);
-        UIDef.put("RadioButton.background",bgGray);
+        UIDef.put("RadioButton.background", bgGray);
         UIDef.put("CheckBox.background", bgGray);
         //UIDef.put("Table.background", bgGray);
         UIDef.put("ToolBar.background", bgGray);
@@ -77,6 +77,7 @@ public class ggc
 
         theApp = new ggc();
         theApp.init();
+
     }
 
     public void init()
