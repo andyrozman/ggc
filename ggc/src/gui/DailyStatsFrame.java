@@ -108,175 +108,61 @@ public class DailyStatsFrame extends JFrame
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-        Box boxInsSumTxt = Box.createVerticalBox();
-        boxInsSumTxt.add(new JLabel(props.getIns1Name() + ":"));
-        boxInsSumTxt.add(new JLabel(props.getIns2Name() + ":"));
-        boxInsSumTxt.add(new JLabel("Total Ins:"));
+        //Panel for Insulin Stats
+        JPanel InsPanel = new JPanel(new GridLayout(3,6));
+        InsPanel.setBorder(BorderFactory.createTitledBorder("Insulin:"));
 
-        Box boxInsSumVal = Box.createVerticalBox();
-        sumIns1 = new JLabel();
-        sumIns1.setHorizontalAlignment(JLabel.RIGHT);
-        sumIns2 = new JLabel();
-        sumIns2.setHorizontalAlignment(JLabel.RIGHT);
-        sumIns = new JLabel();
-        sumIns.setHorizontalAlignment(JLabel.RIGHT);
-        boxInsSumVal.add(sumIns1);
-        boxInsSumVal.add(sumIns2);
-        boxInsSumVal.add(sumIns);
+        InsPanel.add(new JLabel(props.getIns1Abbr() + ":"));
+        InsPanel.add(sumIns1 = new JLabel());
+        InsPanel.add(new JLabel("Avg " + props.getIns1Abbr() + ":"));
+        InsPanel.add(avgIns1 = new JLabel());
+        InsPanel.add(new JLabel("Dose " + props.getIns1Abbr() + ":"));
+        InsPanel.add(doseIns1 = new JLabel());
 
-        Box boxInsSum = Box.createHorizontalBox();
-        boxInsSum.add(boxInsSumTxt);
-        boxInsSum.add(Box.createHorizontalStrut(10));
-        boxInsSum.add(boxInsSumVal);
-        boxInsSum.add(Box.createGlue());
+        InsPanel.add(new JLabel(props.getIns2Abbr() + ":"));
+        InsPanel.add(sumIns2 = new JLabel());
+        InsPanel.add(new JLabel("Avg " + props.getIns2Abbr() + ":"));
+        InsPanel.add(avgIns2 = new JLabel());
+        InsPanel.add(new JLabel("Dose " + props.getIns2Abbr() + ":"));
+        InsPanel.add(doseIns2 = new JLabel());
 
-        Box boxInsAvgTxt = Box.createVerticalBox();
-        boxInsAvgTxt.add(new JLabel("Avg " + props.getIns1Abbr() + ":"));
-        boxInsAvgTxt.add(new JLabel("Avg " + props.getIns2Abbr() + ":"));
-        boxInsAvgTxt.add(new JLabel("Avg Ins:"));
+        InsPanel.add(new JLabel("Total:"));
+        InsPanel.add(sumIns = new JLabel());
+        InsPanel.add(new JLabel("Avg Ins:"));
+        InsPanel.add(avgIns = new JLabel());
+        InsPanel.add(new JLabel("Dose Ins:"));
+        InsPanel.add(doseIns = new JLabel());
 
-        Box boxInsAvgVal = Box.createVerticalBox();
-        avgIns1 = new JLabel();
-        avgIns1.setHorizontalAlignment(JLabel.RIGHT);
-        avgIns2 = new JLabel();
-        avgIns2.setHorizontalAlignment(JLabel.RIGHT);
-        avgIns = new JLabel();
-        avgIns.setHorizontalAlignment(JLabel.RIGHT);
-        boxInsAvgVal.add(avgIns1);
-        boxInsAvgVal.add(avgIns2);
-        boxInsAvgVal.add(avgIns);
+        //Panel for BU Stats
+        JPanel BUPanel = new JPanel(new GridLayout(1,6));
+        BUPanel.setBorder(BorderFactory.createTitledBorder("Bread Units:"));
 
-        Box boxInsAvg = Box.createHorizontalBox();
-        boxInsAvg.add(boxInsAvgTxt);
-        boxInsAvg.add(Box.createHorizontalStrut(10));
-        boxInsAvg.add(boxInsAvgVal);
-        boxInsAvg.add(Box.createGlue());
+        BUPanel.add(new JLabel("Sum:"));
+        BUPanel.add(sumBE = new JLabel());
+        BUPanel.add(new JLabel("Avg:"));
+        BUPanel.add(avgBE = new JLabel());
+        BUPanel.add(new JLabel("Meals:"));
+        BUPanel.add(meals = new JLabel());
 
-        Box boxInsDoseTxt = Box.createVerticalBox();
-        boxInsDoseTxt.add(new JLabel("Dose " + props.getIns1Abbr() + ":"));
-        boxInsDoseTxt.add(new JLabel("Dose " + props.getIns2Abbr() + ":"));
-        boxInsDoseTxt.add(new JLabel("Dose Ins:"));
+        //Panel for BG Stats
+        JPanel BGPanel = new JPanel(new GridLayout(0,6));
+        BGPanel.setBorder(BorderFactory.createTitledBorder("Blood Glucose:"));
 
-        Box boxInsDoseVal = Box.createVerticalBox();
-        doseIns1 = new JLabel();
-        doseIns1.setHorizontalAlignment(JLabel.RIGHT);
-        doseIns2 = new JLabel();
-        doseIns2.setHorizontalAlignment(JLabel.RIGHT);
-        doseIns = new JLabel();
-        doseIns.setHorizontalAlignment(JLabel.RIGHT);
-        boxInsDoseVal.add(doseIns1);
-        boxInsDoseVal.add(doseIns2);
-        boxInsDoseVal.add(doseIns);
-
-        Box boxInsDose = Box.createHorizontalBox();
-        boxInsDose.add(boxInsDoseTxt);
-        boxInsDose.add(Box.createHorizontalStrut(10));
-        boxInsDose.add(boxInsDoseVal);
-        boxInsDose.add(Box.createGlue());
-
-        Box boxIns = Box.createHorizontalBox();
-        boxIns.add(boxInsSum);
-        boxIns.add(Box.createHorizontalStrut(5));
-        boxIns.add(boxInsAvg);
-        boxIns.add(Box.createHorizontalStrut(5));
-        boxIns.add(boxInsDose);
-
-        JPanel panelIns = new JPanel(new BorderLayout());
-        panelIns.setBorder(BorderFactory.createTitledBorder("Insulin:"));
-        panelIns.add(boxIns, BorderLayout.CENTER);
-
-        Box boxBE = Box.createHorizontalBox();
-        boxBE.add(new JLabel("Sum BE:"));
-        boxBE.add(Box.createHorizontalStrut(10));
-        sumBE = new JLabel();
-        sumBE.setHorizontalAlignment(JLabel.RIGHT);
-        boxBE.add(sumBE);
-        boxBE.add(Box.createGlue());
-        boxBE.add(Box.createHorizontalStrut(5));
-        boxBE.add(new JLabel("AvgBE:"));
-        avgBE = new JLabel();
-        avgBE.setHorizontalAlignment(JLabel.RIGHT);
-        boxBE.add(Box.createHorizontalStrut(10));
-        boxBE.add(avgBE);
-        boxBE.add(Box.createGlue());
-        boxBE.add(Box.createHorizontalStrut(5));
-        boxBE.add(new JLabel("Meals:"));
-        boxBE.add(Box.createHorizontalStrut(10));
-        meals = new JLabel();
-        meals.setHorizontalAlignment(JLabel.RIGHT);
-        boxBE.add(meals);
-        boxBE.add(Box.createGlue());
-
-        JPanel panelBE = new JPanel(new BorderLayout());
-        panelBE.setBorder(BorderFactory.createTitledBorder("BE:"));
-        panelBE.add(boxBE, BorderLayout.CENTER);
-
-        Box boxBGStatTxt = Box.createVerticalBox();
-        boxBGStatTxt.add(new JLabel("Avg BG:"));
-        boxBGStatTxt.add(new JLabel("StdDev:"));
-
-        Box boxBGStatVal = Box.createVerticalBox();
-        avgBG = new JLabel();
-        avgBG.setHorizontalAlignment(JLabel.RIGHT);
-        stdDev = new JLabel();
-        stdDev.setHorizontalAlignment(JLabel.RIGHT);
-        boxBGStatVal.add(avgBG);
-        boxBGStatVal.add(stdDev);
-
-        Box boxBGStat = Box.createHorizontalBox();
-        boxBGStat.add(boxBGStatTxt);
-        boxBGStat.add(Box.createHorizontalStrut(10));
-        boxBGStat.add(boxBGStatVal);
-        boxBGStat.add(Box.createGlue());
-
-        Box boxBGLHTxt = Box.createVerticalBox();
-        boxBGLHTxt.add(new JLabel("Highest:"));
-        boxBGLHTxt.add(new JLabel("Lowest:"));
-
-        Box boxBGLHVal = Box.createVerticalBox();
-        highestBG = new JLabel();
-        highestBG.setHorizontalAlignment(JLabel.LEFT);
-        lowestBG = new JLabel();
-        lowestBG.setHorizontalAlignment(JLabel.RIGHT);
-        boxBGLHVal.add(highestBG);
-        boxBGLHVal.add(lowestBG);
-
-        Box boxBGLH = Box.createHorizontalBox();
-        boxBGLH.add(boxBGLHTxt);
-        boxBGLH.add(Box.createHorizontalStrut(10));
-        boxBGLH.add(boxBGLHVal);
-        boxBGLH.add(Box.createGlue());
-
-        Box boxBGReadingsTxt = Box.createVerticalBox();
-        boxBGReadingsTxt.add(new JLabel("Readings:"));
-
-        Box boxBGReadingsVal = Box.createVerticalBox();
-        readings = new JLabel();
-        readings.setHorizontalAlignment(JLabel.RIGHT);
-        boxBGReadingsVal.add(readings);
-
-        Box boxBGReadings = Box.createHorizontalBox();
-        boxBGReadings.add(boxBGReadingsTxt);
-        boxBGReadings.add(Box.createHorizontalStrut(10));
-        boxBGReadings.add(boxBGReadingsVal);
-        boxBGReadings.add(Box.createGlue());
-
-        Box boxBG = Box.createHorizontalBox();
-        boxBG.add(boxBGStat);
-        boxBG.add(Box.createHorizontalStrut(5));
-        boxBG.add(boxBGLH);
-        boxBG.add(Box.createHorizontalStrut(5));
-        boxBG.add(boxBGReadings);
-        boxBG.setBackground(Color.green);
-
-        JPanel panelBG = new JPanel(new BorderLayout());
-        panelBG.setBorder(BorderFactory.createTitledBorder("Blood Glucose:"));
-        panelBG.add(boxBG, BorderLayout.CENTER);
+        BGPanel.add(new JLabel("Avg BG:"));
+        BGPanel.add(avgBG = new JLabel());
+        BGPanel.add(new JLabel("Highest:"));
+        BGPanel.add(highestBG = new JLabel());
+        BGPanel.add(new JLabel("Readings:"));
+        BGPanel.add(readings = new JLabel());
+        BGPanel.add(new JLabel("StdDev:"));
+        BGPanel.add(stdDev = new JLabel());
+        BGPanel.add(new JLabel("Lowest:"));
+        BGPanel.add(lowestBG = new JLabel());
 
         Box dayStats = Box.createVerticalBox();
-        dayStats.add(panelIns);
-        dayStats.add(panelBE);
-        dayStats.add(panelBG);
+        dayStats.add(InsPanel);
+        dayStats.add(BUPanel);
+        dayStats.add(BGPanel);
 
         JPanel dayHeader = new JPanel();
         dayHeader.setLayout(new BorderLayout());

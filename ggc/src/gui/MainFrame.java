@@ -189,6 +189,8 @@ public class MainFrame extends JFrame
         newAction.setEnabled(!opened);
 
         viewDailyAction.setEnabled(opened);
+
+        readMeterAction.setEnabled(opened);
     }
 
     private void setDBActionsAllFalse()
@@ -198,6 +200,8 @@ public class MainFrame extends JFrame
         newAction.setEnabled(false);
 
         viewDailyAction.setEnabled(false);
+
+        readMeterAction.setEnabled(false);
     }
 
     private void close()
