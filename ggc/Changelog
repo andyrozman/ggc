@@ -1,8 +1,14 @@
+2002-08-29  Dieter Schultschik  <schultd@users.sourceforge.net>
+
+	* Checking for new version implemented.
+	* created package ggc. moved everything from src into ggc.
+
 2002-08-28  Dieter Schultschik  <schultd@users.sourceforge.net>
 
 	* Stephan has re-written the whole Data-Import.
 	* Today I merged his changes, and now its in CVS.
-
+	* DataSelector now has Spinners.
+	
 2002-08-01  Dieter Schultschik  <schultd@users.sourceforge.net>
 
 	* Select Meter and SerialPort in preferences.
