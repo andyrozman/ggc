@@ -35,6 +35,7 @@ import java.awt.*;
 public class prefDataStoringPane extends AbstractPrefOptionsPanel
 {
     private JComboBox comboDataSource;
+    private JCheckBox chkAutoConnect;
 
     public prefDataStoringPane()
     {
@@ -53,11 +54,20 @@ public class prefDataStoringPane extends AbstractPrefOptionsPanel
         comboDataSource.setSelectedItem(props.getDataSource());
         comboDataSource.addItemListener(this);
         a.add(comboDataSource);
-        add(a, BorderLayout.NORTH);
+
+        chkAutoConnect = new JCheckBox("AutoConnect to default DataBase on Startup",props.getAutoConnect());
+        chkAutoConnect.addActionListener(this);
+
+        Box b = Box.createVerticalBox();
+        b.add(a);
+        b.add(chkAutoConnect);
+
+        add(b, BorderLayout.NORTH);
     }
 
     public void saveProps()
     {
         props.set("DataSource", comboDataSource.getSelectedItem().toString());
+        props.set("AutoConnect",chkAutoConnect.isSelected());
     }
 }

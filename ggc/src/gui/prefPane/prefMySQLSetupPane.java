@@ -38,6 +38,7 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
     private JTextField fieldPort;
     private JTextField fieldUser;
     private JTextField fieldPass;
+    private JTextField fieldDB;
 
     public prefMySQLSetupPane()
     {
@@ -51,6 +52,7 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         a.add(new JLabel("Port:"));
         a.add(new JLabel("Username:"));
         a.add(new JLabel("Password:"));
+        a.add(new JLabel("Default DataBase:"));
 
 
         JPanel b = new JPanel(new GridLayout(0, 1));
@@ -58,11 +60,13 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         b.add(fieldPort = new JTextField(props.getMySQLPort(), 10));
         b.add(fieldUser = new JTextField(props.getMySQLUser(), 10));
         b.add(fieldPass = new JTextField(props.getMySQLPass(), 10));
+        b.add(fieldDB   = new JTextField(props.getMySQLDBName(), 10));
 
         fieldHost.getDocument().addDocumentListener(this);
         fieldPort.getDocument().addDocumentListener(this);
         fieldUser.getDocument().addDocumentListener(this);
         fieldPass.getDocument().addDocumentListener(this);
+        fieldDB.getDocument().addDocumentListener(this);
 
         Box myBox = Box.createHorizontalBox();
         myBox.add(a);
@@ -79,5 +83,6 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         props.set("MySQLPort", fieldPort.getText());
         props.set("MySQLUser", fieldUser.getText());
         props.set("MySQLPass", fieldPass.getText());
+        props.set("MySQLDBName", fieldDB.getText());
     }
 }

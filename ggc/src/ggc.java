@@ -56,6 +56,7 @@ public class ggc
         UIDef.put("Menu.font",stdFont);
         UIDef.put("MenuItem.font",stdFont);
         UIDef.put("ComboBox.font", stdFont);
+        UIDef.put("CheckBox.font", stdFont);
         UIDef.put("TitledBorder.font", stdFont);
         //UIDef.put("TitledBorder.fontcolor", Color.black);
 
@@ -65,6 +66,7 @@ public class ggc
         UIDef.put("Frame.background", bgGray);
         UIDef.put("Button.background", bgGray);
         UIDef.put("ComboBox.background", bgGray);
+        UIDef.put("CheckBox.background", bgGray);
         //UIDef.put("Table.background", bgGray);
         UIDef.put("ToolBar.background", bgGray);
         UIDef.put("MenuBar.background", bgGray);

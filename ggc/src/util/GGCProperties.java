@@ -50,6 +50,8 @@ public class GGCProperties extends GGCPropertiesHelper
         setDefault("MySQLPort", "3306");
         setDefault("MySQLUser", "testapp");
         setDefault("MySQLPass", "gluco");
+        setDefault("MySQLDBName", "glucodb");
+        setDefault("AutoConnect","false");
         setDefault("Rendering", "0");
         setDefault("AntiAliasing", "0");
         setDefault("ColorRendering", "0");
@@ -159,6 +161,16 @@ public class GGCProperties extends GGCPropertiesHelper
     public String getMySQLPass()
     {
         return get("MySQLPass");
+    }
+
+    public String getMySQLDBName()
+    {
+        return get("MySQLDBName");
+    }
+
+    public boolean getAutoConnect()
+    {
+        return getBoolean("AutoConnect");
     }
 
     public int getRendering()

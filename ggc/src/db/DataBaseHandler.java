@@ -38,15 +38,17 @@ import java.sql.ResultSet;
 import java.sql.Time;
 
 
-public class DataBaseHandler
+public abstract class DataBaseHandler
 {
     static boolean connectedToDB = false;
+    static boolean connected = false;
+
     private static DataBaseHandler singleton = null;
-    String dbName = null;
+    GGCProperties props = GGCProperties.getInstance();
+    String dbName;
 
     public DataBaseHandler()
     {
-        GGCProperties props = GGCProperties.getInstance();
         dbName = props.getDBName();
     }
 
@@ -56,24 +58,9 @@ public class DataBaseHandler
             singleton = MySQLHandler.getInstance();
         return singleton;
     }
-
-    public ResultSet getDayStats(String day)
+    public boolean isConnected()
     {
-        return null;
-    }
-
-    public void saveDayStats(DailyValues dV)
-    {
-    }
-
-    //is overwritten
-    public boolean dateTimeExists(Date date, Time time)
-    {
-        return true;
-    }
-
-    public void createNewDataBase(String name)
-    {
+        return connected;
     }
 
     public boolean isConnectedToDB()
@@ -89,11 +76,19 @@ public class DataBaseHandler
             JOptionPane.showMessageDialog(null, "Invalid Name for a Database", "GGC Error - Invalid Name", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void connect()
-    {
-    }
+    public abstract ResultSet getDayStats(String day);
 
-    public void closeConnection()
-    {
-    }
+    public abstract void saveDayStats(DailyValues dV);
+
+    public abstract boolean dateTimeExists(Date date, Time time);
+
+    public abstract void createNewDataBase(String name);
+
+    public abstract void connect();
+
+    public abstract void closeConnection();
+
+    public abstract void openDataBase();
+
+    public abstract void closeDataBase();
 }
