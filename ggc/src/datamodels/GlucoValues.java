@@ -29,21 +29,25 @@
 package datamodels;
 
 
-import db.DataBaseHandler;
-
-import java.util.Vector;
+import gui.ReadMeterFrame;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
+import java.util.Vector;
 
-import gui.ReadMeterFrame;
+import javax.swing.event.EventListenerList;
+
+import db.DataBaseHandler;
+import event.GlucoValueEvent;
+import event.GlucoValueEventListener;
 
 
 public class GlucoValues extends DailyValues
 {
     Vector dayValues = null;
     private ReadMeterFrame rMF = ReadMeterFrame.getInstance();
+    
+    private EventListenerList listenerList = new EventListenerList();
 
     //private int recordCount = 0;
 
@@ -76,6 +80,9 @@ public class GlucoValues extends DailyValues
             //System.out.println("date2:" + dV.getDateAsString() + "");
             if (s1.equals(dV.getDateAsString())) {
                 dV.setNewRow(dRow);
+                
+                GlucoValueEvent event = new GlucoValueEvent(this, i, i, 0, GlucoValueEvent.INSERT);
+				fireGlucoValueChanged(event);
                 return;
             }
         }
@@ -88,6 +95,9 @@ public class GlucoValues extends DailyValues
             dV.setIsNew(true);
 
             dayValues.add(dV);
+            
+            GlucoValueEvent event = new GlucoValueEvent(this, dayValues.size(), dayValues.size(), 0, GlucoValueEvent.INSERT);
+			fireGlucoValueChanged(event);
         }
     }
 
@@ -123,8 +133,13 @@ public class GlucoValues extends DailyValues
                 int old = c;
                 DailyValues dV = (DailyValues)dayValues.elementAt(i);
                 c += dV.getRowCount();
-                if (old <= row && row < c)
+                if (old <= row && row < c) {
                     dV.deleteRow(row - old);
+                    
+                    GlucoValueEvent event = new GlucoValueEvent(this, row, row, 0, GlucoValueEvent.DELETE);
+					fireGlucoValueChanged(event);
+					return;
+                }
             }
         }
     }
@@ -162,6 +177,9 @@ public class GlucoValues extends DailyValues
                 dV.setValueAt(aValue, row - old, column);
             }
         }
+        
+        GlucoValueEvent event = new GlucoValueEvent(this, row, row, column, GlucoValueEvent.UPDATE);
+		fireGlucoValueChanged(event);
     }
 
     public int getDayCount()
@@ -175,4 +193,28 @@ public class GlucoValues extends DailyValues
     {
         return ((DailyValues)dayValues.elementAt(i)).getDayAndMonthAsString();
     }
+    
+    
+    public void addGlucoValueEventListener(GlucoValueEventListener listener) {
+		listenerList.add(GlucoValueEventListener.class, listener);
+	}
+
+	public void removeGlucoValueEventListener(GlucoValueEventListener listener) {
+		listenerList.remove(GlucoValueEventListener.class, listener);
+	}
+
+	protected void fireGlucoValueChanged(GlucoValueEvent event) {
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+		
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == GlucoValueEventListener.class) {
+				// Lazily create the event:
+				if (event != null)
+					((GlucoValueEventListener) listeners[i + 1]).glucoValuesChanged(event);
+			}
+		}
+	}
 }
