@@ -32,13 +32,12 @@ import datamodels.DailyValues;
 import datamodels.DailyValuesRow;
 import datamodels.HbA1cValues;
 import gui.StatusBar;
+import util.GGCProperties;
 
+import javax.swing.*;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Vector;
-
-import util.GGCProperties;
 
 
 public class MySQLHandler extends DataBaseHandler
@@ -47,10 +46,10 @@ public class MySQLHandler extends DataBaseHandler
     private static MySQLHandler singleton = null;
     private GGCProperties props = GGCProperties.getInstance();
 
-    private MySQLHandler()
+    public MySQLHandler()
     {
         super();
-        connect();
+        //connect();
     }
 
     public static DataBaseHandler getInstance()
@@ -75,10 +74,24 @@ public class MySQLHandler extends DataBaseHandler
         } catch (SQLException sqle) {
             System.err.println(sqle);
         }
+        if (props.getMySQLOpenDefaultDB())
+            openDataBase(false);
     }
 
-    public void openDataBase()
+    public void openDataBase(boolean ask)
     {
+        if (ask) {
+            String s = JOptionPane.showInputDialog("Enter DB Name to open:");
+            if (s != null && !s.equals(""))
+                dbName = s;
+            else {
+                JOptionPane.showMessageDialog(null, "Invalid Name for a Database", "GGC Error - Invalid Name", JOptionPane.ERROR_MESSAGE);
+                connectedToDB = false;
+                return;
+            }
+        } else
+            dbName = props.getMySQLDBName();
+
         try {
             con.createStatement().execute("use " + dbName);
             connectedToDB = true;
@@ -97,6 +110,9 @@ public class MySQLHandler extends DataBaseHandler
 
     public HbA1cValues getHbA1c(java.util.Date day)
     {
+        if (!connectedToDB)
+            return null;
+
         ResultSet results = null;
         HbA1cValues hbVal = new HbA1cValues();
 
@@ -122,6 +138,9 @@ public class MySQLHandler extends DataBaseHandler
 
     public DailyValues getDayStats(java.util.Date day)
     {
+        if (!connectedToDB)
+            return null;
+
         ResultSet results = null;
         DailyValues dV = new DailyValues();
 
@@ -163,6 +182,9 @@ public class MySQLHandler extends DataBaseHandler
 
     public void saveDayStats(DailyValues dV)
     {
+        if (!connectedToDB)
+            return;
+
         Statement statement;
         try {
             if (!con.isClosed() && dV.hasChanged()) {
@@ -191,6 +213,9 @@ public class MySQLHandler extends DataBaseHandler
 
     public boolean dateTimeExists(java.util.Date date)
     {
+        if (!connectedToDB)
+            return false;
+
         Statement statement;
         try {
             if (!con.isClosed()) {
@@ -242,5 +267,23 @@ public class MySQLHandler extends DataBaseHandler
             connectedToDB = false;
             StatusBar.getInstance().setDataSourceText("MySQL [no Connection]");
         }
+    }
+
+    public boolean testConnection(String Host, String Port, String DB, String User, String Pass) throws ClassNotFoundException, SQLException
+    {
+        try {
+            Connection tmpcon;
+
+            Class.forName("org.gjt.mm.mysql.Driver");
+            String sourceURL = "jdbc:mysql://" + Host + ":" + Port + "/" + DB + "?user=" + User + "&password=" + Pass;
+            tmpcon = DriverManager.getConnection(sourceURL);
+            tmpcon.close();
+            return true;
+        } catch (ClassNotFoundException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw e;
+        }
+
     }
 }

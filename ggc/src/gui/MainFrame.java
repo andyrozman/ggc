@@ -51,6 +51,7 @@ public class MainFrame extends JFrame
     private GGCAction aboutAction;
     private DailyStatsFrame dailyStatsWindow;
     private StatusBar statusPanel;
+    private InfoPanel informationPanel;
     DataBaseHandler dbH;
     GGCProperties props = GGCProperties.getInstance();
 
@@ -157,21 +158,20 @@ public class MainFrame extends JFrame
         statusPanel.setStatusMessage("Initialising");
 
         dbH = DataBaseHandler.getInstance();
-        dbH.connect();
+
+        if (props.getAutoConnect())
+            dbH.connect();
 
         if (dbH.isConnected()) {
-            if (props.getAutoConnect())
-                dbH.openDataBase();
             if (dbH.isConnectedToDB())
                 setActionEnabledStateDBOpened();
             else
                 setActionEnabledStateDBClosed();
-
         } else
             setActionEnabledStateDisconnected();
 
         //Information Portal Setup
-        JPanel informationPanel = new InfoPanel();
+        informationPanel = new InfoPanel();
         getContentPane().add(informationPanel, BorderLayout.CENTER);
     }
 
@@ -341,15 +341,22 @@ public class MainFrame extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             if (command.equals("Quit")) {
+
                 close();
+
             } else if (command.equals("Connect")) {
 
                 dbH = DataBaseHandler.getInstance();
                 dbH.connect();
-                if (dbH.isConnected())
-                    setActionEnabledStateConnected();
-                else
+                if (dbH.isConnected()) {
+                    if (dbH.isConnectedToDB())
+                        setActionEnabledStateDBOpened();
+                    else
+                        setActionEnabledStateDBClosed();
+                } else
                     setActionEnabledStateDisconnected();
+                informationPanel.refreshPanels();
+
             } else if (command.equals("Disconnect")) {
 
                 dbH.closeConnection();
@@ -358,8 +365,13 @@ public class MainFrame extends JFrame
                 else
                     setActionEnabledStateDisconnected();
                 DataBaseHandler.killHandler();
+                dbH = null;
+                informationPanel.refreshPanels();
+
             } else if (command.equals("New")) {
 
+                if (dbH == null)
+                    return;
                 String tmpName = JOptionPane.showInputDialog("Enter DB Name to create:");
                 if (tmpName != null && !tmpName.equals("")) {
                     dbH.createNewDataBase(tmpName);
@@ -369,23 +381,30 @@ public class MainFrame extends JFrame
                         setActionEnabledStateDBClosed();
                 } else
                     JOptionPane.showMessageDialog(null, "Invalid Name for Database", "GGC Error - Invalid Name", JOptionPane.ERROR_MESSAGE);
+                informationPanel.refreshPanels();
 
             } else if (command.equals("Open")) {
 
-                dbH.setDBName(JOptionPane.showInputDialog("Enter DB Name to open:"));
-                dbH.openDataBase();
+                //dbH.setDBName(JOptionPane.showInputDialog("Enter DB Name to open:"));
+                if (dbH == null)
+                    return;
+                dbH.openDataBase(true);
                 if (dbH.isConnectedToDB())
                     setActionEnabledStateDBOpened();
                 else
                     setActionEnabledStateDBClosed();
+                informationPanel.refreshPanels();
 
             } else if (command.equals("Close")) {
 
+                if (dbH == null)
+                    return;
                 dbH.closeDataBase();
                 if (dbH.isConnectedToDB())
                     setActionEnabledStateDBOpened();
                 else
                     setActionEnabledStateDBClosed();
+                informationPanel.refreshPanels();
 
             } else if (command.equals("Daily")) {
                 DailyStatsFrame.showMe();

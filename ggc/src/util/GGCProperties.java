@@ -38,7 +38,7 @@ public class GGCProperties extends GGCPropertiesHelper
     private GGCProperties()
     {
         super.read();
-        setDefault("DBName", "glucodb");
+        //setDefault("DBName", "glucodb");
         setDefault("UserName", "Unnamed User");
         setDefault("Ins1Name", "Insulin 1");
         setDefault("Ins2Name", "Insulin 2");
@@ -48,12 +48,15 @@ public class GGCProperties extends GGCPropertiesHelper
         setDefault("LowBG", "60");
         setDefault("TargetHighBG", "120");
         setDefault("TargetLowBG", "80");
-        setDefault("DataSource", "MySQL");
+        setDefault("DataSource", "Textfile");
         setDefault("MySQLHost", "localhost");
         setDefault("MySQLPort", "3306");
-        setDefault("MySQLUser", "testapp");
+        setDefault("MySQLUser", "ggc");
         setDefault("MySQLPass", "gluco");
         setDefault("MySQLDBName", "glucodb");
+        setDefault("MySQLOpenDefaultDB","false");
+        setDefault("TextFilePath", System.getProperty("user.home") + "/MyValues.gcv");
+        setDefault("TextFileOpenDefaultFile","false");
         setDefault("AutoConnect","false");
         setDefault("Rendering", "0");
         setDefault("AntiAliasing", "0");
@@ -62,16 +65,16 @@ public class GGCProperties extends GGCPropertiesHelper
         setDefault("FractionalMetrics", "0");
         setDefault("Interpolation", "0");
         setDefault("TextAntiAliasing", "0");
-        setDefault("ColorTargetBG","0");
-        setDefault("ColorBG", "0");
-        setDefault("ColorAvgBG", "0");
-        setDefault("ColorHighBG", "0");
-        setDefault("ColorLowBG", "0");
-        setDefault("ColorBE", "0");
-        setDefault("ColorIns1", "0");
-        setDefault("ColorIns2","0");
-        setDefault("ColorIns","0");
-        setDefault("ColorInsPerBU","0");
+        setDefault("ColorTargetBG","-1184275");
+        setDefault("ColorBG", "-65485");
+        setDefault("ColorAvgBG", "-6750208");
+        setDefault("ColorHighBG", "-81409");
+        setDefault("ColorLowBG", "-163654");
+        setDefault("ColorBU", "-16724941");
+        setDefault("ColorIns1", "-6710785");
+        setDefault("ColorIns2","-16776961");
+        setDefault("ColorIns","-16724788");
+        setDefault("ColorInsPerBU","-6711040");
     }
 
     public static GGCProperties getInstance()
@@ -179,6 +182,21 @@ public class GGCProperties extends GGCPropertiesHelper
     public String getMySQLDBName()
     {
         return get("MySQLDBName");
+    }
+
+    public boolean getMySQLOpenDefaultDB()
+    {
+        return getBoolean("MySQLOpenDefaultDB");
+    }
+
+    public String getTextFilePath()
+    {
+        return get("TextFilePath");
+    }
+
+    public boolean getTextFileOpenDefaultFile()
+    {
+        return getBoolean("TextFileOpenDefaultFile");
     }
 
     public boolean getAutoConnect()

@@ -68,6 +68,7 @@ public class PropertiesFrame extends JFrame
         prefNode.add(new DefaultMutableTreeNode("Rendering Quality"));
         DefaultMutableTreeNode dataNode = new DefaultMutableTreeNode("Data Storing");
         dataNode.add(new DefaultMutableTreeNode("MySQL Setup"));
+        dataNode.add(new DefaultMutableTreeNode("TextFile Setup"));
         prefNode.add(dataNode);
         /*DefaultMutableTreeNode meterNode = new DefaultMutableTreeNode("Meters");
         meterNode.add(new DefaultMutableTreeNode("Glucocard"));
@@ -97,6 +98,8 @@ public class PropertiesFrame extends JFrame
                     prefOptionsPane = new prefDataStoringPane();
                 } else if (s.equals("MySQL Setup")) {
                     prefOptionsPane = new prefMySQLSetupPane();
+                } else if (s.equals("TextFile Setup")) {
+                    prefOptionsPane = new prefTextFileSetupPane();
                 } else if (s.equals("Rendering Quality")) {
                     prefOptionsPane = new prefRenderingQualityPane();
                 }

@@ -31,9 +31,11 @@ package db;
 import datamodels.DailyValues;
 import datamodels.DailyValuesRow;
 import datamodels.HbA1cValues;
+import gui.StatusBar;
 
 import javax.swing.*;
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -57,16 +59,21 @@ public class TextFileHandler extends DataBaseHandler
     public void closeConnection()
     {
         connected = false;
+        StatusBar.getInstance().setDataSourceText("TextFile: No Connection");
     }
 
     public void closeDataBase()
     {
         connectedToDB = false;
+        StatusBar.getInstance().setDataSourceText("TextFile: No File Opened");
     }
 
     public void connect()
     {
         connected = true;
+        StatusBar.getInstance().setDataSourceText("TextFile: Connected");
+        if (props.getTextFileOpenDefaultFile())
+            openDataBase(false);
     }
 
     public void createNewDataBase(String name)
@@ -83,6 +90,8 @@ public class TextFileHandler extends DataBaseHandler
 
     public boolean dateTimeExists(Date date)
     {
+        if (!connectedToDB)
+            return false;
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("test.tmp"));
@@ -106,6 +115,9 @@ public class TextFileHandler extends DataBaseHandler
 
     public DailyValues getDayStats(Date day)
     {
+        if (!connectedToDB)
+            return null;
+
         DailyValues dV = new DailyValues();
 
         try {
@@ -145,27 +157,108 @@ public class TextFileHandler extends DataBaseHandler
         return dV;
     }
 
-    public HbA1cValues getHbA1c(Date day)
+    public HbA1cValues getHbA1c(Date endDay)
     {
-        return null;
-    }
+        if (!connectedToDB)
+            return null;
 
-    public void openDataBase()
-    {
-        JFileChooser chooser = new JFileChooser();
+        HbA1cValues hbVal = null;
 
-        int returnVal = chooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            dataFile = chooser.getSelectedFile();
-            connectedToDB = true;
-            return;
+        try {
+            hbVal = new HbA1cValues();
+            Date startDay = new Date(endDay.getTime() - 1000L * 60L * 60L * 24L * 90L);
+            sdf.applyPattern("yyyy-MM-dd");
+
+            br = new BufferedReader(new FileReader(dataFile));
+
+            String s = br.readLine();
+
+            while (s != null) {
+                if (s.startsWith("<day")) {
+                    String readDate = s.substring(4, 14);
+
+                    System.out.println(readDate);
+
+                    Date readDay = sdf.parse(readDate);
+
+                    System.out.println(readDay);
+
+                    if (readDay.after(startDay) && readDay.before(endDay)) {
+                        float sumbg = 0;
+                        int countbg = 0;
+                        while (!(s = br.readLine()).equals("</day>")) {
+
+                            int i = s.indexOf(';', 1);
+
+                            float bg = new Float(s.substring(++i, i = s.indexOf(';', i))).floatValue();
+
+                            System.out.println(bg + "");
+
+                            if (bg > 0) {
+                                sumbg += bg;
+                                countbg++;
+                            }
+                        }
+                        hbVal.addDay(sumbg / countbg, countbg);
+
+                    }
+                }
+                s = br.readLine();
+            }
+            br.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        } catch (ParseException e) {
+            System.out.println(e);
+        } catch (NumberFormatException e) {
+            System.out.println(e);
         }
 
-        connectedToDB = false;
+
+        return hbVal;
+    }
+
+    public void openDataBase(boolean ask)
+    {
+        File tmpFile = null;
+
+        if (ask) {
+            JFileChooser chooser = new JFileChooser();
+
+            int returnVal = chooser.showOpenDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION)
+                tmpFile = chooser.getSelectedFile();
+        } else
+            tmpFile = new File(props.getTextFilePath());
+
+        if (tmpFile != null) {
+            if (!tmpFile.exists()) {
+                int res = JOptionPane.showConfirmDialog(null, tmpFile.getAbsolutePath() + " does not exist.\n\nDo you want to create it?", "File does not exist", JOptionPane.YES_NO_OPTION);
+                if (res == JOptionPane.YES_OPTION)
+                    try {
+                        tmpFile.createNewFile();
+                    } catch (IOException e) {
+                        System.out.println(e);
+                        connectedToDB = false;
+                        return;
+                    }
+                else {
+                    connectedToDB = false;
+                    return;
+                }
+            }
+            dataFile = tmpFile;
+            connectedToDB = true;
+            StatusBar.getInstance().setDataSourceText("TextFile: " + dataFile.getName() + " opened");
+        } else
+            connectedToDB = false;
     }
 
     public void saveDayStats(DailyValues dV)
     {
+        if (!connectedToDB)
+            return;
+
         try {
             //write new day
             File tmpFile = new File("test2.tmp");

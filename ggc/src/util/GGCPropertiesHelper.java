@@ -41,7 +41,14 @@ public class GGCPropertiesHelper
 
     public GGCPropertiesHelper()
     {
-        propsFile = new File(System.getProperty("user.home") + "/.ggc.prefs");
+        try {
+            File tmpFile = new File(System.getProperty("user.home") + "/.ggc.prefs");
+            if (!tmpFile.exists())
+                tmpFile.createNewFile();
+            propsFile = tmpFile;
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
     /*

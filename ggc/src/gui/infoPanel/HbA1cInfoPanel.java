@@ -75,7 +75,11 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
 
     public void refreshInfo()
     {
-        HbA1cValues hbVal = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
+        HbA1cValues hbVal = null;
+
+        if(DataBaseHandler.hasInstance())
+            hbVal = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
+
         DecimalFormat df = new DecimalFormat("#0.00");
 
         if (hbVal != null) {
@@ -84,6 +88,14 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
             lblAvgBG.setText(df.format(hbVal.getAvgBG()));
             lblReadings.setText(hbVal.getReadings() + "");
             lblReadingsPerDay.setText(df.format(hbVal.getReadingsPerDay()));
+        }
+        else
+        {
+            lblHbA1c.setText("No DataSource");
+            lblVal.setText("");
+            lblAvgBG.setText("");
+            lblReadings.setText("");
+            lblReadingsPerDay.setText("");
         }
     }
 }

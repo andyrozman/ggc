@@ -57,11 +57,10 @@ public class HbA1cValues
 
     public float getAvgBG()
     {
-        try {
+        if (dayCount != 0)
             return sumBG / dayCount;
-        } catch (Exception e) {
+        else
             return 0;
-        }
     }
 
     public int getDayCount()
@@ -73,14 +72,14 @@ public class HbA1cValues
     {
         float value = 0;
 
-        for(int i = 0; i < 5; i++)
-            value += getPercentOfDaysInClass(i) * (i+1); //max value = 5;
+        for (int i = 0; i < 5; i++)
+            value += getPercentOfDaysInClass(i) * (i + 1); //max value = 5;
 
-        if(value < 2)
+        if (value < 2)
             return "No Expressiveness";
-        if(value < 3)
+        if (value < 3)
             return "Little Expressiveness";
-        if(value < 4)
+        if (value < 4)
             return "Standard Expressiveness";
         else
             return "Good Expressiveness";
@@ -93,21 +92,26 @@ public class HbA1cValues
 
     public float getReadingsPerDay()
     {
-        try {
+        if (dayCount != 0)
             return readings / dayCount;
-        } catch (Exception e) {
+        else
             return 0;
-        }
     }
 
     public float getHbA1c_Method1()
     {
-        return (float)((getAvgBG() + 66.1) / 31.7);
+        if (dayCount > 0)
+            return (float)((getAvgBG() + 66.1) / 31.7);
+        else
+            return 0;
     }
 
     public float getHbA1c_Method2()
     {
-        return (float)(getAvgBG() / 30 + 2);
+        if (dayCount > 0)
+            return (float)(getAvgBG() / 30 + 2);
+        else
+            return 0;
     }
 
     public int getExp()

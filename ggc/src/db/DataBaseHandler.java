@@ -59,8 +59,15 @@ public abstract class DataBaseHandler
                 singleton = MySQLHandler.getInstance();
             else if (s.equals("Textfile"))
                 singleton = new TextFileHandler();
+            else
+                singleton = new DummyHandler();
         }
         return singleton;
+    }
+
+    public static boolean hasInstance()
+    {
+        return singleton != null;
     }
 
     public static void killHandler()
@@ -100,7 +107,7 @@ public abstract class DataBaseHandler
 
     public abstract void closeConnection();
 
-    public abstract void openDataBase();
+    public abstract void openDataBase(boolean ask);
 
     public abstract void closeDataBase();
 }

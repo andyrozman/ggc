@@ -28,8 +28,13 @@
 package gui.prefPane;
 
 
+import db.MySQLHandler;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 
 public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
@@ -39,6 +44,9 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
     private JTextField fieldUser;
     private JTextField fieldPass;
     private JTextField fieldDB;
+    private JCheckBox chkOpenDefault;
+    private JLabel lblState;
+    private JTextArea errorText;
 
     public prefMySQLSetupPane()
     {
@@ -53,6 +61,7 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         a.add(new JLabel("Username:"));
         a.add(new JLabel("Password:"));
         a.add(new JLabel("Default DataBase:"));
+        a.add(new JLabel(""));
 
 
         JPanel b = new JPanel(new GridLayout(0, 1));
@@ -61,16 +70,49 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         b.add(fieldUser = new JTextField(props.getMySQLUser(), 10));
         b.add(fieldPass = new JTextField(props.getMySQLPass(), 10));
         b.add(fieldDB = new JTextField(props.getMySQLDBName(), 10));
+        b.add(chkOpenDefault = new JCheckBox("Open Default DataBase upon Connect", props.getMySQLOpenDefaultDB()));
 
         fieldHost.getDocument().addDocumentListener(this);
         fieldPort.getDocument().addDocumentListener(this);
         fieldUser.getDocument().addDocumentListener(this);
         fieldPass.getDocument().addDocumentListener(this);
         fieldDB.getDocument().addDocumentListener(this);
+        chkOpenDefault.addActionListener(this);
 
-        Box myBox = Box.createHorizontalBox();
-        myBox.add(a);
-        myBox.add(b);
+        Box optionBox = Box.createHorizontalBox();
+        optionBox.add(a);
+        optionBox.add(b);
+
+        JPanel optionPanel = new JPanel(new BorderLayout(5, 5));
+        optionPanel.setBorder(BorderFactory.createTitledBorder("MySQL Options"));
+        optionPanel.add(optionBox, BorderLayout.CENTER);
+
+        JButton testButton = new JButton("Connect");
+        testButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                doTest();
+            }
+        });
+        lblState = new JLabel("State:");
+        errorText = new JTextArea(3, 10);
+        errorText.setEditable(false);
+        errorText.setLineWrap(true);
+        errorText.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+
+        JPanel headerPanel = new JPanel(new BorderLayout(5, 5));
+        headerPanel.add(testButton, BorderLayout.WEST);
+        headerPanel.add(lblState, BorderLayout.CENTER);
+
+        JPanel connectionPanel = new JPanel(new BorderLayout(5, 5));
+        connectionPanel.setBorder(BorderFactory.createTitledBorder("Test Connection"));
+        connectionPanel.add(headerPanel, BorderLayout.NORTH);
+        connectionPanel.add(errorText, BorderLayout.CENTER);
+
+        Box myBox = Box.createVerticalBox();
+        myBox.add(optionPanel);
+        myBox.add(connectionPanel);
 
         setLayout(new BorderLayout());
 
@@ -84,5 +126,35 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         props.set("MySQLUser", fieldUser.getText());
         props.set("MySQLPass", fieldPass.getText());
         props.set("MySQLDBName", fieldDB.getText());
+        props.set("MySQLOpenDefaultDB", chkOpenDefault.isSelected());
+    }
+
+    private void doTest()
+    {
+        MySQLHandler myH = new MySQLHandler();
+
+        boolean b = false;
+        String db = "";
+
+        if(chkOpenDefault.isSelected())
+            db = fieldDB.getText();
+
+        errorText.setText("");
+
+        try {
+            b = myH.testConnection(fieldHost.getText(), fieldPort.getText(), db, fieldUser.getText(), fieldPass.getText());
+        } catch (ClassNotFoundException e) {
+            errorText.setText(e.toString());
+            b = false;
+        } catch (SQLException e) {
+            errorText.setText(e.toString());
+            b = false;
+        }
+        if (b)
+            lblState.setText("Connection Successfully");
+        else
+            lblState.setText("Error During Connecting");
+
+        myH = null;
     }
 }

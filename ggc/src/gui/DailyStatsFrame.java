@@ -199,11 +199,12 @@ public class DailyStatsFrame extends JFrame
             public void tableChanged(TableModelEvent e)
             {
                 DailyGraphFrame.redraw();
+                updateLabels();
                 saveButton.setEnabled(true);
             }
         });
         table = new JTable(model);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN );
         resultsPane = new JScrollPane(table);
 
         JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 1, 2));

@@ -77,21 +77,24 @@ public class DailyValues implements Serializable
         Date time = dVR.getDateTime();
         int size = dataRows.size();
 
+        addRight:
         if (time != null && dVR.getDateTime() != null) {
             bHasChangedValues = true;
             //insert in the right place...
             //System.err.println(size + "");
-            if (size > 0) {
+            if (size <= 0)
+                dataRows.add(dVR);
+            else {
                 int i = 0;
                 for (i = 0; i < size; i++)
                     if (getDateTimeAt(i).after(time)) {
                         dataRows.add(i, dVR);
-                        return;
+                        break addRight;
                     }
                 dataRows.add(i, dVR);
-            } else
-                dataRows.add(dVR);
+            }
         }
+
         sumBG += dVR.getBG();
         if (dVR.getBG() != 0) {
             if (highestBG < dVR.getBG())
@@ -119,8 +122,34 @@ public class DailyValues implements Serializable
     public void deleteRow(int i)
     {
         try {
-            if (i != -1)
+            if (i != -1) {
+                DailyValuesRow dVR = (DailyValuesRow)dataRows.elementAt(i);
+                if (dVR.getBG() != 0) {
+                    sumBG -= dVR.getBG();
+                    counterBG--;
+                }
+                if (dVR.getIns1() != 0) {
+                    sumIns1 -= dVR.getIns1();
+                    counterIns1--;
+                }
+                if (dVR.getIns2() != 0) {
+                    sumIns2 -= dVR.getIns2();
+                    counterIns2--;
+                }
+                if (dVR.getBE() != 0) {
+                    sumBE -= dVR.getBE();
+                    counterBE--;
+                }
+
                 dataRows.remove(i);
+                highestBG = 0;
+                lowestBG = Float.MAX_VALUE;
+                for (int j = 0; j < dataRows.size(); j++) {
+                    dVR = (DailyValuesRow)dataRows.elementAt(j);
+                    highestBG = Math.max(dVR.getBG(), highestBG);
+                    lowestBG = Math.min(dVR.getBG(), lowestBG);
+                }
+            }
         } catch (Exception e) {
         }
     }
@@ -155,7 +184,50 @@ public class DailyValues implements Serializable
 
     public void setValueAt(Object aValue, int row, int column)
     {
-        ((DailyValuesRow)(dataRows.elementAt(row))).setValueAt(aValue, column);
+        DailyValuesRow dVR = (DailyValuesRow)(dataRows.elementAt(row));
+        if (column > 0 && column < 5) {
+            float oldVal = ((Float)dVR.getValueAt(column)).floatValue();
+            float newVal = ((Float)aValue).floatValue();
+            switch (column) {
+                case 1:
+                    sumBG -= oldVal - newVal;
+                    if (oldVal != 0)
+                        counterBG--;
+                    if (newVal != 0)
+                        counterBG++;
+                    break;
+                case 2:
+                    sumIns1 -= oldVal - newVal;
+                    if (oldVal != 0)
+                        counterIns1--;
+                    if (newVal != 0)
+                        counterIns1++;
+                    break;
+                case 3:
+                    sumIns2 -= oldVal - newVal;
+                    if (oldVal != 0)
+                        counterIns2--;
+                    if (newVal != 0)
+                        counterIns2++;
+                    break;
+                case 4:
+                    sumBE -= oldVal - newVal;
+                    if (oldVal != 0)
+                        counterBE--;
+                    if (newVal != 0)
+                        counterBE++;
+            }
+        }
+        dVR.setValueAt(aValue, column);
+
+        highestBG = 0;
+        lowestBG = Float.MAX_VALUE;
+        for (int j = 0; j < dataRows.size(); j++) {
+            dVR = (DailyValuesRow)dataRows.elementAt(j);
+            highestBG = Math.max(dVR.getBG(), highestBG);
+            lowestBG = Math.min(dVR.getBG(), lowestBG);
+        }
+
         bHasChangedValues = true;
     }
 
@@ -341,6 +413,9 @@ public class DailyValues implements Serializable
                 c++;
             }
         }
-        return (float)Math.sqrt(tmp / --c);
+        if (--c > 0)
+            return (float)Math.sqrt(tmp / c);
+        else
+            return 0;
     }
 }
