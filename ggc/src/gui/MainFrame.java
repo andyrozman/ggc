@@ -74,30 +74,30 @@ public class MainFrame extends JFrame
         helpMenu.setMnemonic('H');
 
         connectAction = new GGCAction("Connect", "Connect to DataBase");
-        connectAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/connect.png"));
+        connectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/connect.png")));
         disconnectAction = new GGCAction("Disconnect", "Disconnect from DataBase");
-        disconnectAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/disconnect.png"));
+        disconnectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/disconnect.png")));
 
         newAction = new GGCAction("New", KeyStroke.getKeyStroke('N', Event.CTRL_MASK), "Create a new DataBase");
-        newAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/new.png"));
+        newAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/new.png")));
         openAction = new GGCAction("Open", KeyStroke.getKeyStroke('O', Event.CTRL_MASK), "Open existing DataBase");
-        openAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/open.png"));
+        openAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/open.png")));
         closeAction = new GGCAction("Close", KeyStroke.getKeyStroke('C', Event.CTRL_MASK), "Close current DataBase");
-        closeAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/close.png"));
+        closeAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/close.png")));
         quitAction = new GGCAction("Quit", KeyStroke.getKeyStroke('Q', Event.CTRL_MASK), "Quit ggc");
 
         viewDailyAction = new GGCAction("Daily", KeyStroke.getKeyStroke('D', Event.CTRL_MASK), "View Daily Stats");
-        viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/daily.png"));
+        viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.png")));
         viewCourseGraphAction = new GGCAction("Course", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "View Course");
-        viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/course.png"));
+        viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.png")));
         viewSpreadGraphAction = new GGCAction("Spread", "View Spread");
-        viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/spread.png"));
+        viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.png")));
         viewFrequencyGraphAction = new GGCAction("Frequency", "View frequency of values");
-        viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/frequency.png"));
+        viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.png")));
         viewHbA1cAction = new GGCAction("HbA1c", "View your HbA1c");
 
         readMeterAction = new GGCAction("from Meter", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "Read Data From Meter");
-        readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon("ggc/icons/readmeter.png"));
+        readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.png")));
 
         prefAction = new GGCAction("Preferences", KeyStroke.getKeyStroke('P', Event.CTRL_MASK), "Preferences");
 
@@ -256,7 +256,7 @@ public class MainFrame extends JFrame
 
     private void addToolBarSpacer()
     {
-        JLabel lbl = new JLabel(new ImageIcon("ggc/icons/spacer.png"));
+        JLabel lbl = new JLabel(new ImageIcon(getClass().getResource("/icons/spacer.png")));
         lbl.setEnabled(false);
         toolBar.add(lbl);
     }

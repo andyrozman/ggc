@@ -1,17 +1,23 @@
 GNU Gluco Control (GGC) is a pure Java application helping you to manage your
 diabetes.
 
-Currently, we are in a very early stage of development. Most likely it will
-not run on your system. You need to edit the sources to reflect your system
-configuration. You also need the:
+Currently, we are in a very early stage of development.
+
+You need the commapi:
  javacomm api <http://java.sun.com/products/javacomm>
 installed on your system, if you want to access your "GlucoCard" Meter. It is
 the only meter avaible to me, so there will be no support for additional
 meters in the near future. But, you are invited to write on, or give us the
 protocol specification for your meter ;-)
 
+If you want to store your data in a MySQL Database (recommended), you need this 
+driver:
+ mm.mysql.jdbc <http://www.mysql.com/downloads/api-jdbc.html>
+
 Install:
 ========
+
+CVS:
 
 1. Get the sources from the sf cvs servers.
 2. Compile them.
@@ -25,6 +31,26 @@ Install:
 	#java -noverify ggc
 
 (Make sure you have all required classes in your classpath)
+
+Packaged Version:
+
+1. Download the package (from sourcforge).
+2. Extract it:
+
+        #gunzip ggc_<version>.tar.gz
+
+3. Untar it:
+	
+	#tar xf ggc_<version>.tar
+
+   This will create a new directory named 'ggc'. There you find all resources,
+   sources and a *.jar file.
+
+4. Run GGC:
+
+	#java -jar ggc.jar
+
+5. Have fun while testing.
 
 Future:
 =======
