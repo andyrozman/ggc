@@ -32,6 +32,7 @@ package ggc.db;
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.HbA1cValues;
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import java.util.Date;
@@ -39,8 +40,11 @@ import java.util.Date;
 
 public abstract class DataBaseHandler
 {
-    static boolean connectedToDB = false;
-    static boolean connected = false;
+    
+    protected I18nControl m_ic = I18nControl.getInstance();    
+    
+    public static boolean connectedToDB = false;
+    public static boolean connected = false;
 
     private static DataBaseHandler singleton = null;
     static GGCProperties props = GGCProperties.getInstance();
@@ -55,7 +59,9 @@ public abstract class DataBaseHandler
     {
         if (singleton == null) {
             String s = props.getDataSource();
-            if (s.equals("MySQL"))
+            if (s.equals("HSQL"))
+                singleton = HSQLHandler.getInstance();
+	    else if (s.equals("MySQL"))
                 singleton = MySQLHandler.getInstance();
             else if (s.equals("Textfile"))
                 singleton = new TextFileHandler();
@@ -90,7 +96,7 @@ public abstract class DataBaseHandler
         if (name != null && !name.equals(""))
             dbName = name;
         else
-            JOptionPane.showMessageDialog(null, "Invalid Name for a Database", "GGC Error - Invalid Name", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, m_ic.getMessage("INVALID_NAME_FOR_DB"), "GGC " + m_ic.getMessage("ERROR")+ " - " + m_ic.getMessage("INVALID_NAME"), JOptionPane.ERROR_MESSAGE);
     }
 
     public abstract DailyValues getDayStats(Date day);

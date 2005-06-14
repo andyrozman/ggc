@@ -28,9 +28,10 @@
 package ggc.gui;
 
 
-import datamodels.HbA1cValues;
-import db.DataBaseHandler;
-import view.HbA1cView;
+import ggc.datamodels.HbA1cValues;
+import ggc.db.DataBaseHandler;
+import ggc.util.I18nControl;
+import ggc.view.HbA1cView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,8 @@ import java.util.Date;
 
 public class HbA1cFrame extends JFrame
 {
+    private I18nControl m_ic = I18nControl.getInstance();        
+
     private static HbA1cFrame singleton = null;
     private static HbA1cView hbView;
     private HbA1cValues hbValues;
@@ -84,23 +87,23 @@ public class HbA1cFrame extends JFrame
         JPanel infoPanel = new JPanel(new BorderLayout());
 
         Box a = Box.createHorizontalBox();
-        a.add(new JLabel("Valuation:"));
+        a.add(new JLabel(m_ic.getMessage("VALUATION")+":"));
         a.add(lblExp = new JLabel());
 
         Box b = Box.createHorizontalBox();
-        b.add(new JLabel("BG Avg:"));
+        b.add(new JLabel(m_ic.getMessage("BG")+" "+ m_ic.getMessage("AVG")+":"));
         b.add(lblBGAvg = new JLabel());
 
         Box c = Box.createHorizontalBox();
-        c.add(new JLabel("Readings:"));
+        c.add(new JLabel(m_ic.getMessage("READINGS")+":"));
         c.add(lblReadings = new JLabel());
 
         Box d = Box.createHorizontalBox();
-        d.add(new JLabel("Readings / Day:"));
+        d.add(new JLabel(m_ic.getMessage("READINGS_SLASH_DAY")+":"));
         d.add(lblReadingsPerDay = new JLabel());
 
         Box e = Box.createVerticalBox();
-        e.add(new JLabel("Your current HbA1c:"));
+        e.add(new JLabel(m_ic.getMessage("YOUR_CURRENT")+" HbA1c:"));
         lblHbA1c = new JLabel();
         lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
         e.add(lblHbA1c);
@@ -111,7 +114,7 @@ public class HbA1cFrame extends JFrame
         e.add(d);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton closeButton = new JButton("Close");
+        JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(new Dimension(80, 20));
         closeButton.addActionListener(new ActionListener()
         {

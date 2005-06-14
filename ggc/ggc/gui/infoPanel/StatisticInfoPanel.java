@@ -57,7 +57,7 @@ public class StatisticInfoPanel extends AbstractInfoPanel
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
-        ((TitledBorder)this.getBorder()).setTitle("Statistics for last weeks (" + sdf.format(startDate) + " - " + sdf.format(endDate) + ")");
+        ((TitledBorder)this.getBorder()).setTitle(m_ic.getMessage("STATISTICS_FOR_LAST_WEEK")+" (" + sdf.format(startDate) + " - " + sdf.format(endDate) + ")");
 
         init();
         refreshInfo();
@@ -67,52 +67,52 @@ public class StatisticInfoPanel extends AbstractInfoPanel
     {
         JPanel PanelBG = new JPanel(new GridLayout(2,2));
         PanelBG.setOpaque(false);
-        PanelBG.setBorder(BorderFactory.createTitledBorder("BG Statistics:"));
-        PanelBG.add(new JLabel("Avg BG:"));
+        PanelBG.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BG_STATISTICS")+":"));
+        PanelBG.add(new JLabel(m_ic.getMessage("AVG_BG")+":"));
         PanelBG.add(lblAvgBG = new JLabel());
-        PanelBG.add(new JLabel("Readings:"));
+        PanelBG.add(new JLabel(m_ic.getMessage("READINGS")+":"));
         PanelBG.add(lblBGReadings = new JLabel());
 
         JPanel PanelBU = new JPanel(new GridLayout(5, 2));
         PanelBU.setOpaque(false);
-        PanelBU.setBorder(BorderFactory.createTitledBorder("BU Statistics:"));
-        PanelBU.add(new JLabel("Sum BU:"));
+        PanelBU.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BU_STATISTICS")+":"));
+        PanelBU.add(new JLabel(m_ic.getMessage("SUM_BU")+":"));
         PanelBU.add(lblSumBU = new JLabel());
-        PanelBU.add(new JLabel("BU per Day:"));
+        PanelBU.add(new JLabel(m_ic.getMessage("BU_PER_DAY")+":"));
         PanelBU.add(lblBUDay = new JLabel());
-        PanelBU.add(new JLabel("Meals:"));
+        PanelBU.add(new JLabel(m_ic.getMessage("MEALS")+":"));
         PanelBU.add(lblCountBU = new JLabel());
-        PanelBU.add(new JLabel("Avg Meal Size:"));
+        PanelBU.add(new JLabel(m_ic.getMessage("AVG_MEAL_SIZE")+":"));
         PanelBU.add(lblAvgBU = new JLabel());
-        PanelBU.add(new JLabel("Meals per Day:"));
+        PanelBU.add(new JLabel(m_ic.getMessage("MEALS_PER_DAY")+":"));
         PanelBU.add(lblBUCountDay = new JLabel());
 
         JPanel PanelIns1 = new JPanel(new GridLayout(5, 2));
         PanelIns1.setOpaque(false);
-        PanelIns1.setBorder(BorderFactory.createTitledBorder(props.getIns1Name() + " Statistics:"));
-        PanelIns1.add(new JLabel("Sum" + props.getIns1Abbr() + ":"));
+        PanelIns1.setBorder(BorderFactory.createTitledBorder(props.getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
+        PanelIns1.add(new JLabel(m_ic.getMessage("SUM") + " " + props.getIns1Abbr() + ":"));
         PanelIns1.add(lblSumIns1 = new JLabel());
-        PanelIns1.add(new JLabel(props.getIns1Abbr() + " per Day:"));
+        PanelIns1.add(new JLabel(props.getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
         PanelIns1.add(lblIns1Day = new JLabel());
-        PanelIns1.add(new JLabel("Dose:"));
+        PanelIns1.add(new JLabel(m_ic.getMessage("DOSE")+":"));
         PanelIns1.add(lblCountIns1 = new JLabel());
-        PanelIns1.add(new JLabel("Avg Dose Size:"));
+        PanelIns1.add(new JLabel(m_ic.getMessage("AVG_DOSE_SIZE")+":"));
         PanelIns1.add(lblAvgIns1 = new JLabel());
-        PanelIns1.add(new JLabel("Doses per Day:"));
+        PanelIns1.add(new JLabel(m_ic.getMessage("DOSES_PER_DAY")+":"));
         PanelIns1.add(lblIns1CountDay = new JLabel());
 
         JPanel PanelIns2 = new JPanel(new GridLayout(5, 2));
         PanelIns2.setOpaque(false);
-        PanelIns2.setBorder(BorderFactory.createTitledBorder(props.getIns2Name() + " Statistics:"));
-        PanelIns2.add(new JLabel("Sum " + props.getIns2Abbr() + ":"));
+        PanelIns2.setBorder(BorderFactory.createTitledBorder(props.getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
+        PanelIns2.add(new JLabel(m_ic.getMessage("SUM") + " " + props.getIns2Abbr() + ":"));
         PanelIns2.add(lblSumIns2 = new JLabel());
-        PanelIns2.add(new JLabel(props.getIns2Abbr() + " per Day:"));
+        PanelIns2.add(new JLabel(props.getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
         PanelIns2.add(lblIns2Day = new JLabel());
-        PanelIns2.add(new JLabel("Dose:"));
+        PanelIns2.add(new JLabel(m_ic.getMessage("DOSE")+":"));
         PanelIns2.add(lblCountIns2 = new JLabel());
-        PanelIns2.add(new JLabel("Avg Dose Size:"));
+        PanelIns2.add(new JLabel(m_ic.getMessage("AVG_DOSE_SIZE")+":"));
         PanelIns2.add(lblAvgIns2 = new JLabel());
-        PanelIns2.add(new JLabel("Doses per Day:"));
+        PanelIns2.add(new JLabel(m_ic.getMessage("DOSES_PER_DAY")+":"));
         PanelIns2.add(lblIns2CountDay = new JLabel());
 
         setLayout(new GridLayout(2,2));

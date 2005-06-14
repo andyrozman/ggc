@@ -29,6 +29,9 @@ package ggc.util;
 
 
 import java.awt.*;
+import java.io.*;
+
+import javax.swing.JLabel;
 
 
 public class GGCProperties extends GGCPropertiesHelper
@@ -39,7 +42,7 @@ public class GGCProperties extends GGCPropertiesHelper
     {
         super.read();
         //setDefault("DBName", "glucodb");
-        setDefault("UserName", "Unnamed User");
+        setDefault("UserName", I18nControl.getInstance().getMessage("UNNAMED_USER"));
         setDefault("Ins1Name", "Insulin 1");
         setDefault("Ins2Name", "Insulin 2");
         setDefault("Ins1Abbr", "Ins1");
@@ -55,7 +58,7 @@ public class GGCProperties extends GGCPropertiesHelper
         setDefault("MySQLPass", "gluco");
         setDefault("MySQLDBName", "glucodb");
         setDefault("MySQLOpenDefaultDB", "false");
-        setDefault("TextFilePath", System.getProperty("user.home") + "/MyValues.gcv");
+        setDefault("TextFilePath", "../data/MyValues.gcv");
         setDefault("TextFileOpenDefaultFile", "false");
         setDefault("AutoConnect", "false");
         setDefault("Rendering", "0");
@@ -309,4 +312,7 @@ public class GGCProperties extends GGCPropertiesHelper
     {
         return get("MeterPort");
     }
+
+
+
 }

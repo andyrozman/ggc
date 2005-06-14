@@ -68,7 +68,7 @@ public class MySQLHandler extends DataBaseHandler
             String sourceURL = "jdbc:mysql://" + props.getMySQLHost() + ":" + props.getMySQLPort() + "/?user=" + props.getMySQLUser() + "&password=" + props.getMySQLPass();
             con = DriverManager.getConnection(sourceURL);
             connected = true;
-            StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] no DataBase");
+            StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] " + m_ic.getMessage("NO_DATABASE"));
         } catch (ClassNotFoundException cnfe) {
             System.err.println(cnfe);
         } catch (SQLException sqle) {
@@ -81,11 +81,11 @@ public class MySQLHandler extends DataBaseHandler
     public void openDataBase(boolean ask)
     {
         if (ask) {
-            String s = JOptionPane.showInputDialog("Enter DB Name to open:");
+            String s = JOptionPane.showInputDialog(m_ic.getMessage("ENTER_DB_TO_OPEN")+":");
             if (s != null && !s.equals(""))
                 dbName = s;
             else {
-                JOptionPane.showMessageDialog(null, "Invalid Name for a Database", "GGC Error - Invalid Name", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, m_ic.getMessage("INVALID_NAME_FOR_DB"), "GGC " + m_ic.getMessage("ERROR")+ " - " + m_ic.getMessage("INVALID_NAME"), JOptionPane.ERROR_MESSAGE);
                 connectedToDB = false;
                 return;
             }
@@ -105,7 +105,7 @@ public class MySQLHandler extends DataBaseHandler
     public void closeDataBase()
     {
         connectedToDB = false;
-        StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] no DataBase");
+        StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] " + m_ic.getMessage("NO_DATABASE"));
     }
 
     public HbA1cValues getHbA1c(java.util.Date day)
@@ -266,7 +266,7 @@ public class MySQLHandler extends DataBaseHandler
         } finally {
             connected = false;
             connectedToDB = false;
-            StatusBar.getInstance().setDataSourceText("MySQL [no Connection]");
+            StatusBar.getInstance().setDataSourceText("MySQL [" + m_ic.getMessage("NO_CONNECTION") + "]");
         }
     }
 

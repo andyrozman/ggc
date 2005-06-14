@@ -32,6 +32,7 @@ package ggc.datamodels;
 import ggc.event.GlucoValueEvent;
 import ggc.event.GlucoValueEventListener;
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 import javax.swing.table.AbstractTableModel;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,9 @@ import java.text.SimpleDateFormat;
 
 public class GlucoTableModel extends AbstractTableModel implements GlucoValueEventListener
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();
+
     GlucoValues dayData;
     GGCProperties props = GGCProperties.getInstance();
 
@@ -72,7 +76,8 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
 
     public String getColumnName(int column)
     {
-        String[] s = {"Datetime", "BG", props.getIns1Abbr(), props.getIns2Abbr(), "BE", "Act", "Comment"};
+        String[] s = {
+            m_ic.getMessage("DATETIME"), m_ic.getMessage("BG"), props.getIns1Abbr(), props.getIns2Abbr(), m_ic.getMessage("BE"), m_ic.getMessage("ACT"), m_ic.getMessage("COMMENT") };
         return s[column];
     }
 

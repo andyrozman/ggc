@@ -45,12 +45,12 @@ public class prefTextFileSetupPane extends AbstractPrefOptionsPanel
     private void init()
     {
         JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel("Default File:"));
+        a.add(new JLabel(m_ic.getMessage("DEFAULT_FILE")+":"));
         a.add(new JLabel(""));
 
         JPanel b = new JPanel(new GridLayout(0, 1));
         b.add(fieldDefaultPath = new JTextField(props.getTextFilePath(), 10));
-        b.add(chkOpenDefault = new JCheckBox("Open Default File upon Connect", props.getTextFileOpenDefaultFile()));
+        b.add(chkOpenDefault = new JCheckBox(m_ic.getMessage("OPEN_DEFAULT_FILE_UPON_CONNECT"), props.getTextFileOpenDefaultFile()));
 
         fieldDefaultPath.getDocument().addDocumentListener(this);
         chkOpenDefault.addActionListener(this);
@@ -60,7 +60,7 @@ public class prefTextFileSetupPane extends AbstractPrefOptionsPanel
         myBox.add(b);
 
         JPanel titlePanel = new JPanel(new BorderLayout());
-        titlePanel.setBorder(BorderFactory.createTitledBorder("Text File Setup:"));
+        titlePanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("TEXT_FILE_SETUP")+":"));
         titlePanel.add(myBox, BorderLayout.CENTER);
 
         setLayout(new BorderLayout());

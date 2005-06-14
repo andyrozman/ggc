@@ -42,7 +42,7 @@ public class GGCPropertiesHelper
     public GGCPropertiesHelper()
     {
         try {
-            File tmpFile = new File(System.getProperty("user.home") + "/.ggc.prefs");
+            File tmpFile = new File("../data/GGC.properties");
             if (!tmpFile.exists())
                 tmpFile.createNewFile();
             propsFile = tmpFile;
@@ -91,7 +91,7 @@ public class GGCPropertiesHelper
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(propsFile);
-            props.store(out, "This file was automatically generated.");
+            props.store(out, I18nControl.getInstance().getMessage("THIS_FILE_WAS_AUTOMATICALY_GENERATED"));
         } catch (IOException e) {
             System.err.println(e);
         } finally {

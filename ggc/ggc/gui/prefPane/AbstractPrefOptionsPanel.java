@@ -30,6 +30,7 @@ package ggc.gui.prefPane;
 
 
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -42,6 +43,9 @@ import java.awt.event.ItemListener;
 
 public abstract class AbstractPrefOptionsPanel extends JPanel implements DocumentListener, ItemListener, ActionListener
 {
+
+    protected I18nControl m_ic = I18nControl.getInstance();
+
     protected GGCProperties props = GGCProperties.getInstance();
     protected boolean changed = false;
 
@@ -80,7 +84,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     {
 
         if (changed) {
-            int res = JOptionPane.showConfirmDialog(null, "Some values have changed. Would you like to safe them?", "Values Changed", JOptionPane.YES_NO_OPTION);
+            int res = JOptionPane.showConfirmDialog(null, m_ic.getMessage("SOME_VALUES_CHANGED_LIKE_TO_SAVE"), m_ic.getMessage("VALUES_CHANGED"), JOptionPane.YES_NO_OPTION);
             if (res == JOptionPane.YES_OPTION)
                 saveProps();
         }

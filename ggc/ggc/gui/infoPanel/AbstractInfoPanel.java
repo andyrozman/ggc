@@ -29,6 +29,7 @@ package ggc.gui.infoPanel;
 
 
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 
@@ -37,12 +38,16 @@ public abstract class AbstractInfoPanel extends JPanel
 {
     GGCProperties props = GGCProperties.getInstance();
 
+    protected I18nControl m_ic = I18nControl.getInstance();
+
     public AbstractInfoPanel(String title)
     {
         super();
         setBorder(BorderFactory.createTitledBorder(title));
         setOpaque(false);
     }
+
+    //public void setTitle(String title)
 
     public abstract void refreshInfo();
 }

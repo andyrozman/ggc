@@ -56,11 +56,11 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
     private void init()
     {
         JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel("Host:"));
-        a.add(new JLabel("Port:"));
-        a.add(new JLabel("Username:"));
-        a.add(new JLabel("Password:"));
-        a.add(new JLabel("Default DataBase:"));
+        a.add(new JLabel(m_ic.getMessage("HOST")+":"));
+        a.add(new JLabel(m_ic.getMessage("PORT")+":"));
+        a.add(new JLabel(m_ic.getMessage("USERNAME")+":"));
+        a.add(new JLabel(m_ic.getMessage("PASSWORD")+":"));
+        a.add(new JLabel(m_ic.getMessage("DEFAULT_DATABASE")+":"));
         a.add(new JLabel(""));
 
 
@@ -70,7 +70,7 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         b.add(fieldUser = new JTextField(props.getMySQLUser(), 10));
         b.add(fieldPass = new JTextField(props.getMySQLPass(), 10));
         b.add(fieldDB = new JTextField(props.getMySQLDBName(), 10));
-        b.add(chkOpenDefault = new JCheckBox("Open Default DataBase upon Connect", props.getMySQLOpenDefaultDB()));
+        b.add(chkOpenDefault = new JCheckBox(m_ic.getMessage("OPEN_DEFAULT_DATABASE_UPON_CONNECT"), props.getMySQLOpenDefaultDB()));
 
         fieldHost.getDocument().addDocumentListener(this);
         fieldPort.getDocument().addDocumentListener(this);
@@ -84,10 +84,10 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         optionBox.add(b);
 
         JPanel optionPanel = new JPanel(new BorderLayout(5, 5));
-        optionPanel.setBorder(BorderFactory.createTitledBorder("MySQL Options"));
+        optionPanel.setBorder(BorderFactory.createTitledBorder("MySQL" + m_ic.getMessage("OPTIONS")));
         optionPanel.add(optionBox, BorderLayout.CENTER);
 
-        JButton testButton = new JButton("Connect");
+        JButton testButton = new JButton(m_ic.getMessage("CONNECT"));
         testButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -95,7 +95,7 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
                 doTest();
             }
         });
-        lblState = new JLabel("State:");
+        lblState = new JLabel(m_ic.getMessage("STATE")+":");
         errorText = new JTextArea(3, 10);
         errorText.setEditable(false);
         errorText.setLineWrap(true);
@@ -106,7 +106,7 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         headerPanel.add(lblState, BorderLayout.CENTER);
 
         JPanel connectionPanel = new JPanel(new BorderLayout(5, 5));
-        connectionPanel.setBorder(BorderFactory.createTitledBorder("Test Connection"));
+        connectionPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("TEST_CONNECTION")));
         connectionPanel.add(headerPanel, BorderLayout.NORTH);
         connectionPanel.add(errorText, BorderLayout.CENTER);
 

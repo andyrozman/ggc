@@ -59,12 +59,12 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
         comboPortId.addItemListener(this);
 
         JPanel a = new JPanel(new GridLayout(2, 2));
-        a.add(new JLabel("Meter type:"));
+        a.add(new JLabel(m_ic.getMessage("METER_TYPE")+":"));
         a.add(comboMeterType);
-        a.add(new JLabel("Port to use:"));
+        a.add(new JLabel(m_ic.getMessage("PORT_TO_USE")+":"));
         a.add(comboPortId);
 
-        a.setBorder(BorderFactory.createTitledBorder("Meter Configuration"));
+        a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_CONFIGURATION")));
 
         add(a, BorderLayout.NORTH);
     }

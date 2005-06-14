@@ -12,6 +12,7 @@ import ggc.datamodels.DailyValuesRow;
 import ggc.util.BGInputVerifier;
 import ggc.util.DateInputVerifier;
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 import ggc.util.TimeInputVerifier;
 
 import javax.swing.*;
@@ -30,6 +31,8 @@ import java.awt.event.KeyEvent;
  */
 public class DailyValuesRowDialog extends JDialog
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();    
 
     private DailyValuesRow dailyValuesRow = null;
 
@@ -163,29 +166,29 @@ public class DailyValuesRowDialog extends JDialog
         JLabel label = null;
 
         JPanel dataContainer = new JPanel(gridbag);
-        dataContainer.setBorder(new TitledBorder("Add new values"));
+        dataContainer.setBorder(new TitledBorder(m_ic.getMessage("ADD_NEW_VALUES")));
         content.add(dataContainer, "Center");
 
 
         dateField.setInputVerifier(new DateInputVerifier());
-        addComponent("Date [dd.mm.yyyy] *", dateField, 0.0f, dataContainer);
+        addComponent(m_ic.getMessage("DATE") + " [dd.mm.yyyy] *", dateField, 0.0f, dataContainer);
 
         timeField.setInputVerifier(new TimeInputVerifier());
-        addComponent("Time [hh:mm] *", timeField, 0.0f, dataContainer);
+        addComponent(m_ic.getMessage("TIME") + " [hh:mm] *", timeField, 0.0f, dataContainer);
 
         bgField.setInputVerifier(new BGInputVerifier(false));
-        addComponent("BG", bgField, 0.0f, dataContainer);
+        addComponent(m_ic.getMessage("BG"), bgField, 0.0f, dataContainer);
 
         addComponent(GGCProperties.getInstance().getIns1Abbr(), ins1Field, 0.0f, dataContainer);
 
         addComponent(GGCProperties.getInstance().getIns2Abbr(), ins2Field, 0.0f, dataContainer);
 
-        addComponent("BU", buField, 0.0f, dataContainer);
+        addComponent(m_ic.getMessage("BU"), buField, 0.0f, dataContainer);
 
-        addComponent("Act", actField, 0.0f, dataContainer);
+        addComponent(m_ic.getMessage("ACT"), actField, 0.0f, dataContainer);
 
         commentField.setPreferredSize(new Dimension(200, 50));
-        addComponent("Comment", new JScrollPane(commentField), 1.0f, dataContainer);
+        addComponent(m_ic.getMessage("COMMENT"), new JScrollPane(commentField), 1.0f, dataContainer);
         //addComponent("Comment", commentField, dataContainer);
 
 
@@ -259,7 +262,7 @@ public class DailyValuesRowDialog extends JDialog
         public AddAction()
         {
             super();
-            putValue(Action.NAME, "OK");
+            putValue(Action.NAME, m_ic.getMessage("OK"));
             putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_O));
             putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
         }
@@ -284,6 +287,7 @@ public class DailyValuesRowDialog extends JDialog
         public CloseAction()
         {
             super("Cancel");
+            setName(m_ic.getMessage("CANCEL"));
             putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_C));
         }
 

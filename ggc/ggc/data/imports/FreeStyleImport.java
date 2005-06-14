@@ -9,6 +9,7 @@ package ggc.data.imports;
 
 
 import ggc.datamodels.DailyValuesRow;
+import ggc.util.I18nControl;
 
 import javax.comm.SerialPortEvent;
 import javax.swing.*;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Vector;
+
 
 
 /**
@@ -27,6 +29,8 @@ import java.util.Vector;
 public class FreeStyleImport extends SerialMeterImport
 {
 
+    private I18nControl m_ic = I18nControl.getInstance();
+    
     private DailyValuesRow[] importedData = new DailyValuesRow[0];
 
     private Charset charset = null;
@@ -40,14 +44,16 @@ public class FreeStyleImport extends SerialMeterImport
     {
         super();
 
-        setImage(new ImageIcon(getClass().getResource("/icons/freestyle.png")));
-        setUseInfoMessage("<html>" + "Please connect your cable with your meter.<br>" + "Turn your meter on and press \"Import\"" + "</html>");
+        setImage(new ImageIcon(getClass().getResource("/icons/freestyle.gif")));
+        setUseInfoMessage("<html>" + m_ic.getMessage("CONNECT_YOUR_CABLE_WITH_METER") +".<br>" + m_ic.getMessage("TURN_OFF_METER_PRESS_IMPORT") + "</html>");
         setName("FreeStyle");
     }
 
 
     /**
+
      * @see data.imports.DataImport#importData()
+
      */
     public void importData() throws ImportException
     {
@@ -60,6 +66,7 @@ public class FreeStyleImport extends SerialMeterImport
             portOutputStream.write((int)'m');
             portOutputStream.write((int)'e');
             portOutputStream.write((int)'m');
+
             //portOutputStream.write(((int) 'm')+((int) 'e')+((int) 'm'));
         } catch (IOException e) {
         }
@@ -69,7 +76,9 @@ public class FreeStyleImport extends SerialMeterImport
 
 
     /**
+
      * @see data.imports.DataImport#getImportedData()
+
      */
     public DailyValuesRow[] getImportedData()
     {
@@ -78,7 +87,9 @@ public class FreeStyleImport extends SerialMeterImport
 
 
     /**
+
      * @see javax.comm.SerialPortEventListener#serialEvent(SerialPortEvent)
+
      */
     public void serialEvent(SerialPortEvent event)
     {
@@ -91,13 +102,22 @@ public class FreeStyleImport extends SerialMeterImport
 
                 char ident = (char)inputBuffer[0];
 
+
+
                 //System.out.println("ident : " + ident);
 
+
+
                 // Append received data to messageAreaIn.
+
                 //System.out.println("datalength : " + inputBuffer.length());
+
                 //System.out.println(new String(inputBuffer, "UTF-16BE"));
 
+
+
                 //portOutputStream.write((int) ident);
+
                 portOutputStream.write(150);
                 recieved++;
                 System.out.println("recieved : " + recieved);
@@ -109,7 +129,9 @@ public class FreeStyleImport extends SerialMeterImport
     }
 
     /**
+
      *
+
      */
     private StringBuffer createBufferFromStream(InputStream stream)
     {
@@ -139,7 +161,9 @@ public class FreeStyleImport extends SerialMeterImport
 
 
     /**
+
      *
+
      */
     private byte[] createByteBufferFromStream(InputStream stream)
     {
@@ -169,4 +193,6 @@ public class FreeStyleImport extends SerialMeterImport
     }
 
 }
+
+
 

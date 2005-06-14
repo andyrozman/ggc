@@ -10,6 +10,7 @@ package ggc.data.imports;
 
 import ggc.datamodels.DailyValuesRow;
 import ggc.event.ImportEvent;
+import ggc.util.I18nControl;
 
 import javax.comm.NoSuchPortException;
 import javax.comm.SerialPortEvent;
@@ -33,6 +34,8 @@ import java.util.Vector;
 public class EuroFlashImport extends SerialMeterImport
 {
 
+    private I18nControl m_ic = I18nControl.getInstance();
+
     private int counter = 0;
 
     private DailyValuesRow[] importedData = new DailyValuesRow[0];
@@ -48,8 +51,8 @@ public class EuroFlashImport extends SerialMeterImport
     {
         super();
 
-        setImage(new ImageIcon(getClass().getResource("/icons/euroflash.png")));
-        setUseInfoMessage("<html>" + "Please connect your cable with your meter.<br>" + "Turn your meter off and press \"Import\"" + "</html>");
+        setImage(new ImageIcon(getClass().getResource("/icons/euroflash.gif")));
+        setUseInfoMessage("<html>" + m_ic.getMessage("CONNECT_YOUR_CABLE_WITH_METER") +".<br>" + m_ic.getMessage("TURN_OFF_METER_PRESS_IMPORT") + "</html>");
         setName("EuroFlash");
     }
 

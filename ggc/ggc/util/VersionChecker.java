@@ -28,7 +28,7 @@
 package ggc.util;
 
 
-import ggc.*;
+import ggc.GGC;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -41,6 +41,9 @@ import java.util.StringTokenizer;
 
 public class VersionChecker
 {
+    
+    private I18nControl m_ic = I18nControl.getInstance();        
+
     private BufferedReader in = null;
 
     public static void main(String[] args)
@@ -74,11 +77,11 @@ public class VersionChecker
                 String message = null;
 
                 if (isNewVersion(installedVersion, availableVersion))
-                    message = new String("Your Version:\t\t" + installedVersion + "\nAvailable Version:\t" + availableVersion + "\n\n" + sb.toString());
+                    message = m_ic.getMessage("YOUR_VERSION")+":\t\t" + installedVersion + "\n" + m_ic.getMessage("AVAILABLE_VERSION")+":\t" + availableVersion + "\n\n" + sb.toString();
                 else
-                    message = new String("There is no new version available.");
+                    message = m_ic.getMessage("NO_NEW_VERSION");
 
-                JOptionPane.showMessageDialog(null, message, "Check for new Version", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, message, m_ic.getMessage("CHECK_FOR_NEW_VERSION"), JOptionPane.INFORMATION_MESSAGE);
 
             }
         } catch (java.io.IOException e) {

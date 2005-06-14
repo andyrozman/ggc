@@ -44,7 +44,7 @@ public class prefGeneralPane extends AbstractPrefOptionsPanel
     private void init()
     {
         JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel("Your Name:"));
+        a.add(new JLabel(m_ic.getMessage("YOUR_NAME")+":"));
 
         JPanel b = new JPanel(new GridLayout(0, 1));
         b.add(fieldUserName = new JTextField(props.getUserName(), 10));

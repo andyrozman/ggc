@@ -35,6 +35,7 @@ import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
 import ggc.gui.calendar.calendarPane;
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -51,6 +52,9 @@ import java.util.Date;
 
 public class DailyStatsFrame extends JFrame
 {
+    
+    private I18nControl m_ic = I18nControl.getInstance();    
+
     DailyStatsTableModel model = null;
     JScrollPane resultsPane;
     JTable table;
@@ -74,6 +78,7 @@ public class DailyStatsFrame extends JFrame
     private DailyStatsFrame()
     {
         super("DailyStatsFrame");
+        setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
         init();
     }
 
@@ -112,53 +117,53 @@ public class DailyStatsFrame extends JFrame
 
         //Panel for Insulin Stats
         JPanel InsPanel = new JPanel(new GridLayout(3, 6));
-        InsPanel.setBorder(BorderFactory.createTitledBorder("Insulin:"));
+        InsPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN")+":"));
 
         InsPanel.add(new JLabel(props.getIns1Abbr() + ":"));
         InsPanel.add(sumIns1 = new JLabel());
-        InsPanel.add(new JLabel("Avg " + props.getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + props.getIns1Abbr() + ":"));
         InsPanel.add(avgIns1 = new JLabel());
-        InsPanel.add(new JLabel("Dose " + props.getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + props.getIns1Abbr() + ":"));
         InsPanel.add(doseIns1 = new JLabel());
 
         InsPanel.add(new JLabel(props.getIns2Abbr() + ":"));
         InsPanel.add(sumIns2 = new JLabel());
-        InsPanel.add(new JLabel("Avg " + props.getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + props.getIns2Abbr() + ":"));
         InsPanel.add(avgIns2 = new JLabel());
-        InsPanel.add(new JLabel("Dose " + props.getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + props.getIns2Abbr() + ":"));
         InsPanel.add(doseIns2 = new JLabel());
 
-        InsPanel.add(new JLabel("Total:"));
+        InsPanel.add(new JLabel(m_ic.getMessage("TOTAL")+":"));
         InsPanel.add(sumIns = new JLabel());
-        InsPanel.add(new JLabel("Avg Ins:"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVG_INS")+":"));
         InsPanel.add(avgIns = new JLabel());
-        InsPanel.add(new JLabel("Dose Ins:"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSE_INS")+":"));
         InsPanel.add(doseIns = new JLabel());
 
         //Panel for BU Stats
         JPanel BUPanel = new JPanel(new GridLayout(1, 6));
-        BUPanel.setBorder(BorderFactory.createTitledBorder("Bread Units:"));
+        BUPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BREAD_UNITS")+":"));
 
-        BUPanel.add(new JLabel("Sum:"));
+        BUPanel.add(new JLabel(m_ic.getMessage("SUM")+":"));
         BUPanel.add(sumBE = new JLabel());
-        BUPanel.add(new JLabel("Avg:"));
+        BUPanel.add(new JLabel(m_ic.getMessage("AVG")+":"));
         BUPanel.add(avgBE = new JLabel());
-        BUPanel.add(new JLabel("Meals:"));
+        BUPanel.add(new JLabel(m_ic.getMessage("MEALS")+":"));
         BUPanel.add(meals = new JLabel());
 
         //Panel for BG Stats
         JPanel BGPanel = new JPanel(new GridLayout(0, 6));
-        BGPanel.setBorder(BorderFactory.createTitledBorder("Blood Glucose:"));
+        BGPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BLOOD_GLUCOSE")+":"));
 
-        BGPanel.add(new JLabel("Avg BG:"));
+        BGPanel.add(new JLabel(m_ic.getMessage("AVG_BG")+":"));
         BGPanel.add(avgBG = new JLabel());
-        BGPanel.add(new JLabel("Highest:"));
+        BGPanel.add(new JLabel(m_ic.getMessage("HIGHEST")+":"));
         BGPanel.add(highestBG = new JLabel());
-        BGPanel.add(new JLabel("Readings:"));
+        BGPanel.add(new JLabel(m_ic.getMessage("READINGS")+":"));
         BGPanel.add(readings = new JLabel());
-        BGPanel.add(new JLabel("StdDev:"));
+        BGPanel.add(new JLabel(m_ic.getMessage("STD_DEV")+":"));
         BGPanel.add(stdDev = new JLabel());
-        BGPanel.add(new JLabel("Lowest:"));
+        BGPanel.add(new JLabel(m_ic.getMessage("LOWEST")+":"));
         BGPanel.add(lowestBG = new JLabel());
 
         Box dayStats = Box.createVerticalBox();
@@ -170,7 +175,7 @@ public class DailyStatsFrame extends JFrame
         dayHeader.setLayout(new BorderLayout());
 
         JPanel dayCalendar = new JPanel();
-        dayCalendar.setBorder(BorderFactory.createTitledBorder("Date:"));
+        dayCalendar.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("DATE")+":"));
 
         final calendarPane calPane = new calendarPane();
         calPane.addCalendarListener(new CalendarListener()
@@ -210,7 +215,7 @@ public class DailyStatsFrame extends JFrame
         JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 1, 2));
         Dimension dim = new Dimension(120, 20);
 
-        JButton addButton = new JButton("Add Row");
+        JButton addButton = new JButton(m_ic.getMessage("ADD_ROW"));
         addButton.setPreferredSize(dim);
         addButton.addActionListener(new ActionListener()
         {
@@ -223,7 +228,7 @@ public class DailyStatsFrame extends JFrame
         });
         EntryBox.add(addButton);
 
-        JButton delButton = new JButton("Delete Row");
+        JButton delButton = new JButton(m_ic.getMessage("DELETE_ROW"));
         delButton.setPreferredSize(dim);
         delButton.addActionListener(new ActionListener()
         {
@@ -235,7 +240,7 @@ public class DailyStatsFrame extends JFrame
         });
         EntryBox.add(delButton);
 
-        saveButton = new JButton("Save");
+        saveButton = new JButton(m_ic.getMessage("SAVE"));
         saveButton.setPreferredSize(dim);
         saveButton.addActionListener(new ActionListener()
         {

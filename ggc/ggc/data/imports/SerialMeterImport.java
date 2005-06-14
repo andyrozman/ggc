@@ -12,6 +12,7 @@ import ggc.datamodels.DailyValuesRow;
 import ggc.event.ImportEvent;
 import ggc.event.ImportEventListener;
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 import javax.comm.*;
 import javax.swing.*;
@@ -33,6 +34,8 @@ import java.util.Vector;
  */
 public abstract class SerialMeterImport implements DataImport, SerialPortEventListener, Runnable
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();
 
     private boolean isPortOpen = false;
 
@@ -133,7 +136,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
             return isPortOpen;
 
         if (portIdentifier == null) {
-            throw new ImportException("No com port specified");
+            throw new ImportException(m_ic.getMessage("NO_COM_PORT_SPECIFIED"));
         }
 
         try {
@@ -230,7 +233,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
     public void importData() throws ImportException
     {
         if (portIdentifier == null || serialPort == null || portOutputStream == null || portInputStream == null)
-            throw new ImportException("COM-Port is not initialized correct.");
+            throw new ImportException(m_ic.getMessage("COM_PORT_NOT_INIT_CORRECT"));
 
         startTime = System.currentTimeMillis();
         Thread thread = new Thread(this);
@@ -411,9 +414,9 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         Vector retVal = new Vector();
         int counter = 0;
 
-        Enumeration enum = CommPortIdentifier.getPortIdentifiers();
-        while (enum.hasMoreElements()) {
-            CommPortIdentifier portID = (CommPortIdentifier)enum.nextElement();
+        Enumeration enume = CommPortIdentifier.getPortIdentifiers();
+        while (enume.hasMoreElements()) {
+            CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
             if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
                 retVal.add(portID.getName());
         }

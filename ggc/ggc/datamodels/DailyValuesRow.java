@@ -27,6 +27,8 @@
 
 package ggc.datamodels;
 
+import ggc.util.I18nControl;
+
 
 import javax.swing.*;
 import java.io.Serializable;
@@ -37,6 +39,9 @@ import java.util.Date;
 
 public class DailyValuesRow implements Serializable
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();
+
     private Date datetime;
     private Float BG;
     private Float Ins1;
@@ -64,7 +69,7 @@ public class DailyValuesRow implements Serializable
             try {
                 this.datetime = new Date(df.parse(datetime).getTime());
             } catch (ParseException e) {
-                JOptionPane.showMessageDialog(null, "Date must be in form: 'dd.MM.yyyy'", "Error Parsing Date", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, m_ic.getMessage("DATE_MUST_BE_IN_FORMAT") + ": 'dd.MM.yyyy'", m_ic.getMessage("ERROR_PARSING_DATE"), JOptionPane.ERROR_MESSAGE);
                 this.datetime = null;
             }
             if (BG.trim().equals(""))
@@ -233,4 +238,48 @@ public class DailyValuesRow implements Serializable
                 break;
         }
     }
+
+
+
+    public int getDateD()
+    {
+	
+	String dat = "";
+
+	dat += datetime.getYear() + 1900;
+
+	dat += getLeadingZero(datetime.getMonth() + 1, 2);
+
+	dat += getLeadingZero(datetime.getDate(), 2);
+
+
+	return Integer.parseInt(dat);
+
+    }
+
+
+    public int getDateT()
+    {
+	
+	return datetime.getHours()*100 + datetime.getMinutes();
+	
+    }
+
+
+
+    public String getLeadingZero(int value, int num_places)
+    {
+
+	String tmp = "" + value;
+
+	while (tmp.length()<num_places)
+	{
+	    tmp = "0" + tmp; 
+	}
+
+	return tmp;
+
+    }
+
+
 }

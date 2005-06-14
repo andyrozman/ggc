@@ -31,6 +31,7 @@ package ggc.gui;
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -40,6 +41,9 @@ import java.awt.event.*;
 
 public class AddRowFrame extends JFrame
 {
+    
+    private I18nControl m_ic = I18nControl.getInstance();    
+    
     static AddRowFrame singleton = null;
     JTextField DateField, TimeField, BGField, Ins1Field, Ins2Field, BUField, ActField, CommentField;
     JButton AddButton;
@@ -52,6 +56,7 @@ public class AddRowFrame extends JFrame
     public AddRowFrame(AbstractTableModel m, DailyValues ndV)
     {
         super("Add New Row");
+        super.setTitle(m_ic.getMessage("ADD_NEW_ROW"));
         dV = ndV;
         mod = m;
         init();
@@ -60,6 +65,7 @@ public class AddRowFrame extends JFrame
     public AddRowFrame(AbstractTableModel m, DailyValues ndV, String nDate)
     {
         super("Add New Row");
+        super.setTitle(m_ic.getMessage("ADD_NEW_ROW"));
         sDate = nDate;
         dV = ndV;
         mod = m;
@@ -87,10 +93,10 @@ public class AddRowFrame extends JFrame
         addWindowListener(new CloseListener());
 
         JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel("Date:", SwingConstants.RIGHT));
-        a.add(new JLabel("BG:", SwingConstants.RIGHT));
+        a.add(new JLabel(m_ic.getMessage("DATE")+":", SwingConstants.RIGHT));
+        a.add(new JLabel(m_ic.getMessage("BG")+":", SwingConstants.RIGHT));
         a.add(new JLabel(props.getIns1Abbr() + ":", SwingConstants.RIGHT));
-        a.add(new JLabel("Act:", SwingConstants.RIGHT));
+        a.add(new JLabel(m_ic.getMessage("ACT")+":", SwingConstants.RIGHT));
 
         JPanel b = new JPanel(new GridLayout(0, 1));
         DateField = new JTextField(10);
@@ -156,10 +162,10 @@ public class AddRowFrame extends JFrame
         });
 
         JPanel c = new JPanel(new GridLayout(0, 1));
-        c.add(new JLabel("Time:", SwingConstants.RIGHT));
-        c.add(new JLabel("BU:", SwingConstants.RIGHT));
+        c.add(new JLabel(m_ic.getMessage("TIME")+":", SwingConstants.RIGHT));
+        c.add(new JLabel(m_ic.getMessage("BU")+":", SwingConstants.RIGHT));
         c.add(new JLabel(props.getIns2Abbr() + ":", SwingConstants.RIGHT));
-        c.add(new JLabel("Comment:", SwingConstants.RIGHT));
+        c.add(new JLabel(m_ic.getMessage("COMMENT")+":", SwingConstants.RIGHT));
 
         JPanel d = new JPanel(new GridLayout(0, 1));
         d.add(TimeField = new JTextField(10));
@@ -226,7 +232,7 @@ public class AddRowFrame extends JFrame
         e.add(d);
 
         Box g = Box.createHorizontalBox();
-        AddButton = new JButton("Add Row");
+        AddButton = new JButton(m_ic.getMessage("ADD_ROW"));
         g.add(Box.createHorizontalGlue());
         getRootPane().setDefaultButton(AddButton);
         AddButton.addActionListener(new ActionListener()
@@ -240,7 +246,7 @@ public class AddRowFrame extends JFrame
         });
 
         g.add(AddButton);
-        JButton CloseButton = new JButton("Close");
+        JButton CloseButton = new JButton(m_ic.getMessage("CLOSE"));
         g.add(Box.createHorizontalStrut(10));
         CloseButton.addActionListener(new ActionListener()
         {

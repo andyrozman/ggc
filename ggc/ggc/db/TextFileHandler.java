@@ -59,19 +59,19 @@ public class TextFileHandler extends DataBaseHandler
     public void closeConnection()
     {
         connected = false;
-        StatusBar.getInstance().setDataSourceText("TextFile: No Connection");
+        StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("NO_CONNECTION"));
     }
 
     public void closeDataBase()
     {
         connectedToDB = false;
-        StatusBar.getInstance().setDataSourceText("TextFile: No File Opened");
+        StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("NO_FILE_OPENED"));
     }
 
     public void connect()
     {
         connected = true;
-        StatusBar.getInstance().setDataSourceText("TextFile: Connected");
+        StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("CONNECTED"));
         if (props.getTextFileOpenDefaultFile())
             openDataBase(false);
     }
@@ -233,7 +233,7 @@ public class TextFileHandler extends DataBaseHandler
 
         if (tmpFile != null) {
             if (!tmpFile.exists()) {
-                int res = JOptionPane.showConfirmDialog(null, tmpFile.getAbsolutePath() + " does not exist.\n\nDo you want to create it?", "File does not exist", JOptionPane.YES_NO_OPTION);
+                int res = JOptionPane.showConfirmDialog(null, tmpFile.getAbsolutePath() + " " + m_ic.getMessage("DOES_NOT_EXIST_WANT_CREATE"), m_ic.getMessage("FILE_DOES_NOT_EXIST"), JOptionPane.YES_NO_OPTION);
                 if (res == JOptionPane.YES_OPTION)
                     try {
                         tmpFile.createNewFile();
@@ -249,7 +249,7 @@ public class TextFileHandler extends DataBaseHandler
             }
             dataFile = tmpFile;
             connectedToDB = true;
-            StatusBar.getInstance().setDataSourceText("TextFile: " + dataFile.getName() + " opened");
+            StatusBar.getInstance().setDataSourceText("TextFile: " + dataFile.getName() + " " + m_ic.getMessage("OPENED"));
         } else
             connectedToDB = false;
     }

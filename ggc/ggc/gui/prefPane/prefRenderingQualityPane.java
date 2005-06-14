@@ -57,13 +57,13 @@ public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
     private void init()
     {
         JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel("AntiAliasing:"));
-        a.add(new JLabel("ColorRendering:"));
-        a.add(new JLabel("Dithering:"));
-        a.add(new JLabel("FractionalMetrics:"));
-        a.add(new JLabel("Interpolation:"));
-        a.add(new JLabel("TextAntiAliasing:"));
-        a.add(new JLabel("Rendering:"));
+        a.add(new JLabel(m_ic.getMessage("ANTIALIASING")+":"));
+        a.add(new JLabel(m_ic.getMessage("COLOR_RENDERING")+":"));
+        a.add(new JLabel(m_ic.getMessage("DITHERING")+":"));
+        a.add(new JLabel(m_ic.getMessage("FRACTIONAL_METRICS")+":"));
+        a.add(new JLabel(m_ic.getMessage("INTERPOLATION")+":"));
+        a.add(new JLabel(m_ic.getMessage("TEXT_ANTIALIASING")+":"));
+        a.add(new JLabel(m_ic.getMessage("RENDERING")+":"));
 
         JPanel b = new JPanel(new GridLayout(0, 1));
 

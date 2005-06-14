@@ -27,6 +27,8 @@
 
 package ggc.gui.calendar;
 
+import ggc.util.I18nControl;
+
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -45,6 +47,8 @@ public class DateRangeSelectionPanel extends JPanel
     //private JTextField fieldEndDate;
     //private Date endDate;
     //private Date startDate;
+
+    private I18nControl m_ic = I18nControl.getInstance();    
 
     private JSpinner spinnerEnd;
     private JSpinner spinnerStart;
@@ -104,11 +108,11 @@ public class DateRangeSelectionPanel extends JPanel
     private void init()
     {
         Box a = Box.createVerticalBox();
-        a.add(new JLabel("Ending Date:"));
+        a.add(new JLabel(m_ic.getMessage("ENDING_DATE")+":"));
         a.add(spinnerEnd = new JSpinner(endSpinnerDateModel));
         ((JSpinner.DateEditor)spinnerEnd.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
 
-        a.add(new JLabel("Starting Date:"));
+        a.add(new JLabel(m_ic.getMessage("STARTING_DATE")+":"));
         a.add(spinnerStart = new JSpinner(startSpinnerDateModel));
         ((JSpinner.DateEditor)spinnerStart.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
 
@@ -129,10 +133,10 @@ public class DateRangeSelectionPanel extends JPanel
         });
 
 
-        JRadioButton rbOneWeek = new JRadioButton("1 Week", iRadioGroupState == ONE_WEEK);
-        JRadioButton rbOneMonth = new JRadioButton("1 Month", iRadioGroupState == ONE_MONTH);
-        JRadioButton rbThreeMonths = new JRadioButton("3 Months", iRadioGroupState == THREE_MONTHS);
-        JRadioButton rbCustom = new JRadioButton("custom", iRadioGroupState == CUSTOM);
+        JRadioButton rbOneWeek = new JRadioButton(m_ic.getMessage("1_WEEK"), iRadioGroupState == ONE_WEEK);
+        JRadioButton rbOneMonth = new JRadioButton(m_ic.getMessage("1_MONTH"), iRadioGroupState == ONE_MONTH);
+        JRadioButton rbThreeMonths = new JRadioButton(m_ic.getMessage("3_MONTHS"), iRadioGroupState == THREE_MONTHS);
+        JRadioButton rbCustom = new JRadioButton(m_ic.getMessage("CUSTOM"), iRadioGroupState == CUSTOM);
 
         if (iRadioGroupState != CUSTOM)
             spinnerStart.setEnabled(false);
@@ -155,7 +159,7 @@ public class DateRangeSelectionPanel extends JPanel
         b.add(rbCustom);
 
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createTitledBorder("DateRange Selector"));
+        setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("DATE_RANGE_SELECTOR")));
 
         add(a, BorderLayout.WEST);
         add(b, BorderLayout.CENTER);

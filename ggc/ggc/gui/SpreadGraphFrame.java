@@ -28,10 +28,11 @@
 package ggc.gui;
 
 
-import datamodels.GlucoValues;
-import gui.calendar.DateRangeSelectionPanel;
-import util.GGCProperties;
-import view.SpreadGraphView;
+import ggc.datamodels.GlucoValues;
+import ggc.gui.calendar.DateRangeSelectionPanel;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
+import ggc.view.SpreadGraphView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,9 @@ import java.awt.event.WindowEvent;
 
 public class SpreadGraphFrame extends JFrame
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();
+
     private static SpreadGraphView sGV;
     private static SpreadGraphFrame singleton = null;
 
@@ -57,7 +61,8 @@ public class SpreadGraphFrame extends JFrame
 
     public SpreadGraphFrame()
     {
-        super("Spread Graph");
+        super();
+        setTitle(m_ic.getMessage("SPREAD_GRAPH"));
         setBounds(200, 400, 700, 300);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
@@ -78,19 +83,19 @@ public class SpreadGraphFrame extends JFrame
         dRS = new DateRangeSelectionPanel();
 
         JPanel selectionPanel = new JPanel(new GridLayout(2, 4));
-        selectionPanel.setBorder(BorderFactory.createTitledBorder("To be drawn:"));
-        selectionPanel.add(chkBG = new JCheckBox("BG", true));
+        selectionPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("TO_BE_DRAWN")+":"));
+        selectionPanel.add(chkBG = new JCheckBox(m_ic.getMessage("BG"), true));
         selectionPanel.add(chkIns1 = new JCheckBox(props.getIns1Abbr(), false));
-        selectionPanel.add(chkBU = new JCheckBox("BU", false));
+        selectionPanel.add(chkBU = new JCheckBox(m_ic.getMessage("BU"), false));
         selectionPanel.add(chkIns2 = new JCheckBox(props.getIns2Abbr(), false));
 
         JPanel optionsPanel = new JPanel();
-        optionsPanel.setBorder(BorderFactory.createTitledBorder("Options:"));
-        optionsPanel.add(chkConnect = new JCheckBox("Connect values for one day.", false));
+        optionsPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("OPTIONS_")+":"));
+        optionsPanel.add(chkConnect = new JCheckBox(m_ic.getMessage("CONNECT_VALUES_FOR_ONE_DAY"), false));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Dimension dim = new Dimension(80, 20);
-        JButton drawButton = new JButton("Draw");
+        JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
         drawButton.addActionListener(new ActionListener()
         {
@@ -100,7 +105,7 @@ public class SpreadGraphFrame extends JFrame
                 redraw();
             }
         });
-        JButton closeButton = new JButton("Close");
+        JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
         closeButton.addActionListener(new ActionListener()
         {

@@ -7,6 +7,7 @@ package ggc.datamodels;
 
 
 import ggc.db.DataBaseHandler;
+import ggc.util.I18nControl;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -16,7 +17,18 @@ import java.util.Vector;
 
 public class DailyValues implements Serializable
 {
-    String[] columnNames = {"Time", "BG", "Ins1", "Ins2", "BU", "Act", "Comment"};
+
+    private I18nControl m_ic = I18nControl.getInstance();
+
+    String[] columnNames = { 
+                        m_ic.getMessage("TIME"),
+                        m_ic.getMessage("BG"),
+                        m_ic.getMessage("INS_1"),
+                        m_ic.getMessage("INS_2"),
+                        m_ic.getMessage("BU"),
+                        m_ic.getMessage("ACT"),
+                        m_ic.getMessage("COMMENT") };
+
     Vector dataRows = new Vector();
     static DataBaseHandler dbH;
     private static DailyValues singleton = null;
@@ -115,6 +127,11 @@ public class DailyValues implements Serializable
 
         bOnlyInsert = false;
     }
+
+
+
+
+
 
     public DailyValuesRow getRowAt(int i)
     {
@@ -273,6 +290,22 @@ public class DailyValues implements Serializable
         return dv.getDateAsString() + " " + dv.getTimeAsString();
     }
 
+
+    public int getDateD(int row)
+    {
+        DailyValuesRow dv = (DailyValuesRow)(dataRows.elementAt(row));
+        return dv.getDateD();
+    }
+
+
+    public int getDateT(int row)
+    {
+        DailyValuesRow dv = (DailyValuesRow)(dataRows.elementAt(row));
+        return dv.getDateT();
+    }
+
+
+
     public float getBGAt(int row)
     {
         return ((DailyValuesRow)(dataRows.elementAt(row))).getBG();
@@ -305,7 +338,7 @@ public class DailyValues implements Serializable
 
     public String getColumnName(int column)
     {
-        return columnNames[column] == null ? "No Name" : columnNames[column];
+        return columnNames[column] == null ? m_ic.getMessage("NO_NAME") : columnNames[column];
     }
 
     public float getAvgBG()
@@ -427,4 +460,47 @@ public class DailyValues implements Serializable
         else
             return 0;
     }
+
+
+    public int getDateD()
+    {
+	
+	String dat = "";
+
+	dat += date.getYear() + 1900;
+
+	dat += getLeadingZero(date.getMonth() + 1, 2);
+
+	dat += getLeadingZero(date.getDate(), 2);
+
+
+	return Integer.parseInt(dat);
+
+    }
+
+
+    public int getDateT()
+    {
+	
+	return date.getHours()*100 + date.getMinutes();
+	
+    }
+
+
+
+    public String getLeadingZero(int value, int num_places)
+    {
+
+	String tmp = "" + value;
+
+	while (tmp.length()<num_places)
+	{
+	    tmp = "0" + tmp; 
+	}
+
+	return tmp;
+
+    }
+
+
 }

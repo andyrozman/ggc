@@ -29,6 +29,7 @@ package ggc.gui;
 
 
 import ggc.datamodels.DailyValues;
+import ggc.util.I18nControl;
 import ggc.view.DailyGraphView;
 
 import javax.swing.*;
@@ -37,12 +38,15 @@ import java.awt.*;
 
 public class DailyGraphFrame extends JFrame
 {
+    private I18nControl m_ic = I18nControl.getInstance();    
+
     private static DailyGraphView dGV = new DailyGraphView();
     private static DailyGraphFrame singleton = null;
 
     public DailyGraphFrame()
     {
         super("DailyGraphFrame");
+        setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
         setBounds(300, 300, 300, 300);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(dGV, BorderLayout.CENTER);

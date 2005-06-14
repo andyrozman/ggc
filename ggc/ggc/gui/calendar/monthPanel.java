@@ -31,6 +31,7 @@ package ggc.gui.calendar;
 import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.datamodels.calendar.CalendarModel;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,7 +40,22 @@ import java.awt.event.ActionListener;
 
 public class monthPanel extends JPanel implements CalendarListener
 {
-    private String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private I18nControl m_ic = I18nControl.getInstance();    
+
+    private String[] months = {
+            m_ic.getMessage("JANUARY"), 
+            m_ic.getMessage("FEBRUARY"), 
+            m_ic.getMessage("MARCH"), 
+            m_ic.getMessage("APRIL"), 
+            m_ic.getMessage("MAY"), 
+            m_ic.getMessage("JUNE"), 
+            m_ic.getMessage("JULY"), 
+            m_ic.getMessage("AUGUST"), 
+            m_ic.getMessage("SEPTEMBER"), 
+            m_ic.getMessage("OCTOBER"), 
+            m_ic.getMessage("NOVEMBER"), 
+            m_ic.getMessage("DECEMBER") };
+
     private JComboBox monthCombo;
 
     public monthPanel(final CalendarModel cMod)

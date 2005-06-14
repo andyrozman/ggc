@@ -10,6 +10,7 @@ package ggc.gui;
 
 import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.GlucoTableModel;
+import ggc.util.I18nControl;
 import ggc.util.UIUtilities;
 
 import javax.swing.*;
@@ -29,6 +30,8 @@ import java.awt.event.KeyEvent;
  */
 public class GlucoTable extends JTable
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();    
 
     public GlucoTable(GlucoTableModel model)
     {
@@ -93,7 +96,7 @@ public class GlucoTable extends JTable
             this.table = table;
 
             putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/RowInsertAfter16.gif")));
-            putValue(Action.SHORT_DESCRIPTION, "Add's a new row of values to the table.");
+            putValue(Action.SHORT_DESCRIPTION, I18nControl.getInstance().getMessage("ADD_NEW_ROW_TO_TABLE"));
             //putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
             putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_A));
         }
@@ -128,7 +131,7 @@ public class GlucoTable extends JTable
             this.table = table;
 
             putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/Remove16.gif")));
-            putValue(Action.SHORT_DESCRIPTION, "Delete selected rows.");
+            putValue(Action.SHORT_DESCRIPTION, I18nControl.getInstance().getMessage("DELETE_SELECTED_ROWS"));
 
             if (table.getModel().getRowCount() == 0)
                 setEnabled(false);

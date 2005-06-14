@@ -30,6 +30,7 @@ package ggc.gui.infoPanel;
 
 import ggc.datamodels.HbA1cValues;
 import ggc.db.DataBaseHandler;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,6 +40,7 @@ import java.util.Date;
 
 public class HbA1cInfoPanel extends AbstractInfoPanel
 {
+
     private JLabel lblHbA1c;
     private JLabel lblVal;
     private JLabel lblAvgBG;
@@ -47,7 +49,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
 
     public HbA1cInfoPanel()
     {
-        super("HbA1c");
+        super(I18nControl.getInstance().getMessage("HBA1C"));
         init();
         refreshInfo();
     }
@@ -58,16 +60,16 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
 
         JPanel lblPanel = new JPanel(new GridLayout(5, 2));
         lblPanel.setBackground(Color.white);
-        lblPanel.add(new JLabel("Your current HbA1c:"));
+        lblPanel.add(new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C")+":"));
         lblPanel.add(lblHbA1c = new JLabel());
         lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 14));
-        lblPanel.add(new JLabel("Valuation:"));
+        lblPanel.add(new JLabel(m_ic.getMessage("VALUATION")+":"));
         lblPanel.add(lblVal = new JLabel());
-        lblPanel.add(new JLabel("Avg BG:"));
+        lblPanel.add(new JLabel(m_ic.getMessage("AVG_BG")+":"));
         lblPanel.add(lblAvgBG = new JLabel());
-        lblPanel.add(new JLabel("Readings:"));
+        lblPanel.add(new JLabel(m_ic.getMessage("READINGS")+":"));
         lblPanel.add(lblReadings = new JLabel());
-        lblPanel.add(new JLabel("Readings / Day:"));
+        lblPanel.add(new JLabel(m_ic.getMessage("READINGS_SLASH_DAY")+":"));
         lblPanel.add(lblReadingsPerDay = new JLabel());
 
         add(lblPanel, BorderLayout.NORTH);
@@ -89,7 +91,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
             lblReadings.setText(hbVal.getReadings() + "");
             lblReadingsPerDay.setText(df.format(hbVal.getReadingsPerDay()));
         } else {
-            lblHbA1c.setText("No DataSource");
+            lblHbA1c.setText(m_ic.getMessage("NO_DATASOURCE"));
             lblVal.setText("");
             lblAvgBG.setText("");
             lblReadings.setText("");

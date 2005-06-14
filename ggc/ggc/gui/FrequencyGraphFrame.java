@@ -28,10 +28,11 @@
 package ggc.gui;
 
 
-import datamodels.GlucoValues;
-import gui.calendar.DateRangeSelectionPanel;
-import util.GGCProperties;
-import view.FrequencyGraphView;
+import ggc.datamodels.GlucoValues;
+import ggc.gui.calendar.DateRangeSelectionPanel;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
+import ggc.view.FrequencyGraphView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,8 @@ import java.awt.event.WindowEvent;
 
 public class FrequencyGraphFrame extends JFrame
 {
+    private I18nControl m_ic = I18nControl.getInstance();    
+
     private static FrequencyGraphView fGV;
     private static FrequencyGraphFrame singleton = null;
 
@@ -52,6 +55,8 @@ public class FrequencyGraphFrame extends JFrame
     public FrequencyGraphFrame()
     {
         super("CourseGraphFrame");
+        setTitle(m_ic.getMessage("COURSEGRAPHFRAME"));
+
         setBounds(200, 400, 700, 300);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
@@ -73,7 +78,7 @@ public class FrequencyGraphFrame extends JFrame
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Dimension dim = new Dimension(80, 20);
-        JButton drawButton = new JButton("Draw");
+        JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
         drawButton.addActionListener(new ActionListener()
         {
@@ -83,7 +88,7 @@ public class FrequencyGraphFrame extends JFrame
                 redraw();
             }
         });
-        JButton closeButton = new JButton("Close");
+        JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
         closeButton.addActionListener(new ActionListener()
         {

@@ -76,7 +76,13 @@ public class StatisticValues
 
     private void addDayValues(DailyValues dv)
     {
-        dayCounter++;
+        //System.out.println("DailyValues: " + dv);
+
+	if (dv==null)
+	    return;
+
+	
+	dayCounter++;
 
         sumBG += dv.getSumBG();
         sumBU += dv.getSumBE();

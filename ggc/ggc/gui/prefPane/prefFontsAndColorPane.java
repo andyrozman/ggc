@@ -46,16 +46,16 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
     public prefFontsAndColorPane()
     {
         items = new Vector();
-        items.add(new NameAndColor("BG High Zone", "HighBG", props.getColorHighBG()));
-        items.add(new NameAndColor("BG Target Zone", "TargetBG", props.getColorTargetBG()));
-        items.add(new NameAndColor("BG Low Zone", "LowBG", props.getColorLowBG()));
-        items.add(new NameAndColor("BG", "BG", props.getColorBG()));
-        items.add(new NameAndColor("BG Average", "AvgBG", props.getColorAvgBG()));
-        items.add(new NameAndColor("Bread Units", "BU", props.getColorBU()));
-        items.add(new NameAndColor("Insulin " + props.getIns1Abbr(), "Ins1", props.getColorIns1()));
-        items.add(new NameAndColor("Insulin " + props.getIns2Abbr(), "Ins2", props.getColorIns2()));
-        items.add(new NameAndColor("Insulin", "Ins", props.getColorIns()));
-        items.add(new NameAndColor("Ins / BU Quotient", "InsPerBU", props.getColorInsPerBU()));
+        items.add(new NameAndColor(m_ic.getMessage("BG_HIGH_ZONE"), "HighBG", props.getColorHighBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BG_TARGET_ZONE"), "TargetBG", props.getColorTargetBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BG_LOW_ZONE"), "LowBG", props.getColorLowBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BG"), "BG", props.getColorBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BG_AVERAGE"), "AvgBG", props.getColorAvgBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BREAD_UNITS"), "BU", props.getColorBU()));
+        items.add(new NameAndColor(m_ic.getMessage("INSULIN")+" " + props.getIns1Abbr(), "Ins1", props.getColorIns1()));
+        items.add(new NameAndColor(m_ic.getMessage("INSULIN")+" " + props.getIns2Abbr(), "Ins2", props.getColorIns2()));
+        items.add(new NameAndColor(m_ic.getMessage("INSULIN"), "Ins", props.getColorIns()));
+        items.add(new NameAndColor(m_ic.getMessage("INS_SLASH_BU_QUOTIENT"), "InsPerBU", props.getColorInsPerBU()));
 
         init();
     }
@@ -76,10 +76,10 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
         });
 
         JPanel colorPanel = new JPanel(new BorderLayout());
-        colorPanel.setBorder(BorderFactory.createTitledBorder("Color"));
+        colorPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR")));
 
         JPanel a = new JPanel(new GridLayout(2, 1));
-        a.add(new JLabel("Color:"));
+        a.add(new JLabel(m_ic.getMessage("COLOR")+":"));
         a.add(lblcolor = new JLabel(" "));
 
         lblcolor.setOpaque(true);
@@ -100,7 +100,7 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
     {
         public void mouseClicked(MouseEvent e)
         {
-            Color col = JColorChooser.showDialog(null, "Choose a color", Color.black);
+            Color col = JColorChooser.showDialog(null, m_ic.getMessage("CHOOSE_A_COLOR"), Color.black);
             if (col != null) {
                 ((NameAndColor)items.elementAt(itemList.getSelectedIndex())).setColor(col);
                 lblcolor.setBackground(col);

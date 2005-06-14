@@ -31,6 +31,8 @@ package ggc.gui;
 import ggc.db.DataBaseHandler;
 import ggc.gui.infoPanel.InfoPanel;
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
+
 import ggc.util.VersionChecker;
 
 import javax.swing.*;
@@ -40,6 +42,9 @@ import java.awt.event.*;
 
 public class MainFrame extends JFrame
 {
+    
+    private I18nControl m_ic = I18nControl.getInstance();        
+
     //fields
     private JMenuBar menuBar = new JMenuBar();
     private JToolBar toolBar = new JToolBar();
@@ -64,46 +69,48 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-        JMenu fileMenu = new JMenu("File");
-        JMenu viewMenu = new JMenu("View");
-        JMenu readMenu = new JMenu("Read");
-        JMenu optionMenu = new JMenu("Option");
-        JMenu helpMenu = new JMenu("Help");
-        fileMenu.setMnemonic('F');
-        viewMenu.setMnemonic('V');
-        optionMenu.setMnemonic('O');
-        helpMenu.setMnemonic('H');
+        JMenu fileMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FILE"));
+        JMenu viewMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_VIEW"));
+        JMenu readMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_READ"));
+        JMenu optionMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_OPTION"));
+        JMenu helpMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_HELP"));
+        fileMenu.setMnemonic(m_ic.getMnemonic("MN_FILE"));
+        viewMenu.setMnemonic(m_ic.getMnemonic("MN_VIEW"));
+        optionMenu.setMnemonic(m_ic.getMnemonic("MN_OPTION"));
+        helpMenu.setMnemonic(m_ic.getMnemonic("MN_HELP"));
 
-        connectAction = new GGCAction("Connect", "Connect to DataBase");
-        connectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/connect.png")));
-        disconnectAction = new GGCAction("Disconnect", "Disconnect from DataBase");
-        disconnectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/disconnect.png")));
 
-        newAction = new GGCAction("New", KeyStroke.getKeyStroke('N', Event.CTRL_MASK), "Create a new DataBase");
-        newAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/new.png")));
-        openAction = new GGCAction("Open", KeyStroke.getKeyStroke('O', Event.CTRL_MASK), "Open existing DataBase");
-        openAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/open.png")));
-        closeAction = new GGCAction("Close", KeyStroke.getKeyStroke('C', Event.CTRL_MASK), "Close current DataBase");
-        closeAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/close.png")));
-        quitAction = new GGCAction("Quit", KeyStroke.getKeyStroke('Q', Event.CTRL_MASK), "Quit ggc");
+        connectAction = new GGCAction("MN_CONNECT", "MN_CONNECT_DESC", "file_connect");
+        connectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/connect.gif")));
+        
+	disconnectAction = new GGCAction("MN_DISCONNECT", "MN_DISCONNECT_DESC", "file_disconnect");
+        disconnectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/disconnect.gif")));
 
-        viewDailyAction = new GGCAction("Daily", KeyStroke.getKeyStroke('D', Event.CTRL_MASK), "View Daily Stats");
-        viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.png")));
-        viewCourseGraphAction = new GGCAction("Course", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "View Course");
-        viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.png")));
-        viewSpreadGraphAction = new GGCAction("Spread", "View Spread");
-        viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.png")));
-        viewFrequencyGraphAction = new GGCAction("Frequency", "View frequency of values");
-        viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.png")));
-        viewHbA1cAction = new GGCAction("HbA1c", "View your HbA1c");
+        newAction = new GGCAction("MN_NEW", "MN_NEW_DESC", "file_new");
+        newAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/new.gif")));
+        openAction = new GGCAction("MN_OPEN", "MN_OPEN_DESC", "file_open");
+        openAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/open.gif")));
+        closeAction = new GGCAction("MN_CLOSE", "MN_CLOSE_DESC", "file_close");
+        closeAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/close.gif")));
+        quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
 
-        readMeterAction = new GGCAction("from Meter", KeyStroke.getKeyStroke('R', Event.CTRL_MASK), "Read Data From Meter");
-        readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.png")));
+        viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
+        viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
+        viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
+        viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
+        viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
+        viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
+        viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
+        viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
+        viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
 
-        prefAction = new GGCAction("Preferences", KeyStroke.getKeyStroke('P', Event.CTRL_MASK), "Preferences");
+        readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
+        readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
 
-        aboutAction = new GGCAction("About", KeyStroke.getKeyStroke('A', Event.CTRL_MASK), "About GGC");
-        checkVersionAction = new GGCAction("Check for Update", "Checks if a new version is available");
+        prefAction = new GGCAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "option_pref");
+
+        aboutAction = new GGCAction("MN_ABOUT", "MN_ABOUT_DESC", "hlp_about");
+        checkVersionAction = new GGCAction("MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check");
 
         addMenuItem(fileMenu, connectAction);
         addMenuItem(fileMenu, disconnectAction);
@@ -157,8 +164,8 @@ public class MainFrame extends JFrame
         statusPanel = StatusBar.getInstance();
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
-        statusPanel.setDataSourceText(props.getDataSource() + "[no Connection]");
-        statusPanel.setStatusMessage("Initialising");
+        statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
+        //statusPanel.setStatusMessage("Initialising");
 
         dbH = DataBaseHandler.getInstance();
 
@@ -187,7 +194,11 @@ public class MainFrame extends JFrame
     private void setActionEnabledStateConnected()
     {
         setConActions(true);
-        setDBActions(false);
+        
+	if (props.getDataSource().equals("HSQL"))
+	    setDBActions(true);
+	else
+	    setDBActions(false);
     }
 
     private void setActionEnabledStateDBOpened()
@@ -259,7 +270,7 @@ public class MainFrame extends JFrame
 
     private void addToolBarSpacer()
     {
-        JLabel lbl = new JLabel(new ImageIcon(getClass().getResource("/icons/spacer.png")));
+        JLabel lbl = new JLabel(new ImageIcon(getClass().getResource("/icons/spacer.gif")));
         lbl.setEnabled(false);
         toolBar.add(lbl);
     }
@@ -273,11 +284,14 @@ public class MainFrame extends JFrame
 
         button.setPreferredSize(new Dimension(24, 24));
 
+	//button.setIcon((ImageIcon)action.getValue(Action.SMALL_ICON));
+
         button.addMouseListener(new MouseListener()
         {
             public void mouseEntered(MouseEvent e)
             {
-                if (button.isEnabled()) {
+                if (button.isEnabled()) 
+                {
                     button.setBorder(BorderFactory.createLineBorder(new Color(8, 36, 106), 1));
                     button.setBackground(new Color(180, 190, 213));
                 }
@@ -312,55 +326,95 @@ public class MainFrame extends JFrame
 
     class GGCAction extends AbstractAction
     {
-        private String command = null;
+        //private String command = null;
 
-        GGCAction(String name)
+        GGCAction(String name, String command)
         {
-            super(name);
+            super();
+            setName(m_ic.getMessageWithoutMnemonic(name));
+
+            putValue(Action.NAME, m_ic.getMessageWithoutMnemonic(name));
+
+            char ch = m_ic.getMnemonic(name);
+
+            if (ch!='0') 
+                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
+
+            if (command!=null)
+                putValue(ACTION_COMMAND_KEY, command);
+
             command = name;
         }
-
+/*
         GGCAction(String name, KeyStroke keystroke)
         {
-            this(name);
+            this();
+            setName(m_ic.getMessageWithoutMnemonic(name));
             if (keystroke != null)
                 putValue(ACCELERATOR_KEY, keystroke);
         }
-
-        GGCAction(String name, String tooltip)
+   */
+        GGCAction(String name, String tooltip, String command)
         {
-            this(name);
+            super();
+            setName(m_ic.getMessageWithoutMnemonic(name));
+
+            putValue(Action.NAME, m_ic.getMessageWithoutMnemonic(name));
+
+            char ch = m_ic.getMnemonic(name);
+
+            if (ch!='0') 
+                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
+
             if (tooltip != null)
-                putValue(SHORT_DESCRIPTION, tooltip);
+                putValue(SHORT_DESCRIPTION, m_ic.getMessage(tooltip));
+
+            if (command!=null)
+                putValue(ACTION_COMMAND_KEY, command);
         }
 
+/*
         GGCAction(String name, KeyStroke keystroke, String tooltip)
         {
             this(name, keystroke);
             if (tooltip != null)
                 putValue(SHORT_DESCRIPTION, tooltip);
         }
+*/
 
         public void actionPerformed(ActionEvent e)
         {
-            if (command.equals("Quit")) {
+
+            String command = e.getActionCommand();
+
+            if (command.equals("file_quit")) {
 
                 close();
 
-            } else if (command.equals("Connect")) {
+            } 
+	    else if (command.equals("file_connect")) 
+	    {
 
                 dbH = DataBaseHandler.getInstance();
                 dbH.connect();
-                if (dbH.isConnected()) {
+                
+		//System.out.println(dbH.isConnected()
+
+		if (dbH.isConnected()) 
+		{
+
                     if (dbH.isConnectedToDB())
                         setActionEnabledStateDBOpened();
                     else
                         setActionEnabledStateDBClosed();
-                } else
+                } 
+		else
                     setActionEnabledStateDisconnected();
-                informationPanel.refreshPanels();
+                
+		informationPanel.refreshPanels();
 
-            } else if (command.equals("Disconnect")) {
+            } 
+            else if (command.equals("file_disconnect")) {
 
                 dbH.closeConnection();
                 if (dbH.isConnected())
@@ -371,22 +425,38 @@ public class MainFrame extends JFrame
                 dbH = null;
                 informationPanel.refreshPanels();
 
-            } else if (command.equals("New")) {
+            } 
+            else if (command.equals("file_new")) {
 
                 if (dbH == null)
                     return;
-                String tmpName = JOptionPane.showInputDialog("Enter DB Name to create:");
-                if (tmpName != null && !tmpName.equals("")) {
+
+		String tmpName; 
+
+		//System.out.println(props.getDataSource());
+
+		if (props.getDataSource().equals("HSQL"))
+		{
+		    tmpName = "HSQLDB";
+		}
+		else
+		    tmpName = JOptionPane.showInputDialog(m_ic.getMessage("ENTER_DB_TO_CREATE")+":");
+                
+		if (tmpName != null && !tmpName.equals("")) 
+		{
                     dbH.createNewDataBase(tmpName);
                     if (dbH.isConnectedToDB())
                         setActionEnabledStateDBOpened();
                     else
                         setActionEnabledStateDBClosed();
-                } else
-                    JOptionPane.showMessageDialog(null, "Invalid Name for Database", "GGC Error - Invalid Name", JOptionPane.ERROR_MESSAGE);
+                } 
+		else
+                    JOptionPane.showMessageDialog(null, m_ic.getMessage("INVALID_NAME_FOR_DB"), "GGC " + m_ic.getMessage("ERROR")+ " - " + m_ic.getMessage("INVALID_NAME"), JOptionPane.ERROR_MESSAGE);
+
                 informationPanel.refreshPanels();
 
-            } else if (command.equals("Open")) {
+            } 
+            else if (command.equals("file_open")) {
 
                 //dbH.setDBName(JOptionPane.showInputDialog("Enter DB Name to open:"));
                 if (dbH == null)
@@ -398,7 +468,8 @@ public class MainFrame extends JFrame
                     setActionEnabledStateDBClosed();
                 informationPanel.refreshPanels();
 
-            } else if (command.equals("Close")) {
+            } 
+            else if (command.equals("file_close")) {
 
                 if (dbH == null)
                     return;
@@ -409,24 +480,42 @@ public class MainFrame extends JFrame
                     setActionEnabledStateDBClosed();
                 informationPanel.refreshPanels();
 
-            } else if (command.equals("Daily")) {
+            } 
+            else if (command.equals("view_daily")) 
+            {
                 DailyStatsFrame.showMe();
-            } else if (command.equals("Course")) {
+            } 
+            else if (command.equals("view_course")) 
+            {
                 CourseGraphFrame.showMe();
-            } else if (command.equals("Spread")) {
+            } 
+            else if (command.equals("view_spread")) 
+            {
                 SpreadGraphFrame.showMe();
-            } else if (command.equals("Frequency")) {
+            } 
+            else if (command.equals("view_freq")) 
+            {
                 FrequencyGraphFrame.showMe();
-            } else if (command.equals("HbA1c")) {
+            } 
+            else if (command.equals("view_hba1c")) 
+            {
                 HbA1cFrame.showMe();
-            } else if (command.equals("Preferences")) {
+            } 
+            else if (command.equals("option_pref")) 
+            {
                 PropertiesFrame.showMe();
-            } else if (command.equals("from Meter")) {
-                //ReadMeterFrame.showMe();
+            } 
+            else if (command.equals("read_meter")) 
+            {
                 ReadMeterDialog.showMe(MainFrame.this);
-            } else if (command.equals("About")) {
+            } 
+            else if (command.equals("hlp_about")) 
+            {
+                // FIX This
                 JOptionPane.showMessageDialog(null, "GNU Gluco Control v0.0.1", "About GGC", JOptionPane.INFORMATION_MESSAGE);
-            } else if (command.equals("Check for Update")) {
+            } 
+            else if (command.equals("hlp_check")) 
+            {
                 new VersionChecker().checkForUpdate();
             }
         }

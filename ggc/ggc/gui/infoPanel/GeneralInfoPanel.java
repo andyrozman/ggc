@@ -28,6 +28,7 @@
 
 package ggc.gui.infoPanel;
 
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,9 +40,10 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private JLabel lblIns1 = new JLabel();
     private JLabel lblIns2 = new JLabel();
 
+
     public GeneralInfoPanel()
     {
-        super("General Information:");
+        super(I18nControl.getInstance().getMessage("GENERAL_INFORMATION")+":");
         init();
         refreshInfo();
     }
@@ -50,11 +52,11 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     {
         setLayout(new GridLayout(0, 2));
 
-        add(new JLabel("Your Name:"));
+        add(new JLabel(m_ic.getMessage("YOUR_NAME")+":"));
         add(lblName);
-        add(new JLabel("Basal Insulin:"));
+        add(new JLabel(m_ic.getMessage("BOLUS_INSULIN")+":"));
         add(lblIns1);
-        add(new JLabel("Bogus Insulin:"));
+        add(new JLabel(m_ic.getMessage("BASAL_INSULIN")+":"));
         add(lblIns2);
     }
 

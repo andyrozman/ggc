@@ -11,6 +11,7 @@ package ggc.gui;
 
 
 import ggc.gui.prefPane.*;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -26,6 +27,9 @@ import java.awt.event.WindowEvent;
 
 public class PropertiesFrame extends JFrame
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();        
+
     static PropertiesFrame singleton = null;
     private DefaultMutableTreeNode prefNode;
     private DefaultTreeModel prefTreeModel;
@@ -37,6 +41,8 @@ public class PropertiesFrame extends JFrame
     public PropertiesFrame()
     {
         super("Preferences");
+        setTitle(m_ic.getMessage("PREFERENCES"));
+
         init();
     }
 
@@ -61,16 +67,16 @@ public class PropertiesFrame extends JFrame
         addWindowListener(new CloseListener());
         Dimension dim = new Dimension(80, 20);
 
-        prefNode = new DefaultMutableTreeNode("Preferences");
-        prefNode.add(new DefaultMutableTreeNode("General"));
-        prefNode.add(new DefaultMutableTreeNode("Medical Data"));
-        prefNode.add(new DefaultMutableTreeNode("Colors & Fonts"));
-        prefNode.add(new DefaultMutableTreeNode("Rendering Quality"));
-        DefaultMutableTreeNode dataNode = new DefaultMutableTreeNode("Data Storing");
-        dataNode.add(new DefaultMutableTreeNode("MySQL Setup"));
-        dataNode.add(new DefaultMutableTreeNode("TextFile Setup"));
+        prefNode = new DefaultMutableTreeNode(m_ic.getMessage("PREFERENCES"));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("GENERAL")));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MEDICAL_DATA")));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("COLORS_AND_FONTS")));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("RENDERING_QUALITY")));
+        DefaultMutableTreeNode dataNode = new DefaultMutableTreeNode(m_ic.getMessage("DATA_STORING"));
+        dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MYSQL_SETUP")));
+        dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("TEXTFILE_SETUP")));
         prefNode.add(dataNode);
-        prefNode.add(new DefaultMutableTreeNode("Meter Configuration"));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("METER_CONFIGURATION")));
         /*DefaultMutableTreeNode meterNode = new DefaultMutableTreeNode("Meters");
         meterNode.add(new DefaultMutableTreeNode("Glucocard"));
         prefNode.add(meterNode);*/
@@ -89,21 +95,21 @@ public class PropertiesFrame extends JFrame
                     return;
                 String s = selectedNode.toString();
 
-                if (s.equals("General")) {
+                if (s.equals(m_ic.getMessage("GENERAL"))) {
                     prefOptionsPane = new prefGeneralPane();
-                } else if (s.equals("Medical Data")) {
+                } else if (s.equals(m_ic.getMessage("MEDICAL_DATA"))) {
                     prefOptionsPane = new prefMedicalDataPane();
-                } else if (s.equals("Colors & Fonts")) {
+                } else if (s.equals(m_ic.getMessage("COLORS_AND_FONTS"))) {
                     prefOptionsPane = new prefFontsAndColorPane();
-                } else if (s.equals("Data Storing")) {
+                } else if (s.equals(m_ic.getMessage("DATA_STORING"))) {
                     prefOptionsPane = new prefDataStoringPane();
-                } else if (s.equals("MySQL Setup")) {
+                } else if (s.equals(m_ic.getMessage("MYSQL_SETUP"))) {
                     prefOptionsPane = new prefMySQLSetupPane();
-                } else if (s.equals("TextFile Setup")) {
+                } else if (s.equals(m_ic.getMessage("TEXTFILE_SETUP"))) {
                     prefOptionsPane = new prefTextFileSetupPane();
-                } else if (s.equals("Rendering Quality")) {
+                } else if (s.equals(m_ic.getMessage("RENDERING_QUALITY"))) {
                     prefOptionsPane = new prefRenderingQualityPane();
-                } else if (s.equals("Meter Configuration")) {
+                } else if (s.equals(m_ic.getMessage("METER_CONFIGURATION"))) {
                     prefOptionsPane = new prefMeterConfPane();
                 }
 
@@ -124,7 +130,7 @@ public class PropertiesFrame extends JFrame
 
 
         //set the buttons up...
-        JButton okButton = new JButton("OK");
+        JButton okButton = new JButton(m_ic.getMessage("OK"));
         okButton.setPreferredSize(dim);
         okButton.addActionListener(new ActionListener()
         {
@@ -136,7 +142,7 @@ public class PropertiesFrame extends JFrame
             }
         });
 
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton(m_ic.getMessage("CANCEL"));
         cancelButton.setPreferredSize(dim);
         cancelButton.addActionListener(new ActionListener()
         {
@@ -146,7 +152,7 @@ public class PropertiesFrame extends JFrame
             }
         });
 
-        JButton applyButton = new JButton("Apply");
+        JButton applyButton = new JButton(m_ic.getMessage("APPLY"));
         applyButton.setPreferredSize(dim);
         applyButton.addActionListener(new ActionListener()
         {

@@ -28,8 +28,14 @@
 package ggc.datamodels;
 
 
+import ggc.util.I18nControl;
+
+
 public class HbA1cValues
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();
+
     private float sumBG;
     private int readings;
     private int dayCount;
@@ -76,13 +82,13 @@ public class HbA1cValues
             value += getPercentOfDaysInClass(i) * (i + 1); //max value = 5;
 
         if (value < 2)
-            return "No Expressiveness";
+            return m_ic.getMessage("NO_EXPRESSIVENESS");
         if (value < 3)
-            return "Little Expressiveness";
+            return m_ic.getMessage("LITTLE_EXPRESSIVENESS");
         if (value < 4)
-            return "Standard Expressiveness";
+            return m_ic.getMessage("STANDARD_EXPRESSIVENESS");
         else
-            return "Good Expressiveness";
+            return m_ic.getMessage("GOOD_EXPRESSIVENESS");
     }
 
     public int getReadings()

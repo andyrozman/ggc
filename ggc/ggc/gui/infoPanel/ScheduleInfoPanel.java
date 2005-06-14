@@ -28,6 +28,7 @@
 
 package ggc.gui.infoPanel;
 
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,7 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
 {
     public ScheduleInfoPanel()
     {
-        super("Schedule");
+        super(I18nControl.getInstance().getMessage("SCHEDULE"));
         setLayout(new GridLayout(0, 2));
         init();
         refreshInfo();
@@ -45,8 +46,8 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
 
     private void init()
     {
-        add(new JLabel("Your next appointment:"));
-        add(new JLabel("will be found here..."));
+        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
+        add(new JLabel(m_ic.getMessage("WILL_BE_FOUND_HERE")+" NOT YET"));
     }
 
     public void refreshInfo()

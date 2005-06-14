@@ -55,10 +55,10 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
     private void init()
     {
         JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel("Insulin1 Name:"));
-        a.add(new JLabel("Insulin1 Abbr.:"));
-        a.add(new JLabel("Insulin2 Name:"));
-        a.add(new JLabel("Insulin2 Abbr.:"));
+        a.add(new JLabel(m_ic.getMessage("INSULIN")+" 1 "+m_ic.getMessage("NAME")+":"));
+        a.add(new JLabel(m_ic.getMessage("INSULIN")+" 1 "+m_ic.getMessage("ABBR")+":"));
+        a.add(new JLabel(m_ic.getMessage("INSULIN")+" 2 "+m_ic.getMessage("NAME")+":"));
+        a.add(new JLabel(m_ic.getMessage("INSULIN")+" 2 "+m_ic.getMessage("ABBR")+":"));
 
         JPanel b = new JPanel(new GridLayout(0, 1));
         b.add(fieldIns1Name = new JTextField(props.getIns1Name(), 10));
@@ -76,15 +76,15 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
         insBox.add(b);
 
         JPanel insPanel = new JPanel(new BorderLayout());
-        insPanel.setBorder(new TitledBorder(new EtchedBorder(), "Insulin Settings"));
+        insPanel.setBorder(new TitledBorder(new EtchedBorder(), m_ic.getMessage("INSULIN_SETTINGS")));
         insPanel.add(insBox, BorderLayout.NORTH);
 
 
         JPanel c = new JPanel(new GridLayout(0, 1));
-        c.add(new JLabel("High BG:"));
-        c.add(new JLabel("Low BG:"));
-        c.add(new JLabel("Target High BG:"));
-        c.add(new JLabel("Target Low BG:"));
+        c.add(new JLabel(m_ic.getMessage("HIGH_BG")+":"));
+        c.add(new JLabel(m_ic.getMessage("LOW_BG")+":"));
+        c.add(new JLabel(m_ic.getMessage("TARGET_HIGH_BG")+":"));
+        c.add(new JLabel(m_ic.getMessage("TARGET_LOW_BG")+":"));
 
         JPanel d = new JPanel(new GridLayout(0, 1));
         d.add(fieldHighBG = new JTextField(props.getHighBGAsString(), 10));
@@ -102,7 +102,7 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
         BGBox.add(d);
 
         JPanel BGPanel = new JPanel(new BorderLayout());
-        BGPanel.setBorder(new TitledBorder(new EtchedBorder(), "Blood Glucose Settings"));
+        BGPanel.setBorder(new TitledBorder(new EtchedBorder(), m_ic.getMessage("BLOOD_GLUCOSE_SETTINGS")));
         BGPanel.add(BGBox, BorderLayout.NORTH);
 
         setLayout(new BorderLayout());

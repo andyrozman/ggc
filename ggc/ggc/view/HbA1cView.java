@@ -29,6 +29,7 @@ package ggc.view;
 
 
 import ggc.datamodels.HbA1cValues;
+import ggc.util.I18nControl;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -37,6 +38,8 @@ import java.text.DecimalFormat;
 public class HbA1cView extends AbstractGraphView
 {
     private HbA1cValues hbValues = null;
+
+    private I18nControl m_ic = I18nControl.getInstance();
 
     public HbA1cView()
     {
@@ -120,11 +123,11 @@ public class HbA1cView extends AbstractGraphView
         //Legend
         g2D.setPaint(Color.black);
         DecimalFormat df = new DecimalFormat("00.00");
-        g2D.drawString("Days with 0 or 1 Readings [" + df.format(hbValues.getPercentOfDaysInClass(0) * 100) + " %]", offset + 20, h);
-        g2D.drawString("Days with 2 or 3 Readings [" + df.format(hbValues.getPercentOfDaysInClass(1) * 100) + " %]", offset + 20, h + 15);
-        g2D.drawString("Days with 4 or 5 Readings [" + df.format(hbValues.getPercentOfDaysInClass(2) * 100) + " %]", offset + 20, h + 30);
-        g2D.drawString("Days with 6 or 7 Readings [" + df.format(hbValues.getPercentOfDaysInClass(3) * 100) + " %]", offset + 20, h + 45);
-        g2D.drawString("Days with > 8 Readings     [" + df.format(hbValues.getPercentOfDaysInClass(4) * 100) + " %]", offset + 20, h + 60);
+        g2D.drawString(m_ic.getMessage("DAYS_WITH_READINGS_0_1") + " [" + df.format(hbValues.getPercentOfDaysInClass(0) * 100) + " %]", offset + 20, h);
+        g2D.drawString(m_ic.getMessage("DAYS_WITH_READINGS_2_3") + " [" + df.format(hbValues.getPercentOfDaysInClass(1) * 100) + " %]", offset + 20, h + 15);
+        g2D.drawString(m_ic.getMessage("DAYS_WITH_READINGS_4_5") + " [" + df.format(hbValues.getPercentOfDaysInClass(2) * 100) + " %]", offset + 20, h + 30);
+        g2D.drawString(m_ic.getMessage("DAYS_WITH_READINGS_6_7") + " [" + df.format(hbValues.getPercentOfDaysInClass(3) * 100) + " %]", offset + 20, h + 45);
+        g2D.drawString(m_ic.getMessage("DAYS_WITH_READINGS_MORE_7")+"    [" + df.format(hbValues.getPercentOfDaysInClass(4) * 100) + " %]", offset + 20, h + 60);
 
     }
 }

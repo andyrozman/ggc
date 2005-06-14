@@ -31,6 +31,7 @@ package ggc.gui.calendar;
 import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.datamodels.calendar.CalendarModel;
+import ggc.util.I18nControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,6 +41,9 @@ import java.awt.event.ActionListener;
 
 public class dayPanel extends JPanel implements CalendarListener
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();    
+
     CalendarModel cMod;
 
     public dayPanel(CalendarModel cMod)
@@ -59,13 +63,13 @@ public class dayPanel extends JPanel implements CalendarListener
         //setLayout(new GridLayout(6,7));
         this.invalidate();
 
-        add(new JLabel("Su"));
-        add(new JLabel("Mo"));
-        add(new JLabel("Tu"));
-        add(new JLabel("We"));
-        add(new JLabel("Th"));
-        add(new JLabel("Fr"));
-        add(new JLabel("Sa"));
+        add(new JLabel(m_ic.getMessage("SU")));
+        add(new JLabel(m_ic.getMessage("MO")));
+        add(new JLabel(m_ic.getMessage("TU")));
+        add(new JLabel(m_ic.getMessage("WE")));
+        add(new JLabel(m_ic.getMessage("TH")));
+        add(new JLabel(m_ic.getMessage("FR")));
+        add(new JLabel(m_ic.getMessage("SA")));
 
         int firstday = cMod.getFirstDayInMonth() - 1;
         int numdays = firstday + cMod.getNumDaysInMonth();

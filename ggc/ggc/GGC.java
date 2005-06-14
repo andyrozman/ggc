@@ -39,7 +39,7 @@ public class GGC
     //fields
     private static GGC theApp;
     private static MainFrame mainWindow;
-    private static String version = "0.0.1";
+    private static String version = "0.0.2";
 
     public static void main(String[] args)
     {
@@ -90,7 +90,7 @@ public class GGC
         Toolkit theKit = mainWindow.getToolkit();
         Dimension wndSize = theKit.getScreenSize();
 
-        mainWindow.setBounds(wndSize.width / 4, wndSize.height / 4, wndSize.width / 2, wndSize.height / 2);
+        mainWindow.setBounds(wndSize.width / 4, wndSize.height / 4, (int)(wndSize.width * 0.66), (int)(wndSize.height * 0.66));
         mainWindow.setVisible(true);
     }
 

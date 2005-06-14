@@ -46,16 +46,16 @@ public class prefDataStoringPane extends AbstractPrefOptionsPanel
     {
         setLayout(new BorderLayout());
         Box a = Box.createHorizontalBox();
-        a.add(new JLabel("Data Source:"));
+        a.add(new JLabel(m_ic.getMessage("DATA_SOURCE")+":"));
 
-        String[] choices = {"MySQL", "Textfile"};
+        String[] choices = {"MySQL", "Textfile", "HSQL" };
 
         comboDataSource = new JComboBox(choices);
         comboDataSource.setSelectedItem(props.getDataSource());
         comboDataSource.addItemListener(this);
         a.add(comboDataSource);
 
-        chkAutoConnect = new JCheckBox("AutoConnect to default DataBase on Startup", props.getAutoConnect());
+        chkAutoConnect = new JCheckBox(m_ic.getMessage("AUTOCONNECT_TO_DB_ON_STARTUP"), props.getAutoConnect());
         chkAutoConnect.addActionListener(this);
 
         Box b = Box.createVerticalBox();

@@ -16,6 +16,7 @@ import ggc.datamodels.GlucoValues;
 import ggc.event.ImportEvent;
 import ggc.event.ImportEventListener;
 import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 import javax.comm.NoSuchPortException;
 import javax.swing.*;
@@ -37,6 +38,8 @@ import java.awt.event.WindowEvent;
  */
 public class ReadMeterDialog extends JDialog
 {
+
+    private I18nControl m_ic = I18nControl.getInstance();        
 
     private static ReadMeterDialog singleton = null;
 
@@ -69,7 +72,7 @@ public class ReadMeterDialog extends JDialog
     {
         super(owner);
 
-        setTitle("Read Meter Data");
+        setTitle(m_ic.getMessage("READ_METER_DATA"));
         initialize();
     }
 
@@ -126,7 +129,7 @@ public class ReadMeterDialog extends JDialog
 
         String meterClassName = SerialMeterImport.getMeterClassName(GGCProperties.getInstance().getMeterType());
         if (meterClassName == null || meterClassName.equals(""))
-            throw new NullPointerException("No class for meter definiened.");
+            throw new NullPointerException(m_ic.getMessage("NO_CLASS_FOR_METER_DEFINED"));
 
         try {
             meterImport = (SerialMeterImport)Class.forName(meterClassName).newInstance();
@@ -156,7 +159,7 @@ public class ReadMeterDialog extends JDialog
             }
         });
 
-        logText = new JTextArea("log:\n", 8, 35);
+        logText = new JTextArea(m_ic.getMessage("LOG__")+":\n", 8, 35);
         logText.setAutoscrolls(true);
         JScrollPane sp = new JScrollPane(logText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
@@ -166,8 +169,8 @@ public class ReadMeterDialog extends JDialog
 
         tabPane = new JTabbedPane();
         //tabPane.add("Values", sp2);
-        tabPane.add("Values", GlucoTable.createGlucoTable(model));
-        tabPane.add("Log", sp);
+        tabPane.add(m_ic.getMessage("VALUES"), GlucoTable.createGlucoTable(model));
+        tabPane.add(m_ic.getMessage("LOG"), sp);
 
         progress = new JProgressBar(0, 100);
         progress.setPreferredSize(new Dimension(100, 8));
@@ -192,9 +195,9 @@ public class ReadMeterDialog extends JDialog
         //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/euroflash.png")));
         //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/freestyle.png")));
         JLabel infoIcon = new JLabel((meterImport.getImage() == null)
-                                     ? new ImageIcon(getClass().getResource("/icons/noMeter.png"))
+                                     ? new ImageIcon(getClass().getResource("/icons/noMeter.gif"))
                                      : meterImport.getImage());
-        JLabel infoDescription = new JLabel((meterImport.getUseInfoMessage() == null) ? "No to use information" : meterImport.getUseInfoMessage());
+        JLabel infoDescription = new JLabel((meterImport.getUseInfoMessage() == null) ? m_ic.getMessage("NO_TO_USE_INFORMATION") : meterImport.getUseInfoMessage());
         infoDescription.setVerticalAlignment(JLabel.TOP);
         infoPanel.add(infoIcon, "North");
         infoPanel.add(infoDescription, "Center");
@@ -247,8 +250,15 @@ public class ReadMeterDialog extends JDialog
         public SaveAction()
         {
             super();
-            putValue(Action.NAME, "Save");
-            putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_S));
+
+            putValue(Action.NAME, m_ic.getMessageWithoutMnemonic("ME_SAVE"));
+            
+            char ch = m_ic.getMnemonic("ME_SAVE");
+
+            if (ch!='0') 
+                putValue(Action.MNEMONIC_KEY, ""+ch);
+
+            
         }
 
         /**
@@ -265,8 +275,16 @@ public class ReadMeterDialog extends JDialog
     {
         public CloseAction()
         {
-            super("Close");
-            putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_C));
+            super();
+
+            putValue(Action.NAME, m_ic.getMessageWithoutMnemonic("ME_CLOSE"));
+            
+            char ch = m_ic.getMnemonic("ME_CLOSE");
+
+            if (ch!='0') 
+                putValue(Action.MNEMONIC_KEY, ""+ch);
+            
+
         }
 
         /**
@@ -288,8 +306,12 @@ public class ReadMeterDialog extends JDialog
         public StartImportAction()
         {
             super();
-            putValue(Action.NAME, "Import");
-            putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_I));
+            putValue(Action.NAME, m_ic.getMessageWithoutMnemonic("ME_IMPORT"));
+            
+            char ch = m_ic.getMnemonic("ME_IMPORT");
+
+            if (ch!='0') 
+                putValue(Action.MNEMONIC_KEY, ""+ch);
         }
 
         public void actionPerformed(ActionEvent e)
@@ -306,10 +328,10 @@ public class ReadMeterDialog extends JDialog
                 meterImport.importData();
             } catch (NoSuchPortException exc) {
                 progress.setIndeterminate(false);
-                addLogText("no such COM-Port found.");
+                addLogText(m_ic.getMessage("NO_SUCH_COM_PORT_FOUND"));
             } catch (ImportException exc) {
                 progress.setIndeterminate(false);
-                addLogText("Exception while import:");
+                addLogText(m_ic.getMessage("EXCEPTION_ON_IMPORT")+":");
                 addLogText(exc.getMessage());
             }
 
@@ -327,17 +349,17 @@ public class ReadMeterDialog extends JDialog
                     break;
 
                 case ImportEvent.PORT_OPENED:
-                    addLogText("Port to meter opened");
+                    addLogText(m_ic.getMessage("PORT_TO_METER_OPENED"));
                     break;
 
                 case ImportEvent.PORT_CLOSED:
-                    addLogText("Port to meter closed");
+                    addLogText(m_ic.getMessage("PORT_TO_METER_CLOSED"));
                     break;
 
                 case ImportEvent.IMPORT_FINISHED:
                     meterImport.close();
                     DailyValuesRow[] data = meterImport.getImportedData();
-                    addLogText("Had read values from meter: " + data.length);
+                    addLogText(m_ic.getMessage("HAD_READ_VALUES_FROM_METER")+": " + data.length);
                     for (int i = 0; i < data.length; i++) {
                         DailyValuesRow dailyValuesRow = data[i];
                         getGlucoValues().setNewRow(dailyValuesRow);
@@ -350,7 +372,7 @@ public class ReadMeterDialog extends JDialog
                 case ImportEvent.TIMEOUT:
                     progress.setIndeterminate(false);
                     meterImport.close();
-                    addLogText("Timeout: No data was sended from meter.\n" + "Please check the cable!!");
+                    addLogText(m_ic.getMessage("TIMEOUT_NO_DATA_SENT_FROM_METER")+"\n" + m_ic.getMessage("PLEASE_CHECK_CABLE"));
                     break;
             }
         }
