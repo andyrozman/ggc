@@ -27,3 +27,5 @@
 
 CVSROOT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} schultd@users.sourceforge.net
 DEFAULT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} ggc-cvs@lists.sourceforge.net
+
+# syncmail script changed...
