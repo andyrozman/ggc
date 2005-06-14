@@ -142,7 +142,7 @@ public class prefMySQLSetupPane extends AbstractPrefOptionsPanel
         errorText.setText("");
 
         try {
-            b = myH.testConnection(fieldHost.getText(), fieldPort.getText(), db, fieldUser.getText(), fieldPass.getText());
+            b = myH.testDb(fieldHost.getText(), fieldPort.getText(), db, fieldUser.getText(), fieldPass.getText());
         } catch (ClassNotFoundException e) {
             errorText.setText(e.toString());
             b = false;

@@ -85,13 +85,15 @@ public class MainFrame extends JFrame
         
 	disconnectAction = new GGCAction("MN_DISCONNECT", "MN_DISCONNECT_DESC", "file_disconnect");
         disconnectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/disconnect.gif")));
-
+/*
         newAction = new GGCAction("MN_NEW", "MN_NEW_DESC", "file_new");
         newAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/new.gif")));
         openAction = new GGCAction("MN_OPEN", "MN_OPEN_DESC", "file_open");
         openAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/open.gif")));
         closeAction = new GGCAction("MN_CLOSE", "MN_CLOSE_DESC", "file_close");
         closeAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/close.gif")));
+*/	
+	
         quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
 
         viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
@@ -115,10 +117,10 @@ public class MainFrame extends JFrame
         addMenuItem(fileMenu, connectAction);
         addMenuItem(fileMenu, disconnectAction);
         fileMenu.addSeparator();
-        addMenuItem(fileMenu, newAction);
-        addMenuItem(fileMenu, openAction);
-        addMenuItem(fileMenu, closeAction);
-        fileMenu.addSeparator();
+        //addMenuItem(fileMenu, newAction);
+        //addMenuItem(fileMenu, openAction);
+        //addMenuItem(fileMenu, closeAction);
+        //fileMenu.addSeparator();
         addMenuItem(fileMenu, quitAction);
 
         addMenuItem(viewMenu, viewDailyAction);
@@ -145,18 +147,21 @@ public class MainFrame extends JFrame
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
         addToolBarButton(connectAction);
         addToolBarButton(disconnectAction);
+
         addToolBarSpacer();
-        addToolBarButton(newAction);
-        addToolBarButton(openAction);
-        addToolBarButton(closeAction);
+        //addToolBarButton(newAction);
+        //addToolBarButton(openAction);
+        //addToolBarButton(closeAction);
         addToolBarSpacer();
         addToolBarButton(viewDailyAction);
         addToolBarButton(viewCourseGraphAction);
         addToolBarButton(viewSpreadGraphAction);
         addToolBarButton(viewFrequencyGraphAction);
         addToolBarSpacer();
+	addToolBarSpacer();
         addToolBarButton(viewHbA1cAction);
         addToolBarSpacer();
+	addToolBarSpacer();
         addToolBarButton(readMeterAction);
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
@@ -164,14 +169,21 @@ public class MainFrame extends JFrame
         statusPanel = StatusBar.getInstance();
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
-        statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
-        //statusPanel.setStatusMessage("Initialising");
+        //statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
+        statusPanel.setStatusMessage("Initialising");
 
-        dbH = DataBaseHandler.getInstance();
+	dbH = DataBaseHandler.getInstance();
+	dbH.setStatus();
+
+	//statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
+
 
         if (props.getAutoConnect())
-            dbH.connect();
+            dbH.connectDb();
 
+	setDbActions();
+
+	/*
         if (dbH.isConnected()) {
             if (dbH.isConnectedToDB())
                 setActionEnabledStateDBOpened();
@@ -179,18 +191,21 @@ public class MainFrame extends JFrame
                 setActionEnabledStateDBClosed();
         } else
             setActionEnabledStateDisconnected();
-
+	*/
+	
         //Information Portal Setup
         informationPanel = new InfoPanel();
         getContentPane().add(informationPanel, BorderLayout.CENTER);
     }
 
+    /*
     private void setActionEnabledStateDisconnected()
     {
         setConActions(false);
         setDBActionsAllFalse();
-    }
+    } */
 
+/*
     private void setActionEnabledStateConnected()
     {
         setConActions(true);
@@ -212,18 +227,44 @@ public class MainFrame extends JFrame
         setConActions(true);
         setDBActions(false);
     }
-
-    private void setConActions(boolean connected)
+*/
+/*    private void setConActions(boolean connected)
     {
         connectAction.setEnabled(!connected);
         disconnectAction.setEnabled(connected);
     }
+    */
+
+    private void setDbActions()
+    {
+
+	setDBActions(dbH.isConnected());
+
+/*
+	if (dbH.isConnected())
+	{
+	    connectAction.setEnabled(false);
+	    disconnectAction.setEnabled(true);
+	}
+	else
+	{
+	    connectAction.setEnabled(true);
+	    disconnectAction.setEnabled(false);
+	}
+  */
+    }
+
+
 
     private void setDBActions(boolean opened)
     {
-        openAction.setEnabled(!opened);
-        closeAction.setEnabled(opened);
-        newAction.setEnabled(!opened);
+
+	connectAction.setEnabled(!opened);
+	disconnectAction.setEnabled(opened);
+
+        //openAction.setEnabled(!opened);
+        //closeAction.setEnabled(opened);
+        //newAction.setEnabled(!opened);
 
         viewDailyAction.setEnabled(opened);
         viewSpreadGraphAction.setEnabled(opened);
@@ -234,6 +275,8 @@ public class MainFrame extends JFrame
         readMeterAction.setEnabled(opened);
     }
 
+
+    /*
     private void setDBActionsAllFalse()
     {
         openAction.setEnabled(false);
@@ -247,13 +290,13 @@ public class MainFrame extends JFrame
         viewHbA1cAction.setEnabled(false);
 
         readMeterAction.setEnabled(false);
-    }
+    } */
 
     private void close()
     {
         //write to prefs to file on close.
         props.write();
-
+	dbH.disconnectDb();
         dispose();
         System.exit(0);
     }
@@ -270,9 +313,11 @@ public class MainFrame extends JFrame
 
     private void addToolBarSpacer()
     {
-        JLabel lbl = new JLabel(new ImageIcon(getClass().getResource("/icons/spacer.gif")));
-        lbl.setEnabled(false);
-        toolBar.add(lbl);
+        toolBar.addSeparator();
+	
+	//JLabel lbl = new JLabel(new ImageIcon(getClass().getResource("/icons/spacer.gif")));
+        //lbl.setEnabled(false);
+        //toolBar.add(lbl);
     }
 
     private JButton addToolBarButton(Action action)
@@ -387,18 +432,31 @@ public class MainFrame extends JFrame
 
             String command = e.getActionCommand();
 
-            if (command.equals("file_quit")) {
+	    //System.out.println("Command: " + command);
 
+            if (command.equals("file_quit")) 
+	    {
                 close();
-
             } 
 	    else if (command.equals("file_connect")) 
 	    {
 
-                dbH = DataBaseHandler.getInstance();
-                dbH.connect();
+                //dbH = DataBaseHandler.getInstance();
+
+		
+
+                dbH.connectDb();
+
+
+		//System.out.println("Connect" + dbH + "  " + dbH.isConnected());
+
+		setDbActions();
+
+		dbH.setStatus();
                 
 		//System.out.println(dbH.isConnected()
+
+/*
 
 		if (dbH.isConnected()) 
 		{
@@ -410,23 +468,29 @@ public class MainFrame extends JFrame
                 } 
 		else
                     setActionEnabledStateDisconnected();
-                
+*/                
 		informationPanel.refreshPanels();
 
             } 
-            else if (command.equals("file_disconnect")) {
+            else if (command.equals("file_disconnect")) 
+	    {
 
-                dbH.closeConnection();
+		dbH.disconnectDb();
+		setDbActions();
+
+		dbH.setStatus();
+
+		/*
                 if (dbH.isConnected())
                     setActionEnabledStateConnected();
                 else
                     setActionEnabledStateDisconnected();
                 DataBaseHandler.killHandler();
-                dbH = null;
+                dbH = null; */
                 informationPanel.refreshPanels();
 
             } 
-            else if (command.equals("file_new")) {
+/*            else if (command.equals("file_new")) {
 
                 if (dbH == null)
                     return;
@@ -473,14 +537,17 @@ public class MainFrame extends JFrame
 
                 if (dbH == null)
                     return;
-                dbH.closeDataBase();
+                dbH.disconnectDb();
+
+		/*
                 if (dbH.isConnectedToDB())
                     setActionEnabledStateDBOpened();
                 else
                     setActionEnabledStateDBClosed();
-                informationPanel.refreshPanels();
+		    */
+/*                informationPanel.refreshPanels();
 
-            } 
+            } */
             else if (command.equals("view_daily")) 
             {
                 DailyStatsFrame.showMe();
@@ -518,6 +585,9 @@ public class MainFrame extends JFrame
             {
                 new VersionChecker().checkForUpdate();
             }
+	    else
+		System.out.println("Unknown Command: " + command);
+
         }
     }
 

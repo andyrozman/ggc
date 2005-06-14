@@ -35,7 +35,7 @@ import java.util.Vector;
 public abstract class SerialMeterImport implements DataImport, SerialPortEventListener, Runnable
 {
 
-    private I18nControl m_ic = I18nControl.getInstance();
+    protected I18nControl m_ic = I18nControl.getInstance();
 
     private boolean isPortOpen = false;
 

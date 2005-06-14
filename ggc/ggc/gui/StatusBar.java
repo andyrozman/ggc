@@ -27,6 +27,7 @@
 
 package ggc.gui;
 
+import ggc.db.DataBaseHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,12 +53,16 @@ public class StatusBar extends JPanel
         this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         add(lblMessage, BorderLayout.CENTER);
         add(lblDataSource, BorderLayout.EAST);
+
+	//DataBaseHandler.getInstance().setStatus();
+
     }
 
     public static StatusBar getInstance()
     {
         if (singleton == null)
             singleton = new StatusBar();
+
         return singleton;
     }
 
@@ -70,4 +75,6 @@ public class StatusBar extends JPanel
     {
         lblDataSource.setText(" " + text);
     }
+
+
 }

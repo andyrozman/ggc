@@ -1,0 +1,27 @@
+TO-DO LIST
+==========
+
+
+URGENT:
+-------
+- ANT Build
+- HypersonicSQL Test
+- Printing (table,...)
+- Appointments
+- Add entries to dayvalues (gui-fix)
+
+
+IN NEAR FUTURE
+--------------
+- I18n Language: German
+- I18n Language: French
+- I18n Language: Slovene
+- I18n Language: ...
+- Language check
+
+
+
+
+IN FUTURE:
+----------
+- Pump support

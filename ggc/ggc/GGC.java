@@ -43,11 +43,17 @@ public class GGC
 
     public static void main(String[] args)
     {
-        try {
+        try 
+	{
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (Exception e) {
+        } 
+	catch (Exception ex) 
+	{
+	    System.out.println("Error loading L&F: " + ex);
         }
-        UIDefaults UIDef = UIManager.getDefaults();
+        
+	/*
+	UIDefaults UIDef = UIManager.getDefaults();
 
         Color bgGray = new Color(213, 210, 205);
 
@@ -78,7 +84,7 @@ public class GGC
         UIDef.put("MenuBar.background", bgGray);
         UIDef.put("Pane.background", bgGray);
         UIDef.put("OptionPane.background", bgGray);
-
+	*/
         theApp = new GGC();
         theApp.init();
 

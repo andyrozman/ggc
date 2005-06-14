@@ -71,7 +71,9 @@ public class DailyStatsTableModel extends AbstractTableModel
     public Object getValueAt(int row, int column)
     {
         Object o = dayData.getValueAt(row, column);
-        if (o != null && column == 0) {
+
+        if (o != null && column == 0) 
+	{
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             return sdf.format(o);
         }

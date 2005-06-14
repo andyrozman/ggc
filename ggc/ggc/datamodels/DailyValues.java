@@ -199,7 +199,7 @@ public class DailyValues implements Serializable
 
     public Object getValueAt(int row, int column)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getValueAt(column);
+	return ((DailyValuesRow)(dataRows.elementAt(row))).getValueAt(column);
     }
 
     public void setValueAt(Object aValue, int row, int column)

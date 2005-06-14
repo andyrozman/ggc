@@ -28,6 +28,9 @@
 package ggc.gui.prefPane;
 
 
+import ggc.gui.StatusBar;
+import ggc.db.DataBaseHandler;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -69,5 +72,10 @@ public class prefDataStoringPane extends AbstractPrefOptionsPanel
     {
         props.set("DataSource", comboDataSource.getSelectedItem().toString());
         props.set("AutoConnect", chkAutoConnect.isSelected());
+
+	DataBaseHandler.getInstance().setStatus();
+
+	//StatusBar.getInstance().
+
     }
 }

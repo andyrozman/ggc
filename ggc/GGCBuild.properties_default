@@ -1,0 +1,18 @@
+binary.dir=../bin
+source.dir=../src
+library.dir=../lib
+build.dir=../classes
+
+
+# needed libraries
+#
+# you need to download ggc-support-0.2 or higher. It contains IBM's COM API (for Win and Linux) drivers 
+# and HSQL.
+#
+# Please comment out following lines depending on OS you use. If you use some other OS, you can add line here. # You can also send file to us, and we will add it to ggc-support. See README file in API package on how to
+# use it.
+
+# Windows
+# com_api.file=commWin.jar
+
+

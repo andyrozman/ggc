@@ -31,46 +31,58 @@ package ggc.db;
 
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.HbA1cValues;
+import ggc.gui.StatusBar;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
 import javax.swing.*;
 import java.util.Date;
 
+import java.sql.SQLException;
+
 
 public abstract class DataBaseHandler
 {
     
     protected I18nControl m_ic = I18nControl.getInstance();    
+    protected GGCProperties props = GGCProperties.getInstance();
     
-    public static boolean connectedToDB = false;
-    public static boolean connected = false;
+    //public static boolean connectedToDB = false;
+    public boolean connected = false;
 
-    private static DataBaseHandler singleton = null;
-    static GGCProperties props = GGCProperties.getInstance();
-    String dbName;
+    public static DataBaseHandler singleton = null;
+    //static GGCProperties props = GGCProperties.getInstance();
+    
+    protected String dbName;
+    protected String dbType;
 
-    public DataBaseHandler()
+    //protected String dbStatus = "";
+
+    protected DataBaseHandler()
     {
-        dbName = props.getDBName();
+        //dbName = props.getDBName();
     }
 
     public static DataBaseHandler getInstance()
     {
         if (singleton == null) {
-            String s = props.getDataSource();
+            String s = GGCProperties.getInstance().getDataSource();
+
+	    //System.out.println("DataSource: " + s);
+
             if (s.equals("HSQL"))
                 singleton = HSQLHandler.getInstance();
 	    else if (s.equals("MySQL"))
                 singleton = MySQLHandler.getInstance();
             else if (s.equals("Textfile"))
-                singleton = new TextFileHandler();
+                singleton = TextFileHandler.getInstance();
             else
-                singleton = new DummyHandler();
+                singleton = DummyHandler.getInstance();
         }
         return singleton;
     }
 
+/*
     public static boolean hasInstance()
     {
         return singleton != null;
@@ -80,17 +92,21 @@ public abstract class DataBaseHandler
     {
         singleton = null;
     }
-
+*/
     public boolean isConnected()
     {
         return connected;
     }
-
+/*
     public boolean isConnectedToDB()
     {
         return connectedToDB;
     }
+*/
 
+    public abstract boolean isInitialized();
+
+/*
     public void setDBName(String name)
     {
         if (name != null && !name.equals(""))
@@ -98,7 +114,7 @@ public abstract class DataBaseHandler
         else
             JOptionPane.showMessageDialog(null, m_ic.getMessage("INVALID_NAME_FOR_DB"), "GGC " + m_ic.getMessage("ERROR")+ " - " + m_ic.getMessage("INVALID_NAME"), JOptionPane.ERROR_MESSAGE);
     }
-
+*/
     public abstract DailyValues getDayStats(Date day);
 
     public abstract HbA1cValues getHbA1c(Date day);
@@ -107,13 +123,53 @@ public abstract class DataBaseHandler
 
     public abstract boolean dateTimeExists(java.util.Date date);
 
-    public abstract void createNewDataBase(String name);
+    //public abstract void createNewDataBase(String name);
 
-    public abstract void connect();
+    public abstract void connectDb();
 
-    public abstract void closeConnection();
+    public abstract void disconnectDb();
 
-    public abstract void openDataBase(boolean ask);
+    public abstract void initDb();
 
-    public abstract void closeDataBase();
+    //public abstract boolean testDb();
+
+    //public abstract boolean testDb(String Host, String Port, String DB, String User, String Pass) throws ClassNotFoundException, SQLException;
+
+    //public abstract void closeConnection();
+
+    //public abstract void openDataBase(boolean ask);
+
+    //public abstract void closeDataBase();
+
+    public String getStatus()
+    {
+	
+	String st = "";
+	
+	System.out.println(connected);
+
+	if (connected)
+	    st = m_ic.getMessage("CONNECTED");
+	else
+	{
+	    if (this.isInitialized())
+	    {
+                st = m_ic.getMessage("NOT_INIT");
+	    }
+	    else
+	    {
+		st = m_ic.getMessage("NOT_CONNECTED");
+	    }
+	    
+	}
+
+	return dbType + dbName + " [" + st + "]";
+	
+    }
+
+    public void setStatus()
+    {
+	StatusBar.getInstance().setDataSourceText(getStatus());
+    }
+    
 }

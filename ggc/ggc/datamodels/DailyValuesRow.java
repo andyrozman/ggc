@@ -99,6 +99,8 @@ public class DailyValuesRow implements Serializable
 
             this.Comment = Comment;
 
+	    System.out.println(this.toString());
+
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -131,7 +133,8 @@ public class DailyValuesRow implements Serializable
 
     public String toString()
     {
-        return datetime.getTime() + ";" + BG + ";" + Ins1 + ";" + Ins2 + ";" + BE + ";" + Act + ";" + Comment + ";";
+//        return "DT="+datetime.getTime() + ";BG=" + BG + ";Ins1=" + Ins1 + ";Ins2=" + Ins2 + ";BE=" + BE + ";Act=" + Act + ";Comment=" + Comment + ";";
+	return datetime.getTime() + ";" + BG + ";" + Ins1 + ";" + Ins2 + ";" + BE + ";" + Act + ";" + Comment + ";";
     }
 
     public Date getDateTime()

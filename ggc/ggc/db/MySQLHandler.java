@@ -43,12 +43,18 @@ import java.text.SimpleDateFormat;
 public class MySQLHandler extends DataBaseHandler
 {
     Connection con = null;
-    private static MySQLHandler singleton = null;
-    private GGCProperties props = GGCProperties.getInstance();
+    //private static MySQLHandler singleton = null;
+    //private GGCProperties props = GGCProperties.getInstance();
 
     public MySQLHandler()
     {
         super();
+	dbType = "MySQL:";
+	dbName = props.getMySQLDBName();
+
+	connected = false;
+	//DataBaseHandler.connectedToDB = true;
+
         //connect();
     }
 
@@ -59,25 +65,117 @@ public class MySQLHandler extends DataBaseHandler
         return singleton;
     }
 
-    public void connect()
+
+    public void connectDb()
     {
-        try {
-            if (con != null)
-                con.close();
+        try 
+	{
+            if (con != null) 
+	    {
+		if (!con.isClosed())
+		    return;
+	    }
+
+            con = null;
             Class.forName("org.gjt.mm.mysql.Driver");
-            String sourceURL = "jdbc:mysql://" + props.getMySQLHost() + ":" + props.getMySQLPort() + "/?user=" + props.getMySQLUser() + "&password=" + props.getMySQLPass();
+            String sourceURL = "jdbc:mysql://" + props.getMySQLHost() + ":" + props.getMySQLPort() + "/" + props.getMySQLDBName() + "?user=" + props.getMySQLUser() + "&password=" + props.getMySQLPass();
             con = DriverManager.getConnection(sourceURL);
             connected = true;
-            StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] " + m_ic.getMessage("NO_DATABASE"));
+            //StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] " + m_ic.getMessage("NO_DATABASE"));
+
+	    //dbStatus = "MySQL [" + m_ic.getMessage("NO_CONNECTION") + "]";
+	    //StatusBar.getInstance().setStatus();
+	    setStatus();
+
+
         } catch (ClassNotFoundException cnfe) {
             System.err.println(cnfe);
         } catch (SQLException sqle) {
             System.err.println(sqle);
         }
-        if (props.getMySQLOpenDefaultDB())
-            openDataBase(false);
+        //if (props.getMySQLOpenDefaultDB())
+        //    openDataBase(false);
     }
 
+
+    public boolean isInitialized()
+    {
+
+	Connection i_conn; 
+	boolean init = false;
+
+        try 
+	{
+            //if (con != null)
+            //    con.close();
+            Class.forName("org.gjt.mm.mysql.Driver");
+            String sourceURL = "jdbc:mysql://" + props.getMySQLHost() + ":" + props.getMySQLPort() + "/" + props.getMySQLDBName() + "?user=" + props.getMySQLUser() + "&password=" + props.getMySQLPass();
+            i_conn = DriverManager.getConnection(sourceURL);
+            //connected = true;
+            //StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] " + m_ic.getMessage("NO_DATABASE"));
+
+	    //dbStatus = "MySQL [" + m_ic.getMessage("NO_CONNECTION") + "]";
+	    //StatusBar.getInstance().setStatus();
+	    //setStatus();
+
+	    Statement i_stmt = i_conn.createStatement();
+
+	    ResultSet rs = i_stmt.executeQuery("SHOW TABLES");
+
+	    
+	    while (rs.next())
+	    {
+		if (rs.getString("1").equals("DayValues"))
+		{
+		    init = true;
+		    return init;
+		}
+	    }
+
+	    i_stmt.close();
+	    i_conn.close();
+
+
+
+        } 
+	catch (ClassNotFoundException cnfe) 
+	{
+            System.err.println(cnfe);
+        } 
+	catch (SQLException sqle) 
+	{
+            System.err.println(sqle);
+        }
+        //if (props.getMySQLOpenDefaultDB())
+        //    openDataBase(false);
+
+
+	return init;
+
+    }
+
+
+    public void disconnectDb()
+    {
+        try 
+	{
+            con.close();
+        } 
+	catch (SQLException sqle) 
+	{
+            System.err.println(sqle);
+        } 
+	finally 
+	{
+            connected = false;
+	    setStatus();
+            //connectedToDB = false;
+            //StatusBar.getInstance().setDataSourceText("MySQL [" + m_ic.getMessage("NO_CONNECTION") + "]");
+        }
+    }
+
+
+/*
     public void openDataBase(boolean ask)
     {
         if (ask) {
@@ -101,17 +199,22 @@ public class MySQLHandler extends DataBaseHandler
             connectedToDB = false;
         }
     }
-
+*/
+/*
     public void closeDataBase()
     {
         connectedToDB = false;
         StatusBar.getInstance().setDataSourceText("MySQL [" + props.getMySQLHost() + ":" + props.getMySQLPort() + "] " + m_ic.getMessage("NO_DATABASE"));
     }
-
+  */
     public HbA1cValues getHbA1c(java.util.Date day)
     {
-        if (!connectedToDB)
+        
+	connectDb();
+	
+	if (!connected)
             return null;
+	
 
         ResultSet results = null;
         HbA1cValues hbVal = new HbA1cValues();
@@ -136,15 +239,19 @@ public class MySQLHandler extends DataBaseHandler
         return hbVal;
     }
 
+
     public DailyValues getDayStats(java.util.Date day)
     {
-        if (!connectedToDB)
+	connectDb();
+	
+	if (!connected)
             return null;
 
         ResultSet results = null;
         DailyValues dV = new DailyValues();
 
-        if (con != null) {
+        if (con != null) 
+	{
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String sDay = sdf.format(day);
@@ -182,7 +289,9 @@ public class MySQLHandler extends DataBaseHandler
 
     public void saveDayStats(DailyValues dV)
     {
-        if (!connectedToDB)
+	connectDb();
+	
+	if (!connected)
             return;
 
         Statement statement;
@@ -214,7 +323,9 @@ public class MySQLHandler extends DataBaseHandler
 
     public boolean dateTimeExists(java.util.Date date)
     {
-        if (!connectedToDB)
+	connectDb();
+	
+	if (!connected)
             return false;
 
         Statement statement;
@@ -236,41 +347,35 @@ public class MySQLHandler extends DataBaseHandler
         return false;
     }
 
-    public void createNewDataBase(String name)
+    public void initDb()
     {
         try {
             Statement statement;
             if (!con.isClosed()) {
-                String query1 = "CREATE DATABASE IF NOT EXISTS " + name;
+                String query1 = "CREATE DATABASE IF NOT EXISTS " + props.getMySQLDBName();
                 statement = con.createStatement();
                 statement.execute(query1);
                 con.close();
             }
-            String sourceURL = "jdbc:mysql://localhost/" + name + "?user=testapp&password=gluco";
+
+            String sourceURL = "jdbc:mysql://" + props.getMySQLHost() + ":" + props.getMySQLPort() + "/" + props.getMySQLDBName() + "?user=" + props.getMySQLUser() + "&password=" + props.getMySQLPass();
+	    //String sourceURL = "jdbc:mysql://" + props.getMySQLHost() + ":" + props.getMySQLPort() + "/?user=" + props.getMySQLUser() + "&password=" + props.getMySQLPass();	    
+	    
+	    //String sourceURL = "jdbc:mysql://localhost/" + name + "?user=" + testapp&password=gluco";
+	    //String sourceURL = "jdbc:mysql://" + Host + ":" + Port + "/" + DB + "?user=" + User + "&password=" + Pass;
+
             con = DriverManager.getConnection(sourceURL);
             statement = con.createStatement();
             String query2 = "CREATE TABLE DayValues( " + "datetime datetime NOT NULL default '0000-00-00 00:00:00', bg decimal(7,2) unsigned NOT NULL default '0.00', ins1 decimal(6,2) unsigned NOT NULL default '0.00', ins2 decimal(6,2) unsigned NOT NULL default '0.00', bu decimal(6,2) unsigned NOT NULL default '0.00', act tinyint(3) unsigned NOT NULL default '0', comment varchar(255) NOT NULL default '', PRIMARY KEY (datetime)";
             statement.execute(query2);
-            dbName = name;
+            dbName = "MySQL";
         } catch (SQLException sqle) {
             System.err.println(sqle);
         }
     }
 
-    public void closeConnection()
-    {
-        try {
-            con.close();
-        } catch (SQLException sqle) {
-            System.err.println(sqle);
-        } finally {
-            connected = false;
-            connectedToDB = false;
-            StatusBar.getInstance().setDataSourceText("MySQL [" + m_ic.getMessage("NO_CONNECTION") + "]");
-        }
-    }
 
-    public boolean testConnection(String Host, String Port, String DB, String User, String Pass) throws ClassNotFoundException, SQLException
+    public boolean testDb(String Host, String Port, String DB, String User, String Pass) throws ClassNotFoundException, SQLException
     {
         try {
             Connection tmpcon;

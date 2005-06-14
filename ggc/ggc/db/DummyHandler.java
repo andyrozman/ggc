@@ -36,6 +36,7 @@ import java.util.Date;
 
 public class DummyHandler extends DataBaseHandler
 {
+
     public static DummyHandler singleton = null;
 
     public static DataBaseHandler getInstance()
@@ -45,24 +46,45 @@ public class DummyHandler extends DataBaseHandler
         return singleton;
     }
 
-    public void closeConnection()
+
+    private DummyHandler()
+    {
+	//dbStatus = "Dummy Handler []";
+	dbName = "";
+	dbType = "Dummy Db:";
+    }
+
+
+    public void connectDb()
     {
         connected = false;
+	setStatus();
     }
 
-    public void closeDataBase()
+    public boolean testDb()
     {
-        connectedToDB = false;
+	return true;
     }
 
-    public void connect()
+
+    public void initDb()
     {
-        connected = false;
     }
 
-    public void createNewDataBase(String name)
+    public void disconnectDb()
     {
+	connected = false;
+	setStatus();
     }
+
+
+    public boolean isInitialized()
+    {
+	return false;
+    }
+    
+
+
 
     public boolean dateTimeExists(Date date)
     {
@@ -79,11 +101,9 @@ public class DummyHandler extends DataBaseHandler
         return null;
     }
 
-    public void openDataBase(boolean ask)
-    {
-    }
-
     public void saveDayStats(DailyValues dV)
     {
     }
+
+
 }

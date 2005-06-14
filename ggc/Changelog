@@ -1,3 +1,9 @@
+2005-06-13  Andy Rozman <andyrozman@users.sourceforge.net>   (Version 0.0.2)
+	* fixed some packages
+	* added also *.gif images, since png and xmp are not always displayed
+	* added HSQL database
+	* added internationalization through whole software
+
 2002-08-29  Dieter Schultschik  <schultd@users.sourceforge.net>
 
 	* Checking for new version implemented.

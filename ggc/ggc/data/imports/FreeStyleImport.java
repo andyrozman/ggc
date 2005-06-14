@@ -29,7 +29,7 @@ import java.util.Vector;
 public class FreeStyleImport extends SerialMeterImport
 {
 
-    private I18nControl m_ic = I18nControl.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();
     
     private DailyValuesRow[] importedData = new DailyValuesRow[0];
 

@@ -49,6 +49,19 @@ public class TextFileHandler extends DataBaseHandler
 
     private static TextFileHandler singleton = null;
 
+    private TextFileHandler()
+    {
+	dbType = "TextFile:";
+	
+	File fl = new File(props.getTextFilePath());
+	if  (fl.exists())
+            dbName = fl.getName();
+	else
+	    dbName = m_ic.getMessage("NO_FILE_OPENED");
+
+    }
+
+
     public static DataBaseHandler getInstance()
     {
         if (singleton == null)
@@ -56,41 +69,58 @@ public class TextFileHandler extends DataBaseHandler
         return singleton;
     }
 
-    public void closeConnection()
+    public void disconnectDb()
     {
         connected = false;
-        StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("NO_CONNECTION"));
+	setStatus();
+        //StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("NO_CONNECTION"));
     }
-
+/*
     public void closeDataBase()
     {
-        connectedToDB = false;
-        StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("NO_FILE_OPENED"));
+        connected = false;
+	setStatus();
+        //StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("NO_FILE_OPENED"));
     }
-
-    public void connect()
+  */
+    public void connectDb()
     {
-        connected = true;
-        StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("CONNECTED"));
+        
+	if (!isInitialized())
+	{
+	    initDb();
+	}
+	
+	connected = true;
+	setStatus();
+        //StatusBar.getInstance().setDataSourceText("TextFile: " + m_ic.getMessage("CONNECTED"));
         if (props.getTextFileOpenDefaultFile())
             openDataBase(false);
     }
 
-    public void createNewDataBase(String name)
+    public void initDb()
     {
-        dataFile = new File(name);
+        dataFile = new File(props.getTextFilePath());
         try {
             if (!dataFile.exists())
                 dataFile.createNewFile();
-            connectedToDB = true;
+            connected = true;
+	    setStatus();
         } catch (IOException e) {
             System.out.println(e);
         }
     }
 
+    public boolean isInitialized()
+    {
+        File df = new File(props.getTextFilePath());
+        return df.exists();
+    }
+
+
     public boolean dateTimeExists(Date date)
     {
-        if (!connectedToDB)
+        if (!connected)
             return false;
 
         try {
@@ -115,7 +145,7 @@ public class TextFileHandler extends DataBaseHandler
 
     public DailyValues getDayStats(Date day)
     {
-        if (!connectedToDB)
+        if (!connected)
             return null;
 
         DailyValues dV = new DailyValues();
@@ -159,7 +189,7 @@ public class TextFileHandler extends DataBaseHandler
 
     public HbA1cValues getHbA1c(Date endDay)
     {
-        if (!connectedToDB)
+        if (!connected)
             return null;
 
         HbA1cValues hbVal = null;
@@ -239,24 +269,25 @@ public class TextFileHandler extends DataBaseHandler
                         tmpFile.createNewFile();
                     } catch (IOException e) {
                         System.out.println(e);
-                        connectedToDB = false;
+                        connected = false;
                         return;
                     }
                 else {
-                    connectedToDB = false;
+                    connected = false;
                     return;
                 }
             }
             dataFile = tmpFile;
-            connectedToDB = true;
-            StatusBar.getInstance().setDataSourceText("TextFile: " + dataFile.getName() + " " + m_ic.getMessage("OPENED"));
+            connected = true;
+            //StatusBar.getInstance().setDataSourceText("TextFile: " + dataFile.getName() + " " + m_ic.getMessage("OPENED"));
+	    setStatus();
         } else
-            connectedToDB = false;
+            connected = false;
     }
 
     public void saveDayStats(DailyValues dV)
     {
-        if (!connectedToDB)
+        if (!connected)
             return;
 
         try {

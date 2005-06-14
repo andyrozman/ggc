@@ -79,7 +79,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     {
         HbA1cValues hbVal = null;
 
-        if (DataBaseHandler.hasInstance())
+        if (DataBaseHandler.getInstance().isConnected())
             hbVal = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
 
         DecimalFormat df = new DecimalFormat("#0.00");

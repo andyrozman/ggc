@@ -34,7 +34,7 @@ import java.util.Vector;
 public class EuroFlashImport extends SerialMeterImport
 {
 
-    private I18nControl m_ic = I18nControl.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();
 
     private int counter = 0;
 
