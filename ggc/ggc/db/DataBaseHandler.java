@@ -87,12 +87,12 @@ public abstract class DataBaseHandler
     {
         return singleton != null;
     }
-
+*/
     public static void killHandler()
     {
         singleton = null;
     }
-*/
+
     public boolean isConnected()
     {
         return connected;

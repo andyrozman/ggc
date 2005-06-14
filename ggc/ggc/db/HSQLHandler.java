@@ -413,11 +413,16 @@ public class HSQLHandler extends DataBaseHandler
 
     public void disconnectDb()
     {
-        try {
-            con.close();
-        } catch (SQLException sqle) {
+        try 
+        {
+            if (con!=null) 
+                con.close();
+        } 
+        catch (Exception sqle) 
+        {
             System.err.println(sqle);
-        } finally {
+        } 
+        finally {
             connected = false;
             //connectedToDB = false;
 

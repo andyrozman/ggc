@@ -32,8 +32,9 @@ import ggc.db.DataBaseHandler;
 import ggc.gui.infoPanel.InfoPanel;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
-
 import ggc.util.VersionChecker;
+
+import ggc.print.PrintMonthlyReport;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,21 +60,27 @@ public class MainFrame extends JFrame
     private StatusBar statusPanel;
     private InfoPanel informationPanel;
     DataBaseHandler dbH;
+
+    public static boolean developer_version = false;
+
     GGCProperties props = GGCProperties.getInstance();
 
     //constructor
-    public MainFrame(String title)
+    public MainFrame(String title, boolean developer_version)
     {
         setTitle(title);
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
+        this.developer_version = developer_version;
+
         JMenu fileMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FILE"));
         JMenu viewMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_VIEW"));
         JMenu readMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_READ"));
         JMenu optionMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_OPTION"));
         JMenu helpMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_HELP"));
+        JMenu testMenu = new JMenu("Test");
         fileMenu.setMnemonic(m_ic.getMnemonic("MN_FILE"));
         viewMenu.setMnemonic(m_ic.getMnemonic("MN_VIEW"));
         optionMenu.setMnemonic(m_ic.getMnemonic("MN_OPTION"));
@@ -114,6 +121,8 @@ public class MainFrame extends JFrame
         aboutAction = new GGCAction("MN_ABOUT", "MN_ABOUT_DESC", "hlp_about");
         checkVersionAction = new GGCAction("MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check");
 
+        GGCAction test = new GGCAction("Print", "Print Test", "print_test");
+
         addMenuItem(fileMenu, connectAction);
         addMenuItem(fileMenu, disconnectAction);
         fileMenu.addSeparator();
@@ -137,11 +146,17 @@ public class MainFrame extends JFrame
         addMenuItem(helpMenu, aboutAction);
         addMenuItem(helpMenu, checkVersionAction);
 
+        addMenuItem(testMenu, test);
+
         menuBar.add(fileMenu);
         menuBar.add(viewMenu);
         menuBar.add(readMenu);
         menuBar.add(optionMenu);
         menuBar.add(helpMenu);
+        
+        if (this.developer_version)
+            menuBar.add(testMenu);
+
 
         toolBar.setFloatable(false);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
@@ -585,8 +600,24 @@ public class MainFrame extends JFrame
             {
                 new VersionChecker().checkForUpdate();
             }
-	    else
-		System.out.println("Unknown Command: " + command);
+            else if (command.equals("print_test")) 
+            {
+                new PrintMonthlyReport();
+
+                try
+                {
+                    String pathToAcrobat = "d:/Program Files/Adobe/Acrobat 6.0/Reader/AcroRd32.exe"	;
+
+                    Runtime.getRuntime().exec(pathToAcrobat+ " " + "HelloWorld2.pdf"); 
+                }
+                catch(Exception ex)
+                {
+                    System.out.println("Error running AcrobatReader");
+                }
+
+            }
+            else
+                System.out.println("Unknown Command: " + command);
 
         }
     }

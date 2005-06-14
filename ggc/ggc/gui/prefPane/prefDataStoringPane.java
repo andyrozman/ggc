@@ -73,7 +73,10 @@ public class prefDataStoringPane extends AbstractPrefOptionsPanel
         props.set("DataSource", comboDataSource.getSelectedItem().toString());
         props.set("AutoConnect", chkAutoConnect.isSelected());
 
-	DataBaseHandler.getInstance().setStatus();
+	
+        DataBaseHandler.killHandler();
+        
+        DataBaseHandler.getInstance().setStatus();
 
 	//StatusBar.getInstance().
 

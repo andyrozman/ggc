@@ -85,14 +85,23 @@ public class GGC
         UIDef.put("Pane.background", bgGray);
         UIDef.put("OptionPane.background", bgGray);
 	*/
+
+        boolean dev = false;
+
+        if (args.length>0) 
+        {
+            dev = true;
+        }
+
+
         theApp = new GGC();
-        theApp.init();
+        theApp.init(dev);
 
     }
 
-    public void init()
+    public void init(boolean dev)
     {
-        mainWindow = new MainFrame("GGC - GNU Gluco Control");
+        mainWindow = new MainFrame("GGC - GNU Gluco Control", dev);
         Toolkit theKit = mainWindow.getToolkit();
         Dimension wndSize = theKit.getScreenSize();
 
