@@ -74,13 +74,15 @@ public class HSQLHandler extends DataBaseHandler
     public boolean isInitialized()
     {
 	File fl = new File("../data/ggc_db.properties");
+
+	//System.out.println(fl.getPath() + " exists: " + fl.exists());
 	return fl.exists();
     }
 
 
     public void connectDb()
     {
-	System.out.println("connect");
+	//System.out.println("connect");
 
         try 
 	{
@@ -108,7 +110,7 @@ public class HSQLHandler extends DataBaseHandler
 
 	    //checkDatabase();
 
-	    connected = true;
+	    
 	    //DataBaseHandler.connectedToDB = true;
 
 	    //dbStatus = "HSQL [" + m_ic.getMessage("CONNECTED") + "]";
@@ -371,8 +373,8 @@ public class HSQLHandler extends DataBaseHandler
 	    Statement statement;
 
 
-            statement = con.createStatement();
-	    statement.execute("DROP TABLE DayValues");
+            //statement = con.createStatement();
+	    //statement.execute("DROP TABLE DayValues");
 
 
 

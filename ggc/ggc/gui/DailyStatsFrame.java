@@ -50,14 +50,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class DailyStatsFrame extends JFrame
+public class DailyStatsFrame extends JDialog implements ActionListener
 {
     
     private I18nControl m_ic = I18nControl.getInstance();    
 
     DailyStatsTableModel model = null;
     JScrollPane resultsPane;
+    
     JTable table;
+
+    public boolean save_needed = false;
+
+
+    calendarPane calPane;
 
     JLabel sumIns1, sumIns2, sumIns;
     JLabel avgIns1, avgIns2, avgIns;
@@ -75,27 +81,30 @@ public class DailyStatsFrame extends JFrame
 
     private GGCProperties props = GGCProperties.getInstance();
 
-    private DailyStatsFrame()
+    public DailyStatsFrame(JFrame parent)
     {
-        super("DailyStatsFrame");
+        super(parent, "DailyStatsFrame", false);
         setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
         init();
     }
 
+    /*
     public static DailyStatsFrame getInstance()
     {
         if (singleton == null)
             singleton = new DailyStatsFrame();
         return singleton;
     }
+    */
 
+    /*
     public static void showMe()
     {
-        if (singleton == null)
+        /*if (singleton == null)
             singleton = new DailyStatsFrame();
-        singleton.show();
-        DailyGraphFrame.showMe();
-    }
+        singleton.show(); */
+        //DailyGraphFrame.showMe();
+    //}
 
     public DailyStatsTableModel getTableModel()
     {
@@ -104,16 +113,19 @@ public class DailyStatsFrame extends JFrame
 
     protected void close()
     {
-        DailyGraphFrame.closeMe();
-        dispose();
-        singleton = null;
+        //DailyGraphFrame.closeMe();
+        this.dispose();
+
+	dayData.saveDay();
+
+        //singleton = null;
     }
 
     private void init()
     {
         setBounds(150, 150, 550, 500);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new CloseListener());
+        //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        //addWindowListener(new CloseListener());
 
         //Panel for Insulin Stats
         JPanel InsPanel = new JPanel(new GridLayout(3, 6));
@@ -177,14 +189,14 @@ public class DailyStatsFrame extends JFrame
         JPanel dayCalendar = new JPanel();
         dayCalendar.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("DATE")+":"));
 
-        final calendarPane calPane = new calendarPane();
+        calPane = new calendarPane();
         calPane.addCalendarListener(new CalendarListener()
         {
             public void dateHasChanged(CalendarEvent e)
             {
                 dayData = dbH.getDayStats(new Date(e.getNewDate()));
                 model.setDailyValues(dayData);
-                saveButton.setEnabled(false);
+                //saveButton.setEnabled(false);
                 updateLabels();
                 DailyGraphFrame.setDailyValues(dayData);
             }
@@ -205,19 +217,45 @@ public class DailyStatsFrame extends JFrame
             {
                 DailyGraphFrame.redraw();
                 updateLabels();
-                saveButton.setEnabled(true);
+                //saveButton.setEnabled(true);
             }
         });
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         resultsPane = new JScrollPane(table);
 
-        JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 1, 2));
-        Dimension dim = new Dimension(120, 20);
+
+	Dimension dim = new Dimension(120, 20);
+        
+	JPanel gg = new JPanel();
+	gg.setLayout(new BorderLayout());
+	//gg.setPreferredSize(dim);
+
+
+	JPanel EntryBox1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 2));
+	
+	
+
+        JButton tButton = new JButton(m_ic.getMessage("TTT"));
+        tButton.setPreferredSize(dim);
+	//tButton.setMaximumSize(dim);
+	tButton.setActionCommand("show_daily_graph");
+	tButton.addActionListener(this);
+
+	EntryBox1.add(tButton);
+
+	gg.add(EntryBox1, BorderLayout.WEST);
+	
+	
+	JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 1, 2));
+        //Dimension dim = new Dimension(120, 20);
 
         JButton addButton = new JButton(m_ic.getMessage("ADD_ROW"));
         addButton.setPreferredSize(dim);
-        addButton.addActionListener(new ActionListener()
+	addButton.setActionCommand("add_row");
+	addButton.addActionListener(this);
+        
+/*	addButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
@@ -225,42 +263,52 @@ public class DailyStatsFrame extends JFrame
                 AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
                 aRF.show();
             }
-        });
+        }); */
         EntryBox.add(addButton);
 
         JButton delButton = new JButton(m_ic.getMessage("DELETE_ROW"));
         delButton.setPreferredSize(dim);
-        delButton.addActionListener(new ActionListener()
+	delButton.setActionCommand("delete_row");
+	delButton.addActionListener(this);
+/*        delButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 dayData.deleteRow(table.getSelectedRow());
                 model.fireTableChanged(null);
             }
-        });
+        }); */
         EntryBox.add(delButton);
 
-        saveButton = new JButton(m_ic.getMessage("SAVE"));
+        saveButton = new JButton(m_ic.getMessage("CLOSE"));
         saveButton.setPreferredSize(dim);
-        saveButton.addActionListener(new ActionListener()
+	saveButton.setActionCommand("close");
+	saveButton.addActionListener(this);
+        
+	/*saveButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 dayData.saveDay();
             }
-        });
-        saveButton.setEnabled(false);
+        }); */
+        //saveButton.setEnabled(false);
         EntryBox.add(saveButton);
+
+
+	gg.add(EntryBox, BorderLayout.EAST);
 
         getContentPane().add(resultsPane, BorderLayout.CENTER);
         getContentPane().add(dayHeader, BorderLayout.NORTH);
-        getContentPane().add(EntryBox, BorderLayout.SOUTH);
+        //getContentPane().add(EntryBox, BorderLayout.SOUTH);
+	getContentPane().add(gg, BorderLayout.SOUTH);
 
-        enableEvents(AWTEvent.WINDOW_EVENT_MASK);
-
-        setVisible(true);
+        //enableEvents(AWTEvent.WINDOW_EVENT_MASK);
+        //setVisible(true);
 
         updateLabels();
+
+	setVisible(true);
     }
 
     public void updateLabels()
@@ -292,6 +340,7 @@ public class DailyStatsFrame extends JFrame
         readings.setText(dayData.getBGCount() + "");
     }
 
+/*
     public void processWindowEvent(WindowEvent e)
     {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
@@ -299,6 +348,35 @@ public class DailyStatsFrame extends JFrame
         }
         super.processWindowEvent(e);
     }
+      */
+
+    public void actionPerformed(ActionEvent e)
+    {
+
+	String command = e.getActionCommand();
+
+	if (command.equals("add_row"))
+	{
+	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+	    AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
+	    aRF.show();
+	}
+	else if (command.equals("delete_row"))
+	{
+	    dayData.deleteRow(table.getSelectedRow());
+	    model.fireTableChanged(null);
+	}
+	else if (command.equals("close"))
+	{
+	    close();
+	}
+	else if (command.equals("show_daily_graph"))
+	{
+
+	}
+
+    }
+
 
     private class CloseListener extends WindowAdapter
     {
@@ -307,4 +385,5 @@ public class DailyStatsFrame extends JFrame
             close();
         }
     }
+    
 }

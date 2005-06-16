@@ -36,6 +36,9 @@ import ggc.util.VersionChecker;
 
 import ggc.print.PrintMonthlyReport;
 
+import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -45,6 +48,8 @@ public class MainFrame extends JFrame
 {
     
     private I18nControl m_ic = I18nControl.getInstance();        
+
+    public static SkinLookAndFeel m_skinlf;
 
     //fields
     private JMenuBar menuBar = new JMenuBar();
@@ -64,6 +69,80 @@ public class MainFrame extends JFrame
     public static boolean developer_version = false;
 
     GGCProperties props = GGCProperties.getInstance();
+
+    /**
+     *   Static definitions (Look and Feel)
+     */
+    static
+    {
+
+	//MainFrame.setLookAndFeel("coronaHthemepack.zip");
+        //MainFrame.setLookAndFeel("midnightthemepack.zip");
+        //MainFrame.setLookAndFeel("solunaRthemepack.zip");
+
+	//MainFrame.setLookAndFeel("blueTurquesathemepack.zip");  OK
+	//MainFrame.setLookAndFeel("cougarthemepack.zip");
+	//MainFrame.setLookAndFeel("opusOSBluethemepack.zip"); ?
+	//MainFrame.setLookAndFeel("underlingthemepack.zip"); ?
+	//MainFrame.setLookAndFeel("royalInspiratthemepack.zip"); ?
+//	MainFrame.setLookAndFeel("hmmXPBluethemepack.zip");
+	MainFrame.setLookAndFeel("blueMetalthemepack.zip");  // Win (not so bad) ???
+//	MainFrame.setLookAndFeel("architectBluethemepack.zip");
+//	MainFrame.setLookAndFeel("roueBluethemepack.zip");
+//	MainFrame.setLookAndFeel("quickSilverRthemepack.zip");  
+//	MainFrame.setLookAndFeel("chaNinja-Bluethemepack.zip");  // Mhm
+//	MainFrame.setLookAndFeel("crystal2themepack.zip");  // mhm
+//	MainFrame.setLookAndFeel("toxicthemepack.zip");
+//	MainFrame.setLookAndFeel("amarachthemepack.zip");
+//	MainFrame.setLookAndFeel("b0sumiErgothempack.zip");
+//	MainFrame.setLookAndFeel("gfxOasisthemepack.zip");
+//	MainFrame.setLookAndFeel("iBarthemepack.zip");
+//      MainFrame.setLookAndFeel("midnightthemepack.zip");	 // not os bad
+//	MainFrame.setLookAndFeel("solunaRthemepack.zip");		 // nn
+//	MainFrame.setLookAndFeel("tigerGraphitethemepack.zip");
+//	MainFrame.setLookAndFeel("gorillathemepack.zip");	  // nn
+//	MainFrame.setLookAndFeel("fatalEthemepack.zip");
+//	MainFrame.setLookAndFeel("b0sumithemepack.zip");
+//	MainFrame.setLookAndFeel("architectOlivethemepack.zip");
+//	MainFrame.setLookAndFeel("mmMagra-Xthemepack.zip");
+//	MainFrame.setLookAndFeel("silverLunaXPthemepack.zip");
+//	MainFrame.setLookAndFeel("opusOSDeepthemepack.zip");
+//	MainFrame.setLookAndFeel("coronaHthemepack.zip");
+//	MainFrame.setLookAndFeel("cougarthemepack.zip");
+//	MainFrame.setLookAndFeel("cougarthemepack.zip");
+//	MainFrame.setLookAndFeel("cougarthemepack.zip");
+//	MainFrame.setLookAndFeel("cougarthemepack.zip");
+//	MainFrame.setLookAndFeel("cougarthemepack.zip");
+
+
+    }
+
+
+
+    public static void setLookAndFeel(String name)
+    {
+
+	try
+	{
+	
+	    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("../lib/skinLFThemes/"+name));      
+    
+	    m_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
+	    UIManager.setLookAndFeel(m_skinlf);
+
+            JFrame.setDefaultLookAndFeelDecorated(true);
+            JDialog.setDefaultLookAndFeelDecorated(true);
+
+	}
+	catch(Exception ex)
+	{
+            System.err.println("Error loading L&F: " + ex);
+	}
+
+
+    }
+
+
 
     //constructor
     public MainFrame(String title, boolean developer_version)
@@ -213,6 +292,13 @@ public class MainFrame extends JFrame
         getContentPane().add(informationPanel, BorderLayout.CENTER);
     }
 
+
+    public MainFrame getMyParent()
+    {
+	return this;
+    }
+
+
     /*
     private void setActionEnabledStateDisconnected()
     {
@@ -345,7 +431,7 @@ public class MainFrame extends JFrame
         button.setPreferredSize(new Dimension(24, 24));
 
 	//button.setIcon((ImageIcon)action.getValue(Action.SMALL_ICON));
-
+/*
         button.addMouseListener(new MouseListener()
         {
             public void mouseEntered(MouseEvent e)
@@ -355,6 +441,7 @@ public class MainFrame extends JFrame
                     button.setBorder(BorderFactory.createLineBorder(new Color(8, 36, 106), 1));
                     button.setBackground(new Color(180, 190, 213));
                 }
+		
             }
 
             public void mouseExited(MouseEvent e)
@@ -375,7 +462,7 @@ public class MainFrame extends JFrame
             {
             }
 
-        });
+        });	*/
 
 
         //button.setRolloverIcon(new ImageIcon("ggc/icons/connect.png"));
@@ -565,7 +652,10 @@ public class MainFrame extends JFrame
             } */
             else if (command.equals("view_daily")) 
             {
-                DailyStatsFrame.showMe();
+                //DailyStatsFrame.showMe();
+
+		DailyStatsFrame df = new DailyStatsFrame(getMyParent());
+
             } 
             else if (command.equals("view_course")) 
             {

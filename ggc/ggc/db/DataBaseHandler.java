@@ -152,7 +152,7 @@ public abstract class DataBaseHandler
 	    st = m_ic.getMessage("CONNECTED");
 	else
 	{
-	    if (this.isInitialized())
+	    if (!this.isInitialized())
 	    {
                 st = m_ic.getMessage("NOT_INIT");
 	    }
