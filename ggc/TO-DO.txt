@@ -5,10 +5,10 @@ TO-DO LIST
 URGENT:
 -------
 - ANT Build
-- HypersonicSQL Test
 - Printing (table,...)
 - Appointments
 - Add entries to dayvalues (gui-fix)
+- Nutrition
 
 
 IN NEAR FUTURE
@@ -25,3 +25,11 @@ IN NEAR FUTURE
 IN FUTURE:
 ----------
 - Pump support
+
+
+
+
+
+DONE
+====
++ HypersonicSQL Test
