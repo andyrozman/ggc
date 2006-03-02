@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+<project name="GNU Gluco Control" default="build" basedir=".">
+    <description>
+        Build file for GGC
+    </description>
+
+    <!-- Environment properties read from a file ...-->
+    <property file="./GGCBuild.properties"/>
+
+    <!-- These should *not* be modified on the command line! -->
+    <property name="source.dir" value="${serialbridge.main}/src"/>
+    <property name="neededfiles.dir" value="${serialbridge.main}/src/build"/>
+    <property name="build.dir" value="${source.dir}/classes"/>
+    
+    <!-- Build Server (SerialBridge Application/Applet) -->
+    
+    <target name="build">
+        <echo message="   ************************************************* "/>
+        <echo message="   ****                  GGC Build               **** "/>
+        <echo message="   ************************************************* "/>
+        <echo message=""/>
+        <echo message="     copy = copies all needed files"/>
+        <echo message="     clean = clean build dir"/>
+        <echo message="     build_ggc = build GGC (recompile classes)"/>
+        <echo message="     jar = create GGC jar"/>
+        <echo message="     jar_l = create GGC Little jar"/>
+        <echo message="     full = clean, build_ggc, copy, jar, jar_l"/>
+        <echo message="     dist = full, and create distribution zip file (contains needed libs, and data files)" />
+        <echo message=""/>
+    </target>
+
+
+    <!-- Public targets -->
+        
+    <target name="clean" description="Clean build directory and previus version of GGC">
+        <delete dir="${build.dir}/ggc"/>
+        <delete dir="${build.dir}/icons"/>
+        <delete file="${build.dir}/ggc.jar"/>
+    </target>
+
+
+    <target name="copy" description="Copy all needed files">
+        <copy file="${source.dir}/GGC_SI.properties" todir="${build.dir}/" overwrite="true" />
+        <copy file="${source.dir}/GGC_EN.properties" todir="${build.dir}/" overwrite="true" />
+        <mkdir dir="${build.dir}/icons" />
+        <copy todir="${build.dir}/icons" overwrite="true">
+            <fileset dir="${source.dir}/icons" casesensitive="no">
+                <include name="**/*.gif"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+
+
+    <target name="build_ggc"  description="Build GGC">
+        <javac srcdir="${source.dir}"
+            destdir="${build.dir}"
+            includes="ggc/**"
+            deprecation="off" debug="${debug}">
+            <classpath>
+                <pathelement location="${library.dir}/commWin.jar" />
+                <pathelement location="${library.dir}/hsqldb.jar" />
+                <pathelement location="${library.dir}/itext-1.2.jar" />
+                <pathelement location="${library.dir}/skinlf-1.2.11.jar" />
+                <pathelement location="${build.dir}"/>
+            </classpath>
+        </javac>
+    </target>
+
+
+
+    <target name="jar"  description="Build GGC">
+        <jar jarfile="${build.dir}/ggc.jar"
+             update="false" 
+             index="false"
+             manifest="./manifest_ggc.mf">
+
+            <fileset dir="${build.dir}">
+                <include name="ggc/**"/>
+                <include name="icons/*.gif"/>
+                <exclude name="ggc/little/**"/>
+                <include name="GGC_EN.properties"/>
+                <include name="GGC_SI.properties"/>
+            </fileset>
+        </jar>
+    </target>
+
+
+
+    <target name="jar_l"  description="Build GGC Little">
+        <jar jarfile="${build.dir}/ggcl.jar"
+             update="false" 
+             index="false"
+             manifest="./manifest_ggc_little.mf">
+
+            <fileset dir="${build.dir}">
+                <include name="ggc/datamodels/**"/>
+                <include name="ggc/db/**"/>
+                <include name="ggc/event/**"/>
+                <include name="ggc/little/**"/>
+                <include name="ggc/util/**"/>
+                <include name="ggc/view/**"/>
+                <include name="icons/*.gif"/>
+                <include name="GGC_EN.properties"/>
+                <include name="GGC_SI.properties"/>
+            </fileset>
+        </jar>
+    </target>
+
+
+
+
+
+    <target name="full_build">    
+        <antcall target="clean"/>
+        <antcall target="server_build"/>
+        <antcall target="client_build"/>
+        <antcall target="server_lite_build"/>
+        <antcall target="client_lite_build"/>
+    </target>
+
+
+
+    <target name="hbm2java" description="Generate .java from .hbm files." >
+        <taskdef name="hbm2java"
+            classname="net.sf.hibernate.tool.hbm2java.Hbm2JavaTask" 
+            classpath="${hibernate.all.classpath.dir}"/>
+            <hbm2java output="${source.dir}" >
+                <fileset dir="${source.dir}">
+                    <include name="**/*.hbm.xml"/>
+                </fileset>
+            </hbm2java>
+    </target>
+
+
+
+
+
+
+</project>
+
