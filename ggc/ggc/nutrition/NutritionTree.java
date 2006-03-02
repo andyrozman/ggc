@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 
+
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 
 
 import ggc.db.carbs.NutritionImport;
-
+import ggc.nutrition.NutritionInfo;
 
 
 public class NutritionTree extends JPanel
@@ -54,7 +55,7 @@ public class NutritionTree extends JPanel
     //Optionally set the look and feel.
     private static boolean useSystemLookAndFeel = false;
 
-    public TreeDemo() {
+    public NutritionTree() {
         super(new GridLayout(1,0));
 
         //Create the nodes.
@@ -136,7 +137,7 @@ public class NutritionTree extends JPanel
 
         public BookInfo(String book, String filename) {
             bookName = book;
-            bookURL = TreeDemo.class.getResource(filename);
+            bookURL = NutritionTree.class.getResource(filename);
             if (bookURL == null) {
                 System.err.println("Couldn't find file: "
                                    + filename);
@@ -150,7 +151,7 @@ public class NutritionTree extends JPanel
 
     private void initHelp() {
         String s = "TreeDemoHelp.html";
-        helpURL = TreeDemo.class.getResource(s);
+        helpURL = NutritionTree.class.getResource(s);
         if (helpURL == null) {
             System.err.println("Couldn't open help file: " + s);
         } else if (DEBUG) {
@@ -301,7 +302,7 @@ public class NutritionTree extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        TreeDemo newContentPane = new TreeDemo();
+        NutritionTree newContentPane = new NutritionTree();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 

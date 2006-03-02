@@ -25,7 +25,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
-public class PropertiesFrame extends JFrame
+public class PropertiesFrame extends JDialog
 {
 
     private I18nControl m_ic = I18nControl.getInstance();        
@@ -38,25 +38,37 @@ public class PropertiesFrame extends JFrame
     private JPanel prefPane;
     private AbstractPrefOptionsPanel prefOptionsPane;
 
-    public PropertiesFrame()
+    public PropertiesFrame(MainFrame main)
     {
-        super("Preferences");
+        super();
+
+	Toolkit theKit = main.getToolkit();
+	//Toolkit theKit = JFrame.getToolkit();
+	Dimension wndSize = theKit.getScreenSize();
+
+	int x, y; 
+	
+
+	x = wndSize.width/2 - 320;
+	y = wndSize.height/2 - 240;
+
+	setBounds(x, y, 640, 480);
         setTitle(m_ic.getMessage("PREFERENCES"));
 
         init();
     }
 
-    public static PropertiesFrame getInstance()
+    public static PropertiesFrame getInstance(MainFrame main)
     {
         if (singleton == null)
-            singleton = new PropertiesFrame();
+            singleton = new PropertiesFrame(main);
         return singleton;
     }
 
-    public static void showMe()
+    public static void showMe(MainFrame main)
     {
         if (singleton == null)
-            singleton = new PropertiesFrame();
+            singleton = new PropertiesFrame(main);
         singleton.show();
     }
 
@@ -77,6 +89,7 @@ public class PropertiesFrame extends JFrame
         dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("TEXTFILE_SETUP")));
         prefNode.add(dataNode);
         prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("METER_CONFIGURATION")));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("NUTRITION")));
         /*DefaultMutableTreeNode meterNode = new DefaultMutableTreeNode("Meters");
         meterNode.add(new DefaultMutableTreeNode("Glucocard"));
         prefNode.add(meterNode);*/
@@ -95,23 +108,25 @@ public class PropertiesFrame extends JFrame
                     return;
                 String s = selectedNode.toString();
 
-                if (s.equals(m_ic.getMessage("GENERAL"))) {
+                if (s.equals(m_ic.getMessage("GENERAL"))) 
                     prefOptionsPane = new prefGeneralPane();
-                } else if (s.equals(m_ic.getMessage("MEDICAL_DATA"))) {
+		else if (s.equals(m_ic.getMessage("MEDICAL_DATA"))) 
                     prefOptionsPane = new prefMedicalDataPane();
-                } else if (s.equals(m_ic.getMessage("COLORS_AND_FONTS"))) {
+                else if (s.equals(m_ic.getMessage("COLORS_AND_FONTS")))
                     prefOptionsPane = new prefFontsAndColorPane();
-                } else if (s.equals(m_ic.getMessage("DATA_STORING"))) {
+                else if (s.equals(m_ic.getMessage("DATA_STORING")))
                     prefOptionsPane = new prefDataStoringPane();
-                } else if (s.equals(m_ic.getMessage("MYSQL_SETUP"))) {
+		else if (s.equals(m_ic.getMessage("MYSQL_SETUP"))) 
                     prefOptionsPane = new prefMySQLSetupPane();
-                } else if (s.equals(m_ic.getMessage("TEXTFILE_SETUP"))) {
+		else if (s.equals(m_ic.getMessage("TEXTFILE_SETUP"))) 
                     prefOptionsPane = new prefTextFileSetupPane();
-                } else if (s.equals(m_ic.getMessage("RENDERING_QUALITY"))) {
+		else if (s.equals(m_ic.getMessage("RENDERING_QUALITY"))) 
                     prefOptionsPane = new prefRenderingQualityPane();
-                } else if (s.equals(m_ic.getMessage("METER_CONFIGURATION"))) {
+		else if (s.equals(m_ic.getMessage("METER_CONFIGURATION"))) 
                     prefOptionsPane = new prefMeterConfPane();
-                }
+		else if (s.equals(m_ic.getMessage("NUTRITION"))) 
+		    prefOptionsPane = new prefNutritionConfPane();
+
 
                 old.kill();
                 old = null;

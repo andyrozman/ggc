@@ -23,6 +23,12 @@
  *  Purpose:  loads the gui and sets some look and feel properties.
  *
  *  Author:   schultd
+ *
+ *  Version 1.0 (schultd)
+ *  - basic implementation
+ *
+ *  Version 1.1 (andy)
+ *  - added skin load
  */
 
 package ggc;
@@ -105,7 +111,14 @@ public class GGC
         Toolkit theKit = mainWindow.getToolkit();
         Dimension wndSize = theKit.getScreenSize();
 
-        mainWindow.setBounds(wndSize.width / 4, wndSize.height / 4, (int)(wndSize.width * 0.66), (int)(wndSize.height * 0.66));
+        //mainWindow.setBounds(wndSize.width / 4, wndSize.height / 4, (int)(wndSize.width * 0.66), (int)(wndSize.height * 0.66));
+
+	int x, y; 
+
+	x = wndSize.width/2 - 400;
+	y = wndSize.height/2 - 300;
+
+	mainWindow.setBounds(x, y, 800, 600);
         mainWindow.setVisible(true);
     }
 

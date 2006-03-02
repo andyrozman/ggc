@@ -28,22 +28,23 @@
 package ggc.db.carbs;
 
 
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.DailyValuesRow;
-import ggc.datamodels.HbA1cValues;
-import ggc.gui.StatusBar;
-import ggc.util.GGCProperties;
-import ggc.db.carbs.NutritionImport;
-import ggc.nutrition.NutritionInfo;
-
-import javax.swing.*;
 import java.io.*;
-import java.util.*;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+import java.util.*;
 import java.util.Date;
+
+import javax.swing.*;
+
+import ggc.datamodels.DailyValues;
+import ggc.datamodels.DailyValuesRow;
+import ggc.datamodels.HbA1cValues;
+import ggc.db.datalayer.FoodGroup;
+import ggc.db.datalayer.GGCDb;
+import ggc.gui.StatusBar;
+import ggc.nutrition.NutritionInfo;
+import ggc.util.GGCProperties;
 
 
 
@@ -56,10 +57,18 @@ public class NutritionImport
     boolean connected = false;
     Connection con = null;
 
+    String path = "../data/nutrition/";
+
+
+    GGCDb m_db = null;
+
     public NutritionImport()
     {
 
 	connected = false;
+	m_db = new GGCDb();
+	m_db.initDb();
+	m_db.createDatabase();
 	//DataBaseHandler.connectedToDB = true;
 
     }
@@ -68,6 +77,7 @@ public class NutritionImport
 
     public void connectDb()
     {
+	/*
 	//System.out.println("connect");
 
         try 
@@ -106,7 +116,8 @@ public class NutritionImport
 	{
             System.err.println(sqle);
         }
-        
+
+        */
     }
 
 
@@ -116,13 +127,135 @@ public class NutritionImport
 
         this.insertFoodGroups();
         this.insertFoodDescription();
-        this.insertNutritionData();
-        this.insertHomeWeightData();
+//        this.insertNutritionData();
+//        this.insertHomeWeightData();
 
     }
 
 
     public void insertFoodGroups()
+    {
+
+	try 
+	{
+	    System.out.println(" Loading Food Groups (FD_GROUP.txt)");
+
+	    BufferedReader br = new BufferedReader(new FileReader(new File(path+"FD_GROUP.txt")));
+	    String line = null;
+
+
+	    //PreparedStatement ps = con.prepareStatement("INSERT INTO fd_group (fd_gp, gp_desc) VALUES (?,?)");
+
+	    while ((line=br.readLine())!=null) 
+	    {
+
+		StringTokenizer strtok = new StringTokenizer(line, "^");
+
+		FoodGroup fg = new FoodGroup();
+
+		fg.setId(getInt(strtok.nextToken()));
+		fg.setDescription(getString(strtok.nextToken()));
+
+		m_db.add(fg);
+
+	    }
+
+
+	} 
+	catch (Exception ex) 
+	{
+	    System.err.println("Error on insertFoodGroups(): " + ex);
+	}
+
+    }
+
+
+    public void insertFoodDescription()
+    {
+
+//	connectDb();
+
+	/*
+CREATE TABLE `food_des` (
+  `fd_no` bigint(20) unsigned NOT NULL default '0',
+  `fd_gp` smallint(4) unsigned NOT NULL default '0',
+  `fd_desc` varchar(200) NOT NULL default '',
+  `short_desc` varchar(60) NOT NULL default '',
+  `refuse` float(2,0) default NULL,
+  `fat_g` float(10,3) default NULL,
+  `CH_g` float(10,3) default NULL,
+  `energy_kcal` float(10,3) default NULL,
+  `energy_kJ` float(10,3) default NULL,
+  `sugar_g` float(10,3) default NULL,
+  KEY `fd_no` (`fd_no`),
+  KEY `fd_gp` (`fd_gp`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8; 
+	*/
+
+	// 204 = Fat(Lipid) (g)
+	// 205 = Carbohydrate by difference (g)
+	// 208 = Energy (kcal)
+	// 268 = Energy (kJ)
+	// 269 = Sugar (total) (g)
+
+
+	String tmp ="";
+
+	try 
+	{
+
+	    System.out.println(" Insert Food Description (food_des.txt)");
+
+	    BufferedReader br = new BufferedReader(new FileReader(new File(path+"FOOD_DES.txt")));
+	    String line = null;
+
+
+	    PreparedStatement ps = con.prepareStatement("INSERT INTO food_des (fd_no, fd_gp, fd_desc, short_desc, refuse) VALUES (?,?,?,?,?)");
+
+
+	    while ((line=br.readLine())!=null) 
+	    {
+
+		line = parseExpressionFull(line, "^^", "^0.0^");
+
+		if (line.charAt(line.length()-1)=='^') 
+		    line = line+"0.0";
+
+		//System.out.println(line);
+
+		StringTokenizer strtok = new StringTokenizer(line, "^");
+
+		ps.setLong(1, getLong(strtok.nextToken()));      // NDB_No
+		ps.setShort(2, getShort(strtok.nextToken()));    // FdGrp_Cd
+		ps.setString(3, getString(strtok.nextToken()));  // Long Desc
+		ps.setString(4, getString(strtok.nextToken()));  // Short Desc
+		strtok.nextToken();                              // - ComName
+		strtok.nextToken();                              // - ManufName
+		strtok.nextToken();                              // - Survey
+		strtok.nextToken();                              // - Ref Desc
+		ps.setFloat(5, getFloat(strtok.nextToken()));    // Refuse
+
+		ps.executeUpdate();
+
+	    }
+
+
+	} 
+	catch (Exception ex) 
+	{
+	    System.err.println("Error on insertFoodDescription(): " + ex);
+	    ex.printStackTrace();
+	}
+
+    }
+
+
+
+
+
+
+
+    public void insertFoodGroups_db()
     {
 
         connectDb();
@@ -170,7 +303,7 @@ CREATE TABLE `fd_group` (
 
 
 
-    public void insertFoodDescription()
+    public void insertFoodDescription_db()
     {
 
         connectDb();
@@ -726,13 +859,13 @@ CREATE TABLE `home_weight` (
 
     public static void main(String args[])
     {
-        NutritionImport ni = new NutritionImport();
 
+	NutritionImport ni = new NutritionImport();
 
-        //ni.insertFoodGroups();
+        ni.insertFoodGroups();
         //ni.insertFoodDescription();
         //ni.insertNutritionData();
-        ni.insertHomeWeightData();
+        //ni.insertHomeWeightData();
 
     }
 

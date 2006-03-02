@@ -1,14 +1,19 @@
-TODO LIST
-=========
+TO-DO LIST
+==========
 
 
 URGENT:
 -------
 - ANT Build
 - Printing (table,...)
-- Appointments
+- Appointments: add/edit/delete, view
 - Add entries to dayvalues (gui-fix)
-- Nutrition
+- Edit day entries
+- Nutrition: import, config, view nutr.
+- Meals: add/edit/delete
+- GGC Little: adding, editing, delete, daily graph, show day
+- Hibernate for Database handling
+
 
 
 IN NEAR FUTURE

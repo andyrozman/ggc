@@ -25,31 +25,32 @@
  *  Author:   schultd
  */
 
-package ggc.gui;
+package ggc.little;
 
+
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+
+import javax.swing.*;
+
+import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
 import ggc.db.DataBaseHandler;
+import ggc.gui.*;
 import ggc.gui.infoPanel.InfoPanel;
+import ggc.print.PrintMonthlyReport;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
 
-import ggc.print.PrintMonthlyReport;
 
-import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
-
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-
-
-public class MainFrame extends JFrame
+public class GGCLittle extends JFrame
 {
     
     private I18nControl m_ic = I18nControl.getInstance();        
-
     public static SkinLookAndFeel m_skinlf;
+    public LInfoPanel m_infoPanel = null;
 
     //fields
     private JMenuBar menuBar = new JMenuBar();
@@ -145,14 +146,22 @@ public class MainFrame extends JFrame
 
 
     //constructor
-    public MainFrame(String title, boolean developer_version)
+    public GGCLittle(String title, boolean developer_version)
     {
         setTitle(title);
-        setJMenuBar(menuBar);
+        //setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-        this.developer_version = developer_version;
+	File f = new File("../data/ggc_db.lck");
+
+	if (f.exists())
+	{
+	    f.delete();
+	}
+
+
+        //this.developer_version = developer_version;
 
         JMenu fileMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FILE"));
         JMenu viewMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_VIEW"));
@@ -267,13 +276,20 @@ public class MainFrame extends JFrame
         statusPanel.setStatusMessage("Initialising");
 
 	dbH = DataBaseHandler.getInstance();
+	dbH.connectDb();
+
+	if (!dbH.isConnected())
+	{
+	    dbH.connectDb();
+	}
+
 	dbH.setStatus();
 
 	//statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
 
 
-        if (props.getAutoConnect())
-            dbH.connectDb();
+        //if (props.getAutoConnect())
+        //    dbH.connectDb();
 
 	setDbActions();
 
@@ -288,12 +304,17 @@ public class MainFrame extends JFrame
 	*/
 	
         //Information Portal Setup
-        informationPanel = new InfoPanel();
-        getContentPane().add(informationPanel, BorderLayout.CENTER);
+        //informationPanel = new InfoPanel();
+
+	// Little specific stuff
+
+	m_infoPanel = new LInfoPanel(this);
+
+        getContentPane().add(m_infoPanel, BorderLayout.CENTER);
     }
 
 
-    public MainFrame getMyParent()
+    public GGCLittle getMyParent()
     {
 	return this;
     }
@@ -675,11 +696,11 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("option_pref")) 
             {
-                PropertiesFrame.showMe(MainFrame.this);
+                //PropertiesFrame.showMe(MainFrame.this);
             } 
             else if (command.equals("read_meter")) 
             {
-                ReadMeterDialog.showMe(MainFrame.this);
+                //ReadMeterDialog.showMe(MainFrame.this);
             } 
             else if (command.equals("hlp_about")) 
             {
@@ -716,7 +737,30 @@ public class MainFrame extends JFrame
     {
         public void windowClosing(WindowEvent e)
         {
+	    dbH.disconnectDb();
             close();
         }
     }
+
+
+    public static void main(String args[])
+    {
+	GGCLittle gl = new GGCLittle("GGCL - GNU Gluco Control Little", false);
+	Toolkit theKit = gl.getToolkit();
+	Dimension wndSize = theKit.getScreenSize();
+
+	//mainWindow.setBounds(wndSize.width / 4, wndSize.height / 4, (int)(wndSize.width * 0.66), (int)(wndSize.height * 0.66));
+
+	int x, y; 
+
+	x = wndSize.width/2 - 400;
+	y = wndSize.height/2 - 300;
+
+	gl.setBounds(x, y, 600, 440);
+	gl.setVisible(true);
+
+
+    }
+
+
 }
