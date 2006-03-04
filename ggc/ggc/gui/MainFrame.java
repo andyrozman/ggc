@@ -50,6 +50,7 @@ public class MainFrame extends JFrame
     private I18nControl m_ic = I18nControl.getInstance();        
 
     public static SkinLookAndFeel m_skinlf;
+    private static String skinLFdir = "../ggc-support/lib/skinLFThemes/";
 
     //fields
     private JMenuBar menuBar = new JMenuBar();
@@ -125,7 +126,7 @@ public class MainFrame extends JFrame
 	try
 	{
 	
-	    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("../lib/skinLFThemes/"+name));      
+	    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir+name));      
     
 	    m_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
 	    UIManager.setLookAndFeel(m_skinlf);
@@ -152,7 +153,7 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-        this.developer_version = developer_version;
+        MainFrame.developer_version = developer_version;
 
         JMenu fileMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FILE"));
         JMenu viewMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_VIEW"));
@@ -233,7 +234,7 @@ public class MainFrame extends JFrame
         menuBar.add(optionMenu);
         menuBar.add(helpMenu);
         
-        if (this.developer_version)
+        if (MainFrame.developer_version)
             menuBar.add(testMenu);
 
 
@@ -252,10 +253,10 @@ public class MainFrame extends JFrame
         addToolBarButton(viewSpreadGraphAction);
         addToolBarButton(viewFrequencyGraphAction);
         addToolBarSpacer();
-	addToolBarSpacer();
+	    addToolBarSpacer();
         addToolBarButton(viewHbA1cAction);
         addToolBarSpacer();
-	addToolBarSpacer();
+	    addToolBarSpacer();
         addToolBarButton(readMeterAction);
 
         getContentPane().add(toolBar, BorderLayout.NORTH);

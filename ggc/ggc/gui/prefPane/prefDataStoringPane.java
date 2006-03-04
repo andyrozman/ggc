@@ -28,11 +28,14 @@
 package ggc.gui.prefPane;
 
 
-import ggc.gui.StatusBar;
 import ggc.db.DataBaseHandler;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+
+import javax.swing.Box;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 
 public class prefDataStoringPane extends AbstractPrefOptionsPanel

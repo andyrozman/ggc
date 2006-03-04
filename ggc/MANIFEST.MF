@@ -1,2 +1,2 @@
-Main-Class: ggc
+Main-Class: ggc.GGC
 Name: GGCT

@@ -33,10 +33,23 @@ import ggc.datamodels.DailyValuesRow;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
-import java.awt.*;
-import java.awt.event.*;
 
 
 public class AddRowFrame extends JFrame

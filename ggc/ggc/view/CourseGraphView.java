@@ -108,7 +108,7 @@ public class CourseGraphView extends AbstractGraphView
             for (int i = 0; i < 10; i++) {
                 markPos = leftSpace + i * (diffW) / 9;
                 g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace + 5);
-                g2D.drawString(gV.getDateForDayAt(Math.round((float)i * scale)), markPos - 10, h - lowerSpace + 20);
+                g2D.drawString(gV.getDateForDayAt(Math.round(i * scale)), markPos - 10, h - lowerSpace + 20);
             }
         }
 

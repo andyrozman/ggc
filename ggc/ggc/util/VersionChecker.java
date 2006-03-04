@@ -85,8 +85,12 @@ public class VersionChecker
 
             }
         } catch (java.io.IOException e) {
+            // TODO: shouldn't this rather be System.err.println()?
             System.out.println(e);
-        } finally {
+        }
+        // TODO: What if this throws an error (e.g. if conn is null)
+        finally 
+        {
             conn.disconnect();
             return true;
         }

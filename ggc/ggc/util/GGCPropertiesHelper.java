@@ -38,11 +38,13 @@ public class GGCPropertiesHelper
     private Properties props = new Properties();
     //private static GGCProperties singleton = null;
     private File propsFile;
+    private static String propsFileName = "GGC.properties";
+    private static String propsFileDir = "../ggc-support/data/";
 
     public GGCPropertiesHelper()
     {
         try {
-            File tmpFile = new File("../data/GGC.properties");
+            File tmpFile = new File(propsFileDir+propsFileName);
             if (!tmpFile.exists())
                 tmpFile.createNewFile();
             propsFile = tmpFile;

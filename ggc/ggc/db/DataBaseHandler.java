@@ -35,10 +35,7 @@ import ggc.gui.StatusBar;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
-import javax.swing.*;
 import java.util.Date;
-
-import java.sql.SQLException;
 
 
 public abstract class DataBaseHandler

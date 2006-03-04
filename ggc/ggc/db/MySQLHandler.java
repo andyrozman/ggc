@@ -31,11 +31,13 @@ package ggc.db;
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.HbA1cValues;
-import ggc.gui.StatusBar;
-import ggc.util.GGCProperties;
 
-import javax.swing.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

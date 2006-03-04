@@ -45,7 +45,7 @@ public class GGC
     //fields
     private static GGC theApp;
     private static MainFrame mainWindow;
-    private static String version = "0.0.2";
+    private static String VERSION = "0.0.2";
 
     public static void main(String[] args)
     {
@@ -124,6 +124,6 @@ public class GGC
 
     public static String getVersion()
     {
-        return theApp.version;
+        return GGC.VERSION;
     }
 }

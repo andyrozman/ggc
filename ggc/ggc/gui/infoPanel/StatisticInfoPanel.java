@@ -31,14 +31,15 @@ package ggc.gui.infoPanel;
 
 import ggc.datamodels.StatisticValues;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 
 public class StatisticInfoPanel extends AbstractInfoPanel

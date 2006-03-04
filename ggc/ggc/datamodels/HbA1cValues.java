@@ -115,7 +115,7 @@ public class HbA1cValues
     public float getHbA1c_Method2()
     {
         if (dayCount > 0)
-            return (float)(getAvgBG() / 30 + 2);
+            return (getAvgBG() / 30 + 2);
         else
             return 0;
     }

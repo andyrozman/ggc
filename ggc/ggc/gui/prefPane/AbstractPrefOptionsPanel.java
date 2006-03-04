@@ -73,8 +73,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     }
 
     public void changedUpdate(DocumentEvent e)
-    {
-    };
+    {}
 
     public void actionPerformed(ActionEvent e)
     {

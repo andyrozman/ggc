@@ -10,11 +10,7 @@ package ggc.data.imports;
 
 import ggc.datamodels.DailyValuesRow;
 import ggc.event.ImportEvent;
-import ggc.util.I18nControl;
 
-import javax.comm.NoSuchPortException;
-import javax.comm.SerialPortEvent;
-import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParsePosition;
@@ -23,6 +19,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
+import javax.comm.NoSuchPortException;
+import javax.comm.SerialPortEvent;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -64,9 +64,9 @@ public class EuroFlashImport extends SerialMeterImport
         super.importData();
 
         try {
-            portOutputStream.write((int)'D');
-            portOutputStream.write((int)'M');
-            portOutputStream.write((int)'@');
+            portOutputStream.write('D');
+            portOutputStream.write('M');
+            portOutputStream.write('@');
         } catch (IOException e) {
         }
     }
@@ -95,17 +95,17 @@ public class EuroFlashImport extends SerialMeterImport
                 char ident = inputBuffer.charAt(0);
 
                 if (ident == '@') {
-                    portOutputStream.write((int)'D');
-                    portOutputStream.write((int)'M');
-                    portOutputStream.write((int)'?');
+                    portOutputStream.write('D');
+                    portOutputStream.write('M');
+                    portOutputStream.write('?');
                     timeOut += 15000;
                     System.out.println("second char written.");
                 }
 
                 if (ident == '?') {
-                    portOutputStream.write((int)'D');
-                    portOutputStream.write((int)'M');
-                    portOutputStream.write((int)'P');
+                    portOutputStream.write('D');
+                    portOutputStream.write('M');
+                    portOutputStream.write('P');
                     timeOut += 30000;
                     System.out.println("third char written.");
                 }

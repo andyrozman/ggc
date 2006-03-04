@@ -1,3 +1,37 @@
+2006-03-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * GGC_DE.properties: renamed to GGC_de.properties, some more work on the translation
+    * GGC_EN.properties: some spellchecking, no version or date changes since
+        this doesn't really imply that other translations need to be adopted
+    * ggc.util.I18nControl:
+      - moved header to the top
+      - made EN the fallback default locale, as english is the master language file
+    * ggc.gui.MainFrame:
+      - hardcoded skin location in a field at the top of the file instead of somewhere
+        in the code, to make this a tiny little bit more flexible
+      - changed the path in accordance with cvs repository layout
+    * ggc.util.GGCPropertiesHelper: pretty much same as above for data directory and
+        config file location
+    * MANIFEST.MF: I think this meant ggc.GGC, not just ggc (in Main-Class)
+    * ggc.little.LittleInfoPanel: had wrong package declaration
+    * ggc.little.DailyStatsPanel: doesn't seem to compile here (see "// XXX:" comment)
+    * PROBLEM: There suddenly are some mysterious "org.apache.commons" and "org.hibernate"
+        imports I can't seem to resolve
+
+2006-03-01 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * fix: ggc.nutrition.NutritionTree still thought it was named TreeDemo
+           (constructor, some calls inside the class)
+    * ggc.data.imports.*: a char -> int cast is unnecessary, deleted them.
+    * ggc.view.CourseGraphView: same for int -> float casts
+        If those casts were there for a reason, please feel free to re-insert
+        them and tell me how stupid I am :-P
+    * randomly scattered throughout the project, hopefully not creating too
+      many conflicts:
+        - optimized import section (<Shift> - <O> in eclipse)
+        - added several questions (see TODO comments)
+    * ggc.util.VersionChecker: added two questions, if I forget to start 
+        a discussion, could somebody else, please?
+    * GGC_DE.properties: Added newest version of my German translation
+
 2005-06-13  Andy Rozman <andyrozman@users.sourceforge.net>   (Version 0.0.2)
 	* fixed some packages
 	* added also *.gif images, since png and xmp are not always displayed

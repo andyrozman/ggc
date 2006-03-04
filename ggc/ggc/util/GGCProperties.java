@@ -28,10 +28,7 @@
 package ggc.util;
 
 
-import java.awt.*;
-import java.io.*;
-
-import javax.swing.JLabel;
+import java.awt.Color;
 
 
 public class GGCProperties extends GGCPropertiesHelper

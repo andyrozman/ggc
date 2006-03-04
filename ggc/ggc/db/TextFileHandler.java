@@ -31,13 +31,19 @@ package ggc.db;
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.HbA1cValues;
-import ggc.gui.StatusBar;
 
-import javax.swing.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 
 public class TextFileHandler extends DataBaseHandler

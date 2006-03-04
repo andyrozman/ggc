@@ -31,15 +31,15 @@ package ggc.db;
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.HbA1cValues;
-import ggc.gui.StatusBar;
-import ggc.util.GGCProperties;
 
-import javax.swing.*;
 import java.io.File;
-import java.sql.*;
-import java.text.ParseException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 
 
@@ -508,7 +508,7 @@ public class HSQLHandler extends DataBaseHandler
 
 	java.util.Date dat = new java.util.Date();
 
-        dat.setDate(days);
+    dat.setDate(days);
 	dat.setMonth(month-1);
 	dat.setYear(year-1900);
 

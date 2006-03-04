@@ -28,23 +28,18 @@
 package ggc.db.carbs;
 
 
-import java.io.*;
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Date;
-
-import javax.swing.*;
-
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.DailyValuesRow;
-import ggc.datamodels.HbA1cValues;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.GGCDb;
-import ggc.gui.StatusBar;
 import ggc.nutrition.NutritionInfo;
-import ggc.util.GGCProperties;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 
 

@@ -9,14 +9,14 @@ package ggc.data.imports;
 
 
 import ggc.datamodels.DailyValuesRow;
-import ggc.util.I18nControl;
 
-import javax.comm.SerialPortEvent;
-import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Vector;
+
+import javax.comm.SerialPortEvent;
+import javax.swing.ImageIcon;
 
 
 
@@ -63,9 +63,9 @@ public class FreeStyleImport extends SerialMeterImport
         System.out.println("Charset : " + charset);
 
         try {
-            portOutputStream.write((int)'m');
-            portOutputStream.write((int)'e');
-            portOutputStream.write((int)'m');
+            portOutputStream.write('m');
+            portOutputStream.write('e');
+            portOutputStream.write('m');
 
             //portOutputStream.write(((int) 'm')+((int) 'e')+((int) 'm'));
         } catch (IOException e) {
@@ -129,9 +129,7 @@ public class FreeStyleImport extends SerialMeterImport
     }
 
     /**
-
      *
-
      */
     private StringBuffer createBufferFromStream(InputStream stream)
     {
@@ -161,9 +159,7 @@ public class FreeStyleImport extends SerialMeterImport
 
 
     /**
-
      *
-
      */
     private byte[] createByteBufferFromStream(InputStream stream)
     {

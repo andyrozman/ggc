@@ -26,12 +26,18 @@
  *  Author:   schultd
  */
 
-package ggc.gui.infoPanel;
+package ggc.little;
 
 
-import javax.swing.*;
-import java.awt.*;
+import ggc.gui.infoPanel.AbstractInfoPanel;
+import ggc.gui.infoPanel.GeneralInfoPanel;
+import ggc.gui.infoPanel.StatisticInfoPanel;
+
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.Vector;
+
+import javax.swing.JPanel;
 
 
 public class LittleInfoPanel extends JPanel

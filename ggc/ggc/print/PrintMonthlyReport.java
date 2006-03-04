@@ -2,41 +2,14 @@ package ggc.print;
 
 
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfWriter;
-
-
-import java.awt.Color;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Paragraph;
+import com.lowagie.text.Element;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-
-
-import java.awt.Color;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.pdf.DefaultFontMapper;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfTemplate;
-import com.lowagie.text.pdf.PdfWriter;
-
-import com.lowagie.text.pdf.PdfPRow;
 
 public class PrintMonthlyReport
 {

@@ -1,20 +1,3 @@
-package ggc.util;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.MissingResourceException;
-import java.util.Hashtable;
-import java.util.Enumeration;
-import java.util.Properties;
-import java.util.Vector;
-
-import java.util.*;
-import java.text.DateFormat;
-
-
-import java.io.*;
-
-
 /*
  *  GGC - GNU Gluco Control
  *
@@ -43,6 +26,11 @@ import java.io.*;
  */
 
 
+package ggc.util;
+
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 public class I18nControl
 {
@@ -154,9 +142,9 @@ public class I18nControl
      *  This method sets language for control instance. If none is found, english is defaulted.
      *  if none is found, application will exit.<br><br>
      *
-     *  @param lcl locale that will choose which language will be set
+     *  @param locale locale that will choose which language will be set
      */ 
-    public void setLanguage(Locale lcl)
+    public void setLanguage(Locale locale)
     {
 
         try
@@ -174,18 +162,18 @@ public class I18nControl
                 
             }
             */
-            res = ResourceBundle.getBundle("GGC", lcl);
+            res = ResourceBundle.getBundle("GGC", locale);
         }
         catch (MissingResourceException mre)
         {
-            System.out.println("Couldn't find resource file(1): GGC_xx.properties (for Locale "+lcl+")");
+            System.out.println("Couldn't find resource file(1): GGC_xx.properties (for Locale "+locale+")");
             try
             {
-                res = ResourceBundle.getBundle("GGC", new Locale("SI"));
+                res = ResourceBundle.getBundle("GGC", new Locale("EN"));
             }
             catch(Exception ex)
             {
-                System.out.println("Exception on reading default resource file (GGC_SI.properties). Exiting application.");
+                System.out.println("Exception on reading default resource file (GGC_EN.properties). Exiting application.");
                 System.exit(2);
             }
         }

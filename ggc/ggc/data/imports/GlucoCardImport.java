@@ -29,15 +29,15 @@ package ggc.data.imports;
 
 
 import ggc.datamodels.DailyValuesRow;
-import ggc.util.I18nControl;
 
-import javax.comm.SerialPortEvent;
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
+
+import javax.comm.SerialPortEvent;
+import javax.swing.ImageIcon;
 
 
 public class GlucoCardImport extends SerialMeterImport

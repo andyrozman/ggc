@@ -12,31 +12,24 @@
  */
 package ggc.nutrition;
  
+import ggc.db.carbs.NutritionImport;
+
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.net.URL;
+import java.util.Iterator;
+
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.UIManager;
-
-
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-
-import java.net.URL;
-import java.io.IOException;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-
-import java.util.Iterator;
-import java.util.ArrayList;
-
-
-import ggc.db.carbs.NutritionImport;
-import ggc.nutrition.NutritionInfo;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 
 public class NutritionTree extends JPanel
