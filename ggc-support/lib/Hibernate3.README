@@ -1,0 +1,14 @@
+
+HIBERNATE README
+================
+
+Hibernate is API for working with several different type's of database's. You need to 
+extract this file (hibernate3.zip) into lib directory, where it will create hibernate3 
+directory with several files.
+
+Hibernate will be used in GGC for storing Nutrition data (at beginning), but at later 
+time, all database functionality will be done with Hibernate. 
+
+As said before Hibernate works with several databases, also with default database used 
+for GGC (HypersonicSQL).
+
