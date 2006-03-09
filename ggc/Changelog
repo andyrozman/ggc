@@ -1,3 +1,10 @@
+2006-03-05 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * OK, figured out problem with compiling ggc.little.DailyStatsPanel: this seems to
+        require java 1.5
+    * ggc.util.GGCPropertiesHelper: undid a change to the data dir path that was supposed
+        to be local but forgotten
+    * looks like eclipse committed my .classpath and .cvsignore, trying to fix
+
 2006-03-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * GGC_DE.properties: renamed to GGC_de.properties, some more work on the translation
     * GGC_EN.properties: some spellchecking, no version or date changes since

@@ -375,7 +375,6 @@ public class DailyStatsPanel extends JPanel implements ActionListener
 	if (command.equals("add_row"))
 	{
 	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-        // XXX: my version of Java doesn't seem to accept sf.format(long), Does this work with 1.5?
 	    AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(System.currentTimeMillis()));
 	    aRF.show();
 	}

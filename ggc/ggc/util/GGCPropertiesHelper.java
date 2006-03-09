@@ -39,7 +39,7 @@ public class GGCPropertiesHelper
     //private static GGCProperties singleton = null;
     private File propsFile;
     private static String propsFileName = "GGC.properties";
-    private static String propsFileDir = "../ggc-support/data/";
+    private static String propsFileDir = "../data/";
 
     public GGCPropertiesHelper()
     {
