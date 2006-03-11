@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    
+    <!-- ***************** GGC::Nutrition SCHEMA  ******************* -->
+
+    <!--  Food Group -->
+    <class name="ggc.db.hibernate.FoodGroupH" table="ggc_nutrition_food_group">
+        <id name="id" type="int" unsaved-value="0">
+            <generator class="assigned"/>
+        </id>            
+        <property name="description" type="string" length="60" />
+    </class>
+
+
+    <!--  Food Description -->
+    <class name="ggc.db.hibernate.FoodDescriptionH" table="ggc_nutrition_food_description">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="assigned"/>
+        </id>           
+        <property name="food_group_id" type="int"  />
+        <property name="name" type="string" length="200" />
+        <property name="i18n_name" type="string" length="60" />
+        <property name="refuse" type="float" />
+        <property name="fat_g" type="float" />
+        <property name="CH_g" type="float" />
+        <property name="energy_kcal" type="float" />
+        <property name="energy_kJ" type="float" />
+        <property name="sugar_g" type="float" />
+    </class>
+
+
+    <!--  Food Description -->
+    <class name="ggc.db.hibernate.FoodHomeWeightH" table="ggc_nutrition_food_home_weight">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="native"/>
+        </id>           
+        <property name="food_number" type="long"  />
+        <property name="sequence" type="int" not-null="true" />
+        <property name="amount" type="float"  />
+        <property name="msr_desc" type="string" length="2000" />
+        <property name="weight_g" type="float" />
+    </class>
+
+
+
+
+
+
+    <!--  MyParish  
+    <class name="com.atech.inf_sys.zisdb.db.config.MyParishH" table="cfg_parish">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <many-to-one name="parish" cascade="save-update" class="com.atech.inf_sys.zisdb.db.parish.ParishH" /> 
+    </class>
+--> 
+
+    <!--  MyParishPerson 
+    <class name="com.atech.inf_sys.zisdb.db.config.MyParishPersonH" table="cfg_pperson">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <many-to-one name="parish_person_work" class="com.atech.inf_sys.zisdb.db.parish.ParishPersonWorkH" /> 
+        <many-to-one name="parish" cascade="save-update" class="com.atech.inf_sys.zisdb.db.parish.ParishH" /> 
+        <property name="position" column="position_x" type="string" length="50" />    
+    </class>
+-->
+
+    <!--  Mass 
+    <class name="com.atech.inf_sys.zisdb.db.config.MassH" table="cfg_mass">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
+        </id>            
+        <property name="mass_time" type="long" not-null="true"/>    
+        <property name="mass_day" type="int" not-null="true"/>    
+        <property name="parish_id" type="long" not-null="true"/>  
+        <property name="parish_name" type="string" length="50" not-null="true"/>
+        <property name="duration_type" type="int" not-null="true" />
+        <property name="from_date" type="long" not-null="true" />    
+        <property name="till_date" type="long" not-null="true" />    
+        <property name="comment" column="comment_x" type="string" length="255" />
+    </class>
+-->
+</hibernate-mapping>
