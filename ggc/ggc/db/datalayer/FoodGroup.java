@@ -36,6 +36,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 
     public String toString()
     {
+	//return this.getDescription();
         return this.getShortDescription();
     }
 

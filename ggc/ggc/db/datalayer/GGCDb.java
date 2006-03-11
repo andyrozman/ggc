@@ -23,6 +23,10 @@ import org.hibernate.tool.hbm2ddl.*;
 
 
 import ggc.db.hibernate.DatabaseObjectHibernate;
+import ggc.db.datalayer.FoodGroup;
+import ggc.db.datalayer.FoodDescription;
+import ggc.db.hibernate.FoodGroupH;
+import ggc.db.hibernate.FoodDescriptionH;
 
 
 
@@ -389,8 +393,48 @@ public class GGCDb
     }
 
 
+    // *************************************************************
+    // ****                NUTRITION DATA                       ****
+    // *************************************************************
+    
+    public ArrayList getFoodGroups()
+    {
+
+	ArrayList list = new ArrayList();
+
+	Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodGroupH as pst");
+
+	Iterator it = q.iterate();
+
+	while (it.hasNext())
+	{
+	    FoodGroupH eh = (FoodGroupH)it.next();
+	    list.add(new FoodGroup(eh));
+	}
+
+	return list;
+
+    }
 
 
+    public ArrayList getFoodDescriptions()
+    {
+
+	ArrayList list = new ArrayList();
+
+	Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodDescriptionH as pst");
+
+	Iterator it = q.iterate();
+
+	while (it.hasNext())
+	{
+	    FoodDescriptionH eh = (FoodDescriptionH)it.next();
+	    list.add(new FoodDescription(eh));
+	}
+
+	return list;
+
+    }
 
 
 

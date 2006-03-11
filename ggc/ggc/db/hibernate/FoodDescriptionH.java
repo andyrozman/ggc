@@ -15,10 +15,10 @@ public class FoodDescriptionH implements Serializable {
     private int food_group_id;
 
     /** nullable persistent field */
-    private String description;
+    private String name;
 
     /** nullable persistent field */
-    private String short_description;
+    private String i18n_name;
 
     /** nullable persistent field */
     private float refuse;
@@ -39,11 +39,11 @@ public class FoodDescriptionH implements Serializable {
     private float sugar_g;
 
     /** full constructor */
-    public FoodDescriptionH(long id, int food_group_id, String description, String short_description, float refuse, float fat_g, float CH_g, float energy_kcal, float energy_kJ, float sugar_g) {
+    public FoodDescriptionH(long id, int food_group_id, String name, String i18n_name, float refuse, float fat_g, float CH_g, float energy_kcal, float energy_kJ, float sugar_g) {
         this.id = id;
         this.food_group_id = food_group_id;
-        this.description = description;
-        this.short_description = short_description;
+        this.name = name;
+        this.i18n_name = i18n_name;
         this.refuse = refuse;
         this.fat_g = fat_g;
         this.CH_g = CH_g;
@@ -77,20 +77,20 @@ public class FoodDescriptionH implements Serializable {
         this.food_group_id = food_group_id;
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getName() {
+        return this.name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getShort_description() {
-        return this.short_description;
+    public String getI18n_name() {
+        return this.i18n_name;
     }
 
-    public void setShort_description(String short_description) {
-        this.short_description = short_description;
+    public void setI18n_name(String i18n_name) {
+        this.i18n_name = i18n_name;
     }
 
     public float getRefuse() {

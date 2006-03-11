@@ -160,8 +160,8 @@ public class NutritionImport
 
 		fd.setId(getLong(strtok.nextToken()));		 // NDB_No	
 		fd.setFood_group_id(getInt(strtok.nextToken()));    // FdGrp_Cd
-		fd.setDescription(getString(strtok.nextToken()));  // Long Desc
-		fd.setShort_description(getString(strtok.nextToken()));  // Short Desc
+		fd.setName(getString(strtok.nextToken()));  // Long Desc
+		fd.setI18n_name(getString(strtok.nextToken()));  // Short Desc
 
 		strtok.nextToken();                              // - ComName
 		strtok.nextToken();                              // - ManufName

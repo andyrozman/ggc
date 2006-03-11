@@ -18,8 +18,8 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
     {
         this.setId(0);
 	this.setFood_group_id(0);
-	this.setDescription("");
-	this.setShort_description("");
+	this.setName("");
+	this.setI18n_name("");
 	this.setCH_g(0.0f);
 	this.setEnergy_kcal(0.0f);
 	this.setEnergy_kJ(0.0f);
@@ -33,8 +33,8 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
     {
 	this.setId(ch.getId());
 	this.setFood_group_id(ch.getFood_group_id());
-	this.setDescription(ch.getDescription());
-	this.setShort_description(ch.getShort_description());
+	this.setName(ch.getName());
+	this.setI18n_name(ch.getI18n_name());
 	this.setCH_g(ch.getCH_g());
 	this.setEnergy_kcal(ch.getEnergy_kcal());
 	this.setEnergy_kJ(ch.getEnergy_kJ());
@@ -46,7 +46,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 
     public String getShortDescription()
     {
-        return this.getDescription();
+        return this.getName();
     }
 
 
@@ -77,8 +77,8 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 
 	ch.setId(this.getId());
 	ch.setFood_group_id(this.getFood_group_id());
-	ch.setDescription(this.getDescription());
-	ch.setShort_description(this.getShort_description());
+	ch.setName(this.getName());
+	ch.setI18n_name(this.getI18n_name());
 	ch.setCH_g(this.getCH_g());
 	ch.setEnergy_kcal(this.getEnergy_kcal());
 	ch.setEnergy_kJ(this.getEnergy_kJ());
@@ -112,8 +112,8 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 
 	ch.setId(this.getId());
 	ch.setFood_group_id(this.getFood_group_id());
-	ch.setDescription(this.getDescription());
-	ch.setShort_description(this.getShort_description());
+	ch.setName(this.getName());
+	ch.setI18n_name(this.getI18n_name());
 	ch.setCH_g(this.getCH_g());
 	ch.setEnergy_kcal(this.getEnergy_kcal());
 	ch.setEnergy_kJ(this.getEnergy_kJ());
@@ -184,8 +184,8 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 
 	this.setId(ch.getId());
 	this.setFood_group_id(ch.getFood_group_id());
-	this.setDescription(ch.getDescription());
-	this.setShort_description(ch.getShort_description());
+	this.setName(ch.getName());
+	this.setI18n_name(ch.getI18n_name());
 	this.setCH_g(ch.getCH_g());
 	this.setEnergy_kcal(ch.getEnergy_kcal());
 	this.setEnergy_kJ(ch.getEnergy_kJ());
