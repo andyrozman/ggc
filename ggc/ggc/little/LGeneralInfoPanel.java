@@ -19,12 +19,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: GeneralInfoPanel.java
+ *  Filename: LGeneralInfoPanel.java
  *  Purpose:  Shows general information about your Person. Like your name,
- *            Insulin used, your personal BG bounds, ...
+ *            Insulin used, your personal BG bounds, ... (fix)
  *
- *  Author:   schultd
+ *  Author:   andyrozman
  */
+
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
+
 
 package ggc.little;
 

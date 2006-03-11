@@ -20,10 +20,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *  Filename: DailyStatsFrame.java
- *  Purpose:  Enter and view all data for one day.
+ *  Purpose:  Enter and view all data for one day. (fix)
  *
- *  Author:   schultd
+ *  Author:   andyrozman
  */
+
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
 
 package ggc.little;
 

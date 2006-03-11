@@ -9,20 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-/*
-import com.atech.inf_sys.zis.data.DataAccess;
-import com.atech.inf_sys.zis.data.I18nControl;
-import com.atech.inf_sys.zis.ui.dialogs.DioceseCfgDialog;
-
-import com.atech.inf_sys.zis.datalayer.Parish;
-import com.atech.inf_sys.zis.datalayer.Diocese;
-*/
-
 import ggc.util.I18nControl;
 import ggc.util.DataAccess;
 
 
-    
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
+
+
 public class PanelNutritionMain extends JPanel
 {
 

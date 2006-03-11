@@ -9,18 +9,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-/*
-import com.atech.inf_sys.zis.data.DataAccess;
-import com.atech.inf_sys.zis.data.I18nControl;
-import com.atech.inf_sys.zis.ui.dialogs.DioceseCfgDialog;
-
-import com.atech.inf_sys.zis.datalayer.Parish;
-import com.atech.inf_sys.zis.datalayer.Diocese;
-*/
-
 
 import ggc.util.I18nControl;
 import ggc.util.DataAccess;
+
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
+
 
 public class PanelNutritionFood extends JPanel implements ActionListener
 {
@@ -62,7 +57,7 @@ public class PanelNutritionFood extends JPanel implements ActionListener
         Font fnt_18 = new Font("Times New Roman", Font.BOLD, 18);
 
 
-        label = new JLabel(ic.getMessage("DIOCESES_CONFIGURATION"));
+        label = new JLabel(ic.getMessage("CONFIGURATION"));
         label.setBounds(0, 35, 420, 40);
         label.setFont(font_big); 
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -74,22 +69,22 @@ public class PanelNutritionFood extends JPanel implements ActionListener
         label.setFont(fnt_18); 
         this.add(label, null);
 
-        label = new JLabel(ic.getMessage("ADD_DIOCESE_DESC"));
+        label = new JLabel(ic.getMessage("ADD_DESC"));
         label.setBounds(40, 130, 300, 60);
         label.setFont(font_normal); 
         this.add(label, null);
 
-        button = new JButton(ic.getMessage("ADD_DIOCESE"));
+        button = new JButton(ic.getMessage("ADD_"));
         button.setBounds(110, 190, 170, 25);
         button.setFont(font_normal);
         button.addActionListener(this);
-        button.setActionCommand("add_diocese");
+        button.setActionCommand("add_");
         this.add(button);
 
-        button = new JButton(ic.getMessage("ADD_PARISH"));
+        button = new JButton(ic.getMessage("ADD_"));
         button.setBounds(110, 220, 170, 25);
         button.setFont(font_normal);
-        button.setActionCommand("add_parish");
+        button.setActionCommand("add_p");
         button.addActionListener(this);
         this.add(button);
 
@@ -115,19 +110,7 @@ public class PanelNutritionFood extends JPanel implements ActionListener
     {
 
         String action = e.getActionCommand();
-/*
-        if (action.equals("add_parish"))
-        {
-            m_dialog.makePanelVisible(DioceseCfgDialog.PANEL_PARISH);
-            ((ParishPanel)m_dialog.panels[DioceseCfgDialog.PANEL_PARISH]).setData(new Parish()); 
-        }
-        else if (action.equals("add_diocese"))
-        {
-            m_dialog.makePanelVisible(DioceseCfgDialog.PANEL_DIOCESE);
-            ((DiocesePanel)m_dialog.panels[DioceseCfgDialog.PANEL_DIOCESE]).setData(new Diocese()); 
-        }
-        else */
-            System.out.println("DioceseMainPanel::Unknown command: " + action);
+        System.out.println("PanelNutritionFood::Unknown command: " + action);
   
     }
 

@@ -1,3 +1,28 @@
+2006-03-11  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Moved ANT build files to build directory and removed all those in root
+    * ARCHITECTURE CHANGE: I added Hibernate (v3.1) framework to ggc (download in support as 
+        hibernate3.zip). For now hibernate is used just for nutrition part, but after I
+	finish nutrition and meals, I will change all other code, to use hibernate. With
+	this we will remove several files needed for talking to different database. 
+	Hibernate is object relational database framework, which can talk to almost any 
+	database without any change to our code.
+    * Finished nutrition import
+    * Added hibernate data classes, datalayer classes and main GGCDb class which handle 
+        hibernate database. With this we have database support for nutrition module.
+    * Added classes for working with nutrition. Tree dialog is finished, also TreeModel,
+        but I still need to change panels that display info on selected tree item. This
+	code is now available, but is so far not added to ggc. For testing this you must 
+	set an external database, get jdbc driver for it, set user, password and empty 
+	database, then write this settings to GGC_Config.properties under database 1 (or
+	you can add one for yourself and set SELECTED_DB value). After you have all this
+	you can unpack test_nutrition.zip to your build directory (where all compiled
+	classes go), then you take USDA_Nutrient_Db_for_Standard_Reference_r18.zip from
+	ggc-support cvs tree and unpack it to ../data/nutrition (from your build directory).
+	First you run nut_init for initialization of database and it's filling and then
+	you can use nut_tree to see nutrition tree.
+     * Fixed comments in ggc.little package	
+
+
 2006-03-05 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * OK, figured out problem with compiling ggc.little.DailyStatsPanel: this seems to
         require java 1.5

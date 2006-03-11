@@ -1,5 +1,35 @@
+/*
+ *  GGC - GNU Gluco Control
+ *
+ *  A pure java app to help you manage your diabetes.
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *  Filename: DataAccess
+ *  Purpose:  Used for utility works and static data handling (this is singelton
+ *      class which holds all our definitions, so that we don't need to create them
+ *      again for each class.      
+ *
+ *  Author:   andyrozman
+ */
+
 package ggc.util;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.io.*;
 import java.util.ArrayList;
@@ -9,23 +39,11 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Properties;
-
-import java.awt.Component;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
 import ggc.db.datalayer.GGCDb;
 import ggc.nutrition.GGCTreeRoot;
-
-/*
-import com.atech.inf_sys.pis.data.LanguageInfo;
-import com.atech.inf_sys.pis.data.UserDat;
-import com.atech.inf_sys.pis.ui.misc.DioceseTreeRoot;
-import com.atech.inf_sys.zis.datalayer.ZISDb;
-import com.atech.inf_sys.zis.ui.ZISMain;
-*/
-// LOAD
-// SAVE
 
 
 public class DataAccess
@@ -49,7 +67,6 @@ public class DataAccess
 //    public String skinLFSelected = null;
 //    String allDbs[] = null;
 
-//    public Hashtable<String,String> m_settings = null;
 
     public static String pathPrefix = ".";
 
@@ -57,32 +74,15 @@ public class DataAccess
 
     static private DataAccess m_da = null;   // This is handle to unique 
                                              // singelton instance
-// YYY
+
     public GGCDb m_db = null;
     public Component m_main = null;
-
-
-
-    public Object[] yes_no_combo = null;
-    public Hashtable typesHT = new Hashtable();
-    public Object[] typesAll = null;
 
     public Font fonts[] = null;
 
     public GGCTreeRoot m_nutrition_treeroot = null;
     public GGCTreeRoot m_meals_treeroot = null;
 
-
-    public String gender_minus[] = { 
-        m_i18n.getMessage("GENDER_M"),             // 1
-        m_i18n.getMessage("GENDER_F")
-    };
-
-
-    public String gender[] = { m_i18n.getMessage("SELECT"),
-        m_i18n.getMessage("GENDER_M"),             // 1
-        m_i18n.getMessage("GENDER_F")
-    };
 
 
     // ********************************************************
@@ -108,9 +108,6 @@ public class DataAccess
         loadFonts();
 //        loadAvailableLFs();
 //        loadLanguageInfo();
-
-//        m_settings = new Hashtable<String,String>();
-  //      loadDioceseRoot();
 
     } 
 
@@ -174,13 +171,6 @@ public class DataAccess
     {
         return m_db;
     }
-
-/*
-    public void loadDioceseRoot()
-    {
-        m_dio_treeroot = new DioceseTreeRoot(1);
-    }
-*/
 
 
 
@@ -733,12 +723,6 @@ public class DataAccess
     {
         // FIX set in Db
         return 1800;
-    }
-
-
-    public Object[] getGenderCombo()
-    {
-        return gender;
     }
 
 

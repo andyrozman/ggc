@@ -9,17 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-/*
-import com.atech.inf_sys.zis.data.DataAccess;
-import com.atech.inf_sys.zis.data.I18nControl;
-import com.atech.inf_sys.zis.ui.dialogs.DioceseCfgDialog;
-
-import com.atech.inf_sys.zis.datalayer.Parish;
-import com.atech.inf_sys.zis.datalayer.Diocese;
-*/
 
 import ggc.util.I18nControl;
 import ggc.util.DataAccess;
+
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
 
     
 public class PanelNutritionFoodGroup extends JPanel
@@ -62,7 +57,7 @@ public class PanelNutritionFoodGroup extends JPanel
         Font fnt_18 = new Font("Times New Roman", Font.BOLD, 18);
 
 
-        label = new JLabel(ic.getMessage("DIOCESES_CONFIGURATION"));
+        label = new JLabel(ic.getMessage("CONFIGURATION"));
         label.setBounds(0, 35, 420, 40);
         label.setFont(font_big); 
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -74,7 +69,7 @@ public class PanelNutritionFoodGroup extends JPanel
         label.setFont(fnt_18); 
         this.add(label, null);
 
-        label = new JLabel(ic.getMessage("ADD_DIOCESE_DESC"));
+        label = new JLabel(ic.getMessage("ADD_DESC"));
         label.setBounds(40, 130, 300, 60);
         label.setFont(font_normal); 
         this.add(label, null);

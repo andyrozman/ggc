@@ -19,11 +19,18 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: MainFrame.java
- *  Purpose:  The MainFrame of the app. Contains MenuBars, ToolBars, StatusBars, ...
+ *  Filename: GGCLittle
+ *  Purpose:  This is small version of GGC application, intended for quick adding to 
+ *      database, for example when you make measurement or take insulin and you don't 
+ *      need the whole application.
  *
- *  Author:   schultd
+ *  Author:   andyrozman
  */
+
+
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
+
 
 package ggc.little;
 
@@ -76,46 +83,7 @@ public class GGCLittle extends JFrame
      */
     static
     {
-
-	//MainFrame.setLookAndFeel("coronaHthemepack.zip");
-        //MainFrame.setLookAndFeel("midnightthemepack.zip");
-        //MainFrame.setLookAndFeel("solunaRthemepack.zip");
-
-	//MainFrame.setLookAndFeel("blueTurquesathemepack.zip");  OK
-	//MainFrame.setLookAndFeel("cougarthemepack.zip");
-	//MainFrame.setLookAndFeel("opusOSBluethemepack.zip"); ?
-	//MainFrame.setLookAndFeel("underlingthemepack.zip"); ?
-	//MainFrame.setLookAndFeel("royalInspiratthemepack.zip"); ?
-//	MainFrame.setLookAndFeel("hmmXPBluethemepack.zip");
 	MainFrame.setLookAndFeel("blueMetalthemepack.zip");  // Win (not so bad) ???
-//	MainFrame.setLookAndFeel("architectBluethemepack.zip");
-//	MainFrame.setLookAndFeel("roueBluethemepack.zip");
-//	MainFrame.setLookAndFeel("quickSilverRthemepack.zip");  
-//	MainFrame.setLookAndFeel("chaNinja-Bluethemepack.zip");  // Mhm
-//	MainFrame.setLookAndFeel("crystal2themepack.zip");  // mhm
-//	MainFrame.setLookAndFeel("toxicthemepack.zip");
-//	MainFrame.setLookAndFeel("amarachthemepack.zip");
-//	MainFrame.setLookAndFeel("b0sumiErgothempack.zip");
-//	MainFrame.setLookAndFeel("gfxOasisthemepack.zip");
-//	MainFrame.setLookAndFeel("iBarthemepack.zip");
-//      MainFrame.setLookAndFeel("midnightthemepack.zip");	 // not os bad
-//	MainFrame.setLookAndFeel("solunaRthemepack.zip");		 // nn
-//	MainFrame.setLookAndFeel("tigerGraphitethemepack.zip");
-//	MainFrame.setLookAndFeel("gorillathemepack.zip");	  // nn
-//	MainFrame.setLookAndFeel("fatalEthemepack.zip");
-//	MainFrame.setLookAndFeel("b0sumithemepack.zip");
-//	MainFrame.setLookAndFeel("architectOlivethemepack.zip");
-//	MainFrame.setLookAndFeel("mmMagra-Xthemepack.zip");
-//	MainFrame.setLookAndFeel("silverLunaXPthemepack.zip");
-//	MainFrame.setLookAndFeel("opusOSDeepthemepack.zip");
-//	MainFrame.setLookAndFeel("coronaHthemepack.zip");
-//	MainFrame.setLookAndFeel("cougarthemepack.zip");
-//	MainFrame.setLookAndFeel("cougarthemepack.zip");
-//	MainFrame.setLookAndFeel("cougarthemepack.zip");
-//	MainFrame.setLookAndFeel("cougarthemepack.zip");
-//	MainFrame.setLookAndFeel("cougarthemepack.zip");
-
-
     }
 
 
@@ -139,8 +107,6 @@ public class GGCLittle extends JFrame
 	{
             System.err.println("Error loading L&F: " + ex);
 	}
-
-
     }
 
 

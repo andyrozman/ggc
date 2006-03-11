@@ -19,8 +19,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: HSQLHandler.java
- *  Purpose:  Handler to access a HSQL (Hypersonic) Database.
+ *  Filename: NutritionImport
+ *  Purpose:  Imports nutrition data from USDA Nutrient Database for Standard 
+ *      Reference (from Release 18 up)
  *
  *  Author:   andyrozman
  */
@@ -37,15 +38,11 @@ import java.util.Date;
 
 import javax.swing.*;
 
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.DailyValuesRow;
-import ggc.datamodels.HbA1cValues;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.FoodHomeWeight;
 import ggc.db.datalayer.GGCDb;
 import ggc.gui.StatusBar;
-import ggc.nutrition.NutritionInfo;
 import ggc.util.GGCProperties;
 
 
@@ -53,39 +50,26 @@ import ggc.util.GGCProperties;
 public class NutritionImport 
 {
 
-    //private static HSQLHandler singleton = null;
-    //private GGCProperties props = GGCProperties.getInstance();
-
-    boolean connected = false;
-    Connection con = null;
-
     String path = "../data/nutrition/";
-
 
     GGCDb m_db = null;
 
     public NutritionImport()
     {
-
-	connected = false;
 	m_db = new GGCDb();
 	m_db.initDb();
 	m_db.createDatabase();
-	//DataBaseHandler.connectedToDB = true;
 
+	loadNutritionDatabase();
     }
 
 
-
-
-    public void loadModifiedNutritionDatabase()
+    public void loadNutritionDatabase()
     {
-
         this.insertFoodGroups();
         this.insertFoodDescription();
         this.insertNutritionData();
         this.insertHomeWeightData();
-
     }
 
 
@@ -129,8 +113,6 @@ public class NutritionImport
 	// 268 = Energy (kJ)
 	// 269 = Sugar (total) (g)
 
-
-	String tmp ="";
 	int i=0;
 
 	try 
@@ -141,10 +123,6 @@ public class NutritionImport
 	    BufferedReader br = new BufferedReader(new FileReader(new File(path+"FOOD_DES.txt")));
 	    String line = null;
 
-
-	    //PreparedStatement ps = con.prepareStatement("INSERT INTO food_des (fd_no, fd_gp, fd_desc, short_desc, refuse) VALUES (?,?,?,?,?)");
-
-
 	    while ((line=br.readLine())!=null) 
 	    {
 
@@ -152,8 +130,6 @@ public class NutritionImport
 
 		if (line.charAt(line.length()-1)=='^') 
 		    line = line+"0.0";
-
-		//System.out.println(line);
 
 		StringTokenizer strtok = new StringTokenizer(line, "^");
 		FoodDescription fd = new FoodDescription();
@@ -169,8 +145,6 @@ public class NutritionImport
 		strtok.nextToken();                              // - Ref Desc
 
 		fd.setRefuse(getFloat(strtok.nextToken()));    // Refuse
-
-		//System.out.println(fd.getId());
 
 		m_db.add(fd);
 
@@ -195,7 +169,6 @@ public class NutritionImport
     public void insertNutritionData()
     {
 
-	String tmp ="";
 	int i=0;
 
 	try 
@@ -275,10 +248,7 @@ public class NutritionImport
 		    // 269 = Sugar (total)
 		    fd.setSugar_g(value);
 		}
-
 	    }
-
-
 	} 
 	catch (Exception ex) 
 	{
@@ -289,33 +259,8 @@ public class NutritionImport
     }
 
 
-
-
-
-
-
-    // OLD
-
-
-
-
-
-
     public void insertHomeWeightData()
     {
-/*
-CREATE TABLE `home_weight` (
-  `fd_no` bigint(20) NOT NULL default '0',
-  `seq` int(11) NOT NULL default '0',
-  `amount` int(11) NOT NULL default '1',
-  `msr_desc` varchar(100) NOT NULL default '',
-  `weight_g` int(11) NOT NULL default '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8; 
-*/
-
-//        connectDb();
-
-        String tmp ="";
 
         try 
         {
@@ -327,11 +272,8 @@ CREATE TABLE `home_weight` (
             BufferedReader br = new BufferedReader(new FileReader(new File(path+"WEIGHT.txt")));
             String line = null;
             
-            //PreparedStatement ps = con.prepareStatement("INSERT INTO home_weight (fd_no, seq, amount, msr_desc, weight_g) VALUES (?,?,?,?,?)");
-
             while ((line=br.readLine())!=null) 
             {
-
                 line = parseExpressionFull(line, "^^", "^0.0^");
 
                 if (line.charAt(line.length()-1)=='^') 
@@ -353,9 +295,7 @@ CREATE TABLE `home_weight` (
 		    System.out.print(".");
 
 		i++;
-
             }
-
         } 
         catch (Exception ex) 
         {
@@ -370,238 +310,6 @@ CREATE TABLE `home_weight` (
 
 
 
-
-
-
-
-/*
-    public void insertHomeWeightData()
-    {
-/*
-CREATE TABLE `home_weight` (
-  `fd_no` bigint(20) NOT NULL default '0',
-  `seq` int(11) NOT NULL default '0',
-  `amount` int(11) NOT NULL default '1',
-  `msr_desc` varchar(100) NOT NULL default '',
-  `weight_g` int(11) NOT NULL default '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8; 
-*/
-
-//        connectDb();
-/*
-	String tmp ="";
-
-	try 
-	{
-
-	    System.out.println("Insert Home Weight (WEIGHT.txt)");
-
-	    BufferedReader br = new BufferedReader(new FileReader(new File("WEIGHT.txt")));
-	    String line = null;
-
-	    PreparedStatement ps = con.prepareStatement("INSERT INTO home_weight (fd_no, seq, amount, msr_desc, weight_g) VALUES (?,?,?,?,?)");
-
-
-	    while ((line=br.readLine())!=null) 
-	    {
-
-		line = parseExpressionFull(line, "^^", "^0.0^");
-
-		if (line.charAt(line.length()-1)=='^') 
-		    line = line+"0.0";
-
-
-		StringTokenizer strtok = new StringTokenizer(line, "^");
-
-		FoodHomeWeight fhw = new FoodHomeWeight();
-
-		fhw.setFood_number(getLong(strtok.nextToken()));
-		fhw.setSequence(strtok.nextToken());
-		fhw.setAmount(strtok.nextToken());
-		fhw.setMsr_desc(strtok.nextToken());
-		fhw.setWeight_g(getFloat(strtok.nextToken()));
-
-	    }
-
-	} 
-	catch (Exception ex) 
-	{
-	    System.err.println("Error on insertHomeWeightData(): " + ex);
-	    ex.printStackTrace();
-	}
-
-
-    }
-
-
-
-    public ArrayList getNutritionTypes()
-    {
-
-
-        connectDb();
-
-        ArrayList list = new ArrayList();
-
-        try 
-        {
-            //System.out.println(" Loading Food Groups (fd_group.txt)");
-
-
-            //BufferedReader br = new BufferedReader(new FileReader(new File("fd_group.txt")));
-            //String line = null;
-
-            
-            PreparedStatement ps = con.prepareStatement("SELECT fd_gp, gp_desc FROM fd_group");
-
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next())
-            {
-
-                NutritionInfo n = new NutritionInfo(rs.getInt(1), 1, rs.getString(2));
-
-                list.add(n);
-
-            }
-
-
-        } 
-        catch (Exception ex) 
-        {
-            System.err.println("Error on getNutritionTypes: " + ex);
-        }
-
-        return list;
-
-
-    }
-
-
-
-    public ArrayList getNutritionTypesFoods(int group)
-    {
-
-
-        connectDb();
-
-        ArrayList list = new ArrayList();
-
-        try 
-        {
-            //System.out.println(" Loading Food Groups (fd_group.txt)");
-
-
-            //BufferedReader br = new BufferedReader(new FileReader(new File("fd_group.txt")));
-            //String line = null;
-
-            
-            PreparedStatement ps = con.prepareStatement("SELECT fd_no, fd_desc, short_desc FROM food_des WHERE fd_gp=" + group);
-
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next())
-            {
-
-                NutritionInfo n = new NutritionInfo(rs.getInt(1), 2, rs.getString(2), rs.getString(3));
-
-                list.add(n);
-
-            }
-
-
-        } 
-        catch (Exception ex) 
-        {
-            System.err.println("Error on getNutritionTypesFoods: " + ex);
-        }
-
-        return list;
-
-
-    }
-*/
-
-
-
-
-/*
-    public void initDb()
-    {
-        
-	System.out.println("create");
-
-	try 
-	{
-
-	    connectDb();
-            
-	    Statement statement;
-
-
-            //statement = con.createStatement();
-	    //statement.execute("DROP TABLE DayValues");
-
-
-
-            statement = con.createStatement();
-            String query2 = "CREATE TABLE DayValues( " + 
-			    "id bigint NOT NULL IDENTITY PRIMARY KEY," + 
-			    "dt_date int NOT NULL, "+
-		            "dt_time int NOT NULL, "+
-			    "bg decimal(7,2) NOT NULL, "+
-			    "ins1 decimal(6,2) NOT NULL, "+
-			    "ins2 decimal(6,2) NOT NULL, "+
-			    "bu decimal(6,2) NOT NULL, "+
-			    "act tinyint NOT NULL, "+
-			    "comment varchar(255) NOT NULL)";
-
-            statement.execute(query2);
-            //dbName = name;
-
-	    //setStatus();
-        } catch (SQLException sqle) {
-            System.err.println(sqle);
-        }
-    }
-
-*/
-
-
-    public void disconnectDb()
-    {
-        try 
-        {
-            if (con!=null) 
-                con.close();
-        } 
-        catch (Exception sqle) 
-        {
-            System.err.println(sqle);
-        } 
-        finally {
-            connected = false;
-            //connectedToDB = false;
-
-	    //dbStatus = "HSQL [" + m_ic.getMessage("NO_CONNECTION") + "]";
-	    //StatusBar.getInstance().setStatus();
-
-//	    setStatus();
-
-            //StatusBar.getInstance().setDataSourceText("HSQL [" + m_ic.getMessage("NO_CONNECTION") + "]");
-        }
-    }
-
-
-     /**
-     * Metoda za delo s Stringi.
-     * 
-     * @param in         Vhodni string
-     * @param expression Kaj iscemo
-     * @param replace    S cim bomo zamenjali
-     * 
-     * @return Spremenjen String.
-     */
     private String parseExpression(String in, String expression, String replace)
     {
 
@@ -635,15 +343,6 @@ CREATE TABLE `home_weight` (
 
 
 
-     /**
-     * Metoda za delo s Stringi.
-     * 
-     * @param in         Vhodni string
-     * @param expression Kaj iscemo
-     * @param replace    S cim bomo zamenjali
-     * 
-     * @return Spremenjen String.
-     */
     private String parseExpressionFull(String in, String expression, String replace)
     {
 
@@ -753,14 +452,7 @@ CREATE TABLE `home_weight` (
 
     public static void main(String args[])
     {
-
-	NutritionImport ni = new NutritionImport();
-
-        ni.insertFoodGroups();
-        ni.insertFoodDescription();
-        ni.insertNutritionData();
-        ni.insertHomeWeightData();
-
+	new NutritionImport();
     }
 
 

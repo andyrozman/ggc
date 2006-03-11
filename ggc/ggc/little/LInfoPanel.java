@@ -21,10 +21,13 @@
  *
  *  Filename: InfoPanel.java
  *  Purpose:  Container for all InfoPanels an the MainFrame. Responsible for
- *            managing the handling of its children.
+ *            managing the handling of its children. (fix)
  *
- *  Author:   schultd
+ *  Author:   andyrozman
  */
+
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
 
 package ggc.little;
 

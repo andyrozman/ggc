@@ -1,3 +1,30 @@
+/*
+ *  GGC - GNU Gluco Control
+ *
+ *  A pure java app to help you manage your diabetes.
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *  Filename: NutritionTreeDialog
+ *  Purpose:  Main class for displaying nutrition information.
+ *
+ *  Author:   andyrozman
+ */
+
 package ggc.nutrition;
  
 import java.awt.Dimension;
@@ -8,7 +35,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,28 +55,6 @@ import ggc.util.I18nControl;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 
-
-/*
-import com.atech.inf_sys.zis.data.DataAccess;
-import com.atech.inf_sys.zis.data.I18nControl;
-import com.atech.inf_sys.zis.datalayer.ZISDb;
-import com.atech.inf_sys.zis.ui.ZISMain;
-import com.atech.inf_sys.zis.ui.panels.DioceseMainPanel;
-import com.atech.inf_sys.zis.ui.panels.DiocesePanel;
-import com.atech.inf_sys.zis.ui.panels.EditablePanel;
-import com.atech.inf_sys.zis.ui.panels.ParishPanel;
-import com.atech.inf_sys.zis.ui.panels.ViewDiocesePanel;
-import com.atech.inf_sys.zis.ui.panels.ViewParishPanel;
-import com.atech.inf_sys.zis.ui.panels.ViewDiocesePersonalPanel;
-import com.atech.inf_sys.zis.ui.panels.ViewParishPersonalPanel;
-import com.atech.inf_sys.zis.ui.panels.DiocesePersonalPanel;
-import com.atech.inf_sys.zis.ui.panels.ParishPersonalPanel;
-import com.atech.inf_sys.zisdb.db.diocese.DioceseH;
-import com.atech.inf_sys.zisdb.db.parish.ParishH;
-import com.atech.inf_sys.zis.datalayer.*;
-
-import com.atech.inf_sys.pis.ui.misc.DioceseTreeModel;
-*/
 
 
 public class NutritionTreeDialog extends JDialog implements TreeSelectionListener 
