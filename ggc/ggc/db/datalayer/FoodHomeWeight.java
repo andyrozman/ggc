@@ -4,55 +4,49 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.FoodDescriptionH;
+import ggc.db.hibernate.FoodHomeWeightH;
 
 
 
-public class FoodDescription extends FoodDescriptionH implements DatabaseObjectHibernate
+public class FoodHomeWeight extends FoodHomeWeightH implements DatabaseObjectHibernate
 {
 
     public boolean debug = false;
 
 
-    public FoodDescription()
+    public FoodHomeWeight()
     {
-        this.setId(0);
-	this.setFood_group_id(0);
-	this.setDescription("");
-	this.setShort_description("");
-	this.setCH_g(0.0f);
-	this.setEnergy_kcal(0.0f);
-	this.setEnergy_kJ(0.0f);
-	this.setFat_g(0.0f);
-	this.setRefuse(0.0f);
-	this.setSugar_g(0.0f);
+	this.setId(0L);
+	this.setAmount(0.0f);
+	this.setFood_number(0L);
+	this.setMsr_desc("");
+	this.setSequence(0);
+	this.setWeight_g(0.0f);
     }
 
 
-    public FoodDescription(FoodDescriptionH ch)
+    public FoodHomeWeight(FoodHomeWeightH ch)
     {
 	this.setId(ch.getId());
-	this.setFood_group_id(ch.getFood_group_id());
-	this.setDescription(ch.getDescription());
-	this.setShort_description(ch.getShort_description());
-	this.setCH_g(ch.getCH_g());
-	this.setEnergy_kcal(ch.getEnergy_kcal());
-	this.setEnergy_kJ(ch.getEnergy_kJ());
-	this.setFat_g(ch.getFat_g());
-	this.setRefuse(ch.getRefuse());
-	this.setSugar_g(ch.getSugar_g());
+	this.setAmount(ch.getAmount());
+	this.setFood_number(ch.getFood_number());
+	this.setMsr_desc(ch.getMsr_desc());
+	this.setSequence(ch.getSequence());
+	this.setWeight_g(ch.getWeight_g());
     }
 
 
     public String getShortDescription()
     {
-        return this.getDescription();
+        //return this.getDescription();
+	return "unknown";
     }
 
 
     public String toString()
     {
-        return this.getShortDescription();
+        //return this.getShortDescription();
+	return "unknown";
     }
 
 
@@ -73,18 +67,14 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
         
         Transaction tx = sess.beginTransaction();
 
-	FoodDescriptionH ch = new FoodDescriptionH();
+        FoodHomeWeightH ch = new FoodHomeWeightH();
 
-	ch.setId(this.getId());
-	ch.setFood_group_id(this.getFood_group_id());
-	ch.setDescription(this.getDescription());
-	ch.setShort_description(this.getShort_description());
-	ch.setCH_g(this.getCH_g());
-	ch.setEnergy_kcal(this.getEnergy_kcal());
-	ch.setEnergy_kJ(this.getEnergy_kJ());
-	ch.setFat_g(this.getFat_g());
-	ch.setRefuse(this.getRefuse());
-	ch.setSugar_g(this.getSugar_g());
+	//ch.setId(this.getId());
+	ch.setAmount(this.getAmount());
+	ch.setFood_number(this.getFood_number());
+	ch.setMsr_desc(this.getMsr_desc());
+	ch.setSequence(this.getSequence());
+	ch.setWeight_g(this.getWeight_g());
 
         Long id = (Long)sess.save(ch);
 
@@ -108,18 +98,13 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 
         Transaction tx = sess.beginTransaction();
 
-	FoodDescriptionH ch = (FoodDescriptionH)sess.get(FoodDescriptionH.class, new Long(this.getId()));
+	FoodHomeWeightH ch = (FoodHomeWeightH)sess.get(FoodHomeWeightH.class, new Long(this.getId()));
 
-	ch.setId(this.getId());
-	ch.setFood_group_id(this.getFood_group_id());
-	ch.setDescription(this.getDescription());
-	ch.setShort_description(this.getShort_description());
-	ch.setCH_g(this.getCH_g());
-	ch.setEnergy_kcal(this.getEnergy_kcal());
-	ch.setEnergy_kJ(this.getEnergy_kJ());
-	ch.setFat_g(this.getFat_g());
-	ch.setRefuse(this.getRefuse());
-	ch.setSugar_g(this.getSugar_g());
+	ch.setAmount(this.getAmount());
+	ch.setFood_number(this.getFood_number());
+	ch.setMsr_desc(this.getMsr_desc());
+	ch.setSequence(this.getSequence());
+	ch.setWeight_g(this.getWeight_g());
 
         sess.update(ch);
         tx.commit();
@@ -142,7 +127,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 
         Transaction tx = sess.beginTransaction();
 
-	FoodDescriptionH ch = (FoodDescriptionH)sess.get(FoodDescriptionH.class, new Long(this.getId()));
+	FoodHomeWeightH ch = (FoodHomeWeightH)sess.get(FoodHomeWeightH.class, new Long(this.getId()));
 
         sess.delete(ch);
         tx.commit();
@@ -163,8 +148,8 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        System.out.println("Not implemented: FoodDescription::DbHasChildren");
-        return true;
+        //System.out.println("Not implemented: FoodGroup::DbHasChildren");
+        return false;
     }
 
 
@@ -180,18 +165,13 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
     public boolean DbGet(Session sess) throws Exception
     {
 
-	FoodDescriptionH ch = (FoodDescriptionH)sess.get(FoodDescriptionH.class, new Long(this.getId()));
+	FoodHomeWeightH ch = (FoodHomeWeightH)sess.get(FoodHomeWeightH.class, new Long(this.getId()));
 
-	this.setId(ch.getId());
-	this.setFood_group_id(ch.getFood_group_id());
-	this.setDescription(ch.getDescription());
-	this.setShort_description(ch.getShort_description());
-	this.setCH_g(ch.getCH_g());
-	this.setEnergy_kcal(ch.getEnergy_kcal());
-	this.setEnergy_kJ(ch.getEnergy_kJ());
-	this.setFat_g(ch.getFat_g());
-	this.setRefuse(ch.getRefuse());
-	this.setSugar_g(ch.getSugar_g());
+	this.setAmount(ch.getAmount());
+	this.setFood_number(ch.getFood_number());
+	this.setMsr_desc(ch.getMsr_desc());
+	this.setSequence(ch.getSequence());
+	this.setWeight_g(ch.getWeight_g());
 
         return true;
     }
@@ -205,7 +185,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
      */
     public String getObjectName()
     {
-        return "Food Description";
+        return "Food Home Weight";
     }
 
 

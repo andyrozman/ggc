@@ -12,7 +12,7 @@
  */
 package ggc.nutrition;
  
-import ggc.db.carbs.NutritionImport;
+//port ggc.db.carbs.NutritionImport;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -181,7 +181,8 @@ public class NutritionTree extends JPanel
 
     private void createNodes(DefaultMutableTreeNode top) 
     {
-        
+
+	/*
         NutritionImport ni = new NutritionImport();
 
         Iterator it = ni.getNutritionTypes().iterator();
@@ -207,6 +208,7 @@ public class NutritionTree extends JPanel
 
             top.add(dmtn);
         }
+	*/
 
 
         //DefaultMutableTreeNode groups = null;
