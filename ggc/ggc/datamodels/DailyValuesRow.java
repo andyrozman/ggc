@@ -27,6 +27,7 @@
 
 package ggc.datamodels;
 
+import ggc.errors.DateTimeError;
 import ggc.util.I18nControl;
 
 
@@ -61,16 +62,24 @@ public class DailyValuesRow implements Serializable
         this.Comment = Comment;
     }
 
-    public DailyValuesRow(String datetime, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
+    public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
     {
-
         try {
-            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
             try {
-                this.datetime = new Date(df.parse(datetime).getTime());
-            } catch (ParseException e) {
+                df.parse(date);
+            } 
+            catch (ParseException e) {
                 JOptionPane.showMessageDialog(null, m_ic.getMessage("DATE_MUST_BE_IN_FORMAT") + ": 'dd.MM.yyyy'", m_ic.getMessage("ERROR_PARSING_DATE"), JOptionPane.ERROR_MESSAGE);
-                this.datetime = null;
+                throw new DateTimeError("Incorrectly formatted date!");
+            }
+                
+            try {
+                df.applyPattern("dd.MM.yyyy HH:mm");
+                this.datetime = new Date(df.parse(date+" "+time).getTime());
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(null, m_ic.getMessage("TIME_MUST_BE_IN_FORMAT") + ": 'HH:mm'", m_ic.getMessage("ERROR_PARSING_DATE"), JOptionPane.ERROR_MESSAGE);
+                throw new DateTimeError("Incorrectly formatted time!");
             }
             if (BG.trim().equals(""))
                 this.BG = new Float(0);

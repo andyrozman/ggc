@@ -50,7 +50,7 @@ public class MainFrame extends JFrame
     private I18nControl m_ic = I18nControl.getInstance();        
 
     public static SkinLookAndFeel m_skinlf;
-    private static String skinLFdir = "../ggc-support/lib/skinLFThemes/";
+    private static final String skinLFdir = "../ggc-support/lib/skinLFThemes/";
 
     //fields
     private JMenuBar menuBar = new JMenuBar();
@@ -148,6 +148,9 @@ public class MainFrame extends JFrame
     //constructor
     public MainFrame(String title, boolean developer_version)
     {
+        // this is the first chance to call this method after an instance of GGCProperties has been created
+        m_ic.setLanguage();
+        
         setTitle(title);
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -265,7 +268,7 @@ public class MainFrame extends JFrame
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
         //statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
-        statusPanel.setStatusMessage("Initialising");
+        statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
 	dbH = DataBaseHandler.getInstance();
 	dbH.setStatus();

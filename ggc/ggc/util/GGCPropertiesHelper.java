@@ -38,8 +38,8 @@ public class GGCPropertiesHelper
     private Properties props = new Properties();
     //private static GGCProperties singleton = null;
     private File propsFile;
-    private static String propsFileName = "GGC.properties";
-    private static String propsFileDir = "../data/";
+    private static final String propsFileName = "GGC.properties";
+    private static final String propsFileDir = "../data/";
 
     public GGCPropertiesHelper()
     {
@@ -76,6 +76,8 @@ public class GGCPropertiesHelper
         } catch (FileNotFoundException e) {
             System.err.println(e);
         } catch (IOException e) {
+            System.err.println("ERROR: An error occurred while reading " 
+                    + propsFile.getAbsolutePath());
             System.err.println(e);
         } finally {
             try {

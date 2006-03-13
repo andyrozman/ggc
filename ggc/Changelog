@@ -1,3 +1,36 @@
+2006-03-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * moved DataAccess.java to ggc.util, as per header; doesn't compile since a few
+        files seem to be missing.
+
+2006-03-11 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * ggc.util.I18nControl:
+      - made private static final Locale defaultLocale and set it to Locale.ENGLISH
+      - set Locale.defaultLocale() to defaultLocale; this will make ResourceBundle look
+        here for entries it can't find in the current locale and look at this locale if
+        the required locale couldn't be found
+    * ggc.util.GGCPropertiesHelper: made some Strings final
+    * renamed GGC_XX.properties to GGC_xx.properties
+    * ggc.db.TextFileHandler: see XXX comments
+    * fixes: fixed some exceptions
+    * GGC_en.properties:
+      - added TIME_MUST_BE_IN_FORMAT, DE, EN, SI, YOUR_LANGUAGE, INIT
+      - removed YOUR_CURRENT
+    * GGC_de.properties: translation continues
+    * corrected incorrect error message about date format being incorrect when really
+        time format was meant and squashed an exception thrown when this occurred
+    * ggc.util.GGCProperties: data.imports.* changed to ggc.data.imports.*
+    * BUG: data import from meter throws a ClassCastException in
+        javax.swing.AbstractButton.configurePropertiesFromAction on line 1117 (attempted
+        cast to Integer, I'm too unfamiliar with the Actions used here to be able to
+        further debug anything)
+    * BUG: Daily stats -> add row -> change day -> add some values in the add row frame
+    	-> new entry -> NO error, exception or anything wrong looking -> change back to
+    	original day: no new entries, either here or anywhere else
+    * added language selection to prefPane; implementation is rather hackish and a
+        restart is required if this setting is changed; the main problem with this
+        implementation is an endless loop because the constructor of GGCProperties
+        depends on I18nControl
+
 2006-03-11  Andy Rozman <andyrozman@users.sourceforge.net>
     * Moved ANT build files to build directory and removed all those in root
     * ARCHITECTURE CHANGE: I added Hibernate (v3.1) framework to ggc (download in support as 
@@ -22,6 +55,10 @@
 	you can use nut_tree to see nutrition tree.
      * Fixed comments in ggc.little package	
 
+2006-03-10 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * ggc.util.GGCPropertiesHelper: method read(): made error message in case of
+        IOException a bit more verbose
+    * GGC_DE.properties: more translation
 
 2006-03-05 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * OK, figured out problem with compiling ggc.little.DailyStatsPanel: this seems to
@@ -31,7 +68,7 @@
     * looks like eclipse committed my .classpath and .cvsignore, trying to fix
 
 2006-03-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
-    * GGC_DE.properties: renamed to GGC_de.properties, some more work on the translation
+    * GGC_DE.properties: some more work on the translation
     * GGC_EN.properties: some spellchecking, no version or date changes since
         this doesn't really imply that other translations need to be adopted
     * ggc.util.I18nControl:
@@ -50,8 +87,6 @@
         imports I can't seem to resolve
 
 2006-03-01 Reinhold Rumberger <rumbi@users.sourceforge.net>
-    * fix: ggc.nutrition.NutritionTree still thought it was named TreeDemo
-           (constructor, some calls inside the class)
     * ggc.data.imports.*: a char -> int cast is unnecessary, deleted them.
     * ggc.view.CourseGraphView: same for int -> float casts
         If those casts were there for a reason, please feel free to re-insert

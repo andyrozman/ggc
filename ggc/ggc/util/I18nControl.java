@@ -31,6 +31,7 @@ package ggc.util;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 
 public class I18nControl
 {
@@ -44,7 +45,8 @@ public class I18nControl
 
     static private I18nControl m_i18n = null;   // This is handle to unique 
                                                     // singelton instance
-                                               
+
+    private static final Locale defaultLocale = Locale.ENGLISH;
 
     //   Constructor:  I18nControl
     /**
@@ -56,9 +58,8 @@ public class I18nControl
      */ 
     private I18nControl()
     {
-
-        setLanguage("EN");
-            
+        setLanguage(defaultLocale);
+        Locale.setDefault(defaultLocale);
     } 
     
 
@@ -81,25 +82,29 @@ public class I18nControl
         return m_i18n;
     }
 
-
-
-
-
-
     //  Method:       deleteInstance
     /**
      *
      *  This method sets handle to I18NControl to null and deletes the instance. <br><br>
      *
      */ 
-    public void deleteInstance()
+    public static void deleteInstance()
     {
-        
-        m_i18n=null;
-
+        m_i18n = null;
     }
 
 
+    /**
+     * This method sets the language according to the preferences.<br>
+     * <br>
+     * <h3>WARNING:</h3><br>
+     * Using this method before GGCProperties.getInstance() has been called at least
+     * once will create an endless loop.
+     */
+    public void setLanguage() {
+        GGCProperties props = GGCProperties.getInstance();
+        setLanguage(props.getLanguage());
+    }
 
     //  Method:       setLanguage (String language)
     /**
@@ -166,29 +171,40 @@ public class I18nControl
         }
         catch (MissingResourceException mre)
         {
-            System.out.println("Couldn't find resource file(1): GGC_xx.properties (for Locale "+locale+")");
+            System.err.println("Couldn't find resource file(1): GGC_"+locale+".properties (for Locale "+locale+")");
             try
             {
-                res = ResourceBundle.getBundle("GGC", new Locale("EN"));
+                res = ResourceBundle.getBundle("GGC", defaultLocale);
             }
             catch(Exception ex)
             {
-                System.out.println("Exception on reading default resource file (GGC_EN.properties). Exiting application.");
+                System.err.println("Exception on reading default resource file (GGC_EN.properties). Exiting application.");
                 System.exit(2);
             }
         }
 
     }
 
+    
+    public static String[] getAvailableLanguages() {
+        GGCProperties properties = GGCProperties.getInstance();
+        String allLangs = properties.get("Languages");
 
+        if (allLangs == null || allLangs.equals(""))
+            return new String[0];
 
+        StringTokenizer strTk = new StringTokenizer(allLangs, ";");
+        String[] langs = new String[strTk.countTokens()];
+        int counter = 0;
+        while (strTk.hasMoreTokens()) {
+            langs[counter] = strTk.nextToken();
+            counter++;
+        }
 
+        return langs;
+    }
 
-
-
-
-
-    //  Method: hmmlize
+    //  Method: htmlize
     /**
      *  
      * Converts text from bundle into HTML. This must be used if we have control, which has
@@ -214,8 +230,6 @@ public class I18nControl
         
     }
 
-
-
     //  Method: getMessageHTML(String)
     /**
      * 
@@ -234,16 +248,12 @@ public class I18nControl
 
     }
 
-
-
-
-
     //  Method:       getString
     /**
      * 
      *  This helper method calls getMessage(String) and returns message that is
      *  associated with inserted code. It is implemented mainly, because some 
-     *  programmers are used that resource nsg is returned with this command.
+     *  programmers are used that resource msg is returned with this command.
      * 
      *  @param msg id of message we want
      *  @return value for code, or same code back
@@ -496,7 +506,6 @@ public class I18nControl
     }
 
 
-
     //  Method:       getMessage (String)
     /**
      * 
@@ -513,12 +522,6 @@ public class I18nControl
     }
 
 
-
-
-
-    
-
-
     public static void main(String args[])
     {
 
@@ -529,11 +532,4 @@ public class I18nControl
 
     }
 
-
-
-
-
-
 }
-
-

@@ -275,7 +275,7 @@ public class DailyValuesRowDialog extends JDialog
             if (!verifyInput())
                 return;
 
-            dailyValuesRow = new DailyValuesRow(dateField.getText() + " " + timeField.getText(), bgField.getText(), ins1Field.getText(), ins2Field.getText(), buField.getText(), actField.getText(), commentField.getText());
+            dailyValuesRow = new DailyValuesRow(dateField.getText(), timeField.getText(), bgField.getText(), ins1Field.getText(), ins2Field.getText(), buField.getText(), actField.getText(), commentField.getText());
 
             DailyValuesRowDialog.this.dispose();
         }

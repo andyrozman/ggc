@@ -239,7 +239,7 @@ public class GGCLittle extends JFrame
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
         //statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
-        statusPanel.setStatusMessage("Initialising");
+        statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
 	dbH = DataBaseHandler.getInstance();
 	dbH.connectDb();

@@ -113,7 +113,7 @@ public class TextFileHandler extends DataBaseHandler
             connected = true;
 	    setStatus();
         } catch (IOException e) {
-            System.out.println(e);
+            System.err.println(e);
         }
     }
 
@@ -151,7 +151,7 @@ public class TextFileHandler extends DataBaseHandler
 
     public DailyValues getDayStats(Date day)
     {
-        if (!connected)
+        if (!connected || dataFile == null)
             return null;
 
         DailyValues dV = new DailyValues();
@@ -168,9 +168,13 @@ public class TextFileHandler extends DataBaseHandler
 
                         int i = s.indexOf(';', 1);
 
-                        sdf.applyPattern("dd.MM.yyyy HH:mm");
+                        Date date = new Date(new Long(s.substring(0, i)).longValue());
 
-                        String datetime = sdf.format(new Date(new Long(s.substring(0, i)).longValue()));
+                        sdf.applyPattern("dd.MM.yyyy");
+                        String date_s = sdf.format(date);
+
+                        sdf.applyPattern("HH:mm");
+                        String time = sdf.format(date);
                         String bg = s.substring(++i, i = s.indexOf(';', i));
                         String ins1 = s.substring(++i, i = s.indexOf(';', i));
                         String ins2 = s.substring(++i, i = s.indexOf(';', i));
@@ -178,7 +182,7 @@ public class TextFileHandler extends DataBaseHandler
                         String act = s.substring(++i, i = s.indexOf(';', i));
                         String com = s.substring(++i, i = s.indexOf(';', i));
 
-                        dV.setNewRow(new DailyValuesRow(datetime, bg, ins1, ins2, bu, act, com));
+                        dV.setNewRow(new DailyValuesRow(date_s, time, bg, ins1, ins2, bu, act, com));
                     }
                     break;
                 }
@@ -186,7 +190,7 @@ public class TextFileHandler extends DataBaseHandler
             }
             br.close();
         } catch (IOException e) {
-            System.out.println(e);
+            System.err.println(e);
         }
 
         dV.setDate(day);
@@ -195,7 +199,7 @@ public class TextFileHandler extends DataBaseHandler
 
     public HbA1cValues getHbA1c(Date endDay)
     {
-        if (!connected)
+        if (!connected || dataFile == null)
             return null;
 
         HbA1cValues hbVal = null;

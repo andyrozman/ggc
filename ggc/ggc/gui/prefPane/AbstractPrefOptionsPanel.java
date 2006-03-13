@@ -54,7 +54,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
 
     public void setChanged(boolean change)
     {
-	changed = change;
+        changed = change;
     }
 
     public boolean hasChanged()

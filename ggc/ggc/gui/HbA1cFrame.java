@@ -103,7 +103,7 @@ public class HbA1cFrame extends JFrame
         d.add(lblReadingsPerDay = new JLabel());
 
         Box e = Box.createVerticalBox();
-        e.add(new JLabel(m_ic.getMessage("YOUR_CURRENT")+" HbA1c:"));
+        e.add(new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C")+":"));
         lblHbA1c = new JLabel();
         lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
         e.add(lblHbA1c);

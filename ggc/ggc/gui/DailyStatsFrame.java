@@ -377,8 +377,13 @@ public class DailyStatsFrame extends JDialog implements ActionListener
 	}
 	else if (command.equals("delete_row"))
 	{
-	    dayData.deleteRow(table.getSelectedRow());
-	    model.fireTableChanged(null);
+        try {
+            dayData.deleteRow(table.getSelectedRow());
+            model.fireTableChanged(null);
+        }
+        catch (NullPointerException ex) {
+            // This probably means that no row was selected, so we can ignore it
+        }
 	}
 	else if (command.equals("close"))
 	{

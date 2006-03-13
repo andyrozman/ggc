@@ -49,8 +49,7 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
         setLayout(new BorderLayout());
 
         //String[] choicesMeterType = {"GlucoCard"};
-        String[] choicesMeterType = SerialMeterImport.getAvailableMeters();
-        comboMeterType = new JComboBox(choicesMeterType);
+        comboMeterType = new JComboBox(SerialMeterImport.getAvailableMeters());
         comboPortId = new JComboBox(SerialMeterImport.getAvailableSerialPorts());
 
         comboMeterType.setSelectedItem(props.getMeterType());

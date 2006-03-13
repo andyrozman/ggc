@@ -115,7 +115,7 @@ public class FrequencyGraphFrame extends JFrame
     {
         if (singleton == null)
             singleton = new FrequencyGraphFrame();
-        singleton.show();
+        singleton.setVisible(true);
     }
 
     public static void closeMe()

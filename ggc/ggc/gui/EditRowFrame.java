@@ -239,7 +239,7 @@ public class EditRowFrame extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                dV.setNewRow(new DailyValuesRow(DateField.getText() + " " + TimeField.getText(), BGField.getText(), Ins1Field.getText(), Ins2Field.getText(), BUField.getText(), ActField.getText(), CommentField.getText()));
+                dV.setNewRow(new DailyValuesRow(DateField.getText(), TimeField.getText(), BGField.getText(), Ins1Field.getText(), Ins2Field.getText(), BUField.getText(), ActField.getText(), CommentField.getText()));
                 mod.fireTableChanged(null);
                 clearFields();
             }

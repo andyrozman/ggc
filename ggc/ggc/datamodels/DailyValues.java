@@ -98,7 +98,7 @@ public class DailyValues implements Serializable
                 dataRows.add(dVR);
             else {
                 int i = 0;
-                for (i = 0; i < size; i++)
+                for (; i < size; i++)
                     if (getDateTimeAt(i).after(time)) {
                         dataRows.add(i, dVR);
                         break addRight;
@@ -107,12 +107,13 @@ public class DailyValues implements Serializable
             }
         }
 
-        sumBG += dVR.getBG();
-        if (dVR.getBG() != 0) {
-            if (highestBG < dVR.getBG())
-                highestBG = dVR.getBG();
-            if (lowestBG > dVR.getBG())
-                lowestBG = dVR.getBG();
+        float dVR_BG = dVR.getBG();
+        if (dVR_BG != 0) {
+            sumBG += dVR_BG;
+            if (highestBG < dVR_BG)
+                highestBG = dVR_BG;
+            if (lowestBG > dVR_BG)
+                lowestBG = dVR_BG;
             counterBG++;
         }
         sumIns1 += dVR.getIns1();
