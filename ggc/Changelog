@@ -1,7 +1,3 @@
-2006-03-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
-    * moved DataAccess.java to ggc.util, as per header; doesn't compile since a few
-        files seem to be missing.
-
 2006-03-11 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * ggc.util.I18nControl:
       - made private static final Locale defaultLocale and set it to Locale.ENGLISH
