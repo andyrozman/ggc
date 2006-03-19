@@ -24,11 +24,12 @@
  *
  *  Author:   schultd
  *
- *  Version 1.0 (schultd)
+ *  Version 0.1 (schultd)
  *  - basic implementation
  *
- *  Version 1.1 (andy)
+ *  Version 0.2 (andyrozman)
  *  - added skin load
+ *  - nutrition data
  */
 
 package ggc;

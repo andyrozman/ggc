@@ -45,41 +45,51 @@
 
 
 
-
-
-    <!--  MyParish  
-    <class name="com.atech.inf_sys.zisdb.db.config.MyParishH" table="cfg_parish">
-        <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+    <class name="ggc.db.hibernate.MealGroupH" table="ggc_meal_group">
+        <id name="id" type="int" unsaved-value="0">
+            <generator class="assigned"/>
         </id>            
-        <many-to-one name="parish" cascade="save-update" class="com.atech.inf_sys.zisdb.db.parish.ParishH" /> 
+        <property name="description" type="string" length="60" />
+        <property name="type" type="int"  />  <!-- 1 = Meals, 2= Nutrition Data -->
     </class>
---> 
 
-    <!--  MyParishPerson 
-    <class name="com.atech.inf_sys.zisdb.db.config.MyParishPersonH" table="cfg_pperson">
+    <class name="ggc.db.hibernate.MealH" table="ggc_meal">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="assigned"/>
         </id>            
-        <many-to-one name="parish_person_work" class="com.atech.inf_sys.zisdb.db.parish.ParishPersonWorkH" /> 
-        <many-to-one name="parish" cascade="save-update" class="com.atech.inf_sys.zisdb.db.parish.ParishH" /> 
-        <property name="position" column="position_x" type="string" length="50" />    
+        <property name="meal_group" type="int"  />  
+        <property name="name" type="string" length="60" />
+        <property name="fat_g" type="float" />
+        <property name="CH_g" type="float" />
+        <property name="energy_kcal" type="float" />
+        <property name="energy_kJ" type="float" />
+        <property name="sugar_g" type="float" />
     </class>
--->
 
-    <!--  Mass 
-    <class name="com.atech.inf_sys.zisdb.db.config.MassH" table="cfg_mass">
-        <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
+    <class name="ggc.db.hibernate.MealFoodH" table="ggc_meal_food">
+        <id name="id" type="int" unsaved-value="0">
+            <generator class="assigned"/>
         </id>            
-        <property name="mass_time" type="long" not-null="true"/>    
-        <property name="mass_day" type="int" not-null="true"/>    
-        <property name="parish_id" type="long" not-null="true"/>  
-        <property name="parish_name" type="string" length="50" not-null="true"/>
-        <property name="duration_type" type="int" not-null="true" />
-        <property name="from_date" type="long" not-null="true" />    
-        <property name="till_date" type="long" not-null="true" />    
-        <property name="comment" column="comment_x" type="string" length="255" />
+        <property name="meal_id" type="long"  />  
+        <property name="type" type="int"  />  <!-- 1 = Meals, 2= Nutrition Data -->
+        <property name="food_id" type="long"  />
     </class>
--->
+
+
+
+    <class name="ggc.db.hibernate.MealFoodDescriptionH" table="ggc_meal_food_desc">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="assigned"/>
+        </id>           
+        <property name="meal_group_id" type="int"  />
+        <property name="name" type="string" length="200" />
+        <property name="refuse" type="float" />
+        <property name="fat_g" type="float" />
+        <property name="CH_g" type="float" />
+        <property name="energy_kcal" type="float" />
+        <property name="energy_kJ" type="float" />
+        <property name="sugar_g" type="float" />
+    </class>
+
+
 </hibernate-mapping>

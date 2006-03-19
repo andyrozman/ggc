@@ -57,14 +57,14 @@ public class PanelNutritionMain extends JPanel
         Font fnt_18 = new Font("Times New Roman", Font.BOLD, 18);
 
 
-        label = new JLabel(ic.getMessage("DIOCESES_CONFIGURATION"));
+        label = new JLabel(ic.getMessage("NUTRITION_DATA"));
         label.setBounds(0, 35, 420, 40);
         label.setFont(font_big); 
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, null);
 
 
-        label = new JLabel(ic.getMessage("ADD"));
+        label = new JLabel(ic.getMessage("NUTRITION_DATA_DESC"));
         label.setBounds(40, 100, 100, 30);
         label.setFont(fnt_18); 
         this.add(label, null);
@@ -72,19 +72,19 @@ public class PanelNutritionMain extends JPanel
         label = new JLabel(ic.getMessage("ADD_DIOCESE_DESC"));
         label.setBounds(40, 130, 300, 60);
         label.setFont(font_normal); 
-        this.add(label, null);
+//        this.add(label, null);
 
 
 
         label = new JLabel(ic.getMessage("EDIT_VIEW"));
         label.setBounds(40, 280, 300, 30);
         label.setFont(fnt_18); 
-        this.add(label, null);
+//        this.add(label, null);
 
         label = new JLabel(ic.getMessage("EDIT_VIEW_DESC"));
         label.setBounds(40, 310, 300, 60);
         label.setFont(font_normal); 
-        this.add(label, null);
+//        this.add(label, null);
 
         return;
     }

@@ -6,22 +6,16 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class FoodDescriptionH implements Serializable {
+public class MealH implements Serializable {
 
     /** identifier field */
     private long id;
 
     /** nullable persistent field */
-    private int food_group_id;
+    private int meal_group;
 
     /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
-    private String i18n_name;
-
-    /** nullable persistent field */
-    private float refuse;
 
     /** nullable persistent field */
     private float fat_g;
@@ -39,12 +33,10 @@ public class FoodDescriptionH implements Serializable {
     private float sugar_g;
 
     /** full constructor */
-    public FoodDescriptionH(long id, int food_group_id, String name, String i18n_name, float refuse, float fat_g, float CH_g, float energy_kcal, float energy_kJ, float sugar_g) {
+    public MealH(long id, int meal_group, String name, float fat_g, float CH_g, float energy_kcal, float energy_kJ, float sugar_g) {
         this.id = id;
-        this.food_group_id = food_group_id;
+        this.meal_group = meal_group;
         this.name = name;
-        this.i18n_name = i18n_name;
-        this.refuse = refuse;
         this.fat_g = fat_g;
         this.CH_g = CH_g;
         this.energy_kcal = energy_kcal;
@@ -53,11 +45,11 @@ public class FoodDescriptionH implements Serializable {
     }
 
     /** default constructor */
-    public FoodDescriptionH() {
+    public MealH() {
     }
 
     /** minimal constructor */
-    public FoodDescriptionH(long id) {
+    public MealH(long id) {
         this.id = id;
     }
 
@@ -69,12 +61,12 @@ public class FoodDescriptionH implements Serializable {
         this.id = id;
     }
 
-    public int getFood_group_id() {
-        return this.food_group_id;
+    public int getMeal_group() {
+        return this.meal_group;
     }
 
-    public void setFood_group_id(int food_group_id) {
-        this.food_group_id = food_group_id;
+    public void setMeal_group(int meal_group) {
+        this.meal_group = meal_group;
     }
 
     public String getName() {
@@ -83,22 +75,6 @@ public class FoodDescriptionH implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getI18n_name() {
-        return this.i18n_name;
-    }
-
-    public void setI18n_name(String i18n_name) {
-        this.i18n_name = i18n_name;
-    }
-
-    public float getRefuse() {
-        return this.refuse;
-    }
-
-    public void setRefuse(float refuse) {
-        this.refuse = refuse;
     }
 
     public float getFat_g() {
@@ -148,8 +124,8 @@ public class FoodDescriptionH implements Serializable {
     }
 
     public boolean equals(Object other) {
-        if ( !(other instanceof FoodDescriptionH) ) return false;
-        FoodDescriptionH castOther = (FoodDescriptionH) other;
+        if ( !(other instanceof MealH) ) return false;
+        MealH castOther = (MealH) other;
         return new EqualsBuilder()
             .append(this.getId(), castOther.getId())
             .isEquals();
