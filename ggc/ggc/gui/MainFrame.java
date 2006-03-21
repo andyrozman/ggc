@@ -50,7 +50,7 @@ public class MainFrame extends JFrame
     private I18nControl m_ic = I18nControl.getInstance();        
 
     public static SkinLookAndFeel m_skinlf;
-    private static final String skinLFdir = "../ggc-support/lib/skinLFThemes/";
+    private static final String skinLFdir = "../lib/skinLFThemes/";
 
     //fields
     private JMenuBar menuBar = new JMenuBar();

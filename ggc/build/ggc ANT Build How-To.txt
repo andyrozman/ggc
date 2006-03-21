@@ -1,0 +1,44 @@
+GGC ANT Build How-TO
+====================
+
+1. Edit GGCBuild.properties to reflect your paths
+
+2. Create lib tree structure for libs:
+    lib-root
+       |- jdbc
+       |- hibernate3
+       |- utils
+       
+  - hibernate3 contains whole archive hibernate3.zip
+  - jdbc must contain hsqldb.jar and any drivers for databases you would like to use 
+     (you must add this to additional.jdbc.driver setting in GGCBuild)
+  - utils contains all other utils: commWin.jar, itext-1.2.jar, skinlf-1.2.11.jar
+    
+3. Install ANT 1.6.x 
+
+4. Run build
+     ant
+     
+5. You get several options, select wanted option:
+
+     [echo]    *************************************************
+     [echo]    ****                  GGC Build               ****
+     [echo]    *************************************************
+
+     [echo]      copy = copies all needed files
+     [echo]      clean = clean build dir
+     [echo]      build_ggc = build GGC (recompile classes)
+     [echo]      jar = create GGC jar
+     [echo]      jar_l = create GGC Little jar
+     [echo]      full = clean, build_ggc, copy, jar, jar_l
+     [echo]      dist = full, and create distribution zip file (contains needed
+libs, and data files)
+
+     copy - copies all needed files (language, configs)
+     clean - cleans build directory
+     build_ggc - build all ggc classes
+     jar - creates jar
+     jar_l - creates jar of ggcLittle
+     full - full build (RECOMENDED OPTION)
+     dist - create dist files (N/A)
+     

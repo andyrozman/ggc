@@ -4,15 +4,44 @@ TO-DO LIST
 
 URGENT:
 -------
-- ANT Build
-- Printing (table,...)
-- Appointments: add/edit/delete, view
-- Add entries to dayvalues (gui-fix)
-- Edit day entries
-- Nutrition: import, config, view nutr.
-- Meals: add/edit/delete
-- GGC Little: adding, editing, delete, daily graph, show day
+- Printing: 
+        o  Data gather
+        o  Simple print sheet
+        o  Detailed print sheet
+- Appointments: 
+        o  Create GUI
+        o  Database entries
+        o  Add/Edit/Delete
+        o  View
+- Nutrition: 
+        o  Config
+        o  View nutrition data in tree
+- Meals: 
+        o  Config
+        o  GUI Tree
+        o  Database
+        o  Add/Edit/Delete
+- GGC Little: 
+        o  Add/Edit/Delete
+        o  Daily graph
+        o  Show day
+        o  GUI
 - Hibernate for Database handling
+	o  Full Hibernate loading
+	o  Nutrition db
+	o  Meals db
+	o  Apointments db
+	o  Entries (day-values)
+- Adding support for mG/DL (in graphs especially)
+- Entering daily data: 
+        o  After add close window
+        o  Time displayed as selectable entry
+        o  BG Values must be checked so that comma is also supported and 
+           no exception is thrown
+        o  Add CH entry through meals
+        o  Add daily entry must be changed (GUI is very...)
+        o  Edit
+
 
 
 
@@ -20,21 +49,21 @@ IN NEAR FUTURE
 --------------
 - I18n Language: German
 - I18n Language: French
-- I18n Language: Slovene
+- I18n Language: Italian
 - I18n Language: ...
 - Language check
 
 
-
-
-IN FUTURE:
-----------
+IN FAR FUTURE:
+--------------
 - Pump support
-
-
 
 
 
 DONE
 ====
 + HypersonicSQL Test
++ Nutrition: 
+        o  Database
+        o  Import
++ ANT Build

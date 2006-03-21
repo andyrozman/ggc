@@ -1,18 +1,48 @@
-binary.dir=../bin
-source.dir=../src
-library.dir=../lib
-build.dir=../classes
-
-
-# needed libraries
 #
-# you need to download ggc-support-0.2 or higher. It contains IBM's COM API (for Win and Linux) drivers 
-# and HSQL.
+# GNU Gluco Control
 #
-# Please comment out following lines depending on OS you use. If you use some other OS, you can add line here. # You can also send file to us, and we will add it to ggc-support. See README file in API package on how to
-# use it.
+#
 
-# Windows
-# com_api.file=commWin.jar
+# Change this settings to reflect your paths
+#
 
+# output.dir = where output files (classes) and files will be put
+outdir.dir=d:/My_Projects/ggc
 
+# binary.dir = where output files (jars) will be places
+binary.dir=${outdir.dir}
+
+# source.dir = location of source files
+source.dir=../
+
+# library.dir = location of lib root
+library.dir=${outdir.dir}/lib
+
+# build.dir = output for .class files
+build.dir=${outdir.dir}/build/classes
+
+# set this if you use database that is not our default one (HypersonicSQL)
+additional.jdbc.driver=${jdbc_path}/some.jdbc.driver.jar
+
+#
+# STATIC (this is required lib tree) 
+# DO NOT CHANGE !!!
+#
+jdbc_path=${library.dir}/jdbc/
+hibernate_path=${library.dir}/hibernate3
+utils_path=${library.dir}/utils
+comunication.api_ibm=${utils_path}/commWin.jar
+
+#
+# Path to your communication api. Here you must set path to jar contating your communication 
+# api
+#
+comunication.api=${comunication.api_ibm}
+
+#
+### STOP EDITING HERE
+#
+
+utils_cpath=${utils_path}/itext-1.2.jar;${utils_path}/skinlf-1.2.11.jar;${comunication.api}
+hibernate_cpath=${hibernate_path}/asm.jar;${hibernate_path}/asm-attrs.jar;${hibernate_path}/c3p0-0.9.0.jar;${hibernate_path}/cglib-2.1.3.jar;${hibernate_path}/commons-collections-2.1.1.jar;${hibernate_path}/commons-logging-1.0.4.jar;${hibernate_path}/dom4j-1.6.1.jar;${hibernate_path}/hibernate3.jar;${hibernate_path}/jdbc2_0-stdext.jar;${hibernate_path}/jta.jar;${hibernate_path}/log4j-1.2.11.jar;${hibernate_path}/ehcache-1.1.jar;${hibernate_path}/commons-lang-2.0.jar;${hibernate_path}/antlr-2.7.6rc1.jar
+jdbc_cpath=${jdbc_path}\hsqldb.jar;${additional.jdbc.driver}

@@ -12,7 +12,7 @@
     <property name="neededfiles.dir" value="${serialbridge.main}/src/build"/>
     <property name="build.dir" value="${source.dir}/classes"/>
     
-    <!-- Build Server (SerialBridge Application/Applet) -->
+    <!-- Build GGC  -->
     
     <target name="build">
         <echo message="   ************************************************* "/>
@@ -57,21 +57,18 @@
         <javac srcdir="${source.dir}"
             destdir="${build.dir}"
             includes="ggc/**"
-            deprecation="off" debug="${debug}">
+            deprecation="off" debug="true"> <!-- debug="${debug} -->
             <classpath>
-                <pathelement location="${library.dir}/commWin.jar" />
-                <pathelement location="${library.dir}/hsqldb.jar" />
-                <pathelement location="${library.dir}/itext-1.2.jar" />
-                <pathelement location="${library.dir}/skinlf-1.2.11.jar" />
-                <pathelement location="${build.dir}"/>
-            </classpath>
+                <pathelement path="${hibernate_cpath}" />
+                <pathelement path="${utils_cpath}"/>
+             </classpath>
         </javac>
     </target>
 
 
 
     <target name="jar"  description="Build GGC">
-        <jar jarfile="${build.dir}/ggc.jar"
+        <jar jarfile="${binary.dir}/ggc.jar"
              update="false" 
              index="false"
              manifest="./manifest_ggc.mf">
@@ -80,8 +77,9 @@
                 <include name="ggc/**"/>
                 <include name="icons/*.gif"/>
                 <exclude name="ggc/little/**"/>
-                <include name="GGC_EN.properties"/>
-                <include name="GGC_SI.properties"/>
+                <include name="GGC_en.properties"/>
+                <include name="GGC_si.properties"/>
+                <include name="GGC_de.properties"/>
             </fileset>
         </jar>
     </target>
@@ -102,22 +100,19 @@
                 <include name="ggc/util/**"/>
                 <include name="ggc/view/**"/>
                 <include name="icons/*.gif"/>
-                <include name="GGC_EN.properties"/>
-                <include name="GGC_SI.properties"/>
+                <include name="GGC_en.properties"/>
+                <include name="GGC_si.properties"/>
+                <include name="GGC_de.properties"/>
             </fileset>
         </jar>
     </target>
 
 
+    <target name="full" depends="clean, copy, build_ggc, jar, jar_l">    
+    </target>
 
-
-
-    <target name="full_build">    
-        <antcall target="clean"/>
-        <antcall target="server_build"/>
-        <antcall target="client_build"/>
-        <antcall target="server_lite_build"/>
-        <antcall target="client_lite_build"/>
+    <target name="dist">    
+        <echo message="This option is not available yet." />
     </target>
 
 
