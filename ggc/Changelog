@@ -9,6 +9,8 @@
     * Changed DailyValues and DailyValuesRow
     * Changed StatisticValues and command for getting data over several days
     * Added Nutrition Dialog start to GGC Main (Nutrition Dialog not completed yet)
+    * Added some entries to GGC_en.properties
+    * Fixed build.xml
 
 2006-03-11 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * ggc.util.I18nControl:

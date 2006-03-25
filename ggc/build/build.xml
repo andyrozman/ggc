@@ -57,6 +57,7 @@
         <javac srcdir="${source.dir}"
             destdir="${build.dir}"
             includes="ggc/**"
+            excludes="ggc/db/DummyHandler.java, ggc/db/HSQLHandler.java, ggc/db/MySQLHandler.java, ggc/db/TextFileHandler.java"
             deprecation="off" debug="true"> <!-- debug="${debug} -->
             <classpath>
                 <pathelement path="${hibernate_cpath}" />

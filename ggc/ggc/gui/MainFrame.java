@@ -51,7 +51,8 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    private static String version = "v0.1.2";
+    public static String version = "0.2.1";
+    public static String full_version = "v0.2.1";
     private static String version_date = "25th March 2006";
 
 
@@ -161,7 +162,7 @@ public class MainFrame extends JFrame
         statusPanel = StatusBar.getInstance();
         m_da.startDb(statusPanel);
 
-        setTitle(title);
+        setTitle(title + " (" + full_version + ")");
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
