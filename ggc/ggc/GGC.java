@@ -27,7 +27,7 @@
  *  Version 0.1 (schultd)
  *  - basic implementation
  *
- *  Version 0.2 (andyrozman)
+ *  Version 0.1.1 (andyrozman)
  *  - added skin load
  *  - nutrition data
  */
@@ -46,7 +46,9 @@ public class GGC
     //fields
     private static GGC theApp;
     private static MainFrame mainWindow;
-    private static String VERSION = "0.0.2";
+
+    // version information
+    // is stored in MainFrame
 
     public static void main(String[] args)
     {
@@ -59,51 +61,13 @@ public class GGC
 	    System.out.println("Error loading L&F: " + ex);
         }
         
-	/*
-	UIDefaults UIDef = UIManager.getDefaults();
-
-        Color bgGray = new Color(213, 210, 205);
-
-        Font stdFont = new Font("Dialog", Font.PLAIN, 12);
-
-        UIDef.put("Label.font", stdFont);
-        UIDef.put("Label.foreground", Color.black);
-
-        UIDef.put("Button.font", stdFont);
-        UIDef.put("Menu.font", stdFont);
-        UIDef.put("MenuItem.font", stdFont);
-        UIDef.put("ComboBox.font", stdFont);
-        UIDef.put("CheckBox.font", stdFont);
-        UIDef.put("RadioButton.font", stdFont);
-        UIDef.put("TitledBorder.font", stdFont);
-        //UIDef.put("TitledBorder.fontcolor", Color.black);
-
-        UIDef.put("Panel.background", bgGray);
-        UIDef.put("Menu.background", bgGray);
-        UIDef.put("MenuItem.background", bgGray);
-        UIDef.put("Frame.background", bgGray);
-        UIDef.put("Button.background", bgGray);
-        UIDef.put("ComboBox.background", bgGray);
-        UIDef.put("RadioButton.background", bgGray);
-        UIDef.put("CheckBox.background", bgGray);
-        //UIDef.put("Table.background", bgGray);
-        UIDef.put("ToolBar.background", bgGray);
-        UIDef.put("MenuBar.background", bgGray);
-        UIDef.put("Pane.background", bgGray);
-        UIDef.put("OptionPane.background", bgGray);
-	*/
-
         boolean dev = false;
 
         if (args.length>0) 
-        {
             dev = true;
-        }
-
 
         theApp = new GGC();
         theApp.init(dev);
-
     }
 
     public void init(boolean dev)
@@ -112,10 +76,7 @@ public class GGC
         Toolkit theKit = mainWindow.getToolkit();
         Dimension wndSize = theKit.getScreenSize();
 
-        //mainWindow.setBounds(wndSize.width / 4, wndSize.height / 4, (int)(wndSize.width * 0.66), (int)(wndSize.height * 0.66));
-
 	int x, y; 
-
 	x = wndSize.width/2 - 400;
 	y = wndSize.height/2 - 300;
 
@@ -123,8 +84,4 @@ public class GGC
         mainWindow.setVisible(true);
     }
 
-    public static String getVersion()
-    {
-        return GGC.VERSION;
-    }
 }

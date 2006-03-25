@@ -250,12 +250,12 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 	GGCDb db = new GGCDb();
 	db.initDb();
 
-	DataAccess da = DataAccess.getInstance(db);
+	DataAccess da = DataAccess.getInstance();
 
 	JFrame fr = new JFrame();
 	//fr.setBounds(0,0,640,480);
 	//fr.setVisible(true);
-	da.setParent(fr);
+	//da.setParent(fr);
 	da.m_nutrition_treeroot = new GGCTreeRoot(1);
 
 	NutritionTreeDialog ntd = new NutritionTreeDialog(da);

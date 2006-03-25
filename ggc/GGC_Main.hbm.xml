@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    
+    <!-- ***************** ggc::Main SCHEMA  ******************* -->
+
+    <!--  Day values -->
+    <class name="ggc.db.hibernate.DayValueH" table="ggc_main_dayvalues">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="dt_info" type="long" not-null="true"/>    
+        <property name="bg"  type="float" />
+        <property name="ins1"  type="float" />
+        <property name="ins2"  type="float" />
+        <property name="ch"  type="float" />
+        <property name="meals_ids"  type="string" length="1000" />
+        <property name="act"  type="int" />
+        <property name="comment" type="string" length="2000" />
+    </class>
+
+
+    <!--  Doctor types -->
+    <class name="ggc.db.hibernate.DoctorTypeH" table="ggc_doc_types">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="name"  type="string" length="1000" />
+        <property name="name_i18n"  type="string" length="1000" />
+    </class>
+
+    <!--  Doctor types -->
+    <class name="ggc.db.hibernate.DoctorH" table="ggc_doc_doctors">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="name"  type="string" length="100" />
+        <property name="address"  type="string" length="2000" />
+        <property name="phone_gsm"  type="string" length="500" />
+        <property name="phone"  type="string" length="500" />
+        <property name="working_time"  type="string" length="1000" />
+        <property name="comment"  type="string" length="4000" />
+    </class>
+
+    <!--  Appointment -->
+    <class name="ggc.db.hibernate.AppointmentH" table="ggc_appointment">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="doctor_id"  type="long" not-null="true" />
+        <property name="dt_apoint"  type="long" not-null="true" />
+        <property name="comment"  type="string" length="4000" />
+    </class>
+
+
+</hibernate-mapping>

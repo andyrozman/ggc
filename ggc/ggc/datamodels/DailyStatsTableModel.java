@@ -29,27 +29,30 @@
 package ggc.datamodels;
 
 
-import ggc.util.GGCProperties;
+import java.text.SimpleDateFormat;
 
 import javax.swing.table.AbstractTableModel;
-import java.text.SimpleDateFormat;
+
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
 
 
 public class DailyStatsTableModel extends AbstractTableModel
 {
     DailyValues dayData;
     GGCProperties props = GGCProperties.getInstance();
+    DataAccess m_da = DataAccess.getInstance();
 
     public DailyStatsTableModel(DailyValues dayData)
     {
         this.dayData = dayData;
-        fireTableChanged(null);
+//        fireTableChanged(null);
     }
 
     public void setDailyValues(DailyValues dayData)
     {
         this.dayData = dayData;
-        fireTableChanged(null);
+//        fireTableChanged(null);
     }
 
     public int getColumnCount()
@@ -72,10 +75,13 @@ public class DailyStatsTableModel extends AbstractTableModel
     {
         Object o = dayData.getValueAt(row, column);
 
+	
         if (o != null && column == 0) 
 	{
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            return sdf.format(o);
+	    return m_da.getDateTimeAsTimeString(Long.parseLong((String)o));
+	    //System.out.println("DailyStatsTableModel: " + o);
+            //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            //return sdf.format(o);
         }
 
         return o;
@@ -103,12 +109,13 @@ public class DailyStatsTableModel extends AbstractTableModel
 
     public boolean isCellEditable(int row, int col)
     {
-        return true;
+        //return true;
+	return false;
     }
 
     public void setValueAt(Object aValue, int row, int column)
     {
         dayData.setValueAt(aValue, row, column);
-        fireTableChanged(null);
+        //fireTableChanged(null);
     }
 }

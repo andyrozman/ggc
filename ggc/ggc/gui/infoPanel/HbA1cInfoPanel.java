@@ -28,13 +28,16 @@
 package ggc.gui.infoPanel;
 
 
-import ggc.datamodels.HbA1cValues;
-import ggc.db.DataBaseHandler;
-import ggc.util.I18nControl;
-
-import javax.swing.*;
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.Date;
+
+import javax.swing.*;
+
+import ggc.datamodels.HbA1cValues;
+import ggc.db.DataBaseHandler;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
 import java.util.Date;
 
 
@@ -80,17 +83,21 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
         HbA1cValues hbVal = null;
 
         if (DataBaseHandler.getInstance().isConnected())
-            hbVal = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
+	    hbVal = DataAccess.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
+        //    hbVal = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
 
         DecimalFormat df = new DecimalFormat("#0.00");
 
-        if (hbVal != null) {
+        if (hbVal != null) 
+	{
             lblHbA1c.setText(df.format(hbVal.getHbA1c_Method1()) + " %");
             lblVal.setText(hbVal.getValuation());
             lblAvgBG.setText(df.format(hbVal.getAvgBG()));
             lblReadings.setText(hbVal.getReadings() + "");
             lblReadingsPerDay.setText(df.format(hbVal.getReadingsPerDay()));
-        } else {
+        } 
+	else 
+	{
             lblHbA1c.setText(m_ic.getMessage("NO_DATASOURCE"));
             lblVal.setText("");
             lblAvgBG.setText("");

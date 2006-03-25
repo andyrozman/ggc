@@ -37,8 +37,11 @@
 
 package ggc.db.datalayer;
 
+import java.io.FileInputStream;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -46,10 +49,9 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import java.io.FileInputStream;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory; 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -57,13 +59,19 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.*;
 
-
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.datalayer.FoodGroup;
+import ggc.GGC;
+import ggc.datamodels.DailyValues;
+import ggc.datamodels.DailyValuesRow;
+import ggc.datamodels.HbA1cValues;
+import ggc.db.DataBaseHandler;
 import ggc.db.datalayer.FoodDescription;
-import ggc.db.hibernate.FoodGroupH;
+import ggc.db.datalayer.FoodGroup;
+import ggc.db.hibernate.DatabaseObjectHibernate;
+import ggc.db.hibernate.DayValueH;
 import ggc.db.hibernate.FoodDescriptionH;
-
+import ggc.db.hibernate.FoodGroupH;
+import ggc.nutrition.GGCTreeRoot;
+import ggc.util.DataAccess;
 
 
 public class GGCDb
@@ -80,6 +88,9 @@ public class GGCDb
 
 
     Configuration m_cfg = null;
+    DataAccess m_da; 
+
+    public int m_loadStatus = 0;
 
 
     // ---
@@ -94,9 +105,18 @@ public class GGCDb
     public String db_conn_password = null;
 
 
+    public GGCDb(DataAccess da)
+    {
+	m_cfg = getConfiguration();
+        m_da = da;
+	m_loadStatus = 1;
+    }
+
+
     public GGCDb()
     {
 	m_cfg = getConfiguration();
+	m_loadStatus =1;
     }
 
 
@@ -127,8 +147,21 @@ public class GGCDb
     {
         sessions = m_cfg.buildSessionFactory();
         m_session = sessions.openSession();
+	m_loadStatus = 2;
     }
 
+
+    public int getLoadStatus()
+    {
+	return m_loadStatus;
+    }
+
+
+    public void loadStaticData()
+    {
+        m_da.m_nutrition_treeroot = new GGCTreeRoot(1, this);
+	m_loadStatus = 3;
+    }
 
 
     public void displayError(String source, Exception ex)
@@ -397,7 +430,7 @@ public class GGCDb
 
             Configuration cfg = new Configuration()
                             .addResource("GGC_Nutrition.hbm.xml")
-                            //.addResource("Config.hbm.xml")
+                            .addResource("GGC_Main.hbm.xml")
                             //.addResource("InternalData.hbm.xml")
 			    //.addResource("ParishData.hbm.xml")
                             //.addResource("Person.hbm.xml")
@@ -475,335 +508,200 @@ public class GGCDb
 
 
     // *************************************************************
-    // ****                   E V E N T S                       ****
+    // ****                   GGC Main Data                     ****
+    // ****      Comment: Were implemnted in DataBaseHandler    ****  
     // *************************************************************
 
-/*
-    public ArrayList<Selectable> getPublicEvents()
+
+    public HbA1cValues getHbA1c(java.util.Date day)
     {
+	System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
 
-        ArrayList<Selectable> list = new ArrayList<Selectable>();
+	if (m_loadStatus<2)
+	    return null;
 
-        Query q = getSession().createQuery("select pst from com.atech.inf_sys.zisdb.db.EventsH as pst where pst.type<19");
+	System.out.println("Hibernate: getHbA1c() B2");
+	HbA1cValues hbVal = new HbA1cValues();
 
-        Iterator it = q.iterate();
+	try 
+	{
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	    String eDay = sdf.format(day) + "0000";
+	    String sDay = sdf.format(new Date(day.getTime() - 1000L * 60L * 60L * 24L * 90L)) + "2359";
 
-        while (it.hasNext())
-        {
-            EventsH eh = (EventsH)it.next();
-            list.add(new Events(eh));
-        }
+	    Query q = getSession().createQuery("SELECT dv from " + 
+					       "ggc.db.hibernate.DayValueH as dv " +
+					       "WHERE dv.bg <> 0 AND dv.dt_info >=  " + 
+					       sDay + " AND dv.dt_info <= " + eDay + 
+					       " ORDER BY dv.dt_info");
 
-        return list;
+	    Iterator it = q.list().iterator();
 
-    }
+	    while (it.hasNext())
+	    {
+		DayValueH dv = (DayValueH)it.next();
+		hbVal.addDay(dv.getBg(), 1);
+	    }
 
-    public ArrayList<Selectable> getEventsByType(int type)
-    {
+	} 
+	catch (Exception e) 
+	{
+	    System.out.println(e);
+	}
 
-        ArrayList<Selectable> list = new ArrayList<Selectable>();
-
-        Query q = getSession().createQuery("select pst from com.atech.inf_sys.zisdb.db.EventsH as pst where pst.type=" + type);
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            EventsH eh = (EventsH)it.next();
-            list.add(new Events(eh));
-        }
-
-        return list;
-
-    }
-
-
-
-
-    public ArrayList<Selectable> getEventPerformers()
-    {
-    //    DataAccess.notImplemented("ZISDb::getEventPerformers");
-
-
-        ArrayList<Selectable> list = new ArrayList<Selectable>();
-        String sql ="select pst from com.atech.inf_sys.zisdb.db.internal.InternalPersonH as pst where pst.dead=0 and (pst.type<=2 or pst.type>=6)";
-
-
-        //for (int i=0; i<search.length; i++) 
-        {
-
-            Query q = getSession().createQuery(sql);
-
-            Iterator it = q.iterate();
-
-            while (it.hasNext())
-            {
-                InternalPersonH ob = (InternalPersonH)it.next();
-
-                //if (ob instanceof PriestH) 
-                {
-                    list.add(new InternalPerson(ob));
-                }
-                //else if (ob instanceof FriarH) 
-                //{
-                //    list.add(new PersonEventPerformer((FriarH)ob));
-                //}
-            }
-
-
-        }
-
-        return list;
-
-
-//        return null;
+	return hbVal;
     }
 
 
 
-    public ArrayList<Selectable> getSelectedEventPerformers()
+    public DailyValues getDayStats(java.util.Date day)
     {
 
-        return this.m_sel_pperson;
+	if (m_loadStatus<2)
+	    return null;
 
+	System.out.println("Hibernate: getDayStats()");
+	DailyValues dV = new DailyValues();
+
+	try 
+	{
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	    String sDay = sdf.format(day);
+
+	    Query q = getSession().createQuery("SELECT dv from " + 
+					       "ggc.db.hibernate.DayValueH as dv " +
+					       "WHERE dv.dt_info >=  " + 
+					       sDay + "0000 AND dv.dt_info <= " + sDay + 
+					       "2359 ORDER BY dv.dt_info");
+
+	    Iterator it = q.list().iterator();
+
+	    while (it.hasNext())
+	    {
+		DayValueH dv = (DayValueH)it.next();
+
+		DailyValuesRow dVR = new DailyValuesRow(dv);
+		dV.setNewRow(dVR);
+	    }
+
+	} 
+	catch (Exception e) 
+	{
+	    System.err.println(e);
+	}
+
+	return dV;
     }
 
 
-
-    public ArrayList<PersonEvent> getEventPersons(long id)
+    public DailyValues getDayStatsRange(java.util.Date start, java.util.Date end)
     {
 
-        ArrayList<PersonEvent> pcs = new ArrayList<PersonEvent>();
+	if (m_loadStatus<2)
+	    return null;
 
+	System.out.println("Hibernate: getDayStatsRange()");
+	DailyValues dV = new DailyValues();
 
-        if (id<=0)
-        {
-            System.out.println("Event is not set. Search stopped");
-            return pcs;
-        }
+	try 
+	{
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	    String sDay = sdf.format(start);
+	    String eDay = sdf.format(end);
 
-        Query q = getSession().createQuery("select pst from com.atech.inf_sys.zisdb.db.person.PersonEventH as pst where pst.event.id=" + id);
+	    Query q = getSession().createQuery("SELECT dv from " + 
+					       "ggc.db.hibernate.DayValueH as dv " +
+					       "WHERE dv.dt_info >=  " + 
+					       sDay + "0000 AND dv.dt_info <= " + eDay + 
+					       "2359 ORDER BY dv.dt_info");
 
-        if (q.list().size()>0)
-        {
+	    Iterator it = q.list().iterator();
 
-            Iterator it = q.iterate();
+	    while (it.hasNext())
+	    {
+		DayValueH dv = (DayValueH)it.next();
 
-            while (it.hasNext())
-            {
+		DailyValuesRow dVR = new DailyValuesRow(dv);
+		dV.setNewRow(dVR);
+	    }
 
-                PersonEventH pr = (PersonEventH)it.next();
+	} 
+	catch (Exception e) 
+	{
+	    System.err.println(e);
+	}
 
-                pcs.add(new PersonEvent(pr));
-
-            }
-
-        }
-
-        System.out.println("Found " + pcs.size() + " person's for event.");
-
-        return pcs;
-
-    }
-
-
-
-    public ArrayList<PersonEvent> getReligiousPersonalEvents(long person_id)
-    {
-        ArrayList<PersonEvent> pcs = new ArrayList<PersonEvent>();
-
-        if(person_id <= 0)
-        {
-            System.out.println("Person is not set. Search stopped");
-            return pcs;
-        }
-
-        //System.out.println((new StringBuilder()).append("Person ID: ").append(person_id).toString());
-
-        Query q = getSession().createQuery("select pst from com.atech.inf_sys.zisdb.db.person.PersonEventH as pst where pst.person.id=" + person_id + " and pst.type<20 order by pst.type asc");
-
-        if(q.list().size() > 0)
-        {
-
-            Iterator it = q.iterate();
-
-            while (it.hasNext()) 
-            {
-                pcs.add(new PersonEvent((PersonEventH)it.next()));
-            }
-
-        }
-
-        System.out.println("Found "+"(" + q.list().size() +") person's events (Religious).");
-        return pcs;
-
-    }
-
-
-
-    public ArrayList<PersonEvent> getCivilPersonalEvents(long person_id)
-    {
-
-        ArrayList<PersonEvent> pcs = new ArrayList<PersonEvent>();
-
-        if(person_id <= 0)
-        {
-            System.out.println("Person is not set. Search stopped");
-            return pcs;
-        }
-
-        Query q = getSession().createQuery("select pst from com.atech.inf_sys.zisdb.db.person.PersonEventH as pst where pst.person.id=" + person_id + " and pst.type>19 order by pst.type asc");
-
-
-        if(q.list().size() > 0)
-        {
-
-            Iterator it = q.iterate();
-
-            while (it.hasNext()) 
-            {
-                pcs.add(new PersonEvent((PersonEventH)it.next()));
-            }
-
-        }
-
-        System.out.println("Found "+"(" + q.list().size() +") person's events (civil).");
-
-        return pcs;
-
+	return dV;
     }
 
 
 
 
-
-    public PersonEvent getPersonalEvent(long person_id, long event_id)
+    public void saveDayStats(DailyValues dV)
     {
 
-        //ArrayList<PersonEvent> pcs = new ArrayList<PersonEvent>();
-
-        if ((person_id<=0) || (event_id<=0))
-        {
-            //System.out.println("Person is not set. Search stopped");
-            return null;
-        }
-
-        //PersonEventH pp = new PersonEventH();
-        
-
-        Query q = getSession().createQuery("select pst from com.atech.inf_sys.zisdb.db.person.PersonEventH as pst where pst.person.id=" + person_id + " and pst.event.id=" +  event_id);
+	System.out.println("Hibernate: saveDayStats()");
 
 
-        if (q.list().size() > 0)
-        {
+	if (dV.hasChanged()) 
+	{
+	    System.out.println("SDS: Has changed");
 
-            Iterator it = q.iterate();
+	    // deleted entries
+	    
+	    //if (!dV.onlyInsert())
+	    //	statement.execute("DELETE FROM DayValues where dt_date=" + dV.getDateD());
 
-            while (it.hasNext()) 
-            {
-                return new PersonEvent((PersonEventH)it.next());
-            }
+	    try
+	    {
+		for (int i = 0; i < dV.getRowCount(); i++) 
+		{
+		    DailyValuesRow dwr = dV.getRowAt(i);
 
-        }
+		    Session sess = getSession();
 
-        //System.out.println("Found "+"(" + q.list().size() +") person's events (civil).");
+		    if (dwr.isNew())
+		    {
+			System.out.println("  New");
 
-        //return pcs;
+			Transaction tx = sess.beginTransaction();
 
-        return null;
+			DayValueH dvh = dwr.getHibernateObject();
+			System.out.println(getSession());
+			Long l = (Long)sess.save(dvh);
 
+			dvh.setId(l.longValue());
+			tx.commit();
+
+		    }
+		    else if (dwr.hasChanged())
+		    {
+			Transaction tx = sess.beginTransaction();
+
+			System.out.println("  Changed");
+			DayValueH dvh = dwr.getHibernateObject();
+			sess.update(dvh);
+
+			tx.commit();
+		    }
+		    else
+			System.out.println("  Nothing");
+
+
+		} // for
+	    }
+	    catch(Exception ex)
+	    {
+		System.out.println("saveDayStats: " + ex);
+	    }
+
+	    
+	} // hasChanged
+	else
+	    System.out.println("SDS: Has not changed");
+
+	
     }
-
-
-    public PersonEvent getPersonalEventWithoutPerson(long person_id, long event_id)
-    {
-
-        //ArrayList<PersonEvent> pcs = new ArrayList<PersonEvent>();
-
-        if(person_id <= 0)
-        {
-            //System.out.println("Person is not set. Search stopped");
-            return null;
-        }
-
-        //PersonEventH pp = new PersonEventH();
-
-
-        Query q = getSession().createQuery("select pst from com.atech.inf_sys.zisdb.db.person.PersonEventH as pst where pst.event.id=" +  event_id);
-
-
-        if (q.list().size() > 0)
-        {
-
-            Iterator it = q.iterate();
-
-            while (it.hasNext()) 
-            {
-                PersonEventH pe = (PersonEventH)it.next();
-
-                if (pe.getPerson().getId()!=person_id)
-                {
-                    return new PersonEvent(pe);
-                }
-            }
-
-        }
-
-        //System.out.println("Found "+"(" + q.list().size() +") person's events (civil).");
-
-        //return pcs;
-
-        return null;
-
-    }
-
-
-
-
-
-
-    // type = 1, normal events, 2 = marridge(s)
-/*
-    public ArrayList<PersonEvent> getEventByPerson(long id, int type)
-    {
-
-        ArrayList<PersonEvent> pcs = new ArrayList<PersonEvent>();
-
-
-        if (id<=0)
-        {
-            System.out.println("Event is not set. Search stopped");
-            return pcs;
-        }
-
-        Query q = getSession().createQuery("select pst from com.atech.inf_sys.zisdb.db.person.PersonEventH as pst where pst.event_id=" + id);
-
-        if (q.list().size()>0)
-        {
-
-            Iterator it = q.iterate();
-
-            while (it.hasNext())
-            {
-
-                PersonEventH pr = (PersonEventH)it.next();
-
-                pcs.add(new PersonEvent(pr));
-
-            }
-
-        }
-
-        System.out.println("Found " + pcs.size() + " person's for event.");
-
-        return pcs;
-
-    }
-*/
-
-
-
-
 
 
 

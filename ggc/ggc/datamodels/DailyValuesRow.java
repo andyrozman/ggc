@@ -27,15 +27,18 @@
 
 package ggc.datamodels;
 
-import ggc.errors.DateTimeError;
-import ggc.util.I18nControl;
-
-
-import javax.swing.*;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
+
+import javax.swing.*;
+
+import ggc.db.hibernate.DayValueH;
+import ggc.errors.DateTimeError;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
 
 
 public class DailyValuesRow implements Serializable
@@ -43,6 +46,7 @@ public class DailyValuesRow implements Serializable
 
     private I18nControl m_ic = I18nControl.getInstance();
 
+    /*
     private Date datetime;
     private Float BG;
     private Float Ins1;
@@ -50,20 +54,78 @@ public class DailyValuesRow implements Serializable
     private Float BE;
     private Integer Act;
     private String Comment;
+    */
 
-    public DailyValuesRow(Date datetime, float BG, float Ins1, float Ins2, float BE, int Act, String Comment)
+    private long datetime;
+    private float bg;
+    private float ins1;
+    private float ins2;
+    private float ch;
+    private int act;
+    private String comment;
+
+    private boolean changed = false;
+
+    DayValueH m_dv = null;
+    DataAccess m_da = DataAccess.getInstance();
+
+
+
+    public DailyValuesRow(long datetime, float bg, float ins1, float ins2, float ch, int act, String comment)
     {
         this.datetime = datetime;
-        this.BG = new Float(BG);
-        this.Ins1 = new Float(Ins1);
-        this.Ins2 = new Float(Ins2);
-        this.BE = new Float(BE);
-        this.Act = new Integer(Act);
-        this.Comment = Comment;
+        this.bg = bg; 
+        this.ins1 = ins1;
+        this.ins2 = ins2;
+        this.ch = ch; ;
+        this.act = act;
+        this.comment = comment;
     }
+
+    public DailyValuesRow(DayValueH dv)
+    {
+	this.datetime = dv.getDt_info();
+	this.bg = dv.getBg();
+	this.ins1 = dv.getIns1();
+	this.ins2 = dv.getIns2();
+	this.ch = dv.getCh();
+	this.act = (int)dv.getAct();
+	this.comment = dv.getComment();
+
+	m_dv = dv;
+    }
+
 
     public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
     {
+	StringTokenizer strtok = new StringTokenizer(date, ".");
+	String dt[] = new String[5];
+	dt[2] = strtok.nextToken();  // day
+	dt[1] = strtok.nextToken();  // month
+	dt[0] = strtok.nextToken();  // year
+
+	strtok = new StringTokenizer(time, ":");
+	dt[3] = strtok.nextToken();  // hour
+	dt[4] = strtok.nextToken();  // minute
+
+	String dt_out = dt[0] + m_da.getLeadingZero(dt[1], 2) + m_da.getLeadingZero(dt[2], 2) + m_da.getLeadingZero(dt[3], 2) + m_da.getLeadingZero(dt[4], 2);
+
+	datetime = Long.parseLong(dt_out);
+
+	setValueAt(BG, 1);
+	setValueAt(Ins1, 2);
+	setValueAt(Ins2, 3);
+	setValueAt(BU, 4);
+	setValueAt(Act, 5);
+	setValueAt(Comment, 6);
+
+    }
+
+/*
+    public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
+    {
+
+	/*
         try {
             SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
             try {
@@ -113,29 +175,30 @@ public class DailyValuesRow implements Serializable
         } catch (Exception e) {
             System.err.println(e);
         }
-    }
+	*/
+//    }
 
     public DailyValuesRow()
     {
-        this.datetime = null;
-        this.BG = null;
-        this.Ins1 = null;
-        this.Ins2 = null;
-        this.BE = null;
-        this.Act = null;
-        this.Comment = null;
+	this.datetime = 0L;
+	this.bg = 0.0f;
+	this.ins1 = 0.0f;
+	this.ins2 = 0.0f;
+	this.ch = 0.0f;
+	this.act = 0;
+	this.comment = "";
     }
 
     public String[] getRowString()
     {
         String[] tmp = new String[7];
-        tmp[0] = datetime.toString();
-        tmp[1] = BG.toString();
-        tmp[2] = Ins1.toString();
-        tmp[3] = Ins2.toString();
-        tmp[4] = BE.toString();
-        tmp[5] = Act.toString();
-        tmp[6] = Comment;
+        tmp[0] = "" + datetime;
+        tmp[1] = "" + bg;
+        tmp[2] = "" + ins1;
+        tmp[3] = "" + ins2;
+        tmp[4] = "" + ch;
+        tmp[5] = "" + act;
+        tmp[6] = comment;
 
         return tmp;
     }
@@ -143,56 +206,107 @@ public class DailyValuesRow implements Serializable
     public String toString()
     {
 //        return "DT="+datetime.getTime() + ";BG=" + BG + ";Ins1=" + Ins1 + ";Ins2=" + Ins2 + ";BE=" + BE + ";Act=" + Act + ";Comment=" + Comment + ";";
-	return datetime.getTime() + ";" + BG + ";" + Ins1 + ";" + Ins2 + ";" + BE + ";" + Act + ";" + Comment + ";";
+	return getDateTime() + ";" + bg + ";" + ins1 + ";" + ins2 + ";" + ch + ";" + act + ";" + comment + ";";
     }
+
 
     public Date getDateTime()
     {
-        return datetime;
+	return m_da.getDateTimeAsDateObject(datetime);
     }
 
 
     public String getDateAsString()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(datetime);
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //return sdf.format(datetime);
+	return m_da.getDateTimeAsDateString(datetime);
     }
 
     public String getTimeAsString()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        return sdf.format(datetime);
+        //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        //return sdf.format(datetime);
+	return m_da.getDateTimeAsTimeString(datetime);
     }
 
     public float getBG()
     {
-        return BG.floatValue();
+        return bg;
     }
 
     public float getIns1()
     {
-        return Ins1.floatValue();
+        return ins1;
     }
 
     public float getIns2()
     {
-        return Ins2.floatValue();
+        return ins2;
     }
 
     public float getBE()
     {
-        return BE.floatValue();
+        return ch;
     }
 
     public int getAct()
     {
-        return Act.intValue();
+        return act;
     }
 
     public String getComment()
     {
-        return Comment;
+        return comment;
     }
+
+    public boolean hasChanged()
+    {
+	return changed;
+    }
+
+    public boolean isNew()
+    {
+	if (m_dv==null)
+	    return true;
+	else
+	    return false;
+    }
+
+    public DayValueH getHibernateObject()
+    {
+	if (m_dv==null)
+	{
+	    m_dv = new DayValueH();
+	    m_dv.setAct(act);
+	    m_dv.setBg(bg);
+	    m_dv.setCh(ch);
+	    m_dv.setComment(comment);
+	    m_dv.setDt_info(datetime);
+	    m_dv.setIns1(ins1);
+	    m_dv.setIns2(ins2);
+//	    m_dv.setMeals_ids("");
+	}
+	else
+	{
+	    m_dv.setAct(act);
+	    m_dv.setBg(bg);
+	    m_dv.setCh(ch);
+	    m_dv.setComment(comment);
+	    m_dv.setDt_info(datetime);
+	    m_dv.setIns1(ins1);
+	    m_dv.setIns2(ins2);
+	}
+
+	return m_dv;
+
+    }
+
+    public boolean hasHibernateObject()
+    {
+	return (m_dv!=null);
+    }
+
 
 
     //stupid but TableModel needs Objects...
@@ -200,97 +314,104 @@ public class DailyValuesRow implements Serializable
     {
         switch (column) {
             case 0:
-                return datetime;
+                return ""+datetime; //m_da.getDateTimeAsTimeString(datetime);
             case 1:
-                return BG;
+                return ""+bg;
             case 2:
-                return Ins1;
+                return ""+ins1;
             case 3:
-                return Ins2;
+                return ""+ins2;
             case 4:
-                return BE;
+                return ""+ch;
             case 5:
-                return Act;
+                return ""+act;
             case 6:
-                return Comment;
+                return comment;
             default:
                 return null;
         }
     }
 
+
     public void setValueAt(Object aValue, int column)
     {
-        switch (column) {
-            case 0:
-                try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:MM");
-                    long tmp = sdf.parse(aValue.toString()).getTime();
-                    datetime = new Date(tmp);
-                } catch (Exception e) {
-                    System.err.println(e);
-                }
-                break;
-            case 1:
-                BG = (Float)aValue;
-                break;
+        switch (column) 
+	{
+	    case 0:
+		{
+		    if (aValue instanceof String)
+			datetime = Long.parseLong((String)aValue);
+		    else if (aValue instanceof Integer)
+			datetime = ((Integer)aValue).intValue();
+		    else if (aValue instanceof Long)
+			datetime = ((Long)aValue).longValue();
+		    changed = true;
+		} break;
+	    case 1:
+		{
+		    bg = m_da.getFloatValue(aValue);
+		    if (bg!=0.0f)
+			changed = true;
+		} break;
             case 2:
-                Ins1 = (Float)aValue;
-                break;
+		{
+		    ins1 = m_da.getFloatValue(aValue);
+		    if (ins1!=0.0f)
+			changed = true;
+		} break;
             case 3:
-                Ins2 = (Float)aValue;
-                break;
+		{
+		    ins2 = m_da.getFloatValue(aValue);
+		    if (ins2!=0.0f)
+			changed = true;
+		} break;
             case 4:
-                BE = (Float)aValue;
-                break;
+		{
+		    ch = m_da.getFloatValue(aValue);
+		    if (ch!=0.0f)
+			changed = true;
+		    changed = true;
+		} break;
             case 5:
-                Act = (Integer)aValue;
-                break;
+		{
+		    act = m_da.getIntValue(aValue);
+		    if (act!=0)
+			changed = true;
+		} break;
             case 6:
-                Comment = (String)aValue;
-                break;
+		{
+		    if (aValue instanceof String)
+			comment = (String)aValue;
+		    if (comment.length()!=0)
+			changed = true;
+		} break;
         }
     }
 
 
 
+
+
+
     public int getDateD()
     {
-	
+	return -1;
+/*
 	String dat = "";
 
 	dat += datetime.getYear() + 1900;
-
 	dat += getLeadingZero(datetime.getMonth() + 1, 2);
-
 	dat += getLeadingZero(datetime.getDate(), 2);
 
-
 	return Integer.parseInt(dat);
-
+*/
     }
 
 
     public int getDateT()
     {
-	
-	return datetime.getHours()*100 + datetime.getMinutes();
-	
-    }
-
-
-
-    public String getLeadingZero(int value, int num_places)
-    {
-
-	String tmp = "" + value;
-
-	while (tmp.length()<num_places)
-	{
-	    tmp = "0" + tmp; 
-	}
-
-	return tmp;
-
+	return -1;
+	//return datetime.getHours()*100 + datetime.getMinutes();
     }
 
 

@@ -34,15 +34,24 @@ import java.awt.Font;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Properties;
+
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
+import ggc.datamodels.DailyValues;
+import ggc.datamodels.HbA1cValues;
 import ggc.db.datalayer.GGCDb;
+import ggc.db.datalayer.GGCDbLoader;
+import ggc.gui.MainFrame;
+import ggc.gui.StatusBar;
 import ggc.nutrition.GGCTreeRoot;
 
 
@@ -76,12 +85,18 @@ public class DataAccess
                                              // singelton instance
 
     public GGCDb m_db = null;
-    public Component m_main = null;
+    public MainFrame m_main = null;
 
     public Font fonts[] = null;
 
     public GGCTreeRoot m_nutrition_treeroot = null;
     public GGCTreeRoot m_meals_treeroot = null;
+
+
+    public Date m_date = null;
+    public HbA1cValues m_HbA1c = null;
+    public DailyValues m_dvalues = null;
+
 
 
 
@@ -99,10 +114,10 @@ public class DataAccess
      *  method.<br><br>
      *
      */ 
-    private DataAccess(GGCDb db)
+    private DataAccess()
     {
 
-        m_db = db;
+        //m_db = db;
 
 //        loadConfig();
         loadFonts();
@@ -124,21 +139,21 @@ public class DataAccess
      *  @return Reference to OmniI18nControl object
      * 
      */ 
-    static public DataAccess getInstance(GGCDb db)
+    static public DataAccess getInstance()
     {
         if (m_da == null)
-            m_da = new DataAccess(db);
+            m_da = new DataAccess();
         return m_da;
     }
 
 
 
-    static public DataAccess createInstance(Component main)
+    static public DataAccess createInstance(MainFrame main)
     {
         if (m_da == null)
         {
-            GGCDb db = new GGCDb();
-            m_da = new DataAccess(db);
+            //GGCDb db = new GGCDb();
+            m_da = new DataAccess();
             m_da.setParent(main);
         }
             
@@ -146,12 +161,12 @@ public class DataAccess
     }
 
 
-
+/*
     static public DataAccess getInstance()
     {
         return m_da;
     }
-
+*/
 
 
 
@@ -164,6 +179,14 @@ public class DataAccess
 
         m_i18n=null;
 
+    }
+
+
+    public void startDb(StatusBar bar)
+    {
+        System.out.println("sdtartDb");
+	GGCDbLoader loader = new GGCDbLoader(this, bar);
+	loader.start();
     }
 
 
@@ -203,14 +226,14 @@ public class DataAccess
     // ********************************************************
 
 
-    public void setParent(Component main)
+    public void setParent(MainFrame main)
     {
         m_main = main;
     }
 
 
 
-    public Component getParent()
+    public MainFrame getParent()
     {
         return m_main;
     }
@@ -696,6 +719,69 @@ public class DataAccess
     }
 
 
+    public Date getDateTimeAsDateObject(long dt)
+    {
+
+	//Date dt_obj = new Date();
+	GregorianCalendar gc = new GregorianCalendar();
+	
+
+	int y = (int)(dt/100000000L);
+	dt -= y*100000000L;
+
+	int m = (int)(dt/1000000L);
+	dt -= m*1000000L;
+
+	int d = (int)(dt/10000L);
+	dt -= d*10000L;
+
+	int h = (int)(dt/100L);
+	dt -= h*100L;
+
+	int min = (int)dt;
+
+	gc.set(GregorianCalendar.DATE, d);
+	gc.set(GregorianCalendar.MONTH, m-1);
+	gc.set(GregorianCalendar.YEAR, y);
+
+	gc.set(GregorianCalendar.HOUR_OF_DAY, h);
+	gc.set(GregorianCalendar.MINUTE, min);
+
+/*
+	dt_obj.setHours(h);
+	dt_obj.setMinutes(min);
+
+	dt_obj.setDate(d);
+	dt_obj.setMonth(m);
+	dt_obj.setYear(y);
+
+	return dt_obj;
+	*/
+
+	return gc.getTime();
+
+    }
+
+
+
+    public long getDateTimeFromDateObject(Date dt)
+    {
+
+	GregorianCalendar gc = new GregorianCalendar();
+	gc.setTime(dt);
+
+	String dx = "";
+
+	dx += "" + gc.get(GregorianCalendar.YEAR);
+	dx += "" + getLeadingZero(gc.get(GregorianCalendar.MONTH+1), 2);
+	dx += "" + getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2);
+	dx += "" + getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2);
+	dx += "" + getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
+
+	return Long.parseLong(dx);
+
+    }
+
 
 
 
@@ -718,6 +804,19 @@ public class DataAccess
         return nn;
     }
 
+    public String getLeadingZero(String number, int places)
+    {
+	number = number.trim();
+
+	while (number.length()<places)
+	{
+	    number = "0"+number;
+	}
+
+	return number;
+    }
+
+
 
     public int getStartYear()
     {
@@ -725,6 +824,162 @@ public class DataAccess
         return 1800;
     }
 
+
+
+    public float getFloatValue(Object aValue)
+    {
+	float out = 0.0f;
+
+	if (aValue==null)
+	    return out;
+
+	if (aValue instanceof Float)
+	{
+	    try
+	    {
+		Float f = (Float)aValue;
+		out = f.floatValue();
+	    }
+	    catch(Exception ex) {}
+	}
+	else if (aValue instanceof String)
+	{
+	    String s = (String)aValue;
+	    if (s.length()>0)
+	    {
+		try
+		{
+		    out = Float.parseFloat(s);
+		}
+		catch(Exception ex) {}
+	    }
+	}
+
+	return out;
+    }
+
+
+    public int getIntValue(Object aValue)
+    {
+	int out = 0;
+
+	if (aValue==null)
+	    return out;
+
+	if (aValue instanceof Integer)
+	{
+	    try
+	    {
+		Integer i = (Integer)aValue;
+		out = i.intValue();
+	    }
+	    catch(Exception ex) {}
+	}
+	else if (aValue instanceof String)
+	{
+	    String s = (String)aValue;
+	    if (s.length()>0)
+	    {
+		try
+		{
+		    out = Integer.parseInt(s);
+		}
+		catch(Exception ex) {}
+	    }
+	}
+
+	return out;
+    }
+
+
+    public long getLongValue(Object aValue)
+    {
+	long out = 0L;
+
+	if (aValue==null)
+	    return out;
+
+	if (aValue instanceof Long)
+	{
+	    try
+	    {
+		Long i = (Long)aValue;
+		out = i.longValue();
+	    }
+	    catch(Exception ex) {}
+	}
+	else if (aValue instanceof String)
+	{
+	    String s = (String)aValue;
+	    if (s.length()>0)
+	    {
+		try
+		{
+		    out = Long.parseLong(s);
+		}
+		catch(Exception ex) {}
+	    }
+	}
+
+	return out;
+    }
+
+
+
+/*
+    public Date m_date = null;
+    public HbA1cValues m_HbA1c = null;
+    public DailyValues m_dvalues = null;
+*/
+    public synchronized void loadDailySettings(Date day)
+    {
+	if (m_db==null) 
+	    return;
+
+	if (m_db.getLoadStatus()<2)
+	    return;
+
+	System.out.println("Reload daily settings");
+	m_date = day;
+	m_HbA1c = m_db.getHbA1c(day);
+	m_dvalues = m_db.getDayStats(day);
+    }
+
+    public HbA1cValues getHbA1c(Date day)
+    {
+	if (!isSameDay(day))
+	    loadDailySettings(day);
+
+	if (m_HbA1c==null)
+	    return new HbA1cValues();
+	else
+            return m_HbA1c;
+    }
+
+    public DailyValues getDayStats(Date day)
+    {
+	if (!isSameDay(day))
+	    loadDailySettings(day);
+
+	return m_dvalues;
+    }
+
+
+    public boolean isSameDay(Date day)
+    {
+	if (m_date==null)
+	    return false;
+	else
+	{
+	    if ((m_date.getDate()==day.getDate()) &&
+		(m_date.getYear()==day.getYear()) &&
+		(m_date.getMonth()==day.getMonth()))
+		return true;
+	    else
+		return false;
+
+	}
+    }
 
 
     public static void notImplemented(String source)

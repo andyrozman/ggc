@@ -65,13 +65,15 @@ public class StatisticValues
 
     public void setDayRange(Date sDay, Date eDay)
     {
-        GregorianCalendar gC = new GregorianCalendar();
+
+	dbH.getDayStatsRange(sDay,eDay);
+        /*GregorianCalendar gC = new GregorianCalendar();
         gC.setTime(sDay);
         while (gC.getTime().compareTo(eDay) <= 0) {
             DailyValues dv = dbH.getDayStats(gC.getTime());
             addDayValues(dv);
             gC.add(Calendar.DATE, 1);
-        }
+        }*/
     }
 
     private void addDayValues(DailyValues dv)

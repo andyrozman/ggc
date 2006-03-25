@@ -24,6 +24,7 @@ import javax.comm.NoSuchPortException;
 import javax.comm.SerialPortEvent;
 import javax.swing.ImageIcon;
 
+import ggc.util.DataAccess;
 
 /**
  * @author stephan
@@ -231,7 +232,9 @@ public class EuroFlashImport extends SerialMeterImport
 
                 //
                 //Value dataValue = new Value(date, bzValue);
-                DailyValuesRow dataValue = new DailyValuesRow(date, bzValue, 0, 0, 0, 0, "");
+
+		//DataAccess.getInstance().getDateTimeFromDateObject(Date dt)
+                DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), bzValue, 0, 0, 0, 0, "");
                 importDataVector.addElement(dataValue);
                 //Log.getLogger().info("new value : " + dataValue);
 

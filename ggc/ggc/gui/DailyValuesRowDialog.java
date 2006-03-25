@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -29,7 +30,7 @@ import java.awt.event.KeyEvent;
  * To change this generated comment edit the template variable "typecomment":
  * Window>Preferences>Java>Templates.
  */
-public class DailyValuesRowDialog extends JDialog
+public class DailyValuesRowDialog extends JDialog implements ActionListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();    
@@ -62,8 +63,9 @@ public class DailyValuesRowDialog extends JDialog
     {
         super(owner);
 
-        if (row == null)
-            dailyValuesRow = new DailyValuesRow();
+	dailyValuesRow = row;
+        //if (row == null)
+        //    dailyValuesRow = new DailyValuesRow();
         initialize();
     }
 
@@ -84,8 +86,9 @@ public class DailyValuesRowDialog extends JDialog
     {
         super(owner);
 
-        if (row == null)
-            dailyValuesRow = new DailyValuesRow();
+	dailyValuesRow = row;
+	//if (row == null)
+        //    dailyValuesRow = new DailyValuesRow();
         initialize();
     }
 
@@ -117,7 +120,7 @@ public class DailyValuesRowDialog extends JDialog
 
         dialog.setLocationRelativeTo(owner);
         dialog.pack();
-        dialog.show();
+        //dialog.show();
 
         return dialog.getDailyValuesRow();
     }
@@ -194,8 +197,24 @@ public class DailyValuesRowDialog extends JDialog
 
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton closeButton = new JButton(new CloseAction());
-        JButton addButton = new JButton(new AddAction());
+        JButton closeButton = new JButton(m_ic.getMessage("CANCEL")); //new CloseAction());
+	closeButton.addActionListener(this);
+	closeButton.setActionCommand("cancel");
+	closeButton.setMnemonic(KeyEvent.VK_C);
+
+
+//	super("Cancel");
+//	setName(m_ic.getMessage("CANCEL"));
+//	putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_C));
+
+        JButton addButton = new JButton(); //new AddAction());
+	addButton.addActionListener(this);
+	addButton.setActionCommand("add");
+	addButton.setMnemonic(KeyEvent.VK_O);
+	//putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+
+
+
         buttonPanel.add(addButton);
         buttonPanel.add(closeButton);
         content.add(buttonPanel, "South");
@@ -255,9 +274,32 @@ public class DailyValuesRowDialog extends JDialog
     }
 
 
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+	String action = e.getActionCommand();
+
+	if (action.equals("add"))
+	{
+	    if (!verifyInput())
+		return;
+
+	    dailyValuesRow = new DailyValuesRow(dateField.getText(), timeField.getText(), bgField.getText(), ins1Field.getText(), ins2Field.getText(), buField.getText(), actField.getText(), commentField.getText());
+	    this.dispose();
+	}
+	else if (action.equals("cancel"))
+	{
+	    this.dispose();
+	}
+
+    }
+    
+
     //////////////////////////////////////////////////////////////
     // Action classes
-    protected class AddAction extends AbstractAction
+/*    protected class AddAction extends AbstractAction
     {
         public AddAction()
         {
@@ -270,7 +312,7 @@ public class DailyValuesRowDialog extends JDialog
         /**
          * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
          */
-        public void actionPerformed(ActionEvent e)
+/*        public void actionPerformed(ActionEvent e)
         {
             if (!verifyInput())
                 return;
@@ -294,11 +336,11 @@ public class DailyValuesRowDialog extends JDialog
         /**
          * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
          */
-        public void actionPerformed(ActionEvent e)
+/*        public void actionPerformed(ActionEvent e)
         {
             dailyValuesRow = null;
             DailyValuesRowDialog.this.dispose();
         }
 
-    }
+    } */
 }

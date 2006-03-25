@@ -28,27 +28,34 @@
 package ggc.gui;
 
 
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+
+import javax.swing.*;
+import javax.swing.text.View;
+
+import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
+
 import ggc.db.DataBaseHandler;
 import ggc.gui.infoPanel.InfoPanel;
+import ggc.nutrition.NutritionTreeDialog;
+import ggc.print.PrintMonthlyReport;
+import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
 
-import ggc.print.PrintMonthlyReport;
-
-import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
-
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-
 
 public class MainFrame extends JFrame
 {
-    
-    private I18nControl m_ic = I18nControl.getInstance();        
 
+    // Version information
+    private static String version = "v0.1.2";
+    private static String version_date = "25th March 2006";
+
+
+    private I18nControl m_ic = I18nControl.getInstance();        
     public static SkinLookAndFeel m_skinlf;
     private static final String skinLFdir = "../lib/skinLFThemes/";
 
@@ -56,16 +63,19 @@ public class MainFrame extends JFrame
     private JMenuBar menuBar = new JMenuBar();
     private JToolBar toolBar = new JToolBar();
     private JLabel lblTest = new JLabel();
-    private GGCAction connectAction, disconnectAction, newAction, openAction, closeAction, quitAction;
-    private GGCAction prefAction;
-    private GGCAction readMeterAction;
+
+    //private GGCAction connectAction, disconnectAction, newAction, openAction, closeAction, 
+    private GGCAction quitAction, prefAction, readMeterAction;
     private GGCAction viewDailyAction, viewCourseGraphAction, viewSpreadGraphAction, viewFrequencyGraphAction;
     private GGCAction viewHbA1cAction;
+    private GGCAction foodNutrAction, foodMealsAction, reportPDFSimpleAction, reportPDFExtendedAction;
     private GGCAction aboutAction, checkVersionAction;
+
     private DailyStatsFrame dailyStatsWindow;
     private StatusBar statusPanel;
-    private InfoPanel informationPanel;
+    public InfoPanel informationPanel;
     public static DataBaseHandler dbH;
+    private DataAccess m_da = null;
 
     public static boolean developer_version = false;
 
@@ -122,10 +132,8 @@ public class MainFrame extends JFrame
 
     public static void setLookAndFeel(String name)
     {
-
 	try
 	{
-	
 	    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir+name));      
     
 	    m_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
@@ -133,14 +141,11 @@ public class MainFrame extends JFrame
 
             JFrame.setDefaultLookAndFeelDecorated(true);
             JDialog.setDefaultLookAndFeelDecorated(true);
-
 	}
 	catch(Exception ex)
 	{
             System.err.println("Error loading L&F: " + ex);
 	}
-
-
     }
 
 
@@ -150,7 +155,12 @@ public class MainFrame extends JFrame
     {
         // this is the first chance to call this method after an instance of GGCProperties has been created
         m_ic.setLanguage();
-        
+
+        m_da = DataAccess.createInstance(this);
+
+        statusPanel = StatusBar.getInstance();
+        m_da.startDb(statusPanel);
+
         setTitle(title);
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -161,32 +171,22 @@ public class MainFrame extends JFrame
         JMenu fileMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FILE"));
         JMenu viewMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_VIEW"));
         JMenu readMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_READ"));
+	JMenu foodMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FOOD"));
+	JMenu reportMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_REPORT"));
         JMenu optionMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_OPTION"));
         JMenu helpMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_HELP"));
         JMenu testMenu = new JMenu("Test");
-        fileMenu.setMnemonic(m_ic.getMnemonic("MN_FILE"));
+
+	fileMenu.setMnemonic(m_ic.getMnemonic("MN_FILE"));
         viewMenu.setMnemonic(m_ic.getMnemonic("MN_VIEW"));
         optionMenu.setMnemonic(m_ic.getMnemonic("MN_OPTION"));
         helpMenu.setMnemonic(m_ic.getMnemonic("MN_HELP"));
+	foodMenu.setMnemonic(m_ic.getMnemonic("MN_FOOD"));
+	reportMenu.setMnemonic(m_ic.getMnemonic("MN_REPORT"));
 
-
-        connectAction = new GGCAction("MN_CONNECT", "MN_CONNECT_DESC", "file_connect");
-        connectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/connect.gif")));
-        
-	disconnectAction = new GGCAction("MN_DISCONNECT", "MN_DISCONNECT_DESC", "file_disconnect");
-        disconnectAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/disconnect.gif")));
-/*
-        newAction = new GGCAction("MN_NEW", "MN_NEW_DESC", "file_new");
-        newAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/new.gif")));
-        openAction = new GGCAction("MN_OPEN", "MN_OPEN_DESC", "file_open");
-        openAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/open.gif")));
-        closeAction = new GGCAction("MN_CLOSE", "MN_CLOSE_DESC", "file_close");
-        closeAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/close.gif")));
-*/	
-	
         quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
 
-        viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
+	viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
         viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
         viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
         viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
@@ -199,22 +199,23 @@ public class MainFrame extends JFrame
         readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
         readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
 
-        prefAction = new GGCAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "option_pref");
+        foodNutrAction = new GGCAction("MN_NUTRDB", "MN_NUTRDB_DESC", "food_nutrition");
+	foodMealsAction = new GGCAction("MN_MEALS", "MN_MEALS_DESC", "food_meals");
+
+	reportPDFSimpleAction = new GGCAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple");
+	reportPDFExtendedAction = new GGCAction("MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended");
+
+	prefAction = new GGCAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "option_pref");
 
         aboutAction = new GGCAction("MN_ABOUT", "MN_ABOUT_DESC", "hlp_about");
         checkVersionAction = new GGCAction("MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check");
 
-        GGCAction test = new GGCAction("Print", "Print Test", "print_test");
+        //GGCAction test = new GGCAction("Print", "Print Test", "print_test");
 
-        addMenuItem(fileMenu, connectAction);
-        addMenuItem(fileMenu, disconnectAction);
-        fileMenu.addSeparator();
-        //addMenuItem(fileMenu, newAction);
-        //addMenuItem(fileMenu, openAction);
-        //addMenuItem(fileMenu, closeAction);
-        //fileMenu.addSeparator();
+	// File menu
         addMenuItem(fileMenu, quitAction);
 
+	// View menu
         addMenuItem(viewMenu, viewDailyAction);
         addMenuItem(viewMenu, viewCourseGraphAction);
         addMenuItem(viewMenu, viewSpreadGraphAction);
@@ -222,78 +223,71 @@ public class MainFrame extends JFrame
         viewMenu.addSeparator();
         addMenuItem(viewMenu, viewHbA1cAction);
 
+	// Read menu
         addMenuItem(readMenu, readMeterAction);
 
+	// Food menu
+	addMenuItem(foodMenu, foodNutrAction);
+	addMenuItem(foodMenu, foodMealsAction);
+
+	// report menu
+	addMenuItem(reportMenu, reportPDFSimpleAction);
+	addMenuItem(reportMenu, reportPDFExtendedAction);
+
+	// Option menu
         addMenuItem(optionMenu, prefAction);
 
+	// Help menu
         addMenuItem(helpMenu, aboutAction);
         addMenuItem(helpMenu, checkVersionAction);
 
-        addMenuItem(testMenu, test);
+        //addMenuItem(testMenu, test);
 
         menuBar.add(fileMenu);
         menuBar.add(viewMenu);
         menuBar.add(readMenu);
+	menuBar.add(foodMenu);
+	menuBar.add(reportMenu);
         menuBar.add(optionMenu);
         menuBar.add(helpMenu);
         
-        if (MainFrame.developer_version)
-            menuBar.add(testMenu);
+        //if (MainFrame.developer_version)
+        //    menuBar.add(testMenu);
 
 
         toolBar.setFloatable(false);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
-        addToolBarButton(connectAction);
-        addToolBarButton(disconnectAction);
-
-        addToolBarSpacer();
-        //addToolBarButton(newAction);
-        //addToolBarButton(openAction);
-        //addToolBarButton(closeAction);
-        addToolBarSpacer();
         addToolBarButton(viewDailyAction);
         addToolBarButton(viewCourseGraphAction);
         addToolBarButton(viewSpreadGraphAction);
         addToolBarButton(viewFrequencyGraphAction);
         addToolBarSpacer();
-	    addToolBarSpacer();
-        addToolBarButton(viewHbA1cAction);
+	addToolBarSpacer();
+
+	addToolBarButton(viewHbA1cAction);
         addToolBarSpacer();
-	    addToolBarSpacer();
-        addToolBarButton(readMeterAction);
+	addToolBarSpacer();
+
+	addToolBarButton(readMeterAction);
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
 
         statusPanel = StatusBar.getInstance();
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
-        //statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
+        m_da.startDb(statusPanel);
+
         statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
 	dbH = DataBaseHandler.getInstance();
 	dbH.setStatus();
 
-	//statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
-
-
-        if (props.getAutoConnect())
-            dbH.connectDb();
-
-	setDbActions();
-
-	/*
-        if (dbH.isConnected()) {
-            if (dbH.isConnectedToDB())
-                setActionEnabledStateDBOpened();
-            else
-                setActionEnabledStateDBClosed();
-        } else
-            setActionEnabledStateDisconnected();
-	*/
-	
         //Information Portal Setup
         informationPanel = new InfoPanel();
         getContentPane().add(informationPanel, BorderLayout.CENTER);
+
+        this.setVisible(true);
+
     }
 
 
@@ -303,99 +297,17 @@ public class MainFrame extends JFrame
     }
 
 
-    /*
-    private void setActionEnabledStateDisconnected()
+    public void setDbActions(boolean opened)
     {
-        setConActions(false);
-        setDBActionsAllFalse();
-    } */
-
-/*
-    private void setActionEnabledStateConnected()
-    {
-        setConActions(true);
-        
-	if (props.getDataSource().equals("HSQL"))
-	    setDBActions(true);
-	else
-	    setDBActions(false);
-    }
-
-    private void setActionEnabledStateDBOpened()
-    {
-        setConActions(true);
-        setDBActions(true);
-    }
-
-    private void setActionEnabledStateDBClosed()
-    {
-        setConActions(true);
-        setDBActions(false);
-    }
-*/
-/*    private void setConActions(boolean connected)
-    {
-        connectAction.setEnabled(!connected);
-        disconnectAction.setEnabled(connected);
-    }
-    */
-
-    private void setDbActions()
-    {
-
-	setDBActions(dbH.isConnected());
-
-/*
-	if (dbH.isConnected())
-	{
-	    connectAction.setEnabled(false);
-	    disconnectAction.setEnabled(true);
-	}
-	else
-	{
-	    connectAction.setEnabled(true);
-	    disconnectAction.setEnabled(false);
-	}
-  */
-    }
-
-
-
-    private void setDBActions(boolean opened)
-    {
-
-	connectAction.setEnabled(!opened);
-	disconnectAction.setEnabled(opened);
-
-        //openAction.setEnabled(!opened);
-        //closeAction.setEnabled(opened);
-        //newAction.setEnabled(!opened);
-
         viewDailyAction.setEnabled(opened);
         viewSpreadGraphAction.setEnabled(opened);
         viewCourseGraphAction.setEnabled(opened);
         viewFrequencyGraphAction.setEnabled(opened);
         viewHbA1cAction.setEnabled(opened);
-
         readMeterAction.setEnabled(opened);
+	dbH.setStatus();
     }
 
-
-    /*
-    private void setDBActionsAllFalse()
-    {
-        openAction.setEnabled(false);
-        closeAction.setEnabled(false);
-        newAction.setEnabled(false);
-
-        viewDailyAction.setEnabled(false);
-        viewSpreadGraphAction.setEnabled(false);
-        viewCourseGraphAction.setEnabled(false);
-        viewFrequencyGraphAction.setEnabled(false);
-        viewHbA1cAction.setEnabled(false);
-
-        readMeterAction.setEnabled(false);
-    } */
 
     private void close()
     {
@@ -405,6 +317,7 @@ public class MainFrame extends JFrame
         dispose();
         System.exit(0);
     }
+
 
     private JMenuItem addMenuItem(JMenu menu, Action action)
     {
@@ -416,14 +329,12 @@ public class MainFrame extends JFrame
         return item;
     }
 
+
     private void addToolBarSpacer()
     {
         toolBar.addSeparator();
-	
-	//JLabel lbl = new JLabel(new ImageIcon(getClass().getResource("/icons/spacer.gif")));
-        //lbl.setEnabled(false);
-        //toolBar.add(lbl);
     }
+
 
     private JButton addToolBarButton(Action action)
     {
@@ -431,53 +342,13 @@ public class MainFrame extends JFrame
 
         button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         button.setFocusPainted(false);
-
         button.setPreferredSize(new Dimension(24, 24));
 
-	//button.setIcon((ImageIcon)action.getValue(Action.SMALL_ICON));
-/*
-        button.addMouseListener(new MouseListener()
-        {
-            public void mouseEntered(MouseEvent e)
-            {
-                if (button.isEnabled()) 
-                {
-                    button.setBorder(BorderFactory.createLineBorder(new Color(8, 36, 106), 1));
-                    button.setBackground(new Color(180, 190, 213));
-                }
-		
-            }
-
-            public void mouseExited(MouseEvent e)
-            {
-                button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-                button.setBackground(new Color(213, 210, 205));
-            }
-
-            public void mouseClicked(MouseEvent e)
-            {
-            }
-
-            public void mousePressed(MouseEvent e)
-            {
-            }
-
-            public void mouseReleased(MouseEvent e)
-            {
-            }
-
-        });	*/
-
-
-        //button.setRolloverIcon(new ImageIcon("ggc/icons/connect.png"));
-
-        //button.setRolloverEnabled(true);
         return button;
     }
 
     class GGCAction extends AbstractAction
     {
-        //private String command = null;
 
         GGCAction(String name, String command)
         {
@@ -496,16 +367,9 @@ public class MainFrame extends JFrame
 
             command = name;
         }
-/*
-        GGCAction(String name, KeyStroke keystroke)
-        {
-            this();
-            setName(m_ic.getMessageWithoutMnemonic(name));
-            if (keystroke != null)
-                putValue(ACCELERATOR_KEY, keystroke);
-        }
-   */
-        GGCAction(String name, String tooltip, String command)
+
+
+	GGCAction(String name, String tooltip, String command)
         {
             super();
             setName(m_ic.getMessageWithoutMnemonic(name));
@@ -524,142 +388,19 @@ public class MainFrame extends JFrame
                 putValue(ACTION_COMMAND_KEY, command);
         }
 
-/*
-        GGCAction(String name, KeyStroke keystroke, String tooltip)
-        {
-            this(name, keystroke);
-            if (tooltip != null)
-                putValue(SHORT_DESCRIPTION, tooltip);
-        }
-*/
 
         public void actionPerformed(ActionEvent e)
         {
 
             String command = e.getActionCommand();
 
-	    //System.out.println("Command: " + command);
-
             if (command.equals("file_quit")) 
 	    {
                 close();
             } 
-	    else if (command.equals("file_connect")) 
-	    {
-
-                //dbH = DataBaseHandler.getInstance();
-
-		
-
-                dbH.connectDb();
-
-
-		//System.out.println("Connect" + dbH + "  " + dbH.isConnected());
-
-		setDbActions();
-
-		dbH.setStatus();
-                
-		//System.out.println(dbH.isConnected()
-
-/*
-
-		if (dbH.isConnected()) 
-		{
-
-                    if (dbH.isConnectedToDB())
-                        setActionEnabledStateDBOpened();
-                    else
-                        setActionEnabledStateDBClosed();
-                } 
-		else
-                    setActionEnabledStateDisconnected();
-*/                
-		informationPanel.refreshPanels();
-
-            } 
-            else if (command.equals("file_disconnect")) 
-	    {
-
-		dbH.disconnectDb();
-		setDbActions();
-
-		dbH.setStatus();
-
-		/*
-                if (dbH.isConnected())
-                    setActionEnabledStateConnected();
-                else
-                    setActionEnabledStateDisconnected();
-                DataBaseHandler.killHandler();
-                dbH = null; */
-                informationPanel.refreshPanels();
-
-            } 
-/*            else if (command.equals("file_new")) {
-
-                if (dbH == null)
-                    return;
-
-		String tmpName; 
-
-		//System.out.println(props.getDataSource());
-
-		if (props.getDataSource().equals("HSQL"))
-		{
-		    tmpName = "HSQLDB";
-		}
-		else
-		    tmpName = JOptionPane.showInputDialog(m_ic.getMessage("ENTER_DB_TO_CREATE")+":");
-                
-		if (tmpName != null && !tmpName.equals("")) 
-		{
-                    dbH.createNewDataBase(tmpName);
-                    if (dbH.isConnectedToDB())
-                        setActionEnabledStateDBOpened();
-                    else
-                        setActionEnabledStateDBClosed();
-                } 
-		else
-                    JOptionPane.showMessageDialog(null, m_ic.getMessage("INVALID_NAME_FOR_DB"), "GGC " + m_ic.getMessage("ERROR")+ " - " + m_ic.getMessage("INVALID_NAME"), JOptionPane.ERROR_MESSAGE);
-
-                informationPanel.refreshPanels();
-
-            } 
-            else if (command.equals("file_open")) {
-
-                //dbH.setDBName(JOptionPane.showInputDialog("Enter DB Name to open:"));
-                if (dbH == null)
-                    return;
-                dbH.openDataBase(true);
-                if (dbH.isConnectedToDB())
-                    setActionEnabledStateDBOpened();
-                else
-                    setActionEnabledStateDBClosed();
-                informationPanel.refreshPanels();
-
-            } 
-            else if (command.equals("file_close")) {
-
-                if (dbH == null)
-                    return;
-                dbH.disconnectDb();
-
-		/*
-                if (dbH.isConnectedToDB())
-                    setActionEnabledStateDBOpened();
-                else
-                    setActionEnabledStateDBClosed();
-		    */
-/*                informationPanel.refreshPanels();
-
-            } */
             else if (command.equals("view_daily")) 
             {
-                //DailyStatsFrame.showMe();
-
 		DailyStatsFrame df = new DailyStatsFrame(getMyParent());
-
             } 
             else if (command.equals("view_course")) 
             {
@@ -687,8 +428,7 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("hlp_about")) 
             {
-                // FIX This
-                JOptionPane.showMessageDialog(null, "GNU Gluco Control v0.0.1", "About GGC", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "GNU Gluco Control " + version, "About GGC", JOptionPane.INFORMATION_MESSAGE);
             } 
             else if (command.equals("hlp_check")) 
             {
@@ -701,7 +441,6 @@ public class MainFrame extends JFrame
                 try
                 {
                     String pathToAcrobat = "d:/Program Files/Adobe/Acrobat 6.0/Reader/AcroRd32.exe"	;
-
                     Runtime.getRuntime().exec(pathToAcrobat+ " " + "HelloWorld2.pdf"); 
                 }
                 catch(Exception ex)
@@ -710,6 +449,23 @@ public class MainFrame extends JFrame
                 }
 
             }
+	    else if (command.equals("food_nutrition"))
+	    {
+		new NutritionTreeDialog(m_da);
+		//System.out.println("Command N/A: Food Nutrition");
+	    }
+	    else if (command.equals("food_meals"))
+	    {
+		System.out.println("Command N/A: Food Meals");
+	    }
+	    else if (command.equals("report_pdf_simple"))
+	    {
+		System.out.println("Command N/A: Report PDF Simple");
+	    }
+	    else if (command.equals("report_pdf_extended"))
+	    {
+		System.out.println("Command N/A: Report PDF Extended");
+	    }
             else
                 System.out.println("Unknown Command: " + command);
 

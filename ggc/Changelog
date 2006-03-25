@@ -1,3 +1,15 @@
+2006-03-25 (v0.2.1) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Changed MainFrame (Status, Added menus for future features (meals, nutrition, pdf reports)
+    * Added loading of Hibernate (in seperate thread) and show loading in MainFrame 
+    * More usage of DataAccess class, added several functions
+    * Add daily values tables in hibernate
+    * Added doctors, doctor_type and appointments tables in hibernate
+    * Implemented methods and classes for working with daily values in Hibernate
+    * Removed all database support except hibernate
+    * Changed DailyValues and DailyValuesRow
+    * Changed StatisticValues and command for getting data over several days
+    * Added Nutrition Dialog start to GGC Main (Nutrition Dialog not completed yet)
+
 2006-03-11 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * ggc.util.I18nControl:
       - made private static final Locale defaultLocale and set it to Locale.ENGLISH

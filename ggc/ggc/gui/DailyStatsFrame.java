@@ -366,8 +366,8 @@ public class DailyStatsFrame extends JDialog implements ActionListener
 	if (command.equals("add_row"))
 	{
 	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-	    AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
-	    aRF.show();
+	    AddRowFrame aRF = new AddRowFrame(model, dayData, sf.format(calPane.getSelectedDate()));
+	    //aRF.show();
 	}
 	else if (command.equals("edit_row"))
 	{
@@ -377,13 +377,15 @@ public class DailyStatsFrame extends JDialog implements ActionListener
 	}
 	else if (command.equals("delete_row"))
 	{
-        try {
-            dayData.deleteRow(table.getSelectedRow());
-            model.fireTableChanged(null);
-        }
-        catch (NullPointerException ex) {
-            // This probably means that no row was selected, so we can ignore it
-        }
+	    try 
+	    {
+		dayData.deleteRow(table.getSelectedRow());
+		model.fireTableChanged(null);
+	    }
+	    catch (NullPointerException ex) 
+	    {
+		// This probably means that no row was selected, so we can ignore it
+	    }
 	}
 	else if (command.equals("close"))
 	{
@@ -396,7 +398,7 @@ public class DailyStatsFrame extends JDialog implements ActionListener
 
     }
 
-
+/*
     private class CloseListener extends WindowAdapter
     {
         public void windowClosing(WindowEvent e)
@@ -404,5 +406,5 @@ public class DailyStatsFrame extends JDialog implements ActionListener
             close();
         }
     }
-    
+  */  
 }

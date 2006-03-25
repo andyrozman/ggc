@@ -6,13 +6,14 @@
 package ggc.datamodels;
 
 
-import ggc.db.DataBaseHandler;
-import ggc.util.I18nControl;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+
+import ggc.db.DataBaseHandler;
+import ggc.util.I18nControl;
 
 
 public class DailyValues implements Serializable
@@ -51,6 +52,10 @@ public class DailyValues implements Serializable
     float lowestBG = Float.MAX_VALUE;
     float stdDev = 0;
 
+    boolean changed = false;
+
+    public ArrayList deleteList = null;
+
 
     public void setStdDev(float stdDev)
     {
@@ -62,11 +67,18 @@ public class DailyValues implements Serializable
         dbH = DataBaseHandler.getInstance();
     }
 
+    /*
     public static DailyValues getInstance()
     {
         if (singleton == null)
             singleton = new DailyValues();
         return singleton;
+    }
+    */
+
+    public void resetChanged()
+    {
+	changed = false;
     }
 
     public void setDate(long date)
@@ -88,15 +100,18 @@ public class DailyValues implements Serializable
     {
         Date time = dVR.getDateTime();
         int size = dataRows.size();
+	changed = true;
 
         addRight:
-        if (time != null && dVR.getDateTime() != null) {
+        if (time != null && dVR.getDateTime() != null) 
+	{
             bHasChangedValues = true;
             //insert in the right place...
             //System.err.println(size + "");
             if (size <= 0)
                 dataRows.add(dVR);
-            else {
+            else 
+	    {
                 int i = 0;
                 for (; i < size; i++)
                     if (getDateTimeAt(i).after(time)) {
@@ -141,8 +156,11 @@ public class DailyValues implements Serializable
 
     public void deleteRow(int i)
     {
+	changed = true;
+
         try {
-            if (i != -1) {
+            if (i != -1) 
+	    {
                 DailyValuesRow dVR = (DailyValuesRow)dataRows.elementAt(i);
                 if (dVR.getBG() != 0) {
                     sumBG -= dVR.getBG();
@@ -169,10 +187,32 @@ public class DailyValues implements Serializable
                     highestBG = Math.max(dVR.getBG(), highestBG);
                     lowestBG = Math.min(dVR.getBG(), lowestBG);
                 }
+
+		if (dVR.hasHibernateObject())
+		{
+		    if (deleteList==null)
+			deleteList = new ArrayList();
+
+		    deleteList.add(dVR.getHibernateObject());
+		}
+
             }
-        } catch (Exception e) {
+
+	    //DailyValuesRow dVR = (DailyValuesRow)dataRows.elementAt(i);
+
+
+
+        } 
+	catch (Exception e) 
+	{
         }
         bOnlyInsert = false;
+
+	changed = true;
+
+
+	
+
     }
 
     public void setColumnNames(String[] Names)
@@ -182,7 +222,19 @@ public class DailyValues implements Serializable
 
     public boolean hasChanged()
     {
-        return bHasChangedValues;
+        //return bHasChangedValues;
+	if (changed)
+	    return true;
+	else
+	{
+	    for(int i=0; i<this.getRowCount(); i++)
+	    {
+		if (getChanged(i))
+		    return true;
+	    }
+	    
+	    return false;
+	}
     }
 
     public int getColumnCount()
@@ -196,6 +248,14 @@ public class DailyValues implements Serializable
             return 0;
         else
             return dataRows.size();
+    }
+
+    public boolean hasDeletedItems()
+    {
+	if (deleteList==null)
+	    return false;
+	else 
+	    return (deleteList.size()!=0);
     }
 
     public Object getValueAt(int row, int column)
@@ -305,6 +365,10 @@ public class DailyValues implements Serializable
         return dv.getDateT();
     }
 
+    public boolean getChanged(int row)
+    {
+	return ((DailyValuesRow)(dataRows.elementAt(row))).hasChanged();
+    }
 
 
     public float getBGAt(int row)

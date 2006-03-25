@@ -39,6 +39,7 @@ import java.util.Vector;
 import javax.comm.SerialPortEvent;
 import javax.swing.ImageIcon;
 
+import ggc.util.DataAccess;
 
 public class GlucoCardImport extends SerialMeterImport
 {
@@ -152,7 +153,7 @@ public class GlucoCardImport extends SerialMeterImport
                             //rmf.addLogText("Got value: " + value + " for timestamp: " + date);
 
                             if (date != null) {
-                                DailyValuesRow dVR = new DailyValuesRow(date, bgvalue, 0, 0, 0, 0, "");
+                                DailyValuesRow dVR = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), bgvalue, 0, 0, 0, 0, "");
                                 importedData.addElement(dVR);
                             }
 

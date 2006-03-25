@@ -28,11 +28,13 @@
 package ggc.view;
 
 
-import ggc.datamodels.DailyValues;
-
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
+import java.util.GregorianCalendar;
+
+import ggc.datamodels.DailyValues;
+import ggc.util.DataAccess;
 
 
 public class DailyGraphView extends AbstractGraphView
@@ -42,7 +44,8 @@ public class DailyGraphView extends AbstractGraphView
     public DailyGraphView()
     {
         super();
-        dayData = DailyValues.getInstance();
+        dayData = DataAccess.getInstance().getDb().getDayStats(new GregorianCalendar().getTime());
+//	    DailyValues.getInstance();
     }
 
     public void paint(Graphics g)

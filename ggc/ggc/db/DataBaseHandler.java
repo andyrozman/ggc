@@ -62,8 +62,13 @@ public abstract class DataBaseHandler
 
     public static DataBaseHandler getInstance()
     {
-        if (singleton == null) {
-            String s = GGCProperties.getInstance().getDataSource();
+
+	if (singleton == null) 
+	{
+
+	    singleton = HibernateHandler.getInstance();
+/*
+	    String s = GGCProperties.getInstance().getDataSource();
 
 	    //System.out.println("DataSource: " + s);
 
@@ -75,6 +80,7 @@ public abstract class DataBaseHandler
                 singleton = TextFileHandler.getInstance();
             else
                 singleton = DummyHandler.getInstance();
+		*/
         }
         return singleton;
     }
@@ -113,6 +119,8 @@ public abstract class DataBaseHandler
     }
 */
     public abstract DailyValues getDayStats(Date day);
+
+    public abstract DailyValues getDayStatsRange(Date sDay, Date eDay);
 
     public abstract HbA1cValues getHbA1c(Date day);
 
