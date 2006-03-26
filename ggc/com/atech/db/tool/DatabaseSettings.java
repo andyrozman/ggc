@@ -48,12 +48,7 @@ public class DatabaseSettings
 
     public String toString()
     {
-	String def = "";
-
-	if (this.isDefault)
-	    def=" (Selected)";
-
-	return number + " - " + name + def;
+	return number + " - " + name;
     }
 
 }

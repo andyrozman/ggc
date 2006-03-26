@@ -306,10 +306,10 @@ public class DbTool extends JFrame implements TreeSelectionListener
 	if (tree.getLastSelectedPathComponent() instanceof DbToolTreeRoot)
 	{
 	    DbToolTreeRoot r = (DbToolTreeRoot)tree.getLastSelectedPathComponent();
-	    if (r.type ==  1)
+	    if (r.type==1)
 	    {
 		PanelDatabaseRoot pdr = (PanelDatabaseRoot)panels[1];
-		pdr.setData((DbToolApplicationInterface)tree.getLastSelectedPathComponent());
+		pdr.setData(r.m_app); // (DbToolTreeRoot)tree.getLastSelectedPathComponent());
 		makePanelVisible(DbTool.PANEL_DATABASE_ROOT);
 	    }
 	    else
