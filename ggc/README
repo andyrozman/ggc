@@ -1,3 +1,74 @@
+
+GNU Gluco Control (GGC)
+=======================
+
+
+1. About
+--------
+GNU Gluco Control (GGC) is a pure Java application helping you to manage your
+diabetes.
+
+
+2. Status
+---------
+As before we at very early stage of development. This latest version is little buggy. 
+We are in transition to Hibernate and we don't have 100% functionality at this point 
+of time.
+
+This version (0.2.1) is not intended for end users. Version intended for end users will be
+deployed on sourceforge.net, at first point where we have somewhat workable version.
+
+
+3. How to install
+-----------------
+
+Install is little tricky. 
+
+1. Please get newest version from CVS. 
+
+2. Go to build directory. Rename GGCBuild.properties_default to GGCBuild.properties. Edit 
+    GGCBuild.properties to reflect your directories. 
+    
+3. Please follow instructions in "GGC ANT Build How-TO.txt" and build everything.
+
+4. Copy files from source directory to your build (classes) directory.
+	GGC_*.properties
+	log4j.properties
+	*.hbm.xml
+	run.cmd
+
+5. Install Database. For testing purposes there was built internal database placed into cvs.
+    You must download ggc_db.zip (ggc_db_nutr.zip if you want whole nutrition database).
+    Put files into ../data directory. 
+    
+    If you wish to use your own external database see GGC_Config.properties and edit it
+    accordingly (don't forget to set SELECTED_DB). In CVS there is test_nutrition.zip 
+    where you can find special *.cmd file which must be edited and you can use it to create 
+    database and add nutrition entries (you must put nutrition database (found in ggc-support 
+    files on sf.net)) to directory ../data/nutrition.
+    
+6. Run ggc software: (first edit run.cmd)
+    run.cmd
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OLD README
+----------
+
+
+
 GNU Gluco Control (GGC) is a pure Java application helping you to manage your
 diabetes.
 
