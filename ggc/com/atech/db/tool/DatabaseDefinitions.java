@@ -1,4 +1,4 @@
-package ggc.db.db_tool;
+package com.atech.db.tool;
 
 import java.util.Hashtable;
 import java.util.ArrayList;
@@ -310,6 +310,10 @@ public class DatabaseDefinitions
         return prefix + databaseSettings[index+4];
     }
 
+    public String getHibernateDialectWithout(int index)
+    {
+	return databaseSettings[index+4];
+    }
 
 
 }

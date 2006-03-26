@@ -1,38 +1,9 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DataAccess
- *  Purpose:  Used for utility works and static data handling (this is singelton
- *      class which holds all our definitions, so that we don't need to create them
- *      again for each class.      
- *
- *  Author:   andyrozman
- */
-
-package ggc.db.db_tool;
+package com.atech.db.tool;
 
 import java.awt.Component;
 import java.awt.Font;
 import java.io.*;
-import java.lang.reflect.Constructor;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -45,52 +16,53 @@ import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.UIManager;
 
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.HbA1cValues;
 import ggc.db.datalayer.GGCDb;
 import ggc.db.datalayer.GGCDbLoader;
+import ggc.db.db_tool.DbToolApplicationGGC;
 import ggc.gui.StatusBar;
 import ggc.nutrition.GGCTreeRoot;
 import ggc.util.I18nControl;
-
 
 public class DbToolAccess
 {
 
     // LF
-//    Hashtable<String,String> availableLF_full = null;
-//    Object[]  availableLF = null;
-//    Object[]  availableLang = null;
+    Hashtable availableLF_full = null;
+    Object[]  availableLF = null;
+    Object[]  availableLang = null;
 //    private LanguageInfo m_lang_info = null;
 
-//    String selectedLF = null;
-//    String subSelectedLF = null;
+    String selectedLF = null;
+    String subSelectedLF = null;
 
     // Config file
-//    Hashtable<String,String> config_db_values = null;
-//    public int selected_db = -1;
-//    public int selected_lang = 1;
-//    public String selected_LF_Class = null; // class
-//  public String selected_LF_Name = null; // name
-//    public String skinLFSelected = null;
-//    String allDbs[] = null;
+    Hashtable config_db_values = null;
+    public int selected_db = -1;
+    public int selected_lang = 1;
+    public String selected_LF_Class = null; // class
+    public String selected_LF_Name = null; // name
+    public String skinLFSelected = null;
+    String allDbs[] = null;
 
 
-    public static String pathPrefix = ".";
+    public static String pathPrefix = "./";
 
     public I18nControl m_i18n = I18nControl.getInstance();
 
     static private DbToolAccess m_da = null;   // This is handle to unique 
                                              // singelton instance
 
-    public GGCDb m_db = null;
-    public DbTool m_main = null;
+    //public GGCDb m_db = null;
+    public Component m_main = null;
 
     public Font fonts[] = null;
 
-    //public GGCTreeRoot m_nutrition_treeroot = null;
+    public DbToolTreeRoot m_databases_treeroot = null;
     //public GGCTreeRoot m_meals_treeroot = null;
 
 
@@ -98,10 +70,14 @@ public class DbToolAccess
     public HbA1cValues m_HbA1c = null;
     public DailyValues m_dvalues = null;
 
-    public Hashtable m_tableOfDatabases = null;
+    public Hashtable m_tableOfDatabases = new Hashtable();
     public ArrayList m_listOfDatabases = null;
 
     public Object[] m_availableDatabases = null;
+
+    public ArrayList listOfClasses = new ArrayList();
+
+    public DatabaseDefinitions m_dataDefs = null;
 
 
     // ********************************************************
@@ -113,20 +89,22 @@ public class DbToolAccess
     //   Constructor:  DataAccess
     /**
      *
-     *  This is DataAccess constructor; Since classes use Singleton Pattern,
+     *  This is DbToolAccess constructor; Since classes use Singleton Pattern,
      *  constructor is protected and can be accessed only with getInstance() 
      *  method.<br><br>
      *
      */ 
     private DbToolAccess()
     {
-	System.out.println("Constructor()");
 
         //m_db = db;
 //        loadConfig();
         loadFonts();
-//        loadAvailableLFs();
-//        loadLanguageInfo();
+
+	m_dataDefs = new DatabaseDefinitions();
+	m_databases_treeroot =  new DbToolTreeRoot(this);
+
+	//loadApplicationData();
 
     } 
 
@@ -137,31 +115,30 @@ public class DbToolAccess
     //  Author:       Andy
     /**
      *
-     *  This method returns reference to OmniI18nControl object created, or if no 
+     *  This method returns reference to DbToolAccess object created, or if no 
      *  object was created yet, it creates one.<br><br>
      *
-     *  @return Reference to OmniI18nControl object
+     *  @return Reference to DbToolAccess object
      * 
      */ 
     static public DbToolAccess getInstance()
     {
         if (m_da == null)
             m_da = new DbToolAccess();
+
         return m_da;
     }
 
 
 
-    static public DbToolAccess createInstance(DbTool main)
+    static public DbToolAccess createInstance(Component main)
     {
         if (m_da == null)
         {
             m_da = new DbToolAccess();
             m_da.setParent(main);
-
         }
 
-	System.out.println("CreateInstance " + m_da );
         return m_da;
     }
 
@@ -176,14 +153,16 @@ public class DbToolAccess
 
     public Object[] getAvailableDatabases()
     {
-	System.out.println("getAvailableDatabases() " + m_availableDatabases);
+	//System.out.println("getAvailableDatabases() " + m_availableDatabases);
 	return m_availableDatabases;
     }
+
 
     public void createAvailableDatabases(int number)
     {
 	m_availableDatabases = new Object[number];
     }
+
 
     public void addAvailableDatabase(int index, DatabaseDefObject obj)
     {
@@ -235,18 +214,16 @@ public class DbToolAccess
     // ********************************************************
 
 
-    public void setParent(DbTool main)
+    public void setParent(Component main)
     {
         m_main = main;
     }
 
 
-
-    public DbTool getParent()
+    public Component getParent()
     {
         return m_main;
     }
-
 
 
     // ********************************************************
@@ -315,6 +292,114 @@ public class DbToolAccess
     // ********************************************************
     // ******                  Languages                  *****    
     // ********************************************************
+
+
+    public ArrayList getApplicationDatas()
+    {
+	return listOfClasses;
+    }
+
+
+    public void loadApplicationData()
+    {
+
+	File f = new File(".");
+
+	try
+	{
+	    //System.out.println("Root: " + f.getCanonicalPath());
+	    processDirectory(f.getCanonicalPath(), f, false);
+	}
+	catch(Exception ex)
+	{
+	    System.out.println("Exception: " + ex);
+	}
+
+    }
+
+
+    public void processDirectory(String root, File f, boolean display)
+    {
+	File fl[] = f.listFiles();
+
+	for (int i=0; i<fl.length; i++)
+	{
+	    //System.out.println(fl[i]);
+
+	    if (fl[i].isDirectory())
+	    {
+		processDirectory(root, fl[i], false);
+	    }
+	    else
+	    {
+		String file = fl[i].getName();
+
+		if (file.endsWith(".class"))
+		{
+		    try
+		    {
+			String can = fl[i].getCanonicalPath();
+
+			if (can.contains("$"))
+			    continue;
+
+			can = can.substring(root.length()+1);
+			can = replaceExpression(can, File.separator, ".");
+			can = can.substring(0, can.length()-6);
+
+			try
+			{
+			    //System.out.println("class: " +  can);
+
+			    Class c = Class.forName(can);
+			    if (getCorrectInterface(c))
+			    {
+				DbToolApplicationInterface obj = (DbToolApplicationInterface)c.newInstance();
+				listOfClasses.add(obj);
+			    }
+			}
+			catch(java.lang.NoClassDefFoundError ex) { }
+			catch(java.lang.ExceptionInInitializerError ex) { }
+			catch(Exception ex) { }
+
+		    }
+		    catch(Exception ex)
+		    {
+			System.out.println("  Ex:" + ex);
+		    }
+		    
+		}
+		else if (file.endsWith(".jar"))
+		{
+		    System.out.println("JAR: " +  file);//fl[i]);
+		}
+		//System.out.println("file: " +  file);//fl[i]);
+	    }
+	}
+    }
+
+
+    public boolean getCorrectInterface(Class c) //Object o) 
+    {
+	Class[] theInterfaces = c.getInterfaces();
+	for (int i = 0; i < theInterfaces.length; i++) 
+	{
+	    String interfaceName = theInterfaces[i].getName();
+
+	    if (interfaceName.equals("com.atech.db.tool.DbToolApplicationInterface"))
+	    {
+//		System.out.println("Found Interface: "  + interfaceName);
+		return true;
+	    }
+	    else
+		return false;
+
+	}
+
+	return false;
+    }	
+
+
 
 /*
     public void loadLanguageInfo()
@@ -409,8 +494,8 @@ public class DbToolAccess
     // ******            Config File Handling             *****    
     // ********************************************************
 
-/*
-    public void loadConfig()
+
+    public void loadConfig(DbToolApplicationInterface dtai)
     {
         //Hashtable config_db_values = null;
         //int selected_db = -1;
@@ -418,13 +503,13 @@ public class DbToolAccess
         //String selected_LF_Name = null; // name
         //String skinLFSelected = null;
 
-        config_db_values = new Hashtable<String,String>();
+        config_db_values = new Hashtable();
 
         try
         {
             Properties props = new Properties();
 
-            FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
+            FileInputStream in = new FileInputStream(pathPrefix + dtai.getApplicationDatabaseConfig());
             props.load(in);
 
 
@@ -505,9 +590,42 @@ public class DbToolAccess
     }
 
 
+    public ArrayList getListOfDatabases()
+    {
+	ArrayList list = new ArrayList();
+	int num = (int)(config_db_values.size()/7);
+
+	for (int i=0; i<num; i++)
+	{
+	    DatabaseSettings ds = new DatabaseSettings();
+	    ds.number = i;
+	    ds.name = (String)config_db_values.get("DB" +i +"_CONN_NAME");
+	    ds.db_name = (String)config_db_values.get("DB" +i +"_DB_NAME");
+	    ds.driver = (String)config_db_values.get("DB" +i +"_CONN_DRIVER");
+	    ds.url = (String)config_db_values.get("DB" +i +"_CONN_URL");
+	    //ds.port = config_db_values.get("DB" +i +"_CONN_NAME");
+	    ds.dialect = (String)config_db_values.get("DB" +i +"_HIBERNATE_DIALECT");
+
+	    ds.username = (String)config_db_values.get("DB" +i +"_CONN_USERNAME");
+	    ds.password = (String)config_db_values.get("DB" +i +"_CONN_PASSWORD");
+
+	    if (this.selected_db==i)
+	    {
+		ds.isDefault = true;
+	    }
+
+	    list.add(ds);
+	}
+
+	return list;
+    }
+
+
+
     public void saveConfig()
     {
-        
+
+	/*
         try
         {
 
@@ -588,6 +706,7 @@ public class DbToolAccess
             System.out.println("DataAccess::saveConfig::Exception> " + ex);
             ex.printStackTrace();
         }
+*/
 
     }
     
@@ -608,7 +727,7 @@ public class DbToolAccess
         return 0;
     }
 
-*/
+
 
 
     public String[] getMonthsArray()
@@ -940,55 +1059,7 @@ public class DbToolAccess
     public HbA1cValues m_HbA1c = null;
     public DailyValues m_dvalues = null;
 */
-    public synchronized void loadDailySettings(Date day)
-    {
-	if (m_db==null) 
-	    return;
 
-	if (m_db.getLoadStatus()<2)
-	    return;
-
-	System.out.println("Reload daily settings");
-	m_date = day;
-	m_HbA1c = m_db.getHbA1c(day);
-	m_dvalues = m_db.getDayStats(day);
-    }
-
-    public HbA1cValues getHbA1c(Date day)
-    {
-	if (!isSameDay(day))
-	    loadDailySettings(day);
-
-	if (m_HbA1c==null)
-	    return new HbA1cValues();
-	else
-            return m_HbA1c;
-    }
-
-    public DailyValues getDayStats(Date day)
-    {
-	if (!isSameDay(day))
-	    loadDailySettings(day);
-
-	return m_dvalues;
-    }
-
-
-    public boolean isSameDay(Date day)
-    {
-	if (m_date==null)
-	    return false;
-	else
-	{
-	    if ((m_date.getDate()==day.getDate()) &&
-		(m_date.getYear()==day.getYear()) &&
-		(m_date.getMonth()==day.getMonth()))
-		return true;
-	    else
-		return false;
-
-	}
-    }
 
 
     public static void notImplemented(String source)

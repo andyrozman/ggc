@@ -1,39 +1,16 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionTreeDialog
- *  Purpose:  Main class for displaying nutrition information.
- *
- *  Author:   andyrozman
- */
-
-package ggc.db.db_tool;
+package com.atech.db.tool;
  
+import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.logging.Level;
 
+import java.awt.Component;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,17 +22,15 @@ import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.GGCDb;
-import ggc.db.db_tool.DatabaseDefinitions;
-import ggc.db.db_tool.DatabaseSettings;
 import ggc.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
-
 
 
 public class DbTool extends JFrame implements TreeSelectionListener 
@@ -78,61 +53,152 @@ public class DbTool extends JFrame implements TreeSelectionListener
     private int selectedPanel = 0;
 
 
+    static
+    {
+	try
+	{
+	    UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+	}
+	catch(Exception ex)
+	{
+	}
+    }
 
-    public DbTool(JFrame fr) 
+
+
+    public DbTool() 
     {
 
 	super();
-        //super("", true);
-	//super((JDialog)null, "", true);
 
-        //m_da = da;
+        enableEvents(AWTEvent.WINDOW_EVENT_MASK);
 
 	m_da = DbToolAccess.createInstance(this);
-        ic = I18nControl.getInstance(); //m_da.m_i18n;
+	m_da.loadApplicationData();
+        ic = I18nControl.getInstance();
+	m_da.m_databases_treeroot.loadData();
 
-        this.setResizable(false);
-        this.setBounds(80, 50, 640, 500);
-        this.setTitle(ic.getMessage("NUTRITION_DATA"));
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1,0));
-
-
-        //Create a tree that allows one selection at a time.
-/* XX
-	tree = new JTree();
-        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
-        tree.addTreeSelectionListener(this);
-
-        JScrollPane treeView = new JScrollPane(tree);
-*/
-        mainPane = new JPanel();
-        mainPane.setLayout(null);
-
-        //Add the scroll panes to a split pane.
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT/*.VERTICAL_SPLIT*/);
-// X        splitPane.setTopComponent(treeView);
-        splitPane.setBottomComponent(mainPane);
-
-        Dimension minimumSize = new Dimension(100, 50);
-        mainPane.setMinimumSize(minimumSize);
-// X       treeView.setMinimumSize(minimumSize);
-        splitPane.setDividerLocation(200); //XXX: ignored in some releases
-                                           //of Swing. bug 4101306
-        splitPane.setPreferredSize(new Dimension(500, 300));
-
-        panel.add(splitPane);
+	createGUI();
 
 	loadAvailableDatabaseDefinitions();
-
         createPanels();
-        this.add(panel);
         makePanelVisible(0);
  
         this.setVisible(true);
         
+    }
+
+
+    public DbTool(DbToolApplicationInterface intr) 
+    {
+
+	super();
+
+	m_da = DbToolAccess.createInstance(this);
+	//m_da.loadApplicationData();
+	ic = I18nControl.getInstance();
+	m_da.m_databases_treeroot.loadData(intr);
+
+	createGUI();
+
+	loadAvailableDatabaseDefinitions();
+	createPanels();
+	makePanelVisible(1);
+
+	this.setVisible(true);
+
+    }
+
+
+    public void createGUI()
+    {
+
+	this.setResizable(false);
+
+        Toolkit theKit = this.getToolkit();
+	Dimension wndSize = theKit.getScreenSize();
+
+	int x, y; 
+	x = wndSize.width/2 - 400;
+	y = wndSize.height/2 - 300;
+
+	this.setBounds(x, y, 800, 600);
+	this.setTitle(ic.getMessage("DB_TOOL"));
+
+	JPanel panel = new JPanel();
+	panel.setLayout(new GridLayout(1,0));
+
+	//Create a tree that allows one selection at a time.
+
+	tree = new JTree();
+	tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+	tree.setModel(new DbToolTreeModel(m_da.m_databases_treeroot));
+	tree.setCellRenderer(new DbToolTreeCellRenderer());
+/*
+	tree.setCellRenderer(new TreeCellRenderer()
+	    {
+		/**
+		 * Sets the value of the current tree cell to <code>value</code>.
+		 * If <code>selected</code> is true, the cell will be drawn as if
+		 * selected. If <code>expanded</code> is true the node is currently
+		 * expanded and if <code>leaf</code> is true the node represets a
+		 * leaf and if <code>hasFocus</code> is true the node currently has
+		 * focus. <code>tree</code> is the <code>JTree</code> the receiver is being
+		 * configured for.  Returns the <code>Component</code> that the renderer
+		 * uses to draw the value.
+		 *
+		 * @return	the <code>Component</code> that the renderer uses to draw the value
+		 */
+/*		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus)
+		{
+		    JLabel label = null;
+
+		    if (value instanceof DatabaseSettings)
+		    {
+			DatabaseSettings ds = (DatabaseSettings)value;
+
+			if (ds.isDefault)
+			{
+			    label = new JLabel(ds.toString());
+			    label.setFont(DataAccess.getInstance().getFont(DbToolAccess.FONT_NORMAL_BOLD));
+			}
+			else
+			{
+			    label = new JLabel(ds.toString());
+			    label.setFont(DataAccess.getInstance().getFont(DbToolAccess.FONT_NORMAL));
+			}
+			return label;
+		    }
+		    else
+		    {
+			label = new JLabel(value.toString());
+			label.setFont(DataAccess.getInstance().getFont(DbToolAccess.FONT_NORMAL));
+			return label;
+		    }
+		}
+	    });
+	    */
+	tree.addTreeSelectionListener(this);
+
+	JScrollPane treeView = new JScrollPane(tree);
+
+	mainPane = new JPanel();
+	mainPane.setLayout(null);
+
+	//Add the scroll panes to a split pane.
+	JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT/*.VERTICAL_SPLIT*/);
+	splitPane.setTopComponent(treeView);
+	splitPane.setBottomComponent(mainPane);
+
+	Dimension minimumSize = new Dimension(100, 50);
+	mainPane.setMinimumSize(minimumSize);
+	treeView.setMinimumSize(minimumSize); 
+	splitPane.setDividerLocation(300); //XXX: ignored in some releases
+					   //of Swing. bug 4101306
+	splitPane.setPreferredSize(new Dimension(400, 300));
+	panel.add(splitPane);
+	this.add(panel);
+
     }
 
 
@@ -143,7 +209,7 @@ public class DbTool extends JFrame implements TreeSelectionListener
 	Hashtable table = dd.getTableOfAvailableDatabases();
 	ArrayList list = dd.getListOfAvailableDatabases();
 
-	System.out.println(m_da);
+	//System.out.println(m_da);
 
 	m_da.createAvailableDatabases(list.size());
 
@@ -151,7 +217,7 @@ public class DbTool extends JFrame implements TreeSelectionListener
 	{
 	    String name = (String)list.get(i);
 
-	    System.out.println("name: " + name);
+//	    System.out.println("name: " + name);
 
 	    String id = (String)table.get(name);
 	    int idn = Integer.parseInt(id);
@@ -160,8 +226,10 @@ public class DbTool extends JFrame implements TreeSelectionListener
 						       dd.getJdbcDriver(idn),
 						       dd.getJdbcURL(idn),
 						       dd.getDatabasePort(idn),
-						       dd.getHibernateDialect(idn));
+						       dd.getHibernateDialect(idn),
+						       dd.getHibernateDialectWithout(idn) );
 	    m_da.addAvailableDatabase(i, ds);
+	    m_da.m_tableOfDatabases.put(ds.name, ds);
 	}
 
     }
@@ -172,9 +240,11 @@ public class DbTool extends JFrame implements TreeSelectionListener
     public void createPanels()
     {
 
-	panels = new JPanel[1];
+	panels = new JPanel[3];
 
-        panels[0] = new PanelDatabaseSet(this);
+	panels[0] = new PanelRoot(this);
+	panels[1] = new PanelDatabaseRoot(this);
+        panels[2] = new PanelDatabaseSet(this);
 //        panels[1] = new PanelNutritionFoodGroup(this);
 //        panels[2] = new PanelNutritionFood(this);
 /*        panels[3] = new ViewDiocesePanel(this);
@@ -183,20 +253,33 @@ public class DbTool extends JFrame implements TreeSelectionListener
         panels[6] = new ViewParishPersonalPanel(this);
         panels[7] = new DiocesePersonalPanel(this);
         panels[8] = new ParishPersonalPanel(this); */
-/*
+
         for(int i = 0; i < panels.length ; i++)
         {
             mainPane.add(panels[i]);
         }
 
         makePanelVisible(0);
-*/
+
     }
 
-    public static final int PANEL_MAIN = 0;
-    public static final int PANEL_FOODGROUP = 1;
-    public static final int PANEL_FOOD = 2;
+    public static final int PANEL_ROOT = 0;
+    public static final int PANEL_DATABASE_ROOT = 1;
+    public static final int PANEL_DATABASE = 2;
 
+
+    /**
+     *  Windows Process Event
+     *  Used for redefining windows command (Close)
+     */
+    protected void processWindowEvent(WindowEvent e) 
+    {
+        super.processWindowEvent(e);
+        if (e.getID() == WindowEvent.WINDOW_CLOSING)
+        {
+            System.exit(0);
+        }
+    } 
 
 
     /** 
@@ -218,90 +301,38 @@ public class DbTool extends JFrame implements TreeSelectionListener
     /** Required by TreeSelectionListener interface. */
     public void valueChanged(TreeSelectionEvent e) 
     {
-	System.out.println("DbTool::valueChanged:: NOT IMPLEMENTED");
-/*
-	if (tree.getLastSelectedPathComponent() instanceof GGCTreeRoot)
+	System.out.println("DbTool::valueChanged:: " + tree.getLastSelectedPathComponent());
+
+	if (tree.getLastSelectedPathComponent() instanceof DbToolTreeRoot)
 	{
-	    makePanelVisible(NutritionTreeDialog.PANEL_MAIN);
-	    //Diocese dio = (Diocese)tree.getLastSelectedPathComponent();
-	    //((ViewDiocesePanel)panels[DioceseCfgDialog.PANEL_VIEW_DIOCESE]).setData((DioceseH)dio); //node2.getObject());
+	    DbToolTreeRoot r = (DbToolTreeRoot)tree.getLastSelectedPathComponent();
+	    if (r.type ==  1)
+	    {
+		PanelDatabaseRoot pdr = (PanelDatabaseRoot)panels[1];
+		pdr.setData((DbToolApplicationInterface)tree.getLastSelectedPathComponent());
+		makePanelVisible(DbTool.PANEL_DATABASE_ROOT);
+	    }
+	    else
+                makePanelVisible(DbTool.PANEL_ROOT);
 	}
-	else if (tree.getLastSelectedPathComponent() instanceof FoodGroup)
+	else if (tree.getLastSelectedPathComponent() instanceof DbToolApplicationInterface)
 	{
-	    makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP);
-//	    Parish pi = (Parish)tree.getLastSelectedPathComponent();
-//	    ((ViewParishPanel)panels[DioceseCfgDialog.PANEL_VIEW_PARISH]).setData((ParishH)pi);
+	    PanelDatabaseRoot pdr = (PanelDatabaseRoot)panels[1];
+	    pdr.setData((DbToolApplicationInterface)tree.getLastSelectedPathComponent());
+	    makePanelVisible(DbTool.PANEL_DATABASE_ROOT);
 	}
-	else if (tree.getLastSelectedPathComponent() instanceof FoodDescription)
+	else if (tree.getLastSelectedPathComponent() instanceof DatabaseSettings)
 	{
-	    makePanelVisible(NutritionTreeDialog.PANEL_FOOD);
-//	    Parish pi = (Parish)tree.getLastSelectedPathComponent();
-//	    ((ViewParishPanel)panels[DioceseCfgDialog.PANEL_VIEW_PARISH]).setData((ParishH)pi);
+	    PanelDatabaseSet pd = (PanelDatabaseSet)panels[2];
+	    pd.setData((DatabaseSettings)tree.getLastSelectedPathComponent());
+	    makePanelVisible(DbTool.PANEL_DATABASE);
 	}
 
-
-/*
-        if (panels[selectedPanel] instanceof EditablePanel)
-        {
-            EditablePanel p = (EditablePanel)panels[selectedPanel];
-            if (p.hasDataChanged())
-            {
-                if (!p.saveData())
-                    return;
-            }
-        }
-
-
-        if (tree.getLastSelectedPathComponent() instanceof Diocese)
-        {
-            makePanelVisible(DioceseCfgDialog.PANEL_VIEW_DIOCESE);
-            Diocese dio = (Diocese)tree.getLastSelectedPathComponent();
-            ((ViewDiocesePanel)panels[DioceseCfgDialog.PANEL_VIEW_DIOCESE]).setData((DioceseH)dio); //node2.getObject());
-        }
-        else if (tree.getLastSelectedPathComponent() instanceof Parish)
-        {
-            makePanelVisible(DioceseCfgDialog.PANEL_VIEW_PARISH);
-            Parish pi = (Parish)tree.getLastSelectedPathComponent();
-            ((ViewParishPanel)panels[DioceseCfgDialog.PANEL_VIEW_PARISH]).setData((ParishH)pi);
-        }
-        else if (tree.getLastSelectedPathComponent() instanceof ParishPerson)
-        {
-            ParishPerson pp = (ParishPerson)tree.getLastSelectedPathComponent();
-            makePanelVisible(DioceseCfgDialog.PANEL_VIEW_PARISH_PERSONAL);
-            ((ViewParishPersonalPanel)panels[DioceseCfgDialog.PANEL_VIEW_PARISH_PERSONAL]).setData((ParishH)pp.getParish());
-        }
-        else if (tree.getLastSelectedPathComponent() instanceof DiocesePerson)
-        {
-            DiocesePerson pp = (DiocesePerson)tree.getLastSelectedPathComponent();
-            makePanelVisible(DioceseCfgDialog.PANEL_VIEW_DIOCESE_PERSONAL);
-            ((ViewDiocesePanel)panels[DioceseCfgDialog.PANEL_VIEW_DIOCESE_PERSONAL]).setData((DioceseH)pp.getDiocese());
-        } 
-        else
-        {
-            System.out.println("DioceseCfgDialog::valueChanged::UnknownAction");
-        }
-*/
     }
 
     public static void main(String args[])
     {
-//	GGCDb db = new GGCDb();
-//	db.initDb();
-
-//	DataAccess da = DataAccess.getInstance();
-
-	JFrame fr = new JFrame();
-	//fr.setBounds(0,0,640,480);
-	//fr.setVisible(true);
-	//da.setParent(fr);
-//	da.m_nutrition_treeroot = new GGCTreeRoot(1);
-
-//	NutritionTreeDialog ntd = new NutritionTreeDialog(da);
-
-
-	DbTool tool = new DbTool(fr);
-
-
+	DbTool tool = new DbTool();
     }
 
 

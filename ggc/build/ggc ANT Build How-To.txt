@@ -10,8 +10,9 @@ GGC ANT Build How-TO
        |- utils
        
   - hibernate3 contains whole archive hibernate3.zip
-  - jdbc must contain hsqldb.jar and any drivers for databases you would like to use 
-     (you must add this to additional.jdbc.driver setting in GGCBuild)
+  - jdbc must contain hsqldb.jar (get hsqldb_1_8_0_2.jar and rename it) and any drivers for 
+     databases you would like to use (you must add this to additional.jdbc.driver setting 
+     in GGCBuild)
   - utils contains all other utils: commWin.jar, itext-1.2.jar, skinlf-1.2.11.jar
     
 3. Install ANT 1.6.x 

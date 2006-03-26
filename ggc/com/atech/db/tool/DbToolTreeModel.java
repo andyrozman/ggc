@@ -1,32 +1,4 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionTreeModel
- *  Purpose:  This is tree model for displaying nutrition information.
- *
- *  Author:   andyrozman
- */
-
-
-package ggc.nutrition;
+package com.atech.db.tool;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -72,14 +44,14 @@ public class DbToolTreeModel implements TreeModel
      * The only event raised by this model is TreeStructureChanged with the
      * root as path, i.e. the whole tree has changed.
      */
-    protected void fireTreeStructureChanged(GGCTreeRoot oldRoot) 
+    protected void fireTreeStructureChanged(DbToolTreeRoot oldRoot) 
     {
         int len = treeModelListeners.size();
-        TreeModelEvent e = new TreeModelEvent(this, 
-                                              new Object[] {oldRoot});
-        for (int i = 0; i < len; i++) {
-            ((TreeModelListener)treeModelListeners.elementAt(i)).
-                    treeStructureChanged(e);
+        TreeModelEvent e = new TreeModelEvent(this, new Object[] {oldRoot});
+
+	for (int i = 0; i < len; i++) 
+	{
+            ((TreeModelListener)treeModelListeners.elementAt(i)).treeStructureChanged(e);
         }
     }
 
@@ -96,6 +68,28 @@ public class DbToolTreeModel implements TreeModel
 
 
     /**
+     * Removes a listener previously added with addTreeModelListener().
+     */
+    public void removeTreeModelListener(TreeModelListener l) 
+    {
+	treeModelListeners.removeElement(l);
+    }
+
+    /**
+     * Messaged when the user has altered the value for the item
+     * identified by path to newValue.  Not used by this model.
+     */
+    public void valueForPathChanged(TreePath path, Object newValue) 
+    {
+	System.out.println("*** valueForPathChanged : " + path + " --> " + newValue);
+    }
+
+
+
+
+
+
+    /**
      * Returns the child of parent at index index in the parent's child array.
      */
     public Object getChild(Object parent, int index) 
@@ -103,16 +97,25 @@ public class DbToolTreeModel implements TreeModel
 
         debug("getChild: " + index);
 
-        if (parent instanceof GGCTreeRoot)
+        if (parent instanceof DbToolTreeRoot)
         {
-            return (FoodGroup)rootObj.m_foodGroups.get(index);
+	    if (rootObj.type==DbToolTreeRoot.ROOT_SINGLE)
+	    {
+		return (DatabaseSettings)rootObj.m_app_list.get(index);
+	    }
+	    else
+                return (DbToolApplicationInterface)rootObj.m_appGroup.get(index);
         }
-	else if (parent instanceof FoodGroup)
+	else if (parent instanceof DbToolApplicationInterface)
+	{
+	    return null;
+	}
+/*	else if (parent instanceof FoodGroup)
 	{
 	    FoodGroup fg = (FoodGroup)parent;
 	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
 	    return (FoodDescription)lst.get(index);
-	}
+	} */
 	else
 	    return null;
 
@@ -126,15 +129,22 @@ public class DbToolTreeModel implements TreeModel
 
         debug("Parent (getChildCount()): " + parent);
 
-        if (parent instanceof GGCTreeRoot)
+        if (parent instanceof DbToolTreeRoot)
         {
-            return rootObj.m_foodGroups.size();
+	    if (rootObj.type==DbToolTreeRoot.ROOT_SINGLE)
+	    {
+		return rootObj.m_app_list.size();
+	    }
+	    else
+		return rootObj.m_appGroup.size();
         }
-	else if (parent instanceof FoodGroup)
+	else if (parent instanceof DbToolApplicationInterface)
 	{
-	    FoodGroup fg = (FoodGroup)parent;
-	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
-	    return lst.size();
+	    return 0;
+	}
+	else if (parent instanceof DatabaseSettings)
+	{
+	    return 0;
 	}
 	else
 	    return 0;
@@ -149,10 +159,10 @@ public class DbToolTreeModel implements TreeModel
 
         debug("getIndexofChild: ");
 
-        if (parent instanceof GGCTreeRoot)
+        if (parent instanceof DbToolTreeRoot)
         {
-            FoodGroup dii = (FoodGroup)child;
-            Iterator it = rootObj.m_foodGroups.iterator();
+            DbToolApplicationInterface dii = (DbToolApplicationInterface)child;
+            Iterator it = rootObj.m_appGroup.iterator();
 
             int i = -1;
 
@@ -160,16 +170,29 @@ public class DbToolTreeModel implements TreeModel
             {
                 i++;
 
-                FoodGroup c = (FoodGroup)it.next();
+                DbToolApplicationInterface c = (DbToolApplicationInterface)it.next();
 
-                if (dii.getId()==c.getId()) 
-                    return i;
-
+		if (dii.equals(c))
+		{
+		    return i;
+		}
             }
         }
-	else if (parent instanceof FoodGroup)
+	else if (parent instanceof DbToolApplicationInterface)
 	{
+	    return -1;
+	}
+	else if (parent instanceof DatabaseSettings)
+	{
+	    return -1;
+	}
+	//else
 
+	return -1;
+/*
+	else if (parent instanceof DatabaseSettings)
+	{
+/*
 	    FoodDescription dii = (FoodDescription)child;
 	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+dii.getFood_group_id());
 	    Iterator it = lst.iterator();
@@ -185,10 +208,9 @@ public class DbToolTreeModel implements TreeModel
 		if (dii.getId()==c.getId()) 
 		    return i;
 	    }
-
 	}
+*/
 
-	return -1;
 
     }
 
@@ -206,36 +228,31 @@ public class DbToolTreeModel implements TreeModel
     public boolean isLeaf(Object node) 
     {
 
-        if (node instanceof GGCTreeRoot)
+        if (node instanceof DbToolTreeRoot)
         {
-            return rootObj.m_foodGroups.size() == 0;
+	    if (rootObj.type==DbToolTreeRoot.ROOT_SINGLE)
+		return (rootObj.m_app_list.size()==0);
+	    else
+		return (rootObj.m_appGroup.size()==0);
+
         }
-	else if (node instanceof FoodGroup)
+	else if (node instanceof DbToolApplicationInterface)
+	{
+	    return true;
+	}
+	else if (node instanceof DatabaseSettings)
+	{
+	    return true;
+	}
+/*	else if (node instanceof FoodGroup)
 	{
 	    FoodGroup fg = (FoodGroup)node;
 	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
 	    return lst.size() == 0;
-	}
+	} */
 	else
 	    return true;
 
     }
 
-
-    /**
-     * Removes a listener previously added with addTreeModelListener().
-     */
-    public void removeTreeModelListener(TreeModelListener l) 
-    {
-        treeModelListeners.removeElement(l);
-    }
-
-    /**
-     * Messaged when the user has altered the value for the item
-     * identified by path to newValue.  Not used by this model.
-     */
-    public void valueForPathChanged(TreePath path, Object newValue) 
-    {
-        System.out.println("*** valueForPathChanged : " + path + " --> " + newValue);
-    }
 }
