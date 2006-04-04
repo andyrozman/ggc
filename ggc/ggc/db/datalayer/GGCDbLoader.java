@@ -76,6 +76,7 @@ public class GGCDbLoader extends Thread
         try { Thread.sleep(2000); } catch(Exception ex) { }
 
         GGCDb db = new GGCDb(m_da);
+        m_bar.setDatabaseName(db.db_conn_name);
 //        System.out.println("GGCDbLoader: Init");
         db.initDb();
         //m_da.m_db = db;
