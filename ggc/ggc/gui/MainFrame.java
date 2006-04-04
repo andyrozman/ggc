@@ -46,14 +46,15 @@ import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
 
+import ggc.gui.dialogs.DailyStatsDialog;
 
 public class MainFrame extends JFrame
 {
 
     // Version information
-    public static String version = "0.2.1";
-    public static String full_version = "v0.2.1";
-    private static String version_date = "25th March 2006";
+    public static String version = "0.2.1.3";
+    public static String full_version = "v0.2.1.3";
+    private static String version_date = "4th April 2006";
 
 
     private I18nControl m_ic = I18nControl.getInstance();        
@@ -72,7 +73,7 @@ public class MainFrame extends JFrame
     private GGCAction foodNutrAction, foodMealsAction, reportPDFSimpleAction, reportPDFExtendedAction;
     private GGCAction aboutAction, checkVersionAction;
 
-    private DailyStatsFrame dailyStatsWindow;
+    //private DailyStatsFrame dailyStatsWindow;
     private StatusBar statusPanel;
     public InfoPanel informationPanel;
     public static DataBaseHandler dbH;
@@ -287,6 +288,7 @@ public class MainFrame extends JFrame
         informationPanel = new InfoPanel();
         getContentPane().add(informationPanel, BorderLayout.CENTER);
 
+        setDbActions(false);
         this.setVisible(true);
 
     }
@@ -401,7 +403,8 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("view_daily")) 
             {
-		DailyStatsFrame df = new DailyStatsFrame(getMyParent());
+		//DailyStatsDialog df = 
+                new DailyStatsDialog(getMyParent());
             } 
             else if (command.equals("view_course")) 
             {
