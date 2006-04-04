@@ -53,12 +53,17 @@ public class calendarPane extends JPanel
     {
         cModel = new CalendarModel(new Date(), this);
 
+
+        //
+        //this.setLayout(null);
+
         mPanel = new monthPanel(cModel);
         yPanel = new yearPanel(cModel);
 
         setLayout(new BorderLayout());
 
         Box a = Box.createHorizontalBox();
+        //a.setBounds(10, 10, 120, 30);
 
         a.add(mPanel);
         a.add(yPanel);
@@ -71,6 +76,8 @@ public class calendarPane extends JPanel
         this.addCalendarListener(dPanel);
         this.addCalendarListener(mPanel);
         this.addCalendarListener(yPanel);
+
+        //setBounds(10, 10, 200, 200);
     }
 
     public Date getSelectedDate()
@@ -90,12 +97,14 @@ public class calendarPane extends JPanel
 
     public void notifyListeners(int event)
     {
+        System.out.println("notifyListeners: " + cModel.getYear() + " " + cModel.getMonth()+ " " + cModel.getDay());
         notifyListeners(new CalendarEvent(new GregorianCalendar(cModel.getYear(), cModel.getMonth(), cModel.getDay()), event));
     }
 
     public void notifyListeners(CalendarEvent e)
     {
-        for (int i = 0; i < listeners.size(); i++) {
+        for (int i = 0; i < listeners.size(); i++) 
+        {
             CalendarListener l = (CalendarListener)listeners.elementAt(i);
             l.dateHasChanged(e);
         }
