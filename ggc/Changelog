@@ -1,3 +1,8 @@
+2006-04-04 (v0.2.1.2) Andy Rozman <andyrozman@users.sourceforge.net>
+    * DailyStatsFrame was moved and renamed to dialogs.DailyStatsDialog
+    * Adding DailyRowDailog for editing and later adding rows
+    * Fixed ggc.gui.calendar.dayPanel to be displayed correctly
+
 2006-03-25 (v0.2.1) Andy Rozman <andyrozman@users.sourceforge.net>
     * Changed MainFrame (Status, Added menus for future features (meals, nutrition, pdf reports)
     * Added loading of Hibernate (in seperate thread) and show loading in MainFrame 
