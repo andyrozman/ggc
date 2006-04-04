@@ -378,7 +378,7 @@ public class DailyStatsPanel extends JPanel implements ActionListener
 	if (command.equals("add_row"))
 	{
 	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-	    AddRowFrame aRF = new AddRowFrame(model, dayData, sf.format(System.currentTimeMillis()));
+	    AddRowFrame aRF = new AddRowFrame(model, dayData, sf.format(System.currentTimeMillis()), m_little);
 	    //aRF.show();
 	}
 	else if (command.equals("delete_row"))
