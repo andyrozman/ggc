@@ -76,6 +76,8 @@
 
             <fileset dir="${build.dir}">
                 <include name="ggc/**"/>
+                <include name="com/**"/>
+                <include name="org/**"/>
                 <include name="icons/*.gif"/>
                 <exclude name="ggc/little/**"/>
                 <include name="GGC_en.properties"/>
