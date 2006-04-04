@@ -63,6 +63,8 @@ public class AddRowFrame extends JDialog implements ActionListener, KeyListener
 
     private I18nControl m_ic = I18nControl.getInstance();
 
+    private boolean m_actionDone = false;
+
 //    static AddRowFrame singleton = null;
 
     JTextField DateField, TimeField, BGField, Ins1Field, Ins2Field, BUField,
@@ -78,24 +80,41 @@ public class AddRowFrame extends JDialog implements ActionListener, KeyListener
 
     GGCProperties props = GGCProperties.getInstance();
     JComponent components[] = new JComponent[9];
-
-    public AddRowFrame(AbstractTableModel m, DailyValues ndV) 
+/*
+    public AddRowFrame(AbstractTableModel m, DailyValues ndV, DailyStatsFrame dialog) 
     {
-        //super("Add New Row");
+        super(dialog, "", true);
         setTitle(m_ic.getMessage("ADD_NEW_ROW"));
         dV = ndV;
         mod = m;
         init();
     }
+    */
 
-    public AddRowFrame(AbstractTableModel m, DailyValues ndV, String nDate) {
-        //super("Add New Row");
+    public AddRowFrame(AbstractTableModel m, DailyValues ndV, String nDate, JDialog dialog) 
+    {
+        super(dialog, "", true);
         setTitle(m_ic.getMessage("ADD_NEW_ROW"));
         sDate = nDate;
         dV = ndV;
         mod = m;
         init();
     }
+
+
+    public AddRowFrame(AbstractTableModel m, DailyValues ndV, String nDate, JFrame frame) 
+    {
+        super(frame, "", true);
+        setTitle(m_ic.getMessage("ADD_NEW_ROW"));
+        sDate = nDate;
+        dV = ndV;
+        mod = m;
+        init();
+    }
+
+
+
+
 
     /*
     public static AddRowFrame getInstance(AbstractTableModel m, DailyValues ndV) {
@@ -252,10 +271,17 @@ public class AddRowFrame extends JDialog implements ActionListener, KeyListener
 		    CommentField.getText()));
 	    mod.fireTableChanged(null);
 	    //clearFields();
+            this.m_actionDone = true;
 	    this.dispose();
 	}
 
     }
+
+    public boolean actionSuccesful()
+    {
+        return m_actionDone;
+    }
+
 
     public void keyTyped(KeyEvent e) {}
     public void keyPressed(KeyEvent e) {}
