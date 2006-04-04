@@ -41,8 +41,10 @@ URGENT:
         o  Add CH entry through meals
         o  Add daily entry must be changed (GUI is very...)
         o  Edit
-
-
+- Bug Fixing:
+        o  edit value
+        o  save value
+        o  decimal check, use both , and .
 
 
 IN NEAR FUTURE
