@@ -259,7 +259,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         getRootPane().setDefaultButton(AddButton);
 
         g.add(AddButton);
-        JButton CloseButton = new JButton(m_ic.getMessage("CLOSE"));
+        JButton CloseButton = new JButton(m_ic.getMessage("CANCEL"));
 	components[8] = CloseButton;
 	CloseButton.addKeyListener(this);
 	CloseButton.setActionCommand("close");

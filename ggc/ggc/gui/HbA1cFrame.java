@@ -28,18 +28,20 @@
 package ggc.gui;
 
 
-import ggc.datamodels.HbA1cValues;
-import ggc.db.DataBaseHandler;
-import ggc.util.I18nControl;
-import ggc.view.HbA1cView;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
+
+import javax.swing.*;
+
+import ggc.datamodels.HbA1cValues;
+import ggc.db.DataBaseHandler;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+import ggc.view.HbA1cView;
 
 
 public class HbA1cFrame extends JFrame
@@ -56,13 +58,17 @@ public class HbA1cFrame extends JFrame
     private JLabel lblReadings;
     private JLabel lblReadingsPerDay;
 
+    private DataAccess m_da = null;
+
 
     public HbA1cFrame()
     {
         super("HbA1c");
         init();
 
-        hbValues = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
+        m_da = DataAccess.getInstance();
+
+        hbValues = m_da.getHbA1c(new Date(System.currentTimeMillis()));
         updateLabels();
 
         hbView.setHbA1cValues(hbValues);

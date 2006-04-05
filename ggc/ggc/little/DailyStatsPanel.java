@@ -81,7 +81,7 @@ public class DailyStatsPanel extends JPanel implements ActionListener
     private DailyGraphFrame dailyGraphWindow;
     DailyValues dayData;
     private DataBaseHandler dbH = DataBaseHandler.getInstance();
-    private static DailyStatsFrame singleton = null;
+//    private static DailyStatsFrame singleton = null;
 
     private GGCProperties props = GGCProperties.getInstance();
     GGCLittle m_little = null;

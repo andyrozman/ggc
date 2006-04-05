@@ -51,6 +51,8 @@ import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
 
+import ggc.gui.dialogs.DailyStatsDialog;
+
 
 public class GGCLittle extends JFrame
 {
@@ -69,7 +71,7 @@ public class GGCLittle extends JFrame
     private GGCAction viewDailyAction, viewCourseGraphAction, viewSpreadGraphAction, viewFrequencyGraphAction;
     private GGCAction viewHbA1cAction;
     private GGCAction aboutAction, checkVersionAction;
-    private DailyStatsFrame dailyStatsWindow;
+//    private DailyStatsDialog dailyStatsWindow;
     private StatusBar statusPanel;
     private InfoPanel informationPanel;
     public static DataBaseHandler dbH;
@@ -641,7 +643,7 @@ public class GGCLittle extends JFrame
             {
                 //DailyStatsFrame.showMe();
 
-		DailyStatsFrame df = new DailyStatsFrame(getMyParent());
+		DailyStatsDialog df = new DailyStatsDialog(getMyParent());
 
             } 
             else if (command.equals("view_course")) 

@@ -375,7 +375,9 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	if (command.equals("add_row"))
 	{
 	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-	    AddRowFrame aRF = new AddRowFrame(model, dayData, sf.format(calPane.getSelectedDate()), this);
+	    //AddRowFrame aRF = new AddRowFrame(model, dayData, sf.format(calPane.getSelectedDate()), this);
+
+            DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
 
 
             if (aRF.actionSuccesful()) 
