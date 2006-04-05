@@ -146,6 +146,7 @@ public abstract class DataBaseHandler
 
     //public abstract void closeDataBase();
 
+
     public String getStatus()
     {
 	
