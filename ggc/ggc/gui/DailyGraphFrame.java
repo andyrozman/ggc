@@ -35,13 +35,15 @@ import ggc.view.DailyGraphView;
 import javax.swing.*;
 import java.awt.*;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DailyGraphFrame extends JFrame
 {
     private I18nControl m_ic = I18nControl.getInstance();    
 
     private static DailyGraphView dGV = new DailyGraphView();
-    private static DailyGraphFrame singleton = null;
+    //private static DailyGraphFrame singleton = null;
 
     public DailyGraphFrame()
     {
@@ -53,12 +55,13 @@ public class DailyGraphFrame extends JFrame
         setVisible(true);
     }
 
-    public static void setDailyValues(DailyValues dV)
+    public void setDailyValues(DailyValues dV)
     {
         dGV.setDailyValues(dV);
-        redraw();
+        this.repaint();
+        //redraw();
     }
-
+/*
     public static void showMe()
     {
         if (singleton == null)
@@ -78,5 +81,23 @@ public class DailyGraphFrame extends JFrame
     {
         if (singleton != null)
             singleton.repaint();
+    }
+*/
+
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(ActionEvent e) 
+    {
+        String action = e.getActionCommand();
+
+        if (action.equals("")) 
+        {
+        }
+        else
+            System.out.println("Unknown command: " + action);
+
+
     }
 }

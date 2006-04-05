@@ -62,7 +62,7 @@
             destdir="${build.dir}"
             includes="ggc/**"
             excludes="ggc/db/DummyHandler.java, ggc/db/HSQLHandler.java, ggc/db/MySQLHandler.java, ggc/db/TextFileHandler.java"
-           deprecation="off" debug="true"> <!-- debug="${debug}    DummyHandler.java, ggc/db/HSQLHandler.java, ggc\db\MySQLHandler, ggc/db/TextFileHandler.java"  --> 
+           deprecation="on" debug="true"> <!-- debug="${debug}    DummyHandler.java, ggc/db/HSQLHandler.java, ggc\db\MySQLHandler, ggc/db/TextFileHandler.java"  --> 
             
             <classpath>
                 <pathelement path="${hibernate_cpath}" />

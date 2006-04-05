@@ -206,7 +206,9 @@ public class DailyStatsDialog extends JDialog implements ActionListener
                 model.setDailyValues(dayData);
                 //saveButton.setEnabled(false);
                 updateLabels();
-                DailyGraphFrame.setDailyValues(dayData);
+                dailyGraphWindow.setDailyValues(dayData);
+
+                //DailyGraphFrame.setDailyValues(dayData);
             }
         });
         //calPane.setBounds(10, 10, 300, 200);
@@ -217,14 +219,16 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         dayHeader.add(dayStats, BorderLayout.CENTER);
 
         dayData = dbH.getDayStats(new Date(System.currentTimeMillis()));
-        DailyGraphFrame.setDailyValues(dayData);
+        dailyGraphWindow.setDailyValues(dayData);
+        //DailyGraphFrame.setDailyValues(dayData);
 
         model = new DailyStatsTableModel(dayData);
         model.addTableModelListener(new TableModelListener()
         {
             public void tableChanged(TableModelEvent e)
             {
-                DailyGraphFrame.redraw();
+                dailyGraphWindow.repaint();
+                //DailyGraphFrame.repaint(); //.redraw();
                 updateLabels();
                 //saveButton.setEnabled(true);
             }

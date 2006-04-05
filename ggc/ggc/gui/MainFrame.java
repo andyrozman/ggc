@@ -424,11 +424,11 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("option_pref")) 
             {
-                PropertiesFrame.showMe(MainFrame.this);
+                new PropertiesFrame(MainFrame.this);
             } 
             else if (command.equals("read_meter")) 
             {
-                ReadMeterDialog.showMe(MainFrame.this);
+                new ReadMeterDialog(MainFrame.this);
             } 
             else if (command.equals("hlp_about")) 
             {

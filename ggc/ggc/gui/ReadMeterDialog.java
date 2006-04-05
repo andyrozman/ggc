@@ -44,6 +44,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 
 /**
  * @author stephan
@@ -51,12 +54,12 @@ import javax.swing.event.TableModelListener;
  * To change this generated comment edit the template variable "typecomment":
  * Window>Preferences>Java>Templates.
  */
-public class ReadMeterDialog extends JDialog
+public class ReadMeterDialog extends JDialog implements ActionListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();        
 
-    private static ReadMeterDialog singleton = null;
+//    private static ReadMeterDialog singleton = null;
 
     private JTextArea logText = null;
 
@@ -83,7 +86,7 @@ public class ReadMeterDialog extends JDialog
      * @param owner
      * @throws HeadlessException
      */
-    private ReadMeterDialog(Frame owner)
+    public ReadMeterDialog(Frame owner)
     {
         super(owner);
 
@@ -95,39 +98,39 @@ public class ReadMeterDialog extends JDialog
      * Method getInstance.
      * @return ReadMeterDialog
      */
-    public static ReadMeterDialog getInstance()
+    /*public static ReadMeterDialog getInstance()
     {
         return singleton;
-    }
+    }*/
 
     /**
      * Method showMe.
      * @param owner
      */
-    public static void showMe(Frame owner)
+   /* public static void showMe(Frame owner)
     {
         if (singleton == null)
             singleton = new ReadMeterDialog(owner);
         singleton.setLocationRelativeTo(owner);
-        singleton.show();
-    }
+        singleton.setVisible(true);
+    }*/
 
     /**
      * Method close.
      */
-    public void close()
+/*    public void close()
     {
         dispose();
-    }
+    } */
 
     /**
      * Method close.
      */
-    public void dispose()
+    /*public void dispose()
     {
         singleton = null;
         super.dispose();
-    }
+    } */
 
     public void addLogText(String s)
     {
@@ -158,7 +161,7 @@ public class ReadMeterDialog extends JDialog
 
         meterImport.addImportEventListener(startImportAction);
 
-        this.addWindowListener(new CloseListener());
+//        this.addWindowListener(new CloseListener());
 
         glucoValues = new GlucoValues();
         model = new GlucoTableModel(glucoValues);
@@ -249,13 +252,7 @@ public class ReadMeterDialog extends JDialog
         pack();
     }
 
-    private class CloseListener extends WindowAdapter
-    {
-        public void windowClosing(WindowEvent e)
-        {
-            close();
-        }
-    }
+
 
 
     //////////////////////////////////////////////////////////////
@@ -310,7 +307,7 @@ public class ReadMeterDialog extends JDialog
             meterImport.stopImport();
             meterImport.removeImportEventListener(startImportAction);
             meterImport.close();
-            ReadMeterDialog.this.close();
+        //    ReadMeterDialog.this.close();
         }
 
     }
@@ -393,4 +390,22 @@ public class ReadMeterDialog extends JDialog
         }
 
     }
+
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(ActionEvent e) 
+    {
+        String action = e.getActionCommand();
+
+        if (action.equals("")) 
+        {
+        }
+        else
+            System.out.println("Unknown command: " + action);
+
+    }
+
+
 }

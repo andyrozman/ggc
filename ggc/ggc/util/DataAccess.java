@@ -967,6 +967,10 @@ public class DataAccess
 
     public boolean isSameDay(Date day)
     {
+
+        //GregorianCalendar gc = new GregorianCalendar(day);
+        //gc.set(
+
 	if (m_date==null)
 	    return false;
 	else
@@ -974,7 +978,9 @@ public class DataAccess
 	    if ((m_date.getDate()==day.getDate()) &&
 		(m_date.getYear()==day.getYear()) &&
 		(m_date.getMonth()==day.getMonth()))
-		return true;
+            {
+                return true;
+            }
 	    else
 		return false;
 

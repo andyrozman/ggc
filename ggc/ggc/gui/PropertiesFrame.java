@@ -10,22 +10,25 @@
 package ggc.gui;
 
 
-import ggc.gui.prefPane.*;
-import ggc.util.I18nControl;
-
-import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
-public class PropertiesFrame extends JDialog
+import com.sun.org.apache.bcel.internal.classfile.Unknown;
+
+import ggc.gui.prefPane.*;
+import ggc.util.I18nControl;
+
+
+public class PropertiesFrame extends JDialog implements ActionListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();        
@@ -57,7 +60,7 @@ public class PropertiesFrame extends JDialog
 
         init();
     }
-
+/*
     public static PropertiesFrame getInstance(MainFrame main)
     {
         if (singleton == null)
@@ -70,13 +73,12 @@ public class PropertiesFrame extends JDialog
         if (singleton == null)
             singleton = new PropertiesFrame(main);
         singleton.show();
-    }
+    } */
 
     private void init()
     {
         setBounds(200, 200, 600, 500);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new CloseListener());
         Dimension dim = new Dimension(80, 20);
 
         prefNode = new DefaultMutableTreeNode(m_ic.getMessage("PREFERENCES"));
@@ -147,35 +149,18 @@ public class PropertiesFrame extends JDialog
         //set the buttons up...
         JButton okButton = new JButton(m_ic.getMessage("OK"));
         okButton.setPreferredSize(dim);
-        okButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                prefOptionsPane.saveProps();
-                dispose();
-                singleton = null;
-            }
-        });
+        okButton.setActionCommand("ok");
+        okButton.addActionListener(this);
 
         JButton cancelButton = new JButton(m_ic.getMessage("CANCEL"));
         cancelButton.setPreferredSize(dim);
-        cancelButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                close();
-            }
-        });
+        cancelButton.setActionCommand("cancel");
+        cancelButton.addActionListener(this);
 
         JButton applyButton = new JButton(m_ic.getMessage("APPLY"));
         applyButton.setPreferredSize(dim);
-        applyButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                prefOptionsPane.saveProps();
-            }
-        });
+        applyButton.setActionCommand("apply");
+        applyButton.addActionListener(this);
 
         //...and align them in a row at the buttom.
         JPanel buttonPanel = new JPanel();
@@ -201,11 +186,34 @@ public class PropertiesFrame extends JDialog
         singleton = null;
     }
 
-    private class CloseListener extends WindowAdapter
+
+
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(ActionEvent e) 
     {
-        public void windowClosing(WindowEvent e)
+        String action = e.getActionCommand();
+
+        if (action.equals("ok")) 
+        {
+            prefOptionsPane.saveProps();
+            this.dispose();
+        }
+        else if (action.equals("cancel")) 
         {
             close();
         }
+        else if (action.equals("apply")) 
+        {
+            prefOptionsPane.saveProps();
+        }
+        else
+            System.out.println("PropertiesFrame: Unknown command: " + action);
+
+
     }
+
+
 }

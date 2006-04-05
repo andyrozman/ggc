@@ -210,4 +210,21 @@ public class CourseGraphFrame extends JFrame
             closeMe();
         }
     }
+
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(ActionEvent e) 
+    {
+        String action = e.getActionCommand();
+
+        if (action.equals("")) 
+        {
+        }
+        else
+            System.out.println("Unknown command: " + action);
+
+
+    }
 }
