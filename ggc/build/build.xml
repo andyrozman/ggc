@@ -34,14 +34,18 @@
         
     <target name="clean" description="Clean build directory and previus version of GGC">
         <delete dir="${build.dir}/ggc"/>
+        <delete dir="${build.dir}/com"/>
+        <delete dir="${build.dir}/org"/>
         <delete dir="${build.dir}/icons"/>
         <delete file="${build.dir}/ggc.jar"/>
     </target>
 
 
     <target name="copy" description="Copy all needed files">
-        <copy file="${source.dir}/GGC_SI.properties" todir="${build.dir}/" overwrite="true" />
-        <copy file="${source.dir}/GGC_EN.properties" todir="${build.dir}/" overwrite="true" />
+        <copy file="${source.dir}/GGC_en.properties" todir="${build.dir}/" overwrite="true" />
+        <copy file="${source.dir}/GGC_si.properties" todir="${build.dir}/" overwrite="true" />
+        <copy file="${source.dir}/GGC_de.properties" todir="${build.dir}/" overwrite="true" />
+<!--        <copy file="${source.dir}/GGC_EN.properties" todir="${build.dir}/" overwrite="true" /> -->
         <mkdir dir="${build.dir}/icons" />
         <copy todir="${build.dir}/icons" overwrite="true">
             <fileset dir="${source.dir}/icons" casesensitive="no">
@@ -53,12 +57,13 @@
 
 
 
-    <target name="build_ggc"  description="Build GGC">
+    <target name="make"  description="Build GGC">
         <javac srcdir="${source.dir}"
             destdir="${build.dir}"
             includes="ggc/**"
             excludes="ggc/db/DummyHandler.java, ggc/db/HSQLHandler.java, ggc/db/MySQLHandler.java, ggc/db/TextFileHandler.java"
-            deprecation="off" debug="true"> <!-- debug="${debug} -->
+           deprecation="off" debug="true"> <!-- debug="${debug}    DummyHandler.java, ggc/db/HSQLHandler.java, ggc\db\MySQLHandler, ggc/db/TextFileHandler.java"  --> 
+            
             <classpath>
                 <pathelement path="${hibernate_cpath}" />
                 <pathelement path="${utils_cpath}"/>
@@ -66,9 +71,17 @@
         </javac>
     </target>
 
+     <target name="build_ggc"  description="Build GGC" />
+
+<!--
+
+           includes="ggc/**"
+            excludes="ggc/db/**"  
 
 
-    <target name="jar"  description="Build GGC">
+-->
+
+    <target name="jar"  description="Build GGC jar" depends="make">
         <jar jarfile="${binary.dir}/ggc.jar"
              update="false" 
              index="false"
@@ -89,7 +102,7 @@
 
 
 
-    <target name="jar_l"  description="Build GGC Little">
+    <target name="jar_l"  description="Build GGC Little" depends="make">
         <jar jarfile="${build.dir}/ggcl.jar"
              update="false" 
              index="false"
@@ -111,7 +124,7 @@
     </target>
 
 
-    <target name="full" depends="clean, copy, build_ggc, jar, jar_l">    
+    <target name="full" depends="clean, copy, jar, jar_l">    
     </target>
 
     <target name="dist">    

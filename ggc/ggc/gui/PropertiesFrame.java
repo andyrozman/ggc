@@ -116,10 +116,10 @@ public class PropertiesFrame extends JDialog
                     prefOptionsPane = new prefFontsAndColorPane();
                 else if (s.equals(m_ic.getMessage("DATA_STORING")))
                     prefOptionsPane = new prefDataStoringPane();
-		else if (s.equals(m_ic.getMessage("MYSQL_SETUP"))) 
-                    prefOptionsPane = new prefMySQLSetupPane();
-		else if (s.equals(m_ic.getMessage("TEXTFILE_SETUP"))) 
-                    prefOptionsPane = new prefTextFileSetupPane();
+		//else if (s.equals(m_ic.getMessage("MYSQL_SETUP"))) 
+                //    prefOptionsPane = new prefMySQLSetupPane();
+		//else if (s.equals(m_ic.getMessage("TEXTFILE_SETUP"))) 
+                //    prefOptionsPane = new prefTextFileSetupPane();
 		else if (s.equals(m_ic.getMessage("RENDERING_QUALITY"))) 
                     prefOptionsPane = new prefRenderingQualityPane();
 		else if (s.equals(m_ic.getMessage("METER_CONFIGURATION"))) 
