@@ -686,12 +686,10 @@ public class GGCDb
 			Transaction tx = sess.beginTransaction();
 
 			DayValueH dvh = dwr.getHibernateObject();
-			System.out.println(getSession());
 			Long l = (Long)sess.save(dvh);
 
 			dvh.setId(l.longValue());
 			tx.commit();
-
 		    }
 		    else if (dwr.hasChanged())
 		    {
