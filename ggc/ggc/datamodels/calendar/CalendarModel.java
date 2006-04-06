@@ -29,7 +29,7 @@
 package ggc.datamodels.calendar;
 
 
-import ggc.gui.calendar.calendarPane;
+import ggc.gui.calendar.CalendarPane;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -39,13 +39,13 @@ import java.util.GregorianCalendar;
 public class CalendarModel
 {
     private GregorianCalendar gc;
-    calendarPane cp;
+    CalendarPane cp;
 
-    public CalendarModel(Date date, calendarPane cp)
+    public CalendarModel(GregorianCalendar date, CalendarPane cp)
     {
         this.cp = cp;
-        gc = new GregorianCalendar();
-        gc.setTime(date);
+        gc = date;
+        //gc.setTime(date);
     }
 
     public void setDate(Date date)

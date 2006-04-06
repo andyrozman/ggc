@@ -38,11 +38,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class yearPanel extends JPanel implements CalendarListener
+public class YearPanel extends JPanel implements CalendarListener
 {
     private JTextField yearField;
 
-    public yearPanel(final CalendarModel cMod)
+    public YearPanel(final CalendarModel cMod)
     {
         yearField = new JTextField(cMod.getYear() + "", 4);
         add(yearField);

@@ -28,20 +28,24 @@
 package ggc.gui.calendar;
 
 
-import ggc.datamodels.calendar.CalendarEvent;
-import ggc.datamodels.calendar.CalendarListener;
-import ggc.datamodels.calendar.CalendarModel;
-import ggc.util.I18nControl;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
 
-public class monthPanel extends JPanel implements CalendarListener
+import ggc.datamodels.calendar.CalendarEvent;
+import ggc.datamodels.calendar.CalendarListener;
+import ggc.datamodels.calendar.CalendarModel;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
+
+public class MonthPanel extends JPanel implements CalendarListener
 {
     private I18nControl m_ic = I18nControl.getInstance();    
+    private DataAccess m_da = DataAccess.getInstance();
 
+    /*
     private String[] months = {
             m_ic.getMessage("JANUARY"), 
             m_ic.getMessage("FEBRUARY"), 
@@ -55,12 +59,13 @@ public class monthPanel extends JPanel implements CalendarListener
             m_ic.getMessage("OCTOBER"), 
             m_ic.getMessage("NOVEMBER"), 
             m_ic.getMessage("DECEMBER") };
+            */
 
     private JComboBox monthCombo;
 
-    public monthPanel(final CalendarModel cMod)
+    public MonthPanel(final CalendarModel cMod)
     {
-        monthCombo = new JComboBox(months);
+        monthCombo = new JComboBox(m_da.getMonthsArray());
         monthCombo.setSelectedIndex(cMod.getMonth());
         add(monthCombo);
 

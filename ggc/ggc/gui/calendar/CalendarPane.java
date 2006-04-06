@@ -39,26 +39,26 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 
 
-public class calendarPane extends JPanel
+public class CalendarPane extends JPanel
 {
-    private monthPanel mPanel;
-    private yearPanel yPanel;
-    private dayPanel dPanel;
+    private MonthPanel mPanel;
+    private YearPanel yPanel;
+    private DayPanel dPanel;
 
     CalendarModel cModel;
 
     Vector listeners = new Vector();
 
-    public calendarPane()
+    public CalendarPane()
     {
-        cModel = new CalendarModel(new Date(), this);
+        cModel = new CalendarModel(new GregorianCalendar(), this);
 
 
         //
         //this.setLayout(null);
 
-        mPanel = new monthPanel(cModel);
-        yPanel = new yearPanel(cModel);
+        mPanel = new MonthPanel(cModel);
+        yPanel = new YearPanel(cModel);
 
         setLayout(new BorderLayout());
 
@@ -70,7 +70,7 @@ public class calendarPane extends JPanel
 
         add(a, BorderLayout.NORTH);
 
-        dPanel = new dayPanel(cModel);
+        dPanel = new DayPanel(cModel);
         add(dPanel, BorderLayout.CENTER);
 
         this.addCalendarListener(dPanel);
