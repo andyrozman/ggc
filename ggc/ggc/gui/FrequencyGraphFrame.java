@@ -108,7 +108,7 @@ public class FrequencyGraphFrame extends JFrame
 
     private void setNewDateRange()
     {
-        fGV.setGlucoValues(new GlucoValues(dRS.getStartDate(), dRS.getEndDate()));
+        fGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
     public static void showMe()

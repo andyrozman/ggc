@@ -127,7 +127,7 @@ public class SpreadGraphFrame extends JFrame
 
     private void setNewDateRange()
     {
-        sGV.setGlucoValues(new GlucoValues(dRS.getStartDate(), dRS.getEndDate()));
+        sGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
     public static void showMe()

@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
@@ -68,7 +68,7 @@ public class HbA1cFrame extends JFrame
 
         m_da = DataAccess.getInstance();
 
-        hbValues = m_da.getHbA1c(new Date(System.currentTimeMillis()));
+        hbValues = m_da.getHbA1c(new GregorianCalendar());
         updateLabels();
 
         hbView.setHbA1cValues(hbValues);

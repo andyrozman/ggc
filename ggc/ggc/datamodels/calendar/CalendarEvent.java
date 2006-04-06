@@ -68,6 +68,11 @@ public class CalendarEvent
         return date.getTime().getTime();
     }
 
+    public GregorianCalendar getNewCalendar()
+    {
+        return date;
+    }
+
     public int getEvent()
     {
         return event;

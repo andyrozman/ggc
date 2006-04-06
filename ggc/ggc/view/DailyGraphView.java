@@ -44,7 +44,7 @@ public class DailyGraphView extends AbstractGraphView
     public DailyGraphView()
     {
         super();
-        dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar().getTime());
+        dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
 //	    DailyValues.getInstance();
     }
 

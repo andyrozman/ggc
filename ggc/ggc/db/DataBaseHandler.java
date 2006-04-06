@@ -36,6 +36,7 @@ import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public abstract class DataBaseHandler
@@ -118,11 +119,11 @@ public abstract class DataBaseHandler
             JOptionPane.showMessageDialog(null, m_ic.getMessage("INVALID_NAME_FOR_DB"), "GGC " + m_ic.getMessage("ERROR")+ " - " + m_ic.getMessage("INVALID_NAME"), JOptionPane.ERROR_MESSAGE);
     }
 */
-    public abstract DailyValues getDayStats(Date day);
+    public abstract DailyValues getDayStats(GregorianCalendar day);
 
-    public abstract DailyValues getDayStatsRange(Date sDay, Date eDay);
+    public abstract DailyValues getDayStatsRange(GregorianCalendar sDay, GregorianCalendar eDay);
 
-    public abstract HbA1cValues getHbA1c(Date day);
+    public abstract HbA1cValues getHbA1c(GregorianCalendar day);
 
     public abstract void saveDayStats(DailyValues dV);
 

@@ -41,12 +41,14 @@ import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import ggc.GGC;
 import ggc.db.HibernateHandler;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
@@ -62,6 +64,8 @@ public class GGCDbLoader extends Thread
     DataAccess m_da = null;
     StatusBar m_bar = null;
 
+    public boolean run_once = false;
+
     public GGCDbLoader(DataAccess da, StatusBar bar)
     {
         m_da = da;
@@ -71,6 +75,12 @@ public class GGCDbLoader extends Thread
 
     public void run()
     {
+
+        if (run_once) 
+            return;
+
+        run_once = true;
+
 //        System.out.println("GGCDbLoader: Create");
 
         try { Thread.sleep(2000); } catch(Exception ex) { }
@@ -89,7 +99,8 @@ public class GGCDbLoader extends Thread
 
 	//try { Thread.sleep(2000); } catch(Exception ex) { }
 
-	m_da.loadDailySettings(new java.util.Date(System.currentTimeMillis()));
+        System.out.println("GGC Load");
+	m_da.loadDailySettings(new GregorianCalendar(), true);
 	HibernateHandler.getInstance().connected = true;
 
 	m_bar.setDatabaseName(db.db_conn_name);
@@ -97,6 +108,8 @@ public class GGCDbLoader extends Thread
 	MainFrame mf = m_da.getParent();
 	mf.setDbActions(true);
 	mf.informationPanel.refreshPanels();
+
+        mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
     }
 
 

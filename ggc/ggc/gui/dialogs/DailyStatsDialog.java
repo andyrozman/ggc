@@ -38,6 +38,7 @@ import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -50,9 +51,11 @@ import ggc.datamodels.DailyValues;
 import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
+import ggc.gui.MainFrame;
 import ggc.gui.AddRowFrame;
 import ggc.gui.DailyGraphFrame;
 import ggc.gui.calendar.calendarPane;
+import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
@@ -119,12 +122,10 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
     protected void close()
     {
-        //DailyGraphFrame.closeMe();
+        DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
+       	MainFrame mf = DataAccess.getInstance().getParent();
+	mf.informationPanel.refreshPanels();
         this.dispose();
-
-	//dayData.saveDay();
-
-        //singleton = null;
     }
 
     private void init()
@@ -201,7 +202,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
             public void dateHasChanged(CalendarEvent e)
             {
                 //System.out.println("dateHasChanged");
-                dayData = dbH.getDayStats(new Date(e.getNewDate()));
+                dayData = dbH.getDayStats(e.getNewCalendar());
                 
                 model.setDailyValues(dayData);
                 //saveButton.setEnabled(false);
@@ -219,7 +220,9 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         dayHeader.add(dayCalendar, BorderLayout.WEST);
         dayHeader.add(dayStats, BorderLayout.CENTER);
 
-        dayData = dbH.getDayStats(new Date(System.currentTimeMillis()));
+        dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
+
+        //dbH.getDayStats(new Grenew Date(System.currentTimeMillis()));
         //dailyGraphWindow.setDailyValues(dayData);
         //DailyGraphFrame.setDailyValues(dayData);
 
@@ -399,7 +402,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	}
 	else if (command.equals("close"))
 	{
-            this.dispose();
+            this.close();
 	}
 	else if (command.equals("show_daily_graph"))
 	{

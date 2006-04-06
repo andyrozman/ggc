@@ -29,36 +29,46 @@
 package ggc.gui.infoPanel;
 
 
-import ggc.datamodels.StatisticValues;
-
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import ggc.datamodels.StatisticValues;
+import ggc.util.DataAccess;
+
 
 public class StatisticInfoPanel extends AbstractInfoPanel
 {
-    Date endDate = new Date();
-    Date startDate = new Date(endDate.getTime() - (518400000L)); //now - 6 days in millisec
+    GregorianCalendar endDate = null;
+    GregorianCalendar startDate = null; //new Date(endDate.getTime() - (518400000L)); //now - 6 days in millisec
 
     JLabel lblAvgBG, lblBGReadings;
     JLabel lblSumBU, lblBUDay, lblCountBU, lblAvgBU, lblBUCountDay;
     JLabel lblSumIns1, lblIns1Day, lblCountIns1, lblAvgIns1, lblIns1CountDay;
     JLabel lblSumIns2, lblIns2Day, lblCountIns2, lblAvgIns2, lblIns2CountDay;
 
+    DataAccess m_da = null;
+
     public StatisticInfoPanel()
     {
         super("");
 
+        m_da = DataAccess.getInstance();
+
+        endDate = new GregorianCalendar();
+        startDate = new GregorianCalendar();
+        startDate.add(GregorianCalendar.DAY_OF_MONTH, -7);
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
-        ((TitledBorder)this.getBorder()).setTitle(m_ic.getMessage("STATISTICS_FOR_LAST_WEEK")+" (" + sdf.format(startDate) + " - " + sdf.format(endDate) + ")");
+        ((TitledBorder)this.getBorder()).setTitle(m_ic.getMessage("STATISTICS_FOR_LAST_WEEK")+" (" + sdf.format(startDate.getTime()) + " - " + sdf.format(endDate.getTime()) + ")");
 
         init();
         refreshInfo();
@@ -143,6 +153,10 @@ public class StatisticInfoPanel extends AbstractInfoPanel
 
     public void refreshInfo()
     {
+
+        if (!m_da.isDatabaseInitialized()) 
+            return;
+
         StatisticValues sV = new StatisticValues(startDate, endDate);
 
         if (sV != null) {

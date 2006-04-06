@@ -27,18 +27,19 @@
 
 package ggc.gui.calendar;
 
-import ggc.util.I18nControl;
-
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
 
 
 public class DateRangeSelectionPanel extends JPanel
@@ -67,7 +68,7 @@ public class DateRangeSelectionPanel extends JPanel
 
     public DateRangeSelectionPanel()
     {
-        endSpinnerDateModel.setValue(new Date(System.currentTimeMillis()));
+        endSpinnerDateModel.setValue(new GregorianCalendar());
         iRadioGroupState = ONE_MONTH;
         calcStartDate();
         init();
@@ -75,7 +76,7 @@ public class DateRangeSelectionPanel extends JPanel
 
     public DateRangeSelectionPanel(int flag)
     {
-        endSpinnerDateModel.setValue(new Date(System.currentTimeMillis()));
+        endSpinnerDateModel.setValue(new GregorianCalendar());
         iRadioGroupState = flag;
         calcStartDate();
         init();
@@ -175,8 +176,7 @@ public class DateRangeSelectionPanel extends JPanel
         if (iRadioGroupState == 3)
             return;
 
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(getEndDate());
+        GregorianCalendar gc = (GregorianCalendar)getEndDate().clone();
 
         switch (iRadioGroupState) {
             case ONE_WEEK:
@@ -189,7 +189,7 @@ public class DateRangeSelectionPanel extends JPanel
                 gc.add(Calendar.MONTH, -3);
         }
 
-        startSpinnerDateModel.setValue(gc.getTime());
+        startSpinnerDateModel.setValue(gc);
     }
 
     private class RadioListener extends AbstractAction
@@ -223,4 +223,15 @@ public class DateRangeSelectionPanel extends JPanel
     {
         return startSpinnerDateModel.getDate();
     }
+
+    public GregorianCalendar getEndCalendar()
+    {
+        return DataAccess.getInstance().getGregorianCalendar(endSpinnerDateModel.getDate());
+    }
+
+    public GregorianCalendar getStartCalendar()
+    {
+        return DataAccess.getInstance().getGregorianCalendar(startSpinnerDateModel.getDate());
+    }
+
 }

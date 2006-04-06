@@ -30,7 +30,7 @@ package ggc.gui.infoPanel;
 
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
@@ -83,7 +83,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
         HbA1cValues hbVal = null;
 
         if (DataBaseHandler.getInstance().isConnected())
-	    hbVal = DataAccess.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
+	    hbVal = DataAccess.getInstance().getHbA1c(new GregorianCalendar());
         //    hbVal = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
 
         DecimalFormat df = new DecimalFormat("#0.00");

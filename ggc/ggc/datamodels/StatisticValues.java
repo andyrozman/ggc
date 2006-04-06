@@ -28,16 +28,17 @@
 package ggc.datamodels;
 
 
-import ggc.db.DataBaseHandler;
-
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Calendar;
+
+import ggc.db.DataBaseHandler;
+import ggc.util.DataAccess;
 
 
 public class StatisticValues
 {
-    DataBaseHandler dbH = null;
+//    DataBaseHandler dbH = null;
 
     float dayCounter = 0;
 
@@ -54,19 +55,22 @@ public class StatisticValues
 
     public StatisticValues()
     {
-        dbH = DataBaseHandler.getInstance();
+//        dbH = DataBaseHandler.getInstance();
     }
 
-    public StatisticValues(Date sDay, Date eDay)
+
+    public StatisticValues(GregorianCalendar sDay, GregorianCalendar eDay)
     {
         this();
         setDayRange(sDay,eDay);
     }
 
-    public void setDayRange(Date sDay, Date eDay)
+    public void setDayRange(GregorianCalendar sDay, GregorianCalendar eDay)
     {
 
-	dbH.getDayStatsRange(sDay,eDay);
+        addDayValues(DataAccess.getInstance().getDayStatsRange(sDay, eDay));
+
+	//dbH.getDayStatsRange(sDay,eDay);
         /*GregorianCalendar gC = new GregorianCalendar();
         gC.setTime(sDay);
         while (gC.getTime().compareTo(eDay) <= 0) {

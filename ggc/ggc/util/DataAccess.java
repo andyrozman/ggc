@@ -43,6 +43,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Properties;
 
+
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
@@ -93,9 +94,10 @@ public class DataAccess
     public GGCTreeRoot m_meals_treeroot = null;
 
 
-    public Date m_date = null;
-    public HbA1cValues m_HbA1c = null;
-    public DailyValues m_dvalues = null;
+    // daily and weekly data
+    private GregorianCalendar m_date = null, m_dateStart = null;
+    private HbA1cValues m_HbA1c = null;
+    private DailyValues m_dvalues, m_dRangeValues = null;
 
 
 
@@ -116,7 +118,6 @@ public class DataAccess
      */ 
     private DataAccess()
     {
-
         //m_db = db;
 
 //        loadConfig();
@@ -236,6 +237,14 @@ public class DataAccess
     public MainFrame getParent()
     {
         return m_main;
+    }
+
+
+    //  jfdfhjsdfk
+
+    public I18nControl getI18nInstance()
+    {
+        return m_i18n;
     }
 
 
@@ -931,60 +940,117 @@ public class DataAccess
     public HbA1cValues m_HbA1c = null;
     public DailyValues m_dvalues = null;
 */
-    public synchronized void loadDailySettings(Date day)
+    public synchronized void loadDailySettings(GregorianCalendar day, boolean force)
     {
-	if (m_db==null) 
+	if ((m_db==null) || (m_db.getLoadStatus()<2))
 	    return;
 
-	if (m_db.getLoadStatus()<2)
-	    return;
+        if ((isSameDay(day)) && (!force))
+            return;
 
-	System.out.println("Reload daily settings");
+	System.out.println("Reload daily settings (force:" + force + ")");
+
 	m_date = day;
 	m_HbA1c = m_db.getHbA1c(day);
 	m_dvalues = m_db.getDayStats(day);
+
+        m_dateStart = (GregorianCalendar)day.clone();
+        m_dateStart.add(GregorianCalendar.DAY_OF_MONTH, -7);
+        //m_dateEnd = day;
+
+        m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
-    public HbA1cValues getHbA1c(Date day)
+    public HbA1cValues getHbA1c(GregorianCalendar day)
     {
-	if (!isSameDay(day))
-	    loadDailySettings(day);
+        //System.out.println("DA::getHbA1c");
+	//if (!isSameDay(day))
+	loadDailySettings(day, false);
 
-	if (m_HbA1c==null)
-	    return new HbA1cValues();
-	else
-            return m_HbA1c;
+	//if (m_HbA1c==null)
+	//    return new HbA1cValues();
+	//else
+        return m_HbA1c;
     }
 
-    public DailyValues getDayStats(Date day)
+    public DailyValues getDayStats(GregorianCalendar day)
     {
-	if (!isSameDay(day))
-	    loadDailySettings(day);
+        //System.out.println("DA::getDayStats");
+
+        //if (!isSameDay(day))
+	loadDailySettings(day, false);
 
 	return m_dvalues;
     }
 
 
-    public boolean isSameDay(Date day)
+
+    public DailyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
+    {
+        //System.out.println("DA::getDayStatsRange");
+
+        // we load dialy if not loaded
+        if (this.m_date==null) 
+            loadDailySettings(end, false);
+
+        if ((isSameDay(start, this.m_dateStart)) &&
+           (isSameDay(m_date, end)))
+        {
+            return m_dRangeValues;
+        }
+        else
+            return m_db.getDayStatsRange(start, end);
+    }
+
+    public boolean isSameDay(GregorianCalendar day)
+    {
+        return isSameDay(m_date, day);
+    }
+
+
+    public boolean isDatabaseInitialized()
+    {
+        if ((m_db==null) || (m_db.getLoadStatus()<2))
+	    return false;
+        else
+            return true;
+    }
+
+
+    public boolean isSameDay(GregorianCalendar gc1, GregorianCalendar gc2)
     {
 
-        //GregorianCalendar gc = new GregorianCalendar(day);
-        //gc.set(
-
-	if (m_date==null)
-	    return false;
-	else
-	{
-	    if ((m_date.getDate()==day.getDate()) &&
-		(m_date.getYear()==day.getYear()) &&
-		(m_date.getMonth()==day.getMonth()))
+        if ((gc1==null) || (gc2==null))
+        {
+            return false;
+        }
+        else
+        {
+           
+            if ((gc1.get(GregorianCalendar.DAY_OF_MONTH)==gc2.get(GregorianCalendar.DAY_OF_MONTH)) &&
+                (gc1.get(GregorianCalendar.MONTH)==gc2.get(GregorianCalendar.MONTH)) &&
+                (gc1.get(GregorianCalendar.YEAR)==gc2.get(GregorianCalendar.YEAR)))
             {
                 return true;
             }
-	    else
-		return false;
+            else
+            {
+                return false;
+            }
 
-	}
+        }
+    }
+
+
+    public GregorianCalendar getGregorianCalendar(Date date)
+    {
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.set(GregorianCalendar.DAY_OF_MONTH, date.getDay());
+        gc.set(GregorianCalendar.MONTH, date.getMonth());
+        gc.set(GregorianCalendar.YEAR, date.getYear());
+
+        return gc;
+
     }
 
 

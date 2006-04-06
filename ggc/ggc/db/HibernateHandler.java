@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.DailyValuesRow;
@@ -95,27 +96,33 @@ public class HibernateHandler extends DataBaseHandler
 
 
 
-    public HbA1cValues getHbA1c(java.util.Date day)
+    public HbA1cValues getHbA1c(GregorianCalendar day)
     {
 	if (!getDbInstance())
             return null;
+
+        System.out.println("Db::getHbA1c");
 
 	return m_db.getHbA1c(day);
     }
 
 
-    public DailyValues getDayStats(java.util.Date day)
+    public DailyValues getDayStats(GregorianCalendar day)
     {
 	if (!getDbInstance())
 	    return null;
+
+        System.out.println("Db::getDayStats");
 
 	return m_db.getDayStats(day);
     }
 
-    public DailyValues getDayStatsRange(Date sDay, Date eDay)
+    public DailyValues getDayStatsRange(GregorianCalendar sDay, GregorianCalendar eDay)
     {
 	if (!getDbInstance())
 	    return null;
+
+        System.out.println("Db::getDayStatsRange");
 
 	return m_db.getDayStatsRange(sDay, eDay);
     }

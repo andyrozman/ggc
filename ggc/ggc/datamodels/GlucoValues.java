@@ -29,15 +29,17 @@
 package ggc.datamodels;
 
 
-import ggc.db.DataBaseHandler;
-import ggc.event.GlucoValueEvent;
-import ggc.event.GlucoValueEventListener;
-
-import javax.swing.event.EventListenerList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
+
+import javax.swing.event.EventListenerList;
+
+import ggc.db.DataBaseHandler;
+import ggc.event.GlucoValueEvent;
+import ggc.event.GlucoValueEventListener;
+import ggc.util.DataAccess;
 
 
 public class GlucoValues extends DailyValues
@@ -53,17 +55,21 @@ public class GlucoValues extends DailyValues
         dayValues = new Vector();
     }
 
-    public GlucoValues(Date sDate, Date eDate)
+    public GlucoValues(GregorianCalendar sDate, GregorianCalendar eDate)
     {
         this();
+
+        dayValues.add(DataAccess.getInstance().getDayStatsRange(sDate, eDate));
+/*
         GregorianCalendar gC = new GregorianCalendar();
         gC.setTime(sDate);
-        while (gC.getTime().compareTo(eDate) <= 0) {
+        while (gC.getTime().compareTo(eDate) <= 0) 
+         {
             DailyValues dv = dbH.getDayStats(gC.getTime());
             //recordCount += dv.getRowCount();
             dayValues.add(dv);
             gC.add(Calendar.DATE, 1);
-        }
+        } */
     }
 
     public void addRow(DailyValuesRow dRow)

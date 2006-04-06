@@ -131,7 +131,7 @@ public class CourseGraphFrame extends JFrame
 
     private void setNewDateRange()
     {
-        cGV.setGlucoValues(new GlucoValues(dRS.getStartDate(), dRS.getEndDate()));
+        cGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
     public static void showMe()

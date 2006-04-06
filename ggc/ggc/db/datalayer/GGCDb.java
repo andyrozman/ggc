@@ -41,7 +41,7 @@ import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -513,21 +513,24 @@ public class GGCDb
     // *************************************************************
 
 
-    public HbA1cValues getHbA1c(java.util.Date day)
+    public HbA1cValues getHbA1c(GregorianCalendar day)
     {
-	System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
+	//System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
 
 	if (m_loadStatus<2)
 	    return null;
 
-	System.out.println("Hibernate: getHbA1c() B2");
+	System.out.println("Hibernate: getHbA1c()");
 	HbA1cValues hbVal = new HbA1cValues();
 
 	try 
 	{
+            GregorianCalendar gc1 = (GregorianCalendar)day.clone();
+            gc1.add(GregorianCalendar.DAY_OF_MONTH, -7);
+
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String eDay = sdf.format(day) + "0000";
-	    String sDay = sdf.format(new Date(day.getTime() - 1000L * 60L * 60L * 24L * 90L)) + "2359";
+	    String eDay = sdf.format(day.getTime()) + "2359";
+	    String sDay = sdf.format(gc1.getTime()) + "0000";
 
 	    Query q = getSession().createQuery("SELECT dv from " + 
 					       "ggc.db.hibernate.DayValueH as dv " +
@@ -554,7 +557,7 @@ public class GGCDb
 
 
 
-    public DailyValues getDayStats(java.util.Date day)
+    public DailyValues getDayStats(GregorianCalendar day)
     {
 
 	if (m_loadStatus<2)
@@ -566,7 +569,7 @@ public class GGCDb
 	try 
 	{
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String sDay = sdf.format(day);
+	    String sDay = sdf.format(day.getTime());
 
 	    Query q = getSession().createQuery("SELECT dv from " + 
 					       "ggc.db.hibernate.DayValueH as dv " +
@@ -594,7 +597,7 @@ public class GGCDb
     }
 
 
-    public DailyValues getDayStatsRange(java.util.Date start, java.util.Date end)
+    public DailyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
     {
 
 	if (m_loadStatus<2)
@@ -606,8 +609,8 @@ public class GGCDb
 	try 
 	{
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String sDay = sdf.format(start);
-	    String eDay = sdf.format(end);
+	    String sDay = sdf.format(start.getTime());
+	    String eDay = sdf.format(end.getTime());
 
 	    Query q = getSession().createQuery("SELECT dv from " + 
 					       "ggc.db.hibernate.DayValueH as dv " +
@@ -703,11 +706,6 @@ public class GGCDb
 
 			tx.commit();
 		    }
-		    else
-                    {
-                        if (debug)
-                            System.out.println("  Nothing");
-                    }
 
 		} // for
 

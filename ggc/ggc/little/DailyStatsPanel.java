@@ -30,20 +30,6 @@
 
 package ggc.little;
 
-import ggc.gui.*;
-
-import ggc.datamodels.DailyStatsTableModel;
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.calendar.CalendarEvent;
-import ggc.datamodels.calendar.CalendarListener;
-import ggc.db.DataBaseHandler;
-import ggc.gui.calendar.calendarPane;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-
-import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,6 +38,22 @@ import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+
+import ggc.datamodels.DailyStatsTableModel;
+import ggc.datamodels.DailyValues;
+import ggc.datamodels.calendar.CalendarEvent;
+import ggc.datamodels.calendar.CalendarListener;
+import ggc.db.DataBaseHandler;
+import ggc.gui.*;
+import ggc.gui.calendar.calendarPane;
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 
 public class DailyStatsPanel extends JPanel implements ActionListener
@@ -216,7 +218,8 @@ public class DailyStatsPanel extends JPanel implements ActionListener
         dayHeader.add(dayCalendar, BorderLayout.WEST);
         dayHeader.add(dayStats, BorderLayout.CENTER);
 */
-        dayData = dbH.getDayStats(new Date(System.currentTimeMillis()));
+        dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
+        //dbH.getDayStats(new Date(System.currentTimeMillis()));
         //DailyGraphFrame.setDailyValues(dayData);
 
         model = new DailyStatsTableModel(dayData);

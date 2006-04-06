@@ -52,9 +52,9 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public static String version = "0.2.1.3";
-    public static String full_version = "v0.2.1.3";
-    private static String version_date = "4th April 2006";
+    public static String version = "0.2.1.4";
+    public static String full_version = "v0.2.1.4";
+    private static String version_date = "6th April 2006";
 
 
     private I18nControl m_ic = I18nControl.getInstance();        
@@ -74,7 +74,7 @@ public class MainFrame extends JFrame
     private GGCAction aboutAction, checkVersionAction;
 
     //private DailyStatsFrame dailyStatsWindow;
-    private StatusBar statusPanel;
+    public StatusBar statusPanel;
     public InfoPanel informationPanel;
     public static DataBaseHandler dbH;
     private DataAccess m_da = null;
@@ -161,7 +161,6 @@ public class MainFrame extends JFrame
         m_da = DataAccess.createInstance(this);
 
         statusPanel = StatusBar.getInstance();
-        m_da.startDb(statusPanel);
 
         setTitle(title + " (" + full_version + ")");
         setJMenuBar(menuBar);
