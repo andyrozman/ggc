@@ -77,7 +77,7 @@ import ggc.util.DataAccess;
 public class GGCDb
 {
 
-    private boolean debug = false;
+    private boolean debug = true;
 
     private static Log logger = LogFactory.getLog(GGCDb.class); 
     private Session m_session = null;
@@ -645,24 +645,43 @@ public class GGCDb
 
 	if (dV.hasChanged()) 
 	{
-	    System.out.println("SDS: Has changed");
+            if (debug)
+                System.out.println("SDS: Has changed");
 
-	    // deleted entries
-	    
-	    //if (!dV.onlyInsert())
-	    //	statement.execute("DELETE FROM DayValues where dt_date=" + dV.getDateD());
+            Session sess = getSession();
 
 	    try
 	    {
+
+                // deleted entries
+
+                if (dV.hasDeletedItems()) 
+                {
+                    if (debug)
+                        System.out.println("SDS: Deleted");
+
+                    Transaction tx = sess.beginTransaction();
+
+                    ArrayList list = dV.getDeletedItems();
+                    for (int i=0; i<list.size(); i++) 
+                    {
+                        DayValueH d = (DayValueH)list.get(i);
+                        sess.delete(d);
+                        tx.commit();
+                    }
+
+                }
+
+                // see if any of elements were changed or added
+                
 		for (int i = 0; i < dV.getRowCount(); i++) 
 		{
 		    DailyValuesRow dwr = dV.getRowAt(i);
 
-		    Session sess = getSession();
-
 		    if (dwr.isNew())
 		    {
-			System.out.println("  New");
+                        if (debug)
+                            System.out.println("  New");
 
 			Transaction tx = sess.beginTransaction();
 
@@ -678,17 +697,22 @@ public class GGCDb
 		    {
 			Transaction tx = sess.beginTransaction();
 
-			System.out.println("  Changed");
-			DayValueH dvh = dwr.getHibernateObject();
+                        if (debug)
+                            System.out.println("  Changed");
+
+                        DayValueH dvh = dwr.getHibernateObject();
 			sess.update(dvh);
 
 			tx.commit();
 		    }
 		    else
-			System.out.println("  Nothing");
-
+                    {
+                        if (debug)
+                            System.out.println("  Nothing");
+                    }
 
 		} // for
+
 	    }
 	    catch(Exception ex)
 	    {
@@ -698,9 +722,11 @@ public class GGCDb
 	    
 	} // hasChanged
 	else
-	    System.out.println("SDS: Has not changed");
+        {
+            if (debug)
+                System.out.println("SDS: Has not changed");
+        }
 
-	
     }
 
 

@@ -30,18 +30,6 @@
 package ggc.gui.dialogs;
 
 
-import ggc.datamodels.DailyStatsTableModel;
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.calendar.CalendarEvent;
-import ggc.datamodels.calendar.CalendarListener;
-import ggc.db.DataBaseHandler;
-import ggc.gui.calendar.calendarPane;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-
-import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,10 +39,22 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
-// this need to be checked and fixed
+import org.hibernate.sql.Delete;
+
+import ggc.datamodels.DailyStatsTableModel;
+import ggc.datamodels.DailyValues;
+import ggc.datamodels.calendar.CalendarEvent;
+import ggc.datamodels.calendar.CalendarListener;
+import ggc.db.DataBaseHandler;
 import ggc.gui.AddRowFrame;
 import ggc.gui.DailyGraphFrame;
+import ggc.gui.calendar.calendarPane;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 public class DailyStatsDialog extends JDialog implements ActionListener
 {
@@ -122,7 +122,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         //DailyGraphFrame.closeMe();
         this.dispose();
 
-	dayData.saveDay();
+	//dayData.saveDay();
 
         //singleton = null;
     }
@@ -206,7 +206,8 @@ public class DailyStatsDialog extends JDialog implements ActionListener
                 model.setDailyValues(dayData);
                 //saveButton.setEnabled(false);
                 updateLabels();
-                dailyGraphWindow.setDailyValues(dayData);
+                getTableModel().fireTableChanged(null);
+//x                dailyGraphWindow.setDailyValues(dayData);
 
                 //DailyGraphFrame.setDailyValues(dayData);
             }
@@ -219,7 +220,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         dayHeader.add(dayStats, BorderLayout.CENTER);
 
         dayData = dbH.getDayStats(new Date(System.currentTimeMillis()));
-        dailyGraphWindow.setDailyValues(dayData);
+        //dailyGraphWindow.setDailyValues(dayData);
         //DailyGraphFrame.setDailyValues(dayData);
 
         model = new DailyStatsTableModel(dayData);
@@ -227,7 +228,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         {
             public void tableChanged(TableModelEvent e)
             {
-                dailyGraphWindow.repaint();
+                //dailyGraphWindow.repaint();
                 //DailyGraphFrame.repaint(); //.redraw();
                 updateLabels();
                 //saveButton.setEnabled(true);
@@ -291,31 +292,13 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         delButton.setPreferredSize(dim);
 	delButton.setActionCommand("delete_row");
 	delButton.addActionListener(this);
-/*        delButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                dayData.deleteRow(table.getSelectedRow());
-                model.fireTableChanged(null);
-            }
-        }); */
         EntryBox.add(delButton);
 
         saveButton = new JButton(m_ic.getMessage("CLOSE"));
         saveButton.setPreferredSize(dim);
 	saveButton.setActionCommand("close");
 	saveButton.addActionListener(this);
-        
-	/*saveButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                dayData.saveDay();
-            }
-        }); */
-        //saveButton.setEnabled(false);
         EntryBox.add(saveButton);
-
 
 	gg.add(EntryBox, BorderLayout.EAST);
 
@@ -383,16 +366,11 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
             DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
 
-
             if (aRF.actionSuccesful()) 
             {
-                //System.out.println("Action success !");
                 dbH.saveDayStats(dayData);
                 this.model.fireTableChanged(null);
             }
-            //else
-            //    System.out.println("Action failed !");
-	    //aRF.show();
 	}
 	else if (command.equals("edit_row"))
 	{
@@ -402,25 +380,34 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	}
 	else if (command.equals("delete_row"))
 	{
+            if (table.getSelectedRow()==-1) 
+            {
+                // message
+                return;
+            }
+
 	    try 
 	    {
 		dayData.deleteRow(table.getSelectedRow());
 		model.fireTableChanged(null);
                 dbH.saveDayStats(dayData);
 	    }
-	    catch (NullPointerException ex) 
+	    catch (Exception ex) 
 	    {
-		// This probably means that no row was selected, so we can ignore it
+                System.out.println("DailyStatsDialog:Action:Delete Row: " + ex);
 	    }
 	}
 	else if (command.equals("close"))
 	{
-	    close();
+            this.dispose();
 	}
 	else if (command.equals("show_daily_graph"))
 	{
-
+            // implement
 	}
+        else
+            System.out.println("DailyStatsDialog:Unknown Action: " + command);
+
 
     }
 

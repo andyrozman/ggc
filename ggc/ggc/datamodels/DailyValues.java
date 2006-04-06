@@ -154,14 +154,23 @@ public class DailyValues implements Serializable
         return (DailyValuesRow)dataRows.elementAt(i);
     }
 
+
+
     public void deleteRow(int i)
     {
 	changed = true;
 
+        DailyValuesRow del_row = null;
+
         try {
             if (i != -1) 
 	    {
+                
+
                 DailyValuesRow dVR = (DailyValuesRow)dataRows.elementAt(i);
+
+                //del_row = dVR;
+
                 if (dVR.getBG() != 0) {
                     sumBG -= dVR.getBG();
                     counterBG--;
@@ -183,9 +192,9 @@ public class DailyValues implements Serializable
                 highestBG = 0;
                 lowestBG = Float.MAX_VALUE;
                 for (int j = 0; j < dataRows.size(); j++) {
-                    dVR = (DailyValuesRow)dataRows.elementAt(j);
-                    highestBG = Math.max(dVR.getBG(), highestBG);
-                    lowestBG = Math.min(dVR.getBG(), lowestBG);
+                    DailyValuesRow dVRa = (DailyValuesRow)dataRows.elementAt(j);
+                    highestBG = Math.max(dVRa.getBG(), highestBG);
+                    lowestBG = Math.min(dVRa.getBG(), lowestBG);
                 }
 
 		if (dVR.hasHibernateObject())
@@ -194,6 +203,7 @@ public class DailyValues implements Serializable
 			deleteList = new ArrayList();
 
 		    deleteList.add(dVR.getHibernateObject());
+                    this.changed = true;
 		}
 
             }
@@ -203,17 +213,22 @@ public class DailyValues implements Serializable
 
 
         } 
-	catch (Exception e) 
+	catch (Exception ex) 
 	{
+            System.out.println("Error on delete from DailyValues" + ex);
         }
-        bOnlyInsert = false;
 
+        bOnlyInsert = false;
 	changed = true;
 
-
-	
-
     }
+
+
+    public void refreshStatData()
+    {
+        // implement
+    }
+
 
     public void setColumnNames(String[] Names)
     {
@@ -232,7 +247,7 @@ public class DailyValues implements Serializable
 		if (getChanged(i))
 		    return true;
 	    }
-	    
+
 	    return false;
 	}
     }
@@ -257,6 +272,14 @@ public class DailyValues implements Serializable
 	else 
 	    return (deleteList.size()!=0);
     }
+
+    public ArrayList getDeletedItems()
+    {
+        return deleteList;
+    }
+
+
+
 
     public Object getValueAt(int row, int column)
     {
