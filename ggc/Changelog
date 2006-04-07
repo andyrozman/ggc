@@ -1,3 +1,18 @@
+2006-04-07 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * moved ggc.db_tool to ggc.db.db_tool, as per package entries in the files in ggc.db_tool
+    * merged changes from GGC_en.properties into GGC_de.properties
+
+2006-04-05 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * Some more translation in GGC_de.properties
+    * added NUTRITION, ..., NO_LOCAL_DATA_AVAILABLE to GGC_de.properties, would
+      appreciate their addition to GGC_en.properties
+    * Added error message if host unavailable for update checking
+        (HOST_UNAVAILABLE_INFO, HOST_UNAVAILABLE_MSG)
+    * ggc.util.VersionChecker.isNewVersion:
+      - made variable names more intuitive assuming the code is correct ;-P
+      - added javadoc comment for that method
+    * build/build.xml: translation files don't have to be specified individually anymore
+
 2006-04-07 (v0.2.1.3-v0.2.1.5)
     * Changes to DailyValues, DailyValuesRow (set methods)
     * Added Weekly values (problem when reading a range of days from database)
@@ -46,7 +61,7 @@
       - removed YOUR_CURRENT
     * GGC_de.properties: translation continues
     * corrected incorrect error message about date format being incorrect when really
-        time format was meant and squashed an exception thrown when this occurred
+      time format was meant and squashed an exception thrown when this occurred
     * ggc.util.GGCProperties: data.imports.* changed to ggc.data.imports.*
     * BUG: data import from meter throws a ClassCastException in
         javax.swing.AbstractButton.configurePropertiesFromAction on line 1117 (attempted
@@ -56,9 +71,9 @@
     	-> new entry -> NO error, exception or anything wrong looking -> change back to
     	original day: no new entries, either here or anywhere else
     * added language selection to prefPane; implementation is rather hackish and a
-        restart is required if this setting is changed; the main problem with this
-        implementation is an endless loop because the constructor of GGCProperties
-        depends on I18nControl
+      restart is required if this setting is changed; the main problem with this
+      implementation is an endless loop because the constructor of GGCProperties
+      depends on I18nControl
 
 2006-03-11  Andy Rozman <andyrozman@users.sourceforge.net>
     * Moved ANT build files to build directory and removed all those in root
