@@ -48,6 +48,7 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
 import ggc.datamodels.DailyValues;
+import ggc.datamodels.WeekValues;
 import ggc.datamodels.HbA1cValues;
 import ggc.db.datalayer.GGCDb;
 import ggc.db.datalayer.GGCDbLoader;
@@ -97,7 +98,8 @@ public class DataAccess
     // daily and weekly data
     private GregorianCalendar m_date = null, m_dateStart = null;
     private HbA1cValues m_HbA1c = null;
-    private DailyValues m_dvalues, m_dRangeValues = null;
+    private DailyValues m_dvalues = null;
+    private WeekValues m_dRangeValues = null;
 
 
 
@@ -985,7 +987,7 @@ public class DataAccess
 
 
 
-    public DailyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
+    public WeekValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
     {
         //System.out.println("DA::getDayStatsRange");
 

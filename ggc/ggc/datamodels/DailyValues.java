@@ -32,7 +32,7 @@ public class DailyValues implements Serializable
 
     Vector dataRows = new Vector();
     static DataBaseHandler dbH;
-    private static DailyValues singleton = null;
+    //private static DailyValues singleton = null;
     java.util.Date date;
 
     boolean bHasChangedValues = false;
@@ -556,11 +556,8 @@ public class DailyValues implements Serializable
 	String dat = "";
 
 	dat += date.getYear() + 1900;
-
 	dat += getLeadingZero(date.getMonth() + 1, 2);
-
 	dat += getLeadingZero(date.getDate(), 2);
-
 
 	return Integer.parseInt(dat);
 

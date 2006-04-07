@@ -37,7 +37,7 @@ import ggc.datamodels.DailyValues;
 import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
-import ggc.gui.calendar.calendarPane;
+import ggc.gui.calendar.CalendarPane;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 

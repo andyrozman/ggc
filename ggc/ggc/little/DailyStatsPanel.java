@@ -50,7 +50,7 @@ import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
 import ggc.gui.*;
-import ggc.gui.calendar.calendarPane;
+import ggc.gui.calendar.CalendarPane;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
@@ -69,7 +69,7 @@ public class DailyStatsPanel extends JPanel implements ActionListener
     public boolean save_needed = false;
 
 
-    calendarPane calPane;
+    CalendarPane calPane;
 
     JLabel sumIns1, sumIns2, sumIns;
     JLabel avgIns1, avgIns2, avgIns;

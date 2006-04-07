@@ -30,7 +30,9 @@ package ggc.datamodels;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
 import ggc.db.DataBaseHandler;
 import ggc.util.DataAccess;
@@ -67,8 +69,16 @@ public class StatisticValues
 
     public void setDayRange(GregorianCalendar sDay, GregorianCalendar eDay)
     {
+        WeekValues wv = DataAccess.getInstance().getDayStatsRange(sDay, eDay);
+        Hashtable table = wv.getAllValues();
 
-        addDayValues(DataAccess.getInstance().getDayStatsRange(sDay, eDay));
+        for (Enumeration en = table.keys(); en.hasMoreElements(); ) 
+        {
+            String key = (String)en.nextElement();
+            addDayValues((DailyValues)table.get(key));
+        }
+
+        //addDayValues(DataAccess.getInstance().getDayStatsRange(sDay, eDay));
 
 	//dbH.getDayStatsRange(sDay,eDay);
         /*GregorianCalendar gC = new GregorianCalendar();

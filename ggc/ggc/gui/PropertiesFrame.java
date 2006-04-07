@@ -43,7 +43,7 @@ public class PropertiesFrame extends JDialog implements ActionListener
 
     public PropertiesFrame(MainFrame main)
     {
-        super();
+        super(main);
 
 	Toolkit theKit = main.getToolkit();
 	//Toolkit theKit = JFrame.getToolkit();
@@ -59,6 +59,8 @@ public class PropertiesFrame extends JDialog implements ActionListener
         setTitle(m_ic.getMessage("PREFERENCES"));
 
         init();
+
+        this.setVisible(true);
     }
 /*
     public static PropertiesFrame getInstance(MainFrame main)
@@ -78,7 +80,7 @@ public class PropertiesFrame extends JDialog implements ActionListener
     private void init()
     {
         setBounds(200, 200, 600, 500);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+//        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         Dimension dim = new Dimension(80, 20);
 
         prefNode = new DefaultMutableTreeNode(m_ic.getMessage("PREFERENCES"));
@@ -86,10 +88,10 @@ public class PropertiesFrame extends JDialog implements ActionListener
         prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MEDICAL_DATA")));
         prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("COLORS_AND_FONTS")));
         prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("RENDERING_QUALITY")));
-        DefaultMutableTreeNode dataNode = new DefaultMutableTreeNode(m_ic.getMessage("DATA_STORING"));
-        dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MYSQL_SETUP")));
-        dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("TEXTFILE_SETUP")));
-        prefNode.add(dataNode);
+        //DefaultMutableTreeNode dataNode = new DefaultMutableTreeNode(m_ic.getMessage("DATA_STORING"));
+        //dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MYSQL_SETUP")));
+        //dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("TEXTFILE_SETUP")));
+        //prefNode.add(dataNode);
         prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("METER_CONFIGURATION")));
         prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("NUTRITION")));
         /*DefaultMutableTreeNode meterNode = new DefaultMutableTreeNode("Meters");
@@ -179,12 +181,14 @@ public class PropertiesFrame extends JDialog implements ActionListener
         getContentPane().add(prefPane, BorderLayout.CENTER);
     }
 
+    /*
     private void close()
     {
         prefOptionsPane.kill();
         dispose();
         singleton = null;
     }
+    */
 
 
 
@@ -203,7 +207,7 @@ public class PropertiesFrame extends JDialog implements ActionListener
         }
         else if (action.equals("cancel")) 
         {
-            close();
+            this.dispose();
         }
         else if (action.equals("apply")) 
         {

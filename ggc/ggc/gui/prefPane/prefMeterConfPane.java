@@ -39,6 +39,8 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
     private JComboBox comboMeterType;
     private JComboBox comboPortId;
 
+    private boolean error = false;
+
     public prefMeterConfPane()
     {
         init();
@@ -48,29 +50,55 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
     {
         setLayout(new BorderLayout());
 
-        //String[] choicesMeterType = {"GlucoCard"};
-        comboMeterType = new JComboBox(SerialMeterImport.getAvailableMeters());
-        comboPortId = new JComboBox(SerialMeterImport.getAvailableSerialPorts());
+        try
+        {
+            //String[] choicesMeterType = {"GlucoCard"};
+            comboMeterType = new JComboBox(SerialMeterImport.getAvailableMeters());
+            comboPortId = new JComboBox(SerialMeterImport.getAvailableSerialPorts());
 
-        comboMeterType.setSelectedItem(props.getMeterType());
-        comboPortId.setSelectedItem(props.getMeterPort());
-        comboMeterType.addItemListener(this);
-        comboPortId.addItemListener(this);
+            comboMeterType.setSelectedItem(props.getMeterType());
+            comboPortId.setSelectedItem(props.getMeterPort());
+            comboMeterType.addItemListener(this);
+            comboPortId.addItemListener(this);
 
+            JPanel a = new JPanel(new GridLayout(2, 2));
+            a.add(new JLabel(m_ic.getMessage("METER_TYPE")+":"));
+            a.add(comboMeterType);
+            a.add(new JLabel(m_ic.getMessage("PORT_TO_USE")+":"));
+            a.add(comboPortId);
+
+            a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_CONFIGURATION")));
+
+            add(a, BorderLayout.NORTH);
+
+        }
+        catch(Exception ex)
+        {
+            setError();
+        }
+        catch(java.lang.NoClassDefFoundError ex)
+        {
+            setError();
+        }
+
+    }
+
+    public void setError()
+    {
+        System.out.println("EXXXXXXXXXXXXXX");
+        error = true;
         JPanel a = new JPanel(new GridLayout(2, 2));
-        a.add(new JLabel(m_ic.getMessage("METER_TYPE")+":"));
-        a.add(comboMeterType);
-        a.add(new JLabel(m_ic.getMessage("PORT_TO_USE")+":"));
-        a.add(comboPortId);
-
-        a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_CONFIGURATION")));
-
+        a.add(new JLabel(m_ic.getMessage("NO_COM_CLASSES_AVAILABLE")));
         add(a, BorderLayout.NORTH);
     }
 
+
     public void saveProps()
     {
-        props.set("MeterType", comboMeterType.getSelectedItem().toString());
-        props.set("MeterPort", comboPortId.getSelectedItem().toString());
+        if (!error) 
+        {
+            props.set("MeterType", comboMeterType.getSelectedItem().toString());
+            props.set("MeterPort", comboPortId.getSelectedItem().toString());
+        }
     }
 }

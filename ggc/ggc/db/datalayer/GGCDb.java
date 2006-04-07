@@ -61,6 +61,7 @@ import org.hibernate.tool.hbm2ddl.*;
 
 import ggc.GGC;
 import ggc.datamodels.DailyValues;
+import ggc.datamodels.WeekValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.HbA1cValues;
 import ggc.db.DataBaseHandler;
@@ -408,7 +409,7 @@ public class GGCDb
 
             Properties props = new Properties();
 
-            FileInputStream in = new FileInputStream("./GGC_Config.properties");
+            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
             props.load(in);
 
 	    System.out.println(in);
@@ -597,14 +598,17 @@ public class GGCDb
     }
 
 
-    public DailyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
+    public WeekValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
     {
 
 	if (m_loadStatus<2)
 	    return null;
 
 	System.out.println("Hibernate: getDayStatsRange()");
-	DailyValues dV = new DailyValues();
+
+        WeekValues wv = new WeekValues();
+            
+	//DailyValues dV = new DailyValues();
 
 	try 
 	{
@@ -625,7 +629,8 @@ public class GGCDb
 		DayValueH dv = (DayValueH)it.next();
 
 		DailyValuesRow dVR = new DailyValuesRow(dv);
-		dV.setNewRow(dVR);
+                wv.addDayValueRow(dVR);
+		//dV.setNewRow(dVR);
 	    }
 
 	} 
@@ -634,7 +639,7 @@ public class GGCDb
 	    System.err.println(e);
 	}
 
-	return dV;
+	return wv;
     }
 
 

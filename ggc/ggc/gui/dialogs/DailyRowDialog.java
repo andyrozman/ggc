@@ -295,14 +295,26 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             {
                 // add
                 dV.setNewRow(new DailyValuesRow(DateField.getText(),
-                        TimeField.getText(), BGField.getText(), Ins1Field
-                                .getText(), Ins2Field.getText(), BUField
-                                .getText(), ActField.getText(),
+                        TimeField.getText(), 
+                        checkDecimalFields(BGField.getText()), 
+                        checkDecimalFields(Ins1Field.getText()), 
+                        checkDecimalFields(Ins2Field.getText()), 
+                        checkDecimalFields(BUField.getText()), 
+                        ActField.getText(),
                         CommentField.getText()));
                 //mod.fireTableChanged(null);
                 //clearFields();
                 this.m_actionDone = true;
                 this.dispose();
+
+
+                private float bg;
+                private float ins1;
+                private float ins2;
+                private float ch;
+                private String meals_ids;
+                private int act;
+
             }
             else
             {
@@ -330,8 +342,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     {
 	int change = 0;
 
-//	System.out.println(e.getKeyText(e.getKeyCode()));
-
 	if ((e.getKeyCode() == KeyEvent.VK_LEFT)) // || (e.getKeyCode() == KeyEvent.VK_TAB)
 	    change = -1;
 	else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) || (e.getKeyCode() == KeyEvent.VK_TAB))
@@ -341,7 +351,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 	else if (e.getKeyCode() == KeyEvent.VK_UP)
 	    change = -2;
 
-//	System.out.println("Change: " + change);
 
 	if (change==0)
 	    return;
@@ -355,29 +364,29 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 	    if (components[i].equals(cmp))
 	    {
 		search = i;
-//		System.out.println("Search: " + search);
 		break;
 	    }
 	}
 
 	int newres = search+change;
 
-//	System.out.println("New Res: " + newres);
-
 	if (newres<0)
 	{
 	    newres = 8+newres;
-//	    System.out.println("New Res2: " + newres);
 	}
 	else if (newres>8)
 	{
 	    newres = newres-8;
-//	    System.out.println("New Res2: " + newres);
 	}
 
 	components[newres].requestFocus();
 
-//	System.out.println("Key Event: ");
+    }
+
+    public String checkDecimalFields(String field)
+    {
+        field = field.replace(',', '.');
+        return field;
     }
 
 

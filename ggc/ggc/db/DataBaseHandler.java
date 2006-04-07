@@ -30,6 +30,7 @@ package ggc.db;
 
 
 import ggc.datamodels.DailyValues;
+import ggc.datamodels.WeekValues;
 import ggc.datamodels.HbA1cValues;
 import ggc.gui.StatusBar;
 import ggc.util.GGCProperties;
@@ -121,7 +122,7 @@ public abstract class DataBaseHandler
 */
     public abstract DailyValues getDayStats(GregorianCalendar day);
 
-    public abstract DailyValues getDayStatsRange(GregorianCalendar sDay, GregorianCalendar eDay);
+    public abstract WeekValues getDayStatsRange(GregorianCalendar sDay, GregorianCalendar eDay);
 
     public abstract HbA1cValues getHbA1c(GregorianCalendar day);
 

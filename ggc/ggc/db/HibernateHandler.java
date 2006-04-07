@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ggc.datamodels.DailyValues;
+import ggc.datamodels.WeekValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.HbA1cValues;
 import ggc.db.datalayer.GGCDb;
@@ -117,7 +118,7 @@ public class HibernateHandler extends DataBaseHandler
 	return m_db.getDayStats(day);
     }
 
-    public DailyValues getDayStatsRange(GregorianCalendar sDay, GregorianCalendar eDay)
+    public WeekValues getDayStatsRange(GregorianCalendar sDay, GregorianCalendar eDay)
     {
 	if (!getDbInstance())
 	    return null;
