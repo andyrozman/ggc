@@ -412,7 +412,7 @@ public class GGCDb
             FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
             props.load(in);
 
-	    System.out.println(in);
+	    //System.out.println(in);
 
 
             db_num = Integer.parseInt((String)props.get("SELECTED_DB"));
