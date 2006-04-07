@@ -212,6 +212,20 @@ public class DataAccess
     }
 
 
+    // ********************************************************
+    // ******             BG Measurement Type             *****    
+    // ********************************************************
+
+
+    public static void int BG_MGDL = 1;
+    public static void int BG_MMOLL = 2;
+
+
+    public int getBGMeasurmentType()
+    {
+        return 1;
+    }
+
 
     // ********************************************************
     // ******                   Fonts                     *****    
