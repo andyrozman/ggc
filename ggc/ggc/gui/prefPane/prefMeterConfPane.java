@@ -28,10 +28,12 @@
 package ggc.gui.prefPane;
 
 
-import ggc.data.imports.SerialMeterImport;
+import java.awt.*;
 
 import javax.swing.*;
-import java.awt.*;
+
+import ggc.data.imports.SerialMeterImport;
+import ggc.util.DataAccess;
 
 
 public class prefMeterConfPane extends AbstractPrefOptionsPanel
@@ -40,6 +42,8 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
     private JComboBox comboPortId;
 
     private boolean error = false;
+
+    private DataAccess m_da = DataAccess.getInstance();
 
     public prefMeterConfPane()
     {
@@ -50,55 +54,48 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
     {
         setLayout(new BorderLayout());
 
+        //String[] choicesMeterType = {"GlucoCard"};
+        comboMeterType = new JComboBox(m_da.getMeterManager().getAvailableMetersCombo());
+        comboMeterType.setSelectedItem(props.getMeterType());
+        comboMeterType.addItemListener(this);
+
         try
         {
-            //String[] choicesMeterType = {"GlucoCard"};
-            comboMeterType = new JComboBox(SerialMeterImport.getAvailableMeters());
             comboPortId = new JComboBox(SerialMeterImport.getAvailableSerialPorts());
-
-            comboMeterType.setSelectedItem(props.getMeterType());
             comboPortId.setSelectedItem(props.getMeterPort());
-            comboMeterType.addItemListener(this);
             comboPortId.addItemListener(this);
-
-            JPanel a = new JPanel(new GridLayout(2, 2));
-            a.add(new JLabel(m_ic.getMessage("METER_TYPE")+":"));
-            a.add(comboMeterType);
-            a.add(new JLabel(m_ic.getMessage("PORT_TO_USE")+":"));
-            a.add(comboPortId);
-
-            a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_CONFIGURATION")));
-
-            add(a, BorderLayout.NORTH);
-
-        }
-        catch(Exception ex)
-        {
-            setError();
         }
         catch(java.lang.NoClassDefFoundError ex)
         {
-            setError();
         }
 
+        JPanel a = new JPanel(new GridLayout(2, 2));
+        a.add(new JLabel(m_ic.getMessage("METER_TYPE")+":"));
+        a.add(comboMeterType);
+
+        if (comboPortId==null) 
+        {
+            a.add(new JLabel(""));
+            a.add(new JLabel(m_ic.getMessage("PROBLEM_READING_AVAILABLE_PORTS")));
+        }
+        else
+        {
+            a.add(new JLabel(m_ic.getMessage("PORT_TO_USE")+":"));
+            a.add(comboPortId);
+        }
+
+        a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_CONFIGURATION")));
+        add(a, BorderLayout.NORTH);
+
     }
 
-    public void setError()
-    {
-        System.out.println("EXXXXXXXXXXXXXX");
-        error = true;
-        JPanel a = new JPanel(new GridLayout(2, 2));
-        a.add(new JLabel(m_ic.getMessage("NO_COM_CLASSES_AVAILABLE")));
-        add(a, BorderLayout.NORTH);
-    }
 
 
     public void saveProps()
     {
-        if (!error) 
-        {
-            props.set("MeterType", comboMeterType.getSelectedItem().toString());
+        props.set("MeterType", comboMeterType.getSelectedItem().toString());
+        if (comboPortId!=null)
             props.set("MeterPort", comboPortId.getSelectedItem().toString());
-        }
+
     }
 }

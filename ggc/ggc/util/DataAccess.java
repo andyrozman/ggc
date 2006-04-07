@@ -43,13 +43,13 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Properties;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
+import ggc.data.imports.MeterManager;
 import ggc.datamodels.DailyValues;
-import ggc.datamodels.WeekValues;
 import ggc.datamodels.HbA1cValues;
+import ggc.datamodels.WeekValues;
 import ggc.db.datalayer.GGCDb;
 import ggc.db.datalayer.GGCDbLoader;
 import ggc.gui.MainFrame;
@@ -102,6 +102,9 @@ public class DataAccess
     private WeekValues m_dRangeValues = null;
 
 
+    private MeterManager m_meterManager = null;
+
+
 
 
     // ********************************************************
@@ -126,6 +129,7 @@ public class DataAccess
         loadFonts();
 //        loadAvailableLFs();
 //        loadLanguageInfo();
+        m_meterManager = new MeterManager();
 
     } 
 
@@ -187,7 +191,6 @@ public class DataAccess
 
     public void startDb(StatusBar bar)
     {
-        System.out.println("sdtartDb");
 	GGCDbLoader loader = new GGCDbLoader(this, bar);
 	loader.start();
     }
@@ -196,6 +199,16 @@ public class DataAccess
     public GGCDb getDb()
     {
         return m_db;
+    }
+
+    // ********************************************************
+    // ******                   Meters                    *****    
+    // ********************************************************
+
+
+    public MeterManager getMeterManager()
+    {
+        return this.m_meterManager;
     }
 
 

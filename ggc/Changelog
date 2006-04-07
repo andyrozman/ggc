@@ -1,3 +1,20 @@
+2006-04-07 (v0.2.1.3-v0.2.1.5)
+    * Changes to DailyValues, DailyValuesRow (set methods)
+    * Added Weekly values (problem when reading a range of days from database)
+    * Fixed statistics
+    * Changed DatePanels (names), day, month, year
+    * Minor fixes in Properties (removed database contexts, fixed setting of COMs)
+    * Fixes in loading of database, daydata and weekdata are made static, so that we don't need to make so much calls to database
+    * Using DailyRowDailog for adding data
+    * Using DailyRowDailog for editing existing data
+    * Added and fixed strings in GGC_en
+    * Deleted AddRowFrame and EditRowFrame
+    * Fixes over code against changes of DatePanel
+    * More extensive use of DataAccess class (static data instances)
+    * Added MeterManager class, which has definitions of all available meters, which
+      was stored in configuration
+    * Display meters in Configuration
+
 2006-04-07 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * moved ggc.db_tool to ggc.db.db_tool, as per package entries in the files in ggc.db_tool
     * merged changes from GGC_en.properties into GGC_de.properties
@@ -26,6 +43,9 @@
     * Deleted AddRowFrame and EditRowFrame
     * Fixes over code against changes of DatePanel
     * More extensive use of DataAccess class (static data instances)
+    * Added MeterManager class, which has definitions of all available meters, which
+      was stored in configuration
+    * Display meters in Configuration
 
 2006-04-04 (v0.2.1.2) Andy Rozman <andyrozman@users.sourceforge.net>
     * DailyStatsFrame was moved and renamed to dialogs.DailyStatsDialog
