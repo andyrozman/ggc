@@ -30,16 +30,15 @@ URGENT:
 	o  Nutrition db
 	o  Meals db
 	o  Apointments db
-- Adding support for mG/DL (in graphs especially)
+- Adding support for mmol/l (now we have only mG/DL):
+        o  graphs
+        o  database 
+        o  settings
 - Entering daily data: 
         o  Time displayed as selectable entry
         o  Add CH entry through meals
         o  Add daily entry must be changed (GUI is very...)
         o  Message when no row selected
-        o  Edit
-- Bug Fixing:
-        o  edit value
-        o  save value
 - Properties: 
         o  put them into database
         o  move some of them from config to code (classes for meters)
@@ -103,6 +102,8 @@ DONE
         o  After add close window
         o  BG Values must be checked so that comma is also supported and 
            no exception is thrown
+        o  Edit
 - Bug Fixing:
         o  decimal check, use both , and .
-
+        o  edit value
+        o  save value
