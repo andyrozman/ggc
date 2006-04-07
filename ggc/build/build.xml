@@ -42,10 +42,11 @@
 
 
     <target name="copy" description="Copy all needed files">
-        <copy file="${source.dir}/GGC_en.properties" todir="${build.dir}/" overwrite="true" />
-        <copy file="${source.dir}/GGC_si.properties" todir="${build.dir}/" overwrite="true" />
-        <copy file="${source.dir}/GGC_de.properties" todir="${build.dir}/" overwrite="true" />
-<!--        <copy file="${source.dir}/GGC_EN.properties" todir="${build.dir}/" overwrite="true" /> -->
+        <copy todir="${build.dir}/" overwrite="true">
+            <fileset dir="${source.dir}" casesensitive="no">
+                <include name="GGC_*.properties"/>
+            </fileset>
+        </copy>
         <mkdir dir="${build.dir}/icons" />
         <copy todir="${build.dir}/icons" overwrite="true">
             <fileset dir="${source.dir}/icons" casesensitive="no">
@@ -93,9 +94,7 @@
                 <include name="org/**"/>
                 <include name="icons/*.gif"/>
                 <exclude name="ggc/little/**"/>
-                <include name="GGC_en.properties"/>
-                <include name="GGC_si.properties"/>
-                <include name="GGC_de.properties"/>
+                <include name="GGC_*.properties"/>
             </fileset>
         </jar>
     </target>
@@ -116,9 +115,7 @@
                 <include name="ggc/util/**"/>
                 <include name="ggc/view/**"/>
                 <include name="icons/*.gif"/>
-                <include name="GGC_en.properties"/>
-                <include name="GGC_si.properties"/>
-                <include name="GGC_de.properties"/>
+                <include name="GGC_*.properties"/>
             </fileset>
         </jar>
     </target>
