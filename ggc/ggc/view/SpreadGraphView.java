@@ -179,7 +179,7 @@ public class SpreadGraphView extends AbstractGraphView
                 }
 
                 //draw BU
-                float tmpBU = dV.getBUAt(j);
+                float tmpBU = dV.getCHAt(j);
                 if (drawBU && tmpBU != 0) {
                     g2D.setPaint(colorBU);
                     g2D.fillRect(offset - 1, BUtoCoord(tmpBU) - 1, 3, 3);

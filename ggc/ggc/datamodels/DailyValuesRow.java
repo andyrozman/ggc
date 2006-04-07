@@ -98,19 +98,7 @@ public class DailyValuesRow implements Serializable
 
     public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
     {
-	StringTokenizer strtok = new StringTokenizer(date, ".");
-	String dt[] = new String[5];
-	dt[2] = strtok.nextToken();  // day
-	dt[1] = strtok.nextToken();  // month
-	dt[0] = strtok.nextToken();  // year
-
-	strtok = new StringTokenizer(time, ":");
-	dt[3] = strtok.nextToken();  // hour
-	dt[4] = strtok.nextToken();  // minute
-
-	String dt_out = dt[0] + m_da.getLeadingZero(dt[1], 2) + m_da.getLeadingZero(dt[2], 2) + m_da.getLeadingZero(dt[3], 2) + m_da.getLeadingZero(dt[4], 2);
-
-	datetime = Long.parseLong(dt_out);
+	datetime = getDateTimeLong(date, time);
 
 	setValueAt(BG, 1);
 	setValueAt(Ins1, 2);
@@ -118,6 +106,25 @@ public class DailyValuesRow implements Serializable
 	setValueAt(BU, 4);
 	setValueAt(Act, 5);
 	setValueAt(Comment, 6);
+
+    }
+
+
+    public long getDateTimeLong(String date, String time)
+    {
+        StringTokenizer strtok = new StringTokenizer(date, ".");
+        String dt[] = new String[5];
+        dt[2] = strtok.nextToken();  // day
+        dt[1] = strtok.nextToken();  // month
+        dt[0] = strtok.nextToken();  // year
+
+        strtok = new StringTokenizer(time, ":");
+        dt[3] = strtok.nextToken();  // hour
+        dt[4] = strtok.nextToken();  // minute
+
+        String dt_out = dt[0] + m_da.getLeadingZero(dt[1], 2) + m_da.getLeadingZero(dt[2], 2) + m_da.getLeadingZero(dt[3], 2) + m_da.getLeadingZero(dt[4], 2);
+
+        return Long.parseLong(dt_out);
 
     }
 
@@ -230,35 +237,131 @@ public class DailyValuesRow implements Serializable
 	return m_da.getDateTimeAsTimeString(datetime);
     }
 
+
+    public void setDateTime(String date, String time)
+    {
+        datetime = getDateTimeLong(date, time);
+    }
+
+
     public float getBG()
     {
         return bg;
     }
+
+    public void setBG(String val)
+    {
+        setBG(m_da.getFloatValue(val));
+    }
+
+    public void setBG(float val)
+    {
+        if (bg!=val) 
+        {
+            bg = val;
+            changed = true;
+        }
+    }
+
 
     public float getIns1()
     {
         return ins1;
     }
 
+    public void setIns1(String val)
+    {
+        setIns1(m_da.getFloatValue(val));
+    }
+
+    public void setIns1(float val)
+    {
+        if (ins1!=val) 
+        {
+            ins1 = val;
+            changed = true;
+        }
+    }
+
+
     public float getIns2()
     {
         return ins2;
     }
 
-    public float getBE()
+    public void setIns2(String val)
+    {
+        setIns2(m_da.getFloatValue(val));
+    }
+
+    public void setIns2(float val)
+    {
+        if (ins2!=val) 
+        {
+            ins2 = val;
+            changed = true;
+        }
+    }
+
+
+    public float getCH()
     {
         return ch;
     }
+
+
+    public void setCH(String val)
+    {
+        setCH(m_da.getFloatValue(val));
+    }
+
+    public void setCH(float val)
+    {
+        if (ch!=val) 
+        {
+            ch = val;
+            changed = true;
+        }
+    }
+
 
     public int getAct()
     {
         return act;
     }
 
+    public void setAct(String val)
+    {
+        act = m_da.getIntValue(val);
+    }
+
+    public void setAct(int val)
+    {
+        if (act!=val) 
+        {
+            act = val;
+            changed = true;
+        }
+    }
+
+
+
     public String getComment()
     {
         return comment;
     }
+
+    public void setComment(String val)
+    {
+        if (!comment.equals(val)) 
+        {
+            comment = val;
+            changed = true;
+        }
+    }
+
+
+
 
     public boolean hasChanged()
     {

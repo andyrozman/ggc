@@ -137,6 +137,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         this.m_add_action = true;
         //mod = m;
         init();
+        this.setVisible(true);
     }
 
 
@@ -147,21 +148,27 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         //else
             setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
 
-        this.m_add_action = false;
-        sDate = ndr.getDateAsString();
+        sDate = ndr.getDateAsString().replace('/', '.');
         this.m_dailyValuesRow = ndr;
         
         this.m_add_action = false;
         init();
         initValues();
+        this.setVisible(true);
     }
 
 
     public void initValues()
     {
+        System.out.println("initValues");
         // to do
-        
-
+        TimeField.setText(this.m_dailyValuesRow.getTimeAsString());
+        BGField.setText(""+this.m_dailyValuesRow.getBG());
+        Ins1Field.setText(""+this.m_dailyValuesRow.getIns1());
+        Ins2Field.setText(""+this.m_dailyValuesRow.getIns2());
+        BUField.setText(""+this.m_dailyValuesRow.getCH());
+        ActField.setText(""+this.m_dailyValuesRow.getAct());
+        CommentField.setText(this.m_dailyValuesRow.getComment());
     }
 
 
@@ -274,7 +281,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         getContentPane().add(e, BorderLayout.NORTH);
         getContentPane().add(g, BorderLayout.SOUTH);
 
-	this.setVisible(true);
+	
     }
 
 
@@ -306,19 +313,21 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 //clearFields();
                 this.m_actionDone = true;
                 this.dispose();
-
-
-                private float bg;
-                private float ins1;
-                private float ins2;
-                private float ch;
-                private String meals_ids;
-                private int act;
-
             }
             else
             {
                 // edit
+                this.m_dailyValuesRow.setDateTime(DateField.getText(), TimeField.getText()); 
+                this.m_dailyValuesRow.setBG(checkDecimalFields(BGField.getText()));
+                this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText()));
+                this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
+                this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
+                this.m_dailyValuesRow.setAct(ActField.getText());
+                this.m_dailyValuesRow.setComment(CommentField.getText());
+                //mod.fireTableChanged(null);
+                //clearFields();
+                this.m_actionDone = true;
+                this.dispose();
             }
 	}
 

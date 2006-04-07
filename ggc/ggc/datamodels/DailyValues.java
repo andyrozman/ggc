@@ -137,8 +137,8 @@ public class DailyValues implements Serializable
         sumIns2 += dVR.getIns2();
         if (dVR.getIns2() != 0)
             counterIns2++;
-        sumBE += dVR.getBE();
-        if (dVR.getBE() != 0)
+        sumBE += dVR.getCH();
+        if (dVR.getCH() != 0)
             counterBE++;
 
         bOnlyInsert = false;
@@ -183,8 +183,8 @@ public class DailyValues implements Serializable
                     sumIns2 -= dVR.getIns2();
                     counterIns2--;
                 }
-                if (dVR.getBE() != 0) {
-                    sumBE -= dVR.getBE();
+                if (dVR.getCH() != 0) {
+                    sumBE -= dVR.getCH();
                     counterBE--;
                 }
 
@@ -409,9 +409,9 @@ public class DailyValues implements Serializable
         return ((DailyValuesRow)(dataRows.elementAt(row))).getIns2();
     }
 
-    public float getBUAt(int row)
+    public float getCHAt(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getBE();
+        return ((DailyValuesRow)(dataRows.elementAt(row))).getCH();
     }
 
     public int getActAt(int row)
@@ -461,7 +461,7 @@ public class DailyValues implements Serializable
             return 0;
     }
 
-    public float getAvgBE()
+    public float getAvgCH()
     {
         if (counterBE != 0)
             return sumBE / counterBE;
@@ -489,7 +489,7 @@ public class DailyValues implements Serializable
         return sumIns1 + sumIns2;
     }
 
-    public float getSumBE()
+    public float getSumCH()
     {
         return sumBE;
     }
@@ -514,7 +514,7 @@ public class DailyValues implements Serializable
         return counterIns1 + counterIns2;
     }
 
-    public int getBECount()
+    public int getCHCount()
     {
         return counterBE;
     }

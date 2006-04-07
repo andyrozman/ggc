@@ -192,17 +192,17 @@ public class CourseGraphView extends AbstractGraphView
 
             //draw sumBU
             if (firstSumBU) {
-                plSumBU.moveTo(offset, BUtoCoord(dV.getSumBE()));
+                plSumBU.moveTo(offset, BUtoCoord(dV.getSumCH()));
                 firstSumBU = false;
             } else
-                plSumBU.lineTo(offset, BUtoCoord(dV.getSumBE()));
+                plSumBU.lineTo(offset, BUtoCoord(dV.getSumCH()));
 
             //draw sumMeals
             if (firstMeals) {
-                plMeals.moveTo(offset, BUtoCoord(dV.getBECount()));
+                plMeals.moveTo(offset, BUtoCoord(dV.getCHCount()));
                 firstMeals = false;
             } else
-                plMeals.lineTo(offset, BUtoCoord(dV.getBECount()));
+                plMeals.lineTo(offset, BUtoCoord(dV.getCHCount()));
 
             //draw Ins1
             if (firstSumIns1) {
@@ -227,10 +227,10 @@ public class CourseGraphView extends AbstractGraphView
 
             //draw Ins / BU
             if (firstInsPerBU) {
-                plInsPerBU.moveTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumBE()));
+                plInsPerBU.moveTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumCH()));
                 firstInsPerBU = false;
             } else
-                plInsPerBU.lineTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumBE()));
+                plInsPerBU.lineTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumCH()));
 
         }
         if (cGF.getDrawBG()) {

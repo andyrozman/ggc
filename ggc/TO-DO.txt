@@ -27,24 +27,40 @@ URGENT:
         o  Show day
         o  GUI
 - Hibernate for Database handling
-	o  Full Hibernate loading
 	o  Nutrition db
 	o  Meals db
 	o  Apointments db
-	o  Entries (day-values)
 - Adding support for mG/DL (in graphs especially)
 - Entering daily data: 
-        o  After add close window
         o  Time displayed as selectable entry
-        o  BG Values must be checked so that comma is also supported and 
-           no exception is thrown
         o  Add CH entry through meals
         o  Add daily entry must be changed (GUI is very...)
+        o  Message when no row selected
         o  Edit
 - Bug Fixing:
         o  edit value
         o  save value
-        o  decimal check, use both , and .
+- Properties: 
+        o  put them into database
+        o  move some of them from config to code (classes for meters)
+        o  no error if no configuration present
+        o  Default database 
+- Look and feel:
+        o  Loading of selected L&F
+        o  Configuration of L&F       
+
+
+EXTERNAL APPLICATION:
+---------------------
+
+DB TOOL
+- ??
+
+CONVERT DATA
+- File
+- MySQL
+- HSSQL
+- GGC Hibernate 0.2.1.4
 
 
 IN NEAR FUTURE
@@ -62,10 +78,31 @@ IN FAR FUTURE:
 
 
 
+
+
+
+
+
+
+
+===============================================================================
+===============================================================================
 DONE
-====
+===============================================================================
+===============================================================================
+
 + HypersonicSQL Test
 + Nutrition: 
         o  Database
         o  Import
 + ANT Build
+- Hibernate for Database handling
+	o  Full Hibernate loading
+	o  Entries (day-values)
+- Entering daily data: 
+        o  After add close window
+        o  BG Values must be checked so that comma is also supported and 
+           no exception is thrown
+- Bug Fixing:
+        o  decimal check, use both , and .
+

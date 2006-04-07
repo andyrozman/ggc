@@ -1,3 +1,17 @@
+2006-04-07 (v0.2.1.3-v0.2.1.5)
+    * Changes to DailyValues, DailyValuesRow (set methods)
+    * Added Weekly values (problem when reading a range of days from database)
+    * Fixed statistics
+    * Changed DatePanels (names), day, month, year
+    * Minor fixes in Properties (removed database contexts, fixed setting of COMs)
+    * Fixes in loading of database, daydata and weekdata are made static, so that we don't need to make so much calls to database
+    * Using DailyRowDailog for adding data
+    * Using DailyRowDailog for editing existing data
+    * Added and fixed strings in GGC_en
+    * Deleted AddRowFrame and EditRowFrame
+    * Fixes over code against changes of DatePanel
+    * More extensive use of DataAccess class (static data instances)
+
 2006-04-04 (v0.2.1.2) Andy Rozman <andyrozman@users.sourceforge.net>
     * DailyStatsFrame was moved and renamed to dialogs.DailyStatsDialog
     * Adding DailyRowDailog for editing and later adding rows

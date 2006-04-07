@@ -101,12 +101,12 @@ public class StatisticValues
 	dayCounter++;
 
         sumBG += dv.getSumBG();
-        sumBU += dv.getSumBE();
+        sumBU += dv.getSumCH();
         sumIns1 += dv.getSumIns1();
         sumIns2 += dv.getSumIns2();
 
         countBG += dv.getBGCount();
-        countBU += dv.getBECount();
+        countBU += dv.getCHCount();
         countIns1 += dv.getIns1Count();
         countIns2 += dv.getIns2Count();
     }

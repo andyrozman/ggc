@@ -48,6 +48,7 @@ import org.hibernate.sql.Delete;
 
 import ggc.datamodels.DailyStatsTableModel;
 import ggc.datamodels.DailyValues;
+import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
@@ -336,9 +337,9 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         doseIns2.setText(dayData.getIns2Count() + "");
         doseIns.setText(dayData.getInsCount() + "");
 
-        sumBE.setText(df.format(dayData.getSumBE()));
-        avgBE.setText(df.format(dayData.getAvgBE()));
-        meals.setText(dayData.getBECount() + "");
+        sumBE.setText(df.format(dayData.getSumCH()));
+        avgBE.setText(df.format(dayData.getAvgCH()));
+        meals.setText(dayData.getCHCount() + "");
 
         avgBG.setText(df.format(dayData.getAvgBG()));
         stdDev.setText(df.format(dayData.getStdDev()));
@@ -365,7 +366,6 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	if (command.equals("add_row"))
 	{
 	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-	    //AddRowFrame aRF = new AddRowFrame(model, dayData, sf.format(calPane.getSelectedDate()), this);
 
             DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
 
@@ -380,6 +380,24 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	    //SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
 	    //EditRowFrame eRF = EditRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
 	    //aRF.show();
+
+            if (table.getSelectedRow()==-1) 
+            {
+                // message
+                return;
+            }
+
+            DailyValuesRow dvr = (DailyValuesRow)dayData.getRowAt(table.getSelectedRow());
+
+            DailyRowDialog aRF = new DailyRowDialog(dvr, this);
+
+            if (aRF.actionSuccesful()) 
+            {
+                dbH.saveDayStats(dayData);
+                this.model.fireTableChanged(null);
+            }
+
+
 	}
 	else if (command.equals("delete_row"))
 	{

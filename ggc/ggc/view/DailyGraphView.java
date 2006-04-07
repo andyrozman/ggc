@@ -109,7 +109,7 @@ public class DailyGraphView extends AbstractGraphView
             }
 
             //draw BU
-            float tmpBU = dayData.getBUAt(i);
+            float tmpBU = dayData.getCHAt(i);
             if (tmpBU != 0) {
                 int Y = BUtoCoord(tmpBU);
                 g2D.setPaint(props.getColorBU());

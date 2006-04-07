@@ -352,9 +352,9 @@ public class DailyStatsPanel extends JPanel implements ActionListener
         doseIns2.setText(dayData.getIns2Count() + "");
         doseIns.setText(dayData.getInsCount() + "");
 
-        sumBE.setText(df.format(dayData.getSumBE()));
-        avgBE.setText(df.format(dayData.getAvgBE()));
-        meals.setText(dayData.getBECount() + "");
+        sumBE.setText(df.format(dayData.getSumCH()));
+        avgBE.setText(df.format(dayData.getAvgCH()));
+        meals.setText(dayData.getCHCount() + "");
 
         avgBG.setText(df.format(dayData.getAvgBG()));
         stdDev.setText(df.format(dayData.getStdDev()));

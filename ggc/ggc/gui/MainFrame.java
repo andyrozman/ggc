@@ -52,9 +52,9 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public static String version = "0.2.1.4";
-    public static String full_version = "v0.2.1.4";
-    private static String version_date = "6th April 2006";
+    public static String version = "0.2.1.5";
+    public static String full_version = "v0.2.1.5";
+    private static String version_date = "7th April 2006";
 
 
     private I18nControl m_ic = I18nControl.getInstance();        
