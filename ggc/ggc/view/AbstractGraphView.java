@@ -23,11 +23,17 @@
  *  Purpose:  Common methods and variables for all views.
  *
  *  Author:   schultd
+ *  
+ *  MODIFICATIONS:
+ *    - 2006-04-08: RR * changed maxBG to 450 for mg/dl and 25 for mmol
+ *                     * changed minBG to 20 (mg/dl) and 1 (mmol), don't think
+ *                       there are meters around that display less
  */
 
 package ggc.view;
 
 
+import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 
 import javax.swing.*;
@@ -39,11 +45,11 @@ public abstract class AbstractGraphView extends JComponent
     Object oAA, oCR, oTAA, oR, oD, oFM, oI;
 
     GGCProperties props = GGCProperties.getInstance();
+    DataAccess data = DataAccess.getInstance();
 
-    int maxBG = 300;
-    int minBG = 0;
+    int BGunit, maxBG, minBG, BGDiff;
     int counter = 10;
-    int upperSpace = 10, lowerSpace = 30, leftSpace = 40, rightSpace = 30;
+    int upperSpace = 20, lowerSpace = 30, leftSpace = 40, rightSpace = 30;
     float maxGoodBG = props.getTargetHighBG();
     float minGoodBG = props.getTargetLowBG();
 
@@ -58,10 +64,27 @@ public abstract class AbstractGraphView extends JComponent
     float hourWidth = 0;
     float minuteWidth = 0;
     int dayCount = 0;
-    int BGDiff = maxBG - minBG;
+    
+    String unitLabel = "mg/dl";
 
     public AbstractGraphView()
     {
+        BGunit = data.getBGMeasurmentType();
+        switch (BGunit) {
+        case DataAccess.BG_MMOLL:
+            maxBG = 25;
+            minBG = 1;
+            unitLabel = "mmol";
+            break;
+        case DataAccess.BG_MGDL:
+        default:
+            maxBG = 450;
+            minBG = 20;
+            unitLabel = "mg/dl";
+            break;
+        }
+        BGDiff = maxBG - minBG;
+        
         getRenderingQuality();
     }
 

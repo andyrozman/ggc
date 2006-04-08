@@ -217,8 +217,8 @@ public class DataAccess
     // ********************************************************
 
 
-    public static void int BG_MGDL = 1;
-    public static void int BG_MMOLL = 2;
+    public static final int BG_MGDL = 1;
+    public static final int BG_MMOLL = 2;
 
 
     public int getBGMeasurmentType()

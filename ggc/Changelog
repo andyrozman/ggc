@@ -1,10 +1,24 @@
-2006-04-07 (v0.2.1.3-v0.2.1.5)
+2006-04-08 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * started changing AbstractGraphView to make selection of BG unit type possible
+    * added unit to BG axis in DailyGraphView, couldn't do others as I can't access them
+    * DataAccess: "public static void" inf field should've been "public static final"
+    * corrected html in GGC_en.properties and added articles
+    * some more translation in GGC_de.properties
+    * ggc.little.DailyStatsPanel: made changes neccessary due to the deletion of AddRowFrame
+    * added inherited abstract methods to DummyHandler, they return empty objects
+    * MainFrame: made version info final, major formatting changes, as my tab width (4 spaces)
+                 and the obviously used tab width (8 spaces) just didn't mix
+    * changes '-' to '*' in TO-DO.txt to make diff reading easier
+    * added IDEAS
+
+2006-04-07 (v0.2.1.3-v0.2.1.5) Andy Rozman <andyrozman@users.sourceforge.net>
     * Changes to DailyValues, DailyValuesRow (set methods)
     * Added Weekly values (problem when reading a range of days from database)
     * Fixed statistics
     * Changed DatePanels (names), day, month, year
     * Minor fixes in Properties (removed database contexts, fixed setting of COMs)
-    * Fixes in loading of database, daydata and weekdata are made static, so that we don't need to make so much calls to database
+    * Fixes in loading of database, daydata and weekdata are made static, so that we
+      don't need to make so much calls to database
     * Using DailyRowDailog for adding data
     * Using DailyRowDailog for editing existing data
     * Added and fixed strings in GGC_en
@@ -29,23 +43,6 @@
       - made variable names more intuitive assuming the code is correct ;-P
       - added javadoc comment for that method
     * build/build.xml: translation files don't have to be specified individually anymore
-
-2006-04-07 (v0.2.1.3-v0.2.1.5)
-    * Changes to DailyValues, DailyValuesRow (set methods)
-    * Added Weekly values (problem when reading a range of days from database)
-    * Fixed statistics
-    * Changed DatePanels (names), day, month, year
-    * Minor fixes in Properties (removed database contexts, fixed setting of COMs)
-    * Fixes in loading of database, daydata and weekdata are made static, so that we don't need to make so much calls to database
-    * Using DailyRowDailog for adding data
-    * Using DailyRowDailog for editing existing data
-    * Added and fixed strings in GGC_en
-    * Deleted AddRowFrame and EditRowFrame
-    * Fixes over code against changes of DatePanel
-    * More extensive use of DataAccess class (static data instances)
-    * Added MeterManager class, which has definitions of all available meters, which
-      was stored in configuration
-    * Display meters in Configuration
 
 2006-04-04 (v0.2.1.2) Andy Rozman <andyrozman@users.sourceforge.net>
     * DailyStatsFrame was moved and renamed to dialogs.DailyStatsDialog

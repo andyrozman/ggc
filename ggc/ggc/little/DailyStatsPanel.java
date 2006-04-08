@@ -51,6 +51,7 @@ import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
 import ggc.gui.*;
 import ggc.gui.calendar.CalendarPane;
+import ggc.gui.dialogs.DailyRowDialog;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
@@ -380,9 +381,15 @@ public class DailyStatsPanel extends JPanel implements ActionListener
 
 	if (command.equals("add_row"))
 	{
-	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-	    AddRowFrame aRF = new AddRowFrame(model, dayData, sf.format(System.currentTimeMillis()), m_little);
-	    //aRF.show();
+        SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+
+        DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), m_little);
+
+        if (aRF.actionSuccesful()) 
+        {
+            dbH.saveDayStats(dayData);
+            this.model.fireTableChanged(null);
+        }
 	}
 	else if (command.equals("delete_row"))
 	{

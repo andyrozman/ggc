@@ -4,47 +4,47 @@ TO-DO LIST
 
 URGENT:
 -------
-- Printing: 
+* Printing: 
         o  Data gather
         o  Simple print sheet
         o  Detailed print sheet
-- Appointments: 
+* Appointments: 
         o  Create GUI
         o  Database entries
         o  Add/Edit/Delete
         o  View
-- Nutrition: 
+* Nutrition: 
         o  Config
         o  View nutrition data in tree
-- Meals: 
+* Meals: 
         o  Config
         o  GUI Tree
         o  Database
         o  Add/Edit/Delete
-- GGC Little: 
+* GGC Little: 
         o  Add/Edit/Delete
         o  Daily graph
         o  Show day
         o  GUI
-- Hibernate for Database handling
+* Hibernate for Database handling
 	o  Nutrition db
 	o  Meals db
 	o  Apointments db
-- Adding support for mmol/l (now we have only mG/DL):
+* Adding support for mmol/l (now we have only mG/DL):
         o  graphs
         o  database 
         o  settings
-- Entering daily data: 
+* Entering daily data: 
         o  Time displayed as selectable entry
         o  Add CH entry through meals
         o  Add daily entry must be changed (GUI is very...)
         o  Message when no row selected
-- Properties: 
+* Properties: 
         o  put them into database
         o  move some of them from config to code (classes for meters)
         o  no error if no configuration present
         o  Default database 
-- Look and feel:
+* Look and feel:
         o  Loading of selected L&F
         o  Configuration of L&F       
 
@@ -53,27 +53,27 @@ EXTERNAL APPLICATION:
 ---------------------
 
 DB TOOL
-- ??
+* ??
 
 CONVERT DATA
-- File
-- MySQL
-- HSSQL
-- GGC Hibernate 0.2.1.4
+* File
+* MySQL
+* HSSQL
+* GGC Hibernate 0.2.1.4
 
 
 IN NEAR FUTURE
 --------------
-- I18n Language: German
-- I18n Language: French
-- I18n Language: Italian
-- I18n Language: ...
-- Language check
+* I18n Language: German
+* I18n Language: French
+* I18n Language: Italian
+* I18n Language: ...
+* Language check
 
 
 IN FAR FUTURE:
 --------------
-- Pump support
+* Pump support
 
 
 
@@ -90,20 +90,20 @@ DONE
 ===============================================================================
 ===============================================================================
 
-+ HypersonicSQL Test
-+ Nutrition: 
+* HypersonicSQL Test
+* Nutrition: 
         o  Database
         o  Import
-+ ANT Build
-- Hibernate for Database handling
+* ANT Build
+* Hibernate for Database handling
 	o  Full Hibernate loading
 	o  Entries (day-values)
-- Entering daily data: 
+* Entering daily data: 
         o  After add close window
         o  BG Values must be checked so that comma is also supported and 
            no exception is thrown
         o  Edit
-- Bug Fixing:
+* Bug Fixing:
         o  decimal check, use both , and .
         o  edit value
         o  save value

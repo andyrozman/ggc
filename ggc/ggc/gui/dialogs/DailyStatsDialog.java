@@ -53,7 +53,6 @@ import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
 import ggc.gui.MainFrame;
-import ggc.gui.AddRowFrame;
 import ggc.gui.DailyGraphFrame;
 import ggc.gui.calendar.CalendarPane;
 import ggc.util.DataAccess;

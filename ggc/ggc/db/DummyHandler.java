@@ -20,90 +20,82 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *  Filename: DummyHandler
- *  Purpose:  A Default Handler who does nothing.
+ *  Purpose:  A Default Handler that does nothing.
  *
  *  Author:   schultd
  */
 
 package ggc.db;
 
-
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.HbA1cValues;
+import ggc.datamodels.WeekValues;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
+public class DummyHandler extends DataBaseHandler {
+    public HbA1cValues getHbA1c(GregorianCalendar day) {
+        return (new HbA1cValues());
+    }
 
-public class DummyHandler extends DataBaseHandler
-{
+    public DailyValues getDayStats(GregorianCalendar day) {
+        return (new DailyValues());
+    }
+
+    public WeekValues getDayStatsRange(GregorianCalendar sDay,
+            GregorianCalendar eDay) {
+        return (new WeekValues());
+    }
 
     public static DummyHandler singleton = null;
 
-    public static DataBaseHandler getInstance()
-    {
+    public static DataBaseHandler getInstance() {
         if (singleton == null)
             singleton = new DummyHandler();
         return singleton;
     }
 
-
-    private DummyHandler()
-    {
-	//dbStatus = "Dummy Handler []";
-	dbName = "";
-	dbType = "Dummy Db:";
+    private DummyHandler() {
+        // dbStatus = "Dummy Handler []";
+        dbName = "";
+        dbType = "Dummy Db:";
     }
 
-
-    public void connectDb()
-    {
+    public void connectDb() {
         connected = false;
-	setStatus();
+        setStatus();
     }
 
-    public boolean testDb()
-    {
-	return true;
+    public boolean testDb() {
+        return true;
     }
 
-
-    public void initDb()
-    {
+    public void initDb() {
     }
 
-    public void disconnectDb()
-    {
-	connected = false;
-	setStatus();
+    public void disconnectDb() {
+        connected = false;
+        setStatus();
     }
 
-
-    public boolean isInitialized()
-    {
-	return false;
-    }
-    
-
-
-
-    public boolean dateTimeExists(Date date)
-    {
+    public boolean isInitialized() {
         return false;
     }
 
-    public DailyValues getDayStats(Date day)
-    {
+    public boolean dateTimeExists(Date date) {
+        return false;
+    }
+
+    public DailyValues getDayStats(Date day) {
         return null;
     }
 
-    public HbA1cValues getHbA1c(Date day)
-    {
+    public HbA1cValues getHbA1c(Date day) {
         return null;
     }
 
-    public void saveDayStats(DailyValues dV)
-    {
+    public void saveDayStats(DailyValues dV) {
     }
-
 
 }

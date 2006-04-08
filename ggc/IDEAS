@@ -1,0 +1,6 @@
+This file should be filled with any ideas that pop into your heads and be discussed on the
+ggc-development mailing list or wherever appropriate.
+
+ * How about putting the languages in XML files. This would make formatting easier and allow
+   for the use of dedicated XML editors. Does anybody by any chance have an idea how this
+   could be implemented

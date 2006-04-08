@@ -27,7 +27,6 @@
 
 package ggc.view;
 
-
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
@@ -36,21 +35,17 @@ import java.util.GregorianCalendar;
 import ggc.datamodels.DailyValues;
 import ggc.util.DataAccess;
 
-
-public class DailyGraphView extends AbstractGraphView
-{
+public class DailyGraphView extends AbstractGraphView {
     DailyValues dayData;
 
-    public DailyGraphView()
-    {
+    public DailyGraphView() {
         super();
         dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
-//	    DailyValues.getInstance();
+        // DailyValues.getInstance();
     }
 
-    public void paint(Graphics g)
-    {
-        Graphics2D g2D = (Graphics2D)g;
+    public void paint(Graphics g) {
+        Graphics2D g2D = (Graphics2D) g;
 
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oAA);
         g2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, oCR);
@@ -66,13 +61,11 @@ public class DailyGraphView extends AbstractGraphView
         drawValues(g2D);
     }
 
-    public void setDailyValues(DailyValues dV)
-    {
+    public void setDailyValues(DailyValues dV) {
         dayData = dV;
     }
 
-    protected void drawValues(Graphics2D g2D)
-    {
+    protected void drawValues(Graphics2D g2D) {
         if (dayData == null)
             return;
 
@@ -81,7 +74,7 @@ public class DailyGraphView extends AbstractGraphView
         for (int i = 0; i < dayData.getRowCount(); i++) {
             int X = TimetoCoord(dayData.getDateTimeAt(i));
 
-            //draw BG
+            // draw BG
             float tmpBG = dayData.getBGAt(i);
             if (tmpBG != 0) {
                 int Y = BGtoCoord(tmpBG);
@@ -92,49 +85,53 @@ public class DailyGraphView extends AbstractGraphView
                 tmpC++;
             }
 
-            //draw Ins1
+            // draw Ins1
             float tmpIns1 = dayData.getIns1At(i);
             if (tmpIns1 != 0) {
                 int Y = InstoCoord(tmpIns1);
                 g2D.setPaint(props.getColorIns1());
-                g2D.fillRect(X - 4, Y, 3, (int)drawableHeight - Y + upperSpace);
+                g2D
+                        .fillRect(X - 4, Y, 3, (int) drawableHeight - Y
+                                + upperSpace);
             }
 
-            //draw Ins2
+            // draw Ins2
             float tmpIns2 = dayData.getIns2At(i);
             if (tmpIns2 != 0) {
                 int Y = InstoCoord(tmpIns2);
                 g2D.setPaint(props.getColorIns2());
-                g2D.fillRect(X - 1, Y, 3, (int)drawableHeight - Y + upperSpace);
+                g2D
+                        .fillRect(X - 1, Y, 3, (int) drawableHeight - Y
+                                + upperSpace);
             }
 
-            //draw BU
+            // draw BU
             float tmpBU = dayData.getCHAt(i);
             if (tmpBU != 0) {
                 int Y = BUtoCoord(tmpBU);
                 g2D.setPaint(props.getColorBU());
-                g2D.fillRect(X + 1, Y, 3, (int)drawableHeight - Y + upperSpace);
+                g2D
+                        .fillRect(X + 1, Y, 3, (int) drawableHeight - Y
+                                + upperSpace);
             }
 
         }
 
-        //draw avg BG
+        // draw avg BG
         g2D.setPaint(props.getColorAvgBG());
         int tmp = BGtoCoord(dayData.getAvgBG());
         g2D.drawLine(leftSpace, tmp, viewWidth - rightSpace, tmp);
 
-        //paint BG
+        // paint BG
         g2D.setPaint(props.getColorBG());
         g2D.draw(polyline);
     }
 
-    protected void drawFramework(Graphics2D g2D)
-    {
+    protected void drawFramework(Graphics2D g2D) {
         Dimension dim = getSize();
         int h = dim.height, w = dim.width;
 
         int markPos = 0;
-        int diffBG = maxBG - minBG;
         int diffH = h - lowerSpace - upperSpace;
         int diffW = w - rightSpace - leftSpace;
 
@@ -145,9 +142,12 @@ public class DailyGraphView extends AbstractGraphView
 
         g2D.setPaint(Color.black);
         g2D.drawLine(leftSpace, upperSpace, leftSpace, h - lowerSpace);
+
+        // add unit label to line
+        g2D.drawString(unitLabel, 5, upperSpace - 10);
         for (int i = 0; i <= counter; i++) {
-            markPos = upperSpace + i * (diffH) / counter;
-            g2D.drawString((maxBG - (diffBG) / counter * i) + "", 5, markPos + 5);
+            markPos = upperSpace + i * diffH / counter;
+            g2D.drawString((maxBG - BGDiff / counter * i) + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }
         g2D.drawLine(leftSpace, h - lowerSpace, w - rightSpace, h - lowerSpace);
@@ -156,22 +156,29 @@ public class DailyGraphView extends AbstractGraphView
             g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace + 5);
             g2D.drawString(4 * i + ":00", markPos - 10, h - lowerSpace + 20);
         }
-        //Target Zone
-        Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxGoodBG), drawableWidth, BGtoCoord(minGoodBG) - BGtoCoord(maxGoodBG));
+        
+        // Target Zone
+        Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1,
+                BGtoCoord(maxGoodBG), drawableWidth, BGtoCoord(minGoodBG)
+                        - BGtoCoord(maxGoodBG));
         g2D.setPaint(props.getColorTargetBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
-        //High Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(props.getHighBG()) - BGtoCoord(maxBG));
+        // High Zone
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG),
+                drawableWidth, BGtoCoord(props.getHighBG()) - BGtoCoord(maxBG));
         g2D.setPaint(props.getColorHighBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
-        //Low Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(props.getLowBG()), drawableWidth, BGtoCoord(0) - BGtoCoord(props.getLowBG()) - 1);
+        // Low Zone
+        rect1 = new Rectangle2D.Float(leftSpace + 1,
+                BGtoCoord(props.getLowBG()), drawableWidth, BGtoCoord(0)
+                        - BGtoCoord(props.getLowBG()) - 1);
         g2D.setPaint(props.getColorLowBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
+
     }
 }
