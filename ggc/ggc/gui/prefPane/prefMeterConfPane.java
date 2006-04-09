@@ -40,6 +40,7 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
 {
     private JComboBox comboMeterType;
     private JComboBox comboPortId;
+    private JLabel    meterPicture;
 
     private boolean error = false;
 
@@ -55,7 +56,7 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
         setLayout(new BorderLayout());
 
         //String[] choicesMeterType = {"GlucoCard"};
-        comboMeterType = new JComboBox(m_da.getMeterManager().getAvailableMetersCombo());
+        comboMeterType = new JComboBox(m_da.getMeterManager().getAvailableMeters());
         comboMeterType.setSelectedItem(props.getMeterType());
         comboMeterType.addItemListener(this);
 
@@ -84,8 +85,21 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
             a.add(comboPortId);
         }
 
+        // picture
+        
+        JPanel pa = new JPanel(new GridLayout(1, 1));
+        meterPicture = new JLabel(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
+
+//        System.out.println(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
+//        System.out.println(meterPicture);
+
+        pa.add(meterPicture);
+        pa.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_PICTURE")));
+
         a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_CONFIGURATION")));
         add(a, BorderLayout.NORTH);
+
+        add(pa, BorderLayout.CENTER);
 
     }
 

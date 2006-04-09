@@ -14,7 +14,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
     public String getApplicationDatabaseConfig()
     {
-	return "GGC_Config.properties";
+	return "../data/GGC_Config.properties";
     }
 
     public String toString()

@@ -41,12 +41,14 @@ public class MeterManager
     protected I18nControl m_ic = I18nControl.getInstance();
 
     public String[] meter_names = {
+        m_ic.getMessage("NONE"),
         "GlucoCard", 
         "EuroFlash",
         "FreeStyle"
     };
 
     public String[] meter_classes = {
+        null,
         "ggc.data.imports.GlucoCardImport",
         "ggc.data.imports.EuroFlashImport",
         "ggc.data.imports.FreeStyleImport",
@@ -54,9 +56,10 @@ public class MeterManager
 
 
     public ImageIcon[] meter_pictures = {
-        null,
-        null,
-        null,
+        new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
+        new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
+        new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
+        new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
     };
 
 
@@ -102,7 +105,7 @@ public class MeterManager
         return this.meter_classes[index];
     }
 
-
+/*
     public Object[] getAvailableMetersCombo()
     {
         Object oo[] = new Object[this.meter_names.length+1];
@@ -115,6 +118,6 @@ public class MeterManager
 
         return oo;
     }
-
+*/
 
 }
