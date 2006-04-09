@@ -4,3 +4,12 @@ ggc-development mailing list or wherever appropriate.
  * How about putting the languages in XML files. This would make formatting easier and allow
    for the use of dedicated XML editors. Does anybody by any chance have an idea how this
    could be implemented
+   
+Yes and this looks like you are trying to invent hot water. Bundle files are a very fine 
+idea for languages beacuse they are simple, and easy changed. Look at the mess M$ made 
+with C# and language files. If you would use XML you would then have to implement all 
+things yourself, and make things harder for us developers. Now anybody can take language 
+file and translates it himself, or adds keywords or does anything he wants with it. Why 
+would you want to use XMLs anyway? It doesn't nothing good. Langauge files in 95% don't 
+need any formating, plus in 5% they do, it wouldn't work in XML, since you can't use tags
+in XMLs. Plus you would have to process this files before use.
