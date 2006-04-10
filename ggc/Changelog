@@ -1,3 +1,6 @@
+2006-04-10 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * new function getDisplayedBG() in DataAccess, not used yet
+
 2006-04-08 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * started changing AbstractGraphView to make selection of BG unit type possible
     * added unit to BG axis in DailyGraphView, couldn't do others as I can't access them

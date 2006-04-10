@@ -79,7 +79,7 @@ public class DataAccess
 //    String allDbs[] = null;
 
 
-    public static String pathPrefix = ".";
+    public static final String pathPrefix = ".";
 
     public I18nControl m_i18n = I18nControl.getInstance();
 
@@ -218,14 +218,33 @@ public class DataAccess
 
 
     public static final int BG_MGDL = 1;
-    public static final int BG_MMOLL = 2;
+    public static final int BG_MMOL = 2;
 
 
-    public int getBGMeasurmentType()
+    public static int getBGMeasurmentType()
     {
-        return 1;
+        return BG_MGDL;
     }
 
+    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f; 
+    private static final float MMOL_TO_MGDL_FACTOR = 18.018f; 
+    
+    /**
+     * Depending on the return value of <code>getBGMeasurmentType()</code>, either
+     * return the mg/dl or the mmol/l value of the database's value. Default is mg/dl.
+     * @param dbValue - The database's value
+     * @return the BG in either mg/dl or mmol/l
+     */
+    public static float getDisplayedBG (int dbValue) {
+        switch (getBGMeasurmentType()) {
+        case BG_MMOL:
+            // TODO: ?? do I have to convert dbValue to float??
+            return (dbValue * MGDL_TO_MMOL_FACTOR);
+        case BG_MGDL:
+        default:
+            return dbValue;
+        }
+    }
 
     // ********************************************************
     // ******                   Fonts                     *****    
@@ -1126,4 +1145,3 @@ public class DataAccess
 
 
 }
-

@@ -13,3 +13,15 @@ file and translates it himself, or adds keywords or does anything he wants with 
 would you want to use XMLs anyway? It doesn't nothing good. Langauge files in 95% don't 
 need any formating, plus in 5% they do, it wouldn't work in XML, since you can't use tags
 in XMLs. Plus you would have to process this files before use.
+
+Gee, it was a *thought*, not even an intention. :-)
+A couple of responses:
+ * I have so no idea about all this C#/.Net stuff, I couldn't even begin to see what you
+   mean here
+ * I was hoping for some pre-existing package,
+ * The main point was really having decent editors available, as opposed to no proper editor
+   for java properties files.
+ * The one thing that really get's under my skin about java properties is the fact that
+   you basically have to use ascii+unicode escapes to get special characters, whereas you
+   could specify encoding in XML
+ * OK, idea scrapped, I'd still like to do something about the previous point, though

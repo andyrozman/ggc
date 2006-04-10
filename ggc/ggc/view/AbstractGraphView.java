@@ -45,7 +45,6 @@ public abstract class AbstractGraphView extends JComponent
     Object oAA, oCR, oTAA, oR, oD, oFM, oI;
 
     GGCProperties props = GGCProperties.getInstance();
-    DataAccess data = DataAccess.getInstance();
 
     int BGunit, maxBG, minBG, BGDiff;
     int counter = 10;
@@ -69,12 +68,12 @@ public abstract class AbstractGraphView extends JComponent
 
     public AbstractGraphView()
     {
-        BGunit = data.getBGMeasurmentType();
+        BGunit = DataAccess.getBGMeasurmentType();
         switch (BGunit) {
-        case DataAccess.BG_MMOLL:
+        case DataAccess.BG_MMOL:
             maxBG = 25;
             minBG = 1;
-            unitLabel = "mmol";
+            unitLabel = "mmol/l";
             break;
         case DataAccess.BG_MGDL:
         default:
