@@ -28,7 +28,7 @@
 package ggc.gui.prefPane;
 
 
-import ggc.view.DailyGraphView;
+import ggc.gui.view.DailyGraphView;
 
 import javax.swing.*;
 import java.awt.*;

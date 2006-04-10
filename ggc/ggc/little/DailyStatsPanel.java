@@ -49,7 +49,7 @@ import ggc.datamodels.DailyValues;
 import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
-import ggc.gui.*;
+import ggc.gui.dialogs.*;
 import ggc.gui.calendar.CalendarPane;
 import ggc.gui.dialogs.DailyRowDialog;
 import ggc.util.DataAccess;
@@ -81,7 +81,7 @@ public class DailyStatsPanel extends JPanel implements ActionListener
 
     JLabel lblDate;
     JButton saveButton;
-    private DailyGraphFrame dailyGraphWindow;
+    private DailyGraphDialog dailyGraphWindow;
     DailyValues dayData;
     private DataBaseHandler dbH = DataBaseHandler.getInstance();
 //    private static DailyStatsFrame singleton = null;

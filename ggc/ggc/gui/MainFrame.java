@@ -46,6 +46,10 @@ import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
 
 import ggc.gui.dialogs.DailyStatsDialog;
+//import ggc.gui.dialogs.DailyStatsDialog;
+import ggc.gui.dialogs.SpreadGraphDialog;
+import ggc.gui.dialogs.CourseGraphDialog;
+import ggc.gui.dialogs.FrequencyGraphDialog;
 
 public class MainFrame extends JFrame {
 
@@ -417,15 +421,15 @@ public class MainFrame extends JFrame {
             } 
 	    else if (command.equals("view_course")) 
 	    {
-                new CourseGraphFrame(MainFrame.this); //.showMe();
+                new CourseGraphDialog(MainFrame.this); //.showMe();
             } 
 	    else if (command.equals("view_spread")) 
 	    {
-		new SpreadGraphFrame(MainFrame.this);
+		new SpreadGraphDialog(MainFrame.this);
             } 
 	    else if (command.equals("view_freq")) 
 	    {
-                new FrequencyGraphFrame(MainFrame.this); //.showMe();
+                new FrequencyGraphDialog(MainFrame.this); //.showMe();
             } 
 	    else if (command.equals("view_hba1c")) 
 	    {

@@ -41,7 +41,7 @@ import ggc.datamodels.HbA1cValues;
 import ggc.db.DataBaseHandler;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
-import ggc.view.HbA1cView;
+import ggc.gui.view.HbA1cView;
 
 
 public class HbA1cFrame extends JFrame

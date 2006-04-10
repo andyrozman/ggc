@@ -53,11 +53,14 @@ import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 import ggc.db.DataBaseHandler;
 import ggc.gui.MainFrame;
-import ggc.gui.DailyGraphFrame;
+import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.calendar.CalendarPane;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
+
+import ggc.gui.dialogs.*;
+
 
 public class DailyStatsDialog extends JDialog implements ActionListener
 {
@@ -83,12 +86,13 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
     JLabel lblDate;
     JButton saveButton;
-    private DailyGraphFrame dailyGraphWindow;
+    private DailyGraphDialog dailyGraphWindow;
     DailyValues dayData;
     private DataBaseHandler dbH = DataBaseHandler.getInstance();
     //private static DailyStatsFrame singleton = null;
 
     private GGCProperties props = GGCProperties.getInstance();
+
 
     public DailyStatsDialog(JFrame parent)
     {

@@ -53,6 +53,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ggc.gui.dialogs.*;
 
 public class DailyStatsControlsPanel extends JPanel //implements ActionListener
 {
@@ -72,7 +73,7 @@ public class DailyStatsControlsPanel extends JPanel //implements ActionListener
 
     JLabel lblDate;
     JButton saveButton;
-    private DailyGraphFrame dailyGraphWindow;
+    private DailyGraphDialog dailyGraphWindow;
     DailyValues dayData;
     private DataBaseHandler dbH = DataBaseHandler.getInstance();
     //private static DailyStatsFrame singleton = null;
