@@ -42,23 +42,27 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
-public class FrequencyGraphFrame extends JFrame
+public class FrequencyGraphFrame extends JDialog implements ActionListener
 {
     private I18nControl m_ic = I18nControl.getInstance();    
 
     private static FrequencyGraphView fGV;
-    private static FrequencyGraphFrame singleton = null;
+    //private static FrequencyGraphFrame singleton = null;
 
     private GGCProperties props = GGCProperties.getInstance();
     private DateRangeSelectionPanel dRS;
 
-    public FrequencyGraphFrame()
-    {
-        super("CourseGraphFrame");
-        setTitle(m_ic.getMessage("COURSEGRAPHFRAME"));
 
-        setBounds(200, 400, 700, 300);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+    public FrequencyGraphFrame(JFrame parent)
+    {
+        super(parent, "CourseGraphFrame", true);
+        setTitle(m_ic.getMessage("FREQGRAPHFRAME"));
+
+	Rectangle rec = parent.getBounds();
+	int x = rec.x + (rec.width/2);
+	int y = rec.y + (rec.height/2);
+
+	setBounds(x-350, y-250, 700, 500);
         addWindowListener(new CloseListener());
 
         fGV = new FrequencyGraphView();
@@ -80,24 +84,15 @@ public class FrequencyGraphFrame extends JFrame
         Dimension dim = new Dimension(80, 20);
         JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
-        drawButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setNewDateRange();
-                redraw();
-            }
-        });
+	drawButton.setActionCommand("draw");
+	drawButton.addActionListener(this);
+
         JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
-        closeButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                closeMe();
-            }
-        });
-        buttonPanel.add(drawButton);
+	closeButton.setActionCommand("close");
+	closeButton.addActionListener(this);
+
+	buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);
 
         cPanel.add(dRS, BorderLayout.WEST);
@@ -111,6 +106,7 @@ public class FrequencyGraphFrame extends JFrame
         fGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
+/*
     public static void showMe()
     {
         if (singleton == null)
@@ -139,12 +135,20 @@ public class FrequencyGraphFrame extends JFrame
         if (singleton != null)
             singleton.repaint();
     }
+*/
+
+    private void closeDialog()
+    {
+	fGV = null;
+	this.dispose();
+    }
+
 
     private class CloseListener extends WindowAdapter
     {
         public void windowClosing(WindowEvent e)
         {
-            closeMe();
+	    closeDialog();
         }
     }
 
@@ -154,15 +158,19 @@ public class FrequencyGraphFrame extends JFrame
      */
     public void actionPerformed(ActionEvent e) 
     {
-        String action = e.getActionCommand();
+	String action = e.getActionCommand();
 
-        if (action.equals("")) 
-        {
-        }
-        else
-            System.out.println("Unknown command: " + action);
-
-
+	if (action.equals("draw")) 
+	{
+	    setNewDateRange();
+	    fGV.repaint(this.getBounds());
+	}
+	else if (action.equals("close")) 
+	{
+	    closeDialog();
+	}
+	else
+	    System.out.println("FrequencyGraphFrame: Unknown command: " + action);
     }
 
 }

@@ -52,6 +52,7 @@ import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
 
 import ggc.gui.dialogs.DailyStatsDialog;
+import ggc.gui.dialogs.CourseGraphDialog;
 
 
 public class GGCLittle extends JFrame
@@ -648,15 +649,15 @@ public class GGCLittle extends JFrame
             } 
             else if (command.equals("view_course")) 
             {
-                new CourseGraphFrame(getMyParent()); //.showMe();
+                new CourseGraphDialog(getMyParent()); //.showMe();
             } 
             else if (command.equals("view_spread")) 
             {
-                SpreadGraphFrame.showMe();
+		new SpreadGraphFrame(getMyParent());
             } 
             else if (command.equals("view_freq")) 
             {
-                FrequencyGraphFrame.showMe();
+                new FrequencyGraphFrame(getMyParent());
             } 
             else if (command.equals("view_hba1c")) 
             {

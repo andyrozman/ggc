@@ -316,7 +316,8 @@ public class MainFrame extends JFrame {
         return this;
     }
 
-    public void setDbActions(boolean opened) {
+    public void setDbActions(boolean opened) 
+    {
         viewDailyAction.setEnabled(opened);
         viewSpreadGraphAction.setEnabled(opened);
         viewCourseGraphAction.setEnabled(opened);
@@ -326,29 +327,34 @@ public class MainFrame extends JFrame {
         dbH.setStatus();
     }
 
-    private void close() {
+    private void close() 
+    {
         //write to prefs to file on close.
         props.write();
-        dbH.disconnectDb();
+        //dbH.disconnectDb();
+	m_da.deleteInstance();
         dispose();
         System.exit(0);
     }
 
-    private JMenuItem addMenuItem(JMenu menu, Action action) {
+    private JMenuItem addMenuItem(JMenu menu, Action action) 
+    {
         JMenuItem item = menu.add(action);
 
-        KeyStroke keystroke = (KeyStroke) action
-                .getValue(action.ACCELERATOR_KEY);
+        KeyStroke keystroke = (KeyStroke) action.getValue(action.ACCELERATOR_KEY);
         if (keystroke != null)
             item.setAccelerator(keystroke);
+
         return item;
     }
 
-    private void addToolBarSpacer() {
+    private void addToolBarSpacer() 
+    {
         toolBar.addSeparator();
     }
 
-    private JButton addToolBarButton(Action action) {
+    private JButton addToolBarButton(Action action) 
+    {
         final JButton button = toolBar.add(action);
 
         button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -401,20 +407,31 @@ public class MainFrame extends JFrame {
 
             String command = e.getActionCommand();
 
-            if (command.equals("file_quit")) {
+            if (command.equals("file_quit")) 
+	    {
                 close();
-            } else if (command.equals("view_daily")) {
-                //DailyStatsDialog df = 
+            } 
+	    else if (command.equals("view_daily")) 
+	    {
                 new DailyStatsDialog(getMyParent());
-            } else if (command.equals("view_course")) {
+            } 
+	    else if (command.equals("view_course")) 
+	    {
                 new CourseGraphFrame(MainFrame.this); //.showMe();
-            } else if (command.equals("view_spread")) {
-                SpreadGraphFrame.showMe();
-            } else if (command.equals("view_freq")) {
-                FrequencyGraphFrame.showMe();
-            } else if (command.equals("view_hba1c")) {
+            } 
+	    else if (command.equals("view_spread")) 
+	    {
+		new SpreadGraphFrame(MainFrame.this);
+            } 
+	    else if (command.equals("view_freq")) 
+	    {
+                new FrequencyGraphFrame(MainFrame.this); //.showMe();
+            } 
+	    else if (command.equals("view_hba1c")) 
+	    {
                 HbA1cFrame.showMe();
-            } else if (command.equals("option_pref")) {
+            } 
+	    else if (command.equals("option_pref")) {
                 new PropertiesFrame(MainFrame.this);
             } else if (command.equals("read_meter")) {
                 new ReadMeterDialog(MainFrame.this);

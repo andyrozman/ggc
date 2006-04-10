@@ -42,13 +42,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
-public class SpreadGraphFrame extends JFrame
+public class SpreadGraphFrame extends JDialog implements ActionListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();
 
     private static SpreadGraphView sGV;
-    private static SpreadGraphFrame singleton = null;
+    //private static SpreadGraphFrame singleton = null;
 
     private GGCProperties props = GGCProperties.getInstance();
 
@@ -59,15 +59,22 @@ public class SpreadGraphFrame extends JFrame
     private JCheckBox chkConnect;
     private DateRangeSelectionPanel dRS;
 
-    public SpreadGraphFrame()
+    public SpreadGraphFrame(JFrame parent)
     {
         super();
         setTitle(m_ic.getMessage("SPREAD_GRAPH"));
-        setBounds(200, 400, 700, 300);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+	Rectangle rec = parent.getBounds();
+	int x = rec.x + (rec.width/2);
+	int y = rec.y + (rec.height/2);
+
+
+	setBounds(x-350, y-250, 700, 500);
+
+
         addWindowListener(new CloseListener());
 
-        sGV = new SpreadGraphView();
+        sGV = new SpreadGraphView(this);
         getContentPane().add(sGV, BorderLayout.CENTER);
 
         JPanel controlPanel = initControlPanel();
@@ -97,23 +104,13 @@ public class SpreadGraphFrame extends JFrame
         Dimension dim = new Dimension(80, 20);
         JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
-        drawButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setNewDateRange();
-                redraw();
-            }
-        });
+	drawButton.setActionCommand("draw");
+	drawButton.addActionListener(this);
+
         JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
-        closeButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                closeMe();
-            }
-        });
+	closeButton.setActionCommand("close");
+	closeButton.addActionListener(this);
         buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);
 
@@ -130,13 +127,15 @@ public class SpreadGraphFrame extends JFrame
         sGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
+    /*
     public static void showMe()
     {
         if (singleton == null)
             singleton = new SpreadGraphFrame();
         singleton.show();
-    }
+    }*/
 
+/*
     public static void closeMe()
     {
         if (singleton != null) {
@@ -145,19 +144,23 @@ public class SpreadGraphFrame extends JFrame
             sGV = null;
         }
     }
+    */
 
+/*
     public static SpreadGraphFrame getInstance()
     {
         if (singleton == null)
             singleton = new SpreadGraphFrame();
         return singleton;
     }
+*/
 
+    /*
     public static void redraw()
     {
         if (singleton != null)
             singleton.repaint();
-    }
+    }*/
 
     public boolean getDrawBG()
     {
@@ -184,13 +187,23 @@ public class SpreadGraphFrame extends JFrame
         return chkConnect.isSelected();
     }
 
+
+    private void closeDialog()
+    {
+	sGV = null;
+	this.dispose();
+    }
+
+
+
     private class CloseListener extends WindowAdapter
     {
         public void windowClosing(WindowEvent e)
         {
-            closeMe();
+            closeDialog();
         }
     }
+
 
 
     /**
@@ -198,15 +211,20 @@ public class SpreadGraphFrame extends JFrame
      */
     public void actionPerformed(ActionEvent e) 
     {
-        String action = e.getActionCommand();
+	String action = e.getActionCommand();
 
-        if (action.equals("")) 
-        {
-        }
-        else
-            System.out.println("Unknown command: " + action);
-
-
+	if (action.equals("draw")) 
+	{
+	    setNewDateRange();
+	    sGV.repaint(this.getBounds());
+	}
+	else if (action.equals("close")) 
+	{
+	    closeDialog();
+	    //this.dispose();
+	}
+	else
+	    System.out.println("SpreadGraphFrame: Unknown command: " + action);
     }
 
 
