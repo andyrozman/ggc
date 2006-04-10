@@ -1,3 +1,9 @@
+2006-04-10 (v0.2.1.7) Andy Rozman <andyrozman@users.sourceforge.net>
+    * moved ggc.view.* to ggc.gui.view.*
+    * Renamed and made as JDialog: CourseGraphFrame, DailyGraphFrame, FrequenceGraphFrame,
+      SpreadGraphFrame, and fixed.
+	
+
 2006-04-10 (v0.2.1.6) Andy Rozman <andyrozman@users.sourceforge.net>
     * Some bug fixes in Graphs. Now graphs are displayed. This code is not finished
       yet, but it's now usable without getting any exceptions.
