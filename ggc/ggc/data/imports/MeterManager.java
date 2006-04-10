@@ -56,10 +56,10 @@ public class MeterManager
 
 
     public ImageIcon[] meter_pictures = {
+        new ImageIcon(getClass().getResource("/icons/noMeter.gif")),
         new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
-        new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
-        new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
-        new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
+        new ImageIcon(getClass().getResource("/icons/euroflash.gif")),
+        new ImageIcon(getClass().getResource("/icons/freestyle.gif")),
     };
 
 

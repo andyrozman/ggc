@@ -39,18 +39,21 @@ import java.awt.geom.Rectangle2D;
 
 public class CourseGraphView extends AbstractGraphView
 {
-    GlucoValues gV = null;
+    private GlucoValues gV = null;
+    private CourseGraphFrame m_cGF = null;
 
-    public CourseGraphView()
+    public CourseGraphView(CourseGraphFrame parent)
     {
         super();
+        this.m_cGF = parent;
         dayCount = 0;
     }
 
-    public CourseGraphView(GlucoValues gV)
+    public CourseGraphView(GlucoValues gV, CourseGraphFrame parent)
     {
-        this();
+        this(parent);
         this.gV = gV;
+        //this.m_cGF = parent;
         dayCount = gV.getDayCount();
     }
 
@@ -134,7 +137,7 @@ public class CourseGraphView extends AbstractGraphView
 
     protected void drawValues(Graphics2D g2D)
     {
-        CourseGraphFrame cGF = CourseGraphFrame.getInstance();
+        //CourseGraphFrame cGF = CourseGraphFrame.getInstance();
 
         GeneralPath plBG = new GeneralPath();
         //GeneralPath plAvgBGDay = new GeneralPath();
@@ -185,7 +188,7 @@ public class CourseGraphView extends AbstractGraphView
             //                firstAvgBGDay = false;
             //            } else
             //                plAvgBGDay.lineTo(offset, BGtoCoord(dV.getAvgBG()));
-            if (cGF.getDrawAvgBGDay()) {
+            if (m_cGF.getDrawAvgBGDay()) {
                 int tmp = BGtoCoord(dV.getAvgBG());
                 g2D.drawLine((int)multiWidth + leftSpace, tmp, (int)(multiWidth + dayWidthC + leftSpace), tmp);
             }
@@ -233,7 +236,7 @@ public class CourseGraphView extends AbstractGraphView
                 plInsPerBU.lineTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumCH()));
 
         }
-        if (cGF.getDrawBG()) {
+        if (m_cGF.getDrawBG()) {
             g2D.setPaint(props.getColorBG());
             g2D.draw(plBG);
         }
@@ -241,27 +244,27 @@ public class CourseGraphView extends AbstractGraphView
         //            g2D.setPaint(props.getColorAvgBG());
         //            g2D.draw(plAvgBGDay);
         //        }
-        if (cGF.getDrawSumBU()) {
+        if (m_cGF.getDrawSumBU()) {
             g2D.setPaint(props.getColorBU());
             g2D.draw(plSumBU);
         }
-        if (cGF.getDrawMeals()) {
+        if (m_cGF.getDrawMeals()) {
             g2D.setPaint(props.getColorBU());
             g2D.draw(plMeals);
         }
-        if (cGF.getDrawSumIns1()) {
+        if (m_cGF.getDrawSumIns1()) {
             g2D.setPaint(props.getColorIns1());
             g2D.draw(plSumIns1);
         }
-        if (cGF.getDrawSumIns2()) {
+        if (m_cGF.getDrawSumIns2()) {
             g2D.setPaint(props.getColorIns2());
             g2D.draw(plSumIns2);
         }
-        if (cGF.getDrawSumIns()) {
+        if (m_cGF.getDrawSumIns()) {
             g2D.setPaint(props.getColorIns());
             g2D.draw(plSumIns);
         }
-        if (cGF.getDrawInsPerBU()) {
+        if (m_cGF.getDrawInsPerBU()) {
             g2D.setPaint(props.getColorInsPerBU());
             g2D.draw(plInsPerBU);
         }

@@ -28,6 +28,17 @@
 package ggc.gui;
 
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.*;
+
+import com.sun.corba.se.impl.orbutil.graph.Graph;
+import com.sun.org.apache.bcel.internal.classfile.Unknown;
+
 import ggc.datamodels.GlucoValues;
 import ggc.gui.calendar.DateRangeSelectionPanel;
 import ggc.util.GGCProperties;
@@ -35,15 +46,7 @@ import ggc.util.I18nControl;
 import ggc.view.CourseGraphView;
 
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-
-public class CourseGraphFrame extends JFrame
+public class CourseGraphFrame extends JDialog implements ActionListener //JFrame
 {
 
     private I18nControl m_ic = I18nControl.getInstance();    
@@ -64,15 +67,15 @@ public class CourseGraphFrame extends JFrame
     private DateRangeSelectionPanel dRS;
 
 
-    public CourseGraphFrame()
+    public CourseGraphFrame(JFrame parent)
     {
-        super("Course Graph");
+        super(parent, "Course Graph", true);
         setTitle(m_ic.getMessage("COURSE_GRAPH"));
-        setBounds(200, 400, 700, 300);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setBounds(200, 200, 700, 500);
+        //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-        cGV = new CourseGraphView();
+        cGV = new CourseGraphView(this);
         getContentPane().add(cGV, BorderLayout.CENTER);
 
         JPanel controlPanel = initControlPanel();
@@ -102,23 +105,25 @@ public class CourseGraphFrame extends JFrame
         Dimension dim = new Dimension(80, 20);
         JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
+        drawButton.setActionCommand("draw");
+        drawButton.addActionListener(this);
+/*
         drawButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 setNewDateRange();
-                redraw();
+                cGV.repaint(this.getBounds());
+
+                //this.invalidate();
+                //this.repaint();
+                //redraw();
             }
-        });
+        }); */
         JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
-        closeButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                closeMe();
-            }
-        });
+        closeButton.setActionCommand("close");
+        closeButton.addActionListener(this);
         buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);
 
@@ -134,13 +139,15 @@ public class CourseGraphFrame extends JFrame
         cGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
+    /*
     public static void showMe()
     {
         if (singleton == null)
             singleton = new CourseGraphFrame();
         singleton.show();
     }
-
+    */
+/*
     public static void closeMe()
     {
         if (singleton != null) {
@@ -148,20 +155,23 @@ public class CourseGraphFrame extends JFrame
             singleton = null;
             cGV = null;
         }
-    }
+        this.dispose();
+    } */
 
+    /*
     public static CourseGraphFrame getInstance()
     {
         if (singleton == null)
             singleton = new CourseGraphFrame();
         return singleton;
-    }
+    }*/
 
+    /*
     public static void redraw()
     {
         if (singleton != null)
             singleton.repaint();
-    }
+    }*/
 
     public boolean getDrawBG()
     {
@@ -207,7 +217,8 @@ public class CourseGraphFrame extends JFrame
     {
         public void windowClosing(WindowEvent e)
         {
-            closeMe();
+            //closeMe();
+            //this.dispose();
         }
     }
 
@@ -219,11 +230,18 @@ public class CourseGraphFrame extends JFrame
     {
         String action = e.getActionCommand();
 
-        if (action.equals("")) 
+
+        if (action.equals("draw")) 
         {
+            setNewDateRange();
+            cGV.repaint(this.getBounds());
+        }
+        else if (action.equals("close")) 
+        {
+            this.dispose();
         }
         else
-            System.out.println("Unknown command: " + action);
+            System.out.println("CourseGraphFrame: Unknown command: " + action);
 
 
     }

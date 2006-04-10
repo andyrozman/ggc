@@ -50,11 +50,11 @@ import ggc.gui.dialogs.DailyStatsDialog;
 public class MainFrame extends JFrame {
 
     // Version information
-    public static final String version = "0.2.1.5";
+    public static final String version = "0.2.1.6";
 
     public static final String full_version = "v" + version;
 
-    private static final String version_date = "7th April 2006";
+    private static final String version_date = "10th April 2006";
 
     private I18nControl m_ic = I18nControl.getInstance();
 
@@ -407,7 +407,7 @@ public class MainFrame extends JFrame {
                 //DailyStatsDialog df = 
                 new DailyStatsDialog(getMyParent());
             } else if (command.equals("view_course")) {
-                CourseGraphFrame.showMe();
+                new CourseGraphFrame(MainFrame.this); //.showMe();
             } else if (command.equals("view_spread")) {
                 SpreadGraphFrame.showMe();
             } else if (command.equals("view_freq")) {

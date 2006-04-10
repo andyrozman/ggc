@@ -33,6 +33,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
+//import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 import javax.swing.event.EventListenerList;
 
@@ -44,7 +47,8 @@ import ggc.util.DataAccess;
 
 public class GlucoValues extends DailyValues
 {
-    Vector dayValues = null;
+//    ArrayList dayValues = null;
+        Vector dayValues = null;
 
     private EventListenerList listenerList = new EventListenerList();
 
@@ -53,13 +57,27 @@ public class GlucoValues extends DailyValues
     public GlucoValues()
     {
         dayValues = new Vector();
+        //dayValues = new ArrayList();
     }
 
     public GlucoValues(GregorianCalendar sDate, GregorianCalendar eDate)
     {
         this();
 
-        dayValues.add(DataAccess.getInstance().getDayStatsRange(sDate, eDate));
+        //dayValues.add(DataAccess.getInstance().getDayStatsRange(sDate, eDate));
+
+
+        WeekValues wv = DataAccess.getInstance().getDayStatsRange(sDate, eDate);
+        Hashtable table = wv.getAllValues();
+
+        for (Enumeration en = table.keys(); en.hasMoreElements(); ) 
+        {
+            String key = (String)en.nextElement();
+            addDayValues((DailyValues)table.get(key));
+        }
+
+
+
 /*
         GregorianCalendar gC = new GregorianCalendar();
         gC.setTime(sDate);
@@ -71,6 +89,19 @@ public class GlucoValues extends DailyValues
             gC.add(Calendar.DATE, 1);
         } */
     }
+
+
+    private void addDayValues(DailyValues dv)
+    {
+        //System.out.println("DailyValues: " + dv);
+
+        for (int i=0; i<dv.getRowCount(); i++) 
+        {
+            addRow((DailyValuesRow)dv.getRowAt(i));
+        }
+
+    }
+
 
     public void addRow(DailyValuesRow dRow)
     {

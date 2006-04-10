@@ -1,3 +1,10 @@
+2006-04-10 (v0.2.1.6) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Some bug fixes in Graphs. Now graphs are displayed. This code is not finished
+      yet, but it's now usable without getting any exceptions.
+    * Configuration of meters now displays meters correctly
+    * Added Time calculation methods in DataAccess (we got wrong time as 
+      GregorianCalendar and database returned nothing).
+
 2006-04-10 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * new function getDisplayedBG() in DataAccess, not used yet
 

@@ -54,6 +54,10 @@ public class DateRangeSelectionPanel extends JPanel
     private JSpinner spinnerEnd;
     private JSpinner spinnerStart;
 
+    private GregorianCalendar gc_end = null;
+    private GregorianCalendar gc_start = null;
+
+
     private SpinnerDateModel endSpinnerDateModel = new SpinnerDateModel();
     private SpinnerDateModel startSpinnerDateModel = new SpinnerDateModel();
 
@@ -68,7 +72,7 @@ public class DateRangeSelectionPanel extends JPanel
 
     public DateRangeSelectionPanel()
     {
-        endSpinnerDateModel.setValue(new GregorianCalendar());
+        this(new GregorianCalendar(), null);
         iRadioGroupState = ONE_MONTH;
         calcStartDate();
         init();
@@ -76,34 +80,55 @@ public class DateRangeSelectionPanel extends JPanel
 
     public DateRangeSelectionPanel(int flag)
     {
-        endSpinnerDateModel.setValue(new GregorianCalendar());
+        this(new GregorianCalendar(), null);
         iRadioGroupState = flag;
         calcStartDate();
         init();
     }
 
-    public DateRangeSelectionPanel(Date endDate)
+    public DateRangeSelectionPanel(GregorianCalendar endDate)
     {
-        endSpinnerDateModel.setValue(endDate);
+        this(new GregorianCalendar(), null);
         iRadioGroupState = ONE_MONTH;
         calcStartDate();
         init();
     }
 
-    public DateRangeSelectionPanel(Date endDate, int flag)
+    public DateRangeSelectionPanel(GregorianCalendar endDate, int flag)
     {
-        endSpinnerDateModel.setValue(endDate);
+        this(endDate, null);
+        //endSpinnerDateModel.setValue(endDate);
         iRadioGroupState = flag;
         calcStartDate();
         init();
     }
 
+/*
     public DateRangeSelectionPanel(Date endDate, Date startDate)
     {
         endSpinnerDateModel.setValue(endDate);
         startSpinnerDateModel.setValue(startDate);
         iRadioGroupState = CUSTOM;
     }
+    */
+
+
+    public DateRangeSelectionPanel(GregorianCalendar endDate, GregorianCalendar startDate)
+    {
+        if (endDate!=null) 
+        {
+            endSpinnerDateModel.setValue(endDate.getTime());
+            this.gc_end = endDate;
+        }
+
+        if (startDate!=null) 
+        {
+            startSpinnerDateModel.setValue(startDate.getTime());
+            this.gc_start = startDate;
+        }
+        iRadioGroupState = CUSTOM;
+    }
+
 
 
     private void init()
@@ -176,20 +201,21 @@ public class DateRangeSelectionPanel extends JPanel
         if (iRadioGroupState == 3)
             return;
 
-        GregorianCalendar gc = (GregorianCalendar)getEndDate().clone();
+        //if (gc_start==null) 
+        gc_start = (GregorianCalendar)gc_end.clone();
 
         switch (iRadioGroupState) {
             case ONE_WEEK:
-                gc.add(Calendar.WEEK_OF_YEAR, -1);
+                gc_start.add(Calendar.WEEK_OF_YEAR, -1);
                 break;
             case ONE_MONTH:
-                gc.add(Calendar.MONTH, -1);
+                gc_start.add(Calendar.MONTH, -1);
                 break;
             case THREE_MONTHS:
-                gc.add(Calendar.MONTH, -3);
+                gc_start.add(Calendar.MONTH, -3);
         }
 
-        startSpinnerDateModel.setValue(gc);
+        startSpinnerDateModel.setValue(gc_start.getTime());
     }
 
     private class RadioListener extends AbstractAction

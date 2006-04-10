@@ -612,9 +612,13 @@ public class GGCDb
 
 	try 
 	{
+            //System.out.println("Start " + start);
+
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String sDay = sdf.format(start.getTime());
-	    String eDay = sdf.format(end.getTime());
+	    String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
+                //sdf.format(start.getTime());
+	    String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
+                //sdf.format(end.getTime());
 
 	    Query q = getSession().createQuery("SELECT dv from " + 
 					       "ggc.db.hibernate.DayValueH as dv " +
@@ -636,7 +640,7 @@ public class GGCDb
 	} 
 	catch (Exception e) 
 	{
-	    System.err.println(e);
+	    System.err.println("gteDayRange:" + e);
 	}
 
 	return wv;

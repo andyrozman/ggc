@@ -29,6 +29,7 @@ package ggc.gui.prefPane;
 
 
 import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -59,6 +60,8 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
         comboMeterType = new JComboBox(m_da.getMeterManager().getAvailableMeters());
         comboMeterType.setSelectedItem(props.getMeterType());
         comboMeterType.addItemListener(this);
+
+        System.out.println(props.getMeterType());
 
         try
         {
@@ -93,6 +96,8 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
 //        System.out.println(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
 //        System.out.println(meterPicture);
 
+        System.out.println(props.getMeterType());
+
         pa.add(meterPicture);
         pa.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_PICTURE")));
 
@@ -103,6 +108,16 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
 
     }
 
+
+    public void itemStateChanged(ItemEvent e)
+    {
+        changed = true;
+        meterPicture.setIcon(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
+
+            //= new JLabel(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
+        System.out.println("changedEvent");
+
+    }
 
 
     public void saveProps()

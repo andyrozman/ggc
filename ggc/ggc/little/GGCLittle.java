@@ -648,7 +648,7 @@ public class GGCLittle extends JFrame
             } 
             else if (command.equals("view_course")) 
             {
-                CourseGraphFrame.showMe();
+                new CourseGraphFrame(getMyParent()); //.showMe();
             } 
             else if (command.equals("view_spread")) 
             {

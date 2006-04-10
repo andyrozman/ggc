@@ -839,6 +839,36 @@ public class DataAccess
 
     }
 
+    // 1 = Db Date: yyyyMMdd
+    // 2 = Db Full: yyyyMMddHHMM (24h format)
+    public String getDateTimeStringFromGregorianCalendar(GregorianCalendar gc, int type)
+    {
+        String st = "";
+
+        if (gc.get(GregorianCalendar.YEAR)<1000) 
+        {
+            st+= gc.get(GregorianCalendar.YEAR)+1900;
+        }
+        else
+        {
+            st+= gc.get(GregorianCalendar.YEAR);
+        }
+
+        st+= getLeadingZero(gc.get(GregorianCalendar.MONTH)+1, 2);
+        st+= getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2);
+
+        if (type==2) 
+        {
+            st+= getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2);
+            st+= getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
+
+        }
+
+        System.out.println(st);
+
+        return st;
+    }
+
 
 
 
