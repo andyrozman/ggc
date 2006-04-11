@@ -62,8 +62,8 @@ public class GeneralInfoPanel extends AbstractInfoPanel
 
     public void refreshInfo()
     {
-        lblName.setText(props.getUserName());
-        lblIns1.setText(props.getIns1Name());
-        lblIns2.setText(props.getIns2Name());
+        lblName.setText(m_da.getSettings().getUserName());
+        lblIns1.setText(m_da.getSettings().getIns1Name());
+        lblIns2.setText(m_da.getSettings().getIns2Name());
     }
 }

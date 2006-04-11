@@ -15,6 +15,9 @@ public class ColorSchemeH implements Serializable {
     private String name;
 
     /** nullable persistent field */
+    private int custom_type;
+
+    /** nullable persistent field */
     private int color_bg;
 
     /** nullable persistent field */
@@ -45,8 +48,9 @@ public class ColorSchemeH implements Serializable {
     private int color_ch;
 
     /** full constructor */
-    public ColorSchemeH(String name, int color_bg, int color_bg_avg, int color_bg_low, int color_bg_high, int color_bg_target, int color_ins, int color_ins1, int color_ins2, int color_ins_perbu, int color_ch) {
+    public ColorSchemeH(String name, int custom_type, int color_bg, int color_bg_avg, int color_bg_low, int color_bg_high, int color_bg_target, int color_ins, int color_ins1, int color_ins2, int color_ins_perbu, int color_ch) {
         this.name = name;
+        this.custom_type = custom_type;
         this.color_bg = color_bg;
         this.color_bg_avg = color_bg_avg;
         this.color_bg_low = color_bg_low;
@@ -77,6 +81,14 @@ public class ColorSchemeH implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getCustom_type() {
+        return this.custom_type;
+    }
+
+    public void setCustom_type(int custom_type) {
+        this.custom_type = custom_type;
     }
 
     public int getColor_bg() {

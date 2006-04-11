@@ -66,6 +66,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 {
     
     private I18nControl m_ic = I18nControl.getInstance();    
+    private DataAccess m_da = DataAccess.getInstance();
 
     DailyStatsTableModel model = null;
     JScrollPane resultsPane;
@@ -91,7 +92,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
     private DataBaseHandler dbH = DataBaseHandler.getInstance();
     //private static DailyStatsFrame singleton = null;
 
-    private GGCProperties props = GGCProperties.getInstance();
+    //private GGCProperties props = GGCProperties.getInstance();
 
 
     public DailyStatsDialog(JFrame parent)
@@ -135,25 +136,23 @@ public class DailyStatsDialog extends JDialog implements ActionListener
     private void init()
     {
         setBounds(150, 150, 550, 500);
-        //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        //addWindowListener(new CloseListener());
 
         //Panel for Insulin Stats
         JPanel InsPanel = new JPanel(new GridLayout(3, 6));
         InsPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN")+":"));
 
-        InsPanel.add(new JLabel(props.getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_da.getSettings().getIns1Abbr() + ":"));
         InsPanel.add(sumIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + props.getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + m_da.getSettings().getIns1Abbr() + ":"));
         InsPanel.add(avgIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + props.getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + m_da.getSettings().getIns1Abbr() + ":"));
         InsPanel.add(doseIns1 = new JLabel());
 
-        InsPanel.add(new JLabel(props.getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_da.getSettings().getIns2Abbr() + ":"));
         InsPanel.add(sumIns2 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + props.getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + m_da.getSettings().getIns2Abbr() + ":"));
         InsPanel.add(avgIns2 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + props.getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + m_da.getSettings().getIns2Abbr() + ":"));
         InsPanel.add(doseIns2 = new JLabel());
 
         InsPanel.add(new JLabel(m_ic.getMessage("TOTAL")+":"));

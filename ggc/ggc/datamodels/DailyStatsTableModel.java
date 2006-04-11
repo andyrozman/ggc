@@ -40,19 +40,18 @@ import ggc.util.GGCProperties;
 public class DailyStatsTableModel extends AbstractTableModel
 {
     DailyValues dayData;
-    GGCProperties props = GGCProperties.getInstance();
     DataAccess m_da = DataAccess.getInstance();
 
     public DailyStatsTableModel(DailyValues dayData)
     {
         this.dayData = dayData;
-//        fireTableChanged(null);
+        fireTableChanged(null);
     }
 
     public void setDailyValues(DailyValues dayData)
     {
         this.dayData = dayData;
-//        fireTableChanged(null);
+        fireTableChanged(null);
     }
 
     public int getColumnCount()
@@ -90,9 +89,9 @@ public class DailyStatsTableModel extends AbstractTableModel
     public String getColumnName(int column)
     {
         if (column == 2)
-            return props.getIns1Abbr();
+            return m_da.getSettings().getIns1Abbr();
         if (column == 3)
-            return props.getIns2Abbr();
+            return m_da.getSettings().getIns2Abbr();
 
         return dayData.getColumnName(column);
     }
@@ -116,6 +115,6 @@ public class DailyStatsTableModel extends AbstractTableModel
     public void setValueAt(Object aValue, int row, int column)
     {
         dayData.setValueAt(aValue, row, column);
-        //fireTableChanged(null);
+        fireTableChanged(null);
     }
 }

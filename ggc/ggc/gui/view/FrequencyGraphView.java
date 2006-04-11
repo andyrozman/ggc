@@ -147,17 +147,17 @@ public class FrequencyGraphView extends AbstractGraphView
             g2D.drawString(i + "", markPos - 10, viewHeight - lowerSpace + 20);
         }
 
-        int lower = (int)props.getLowBG();
-        int upper = (int)props.getHighBG();
+        int lower = (int)m_da.getSettings().getLowBG();
+        int upper = (int)m_da.getSettings().getHighBG();
 
-        g2D.setPaint(props.getColorLowBG());
+        g2D.setPaint(m_da.getSettings().getColorLowBG());
         g2D.fillRect(leftSpace + 1, upperSpace, lower, (int)drawableHeight);
 
-        g2D.setPaint(props.getColorTargetBG());
-        g2D.fillRect((int)(leftSpace + props.getTargetLowBG()), upperSpace, (int)(props.getTargetHighBG() - props.getTargetLowBG()), (int)drawableHeight);
+        g2D.setPaint(m_da.getSettings().getColorTargetBG());
+        g2D.fillRect((int)(leftSpace + m_da.getSettings().getTargetLowBG()), upperSpace, (int)(m_da.getSettings().getTargetHighBG() - m_da.getSettings().getTargetLowBG()), (int)drawableHeight);
 
-        g2D.setPaint(props.getColorHighBG());
-        g2D.fillRect((int)(leftSpace + props.getHighBG()), upperSpace, (int)(drawableWidth - props.getHighBG()), (int)drawableHeight);
+        g2D.setPaint(m_da.getSettings().getColorHighBG());
+        g2D.fillRect((int)(leftSpace + m_da.getSettings().getHighBG()), upperSpace, (int)(drawableWidth - m_da.getSettings().getHighBG()), (int)drawableHeight);
 
     }
 
@@ -173,7 +173,7 @@ public class FrequencyGraphView extends AbstractGraphView
                 g2D.drawLine(leftSpace + i + 1, viewHeight - lowerSpace, leftSpace + i + 1, (int)(viewHeight - lowerSpace - values[i] * unitHeight));
             }
 
-            g2D.setPaint(props.getColorAvgBG());
+            g2D.setPaint(m_da.getSettings().getColorAvgBG());
             g2D.drawLine(leftSpace + 1 + avgBG, viewHeight - lowerSpace, leftSpace + 1 + avgBG, upperSpace);
         }
     }

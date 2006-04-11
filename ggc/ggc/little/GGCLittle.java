@@ -80,7 +80,7 @@ public class GGCLittle extends JFrame
 
     public static boolean developer_version = false;
 
-    GGCProperties props = GGCProperties.getInstance();
+    //GGCProperties props = GGCProperties.getInstance();
 
     /**
      *   Static definitions (Look and Feel)
@@ -387,7 +387,7 @@ public class GGCLittle extends JFrame
     private void close()
     {
         //write to prefs to file on close.
-        props.write();
+        //props.write();
 	dbH.disconnectDb();
         dispose();
         System.exit(0);

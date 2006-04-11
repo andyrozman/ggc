@@ -45,8 +45,6 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
 
     private boolean error = false;
 
-    private DataAccess m_da = DataAccess.getInstance();
-
     public prefMeterConfPane()
     {
         init();
@@ -58,15 +56,15 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
 
         //String[] choicesMeterType = {"GlucoCard"};
         comboMeterType = new JComboBox(m_da.getMeterManager().getAvailableMeters());
-        comboMeterType.setSelectedItem(props.getMeterType());
+        comboMeterType.setSelectedItem(m_da.getSettings().getMeterType());
         comboMeterType.addItemListener(this);
 
-        System.out.println(props.getMeterType());
+        //System.out.println(props.getMeterType());
 
         try
         {
             comboPortId = new JComboBox(SerialMeterImport.getAvailableSerialPorts());
-            comboPortId.setSelectedItem(props.getMeterPort());
+            comboPortId.setSelectedItem(m_da.getSettings().getMeterPort());
             comboPortId.addItemListener(this);
         }
         catch(java.lang.NoClassDefFoundError ex)
@@ -89,21 +87,14 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
         }
 
         // picture
-        
         JPanel pa = new JPanel(new GridLayout(1, 1));
         meterPicture = new JLabel(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
-
-//        System.out.println(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
-//        System.out.println(meterPicture);
-
-        System.out.println(props.getMeterType());
 
         pa.add(meterPicture);
         pa.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_PICTURE")));
 
         a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_CONFIGURATION")));
         add(a, BorderLayout.NORTH);
-
         add(pa, BorderLayout.CENTER);
 
     }
@@ -113,18 +104,15 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
     {
         changed = true;
         meterPicture.setIcon(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
-
-            //= new JLabel(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
-        System.out.println("changedEvent");
-
     }
 
 
     public void saveProps()
     {
+	/*
         props.set("MeterType", comboMeterType.getSelectedItem().toString());
         if (comboPortId!=null)
             props.set("MeterPort", comboPortId.getSelectedItem().toString());
-
+*/
     }
 }

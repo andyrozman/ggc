@@ -32,23 +32,26 @@ import ggc.util.I18nControl;
 import javax.swing.*;
 import java.awt.*;
 
-public class prefGeneralPane extends AbstractPrefOptionsPanel {
+public class prefGeneralPane extends AbstractPrefOptionsPanel 
+{
     private JTextField fieldUserName;
 
     private JComboBox langBox;
 
-    public prefGeneralPane() {
+    public prefGeneralPane() 
+    {
         init();
     }
 
-    private void init() {
+    private void init() 
+    {
         JPanel a = new JPanel(new GridLayout(2, 2));
         langBox = new JComboBox(I18nControl.getAvailableLanguages());
 
-        langBox.setSelectedItem(props.getLanguage());
+        langBox.setSelectedItem(m_da.getSettings().getLanguage());
 
         a.add(new JLabel(m_ic.getMessage("YOUR_NAME") + ":"));
-        a.add(fieldUserName = new JTextField(props.getUserName(), 10));
+        a.add(fieldUserName = new JTextField(m_da.getSettings().getUserName(), 10));
 
         a.add(new JLabel(m_ic.getMessage("YOUR_LANGUAGE") + ":"));
         a.add(langBox);
@@ -62,10 +65,13 @@ public class prefGeneralPane extends AbstractPrefOptionsPanel {
         add(c);
     }
 
-    public void saveProps() {
+    public void saveProps() 
+    {
+	/*
         props.set("UserName", fieldUserName.getText());
         props.set("Language", langBox.getSelectedItem().toString());
 
-        m_ic.setLanguage();
+        m_ic.setLanguage(); 
+	*/
     }
 }

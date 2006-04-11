@@ -28,29 +28,33 @@
 package ggc.gui.dialogs;
 
 
-import ggc.datamodels.GlucoValues;
-import ggc.gui.calendar.DateRangeSelectionPanel;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-import ggc.gui.view.SpreadGraphView;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.*;
+
+import ggc.datamodels.GlucoValues;
+import ggc.gui.calendar.DateRangeSelectionPanel;
+import ggc.gui.view.SpreadGraphView;
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
+
 
 public class SpreadGraphDialog extends JDialog implements ActionListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();
+    private DataAccess m_da = DataAccess.getInstance();
 
     private static SpreadGraphView sGV;
     //private static SpreadGraphFrame singleton = null;
 
-    private GGCProperties props = GGCProperties.getInstance();
+    //private GGCProperties props = GGCProperties.getInstance();
+    
 
     private JCheckBox chkBG;
     private JCheckBox chkBU;
@@ -58,6 +62,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
     private JCheckBox chkIns2;
     private JCheckBox chkConnect;
     private DateRangeSelectionPanel dRS;
+
 
     public SpreadGraphDialog(JFrame parent)
     {
@@ -92,9 +97,9 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
         JPanel selectionPanel = new JPanel(new GridLayout(2, 4));
         selectionPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("TO_BE_DRAWN")+":"));
         selectionPanel.add(chkBG = new JCheckBox(m_ic.getMessage("BG"), true));
-        selectionPanel.add(chkIns1 = new JCheckBox(props.getIns1Abbr(), false));
+        selectionPanel.add(chkIns1 = new JCheckBox(m_da.getSettings().getIns1Abbr(), false));
         selectionPanel.add(chkBU = new JCheckBox(m_ic.getMessage("BU"), false));
-        selectionPanel.add(chkIns2 = new JCheckBox(props.getIns2Abbr(), false));
+        selectionPanel.add(chkIns2 = new JCheckBox(m_da.getSettings().getIns2Abbr(), false));
 
         JPanel optionsPanel = new JPanel();
         optionsPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("OPTIONS_")+":"));

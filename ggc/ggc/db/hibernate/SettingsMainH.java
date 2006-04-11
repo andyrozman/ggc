@@ -33,25 +33,37 @@ public class SettingsMainH implements Serializable {
     private String meter_port;
 
     /** nullable persistent field */
-    private float bg_low;
-
-    /** nullable persistent field */
-    private float bg_high;
-
-    /** nullable persistent field */
-    private float bg_target_high;
-
-    /** nullable persistent field */
-    private float bg_target_low;
-
-    /** nullable persistent field */
     private int bg_unit;
+
+    /** nullable persistent field */
+    private float bg1_low;
+
+    /** nullable persistent field */
+    private float bg1_high;
+
+    /** nullable persistent field */
+    private float bg1_target_low;
+
+    /** nullable persistent field */
+    private float bg1_target_high;
+
+    /** nullable persistent field */
+    private float bg2_low;
+
+    /** nullable persistent field */
+    private float bg2_high;
+
+    /** nullable persistent field */
+    private float bg2_target_low;
+
+    /** nullable persistent field */
+    private float bg2_target_high;
 
     /** nullable persistent field */
     private int laf_type;
 
     /** nullable persistent field */
-    private int laf_name;
+    private String laf_name;
 
     /** nullable persistent field */
     private int render_rendering;
@@ -75,10 +87,22 @@ public class SettingsMainH implements Serializable {
     private int render_fractionalmetrics;
 
     /** nullable persistent field */
+    private String pdf_display_software_path;
+
+    /** nullable persistent field */
+    private int lunch_start_time;
+
+    /** nullable persistent field */
+    private int dinner_start_time;
+
+    /** nullable persistent field */
+    private int night_start_time;
+
+    /** nullable persistent field */
     private int color_scheme;
 
     /** full constructor */
-    public SettingsMainH(String name, String ins1_name, String ins1_abbr, String ins2_name, String ins2_abbr, int meter_type, String meter_port, float bg_low, float bg_high, float bg_target_high, float bg_target_low, int bg_unit, int laf_type, int laf_name, int render_rendering, int render_dithering, int render_interpolation, int render_antialiasing, int render_textantialiasing, int render_colorrendering, int render_fractionalmetrics, int color_scheme) {
+    public SettingsMainH(String name, String ins1_name, String ins1_abbr, String ins2_name, String ins2_abbr, int meter_type, String meter_port, int bg_unit, float bg1_low, float bg1_high, float bg1_target_low, float bg1_target_high, float bg2_low, float bg2_high, float bg2_target_low, float bg2_target_high, int laf_type, String laf_name, int render_rendering, int render_dithering, int render_interpolation, int render_antialiasing, int render_textantialiasing, int render_colorrendering, int render_fractionalmetrics, String pdf_display_software_path, int lunch_start_time, int dinner_start_time, int night_start_time, int color_scheme) {
         this.name = name;
         this.ins1_name = ins1_name;
         this.ins1_abbr = ins1_abbr;
@@ -86,11 +110,15 @@ public class SettingsMainH implements Serializable {
         this.ins2_abbr = ins2_abbr;
         this.meter_type = meter_type;
         this.meter_port = meter_port;
-        this.bg_low = bg_low;
-        this.bg_high = bg_high;
-        this.bg_target_high = bg_target_high;
-        this.bg_target_low = bg_target_low;
         this.bg_unit = bg_unit;
+        this.bg1_low = bg1_low;
+        this.bg1_high = bg1_high;
+        this.bg1_target_low = bg1_target_low;
+        this.bg1_target_high = bg1_target_high;
+        this.bg2_low = bg2_low;
+        this.bg2_high = bg2_high;
+        this.bg2_target_low = bg2_target_low;
+        this.bg2_target_high = bg2_target_high;
         this.laf_type = laf_type;
         this.laf_name = laf_name;
         this.render_rendering = render_rendering;
@@ -100,6 +128,10 @@ public class SettingsMainH implements Serializable {
         this.render_textantialiasing = render_textantialiasing;
         this.render_colorrendering = render_colorrendering;
         this.render_fractionalmetrics = render_fractionalmetrics;
+        this.pdf_display_software_path = pdf_display_software_path;
+        this.lunch_start_time = lunch_start_time;
+        this.dinner_start_time = dinner_start_time;
+        this.night_start_time = night_start_time;
         this.color_scheme = color_scheme;
     }
 
@@ -171,44 +203,76 @@ public class SettingsMainH implements Serializable {
         this.meter_port = meter_port;
     }
 
-    public float getBg_low() {
-        return this.bg_low;
-    }
-
-    public void setBg_low(float bg_low) {
-        this.bg_low = bg_low;
-    }
-
-    public float getBg_high() {
-        return this.bg_high;
-    }
-
-    public void setBg_high(float bg_high) {
-        this.bg_high = bg_high;
-    }
-
-    public float getBg_target_high() {
-        return this.bg_target_high;
-    }
-
-    public void setBg_target_high(float bg_target_high) {
-        this.bg_target_high = bg_target_high;
-    }
-
-    public float getBg_target_low() {
-        return this.bg_target_low;
-    }
-
-    public void setBg_target_low(float bg_target_low) {
-        this.bg_target_low = bg_target_low;
-    }
-
     public int getBg_unit() {
         return this.bg_unit;
     }
 
     public void setBg_unit(int bg_unit) {
         this.bg_unit = bg_unit;
+    }
+
+    public float getBg1_low() {
+        return this.bg1_low;
+    }
+
+    public void setBg1_low(float bg1_low) {
+        this.bg1_low = bg1_low;
+    }
+
+    public float getBg1_high() {
+        return this.bg1_high;
+    }
+
+    public void setBg1_high(float bg1_high) {
+        this.bg1_high = bg1_high;
+    }
+
+    public float getBg1_target_low() {
+        return this.bg1_target_low;
+    }
+
+    public void setBg1_target_low(float bg1_target_low) {
+        this.bg1_target_low = bg1_target_low;
+    }
+
+    public float getBg1_target_high() {
+        return this.bg1_target_high;
+    }
+
+    public void setBg1_target_high(float bg1_target_high) {
+        this.bg1_target_high = bg1_target_high;
+    }
+
+    public float getBg2_low() {
+        return this.bg2_low;
+    }
+
+    public void setBg2_low(float bg2_low) {
+        this.bg2_low = bg2_low;
+    }
+
+    public float getBg2_high() {
+        return this.bg2_high;
+    }
+
+    public void setBg2_high(float bg2_high) {
+        this.bg2_high = bg2_high;
+    }
+
+    public float getBg2_target_low() {
+        return this.bg2_target_low;
+    }
+
+    public void setBg2_target_low(float bg2_target_low) {
+        this.bg2_target_low = bg2_target_low;
+    }
+
+    public float getBg2_target_high() {
+        return this.bg2_target_high;
+    }
+
+    public void setBg2_target_high(float bg2_target_high) {
+        this.bg2_target_high = bg2_target_high;
     }
 
     public int getLaf_type() {
@@ -219,11 +283,11 @@ public class SettingsMainH implements Serializable {
         this.laf_type = laf_type;
     }
 
-    public int getLaf_name() {
+    public String getLaf_name() {
         return this.laf_name;
     }
 
-    public void setLaf_name(int laf_name) {
+    public void setLaf_name(String laf_name) {
         this.laf_name = laf_name;
     }
 
@@ -281,6 +345,38 @@ public class SettingsMainH implements Serializable {
 
     public void setRender_fractionalmetrics(int render_fractionalmetrics) {
         this.render_fractionalmetrics = render_fractionalmetrics;
+    }
+
+    public String getPdf_display_software_path() {
+        return this.pdf_display_software_path;
+    }
+
+    public void setPdf_display_software_path(String pdf_display_software_path) {
+        this.pdf_display_software_path = pdf_display_software_path;
+    }
+
+    public int getLunch_start_time() {
+        return this.lunch_start_time;
+    }
+
+    public void setLunch_start_time(int lunch_start_time) {
+        this.lunch_start_time = lunch_start_time;
+    }
+
+    public int getDinner_start_time() {
+        return this.dinner_start_time;
+    }
+
+    public void setDinner_start_time(int dinner_start_time) {
+        this.dinner_start_time = dinner_start_time;
+    }
+
+    public int getNight_start_time() {
+        return this.night_start_time;
+    }
+
+    public void setNight_start_time(int night_start_time) {
+        this.night_start_time = night_start_time;
     }
 
     public int getColor_scheme() {

@@ -8,20 +8,22 @@
 package ggc.gui;
 
 
-import ggc.datamodels.DailyValuesRow;
-import ggc.util.BGInputVerifier;
-import ggc.util.DateInputVerifier;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-import ggc.util.TimeInputVerifier;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionListener;
+
+import ggc.datamodels.DailyValuesRow;
+import ggc.util.BGInputVerifier;
+import ggc.util.DataAccess;
+import ggc.util.DateInputVerifier;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
+import ggc.util.TimeInputVerifier;
 
 
 /**
@@ -34,6 +36,7 @@ public class DailyValuesRowDialog extends JDialog implements ActionListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();    
+    private DataAccess m_da = DataAccess.getInstance();
 
     private DailyValuesRow dailyValuesRow = null;
 
@@ -182,9 +185,9 @@ public class DailyValuesRowDialog extends JDialog implements ActionListener
         bgField.setInputVerifier(new BGInputVerifier(false));
         addComponent(m_ic.getMessage("BG"), bgField, 0.0f, dataContainer);
 
-        addComponent(GGCProperties.getInstance().getIns1Abbr(), ins1Field, 0.0f, dataContainer);
+        addComponent(m_da.getSettings().getIns1Abbr(), ins1Field, 0.0f, dataContainer);
 
-        addComponent(GGCProperties.getInstance().getIns2Abbr(), ins2Field, 0.0f, dataContainer);
+        addComponent(m_da.getSettings().getIns2Abbr(), ins2Field, 0.0f, dataContainer);
 
         addComponent(m_ic.getMessage("BU"), buField, 0.0f, dataContainer);
 

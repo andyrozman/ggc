@@ -101,9 +101,10 @@ public class I18nControl
      * Using this method before GGCProperties.getInstance() has been called at least
      * once will create an endless loop.
      */
-    public void setLanguage() {
-        GGCProperties props = GGCProperties.getInstance();
-        setLanguage(props.getLanguage());
+    public void setLanguage() 
+    {
+        //GGCProperties props = GGCProperties.getInstance();
+        setLanguage("en"); //props.getLanguage());
     }
 
     //  Method:       setLanguage (String language)
@@ -186,7 +187,10 @@ public class I18nControl
     }
 
     
-    public static String[] getAvailableLanguages() {
+    public static String[] getAvailableLanguages() 
+    {
+	return null;
+	/*
         GGCProperties properties = GGCProperties.getInstance();
         String allLangs = properties.get("Languages");
 
@@ -202,6 +206,7 @@ public class I18nControl
         }
 
         return langs;
+	*/
     }
 
     //  Method: htmlize

@@ -28,27 +28,30 @@
 package ggc.gui.dialogs;
 
 
-import ggc.datamodels.GlucoValues;
-import ggc.gui.calendar.DateRangeSelectionPanel;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-import ggc.gui.view.FrequencyGraphView;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.*;
+
+import ggc.datamodels.GlucoValues;
+import ggc.gui.calendar.DateRangeSelectionPanel;
+import ggc.gui.view.FrequencyGraphView;
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
+
 
 public class FrequencyGraphDialog extends JDialog implements ActionListener
 {
     private I18nControl m_ic = I18nControl.getInstance();    
+    //private DataAccess m_da = DataAccess.getInstance();
 
     private static FrequencyGraphView fGV;
 
-    private GGCProperties props = GGCProperties.getInstance();
+    //ivate GGCProperties props = GGCProperties.getInstance();
     private DateRangeSelectionPanel dRS;
 
 
@@ -105,36 +108,6 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener
         fGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
-/*
-    public static void showMe()
-    {
-        if (singleton == null)
-            singleton = new FrequencyGraphFrame();
-        singleton.setVisible(true);
-    }
-
-    public static void closeMe()
-    {
-        if (singleton != null) {
-            singleton.dispose();
-            singleton = null;
-            fGV = null;
-        }
-    }
-
-    public static FrequencyGraphFrame getInstance()
-    {
-        if (singleton == null)
-            singleton = new FrequencyGraphFrame();
-        return singleton;
-    }
-
-    public static void redraw()
-    {
-        if (singleton != null)
-            singleton.repaint();
-    }
-*/
 
     private void closeDialog()
     {

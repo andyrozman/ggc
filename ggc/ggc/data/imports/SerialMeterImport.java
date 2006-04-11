@@ -8,15 +8,6 @@
 package ggc.data.imports;
 
 
-import ggc.datamodels.DailyValuesRow;
-import ggc.event.ImportEvent;
-import ggc.event.ImportEventListener;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-
-import javax.comm.*;
-import javax.swing.*;
-import javax.swing.event.EventListenerList;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -24,6 +15,17 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.TooManyListenersException;
 import java.util.Vector;
+
+import javax.comm.*;
+import javax.swing.*;
+import javax.swing.event.EventListenerList;
+
+import ggc.datamodels.DailyValuesRow;
+import ggc.event.ImportEvent;
+import ggc.event.ImportEventListener;
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 
 /**
@@ -36,6 +38,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 {
 
     protected I18nControl m_ic = I18nControl.getInstance();
+    protected DataAccess m_da = DataAccess.getInstance();
 
     private boolean isPortOpen = false;
 
@@ -384,7 +387,9 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 
     public static String[] getAvailableMeters()
     {
-        GGCProperties properties = GGCProperties.getInstance();
+	return DataAccess.getInstance().getMeterManager().getAvailableMeters();
+	/*
+	GGCProperties properties = GGCProperties.getInstance();
         String allMeter = properties.get("Meter");
 
         if (allMeter == null || allMeter.equals(""))
@@ -398,15 +403,13 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
             counter++;
         }
 
-        return meter;
+        return meter; */
     }
 
 
     public static String getMeterClassName(String meterName)
     {
-        GGCProperties properties = GGCProperties.getInstance();
-        System.out.println("Meter." + meterName + ".class");
-        return properties.get("Meter." + meterName + ".class");
+	return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
     }
 
     public static Vector getAvailableSerialPorts()

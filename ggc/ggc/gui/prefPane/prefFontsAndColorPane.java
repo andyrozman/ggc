@@ -43,9 +43,13 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
     private JLabel lblcolor;
     private Vector items;
 
+
+    // fix this
+
     public prefFontsAndColorPane()
     {
         items = new Vector();
+	/*
         items.add(new NameAndColor(m_ic.getMessage("BG_HIGH_ZONE"), "HighBG", props.getColorHighBG()));
         items.add(new NameAndColor(m_ic.getMessage("BG_TARGET_ZONE"), "TargetBG", props.getColorTargetBG()));
         items.add(new NameAndColor(m_ic.getMessage("BG_LOW_ZONE"), "LowBG", props.getColorLowBG()));
@@ -56,7 +60,7 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
         items.add(new NameAndColor(m_ic.getMessage("INSULIN")+" " + props.getIns2Abbr(), "Ins2", props.getColorIns2()));
         items.add(new NameAndColor(m_ic.getMessage("INSULIN"), "Ins", props.getColorIns()));
         items.add(new NameAndColor(m_ic.getMessage("INS_SLASH_BU_QUOTIENT"), "InsPerBU", props.getColorInsPerBU()));
-
+	*/
         init();
     }
 
@@ -160,11 +164,14 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
 
     public void saveProps()
     {
-        for (int i = 0; i < items.size(); i++) {
+	/*
+        for (int i = 0; i < items.size(); i++) 
+	{
             String name = "Color" + ((NameAndColor)items.elementAt(i)).getID();
             Color color = ((NameAndColor)items.elementAt(i)).getColor();
 
             props.set(name, color);
         }
+	*/
     }
 }

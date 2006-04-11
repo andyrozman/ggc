@@ -87,43 +87,40 @@ public class DailyGraphView extends AbstractGraphView {
 
             // draw Ins1
             float tmpIns1 = dayData.getIns1At(i);
-            if (tmpIns1 != 0) {
+            if (tmpIns1 != 0) 
+	    {
                 int Y = InstoCoord(tmpIns1);
-                g2D.setPaint(props.getColorIns1());
-                g2D
-                        .fillRect(X - 4, Y, 3, (int) drawableHeight - Y
-                                + upperSpace);
+                g2D.setPaint(m_da.getSettings().getColorIns1());
+                g2D.fillRect(X - 4, Y, 3, (int) drawableHeight - Y + upperSpace);
             }
 
             // draw Ins2
             float tmpIns2 = dayData.getIns2At(i);
-            if (tmpIns2 != 0) {
+            if (tmpIns2 != 0) 
+	    {
                 int Y = InstoCoord(tmpIns2);
-                g2D.setPaint(props.getColorIns2());
-                g2D
-                        .fillRect(X - 1, Y, 3, (int) drawableHeight - Y
-                                + upperSpace);
+                g2D.setPaint(m_da.getSettings().getColorIns2());
+                g2D.fillRect(X - 1, Y, 3, (int) drawableHeight - Y + upperSpace);
             }
 
             // draw BU
             float tmpBU = dayData.getCHAt(i);
-            if (tmpBU != 0) {
+            if (tmpBU != 0) 
+	    {
                 int Y = BUtoCoord(tmpBU);
-                g2D.setPaint(props.getColorBU());
-                g2D
-                        .fillRect(X + 1, Y, 3, (int) drawableHeight - Y
-                                + upperSpace);
+                g2D.setPaint(m_da.getSettings().getColorBU());
+                g2D.fillRect(X + 1, Y, 3, (int) drawableHeight - Y + upperSpace);
             }
 
         }
 
         // draw avg BG
-        g2D.setPaint(props.getColorAvgBG());
+        g2D.setPaint(m_da.getSettings().getColorAvgBG());
         int tmp = BGtoCoord(dayData.getAvgBG());
         g2D.drawLine(leftSpace, tmp, viewWidth - rightSpace, tmp);
 
         // paint BG
-        g2D.setPaint(props.getColorBG());
+        g2D.setPaint(m_da.getSettings().getColorBG());
         g2D.draw(polyline);
     }
 
@@ -161,22 +158,22 @@ public class DailyGraphView extends AbstractGraphView {
         Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1,
                 BGtoCoord(maxGoodBG), drawableWidth, BGtoCoord(minGoodBG)
                         - BGtoCoord(maxGoodBG));
-        g2D.setPaint(props.getColorTargetBG());
+        g2D.setPaint(m_da.getSettings().getColorTargetBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
         // High Zone
         rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG),
-                drawableWidth, BGtoCoord(props.getHighBG()) - BGtoCoord(maxBG));
-        g2D.setPaint(props.getColorHighBG());
+                drawableWidth, BGtoCoord(m_da.getSettings().getHighBG()) - BGtoCoord(maxBG));
+        g2D.setPaint(m_da.getSettings().getColorHighBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
         // Low Zone
         rect1 = new Rectangle2D.Float(leftSpace + 1,
-                BGtoCoord(props.getLowBG()), drawableWidth, BGtoCoord(0)
-                        - BGtoCoord(props.getLowBG()) - 1);
-        g2D.setPaint(props.getColorLowBG());
+                BGtoCoord(m_da.getSettings().getLowBG()), drawableWidth, BGtoCoord(0)
+                        - BGtoCoord(m_da.getSettings().getLowBG()) - 1);
+        g2D.setPaint(m_da.getSettings().getColorLowBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 

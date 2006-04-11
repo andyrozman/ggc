@@ -105,6 +105,24 @@ public class MeterManager
         return this.meter_classes[index];
     }
 
+
+    public String getMeterClassName(String name)
+    {
+	int index = 0;
+
+	for (int i=0; i<this.meter_names.length; i++)
+	{
+	    if (this.meter_names.equals(name))
+	    {
+		index = i;
+		break;
+	    }
+	}
+
+	return this.meter_classes[index];
+    }
+
+
 /*
     public Object[] getAvailableMetersCombo()
     {

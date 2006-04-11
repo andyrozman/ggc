@@ -44,7 +44,7 @@ public abstract class DataBaseHandler
 {
     
     protected I18nControl m_ic = I18nControl.getInstance();    
-    protected GGCProperties props = GGCProperties.getInstance();
+    //protected GGCProperties props = GGCProperties.getInstance();
     
     //public static boolean connectedToDB = false;
     public boolean connected = false;

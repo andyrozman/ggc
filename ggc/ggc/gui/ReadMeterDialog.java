@@ -8,16 +8,6 @@
 package ggc.gui;
 
 
-import ggc.data.imports.ImportException;
-import ggc.data.imports.SerialMeterImport;
-import ggc.datamodels.DailyValuesRow;
-import ggc.datamodels.GlucoTableModel;
-import ggc.datamodels.GlucoValues;
-import ggc.event.ImportEvent;
-import ggc.event.ImportEventListener;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -25,27 +15,27 @@ import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.comm.NoSuchPortException;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import ggc.data.imports.ImportException;
+import ggc.data.imports.SerialMeterImport;
+import ggc.datamodels.DailyValuesRow;
+import ggc.datamodels.GlucoTableModel;
+import ggc.datamodels.GlucoValues;
+import ggc.event.ImportEvent;
+import ggc.event.ImportEventListener;
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 
 /**
@@ -58,27 +48,22 @@ public class ReadMeterDialog extends JDialog implements ActionListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();        
+    private DataAccess m_da = DataAccess.getInstance();
 
 //    private static ReadMeterDialog singleton = null;
 
     private JTextArea logText = null;
-
     private JProgressBar progress = null;
 
     private GlucoValues glucoValues = null;
-
     private GlucoTableModel model = null;
-
     private GlucoTable resTable;
 
     private JButton startButton;
-
     private JButton saveButton;
 
     private JTabbedPane tabPane;
-
     private SerialMeterImport meterImport = null;
-
     private StartImportAction startImportAction = new StartImportAction();
 
     /**
@@ -145,13 +130,17 @@ public class ReadMeterDialog extends JDialog implements ActionListener
     protected void initialize()
     {
 
-        String meterClassName = SerialMeterImport.getMeterClassName(GGCProperties.getInstance().getMeterType());
-        if (meterClassName == null || meterClassName.equals(""))
+        String meterClassName = m_da.getMeterManager().meter_classes[m_da.getSettings().getMeterType()];
+
+	if (meterClassName == null || meterClassName.equals(""))
             throw new NullPointerException(m_ic.getMessage("NO_CLASS_FOR_METER_DEFINED"));
 
-        try {
+        try 
+	{
             meterImport = (SerialMeterImport)Class.forName(meterClassName).newInstance();
-        } catch (Exception exc) {
+        } 
+	catch (Exception exc) 
+	{
             System.out.println(exc);
         }
 
@@ -332,7 +321,7 @@ public class ReadMeterDialog extends JDialog implements ActionListener
             tabPane.setSelectedIndex(1);
 
             try {
-                meterImport.setPort(GGCProperties.getInstance().getMeterPort());
+                meterImport.setPort(m_da.getSettings().getMeterPort());
 
                 progress.setIndeterminate(true);
                 meterImport.open();

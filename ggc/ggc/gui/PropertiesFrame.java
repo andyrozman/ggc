@@ -118,8 +118,8 @@ public class PropertiesFrame extends JDialog implements ActionListener
                     prefOptionsPane = new prefMedicalDataPane();
                 else if (s.equals(m_ic.getMessage("COLORS_AND_FONTS")))
                     prefOptionsPane = new prefFontsAndColorPane();
-                else if (s.equals(m_ic.getMessage("DATA_STORING")))
-                    prefOptionsPane = new prefDataStoringPane();
+                //else if (s.equals(m_ic.getMessage("DATA_STORING")))
+                //    prefOptionsPane = new prefDataStoringPane();
 		//else if (s.equals(m_ic.getMessage("MYSQL_SETUP"))) 
                 //    prefOptionsPane = new prefMySQLSetupPane();
 		//else if (s.equals(m_ic.getMessage("TEXTFILE_SETUP"))) 

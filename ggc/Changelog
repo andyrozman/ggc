@@ -1,12 +1,15 @@
 2006-04-11 Andy Rozman <andyrozman@users.sourceforge.net>
     * added I18nCheck tool to help translators by translation (they display keywords 
       not available in langugae file)
+    * started removing config file. All settings will be stored in database, except database
+      settings and language settings
+    * changed GGCProperties, and changed all callings of this class to DataAccess where 
+      GGCProperties is instantiated. 
 
 2006-04-10 (v0.2.1.7) Andy Rozman <andyrozman@users.sourceforge.net>
     * moved ggc.view.* to ggc.gui.view.*
     * Renamed and made as JDialog: CourseGraphFrame, DailyGraphFrame, FrequenceGraphFrame,
       SpreadGraphFrame, and fixed.
-	
 
 2006-04-10 (v0.2.1.6) Andy Rozman <andyrozman@users.sourceforge.net>
     * Some bug fixes in Graphs. Now graphs are displayed. This code is not finished

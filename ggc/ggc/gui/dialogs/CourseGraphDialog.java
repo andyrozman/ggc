@@ -41,28 +41,22 @@ import com.sun.org.apache.bcel.internal.classfile.Unknown;
 
 import ggc.datamodels.GlucoValues;
 import ggc.gui.calendar.DateRangeSelectionPanel;
+import ggc.gui.view.CourseGraphView;
+import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
-import ggc.gui.view.CourseGraphView;
 
 
 public class CourseGraphDialog extends JDialog implements ActionListener //JFrame
 {
 
     private I18nControl m_ic = I18nControl.getInstance();    
+    private DataAccess m_da = DataAccess.getInstance();
 
     private CourseGraphView cGV;
 
-    private GGCProperties props = GGCProperties.getInstance();
-
-    private JCheckBox chkBG;
-    private JCheckBox chkAvgBGDay;
-    private JCheckBox chkSumBU;
-    private JCheckBox chkMeals;
-    private JCheckBox chkSumIns1;
-    private JCheckBox chkSumIns2;
-    private JCheckBox chkSumIns;
-    private JCheckBox chkInsPerBU;
+    private JCheckBox chkBG, chkAvgBGDay, chkSumBU, chkMeals, chkSumIns1, chkSumIns2,
+	    	      chkSumIns, chkInsPerBU;
     private DateRangeSelectionPanel dRS;
 
 
@@ -79,7 +73,6 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
 
 
         setBounds(x-350, y-250, 700, 500);
-        //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
         cGV = new CourseGraphView(this);
@@ -101,11 +94,11 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
         selectionPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("TO_BE_DRAWN")+":"));
         selectionPanel.add(chkBG = new JCheckBox(m_ic.getMessage("BG"), true));
         selectionPanel.add(chkSumBU = new JCheckBox(m_ic.getMessage("SUM_BU"), false));
-        selectionPanel.add(chkSumIns1 = new JCheckBox(m_ic.getMessage("SUM") + " " + props.getIns1Abbr(), false));
+        selectionPanel.add(chkSumIns1 = new JCheckBox(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr(), false));
         selectionPanel.add(chkSumIns = new JCheckBox(m_ic.getMessage("SUM_INSULIN"), false));
         selectionPanel.add(chkAvgBGDay = new JCheckBox(m_ic.getMessage("AVG_BG_PER_DAY"), false));
         selectionPanel.add(chkMeals = new JCheckBox(m_ic.getMessage("MEALS"), false));
-        selectionPanel.add(chkSumIns2 = new JCheckBox(m_ic.getMessage("SUM")+" " + props.getIns2Abbr(), false));
+        selectionPanel.add(chkSumIns2 = new JCheckBox(m_ic.getMessage("SUM")+" " + m_da.getSettings().getIns2Abbr(), false));
         selectionPanel.add(chkInsPerBU = new JCheckBox(m_ic.getMessage("INS_SLASH_BU"), false));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));

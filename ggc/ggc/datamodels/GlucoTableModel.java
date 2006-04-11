@@ -29,22 +29,25 @@
 package ggc.datamodels;
 
 
-import ggc.event.GlucoValueEvent;
-import ggc.event.GlucoValueEventListener;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
+import java.text.SimpleDateFormat;
 
 import javax.swing.table.AbstractTableModel;
-import java.text.SimpleDateFormat;
+
+import ggc.event.GlucoValueEvent;
+import ggc.event.GlucoValueEventListener;
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 
 public class GlucoTableModel extends AbstractTableModel implements GlucoValueEventListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();
+    private DataAccess m_da = DataAccess.getInstance();
 
     GlucoValues dayData;
-    GGCProperties props = GGCProperties.getInstance();
+    //GGCProperties props = GGCProperties.getInstance();
 
     public GlucoTableModel(GlucoValues dayData)
     {
@@ -77,7 +80,7 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
     public String getColumnName(int column)
     {
         String[] s = {
-            m_ic.getMessage("DATETIME"), m_ic.getMessage("BG"), props.getIns1Abbr(), props.getIns2Abbr(), m_ic.getMessage("BE"), m_ic.getMessage("ACT"), m_ic.getMessage("COMMENT") };
+            m_ic.getMessage("DATETIME"), m_ic.getMessage("BG"), m_da.getSettings().getIns1Abbr(), m_da.getSettings().getIns2Abbr(), m_ic.getMessage("BE"), m_ic.getMessage("ACT"), m_ic.getMessage("COMMENT") };
         return s[column];
     }
 

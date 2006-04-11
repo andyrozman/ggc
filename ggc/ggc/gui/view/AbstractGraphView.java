@@ -44,13 +44,15 @@ public abstract class AbstractGraphView extends JComponent
 {
     Object oAA, oCR, oTAA, oR, oD, oFM, oI;
 
-    GGCProperties props = GGCProperties.getInstance();
+    DataAccess m_da = DataAccess.getInstance();
+
+    //GGCProperties props = GGCProperties.getInstance();
 
     int BGunit, maxBG, minBG, BGDiff;
     int counter = 10;
     int upperSpace = 20, lowerSpace = 30, leftSpace = 40, rightSpace = 30;
-    float maxGoodBG = props.getTargetHighBG();
-    float minGoodBG = props.getTargetLowBG();
+    float maxGoodBG = m_da.getSettings().getTargetHighBG();
+    float minGoodBG = m_da.getSettings().getTargetLowBG();
 
     int viewWidth = 0;
     int viewHeight = 0;
@@ -68,17 +70,20 @@ public abstract class AbstractGraphView extends JComponent
 
     public AbstractGraphView()
     {
-        BGunit = DataAccess.getBGMeasurmentType();
-        switch (BGunit) {
+
+        BGunit = m_da.getSettings().getMeasurmentTypeBg();
+
+	switch (BGunit) 
+	{
         case DataAccess.BG_MMOL:
-            maxBG = 25;
-            minBG = 1;
+            maxBG = 44;
+            minBG = 0;
             unitLabel = "mmol/l";
             break;
         case DataAccess.BG_MGDL:
         default:
             maxBG = 450;
-            minBG = 20;
+            minBG = 0;
             unitLabel = "mg/dl";
             break;
         }
@@ -153,88 +158,12 @@ public abstract class AbstractGraphView extends JComponent
 
     private void getRenderingQuality()
     {
-        switch (props.getAntiAliasing()) {
-            case 1:
-                oAA = RenderingHints.VALUE_ANTIALIAS_OFF;
-                break;
-            case 2:
-                oAA = RenderingHints.VALUE_ANTIALIAS_ON;
-                break;
-            default:
-                oAA = RenderingHints.VALUE_ANTIALIAS_DEFAULT;
-        }
-        //System.out.println("rendering " + oAA);
-
-        switch (props.getColorRendering()) {
-            case 1:
-                oCR = RenderingHints.VALUE_COLOR_RENDER_QUALITY;
-                break;
-            case 2:
-                oCR = RenderingHints.VALUE_COLOR_RENDER_SPEED;
-                break;
-            default:
-                oCR = RenderingHints.VALUE_COLOR_RENDER_DEFAULT;
-        }
-        //System.out.println("colorrend " + oCR);
-
-        switch (props.getDithering()) {
-            case 1:
-                oD = RenderingHints.VALUE_DITHER_DISABLE;
-                break;
-            case 2:
-                oD = RenderingHints.VALUE_DITHER_ENABLE;
-                break;
-            default:
-                oD = RenderingHints.VALUE_DITHER_DEFAULT;
-        }
-        //System.out.println("dithering " + oD);
-
-        switch (props.getFractionalMetrics()) {
-            case 1:
-                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
-                break;
-            case 2:
-                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_ON;
-                break;
-            default:
-                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT;
-        }
-        //System.out.println("fractional " + oFM);
-
-        switch (props.getInterpolation()) {
-            case 1:
-                oI = RenderingHints.VALUE_INTERPOLATION_BICUBIC;
-                break;
-            case 2:
-                oI = RenderingHints.VALUE_INTERPOLATION_BILINEAR;
-                break;
-            default:
-                oI = RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR;
-        }
-        //System.out.println("interpolation " + oI);
-
-        switch (props.getRendering()) {
-            case 1:
-                oR = RenderingHints.VALUE_RENDER_QUALITY;
-                break;
-            case 2:
-                oR = RenderingHints.VALUE_RENDER_SPEED;
-                break;
-            default:
-                oR = RenderingHints.VALUE_RENDER_DEFAULT;
-        }
-        //System.out.println("rendering " + oR);
-
-        switch (props.getTextAntiAliasing()) {
-            case 1:
-                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;
-                break;
-            case 2:
-                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
-                break;
-            default:
-                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT;
-        }
-        //System.out.println("text AA " + oTAA);
+	oAA = m_da.getSettings().getAntiAliasing();
+	oCR = m_da.getSettings().getColorRendering();
+        oD = m_da.getSettings().getDithering();
+        oFM = m_da.getSettings().getFractionalMetrics();
+        oI = m_da.getSettings().getInterpolation();
+	oR = m_da.getSettings().getRendering();
+	oTAA = m_da.getSettings().getTextAntiAliasing();
     }
 }

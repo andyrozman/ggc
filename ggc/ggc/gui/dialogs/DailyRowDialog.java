@@ -52,6 +52,7 @@ import javax.swing.table.AbstractTableModel;
 import ggc.datamodels.DailyValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.errors.DateTimeError;
+import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
@@ -62,6 +63,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 {
 
     private I18nControl m_ic = I18nControl.getInstance();
+    private DataAccess m_da = DataAccess.getInstance();
 
     private boolean m_actionDone = false;
 
@@ -79,7 +81,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     //AbstractTableModel mod = null;
 
-    GGCProperties props = GGCProperties.getInstance();
+    //GGCProperties props = GGCProperties.getInstance();
     JComponent components[] = new JComponent[9];
 /*
     public AddRowFrame(AbstractTableModel m, DailyValues ndV, DailyStatsFrame dialog) 
@@ -195,7 +197,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         JPanel a = new JPanel(new GridLayout(0, 1));
         a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
         a.add(new JLabel(m_ic.getMessage("BG") + ":", SwingConstants.RIGHT));
-        a.add(new JLabel(props.getIns1Abbr() + ":", SwingConstants.RIGHT));
+        a.add(new JLabel(m_da.getSettings().getIns1Abbr() + ":", SwingConstants.RIGHT));
         a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
 
         JPanel b = new JPanel(new GridLayout(0, 1));
@@ -225,7 +227,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         JPanel c = new JPanel(new GridLayout(0, 1));
         c.add(new JLabel(m_ic.getMessage("TIME") + ":", SwingConstants.RIGHT));
         c.add(new JLabel(m_ic.getMessage("BU") + ":", SwingConstants.RIGHT));
-        c.add(new JLabel(props.getIns2Abbr() + ":", SwingConstants.RIGHT));
+        c.add(new JLabel(m_da.getSettings().getIns2Abbr() + ":", SwingConstants.RIGHT));
         c.add(new JLabel(m_ic.getMessage("COMMENT") + ":", SwingConstants.RIGHT));
 
         JPanel d = new JPanel(new GridLayout(0, 1));
@@ -280,7 +282,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         getContentPane().add(e, BorderLayout.NORTH);
         getContentPane().add(g, BorderLayout.SOUTH);
-
 	
     }
 

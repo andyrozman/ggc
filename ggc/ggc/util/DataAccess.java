@@ -104,7 +104,7 @@ public class DataAccess
 
     private MeterManager m_meterManager = null;
 
-
+    private GGCProperties m_settings = null;
 
 
     // ********************************************************
@@ -130,6 +130,7 @@ public class DataAccess
 //        loadAvailableLFs();
 //        loadLanguageInfo();
         m_meterManager = new MeterManager();
+        this.m_settings = new GGCProperties(this);
 
     } 
 
@@ -210,6 +211,19 @@ public class DataAccess
     {
         return this.m_meterManager;
     }
+
+
+    // ********************************************************
+    // ******                   Meters                    *****    
+    // ********************************************************
+
+
+    public GGCProperties getSettings()
+    {
+	return this.m_settings;
+    }
+
+
 
 
     // ********************************************************

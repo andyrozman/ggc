@@ -61,10 +61,10 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
         a.add(new JLabel(m_ic.getMessage("INSULIN")+" 2 "+m_ic.getMessage("ABBR")+":"));
 
         JPanel b = new JPanel(new GridLayout(0, 1));
-        b.add(fieldIns1Name = new JTextField(props.getIns1Name(), 10));
-        b.add(fieldIns1Abbr = new JTextField(props.getIns1Abbr(), 10));
-        b.add(fieldIns2Name = new JTextField(props.getIns2Name(), 10));
-        b.add(fieldIns2Abbr = new JTextField(props.getIns2Abbr(), 10));
+        b.add(fieldIns1Name = new JTextField(m_da.getSettings().getIns1Name(), 10));
+        b.add(fieldIns1Abbr = new JTextField(m_da.getSettings().getIns1Abbr(), 10));
+        b.add(fieldIns2Name = new JTextField(m_da.getSettings().getIns2Name(), 10));
+        b.add(fieldIns2Abbr = new JTextField(m_da.getSettings().getIns2Abbr(), 10));
 
         fieldIns1Name.getDocument().addDocumentListener(this);
         fieldIns2Name.getDocument().addDocumentListener(this);
@@ -86,11 +86,13 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
         c.add(new JLabel(m_ic.getMessage("TARGET_HIGH_BG")+":"));
         c.add(new JLabel(m_ic.getMessage("TARGET_LOW_BG")+":"));
 
+
+// FIX
         JPanel d = new JPanel(new GridLayout(0, 1));
-        d.add(fieldHighBG = new JTextField(props.getHighBGAsString(), 10));
-        d.add(fieldLowBG = new JTextField(props.getLowBGAsString(), 10));
-        d.add(fieldTargetHighBG = new JTextField(props.getTargetHighBGAsString(), 10));
-        d.add(fieldTargetLowBG = new JTextField(props.getTargetLowBGAsString(), 10));
+        d.add(fieldHighBG = new JTextField(m_da.getSettings().getHighBGAsString(), 10));
+        d.add(fieldLowBG = new JTextField(m_da.getSettings().getLowBGAsString(), 10));
+        d.add(fieldTargetHighBG = new JTextField(m_da.getSettings().getTargetHighBGAsString(), 10));
+        d.add(fieldTargetLowBG = new JTextField(m_da.getSettings().getTargetLowBGAsString(), 10));
 
         fieldHighBG.getDocument().addDocumentListener(this);
         fieldLowBG.getDocument().addDocumentListener(this);
@@ -116,6 +118,7 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
 
     public void saveProps()
     {
+	/*
         props.set("Ins1Name", fieldIns1Name.getText());
         props.set("Ins2Name", fieldIns2Name.getText());
         props.set("Ins1Abbr", fieldIns1Abbr.getText());
@@ -124,5 +127,6 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
         props.set("LowBG", fieldLowBG.getText());
         props.set("TargetHighBG", fieldTargetHighBG.getText());
         props.set("TargetLowBG", fieldTargetLowBG.getText());
+	*/
     }
 }

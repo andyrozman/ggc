@@ -28,17 +28,18 @@
 package ggc.gui.infoPanel;
 
 
+import javax.swing.*;
+
+import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
-
-import javax.swing.*;
 
 
 public abstract class AbstractInfoPanel extends JPanel
 {
-    GGCProperties props = GGCProperties.getInstance();
-
+    //GGCProperties props = GGCProperties.getInstance();
     protected I18nControl m_ic = I18nControl.getInstance();
+    protected DataAccess m_da = DataAccess.getInstance();
 
     public AbstractInfoPanel(String title)
     {

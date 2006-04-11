@@ -54,7 +54,6 @@ public class StatisticInfoPanel extends AbstractInfoPanel
     JLabel lblSumIns1, lblIns1Day, lblCountIns1, lblAvgIns1, lblIns1CountDay;
     JLabel lblSumIns2, lblIns2Day, lblCountIns2, lblAvgIns2, lblIns2CountDay;
 
-    DataAccess m_da = null;
 
     public StatisticInfoPanel()
     {
@@ -107,11 +106,11 @@ public class StatisticInfoPanel extends AbstractInfoPanel
 
         JPanel PanelIns1 = new JPanel(new GridLayout(5, 2));
         PanelIns1.setOpaque(false);
-        PanelIns1.setBorder(BorderFactory.createTitledBorder(props.getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
-        PanelIns1.add(new JLabel(m_ic.getMessage("SUM") + " " + props.getIns1Abbr() + ":"));
+        PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
+        PanelIns1.add(new JLabel(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr() + ":"));
         PanelIns1.add(lblSumIns1 = new JLabel());
 	lblSumIns1.setHorizontalAlignment(JLabel.CENTER);
-        PanelIns1.add(new JLabel(props.getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
+        PanelIns1.add(new JLabel(m_da.getSettings().getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
         PanelIns1.add(lblIns1Day = new JLabel());
 	lblIns1Day.setHorizontalAlignment(JLabel.CENTER);
         PanelIns1.add(new JLabel(m_ic.getMessage("DOSE")+":"));
@@ -126,11 +125,11 @@ public class StatisticInfoPanel extends AbstractInfoPanel
 
         JPanel PanelIns2 = new JPanel(new GridLayout(5, 2));
         PanelIns2.setOpaque(false);
-        PanelIns2.setBorder(BorderFactory.createTitledBorder(props.getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
-        PanelIns2.add(new JLabel(m_ic.getMessage("SUM") + " " + props.getIns2Abbr() + ":"));
+        PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
+        PanelIns2.add(new JLabel(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns2Abbr() + ":"));
         PanelIns2.add(lblSumIns2 = new JLabel());
 	lblSumIns2.setHorizontalAlignment(JLabel.CENTER);
-        PanelIns2.add(new JLabel(props.getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
+        PanelIns2.add(new JLabel(m_da.getSettings().getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
         PanelIns2.add(lblIns2Day = new JLabel());
 	lblIns2Day.setHorizontalAlignment(JLabel.CENTER);
         PanelIns2.add(new JLabel(m_ic.getMessage("DOSE")+":"));

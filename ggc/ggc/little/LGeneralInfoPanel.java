@@ -32,11 +32,13 @@
 
 package ggc.little;
 
-import ggc.util.I18nControl;
-import ggc.util.GGCProperties;
+import java.awt.*;
 
 import javax.swing.*;
-import java.awt.*;
+
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
 
 
 public class LGeneralInfoPanel extends JPanel //AbstractInfoPanel
@@ -44,8 +46,10 @@ public class LGeneralInfoPanel extends JPanel //AbstractInfoPanel
     private JLabel lblName = new JLabel();
     private JLabel lblIns1 = new JLabel();
     private JLabel lblIns2 = new JLabel();
-    GGCProperties props = GGCProperties.getInstance();
+    //GGCProperties props = GGCProperties.getInstance();
     private I18nControl m_ic = I18nControl.getInstance();
+    DataAccess m_da = DataAccess.getInstance();
+
 
     public LGeneralInfoPanel()
     {
@@ -73,8 +77,8 @@ public class LGeneralInfoPanel extends JPanel //AbstractInfoPanel
 
     public void refreshInfo()
     {
-        lblName.setText(props.getUserName());
-        lblIns1.setText(props.getIns1Name());
-        lblIns2.setText(props.getIns2Name());
+        lblName.setText(m_da.getSettings().getUserName());
+        lblIns1.setText(m_da.getSettings().getIns1Name());
+        lblIns2.setText(m_da.getSettings().getIns2Name());
     }
 }

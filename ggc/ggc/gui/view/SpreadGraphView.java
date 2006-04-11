@@ -123,19 +123,19 @@ public class SpreadGraphView extends AbstractGraphView
 
         //Target Zone
         Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxGoodBG), drawableWidth, BGtoCoord(minGoodBG) - BGtoCoord(maxGoodBG));
-        g2D.setPaint(props.getColorTargetBG());
+        g2D.setPaint(m_da.getSettings().getColorTargetBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
         //High Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(props.getHighBG()) - BGtoCoord(maxBG));
-        g2D.setPaint(props.getColorHighBG());
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(m_da.getSettings().getHighBG()) - BGtoCoord(maxBG));
+        g2D.setPaint(m_da.getSettings().getColorHighBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
         //Low Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(props.getLowBG()), drawableWidth, BGtoCoord(0) - BGtoCoord(props.getLowBG()) - 1);
-        g2D.setPaint(props.getColorLowBG());
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(m_da.getSettings().getLowBG()), drawableWidth, BGtoCoord(0) - BGtoCoord(m_da.getSettings().getLowBG()) - 1);
+        g2D.setPaint(m_da.getSettings().getColorLowBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
@@ -157,10 +157,10 @@ public class SpreadGraphView extends AbstractGraphView
 
         DailyValues dV;
 
-        Color colorBG = props.getColorBG();
-        Color colorBU = props.getColorBU();
-        Color colorIns1 = props.getColorIns1();
-        Color colorIns2 = props.getColorIns2();
+        Color colorBG = m_da.getSettings().getColorBG();
+        Color colorBU = m_da.getSettings().getColorBU();
+        Color colorIns1 = m_da.getSettings().getColorIns1();
+        Color colorIns2 = m_da.getSettings().getColorIns2();
 
         boolean drawBG = m_sGF.getDrawBG();
         boolean drawBU = m_sGF.getDrawBU();
@@ -256,25 +256,25 @@ public class SpreadGraphView extends AbstractGraphView
 
             if (drawBG) 
 	    {
-                g2D.setPaint(props.getColorBG());
+                g2D.setPaint(m_da.getSettings().getColorBG());
                 g2D.draw(plBG);
             }
 
 	    if (drawBU) 
 	    {
-                g2D.setPaint(props.getColorBU());
+                g2D.setPaint(m_da.getSettings().getColorBU());
                 g2D.draw(plBU);
             }
 
 	    if (drawIns1) 
 	    {
-                g2D.setPaint(props.getColorIns1());
+                g2D.setPaint(m_da.getSettings().getColorIns1());
                 g2D.draw(plIns1);
             }
 
 	    if (drawIns2) 
 	    {
-                g2D.setPaint(props.getColorIns2());
+                g2D.setPaint(m_da.getSettings().getColorIns2());
                 g2D.draw(plIns2);
             }
 

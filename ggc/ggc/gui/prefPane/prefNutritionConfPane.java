@@ -181,7 +181,5 @@ public class prefNutritionConfPane extends AbstractPrefOptionsPanel
 
     public void saveProps()
     {
-        //props.set("MeterType", comboMeterType.getSelectedItem().toString());
-        //props.set("MeterPort", comboPortId.getSelectedItem().toString());
     }
 }

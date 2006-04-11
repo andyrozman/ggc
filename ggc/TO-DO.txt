@@ -31,6 +31,7 @@ URGENT:
 	o  Nutrition db
 	o  Meals db
 	o  Apointments db
+        o  Config
 * Adding support for mmol/l (now we have only mG/DL):
         o  graphs
         o  database 
@@ -40,12 +41,19 @@ URGENT:
         o  Add CH entry through meals
         o  Add daily entry must be changed (GUI is very...)
         o  Message when no row selected
+	o  option in which type we enter
 * Properties: 
         o  put them into database
         o  move some of them from config to code (classes for meters)
         o  no error if no configuration present
         o  Default database 
         o  Colors as separate table
+* Configuration:
+        o  low/high BGs
+	o  type of unit
+	o  colors
+	o  load/save config
+	
 * Look and feel:
         o  Loading of selected L&F
         o  Configuration of L&F       
@@ -60,11 +68,9 @@ DB TOOL
 CONVERT DATA
 * File
 * MySQL
-* HSSQL
+* HSQL
 * GGC Hibernate 0.2.1.4
 
-I18N TOOL
-* Check langauge files
 
 
 IN NEAR FUTURE
@@ -112,3 +118,6 @@ DONE
         o  decimal check, use both , and .
         o  edit value
         o  save value
+
+I18N TOOL
+* Check langauge files        

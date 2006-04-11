@@ -58,15 +58,57 @@
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
-        <property name="dt_info" type="long" not-null="true"/>    
-        <property name="bg"  type="float" />
-        <property name="ins1"  type="float" />
-        <property name="ins2"  type="float" />
-        <property name="ch"  type="float" />
-        <property name="meals_ids"  type="string" length="1000" />
-        <property name="act"  type="int" />
-        <property name="comment" type="string" length="2000" />
+        <property name="name" type="string"  length="50"/>    
+        <property name="ins1_name" type="string" length="20" />
+        <property name="ins1_abbr" type="string" length="10" />
+        <property name="ins2_name" type="string" length="20" />
+        <property name="ins2_abbr" type="string" length="10" />
+        <property name="meter_type"  type="int" />
+        <property name="meter_port"  type="string" length="50" />
+        <property name="bg_unit"  type="int" />  <!-- 1= mmol/l, 2=mg/dl -->
+        <property name="bg1_low"  type="float"  />
+        <property name="bg1_high"  type="float"  />
+        <property name="bg1_target_low"  type="float"  />
+        <property name="bg1_target_high"  type="float"  />
+        <property name="bg2_low"  type="float"  />
+        <property name="bg2_high"  type="float"  />
+        <property name="bg2_target_low"  type="float"  />
+        <property name="bg2_target_high"  type="float"  />
+        <property name="laf_type" type="int"  /> <!-- 1= class specified, 2=skinlf -->   
+        <property name="laf_name" type="string" length="60"  /> <!-- 1= class, 2= file of skin -->   
+
+        <property name="render_rendering"  type="int" />
+        <property name="render_dithering"  type="int" />
+        <property name="render_interpolation"  type="int" />
+        <property name="render_antialiasing"  type="int" />
+        <property name="render_textantialiasing"  type="int" />
+        <property name="render_colorrendering"  type="int" />
+        <property name="render_fractionalmetrics"  type="int" />
+
+        <property name="pdf_display_software_path"  type="string" length="100" />
+        <property name="lunch_start_time"  type="int" />
+        <property name="dinner_start_time"  type="int" />
+        <property name="night_start_time"  type="int" />
+
+        <property name="color_scheme"  type="int" />
     </class>
 
+    <class name="ggc.db.hibernate.ColorSchemeH" table="ggc_sett_colorscheme">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="name" type="string"  length="50"/>    
+        <property name="custom_type" type="int" />    
+        <property name="color_bg"  type="int" />
+        <property name="color_bg_avg"  type="int" />
+        <property name="color_bg_low"  type="int" />
+        <property name="color_bg_high"  type="int" />
+        <property name="color_bg_target"  type="int" />
+        <property name="color_ins"  type="int" />
+        <property name="color_ins1"  type="int" />
+        <property name="color_ins2"  type="int" />
+        <property name="color_ins_perbu"  type="int" />
+        <property name="color_ch"  type="int" />
+    </class>
 
 </hibernate-mapping>

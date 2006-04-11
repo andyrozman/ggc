@@ -37,13 +37,9 @@ import java.awt.event.ItemEvent;
 
 public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
 {
-    private JComboBox comboAntiAliasing;
-    private JComboBox comboColorRendering;
-    private JComboBox comboDithering;
-    private JComboBox comboFractionalMetrics;
-    private JComboBox comboInterpolation;
-    private JComboBox comboTextAntiAliasing;
-    private JComboBox comboRendering;
+    private JComboBox comboAntiAliasing, comboColorRendering, comboDithering,
+		      comboFractionalMetrics, comboInterpolation, comboTextAntiAliasing,
+		      comboRendering;
 
     private DailyGraphView dgv;
 
@@ -94,13 +90,13 @@ public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
 
         setLayout(new BorderLayout());
 
-        comboAntiAliasing.setSelectedIndex(props.getAntiAliasing());
-        comboColorRendering.setSelectedIndex(props.getColorRendering());
-        comboDithering.setSelectedIndex(props.getDithering());
-        comboFractionalMetrics.setSelectedIndex(props.getFractionalMetrics());
-        comboInterpolation.setSelectedIndex(props.getInterpolation());
-        comboTextAntiAliasing.setSelectedIndex(props.getTextAntiAliasing());
-        comboRendering.setSelectedIndex(props.getRendering());
+        comboAntiAliasing.setSelectedIndex(m_da.getSettings().getAntiAliasing());
+        comboColorRendering.setSelectedIndex(m_da.getSettings().getColorRendering());
+        comboDithering.setSelectedIndex(m_da.getSettings().getDithering());
+        comboFractionalMetrics.setSelectedIndex(m_da.getSettings().getFractionalMetrics());
+        comboInterpolation.setSelectedIndex(m_da.getSettings().getInterpolation());
+        comboTextAntiAliasing.setSelectedIndex(m_da.getSettings().getTextAntiAliasing());
+        comboRendering.setSelectedIndex(m_da.getSettings().getRendering());
 
         comboAntiAliasing.addItemListener(this);
         comboColorRendering.addItemListener(this);
@@ -123,6 +119,7 @@ public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
 
     public void saveProps()
     {
+	/*
         props.set("AntiAliasing", comboAntiAliasing.getSelectedIndex());
         props.set("ColorRendering", comboColorRendering.getSelectedIndex());
         props.set("Dithering", comboDithering.getSelectedIndex());
@@ -130,6 +127,7 @@ public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
         props.set("Interpolation", comboInterpolation.getSelectedIndex());
         props.set("TextAntiAliasing", comboTextAntiAliasing.getSelectedIndex());
         props.set("Rendering", comboRendering.getSelectedIndex());
+	*/
     }
 
     public void itemStateChanged(ItemEvent e)
