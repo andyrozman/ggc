@@ -4,6 +4,7 @@ TO-DO LIST
 
 URGENT:
 -------
+
 * Printing: 
         o  Data gather
         o  Simple print sheet
@@ -44,12 +45,13 @@ URGENT:
         o  move some of them from config to code (classes for meters)
         o  no error if no configuration present
         o  Default database 
+        o  Colors as separate table
 * Look and feel:
         o  Loading of selected L&F
         o  Configuration of L&F       
 
 
-EXTERNAL APPLICATION:
+EXTERNAL APPLICATIONS:
 ---------------------
 
 DB TOOL
@@ -60,6 +62,9 @@ CONVERT DATA
 * MySQL
 * HSSQL
 * GGC Hibernate 0.2.1.4
+
+I18N TOOL
+* Check langauge files
 
 
 IN NEAR FUTURE
