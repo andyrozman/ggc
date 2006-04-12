@@ -106,6 +106,9 @@ public class GGCDbLoader extends Thread
 	mf.setDbActions(true);
 	mf.informationPanel.refreshPanels();
 
+        db.loadConfigData();
+        mf.
+
         mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
     }
   

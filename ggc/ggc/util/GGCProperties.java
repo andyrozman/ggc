@@ -31,8 +31,10 @@
 package ggc.util;
 
 import java.awt.Color;
-import ggc.db.hibernate.SettingsMainH;
+import java.util.Hashtable;
+
 import ggc.db.hibernate.ColorSchemeH;
+import ggc.db.hibernate.SettingsMainH;
 
 public class GGCProperties //extends GGCPropertiesHelper 
 {
@@ -40,10 +42,12 @@ public class GGCProperties //extends GGCPropertiesHelper
     private SettingsMainH m_settings = null;
     private ColorSchemeH m_colors = null;
     private DataAccess m_da = null;
+    private Hashtable m_color_schemes;
 
     public GGCProperties(DataAccess da) 
     {
 	m_da = da;
+        m_color_schemes = new Hashtable();
         this.m_settings = new SettingsMainH(I18nControl.getInstance().getMessage("UNNAMED_USER"), 
                        "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 
                        2, 60.0f, 200.0f, 80.0f, 120.0f, 
@@ -51,105 +55,39 @@ public class GGCProperties //extends GGCPropertiesHelper
 		       2, "blueMetalthemepack.zip",
                        0, 0, 0, 0, 0, 0, 0, 
 		       "", 1100, 1800, 2100, 1);
-/*
-	public SettingsMainH(String name, String ins1_name, String ins1_abbr, 
-			     String ins2_name, String ins2_abbr, int meter_type, 
-			     String meter_port, int bg_unit, float bg1_low, 
-			     float bg1_high, float bg1_target_low, float bg1_target_high, 
-			     float bg2_low, float bg2_high, float bg2_target_low, 
-			     float bg2_target_high, int laf_type, 
-			     String laf_name, int render_rendering, 
-			     int render_dithering, int render_interpolation, 
-			     int render_antialiasing, int render_textantialiasing, 
-			     int render_colorrendering, int render_fractionalmetrics, 
-			     String pdf_display_software_path, int lunch_start_time, 
-			     int dinner_start_time, int night_start_time, 
-			     int color_scheme) {
-*/
 
         this.m_colors = new ColorSchemeH(
         "Default Scheme", 0, -65485, -6750208, -163654, -81409, -1184275, -16724788, 
         -6710785, -16776961, -6711040, -16724941);
-        
 
-        /*
-        setDefault("ColorTargetBG", "-1184275");
-        setDefault("ColorBG", "-65485");
-        setDefault("ColorAvgBG", "-6750208");
-        setDefault("ColorHighBG", "-81409");
-        setDefault("ColorLowBG", "-163654");
-        setDefault("ColorBU", "-16724941");
-        setDefault("ColorIns1", "-6710785");
-        setDefault("ColorIns2", "-16776961");
-        setDefault("ColorIns", "-16724788");
-        setDefault("ColorInsPerBU", "-6711040");
-
-
-
-        super.read();
-        // setDefault("DBName", "glucodb");
-        setDefault("UserName", I18nControl.getInstance().getMessage("UNNAMED_USER"));
-        setDefault("Ins1Name", "Insulin 1");
-        setDefault("Ins2Name", "Insulin 2");
-        setDefault("Ins1Abbr", "Ins1");
-        setDefault("Ins2Abbr", "Ins2");
-        setDefault("HighBG", "200");
-        setDefault("LowBG", "60");
-        setDefault("TargetHighBG", "120");
-        setDefault("TargetLowBG", "80");
-
-        setDefault("Rendering", "0");
-        setDefault("AntiAliasing", "0");
-        setDefault("ColorRendering", "0");
-        setDefault("Dithering", "0");
-        setDefault("FractionalMetrics", "0");
-        setDefault("Interpolation", "0");
-        setDefault("TextAntiAliasing", "0");
-
-        setDefault("ColorTargetBG", "-1184275");
-        setDefault("ColorBG", "-65485");
-        setDefault("ColorAvgBG", "-6750208");
-        setDefault("ColorHighBG", "-81409");
-        setDefault("ColorLowBG", "-163654");
-        setDefault("ColorBU", "-16724941");
-        setDefault("ColorIns1", "-6710785");
-        setDefault("ColorIns2", "-16776961");
-        setDefault("ColorIns", "-16724788");
-        setDefault("ColorInsPerBU", "-6711040");
-
-        setDefault("MeterType", "GlucoCard");
-        setDefault("MeterPort", "none");
-        setDefault("Meter", "GlucoCard;EuroFlash;FreeStyle");
-
-        setDefault("Language", "en");
-
-
-
-        super.read();
-        // setDefault("DBName", "glucodb");
-        setDefault("UserName", I18nControl.getInstance().getMessage("UNNAMED_USER"));
-        setDefault("Ins1Name", "Insulin 1");
-        setDefault("Ins2Name", "Insulin 2");
-        setDefault("Ins1Abbr", "Ins1");
-        setDefault("Ins2Abbr", "Ins2");
-        setDefault("HighBG", "200");
-        setDefault("LowBG", "60");
-        setDefault("TargetHighBG", "120");
-        setDefault("TargetLowBG", "80");
-
-
-        
-        */
     }
 
-/*
-    public static GGCProperties getInstance() 
+
+
+    public void loadSettings(SettingsMainH settings)
     {
-        if (singleton == null)
-            singleton = new GGCProperties();
-        return singleton;
+        this.m_settings = settings;
     }
-    */
+
+    public SettingsMainH saveSettings()
+    {
+        return this.m_settings;
+    }
+
+    public void setColorSchemeObject(int id)
+    {
+        this.m_colors = (ColorSchemeH)this.m_color_schemes.get("" + id);
+    }
+
+    public void loadColorSchemes(Hashtable table)
+    {
+        this.m_color_schemes = table;
+    }
+
+    public Hashtable saveColorScemes()
+    {
+        return this.m_color_schemes;
+    }
 
 
     public String getUserName() 

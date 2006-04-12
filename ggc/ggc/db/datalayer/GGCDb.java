@@ -41,8 +41,8 @@ import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -61,9 +61,9 @@ import org.hibernate.tool.hbm2ddl.*;
 
 import ggc.GGC;
 import ggc.datamodels.DailyValues;
-import ggc.datamodels.WeekValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.HbA1cValues;
+import ggc.datamodels.WeekValues;
 import ggc.db.DataBaseHandler;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
@@ -71,6 +71,8 @@ import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.DayValueH;
 import ggc.db.hibernate.FoodDescriptionH;
 import ggc.db.hibernate.FoodGroupH;
+import ggc.db.hibernate.ColorSchemeH;
+import ggc.db.hibernate.SettingsMainH;
 import ggc.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
 
@@ -499,19 +501,57 @@ public class GGCDb
 
     public void loadConfigData()
     {
+        Session sess = getSession();
+        SettingsMainH seti = (SettingsMainH)sess.get(SettingsMainH.class, new Long(1));
+
+        // load schemes
+        loadColorSchemes(sess);
+
+        // sets settings
+        m_da.getSettings().loadSettings(seti);
+
+        // sets active color scheme
+        m_da.getSettings().setColorSchemeObject(seti.getColor_scheme());
     }
 
     public void saveConfigData()
     {
+        //Session sess = getSession();
+
+        //saveColorSchemes(sess);
+
+        // save config
+        DataAccess.notImplemented("GGCDb::saveConfigData()");
+
 
     }
 
-    public void saveColorSchemes()
+    private void loadColorSchemes(Session sess)
     {
+        Hashtable table = new Hashtable();
+
+        Query q = sess.createQuery("select pst from ggc.db.hibernate.ColorSchemeH as pst");
+
+        Iterator it = q.iterate();
+
+        while (it.hasNext())
+        {
+            ColorSchemeH eh = (ColorSchemeH)it.next();
+            table.put("" +  eh.getId(), eh);
+        }
+
+        m_da.getSettings().loadColorSchemes(table);
+
+    }
+
+    private void saveColorSchemes(Session sess)
+    {
+        DataAccess.notImplemented("GGCDb::saveColorSchemes()");
     }
 
     public void saveConfigToFile()
     {
+        DataAccess.notImplemented("GGCDb::saveConfigToFile()");
     }
 
 
