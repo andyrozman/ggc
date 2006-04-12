@@ -55,9 +55,6 @@ import ggc.gui.StatusBar;
 import ggc.util.DataAccess;
 
 
-
-
-
 public class GGCDbLoader extends Thread
 {
 
@@ -111,7 +108,7 @@ public class GGCDbLoader extends Thread
 
         mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
     }
-
+  
 
 }
 

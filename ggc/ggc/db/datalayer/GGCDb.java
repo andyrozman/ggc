@@ -260,6 +260,34 @@ public class GGCDb
     }
 
 
+    public boolean addForce(Object obj)
+    {
+
+        if (debug)
+            System.out.println("addForce::" + obj.toString());
+
+        try
+        {
+            Session sess = getSession();
+            Transaction tx = sess.beginTransaction();
+
+            sess.save(obj);
+
+            tx.commit();
+
+            return true;
+        }
+        catch(Exception ex)
+        {
+            //setError(1, ex.getMessage(), doh.getObjectName());
+            System.out.println("Exception on add: " + ex);
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+
 
     public boolean edit(Object obj)
     {
@@ -372,6 +400,8 @@ public class GGCDb
 
 
 
+
+
     public String addGetId()
     {
         return this.m_addId;
@@ -460,6 +490,28 @@ public class GGCDb
             ex.printStackTrace();
         }
         return null;
+    }
+
+
+    // *************************************************************
+    // ****                     SETTINGS                        ****
+    // *************************************************************
+
+    public void loadConfigData()
+    {
+    }
+
+    public void saveConfigData()
+    {
+
+    }
+
+    public void saveColorSchemes()
+    {
+    }
+
+    public void saveConfigToFile()
+    {
     }
 
 

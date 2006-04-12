@@ -214,7 +214,7 @@ public class DataAccess
 
 
     // ********************************************************
-    // ******                   Meters                    *****    
+    // ******                  Settings                   *****    
     // ********************************************************
 
 
@@ -223,6 +223,10 @@ public class DataAccess
 	return this.m_settings;
     }
 
+    public void loadSettingsFromDb()
+    {
+
+    }
 
 
 
