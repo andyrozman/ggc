@@ -106,7 +106,7 @@ public class GGCDbLoader extends Thread
 	mf.setDbActions(true);
 	mf.informationPanel.refreshPanels();
 
-        db.loadConfigData();
+	m_da.loadSettingsFromDb();
 
         mf.informationPanel.refreshPanels();
 

@@ -1,11 +1,47 @@
 package ggc.db.db_tool;
 
-import com.atech.db.tool.DbToolApplicationInterface;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Properties;
+
+import com.atech.db.tool.DatabaseSettings;
+import com.atech.db.tool.DbToolApplicationInterface;
 
 public class DbToolApplicationGGC implements DbToolApplicationInterface
 {
+
+    public int selected_db = 0;
+    public int selected_lang = 0;
+
+
+    Hashtable config_db_values = null;
+    //String selected_LF_Class = null; // class
+    //String selected_LF_Name = null; // name
+    //String skinLFSelected = null;
+
+    private Hashtable staticDatabases;
+    private Hashtable customDatabases;
+    private Hashtable allDatabases;
+
+
+    public DbToolApplicationGGC()
+    {
+	this.staticDatabases = new Hashtable();
+	this.customDatabases = new Hashtable();
+	this.allDatabases = new Hashtable();
+	initStaticDbs();
+    }
+
+
+    public void initStaticDbs()
+    {
+	// load all static database info
+    }
 
     public String getApplicationName()
     {
@@ -19,25 +55,270 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
     public void loadConfig()
     {
+
+	config_db_values = new Hashtable();
+
+	try
+	{
+	    Properties props = new Properties();
+
+	    FileInputStream in = new FileInputStream(getApplicationDatabaseConfig());
+	    props.load(in);
+
+
+	    for(Enumeration en = props.keys(); en.hasMoreElements(); )
+	    {
+		String  str = (String)en.nextElement();
+
+		if (str.startsWith("DB")) 
+		{
+		    config_db_values.put(str, (String)props.get(str));
+		}
+		else
+		{
+/*
+		    if (str.equals("LF_NAME")) 
+		    {
+			selected_LF_Name = (String)props.get(str);
+		    }
+		    else if (str.equals("LF_CLASS")) 
+		    {
+			selected_LF_Class = (String)props.get(str);
+		    }
+		    else if (str.equals("SKINLF_SELECTED")) 
+		    {
+			skinLFSelected = (String)props.get(str);
+		    } */
+		    if (str.equals("SELECTED_DB")) 
+		    {
+			selected_db = Integer.parseInt((String)props.get(str));
+		    }
+		    else if (str.equals("SELECTED_LANG")) 
+		    {
+			selected_lang = Integer.parseInt((String)props.get(str));
+		    }
+		    else 
+			System.out.println("DataAccess:loadConfig:: Unknown parameter : " + str);
+
+		}
+
+	    }
+
+	    /*
+	    ArrayList<String> list = new ArrayList<String>();
+
+	    int count_db = 0;
+
+	    list.add("0 - " + m_i18n.getMessage("INTERNAL_DATABASE"));
+	    for (int i=1; i<20; i++) 
+	    {
+		if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
+		{
+		    count_db++;
+		    list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
+		}
+
+		if ((count_db*6)>=config_db_values.size()) 
+		    break;
+
+	    }
+
+	    Iterator it = list.iterator();
+
+	    int j=0;
+	    allDbs = new String[list.size()];
+
+	    while (it.hasNext()) 
+	    {
+		String val = (String)it.next();
+		allDbs[j] = val;
+		j++;
+	    }
+	    */
+
+	}
+	catch(Exception ex)
+	{
+	    System.out.println("DataAccess::loadConfig::Exception> " + ex);
+	}
+
     }
+
 
     public void saveConfig()
     {
+
+	try
+	{
+
+	    //Properties props = new Properties();
+	    BufferedWriter bw = new BufferedWriter(new FileWriter(getApplicationDatabaseConfig()+"ss"));
+
+	    bw.write("#\n" +
+		     "# ZISConfig (Settings for ZIS)\n" +
+		     "#\n"+
+		     "# Don't edit by hand\n" +
+		     "#\n\n"+
+		     "#\n# Databases settings\n#\n");
+
+
+	    int count_db = 0;
+
+	    for (int i=0; i<20; i++) 
+	    {
+		if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
+		{
+		    String con_name = (String)config_db_values.get("DB"+i+"_CONN_NAME");
+		    bw.write("\n#\n# Database #" + i +" - " + con_name + "\n#\n");
+		    count_db++;
+		    bw.write("DB" + i + "_CONN_NAME=" + con_name +"\n");
+		    bw.write("DB" + i + "_CONN_DRIVER_CLASS=" + config_db_values.get("DB"+i+"_CONN_DRIVER_CLASS") +"\n");
+		    bw.write("DB" + i + "_CONN_URL=" + config_db_values.get("DB"+i+"_CONN_URL") +"\n");
+		    bw.write("DB" + i + "_CONN_USERNAME=" + config_db_values.get("DB"+i+"_CONN_USERNAME") +"\n");
+		    bw.write("DB" + i + "_CONN_PASSWORD=" + config_db_values.get("DB"+i+"_CONN_PASSWORD") +"\n");
+		    bw.write("DB" + i + "_HIBERNATE_DIALECT=" + config_db_values.get("DB"+i+"_HIBERNATE_DIALECT") +"\n");
+
+//                    list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
+		}
+
+		if ((count_db*6)>=config_db_values.size()) 
+		    break;
+
+	    }
+
+/*
+	    for(Enumeration en=config_db_values.keys(); en.hasMoreElements(); )
+	    {
+		String key = (String)en.nextElement();
+		bw.write(key + "=" + config_db_values.get(key)+"\n");
+	    }
+	    */
+/*
+	    bw.write("\n\n#\n# Look and Feel Settings\n#\n\n");
+	    bw.write("LF_NAME=" + selected_LF_Name +"\n");
+
+	    //props.put("LF_NAME", selected_LF_Name);
+
+	    selected_LF_Class = availableLF_full.get(selected_LF_Name);
+
+	    bw.write("LF_CLASS=" + selected_LF_Class +"\n");
+
+	    //props.put("LF_CLASS", selected_LF_Name);
+	    bw.write("SKINLF_SELECTED=" + skinLFSelected +"\n");
+	    //props.put("SKINLF_SELECTED", skinLFSelected);
+	    bw.write("\n\n#\n# Db Selector\n#\n\n");
+*/
+
+
+	    bw.write("SELECTED_DB=" + selected_db +"\n");
+	    bw.write("SELECTED_LANG=" + selected_lang +"\n");
+
+
+//            FileOutputStream out = new FileOutputStream("./ZISOut.properties");
+
+	    bw.close();
+	    //props.s
+
+	    //props.store(out, " Settings for ZIS version 0.2.3 or higher (please DON'T edit this file by hand!!)");
+
+	}
+	catch(Exception ex)
+	{
+	    System.out.println("DataAccess::saveConfig::Exception> " + ex);
+	    ex.printStackTrace();
+	}
+
     }
+
+
 
     public int getFirstAvailableDatabase()
     {
 	return 0;
     }
 
-    public ArrayList getStaticDatabases()
+    public Hashtable getStaticDatabases()
+    {
+	return this.staticDatabases; 
+    }
+
+
+    public Hashtable getCustomDatabases()
+    {
+	return this.customDatabases;
+    }
+
+    public Hashtable getAllDatabases()
+    {
+	return this.allDatabases;
+    }
+
+    public DatabaseSettings getDatabase(int index)
     {
 	return null;
     }
+
+    public DatabaseSettings getSelectedDatabase()
+    {
+	return null;
+    }
+
+
+    public void addDatabaseSetting(String setting, String value)
+    {
+	String dbnum = setting.substring(2,3);
+
+	System.out.println(dbnum);
+
+    }
+
+
+    public void test()
+    {
+	/*
+	ArrayList list = new ArrayList();
+	int num = (int)(config_db_values.size()/7);
+
+	for (int i=0; i<num; i++)
+	{
+	    DatabaseSettings ds = new DatabaseSettings();
+	    ds.number = i;
+	    ds.name = (String)config_db_values.get("DB" +i +"_CONN_NAME");
+	    ds.db_name = (String)config_db_values.get("DB" +i +"_DB_NAME");
+	    ds.driver = (String)config_db_values.get("DB" +i +"_CONN_DRIVER");
+	    ds.url = (String)config_db_values.get("DB" +i +"_CONN_URL");
+	    //ds.port = config_db_values.get("DB" +i +"_CONN_NAME");
+	    ds.dialect = (String)config_db_values.get("DB" +i +"_HIBERNATE_DIALECT");
+
+	    ds.username = (String)config_db_values.get("DB" +i +"_CONN_USERNAME");
+	    ds.password = (String)config_db_values.get("DB" +i +"_CONN_PASSWORD");
+
+	    if (this.selected_db==i)
+	    {
+		ds.isDefault = true;
+	    }
+
+	    list.add(ds);
+	}
+
+	return list;
+
+	*/
+    }
+
+
 
     public String toString()
     {
 	return getApplicationName();
     }
+
+
+    public static void main(String args[])
+    {
+	DbToolApplicationGGC apl = new DbToolApplicationGGC();
+	apl.loadConfig();
+    }
+
 
 }

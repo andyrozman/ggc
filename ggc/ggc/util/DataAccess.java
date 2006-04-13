@@ -55,7 +55,7 @@ import ggc.db.datalayer.GGCDbLoader;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.nutrition.GGCTreeRoot;
-
+import ggc.db.db_tool.DbToolApplicationGGC;
 
 public class DataAccess
 {
@@ -103,8 +103,8 @@ public class DataAccess
 
 
     private MeterManager m_meterManager = null;
-
     private GGCProperties m_settings = null;
+    private DbToolApplicationGGC m_configFile = null;
 
 
     // ********************************************************
@@ -131,6 +131,8 @@ public class DataAccess
 //        loadLanguageInfo();
         m_meterManager = new MeterManager();
         this.m_settings = new GGCProperties(this);
+	this.m_configFile = new DbToolApplicationGGC();
+	this.m_configFile.loadConfig();
 
     } 
 
@@ -225,7 +227,7 @@ public class DataAccess
 
     public void loadSettingsFromDb()
     {
-
+	m_db.loadConfigData();
     }
 
 

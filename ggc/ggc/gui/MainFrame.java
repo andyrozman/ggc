@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
 
     private static final String version_date = "13th April 2006";
 
-    private I18nControl m_ic = I18nControl.getInstance();
+    private I18nControl m_ic = null;
 
     public static SkinLookAndFeel m_skinlf;
 
@@ -102,7 +102,8 @@ public class MainFrame extends JFrame {
     /**
      *   Static definitions (Look and Feel)
      */
-    static {
+    static 
+    {
 
         //MainFrame.setLookAndFeel("coronaHthemepack.zip");
         //MainFrame.setLookAndFeel("midnightthemepack.zip");
@@ -144,7 +145,8 @@ public class MainFrame extends JFrame {
 
     }
 
-    public static void setLookAndFeel(String name) {
+    public static void setLookAndFeel(String name) 
+    {
         try {
             SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir
                     + name));
@@ -160,11 +162,13 @@ public class MainFrame extends JFrame {
     }
 
     //constructor
-    public MainFrame(String title, boolean developer_version) {
+    public MainFrame(String title, boolean developer_version) 
+    {
         // this is the first chance to call this method after an instance of GGCProperties has been created
-        m_ic.setLanguage();
+        //m_ic.setLanguage();
 
         m_da = DataAccess.createInstance(this);
+	m_ic = I18nControl.getInstance();
 
         statusPanel = StatusBar.getInstance();
 
