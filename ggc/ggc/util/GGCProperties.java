@@ -278,6 +278,25 @@ public class GGCProperties //extends GGCPropertiesHelper
     }
 
 
+    public int getBGUnit()
+    {
+        return this.m_settings.getBg_unit();
+    }
+
+    public String getBGUnitString()
+    {
+        int unit = getBGUnit();
+
+        if (unit==1) 
+            return "mg/dl";
+        else if (unit==2) 
+            return "mmol/l";
+        else
+            return m_da.getI18nInstance().getMessage("UNKNOWN");
+
+    }
+
+
     public String getMeterPort() 
     {
 	return this.m_settings.getMeter_port();

@@ -54,11 +54,11 @@ import ggc.gui.dialogs.FrequencyGraphDialog;
 public class MainFrame extends JFrame {
 
     // Version information
-    public static final String version = "0.2.1.6";
+    public static final String version = "0.2.1.9";
 
     public static final String full_version = "v" + version;
 
-    private static final String version_date = "10th April 2006";
+    private static final String version_date = "13th April 2006";
 
     private I18nControl m_ic = I18nControl.getInstance();
 
@@ -179,12 +179,10 @@ public class MainFrame extends JFrame {
         JMenu viewMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_VIEW"));
         JMenu readMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_READ"));
         JMenu foodMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FOOD"));
-        JMenu reportMenu = new JMenu(m_ic
-                .getMessageWithoutMnemonic("MN_REPORT"));
-        JMenu optionMenu = new JMenu(m_ic
-                .getMessageWithoutMnemonic("MN_OPTION"));
+        JMenu reportMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_REPORT"));
+        JMenu optionMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_OPTION"));
         JMenu helpMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_HELP"));
-        JMenu testMenu = new JMenu("Test");
+        //JMenu testMenu = new JMenu("Test");
 
         fileMenu.setMnemonic(m_ic.getMnemonic("MN_FILE"));
         viewMenu.setMnemonic(m_ic.getMnemonic("MN_VIEW"));
@@ -316,7 +314,8 @@ public class MainFrame extends JFrame {
 
     }
 
-    public MainFrame getMyParent() {
+    public MainFrame getMyParent() 
+    {
         return this;
     }
 

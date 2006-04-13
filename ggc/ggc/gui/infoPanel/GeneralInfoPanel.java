@@ -39,6 +39,8 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private JLabel lblName = new JLabel();
     private JLabel lblIns1 = new JLabel();
     private JLabel lblIns2 = new JLabel();
+    private JLabel lblMeter = new JLabel();
+    private JLabel lblUnit = new JLabel();
 
 
     public GeneralInfoPanel()
@@ -58,12 +60,31 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         add(lblIns1);
         add(new JLabel(m_ic.getMessage("BASAL_INSULIN")+":"));
         add(lblIns2);
+        add(new JLabel(m_ic.getMessage("GLUCOMETER")+":"));
+        add(lblMeter);
+        add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
+        add(lblUnit);
+
+	add(new JLabel());
+	add(new JLabel());
+
+//	add(new JLabel());
+//		add(new JLabel());
     }
 
     public void refreshInfo()
     {
         lblName.setText(m_da.getSettings().getUserName());
-        lblIns1.setText(m_da.getSettings().getIns1Name());
-        lblIns2.setText(m_da.getSettings().getIns2Name());
+        lblIns1.setText(m_da.getSettings().getIns1Name() + "  (" + m_da.getSettings().getIns1Abbr() + ")");
+        lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
+        lblMeter.setText(m_da.getSettings().getMeterTypeString() + "  (" + m_da.getSettings().getMeterPort() + ")");
+        lblUnit.setText(m_da.getSettings().getBGUnitString());
     }
+
+/*
+        <property name="meter_type"  type="int" />
+        <property name="meter_port"  type="string" length="50" />
+        <property name="bg_unit"  type="int" />  <!-- 1= mmol/l, 2=mg/dl -->
+*/
+
 }

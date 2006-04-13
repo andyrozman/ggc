@@ -1,4 +1,8 @@
-2006-04-11 Andy Rozman <andyrozman@users.sourceforge.net>
+2006-04-13 (v0.2.1.9) Andy Rozman <andyrozman@users.sourceforge.net>
+    * continuing work on config in db 
+    * loading of selected language (from config file)
+
+2006-04-11 (v0.2.1.8) Andy Rozman <andyrozman@users.sourceforge.net>
     * added I18nCheck tool to help translators by translation (they display keywords 
       not available in langugae file)
     * started removing config file. All settings will be stored in database, except database

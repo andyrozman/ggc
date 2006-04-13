@@ -36,6 +36,8 @@ public class prefGeneralPane extends AbstractPrefOptionsPanel
 {
     private JTextField fieldUserName;
 
+    //private I18nControl m_ic = I18nControl.getInstance();
+
     private JComboBox langBox;
 
     public prefGeneralPane() 
@@ -46,9 +48,9 @@ public class prefGeneralPane extends AbstractPrefOptionsPanel
     private void init() 
     {
         JPanel a = new JPanel(new GridLayout(2, 2));
-        langBox = new JComboBox(I18nControl.getAvailableLanguages());
+        langBox = new JComboBox(m_ic.getAvailableLanguages());
 
-        langBox.setSelectedItem(m_da.getSettings().getLanguage());
+        langBox.setSelectedItem(m_ic.getSelectedLanguageIndex());
 
         a.add(new JLabel(m_ic.getMessage("YOUR_NAME") + ":"));
         a.add(fieldUserName = new JTextField(m_da.getSettings().getUserName(), 10));

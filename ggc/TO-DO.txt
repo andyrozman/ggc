@@ -31,11 +31,9 @@ URGENT:
 	o  Nutrition db
 	o  Meals db
 	o  Apointments db
-        o  Config
 * Adding support for mmol/l (now we have only mG/DL):
         o  graphs
         o  database 
-        o  settings
 * Entering daily data: 
         o  Time displayed as selectable entry
         o  Add CH entry through meals
@@ -109,6 +107,9 @@ DONE
 * Hibernate for Database handling
 	o  Full Hibernate loading
 	o  Entries (day-values)
+        o  Config
+* Adding support for mmol/l (now we have only mG/DL):
+        o  settings
 * Entering daily data: 
         o  After add close window
         o  BG Values must be checked so that comma is also supported and 

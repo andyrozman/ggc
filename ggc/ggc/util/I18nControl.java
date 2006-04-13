@@ -33,8 +33,24 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 public class I18nControl
 {
+
+    public String[] availableLanguages = {
+	"English",
+	"Deutsch",
+	"Slovenski",
+    };
+
+    public String[] avLangPostfix = {
+	"en",
+	"de",
+	"si",
+    };
+
 
     
     /**
@@ -48,6 +64,8 @@ public class I18nControl
 
     private static final Locale defaultLocale = Locale.ENGLISH;
 
+    private String selected_language = "en";
+
     //   Constructor:  I18nControl
     /**
      *
@@ -58,11 +76,29 @@ public class I18nControl
      */ 
     private I18nControl()
     {
-        setLanguage(defaultLocale);
-        Locale.setDefault(defaultLocale);
+	getSelectedLanguage();
+        setLanguage();
+        //Locale.setDefault(defaultLocale);
     } 
     
 
+    private void getSelectedLanguage()
+    {
+        try
+        {
+            Properties props = new Properties();
+
+            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
+            props.load(in);
+
+            this.selected_language = (String)props.get("SELECTED_LANG");
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        
+    }
 
     
     //  Method:       getInstance
@@ -104,7 +140,7 @@ public class I18nControl
     public void setLanguage() 
     {
         //GGCProperties props = GGCProperties.getInstance();
-        setLanguage("en"); //props.getLanguage());
+        setLanguage(this.selected_language); //props.getLanguage());
     }
 
     //  Method:       setLanguage (String language)
@@ -187,9 +223,10 @@ public class I18nControl
     }
 
     
-    public static String[] getAvailableLanguages() 
+    public String[] getAvailableLanguages() 
     {
-	return null;
+	return this.availableLanguages;
+	
 	/*
         GGCProperties properties = GGCProperties.getInstance();
         String allLangs = properties.get("Languages");
@@ -208,6 +245,27 @@ public class I18nControl
         return langs;
 	*/
     }
+
+
+    public int getSelectedLanguageIndex()
+    {
+	return this.getLanguageIndex(this.selected_language);
+    }
+
+
+    public int getLanguageIndex(String postfix)
+    {
+	for (int i=0; i<this.avLangPostfix.length; i++) 
+	{
+	    if (this.avLangPostfix.equals(postfix)) 
+	    {
+		return i;
+	    }
+	}
+
+	return 0;
+    }
+
 
     //  Method: htmlize
     /**
