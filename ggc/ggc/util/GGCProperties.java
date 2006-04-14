@@ -371,7 +371,7 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public void load()
     {
-	m_db.loadConfigData();
+	m_da.getDb().loadConfigData();
 	m_da.setBGMeasurmentType(this.getBGUnit());
     }
 
