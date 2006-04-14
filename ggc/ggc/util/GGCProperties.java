@@ -33,6 +33,8 @@ package ggc.util;
 import java.awt.Color;
 import java.util.Hashtable;
 
+
+import ggc.db.db_tool.DbToolApplicationGGC;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.SettingsMainH;
 
@@ -44,10 +46,18 @@ public class GGCProperties //extends GGCPropertiesHelper
     private DataAccess m_da = null;
     private Hashtable m_color_schemes;
 
-    public GGCProperties(DataAccess da) 
+    DbToolApplicationGGC m_config = null;
+
+    private boolean changed_db = false;
+    private boolean changed_config = false;
+    private boolean changed_scheme = false;
+
+
+    public GGCProperties(DataAccess da, DbToolApplicationGGC config) 
     {
-	m_da = da;
-        m_color_schemes = new Hashtable();
+	this.m_da = da;
+	this.m_config = config;
+        this.m_color_schemes = new Hashtable();
         this.m_settings = new SettingsMainH(I18nControl.getInstance().getMessage("UNNAMED_USER"), 
                        "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 
                        2, 60.0f, 200.0f, 80.0f, 120.0f, 
@@ -90,10 +100,22 @@ public class GGCProperties //extends GGCPropertiesHelper
     }
 
 
+    // user's name
     public String getUserName() 
     {
 	return this.m_settings.getName();
     }
+
+    public void setUserName(String value)
+    {
+	if (!this.m_settings.getName().equals(value)) 
+	{
+	    this.m_settings.setName(value);
+	    changed_db = true;
+	}
+    }
+
+    // insulins
 
     public String getIns1Name() 
     {
@@ -121,6 +143,8 @@ public class GGCProperties //extends GGCPropertiesHelper
 	return this.m_settings.getIns2_abbr();
     }
 
+
+    // BG settings
 
     public float getHighBG() 
     {
@@ -175,6 +199,8 @@ public class GGCProperties //extends GGCPropertiesHelper
     }
 
 
+    // rendering stuff
+
     public int getRendering() 
     {
 	return this.m_settings.getRender_rendering();
@@ -209,6 +235,9 @@ public class GGCProperties //extends GGCPropertiesHelper
     {
 	return this.m_settings.getRender_textantialiasing();
     }
+
+
+    // colors
 
     public Color getColorTargetBG() 
     {
@@ -266,6 +295,8 @@ public class GGCProperties //extends GGCPropertiesHelper
 	return getColor(this.m_colors.getColor_ins_perbu());
     }
 
+    // meter
+
     public int getMeterType() 
     {
 	return this.m_settings.getMeter_type();
@@ -276,6 +307,8 @@ public class GGCProperties //extends GGCPropertiesHelper
     {
 	return m_da.getMeterManager().meter_names[this.m_settings.getMeter_type()];
     }
+
+
 
 
     public int getBGUnit()
@@ -304,12 +337,69 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public String getLanguage() 
     {
-	return null;
+	return this.m_config.selected_lang;
+    }
+
+    public void setLanguage(String name)
+    {
+	System.out.println("set Lang: " + name);
+
+	int idx = m_da.getLanguageIndexByName(name);
+
+	String post = m_da.avLangPostfix[idx];
+
+	System.out.println("  new Lang:" + post);
+
+	if (!this.m_config.selected_lang.equals(post)) 
+	{
+	    System.out.println("  changed");
+	    this.m_config.selected_lang = post;
+	    this.changed_config = true;
+	}
+	else
+	    System.out.println("  same");
+
     }
 
     public Color getColor(int key)
     {
 	return new Color(key);
+    }
+
+
+
+
+    public void load()
+    {
+    }
+
+    public void reload()
+    {
+    }
+
+    public void save()
+    {
+	System.out.println("save");
+
+	// fix
+	if (changed_scheme) 
+	{
+	    System.out.println("save Scheme");
+	    //m_da.m_db.s
+	}
+
+	if (changed_db) 
+	{
+	    System.out.println("save Db");
+	    m_da.m_db.saveConfigData();
+	}
+
+	if (changed_config) 
+	{
+	    System.out.println("save Config");
+	    this.m_config.saveConfig();
+	}
+
     }
 
 

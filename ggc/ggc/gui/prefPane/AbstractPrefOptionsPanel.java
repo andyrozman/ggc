@@ -48,6 +48,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
 
     protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccess m_da = DataAccess.getInstance();
+    protected GGCProperties settings = m_da.getSettings();
 
     //protected GGCProperties props = GGCProperties.getInstance();
     protected boolean changed = false;

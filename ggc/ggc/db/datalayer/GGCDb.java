@@ -549,10 +549,6 @@ public class GGCDb
         DataAccess.notImplemented("GGCDb::saveColorSchemes()");
     }
 
-    public void saveConfigToFile()
-    {
-        DataAccess.notImplemented("GGCDb::saveConfigToFile()");
-    }
 
 
     // *************************************************************

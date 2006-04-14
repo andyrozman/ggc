@@ -1,5 +1,6 @@
 package com.atech.db.tool;
 
+import java.io.BufferedWriter;
 import java.util.Hashtable;
 
 public class DatabaseSettings 
@@ -9,6 +10,7 @@ public class DatabaseSettings
     public String db_name = null;
     public String name = null;
     public String driver = null;
+    public String driver_class = null;
     public String url = null;
     public String port = null;
     public String dialect = null;
@@ -43,6 +45,18 @@ public class DatabaseSettings
 
 	settings = new Hashtable();
 
+    }
+
+    public void write(BufferedWriter bw) throws java.io.IOException
+    {
+	bw.write("\n#\n# Database #" + this.number +" - " + this.name + "\n#\n");
+	bw.write("DB" + this.number + "_CONN_NAME=" + this.name +"\n");
+	bw.write("DB" + this.number + "_DB_NAME=" + this.db_name +"\n");
+	bw.write("DB" + this.number + "_CONN_DRIVER_CLASS=" + this.driver_class +"\n");
+	bw.write("DB" + this.number + "_CONN_URL=" + this.url +"\n");
+	bw.write("DB" + this.number + "_CONN_USERNAME=" + this.username +"\n");
+	bw.write("DB" + this.number + "_CONN_PASSWORD=" + this.password +"\n");
+	bw.write("DB" + this.number + "_HIBERNATE_DIALECT=" + this.dialect +"\n");
     }
 
 

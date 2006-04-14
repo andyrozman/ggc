@@ -81,8 +81,9 @@ public class DataAccess
 
     public static final String pathPrefix = ".";
 
-    public I18nControl m_i18n = I18nControl.getInstance();
+    public I18nControl m_i18n = null;
 
+    //I18nControl.getInstance();
     static private DataAccess m_da = null;   // This is handle to unique 
                                              // singelton instance
 
@@ -107,6 +108,23 @@ public class DataAccess
     private DbToolApplicationGGC m_configFile = null;
 
 
+
+    public String[] availableLanguages = {
+	"English",
+	"Deutsch",
+	"Slovenski",
+    };
+
+    public String[] avLangPostfix = {
+	"en",
+	"de",
+	"si",
+    };
+
+
+
+
+
     // ********************************************************
     // ******      Constructors and Access methods        *****    
     // ********************************************************
@@ -123,17 +141,19 @@ public class DataAccess
      */ 
     private DataAccess()
     {
-        //m_db = db;
-
-//        loadConfig();
         loadFonts();
+
+	//m_i18n.createInstance(this);
 //        loadAvailableLFs();
 //        loadLanguageInfo();
         m_meterManager = new MeterManager();
-        this.m_settings = new GGCProperties(this);
+
 	this.m_configFile = new DbToolApplicationGGC();
 	this.m_configFile.loadConfig();
 
+	this.m_settings = new GGCProperties(this, this.m_configFile);
+
+	m_i18n = I18nControl.getInstance();
     } 
 
 
@@ -204,6 +224,8 @@ public class DataAccess
         return m_db;
     }
 
+
+
     // ********************************************************
     // ******                   Meters                    *****    
     // ********************************************************
@@ -228,6 +250,53 @@ public class DataAccess
     public void loadSettingsFromDb()
     {
 	m_db.loadConfigData();
+    }
+
+
+    // ********************************************************
+    // ******                  Language                   *****    
+    // ********************************************************
+
+
+
+    public String[] getAvailableLanguages() 
+    {
+	return this.availableLanguages;
+    }
+
+
+    public int getSelectedLanguageIndex()
+    {
+	return this.getLanguageIndex(this.getSettings().getLanguage());
+    }
+
+
+    public int getLanguageIndex(String postfix)
+    {
+	for (int i=0; i<this.avLangPostfix.length; i++) 
+	{
+	    if (this.avLangPostfix.equals(postfix)) 
+	    {
+		return i;
+	    }
+	}
+
+	return 0;
+    }
+
+    public int getLanguageIndexByName(String name)
+    {
+	//stem.out.println(name);
+
+	for (int i=0; i<this.availableLanguages.length; i++) 
+	{
+	    if (this.availableLanguages[i].equals(name)) 
+	    {
+		return i;
+	    }
+	}
+
+	return 0;
     }
 
 

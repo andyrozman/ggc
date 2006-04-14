@@ -16,7 +16,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 {
 
     public int selected_db = 0;
-    public int selected_lang = 0;
+    public String selected_lang = "en";
 
 
     Hashtable config_db_values = null;
@@ -72,7 +72,8 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
 		if (str.startsWith("DB")) 
 		{
-		    config_db_values.put(str, (String)props.get(str));
+		    addDatabaseSetting(str, (String)props.get(str));
+		    //config_db_values.put(str, (String)props.get(str));
 		}
 		else
 		{
@@ -95,7 +96,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 		    }
 		    else if (str.equals("SELECTED_LANG")) 
 		    {
-			selected_lang = Integer.parseInt((String)props.get(str));
+			selected_lang = (String)props.get(str);
 		    }
 		    else 
 			System.out.println("DataAccess:loadConfig:: Unknown parameter : " + str);
@@ -152,47 +153,27 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 	{
 
 	    //Properties props = new Properties();
-	    BufferedWriter bw = new BufferedWriter(new FileWriter(getApplicationDatabaseConfig()+"ss"));
+	    BufferedWriter bw = new BufferedWriter(new FileWriter(getApplicationDatabaseConfig()));
 
 	    bw.write("#\n" +
-		     "# ZISConfig (Settings for ZIS)\n" +
+		     "# GGC_Config (Settings for GGC)\n" +
 		     "#\n"+
 		     "# Don't edit by hand\n" +
+		     "# Only settings need for application startup are written here. All other info\n"+
+		     "#    is stored in database\n" +
 		     "#\n\n"+
 		     "#\n# Databases settings\n#\n");
 
 
 	    int count_db = 0;
 
-	    for (int i=0; i<20; i++) 
+	    //for (int i=0; i<this.allDatabases.size(); i++)  fix, only non-static db data should be written
+	    for (int i=0; i<this.allDatabases.size(); i++) 
 	    {
-		if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
-		{
-		    String con_name = (String)config_db_values.get("DB"+i+"_CONN_NAME");
-		    bw.write("\n#\n# Database #" + i +" - " + con_name + "\n#\n");
-		    count_db++;
-		    bw.write("DB" + i + "_CONN_NAME=" + con_name +"\n");
-		    bw.write("DB" + i + "_CONN_DRIVER_CLASS=" + config_db_values.get("DB"+i+"_CONN_DRIVER_CLASS") +"\n");
-		    bw.write("DB" + i + "_CONN_URL=" + config_db_values.get("DB"+i+"_CONN_URL") +"\n");
-		    bw.write("DB" + i + "_CONN_USERNAME=" + config_db_values.get("DB"+i+"_CONN_USERNAME") +"\n");
-		    bw.write("DB" + i + "_CONN_PASSWORD=" + config_db_values.get("DB"+i+"_CONN_PASSWORD") +"\n");
-		    bw.write("DB" + i + "_HIBERNATE_DIALECT=" + config_db_values.get("DB"+i+"_HIBERNATE_DIALECT") +"\n");
-
-//                    list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
-		}
-
-		if ((count_db*6)>=config_db_values.size()) 
-		    break;
-
+		DatabaseSettings dbs = (DatabaseSettings)this.allDatabases.get(""+i);
+		dbs.write(bw);
 	    }
 
-/*
-	    for(Enumeration en=config_db_values.keys(); en.hasMoreElements(); )
-	    {
-		String key = (String)en.nextElement();
-		bw.write(key + "=" + config_db_values.get(key)+"\n");
-	    }
-	    */
 /*
 	    bw.write("\n\n#\n# Look and Feel Settings\n#\n\n");
 	    bw.write("LF_NAME=" + selected_LF_Name +"\n");
@@ -205,21 +186,16 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
 	    //props.put("LF_CLASS", selected_LF_Name);
 	    bw.write("SKINLF_SELECTED=" + skinLFSelected +"\n");
-	    //props.put("SKINLF_SELECTED", skinLFSelected);
-	    bw.write("\n\n#\n# Db Selector\n#\n\n");
-*/
+	    //props.put("SKINLF_SELECTED", skinLFSelected); */
 
 
+	    bw.write("\n\n#\n# Db Selector\n#\n");
 	    bw.write("SELECTED_DB=" + selected_db +"\n");
+
+	    bw.write("\n\n#\n# Language Selector\n#\n");
 	    bw.write("SELECTED_LANG=" + selected_lang +"\n");
 
-
-//            FileOutputStream out = new FileOutputStream("./ZISOut.properties");
-
 	    bw.close();
-	    //props.s
-
-	    //props.store(out, " Settings for ZIS version 0.2.3 or higher (please DON'T edit this file by hand!!)");
 
 	}
 	catch(Exception ex)
@@ -234,7 +210,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
     public int getFirstAvailableDatabase()
     {
-	return 0;
+	return 1;
     }
 
     public Hashtable getStaticDatabases()
@@ -266,9 +242,74 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
     public void addDatabaseSetting(String setting, String value)
     {
-	String dbnum = setting.substring(2,3);
+	int dbnum = Integer.parseInt(setting.substring(2,3));
 
-	System.out.println(dbnum);
+//	if (dbnum<this.getFirstAvailableDatabase()) 
+//	    return;
+
+	if (this.customDatabases.containsKey(""+dbnum)) 
+	{
+	    // we have database
+	    DatabaseSettings dbs = (DatabaseSettings)this.customDatabases.get(""+dbnum);
+	    addDatabaseSetting(dbs, setting, value);
+	}
+	else
+	{
+	    // new database
+	    DatabaseSettings dbs = new DatabaseSettings();
+	    dbs.number = dbnum;
+	    addDatabaseSetting(dbs, setting, value);
+	    this.customDatabases.put(""+dbnum, dbs);
+	    this.allDatabases.put(""+dbnum, dbs);
+	}
+
+	//System.out.println(dbnum);
+
+    }
+
+
+    public void addDatabaseSetting(DatabaseSettings ds, String setting, String value)
+    {
+	String sett = setting.substring(setting.indexOf("_")+1);
+
+	//System.out.println(sett);
+
+	if (sett.equals("CONN_NAME")) 
+	{
+	    ds.name = value;
+	}
+	else if (sett.equals("DB_NAME"))
+	{
+	    ds.db_name = value;
+	}
+	else if (sett.equals("CONN_DRIVER")) 
+	{
+	    ds.driver = value;
+	}
+	else if (sett.equals("CONN_URL")) 
+	{
+	    ds.url = value;
+	}
+	else if (sett.equals("HIBERNATE_DIALECT"))
+	{
+	    ds.dialect = value;
+	}
+	else if (sett.equals("CONN_USERNAME"))
+	{
+	    ds.username = value;
+	}
+	else if (sett.equals("CONN_PASSWORD")) 
+	{
+	    ds.password = value;
+	}
+	else if (sett.equals("CONN_DRIVER_CLASS")) 
+	{
+	    ds.driver_class = value;
+	}
+	else 
+	{
+	    System.out.println("Unknown DB keyword in config: " + sett);
+	}
 
     }
 
@@ -318,6 +359,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     {
 	DbToolApplicationGGC apl = new DbToolApplicationGGC();
 	apl.loadConfig();
+	apl.saveConfig();
     }
 
 

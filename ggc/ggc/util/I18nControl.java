@@ -39,18 +39,6 @@ import java.util.Properties;
 public class I18nControl
 {
 
-    public String[] availableLanguages = {
-	"English",
-	"Deutsch",
-	"Slovenski",
-    };
-
-    public String[] avLangPostfix = {
-	"en",
-	"de",
-	"si",
-    };
-
 
     
     /**
@@ -78,13 +66,14 @@ public class I18nControl
     {
 	getSelectedLanguage();
         setLanguage();
-        //Locale.setDefault(defaultLocale);
     } 
     
 
     private void getSelectedLanguage()
     {
-        try
+	//this.selected_language = DataAccess.getInstance().getSettings().getLanguage();
+
+	try
         {
             Properties props = new Properties();
 
@@ -92,6 +81,7 @@ public class I18nControl
             props.load(in);
 
             this.selected_language = (String)props.get("SELECTED_LANG");
+
         }
         catch (Exception ex)
         {
@@ -222,49 +212,6 @@ public class I18nControl
 
     }
 
-    
-    public String[] getAvailableLanguages() 
-    {
-	return this.availableLanguages;
-	
-	/*
-        GGCProperties properties = GGCProperties.getInstance();
-        String allLangs = properties.get("Languages");
-
-        if (allLangs == null || allLangs.equals(""))
-            return new String[0];
-
-        StringTokenizer strTk = new StringTokenizer(allLangs, ";");
-        String[] langs = new String[strTk.countTokens()];
-        int counter = 0;
-        while (strTk.hasMoreTokens()) {
-            langs[counter] = strTk.nextToken();
-            counter++;
-        }
-
-        return langs;
-	*/
-    }
-
-
-    public int getSelectedLanguageIndex()
-    {
-	return this.getLanguageIndex(this.selected_language);
-    }
-
-
-    public int getLanguageIndex(String postfix)
-    {
-	for (int i=0; i<this.avLangPostfix.length; i++) 
-	{
-	    if (this.avLangPostfix.equals(postfix)) 
-	    {
-		return i;
-	    }
-	}
-
-	return 0;
-    }
 
 
     //  Method: htmlize

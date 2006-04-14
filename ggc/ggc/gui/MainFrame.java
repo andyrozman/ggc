@@ -51,17 +51,15 @@ import ggc.gui.dialogs.SpreadGraphDialog;
 import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.FrequencyGraphDialog;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame 
+{
 
     // Version information
     public static final String version = "0.2.1.9";
-
     public static final String full_version = "v" + version;
-
     private static final String version_date = "13th April 2006";
 
     private I18nControl m_ic = null;
-
     public static SkinLookAndFeel m_skinlf;
 
     private static final String skinLFdir = "../lib/skinLFThemes/";
@@ -104,6 +102,8 @@ public class MainFrame extends JFrame {
      */
     static 
     {
+
+	//DataAccess.getInstance();
 
         //MainFrame.setLookAndFeel("coronaHthemepack.zip");
         //MainFrame.setLookAndFeel("midnightthemepack.zip");
@@ -197,46 +197,29 @@ public class MainFrame extends JFrame {
 
         quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
 
-        viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC",
-                "view_daily");
-        viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass()
-                .getResource("/icons/daily.gif")));
-        viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC",
-                "view_course");
-        viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(
-                getClass().getResource("/icons/course.gif")));
-        viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC",
-                "view_spread");
-        viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(
-                getClass().getResource("/icons/spread.gif")));
-        viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY",
-                "MN_FREQUENCY_DESC", "view_freq");
-        viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(
-                getClass().getResource("/icons/frequency.gif")));
-        viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC",
-                "view_hba1c");
+        viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
+        viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
+        viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
+        viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
+        viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
+        viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
+        viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
+        viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
+        viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
 
-        readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC",
-                "read_meter");
-        readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass()
-                .getResource("/icons/readmeter.gif")));
+	readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
+        readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
 
-        foodNutrAction = new GGCAction("MN_NUTRDB", "MN_NUTRDB_DESC",
-                "food_nutrition");
-        foodMealsAction = new GGCAction("MN_MEALS", "MN_MEALS_DESC",
-                "food_meals");
+        foodNutrAction = new GGCAction("MN_NUTRDB", "MN_NUTRDB_DESC", "food_nutrition");
+        foodMealsAction = new GGCAction("MN_MEALS", "MN_MEALS_DESC", "food_meals");
 
-        reportPDFSimpleAction = new GGCAction("MN_PDF_SIMPLE",
-                "MN_PDF_SIMPLE_DESC", "report_pdf_simple");
-        reportPDFExtendedAction = new GGCAction("MN_PDF_EXT",
-                "MN_PDF_EXT_DESC", "report_pdf_extended");
+        reportPDFSimpleAction = new GGCAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple");
+        reportPDFExtendedAction = new GGCAction("MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended");
 
-        prefAction = new GGCAction("MN_PREFERENCES", "MN_PREFERENCES_DESC",
-                "option_pref");
+        prefAction = new GGCAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "option_pref");
 
         aboutAction = new GGCAction("MN_ABOUT", "MN_ABOUT_DESC", "hlp_about");
-        checkVersionAction = new GGCAction("MN_CHECK_FOR_UPDATE",
-                "MN_CHECK_FOR_UPDATE_DESC", "hlp_check");
+        checkVersionAction = new GGCAction("MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check");
 
         //GGCAction test = new GGCAction("Print", "Print Test", "print_test");
 
@@ -475,8 +458,10 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private class CloseListener extends WindowAdapter {
-        public void windowClosing(WindowEvent e) {
+    private class CloseListener extends WindowAdapter 
+    {
+        public void windowClosing(WindowEvent e) 
+	{
             close();
         }
     }
