@@ -3,6 +3,7 @@
       workings, so that after properties are done, we can save all setting and not just the 
       current as it was till now. 
     * changed DailyStatsDialog to display graph and ti display error if no row was selected.
+    * fixed AbstractGraphView
 
 
 

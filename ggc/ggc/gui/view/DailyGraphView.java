@@ -44,7 +44,8 @@ public class DailyGraphView extends AbstractGraphView {
         // DailyValues.getInstance();
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics g) 
+    {
         Graphics2D g2D = (Graphics2D) g;
 
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oAA);
