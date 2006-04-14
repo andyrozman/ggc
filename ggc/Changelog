@@ -1,3 +1,8 @@
+2006-04-15 (v0.2.1.11) Andy Rozman <andyrozman@users.sourceforge.net>
+    * fix Statistics (BG / Insulin) and Hba1c display
+
+
+
 2006-04-14 (v0.2.1.10) Andy Rozman <andyrozman@users.sourceforge.net>
     * moved ggc.gui.PropertiesFrame to ggc.gui.dialogs.PropertiesDialog, and changed internal
       workings, so that after properties are done, we can save all setting and not just the 
