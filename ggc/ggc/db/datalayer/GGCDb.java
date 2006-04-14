@@ -262,11 +262,13 @@ public class GGCDb
     }
 
 
-    public boolean addForce(Object obj)
+    // this method is used for direct use with hibernate objects (unlike use with our 
+    // datalayer classes)
+    public boolean addHibernate(Object obj)
     {
 
         if (debug)
-            System.out.println("addForce::" + obj.toString());
+            System.out.println("addHibernate::" + obj.toString());
 
         try
         {
@@ -274,15 +276,13 @@ public class GGCDb
             Transaction tx = sess.beginTransaction();
 
             sess.save(obj);
-
             tx.commit();
 
             return true;
         }
         catch(Exception ex)
         {
-            //setError(1, ex.getMessage(), doh.getObjectName());
-            System.out.println("Exception on add: " + ex);
+            System.out.println("Exception on addHibernate: " + ex);
             ex.printStackTrace();
             return false;
         }
@@ -323,6 +323,36 @@ public class GGCDb
         }
 
     }
+
+
+    // this method is used for direct use with hibernate objects (unlike use with our 
+    // datalayer classes)
+    public boolean editHibernate(Object obj)
+    {
+
+	if (debug)
+	    System.out.println("editHibernate::" + obj.toString());
+
+	try
+	{
+	    Session sess = getSession();
+	    Transaction tx = sess.beginTransaction();
+
+	    sess.update(obj);
+
+	    tx.commit();
+
+	    return true;
+	}
+	catch(Exception ex)
+	{
+	    System.out.println("Exception on editHibernate: " + ex);
+	    ex.printStackTrace();
+	    return false;
+	}
+
+    }
+
 
 
     public boolean get(Object obj)
@@ -476,12 +506,12 @@ public class GGCDb
                             .setProperty("hibernate.connection.username", db_conn_username)
                             .setProperty("hibernate.connection.password", db_conn_password)
                             .setProperty("hibernate.connection.charSet", "utf-8")
-                            .setProperty("hibernate.use_outer_join", "true")
+                            .setProperty("hibernate.use_outer_join", "true");
 //	      .setProperty("hibernate.show_sql", "true")
-                            .setProperty("hibernate.c3p0.min_size", "5")
+/*                            .setProperty("hibernate.c3p0.min_size", "5")
                             .setProperty("hibernate.c3p0.max_size", "20")
                             .setProperty("hibernate.c3p0.timeout", "1800")
-                            .setProperty("hibernate.c3p0.max_statements", "50");
+                            .setProperty("hibernate.c3p0.max_statements", "50"); */
 
             in.close();
 
@@ -499,6 +529,9 @@ public class GGCDb
     // ****                     SETTINGS                        ****
     // *************************************************************
 
+    /**
+     * We load all config data (including schemes)
+     */
     public void loadConfigData()
     {
         Session sess = getSession();
@@ -508,22 +541,21 @@ public class GGCDb
         loadColorSchemes(sess);
 
         // sets settings
-        m_da.getSettings().loadSettings(seti);
+        m_da.getSettings().setSettings(seti);
 
         // sets active color scheme
         m_da.getSettings().setColorSchemeObject(seti.getColor_scheme());
     }
 
+
+    /**
+     * We save just config, schemes save must be called separately
+     */
     public void saveConfigData()
     {
-        //Session sess = getSession();
-
-        //saveColorSchemes(sess);
-
+	editHibernate(m_da.getSettings().getSettings());
         // save config
-        DataAccess.notImplemented("GGCDb::saveConfigData()");
-
-
+        //DataAccess.notImplemented("GGCDb::saveConfigData()");
     }
 
     private void loadColorSchemes(Session sess)
@@ -540,7 +572,7 @@ public class GGCDb
             table.put("" +  eh.getId(), eh);
         }
 
-        m_da.getSettings().loadColorSchemes(table);
+        m_da.getSettings().setColorSchemes(table, false);
 
     }
 
@@ -615,7 +647,7 @@ public class GGCDb
 	try 
 	{
             GregorianCalendar gc1 = (GregorianCalendar)day.clone();
-            gc1.add(GregorianCalendar.DAY_OF_MONTH, -7);
+            gc1.add(GregorianCalendar.DAY_OF_MONTH, -6);
 
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	    String eDay = sdf.format(day.getTime()) + "2359";

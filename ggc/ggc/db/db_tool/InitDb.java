@@ -80,14 +80,14 @@ public class InitDb
                        "", 1100, 1800, 2100, 1);
         seti.setId(1);
 
-        m_db.addForce(seti);
+        m_db.addHibernate(seti);
 
         ColorSchemeH colors = new ColorSchemeH(
         "Default Scheme", 0, -65485, -6750208, -163654, -81409, -1184275, -16724788, 
         -6710785, -16776961, -6711040, -16724941);
         colors.setId(1);
 
-        m_db.addForce(colors);
+        m_db.addHibernate(colors);
 
     }
 

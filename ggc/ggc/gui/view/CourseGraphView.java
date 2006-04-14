@@ -99,16 +99,19 @@ public class CourseGraphView extends AbstractGraphView
         g2D.setPaint(Color.black);
         g2D.drawLine(leftSpace, upperSpace, leftSpace, h - lowerSpace);
 
-        for (int i = 0; i <= counter; i++) {
+        for (int i = 0; i <= counter; i++) 
+	{
             markPos = upperSpace + i * (diffH) / counter;
             g2D.drawString((maxBG - (diffBG) / counter * i) + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }
         g2D.drawLine(leftSpace, h - lowerSpace, w - rightSpace, h - lowerSpace);
 
-        if (gV != null) {
+        if (gV != null) 
+	{
             float scale = (float)(dayCount - 1) / 9;
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++) 
+	    {
                 markPos = leftSpace + i * (diffW) / 9;
                 g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace + 5);
                 g2D.drawString(gV.getDateForDayAt(Math.round(i * scale)), markPos - 10, h - lowerSpace + 20);
@@ -122,13 +125,13 @@ public class CourseGraphView extends AbstractGraphView
         g2D.draw(rect1);
 
         //High Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(m_da.getSettings().getHighBG()) - BGtoCoord(maxBG));
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(m_da.getSettings().getBG_High()) - BGtoCoord(maxBG));
         g2D.setPaint(m_da.getSettings().getColorHighBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
         //Low Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(m_da.getSettings().getLowBG()), drawableWidth, BGtoCoord(0) - BGtoCoord(m_da.getSettings().getLowBG()) - 1);
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(m_da.getSettings().getBG_Low()), drawableWidth, BGtoCoord(0) - BGtoCoord(m_da.getSettings().getBG_Low()) - 1);
         g2D.setPaint(m_da.getSettings().getColorLowBG());
         g2D.fill(rect1);
         g2D.draw(rect1);

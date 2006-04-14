@@ -74,12 +74,12 @@ public class GGCProperties //extends GGCPropertiesHelper
 
 
 
-    public void loadSettings(SettingsMainH settings)
+    public void setSettings(SettingsMainH settings)
     {
         this.m_settings = settings;
     }
 
-    public SettingsMainH saveSettings()
+    public SettingsMainH getSettings()
     {
         return this.m_settings;
     }
@@ -89,18 +89,21 @@ public class GGCProperties //extends GGCPropertiesHelper
         this.m_colors = (ColorSchemeH)this.m_color_schemes.get("" + id);
     }
 
-    public void loadColorSchemes(Hashtable table)
+    public void setColorSchemes(Hashtable table, boolean isnew)
     {
         this.m_color_schemes = table;
+	this.changed_scheme = isnew;
     }
 
-    public Hashtable saveColorScemes()
+    public Hashtable getColorSchemes()
     {
         return this.m_color_schemes;
     }
 
+    // ---
+    // ---  General Data
+    // ---
 
-    // user's name
     public String getUserName() 
     {
 	return this.m_settings.getName();
@@ -115,11 +118,23 @@ public class GGCProperties //extends GGCPropertiesHelper
 	}
     }
 
-    // insulins
+
+    // ---
+    // ---  Medical Data (Insulins and BG)
+    // ---
 
     public String getIns1Name() 
     {
 	return this.m_settings.getIns1_name();
+    }
+
+    public void setIns1Name(String value)
+    {
+	if (!this.m_settings.getIns1_name().equals(value)) 
+	{
+	    this.m_settings.setIns1_name(value);
+	    changed_db = true;
+	}
     }
 
     public String getIns2Name() 
@@ -127,15 +142,31 @@ public class GGCProperties //extends GGCPropertiesHelper
 	return this.m_settings.getIns2_name();
     }
 
+    public void setIns2Name(String value)
+    {
+	if (!this.m_settings.getIns2_name().equals(value)) 
+	{
+	    this.m_settings.setIns2_name(value);
+	    changed_db = true;
+	}
+    }
+
+
     public String getIns1Abbr() 
     {
 	return this.m_settings.getIns1_abbr();
     }
 
-    public int getMeasurmentTypeBg()
+
+    public void setIns1Abbr(String value)
     {
-	return this.m_settings.getBg_unit();
+	if (!this.m_settings.getIns1_abbr().equals(value)) 
+	{
+	    this.m_settings.setIns1_abbr(value);
+	    changed_db = true;
+	}
     }
+
 
 
     public String getIns2Abbr() 
@@ -143,23 +174,74 @@ public class GGCProperties //extends GGCPropertiesHelper
 	return this.m_settings.getIns2_abbr();
     }
 
+    public void setIns2Abbr(String value)
+    {
+	if (!this.m_settings.getIns2_abbr().equals(value)) 
+	{
+	    this.m_settings.setIns2_abbr(value);
+	    changed_db = true;
+	}
+    }
+
+
+    public int getBG_unit()
+    {
+	return this.m_settings.getBg_unit();
+    }
+
+
+    public void setBG_unit(int bgunit)
+    {
+	if (this.m_settings.getBg_unit()!= bgunit) 
+	{
+	    this.m_settings.setBg_unit(bgunit);
+	    changed_db = true;
+	}
+    }
+
 
     // BG settings
 
-    public float getHighBG() 
+    public float getBG_High() 
     {
 	if (this.m_settings.getBg_unit()==1)
 	    return this.m_settings.getBg1_high();
 	else
-            return this.m_settings.getBg2_high();
+	    return this.m_settings.getBg2_high();
     }
 
-    public String getHighBGAsString() 
+
+    public float getBG1_High() 
     {
-	return "" + getHighBG();
+	return this.m_settings.getBg1_high();
     }
 
-    public float getLowBG() 
+    public void setBG1_High(float value)
+    {
+	if (this.m_settings.getBg1_high()!= value) 
+	{
+	    this.m_settings.setBg1_high(value);
+	    changed_db = true;
+	}
+    }
+
+
+    public float getBG2_High() 
+    {
+	return this.m_settings.getBg2_high();
+    }
+
+    public void setBG2_High(float value)
+    {
+	if (this.m_settings.getBg2_high()!= value) 
+	{
+	    this.m_settings.setBg2_high(value);
+	    changed_db = true;
+	}
+    }
+
+
+    public float getBG_Low() 
     {
 	if (this.m_settings.getBg_unit()==1)
 	    return this.m_settings.getBg1_low();
@@ -167,12 +249,38 @@ public class GGCProperties //extends GGCPropertiesHelper
 	    return this.m_settings.getBg2_low();
     }
 
-    public String getLowBGAsString() 
+
+    public float getBG1_Low() 
     {
-	return "" + this.getLowBG();
+	return this.m_settings.getBg1_low();
     }
 
-    public float getTargetHighBG() 
+    public void setBG1_Low(float value)
+    {
+	if (this.m_settings.getBg1_low()!= value) 
+	{
+	    this.m_settings.setBg1_low(value);
+	    changed_db = true;
+	}
+    }
+
+
+    public float getBG2_Low() 
+    {
+	return this.m_settings.getBg2_low();
+    }
+
+    public void setBG2_Low(float value)
+    {
+	if (this.m_settings.getBg2_low()!= value) 
+	{
+	    this.m_settings.setBg2_low(value);
+	    changed_db = true;
+	}
+    }
+
+
+    public float getBG_TargetHigh() 
     {
 	if (this.m_settings.getBg_unit()==1)
 	    return this.m_settings.getBg1_target_high();
@@ -180,12 +288,38 @@ public class GGCProperties //extends GGCPropertiesHelper
 	    return this.m_settings.getBg2_target_high();
     }
 
-    public String getTargetHighBGAsString() 
+    public float getBG1_TargetHigh() 
     {
-	return "" + this.getTargetHighBG();
+	return this.m_settings.getBg1_target_high();
     }
 
-    public float getTargetLowBG() 
+
+    public void setBG1_TargetHigh(float value)
+    {
+	if (this.m_settings.getBg1_target_high()!= value) 
+	{
+	    this.m_settings.setBg1_target_high(value);
+	    changed_db = true;
+	}
+    }
+
+
+    public float getBG2_TargetHigh() 
+    {
+	return this.m_settings.getBg2_target_high();
+    }
+
+    public void setBG2_TargetHigh(float value)
+    {
+	if (this.m_settings.getBg2_target_high()!= value) 
+	{
+	    this.m_settings.setBg2_target_high(value);
+	    changed_db = true;
+	}
+    }
+
+
+    public float getBG_TargetLow() 
     {
 	if (this.m_settings.getBg_unit()==1)
 	    return this.m_settings.getBg1_target_low();
@@ -193,14 +327,66 @@ public class GGCProperties //extends GGCPropertiesHelper
 	    return this.m_settings.getBg2_target_low();
     }
 
+    public float getBG1_TargetLow() 
+    {
+	return this.m_settings.getBg1_target_low();
+    }
+
+
+    public void setBG1_TargetLow(float value)
+    {
+	if (this.m_settings.getBg1_target_low()!= value) 
+	{
+	    this.m_settings.setBg1_target_low(value);
+	    changed_db = true;
+	}
+    }
+
+
+    public float getBG2_TargetLow() 
+    {
+	return this.m_settings.getBg2_target_low();
+    }
+
+
+    public void setBG2_TargetLow(float value)
+    {
+	if (this.m_settings.getBg2_target_low()!= value) 
+	{
+	    this.m_settings.setBg2_target_low(value);
+	    changed_db = true;
+	}
+    }
+
+
+    /*
+    public String getHighBGAsString() 
+    {
+	return "" + getHighBG();
+
+
+    public String getLowBGAsString() 
+    {
+	return "" + this.getLowBG();
+    }
+
+
+    public String getTargetHighBGAsString() 
+    {
+	return "" + this.getTargetHighBG();
+    }
+
+
     public String getTargetLowBGAsString() 
     {
 	return "" + this.getTargetLowBG();
     }
+   */
 
 
+    //
     // rendering stuff
-
+    //
     public int getRendering() 
     {
 	return this.m_settings.getRender_rendering();
@@ -406,6 +592,43 @@ public class GGCProperties //extends GGCPropertiesHelper
 	m_da.setBGMeasurmentType(this.getBGUnit());
 
     }
+
+/*
+    this.name = name;
+
+    this.ins1_name = ins1_name;
+    this.ins1_abbr = ins1_abbr;
+    this.ins2_name = ins2_name;
+    this.ins2_abbr = ins2_abbr;
+
+    this.meter_type = meter_type;
+    this.meter_port = meter_port;
+
+    this.bg_unit = bg_unit;
+    this.bg1_low = bg1_low;
+    this.bg1_high = bg1_high;
+    this.bg1_target_low = bg1_target_low;
+    this.bg1_target_high = bg1_target_high;
+    this.bg2_low = bg2_low;
+    this.bg2_high = bg2_high;
+    this.bg2_target_low = bg2_target_low;
+    this.bg2_target_high = bg2_target_high;
+
+    this.render_rendering = render_rendering;
+    this.render_dithering = render_dithering;
+    this.render_interpolation = render_interpolation;
+    this.render_antialiasing = render_antialiasing;
+    this.render_textantialiasing = render_textantialiasing;
+    this.render_colorrendering = render_colorrendering;
+    this.render_fractionalmetrics = render_fractionalmetrics;
+    this.pdf_display_software_path = pdf_display_software_path;
+    this.lunch_start_time = lunch_start_time;
+    this.dinner_start_time = dinner_start_time;
+    this.night_start_time = night_start_time;
+    this.color_scheme = color_scheme;
+*/
+
+
 
 
 }

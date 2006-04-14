@@ -126,6 +126,7 @@ public class DataAccess
     };
 
 
+    public String[] bg_units = { "mg/dl", "mmol/l" };
 
 
 
@@ -277,9 +278,11 @@ public class DataAccess
 
     public int getLanguageIndex(String postfix)
     {
+	//System.out.println(postfix);
+
 	for (int i=0; i<this.avLangPostfix.length; i++) 
 	{
-	    if (this.avLangPostfix.equals(postfix)) 
+	    if (this.avLangPostfix[i].equals(postfix)) 
 	    {
 		return i;
 	    }
@@ -1147,7 +1150,7 @@ public class DataAccess
 	m_dvalues = m_db.getDayStats(day);
 
         m_dateStart = (GregorianCalendar)day.clone();
-        m_dateStart.add(GregorianCalendar.DAY_OF_MONTH, -7);
+        m_dateStart.add(GregorianCalendar.DAY_OF_MONTH, -6);
         //m_dateEnd = day;
 
         m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);

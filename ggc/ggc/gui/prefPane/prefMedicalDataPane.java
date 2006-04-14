@@ -36,16 +36,16 @@ import java.awt.*;
 
 public class prefMedicalDataPane extends AbstractPrefOptionsPanel
 {
-    private JTextField fieldIns1Name;
-    private JTextField fieldIns2Name;
-    private JTextField fieldIns1Abbr;
-    private JTextField fieldIns2Abbr;
+    // insulins
+    private JTextField fieldIns1Name, fieldIns2Name, fieldIns1Abbr, fieldIns2Abbr;
 
-    private JTextField fieldHighBG;
-    private JTextField fieldLowBG;
+    // bg (mg/dl)
+    private JTextField fieldHighBG1, fieldLowBG1, fieldTargetHighBG1, fieldTargetLowBG1;
 
-    private JTextField fieldTargetHighBG;
-    private JTextField fieldTargetLowBG;
+    // bg (mmol/l)
+    private JTextField fieldHighBG2, fieldLowBG2, fieldTargetHighBG2, fieldTargetLowBG2;
+
+    JComboBox cbUnit = null;
 
     public prefMedicalDataPane()
     {
@@ -54,79 +54,98 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
 
     private void init()
     {
-        JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel(m_ic.getMessage("INSULIN")+" 1 "+m_ic.getMessage("NAME")+":"));
-        a.add(new JLabel(m_ic.getMessage("INSULIN")+" 1 "+m_ic.getMessage("ABBR")+":"));
-        a.add(new JLabel(m_ic.getMessage("INSULIN")+" 2 "+m_ic.getMessage("NAME")+":"));
-        a.add(new JLabel(m_ic.getMessage("INSULIN")+" 2 "+m_ic.getMessage("ABBR")+":"));
 
-        JPanel b = new JPanel(new GridLayout(0, 1));
-        b.add(fieldIns1Name = new JTextField(m_da.getSettings().getIns1Name(), 10));
-        b.add(fieldIns1Abbr = new JTextField(m_da.getSettings().getIns1Abbr(), 10));
-        b.add(fieldIns2Name = new JTextField(m_da.getSettings().getIns2Name(), 10));
-        b.add(fieldIns2Abbr = new JTextField(m_da.getSettings().getIns2Abbr(), 10));
+	JPanel ful = new JPanel(new GridLayout(4,0));
 
-        fieldIns1Name.getDocument().addDocumentListener(this);
-        fieldIns2Name.getDocument().addDocumentListener(this);
-        fieldIns1Abbr.getDocument().addDocumentListener(this);
-        fieldIns2Abbr.getDocument().addDocumentListener(this);
+	JPanel a = new JPanel(new GridLayout(0, 2));
+	a.setBorder(new TitledBorder(m_ic.getMessage("INSULIN_SETTINGS")));
+	a.add(new JLabel(m_ic.getMessage("INSULIN")+" 1 "+m_ic.getMessage("NAME")+":"));
+	a.add(fieldIns1Name = new JTextField(m_da.getSettings().getIns1Name(), 20));
+	a.add(new JLabel(m_ic.getMessage("INSULIN")+" 1 "+m_ic.getMessage("ABBR")+":"));
+	a.add(fieldIns1Abbr = new JTextField(m_da.getSettings().getIns1Abbr(), 20));
+	a.add(new JLabel(m_ic.getMessage("INSULIN")+" 2 "+m_ic.getMessage("NAME")+":"));
+	a.add(fieldIns2Name = new JTextField(m_da.getSettings().getIns2Name(), 20));
+	a.add(new JLabel(m_ic.getMessage("INSULIN")+" 2 "+m_ic.getMessage("ABBR")+":"));
+	a.add(fieldIns2Abbr = new JTextField(m_da.getSettings().getIns2Abbr(), 20));
 
-        Box insBox = Box.createHorizontalBox();
-        insBox.add(a);
-        insBox.add(b);
+	fieldIns1Name.getDocument().addDocumentListener(this);
+	fieldIns2Name.getDocument().addDocumentListener(this);
+	fieldIns1Abbr.getDocument().addDocumentListener(this);
+	fieldIns2Abbr.getDocument().addDocumentListener(this);
 
-        JPanel insPanel = new JPanel(new BorderLayout());
-        insPanel.setBorder(new TitledBorder(new EtchedBorder(), m_ic.getMessage("INSULIN_SETTINGS")));
-        insPanel.add(insBox, BorderLayout.NORTH);
+	// bg 1 
+	JPanel c = new JPanel(new GridLayout(0, 2));
+	c.setBorder(new TitledBorder(m_ic.getMessage("BLOOD_GLUCOSE_SETTINGS_1")));
+	c.add(new JLabel(m_ic.getMessage("HIGH_BG")+":"));
+	c.add(fieldHighBG1 = new JTextField("" + m_da.getSettings().getBG1_High(), 10));
+	c.add(new JLabel(m_ic.getMessage("LOW_BG")+":"));
+	c.add(fieldLowBG1 = new JTextField("" + m_da.getSettings().getBG1_Low(), 10));
+	c.add(new JLabel(m_ic.getMessage("TARGET_HIGH_BG")+":"));
+	c.add(fieldTargetHighBG1 = new JTextField("" + m_da.getSettings().getBG1_TargetHigh(), 10));
+	c.add(new JLabel(m_ic.getMessage("TARGET_LOW_BG")+":"));
+	c.add(fieldTargetLowBG1 = new JTextField("" + m_da.getSettings().getBG1_TargetLow(), 10));
 
+	fieldHighBG1.getDocument().addDocumentListener(this);
+	fieldLowBG1.getDocument().addDocumentListener(this);
+	fieldTargetHighBG1.getDocument().addDocumentListener(this);
+	fieldTargetLowBG1.getDocument().addDocumentListener(this);
 
-        JPanel c = new JPanel(new GridLayout(0, 1));
-        c.add(new JLabel(m_ic.getMessage("HIGH_BG")+":"));
-        c.add(new JLabel(m_ic.getMessage("LOW_BG")+":"));
-        c.add(new JLabel(m_ic.getMessage("TARGET_HIGH_BG")+":"));
-        c.add(new JLabel(m_ic.getMessage("TARGET_LOW_BG")+":"));
+	// bg 2 
+	JPanel b = new JPanel(new GridLayout(0, 2));
+	b.setBorder(new TitledBorder(m_ic.getMessage("BLOOD_GLUCOSE_SETTINGS_2")));
+	b.add(new JLabel(m_ic.getMessage("HIGH_BG")+":"));
+	b.add(fieldHighBG2 = new JTextField("" + m_da.getSettings().getBG2_High(), 10));
+	b.add(new JLabel(m_ic.getMessage("LOW_BG")+":"));
+	b.add(fieldLowBG2 = new JTextField("" + m_da.getSettings().getBG2_Low(), 10));
+	b.add(new JLabel(m_ic.getMessage("TARGET_HIGH_BG")+":"));
+	b.add(fieldTargetHighBG2 = new JTextField("" + m_da.getSettings().getBG2_TargetHigh(), 10));
+	b.add(new JLabel(m_ic.getMessage("TARGET_LOW_BG")+":"));
+	b.add(fieldTargetLowBG2 = new JTextField("" + m_da.getSettings().getBG2_TargetLow(), 10));
 
+	fieldHighBG2.getDocument().addDocumentListener(this);
+	fieldLowBG2.getDocument().addDocumentListener(this);
+	fieldTargetHighBG2.getDocument().addDocumentListener(this);
+	fieldTargetLowBG2.getDocument().addDocumentListener(this);
 
-// FIX
-        JPanel d = new JPanel(new GridLayout(0, 1));
-        d.add(fieldHighBG = new JTextField(m_da.getSettings().getHighBGAsString(), 10));
-        d.add(fieldLowBG = new JTextField(m_da.getSettings().getLowBGAsString(), 10));
-        d.add(fieldTargetHighBG = new JTextField(m_da.getSettings().getTargetHighBGAsString(), 10));
-        d.add(fieldTargetLowBG = new JTextField(m_da.getSettings().getTargetLowBGAsString(), 10));
+	// bg unit
+	JPanel d = new JPanel(new GridLayout(0, 2));
+	d.setBorder(new TitledBorder(m_ic.getMessage("BLOOD_GLUCOSE_UNIT_SETTING")));
+	d.add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
+	d.add(cbUnit = new JComboBox(m_da.bg_units));
+	cbUnit.setSelectedIndex(settings.getBGUnit() -1);
 
-        fieldHighBG.getDocument().addDocumentListener(this);
-        fieldLowBG.getDocument().addDocumentListener(this);
-        fieldTargetHighBG.getDocument().addDocumentListener(this);
-        fieldTargetLowBG.getDocument().addDocumentListener(this);
+	Box i = Box.createVerticalBox();
+	i.add(a);
+	i.add(d);
+	i.add(c);
+	i.add(b);
 
-        Box BGBox = Box.createHorizontalBox();
-        BGBox.add(c);
-        BGBox.add(d);
+	add(i, BorderLayout.NORTH);
 
-        JPanel BGPanel = new JPanel(new BorderLayout());
-        BGPanel.setBorder(new TitledBorder(new EtchedBorder(), m_ic.getMessage("BLOOD_GLUCOSE_SETTINGS")));
-        BGPanel.add(BGBox, BorderLayout.NORTH);
-
-        setLayout(new BorderLayout());
-
-        Box i = Box.createHorizontalBox();
-        i.add(insPanel);
-        i.add(BGPanel);
-
-        add(i, BorderLayout.NORTH);
     }
 
     public void saveProps()
     {
-	/*
-        props.set("Ins1Name", fieldIns1Name.getText());
-        props.set("Ins2Name", fieldIns2Name.getText());
-        props.set("Ins1Abbr", fieldIns1Abbr.getText());
-        props.set("Ins2Abbr", fieldIns2Abbr.getText());
-        props.set("HighBG", fieldHighBG.getText());
-        props.set("LowBG", fieldLowBG.getText());
-        props.set("TargetHighBG", fieldTargetHighBG.getText());
-        props.set("TargetLowBG", fieldTargetLowBG.getText());
-	*/
+	// insulins
+	settings.setIns1Name(fieldIns1Name.getText());
+        settings.setIns2Name(fieldIns2Name.getText());
+        settings.setIns1Abbr(fieldIns1Abbr.getText());
+        settings.setIns2Abbr(fieldIns2Abbr.getText());
+
+	// bg 1
+        settings.setBG1_High(m_da.getFloatValue(fieldHighBG1.getText()));
+        settings.setBG1_Low(m_da.getFloatValue(fieldLowBG1.getText()));
+        settings.setBG1_TargetHigh(m_da.getFloatValue(fieldTargetHighBG1.getText()));
+        settings.setBG1_TargetLow(m_da.getFloatValue(fieldTargetLowBG1.getText()));
+
+	// bg 2
+	settings.setBG2_High(m_da.getFloatValue(fieldHighBG2.getText()));
+	settings.setBG2_Low(m_da.getFloatValue(fieldLowBG2.getText()));
+	settings.setBG2_TargetHigh(m_da.getFloatValue(fieldTargetHighBG2.getText()));
+	settings.setBG2_TargetLow(m_da.getFloatValue(fieldTargetLowBG2.getText()));
+
+	// unit 
+	settings.setBG_unit(cbUnit.getSelectedIndex()+1);
+
     }
 }

@@ -63,7 +63,7 @@ public class StatisticInfoPanel extends AbstractInfoPanel
 
         endDate = new GregorianCalendar();
         startDate = new GregorianCalendar();
-        startDate.add(GregorianCalendar.DAY_OF_MONTH, -7);
+        startDate.add(GregorianCalendar.DAY_OF_MONTH, -6);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 

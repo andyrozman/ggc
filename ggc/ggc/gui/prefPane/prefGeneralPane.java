@@ -50,7 +50,7 @@ public class prefGeneralPane extends AbstractPrefOptionsPanel
         JPanel a = new JPanel(new GridLayout(2, 2));
         langBox = new JComboBox(m_da.getAvailableLanguages());
 
-        langBox.setSelectedItem(m_da.getSelectedLanguageIndex());
+        langBox.setSelectedIndex(m_da.getSelectedLanguageIndex());
 
         a.add(new JLabel(m_ic.getMessage("YOUR_NAME") + ":"));
         a.add(fieldUserName = new JTextField(m_da.getSettings().getUserName(), 10));
@@ -69,17 +69,7 @@ public class prefGeneralPane extends AbstractPrefOptionsPanel
 
     public void saveProps() 
     {
-	/*
-        props.set("UserName", fieldUserName.getText());
-        props.set("Language", langBox.getSelectedItem().toString());
-
-        m_ic.setLanguage(); 
-	*/
-
 	settings.setUserName(fieldUserName.getText());
 	settings.setLanguage(langBox.getSelectedItem().toString());
-
-	// this shouldn't be done this way
-	settings.save();
     }
 }

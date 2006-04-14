@@ -147,17 +147,17 @@ public class FrequencyGraphView extends AbstractGraphView
             g2D.drawString(i + "", markPos - 10, viewHeight - lowerSpace + 20);
         }
 
-        int lower = (int)m_da.getSettings().getLowBG();
-        int upper = (int)m_da.getSettings().getHighBG();
+        int lower = (int)m_da.getSettings().getBG_Low();
+        int upper = (int)m_da.getSettings().getBG_High();
 
         g2D.setPaint(m_da.getSettings().getColorLowBG());
         g2D.fillRect(leftSpace + 1, upperSpace, lower, (int)drawableHeight);
 
         g2D.setPaint(m_da.getSettings().getColorTargetBG());
-        g2D.fillRect((int)(leftSpace + m_da.getSettings().getTargetLowBG()), upperSpace, (int)(m_da.getSettings().getTargetHighBG() - m_da.getSettings().getTargetLowBG()), (int)drawableHeight);
+        g2D.fillRect((int)(leftSpace + m_da.getSettings().getBG_TargetLow()), upperSpace, (int)(m_da.getSettings().getBG_TargetHigh() - m_da.getSettings().getBG_TargetLow()), (int)drawableHeight);
 
         g2D.setPaint(m_da.getSettings().getColorHighBG());
-        g2D.fillRect((int)(leftSpace + m_da.getSettings().getHighBG()), upperSpace, (int)(drawableWidth - m_da.getSettings().getHighBG()), (int)drawableHeight);
+        g2D.fillRect((int)(leftSpace + m_da.getSettings().getBG_High()), upperSpace, (int)(drawableWidth - m_da.getSettings().getBG_High()), (int)drawableHeight);
 
     }
 

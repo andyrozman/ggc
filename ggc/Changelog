@@ -4,7 +4,10 @@
       current as it was till now. 
     * changed DailyStatsDialog to display graph and ti display error if no row was selected.
     * fixed AbstractGraphView
-
+    * added methods for set to GGCProperties (for insulins, bg's and general data)
+    * PropertiesDialog fixed save/apply and cancel
+    * medical data added new configuration stuff (bg unit, settings for both bg units) and 
+      fixed saving
 
 
 2006-04-13 (v0.2.1.9) Andy Rozman <andyrozman@users.sourceforge.net>

@@ -51,8 +51,8 @@ public abstract class AbstractGraphView extends JComponent
     int BGunit, maxBG, minBG, BGDiff;
     int counter = 10;
     int upperSpace = 20, lowerSpace = 30, leftSpace = 40, rightSpace = 30;
-    float maxGoodBG = m_da.getSettings().getTargetHighBG();
-    float minGoodBG = m_da.getSettings().getTargetLowBG();
+    float maxGoodBG = m_da.getSettings().getBG_TargetHigh();
+    float minGoodBG = m_da.getSettings().getBG_TargetLow();
 
     int viewWidth = 0;
     int viewHeight = 0;
@@ -71,7 +71,7 @@ public abstract class AbstractGraphView extends JComponent
     public AbstractGraphView()
     {
 
-        BGunit = m_da.getSettings().getMeasurmentTypeBg();
+        BGunit = m_da.getSettings().getBG_unit();
 
 	switch (BGunit) 
 	{

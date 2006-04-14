@@ -49,6 +49,17 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
     GlucoValues dayData;
     //GGCProperties props = GGCProperties.getInstance();
 
+    private String[] column_names = {
+		m_ic.getMessage("DATETIME"), 
+		m_ic.getMessage("BG"), 
+		m_da.getSettings().getIns1Abbr(), 
+		m_da.getSettings().getIns2Abbr(), 
+		m_ic.getMessage("BE"), 
+		m_ic.getMessage("ACT"), 
+		m_ic.getMessage("COMMENT") 
+	};
+
+
     public GlucoTableModel(GlucoValues dayData)
     {
         this.dayData = dayData;
@@ -79,9 +90,7 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
 
     public String getColumnName(int column)
     {
-        String[] s = {
-            m_ic.getMessage("DATETIME"), m_ic.getMessage("BG"), m_da.getSettings().getIns1Abbr(), m_da.getSettings().getIns2Abbr(), m_ic.getMessage("BE"), m_ic.getMessage("ACT"), m_ic.getMessage("COMMENT") };
-        return s[column];
+        return column_names[column];
     }
 
     public Class getColumnClass(int c)

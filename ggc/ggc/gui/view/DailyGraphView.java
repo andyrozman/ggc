@@ -72,7 +72,8 @@ public class DailyGraphView extends AbstractGraphView {
 
         GeneralPath polyline = new GeneralPath();
         int tmpC = 0;
-        for (int i = 0; i < dayData.getRowCount(); i++) {
+        for (int i = 0; i < dayData.getRowCount(); i++) 
+	{
             int X = TimetoCoord(dayData.getDateTimeAt(i));
 
             // draw BG
@@ -125,7 +126,9 @@ public class DailyGraphView extends AbstractGraphView {
         g2D.draw(polyline);
     }
 
-    protected void drawFramework(Graphics2D g2D) {
+
+    protected void drawFramework(Graphics2D g2D) 
+    {
         Dimension dim = getSize();
         int h = dim.height, w = dim.width;
 
@@ -165,15 +168,15 @@ public class DailyGraphView extends AbstractGraphView {
 
         // High Zone
         rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG),
-                drawableWidth, BGtoCoord(m_da.getSettings().getHighBG()) - BGtoCoord(maxBG));
+                drawableWidth, BGtoCoord(m_da.getSettings().getBG_High()) - BGtoCoord(maxBG));
         g2D.setPaint(m_da.getSettings().getColorHighBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
         // Low Zone
         rect1 = new Rectangle2D.Float(leftSpace + 1,
-                BGtoCoord(m_da.getSettings().getLowBG()), drawableWidth, BGtoCoord(0)
-                        - BGtoCoord(m_da.getSettings().getLowBG()) - 1);
+                BGtoCoord(m_da.getSettings().getBG_Low()), drawableWidth, BGtoCoord(0)
+                        - BGtoCoord(m_da.getSettings().getBG_Low()) - 1);
         g2D.setPaint(m_da.getSettings().getColorLowBG());
         g2D.fill(rect1);
         g2D.draw(rect1);

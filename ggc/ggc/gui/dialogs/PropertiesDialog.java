@@ -26,6 +26,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 import ggc.gui.prefPane.*;
 import ggc.util.I18nControl;
+import ggc.util.DataAccess;
 
 
 public class PropertiesDialog extends JDialog implements ActionListener
@@ -120,12 +121,8 @@ public class PropertiesDialog extends JDialog implements ActionListener
         buttonPanel.add(cancelButton);
         buttonPanel.add(applyButton);
 
-        //prefOptionsPane = new prefGeneralPane();
-
         prefPane.add(buttonPanel, BorderLayout.SOUTH);
         prefPane.add((JPanel)panels.get(0), BorderLayout.CENTER);
-
-	//selectPanel(m_ic.getMessage("PREFERENCES"));
 
         getContentPane().add(prefTreePane, BorderLayout.WEST);
         getContentPane().add(prefPane, BorderLayout.CENTER);
@@ -233,6 +230,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
         }
         else if (action.equals("cancel")) 
         {
+	    reset();
             this.dispose();
         }
         else if (action.equals("apply")) 
@@ -246,13 +244,18 @@ public class PropertiesDialog extends JDialog implements ActionListener
 
     public void save()
     {
-	// invalid code
-	//prefOptionsPane.saveProps();
+	for (int i=0; i<panels.size(); i++)
+	{
+	    AbstractPrefOptionsPanel pn = (AbstractPrefOptionsPanel)panels.get(i);
+	    pn.saveProps();
+	}
+
+	DataAccess.getInstance().getSettings().save();
     }
 
     public void reset()
     {
-	// n/i
+	DataAccess.getInstance().getSettings().reload();
     }
 
 
