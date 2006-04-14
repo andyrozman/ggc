@@ -50,14 +50,15 @@ import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.SpreadGraphDialog;
 import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.FrequencyGraphDialog;
+import ggc.gui.dialogs.PropertiesDialog;
 
 public class MainFrame extends JFrame 
 {
 
     // Version information
-    public static final String version = "0.2.1.9";
+    public static final String version = "0.2.1.10";
     public static final String full_version = "v" + version;
-    private static final String version_date = "13th April 2006";
+    private static final String version_date = "14th April 2006";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel m_skinlf;
@@ -421,9 +422,11 @@ public class MainFrame extends JFrame
 	    {
                 HbA1cFrame.showMe();
             } 
-	    else if (command.equals("option_pref")) {
-                new PropertiesFrame(MainFrame.this);
-            } else if (command.equals("read_meter")) {
+	    else if (command.equals("option_pref")) 
+	    {
+                new PropertiesDialog(MainFrame.this);
+            } 
+	    else if (command.equals("read_meter")) {
                 new ReadMeterDialog(MainFrame.this);
             } else if (command.equals("hlp_about")) {
                 JOptionPane

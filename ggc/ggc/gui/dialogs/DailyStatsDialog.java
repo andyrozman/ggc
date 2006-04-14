@@ -99,6 +99,15 @@ public class DailyStatsDialog extends JDialog implements ActionListener
     {
         super(parent, "DailyStatsFrame", false);
         setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
+
+	Rectangle rec = parent.getBounds();
+	int x = rec.x + (rec.width/2);
+	int y = rec.y + (rec.height/2);
+
+	setBounds(x-275, y-250, 550, 500);
+
+	//setBounds(150, 150, 550, 500);
+
         init();
     }
 
@@ -135,7 +144,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
     private void init()
     {
-        setBounds(150, 150, 550, 500);
+        //setBounds(150, 150, 550, 500);
 
         //Panel for Insulin Stats
         JPanel InsPanel = new JPanel(new GridLayout(3, 6));
@@ -254,9 +263,8 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
 	JPanel EntryBox1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 2));
 	
-	
 
-        JButton tButton = new JButton(m_ic.getMessage("TTT"));
+        JButton tButton = new JButton(m_ic.getMessage("GRAPH"));
         tButton.setPreferredSize(dim);
 	//tButton.setMaximumSize(dim);
 	tButton.setActionCommand("show_daily_graph");
@@ -276,22 +284,10 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	addButton.addActionListener(this);
 	EntryBox.add(addButton);
 
-
 	JButton editButton = new JButton(m_ic.getMessage("EDIT_ROW"));
 	editButton.setPreferredSize(dim);
 	editButton.setActionCommand("edit_row");
 	editButton.addActionListener(this);
-
-
-/*	addButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-                AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
-                aRF.show();
-            }
-        }); */
         EntryBox.add(editButton);
 
         JButton delButton = new JButton(m_ic.getMessage("DELETE_ROW"));
@@ -312,9 +308,6 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         getContentPane().add(dayHeader, BorderLayout.NORTH);
         //getContentPane().add(EntryBox, BorderLayout.SOUTH);
 	getContentPane().add(gg, BorderLayout.SOUTH);
-
-        //enableEvents(AWTEvent.WINDOW_EVENT_MASK);
-        //setVisible(true);
 
         updateLabels();
 
@@ -385,7 +378,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
             if (table.getSelectedRow()==-1) 
             {
-                // message
+		JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -405,7 +398,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	{
             if (table.getSelectedRow()==-1) 
             {
-                // message
+		JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -426,7 +419,8 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	}
 	else if (command.equals("show_daily_graph"))
 	{
-            // implement
+	    DailyGraphDialog dgd = new DailyGraphDialog(this);
+	    dgd.setDailyValues(this.dayData);
 	}
         else
             System.out.println("DailyStatsDialog:Unknown Action: " + command);

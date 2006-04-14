@@ -49,18 +49,18 @@ public class prefFontsAndColorPane extends AbstractPrefOptionsPanel
     public prefFontsAndColorPane()
     {
         items = new Vector();
-	/*
-        items.add(new NameAndColor(m_ic.getMessage("BG_HIGH_ZONE"), "HighBG", props.getColorHighBG()));
-        items.add(new NameAndColor(m_ic.getMessage("BG_TARGET_ZONE"), "TargetBG", props.getColorTargetBG()));
-        items.add(new NameAndColor(m_ic.getMessage("BG_LOW_ZONE"), "LowBG", props.getColorLowBG()));
-        items.add(new NameAndColor(m_ic.getMessage("BG"), "BG", props.getColorBG()));
-        items.add(new NameAndColor(m_ic.getMessage("BG_AVERAGE"), "AvgBG", props.getColorAvgBG()));
-        items.add(new NameAndColor(m_ic.getMessage("BREAD_UNITS"), "BU", props.getColorBU()));
-        items.add(new NameAndColor(m_ic.getMessage("INSULIN")+" " + props.getIns1Abbr(), "Ins1", props.getColorIns1()));
-        items.add(new NameAndColor(m_ic.getMessage("INSULIN")+" " + props.getIns2Abbr(), "Ins2", props.getColorIns2()));
-        items.add(new NameAndColor(m_ic.getMessage("INSULIN"), "Ins", props.getColorIns()));
-        items.add(new NameAndColor(m_ic.getMessage("INS_SLASH_BU_QUOTIENT"), "InsPerBU", props.getColorInsPerBU()));
-	*/
+	
+        items.add(new NameAndColor(m_ic.getMessage("BG_HIGH_ZONE"), "HighBG", settings.getColorHighBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BG_TARGET_ZONE"), "TargetBG", settings.getColorTargetBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BG_LOW_ZONE"), "LowBG", settings.getColorLowBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BG"), "BG", settings.getColorBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BG_AVERAGE"), "AvgBG", settings.getColorAvgBG()));
+        items.add(new NameAndColor(m_ic.getMessage("BREAD_UNITS"), "BU", settings.getColorBU()));
+        items.add(new NameAndColor(m_ic.getMessage("INSULIN")+" " + settings.getIns1Abbr(), "Ins1", settings.getColorIns1()));
+        items.add(new NameAndColor(m_ic.getMessage("INSULIN")+" " + settings.getIns2Abbr(), "Ins2", settings.getColorIns2()));
+        items.add(new NameAndColor(m_ic.getMessage("INSULIN"), "Ins", settings.getColorIns()));
+        items.add(new NameAndColor(m_ic.getMessage("INS_SLASH_BU_QUOTIENT"), "InsPerBU", settings.getColorInsPerBU()));
+	
         init();
     }
 

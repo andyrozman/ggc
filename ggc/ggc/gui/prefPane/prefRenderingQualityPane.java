@@ -90,13 +90,13 @@ public class prefRenderingQualityPane extends AbstractPrefOptionsPanel
 
         setLayout(new BorderLayout());
 
-        comboAntiAliasing.setSelectedIndex(m_da.getSettings().getAntiAliasing());
-        comboColorRendering.setSelectedIndex(m_da.getSettings().getColorRendering());
-        comboDithering.setSelectedIndex(m_da.getSettings().getDithering());
-        comboFractionalMetrics.setSelectedIndex(m_da.getSettings().getFractionalMetrics());
-        comboInterpolation.setSelectedIndex(m_da.getSettings().getInterpolation());
-        comboTextAntiAliasing.setSelectedIndex(m_da.getSettings().getTextAntiAliasing());
-        comboRendering.setSelectedIndex(m_da.getSettings().getRendering());
+        //comboAntiAliasing.setSelectedIndex(m_da.getSettings().getAntiAliasing());
+        //comboColorRendering.setSelectedIndex(m_da.getSettings().getColorRendering());
+        //comboDithering.setSelectedIndex(m_da.getSettings().getDithering());
+        //comboFractionalMetrics.setSelectedIndex(m_da.getSettings().getFractionalMetrics());
+        //comboInterpolation.setSelectedIndex(m_da.getSettings().getInterpolation());
+        //comboTextAntiAliasing.setSelectedIndex(m_da.getSettings().getTextAntiAliasing());
+        //comboRendering.setSelectedIndex(m_da.getSettings().getRendering());
 
         comboAntiAliasing.addItemListener(this);
         comboColorRendering.addItemListener(this);

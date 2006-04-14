@@ -158,12 +158,90 @@ public abstract class AbstractGraphView extends JComponent
 
     private void getRenderingQuality()
     {
-	oAA = m_da.getSettings().getAntiAliasing();
-	oCR = m_da.getSettings().getColorRendering();
-        oD = m_da.getSettings().getDithering();
-        oFM = m_da.getSettings().getFractionalMetrics();
-        oI = m_da.getSettings().getInterpolation();
-	oR = m_da.getSettings().getRendering();
-	oTAA = m_da.getSettings().getTextAntiAliasing();
+
+       switch (m_da.getSettings().getAntiAliasing()) {
+            case 1:
+                oAA = RenderingHints.VALUE_ANTIALIAS_OFF;
+                break;
+            case 2:
+                oAA = RenderingHints.VALUE_ANTIALIAS_ON;
+                break;
+            default:
+                oAA = RenderingHints.VALUE_ANTIALIAS_DEFAULT;
+        }
+        //System.out.println("rendering " + oAA);
+
+        switch (m_da.getSettings().getColorRendering()) {
+            case 1:
+                oCR = RenderingHints.VALUE_COLOR_RENDER_QUALITY;
+                break;
+            case 2:
+                oCR = RenderingHints.VALUE_COLOR_RENDER_SPEED;
+                break;
+            default:
+                oCR = RenderingHints.VALUE_COLOR_RENDER_DEFAULT;
+        }
+        //System.out.println("colorrend " + oCR);
+
+        switch (m_da.getSettings().getDithering()) {
+            case 1:
+                oD = RenderingHints.VALUE_DITHER_DISABLE;
+                break;
+            case 2:
+                oD = RenderingHints.VALUE_DITHER_ENABLE;
+                break;
+            default:
+                oD = RenderingHints.VALUE_DITHER_DEFAULT;
+        }
+        //System.out.println("dithering " + oD);
+
+        switch (m_da.getSettings().getFractionalMetrics()) {
+            case 1:
+                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
+                break;
+            case 2:
+                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_ON;
+                break;
+            default:
+                oFM = RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT;
+        }
+        //System.out.println("fractional " + oFM);
+
+        switch (m_da.getSettings().getInterpolation()) {
+            case 1:
+                oI = RenderingHints.VALUE_INTERPOLATION_BICUBIC;
+                break;
+            case 2:
+                oI = RenderingHints.VALUE_INTERPOLATION_BILINEAR;
+                break;
+            default:
+                oI = RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR;
+        }
+        //System.out.println("interpolation " + oI);
+
+        switch (m_da.getSettings().getRendering()) {
+            case 1:
+                oR = RenderingHints.VALUE_RENDER_QUALITY;
+                break;
+            case 2:
+                oR = RenderingHints.VALUE_RENDER_SPEED;
+                break;
+            default:
+                oR = RenderingHints.VALUE_RENDER_DEFAULT;
+        }
+        //System.out.println("rendering " + oR);
+
+        switch (m_da.getSettings().getTextAntiAliasing()) {
+            case 1:
+                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;
+                break;
+            case 2:
+                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
+                break;
+            default:
+                oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT;
+        }
+        //System.out.println("text AA " + oTAA);
+
     }
 }
