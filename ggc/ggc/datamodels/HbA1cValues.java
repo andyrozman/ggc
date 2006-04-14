@@ -28,6 +28,9 @@
 package ggc.datamodels;
 
 
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 import ggc.util.I18nControl;
 
 
@@ -42,6 +45,8 @@ public class HbA1cValues
     private int exp;
     private int[] ReadingsPerDay;
 
+    private Hashtable m_dataTable = null;
+
     public HbA1cValues()
     {
         sumBG = 0;
@@ -49,6 +54,7 @@ public class HbA1cValues
         dayCount = 0;
         exp = 0;
         ReadingsPerDay = new int[25];
+	m_dataTable = new Hashtable();
     }
 
     public void addDay(float avgBG, int readings)
@@ -58,8 +64,45 @@ public class HbA1cValues
         this.readings += readings;
         exp += readings * readings;
         dayCount++;
+    }
+
+
+    public void addDayValueRow(DailyValuesRow dvr)
+    {
+	int date = (int)dvr.getDate();
+
+	if (m_dataTable.containsKey(""+date))
+	{
+	    DailyValues dv_int = (DailyValues)m_dataTable.get(""+date);
+	    dv_int.addRow(dvr);
+	}
+	else
+	{
+	    DailyValues dv = new DailyValues();
+	    dv.addRow(dvr);
+	    m_dataTable.put(""+date, dv);
+	}
+    }
+
+
+    public void processDayValues()
+    {
+	for (Enumeration en = m_dataTable.keys(); en.hasMoreElements(); )
+	{
+	    DailyValues dv = (DailyValues)m_dataTable.get((String)en.nextElement());
+	    addDay(dv.getAvgBG(), dv.getBGCount());
+	}
+
+	int num = 7 - m_dataTable.size();
+
+	for (int i=0; i<num; i++)
+	{
+	    addDay(0.0f, 0);
+	}
 
     }
+    
+
 
     public float getAvgBG()
     {

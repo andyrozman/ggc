@@ -33,23 +33,23 @@ public class WeekValues implements Serializable
 
     public void addDay(DailyValues dv)
     {
-        m_dataTable.put(dv.getDateAsString(), dv);
+        m_dataTable.put(""+dv.getDate(), dv);
     }
 
     public void addDayValueRow(DailyValuesRow dvr)
     {
-        
-        if (m_dataTable.contains(dvr.getDateAsString()))
+	int date = (int)dvr.getDate();
+
+	if (m_dataTable.containsKey(""+date))
         {
-            DailyValues dv_int = (DailyValues)m_dataTable.get(dvr.getDateAsString());
-            dv_int.setNewRow(dvr);
+            DailyValues dv_int = (DailyValues)m_dataTable.get(""+date);
+            dv_int.addRow(dvr);
         }
         else
         {
             DailyValues dv = new DailyValues();
-            dv.setNewRow(dvr);
-            dv.setDate(dvr.getDateTime());
-            m_dataTable.put(dv.getDateAsString(), dv);
+            dv.addRow(dvr);
+            m_dataTable.put(""+date, dv);
         }
     }
 

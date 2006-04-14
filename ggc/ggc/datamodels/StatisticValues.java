@@ -109,6 +109,15 @@ public class StatisticValues
         countBU += dv.getCHCount();
         countIns1 += dv.getIns1Count();
         countIns2 += dv.getIns2Count();
+/*
+	System.out.println("dv=" + dv.getDateAsString() +
+			   "sumBG=" + sumBG + 
+			   "sumIns1=" + sumIns1 +
+			   "sumIns2=" + sumIns2 +
+			   "countBG=" + countBG + 
+			   "countIns1=" + countIns1 +
+			   "countIns2=" + countIns2); */
+
     }
 
     public float getCountBG()

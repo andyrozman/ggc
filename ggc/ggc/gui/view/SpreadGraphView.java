@@ -175,7 +175,7 @@ public class SpreadGraphView extends AbstractGraphView
 
             for (int j = 0; j < dV.getRowCount(); j++) 
 	    {
-                int offset = TimetoCoord(dV.getDateTimeAt(j));
+                int offset = TimetoCoord(dV.getDateTimeAsDateAt(j));
 
                 //draw BG
                 float tmpBG = dV.getBGAt(j);

@@ -664,8 +664,10 @@ public class GGCDb
 	    while (it.hasNext())
 	    {
 		DayValueH dv = (DayValueH)it.next();
-		hbVal.addDay(dv.getBg(), 1);
+		hbVal.addDayValueRow(new DailyValuesRow(dv));
 	    }
+
+	    hbVal.processDayValues();
 
 	} 
 	catch (Exception e) 

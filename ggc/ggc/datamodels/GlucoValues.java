@@ -45,6 +45,8 @@ import ggc.event.GlucoValueEventListener;
 import ggc.util.DataAccess;
 
 
+// FIX
+
 public class GlucoValues extends DailyValues
 {
 //    ArrayList dayValues = null;
@@ -107,11 +109,13 @@ public class GlucoValues extends DailyValues
     {
         String s1 = dRow.getDateAsString();
 
-        for (int i = 0; i < dayValues.size(); i++) {
+        for (int i = 0; i < dayValues.size(); i++) 
+	{
             DailyValues dV = (DailyValues)dayValues.elementAt(i);
             //System.out.println("date1:" + s1 + "");
             //System.out.println("date2:" + dV.getDateAsString() + "");
-            if (s1.equals(dV.getDateAsString())) {
+            if (s1.equals(dV.getDateAsString())) 
+	    {
                 dV.setNewRow(dRow);
 
                 GlucoValueEvent event = new GlucoValueEvent(this, i, i, 0, GlucoValueEvent.INSERT);
@@ -120,11 +124,12 @@ public class GlucoValues extends DailyValues
             }
         }
 
-        if (dRow.getDateTime() != null) {
+        if (dRow.getDateTime() != 0) 
+	{
             DailyValues dV = new DailyValues();
 
-            dV.setNewRow(dRow);
-            dV.setDate(dRow.getDateTime());
+            dV.addRow(dRow);
+            //dV.setD.setDate(dRow.getDateTime());
             dV.setIsNew(true);
             dayValues.add(dV);
 
@@ -136,7 +141,8 @@ public class GlucoValues extends DailyValues
     public void setNewRow(DailyValuesRow dRow)
     {
         DataBaseHandler dbH = DataBaseHandler.getInstance();
-        if (!dbH.dateTimeExists(dRow.getDateTime())) {
+        if (!dbH.dateTimeExists(dRow.getDateTimeAsDate())) 
+	{
             addRow(dRow);
             //rMF.getResTableModel().fireTableChanged(null);
         }

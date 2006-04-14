@@ -98,4 +98,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
                 saveProps();
         }
     }
+
+
+
 }

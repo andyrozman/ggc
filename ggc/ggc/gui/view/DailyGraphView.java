@@ -74,7 +74,7 @@ public class DailyGraphView extends AbstractGraphView {
         int tmpC = 0;
         for (int i = 0; i < dayData.getRowCount(); i++) 
 	{
-            int X = TimetoCoord(dayData.getDateTimeAt(i));
+            int X = TimetoCoord(dayData.getDateTimeAsDateAt(i));
 
             // draw BG
             float tmpBG = dayData.getBGAt(i);

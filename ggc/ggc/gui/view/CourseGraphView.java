@@ -175,7 +175,7 @@ public class CourseGraphView extends AbstractGraphView
                 float tmpBG = dV.getBGAt(j);
 
                 if (tmpBG != 0) {
-                    int X = (int)(multiWidth + DateTimetoCoord(dV.getDateTimeAt(j)));
+                    int X = (int)(multiWidth + DateTimetoCoord(dV.getDateTimeAsDateAt(j)));
                     int Y = BGtoCoord(tmpBG);
                     if (firstBG) {
                         plBG.moveTo(X, Y);

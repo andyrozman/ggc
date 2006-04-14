@@ -19,9 +19,11 @@ import ggc.util.I18nControl;
 public class DailyValues implements Serializable
 {
 
+    private boolean debug = false;
+
     private I18nControl m_ic = I18nControl.getInstance();
 
-    String[] columnNames = { 
+    private String[] column_names = { 
                         m_ic.getMessage("TIME"),
                         m_ic.getMessage("BG"),
                         m_ic.getMessage("INS_1"),
@@ -30,10 +32,11 @@ public class DailyValues implements Serializable
                         m_ic.getMessage("ACT"),
                         m_ic.getMessage("COMMENT") };
 
-    Vector dataRows = new Vector();
+    ArrayList dataRows = new ArrayList();
     static DataBaseHandler dbH;
     //private static DailyValues singleton = null;
-    java.util.Date date;
+    //java.util.Date date;
+    long date = 0;
 
     boolean bHasChangedValues = false;
     boolean bOnlyInsert = true;
@@ -64,7 +67,6 @@ public class DailyValues implements Serializable
 
     public DailyValues()
     {
-        dbH = DataBaseHandler.getInstance();
     }
 
     /*
@@ -81,15 +83,17 @@ public class DailyValues implements Serializable
 	changed = false;
     }
 
-    public void setDate(long date)
+    public void setDateTime(long date)
     {
-        this.date = new Date(date);
+        //this.date = new Date(date);
+	this.date = date;
     }
 
+    /*
     public void setDate(Date date)
     {
         this.date = date;
-    }
+    }*/
 
     public void saveDay()
     {
@@ -98,12 +102,21 @@ public class DailyValues implements Serializable
 
     public void setNewRow(DailyValuesRow dVR)
     {
-        Date time = dVR.getDateTime();
+	addRow(dVR);
+    }
+
+
+    public void setNewRow(DailyValuesRow dVR, boolean tru)
+    {
+	
+	this.date = dVR.getDate();
+        long time = dVR.getDateTime();
         int size = dataRows.size();
 	changed = true;
 
-        addRight:
-        if (time != null && dVR.getDateTime() != null) 
+        //addRight:
+
+        //if (time != null && dVR.getDateTime() != null) 
 	{
             bHasChangedValues = true;
             //insert in the right place...
@@ -112,18 +125,34 @@ public class DailyValues implements Serializable
                 dataRows.add(dVR);
             else 
 	    {
-                int i = 0;
-                for (; i < size; i++)
-                    if (getDateTimeAt(i).after(time)) {
+		int i = 0;
+		boolean added = false;
+
+                for ( ; i < size; i++)
+		{
+                    if (getDateTimeAt(i) < time) 
+		    {
                         dataRows.add(i, dVR);
-                        break addRight;
+			added = true;
+                        break;
                     }
-                dataRows.add(i, dVR);
+		}
+
+		if (!added)
+		{
+		    dataRows.add(i, dVR);
+		}
+                //dataRows.add(i, dVR);
             }
         }
 
+	//System.out.println("dataRows=" + dataRows.size());
+	
+	/*
         float dVR_BG = dVR.getBG();
-        if (dVR_BG != 0) {
+
+	if (dVR_BG != 0) 
+	{
             sumBG += dVR_BG;
             if (highestBG < dVR_BG)
                 highestBG = dVR_BG;
@@ -131,17 +160,63 @@ public class DailyValues implements Serializable
                 lowestBG = dVR_BG;
             counterBG++;
         }
+
         sumIns1 += dVR.getIns1();
         if (dVR.getIns1() != 0)
             counterIns1++;
+
         sumIns2 += dVR.getIns2();
         if (dVR.getIns2() != 0)
             counterIns2++;
+
         sumBE += dVR.getCH();
         if (dVR.getCH() != 0)
             counterBE++;
-
+	*/
+    
         bOnlyInsert = false;
+
+	refreshStatData();
+
+
+    }
+
+
+
+    public void addRow(DailyValuesRow dVR)
+    {
+	this.date = dVR.getDate();
+	long time = dVR.getDateTime();
+	int size = dataRows.size();
+	changed = true;
+
+	if (size <= 0)
+	{
+	    dataRows.add(dVR);
+	}
+	else 
+	{
+	    int i = 0;
+	    boolean added = false;
+
+	    for ( ; i < size; i++)
+	    {
+		if (time > getDateTimeAt(i) ) 
+		{
+		    dataRows.add(i, dVR);
+		    added = true;
+		    break;
+		}
+	    }
+
+	    if (!added)
+		dataRows.add(i, dVR);
+
+	}
+
+	bOnlyInsert = false;
+	refreshStatData();
+
     }
 
 
@@ -151,66 +226,29 @@ public class DailyValues implements Serializable
 
     public DailyValuesRow getRowAt(int i)
     {
-        return (DailyValuesRow)dataRows.elementAt(i);
+        return getRow(i);
     }
 
 
 
     public void deleteRow(int i)
     {
-	changed = true;
+        try 
+	{
 
-        DailyValuesRow del_row = null;
+	    DailyValuesRow dVR = getRow(i);
 
-        try {
-            if (i != -1) 
+	    dataRows.remove(i);
+	    this.refreshStatData();
+
+	    if (dVR.hasHibernateObject())
 	    {
-                
+		if (deleteList==null)
+		    deleteList = new ArrayList();
 
-                DailyValuesRow dVR = (DailyValuesRow)dataRows.elementAt(i);
-
-                //del_row = dVR;
-
-                if (dVR.getBG() != 0) {
-                    sumBG -= dVR.getBG();
-                    counterBG--;
-                }
-                if (dVR.getIns1() != 0) {
-                    sumIns1 -= dVR.getIns1();
-                    counterIns1--;
-                }
-                if (dVR.getIns2() != 0) {
-                    sumIns2 -= dVR.getIns2();
-                    counterIns2--;
-                }
-                if (dVR.getCH() != 0) {
-                    sumBE -= dVR.getCH();
-                    counterBE--;
-                }
-
-                dataRows.remove(i);
-                highestBG = 0;
-                lowestBG = Float.MAX_VALUE;
-                for (int j = 0; j < dataRows.size(); j++) {
-                    DailyValuesRow dVRa = (DailyValuesRow)dataRows.elementAt(j);
-                    highestBG = Math.max(dVRa.getBG(), highestBG);
-                    lowestBG = Math.min(dVRa.getBG(), lowestBG);
-                }
-
-		if (dVR.hasHibernateObject())
-		{
-		    if (deleteList==null)
-			deleteList = new ArrayList();
-
-		    deleteList.add(dVR.getHibernateObject());
-                    this.changed = true;
-		}
-
-            }
-
-	    //DailyValuesRow dVR = (DailyValuesRow)dataRows.elementAt(i);
-
-
+		deleteList.add(dVR.getHibernateObject());
+		this.changed = true;
+	    }
 
         } 
 	catch (Exception ex) 
@@ -226,14 +264,66 @@ public class DailyValues implements Serializable
 
     public void refreshStatData()
     {
-        // implement
+
+	sumBG = 0.0f;
+	sumIns1 = 0.0f;
+	sumIns2 = 0.0f;
+	sumBE = 0.0f;
+
+	counterBG = 0;
+	counterBE = 0;
+	counterIns1 = 0;
+	counterIns2 = 0;
+
+	highestBG = 0.0f;
+	lowestBG = Float.MAX_VALUE;
+
+
+	for (int i=0; i<getRowCount(); i++)
+	{
+	    //System.out.println(i + " / " + getRowCount());
+
+	    DailyValuesRow dvr = getRow(i);
+
+	    float dVR_BG = dvr.getBG();
+
+	    if (dVR_BG != 0) 
+	    {
+		sumBG += dVR_BG;
+		if (highestBG < dVR_BG)
+		    highestBG = dVR_BG;
+		if (lowestBG > dVR_BG)
+		    lowestBG = dVR_BG;
+		counterBG++;
+	    }
+
+	    sumIns1 += dvr.getIns1();
+	    if (dvr.getIns1() != 0)
+		counterIns1++;
+
+	    sumIns2 += dvr.getIns2();
+	    if (dvr.getIns2() != 0)
+		counterIns2++;
+
+	    sumBE += dvr.getCH();
+	    if (dvr.getCH() != 0)
+		counterBE++;
+	}
+
+	if (debug)
+	System.out.println("date=" + date +
+			   "sumBG=" + sumBG + " (" + counterBG + ") " +
+			   "sumIns1=" + sumIns1 + " (" + counterIns1 + ") " +
+			   "sumIns2=" + sumIns2 + " (" + counterIns2 + ") ");
+
     }
 
 
-    public void setColumnNames(String[] Names)
+    public void setColumnNames(String[] names)
     {
-        columnNames = Names;
+        column_names = names;
     }
+
 
     public boolean hasChanged()
     {
@@ -252,10 +342,12 @@ public class DailyValues implements Serializable
 	}
     }
 
+
     public int getColumnCount()
     {
-        return columnNames.length;
+        return column_names.length;
     }
+
 
     public int getRowCount()
     {
@@ -263,6 +355,12 @@ public class DailyValues implements Serializable
             return 0;
         else
             return dataRows.size();
+    }
+
+
+    public DailyValuesRow getRow(int index)
+    {
+	return (DailyValuesRow)this.dataRows.get(index);
     }
 
     public boolean hasDeletedItems()
@@ -283,12 +381,14 @@ public class DailyValues implements Serializable
 
     public Object getValueAt(int row, int column)
     {
-	return ((DailyValuesRow)(dataRows.elementAt(row))).getValueAt(column);
+	return ((DailyValuesRow)getRow(row)).getValueAt(column);
     }
 
     public void setValueAt(Object aValue, int row, int column)
     {
-        DailyValuesRow dVR = (DailyValuesRow)(dataRows.elementAt(row));
+        DailyValuesRow dVR = getRow(row);
+
+	/*
         if (column > 0 && column < 5) {
             float oldVal = ((Float)dVR.getValueAt(column)).floatValue();
             float newVal = ((Float)aValue).floatValue();
@@ -321,16 +421,19 @@ public class DailyValues implements Serializable
                     if (newVal != 0)
                         counterBE++;
             }
-        }
+        } */
+
+	refreshStatData();
         dVR.setValueAt(aValue, column);
 
+	/*
         highestBG = 0;
         lowestBG = Float.MAX_VALUE;
         for (int j = 0; j < dataRows.size(); j++) {
             dVR = (DailyValuesRow)dataRows.elementAt(j);
             highestBG = Math.max(dVR.getBG(), highestBG);
             lowestBG = Math.min(dVR.getBG(), lowestBG);
-        }
+        }*/
 
         bHasChangedValues = true;
         bOnlyInsert = false;
@@ -352,7 +455,7 @@ public class DailyValues implements Serializable
         return sdf.format(date);
     }
 
-    public Date getDate()
+    public long getDate()
     {
         return date;
     }
@@ -363,70 +466,75 @@ public class DailyValues implements Serializable
         return sdf.format(date);
     }
 
-    public Date getDateTimeAt(int row)
+
+    public long getDateTimeAt(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getDateTime();
+	return getRow(row).getDateTime();
+    }
+
+
+    public Date getDateTimeAsDateAt(int row)
+    {
+        return getRow(row).getDateTimeAsDate();
     }
 
     public String getDateTimeAsStringAt(int row)
     {
-        DailyValuesRow dv = (DailyValuesRow)(dataRows.elementAt(row));
+        DailyValuesRow dv = getRow(row);
         return dv.getDateAsString() + " " + dv.getTimeAsString();
     }
 
 
     public int getDateD(int row)
     {
-        DailyValuesRow dv = (DailyValuesRow)(dataRows.elementAt(row));
-        return dv.getDateD();
+        return getRow(row).getDateD();
     }
 
 
     public int getDateT(int row)
     {
-        DailyValuesRow dv = (DailyValuesRow)(dataRows.elementAt(row));
-        return dv.getDateT();
+        return getRow(row).getDateT();
     }
 
     public boolean getChanged(int row)
     {
-	return ((DailyValuesRow)(dataRows.elementAt(row))).hasChanged();
+	return getRow(row).hasChanged();
     }
 
 
     public float getBGAt(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getBG();
+        return getRow(row).getBG();
     }
 
     public float getIns1At(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getIns1();
+        return getRow(row).getIns1();
     }
 
     public float getIns2At(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getIns2();
+        return getRow(row).getIns2();
     }
 
     public float getCHAt(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getCH();
+        return getRow(row).getCH();
     }
 
     public int getActAt(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getAct();
+        return getRow(row).getAct();
     }
 
     public String getCommentAt(int row)
     {
-        return ((DailyValuesRow)(dataRows.elementAt(row))).getComment();
+        return getRow(row).getComment();
     }
 
     public String getColumnName(int column)
     {
-        return columnNames[column] == null ? m_ic.getMessage("NO_NAME") : columnNames[column];
+        return column_names[column] == null ? m_ic.getMessage("NO_NAME") : column_names[column];
     }
 
     public float getAvgBG()
@@ -549,7 +657,7 @@ public class DailyValues implements Serializable
             return 0;
     }
 
-
+/*
     public int getDateD()
     {
 	
@@ -562,17 +670,17 @@ public class DailyValues implements Serializable
 	return Integer.parseInt(dat);
 
     }
-
-
+*/
+/*
     public int getDateT()
     {
 	
 	return date.getHours()*100 + date.getMinutes();
 	
     }
+*/
 
-
-
+/*
     public String getLeadingZero(int value, int num_places)
     {
 
@@ -586,6 +694,6 @@ public class DailyValues implements Serializable
 	return tmp;
 
     }
-
+*/
 
 }

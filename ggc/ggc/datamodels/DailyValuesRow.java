@@ -217,17 +217,32 @@ public class DailyValuesRow implements Serializable
     }
 
 
-    public Date getDateTime()
+    public long getDateTime()
+    {
+	return datetime;
+    }
+
+
+
+    public Date getDateTimeAsDate()
     {
 	return m_da.getDateTimeAsDateObject(datetime);
     }
 
 
+    public long getDate()
+    {
+	return (long)(datetime/10000);
+    }
+
+
+
     public String getDateAsString()
     {
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	return ""+getDate();
+//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //return sdf.format(datetime);
-	return m_da.getDateTimeAsDateString(datetime);
+	//dssreturn m_da.getDateTimeAsDateString(datetime);
     }
 
     public String getTimeAsString()

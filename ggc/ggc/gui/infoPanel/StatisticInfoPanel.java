@@ -158,7 +158,8 @@ public class StatisticInfoPanel extends AbstractInfoPanel
 
         StatisticValues sV = new StatisticValues(startDate, endDate);
 
-        if (sV != null) {
+        if (sV != null) 
+	{
             DecimalFormat df = new DecimalFormat("#0.00");
 
             lblAvgBG.setText(df.format(sV.getAvgBG()));
