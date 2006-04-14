@@ -107,6 +107,10 @@ public class DataAccess
     private GGCProperties m_settings = null;
     private DbToolApplicationGGC m_configFile = null;
 
+    /**
+     * Which BG unit is used: 1 = mg/dl, 2 = mmol/l
+     */
+    public int m_BG_unit = 1;
 
 
     public String[] availableLanguages = {
@@ -249,7 +253,7 @@ public class DataAccess
 
     public void loadSettingsFromDb()
     {
-	m_db.loadConfigData();
+	this.m_settings.load();
     }
 
 
@@ -310,9 +314,14 @@ public class DataAccess
     public static final int BG_MMOL = 2;
 
 
-    public static int getBGMeasurmentType()
+    public int getBGMeasurmentType()
     {
-        return BG_MGDL;
+	return this.m_BG_unit;
+    }
+
+    public void setBGMeasurmentType(int type)
+    {
+	this.m_BG_unit = type;
     }
 
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f; 
@@ -324,16 +333,32 @@ public class DataAccess
      * @param dbValue - The database's value
      * @return the BG in either mg/dl or mmol/l
      */
-    public static float getDisplayedBG (int dbValue) {
-        switch (getBGMeasurmentType()) {
-        case BG_MMOL:
-            // TODO: ?? do I have to convert dbValue to float??
-            return (dbValue * MGDL_TO_MMOL_FACTOR);
-        case BG_MGDL:
-        default:
-            return dbValue;
+/*    public float getDisplayedBG (int dbValue) 
+    {
+        switch (this.m_BG_unit) 
+	{
+	    case BG_MMOL:
+		// TODO: ?? do I have to convert dbValue to float??
+		return (dbValue * MGDL_TO_MMOL_FACTOR);
+	    case BG_MGDL:
+	    default:
+		return dbValue;
         }
+    } */
+
+    public float getBGValue(float bg_value)
+    {
+	switch (this.m_BG_unit) 
+	{
+	    case BG_MMOL:
+		return (bg_value * MGDL_TO_MMOL_FACTOR);
+	    case BG_MGDL:
+	    default:
+		return bg_value;
+	}
+
     }
+
 
     // ********************************************************
     // ******                   Fonts                     *****    

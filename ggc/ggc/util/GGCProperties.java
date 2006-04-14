@@ -342,22 +342,22 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public void setLanguage(String name)
     {
-	System.out.println("set Lang: " + name);
+	//System.out.println("set Lang: " + name);
 
 	int idx = m_da.getLanguageIndexByName(name);
 
 	String post = m_da.avLangPostfix[idx];
 
-	System.out.println("  new Lang:" + post);
+	//System.out.println("  new Lang:" + post);
 
 	if (!this.m_config.selected_lang.equals(post)) 
 	{
-	    System.out.println("  changed");
+	    //System.out.println("  changed");
 	    this.m_config.selected_lang = post;
 	    this.changed_config = true;
 	}
-	else
-	    System.out.println("  same");
+	//else
+	//    System.out.println("  same");
 
     }
 
@@ -371,10 +371,13 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public void load()
     {
+	m_db.loadConfigData();
+	m_da.setBGMeasurmentType(this.getBGUnit());
     }
 
     public void reload()
     {
+	load();
     }
 
     public void save()
@@ -399,6 +402,8 @@ public class GGCProperties //extends GGCPropertiesHelper
 	    System.out.println("save Config");
 	    this.m_config.saveConfig();
 	}
+
+	m_da.setBGMeasurmentType(this.getBGUnit());
 
     }
 
