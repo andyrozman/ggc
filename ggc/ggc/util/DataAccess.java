@@ -32,6 +32,9 @@ package ggc.util;
 import java.awt.Component;
 import java.awt.Font;
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -56,28 +59,25 @@ import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.nutrition.GGCTreeRoot;
 import ggc.db.db_tool.DbToolApplicationGGC;
-
-public class DataAccess
-{
+public class DataAccess {
 
     // LF
-//    Hashtable<String,String> availableLF_full = null;
-//    Object[]  availableLF = null;
-//    Object[]  availableLang = null;
-//    private LanguageInfo m_lang_info = null;
+    //    Hashtable<String,String> availableLF_full = null;
+    //    Object[]  availableLF = null;
+    //    Object[]  availableLang = null;
+    //    private LanguageInfo m_lang_info = null;
 
-//    String selectedLF = null;
-//    String subSelectedLF = null;
+    //    String selectedLF = null;
+    //    String subSelectedLF = null;
 
     // Config file
-//    Hashtable<String,String> config_db_values = null;
-//    public int selected_db = -1;
-//    public int selected_lang = 1;
-//    public String selected_LF_Class = null; // class
-//  public String selected_LF_Name = null; // name
-//    public String skinLFSelected = null;
-//    String allDbs[] = null;
-
+    //    Hashtable<String,String> config_db_values = null;
+    //    public int selected_db = -1;
+    //    public int selected_lang = 1;
+    //    public String selected_LF_Class = null; // class
+    //  public String selected_LF_Name = null; // name
+    //    public String skinLFSelected = null;
+    //    String allDbs[] = null;
 
     public static final String pathPrefix = ".";
 
@@ -88,20 +88,23 @@ public class DataAccess
                                              // singelton instance
 
     public GGCDb m_db = null;
+
     public MainFrame m_main = null;
 
     public Font fonts[] = null;
 
     public GGCTreeRoot m_nutrition_treeroot = null;
-    public GGCTreeRoot m_meals_treeroot = null;
 
+    public GGCTreeRoot m_meals_treeroot = null;
 
     // daily and weekly data
     private GregorianCalendar m_date = null, m_dateStart = null;
-    private HbA1cValues m_HbA1c = null;
-    private DailyValues m_dvalues = null;
-    private WeekValues m_dRangeValues = null;
 
+    private HbA1cValues m_HbA1c = null;
+
+    private DailyValues m_dvalues = null;
+
+    private WeekValues m_dRangeValues = null;
 
     private MeterManager m_meterManager = null;
     private GGCProperties m_settings = null;
@@ -125,16 +128,11 @@ public class DataAccess
 	"si",
     };
 
-
     public String[] bg_units = { "mg/dl", "mmol/l" };
-
-
 
     // ********************************************************
     // ******      Constructors and Access methods        *****    
     // ********************************************************
-
-
 
     //   Constructor:  DataAccess
     /**
@@ -143,11 +141,9 @@ public class DataAccess
      *  constructor is protected and can be accessed only with getInstance() 
      *  method.<br><br>
      *
-     */ 
-    private DataAccess()
-    {
+     */
+    private DataAccess() {
         loadFonts();
-
 	//m_i18n.createInstance(this);
 //        loadAvailableLFs();
 //        loadLanguageInfo();
@@ -162,8 +158,6 @@ public class DataAccess
     } 
 
 
-
-
     //  Method:       getInstance
     //  Author:       Andy
     /**
@@ -173,59 +167,46 @@ public class DataAccess
      *
      *  @return Reference to OmniI18nControl object
      * 
-     */ 
-    static public DataAccess getInstance()
-    {
+     */
+    static public DataAccess getInstance() {
         if (m_da == null)
             m_da = new DataAccess();
         return m_da;
     }
 
-
-
-    static public DataAccess createInstance(MainFrame main)
-    {
-        if (m_da == null)
-        {
+    static public DataAccess createInstance(MainFrame main) {
+        if (m_da == null) {
             //GGCDb db = new GGCDb();
             m_da = new DataAccess();
             m_da.setParent(main);
         }
-            
+
         return m_da;
     }
 
-
-/*
-    static public DataAccess getInstance()
-    {
-        return m_da;
-    }
-*/
-
-
+    /*
+     static public DataAccess getInstance()
+     {
+     return m_da;
+     }
+     */
 
     //  Method:       deleteInstance
     /**
      *  This method sets handle to DataAccess to null and deletes the instance. <br><br>
-     */ 
-    public void deleteInstance()
-    {
+     */
+    public void deleteInstance() {
 
-        m_i18n=null;
+        m_i18n = null;
 
     }
 
-
-    public void startDb(StatusBar bar)
-    {
-	GGCDbLoader loader = new GGCDbLoader(this, bar);
-	loader.start();
+    public void startDb(StatusBar bar) {
+        GGCDbLoader loader = new GGCDbLoader(this, bar);
+        loader.start();
     }
 
-
-    public GGCDb getDb()
-    {
+    public GGCDb getDb() {
         return m_db;
     }
 
@@ -235,12 +216,9 @@ public class DataAccess
     // ******                   Meters                    *****    
     // ********************************************************
 
-
-    public MeterManager getMeterManager()
-    {
+    public MeterManager getMeterManager() {
         return this.m_meterManager;
     }
-
 
     // ********************************************************
     // ******                  Settings                   *****    
@@ -312,42 +290,42 @@ public class DataAccess
     // ******             BG Measurement Type             *****    
     // ********************************************************
 
-
     public static final int BG_MGDL = 1;
-    public static final int BG_MMOL = 2;
 
+    public static final int BG_MMOL = 2;
 
     public int getBGMeasurmentType()
     {
-	return this.m_BG_unit;
+        return this.m_BG_unit;
     }
 
     public void setBGMeasurmentType(int type)
     {
-	this.m_BG_unit = type;
+        this.m_BG_unit = type;
     }
 
-    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f; 
-    private static final float MMOL_TO_MGDL_FACTOR = 18.018f; 
-    
+    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
+
+    private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
+
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>, either
      * return the mg/dl or the mmol/l value of the database's value. Default is mg/dl.
      * @param dbValue - The database's value
      * @return the BG in either mg/dl or mmol/l
      */
-/*    public float getDisplayedBG (int dbValue) 
-    {
-        switch (this.m_BG_unit) 
-	{
-	    case BG_MMOL:
-		// TODO: ?? do I have to convert dbValue to float??
-		return (dbValue * MGDL_TO_MMOL_FACTOR);
-	    case BG_MGDL:
-	    default:
-		return dbValue;
+    public float getDisplayedBG(int dbValue) {
+        switch (this.m_BG_unit) {
+        case BG_MMOL:
+            // this POS should return a float rounded to 3 decimal places,
+            // if I understand the docu correctly
+            return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR,
+                    new MathContext(3, RoundingMode.HALF_UP)).floatValue());
+        case BG_MGDL:
+        default:
+            return dbValue;
         }
-    } */
+    }
 
     public float getBGValue(float bg_value)
     {
@@ -368,412 +346,397 @@ public class DataAccess
     // ********************************************************
 
     public static final int FONT_BIG_BOLD = 0;
+
     public static final int FONT_NORMAL = 1;
+
     public static final int FONT_NORMAL_BOLD = 2;
 
-    public void loadFonts()
-    {
+    public void loadFonts() {
         fonts = new Font[3];
         fonts[0] = new Font("SansSerif", Font.BOLD, 22);
         fonts[1] = new Font("SansSerif", Font.PLAIN, 12);
         fonts[2] = new Font("SansSerif", Font.BOLD, 12);
     }
 
-
-    public Font getFont(int font_id)
-    {
+    public Font getFont(int font_id) {
         return fonts[font_id];
     }
-
-
 
     // ********************************************************
     // ******          Parent handling (for UIs)          *****    
     // ********************************************************
 
-
-    public void setParent(MainFrame main)
-    {
+    public void setParent(MainFrame main) {
         m_main = main;
     }
 
-
-
-    public MainFrame getParent()
-    {
+    public MainFrame getParent() {
         return m_main;
     }
 
-
     //  jfdfhjsdfk
 
-    public I18nControl getI18nInstance()
-    {
+    public I18nControl getI18nInstance() {
         return m_i18n;
     }
-
-
 
     // ********************************************************
     // ******               Look and Feel                 *****    
     // ********************************************************
 
-/*
-    public void loadAvailableLFs()
-    {
+    /*
+     public void loadAvailableLFs()
+     {
 
-        availableLF_full = new Hashtable<String,String>();
-        UIManager.LookAndFeelInfo[] info = UIManager.getInstalledLookAndFeels();
+     availableLF_full = new Hashtable<String,String>();
+     UIManager.LookAndFeelInfo[] info = UIManager.getInstalledLookAndFeels();
 
-        availableLF = new Object[info.length+1];
+     availableLF = new Object[info.length+1];
 
-        //ring selectedLF = null;
-        //String subSelectedLF = null;
+     //ring selectedLF = null;
+     //String subSelectedLF = null;
 
-        int i;
-        for (i=0; i<info.length; i++) 
-        {
-            String name = info[i].getName();
-            String className = info[i].getClassName();
+     int i;
+     for (i=0; i<info.length; i++) 
+     {
+     String name = info[i].getName();
+     String className = info[i].getClassName();
 
-            availableLF_full.put(name, className);
-            availableLF[i] = name;
+     availableLF_full.put(name, className);
+     availableLF[i] = name;
 
-            //System.out.println(humanReadableName);
-        }     
+     //System.out.println(humanReadableName);
+     }     
 
-        availableLF_full.put("SkinLF", "com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
-        availableLF[i] = "SkinLF";
+     availableLF_full.put("SkinLF", "com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
+     availableLF[i] = "SkinLF";
 
-    }
+     }
 
-    public Object[] getAvailableLFs()
-    {
-        return availableLF;
-    }
+     public Object[] getAvailableLFs()
+     {
+     return availableLF;
+     }
 
 
-    public static String[] getLFData()
-    {
-        String out[] = new String[2];
+     public static String[] getLFData()
+     {
+     String out[] = new String[2];
 
-        try
-        {
-            Properties props = new Properties();
+     try
+     {
+     Properties props = new Properties();
 
-            FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
-            props.load(in);
+     FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
+     props.load(in);
 
-            out[0] = (String)props.get("LF_CLASS");
-            out[1] = (String)props.get("SKINLF_SELECTED");
+     out[0] = (String)props.get("LF_CLASS");
+     out[1] = (String)props.get("SKINLF_SELECTED");
 
-            return out;
+     return out;
 
-        }
-        catch(Exception ex)
-        {
-            System.out.println("DataAccess::getLFData::Exception> " + ex);
-            return null;
-        }
-    }
-*/
+     }
+     catch(Exception ex)
+     {
+     System.out.println("DataAccess::getLFData::Exception> " + ex);
+     return null;
+     }
+     }
+     */
     // ********************************************************
     // ******                  Languages                  *****    
     // ********************************************************
+    /*
+     public void loadLanguageInfo()
+     {
 
-/*
-    public void loadLanguageInfo()
-    {
+     try
+     {
 
-        try
-        {
+     Properties props = new Properties();
 
-            Properties props = new Properties();
+     FileInputStream in = new FileInputStream(pathPrefix + "/data/lang/PIS_Languages.properties");
+     props.load(in);
 
-            FileInputStream in = new FileInputStream(pathPrefix + "/data/lang/PIS_Languages.properties");
-            props.load(in);
+     m_lang_info = new LanguageInfo();
+     m_lang_info.loadData(props);
 
-            m_lang_info = new LanguageInfo();
-            m_lang_info.loadData(props);
+     }
+     catch(Exception ex)
+     {
+     System.out.println("DataAccess::loadLanguageInfo::Exception> " + ex);
+     }
 
-        }
-        catch(Exception ex)
-        {
-            System.out.println("DataAccess::loadLanguageInfo::Exception> " + ex);
-        }
-
-    }
-
-
-    public LanguageInfo getLanguageInfo()
-    {
-        return m_lang_info;
-    }
+     }
 
 
-
-    public Object[] getAvailableLanguages()
-    {
-        return m_lang_info.availableLang;
-    }
-
-
-    public int getSelectedLangIndex()
-    {
-        return selected_lang;
-    }
+     public LanguageInfo getLanguageInfo()
+     {
+     return m_lang_info;
+     }
 
 
-    public static String getSelectedLocale()
-    {
-        String locale = "SI";
 
-        try
-        {
-            Properties props = new Properties();
-
-            FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
-            props.load(in);
-
-            int sel_lang = 1;
-
-            if (props.containsKey("SELECTED_LANG"))
-            {
-                sel_lang = Integer.parseInt((String)props.get("SELECTED_LANG"));
-                System.out.println("Sel lang: " + sel_lang);
-            }
+     public Object[] getAvailableLanguages()
+     {
+     return m_lang_info.availableLang;
+     }
 
 
-            //props = new Properties();
-            props.clear();
+     public int getSelectedLangIndex()
+     {
+     return selected_lang;
+     }
 
-            in = null;
-            in = new FileInputStream(pathPrefix  + "/data/lang/PIS_Languages.properties");
-            props.load(in);
 
-            if (props.containsKey("LANG_" + sel_lang + "_LOCALE"))
-            {
-                locale = (String)props.get("LANG_" + sel_lang + "_LOCALE");
-            }
+     public static String getSelectedLocale()
+     {
+     String locale = "SI";
 
-//            System.out.println("Locale: " + locale);
+     try
+     {
+     Properties props = new Properties();
 
-        }
-        catch(Exception ex)
-        {
-            System.out.println("DataAccess::getSelectedLocale::Exception> " + ex);
-        }
+     FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
+     props.load(in);
 
-        return locale;
+     int sel_lang = 1;
 
-    }
-*/
+     if (props.containsKey("SELECTED_LANG"))
+     {
+     sel_lang = Integer.parseInt((String)props.get("SELECTED_LANG"));
+     System.out.println("Sel lang: " + sel_lang);
+     }
 
+
+     //props = new Properties();
+     props.clear();
+
+     in = null;
+     in = new FileInputStream(pathPrefix  + "/data/lang/PIS_Languages.properties");
+     props.load(in);
+
+     if (props.containsKey("LANG_" + sel_lang + "_LOCALE"))
+     {
+     locale = (String)props.get("LANG_" + sel_lang + "_LOCALE");
+     }
+
+     //            System.out.println("Locale: " + locale);
+
+     }
+     catch(Exception ex)
+     {
+     System.out.println("DataAccess::getSelectedLocale::Exception> " + ex);
+     }
+
+     return locale;
+
+     }
+     */
 
     // ********************************************************
     // ******            Config File Handling             *****    
     // ********************************************************
+    /*
+     public void loadConfig()
+     {
+     //Hashtable config_db_values = null;
+     //int selected_db = -1;
+     //String selected_LF_Class = null; // class
+     //String selected_LF_Name = null; // name
+     //String skinLFSelected = null;
 
-/*
-    public void loadConfig()
-    {
-        //Hashtable config_db_values = null;
-        //int selected_db = -1;
-        //String selected_LF_Class = null; // class
-        //String selected_LF_Name = null; // name
-        //String skinLFSelected = null;
+     config_db_values = new Hashtable<String,String>();
 
-        config_db_values = new Hashtable<String,String>();
+     try
+     {
+     Properties props = new Properties();
 
-        try
-        {
-            Properties props = new Properties();
-
-            FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
-            props.load(in);
-
-
-            for(Enumeration en = props.keys(); en.hasMoreElements(); )
-            {
-                String  str = (String)en.nextElement();
-
-                if (str.startsWith("DB")) 
-                {
-                    config_db_values.put(str, (String)props.get(str));
-                }
-                else
-                {
-
-                    if (str.equals("LF_NAME")) 
-                    {
-                        selected_LF_Name = (String)props.get(str);
-                    }
-                    else if (str.equals("LF_CLASS")) 
-                    {
-                        selected_LF_Class = (String)props.get(str);
-                    }
-                    else if (str.equals("SKINLF_SELECTED")) 
-                    {
-                        skinLFSelected = (String)props.get(str);
-                    }
-                    else if (str.equals("SELECTED_DB")) 
-                    {
-                        selected_db = Integer.parseInt((String)props.get(str));
-                    }
-                    else if (str.equals("SELECTED_LANG")) 
-                    {
-                        selected_lang = Integer.parseInt((String)props.get(str));
-                    }
-                    else 
-                        System.out.println("DataAccess:loadConfig:: Unknown parameter : " + str);
-
-                }
-
-            }
-
-            ArrayList<String> list = new ArrayList<String>();
-
-            int count_db = 0;
-
-            list.add("0 - " + m_i18n.getMessage("INTERNAL_DATABASE"));
-            for (int i=1; i<20; i++) 
-            {
-                if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
-                {
-                    count_db++;
-                    list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
-                }
-
-                if ((count_db*6)>=config_db_values.size()) 
-                    break;
-
-            }
-
-            Iterator it = list.iterator();
-
-            int j=0;
-            allDbs = new String[list.size()];
-
-            while (it.hasNext()) 
-            {
-                String val = (String)it.next();
-                allDbs[j] = val;
-                j++;
-            }
-
-        }
-        catch(Exception ex)
-        {
-            System.out.println("DataAccess::loadConfig::Exception> " + ex);
-        }
-
-    }
+     FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
+     props.load(in);
 
 
-    public void saveConfig()
-    {
-        
-        try
-        {
+     for(Enumeration en = props.keys(); en.hasMoreElements(); )
+     {
+     String  str = (String)en.nextElement();
 
-            //Properties props = new Properties();
-            BufferedWriter bw = new BufferedWriter(new FileWriter(pathPrefix  + "/data/PIS_Config.properties"));
+     if (str.startsWith("DB")) 
+     {
+     config_db_values.put(str, (String)props.get(str));
+     }
+     else
+     {
 
+     if (str.equals("LF_NAME")) 
+     {
+     selected_LF_Name = (String)props.get(str);
+     }
+     else if (str.equals("LF_CLASS")) 
+     {
+     selected_LF_Class = (String)props.get(str);
+     }
+     else if (str.equals("SKINLF_SELECTED")) 
+     {
+     skinLFSelected = (String)props.get(str);
+     }
+     else if (str.equals("SELECTED_DB")) 
+     {
+     selected_db = Integer.parseInt((String)props.get(str));
+     }
+     else if (str.equals("SELECTED_LANG")) 
+     {
+     selected_lang = Integer.parseInt((String)props.get(str));
+     }
+     else 
+     System.out.println("DataAccess:loadConfig:: Unknown parameter : " + str);
 
-            bw.write("#\n" +
-                     "# ZISConfig (Settings for ZIS)\n" +
-                     "#\n"+
-                     "# Don't edit by hand\n" +
-                     "#\n\n"+
-                     "#\n# Databases settings\n#\n");
+     }
 
+     }
 
-            int count_db = 0;
+     ArrayList<String> list = new ArrayList<String>();
 
-            for (int i=0; i<20; i++) 
-            {
-                if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
-                {
-                    String con_name = config_db_values.get("DB"+i+"_CONN_NAME");
-                    bw.write("\n#\n# Database #" + i +" - " + con_name + "\n#\n");
-                    count_db++;
-                    bw.write("DB" + i + "_CONN_NAME=" + con_name +"\n");
-                    bw.write("DB" + i + "_CONN_DRIVER_CLASS=" + config_db_values.get("DB"+i+"_CONN_DRIVER_CLASS") +"\n");
-                    bw.write("DB" + i + "_CONN_URL=" + config_db_values.get("DB"+i+"_CONN_URL") +"\n");
-                    bw.write("DB" + i + "_CONN_USERNAME=" + config_db_values.get("DB"+i+"_CONN_USERNAME") +"\n");
-                    bw.write("DB" + i + "_CONN_PASSWORD=" + config_db_values.get("DB"+i+"_CONN_PASSWORD") +"\n");
-                    bw.write("DB" + i + "_HIBERNATE_DIALECT=" + config_db_values.get("DB"+i+"_HIBERNATE_DIALECT") +"\n");
+     int count_db = 0;
 
-//                    list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
-                }
+     list.add("0 - " + m_i18n.getMessage("INTERNAL_DATABASE"));
+     for (int i=1; i<20; i++) 
+     {
+     if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
+     {
+     count_db++;
+     list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
+     }
 
-                if ((count_db*6)>=config_db_values.size()) 
-                    break;
+     if ((count_db*6)>=config_db_values.size()) 
+     break;
 
-            }
+     }
 
-/*
-            for(Enumeration en=config_db_values.keys(); en.hasMoreElements(); )
-            {
-                String key = (String)en.nextElement();
-                bw.write(key + "=" + config_db_values.get(key)+"\n");
-            }
-            */
-/*
-            bw.write("\n\n#\n# Look and Feel Settings\n#\n\n");
-            bw.write("LF_NAME=" + selected_LF_Name +"\n");
+     Iterator it = list.iterator();
 
-            //props.put("LF_NAME", selected_LF_Name);
+     int j=0;
+     allDbs = new String[list.size()];
 
-            selected_LF_Class = availableLF_full.get(selected_LF_Name);
+     while (it.hasNext()) 
+     {
+     String val = (String)it.next();
+     allDbs[j] = val;
+     j++;
+     }
 
-            bw.write("LF_CLASS=" + selected_LF_Class +"\n");
+     }
+     catch(Exception ex)
+     {
+     System.out.println("DataAccess::loadConfig::Exception> " + ex);
+     }
 
-            //props.put("LF_CLASS", selected_LF_Name);
-            bw.write("SKINLF_SELECTED=" + skinLFSelected +"\n");
-            //props.put("SKINLF_SELECTED", skinLFSelected);
-            bw.write("\n\n#\n# Db Selector\n#\n\n");
-
-            bw.write("SELECTED_DB=" + selected_db +"\n");
-            //props.put("SELECTED_DB", ""+selected_db);
-
-            bw.write("SELECTED_LANG=" + selected_lang +"\n");
-
-
-//            FileOutputStream out = new FileOutputStream("./ZISOut.properties");
-
-            bw.close();
-            //props.s
-
-            //props.store(out, " Settings for ZIS version 0.2.3 or higher (please DON'T edit this file by hand!!)");
-
-        }
-        catch(Exception ex)
-        {
-            System.out.println("DataAccess::saveConfig::Exception> " + ex);
-            ex.printStackTrace();
-        }
-
-    }
-    
-
-    public String[] getAvailableDbs()
-    {
-        return allDbs;
-    }
+     }
 
 
-    public int getSelectedDbIndex()
-    {
-        for (int i=0; i<allDbs.length; i++)
-        {
-            if (allDbs[i].startsWith(this.selected_db + " - "))
-                return i;
-        }
-        return 0;
-    }
+     public void saveConfig()
+     {
+     
+     try
+     {
 
-*/
+     //Properties props = new Properties();
+     BufferedWriter bw = new BufferedWriter(new FileWriter(pathPrefix  + "/data/PIS_Config.properties"));
+
+
+     bw.write("#\n" +
+     "# ZISConfig (Settings for ZIS)\n" +
+     "#\n"+
+     "# Don't edit by hand\n" +
+     "#\n\n"+
+     "#\n# Databases settings\n#\n");
+
+
+     int count_db = 0;
+
+     for (int i=0; i<20; i++) 
+     {
+     if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
+     {
+     String con_name = config_db_values.get("DB"+i+"_CONN_NAME");
+     bw.write("\n#\n# Database #" + i +" - " + con_name + "\n#\n");
+     count_db++;
+     bw.write("DB" + i + "_CONN_NAME=" + con_name +"\n");
+     bw.write("DB" + i + "_CONN_DRIVER_CLASS=" + config_db_values.get("DB"+i+"_CONN_DRIVER_CLASS") +"\n");
+     bw.write("DB" + i + "_CONN_URL=" + config_db_values.get("DB"+i+"_CONN_URL") +"\n");
+     bw.write("DB" + i + "_CONN_USERNAME=" + config_db_values.get("DB"+i+"_CONN_USERNAME") +"\n");
+     bw.write("DB" + i + "_CONN_PASSWORD=" + config_db_values.get("DB"+i+"_CONN_PASSWORD") +"\n");
+     bw.write("DB" + i + "_HIBERNATE_DIALECT=" + config_db_values.get("DB"+i+"_HIBERNATE_DIALECT") +"\n");
+
+     //                    list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
+     }
+
+     if ((count_db*6)>=config_db_values.size()) 
+     break;
+
+     }
+
+     /*
+     for(Enumeration en=config_db_values.keys(); en.hasMoreElements(); )
+     {
+     String key = (String)en.nextElement();
+     bw.write(key + "=" + config_db_values.get(key)+"\n");
+     }
+     */
+    /*
+     bw.write("\n\n#\n# Look and Feel Settings\n#\n\n");
+     bw.write("LF_NAME=" + selected_LF_Name +"\n");
+
+     //props.put("LF_NAME", selected_LF_Name);
+
+     selected_LF_Class = availableLF_full.get(selected_LF_Name);
+
+     bw.write("LF_CLASS=" + selected_LF_Class +"\n");
+
+     //props.put("LF_CLASS", selected_LF_Name);
+     bw.write("SKINLF_SELECTED=" + skinLFSelected +"\n");
+     //props.put("SKINLF_SELECTED", skinLFSelected);
+     bw.write("\n\n#\n# Db Selector\n#\n\n");
+
+     bw.write("SELECTED_DB=" + selected_db +"\n");
+     //props.put("SELECTED_DB", ""+selected_db);
+
+     bw.write("SELECTED_LANG=" + selected_lang +"\n");
+
+
+     //            FileOutputStream out = new FileOutputStream("./ZISOut.properties");
+
+     bw.close();
+     //props.s
+
+     //props.store(out, " Settings for ZIS version 0.2.3 or higher (please DON'T edit this file by hand!!)");
+
+     }
+     catch(Exception ex)
+     {
+     System.out.println("DataAccess::saveConfig::Exception> " + ex);
+     ex.printStackTrace();
+     }
+
+     }
+     
+
+     public String[] getAvailableDbs()
+     {
+     return allDbs;
+     }
+
+
+     public int getSelectedDbIndex()
+     {
+     for (int i=0; i<allDbs.length; i++)
+     {
+     if (allDbs[i].startsWith(this.selected_db + " - "))
+     return i;
+     }
+     return 0;
+     }
+
+     */
 
     // ********************************************************
     // ******          Dates and Times Handling           *****    
@@ -782,7 +745,6 @@ public class DataAccess
 
     public String[] getMonthsArray()
     {
-
         String arr[] = new String[12];
 
         arr[0] = m_i18n.getMessage("JANUARY");
@@ -802,162 +764,139 @@ public class DataAccess
 
     }
 
-
-    public String getDateString(int date)
-    {
+    public String getDateString(int date) {
 
         // 20051012
-
 
         int year = date/10000;
         int months = date - (year*10000);
 
-        months = months/100;
+        months = months / 100;
 
-        int days = date - (year*10000) - (months*100);
+        int days = date - (year * 10000) - (months * 100);
 
-        if (year==0)
-        {
-            return getLeadingZero(days,2) + "/" + getLeadingZero(months,2);
-        }
-        else
-            return getLeadingZero(days,2) + "/" + getLeadingZero(months,2) + "/" + year;
-
-    }
-
-
-    public String getTimeString(int time)
-    {
-
-        int hours = time/100;
-
-        int min = time - hours*100;
-
-        return getLeadingZero(hours,2) + ":" + getLeadingZero(min,2);
+        if (year == 0) {
+            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2);
+        } else
+            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2)
+                    + "/" + year;
 
     }
 
-    public String getDateTimeString(long date)
-    {
+    public String getTimeString(int time) {
+
+        int hours = time / 100;
+
+        int min = time - hours * 100;
+
+        return getLeadingZero(hours, 2) + ":" + getLeadingZero(min, 2);
+
+    }
+
+    public String getDateTimeString(long date) {
         return getDateTimeString(date, 1);
     }
 
-
-    public String getDateTimeAsDateString(long date)
-    {
+    public String getDateTimeAsDateString(long date) {
         return getDateTimeString(date, 2);
     }
 
-
-    public String getDateTimeAsTimeString(long date)
-    {
+    public String getDateTimeAsTimeString(long date) {
         return getDateTimeString(date, 3);
     }
-
 
     // ret_type = 1 (Date and time)
     // ret_type = 2 (Date)
     // ret_type = 3 (Time)
 
     public final static int DT_DATETIME = 1;
+
     public final static int DT_DATE = 2;
+
     public final static int DT_TIME = 3;
 
+    public String getDateTimeString(long dt, int ret_type) {
 
+        int y = (int) (dt / 100000000L);
+        dt -= y * 100000000L;
 
-    public String getDateTimeString(long dt, int ret_type)
-    {
+        int m = (int) (dt / 1000000L);
+        dt -= m * 1000000L;
 
+        int d = (int) (dt / 10000L);
+        dt -= d * 10000L;
 
-        int y = (int)(dt/100000000L);
-        dt -= y*100000000L;
+        int h = (int) (dt / 100L);
+        dt -= h * 100L;
 
-        int m = (int)(dt/1000000L);
-        dt -= m*1000000L;
+        int min = (int) dt;
 
-        int d = (int)(dt/10000L);
-        dt -= d*10000L;
-
-        int h = (int)(dt/100L);
-        dt -= h*100L;
-
-        int min = (int)dt;
-
-
-        if (ret_type==DT_DATETIME)
-        {
-            return getLeadingZero(d,2) + "/" + getLeadingZero(m,2) + "/" + y + "  " + getLeadingZero(h,2) + ":" + getLeadingZero(min,2);
-        }
-        else if (ret_type==DT_DATE)
-        {
-            return getLeadingZero(d,2) + "/" + getLeadingZero(m,2) + "/" + y;
-        }
-        else
-            return getLeadingZero(h,2) + ":" + getLeadingZero(min,2);
+        if (ret_type == DT_DATETIME) {
+            return getLeadingZero(d, 2) + "/" + getLeadingZero(m, 2) + "/" + y
+                    + "  " + getLeadingZero(h, 2) + ":"
+                    + getLeadingZero(min, 2);
+        } else if (ret_type == DT_DATE) {
+            return getLeadingZero(d, 2) + "/" + getLeadingZero(m, 2) + "/" + y;
+        } else
+            return getLeadingZero(h, 2) + ":" + getLeadingZero(min, 2);
 
     }
 
+    public Date getDateTimeAsDateObject(long dt) {
 
-    public Date getDateTimeAsDateObject(long dt)
-    {
+        //Date dt_obj = new Date();
+        GregorianCalendar gc = new GregorianCalendar();
 
-	//Date dt_obj = new Date();
-	GregorianCalendar gc = new GregorianCalendar();
-	
+        int y = (int) (dt / 100000000L);
+        dt -= y * 100000000L;
 
-	int y = (int)(dt/100000000L);
-	dt -= y*100000000L;
+        int m = (int) (dt / 1000000L);
+        dt -= m * 1000000L;
 
-	int m = (int)(dt/1000000L);
-	dt -= m*1000000L;
+        int d = (int) (dt / 10000L);
+        dt -= d * 10000L;
 
-	int d = (int)(dt/10000L);
-	dt -= d*10000L;
+        int h = (int) (dt / 100L);
+        dt -= h * 100L;
 
-	int h = (int)(dt/100L);
-	dt -= h*100L;
+        int min = (int) dt;
 
-	int min = (int)dt;
+        gc.set(GregorianCalendar.DATE, d);
+        gc.set(GregorianCalendar.MONTH, m - 1);
+        gc.set(GregorianCalendar.YEAR, y);
 
-	gc.set(GregorianCalendar.DATE, d);
-	gc.set(GregorianCalendar.MONTH, m-1);
-	gc.set(GregorianCalendar.YEAR, y);
+        gc.set(GregorianCalendar.HOUR_OF_DAY, h);
+        gc.set(GregorianCalendar.MINUTE, min);
 
-	gc.set(GregorianCalendar.HOUR_OF_DAY, h);
-	gc.set(GregorianCalendar.MINUTE, min);
+        /*
+         dt_obj.setHours(h);
+         dt_obj.setMinutes(min);
 
-/*
-	dt_obj.setHours(h);
-	dt_obj.setMinutes(min);
+         dt_obj.setDate(d);
+         dt_obj.setMonth(m);
+         dt_obj.setYear(y);
 
-	dt_obj.setDate(d);
-	dt_obj.setMonth(m);
-	dt_obj.setYear(y);
+         return dt_obj;
+         */
 
-	return dt_obj;
-	*/
-
-	return gc.getTime();
+        return gc.getTime();
 
     }
 
+    public long getDateTimeFromDateObject(Date dt) {
 
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(dt);
 
-    public long getDateTimeFromDateObject(Date dt)
-    {
+        String dx = "";
 
-	GregorianCalendar gc = new GregorianCalendar();
-	gc.setTime(dt);
+        dx += "" + gc.get(GregorianCalendar.YEAR);
+        dx += "" + getLeadingZero(gc.get(GregorianCalendar.MONTH + 1), 2);
+        dx += "" + getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2);
+        dx += "" + getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2);
+        dx += "" + getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
 
-	String dx = "";
-
-	dx += "" + gc.get(GregorianCalendar.YEAR);
-	dx += "" + getLeadingZero(gc.get(GregorianCalendar.MONTH+1), 2);
-	dx += "" + getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2);
-	dx += "" + getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2);
-	dx += "" + getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
-
-	return Long.parseLong(dx);
+        return Long.parseLong(dx);
 
     }
 
@@ -1000,254 +939,202 @@ public class DataAccess
         return getDateString(date)+" " + getTimeString(time);
     }
 
+    public String getLeadingZero(int number, int places) {
+        String nn = "" + number;
 
-    public String getLeadingZero(int number, int places)
-    {
-        String nn = ""+number;
-
-        while (nn.length()<places)
-        {
-            nn = "0"+nn;
+        while (nn.length() < places) {
+            nn = "0" + nn;
         }
 
         return nn;
     }
 
-    public String getLeadingZero(String number, int places)
-    {
-	number = number.trim();
+    public String getLeadingZero(String number, int places) {
+        number = number.trim();
 
-	while (number.length()<places)
-	{
-	    number = "0"+number;
-	}
+        while (number.length() < places) {
+            number = "0" + number;
+        }
 
-	return number;
+        return number;
     }
 
-
-
-    public int getStartYear()
-    {
+    public int getStartYear() {
         // FIX set in Db
         return 1800;
     }
 
+    public float getFloatValue(Object aValue) {
+        float out = 0.0f;
 
+        if (aValue == null)
+            return out;
 
-    public float getFloatValue(Object aValue)
-    {
-	float out = 0.0f;
+        if (aValue instanceof Float) {
+            try {
+                Float f = (Float) aValue;
+                out = f.floatValue();
+            } catch (Exception ex) {
+            }
+        } else if (aValue instanceof String) {
+            String s = (String) aValue;
+            if (s.length() > 0) {
+                try {
+                    out = Float.parseFloat(s);
+                } catch (Exception ex) {
+                }
+            }
+        }
 
-	if (aValue==null)
-	    return out;
-
-	if (aValue instanceof Float)
-	{
-	    try
-	    {
-		Float f = (Float)aValue;
-		out = f.floatValue();
-	    }
-	    catch(Exception ex) {}
-	}
-	else if (aValue instanceof String)
-	{
-	    String s = (String)aValue;
-	    if (s.length()>0)
-	    {
-		try
-		{
-		    out = Float.parseFloat(s);
-		}
-		catch(Exception ex) {}
-	    }
-	}
-
-	return out;
+        return out;
     }
 
+    public int getIntValue(Object aValue) {
+        int out = 0;
 
-    public int getIntValue(Object aValue)
-    {
-	int out = 0;
+        if (aValue == null)
+            return out;
 
-	if (aValue==null)
-	    return out;
+        if (aValue instanceof Integer) {
+            try {
+                Integer i = (Integer) aValue;
+                out = i.intValue();
+            } catch (Exception ex) {
+            }
+        } else if (aValue instanceof String) {
+            String s = (String) aValue;
+            if (s.length() > 0) {
+                try {
+                    out = Integer.parseInt(s);
+                } catch (Exception ex) {
+                }
+            }
+        }
 
-	if (aValue instanceof Integer)
-	{
-	    try
-	    {
-		Integer i = (Integer)aValue;
-		out = i.intValue();
-	    }
-	    catch(Exception ex) {}
-	}
-	else if (aValue instanceof String)
-	{
-	    String s = (String)aValue;
-	    if (s.length()>0)
-	    {
-		try
-		{
-		    out = Integer.parseInt(s);
-		}
-		catch(Exception ex) {}
-	    }
-	}
-
-	return out;
+        return out;
     }
 
+    public long getLongValue(Object aValue) {
+        long out = 0L;
 
-    public long getLongValue(Object aValue)
-    {
-	long out = 0L;
+        if (aValue == null)
+            return out;
 
-	if (aValue==null)
-	    return out;
+        if (aValue instanceof Long) {
+            try {
+                Long i = (Long) aValue;
+                out = i.longValue();
+            } catch (Exception ex) {
+            }
+        } else if (aValue instanceof String) {
+            String s = (String) aValue;
+            if (s.length() > 0) {
+                try {
+                    out = Long.parseLong(s);
+                } catch (Exception ex) {
+                }
+            }
+        }
 
-	if (aValue instanceof Long)
-	{
-	    try
-	    {
-		Long i = (Long)aValue;
-		out = i.longValue();
-	    }
-	    catch(Exception ex) {}
-	}
-	else if (aValue instanceof String)
-	{
-	    String s = (String)aValue;
-	    if (s.length()>0)
-	    {
-		try
-		{
-		    out = Long.parseLong(s);
-		}
-		catch(Exception ex) {}
-	    }
-	}
-
-	return out;
+        return out;
     }
 
-
-
-/*
-    public Date m_date = null;
-    public HbA1cValues m_HbA1c = null;
-    public DailyValues m_dvalues = null;
-*/
-    public synchronized void loadDailySettings(GregorianCalendar day, boolean force)
-    {
-	if ((m_db==null) || (m_db.getLoadStatus()<2))
-	    return;
+    /*
+     public Date m_date = null;
+     public HbA1cValues m_HbA1c = null;
+     public DailyValues m_dvalues = null;
+     */
+    public synchronized void loadDailySettings(GregorianCalendar day,
+            boolean force) {
+        if ((m_db == null) || (m_db.getLoadStatus() < 2))
+            return;
 
         if ((isSameDay(day)) && (!force))
             return;
 
-	System.out.println("Reload daily settings (force:" + force + ")");
+        System.out.println("Reload daily settings (force:" + force + ")");
 
-	m_date = day;
-	m_HbA1c = m_db.getHbA1c(day);
-	m_dvalues = m_db.getDayStats(day);
+        m_date = day;
+        m_HbA1c = m_db.getHbA1c(day);
+        m_dvalues = m_db.getDayStats(day);
 
-        m_dateStart = (GregorianCalendar)day.clone();
+        m_dateStart = (GregorianCalendar) day.clone();
         m_dateStart.add(GregorianCalendar.DAY_OF_MONTH, -6);
         //m_dateEnd = day;
 
         m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
-    public HbA1cValues getHbA1c(GregorianCalendar day)
-    {
+    public HbA1cValues getHbA1c(GregorianCalendar day) {
         //System.out.println("DA::getHbA1c");
-	//if (!isSameDay(day))
-	loadDailySettings(day, false);
+        //if (!isSameDay(day))
+        loadDailySettings(day, false);
 
-	//if (m_HbA1c==null)
-	//    return new HbA1cValues();
-	//else
+        //if (m_HbA1c==null)
+        //    return new HbA1cValues();
+        //else
         return m_HbA1c;
     }
 
-    public DailyValues getDayStats(GregorianCalendar day)
-    {
+    public DailyValues getDayStats(GregorianCalendar day) {
         //System.out.println("DA::getDayStats");
 
         //if (!isSameDay(day))
-	loadDailySettings(day, false);
+        loadDailySettings(day, false);
 
-	return m_dvalues;
+        return m_dvalues;
     }
 
-
-
-    public WeekValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
-    {
+    public WeekValues getDayStatsRange(GregorianCalendar start,
+            GregorianCalendar end) {
         //System.out.println("DA::getDayStatsRange");
 
         // we load dialy if not loaded
-        if (this.m_date==null) 
+        if (this.m_date == null)
             loadDailySettings(end, false);
 
-        if ((isSameDay(start, this.m_dateStart)) &&
-           (isSameDay(m_date, end)))
-        {
+        if ((isSameDay(start, this.m_dateStart)) && (isSameDay(m_date, end))) {
 	    //System.out.println("Same day");
             return m_dRangeValues;
-        }
-        else
+        } else
 	{
 	    //System.out.println("other range");
 	    return m_db.getDayStatsRange(start, end);
 	}
     }
 
-    public boolean isSameDay(GregorianCalendar day)
-    {
+    public boolean isSameDay(GregorianCalendar day) {
         return isSameDay(m_date, day);
     }
 
-
-    public boolean isDatabaseInitialized()
-    {
-        if ((m_db==null) || (m_db.getLoadStatus()<2))
-	    return false;
+    public boolean isDatabaseInitialized() {
+        if ((m_db == null) || (m_db.getLoadStatus() < 2))
+            return false;
         else
             return true;
     }
 
+    public boolean isSameDay(GregorianCalendar gc1, GregorianCalendar gc2) {
 
-    public boolean isSameDay(GregorianCalendar gc1, GregorianCalendar gc2)
-    {
-
-        if ((gc1==null) || (gc2==null))
-        {
+        if ((gc1 == null) || (gc2 == null)) {
             return false;
-        }
-        else
-        {
-           
-            if ((gc1.get(GregorianCalendar.DAY_OF_MONTH)==gc2.get(GregorianCalendar.DAY_OF_MONTH)) &&
-                (gc1.get(GregorianCalendar.MONTH)==gc2.get(GregorianCalendar.MONTH)) &&
-                (gc1.get(GregorianCalendar.YEAR)==gc2.get(GregorianCalendar.YEAR)))
-            {
+        } else {
+
+            if ((gc1.get(GregorianCalendar.DAY_OF_MONTH) == gc2
+                    .get(GregorianCalendar.DAY_OF_MONTH))
+                    && (gc1.get(GregorianCalendar.MONTH) == gc2
+                            .get(GregorianCalendar.MONTH))
+                    && (gc1.get(GregorianCalendar.YEAR) == gc2
+                            .get(GregorianCalendar.YEAR))) {
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
 
         }
     }
 
-
-    public GregorianCalendar getGregorianCalendar(Date date)
-    {
+    public GregorianCalendar getGregorianCalendar(Date date) {
         GregorianCalendar gc = new GregorianCalendar();
         gc.set(GregorianCalendar.DAY_OF_MONTH, date.getDay());
         gc.set(GregorianCalendar.MONTH, date.getMonth());
@@ -1257,14 +1144,9 @@ public class DataAccess
 
     }
 
-
-    public static void notImplemented(String source)
-    {
+    public static void notImplemented(String source) {
         System.out.println("Not Implemented: " + source);
     }
-
-
-
 
     /**
      * For replacing strings.<br>
@@ -1275,29 +1157,26 @@ public class DataAccess
      * 
      * @return Parsed string.
      */
-    public String replaceExpression(String input, String replace, String replacement)
-    {
+    public String replaceExpression(String input, String replace,
+            String replacement) {
 
         int idx;
-        if ((idx=input.indexOf(replace))==-1)
-        {
+        if ((idx = input.indexOf(replace)) == -1) {
             return input;
         }
 
         StringBuffer returning = new StringBuffer();
 
-        while (idx!=-1)
-        {
+        while (idx != -1) {
             returning.append(input.substring(0, idx));
             returning.append(replacement);
-            input = input.substring(idx+replace.length());
+            input = input.substring(idx + replace.length());
             idx = input.indexOf(replace);
         }
         returning.append(input);
-        
+
         return returning.toString();
 
     }
-
 
 }

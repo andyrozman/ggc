@@ -1,3 +1,7 @@
+2006-04-10 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * had to merge in some conflicts in DataAccess.java; hope I made no mistakes.
+      It compiles so I can't have broken too much...
+
 2006-04-15 (v0.2.1.11) Andy Rozman <andyrozman@users.sourceforge.net>
     * fixed Statistics (BG / Insulin) and Hba1c display
     * fixed AbstractGraphView problem
