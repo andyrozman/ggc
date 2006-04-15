@@ -53,6 +53,7 @@ public class GlucoValues extends DailyValues
         Vector dayValues = null;
 
     private EventListenerList listenerList = new EventListenerList();
+    private DataAccess m_da = DataAccess.getInstance();
 
     //private int recordCount = 0;
 
@@ -71,6 +72,12 @@ public class GlucoValues extends DailyValues
 
         WeekValues wv = DataAccess.getInstance().getDayStatsRange(sDate, eDate);
         Hashtable table = wv.getAllValues();
+
+	//System.out.println("GlucoValues: " + table.size());
+
+
+	//System.out.println("Start: " + m_da.getDateTimeStringFromGregorianCalendar(sDate,2));
+	//System.out.println("End: " + m_da.getDateTimeStringFromGregorianCalendar(eDate,2));
 
         for (Enumeration en = table.keys(); en.hasMoreElements(); ) 
         {

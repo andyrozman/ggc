@@ -92,14 +92,14 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
 
         JPanel selectionPanel = new JPanel(new GridLayout(2, 4));
         selectionPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("TO_BE_DRAWN")+":"));
-        selectionPanel.add(chkBG = new JCheckBox(m_ic.getMessage("BG"), true));
-        selectionPanel.add(chkSumBU = new JCheckBox(m_ic.getMessage("SUM_BU"), false));
-        selectionPanel.add(chkSumIns1 = new JCheckBox(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr(), false));
-        selectionPanel.add(chkSumIns = new JCheckBox(m_ic.getMessage("SUM_INSULIN"), false));
-        selectionPanel.add(chkAvgBGDay = new JCheckBox(m_ic.getMessage("AVG_BG_PER_DAY"), false));
-        selectionPanel.add(chkMeals = new JCheckBox(m_ic.getMessage("MEALS"), false));
-        selectionPanel.add(chkSumIns2 = new JCheckBox(m_ic.getMessage("SUM")+" " + m_da.getSettings().getIns2Abbr(), false));
-        selectionPanel.add(chkInsPerBU = new JCheckBox(m_ic.getMessage("INS_SLASH_BU"), false));
+        selectionPanel.add(chkBG = new JCheckBox("  " + m_ic.getMessage("BG"), true));
+        selectionPanel.add(chkSumBU = new JCheckBox("  " + m_ic.getMessage("SUM_BU"), false));
+        selectionPanel.add(chkSumIns1 = new JCheckBox("  " + m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr(), false));
+        selectionPanel.add(chkSumIns = new JCheckBox("  " + m_ic.getMessage("SUM_INSULIN"), false));
+        selectionPanel.add(chkAvgBGDay = new JCheckBox("  " + m_ic.getMessage("AVG_BG_PER_DAY"), false));
+        selectionPanel.add(chkMeals = new JCheckBox("  " + m_ic.getMessage("MEALS"), false));
+        selectionPanel.add(chkSumIns2 = new JCheckBox("  " + m_ic.getMessage("SUM")+" " + m_da.getSettings().getIns2Abbr(), false));
+        selectionPanel.add(chkInsPerBU = new JCheckBox("  " + m_ic.getMessage("INS_SLASH_BU"), false));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Dimension dim = new Dimension(80, 20);
@@ -107,20 +107,8 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
         drawButton.setPreferredSize(dim);
         drawButton.setActionCommand("draw");
         drawButton.addActionListener(this);
-/*
-        drawButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setNewDateRange();
-                cGV.repaint(this.getBounds());
 
-                //this.invalidate();
-                //this.repaint();
-                //redraw();
-            }
-        }); */
-        JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
+	JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
         closeButton.setActionCommand("close");
         closeButton.addActionListener(this);

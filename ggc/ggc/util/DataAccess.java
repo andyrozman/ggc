@@ -775,6 +775,10 @@ public class DataAccess
 
 */
 
+    // ********************************************************
+    // ******          Dates and Times Handling           *****    
+    // ********************************************************
+
 
     public String[] getMonthsArray()
     {
@@ -803,6 +807,7 @@ public class DataAccess
     {
 
         // 20051012
+
 
         int year = date/10000;
         int months = date - (year*10000);
@@ -1191,10 +1196,14 @@ public class DataAccess
         if ((isSameDay(start, this.m_dateStart)) &&
            (isSameDay(m_date, end)))
         {
+	    //System.out.println("Same day");
             return m_dRangeValues;
         }
         else
-            return m_db.getDayStatsRange(start, end);
+	{
+	    //System.out.println("other range");
+	    return m_db.getDayStatsRange(start, end);
+	}
     }
 
     public boolean isSameDay(GregorianCalendar day)

@@ -2,6 +2,8 @@
     * fixed Statistics (BG / Insulin) and Hba1c display
     * fixed AbstractGraphView problem
     * fixed display of daily graphs in day stats 
+    * fixed control panels of daily graph (date selector was displayed very ugly, and 
+      all texts for check and select elements were displayed to close to control
 
 
 2006-04-14 (v0.2.1.10) Andy Rozman <andyrozman@users.sourceforge.net>

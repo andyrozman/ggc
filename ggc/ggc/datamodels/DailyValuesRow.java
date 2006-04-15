@@ -219,7 +219,7 @@ public class DailyValuesRow implements Serializable
 
     public long getDateTime()
     {
-	System.out.println(datetime);
+	//System.out.println(datetime);
 	return datetime;
     }
 

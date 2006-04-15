@@ -96,14 +96,14 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
 
         JPanel selectionPanel = new JPanel(new GridLayout(2, 4));
         selectionPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("TO_BE_DRAWN")+":"));
-        selectionPanel.add(chkBG = new JCheckBox(m_ic.getMessage("BG"), true));
-        selectionPanel.add(chkIns1 = new JCheckBox(m_da.getSettings().getIns1Abbr(), false));
-        selectionPanel.add(chkBU = new JCheckBox(m_ic.getMessage("BU"), false));
-        selectionPanel.add(chkIns2 = new JCheckBox(m_da.getSettings().getIns2Abbr(), false));
+        selectionPanel.add(chkBG = new JCheckBox("  " + m_ic.getMessage("BG"), true));
+        selectionPanel.add(chkIns1 = new JCheckBox("  " + m_da.getSettings().getIns1Abbr(), false));
+        selectionPanel.add(chkBU = new JCheckBox("  " + m_ic.getMessage("BU"), false));
+        selectionPanel.add(chkIns2 = new JCheckBox("  " + m_da.getSettings().getIns2Abbr(), false));
 
         JPanel optionsPanel = new JPanel();
         optionsPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("OPTIONS_")+":"));
-        optionsPanel.add(chkConnect = new JCheckBox(m_ic.getMessage("CONNECT_VALUES_FOR_ONE_DAY"), false));
+        optionsPanel.add(chkConnect = new JCheckBox("  " + m_ic.getMessage("CONNECT_VALUES_FOR_ONE_DAY"), false));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Dimension dim = new Dimension(80, 20);
@@ -221,7 +221,8 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
 	if (action.equals("draw")) 
 	{
 	    setNewDateRange();
-	    sGV.repaint(this.getBounds());
+	    //sGV.repaint(this.getBounds());
+	    sGV.repaint();
 	}
 	else if (action.equals("close")) 
 	{

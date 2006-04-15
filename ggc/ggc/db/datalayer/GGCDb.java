@@ -742,6 +742,8 @@ public class GGCDb
 	    String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
                 //sdf.format(end.getTime());
 
+	    System.out.println("getDatStatsRange: "  + sDay + " - " + eDay);
+
 	    Query q = getSession().createQuery("SELECT dv from " + 
 					       "ggc.db.hibernate.DayValueH as dv " +
 					       "WHERE dv.dt_info >=  " + 
@@ -756,6 +758,7 @@ public class GGCDb
 
 		DailyValuesRow dVR = new DailyValuesRow(dv);
                 wv.addDayValueRow(dVR);
+
 		//dV.setNewRow(dVR);
 	    }
 

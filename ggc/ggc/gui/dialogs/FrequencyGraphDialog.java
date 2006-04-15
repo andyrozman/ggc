@@ -44,7 +44,7 @@ import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
 
-public class FrequencyGraphDialog extends JDialog implements ActionListener, WindowAdapter
+public class FrequencyGraphDialog extends JDialog implements ActionListener
 {
     private I18nControl m_ic = I18nControl.getInstance();    
     //private DataAccess m_da = DataAccess.getInstance();
@@ -75,6 +75,7 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Win
 
         setVisible(true);
     }
+
 
     private JPanel initControlPanel()
     {
