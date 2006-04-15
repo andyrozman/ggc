@@ -196,12 +196,14 @@ public class DailyValues implements Serializable
 	}
 	else 
 	{
+
 	    int i = 0;
 	    boolean added = false;
 
 	    for ( ; i < size; i++)
 	    {
-		if (time > getDateTimeAt(i) ) 
+
+		if (getDateTimeAt(i) > time) 
 		{
 		    dataRows.add(i, dVR);
 		    added = true;
@@ -381,7 +383,7 @@ public class DailyValues implements Serializable
 
     public Object getValueAt(int row, int column)
     {
-	return ((DailyValuesRow)getRow(row)).getValueAt(column);
+	return getRow(row).getValueAt(column);
     }
 
     public void setValueAt(Object aValue, int row, int column)

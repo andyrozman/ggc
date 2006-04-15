@@ -44,7 +44,7 @@ import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
 
-public class FrequencyGraphDialog extends JDialog implements ActionListener
+public class FrequencyGraphDialog extends JDialog implements ActionListener, WindowAdapter
 {
     private I18nControl m_ic = I18nControl.getInstance();    
     //private DataAccess m_da = DataAccess.getInstance();
@@ -135,7 +135,10 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener
 	if (action.equals("draw")) 
 	{
 	    setNewDateRange();
-	    fGV.repaint(this.getBounds());
+	    fGV.invalidate();
+	    fGV.validate();
+	    fGV.repaint();
+	    //fGV.repaint(this.getBounds());
 	}
 	else if (action.equals("close")) 
 	{

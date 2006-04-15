@@ -419,8 +419,8 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	}
 	else if (command.equals("show_daily_graph"))
 	{
-	    DailyGraphDialog dgd = new DailyGraphDialog(this);
-	    dgd.setDailyValues(this.dayData);
+	    DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
+	    //dgd.setDailyValues(this.dayData);
 	}
         else
             System.out.println("DailyStatsDialog:Unknown Action: " + command);

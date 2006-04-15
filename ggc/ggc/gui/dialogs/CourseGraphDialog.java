@@ -245,7 +245,8 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
         if (action.equals("draw")) 
         {
             setNewDateRange();
-            cGV.repaint(this.getBounds());
+            //cGV.repaint(this.getBounds());
+	    cGV.repaint();
         }
         else if (action.equals("close")) 
         {

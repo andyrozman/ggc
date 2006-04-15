@@ -219,6 +219,7 @@ public class DailyValuesRow implements Serializable
 
     public long getDateTime()
     {
+	System.out.println(datetime);
 	return datetime;
     }
 
@@ -513,7 +514,8 @@ public class DailyValuesRow implements Serializable
 
     public int getDateD()
     {
-	return -1;
+	return Integer.parseInt(m_da.getDateTimeAsDateString(datetime));
+	//return -1;
 /*
 	String dat = "";
 
@@ -528,7 +530,8 @@ public class DailyValuesRow implements Serializable
 
     public int getDateT()
     {
-	return -1;
+	return Integer.parseInt(m_da.getDateTimeAsTimeString(datetime));
+	//return -1;
 	//return datetime.getHours()*100 + datetime.getMinutes();
     }
 

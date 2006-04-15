@@ -1,6 +1,7 @@
 2006-04-15 (v0.2.1.11) Andy Rozman <andyrozman@users.sourceforge.net>
-    * fix Statistics (BG / Insulin) and Hba1c display
-
+    * fixed Statistics (BG / Insulin) and Hba1c display
+    * fixed AbstractGraphView problem
+    * fixed display of daily graphs in day stats 
 
 
 2006-04-14 (v0.2.1.10) Andy Rozman <andyrozman@users.sourceforge.net>

@@ -37,6 +37,8 @@ import java.awt.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 // FIX
 
@@ -44,7 +46,7 @@ public class DailyGraphDialog extends JDialog
 {
     private I18nControl m_ic = I18nControl.getInstance();    
 
-    private static DailyGraphView dGV = new DailyGraphView();
+    private static DailyGraphView dGV = null;
     //private static DailyGraphFrame singleton = null;
 
     public DailyGraphDialog(JDialog dialog)
@@ -52,17 +54,44 @@ public class DailyGraphDialog extends JDialog
         super(dialog, "DailyGraphFrame", true);
         setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
 
+	dGV = new DailyGraphView();
+
 	Rectangle rec = dialog.getBounds();
 	int x = rec.x + (rec.width/2);
 	int y = rec.y + (rec.height/2);
 
 	setBounds(x-200, y-150, 400, 300);
+	addWindowListener(new CloseListener());
 
         //setBounds(300, 300, 300, 300);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        //setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(dGV, BorderLayout.CENTER);
         setVisible(true);
     }
+
+
+    public DailyGraphDialog(JDialog dialog, DailyValues dV)
+    {
+	super(dialog, "DailyGraphFrame", true);
+	setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
+
+	dGV = new DailyGraphView();
+
+	Rectangle rec = dialog.getBounds();
+	int x = rec.x + (rec.width/2);
+	int y = rec.y + (rec.height/2);
+
+	setBounds(x-200, y-150, 400, 300);
+	addWindowListener(new CloseListener());
+
+	dGV.setDailyValues(dV);
+	//setBounds(300, 300, 300, 300);
+	//setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	getContentPane().add(dGV, BorderLayout.CENTER);
+	setVisible(true);
+    }
+
+
 
     public void setDailyValues(DailyValues dV)
     {
@@ -92,6 +121,23 @@ public class DailyGraphDialog extends JDialog
             singleton.repaint();
     }
 */
+
+
+    private void closeDialog()
+    {
+	dGV = null;
+	this.dispose();
+    }
+
+
+    private class CloseListener extends WindowAdapter
+    {
+	public void windowClosing(WindowEvent e)
+	{
+	    closeDialog();
+	}
+    }
+
 
 
     /**

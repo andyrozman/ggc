@@ -75,17 +75,17 @@ public abstract class AbstractGraphView extends JComponent
 
 	switch (BGunit) 
 	{
-        case DataAccess.BG_MMOL:
-            maxBG = 44;
-            minBG = 0;
-            unitLabel = "mmol/l";
-            break;
-        case DataAccess.BG_MGDL:
-        default:
-            maxBG = 450;
-            minBG = 0;
-            unitLabel = "mg/dl";
-            break;
+	    case DataAccess.BG_MMOL:
+		maxBG = 44;
+		minBG = 0;
+		unitLabel = "mmol/l";
+		break;
+	    case DataAccess.BG_MGDL:
+	    default:
+		maxBG = 450;
+		minBG = 0;
+		unitLabel = "mg/dl";
+		break;
         }
         BGDiff = maxBG - minBG;
         
@@ -134,7 +134,7 @@ public abstract class AbstractGraphView extends JComponent
     {
         return (int)(drawableHeight + upperSpace - drawableHeight / 4 * factor);
     }
-
+/*
     protected int DateTimetoCoord(java.util.Date time)
     {
         int timeH = time.getHours();
@@ -142,7 +142,26 @@ public abstract class AbstractGraphView extends JComponent
 
         return (int)(leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
     }
+    */
 
+    protected int DateTimetoCoord(long datetime)
+    {
+	return timeToCoordReal(datetime);
+    }
+
+
+    private int timeToCoordReal(long datetime)
+    {
+	String dt = m_da.getDateTimeAsTimeString(datetime);
+
+	int timeH = Integer.parseInt(dt.substring(0,2));
+	int timeM = Integer.parseInt(dt.substring(0,2));
+
+	return (int)(leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
+    }
+
+
+    /*
     protected int TimetoCoord(java.util.Date time)
     {
         int timeH = time.getHours();
@@ -150,6 +169,14 @@ public abstract class AbstractGraphView extends JComponent
 
         return (int)(leftSpace + timeH * hourWidth + timeM * minuteWidth);
     }
+    */
+
+
+    protected int TimetoCoord(long datetime)
+    {
+	return timeToCoordReal(datetime);
+    }
+
 
     public void setNewRenderingQuality()
     {
