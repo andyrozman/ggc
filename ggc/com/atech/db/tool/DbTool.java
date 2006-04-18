@@ -40,7 +40,6 @@ public class DbTool extends JFrame implements TreeSelectionListener
 
     private DbToolAccess m_da = null;
 
-    private static boolean DEBUG = false;
 
 //    private static boolean playWithLineStyle = false;
 //    private static String lineStyle = "Horizontal";

@@ -51,6 +51,8 @@ import ggc.gui.dialogs.SpreadGraphDialog;
 import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.FrequencyGraphDialog;
 import ggc.gui.dialogs.PropertiesDialog;
+import ggc.gui.dialogs.HbA1cDialog;
+
 
 public class MainFrame extends JFrame 
 {
@@ -90,11 +92,11 @@ public class MainFrame extends JFrame
 
     public InfoPanel informationPanel;
 
-    public static DataBaseHandler dbH;
+    public static DataBaseHandler s_dbH;
 
     private DataAccess m_da = null;
 
-    public static boolean developer_version = false;
+    //public static boolean s_developer_version = false;
 
     //GGCProperties props = GGCProperties.getInstance();
 
@@ -178,7 +180,7 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-        MainFrame.developer_version = developer_version;
+      //  MainFrame.developer_version = developer_version;
 
         JMenu fileMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FILE"));
         JMenu viewMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_VIEW"));
@@ -290,8 +292,8 @@ public class MainFrame extends JFrame
 
         statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
-        dbH = DataBaseHandler.getInstance();
-        dbH.setStatus();
+        s_dbH = DataBaseHandler.getInstance();
+        s_dbH.setStatus();
 
         //Information Portal Setup
         informationPanel = new InfoPanel();
@@ -315,7 +317,7 @@ public class MainFrame extends JFrame
         viewFrequencyGraphAction.setEnabled(opened);
         viewHbA1cAction.setEnabled(opened);
         readMeterAction.setEnabled(opened);
-        dbH.setStatus();
+        s_dbH.setStatus();
     }
 
     private void close() 
@@ -420,15 +422,17 @@ public class MainFrame extends JFrame
             } 
 	    else if (command.equals("view_hba1c")) 
 	    {
-                HbA1cFrame.showMe();
+                new HbA1cDialog(MainFrame.this);
             } 
 	    else if (command.equals("option_pref")) 
 	    {
                 new PropertiesDialog(MainFrame.this);
             } 
-	    else if (command.equals("read_meter")) {
+	    else if (command.equals("read_meter")) 
+	    {
                 new ReadMeterDialog(MainFrame.this);
-            } else if (command.equals("hlp_about")) {
+            } 
+	    else if (command.equals("hlp_about")) {
                 JOptionPane
                         .showMessageDialog(null,
                                 "GNU Gluco Control " + s_version, "About GGC",

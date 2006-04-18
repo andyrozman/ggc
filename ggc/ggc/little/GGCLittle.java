@@ -657,7 +657,7 @@ public class GGCLittle extends JFrame
             } 
             else if (command.equals("view_hba1c")) 
             {
-                HbA1cFrame.showMe();
+                //HbA1cFrame.showMe();
             } 
             else if (command.equals("option_pref")) 
             {

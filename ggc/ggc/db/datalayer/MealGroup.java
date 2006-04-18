@@ -43,8 +43,8 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
 
     public boolean debug = false;
 
-    public static int MEAL_GROUP_MEALS = 1;
-    public static int MEAL_GROUP_NUTRITION = 2;
+    public static final int MEAL_GROUP_MEALS = 1;
+    public static final int MEAL_GROUP_NUTRITION = 2;
 
     public MealGroup()
     {

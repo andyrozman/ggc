@@ -33,7 +33,7 @@ public class DailyValues implements Serializable
                         m_ic.getMessage("COMMENT") };
 
     ArrayList dataRows = new ArrayList();
-    static DataBaseHandler dbH;
+    //static DataBaseHandler dbH;
     //private static DailyValues singleton = null;
     //java.util.Date date;
     long date = 0;
@@ -97,7 +97,7 @@ public class DailyValues implements Serializable
 
     public void saveDay()
     {
-        dbH.saveDayStats(this);
+        //dbH.saveDayStats(this);
     }
 
     public void setNewRow(DailyValuesRow dVR)

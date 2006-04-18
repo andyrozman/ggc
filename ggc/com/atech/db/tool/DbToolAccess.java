@@ -50,11 +50,11 @@ public class DbToolAccess
     String allDbs[] = null;
 
 
-    public static String pathPrefix = "./";
+    public static String s_pathPrefix = "./";
 
     public I18nControl m_i18n = I18nControl.getInstance();
 
-    static private DbToolAccess m_da = null;   // This is handle to unique 
+    private static DbToolAccess s_da = null;   // This is handle to unique 
                                              // singelton instance
 
     //public GGCDb m_db = null;
@@ -121,25 +121,25 @@ public class DbToolAccess
      *  @return Reference to DbToolAccess object
      * 
      */ 
-    static public DbToolAccess getInstance()
+    public static DbToolAccess getInstance()
     {
-        if (m_da == null)
-            m_da = new DbToolAccess();
+        if (s_da == null)
+            s_da = new DbToolAccess();
 
-        return m_da;
+        return s_da;
     }
 
 
 
-    static public DbToolAccess createInstance(Component main)
+    public static DbToolAccess createInstance(Component main)
     {
-        if (m_da == null)
+        if (s_da == null)
         {
-            m_da = new DbToolAccess();
-            m_da.setParent(main);
+            s_da = new DbToolAccess();
+            s_da.setParent(main);
         }
 
-        return m_da;
+        return s_da;
     }
 
 
@@ -509,7 +509,7 @@ public class DbToolAccess
         {
             Properties props = new Properties();
 
-            FileInputStream in = new FileInputStream(pathPrefix + dtai.getApplicationDatabaseConfig());
+            FileInputStream in = new FileInputStream(s_pathPrefix + dtai.getApplicationDatabaseConfig());
             props.load(in);
 
 
@@ -808,9 +808,9 @@ public class DbToolAccess
     // ret_type = 2 (Date)
     // ret_type = 3 (Time)
 
-    public final static int DT_DATETIME = 1;
-    public final static int DT_DATE = 2;
-    public final static int DT_TIME = 3;
+    public static final int DT_DATETIME = 1;
+    public static final int DT_DATE = 2;
+    public static final int DT_TIME = 3;
 
 
 

@@ -12,8 +12,8 @@ import ggc.util.DataAccess;
 public class DbToolTreeRoot 
 {
 
-    public final static int ROOT_SINGLE = 1;
-    public final static int ROOT_MULTIPLE = 2;
+    public static final int ROOT_SINGLE = 1;
+    public static final int ROOT_MULTIPLE = 2;
 
     public int type = ROOT_SINGLE;
 

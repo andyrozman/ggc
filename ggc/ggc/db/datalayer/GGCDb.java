@@ -82,7 +82,7 @@ public class GGCDb
 
     private boolean debug = true;
 
-    private static Log logger = LogFactory.getLog(GGCDb.class); 
+    private static Log s_logger = LogFactory.getLog(GGCDb.class); 
     private Session m_session = null;
     private SessionFactory sessions = null;
     private int m_errorCode = 0;

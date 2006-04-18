@@ -44,8 +44,8 @@ import java.awt.*;
 public class GGC
 {
     //fields
-    private static GGC theApp;
-    private static MainFrame mainWindow;
+    private static GGC s_theApp;
+    private static MainFrame s_mainWindow;
 
     // version information
     // is stored in MainFrame
@@ -66,22 +66,22 @@ public class GGC
         if (args.length>0) 
             dev = true;
 
-        theApp = new GGC();
-        theApp.init(dev);
+        s_theApp = new GGC();
+        s_theApp.init(dev);
     }
 
     public void init(boolean dev)
     {
-        mainWindow = new MainFrame("GGC - GNU Gluco Control", dev);
-        Toolkit theKit = mainWindow.getToolkit();
+        s_mainWindow = new MainFrame("GGC - GNU Gluco Control", dev);
+        Toolkit theKit = s_mainWindow.getToolkit();
         Dimension wndSize = theKit.getScreenSize();
 
 	int x, y; 
 	x = wndSize.width/2 - 400;
 	y = wndSize.height/2 - 300;
 
-	mainWindow.setBounds(x, y, 800, 600);
-        mainWindow.setVisible(true);
+	s_mainWindow.setBounds(x, y, 800, 600);
+        s_mainWindow.setVisible(true);
     }
 
 }

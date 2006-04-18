@@ -48,11 +48,9 @@ public class GlucoCardImport extends SerialMeterImport
     
     Thread gThread;
 
-    static int counter = 0;
-
-    static int h = 0;
-
-    static byte[] readb = new byte[100];
+    private int counter = 0;
+    private int h = 0;
+    private byte[] readb = new byte[100];
 
 
     public static final int CONTROL_NUL = 0x00;
@@ -161,7 +159,8 @@ public class GlucoCardImport extends SerialMeterImport
 
                         for (int z = 0; z < 100; z++)
                             readb[z] = 0;
-                        h = 0;
+
+			h = 0;
                         portOutputStream.write(CONTROL_ACK);
                     }
                     counter++;
