@@ -67,9 +67,9 @@ public class HibernateHandler extends DataBaseHandler
 
     public static DataBaseHandler getInstance()
     {
-        if (singleton == null)
-            singleton = new HibernateHandler();
-        return singleton;
+        if (s_singleton == null)
+            s_singleton = new HibernateHandler();
+        return s_singleton;
     }
 
 

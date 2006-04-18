@@ -49,7 +49,7 @@ public abstract class DataBaseHandler
     //public static boolean connectedToDB = false;
     public boolean connected = false;
 
-    public static DataBaseHandler singleton = null;
+    public static DataBaseHandler s_singleton = null;
     //static GGCProperties props = GGCProperties.getInstance();
     
     protected String dbName;
@@ -65,10 +65,10 @@ public abstract class DataBaseHandler
     public static DataBaseHandler getInstance()
     {
 
-	if (singleton == null) 
+	if (s_singleton == null) 
 	{
 
-	    singleton = HibernateHandler.getInstance();
+	    s_singleton = HibernateHandler.getInstance();
 /*
 	    String s = GGCProperties.getInstance().getDataSource();
 
@@ -84,7 +84,7 @@ public abstract class DataBaseHandler
                 singleton = DummyHandler.getInstance();
 		*/
         }
-        return singleton;
+        return s_singleton;
     }
 
 /*
@@ -95,7 +95,7 @@ public abstract class DataBaseHandler
 */
     public static void killHandler()
     {
-        singleton = null;
+        s_singleton = null;
     }
 
     public boolean isConnected()
@@ -151,7 +151,7 @@ public abstract class DataBaseHandler
 
     public String getStatus()
     {
-	
+	/*
 	String st = "";
 	
 	System.out.println(connected);
@@ -172,12 +172,13 @@ public abstract class DataBaseHandler
 	}
 
 	return dbType + dbName + " [" + st + "]";
-	
+	*/
+	return null;
     }
 
     public void setStatus()
     {
-	StatusBar.getInstance().setDataSourceText(getStatus());
+	//StatusBar.getInstance().setDataSourceText(getStatus());
     }
     
 }
