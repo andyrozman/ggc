@@ -45,9 +45,8 @@ import java.awt.event.WindowEvent;
 public class DailyGraphDialog extends JDialog
 {
     private I18nControl m_ic = I18nControl.getInstance();    
+    private DailyGraphView dGV = null;
 
-    private static DailyGraphView dGV = null;
-    //private static DailyGraphFrame singleton = null;
 
     public DailyGraphDialog(JDialog dialog)
     {

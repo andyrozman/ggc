@@ -25,14 +25,14 @@
  *  Author:   schultd
  */
 
-package ggc.gui.prefPane;
+package ggc.gui.panels.prefs;
 
 import ggc.util.I18nControl;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class prefMainPane extends AbstractPrefOptionsPanel 
+public class PrefGeneralPane extends AbstractPrefOptionsPanel 
 {
     private JTextField fieldUserName;
 
@@ -40,7 +40,7 @@ public class prefMainPane extends AbstractPrefOptionsPanel
 
     private JComboBox langBox;
 
-    public prefMainPane() 
+    public PrefGeneralPane() 
     {
         init();
     }
@@ -48,10 +48,18 @@ public class prefMainPane extends AbstractPrefOptionsPanel
     private void init() 
     {
         JPanel a = new JPanel(new GridLayout(2, 2));
+        langBox = new JComboBox(m_da.getAvailableLanguages());
 
+        langBox.setSelectedIndex(m_da.getSelectedLanguageIndex());
 
-        a.add(new JLabel(m_ic.getMessage("HAHAHA") + ":"));
+        a.add(new JLabel(m_ic.getMessage("YOUR_NAME") + ":"));
+        a.add(fieldUserName = new JTextField(m_da.getSettings().getUserName(), 10));
 
+        a.add(new JLabel(m_ic.getMessage("YOUR_LANGUAGE") + ":"));
+        a.add(langBox);
+
+        fieldUserName.getDocument().addDocumentListener(this);
+        langBox.addItemListener(this);
 
         Box c = Box.createHorizontalBox();
         c.add(a);
@@ -61,5 +69,7 @@ public class prefMainPane extends AbstractPrefOptionsPanel
 
     public void saveProps() 
     {
+	settings.setUserName(fieldUserName.getText());
+	settings.setLanguage(langBox.getSelectedItem().toString());
     }
 }

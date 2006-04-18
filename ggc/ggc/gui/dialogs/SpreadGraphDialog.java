@@ -50,7 +50,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
 
-    private static SpreadGraphView sGV;
+    private SpreadGraphView sGV;
     //private static SpreadGraphFrame singleton = null;
 
     //private GGCProperties props = GGCProperties.getInstance();

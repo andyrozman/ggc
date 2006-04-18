@@ -37,7 +37,7 @@ import javax.swing.text.View;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
 import ggc.db.DataBaseHandler;
-import ggc.gui.infoPanel.InfoPanel;
+import ggc.gui.panels.info.InfoPanel;
 import ggc.nutrition.NutritionTreeDialog;
 import ggc.print.PrintMonthlyReport;
 import ggc.util.DataAccess;
@@ -56,12 +56,12 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public static final String version = "0.2.1.11";
-    public static final String full_version = "v" + version;
-    private static final String version_date = "15th April 2006";
+    public  static String s_version = "0.2.1.11";
+    private String full_version = "v" + s_version;
+    private String version_date = "15th April 2006";
 
     private I18nControl m_ic = null;
-    public static SkinLookAndFeel m_skinlf;
+    public static SkinLookAndFeel s_skinlf;
 
     private static final String skinLFdir = "../lib/skinLFThemes/";
 
@@ -152,8 +152,8 @@ public class MainFrame extends JFrame
             SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir
                     + name));
 
-            m_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
-            UIManager.setLookAndFeel(m_skinlf);
+            s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
+            UIManager.setLookAndFeel(s_skinlf);
 
             JFrame.setDefaultLookAndFeelDecorated(true);
             JDialog.setDefaultLookAndFeelDecorated(true);
@@ -171,7 +171,7 @@ public class MainFrame extends JFrame
         m_da = DataAccess.createInstance(this);
 	m_ic = I18nControl.getInstance();
 
-        statusPanel = StatusBar.getInstance();
+        statusPanel = new StatusBar();
 
         setTitle(title + " (" + full_version + ")");
         setJMenuBar(menuBar);
@@ -283,7 +283,7 @@ public class MainFrame extends JFrame
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
 
-        statusPanel = StatusBar.getInstance();
+        //statusPanel = StatusBar.getInstance();
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
         m_da.startDb(statusPanel);
@@ -431,7 +431,7 @@ public class MainFrame extends JFrame
             } else if (command.equals("hlp_about")) {
                 JOptionPane
                         .showMessageDialog(null,
-                                "GNU Gluco Control " + version, "About GGC",
+                                "GNU Gluco Control " + s_version, "About GGC",
                                 JOptionPane.INFORMATION_MESSAGE);
             } else if (command.equals("hlp_check")) {
                 new VersionChecker().checkForUpdate();

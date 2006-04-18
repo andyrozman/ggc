@@ -24,7 +24,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import ggc.gui.prefPane.*;
+import ggc.gui.panels.prefs.*;
+
 import ggc.util.I18nControl;
 import ggc.util.DataAccess;
 
@@ -174,13 +175,13 @@ public class PropertiesDialog extends JDialog implements ActionListener
 	panels = new ArrayList();
 	panel_id = new Hashtable();
 
-	addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new prefMainPane());
-	addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new prefGeneralPane());
-	addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new prefMedicalDataPane());
-        addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new prefFontsAndColorPane(this));
-	addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new prefRenderingQualityPane());
-	addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new prefMeterConfPane());
-	addPanel(m_ic.getMessage("NUTRITION"), PANEL_NUTRITION, new prefNutritionConfPane());
+	addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new PrefMainPane());
+	addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane());
+	addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane());
+        addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new PrefFontsAndColorPane(this));
+	addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane());
+	addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane());
+	addPanel(m_ic.getMessage("NUTRITION"), PANEL_NUTRITION, new PrefNutritionConfPane());
     }
 
 

@@ -50,13 +50,14 @@ public class StatusBar extends JPanel
     private JLabel lblLed = null;
     private JLabel lblName = null;
 
-    private static StatusBar singleton = null;
+    //private static StatusBar singleton = null;
 
     private ImageIcon[] statusIcons = null;
 
     public StatusBar()
     {
-        statusIcons = new ImageIcon[3];
+
+	statusIcons = new ImageIcon[3];
 
         statusIcons[0] = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
         statusIcons[1] = new ImageIcon(getClass().getResource("/icons/led_yellow.gif"));
@@ -127,6 +128,7 @@ public class StatusBar extends JPanel
 
     }
 
+    /*
     public static StatusBar getInstance()
     {
         if (singleton == null)
@@ -134,6 +136,7 @@ public class StatusBar extends JPanel
 
         return singleton;
     }
+    */
 
     public void setStatusMessage(String msg)
     {
