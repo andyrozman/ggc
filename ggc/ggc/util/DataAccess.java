@@ -357,19 +357,19 @@ public class DataAccess {
     // ********************************************************
 
     public static final int FONT_BIG_BOLD = 0;
-
     public static final int FONT_NORMAL = 1;
-
     public static final int FONT_NORMAL_BOLD = 2;
 
-    public void loadFonts() {
+    public void loadFonts() 
+    {
         fonts = new Font[3];
         fonts[0] = new Font("SansSerif", Font.BOLD, 22);
         fonts[1] = new Font("SansSerif", Font.PLAIN, 12);
         fonts[2] = new Font("SansSerif", Font.BOLD, 12);
     }
 
-    public Font getFont(int font_id) {
+    public Font getFont(int font_id) 
+    {
         return fonts[font_id];
     }
 
@@ -377,17 +377,20 @@ public class DataAccess {
     // ******          Parent handling (for UIs)          *****    
     // ********************************************************
 
-    public void setParent(MainFrame main) {
+    public void setParent(MainFrame main) 
+    {
         m_main = main;
     }
 
-    public MainFrame getParent() {
+
+    public MainFrame getParent() 
+    {
         return m_main;
     }
 
-    //  jfdfhjsdfk
 
-    public I18nControl getI18nInstance() {
+    public I18nControl getI18nInstance() 
+    {
         return m_i18n;
     }
 
@@ -454,300 +457,8 @@ public class DataAccess {
      }
      }
      */
-    // ********************************************************
-    // ******                  Languages                  *****    
-    // ********************************************************
-    /*
-     public void loadLanguageInfo()
-     {
 
-     try
-     {
 
-     Properties props = new Properties();
-
-     FileInputStream in = new FileInputStream(pathPrefix + "/data/lang/PIS_Languages.properties");
-     props.load(in);
-
-     m_lang_info = new LanguageInfo();
-     m_lang_info.loadData(props);
-
-     }
-     catch(Exception ex)
-     {
-     System.out.println("DataAccess::loadLanguageInfo::Exception> " + ex);
-     }
-
-     }
-
-
-     public LanguageInfo getLanguageInfo()
-     {
-     return m_lang_info;
-     }
-
-
-
-     public Object[] getAvailableLanguages()
-     {
-     return m_lang_info.availableLang;
-     }
-
-
-     public int getSelectedLangIndex()
-     {
-     return selected_lang;
-     }
-
-
-     public static String getSelectedLocale()
-     {
-     String locale = "SI";
-
-     try
-     {
-     Properties props = new Properties();
-
-     FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
-     props.load(in);
-
-     int sel_lang = 1;
-
-     if (props.containsKey("SELECTED_LANG"))
-     {
-     sel_lang = Integer.parseInt((String)props.get("SELECTED_LANG"));
-     System.out.println("Sel lang: " + sel_lang);
-     }
-
-
-     //props = new Properties();
-     props.clear();
-
-     in = null;
-     in = new FileInputStream(pathPrefix  + "/data/lang/PIS_Languages.properties");
-     props.load(in);
-
-     if (props.containsKey("LANG_" + sel_lang + "_LOCALE"))
-     {
-     locale = (String)props.get("LANG_" + sel_lang + "_LOCALE");
-     }
-
-     //            System.out.println("Locale: " + locale);
-
-     }
-     catch(Exception ex)
-     {
-     System.out.println("DataAccess::getSelectedLocale::Exception> " + ex);
-     }
-
-     return locale;
-
-     }
-     */
-
-    // ********************************************************
-    // ******            Config File Handling             *****    
-    // ********************************************************
-    /*
-     public void loadConfig()
-     {
-     //Hashtable config_db_values = null;
-     //int selected_db = -1;
-     //String selected_LF_Class = null; // class
-     //String selected_LF_Name = null; // name
-     //String skinLFSelected = null;
-
-     config_db_values = new Hashtable<String,String>();
-
-     try
-     {
-     Properties props = new Properties();
-
-     FileInputStream in = new FileInputStream(pathPrefix  + "/data/PIS_Config.properties");
-     props.load(in);
-
-
-     for(Enumeration en = props.keys(); en.hasMoreElements(); )
-     {
-     String  str = (String)en.nextElement();
-
-     if (str.startsWith("DB")) 
-     {
-     config_db_values.put(str, (String)props.get(str));
-     }
-     else
-     {
-
-     if (str.equals("LF_NAME")) 
-     {
-     selected_LF_Name = (String)props.get(str);
-     }
-     else if (str.equals("LF_CLASS")) 
-     {
-     selected_LF_Class = (String)props.get(str);
-     }
-     else if (str.equals("SKINLF_SELECTED")) 
-     {
-     skinLFSelected = (String)props.get(str);
-     }
-     else if (str.equals("SELECTED_DB")) 
-     {
-     selected_db = Integer.parseInt((String)props.get(str));
-     }
-     else if (str.equals("SELECTED_LANG")) 
-     {
-     selected_lang = Integer.parseInt((String)props.get(str));
-     }
-     else 
-     System.out.println("DataAccess:loadConfig:: Unknown parameter : " + str);
-
-     }
-
-     }
-
-     ArrayList<String> list = new ArrayList<String>();
-
-     int count_db = 0;
-
-     list.add("0 - " + m_i18n.getMessage("INTERNAL_DATABASE"));
-     for (int i=1; i<20; i++) 
-     {
-     if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
-     {
-     count_db++;
-     list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
-     }
-
-     if ((count_db*6)>=config_db_values.size()) 
-     break;
-
-     }
-
-     Iterator it = list.iterator();
-
-     int j=0;
-     allDbs = new String[list.size()];
-
-     while (it.hasNext()) 
-     {
-     String val = (String)it.next();
-     allDbs[j] = val;
-     j++;
-     }
-
-     }
-     catch(Exception ex)
-     {
-     System.out.println("DataAccess::loadConfig::Exception> " + ex);
-     }
-
-     }
-
-
-     public void saveConfig()
-     {
-     
-     try
-     {
-
-     //Properties props = new Properties();
-     BufferedWriter bw = new BufferedWriter(new FileWriter(pathPrefix  + "/data/PIS_Config.properties"));
-
-
-     bw.write("#\n" +
-     "# ZISConfig (Settings for ZIS)\n" +
-     "#\n"+
-     "# Don't edit by hand\n" +
-     "#\n\n"+
-     "#\n# Databases settings\n#\n");
-
-
-     int count_db = 0;
-
-     for (int i=0; i<20; i++) 
-     {
-     if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
-     {
-     String con_name = config_db_values.get("DB"+i+"_CONN_NAME");
-     bw.write("\n#\n# Database #" + i +" - " + con_name + "\n#\n");
-     count_db++;
-     bw.write("DB" + i + "_CONN_NAME=" + con_name +"\n");
-     bw.write("DB" + i + "_CONN_DRIVER_CLASS=" + config_db_values.get("DB"+i+"_CONN_DRIVER_CLASS") +"\n");
-     bw.write("DB" + i + "_CONN_URL=" + config_db_values.get("DB"+i+"_CONN_URL") +"\n");
-     bw.write("DB" + i + "_CONN_USERNAME=" + config_db_values.get("DB"+i+"_CONN_USERNAME") +"\n");
-     bw.write("DB" + i + "_CONN_PASSWORD=" + config_db_values.get("DB"+i+"_CONN_PASSWORD") +"\n");
-     bw.write("DB" + i + "_HIBERNATE_DIALECT=" + config_db_values.get("DB"+i+"_HIBERNATE_DIALECT") +"\n");
-
-     //                    list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
-     }
-
-     if ((count_db*6)>=config_db_values.size()) 
-     break;
-
-     }
-
-     /*
-     for(Enumeration en=config_db_values.keys(); en.hasMoreElements(); )
-     {
-     String key = (String)en.nextElement();
-     bw.write(key + "=" + config_db_values.get(key)+"\n");
-     }
-     */
-    /*
-     bw.write("\n\n#\n# Look and Feel Settings\n#\n\n");
-     bw.write("LF_NAME=" + selected_LF_Name +"\n");
-
-     //props.put("LF_NAME", selected_LF_Name);
-
-     selected_LF_Class = availableLF_full.get(selected_LF_Name);
-
-     bw.write("LF_CLASS=" + selected_LF_Class +"\n");
-
-     //props.put("LF_CLASS", selected_LF_Name);
-     bw.write("SKINLF_SELECTED=" + skinLFSelected +"\n");
-     //props.put("SKINLF_SELECTED", skinLFSelected);
-     bw.write("\n\n#\n# Db Selector\n#\n\n");
-
-     bw.write("SELECTED_DB=" + selected_db +"\n");
-     //props.put("SELECTED_DB", ""+selected_db);
-
-     bw.write("SELECTED_LANG=" + selected_lang +"\n");
-
-
-     //            FileOutputStream out = new FileOutputStream("./ZISOut.properties");
-
-     bw.close();
-     //props.s
-
-     //props.store(out, " Settings for ZIS version 0.2.3 or higher (please DON'T edit this file by hand!!)");
-
-     }
-     catch(Exception ex)
-     {
-     System.out.println("DataAccess::saveConfig::Exception> " + ex);
-     ex.printStackTrace();
-     }
-
-     }
-     
-
-     public String[] getAvailableDbs()
-     {
-     return allDbs;
-     }
-
-
-     public int getSelectedDbIndex()
-     {
-     for (int i=0; i<allDbs.length; i++)
-     {
-     if (allDbs[i].startsWith(this.selected_db + " - "))
-     return i;
-     }
-     return 0;
-     }
-
-     */
 
     // ********************************************************
     // ******          Dates and Times Handling           *****    
@@ -943,8 +654,6 @@ public class DataAccess {
 
 
 
-
-
     public String getDateTimeString(int date, int time)
     {
         return getDateString(date)+" " + getTimeString(time);
@@ -970,29 +679,40 @@ public class DataAccess {
         return number;
     }
 
-    public int getStartYear() {
-        // FIX set in Db
+    public int getStartYear() 
+    {
         return 1800;
     }
 
-    public float getFloatValue(Object aValue) {
+    public float getFloatValue(Object aValue) 
+    {
         float out = 0.0f;
 
         if (aValue == null)
             return out;
 
-        if (aValue instanceof Float) {
-            try {
+        if (aValue instanceof Float) 
+	{
+            try 
+	    {
                 Float f = (Float) aValue;
                 out = f.floatValue();
-            } catch (Exception ex) {
+            } 
+	    catch (Exception ex) 
+	    {
             }
-        } else if (aValue instanceof String) {
+        } 
+	else if (aValue instanceof String) 
+	{
             String s = (String) aValue;
-            if (s.length() > 0) {
-                try {
+            if (s.length() > 0) 
+	    {
+                try 
+		{
                     out = Float.parseFloat(s);
-                } catch (Exception ex) {
+                } 
+		catch (Exception ex) 
+		{
                 }
             }
         }
@@ -1000,24 +720,36 @@ public class DataAccess {
         return out;
     }
 
-    public int getIntValue(Object aValue) {
+
+    public int getIntValue(Object aValue) 
+    {
         int out = 0;
 
         if (aValue == null)
             return out;
 
-        if (aValue instanceof Integer) {
-            try {
+        if (aValue instanceof Integer) 
+	{
+            try 
+	    {
                 Integer i = (Integer) aValue;
                 out = i.intValue();
-            } catch (Exception ex) {
+            } 
+	    catch (Exception ex) 
+	    {
             }
-        } else if (aValue instanceof String) {
+        } 
+	else if (aValue instanceof String) 
+	{
             String s = (String) aValue;
-            if (s.length() > 0) {
-                try {
+            if (s.length() > 0) 
+	    {
+                try 
+		{
                     out = Integer.parseInt(s);
-                } catch (Exception ex) {
+                } 
+		catch (Exception ex) 
+	        {
                 }
             }
         }

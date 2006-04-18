@@ -65,16 +65,12 @@ public class DailyGraphView extends AbstractGraphView
 
     public void redraw()
     {
-	System.out.println("redraw");
 	this.repaint();
     }
 
 
     public void paint(Graphics g) 
     {
-	System.out.println("paint");
-
-
         Graphics2D g2D = (Graphics2D) g;
 
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oAA);
@@ -98,9 +94,6 @@ public class DailyGraphView extends AbstractGraphView
 
     protected void drawValues(Graphics2D g2D) 
     {
-	System.out.println("draw Values");
-
-
         if (dayData == null)
             return;
 
@@ -164,10 +157,6 @@ public class DailyGraphView extends AbstractGraphView
 
     protected void drawFramework(Graphics2D g2D) 
     {
-
-	System.out.println("draw Framework");
-
-
         Dimension dim = getSize();
         int h = dim.height, w = dim.width;
 
@@ -221,9 +210,6 @@ public class DailyGraphView extends AbstractGraphView
         g2D.setPaint(m_da.getColor(this.scheme.getColor_bg_high()));
         g2D.fill(rect1);
         g2D.draw(rect1);
-
-	System.out.println("color high: " + this.scheme.getColor_bg_high());
-
 
         // Low Zone
         rect1 = new Rectangle2D.Float(leftSpace + 1,
