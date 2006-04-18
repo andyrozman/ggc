@@ -325,7 +325,7 @@ public class DataAccess {
      */
     public float getDisplayedBG(float dbValue) 
     {
-        switch (this.m_settings.getBG_unit()) 
+        switch (this.m_BG_unit) 
 	{
 	    case BG_MMOL:
 		// this POS should return a float rounded to 3 decimal places,
