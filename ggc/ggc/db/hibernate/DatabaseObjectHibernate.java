@@ -43,7 +43,7 @@ public interface DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return id in type of String
      */
-    public abstract String DbAdd(Session sess) throws Exception;
+    String DbAdd(Session sess) throws Exception;
 
 
     /**
@@ -53,7 +53,7 @@ public interface DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-    public abstract boolean DbEdit(Session sess) throws Exception;
+    boolean DbEdit(Session sess) throws Exception;
 
 
     /**
@@ -63,7 +63,7 @@ public interface DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-    public abstract boolean DbDelete(Session sess) throws Exception;
+    boolean DbDelete(Session sess) throws Exception;
 
 
     /**
@@ -74,7 +74,7 @@ public interface DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-    public abstract boolean DbHasChildren(Session sess) throws Exception;
+    boolean DbHasChildren(Session sess) throws Exception;
 
 
     /**
@@ -85,7 +85,7 @@ public interface DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-    public abstract boolean DbGet(Session sess) throws Exception;
+    boolean DbGet(Session sess) throws Exception;
 
 
     /**
@@ -93,7 +93,7 @@ public interface DatabaseObjectHibernate
      * 
      * @return name of object (not Hibernate object)
      */
-    public abstract String getObjectName();
+    String getObjectName();
 
 
     /**
@@ -101,7 +101,7 @@ public interface DatabaseObjectHibernate
      * 
      * @return true if object in debug mode
      */
-    public abstract boolean isDebugMode();
+    boolean isDebugMode();
 
 
 
@@ -116,7 +116,7 @@ public interface DatabaseObjectHibernate
      * 
      * @return number of action
      */
-    public abstract int getAction();
+    int getAction();
 
 
 
