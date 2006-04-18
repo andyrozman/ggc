@@ -45,7 +45,7 @@ import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
 import ggc.db.DataBaseHandler;
 import ggc.gui.*;
-import ggc.gui.infoPanel.InfoPanel;
+import ggc.gui.panels.info.InfoPanel;
 import ggc.print.PrintMonthlyReport;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
@@ -60,7 +60,7 @@ public class GGCLittle extends JFrame
 {
     
     private I18nControl m_ic = I18nControl.getInstance();        
-    public static SkinLookAndFeel m_skinlf;
+    public static SkinLookAndFeel s_skinlf;
     public LInfoPanel m_infoPanel = null;
 
     //fields
@@ -76,9 +76,7 @@ public class GGCLittle extends JFrame
 //    private DailyStatsDialog dailyStatsWindow;
     private StatusBar statusPanel;
     private InfoPanel informationPanel;
-    public static DataBaseHandler dbH;
-
-    public static boolean developer_version = false;
+    public static DataBaseHandler s_dbH;
 
     //GGCProperties props = GGCProperties.getInstance();
 
@@ -87,7 +85,7 @@ public class GGCLittle extends JFrame
      */
     static
     {
-	MainFrame.setLookAndFeel("blueMetalthemepack.zip");  // Win (not so bad) ???
+	GGCLittle.setLookAndFeel("blueMetalthemepack.zip");  // Win (not so bad) ???
     }
 
 
@@ -100,8 +98,8 @@ public class GGCLittle extends JFrame
 	
 	    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("../lib/skinLFThemes/"+name));      
     
-	    m_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
-	    UIManager.setLookAndFeel(m_skinlf);
+	    s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
+	    UIManager.setLookAndFeel(s_skinlf);
 
             JFrame.setDefaultLookAndFeelDecorated(true);
             JDialog.setDefaultLookAndFeelDecorated(true);
@@ -212,9 +210,6 @@ public class GGCLittle extends JFrame
         menuBar.add(optionMenu);
         menuBar.add(helpMenu);
         
-        if (this.developer_version)
-            menuBar.add(testMenu);
-
 
         toolBar.setFloatable(false);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
@@ -239,33 +234,33 @@ public class GGCLittle extends JFrame
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
 
-        statusPanel = StatusBar.getInstance();
+        statusPanel = new StatusBar();
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
         //statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
         statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
-	dbH = DataBaseHandler.getInstance();
-	dbH.connectDb();
+	s_dbH = DataBaseHandler.getInstance();
+	s_dbH.connectDb();
 
-	if (!dbH.isConnected())
+	if (!s_dbH.isConnected())
 	{
-	    dbH.connectDb();
+	    s_dbH.connectDb();
 	}
 
-	dbH.setStatus();
+	s_dbH.setStatus();
 
 	//statusPanel.setDataSourceText(props.getDataSource() + "[" + m_ic.getMessage("NO_CONNECTION") + "]");
 
 
         //if (props.getAutoConnect())
-        //    dbH.connectDb();
+        //    s_dbH.connectDb();
 
 	setDbActions();
 
 	/*
-        if (dbH.isConnected()) {
-            if (dbH.isConnectedToDB())
+        if (s_dbH.isConnected()) {
+            if (s_dbH.isConnectedToDB())
                 setActionEnabledStateDBOpened();
             else
                 setActionEnabledStateDBClosed();
@@ -330,10 +325,10 @@ public class GGCLittle extends JFrame
     private void setDbActions()
     {
 
-	setDBActions(dbH.isConnected());
+	setDBActions(s_dbH.isConnected());
 
 /*
-	if (dbH.isConnected())
+	if (s_dbH.isConnected())
 	{
 	    connectAction.setEnabled(false);
 	    disconnectAction.setEnabled(true);
@@ -388,7 +383,7 @@ public class GGCLittle extends JFrame
     {
         //write to prefs to file on close.
         //props.write();
-	dbH.disconnectDb();
+	s_dbH.disconnectDb();
         dispose();
         System.exit(0);
     }
@@ -534,27 +529,27 @@ public class GGCLittle extends JFrame
 	    else if (command.equals("file_connect")) 
 	    {
 
-                //dbH = DataBaseHandler.getInstance();
+                //s_dbH = DataBaseHandler.getInstance();
 
 		
 
-                dbH.connectDb();
+                s_dbH.connectDb();
 
 
-		//System.out.println("Connect" + dbH + "  " + dbH.isConnected());
+		//System.out.println("Connect" + s_dbH + "  " + s_dbH.isConnected());
 
 		setDbActions();
 
-		dbH.setStatus();
+		s_dbH.setStatus();
                 
-		//System.out.println(dbH.isConnected()
+		//System.out.println(s_dbH.isConnected()
 
 /*
 
-		if (dbH.isConnected()) 
+		if (s_dbH.isConnected()) 
 		{
 
-                    if (dbH.isConnectedToDB())
+                    if (s_dbH.isConnectedToDB())
                         setActionEnabledStateDBOpened();
                     else
                         setActionEnabledStateDBClosed();
@@ -568,24 +563,24 @@ public class GGCLittle extends JFrame
             else if (command.equals("file_disconnect")) 
 	    {
 
-		dbH.disconnectDb();
+		s_dbH.disconnectDb();
 		setDbActions();
 
-		dbH.setStatus();
+		s_dbH.setStatus();
 
 		/*
-                if (dbH.isConnected())
+                if (s_dbH.isConnected())
                     setActionEnabledStateConnected();
                 else
                     setActionEnabledStateDisconnected();
                 DataBaseHandler.killHandler();
-                dbH = null; */
+                s_dbH = null; */
                 informationPanel.refreshPanels();
 
             } 
 /*            else if (command.equals("file_new")) {
 
-                if (dbH == null)
+                if (s_dbH == null)
                     return;
 
 		String tmpName; 
@@ -601,8 +596,8 @@ public class GGCLittle extends JFrame
                 
 		if (tmpName != null && !tmpName.equals("")) 
 		{
-                    dbH.createNewDataBase(tmpName);
-                    if (dbH.isConnectedToDB())
+                    s_dbH.createNewDataBase(tmpName);
+                    if (s_dbH.isConnectedToDB())
                         setActionEnabledStateDBOpened();
                     else
                         setActionEnabledStateDBClosed();
@@ -615,11 +610,11 @@ public class GGCLittle extends JFrame
             } 
             else if (command.equals("file_open")) {
 
-                //dbH.setDBName(JOptionPane.showInputDialog("Enter DB Name to open:"));
-                if (dbH == null)
+                //s_dbH.setDBName(JOptionPane.showInputDialog("Enter DB Name to open:"));
+                if (s_dbH == null)
                     return;
-                dbH.openDataBase(true);
-                if (dbH.isConnectedToDB())
+                s_dbH.openDataBase(true);
+                if (s_dbH.isConnectedToDB())
                     setActionEnabledStateDBOpened();
                 else
                     setActionEnabledStateDBClosed();
@@ -628,12 +623,12 @@ public class GGCLittle extends JFrame
             } 
             else if (command.equals("file_close")) {
 
-                if (dbH == null)
+                if (s_dbH == null)
                     return;
-                dbH.disconnectDb();
+                s_dbH.disconnectDb();
 
 		/*
-                if (dbH.isConnectedToDB())
+                if (s_dbH.isConnectedToDB())
                     setActionEnabledStateDBOpened();
                 else
                     setActionEnabledStateDBClosed();
@@ -707,7 +702,7 @@ public class GGCLittle extends JFrame
     {
         public void windowClosing(WindowEvent e)
         {
-	    dbH.disconnectDb();
+	    s_dbH.disconnectDb();
             close();
         }
     }

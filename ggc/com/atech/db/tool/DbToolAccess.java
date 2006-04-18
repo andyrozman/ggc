@@ -23,8 +23,8 @@ import ggc.datamodels.DailyValues;
 import ggc.datamodels.HbA1cValues;
 import ggc.db.datalayer.GGCDb;
 import ggc.db.datalayer.GGCDbLoader;
-import ggc.db.db_tool.DbToolApplicationGGC;
-import ggc.gui.StatusBar;
+//import ggc.db.db_tool.DbToolApplicationGGC;
+//import ggc.gui.StatusBar;
 import ggc.nutrition.GGCTreeRoot;
 import ggc.util.I18nControl;
 

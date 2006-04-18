@@ -34,7 +34,7 @@ import java.awt.Color;
 import java.util.Hashtable;
 
 
-import ggc.db.db_tool.DbToolApplicationGGC;
+import ggc.db.tool.DbToolApplicationGGC;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.SettingsMainH;
 

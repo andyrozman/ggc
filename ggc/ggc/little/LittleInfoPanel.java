@@ -28,10 +28,11 @@
 
 package ggc.little;
 
+//import ggc.gui.panels.info;
 
-import ggc.gui.infoPanel.AbstractInfoPanel;
-import ggc.gui.infoPanel.GeneralInfoPanel;
-import ggc.gui.infoPanel.StatisticInfoPanel;
+import ggc.gui.panels.info.AbstractInfoPanel;
+import ggc.gui.panels.info.GeneralInfoPanel;
+import ggc.gui.panels.info.StatisticInfoPanel;
 
 import java.awt.Color;
 import java.awt.GridLayout;

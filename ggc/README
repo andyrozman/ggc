@@ -2,6 +2,23 @@
 GNU Gluco Control (GGC)
 =======================
 
+This readme file has now four section, which are:
+I.   GGC BASIC INFORMATION
+II.  USER INFORMATION
+III. TRANSLATORS INFORMATION
+IV.  DEVELOPERS INFORMATION
+
+End users, only need to read first section, translator first and second, and 
+developers, all 3 of them.
+
+At this time there is no user release for GGC, so users must install everything 
+with help of development section.
+
+
+
+*******************************
+I.  USER INFORMATION
+*******************************
 
 1. About
 ========
@@ -16,11 +33,41 @@ As before we at very early stage of development. This latest version is little b
 We are in transition to Hibernate and we don't have 100% functionality at this point 
 of time.
 
-This version (0.2.1) is not intended for end users. Version intended for end users will be
-deployed on sourceforge.net, at first point where we have somewhat workable version.
+This version (0.2.1) is not intended for end users. Version intended for end users 
+will be deployed on sourceforge.net, at first point where we have somewhat workable 
+version (planned for end of May 2006).
+
+   
 
 
-3. How to install (CVS Version)
+*******************************
+II.  USER INFORMATION
+*******************************
+
+Not yet done.
+
+
+*******************************
+III.  TRANSLATORS INFORMATION
+*******************************
+
+I18nCheck - This utility helps translators to see if their language file has all 
+    keywords in language files (in development process we add keywords in default
+    language file (english), so translators only need to translate new keywords).
+
+Note: Langauge file must be ASCII file with unicode escape codes. Translator are 
+    not limited with this. They can use any UTF like editor, and type their characters
+    without problems. At end of translation they need to run JDK tool native2ascii,
+    which will change your characters into unicode escape sequences (be carefull, you
+    must save language file in utf).
+
+
+
+*******************************
+IV.  DEVELOPERS INFORMATION
+*******************************
+
+1. How to install (CVS Version)
 ===============================
 
 Install is little tricky. 
@@ -50,23 +97,14 @@ Install is little tricky.
     
 6. Run ggc software: (first edit run.cmd)
     run.cmd
-    
 
-4. Developer notes
-==================
 
-Languages: 
-----------
 
-I18nCheck - This utility helps translators to see if their language file has all 
-    keywords in language files (in development process we add keywords in default
-    language file (english), so translators need to translate new keywords).
 
-Note: Langauge file must be ASCII file with unicode escape codes. Translator are 
-    not limited with this. They can use any UTF like editor, and type their characters
-    without problems. At end of translation they need to run JDK tool native2ascii,
-    which will change your characters into unicode escape sequences (be carefull, you
-    must save language file in utf).
+Not yet done.
+
+
+
 
 
 

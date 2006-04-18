@@ -47,7 +47,7 @@ public class I18nControl
     ResourceBundle res;
 
 
-    static private I18nControl m_i18n = null;   // This is handle to unique 
+    static I18nControl s_i18n = null;   // This is handle to unique 
                                                     // singelton instance
 
     private static final Locale defaultLocale = Locale.ENGLISH;
@@ -101,11 +101,11 @@ public class I18nControl
      *  @return Reference to I18nControl object
      * 
      */ 
-    static public I18nControl getInstance()
+    public static I18nControl getInstance()
     {
-        if (m_i18n == null)
-            m_i18n = new I18nControl();
-        return m_i18n;
+        if (s_i18n == null)
+            s_i18n = new I18nControl();
+        return s_i18n;
     }
 
     //  Method:       deleteInstance
@@ -116,7 +116,7 @@ public class I18nControl
      */ 
     public static void deleteInstance()
     {
-        m_i18n = null;
+        s_i18n = null;
     }
 
 

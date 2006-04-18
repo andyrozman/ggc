@@ -7,28 +7,27 @@ import java.util.Hashtable;
 public interface DbToolApplicationInterface 
 {
 
-    public String getApplicationName();
+    String getApplicationName();
 
-    public String getApplicationDatabaseConfig();
+    String getApplicationDatabaseConfig();
 
-    public void initStaticDbs();
+    void initStaticDbs();
 
-    public void loadConfig();
+    void loadConfig();
 
-    public void saveConfig();
+    void saveConfig();
 
-    public int getFirstAvailableDatabase();
+    int getFirstAvailableDatabase();
 
-    public Hashtable getStaticDatabases();
+    Hashtable getStaticDatabases();
 
-    public Hashtable getCustomDatabases();
+    Hashtable getCustomDatabases();
 
-    public Hashtable getAllDatabases();
+    Hashtable getAllDatabases();
 
-    public DatabaseSettings getDatabase(int index);
+    DatabaseSettings getDatabase(int index);
 
-    public DatabaseSettings getSelectedDatabase();
-
+    DatabaseSettings getSelectedDatabase();
 
 
 }

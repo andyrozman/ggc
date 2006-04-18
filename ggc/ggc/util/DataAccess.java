@@ -29,26 +29,14 @@
 
 package ggc.util;
 
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Color;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Properties;
-
-import javax.swing.ImageIcon;
-import javax.swing.UIManager;
 
 import ggc.data.imports.MeterManager;
 import ggc.datamodels.DailyValues;
@@ -59,8 +47,10 @@ import ggc.db.datalayer.GGCDbLoader;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.nutrition.GGCTreeRoot;
-import ggc.db.db_tool.DbToolApplicationGGC;
-public class DataAccess {
+import ggc.db.tool.DbToolApplicationGGC;
+
+public class DataAccess 
+{
 
     // LF
     //    Hashtable<String,String> availableLF_full = null;
@@ -84,8 +74,8 @@ public class DataAccess {
 
     public I18nControl m_i18n = null;
 
-    //I18nControl.getInstance();
-    static private DataAccess m_da = null;   // This is handle to unique 
+    
+    private static DataAccess s_da = null;   // This is handle to unique 
                                              // singelton instance
 
     public GGCDb m_db = null;
@@ -169,22 +159,22 @@ public class DataAccess {
      *  @return Reference to OmniI18nControl object
      * 
      */
-    static public DataAccess getInstance() 
+    public static DataAccess getInstance() 
     {
-        if (m_da == null)
-            m_da = new DataAccess();
-        return m_da;
+        if (s_da == null)
+            s_da = new DataAccess();
+        return s_da;
     }
 
-    static public DataAccess createInstance(MainFrame main) 
+    public static DataAccess createInstance(MainFrame main) 
     {
-        if (m_da == null) {
+        if (s_da == null) {
             //GGCDb db = new GGCDb();
-            m_da = new DataAccess();
-            m_da.setParent(main);
+            s_da = new DataAccess();
+            s_da.setParent(main);
         }
 
-        return m_da;
+        return s_da;
     }
 
     /*
@@ -531,11 +521,9 @@ public class DataAccess {
     // ret_type = 2 (Date)
     // ret_type = 3 (Time)
 
-    public final static int DT_DATETIME = 1;
-
-    public final static int DT_DATE = 2;
-
-    public final static int DT_TIME = 3;
+    public static final int DT_DATETIME = 1;
+    public static final int DT_DATE = 2;
+    public static final int DT_TIME = 3;
 
     public String getDateTimeString(long dt, int ret_type) {
 

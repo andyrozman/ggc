@@ -31,5 +31,5 @@ package ggc.datamodels.calendar;
 
 public interface CalendarListener
 {
-    public void dateHasChanged(CalendarEvent e);
+    void dateHasChanged(CalendarEvent e);
 }

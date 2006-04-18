@@ -51,9 +51,10 @@ public class VersionChecker {
         vC.checkForUpdate();
     }
 
-    public boolean checkForUpdate() {
+    public boolean checkForUpdate() 
+    {
 
-        String installedVersion = MainFrame.version;
+        String installedVersion = MainFrame.s_version;
         String availableVersion = new String();
         HttpURLConnection conn = null;
 

@@ -64,7 +64,6 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     private DataAccess m_da = null;
 
-    private static boolean DEBUG = false;
 
 //    private static boolean playWithLineStyle = false;
 //    private static String lineStyle = "Horizontal";

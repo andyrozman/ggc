@@ -8,8 +8,6 @@
     <property file="./GGCBuild.properties"/>
 
     <!-- These should *not* be modified on the command line! -->
-    <property name="source.dir" value="${serialbridge.main}/src"/>
-    <property name="neededfiles.dir" value="${serialbridge.main}/src/build"/>
     <property name="build.dir" value="${source.dir}/classes"/>
     
     <!-- Build GGC  -->
@@ -26,6 +24,7 @@
         <echo message="     jar_l = create GGC Little jar"/>
         <echo message="     full = clean, build_ggc, copy, jar, jar_l"/>
         <echo message="     dist = full, and create distribution zip file (contains needed libs, and data files)" />
+        <echo message="     style (_devel, _deploy) = checkstyle against our rules" />
         <echo message=""/>
     </target>
 
@@ -121,6 +120,9 @@
     </target>
 
 
+    <target name="dev" depends="clean, copy, make">    
+    </target>
+
     <target name="full" depends="clean, copy, jar, jar_l">    
     </target>
 
@@ -128,6 +130,29 @@
         <echo message="This option is not available yet." />
     </target>
 
+
+    <target name="style_deploy">    
+        <taskdef resource="checkstyletask.properties" classpath="${library.dir}/devel/checkstyle-all-4.1.jar" />
+
+        <checkstyle config="ggc_deploy.xml">
+            <fileset dir="${source.dir}" includes="**/*.java"/>
+
+            <formatter type="plain"/>
+            <formatter type="xml" toFile="checkstyle_errors.xml"/>
+        </checkstyle>
+
+    </target>
+
+    <target name="style_devel">    
+        <taskdef resource="checkstyletask.properties" classpath="${library.dir}/devel/checkstyle-all-4.1.jar" />
+
+        <checkstyle config="ggc_devel.xml">
+            <fileset dir="${source.dir}" includes="**/*.java"/>
+
+            <formatter type="plain"/>
+            <formatter type="xml" toFile="checkstyle_errors.xml"/>
+        </checkstyle>
+    </target>
 
 
     <target name="hbm2java" description="Generate .java from .hbm files." >
@@ -140,10 +165,6 @@
                 </fileset>
             </hbm2java>
     </target>
-
-
-
-
 
 
 </project>
