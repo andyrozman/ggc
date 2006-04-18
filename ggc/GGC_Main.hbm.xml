@@ -90,7 +90,7 @@
         <property name="dinner_start_time"  type="int" />
         <property name="night_start_time"  type="int" />
 
-        <property name="color_scheme"  type="int" />
+        <property name="color_scheme"  type="string" length="50" />
     </class>
 
     <class name="ggc.db.hibernate.ColorSchemeH" table="ggc_sett_colorscheme">

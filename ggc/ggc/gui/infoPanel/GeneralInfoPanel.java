@@ -78,7 +78,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         lblIns1.setText(m_da.getSettings().getIns1Name() + "  (" + m_da.getSettings().getIns1Abbr() + ")");
         lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
         lblMeter.setText(m_da.getSettings().getMeterTypeString() + "  (" + m_da.getSettings().getMeterPort() + ")");
-        lblUnit.setText(m_da.getSettings().getBGUnitString());
+        lblUnit.setText(m_da.getSettings().getBG_unitString());
     }
 
 /*

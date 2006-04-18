@@ -109,10 +109,8 @@ public class prefMeterConfPane extends AbstractPrefOptionsPanel
 
     public void saveProps()
     {
-	/*
-        props.set("MeterType", comboMeterType.getSelectedItem().toString());
+        settings.setMeterType(comboMeterType.getSelectedIndex());
         if (comboPortId!=null)
-            props.set("MeterPort", comboPortId.getSelectedItem().toString());
-*/
+            settings.setMeterPort(comboPortId.getSelectedItem().toString());
     }
 }

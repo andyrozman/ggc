@@ -31,6 +31,7 @@ package ggc.util;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Color;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -168,13 +169,15 @@ public class DataAccess {
      *  @return Reference to OmniI18nControl object
      * 
      */
-    static public DataAccess getInstance() {
+    static public DataAccess getInstance() 
+    {
         if (m_da == null)
             m_da = new DataAccess();
         return m_da;
     }
 
-    static public DataAccess createInstance(MainFrame main) {
+    static public DataAccess createInstance(MainFrame main) 
+    {
         if (m_da == null) {
             //GGCDb db = new GGCDb();
             m_da = new DataAccess();
@@ -195,18 +198,19 @@ public class DataAccess {
     /**
      *  This method sets handle to DataAccess to null and deletes the instance. <br><br>
      */
-    public void deleteInstance() {
-
+    public void deleteInstance() 
+    {
         m_i18n = null;
-
     }
 
-    public void startDb(StatusBar bar) {
+    public void startDb(StatusBar bar) 
+    {
         GGCDbLoader loader = new GGCDbLoader(this, bar);
         loader.start();
     }
 
-    public GGCDb getDb() {
+    public GGCDb getDb() 
+    {
         return m_db;
     }
 
@@ -216,7 +220,8 @@ public class DataAccess {
     // ******                   Meters                    *****    
     // ********************************************************
 
-    public MeterManager getMeterManager() {
+    public MeterManager getMeterManager() 
+    {
         return this.m_meterManager;
     }
 
@@ -234,6 +239,12 @@ public class DataAccess {
     {
 	this.m_settings.load();
     }
+
+    public Color getColor(int color) 
+    {
+	return new Color(color);
+    }
+
 
 
     // ********************************************************
@@ -291,7 +302,6 @@ public class DataAccess {
     // ********************************************************
 
     public static final int BG_MGDL = 1;
-
     public static final int BG_MMOL = 2;
 
     public int getBGMeasurmentType()
@@ -305,25 +315,26 @@ public class DataAccess {
     }
 
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
-
     private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
 
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>, either
      * return the mg/dl or the mmol/l value of the database's value. Default is mg/dl.
-     * @param dbValue - The database's value
+     * @param dbValue - The database's value (in float)
      * @return the BG in either mg/dl or mmol/l
      */
-    public float getDisplayedBG(int dbValue) {
-        switch (this.m_BG_unit) {
-        case BG_MMOL:
-            // this POS should return a float rounded to 3 decimal places,
-            // if I understand the docu correctly
-            return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR,
-                    new MathContext(3, RoundingMode.HALF_UP)).floatValue());
-        case BG_MGDL:
-        default:
-            return dbValue;
+    public float getDisplayedBG(float dbValue) 
+    {
+        switch (this.m_settings.getBG_unit()) 
+	{
+	    case BG_MMOL:
+		// this POS should return a float rounded to 3 decimal places,
+		// if I understand the docu correctly
+		return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR,
+			new MathContext(3, RoundingMode.HALF_UP)).floatValue());
+	    case BG_MGDL:
+	    default:
+		return dbValue;
         }
     }
 

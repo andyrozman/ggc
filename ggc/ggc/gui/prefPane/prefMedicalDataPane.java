@@ -112,7 +112,7 @@ public class prefMedicalDataPane extends AbstractPrefOptionsPanel
 	d.setBorder(new TitledBorder(m_ic.getMessage("BLOOD_GLUCOSE_UNIT_SETTING")));
 	d.add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
 	d.add(cbUnit = new JComboBox(m_da.bg_units));
-	cbUnit.setSelectedIndex(settings.getBGUnit() -1);
+	cbUnit.setSelectedIndex(settings.getBG_unit() -1);
 
 	Box i = Box.createVerticalBox();
 	i.add(a);

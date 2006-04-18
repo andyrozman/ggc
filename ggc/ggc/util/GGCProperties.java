@@ -64,7 +64,10 @@ public class GGCProperties //extends GGCPropertiesHelper
 		       3.0f, 20.0f, 4.4f, 14.0f,
 		       2, "blueMetalthemepack.zip",
                        0, 0, 0, 0, 0, 0, 0, 
-		       "", 1100, 1800, 2100, 1);
+		       "", 1100, 1800, 2100, "Default Scheme");
+
+	//public SettingsMainH(String name, String ins1_name, String ins1_abbr, String ins2_name, String ins2_abbr, int meter_type, String meter_port, int bg_unit, float bg1_low, float bg1_high, float bg1_target_low, float bg1_target_high, float bg2_low, float bg2_high, float bg2_target_low, float bg2_target_high, int laf_type, String laf_name, int render_rendering, int render_dithering, int render_interpolation, int render_antialiasing, int render_textantialiasing, int render_colorrendering, int render_fractionalmetrics, String pdf_display_software_path, int lunch_start_time, int dinner_start_time, int night_start_time, String color_scheme) {
+
 
         this.m_colors = new ColorSchemeH(
         "Default Scheme", 0, -65485, -6750208, -163654, -81409, -1184275, -16724788, 
@@ -84,9 +87,16 @@ public class GGCProperties //extends GGCPropertiesHelper
         return this.m_settings;
     }
 
-    public void setColorSchemeObject(int id)
+    public void setColorSchemeObject(String name)
     {
-        this.m_colors = (ColorSchemeH)this.m_color_schemes.get("" + id);
+	ColorSchemeH cs = (ColorSchemeH)this.m_color_schemes.get("" + name);
+
+	if (!cs.equals(m_colors)) 
+	{
+	    this.m_colors = (ColorSchemeH)this.m_color_schemes.get("" + name);
+	    this.m_settings.setColor_scheme(name);
+	    this.changed_db = true;
+	}
     }
 
     public void setColorSchemes(Hashtable table, boolean isnew)
@@ -184,6 +194,8 @@ public class GGCProperties //extends GGCPropertiesHelper
     }
 
 
+    // BG settings
+
     public int getBG_unit()
     {
 	return this.m_settings.getBg_unit();
@@ -200,7 +212,21 @@ public class GGCProperties //extends GGCPropertiesHelper
     }
 
 
-    // BG settings
+    public String getBG_unitString()
+    {
+	int unit = getBG_unit();
+
+	if (unit==1) 
+	    return "mg/dl";
+	else if (unit==2) 
+	    return "mmol/l";
+	else
+	    return m_da.getI18nInstance().getMessage("UNKNOWN");
+
+    }
+
+
+
 
     public float getBG_High() 
     {
@@ -359,29 +385,9 @@ public class GGCProperties //extends GGCPropertiesHelper
     }
 
 
-    /*
-    public String getHighBGAsString() 
-    {
-	return "" + getHighBG();
 
 
-    public String getLowBGAsString() 
-    {
-	return "" + this.getLowBG();
-    }
 
-
-    public String getTargetHighBGAsString() 
-    {
-	return "" + this.getTargetHighBG();
-    }
-
-
-    public String getTargetLowBGAsString() 
-    {
-	return "" + this.getTargetLowBG();
-    }
-   */
 
 
     //
@@ -424,6 +430,21 @@ public class GGCProperties //extends GGCPropertiesHelper
 
 
     // colors
+
+    public ColorSchemeH getSelectedColorScheme() 
+    {
+	return this.m_colors;
+    }
+
+    /*
+    public ColorSchemeH setSelectedColorScheme() 
+    {
+	return this.m_colors;
+    }
+    */
+
+
+
 
     public Color getColorTargetBG() 
     {
@@ -481,6 +502,7 @@ public class GGCProperties //extends GGCPropertiesHelper
 	return getColor(this.m_colors.getColor_ins_perbu());
     }
 
+
     // meter
 
     public int getMeterType() 
@@ -488,6 +510,14 @@ public class GGCProperties //extends GGCPropertiesHelper
 	return this.m_settings.getMeter_type();
     }
 
+    public void setMeterType(int value) 
+    {
+	if (this.m_settings.getMeter_type()!= value) 
+	{
+	    this.m_settings.setMeter_type(value);
+	    changed_db = true;
+	}
+    }
 
     public String getMeterTypeString() 
     {
@@ -495,31 +525,29 @@ public class GGCProperties //extends GGCPropertiesHelper
     }
 
 
-
-
-    public int getBGUnit()
-    {
-        return this.m_settings.getBg_unit();
-    }
-
-    public String getBGUnitString()
-    {
-        int unit = getBGUnit();
-
-        if (unit==1) 
-            return "mg/dl";
-        else if (unit==2) 
-            return "mmol/l";
-        else
-            return m_da.getI18nInstance().getMessage("UNKNOWN");
-
-    }
-
-
     public String getMeterPort() 
     {
 	return this.m_settings.getMeter_port();
     }
+
+
+    public void setMeterPort(String value) 
+    {
+	if (!this.m_settings.getMeter_port().equals(value)) 
+	{
+	    this.m_settings.setMeter_port(value);
+	    changed_db = true;
+	}
+    }
+
+
+
+
+    // 
+
+
+
+
 
     public String getLanguage() 
     {
@@ -558,7 +586,7 @@ public class GGCProperties //extends GGCPropertiesHelper
     public void load()
     {
 	m_da.getDb().loadConfigData();
-	m_da.setBGMeasurmentType(this.getBGUnit());
+	m_da.setBGMeasurmentType(this.getBG_unit());
     }
 
     public void reload()
@@ -589,7 +617,7 @@ public class GGCProperties //extends GGCPropertiesHelper
 	    this.m_config.saveConfig();
 	}
 
-	m_da.setBGMeasurmentType(this.getBGUnit());
+	m_da.setBGMeasurmentType(this.getBG_unit());
 
     }
 

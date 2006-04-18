@@ -99,6 +99,8 @@ public class DailyGraphDialog extends JDialog
         this.repaint();
         //redraw();
     }
+
+
 /*
     public static void showMe()
     {

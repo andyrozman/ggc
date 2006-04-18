@@ -1,3 +1,6 @@
+2006-04-18 (v0.2.1.12) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Color schemes changed, we reference colorscheme by name and notr by id.
+
 2006-04-10 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * had to merge in some conflicts in DataAccess.java; hope I made no mistakes.
       It compiles so I can't have broken too much...

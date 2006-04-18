@@ -33,20 +33,48 @@ import java.awt.geom.Rectangle2D;
 import java.util.GregorianCalendar;
 
 import ggc.datamodels.DailyValues;
+import ggc.db.hibernate.ColorSchemeH;
 import ggc.util.DataAccess;
 
 public class DailyGraphView extends AbstractGraphView 
 {
-    DailyValues dayData;
+    private DailyValues dayData;
+    private ColorSchemeH scheme;
 
-    public DailyGraphView() {
+    public DailyGraphView() 
+    {
         super();
         dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
-        // DailyValues.getInstance();
+	this.scheme = m_da.getSettings().getSelectedColorScheme();
     }
+
+    public DailyGraphView(ColorSchemeH scheme, DailyValues dv) 
+    {
+	super();
+	dayData = dv;
+	this.scheme = scheme; 
+    }
+
+
+    public void setScheme(ColorSchemeH sh)
+    {
+	this.scheme = sh; 
+	this.redraw();
+    }
+
+
+    public void redraw()
+    {
+	System.out.println("redraw");
+	this.repaint();
+    }
+
 
     public void paint(Graphics g) 
     {
+	System.out.println("paint");
+
+
         Graphics2D g2D = (Graphics2D) g;
 
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oAA);
@@ -63,12 +91,16 @@ public class DailyGraphView extends AbstractGraphView
         drawValues(g2D);
     }
 
-    public void setDailyValues(DailyValues dV) {
+    public void setDailyValues(DailyValues dV) 
+    {
         dayData = dV;
     }
 
     protected void drawValues(Graphics2D g2D) 
     {
+	System.out.println("draw Values");
+
+
         if (dayData == null)
             return;
 
@@ -95,7 +127,7 @@ public class DailyGraphView extends AbstractGraphView
             if (tmpIns1 != 0) 
 	    {
                 int Y = InstoCoord(tmpIns1);
-                g2D.setPaint(m_da.getSettings().getColorIns1());
+                g2D.setPaint(m_da.getColor(this.scheme.getColor_ins1()));
                 g2D.fillRect(X - 4, Y, 3, (int) drawableHeight - Y + upperSpace);
             }
 
@@ -104,7 +136,7 @@ public class DailyGraphView extends AbstractGraphView
             if (tmpIns2 != 0) 
 	    {
                 int Y = InstoCoord(tmpIns2);
-                g2D.setPaint(m_da.getSettings().getColorIns2());
+                g2D.setPaint(m_da.getColor(this.scheme.getColor_ins2()));
                 g2D.fillRect(X - 1, Y, 3, (int) drawableHeight - Y + upperSpace);
             }
 
@@ -113,25 +145,29 @@ public class DailyGraphView extends AbstractGraphView
             if (tmpBU != 0) 
 	    {
                 int Y = BUtoCoord(tmpBU);
-                g2D.setPaint(m_da.getSettings().getColorBU());
+                g2D.setPaint(m_da.getColor(this.scheme.getColor_ch()));
                 g2D.fillRect(X + 1, Y, 3, (int) drawableHeight - Y + upperSpace);
             }
 
         }
 
         // draw avg BG
-        g2D.setPaint(m_da.getSettings().getColorAvgBG());
+        g2D.setPaint(m_da.getColor(this.scheme.getColor_bg_avg()));
         int tmp = BGtoCoord(dayData.getAvgBG());
         g2D.drawLine(leftSpace, tmp, viewWidth - rightSpace, tmp);
 
         // paint BG
-        g2D.setPaint(m_da.getSettings().getColorBG());
+        g2D.setPaint(m_da.getColor(this.scheme.getColor_bg()));
         g2D.draw(polyline);
     }
 
 
     protected void drawFramework(Graphics2D g2D) 
     {
+
+	System.out.println("draw Framework");
+
+
         Dimension dim = getSize();
         int h = dim.height, w = dim.width;
 
@@ -149,7 +185,7 @@ public class DailyGraphView extends AbstractGraphView
 
         // add unit label to line
         g2D.drawString(unitLabel, 5, upperSpace - 10);   
-	System.out.println(unitLabel);
+	//System.out.println(unitLabel);
         for (int i = 0; i <= counter; i++) 
 	{
 	    //System.out.println((maxBG - BGDiff / counter * i));
@@ -173,22 +209,27 @@ public class DailyGraphView extends AbstractGraphView
         Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1,
                 BGtoCoord(maxGoodBG), drawableWidth, BGtoCoord(minGoodBG)
                         - BGtoCoord(maxGoodBG));
-        g2D.setPaint(m_da.getSettings().getColorTargetBG());
+        g2D.setPaint(m_da.getColor(this.scheme.getColor_bg_target()));
         g2D.fill(rect1);
         g2D.draw(rect1);
+
+
 
         // High Zone
         rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG),
                 drawableWidth, BGtoCoord(m_da.getSettings().getBG_High()) - BGtoCoord(maxBG));
-        g2D.setPaint(m_da.getSettings().getColorHighBG());
+        g2D.setPaint(m_da.getColor(this.scheme.getColor_bg_high()));
         g2D.fill(rect1);
         g2D.draw(rect1);
+
+	System.out.println("color high: " + this.scheme.getColor_bg_high());
+
 
         // Low Zone
         rect1 = new Rectangle2D.Float(leftSpace + 1,
                 BGtoCoord(m_da.getSettings().getBG_Low()), drawableWidth, BGtoCoord(0)
                         - BGtoCoord(m_da.getSettings().getBG_Low()) - 1);
-        g2D.setPaint(m_da.getSettings().getColorLowBG());
+        g2D.setPaint(m_da.getColor(this.scheme.getColor_bg_low()));
         g2D.fill(rect1);
         g2D.draw(rect1);
 

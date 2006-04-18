@@ -177,7 +177,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
 	addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new prefMainPane());
 	addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new prefGeneralPane());
 	addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new prefMedicalDataPane());
-        addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new prefFontsAndColorPane());
+        addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new prefFontsAndColorPane(this));
 	addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new prefRenderingQualityPane());
 	addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new prefMeterConfPane());
 	addPanel(m_ic.getMessage("NUTRITION"), PANEL_NUTRITION, new prefNutritionConfPane());

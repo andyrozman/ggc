@@ -5,18 +5,56 @@ TO-DO LIST
 URGENT:
 -------
 
+Level 1 (High Priority): 
+----------------------------
 * Printing: 
         o  Data gather
         o  Simple print sheet
         o  Detailed print sheet
+* Configuration:
+	o  colors
+        o  L&F       
+
+
+Level 2 (Medium 1 Priority):
+----------------------------
+
+* Nutrition: 
+        o  Config
+        o  View nutrition data in tree
+* Properties: 
+        o  no error if no configuration present
+        o  Default database 
+        o  Colors as separate table
+* Look and feel:
+        o  Loading of selected L&F
+
+
+Level 3 (Medium 2 Priority):
+----------------------------
+
+Level 4 (Medium 3 Priority):
+----------------------------
+
+* Hibernate for Database handling
+	o  Nutrition db
+	o  Meals db
+	o  Apointments db
+* Entering daily data: 
+        o  Time displayed as selectable entry
+        o  Add CH entry through meals
+        o  Add daily entry must be changed (GUI is very...)
+	o  option in which type we enter
+
+
+Level 5 (Low Priority):
+----------------------------
+
 * Appointments: 
         o  Create GUI
         o  Database entries
         o  Add/Edit/Delete
         o  View
-* Nutrition: 
-        o  Config
-        o  View nutrition data in tree
 * Meals: 
         o  Config
         o  GUI Tree
@@ -27,34 +65,9 @@ URGENT:
         o  Daily graph
         o  Show day
         o  GUI
-* Hibernate for Database handling
-	o  Nutrition db
-	o  Meals db
-	o  Apointments db
 * Adding support for mmol/l (now we have only mG/DL):
         o  graphs
         o  database 
-* Entering daily data: 
-        o  Time displayed as selectable entry
-        o  Add CH entry through meals
-        o  Add daily entry must be changed (GUI is very...)
-        o  Message when no row selected
-	o  option in which type we enter
-* Properties: 
-        o  put them into database
-        o  move some of them from config to code (classes for meters)
-        o  no error if no configuration present
-        o  Default database 
-        o  Colors as separate table
-* Configuration:
-        o  low/high BGs
-	o  type of unit
-	o  colors
-	o  load/save config
-	
-* Look and feel:
-        o  Loading of selected L&F
-        o  Configuration of L&F       
 
 
 EXTERNAL APPLICATIONS:
@@ -115,10 +128,17 @@ DONE
         o  BG Values must be checked so that comma is also supported and 
            no exception is thrown
         o  Edit
+        o  Message when no row selected
 * Bug Fixing:
         o  decimal check, use both , and .
         o  edit value
         o  save value
+* Properties: 
+        o  put them into database
+        o  move some of them from config to code (classes for meters)
+* Configuration:
+        o  low/high BGs
+
 
 I18N TOOL
 * Check langauge files        

@@ -264,7 +264,7 @@ public class GGCDb
 
     // this method is used for direct use with hibernate objects (unlike use with our 
     // datalayer classes)
-    public boolean addHibernate(Object obj)
+    public long addHibernate(Object obj)
     {
 
         if (debug)
@@ -275,16 +275,16 @@ public class GGCDb
             Session sess = getSession();
             Transaction tx = sess.beginTransaction();
 
-            sess.save(obj);
+            Long val = (Long)sess.save(obj);
             tx.commit();
 
-            return true;
+            return val.longValue();
         }
         catch(Exception ex)
         {
             System.out.println("Exception on addHibernate: " + ex);
             ex.printStackTrace();
-            return false;
+            return -1;
         }
 
     }
@@ -569,7 +569,7 @@ public class GGCDb
         while (it.hasNext())
         {
             ColorSchemeH eh = (ColorSchemeH)it.next();
-            table.put("" +  eh.getId(), eh);
+            table.put(eh.getName(), eh);
         }
 
         m_da.getSettings().setColorSchemes(table, false);

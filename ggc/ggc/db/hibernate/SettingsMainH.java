@@ -99,10 +99,10 @@ public class SettingsMainH implements Serializable {
     private int night_start_time;
 
     /** nullable persistent field */
-    private int color_scheme;
+    private String color_scheme;
 
     /** full constructor */
-    public SettingsMainH(String name, String ins1_name, String ins1_abbr, String ins2_name, String ins2_abbr, int meter_type, String meter_port, int bg_unit, float bg1_low, float bg1_high, float bg1_target_low, float bg1_target_high, float bg2_low, float bg2_high, float bg2_target_low, float bg2_target_high, int laf_type, String laf_name, int render_rendering, int render_dithering, int render_interpolation, int render_antialiasing, int render_textantialiasing, int render_colorrendering, int render_fractionalmetrics, String pdf_display_software_path, int lunch_start_time, int dinner_start_time, int night_start_time, int color_scheme) {
+    public SettingsMainH(String name, String ins1_name, String ins1_abbr, String ins2_name, String ins2_abbr, int meter_type, String meter_port, int bg_unit, float bg1_low, float bg1_high, float bg1_target_low, float bg1_target_high, float bg2_low, float bg2_high, float bg2_target_low, float bg2_target_high, int laf_type, String laf_name, int render_rendering, int render_dithering, int render_interpolation, int render_antialiasing, int render_textantialiasing, int render_colorrendering, int render_fractionalmetrics, String pdf_display_software_path, int lunch_start_time, int dinner_start_time, int night_start_time, String color_scheme) {
         this.name = name;
         this.ins1_name = ins1_name;
         this.ins1_abbr = ins1_abbr;
@@ -379,11 +379,11 @@ public class SettingsMainH implements Serializable {
         this.night_start_time = night_start_time;
     }
 
-    public int getColor_scheme() {
+    public String getColor_scheme() {
         return this.color_scheme;
     }
 
-    public void setColor_scheme(int color_scheme) {
+    public void setColor_scheme(String color_scheme) {
         this.color_scheme = color_scheme;
     }
 
