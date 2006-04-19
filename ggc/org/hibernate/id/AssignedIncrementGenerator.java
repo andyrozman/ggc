@@ -141,7 +141,7 @@ public class AssignedIncrementGenerator implements IdentifierGenerator, Configur
                     buf.append("select ").append(column).append(" from ");
                 }
 
-                buf.append( Table.qualify( catalog, schema, tables[i] ) );
+                buf.append(Table.qualify(catalog, schema, tables[i]) );
 
                 if ( i<tables.length-1) 
                     buf.append(" union ");

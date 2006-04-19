@@ -41,16 +41,20 @@ public class BGInputVerifier extends InputVerifier
         if (border == null)
             border = input.getBorder();
 
-        try {
+        try 
+        {
             String bgStr = ((JTextField)input).getText();
 
-            if (!nonNull) {
+            if (!nonNull) 
+            {
                 if (bgStr == null || bgStr.equals(""))
                     return true;
             }
 
             float bg = Float.parseFloat(bgStr);
-        } catch (NumberFormatException e) {
+        } 
+        catch (NumberFormatException e) 
+        {
             input.setBorder(new LineBorder(Color.red));
             return false;
         }

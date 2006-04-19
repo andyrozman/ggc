@@ -78,9 +78,13 @@ public class GGCDbLoader extends Thread
 
         run_once = true;
 
-//        System.out.println("GGCDbLoader: Create");
-
-        try { Thread.sleep(2000); } catch(Exception ex) { }
+        try 
+        { 
+            Thread.sleep(2000); 
+        } 
+        catch(Exception ex) 
+        { 
+        }
 
         GGCDb db = new GGCDb(m_da);
         m_bar.setDatabaseName(db.db_conn_name);
@@ -97,16 +101,16 @@ public class GGCDbLoader extends Thread
 	//try { Thread.sleep(2000); } catch(Exception ex) { }
 
         System.out.println("GGC Load");
-	m_da.loadDailySettings(new GregorianCalendar(), true);
-	HibernateHandler.getInstance().connected = true;
+    	m_da.loadDailySettings(new GregorianCalendar(), true);
+    	HibernateHandler.getInstance().connected = true;
 
-	m_bar.setDatabaseName(db.db_conn_name);
+        m_bar.setDatabaseName(db.db_conn_name);
 
-	MainFrame mf = m_da.getParent();
-	mf.setDbActions(true);
-	mf.informationPanel.refreshPanels();
+    	MainFrame mf = m_da.getParent();
+    	mf.setDbActions(true);
+    	mf.informationPanel.refreshPanels();
 
-	m_da.loadSettingsFromDb();
+	    m_da.loadSettingsFromDb();
 
         mf.informationPanel.refreshPanels();
 

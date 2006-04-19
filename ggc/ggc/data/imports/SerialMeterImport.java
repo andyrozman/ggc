@@ -89,8 +89,10 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = listeners.length - 2; i >= 0; i -= 2) {
-            if (listeners[i] == ImportEventListener.class) {
+        for (int i = listeners.length - 2; i >= 0; i -= 2) 
+        {
+            if (listeners[i] instanceof ImportEventListener) 
+            {
                 // Lazily create the event:
                 if (event == null)
                     event = new ImportEvent(this);
@@ -138,11 +140,11 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         if (isPortOpen)
             return isPortOpen;
 
-        if (portIdentifier == null) {
+        if (portIdentifier == null) 
             throw new ImportException(m_ic.getMessage("NO_COM_PORT_SPECIFIED"));
-        }
 
-        try {
+        try 
+        {
             serialPort = (SerialPort)portIdentifier.open("ggc", (int)timeOut);
 
             setConnectionParameters();
@@ -152,28 +154,38 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
             serialPort.notifyOnDataAvailable(true);
             serialPort.notifyOnBreakInterrupt(true);
 
-            try {
+            try 
+            {
                 Thread.sleep(10000);
-            } catch (Exception exc) {
+            } 
+            catch (Exception exc) 
+            {
             }
 
             isPortOpen = true;
             System.out.println("open port : " + portIdentifier.getName());
             serialPort.addEventListener(this);
 
-        } catch (PortInUseException exc) {
+        } 
+        catch (PortInUseException exc) 
+        {
             throw new ImportException(exc);
-
-        } catch (IOException exc) {
+        } 
+        catch (IOException exc) 
+        {
             throw new ImportException(exc);
-
-        } catch (TooManyListenersException exc) {
+        } 
+        catch (TooManyListenersException exc) 
+        {
             throw new ImportException(exc);
         }
 
-        try {
+        try 
+        {
             serialPort.enableReceiveTimeout(30);
-        } catch (UnsupportedCommOperationException e) {
+        } 
+        catch (UnsupportedCommOperationException e) 
+        {
         }
 
         if (isPortOpen)
@@ -197,19 +209,26 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 
         // Set connection parameters, if set fails return parameters object
         // to original state.
-        try {
+        try 
+        {
             serialPort.setSerialPortParams(9600, // BuadRate
                                            SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-        } catch (UnsupportedCommOperationException e) {
+        } 
+        catch (UnsupportedCommOperationException e) 
+        {
         }
+
         // Set flow control.
-        try {
+        try 
+        {
             //			serialPort.setFlowControlMode(
             //					parameters.getFlowControlIn() |
             //					parameters.getFlowControlOut()
             //			);
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
-        } catch (UnsupportedCommOperationException e) {
+        } 
+        catch (UnsupportedCommOperationException e) 
+        {
             //throw new SerialConnectionException("Unsupported flow control");
         }
     }
@@ -261,7 +280,8 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         //System.out.println();
 
         // Determine type of event.
-        switch (event.getEventType()) {
+        switch (event.getEventType()) 
+        {
             case SerialPortEvent.DATA_AVAILABLE:
                 dataFromMeter = true;
                 timeOut += 5000;
@@ -314,10 +334,14 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
      */
     public void run()
     {
-        while (System.currentTimeMillis() - startTime < getTimeOut()) {
-            try {
+        while (System.currentTimeMillis() - startTime < getTimeOut()) 
+        {
+            try 
+            {
                 Thread.sleep(1000);
-            } catch (InterruptedException exc) {
+            } 
+            catch (InterruptedException exc) 
+            {
             }
         }
 
@@ -387,29 +411,13 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 
     public static String[] getAvailableMeters()
     {
-	return DataAccess.getInstance().getMeterManager().getAvailableMeters();
-	/*
-	GGCProperties properties = GGCProperties.getInstance();
-        String allMeter = properties.get("Meter");
-
-        if (allMeter == null || allMeter.equals(""))
-            return new String[0];
-
-        StringTokenizer strTk = new StringTokenizer(allMeter, ";");
-        String[] meter = new String[strTk.countTokens()];
-        int counter = 0;
-        while (strTk.hasMoreTokens()) {
-            meter[counter] = strTk.nextToken();
-            counter++;
-        }
-
-        return meter; */
+        return DataAccess.getInstance().getMeterManager().getAvailableMeters();
     }
 
 
     public static String getMeterClassName(String meterName)
     {
-	return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
+        return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
     }
 
     public static Vector getAvailableSerialPorts()
@@ -418,7 +426,8 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         int counter = 0;
 
         Enumeration enume = CommPortIdentifier.getPortIdentifiers();
-        while (enume.hasMoreElements()) {
+        while (enume.hasMoreElements()) 
+        {
             CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
             if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
                 retVal.add(portID.getName());

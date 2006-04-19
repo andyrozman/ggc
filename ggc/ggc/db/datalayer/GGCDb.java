@@ -110,16 +110,16 @@ public class GGCDb
 
     public GGCDb(DataAccess da)
     {
-	m_cfg = getConfiguration();
+        m_cfg = getConfiguration();
         m_da = da;
-	m_loadStatus = 1;
+        m_loadStatus = 1;
     }
 
 
     public GGCDb()
     {
-	m_cfg = getConfiguration();
-	m_loadStatus =1;
+        m_cfg = getConfiguration();
+        m_loadStatus =1;
     }
 
 

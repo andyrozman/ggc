@@ -80,13 +80,13 @@ public class DailyValues implements Serializable
 
     public void resetChanged()
     {
-	changed = false;
+        changed = false;    
     }
 
     public void setDateTime(long date)
     {
         //this.date = new Date(date);
-	this.date = date;
+        this.date = date;
     }
 
     /*
@@ -102,46 +102,46 @@ public class DailyValues implements Serializable
 
     public void setNewRow(DailyValuesRow dVR)
     {
-	addRow(dVR);
+        addRow(dVR);
     }
 
 
     public void setNewRow(DailyValuesRow dVR, boolean tru)
     {
 	
-	this.date = dVR.getDate();
+        this.date = dVR.getDate();
         long time = dVR.getDateTime();
         int size = dataRows.size();
-	changed = true;
+        changed = true;
 
         //addRight:
 
         //if (time != null && dVR.getDateTime() != null) 
-	{
+        {
             bHasChangedValues = true;
             //insert in the right place...
             //System.err.println(size + "");
             if (size <= 0)
                 dataRows.add(dVR);
             else 
-	    {
-		int i = 0;
-		boolean added = false;
-
+            {
+        		int i = 0;
+        		boolean added = false;
+        
                 for ( ; i < size; i++)
-		{
+        		{
                     if (getDateTimeAt(i) < time) 
-		    {
+        		    {
                         dataRows.add(i, dVR);
-			added = true;
+                        added = true;
                         break;
                     }
-		}
+        		}
 
-		if (!added)
-		{
-		    dataRows.add(i, dVR);
-		}
+        		if (!added)
+        		{
+        		    dataRows.add(i, dVR);
+        		}
                 //dataRows.add(i, dVR);
             }
         }
@@ -176,8 +176,7 @@ public class DailyValues implements Serializable
     
         bOnlyInsert = false;
 
-	refreshStatData();
-
+        refreshStatData();
 
     }
 
@@ -185,39 +184,38 @@ public class DailyValues implements Serializable
 
     public void addRow(DailyValuesRow dVR)
     {
-	this.date = dVR.getDate();
-	long time = dVR.getDateTime();
-	int size = dataRows.size();
-	changed = true;
-
-	if (size <= 0)
-	{
-	    dataRows.add(dVR);
-	}
-	else 
-	{
-
-	    int i = 0;
-	    boolean added = false;
-
-	    for ( ; i < size; i++)
-	    {
-
-		if (getDateTimeAt(i) > time) 
-		{
-		    dataRows.add(i, dVR);
-		    added = true;
-		    break;
-		}
-	    }
-
-	    if (!added)
-		dataRows.add(i, dVR);
-
-	}
-
-	bOnlyInsert = false;
-	refreshStatData();
+    	this.date = dVR.getDate();
+    	long time = dVR.getDateTime();
+    	int size = dataRows.size();
+    	changed = true;
+    
+    	if (size <= 0)
+    	{
+    	    dataRows.add(dVR);
+    	}
+    	else 
+    	{
+    
+    	    int i = 0;
+    	    boolean added = false;
+    
+    	    for ( ; i < size; i++)
+    	    {
+        		if (getDateTimeAt(i) > time) 
+        		{
+        		    dataRows.add(i, dVR);
+        		    added = true;
+        		    break;
+        		}
+    	    }
+    
+    	    if (!added)
+    		dataRows.add(i, dVR);
+    
+    	}
+    
+    	bOnlyInsert = false;
+    	refreshStatData();
 
     }
 
@@ -236,30 +234,30 @@ public class DailyValues implements Serializable
     public void deleteRow(int i)
     {
         try 
-	{
-
-	    DailyValuesRow dVR = getRow(i);
-
-	    dataRows.remove(i);
-	    this.refreshStatData();
-
-	    if (dVR.hasHibernateObject())
-	    {
-		if (deleteList==null)
-		    deleteList = new ArrayList();
-
-		deleteList.add(dVR.getHibernateObject());
-		this.changed = true;
-	    }
-
+    	{
+    
+    	    DailyValuesRow dVR = getRow(i);
+    
+    	    dataRows.remove(i);
+    	    this.refreshStatData();
+    
+    	    if (dVR.hasHibernateObject())
+    	    {
+        		if (deleteList==null)
+        		    deleteList = new ArrayList();
+        
+        		deleteList.add(dVR.getHibernateObject());
+        		this.changed = true;
+    	    }
+    
         } 
-	catch (Exception ex) 
-	{
+        catch (Exception ex) 
+        {
             System.out.println("Error on delete from DailyValues" + ex);
         }
 
         bOnlyInsert = false;
-	changed = true;
+        changed = true;
 
     }
 
@@ -267,56 +265,56 @@ public class DailyValues implements Serializable
     public void refreshStatData()
     {
 
-	sumBG = 0.0f;
-	sumIns1 = 0.0f;
-	sumIns2 = 0.0f;
-	sumBE = 0.0f;
+    	sumBG = 0.0f;
+    	sumIns1 = 0.0f;
+    	sumIns2 = 0.0f;
+    	sumBE = 0.0f;
+    
+    	counterBG = 0;
+    	counterBE = 0;
+    	counterIns1 = 0;
+    	counterIns2 = 0;
+    
+    	highestBG = 0.0f;
+    	lowestBG = Float.MAX_VALUE;
+    
+    
+    	for (int i=0; i<getRowCount(); i++)
+    	{
+    	    //System.out.println(i + " / " + getRowCount());
+    
+    	    DailyValuesRow dvr = getRow(i);
+    
+    	    float dVR_BG = dvr.getBG();
+    
+    	    if (dVR_BG != 0) 
+    	    {
+    		sumBG += dVR_BG;
+    		if (highestBG < dVR_BG)
+    		    highestBG = dVR_BG;
+    		if (lowestBG > dVR_BG)
+    		    lowestBG = dVR_BG;
+    		counterBG++;
+    	    }
+    
+    	    sumIns1 += dvr.getIns1();
+    	    if (dvr.getIns1() != 0)
+    		counterIns1++;
+    
+    	    sumIns2 += dvr.getIns2();
+    	    if (dvr.getIns2() != 0)
+    		counterIns2++;
+    
+    	    sumBE += dvr.getCH();
+    	    if (dvr.getCH() != 0)
+    		counterBE++;
+    	}
 
-	counterBG = 0;
-	counterBE = 0;
-	counterIns1 = 0;
-	counterIns2 = 0;
-
-	highestBG = 0.0f;
-	lowestBG = Float.MAX_VALUE;
-
-
-	for (int i=0; i<getRowCount(); i++)
-	{
-	    //System.out.println(i + " / " + getRowCount());
-
-	    DailyValuesRow dvr = getRow(i);
-
-	    float dVR_BG = dvr.getBG();
-
-	    if (dVR_BG != 0) 
-	    {
-		sumBG += dVR_BG;
-		if (highestBG < dVR_BG)
-		    highestBG = dVR_BG;
-		if (lowestBG > dVR_BG)
-		    lowestBG = dVR_BG;
-		counterBG++;
-	    }
-
-	    sumIns1 += dvr.getIns1();
-	    if (dvr.getIns1() != 0)
-		counterIns1++;
-
-	    sumIns2 += dvr.getIns2();
-	    if (dvr.getIns2() != 0)
-		counterIns2++;
-
-	    sumBE += dvr.getCH();
-	    if (dvr.getCH() != 0)
-		counterBE++;
-	}
-
-	if (debug)
-	System.out.println("date=" + date +
-			   "sumBG=" + sumBG + " (" + counterBG + ") " +
-			   "sumIns1=" + sumIns1 + " (" + counterIns1 + ") " +
-			   "sumIns2=" + sumIns2 + " (" + counterIns2 + ") ");
+    	if (debug)
+    	System.out.println("date=" + date +
+    			   "sumBG=" + sumBG + " (" + counterBG + ") " +
+    			   "sumIns1=" + sumIns1 + " (" + counterIns1 + ") " +
+    			   "sumIns2=" + sumIns2 + " (" + counterIns2 + ") ");
 
     }
 
@@ -330,18 +328,18 @@ public class DailyValues implements Serializable
     public boolean hasChanged()
     {
         //return bHasChangedValues;
-	if (changed)
-	    return true;
-	else
-	{
-	    for(int i=0; i<this.getRowCount(); i++)
-	    {
-		if (getChanged(i))
-		    return true;
-	    }
-
-	    return false;
-	}
+    	if (changed)
+    	    return true;
+    	else
+    	{
+    	    for(int i=0; i<this.getRowCount(); i++)
+    	    {
+    		if (getChanged(i))
+    		    return true;
+    	    }
+    
+    	    return false;
+    	}
     }
 
 
@@ -362,15 +360,15 @@ public class DailyValues implements Serializable
 
     public DailyValuesRow getRow(int index)
     {
-	return (DailyValuesRow)this.dataRows.get(index);
+        return (DailyValuesRow)this.dataRows.get(index);
     }
 
     public boolean hasDeletedItems()
     {
-	if (deleteList==null)
-	    return false;
-	else 
-	    return (deleteList.size()!=0);
+    	if (deleteList==null)
+    	    return false;
+    	else 
+    	    return (deleteList.size()!=0);
     }
 
     public ArrayList getDeletedItems()
@@ -383,7 +381,7 @@ public class DailyValues implements Serializable
 
     public Object getValueAt(int row, int column)
     {
-	return getRow(row).getValueAt(column);
+        return getRow(row).getValueAt(column);
     }
 
     public void setValueAt(Object aValue, int row, int column)
@@ -425,7 +423,7 @@ public class DailyValues implements Serializable
             }
         } */
 
-	refreshStatData();
+        refreshStatData();
         dVR.setValueAt(aValue, column);
 
 	/*
@@ -471,7 +469,7 @@ public class DailyValues implements Serializable
 
     public long getDateTimeAt(int row)
     {
-	return getRow(row).getDateTime();
+        return getRow(row).getDateTime();
     }
 
 
@@ -646,9 +644,11 @@ public class DailyValues implements Serializable
     {
         float tmp = 0;
         int c = 0;
-        for (int i = 0; i < getRowCount(); i++) {
+        for (int i = 0; i < getRowCount(); i++) 
+        {
             float bg = getBGAt(i);
-            if (bg != 0) {
+            if (bg != 0) 
+            {
                 tmp += (bg - getAvgBG()) * (bg - getAvgBG());
                 c++;
             }
@@ -682,20 +682,6 @@ public class DailyValues implements Serializable
     }
 */
 
-/*
-    public String getLeadingZero(int value, int num_places)
-    {
 
-	String tmp = "" + value;
-
-	while (tmp.length()<num_places)
-	{
-	    tmp = "0" + tmp; 
-	}
-
-	return tmp;
-
-    }
-*/
 
 }

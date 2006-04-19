@@ -64,11 +64,14 @@ public class EuroFlashImport extends SerialMeterImport
     {
         super.importData();
 
-        try {
+        try
+        {
             portOutputStream.write('D');
             portOutputStream.write('M');
             portOutputStream.write('@');
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
         }
     }
 
@@ -88,14 +91,17 @@ public class EuroFlashImport extends SerialMeterImport
     {
         super.serialEvent(event);
 
-        if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+        if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE)
+        {
 
-            try {
+            try
+            {
                 StringBuffer inputBuffer = createBufferFromStream(portInputStream);
 
                 char ident = inputBuffer.charAt(0);
 
-                if (ident == '@') {
+                if (ident == '@')
+                {
                     portOutputStream.write('D');
                     portOutputStream.write('M');
                     portOutputStream.write('?');
@@ -103,7 +109,8 @@ public class EuroFlashImport extends SerialMeterImport
                     System.out.println("second char written.");
                 }
 
-                if (ident == '?') {
+                if (ident == '?')
+                {
                     portOutputStream.write('D');
                     portOutputStream.write('M');
                     portOutputStream.write('P');
@@ -111,14 +118,17 @@ public class EuroFlashImport extends SerialMeterImport
                     System.out.println("third char written.");
                 }
 
-                if (ident == 'P') {
+                if (ident == 'P')
+                {
                     timeOut += 15000;
                     parseDataString(new String(inputBuffer));
                     stopImport();
 
                 }
 
-            } catch (Exception exc) {
+            }
+            catch (Exception exc)
+            {
                 System.out.println("Exception while parsing new data. " + exc);
             }
         }
@@ -132,19 +142,27 @@ public class EuroFlashImport extends SerialMeterImport
         StringBuffer inputBuffer = new StringBuffer();
         int newData = 0;
 
-        while (newData != -1) {
-            try {
+        while (newData != -1)
+        {
+            try
+            {
                 newData = stream.read();
-                if (newData == -1) {
+                if (newData == -1)
+                {
                     break;
                 }
-                if ('\r' == (char)newData) {
+                if ('\r' == (char)newData)
+                {
                     inputBuffer.append('\n');
-                } else {
+                }
+                else
+                {
                     //System.out.println("byte : " + newData);
                     inputBuffer.append((char)newData);
                 }
-            } catch (IOException ex) {
+            }
+            catch (IOException ex)
+            {
                 System.err.println(ex);
                 return inputBuffer;
             }
@@ -158,7 +176,8 @@ public class EuroFlashImport extends SerialMeterImport
         String value = null;
         Vector importDataVector = new Vector();
 
-        try {
+        try
+        {
             int currentCount = 0;
             int valueCount = 0;
             String measure = "";
@@ -187,7 +206,8 @@ public class EuroFlashImport extends SerialMeterImport
             vstk.nextToken();
             subValue = subValue.substring(1);
             int pos = subValue.indexOf('"');
-            if (pos != -1) {
+            if (pos != -1)
+            {
                 //Log.getLogger().info("subValue : " + subValue);
                 measure = subValue.substring(0, pos);
             }
@@ -196,7 +216,8 @@ public class EuroFlashImport extends SerialMeterImport
             // value string: P "SAT"," 6/02/01"," 1:21:30   ","  228 ", 00 07F6
             //DateFormat dFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, new Locale("en", "US"))
             SimpleDateFormat dFormat = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
-            while (stk.hasMoreTokens()) {
+            while (stk.hasMoreTokens())
+            {
                 value = stk.nextToken();
 
                 vstk = new StringTokenizer(value, ",");
@@ -233,7 +254,7 @@ public class EuroFlashImport extends SerialMeterImport
                 //
                 //Value dataValue = new Value(date, bzValue);
 
-		//DataAccess.getInstance().getDateTimeFromDateObject(Date dt)
+                //DataAccess.getInstance().getDateTimeFromDateObject(Date dt)
                 DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), bzValue, 0, 0, 0, 0, "");
                 importDataVector.addElement(dataValue);
                 //Log.getLogger().info("new value : " + dataValue);
@@ -241,7 +262,9 @@ public class EuroFlashImport extends SerialMeterImport
                 currentCount++;
                 fireImportChanged(new ImportEvent(this, ImportEvent.PROGRESS, (currentCount * 100 / valueCount)));
             }
-        } catch (Exception exc) {
+        }
+        catch (Exception exc)
+        {
             //System.out.println("parsing failed (" + value + ") : " + exc);
             //exc.printStackTrace();
             throw new ImportException(exc);
@@ -258,15 +281,20 @@ public class EuroFlashImport extends SerialMeterImport
     {
         EuroFlashImport importer = new EuroFlashImport();
 
-        try {
+        try
+        {
 
             importer.setPort("COM2");
             importer.open();
             importer.importData();
 
-        } catch (NoSuchPortException e) {
+        }
+        catch (NoSuchPortException e)
+        {
             System.out.println("exc : " + e);
-        } catch (ImportException e) {
+        }
+        catch (ImportException e)
+        {
             System.out.println("exc : " + e);
         }
 

@@ -49,7 +49,8 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
     GlucoValues dayData;
     //GGCProperties props = GGCProperties.getInstance();
 
-    private String[] column_names = {
+    private String[] column_names = 
+    {
 		m_ic.getMessage("DATETIME"), 
 		m_ic.getMessage("BG"), 
 		m_da.getSettings().getIns1Abbr(), 
@@ -80,7 +81,8 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
     public Object getValueAt(int row, int column)
     {
         Object o = dayData.getValueAt(row, column);
-        if (o != null && column == 0) {
+        if (o != null && column == 0) 
+        {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             return sdf.format(o);
         }
@@ -119,7 +121,8 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
      */
     public void glucoValuesChanged(GlucoValueEvent event)
     {
-        switch (event.getType()) {
+        switch (event.getType()) 
+        {
             case GlucoValueEvent.INSERT:
                 fireTableRowsInserted(event.getFirstRow(), event.getLastRow());
                 break;

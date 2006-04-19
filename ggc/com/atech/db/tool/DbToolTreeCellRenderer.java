@@ -37,12 +37,12 @@ public class DbToolTreeCellRenderer extends DefaultTreeCellRenderer
 
     public DbToolTreeCellRenderer()
     {
-	super();
+        super();
 
-	DbToolAccess da = DbToolAccess.getInstance();
+        DbToolAccess da = DbToolAccess.getInstance();
 
-	defFont = da.getFont(DbToolAccess.FONT_NORMAL);
-	boldFont = da.getFont(DbToolAccess.FONT_NORMAL_BOLD);
+        defFont = da.getFont(DbToolAccess.FONT_NORMAL);
+        boldFont = da.getFont(DbToolAccess.FONT_NORMAL_BOLD);
 	/*defFont = super.getFont();
 	defFont = 
 
@@ -67,55 +67,53 @@ public class DbToolTreeCellRenderer extends DefaultTreeCellRenderer
 						  boolean leaf, int row,
 						  boolean hasFocus) 
     {
-	String stringValue = tree.convertValueToText(value, sel,
+        String stringValue = tree.convertValueToText(value, sel,
 					  expanded, leaf, row, hasFocus);
-	setFont(this.defFont);
+        setFont(this.defFont);
 
-	//System.out.println(value);
-	if (value instanceof DatabaseSettings)
-	{
-	    DatabaseSettings ds = (DatabaseSettings)value;
-
-	    if (ds.isDefault)
-		setFont(this.boldFont);
-	}
+        //System.out.println(value);
+    	if (value instanceof DatabaseSettings)
+    	{
+    	    DatabaseSettings ds = (DatabaseSettings)value;
+    
+    	    if (ds.isDefault)
+    		setFont(this.boldFont);
+    	}
 
 
         //this.tree = tree;
-	this.hasFocus = hasFocus;
-	setText(stringValue);
-	if(sel)
-	    setForeground(getTextSelectionColor());
-	else
-	    setForeground(getTextNonSelectionColor());
-	// There needs to be a way to specify disabled icons.
-	if (!tree.isEnabled()) 
-	{
-	    setEnabled(false);
-	    if (leaf) {
-		setDisabledIcon(getLeafIcon());
-	    } else if (expanded) {
-		setDisabledIcon(getOpenIcon());
-	    } else {
-		setDisabledIcon(getClosedIcon());
-	    }
-	}
-	else 
-	{
-	    setEnabled(true);
-	    if (leaf) {
-		setIcon(getLeafIcon());
-	    } else if (expanded) {
-		setIcon(super.getOpenIcon());
-	    } else {
-		setIcon(super.getClosedIcon());
-	    }
-	}
+    	this.hasFocus = hasFocus;
+    	setText(stringValue);
+    	if(sel)
+    	    setForeground(getTextSelectionColor());
+    	else
+    	    setForeground(getTextNonSelectionColor());
+    	// There needs to be a way to specify disabled icons.
+    	if (!tree.isEnabled()) 
+    	{
+    	    setEnabled(false);
+    	    if (leaf) 
+                setDisabledIcon(getLeafIcon());
+            else if (expanded) 
+                setDisabledIcon(getOpenIcon());
+            else 
+                setDisabledIcon(getClosedIcon());
+    	}
+    	else 
+    	{
+    	    setEnabled(true);
+    	    if (leaf) 
+                setIcon(getLeafIcon());
+            else if (expanded) 
+                setIcon(super.getOpenIcon());
+            else 
+                setIcon(super.getClosedIcon());
+    	}
         setComponentOrientation(tree.getComponentOrientation());
 	    
-	selected = sel;
+        selected = sel;
 
-	return this;
+        return this;
     }
 
 

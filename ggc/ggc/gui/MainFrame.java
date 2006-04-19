@@ -150,16 +150,18 @@ public class MainFrame extends JFrame
 
     public static void setLookAndFeel(String name) 
     {
-        try {
-            SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir
-                    + name));
+        try 
+        {
+            SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir+ name));
 
             s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
             UIManager.setLookAndFeel(s_skinlf);
 
             JFrame.setDefaultLookAndFeelDecorated(true);
             JDialog.setDefaultLookAndFeelDecorated(true);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             System.err.println("Error loading L&F: " + ex);
         }
     }
@@ -171,7 +173,7 @@ public class MainFrame extends JFrame
         //m_ic.setLanguage();
 
         m_da = DataAccess.createInstance(this);
-	m_ic = I18nControl.getInstance();
+        m_ic = I18nControl.getInstance();
 
         statusPanel = new StatusBar();
 
@@ -210,7 +212,7 @@ public class MainFrame extends JFrame
         viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
         viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
 
-	readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
+        readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
         readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
 
         foodNutrAction = new GGCAction("MN_NUTRDB", "MN_NUTRDB_DESC", "food_nutrition");
@@ -325,7 +327,8 @@ public class MainFrame extends JFrame
         //write to prefs to file on close.
         //props.write();
         //dbH.disconnectDb();
-	m_da.deleteInstance();
+        m_da.getDb().closeDb();
+        m_da.deleteInstance();
         dispose();
         System.exit(0);
     }
@@ -357,9 +360,12 @@ public class MainFrame extends JFrame
         return button;
     }
 
-    class GGCAction extends AbstractAction {
 
-        GGCAction(String name, String command) {
+    class GGCAction extends AbstractAction 
+    {
+
+        GGCAction(String name, String command) 
+        {
             super();
             setName(m_ic.getMessageWithoutMnemonic(name));
 
@@ -377,7 +383,8 @@ public class MainFrame extends JFrame
             command = name;
         }
 
-        GGCAction(String name, String tooltip, String command) {
+        GGCAction(String name, String tooltip, String command) 
+        {
             super();
             setName(m_ic.getMessageWithoutMnemonic(name));
 
@@ -396,70 +403,87 @@ public class MainFrame extends JFrame
                 putValue(ACTION_COMMAND_KEY, command);
         }
 
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) 
+        {
 
             String command = e.getActionCommand();
 
             if (command.equals("file_quit")) 
-	    {
+            {
                 close();
             } 
-	    else if (command.equals("view_daily")) 
-	    {
+            else if (command.equals("view_daily")) 
+            {
                 new DailyStatsDialog(getMyParent());
             } 
-	    else if (command.equals("view_course")) 
-	    {
+            else if (command.equals("view_course")) 
+            {
                 new CourseGraphDialog(MainFrame.this); //.showMe();
             } 
-	    else if (command.equals("view_spread")) 
-	    {
-		new SpreadGraphDialog(MainFrame.this);
+            else if (command.equals("view_spread")) 
+            {
+                new SpreadGraphDialog(MainFrame.this);
             } 
-	    else if (command.equals("view_freq")) 
-	    {
+            else if (command.equals("view_freq")) 
+            {
                 new FrequencyGraphDialog(MainFrame.this); //.showMe();
             } 
-	    else if (command.equals("view_hba1c")) 
-	    {
+            else if (command.equals("view_hba1c")) 
+            {
                 new HbA1cDialog(MainFrame.this);
             } 
-	    else if (command.equals("option_pref")) 
-	    {
+            else if (command.equals("option_pref")) 
+            {
                 new PropertiesDialog(MainFrame.this);
             } 
-	    else if (command.equals("read_meter")) 
-	    {
+            else if (command.equals("read_meter")) 
+            {
                 new ReadMeterDialog(MainFrame.this);
             } 
-	    else if (command.equals("hlp_about")) {
-                JOptionPane
-                        .showMessageDialog(null,
+            else if (command.equals("hlp_about")) 
+            {
+                JOptionPane.showMessageDialog(null,
                                 "GNU Gluco Control " + s_version, "About GGC",
                                 JOptionPane.INFORMATION_MESSAGE);
-            } else if (command.equals("hlp_check")) {
+            } 
+            else if (command.equals("hlp_check")) 
+            {
                 new VersionChecker().checkForUpdate();
-            } else if (command.equals("print_test")) {
+            } 
+            else if (command.equals("print_test")) 
+            {
                 new PrintMonthlyReport();
 
-                try {
+                try 
+                {
                     String pathToAcrobat = "d:/Program Files/Adobe/Acrobat 6.0/Reader/AcroRd32.exe";
                     Runtime.getRuntime().exec(
                             pathToAcrobat + " " + "HelloWorld2.pdf");
-                } catch (Exception ex) {
+                } 
+                catch (Exception ex) 
+                {
                     System.out.println("Error running AcrobatReader");
                 }
 
-            } else if (command.equals("food_nutrition")) {
+            } 
+            else if (command.equals("food_nutrition")) 
+            {
                 new NutritionTreeDialog(m_da);
                 //System.out.println("Command N/A: Food Nutrition");
-            } else if (command.equals("food_meals")) {
+            } 
+            else if (command.equals("food_meals")) 
+            {
                 System.out.println("Command N/A: Food Meals");
-            } else if (command.equals("report_pdf_simple")) {
+            } 
+            else if (command.equals("report_pdf_simple")) 
+            {
                 System.out.println("Command N/A: Report PDF Simple");
-            } else if (command.equals("report_pdf_extended")) {
+            } 
+            else if (command.equals("report_pdf_extended")) 
+            {
                 System.out.println("Command N/A: Report PDF Extended");
-            } else
+            } 
+            else
                 System.out.println("Unknown Command: " + command);
 
         }

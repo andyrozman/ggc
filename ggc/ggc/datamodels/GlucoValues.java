@@ -73,11 +73,11 @@ public class GlucoValues extends DailyValues
         WeekValues wv = DataAccess.getInstance().getDayStatsRange(sDate, eDate);
         Hashtable table = wv.getAllValues();
 
-	//System.out.println("GlucoValues: " + table.size());
-
-
-	//System.out.println("Start: " + m_da.getDateTimeStringFromGregorianCalendar(sDate,2));
-	//System.out.println("End: " + m_da.getDateTimeStringFromGregorianCalendar(eDate,2));
+    	//System.out.println("GlucoValues: " + table.size());
+    
+    
+    	//System.out.println("Start: " + m_da.getDateTimeStringFromGregorianCalendar(sDate,2));
+    	//System.out.println("End: " + m_da.getDateTimeStringFromGregorianCalendar(eDate,2));
 
         for (Enumeration en = table.keys(); en.hasMoreElements(); ) 
         {
@@ -117,12 +117,12 @@ public class GlucoValues extends DailyValues
         String s1 = dRow.getDateAsString();
 
         for (int i = 0; i < dayValues.size(); i++) 
-	{
+        {
             DailyValues dV = (DailyValues)dayValues.elementAt(i);
             //System.out.println("date1:" + s1 + "");
             //System.out.println("date2:" + dV.getDateAsString() + "");
             if (s1.equals(dV.getDateAsString())) 
-	    {
+            {
                 dV.setNewRow(dRow);
 
                 GlucoValueEvent event = new GlucoValueEvent(this, i, i, 0, GlucoValueEvent.INSERT);
@@ -132,7 +132,7 @@ public class GlucoValues extends DailyValues
         }
 
         if (dRow.getDateTime() != 0) 
-	{
+        {
             DailyValues dV = new DailyValues();
 
             dV.addRow(dRow);
@@ -149,7 +149,7 @@ public class GlucoValues extends DailyValues
     {
         DataBaseHandler dbH = DataBaseHandler.getInstance();
         if (!dbH.dateTimeExists(dRow.getDateTimeAsDate())) 
-	{
+        {
             addRow(dRow);
             //rMF.getResTableModel().fireTableChanged(null);
         }
@@ -171,14 +171,17 @@ public class GlucoValues extends DailyValues
 
     public void deleteRow(int row)
     {
-        if (row != -1) {
+        if (row != -1) 
+        {
             int c = 0;
             Object o = null;
-            for (int i = 0; i < dayValues.size(); i++) {
+            for (int i = 0; i < dayValues.size(); i++) 
+            {
                 int old = c;
                 DailyValues dV = (DailyValues)dayValues.elementAt(i);
                 c += dV.getRowCount();
-                if (old <= row && row < c) {
+                if (old <= row && row < c) 
+                {
                     dV.deleteRow(row - old);
 
                     GlucoValueEvent event = new GlucoValueEvent(this, row, row, 0, GlucoValueEvent.DELETE);
@@ -193,14 +196,13 @@ public class GlucoValues extends DailyValues
     {
         int c = 0;
         Object o = null;
-        for (int i = 0; i < dayValues.size(); i++) {
+        for (int i = 0; i < dayValues.size(); i++) 
+        {
             int old = c;
             DailyValues dV = (DailyValues)dayValues.elementAt(i);
             c += dV.getRowCount();
-            if (old <= row && row < c) {
+            if ((old <= row) && (row < c))
                 o = dV.getValueAt(row - old, column);
-                //System.out.println(o.toString());
-            }
         }
         return o;
     }
@@ -214,13 +216,13 @@ public class GlucoValues extends DailyValues
     {
         int c = 0;
         Object o = null;
-        for (int i = 0; i < dayValues.size(); i++) {
+        for (int i = 0; i < dayValues.size(); i++) 
+        {
             int old = c;
             DailyValues dV = (DailyValues)dayValues.elementAt(i);
             c += dV.getRowCount();
-            if (old <= row && row < c) {
+            if ((old <= row) && (row < c)) 
                 dV.setValueAt(aValue, row - old, column);
-            }
         }
 
         GlucoValueEvent event = new GlucoValueEvent(this, row, row, column, GlucoValueEvent.UPDATE);
@@ -257,8 +259,10 @@ public class GlucoValues extends DailyValues
 
         // Process the listeners last to first, notifying
         // those that are interested in this event
-        for (int i = listeners.length - 2; i >= 0; i -= 2) {
-            if (listeners[i] == GlucoValueEventListener.class) {
+        for (int i = listeners.length - 2; i >= 0; i -= 2) 
+        {
+            if (listeners[i] instanceof GlucoValueEventListener) 
+            {
                 // Lazily create the event:
                 if (event != null)
                     ((GlucoValueEventListener)listeners[i + 1]).glucoValuesChanged(event);

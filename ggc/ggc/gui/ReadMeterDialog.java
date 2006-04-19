@@ -132,15 +132,15 @@ public class ReadMeterDialog extends JDialog implements ActionListener
 
         String meterClassName = m_da.getMeterManager().meter_classes[m_da.getSettings().getMeterType()];
 
-	if (meterClassName == null || meterClassName.equals(""))
+        if (meterClassName == null || meterClassName.equals(""))
             throw new NullPointerException(m_ic.getMessage("NO_CLASS_FOR_METER_DEFINED"));
 
         try 
-	{
+        {
             meterImport = (SerialMeterImport)Class.forName(meterClassName).newInstance();
         } 
-	catch (Exception exc) 
-	{
+        catch (Exception exc) 
+        {
             System.out.println(exc);
         }
 
@@ -320,17 +320,22 @@ public class ReadMeterDialog extends JDialog implements ActionListener
 
             tabPane.setSelectedIndex(1);
 
-            try {
+            try 
+            {
                 meterImport.setPort(m_da.getSettings().getMeterPort());
 
                 progress.setIndeterminate(true);
                 meterImport.open();
 
                 meterImport.importData();
-            } catch (NoSuchPortException exc) {
+            } 
+            catch (NoSuchPortException exc) 
+            {
                 progress.setIndeterminate(false);
                 addLogText(m_ic.getMessage("NO_SUCH_COM_PORT_FOUND"));
-            } catch (ImportException exc) {
+            } 
+            catch (ImportException exc) 
+            {
                 progress.setIndeterminate(false);
                 addLogText(m_ic.getMessage("EXCEPTION_ON_IMPORT")+":");
                 addLogText(exc.getMessage());
@@ -343,7 +348,8 @@ public class ReadMeterDialog extends JDialog implements ActionListener
          */
         public void importChanged(ImportEvent event)
         {
-            switch (event.getType()) {
+            switch (event.getType()) 
+            {
                 case ImportEvent.PROGRESS:
                     progress.setIndeterminate(false);
                     progress.setValue(event.getProgress());
@@ -361,7 +367,8 @@ public class ReadMeterDialog extends JDialog implements ActionListener
                     meterImport.close();
                     DailyValuesRow[] data = meterImport.getImportedData();
                     addLogText(m_ic.getMessage("HAD_READ_VALUES_FROM_METER")+": " + data.length);
-                    for (int i = 0; i < data.length; i++) {
+                    for (int i = 0; i < data.length; i++) 
+                    {
                         DailyValuesRow dailyValuesRow = data[i];
                         getGlucoValues().setNewRow(dailyValuesRow);
                     }

@@ -159,7 +159,7 @@
         <taskdef name="hbm2java"
             classname="net.sf.hibernate.tool.hbm2java.Hbm2JavaTask" 
             classpath="${hibernate.all.classpath.dir}"/>
-            <hbm2java output="${source.dir}" >
+            <hbm2java output="${source.dir}/hib_new/" >
                 <fileset dir="${source.dir}">
                     <include name="**/*.hbm.xml"/>
                 </fileset>

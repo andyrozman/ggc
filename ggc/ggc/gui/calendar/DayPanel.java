@@ -126,7 +126,8 @@ public class DayPanel extends JPanel implements CalendarListener
         button2.setFont(new Font("Dialog", Font.BOLD, 12));
         add(button2);
 
-        for (int i = curday; i < numdays; i++) {
+        for (int i = curday; i < numdays; i++) 
+        {
             add(createButton(++lbl));
         }
 

@@ -6,7 +6,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class FoodHomeWeightH implements Serializable {
+public class FoodHomeWeightH implements Serializable
+{
 
     /** identifier field */
     private long id;
@@ -27,7 +28,8 @@ public class FoodHomeWeightH implements Serializable {
     private float weight_g;
 
     /** full constructor */
-    public FoodHomeWeightH(long food_number, int sequence, float amount, String msr_desc, float weight_g) {
+    public FoodHomeWeightH(long food_number, int sequence, float amount, String msr_desc, float weight_g)
+    {
         this.food_number = food_number;
         this.sequence = sequence;
         this.amount = amount;
@@ -36,80 +38,97 @@ public class FoodHomeWeightH implements Serializable {
     }
 
     /** default constructor */
-    public FoodHomeWeightH() {
+    public FoodHomeWeightH()
+    {
     }
 
     /** minimal constructor */
-    public FoodHomeWeightH(int sequence) {
+    public FoodHomeWeightH(int sequence)
+    {
         this.sequence = sequence;
     }
 
-    public long getId() {
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public long getFood_number() {
+    public long getFood_number()
+    {
         return this.food_number;
     }
 
-    public void setFood_number(long food_number) {
+    public void setFood_number(long food_number)
+    {
         this.food_number = food_number;
     }
 
-    public int getSequence() {
+    public int getSequence()
+    {
         return this.sequence;
     }
 
-    public void setSequence(int sequence) {
+    public void setSequence(int sequence)
+    {
         this.sequence = sequence;
     }
 
-    public float getAmount() {
+    public float getAmount()
+    {
         return this.amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(float amount)
+    {
         this.amount = amount;
     }
 
-    public String getMsr_desc() {
+    public String getMsr_desc()
+    {
         return this.msr_desc;
     }
 
-    public void setMsr_desc(String msr_desc) {
+    public void setMsr_desc(String msr_desc)
+    {
         this.msr_desc = msr_desc;
     }
 
-    public float getWeight_g() {
+    public float getWeight_g()
+    {
         return this.weight_g;
     }
 
-    public void setWeight_g(float weight_g) {
+    public void setWeight_g(float weight_g)
+    {
         this.weight_g = weight_g;
     }
 
-    public String toString() {
+    public String toString()
+    {
         return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
+        .append("id", getId())
+        .toString();
     }
 
-    public boolean equals(Object other) {
+    public boolean equals(Object other)
+    {
         if ( !(other instanceof FoodHomeWeightH) ) return false;
         FoodHomeWeightH castOther = (FoodHomeWeightH) other;
         return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        .append(this.getId(), castOther.getId())
+        .isEquals();
     }
 
-    public int hashCode() {
+    public int hashCode()
+    {
         return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+        .append(getId())
+        .toHashCode();
     }
 
 }

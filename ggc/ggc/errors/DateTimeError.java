@@ -34,7 +34,8 @@ package ggc.errors;
  * 
  * @author Reinhold Rumberger
  */
-public class DateTimeError extends Error {
+public class DateTimeError extends Error 
+{
 
     /**
      * Eclipse says this class is serializable and therefore should have this
@@ -42,7 +43,8 @@ public class DateTimeError extends Error {
      */
     static final long serialVersionUID = 1L;
 
-    public DateTimeError(String msg) {
+    public DateTimeError(String msg) 
+    {
         super(msg);
     }
 }

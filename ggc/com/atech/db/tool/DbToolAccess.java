@@ -320,83 +320,89 @@ public class DbToolAccess
 
     public void processDirectory(String root, File f, boolean display)
     {
-	File fl[] = f.listFiles();
-
-	for (int i=0; i<fl.length; i++)
-	{
-	    //System.out.println(fl[i]);
-
-	    if (fl[i].isDirectory())
-	    {
-		processDirectory(root, fl[i], false);
+    	File fl[] = f.listFiles();
+    
+    	for (int i=0; i<fl.length; i++)
+    	{
+    	    //System.out.println(fl[i]);
+    
+    	    if (fl[i].isDirectory())
+    	    {
+                processDirectory(root, fl[i], false);
+    	    }
+    	    else
+    	    {
+        		String file = fl[i].getName();
+        
+        		if (file.endsWith(".class"))
+        		{
+        		    try
+        		    {
+            			String can = fl[i].getCanonicalPath();
+            
+            			if (can.contains("$"))
+            			    continue;
+            
+            			can = can.substring(root.length()+1);
+            			can = replaceExpression(can, File.separator, ".");
+            			can = can.substring(0, can.length()-6);
+            
+            			try
+            			{
+            			    //System.out.println("class: " +  can);
+            
+            			    Class c = Class.forName(can);
+            			    if (getCorrectInterface(c))
+            			    {
+                				DbToolApplicationInterface obj = (DbToolApplicationInterface)c.newInstance();
+                                listOfClasses.add(obj);
+            			    }
+            			}
+            			catch(java.lang.NoClassDefFoundError ex) 
+                        { 
+                        }
+            			catch(java.lang.ExceptionInInitializerError ex) 
+                        { 
+                        }
+            			catch(Exception ex) 
+                        { 
+                        }
+        
+        		    }
+        		    catch(Exception ex)
+        		    {
+                        System.out.println("  Ex:" + ex);
+        		    }
+        		    
+        		}
+        		else if (file.endsWith(".jar"))
+        		{
+        		    System.out.println("JAR: " +  file);//fl[i]);
+        		}
+                //System.out.println("file: " +  file);//fl[i]);
+            }
 	    }
-	    else
-	    {
-		String file = fl[i].getName();
-
-		if (file.endsWith(".class"))
-		{
-		    try
-		    {
-			String can = fl[i].getCanonicalPath();
-
-			if (can.contains("$"))
-			    continue;
-
-			can = can.substring(root.length()+1);
-			can = replaceExpression(can, File.separator, ".");
-			can = can.substring(0, can.length()-6);
-
-			try
-			{
-			    //System.out.println("class: " +  can);
-
-			    Class c = Class.forName(can);
-			    if (getCorrectInterface(c))
-			    {
-				DbToolApplicationInterface obj = (DbToolApplicationInterface)c.newInstance();
-				listOfClasses.add(obj);
-			    }
-			}
-			catch(java.lang.NoClassDefFoundError ex) { }
-			catch(java.lang.ExceptionInInitializerError ex) { }
-			catch(Exception ex) { }
-
-		    }
-		    catch(Exception ex)
-		    {
-			System.out.println("  Ex:" + ex);
-		    }
-		    
-		}
-		else if (file.endsWith(".jar"))
-		{
-		    System.out.println("JAR: " +  file);//fl[i]);
-		}
-		//System.out.println("file: " +  file);//fl[i]);
-	    }
-	}
     }
 
 
     public boolean getCorrectInterface(Class c) //Object o) 
     {
-	Class[] theInterfaces = c.getInterfaces();
-	for (int i = 0; i < theInterfaces.length; i++) 
-	{
-	    String interfaceName = theInterfaces[i].getName();
+    	Class[] theInterfaces = c.getInterfaces();
+    	for (int i = 0; i < theInterfaces.length; i++) 
+    	{
+    	    String interfaceName = theInterfaces[i].getName();
+    
+    	    if (interfaceName.equals("com.atech.db.tool.DbToolApplicationInterface"))
+    	    {
+    //		System.out.println("Found Interface: "  + interfaceName);
+                return true;
+    	    }
+    	    else
+                return false;
 
-	    if (interfaceName.equals("com.atech.db.tool.DbToolApplicationInterface"))
-	    {
-//		System.out.println("Found Interface: "  + interfaceName);
-		return true;
-	    }
-	    else
-		return false;
+        }
 
-	}
-
-	return false;
+        return false;
     }	
 
 
@@ -592,32 +598,32 @@ public class DbToolAccess
 
     public ArrayList getListOfDatabases()
     {
-	ArrayList list = new ArrayList();
-	int num = (int)(config_db_values.size()/7);
-
-	for (int i=0; i<num; i++)
-	{
-	    DatabaseSettings ds = new DatabaseSettings();
-	    ds.number = i;
-	    ds.name = (String)config_db_values.get("DB" +i +"_CONN_NAME");
-	    ds.db_name = (String)config_db_values.get("DB" +i +"_DB_NAME");
-	    ds.driver = (String)config_db_values.get("DB" +i +"_CONN_DRIVER");
-	    ds.url = (String)config_db_values.get("DB" +i +"_CONN_URL");
-	    //ds.port = config_db_values.get("DB" +i +"_CONN_NAME");
-	    ds.dialect = (String)config_db_values.get("DB" +i +"_HIBERNATE_DIALECT");
-
-	    ds.username = (String)config_db_values.get("DB" +i +"_CONN_USERNAME");
-	    ds.password = (String)config_db_values.get("DB" +i +"_CONN_PASSWORD");
-
-	    if (this.selected_db==i)
-	    {
-		ds.isDefault = true;
-	    }
-
-	    list.add(ds);
-	}
-
-	return list;
+    	ArrayList list = new ArrayList();
+    	int num = (int)(config_db_values.size()/7);
+    
+    	for (int i=0; i<num; i++)
+    	{
+    	    DatabaseSettings ds = new DatabaseSettings();
+    	    ds.number = i;
+    	    ds.name = (String)config_db_values.get("DB" +i +"_CONN_NAME");
+    	    ds.db_name = (String)config_db_values.get("DB" +i +"_DB_NAME");
+    	    ds.driver = (String)config_db_values.get("DB" +i +"_CONN_DRIVER");
+    	    ds.url = (String)config_db_values.get("DB" +i +"_CONN_URL");
+    	    //ds.port = config_db_values.get("DB" +i +"_CONN_NAME");
+    	    ds.dialect = (String)config_db_values.get("DB" +i +"_HIBERNATE_DIALECT");
+    
+    	    ds.username = (String)config_db_values.get("DB" +i +"_CONN_USERNAME");
+    	    ds.password = (String)config_db_values.get("DB" +i +"_CONN_PASSWORD");
+    
+    	    if (this.selected_db==i)
+    	    {
+                ds.isDefault = true;
+    	    }
+    
+    	    list.add(ds);
+    	}
+    
+    	return list;
     }
 
 

@@ -77,9 +77,9 @@ public class NutritionTreeModel implements TreeModel
         int len = treeModelListeners.size();
         TreeModelEvent e = new TreeModelEvent(this, 
                                               new Object[] {oldRoot});
-        for (int i = 0; i < len; i++) {
-            ((TreeModelListener)treeModelListeners.elementAt(i)).
-                    treeStructureChanged(e);
+        for (int i = 0; i < len; i++) 
+        {
+            ((TreeModelListener)treeModelListeners.elementAt(i)).treeStructureChanged(e);
         }
     }
 
@@ -107,15 +107,15 @@ public class NutritionTreeModel implements TreeModel
         {
             return (FoodGroup)rootObj.m_foodGroups.get(index);
         }
-	else if (parent instanceof FoodGroup)
-	{
-	    FoodGroup fg = (FoodGroup)parent;
-	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
-	    return (FoodDescription)lst.get(index);
-	}
-	else
-	    return null;
-
+    	else if (parent instanceof FoodGroup)
+    	{
+    	    FoodGroup fg = (FoodGroup)parent;
+    	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    return (FoodDescription)lst.get(index);
+    	}
+    	else
+    	    return null;
+    
     }
 
     /**
@@ -130,16 +130,16 @@ public class NutritionTreeModel implements TreeModel
         {
             return rootObj.m_foodGroups.size();
         }
-	else if (parent instanceof FoodGroup)
-	{
-	    FoodGroup fg = (FoodGroup)parent;
-	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
-	    return lst.size();
-	}
-	else
-	    return 0;
-
-    }
+    	else if (parent instanceof FoodGroup)
+    	{
+    	    FoodGroup fg = (FoodGroup)parent;
+    	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    return lst.size();
+    	}
+    	else
+    	    return 0;
+    
+        }
 
     /**
      * Returns the index of child in parent.
@@ -167,28 +167,28 @@ public class NutritionTreeModel implements TreeModel
 
             }
         }
-	else if (parent instanceof FoodGroup)
-	{
-
-	    FoodDescription dii = (FoodDescription)child;
-	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+dii.getFood_group_id());
-	    Iterator it = lst.iterator();
-
-	    int i = -1;
-
-	    while (it.hasNext()) 
-	    {
-		i++;
-
-		FoodDescription c = (FoodDescription)it.next();
-
-		if (dii.getId()==c.getId()) 
-		    return i;
-	    }
-
-	}
-
-	return -1;
+    	else if (parent instanceof FoodGroup)
+    	{
+    
+    	    FoodDescription dii = (FoodDescription)child;
+    	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+dii.getFood_group_id());
+    	    Iterator it = lst.iterator();
+    
+    	    int i = -1;
+    
+    	    while (it.hasNext()) 
+    	    {
+        		i++;
+        
+        		FoodDescription c = (FoodDescription)it.next();
+        
+        		if (dii.getId()==c.getId()) 
+        		    return i;
+    	    }
+    
+    	}
+    
+    	return -1;
 
     }
 
@@ -210,14 +210,14 @@ public class NutritionTreeModel implements TreeModel
         {
             return rootObj.m_foodGroups.size() == 0;
         }
-	else if (node instanceof FoodGroup)
-	{
-	    FoodGroup fg = (FoodGroup)node;
-	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
-	    return lst.size() == 0;
-	}
-	else
-	    return true;
+    	else if (node instanceof FoodGroup)
+    	{
+    	    FoodGroup fg = (FoodGroup)node;
+    	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    return lst.size() == 0;
+    	}
+    	else
+    	    return true;
 
     }
 
@@ -238,4 +238,5 @@ public class NutritionTreeModel implements TreeModel
     {
         System.out.println("*** valueForPathChanged : " + path + " --> " + newValue);
     }
+
 }

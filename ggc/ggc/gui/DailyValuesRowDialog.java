@@ -256,19 +256,22 @@ public class DailyValuesRowDialog extends JDialog implements ActionListener
     public boolean verifyInput()
     {
         InputVerifier verifier = dateField.getInputVerifier();
-        if (!verifier.shouldYieldFocus(dateField)) {
+        if (!verifier.shouldYieldFocus(dateField)) 
+        {
             dateField.requestFocus();
             return false;
         }
 
         verifier = timeField.getInputVerifier();
-        if (!verifier.shouldYieldFocus(timeField)) {
+        if (!verifier.shouldYieldFocus(timeField)) 
+        {
             timeField.requestFocus();
             return false;
         }
 
         verifier = bgField.getInputVerifier();
-        if (!verifier.shouldYieldFocus(bgField)) {
+        if (!verifier.shouldYieldFocus(bgField)) 
+        {
             bgField.requestFocus();
             return false;
         }
@@ -282,21 +285,20 @@ public class DailyValuesRowDialog extends JDialog implements ActionListener
      */
     public void actionPerformed(ActionEvent e)
     {
-	String action = e.getActionCommand();
-
-	if (action.equals("add"))
-	{
-	    if (!verifyInput())
-		return;
-
-	    dailyValuesRow = new DailyValuesRow(dateField.getText(), timeField.getText(), bgField.getText(), ins1Field.getText(), ins2Field.getText(), buField.getText(), actField.getText(), commentField.getText());
-	    this.dispose();
-	}
-	else if (action.equals("cancel"))
-	{
-	    this.dispose();
-	}
-
+    	String action = e.getActionCommand();
+    
+    	if (action.equals("add"))
+    	{
+    	    if (!verifyInput())
+    		return;
+    
+    	    dailyValuesRow = new DailyValuesRow(dateField.getText(), timeField.getText(), bgField.getText(), ins1Field.getText(), ins2Field.getText(), buField.getText(), actField.getText(), commentField.getText());
+    	    this.dispose();
+    	}
+    	else if (action.equals("cancel"))
+    	{
+    	    this.dispose();
+    	}
     }
     
 

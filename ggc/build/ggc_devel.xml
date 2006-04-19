@@ -23,70 +23,74 @@
 
 
 
-        <!-- Checks for Naming Conventions.                  -->
-        <!-- See http://checkstyle.sf.net/config_naming.html -->
- <!-- B       
-        <module name="ConstantName"/> 
-        <module name="LocalFinalVariableName"/>
-        <module name="MethodName"/>
-        <module name="PackageName"/>
-        <module name="ParameterName"/>
+          <!-- Checks for Naming Conventions.                  -->
+        
+
+          <!--
+        <module name="MemberName">
+          <property name="format" value="^m_[a-z_][a-zA-Z0-9]*$"/>
+        </module>
+        
+        <module name="MethodName">
+          <property name="format" value="^[a-z][a-zA-Z0-9_]*$"/>
+        </module>
         -->
 
-        <!--
-<module name="MemberName">
-  <property name="format" value="^[a-z][a-z_][a-zA-Z0-9]*$"/>
-</module>
 
-<module name="MethodName">
-  <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
-</module>
--->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+        </module>
 
+        <module name="LocalVariableName">
+            <property name="format" value="[a-zA-Z0-9]*$"/>
+            <property name="tokens" value="PARAMETER_DEF"/>
+        </module>
 
-<module name="PackageName">
-    <property name="format"
-              value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
-</module>
-
-<module name="LocalVariableName">
-    <property name="format" value="[a-zA-Z0-9]*$"/>
-    <property name="tokens" value="PARAMETER_DEF"/>
-</module>
-
-<!--
-<module name="TypeName">
-    <property name="format" value="^I_[a-zA-Z0-9]*$"/>
-    <property name="tokens" value="INTERFACE_DEF"/>
-</module>
--->
-
-<module name="StaticVariableName">
-    <property name="format" value="^s_[a-zA-Z0-9]*$"/>
-</module>
-
-        
-
-
-        
+        <module name="StaticVariableName">
+            <property name="format" value="^s_[a-zA-Z0-9]*$"/>
+        </module>
 
 
 
         <!-- Checks for whitespace                               -->
-        <!-- See http://checkstyle.sf.net/config_whitespace.html -->
-<!--        <module name="EmptyForIteratorPad"/>
-        <module name="MethodParamPad"/>
-        <module name="NoWhitespaceAfter"/>
-        <module name="NoWhitespaceBefore"/>
-        <module name="OperatorWrap"/>
-        <module name="ParenPad"/>
-        <module name="TypecastParenPad"/>
-        <module name="TabCharacter"/>
-        <module name="WhitespaceAfter"/>
-        <module name="WhitespaceAround"/>  -->
+        <module name="EmptyForInitializerPad">
+            <property name="option" value="space"/>
+        </module>
+        
+        <module name="MethodParamPad">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="option" value="nospace"/>
+            <property name="allowLineBreaks" value="true"/>
+        </module>
+        
+        <module name="NoWhitespaceAfter">
+            <property name="tokens" value="DOT"/>
+            <property name="allowLineBreaks" value="false"/>
+        </module>
+        
+        <module name="NoWhitespaceBefore">
+            <property name="tokens" value="DOT"/>
+            <property name="allowLineBreaks" value="true"/>
+        </module>
+        
+        
+        <module name="ParenPad">
+            <property name="tokens" value="CTOR_CALL, METHOD_CALL, SUPER_CTOR_CALL"/>
+            <property name="option" value="nospace"/>
+        </module>
+        
+        
+        <module name="TypecastParenPad">
+            <property name="option" value="nospace"/>
+        </module>
 
-
-
+        <!--
+<module name="WhitespaceAround">
+     <property name="tokens" value="LITERAL_CATCH"/>
+    <property name="allowEmptyConstructors" value="true"/>
+    <property name="allowEmptyMethods" value="true"/>
+</module>
+-->
 
         <!-- Checks for blocks. You know, those {}'s         -->
         <!-- See http://checkstyle.sf.net/config_blocks.html -->
@@ -95,6 +99,14 @@
         <module name="LeftCurly"/>
         <module name="NeedBraces"/>
         <module name="RightCurly"/>  -->
+
+<module name="LeftCurly">
+    <property name="option" value="nl"/>
+    <property name="tokens" value="CLASS_DEF, CTOR_DEF, INTERFACE_DEF, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, METHOD_DEF"/>
+</module>    
+
+<!-- CLASS_DEF, CTOR_DEF, INTERFACE_DEF, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, METHOD_DEF
+-->
 
 
         <!-- Checks for common coding problems               -->

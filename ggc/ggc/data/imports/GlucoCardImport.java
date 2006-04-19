@@ -43,9 +43,9 @@ import ggc.util.DataAccess;
 
 public class GlucoCardImport extends SerialMeterImport
 {
-    
+
     //private I18nControl m_ic = I18nControl.getInstance();
-    
+
     Thread gThread;
 
     private int counter = 0;
@@ -75,26 +75,31 @@ public class GlucoCardImport extends SerialMeterImport
 
     public void serialEvent(SerialPortEvent event)
     {
-        if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+        if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE)
+        {
 
-            try {
+            try
+            {
                 byte[] rBuffer = new byte[40];
 
                 int numBytes = portInputStream.read(rBuffer);
                 //rmf.addLogText("Getting data buffer[0]=" + rBuffer[0]);
 
-                if (rBuffer[0] == CONTROL_EOT && counter == 0) {
+                if (rBuffer[0] == CONTROL_EOT && counter == 0)
+                {
                     portOutputStream.write(CONTROL_STX);
                     portOutputStream.write(CONTROL_STX);
                     portOutputStream.write(CONTROL_STX);
                     counter++;
                 }
-                if (rBuffer[0] == CONTROL_ENQ && counter == 1) {
+                if (rBuffer[0] == CONTROL_ENQ && counter == 1)
+                {
                     portOutputStream.write(CONTROL_STX);
                     portOutputStream.write(CONTROL_STX);
                     counter++;
                 }
-                if (rBuffer[0] == CONTROL_EOT && rBuffer[1] == 0 && counter == 2) {
+                if (rBuffer[0] == CONTROL_EOT && rBuffer[1] == 0 && counter == 2)
+                {
                     portOutputStream.write(CONTROL_DC1);
                     portOutputStream.write(CONTROL_STX);
                     portOutputStream.write(CONTROL_STX);
@@ -113,22 +118,27 @@ public class GlucoCardImport extends SerialMeterImport
                     portOutputStream.write(CONTROL_STX);
                     counter++;
                 }
-                if (rBuffer[0] == CONTROL_ENQ && counter == 3) {
+                if (rBuffer[0] == CONTROL_ENQ && counter == 3)
+                {
                     portOutputStream.write(CONTROL_ACK);
                     counter++;
                 }
-                if (counter > 3) {
+                if (counter > 3)
+                {
 
                     int j = 0;
                     while (j < rBuffer.length && rBuffer[j] != 0)
                         readb[h++] = rBuffer[j++];
 
-                    if (readb[h - 1] == CONTROL_LF) {
+                    if (readb[h - 1] == CONTROL_LF)
+                    {
                         String sAusgabe = (new String(readb)).trim();
-                        if (sAusgabe.charAt(1) == 'H') {
+                        if (sAusgabe.charAt(1) == 'H')
+                        {
 
                         }
-                        if (sAusgabe.charAt(1) == 'R') {
+                        if (sAusgabe.charAt(1) == 'R')
+                        {
                             int b = 0;
                             for (int i = 0; i < 3; i++)
                                 b = sAusgabe.indexOf("|", b + 1);
@@ -139,18 +149,22 @@ public class GlucoCardImport extends SerialMeterImport
                             SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
                             Date date = null;
                             float bgvalue = 0;
-                            try {
+                            try
+                            {
                                 date = new Date(sf.parse(datetime).getTime());
                                 date.setTime(date.getTime() - (date.getTime() % 60000L));
 
                                 bgvalue = (new Float(value).floatValue());
-                            } catch (ParseException e) {
+                            }
+                            catch (ParseException e)
+                            {
                                 System.out.println(e);
                             }
 
                             //rmf.addLogText("Got value: " + value + " for timestamp: " + date);
 
-                            if (date != null) {
+                            if (date != null)
+                            {
                                 DailyValuesRow dVR = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), bgvalue, 0, 0, 0, 0, "");
                                 importedData.addElement(dVR);
                             }
@@ -160,15 +174,19 @@ public class GlucoCardImport extends SerialMeterImport
                         for (int z = 0; z < 100; z++)
                             readb[z] = 0;
 
-			h = 0;
+                        h = 0;
                         portOutputStream.write(CONTROL_ACK);
                     }
                     counter++;
                 }
 
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 System.out.println(e);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 System.out.println(e);
             }
         }
@@ -193,10 +211,13 @@ public class GlucoCardImport extends SerialMeterImport
         importedData = new Vector();
         super.importData();
 
-        try {
+        try
+        {
             portOutputStream.write(CONTROL_NUL);
             portOutputStream.write(CONTROL_STX);
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
         }
     }
 }

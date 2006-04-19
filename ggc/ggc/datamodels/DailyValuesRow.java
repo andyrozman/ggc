@@ -84,29 +84,28 @@ public class DailyValuesRow implements Serializable
 
     public DailyValuesRow(DayValueH dv)
     {
-	this.datetime = dv.getDt_info();
-	this.bg = dv.getBg();
-	this.ins1 = dv.getIns1();
-	this.ins2 = dv.getIns2();
-	this.ch = dv.getCh();
-	this.act = (int)dv.getAct();
-	this.comment = dv.getComment();
-
-	m_dv = dv;
+    	this.datetime = dv.getDt_info();
+    	this.bg = dv.getBg();
+    	this.ins1 = dv.getIns1();
+    	this.ins2 = dv.getIns2();
+    	this.ch = dv.getCh();
+    	this.act = (int)dv.getAct();
+    	this.comment = dv.getComment();
+    
+    	m_dv = dv;
     }
 
 
     public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
     {
-	datetime = getDateTimeLong(date, time);
-
-	setValueAt(BG, 1);
-	setValueAt(Ins1, 2);
-	setValueAt(Ins2, 3);
-	setValueAt(BU, 4);
-	setValueAt(Act, 5);
-	setValueAt(Comment, 6);
-
+    	datetime = getDateTimeLong(date, time);
+    
+    	setValueAt(BG, 1);
+    	setValueAt(Ins1, 2);
+    	setValueAt(Ins2, 3);
+    	setValueAt(BU, 4);
+    	setValueAt(Act, 5);
+    	setValueAt(Comment, 6);
     }
 
 
@@ -187,13 +186,13 @@ public class DailyValuesRow implements Serializable
 
     public DailyValuesRow()
     {
-	this.datetime = 0L;
-	this.bg = 0.0f;
-	this.ins1 = 0.0f;
-	this.ins2 = 0.0f;
-	this.ch = 0.0f;
-	this.act = 0;
-	this.comment = "";
+    	this.datetime = 0L;
+    	this.bg = 0.0f;
+    	this.ins1 = 0.0f;
+    	this.ins2 = 0.0f;
+    	this.ch = 0.0f;
+    	this.act = 0;
+    	this.comment = "";
     }
 
     public String[] getRowString()
@@ -213,34 +212,34 @@ public class DailyValuesRow implements Serializable
     public String toString()
     {
 //        return "DT="+datetime.getTime() + ";BG=" + BG + ";Ins1=" + Ins1 + ";Ins2=" + Ins2 + ";BE=" + BE + ";Act=" + Act + ";Comment=" + Comment + ";";
-	return getDateTime() + ";" + bg + ";" + ins1 + ";" + ins2 + ";" + ch + ";" + act + ";" + comment + ";";
+        return getDateTime() + ";" + bg + ";" + ins1 + ";" + ins2 + ";" + ch + ";" + act + ";" + comment + ";";
     }
 
 
     public long getDateTime()
     {
 	//System.out.println(datetime);
-	return datetime;
+        return datetime;
     }
 
 
 
     public Date getDateTimeAsDate()
     {
-	return m_da.getDateTimeAsDateObject(datetime);
+        return m_da.getDateTimeAsDateObject(datetime);
     }
 
 
     public long getDate()
     {
-	return (long)(datetime/10000);
+        return (long)(datetime/10000);
     }
 
 
 
     public String getDateAsString()
     {
-	return ""+getDate();
+        return ""+getDate();
 //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //return sdf.format(datetime);
 	//dssreturn m_da.getDateTimeAsDateString(datetime);
@@ -250,7 +249,7 @@ public class DailyValuesRow implements Serializable
     {
         //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         //return sdf.format(datetime);
-	return m_da.getDateTimeAsTimeString(datetime);
+        return m_da.getDateTimeAsTimeString(datetime);
     }
 
 
@@ -381,49 +380,49 @@ public class DailyValuesRow implements Serializable
 
     public boolean hasChanged()
     {
-	return changed;
+        return changed;
     }
 
     public boolean isNew()
     {
-	if (m_dv==null)
-	    return true;
-	else
-	    return false;
+        if (m_dv==null)
+            return true;
+        else
+            return false;
     }
 
     public DayValueH getHibernateObject()
     {
-	if (m_dv==null)
-	{
-	    m_dv = new DayValueH();
-	    m_dv.setAct(act);
-	    m_dv.setBg(bg);
-	    m_dv.setCh(ch);
-	    m_dv.setComment(comment);
-	    m_dv.setDt_info(datetime);
-	    m_dv.setIns1(ins1);
-	    m_dv.setIns2(ins2);
+        if (m_dv==null)
+        {
+            m_dv = new DayValueH();
+            m_dv.setAct(act);
+            m_dv.setBg(bg);
+            m_dv.setCh(ch);
+            m_dv.setComment(comment);
+            m_dv.setDt_info(datetime);
+            m_dv.setIns1(ins1);
+            m_dv.setIns2(ins2);
 //	    m_dv.setMeals_ids("");
-	}
-	else
-	{
-	    m_dv.setAct(act);
-	    m_dv.setBg(bg);
-	    m_dv.setCh(ch);
-	    m_dv.setComment(comment);
-	    m_dv.setDt_info(datetime);
-	    m_dv.setIns1(ins1);
-	    m_dv.setIns2(ins2);
-	}
+        }
+        else
+        {
+            m_dv.setAct(act);
+            m_dv.setBg(bg);
+            m_dv.setCh(ch);
+            m_dv.setComment(comment);
+            m_dv.setDt_info(datetime);
+            m_dv.setIns1(ins1);
+            m_dv.setIns2(ins2);
+        }
 
-	return m_dv;
+        return m_dv;
 
     }
 
     public boolean hasHibernateObject()
     {
-	return (m_dv!=null);
+        return (m_dv!=null);
     }
 
 
@@ -431,7 +430,8 @@ public class DailyValuesRow implements Serializable
     //stupid but TableModel needs Objects...
     public Object getValueAt(int column)
     {
-        switch (column) {
+        switch (column) 
+        {
             case 0:
                 return ""+datetime; //m_da.getDateTimeAsTimeString(datetime);
             case 1:
@@ -455,55 +455,55 @@ public class DailyValuesRow implements Serializable
     public void setValueAt(Object aValue, int column)
     {
         switch (column) 
-	{
-	    case 0:
-		{
-		    if (aValue instanceof String)
-			datetime = Long.parseLong((String)aValue);
-		    else if (aValue instanceof Integer)
-			datetime = ((Integer)aValue).intValue();
-		    else if (aValue instanceof Long)
-			datetime = ((Long)aValue).longValue();
-		    changed = true;
-		} break;
-	    case 1:
-		{
-		    bg = m_da.getFloatValue(aValue);
-		    if (bg!=0.0f)
-			changed = true;
-		} break;
+        {
+    	    case 0:
+    		{
+    		    if (aValue instanceof String)
+    			datetime = Long.parseLong((String)aValue);
+    		    else if (aValue instanceof Integer)
+    			datetime = ((Integer)aValue).intValue();
+    		    else if (aValue instanceof Long)
+    			datetime = ((Long)aValue).longValue();
+    		    changed = true;
+    		} break;
+    	    case 1:
+    		{
+    		    bg = m_da.getFloatValue(aValue);
+    		    if (bg!=0.0f)
+    			changed = true;
+    		} break;
             case 2:
-		{
-		    ins1 = m_da.getFloatValue(aValue);
-		    if (ins1!=0.0f)
-			changed = true;
-		} break;
+    		{
+    		    ins1 = m_da.getFloatValue(aValue);
+    		    if (ins1!=0.0f)
+    			changed = true;
+    		} break;
             case 3:
-		{
-		    ins2 = m_da.getFloatValue(aValue);
-		    if (ins2!=0.0f)
-			changed = true;
-		} break;
+    		{
+    		    ins2 = m_da.getFloatValue(aValue);
+    		    if (ins2!=0.0f)
+    			changed = true;
+    		} break;
             case 4:
-		{
-		    ch = m_da.getFloatValue(aValue);
-		    if (ch!=0.0f)
-			changed = true;
-		    changed = true;
-		} break;
+    		{
+    		    ch = m_da.getFloatValue(aValue);
+    		    if (ch!=0.0f)
+    			changed = true;
+    		    changed = true;
+    		} break;
             case 5:
-		{
-		    act = m_da.getIntValue(aValue);
-		    if (act!=0)
-			changed = true;
-		} break;
+    		{
+    		    act = m_da.getIntValue(aValue);
+    		    if (act!=0)
+    			changed = true;
+    		} break;
             case 6:
-		{
-		    if (aValue instanceof String)
-			comment = (String)aValue;
-		    if (comment.length()!=0)
-			changed = true;
-		} break;
+    		{
+    		    if (aValue instanceof String)
+    			comment = (String)aValue;
+    		    if (comment.length()!=0)
+    			changed = true;
+    		} break;
         }
     }
 
@@ -514,7 +514,7 @@ public class DailyValuesRow implements Serializable
 
     public int getDateD()
     {
-	return Integer.parseInt(m_da.getDateTimeAsDateString(datetime));
+        return Integer.parseInt(m_da.getDateTimeAsDateString(datetime));
 	//return -1;
 /*
 	String dat = "";
@@ -530,7 +530,7 @@ public class DailyValuesRow implements Serializable
 
     public int getDateT()
     {
-	return Integer.parseInt(m_da.getDateTimeAsTimeString(datetime));
+        return Integer.parseInt(m_da.getDateTimeAsTimeString(datetime));
 	//return -1;
 	//return datetime.getHours()*100 + datetime.getMinutes();
     }

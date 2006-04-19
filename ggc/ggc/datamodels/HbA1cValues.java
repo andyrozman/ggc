@@ -54,7 +54,7 @@ public class HbA1cValues
         dayCount = 0;
         exp = 0;
         ReadingsPerDay = new int[25];
-	m_dataTable = new Hashtable();
+        m_dataTable = new Hashtable();
     }
 
     public void addDay(float avgBG, int readings)
@@ -69,36 +69,36 @@ public class HbA1cValues
 
     public void addDayValueRow(DailyValuesRow dvr)
     {
-	int date = (int)dvr.getDate();
+        int date = (int)dvr.getDate();
 
-	if (m_dataTable.containsKey(""+date))
-	{
-	    DailyValues dv_int = (DailyValues)m_dataTable.get(""+date);
-	    dv_int.addRow(dvr);
-	}
-	else
-	{
-	    DailyValues dv = new DailyValues();
-	    dv.addRow(dvr);
-	    m_dataTable.put(""+date, dv);
-	}
+        if (m_dataTable.containsKey(""+date))
+        {
+            DailyValues dv_int = (DailyValues)m_dataTable.get(""+date);
+            dv_int.addRow(dvr);
+        }
+        else
+        {
+    	    DailyValues dv = new DailyValues();
+    	    dv.addRow(dvr);
+    	    m_dataTable.put(""+date, dv);
+        }
     }
 
 
     public void processDayValues()
     {
-	for (Enumeration en = m_dataTable.keys(); en.hasMoreElements(); )
-	{
-	    DailyValues dv = (DailyValues)m_dataTable.get((String)en.nextElement());
-	    addDay(dv.getAvgBG(), dv.getBGCount());
-	}
+    	for (Enumeration en = m_dataTable.keys(); en.hasMoreElements(); )
+    	{
+    	    DailyValues dv = (DailyValues)m_dataTable.get((String)en.nextElement());
+    	    addDay(dv.getAvgBG(), dv.getBGCount());
+    	}
 
-	int num = 7 - m_dataTable.size();
-
-	for (int i=0; i<num; i++)
-	{
-	    addDay(0.0f, 0);
-	}
+    	int num = 7 - m_dataTable.size();
+    
+    	for (int i=0; i<num; i++)
+    	{
+    	    addDay(0.0f, 0);
+    	}
 
     }
     
@@ -170,7 +170,8 @@ public class HbA1cValues
 
     public float getPercentOfDaysInClass(int r)
     {
-        switch (r) {
+        switch (r) 
+        {
             case 0:
                 return (ReadingsPerDay[0] + ReadingsPerDay[1] - dayCount + 90) / (float)90;
             case 1:

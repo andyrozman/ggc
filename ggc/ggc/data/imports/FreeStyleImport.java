@@ -30,7 +30,7 @@ public class FreeStyleImport extends SerialMeterImport
 {
 
     //private I18nControl m_ic = I18nControl.getInstance();
-    
+
     private DailyValuesRow[] importedData = new DailyValuesRow[0];
 
     private Charset charset = null;
@@ -62,13 +62,16 @@ public class FreeStyleImport extends SerialMeterImport
         charset = Charset.forName("US-ASCII");
         System.out.println("Charset : " + charset);
 
-        try {
+        try
+        {
             portOutputStream.write('m');
             portOutputStream.write('e');
             portOutputStream.write('m');
 
             //portOutputStream.write(((int) 'm')+((int) 'e')+((int) 'm'));
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
         }
 
         timeOut = 15000;
@@ -95,9 +98,11 @@ public class FreeStyleImport extends SerialMeterImport
     {
         super.serialEvent(event);
 
-        if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+        if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE)
+        {
 
-            try {
+            try
+            {
                 byte[] inputBuffer = createByteBufferFromStream(portInputStream);
 
                 char ident = (char)inputBuffer[0];
@@ -122,7 +127,9 @@ public class FreeStyleImport extends SerialMeterImport
                 recieved++;
                 System.out.println("recieved : " + recieved);
 
-            } catch (Exception exc) {
+            }
+            catch (Exception exc)
+            {
                 System.out.println("Exception while parsing new data. " + exc);
             }
         }
@@ -136,19 +143,27 @@ public class FreeStyleImport extends SerialMeterImport
         StringBuffer inputBuffer = new StringBuffer();
         int newData = 0;
 
-        while (newData != -1) {
-            try {
+        while (newData != -1)
+        {
+            try
+            {
                 newData = stream.read();
-                if (newData == -1) {
+                if (newData == -1)
+                {
                     break;
                 }
-                if ('\r' == (char)newData) {
+                if ('\r' == (char)newData)
+                {
                     inputBuffer.append('\n');
-                } else {
+                }
+                else
+                {
                     System.out.println("byte : " + newData);
                     inputBuffer.append((char)newData);
                 }
-            } catch (IOException ex) {
+            }
+            catch (IOException ex)
+            {
                 System.err.println(ex);
                 return inputBuffer;
             }
@@ -166,22 +181,28 @@ public class FreeStyleImport extends SerialMeterImport
         Vector bytes = new Vector();
         int newData = 0;
 
-        while (newData != -1) {
-            try {
+        while (newData != -1)
+        {
+            try
+            {
                 newData = stream.read();
-                if (newData == -1) {
+                if (newData == -1)
+                {
                     break;
                 }
                 System.out.println("byte : " + newData);
                 bytes.addElement(new Byte((byte)newData));
 
-            } catch (IOException ex) {
+            }
+            catch (IOException ex)
+            {
                 System.err.println(ex);
             }
         }
 
         byte[] allBytes = new byte[bytes.size()];
-        for (int i = 0; i < bytes.size(); i++) {
+        for (int i = 0; i < bytes.size(); i++)
+        {
             allBytes[i] = ((Byte)bytes.elementAt(i)).byteValue();
         }
 

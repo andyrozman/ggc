@@ -11,7 +11,7 @@ package ggc.util;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
 
 
 /**
@@ -40,11 +40,12 @@ public class UIUtilities
 
         button.setPreferredSize(new Dimension(24, 24));
 
-        button.addMouseListener(new MouseListener()
+        button.addMouseListener(new MouseAdapter()
         {
             public void mouseEntered(MouseEvent e)
             {
-                if (button.isEnabled()) {
+                if (button.isEnabled()) 
+		{
                     button.setBorder(BorderFactory.createLineBorder(new Color(8, 36, 106), 1));
                     button.setBackground(new Color(180, 190, 213));
                 }
@@ -55,10 +56,10 @@ public class UIUtilities
                 button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
                 button.setBackground(new Color(213, 210, 205));
             }
-
-            public void mouseClicked(MouseEvent e)
-            {
-            }
+/*
+            public void mouseClicked(MouseEvent e) 
+	    { 
+	    }
 
             public void mousePressed(MouseEvent e)
             {
@@ -66,7 +67,7 @@ public class UIUtilities
 
             public void mouseReleased(MouseEvent e)
             {
-            }
+            } */
 
         });
         return button;

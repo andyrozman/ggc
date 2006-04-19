@@ -73,24 +73,25 @@ public abstract class AbstractGraphView extends JComponent
 
         BGunit = m_da.getSettings().getBG_unit();
 
-	switch (BGunit) 
-	{
-	    case DataAccess.BG_MMOL:
-		maxBG = 44;
-		minBG = 0;
-		unitLabel = "mmol/l";
-		break;
-	    case DataAccess.BG_MGDL:
-	    default:
-		maxBG = 450;
-		minBG = 0;
-		unitLabel = "mg/dl";
-		break;
+    	switch (BGunit) 
+    	{
+    	    case DataAccess.BG_MMOL:
+    		maxBG = 44;
+    		minBG = 0;
+    		unitLabel = "mmol/l";
+    		break;
+    	    case DataAccess.BG_MGDL:
+    	    default:
+    		maxBG = 450;
+    		minBG = 0;
+    		unitLabel = "mg/dl";
+    		break;
         }
         BGDiff = maxBG - minBG;
-        
+            
         getRenderingQuality();
     }
+
 
     protected abstract void drawFramework(Graphics2D g2D);
 
@@ -146,18 +147,18 @@ public abstract class AbstractGraphView extends JComponent
 
     protected int DateTimetoCoord(long datetime)
     {
-	return timeToCoordReal(datetime);
+        return timeToCoordReal(datetime);
     }
 
 
     private int timeToCoordReal(long datetime)
     {
-	String dt = m_da.getDateTimeAsTimeString(datetime);
+        String dt = m_da.getDateTimeAsTimeString(datetime);
 
-	int timeH = Integer.parseInt(dt.substring(0,2));
-	int timeM = Integer.parseInt(dt.substring(0,2));
+        int timeH = Integer.parseInt(dt.substring(0,2));
+        int timeM = Integer.parseInt(dt.substring(0,2));
 
-	return (int)(leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
+        return (int)(leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
     }
 
 
@@ -174,7 +175,7 @@ public abstract class AbstractGraphView extends JComponent
 
     protected int TimetoCoord(long datetime)
     {
-	return timeToCoordReal(datetime);
+        return timeToCoordReal(datetime);
     }
 
 
@@ -186,7 +187,8 @@ public abstract class AbstractGraphView extends JComponent
     private void getRenderingQuality()
     {
 
-       switch (m_da.getSettings().getAntiAliasing()) {
+       switch (m_da.getSettings().getAntiAliasing()) 
+       {
             case 1:
                 oAA = RenderingHints.VALUE_ANTIALIAS_OFF;
                 break;
@@ -198,7 +200,8 @@ public abstract class AbstractGraphView extends JComponent
         }
         //System.out.println("rendering " + oAA);
 
-        switch (m_da.getSettings().getColorRendering()) {
+        switch (m_da.getSettings().getColorRendering()) 
+        {
             case 1:
                 oCR = RenderingHints.VALUE_COLOR_RENDER_QUALITY;
                 break;
@@ -210,7 +213,8 @@ public abstract class AbstractGraphView extends JComponent
         }
         //System.out.println("colorrend " + oCR);
 
-        switch (m_da.getSettings().getDithering()) {
+        switch (m_da.getSettings().getDithering()) 
+        {
             case 1:
                 oD = RenderingHints.VALUE_DITHER_DISABLE;
                 break;
@@ -222,7 +226,8 @@ public abstract class AbstractGraphView extends JComponent
         }
         //System.out.println("dithering " + oD);
 
-        switch (m_da.getSettings().getFractionalMetrics()) {
+        switch (m_da.getSettings().getFractionalMetrics()) 
+        {
             case 1:
                 oFM = RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
                 break;
@@ -234,7 +239,8 @@ public abstract class AbstractGraphView extends JComponent
         }
         //System.out.println("fractional " + oFM);
 
-        switch (m_da.getSettings().getInterpolation()) {
+        switch (m_da.getSettings().getInterpolation()) 
+        {
             case 1:
                 oI = RenderingHints.VALUE_INTERPOLATION_BICUBIC;
                 break;
@@ -246,7 +252,8 @@ public abstract class AbstractGraphView extends JComponent
         }
         //System.out.println("interpolation " + oI);
 
-        switch (m_da.getSettings().getRendering()) {
+        switch (m_da.getSettings().getRendering()) 
+        {
             case 1:
                 oR = RenderingHints.VALUE_RENDER_QUALITY;
                 break;
@@ -258,7 +265,8 @@ public abstract class AbstractGraphView extends JComponent
         }
         //System.out.println("rendering " + oR);
 
-        switch (m_da.getSettings().getTextAntiAliasing()) {
+        switch (m_da.getSettings().getTextAntiAliasing()) 
+        {
             case 1:
                 oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;
                 break;
