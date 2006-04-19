@@ -47,57 +47,57 @@ public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
     public PrefNutritionConfPane()
     {
         init();
-	getLocalData();
-	getDbData();
+        getLocalData();
+        getDbData();
     }
 
     public void getDbData()
     {
-	if (MainFrame.dbH.isConnected())
-	{
-	    lab_db.setText("PROBLEM");
-	}
-	else
-	{
-	    lab_db.setText(m_ic.getMessage("DB_IS_NOT_CONNECTED"));
-	}
+        /*
+    	if (MainFrame.dbH.isConnected())
+    	{
+    	    lab_db.setText("PROBLEM");
+    	}
+    	else
+    	{
+    	    lab_db.setText(m_ic.getMessage("DB_IS_NOT_CONNECTED"));
+    	}
+        */
 
     }
 
 
     public void getLocalData()
     {
-	File fl = new File("../data/nutrition/");
-	boolean found = false;
+    	File fl = new File("../data/nutrition/");
+    	boolean found = false;
+    
+    	if (!fl.exists())
+    	{
+    	    found = false;
+    	}
+    	else
+    	{
+    	    String fls[] = fl.list();
+    
+    	    for (int i=0; i<fls.length; i++)
+    	    {
+        		if (fls[i].startsWith("SR"))
+        		{
+        		    lab_file.setText(fls[i].substring(0, fls[i].indexOf("_")));
+        
+        		    found = true;
+        		    break;
+        		}
+    	    }
+    
+    
+    
+    	}
 
-	if (!fl.exists())
-	{
-	    found = false;
-	}
-	else
-	{
-	    String fls[] = fl.list();
+    	if (!found)
+    	    lab_file.setText(m_ic.getMessage("NO_LOCAL_DATA_AVAILABLE"));
 
-	    for (int i=0; i<fls.length; i++)
-	    {
-		if (fls[i].startsWith("SR"))
-		{
-		    lab_file.setText(fls[i].substring(0, fls[i].indexOf("_")));
-
-		    found = true;
-		    break;
-		}
-	    }
-
-
-
-	}
-
-	if (!found)
-	    lab_file.setText(m_ic.getMessage("NO_LOCAL_DATA_AVAILABLE"));
-
-
-   
     }
 
     public void init()
