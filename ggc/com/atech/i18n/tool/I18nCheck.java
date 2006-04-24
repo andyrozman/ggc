@@ -86,7 +86,7 @@ public class I18nCheck
                 if (sub.length()<=3) 
                 {
                     this.lang_short.add(sub);
-                    //System.out.println(sub);
+                    System.out.println(sub);
                 }
             }
         }

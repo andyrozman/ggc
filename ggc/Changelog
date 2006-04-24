@@ -1,3 +1,7 @@
+
+    * update of slovene language file
+    * some of translation done
+
 2006-04-19 Andy Rozman <andyrozman@users.sourceforge.net>
     * changes to README file
     * added two tasks into ant: style_devel, style_deploy, which are used for 
