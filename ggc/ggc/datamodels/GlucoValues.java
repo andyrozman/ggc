@@ -39,7 +39,7 @@ import java.util.Hashtable;
 
 import javax.swing.event.EventListenerList;
 
-import ggc.db.DataBaseHandler;
+//import ggc.db.DataBaseHandler;
 import ggc.event.GlucoValueEvent;
 import ggc.event.GlucoValueEventListener;
 import ggc.util.DataAccess;
@@ -147,8 +147,8 @@ public class GlucoValues extends DailyValues
 
     public void setNewRow(DailyValuesRow dRow)
     {
-        DataBaseHandler dbH = DataBaseHandler.getInstance();
-        if (!dbH.dateTimeExists(dRow.getDateTimeAsDate())) 
+        //DataBaseHandler dbH = DataBaseHandler.getInstance();
+        if (!m_da.getDb().dateTimeExists(dRow.getDateTime())) 
         {
             addRow(dRow);
             //rMF.getResTableModel().fireTableChanged(null);

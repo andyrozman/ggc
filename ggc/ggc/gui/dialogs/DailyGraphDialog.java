@@ -53,14 +53,14 @@ public class DailyGraphDialog extends JDialog
         super(dialog, "DailyGraphFrame", true);
         setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
 
-	dGV = new DailyGraphView();
+        dGV = new DailyGraphView();
 
-	Rectangle rec = dialog.getBounds();
-	int x = rec.x + (rec.width/2);
-	int y = rec.y + (rec.height/2);
+        Rectangle rec = dialog.getBounds();
+        int x = rec.x + (rec.width/2);
+        int y = rec.y + (rec.height/2);
 
-	setBounds(x-200, y-150, 400, 300);
-	addWindowListener(new CloseListener());
+        setBounds(x-200, y-150, 400, 300);
+        addWindowListener(new CloseListener());
 
         //setBounds(300, 300, 300, 300);
         //setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -71,23 +71,23 @@ public class DailyGraphDialog extends JDialog
 
     public DailyGraphDialog(JDialog dialog, DailyValues dV)
     {
-	super(dialog, "DailyGraphFrame", true);
-	setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
-
-	dGV = new DailyGraphView();
-
-	Rectangle rec = dialog.getBounds();
-	int x = rec.x + (rec.width/2);
-	int y = rec.y + (rec.height/2);
-
-	setBounds(x-200, y-150, 400, 300);
-	addWindowListener(new CloseListener());
-
-	dGV.setDailyValues(dV);
-	//setBounds(300, 300, 300, 300);
-	//setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	getContentPane().add(dGV, BorderLayout.CENTER);
-	setVisible(true);
+    	super(dialog, "DailyGraphFrame", true);
+    	setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
+    
+    	dGV = new DailyGraphView();
+    
+    	Rectangle rec = dialog.getBounds();
+    	int x = rec.x + (rec.width/2);
+    	int y = rec.y + (rec.height/2);
+    
+    	setBounds(x-200, y-150, 400, 300);
+    	addWindowListener(new CloseListener());
+    
+    	dGV.setDailyValues(dV);
+    	//setBounds(300, 300, 300, 300);
+    	//setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    	getContentPane().add(dGV, BorderLayout.CENTER);
+    	setVisible(true);
     }
 
 
@@ -126,8 +126,8 @@ public class DailyGraphDialog extends JDialog
 
     private void closeDialog()
     {
-	dGV = null;
-	this.dispose();
+    	dGV = null;
+    	this.dispose();
     }
 
 

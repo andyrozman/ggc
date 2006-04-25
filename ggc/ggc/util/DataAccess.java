@@ -46,6 +46,7 @@ import ggc.db.datalayer.GGCDb;
 import ggc.db.datalayer.GGCDbLoader;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
+import ggc.gui.little.GGCLittle;
 import ggc.nutrition.GGCTreeRoot;
 import ggc.db.tool.DbToolApplicationGGC;
 
@@ -82,21 +83,19 @@ public class DataAccess
 
 	public MainFrame m_main = null;
 
+    public GGCLittle m_main_little = null;
+
 	public Font fonts[] = null;
 
 	public GGCTreeRoot m_nutrition_treeroot = null;
-
 	public GGCTreeRoot m_meals_treeroot = null;
 
 	// daily and weekly data
 	private GregorianCalendar m_date = null, m_dateStart = null;
 
 	private HbA1cValues m_HbA1c = null;
-
 	private DailyValues m_dvalues = null;
-
 	private WeekValues m_dRangeValues = null;
-
 	private MeterManager m_meterManager = null;
 	private GGCProperties m_settings = null;
 	private DbToolApplicationGGC m_configFile = null;
@@ -178,6 +177,20 @@ public class DataAccess
 
 		return s_da;
 	}
+
+
+    public static DataAccess createInstance(GGCLittle main) 
+	{
+		if (s_da == null)
+		{
+			//GGCDb db = new GGCDb();
+			s_da = new DataAccess();
+			s_da.setParent(main);
+		}
+
+		return s_da;
+	}
+
 
 	/*
 	 static public DataAccess getInstance()
@@ -365,9 +378,16 @@ public class DataAccess
 	// ******          Parent handling (for UIs)          *****    
 	// ********************************************************
 
-	public void setParent(MainFrame main) 
+
+    public void setParent(MainFrame main) 
+    {
+        m_main = main;
+    }
+
+
+	public void setParent(GGCLittle main) 
 	{
-		m_main = main;
+		m_main_little = main;
 	}
 
 
@@ -375,6 +395,12 @@ public class DataAccess
 	{
 		return m_main;
 	}
+
+
+    public GGCLittle getParentLittle() 
+    {
+        return m_main_little;
+    }
 
 
 	public I18nControl getI18nInstance() 
@@ -810,6 +836,28 @@ public class DataAccess
 		//m_dateEnd = day;
 
 		m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
+	}
+
+
+	public synchronized void loadDailySettingsLittle(GregorianCalendar day, boolean force) 
+    {
+		if ((m_db == null) || (m_db.getLoadStatus() < 2))
+			return;
+
+		if ((isSameDay(day)) && (!force))
+			return;
+
+		System.out.println("(Re)Load daily settings Little - (force:" + force + ")");
+
+		m_date = day;
+		//m_HbA1c = m_db.getHbA1c(day);
+		m_dvalues = m_db.getDayStats(day);
+
+		//m_dateStart = (GregorianCalendar) day.clone();
+		//m_dateStart.add(GregorianCalendar.DAY_OF_MONTH, -6);
+		//m_dateEnd = day;
+
+		//m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
 	}
 
 	public HbA1cValues getHbA1c(GregorianCalendar day) 

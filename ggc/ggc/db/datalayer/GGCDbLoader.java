@@ -49,10 +49,11 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 
 import ggc.GGC;
-import ggc.db.HibernateHandler;
+//import ggc.db.HibernateHandler;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.util.DataAccess;
+import ggc.gui.little.GGCLittle;
 
 
 public class GGCDbLoader extends Thread
@@ -88,33 +89,38 @@ public class GGCDbLoader extends Thread
 
         GGCDb db = new GGCDb(m_da);
         m_bar.setDatabaseName(db.db_conn_name);
-//        System.out.println("GGCDbLoader: Init");
         db.initDb();
-        //m_da.m_db = db;
         m_bar.setDbStatus(StatusBar.DB_INIT_OK); 
 
-//        System.out.println("GGCDbLoader: Static Data");
         db.loadStaticData();
         m_bar.setDbStatus(StatusBar.DB_LOAD);
         m_da.m_db = db;
 
-	//try { Thread.sleep(2000); } catch(Exception ex) { }
-
-        System.out.println("GGC Load");
-    	m_da.loadDailySettings(new GregorianCalendar(), true);
-    	HibernateHandler.getInstance().connected = true;
+        if (m_da.getParent()!=null)
+            m_da.loadDailySettings(new GregorianCalendar(), true);
+        else
+            m_da.loadDailySettingsLittle(new GregorianCalendar(), true);
 
         m_bar.setDatabaseName(db.db_conn_name);
 
-    	MainFrame mf = m_da.getParent();
-    	mf.setDbActions(true);
-    	mf.informationPanel.refreshPanels();
-
-	    m_da.loadSettingsFromDb();
-
-        mf.informationPanel.refreshPanels();
-
-        mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
+        if (m_da.getParent()!=null)
+        {
+            // GGC
+            MainFrame mf = m_da.getParent();
+            mf.setDbActions(true);
+            m_da.loadSettingsFromDb();
+            mf.informationPanel.refreshPanels();
+            mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
+        }
+        else
+        {
+            /// GGC Little
+            GGCLittle mf = m_da.getParentLittle();
+            mf.setDbActions(true);
+            m_da.loadSettingsFromDb();
+            mf.informationPanel.refreshPanels();
+            mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
+        }
     }
   
 

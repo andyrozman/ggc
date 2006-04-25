@@ -64,7 +64,7 @@ import ggc.datamodels.DailyValues;
 import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.HbA1cValues;
 import ggc.datamodels.WeekValues;
-import ggc.db.DataBaseHandler;
+//import ggc.db.DataBaseHandler;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.hibernate.DatabaseObjectHibernate;
@@ -129,6 +129,10 @@ public class GGCDb
         openHibernateSimple();
     }
 
+    public boolean isDbStarted()
+    {
+        return (this.m_loadStatus==3);
+    }
 
     public void closeDb()
     {
@@ -150,20 +154,20 @@ public class GGCDb
     {
         sessions = m_cfg.buildSessionFactory();
         m_session = sessions.openSession();
-	m_loadStatus = 2;
+        m_loadStatus = 2;
     }
 
 
     public int getLoadStatus()
     {
-	return m_loadStatus;
+        return m_loadStatus;
     }
 
 
     public void loadStaticData()
     {
         m_da.m_nutrition_treeroot = new GGCTreeRoot(1, this);
-	m_loadStatus = 3;
+        m_loadStatus = 3;
     }
 
 
@@ -683,40 +687,40 @@ public class GGCDb
     public DailyValues getDayStats(GregorianCalendar day)
     {
 
-	if (m_loadStatus<2)
-	    return null;
-
-	System.out.println("Hibernate: getDayStats()");
-	DailyValues dV = new DailyValues();
-
-	try 
-	{
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String sDay = sdf.format(day.getTime());
-
-	    Query q = getSession().createQuery("SELECT dv from " + 
-					       "ggc.db.hibernate.DayValueH as dv " +
-					       "WHERE dv.dt_info >=  " + 
-					       sDay + "0000 AND dv.dt_info <= " + sDay + 
-					       "2359 ORDER BY dv.dt_info");
-
-	    Iterator it = q.list().iterator();
-
-	    while (it.hasNext())
-	    {
-		DayValueH dv = (DayValueH)it.next();
-
-		DailyValuesRow dVR = new DailyValuesRow(dv);
-		dV.setNewRow(dVR);
-	    }
-
-	} 
-	catch (Exception e) 
-	{
-	    System.err.println(e);
-	}
-
-	return dV;
+    	if (m_loadStatus<2)
+    	    return null;
+    
+    	System.out.println("Hibernate: getDayStats()");
+    	DailyValues dV = new DailyValues();
+    
+    	try 
+    	{
+    	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    	    String sDay = sdf.format(day.getTime());
+    
+    	    Query q = getSession().createQuery("SELECT dv from " + 
+    					       "ggc.db.hibernate.DayValueH as dv " +
+    					       "WHERE dv.dt_info >=  " + 
+    					       sDay + "0000 AND dv.dt_info <= " + sDay + 
+    					       "2359 ORDER BY dv.dt_info");
+    
+    	    Iterator it = q.list().iterator();
+    
+    	    while (it.hasNext())
+    	    {
+    		DayValueH dv = (DayValueH)it.next();
+    
+    		DailyValuesRow dVR = new DailyValuesRow(dv);
+    		dV.setNewRow(dVR);
+    	    }
+    
+    	} 
+    	catch (Exception e) 
+    	{
+    	    System.err.println(e);
+    	}
+    
+    	return dV;
     }
 
 
@@ -777,18 +781,18 @@ public class GGCDb
     public void saveDayStats(DailyValues dV)
     {
 
-	System.out.println("Hibernate: saveDayStats()");
+        System.out.println("Hibernate: saveDayStats()");
 
 
-	if (dV.hasChanged()) 
-	{
+        if (dV.hasChanged()) 
+        {
             if (debug)
                 System.out.println("SDS: Has changed");
 
             Session sess = getSession();
 
-	    try
-	    {
+            try
+            {
 
                 // deleted entries
 
@@ -811,50 +815,75 @@ public class GGCDb
 
                 // see if any of elements were changed or added
                 
-		for (int i = 0; i < dV.getRowCount(); i++) 
-		{
-		    DailyValuesRow dwr = dV.getRowAt(i);
-
-		    if (dwr.isNew())
-		    {
+        		for (int i = 0; i < dV.getRowCount(); i++) 
+        		{
+        		    DailyValuesRow dwr = dV.getRowAt(i);
+        
+        		    if (dwr.isNew())
+        		    {
                         if (debug)
                             System.out.println("  New");
 
-			Transaction tx = sess.beginTransaction();
-
-			DayValueH dvh = dwr.getHibernateObject();
-			Long l = (Long)sess.save(dvh);
-
-			dvh.setId(l.longValue());
-			tx.commit();
-		    }
-		    else if (dwr.hasChanged())
-		    {
-			Transaction tx = sess.beginTransaction();
+            			Transaction tx = sess.beginTransaction();
+            
+            			DayValueH dvh = dwr.getHibernateObject();
+            			Long l = (Long)sess.save(dvh);
+            
+            			dvh.setId(l.longValue());
+            			tx.commit();
+        		    }
+                    else if (dwr.hasChanged())
+                    {
+                        Transaction tx = sess.beginTransaction();
 
                         if (debug)
                             System.out.println("  Changed");
 
                         DayValueH dvh = dwr.getHibernateObject();
-			sess.update(dvh);
+                        sess.update(dvh);
 
-			tx.commit();
-		    }
+                        tx.commit();
+                    }
 
-		} // for
+                } // for
 
-	    }
-	    catch(Exception ex)
-	    {
-		System.out.println("saveDayStats: " + ex);
-	    }
+            }
+            catch(Exception ex)
+            {
+                System.out.println("saveDayStats: " + ex);
+            }
 
-	    
-	} // hasChanged
-	else
+        } // hasChanged
+        else
         {
             if (debug)
                 System.out.println("SDS: Has not changed");
+        }
+
+    }
+
+    public boolean dateTimeExists(long datetime)
+    {
+        if (m_loadStatus<2)
+            return false;
+
+        if (debug)
+            System.out.println("Hibernate: dateTimeExists()");
+
+        DailyValues dV = new DailyValues();
+
+        try 
+        {
+            Query q = getSession().createQuery("SELECT dv from " + 
+                               "ggc.db.hibernate.DayValueH as dv " +
+                               "WHERE dv.dt_info = " + datetime );
+
+            return (q.list().size()==1);
+        } 
+        catch (Exception e) 
+        {
+            System.err.println(e);
+            return false;
         }
 
     }

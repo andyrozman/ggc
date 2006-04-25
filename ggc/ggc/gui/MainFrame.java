@@ -36,7 +36,7 @@ import javax.swing.text.View;
 
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
-import ggc.db.DataBaseHandler;
+//import ggc.db.DataBaseHandler;
 import ggc.gui.panels.info.InfoPanel;
 import ggc.nutrition.NutritionTreeDialog;
 import ggc.print.PrintMonthlyReport;
@@ -92,7 +92,7 @@ public class MainFrame extends JFrame
 
     public InfoPanel informationPanel;
 
-    public static DataBaseHandler s_dbH;
+    //public static DataBaseHandler s_dbH;
 
     private DataAccess m_da = null;
 
@@ -106,7 +106,7 @@ public class MainFrame extends JFrame
     static 
     {
 
-	//DataAccess.getInstance();
+        //DataAccess.getInstance();
 
         //MainFrame.setLookAndFeel("coronaHthemepack.zip");
         //MainFrame.setLookAndFeel("midnightthemepack.zip");
@@ -294,8 +294,8 @@ public class MainFrame extends JFrame
 
         statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
-        s_dbH = DataBaseHandler.getInstance();
-        s_dbH.setStatus();
+        //s_dbH = DataBaseHandler.getInstance();
+        //s_dbH.setStatus();
 
         //Information Portal Setup
         informationPanel = new InfoPanel();
@@ -319,7 +319,7 @@ public class MainFrame extends JFrame
         viewFrequencyGraphAction.setEnabled(opened);
         viewHbA1cAction.setEnabled(opened);
         readMeterAction.setEnabled(opened);
-        s_dbH.setStatus();
+        //s_dbH.setStatus();
     }
 
     private void close() 

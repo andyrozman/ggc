@@ -30,15 +30,15 @@ package ggc.gui.panels.info;
 
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
 import ggc.datamodels.HbA1cValues;
-import ggc.db.DataBaseHandler;
+import ggc.db.datalayer.GGCDb;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
-import java.util.Date;
 
 
 public class HbA1cInfoPanel extends AbstractInfoPanel
@@ -49,6 +49,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     private JLabel lblAvgBG;
     private JLabel lblReadings;
     private JLabel lblReadingsPerDay;
+    private DataAccess m_da = DataAccess.getInstance();
 
     public HbA1cInfoPanel()
     {
@@ -82,22 +83,27 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     {
         HbA1cValues hbVal = null;
 
-        if (DataBaseHandler.getInstance().isConnected())
-	    hbVal = DataAccess.getInstance().getHbA1c(new GregorianCalendar());
+        GGCDb db = m_da.getDb();
+
+        if ((db!=null) && (db.isDbStarted()))
+            hbVal = m_da.getHbA1c(new GregorianCalendar());
+
+//        if (DataBaseHandler.getInstance().isConnected())
+//	    hbVal = DataAccess.getInstance().getHbA1c(new GregorianCalendar());
         //    hbVal = DataBaseHandler.getInstance().getHbA1c(new Date(System.currentTimeMillis()));
 
         DecimalFormat df = new DecimalFormat("#0.00");
 
         if (hbVal != null) 
-	{
+        {
             lblHbA1c.setText(df.format(hbVal.getHbA1c_Method1()) + " %");
             lblVal.setText(hbVal.getValuation());
             lblAvgBG.setText(df.format(hbVal.getAvgBG()));
             lblReadings.setText(hbVal.getReadings() + "");
             lblReadingsPerDay.setText(df.format(hbVal.getReadingsPerDay()));
         } 
-	else 
-	{
+        else 
+        {
             lblHbA1c.setText(m_ic.getMessage("NO_DATASOURCE"));
             lblVal.setText("");
             lblAvgBG.setText("");

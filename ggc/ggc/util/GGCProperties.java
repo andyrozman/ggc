@@ -102,7 +102,7 @@ public class GGCProperties //extends GGCPropertiesHelper
     public void setColorSchemes(Hashtable table, boolean isnew)
     {
         this.m_color_schemes = table;
-	this.changed_scheme = isnew;
+        this.changed_scheme = isnew;
     }
 
     public Hashtable getColorSchemes()

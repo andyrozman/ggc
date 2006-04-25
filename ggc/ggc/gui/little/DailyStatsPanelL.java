@@ -20,15 +20,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *  Filename: DailyStatsFrame.java
- *  Purpose:  Enter and view all data for one day.
+ *  Purpose:  Enter and view all data for one day. (fix)
  *
- *  Author:   schultd
- *      Changes by andy 
- *
+ *  Author:   andyrozman
  */
 
-package ggc.gui.dialogs;
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
 
+package ggc.gui.little;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,29 +44,26 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import org.hibernate.sql.Delete;
-
 import ggc.datamodels.DailyStatsTableModel;
 import ggc.datamodels.DailyValues;
-import ggc.datamodels.DailyValuesRow;
 import ggc.datamodels.calendar.CalendarEvent;
 import ggc.datamodels.calendar.CalendarListener;
 //import ggc.db.DataBaseHandler;
 import ggc.db.datalayer.GGCDb;
-import ggc.gui.MainFrame;
 import ggc.gui.calendar.CalendarPane;
 import ggc.gui.dialogs.*;
-import ggc.gui.dialogs.DailyGraphDialog;
+import ggc.gui.dialogs.DailyRowDialog;
+//import ggc.little.GGCLittle;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
+import ggc.gui.panels.info.AbstractInfoPanel;
 
 
-public class DailyStatsDialog extends JDialog implements ActionListener
+public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel implements ActionListener
 {
     
-    private I18nControl m_ic = I18nControl.getInstance();    
-    private DataAccess m_da = DataAccess.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();    
 
     DailyStatsTableModel model = null;
     JScrollPane resultsPane;
@@ -74,6 +71,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
     JTable table;
 
     public boolean save_needed = false;
+
 
     CalendarPane calPane;
 
@@ -88,29 +86,19 @@ public class DailyStatsDialog extends JDialog implements ActionListener
     JButton saveButton;
     //private DailyGraphDialog dailyGraphWindow;
     DailyValues dayData;
+//    private DataBaseHandler dbH = DataBaseHandler.getInstance();
+//    private static DailyStatsFrame singleton = null;
 
-    GGCDb m_db = m_da.getDb();
-    //private DataBaseHandler dbH = DataBaseHandler.getInstance();
-    // 
-    // 
-    //private static DailyStatsFrame singleton = null;
-
+    //private DataAccess m_da = DataAccess.getInstance();
+    private GGCDb m_db = m_da.getDb();
     //private GGCProperties props = GGCProperties.getInstance();
+    private GGCLittle m_little = null;
 
-
-    public DailyStatsDialog(JFrame parent)
+    public DailyStatsPanelL(GGCLittle little)
     {
-        super(parent, "DailyStatsFrame", false);
-        setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
-
-    	Rectangle rec = parent.getBounds();
-    	int x = rec.x + (rec.width/2);
-    	int y = rec.y + (rec.height/2);
-    
-    	setBounds(x-275, y-250, 550, 500);
-    
-    	//setBounds(150, 150, 550, 500);
-
+        super("Daily VALUES:");
+        m_little = little;
+        //setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
         init();
     }
 
@@ -139,32 +127,59 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
     protected void close()
     {
-        DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
-       	MainFrame mf = DataAccess.getInstance().getParent();
-        mf.informationPanel.refreshPanels();
-        this.dispose();
+        //DailyGraphFrame.closeMe();
+        //this.dispose();
+
+        //dayData.saveDay();
+
+        //singleton = null;
+    }
+
+    public void refreshInfo()
+    {
+        System.out.println("Refresh Data Table");
+        DailyValues dv = m_da.getDayStats(new GregorianCalendar());
+
+        if (dv!=null)
+        {
+            System.out.println("DV found");
+
+            dayData = dv;
+            model.setDailyValues(dayData);
+            this.model.fireTableChanged(null);
+
+            
+
+        }
+        else
+            System.out.println("DV NOT found");
+        
     }
 
     private void init()
     {
-        //setBounds(150, 150, 550, 500);
+//        setBounds(150, 150, 550, 500);
+        //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        //addWindowListener(new CloseListener());
+        this.setLayout(new GridLayout(1,1));
 
+/*
         //Panel for Insulin Stats
         JPanel InsPanel = new JPanel(new GridLayout(3, 6));
         InsPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN")+":"));
 
-        InsPanel.add(new JLabel(m_da.getSettings().getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(props.getIns1Abbr() + ":"));
         InsPanel.add(sumIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + m_da.getSettings().getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + props.getIns1Abbr() + ":"));
         InsPanel.add(avgIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + m_da.getSettings().getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + props.getIns1Abbr() + ":"));
         InsPanel.add(doseIns1 = new JLabel());
 
-        InsPanel.add(new JLabel(m_da.getSettings().getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(props.getIns2Abbr() + ":"));
         InsPanel.add(sumIns2 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + m_da.getSettings().getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVG")+" " + props.getIns2Abbr() + ":"));
         InsPanel.add(avgIns2 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + m_da.getSettings().getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSE")+" " + props.getIns2Abbr() + ":"));
         InsPanel.add(doseIns2 = new JLabel());
 
         InsPanel.add(new JLabel(m_ic.getMessage("TOTAL")+":"));
@@ -201,54 +216,51 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         BGPanel.add(lowestBG = new JLabel());
 
         Box dayStats = Box.createVerticalBox();
-        dayStats.add(InsPanel);
-        dayStats.add(BUPanel);
-        dayStats.add(BGPanel);
+    //    dayStats.add(InsPanel);
+    //    dayStats.add(BUPanel);
+    //    dayStats.add(BGPanel);
 
         JPanel dayHeader = new JPanel();
         dayHeader.setLayout(new BorderLayout());
 
         JPanel dayCalendar = new JPanel();
         dayCalendar.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("DATE")+":"));
-
-        calPane = new CalendarPane();
+    */
+/*
+        calPane = new calendarPane();
         calPane.addCalendarListener(new CalendarListener()
         {
             public void dateHasChanged(CalendarEvent e)
             {
-                //System.out.println("dateHasChanged");
-                dayData = m_da.getDb().getDayStats(e.getNewCalendar());
-                
+                dayData = dbH.getDayStats(new Date(e.getNewDate()));
                 model.setDailyValues(dayData);
                 //saveButton.setEnabled(false);
                 updateLabels();
-                getTableModel().fireTableChanged(null);
-//x                dailyGraphWindow.setDailyValues(dayData);
-
-                //DailyGraphFrame.setDailyValues(dayData);
+                DailyGraphFrame.setDailyValues(dayData);
             }
         });
-        //calPane.setBounds(10, 10, 300, 200);
         dayCalendar.add(calPane);
 
 
         dayHeader.add(dayCalendar, BorderLayout.WEST);
         dayHeader.add(dayStats, BorderLayout.CENTER);
-
-        dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
-
-        //dbH.getDayStats(new Grenew Date(System.currentTimeMillis()));
-        //dailyGraphWindow.setDailyValues(dayData);
+*/
+        dayData = m_da.getDayStats(new GregorianCalendar());
+        //dbH.getDayStats(new Date(System.currentTimeMillis()));
         //DailyGraphFrame.setDailyValues(dayData);
+
+        if (dayData==null)
+        {
+            dayData = new DailyValues();
+        }
 
         model = new DailyStatsTableModel(dayData);
         model.addTableModelListener(new TableModelListener()
         {
             public void tableChanged(TableModelEvent e)
             {
-                //dailyGraphWindow.repaint();
-                //DailyGraphFrame.repaint(); //.redraw();
-                updateLabels();
+                //DailyGraphFrame.redraw();
+                //updateLabels();
                 //saveButton.setEnabled(true);
             }
         });
@@ -256,22 +268,24 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         resultsPane = new JScrollPane(table);
 
-
-	Dimension dim = new Dimension(100, 20);
+/*
+	Dimension dim = new Dimension(120, 20);
         
 	JPanel gg = new JPanel();
 	gg.setLayout(new BorderLayout());
 	//gg.setPreferredSize(dim);
+*/
 
-
+/*
 	JPanel EntryBox1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 2));
 	
+	
 
-        JButton tButton = new JButton(m_ic.getMessage("GRAPH"));
+        JButton tButton = new JButton(m_ic.getMessage("TTT"));
         tButton.setPreferredSize(dim);
 	//tButton.setMaximumSize(dim);
 	tButton.setActionCommand("show_daily_graph");
-	tButton.addActionListener(this);
+//	tButton.addActionListener(this);
 
 	EntryBox1.add(tButton);
 
@@ -284,41 +298,79 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         JButton addButton = new JButton(m_ic.getMessage("ADD_ROW"));
         addButton.setPreferredSize(dim);
 	addButton.setActionCommand("add_row");
-	addButton.addActionListener(this);
-	EntryBox.add(addButton);
-
-	JButton editButton = new JButton(m_ic.getMessage("EDIT_ROW"));
-	editButton.setPreferredSize(dim);
-	editButton.setActionCommand("edit_row");
-	editButton.addActionListener(this);
-        EntryBox.add(editButton);
+    //    addButton.addActionListener(this);
+        
+/*	addButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+                AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
+                aRF.show();
+            }
+        }); */
+/*        EntryBox.add(addButton);
 
         JButton delButton = new JButton(m_ic.getMessage("DELETE_ROW"));
         delButton.setPreferredSize(dim);
 	delButton.setActionCommand("delete_row");
-	delButton.addActionListener(this);
-        EntryBox.add(delButton);
+  //      delButton.addActionListener(this);
+/*        delButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                dayData.deleteRow(table.getSelectedRow());
+                model.fireTableChanged(null);
+            }
+        }); */
+/*        EntryBox.add(delButton);
 
         saveButton = new JButton(m_ic.getMessage("CLOSE"));
         saveButton.setPreferredSize(dim);
 	saveButton.setActionCommand("close");
-	saveButton.addActionListener(this);
-        EntryBox.add(saveButton);
+//	saveButton.addActionListener(this);
+        
+	/*saveButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                dayData.saveDay();
+            }
+        }); */
+        //saveButton.setEnabled(false);
+/*        EntryBox.add(saveButton);
+
 
 	gg.add(EntryBox, BorderLayout.EAST);
+	*/
 
-        getContentPane().add(resultsPane, BorderLayout.CENTER);
-        getContentPane().add(dayHeader, BorderLayout.NORTH);
+        add(resultsPane, BorderLayout.CENTER);
+//        add(dayHeader, BorderLayout.NORTH);
         //getContentPane().add(EntryBox, BorderLayout.SOUTH);
-	getContentPane().add(gg, BorderLayout.SOUTH);
+//	add(gg, BorderLayout.SOUTH);
 
-        updateLabels();
+        //enableEvents(AWTEvent.WINDOW_EVENT_MASK);
+        //setVisible(true);
 
-	setVisible(true);
+//        updateLabels();
+
+	//System.out.println("Little: " + m_little);
+	//System.out.println("Info panel: " + m_little.m_infoPanel);
+	//System.out.println("Control: " + m_little.m_infoPanel.control);
+
+	//m_little.m_infoPanel.control.addActionCommands(this);
+
+
+
+        setVisible(true);
     }
+
+
+
 
     public void updateLabels()
     {
+        /*
         if (dayData == null)
             return;
 
@@ -344,6 +396,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         highestBG.setText(df.format(dayData.getHighestBG()));
         lowestBG.setText(df.format(dayData.getLowestBG()));
         readings.setText(dayData.getBGCount() + "");
+        */
     }
 
 /*
@@ -359,12 +412,12 @@ public class DailyStatsDialog extends JDialog implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
 
-    	String command = e.getActionCommand();
-    
-    	if (command.equals("add_row"))
-    	{
-    	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-    
+        String command = e.getActionCommand();
+/*
+        if (command.equals("add_row"))
+        {
+            SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+
             DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
 
             if (aRF.actionSuccesful()) 
@@ -372,13 +425,13 @@ public class DailyStatsDialog extends JDialog implements ActionListener
                 m_db.saveDayStats(dayData);
                 this.model.fireTableChanged(null);
             }
-    	}
-    	else if (command.equals("edit_row"))
-    	{
-    	    //SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-    	    //EditRowFrame eRF = EditRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
-    	    //aRF.show();
-    
+        }
+        else if (command.equals("edit_row"))
+        {
+            //SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+            //EditRowFrame eRF = EditRowFrame.getInstance(model, dayData, sf.format(calPane.getSelectedDate()));
+            //aRF.show();
+
             if (table.getSelectedRow()==-1) 
             {
                 JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
@@ -394,43 +447,72 @@ public class DailyStatsDialog extends JDialog implements ActionListener
                 m_db.saveDayStats(dayData);
                 this.model.fireTableChanged(null);
             }
-    
-    	}
-    	else if (command.equals("delete_row"))
-    	{
+
+        }
+        else if (command.equals("delete_row"))
+        {
             if (table.getSelectedRow()==-1) 
             {
                 JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-    
-    	    try 
-    	    {
+
+            try 
+            {
                 dayData.deleteRow(table.getSelectedRow());
                 model.fireTableChanged(null);
                 m_db.saveDayStats(dayData);
-    	    }
-    	    catch (Exception ex) 
-    	    {
+            }
+            catch (Exception ex) 
+            {
                 System.out.println("DailyStatsDialog:Action:Delete Row: " + ex);
-    	    }
-    	}
-    	else if (command.equals("close"))
-    	{
+            }
+        }
+        else if (command.equals("close"))
+        {
             this.close();
-    	}
-    	else if (command.equals("show_daily_graph"))
-    	{
-    	    DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
-    	    //dgd.setDailyValues(this.dayData);
-    	}
+        }
+        else if (command.equals("show_daily_graph"))
+        {
+            //XXXDailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
+            //dgd.setDailyValues(this.dayData);
+        }
         else
-            System.out.println("DailyStatsDialog:Unknown Action: " + command);
-
-
-    }
+            System.out.println("DailyStatsPanel:Unknown Action: " + command);
+*/
 
 /*
+        String command = e.getActionCommand();
+
+        if (command.equals("add_row"))
+        {
+            SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+
+            DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), m_little);
+
+            if (aRF.actionSuccesful()) 
+            {
+                dbH.saveDayStats(dayData);
+                this.model.fireTableChanged(null);
+            }
+        }
+        else if (command.equals("delete_row"))
+        {
+            dayData.deleteRow(table.getSelectedRow());
+            model.fireTableChanged(null);
+        }
+        else if (command.equals("close"))
+        {
+            close();
+        }
+        else if (command.equals("show_daily_graph"))
+        {
+            
+        }
+*/
+    }
+
+
     private class CloseListener extends WindowAdapter
     {
         public void windowClosing(WindowEvent e)
@@ -438,5 +520,5 @@ public class DailyStatsDialog extends JDialog implements ActionListener
             close();
         }
     }
-  */  
+    
 }

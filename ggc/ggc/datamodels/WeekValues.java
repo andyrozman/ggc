@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import ggc.db.DataBaseHandler;
+//import ggc.db.DataBaseHandler;
 import ggc.util.I18nControl;
 
 import ggc.datamodels.DailyValues;

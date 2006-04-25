@@ -19,31 +19,44 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: GeneralInfoPanel.java
+ *  Filename: LGeneralInfoPanel.java
  *  Purpose:  Shows general information about your Person. Like your name,
- *            Insulin used, your personal BG bounds, ...
+ *            Insulin used, your personal BG bounds, ... (fix)
  *
- *  Author:   schultd
+ *  Author:   andyrozman
  */
 
-package ggc.gui.panels.info;
+// WORK IN PROGRESS, PLEASE DO NOT TOUCH
+// andyrozman
 
-import ggc.util.I18nControl;
 
-import javax.swing.*;
+package ggc.gui.little;
+
 import java.awt.*;
 
+import javax.swing.*;
 
-public class GeneralInfoPanel extends AbstractInfoPanel
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
+
+import ggc.gui.panels.info.AbstractInfoPanel;
+
+
+public class GeneralInfoPanelL extends AbstractInfoPanel
 {
     private JLabel lblName = new JLabel();
     private JLabel lblIns1 = new JLabel();
     private JLabel lblIns2 = new JLabel();
+
     private JLabel lblMeter = new JLabel();
     private JLabel lblUnit = new JLabel();
+    //GGCProperties props = GGCProperties.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();
+    //DataAccess m_da = DataAccess.getInstance();
 
 
-    public GeneralInfoPanel()
+    public GeneralInfoPanelL()
     {
         super(I18nControl.getInstance().getMessage("GENERAL_INFORMATION")+":");
         init();
@@ -52,6 +65,16 @@ public class GeneralInfoPanel extends AbstractInfoPanel
 
     public void init()
     {
+        /*
+        setLayout(new GridLayout(0, 2));
+
+        add(new JLabel(m_ic.getMessage("YOUR_NAME")+":"));
+        add(lblName);
+        add(new JLabel(m_ic.getMessage("BOLUS_INSULIN")+":"));
+        add(lblIns1);
+        add(new JLabel(m_ic.getMessage("BASAL_INSULIN")+":"));
+        add(lblIns2);*/
+
         setLayout(new GridLayout(0, 2));
 
         add(new JLabel(m_ic.getMessage("YOUR_NAME")+":"));
@@ -65,8 +88,9 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
         add(lblUnit);
 
-        add(new JLabel());
-        add(new JLabel());
+        
+        
+
 
     }
 
@@ -78,11 +102,4 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         lblMeter.setText(m_da.getSettings().getMeterTypeString() + "  (" + m_da.getSettings().getMeterPort() + ")");
         lblUnit.setText(m_da.getSettings().getBG_unitString());
     }
-
-/*
-        <property name="meter_type"  type="int" />
-        <property name="meter_port"  type="string" length="50" />
-        <property name="bg_unit"  type="int" />  <!-- 1= mmol/l, 2=mg/dl -->
-*/
-
 }

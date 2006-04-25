@@ -38,7 +38,7 @@ import java.util.GregorianCalendar;
 import javax.swing.*;
 
 import ggc.datamodels.HbA1cValues;
-import ggc.db.DataBaseHandler;
+//import ggc.db.DataBaseHandler;
 import ggc.gui.MainFrame;
 import ggc.gui.view.HbA1cView;
 import ggc.util.DataAccess;
@@ -189,17 +189,17 @@ public class HbA1cDialog extends JDialog implements ActionListener
 
     private void closeDialog()
     {
-	hbView = null;
-	this.dispose();
+        hbView = null;
+        this.dispose();
     }
 
 
     private class CloseListener extends WindowAdapter
     {
-	public void windowClosing(WindowEvent e)
-	{
-	    closeDialog();
-	}
+    	public void windowClosing(WindowEvent e)
+    	{
+    	    closeDialog();
+    	}
     }
 
 
@@ -215,14 +215,10 @@ public class HbA1cDialog extends JDialog implements ActionListener
 
         if (action.equals("close")) 
         {
-	    this.closeDialog();
+            this.closeDialog();
         }
-	else if (action.equals("close")) 
-	{
-	    this.closeDialog();
-	}
         else
-            System.out.println("Unknown command: " + action);
+            System.out.println("HbA1cDialog:Unknown command: " + action);
 
 
     }
