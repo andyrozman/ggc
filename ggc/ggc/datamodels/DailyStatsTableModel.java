@@ -48,6 +48,11 @@ public class DailyStatsTableModel extends AbstractTableModel
         fireTableChanged(null);
     }
 
+    public DailyValues getDailyValues()
+    {
+        return this.dayData;
+    }
+
     public void setDailyValues(DailyValues dayData)
     {
         this.dayData = dayData;

@@ -148,9 +148,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         //if (add) 
         //    setTitle(m_ic.getMessage("ADD_NEW_ROW"));
         //else
-            setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
+        setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
 
-        sDate = ndr.getDateAsString().replace('/', '.');
+        sDate = ndr.getDateAsString();
         this.m_dailyValuesRow = ndr;
         
         this.m_add_action = false;
@@ -162,7 +162,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     public void initValues()
     {
-        System.out.println("initValues");
+        //stem.out.println("initValues");
         // to do
         TimeField.setText(this.m_dailyValuesRow.getTimeAsString());
         BGField.setText(""+this.m_dailyValuesRow.getBG());
@@ -174,21 +174,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     }
 
 
-
-    /*
-    public static AddRowFrame getInstance(AbstractTableModel m, DailyValues ndV) {
-        if (singleton == null)
-            singleton = new AddRowFrame(m, ndV);
-        return singleton;
-    }
-
-    public static AddRowFrame getInstance(AbstractTableModel m,
-            DailyValues ndV, String nDate) {
-        if (singleton == null)
-            singleton = new AddRowFrame(m, ndV, nDate);
-        return singleton;
-    }
-    */
 
     private void init() 
     {

@@ -40,11 +40,15 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import ggc.util.I18nControl;
+
 import org.hibernate.Hibernate;
 
 
 public class StatusBar extends JPanel
 {
+    I18nControl m_ic = I18nControl.getInstance();
+
     private JLabel lblMessage = null;
     private JLabel lblDataSource = null;
     private JLabel lblLed = null;
@@ -57,24 +61,15 @@ public class StatusBar extends JPanel
     public StatusBar()
     {
 
-	statusIcons = new ImageIcon[3];
+        statusIcons = new ImageIcon[3];
 
         statusIcons[0] = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
         statusIcons[1] = new ImageIcon(getClass().getResource("/icons/led_yellow.gif"));
         statusIcons[2] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));
 
-
         lblMessage = new JLabel();
         lblMessage.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
         lblMessage.setPreferredSize(new Dimension(400, 18));
-
-	/*
-        lblDataSource = new JLabel();
-        lblDataSource.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-        lblDataSource.setPreferredSize(new Dimension(200, 18));
-	*/
-
-//        ImageIcon ii = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
 
         JPanel pan = new JPanel();
         pan.setPreferredSize(new Dimension(385, 18));
@@ -82,19 +77,11 @@ public class StatusBar extends JPanel
         SpringLayout layout = new SpringLayout();
         pan.setLayout(layout); //new java.awt.FlowLayout());
 
-
         lblName = new JLabel();
-        lblName.setText("Database [Unknown]: ");
+        setDatabaseName(m_ic.getMessage("UNKNOWN"));
         pan.add(lblName);
 
-
-
         lblLed = new JLabel(statusIcons[0]);
-        //lblLed.Se
-        //(lblLed.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-        //lblLed.setIcon(ii);
-        //lblLed.setDisabledIcon(ii);
-        //lblLed.setEnabledIcon(ii);
         pan.add(lblLed, BorderLayout.EAST);
 
         layout.putConstraint(SpringLayout.WEST, lblName,
@@ -109,23 +96,10 @@ public class StatusBar extends JPanel
                      1,
                      SpringLayout.NORTH, pan);
 
-
-//        ImageIcon ii = new ImageIcon("/icons/led_gray.gif");
-        //System.out.println(ii);
-
-        //blLed.setText("");
-        //lblLed.setPreferredSize(new Dimension(80, 18));
-
-
         setLayout(new BorderLayout(2, 2));
         this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         add(lblMessage, BorderLayout.WEST);
-        //add(lblDataSource, BorderLayout.CENTER);
-        //add(lblLed, BorderLayout.EAST);
         add(pan, BorderLayout.EAST);
-
-	//DataBaseHandler.getInstance().setStatus();
-
     }
 
     /*
@@ -160,7 +134,7 @@ public class StatusBar extends JPanel
 
     public void setDatabaseName(String dbName)
     {
-	lblName.setText("Database [" + dbName +"]:");
+        lblName.setText(m_ic.getMessage("DATABASE") + " [" + dbName +"]:");
     }
 
 }

@@ -48,12 +48,14 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+
 import ggc.GGC;
 //import ggc.db.HibernateHandler;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.util.DataAccess;
 import ggc.gui.little.GGCLittle;
+import ggc.gui.little.StatusBarL;
 
 
 public class GGCDbLoader extends Thread
@@ -61,6 +63,7 @@ public class GGCDbLoader extends Thread
 
     DataAccess m_da = null;
     StatusBar m_bar = null;
+    StatusBarL m_barL = null;
 
     public boolean run_once = false;
 
@@ -70,6 +73,14 @@ public class GGCDbLoader extends Thread
         m_bar = bar;
 //        System.out.println("GGCDbLoader inited");
     }
+
+
+    public GGCDbLoader(DataAccess da, StatusBarL bar2)
+    {
+        m_da = da;
+        m_barL = bar2;
+    }
+
 
     public void run()
     {
@@ -88,12 +99,18 @@ public class GGCDbLoader extends Thread
         }
 
         GGCDb db = new GGCDb(m_da);
-        m_bar.setDatabaseName(db.db_conn_name);
+
+        if (m_bar!=null)
+            m_bar.setDatabaseName(db.db_conn_name);
+        else
+            m_barL.setDatabaseName(db.db_conn_name);
+
+
         db.initDb();
-        m_bar.setDbStatus(StatusBar.DB_INIT_OK); 
+        setDbStatus(StatusBar.DB_INIT_OK); 
 
         db.loadStaticData();
-        m_bar.setDbStatus(StatusBar.DB_LOAD);
+        setDbStatus(StatusBar.DB_LOAD);
         m_da.m_db = db;
 
         if (m_da.getParent()!=null)
@@ -101,7 +118,7 @@ public class GGCDbLoader extends Thread
         else
             m_da.loadDailySettingsLittle(new GregorianCalendar(), true);
 
-        m_bar.setDatabaseName(db.db_conn_name);
+        //m_bar.setDatabaseName(db.db_conn_name);
 
         if (m_da.getParent()!=null)
         {
@@ -118,11 +135,20 @@ public class GGCDbLoader extends Thread
             GGCLittle mf = m_da.getParentLittle();
             mf.setDbActions(true);
             m_da.loadSettingsFromDb();
+            mf.informationPanel.dailyStats.model.setDailyValues(m_da.getDayStats(new GregorianCalendar()));
             mf.informationPanel.refreshPanels();
             mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
         }
     }
-  
+
+    public void setDbStatus(int status)
+    {
+        if (m_bar!=null)
+            m_bar.setDbStatus(status);
+        else
+            m_barL.setDbStatus(status);
+    }
+
 
 }
 

@@ -45,45 +45,37 @@ public class MainLittlePanel extends JPanel
     GGCLittle m_little = null;
 
     public DailyStatsControlsL control = null;
-    public GeneralInfoPanelL general = null;
-    public DailyStatsPanelL dailyStats = null;
+    public GeneralInfoPanelL   general = null;
+    public DailyStatsPanelL    dailyStats = null;
+    public ScheduleInfoPanelL  schedule = null;
 
 
     public MainLittlePanel(GGCLittle little)
     {
         m_little = little;
         setLayout(new GridLayout(2, 1));
-        setBackground(Color.white);
+        //setBackground(Color.white);
 
     	JPanel pane = new JPanel();
     	pane.setLayout(new GridLayout(1, 2));
+
     	pane.add(general = new GeneralInfoPanelL());
-        this.vInfoPanels.add(general);
-
-        JPanel control_app_panel = new JPanel();
-
-        control_app_panel.setLayout(new GridLayout(2, 1));
-        control_app_panel.add(control = new DailyStatsControlsL(little));
-        control_app_panel.add(new JPanel()); //new DailyStatsControlsPanel(little));
         
-    	pane.add( control_app_panel);
+        JPanel control_app_panel = new JPanel();
+        control_app_panel.setLayout(new GridLayout(2, 1));
+        control_app_panel.add(control = new DailyStatsControlsL(this));
+        control_app_panel.add(schedule = new ScheduleInfoPanelL()); //new DailyStatsControlsPanel(little));
+        
+    	pane.add(control_app_panel);
 
-	//ggc.little.
-	
         add(pane);
-	//add(new LGeneralInfoPanel());
-	add(dailyStats = new DailyStatsPanelL(little));
+        add(dailyStats = new DailyStatsPanelL());
 
-    this.vInfoPanels.add(dailyStats);
+        this.vInfoPanels.add(general);
+        this.vInfoPanels.add(control);
+        this.vInfoPanels.add(schedule);
+        this.vInfoPanels.add(dailyStats);
 
-	//control.addActionCommands(dailyStats);
-
-        //vInfoPanels.add(new GeneralInfoPanel());
-//        vInfoPanels.add(new HbA1cInfoPanel());
-//        vInfoPanels.add(new ScheduleInfoPanel());
-        //vInfoPanels.add(new StatisticInfoPanel());
-
-      //  addPanels();
     }
 
     

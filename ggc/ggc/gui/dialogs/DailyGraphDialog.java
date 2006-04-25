@@ -60,10 +60,10 @@ public class DailyGraphDialog extends JDialog
         int y = rec.y + (rec.height/2);
 
         setBounds(x-200, y-150, 400, 300);
-        addWindowListener(new CloseListener());
+        //dWindowListener(new CloseListener());
 
         //setBounds(300, 300, 300, 300);
-        //setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(dGV, BorderLayout.CENTER);
         setVisible(true);
     }
@@ -71,6 +71,9 @@ public class DailyGraphDialog extends JDialog
 
     public DailyGraphDialog(JDialog dialog, DailyValues dV)
     {
+        this(dialog);
+        setDailyValues(dV);
+/*
     	super(dialog, "DailyGraphFrame", true);
     	setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
     
@@ -81,13 +84,36 @@ public class DailyGraphDialog extends JDialog
     	int y = rec.y + (rec.height/2);
     
     	setBounds(x-200, y-150, 400, 300);
-    	addWindowListener(new CloseListener());
+    	//addWindowListener(new CloseListener());
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     
     	dGV.setDailyValues(dV);
     	//setBounds(300, 300, 300, 300);
     	//setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     	getContentPane().add(dGV, BorderLayout.CENTER);
     	setVisible(true);
+        */
+    }
+
+
+    public DailyGraphDialog(JFrame frame)
+    {
+        super(frame, "DailyGraphFrame", true);
+        setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
+
+        dGV = new DailyGraphView();
+
+        Rectangle rec = frame.getBounds();
+        int x = rec.x + (rec.width/2);
+        int y = rec.y + (rec.height/2);
+
+        setBounds(x-200, y-150, 400, 300);
+        //dWindowListener(new CloseListener());
+
+        //setBounds(300, 300, 300, 300);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        getContentPane().add(dGV, BorderLayout.CENTER);
+        setVisible(true);
     }
 
 
@@ -100,28 +126,7 @@ public class DailyGraphDialog extends JDialog
     }
 
 
-/*
-    public static void showMe()
-    {
-        if (singleton == null)
-            singleton = new DailyGraphFrame();
-        singleton.show();
-    }
 
-    public static void closeMe()
-    {
-        if (singleton != null) {
-            singleton.dispose();
-            singleton = null;
-        }
-    }
-
-    public static void redraw()
-    {
-        if (singleton != null)
-            singleton.repaint();
-    }
-*/
 
 
     private void closeDialog()
@@ -131,29 +136,4 @@ public class DailyGraphDialog extends JDialog
     }
 
 
-    private class CloseListener extends WindowAdapter
-    {
-	public void windowClosing(WindowEvent e)
-	{
-	    closeDialog();
-	}
-    }
-
-
-
-    /**
-     * Invoked when an action occurs.
-     */
-    public void actionPerformed(ActionEvent e) 
-    {
-        String action = e.getActionCommand();
-
-        if (action.equals("")) 
-        {
-        }
-        else
-            System.out.println("Unknown command: " + action);
-
-
-    }
 }

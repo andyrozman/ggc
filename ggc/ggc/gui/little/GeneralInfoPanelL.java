@@ -65,16 +65,6 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
 
     public void init()
     {
-        /*
-        setLayout(new GridLayout(0, 2));
-
-        add(new JLabel(m_ic.getMessage("YOUR_NAME")+":"));
-        add(lblName);
-        add(new JLabel(m_ic.getMessage("BOLUS_INSULIN")+":"));
-        add(lblIns1);
-        add(new JLabel(m_ic.getMessage("BASAL_INSULIN")+":"));
-        add(lblIns2);*/
-
         setLayout(new GridLayout(0, 2));
 
         add(new JLabel(m_ic.getMessage("YOUR_NAME")+":"));
@@ -87,11 +77,7 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
         add(lblMeter);
         add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
         add(lblUnit);
-
         
-        
-
-
     }
 
     public void refreshInfo()

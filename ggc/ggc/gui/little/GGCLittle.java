@@ -66,7 +66,7 @@ public class GGCLittle extends JFrame implements WindowListener
 
     // GUI
     public MainLittlePanel informationPanel = null;
-    public StatusBar statusPanel;
+    public StatusBarL statusPanel;
 
     //fields
     private JToolBar toolBar = new JToolBar();
@@ -109,7 +109,7 @@ public class GGCLittle extends JFrame implements WindowListener
         m_da = DataAccess.createInstance(this);
         m_ic = I18nControl.getInstance();
 
-        statusPanel = new StatusBar();
+        statusPanel = new StatusBarL();
 
         setTitle(title + " (" /*+ full_version*/ + ")");
 

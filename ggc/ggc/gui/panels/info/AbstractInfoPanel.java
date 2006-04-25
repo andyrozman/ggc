@@ -27,17 +27,17 @@
 
 package ggc.gui.panels.info;
 
-
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
 
 import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
+
+import javax.swing.border.TitledBorder;
 
 
 public abstract class AbstractInfoPanel extends JPanel
 {
-    //GGCProperties props = GGCProperties.getInstance();
     protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccess m_da = DataAccess.getInstance();
 
@@ -48,7 +48,11 @@ public abstract class AbstractInfoPanel extends JPanel
         setOpaque(false);
     }
 
-    //public void setTitle(String title)
+    public void setTitle(String title)
+    {
+        TitledBorder tb = (TitledBorder)this.getBorder();
+        tb.setTitle(title);
+    }
 
     public abstract void refreshInfo();
 }

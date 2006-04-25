@@ -239,7 +239,7 @@ public class DailyValuesRow implements Serializable
 
     public String getDateAsString()
     {
-        return ""+getDate();
+        return m_da.getDateTimeAsDateString(datetime);
 //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //return sdf.format(datetime);
 	//dssreturn m_da.getDateTimeAsDateString(datetime);

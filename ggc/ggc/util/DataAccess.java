@@ -47,6 +47,8 @@ import ggc.db.datalayer.GGCDbLoader;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
+import ggc.gui.little.StatusBarL;
+
 import ggc.nutrition.GGCTreeRoot;
 import ggc.db.tool.DbToolApplicationGGC;
 
@@ -213,6 +215,14 @@ public class DataAccess
 		GGCDbLoader loader = new GGCDbLoader(this, bar);
 		loader.start();
 	}
+
+    public void startDb(StatusBarL bar2) 
+    {
+        GGCDbLoader loader = new GGCDbLoader(this, bar2);
+        loader.start();
+    }
+
+
 
 	public GGCDb getDb() 
 	{
@@ -477,6 +487,13 @@ public class DataAccess
 	// ********************************************************
 	// ******          Dates and Times Handling           *****    
 	// ********************************************************
+
+
+    public String getCurrentDateString()
+    {
+        GregorianCalendar gc = new GregorianCalendar();
+        return gc.get(GregorianCalendar.DAY_OF_MONTH) + "." + (gc.get(GregorianCalendar.MONTH)+1) + "." + gc.get(GregorianCalendar.YEAR);
+    }
 
 
 	public String[] getMonthsArray()

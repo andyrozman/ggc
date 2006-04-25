@@ -2,90 +2,88 @@ TO-DO LIST
 ==========
 
 
-URGENT:
--------
-
 Level 1 (High Priority): 
 ----------------------------
 * Printing: 
-        o  Data gather
-        o  Simple print sheet
-        o  Detailed print sheet
+    o  Data gather (MonthlyValues)
+    o  Simple print sheet
+    o  Detailed print sheet
 * Configuration:
-	o  colors
-        o  L&F       
+    o  colors
+    o  rendering
+    o  printing
+    o  L&F       
+
 
 
 Level 2 (Medium 1 Priority):
 ----------------------------
 
+* DB TOOL
+    o ???
+
 * Nutrition: 
-        o  Config
-        o  View nutrition data in tree
+    o  Config
+    o  View nutrition data in tree
 * Properties: 
-        o  no error if no configuration present
-        o  Default database 
-        o  Colors as separate table
+    o  no error if no configuration present
+    o  Default database 
+    o  Colors as separate table
 * Look and feel:
-        o  Loading of selected L&F
+    o  Loading of selected L&F
+
 
 
 Level 3 (Medium 2 Priority):
 ----------------------------
 
+
 Level 4 (Medium 3 Priority):
 ----------------------------
 
 * Hibernate for Database handling
-	o  Nutrition db
-	o  Meals db
-	o  Apointments db
+    o  Nutrition db
+    o  Meals db
+    o  Apointments db
 * Entering daily data: 
-        o  Time displayed as selectable entry
-        o  Add CH entry through meals
-        o  Add daily entry must be changed (GUI is very...)
-	o  option in which type we enter
+    o  Time displayed as selectable entry
+    o  Add CH entry through meals
+    o  Add daily entry must be changed (GUI is very...)
+    o  option in which type we enter
+    o  delete should ask: are you sure?
+* CONVERT DATA
+    o File
+    o MySQL
+    o HSQL
+
 
 
 Level 5 (Low Priority):
 ----------------------------
 
 * Appointments: 
-        o  Create GUI
-        o  Database entries
-        o  Add/Edit/Delete
-        o  View
+    o  Create GUI
+    o  Database entries
+    o  Add/Edit/Delete
+    o  View
 * Meals: 
-        o  Config
-        o  GUI Tree
-        o  Database
-        o  Add/Edit/Delete
+    o  Config
+    o  GUI Tree
+    o  Database
+    o  Add/Edit/Delete
 * GGC Little: 
-        o  Add/Edit/Delete
-        o  Daily graph
-        o  Show day
-        o  GUI
+    o  GUI
+    o  about
+    o  meter import, add/edit should be centered
 * Adding support for mmol/l (now we have only mG/DL):
-        o  graphs
-        o  database 
-
-
-EXTERNAL APPLICATIONS:
----------------------
-
-DB TOOL
-* ??
-
-CONVERT DATA
-* File
-* MySQL
-* HSQL
-* GGC Hibernate 0.2.1.4
+    o  graphs
+    o  database (write in database as mg/dl only, and display as what is set)
 
 
 
-IN NEAR FUTURE
---------------
+Level 6 (IN NEAR FUTURE):
+-------------------------
+
 * I18n Language: German
 * I18n Language: French
 * I18n Language: Italian
@@ -93,11 +91,11 @@ IN NEAR FUTURE
 * Language check
 
 
-IN FAR FUTURE:
---------------
+
+Level 7 (IN FAR FUTURE/MAYBE):
+------------------------------
+
 * Pump support
-
-
 
 
 
@@ -138,6 +136,12 @@ DONE
         o  move some of them from config to code (classes for meters)
 * Configuration:
         o  low/high BGs
+
+* GGC Little: 
+        o  Add/Edit/Delete
+        o  Daily graph
+        o  Show day
+
 
 
 I18N TOOL
