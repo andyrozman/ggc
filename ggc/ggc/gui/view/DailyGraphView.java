@@ -45,27 +45,27 @@ public class DailyGraphView extends AbstractGraphView
     {
         super();
         dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
-	this.scheme = m_da.getSettings().getSelectedColorScheme();
+        this.scheme = m_da.getSettings().getSelectedColorScheme();
     }
 
     public DailyGraphView(ColorSchemeH scheme, DailyValues dv) 
     {
-	super();
-	dayData = dv;
-	this.scheme = scheme; 
+        super();
+        dayData = dv;
+        this.scheme = scheme; 
     }
 
 
     public void setScheme(ColorSchemeH sh)
     {
-	this.scheme = sh; 
-	this.redraw();
+        this.scheme = sh; 
+        this.redraw();
     }
 
 
     public void redraw()
     {
-	this.repaint();
+        this.repaint();
     }
 
 
@@ -94,8 +94,12 @@ public class DailyGraphView extends AbstractGraphView
 
     protected void drawValues(Graphics2D g2D) 
     {
-        if (dayData == null)
+        if (dayData == null) 
             return;
+
+        if (this.scheme==null)
+            return;
+
 
         GeneralPath polyline = new GeneralPath();
         int tmpC = 0;
@@ -157,6 +161,9 @@ public class DailyGraphView extends AbstractGraphView
 
     protected void drawFramework(Graphics2D g2D) 
     {
+        if (this.scheme==null)
+            return;
+
         Dimension dim = getSize();
         int h = dim.height, w = dim.width;
 
@@ -174,21 +181,21 @@ public class DailyGraphView extends AbstractGraphView
 
         // add unit label to line
         g2D.drawString(unitLabel, 5, upperSpace - 10);   
-	//System.out.println(unitLabel);
+        //System.out.println(unitLabel);
         for (int i = 0; i <= counter; i++) 
-	{
-	    //System.out.println((maxBG - BGDiff / counter * i));
+        {
+            //System.out.println((maxBG - BGDiff / counter * i));
 
             markPos = upperSpace + i * diffH / counter;
-	    g2D.drawString((maxBG - BGDiff / counter * i) + "", 5, markPos + 5);
-	    //g2D.drawString((maxBG - BGDiff / counter * i) + "", 5, markPos + 5);
+            g2D.drawString((maxBG - BGDiff / counter * i) + "", 5, markPos + 5);
+            //g2D.drawString((maxBG - BGDiff / counter * i) + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }
 
         g2D.drawLine(leftSpace, h - lowerSpace, w - rightSpace, h - lowerSpace);
 
-	for (int i = 0; i <= 6; i++) 
-	{
+        for (int i = 0; i <= 6; i++) 
+        {
             markPos = leftSpace + i * (diffW) / 6;
             g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace + 5);
             g2D.drawString(4 * i + ":00", markPos - 10, h - lowerSpace + 20);

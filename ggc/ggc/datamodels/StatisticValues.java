@@ -219,10 +219,11 @@ public class StatisticValues
             return 0;
     }
 
+
     public float getAvgIns2()
     {
         if(countIns2 > 0)
-            return sumIns1 / countIns2;
+            return sumIns2 / countIns2;
         else
             return 0;
     }

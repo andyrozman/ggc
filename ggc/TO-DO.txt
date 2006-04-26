@@ -27,8 +27,7 @@ Level 2 (Medium 1 Priority):
     o  View nutrition data in tree
 * Properties: 
     o  no error if no configuration present
-    o  Default database 
-    o  Colors as separate table
+
 * Look and feel:
     o  Loading of selected L&F
 
@@ -134,7 +133,8 @@ DONE
 * Properties: 
         o  put them into database
         o  move some of them from config to code (classes for meters)
-* Configuration:
+	o  Default database 
+	o  Colors as separate table* Configuration:
         o  low/high BGs
 
 * GGC Little: 
