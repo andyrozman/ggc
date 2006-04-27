@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.GGCDb;
+import ggc.db.GGCDb;
 import ggc.util.DataAccess;
 
 public class DbToolTreeRoot 

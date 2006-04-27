@@ -8,11 +8,13 @@ Level 1 (High Priority):
     o  Data gather (MonthlyValues)
     o  Simple print sheet
     o  Detailed print sheet
+    o  Print dialog
 * Configuration:
     o  colors
     o  rendering
     o  printing
-    o  L&F       
+    o  L&F  
+    o  Db Selection     
 
 
 
@@ -86,8 +88,8 @@ Level 6 (IN NEAR FUTURE):
 * I18n Language: German
 * I18n Language: French
 * I18n Language: Italian
-* I18n Language: ...
-* Language check
+* I18n Language: Slovenian
+
 
 
 
@@ -95,6 +97,7 @@ Level 7 (IN FAR FUTURE/MAYBE):
 ------------------------------
 
 * Pump support
+* Add aditional meters
 
 
 
