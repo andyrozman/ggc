@@ -1,3 +1,12 @@
+2006-04-27 (v0.2.2.1) Andy Rozman <andyrozman@users.sourceforge.net>
+    * moved ggc.datamodels to ggc.data
+    * moved GGCDb and GGCDbLoader to ggc.db (from ggc.db.datalayer)
+    * changes to configuration (Colors)
+    * start working on printing (added PrintingDialog, MonthlyValues)
+    * looking at meter import tool, trying to fix all exception that are thrown
+      if no meter present
+
+
 2006-04-25 (v0.2.1.13) Andy Rozman <andyrozman@users.sourceforge.net>
     * Removal of DatabaseHandler and HibernateHandler. All classes were changed to 
       use Db directly trhorugh DataAccess static class
