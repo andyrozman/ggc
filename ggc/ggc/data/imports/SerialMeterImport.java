@@ -20,7 +20,7 @@ import javax.comm.*;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
-import ggc.datamodels.DailyValuesRow;
+import ggc.data.DailyValuesRow;
 import ggc.event.ImportEvent;
 import ggc.event.ImportEventListener;
 import ggc.util.DataAccess;

@@ -8,7 +8,7 @@
 package ggc.data.imports;
 
 
-import ggc.datamodels.DailyValuesRow;
+import ggc.data.DailyValuesRow;
 import ggc.event.ImportEvent;
 
 import java.io.IOException;

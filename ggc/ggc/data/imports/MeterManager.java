@@ -29,7 +29,7 @@
 
 package ggc.data.imports;
 
-import ggc.datamodels.DailyValuesRow;
+import ggc.data.DailyValuesRow;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 

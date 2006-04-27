@@ -28,7 +28,7 @@
 package ggc.data.imports;
 
 
-import ggc.datamodels.DailyValuesRow;
+import ggc.data.DailyValuesRow;
 
 import java.io.IOException;
 import java.sql.Date;
