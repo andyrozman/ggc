@@ -28,7 +28,7 @@
 package ggc.gui.dialogs;
 
 
-import ggc.datamodels.DailyValues;
+import ggc.data.DailyValues;
 import ggc.util.I18nControl;
 import ggc.gui.view.DailyGraphView;
 

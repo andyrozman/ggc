@@ -28,8 +28,8 @@
 package ggc.gui.view;
 
 
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.GlucoValues;
+import ggc.data.DailyValues;
+import ggc.data.GlucoValues;
 
 import java.awt.*;
 

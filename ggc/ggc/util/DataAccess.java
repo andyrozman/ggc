@@ -39,11 +39,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ggc.data.imports.MeterManager;
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.HbA1cValues;
-import ggc.datamodels.WeekValues;
-import ggc.db.datalayer.GGCDb;
-import ggc.db.datalayer.GGCDbLoader;
+import ggc.data.DailyValues;
+import ggc.data.HbA1cValues;
+import ggc.data.WeeklyValues;
+import ggc.db.GGCDb;
+import ggc.db.GGCDbLoader;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
@@ -97,7 +97,7 @@ public class DataAccess
 
 	private HbA1cValues m_HbA1c = null;
 	private DailyValues m_dvalues = null;
-	private WeekValues m_dRangeValues = null;
+	private WeeklyValues m_dRangeValues = null;
 	private MeterManager m_meterManager = null;
 	private GGCProperties m_settings = null;
 	private DbToolApplicationGGC m_configFile = null;
@@ -899,7 +899,7 @@ public class DataAccess
 		return m_dvalues;
 	}
 
-	public WeekValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end) 
+	public WeeklyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end) 
     {
 		//System.out.println("DA::getDayStatsRange");
 

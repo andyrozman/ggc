@@ -8,8 +8,8 @@
 package ggc.gui;
 
 
-import ggc.datamodels.DailyValuesRow;
-import ggc.datamodels.GlucoTableModel;
+import ggc.data.DailyValuesRow;
+import ggc.data.GlucoTableModel;
 import ggc.util.I18nControl;
 import ggc.util.UIUtilities;
 
@@ -32,6 +32,13 @@ public class GlucoTable extends JTable
 {
 
     private I18nControl m_ic = I18nControl.getInstance();    
+    GlucoTableModel model = null;
+
+    public GlucoTable()
+    {
+        super();
+        setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    }
 
     public GlucoTable(GlucoTableModel model)
     {
@@ -53,6 +60,26 @@ public class GlucoTable extends JTable
         return header;
     }
 
+    public void setModel(GlucoTableModel model)
+    {
+        super.setModel(model);
+        this.model = model;
+        //createGlucoTable(model);
+
+        model.addTableModelListener(new TableModelListener()
+        {
+            public void tableChanged(TableModelEvent e)
+            {
+                /* FIX
+                if (model.getRowCount() == 0 && deleteRowAction.isEnabled())
+                    deleteRowAction.setEnabled(false);
+                if (model.getRowCount() > 0 && !deleteRowAction.isEnabled())
+                    deleteRowAction.setEnabled(true);
+                    */
+            }
+        });
+    }
+
     public static JComponent createGlucoTable(final GlucoTableModel model)
     {
         GlucoTable table = new GlucoTable(model);
@@ -69,16 +96,7 @@ public class GlucoTable extends JTable
         //toolBar.add(addRowAction);
         //toolBar.add(deleteRowAction);
 
-        model.addTableModelListener(new TableModelListener()
-        {
-            public void tableChanged(TableModelEvent e)
-            {
-                if (model.getRowCount() == 0 && deleteRowAction.isEnabled())
-                    deleteRowAction.setEnabled(false);
-                if (model.getRowCount() > 0 && !deleteRowAction.isEnabled())
-                    deleteRowAction.setEnabled(true);
-            }
-        });
+        
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(toolBar, "North");

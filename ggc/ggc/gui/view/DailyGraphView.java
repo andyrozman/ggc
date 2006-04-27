@@ -32,7 +32,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.util.GregorianCalendar;
 
-import ggc.datamodels.DailyValues;
+import ggc.data.DailyValues;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.util.DataAccess;
 

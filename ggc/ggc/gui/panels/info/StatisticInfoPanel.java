@@ -40,7 +40,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import ggc.datamodels.StatisticValues;
+import ggc.data.StatisticValues;
 import ggc.util.DataAccess;
 
 

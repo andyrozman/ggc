@@ -36,7 +36,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-import ggc.datamodels.GlucoValues;
+import ggc.data.GlucoValues;
 import ggc.gui.calendar.DateRangeSelectionPanel;
 import ggc.gui.view.FrequencyGraphView;
 import ggc.util.DataAccess;

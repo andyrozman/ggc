@@ -28,7 +28,7 @@
 package ggc.gui.view;
 
 
-import ggc.datamodels.HbA1cValues;
+import ggc.data.HbA1cValues;
 import ggc.util.I18nControl;
 
 import java.awt.*;

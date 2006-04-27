@@ -17,7 +17,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import ggc.datamodels.DailyValuesRow;
+import ggc.data.DailyValuesRow;
 import ggc.util.BGInputVerifier;
 import ggc.util.DataAccess;
 import ggc.util.DateInputVerifier;

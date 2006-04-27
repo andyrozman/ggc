@@ -33,9 +33,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import ggc.datamodels.calendar.CalendarEvent;
-import ggc.datamodels.calendar.CalendarListener;
-import ggc.datamodels.calendar.CalendarModel;
+import ggc.data.calendar.CalendarEvent;
+import ggc.data.calendar.CalendarListener;
+import ggc.data.calendar.CalendarModel;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 

@@ -28,9 +28,9 @@ import javax.swing.event.TableModelListener;
 
 import ggc.data.imports.ImportException;
 import ggc.data.imports.SerialMeterImport;
-import ggc.datamodels.DailyValuesRow;
-import ggc.datamodels.GlucoTableModel;
-import ggc.datamodels.GlucoValues;
+import ggc.data.DailyValuesRow;
+import ggc.data.GlucoTableModel;
+import ggc.data.GlucoValues;
 import ggc.event.ImportEvent;
 import ggc.event.ImportEventListener;
 import ggc.util.DataAccess;
@@ -46,6 +46,10 @@ import ggc.util.I18nControl;
  */
 public class ReadMeterDialog extends JDialog implements ActionListener
 {
+
+
+    private JLabel infoIcon = null;
+    private JLabel infoDescription = null;
 
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccess m_da = DataAccess.getInstance();
@@ -71,12 +75,13 @@ public class ReadMeterDialog extends JDialog implements ActionListener
      * @param owner
      * @throws HeadlessException
      */
-    public ReadMeterDialog(Frame owner)
+    public ReadMeterDialog(JFrame owner)
     {
         super(owner);
 
         setTitle(m_ic.getMessage("READ_METER_DATA"));
-        initialize();
+        init();
+        //initMeter();
     }
 
     /**
@@ -127,7 +132,88 @@ public class ReadMeterDialog extends JDialog implements ActionListener
         return glucoValues;
     }
 
-    protected void initialize()
+    protected void init()
+    {
+
+
+        logText = new JTextArea(m_ic.getMessage("LOG__")+":\n", 8, 35);
+        logText.setAutoscrolls(true);
+        JScrollPane sp = new JScrollPane(logText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        resTable = new GlucoTable();
+
+        JScrollPane sp2 = new JScrollPane(resTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        tabPane = new JTabbedPane();
+        //tabPane.add("Values", sp2);
+        tabPane.add(m_ic.getMessage("VALUES"), GlucoTable.createGlucoTable(model));
+        tabPane.add(m_ic.getMessage("LOG"), sp);
+
+        progress = new JProgressBar(0, 100);
+        progress.setPreferredSize(new Dimension(100, 8));
+
+        startButton = new JButton(); // startImportAction
+        startButton.setActionCommand("start");
+        saveButton = new JButton();  // new SaveAction()
+        saveButton.setActionCommand("save");
+        saveButton.setEnabled(false);
+
+        JPanel importButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        importButtonPanel.add(startButton);
+        importButtonPanel.add(saveButton);
+
+        JPanel dialogButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton closeButton = new JButton();  // new CloseAction()
+        closeButton.setActionCommand("save");
+        dialogButtonPanel.add(closeButton);
+
+        JPanel buttonPanel = new JPanel(new BorderLayout(0, 0));
+        buttonPanel.add(importButtonPanel, "West");
+        buttonPanel.add(dialogButtonPanel, "East");
+
+        JPanel infoPanel = new JPanel(new BorderLayout());
+        //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/euroflash.png")));
+        //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/freestyle.png")));
+        infoIcon = new JLabel();
+        infoDescription = new JLabel();
+        infoDescription.setVerticalAlignment(JLabel.TOP);
+        infoPanel.add(infoIcon, "North");
+        infoPanel.add(infoDescription, "Center");
+        infoPanel.setBorder(new TitledBorder(meterImport.getName()));
+        infoPanel.setPreferredSize(new Dimension(160, 250));
+
+        JPanel importContent = new JPanel(new BorderLayout(5, 10));
+        importContent.add(buttonPanel, "North");
+        importContent.add(tabPane, "Center");
+        importContent.add(progress, "South");
+
+        JPanel content = new JPanel(new BorderLayout(5, 15))
+        {
+            public Insets getInsets()
+            {
+                return new Insets(8, 8, 8, 8);
+            }
+
+            public Insets getInsets(Insets insets)
+            {
+                insets.top = 8;
+                insets.left = 8;
+                insets.bottom = 8;
+                insets.right = 8;
+                return insets;
+            }
+        };
+        setContentPane(content);
+
+        content.add(importContent, "Center");
+        content.add(infoPanel, "West");
+        content.add(buttonPanel, "South");
+
+        pack();
+    }
+
+
+    public void initMeter()
     {
 
         String meterClassName = m_da.getMeterManager().meter_classes[m_da.getSettings().getMeterType()];
@@ -166,81 +252,16 @@ public class ReadMeterDialog extends JDialog implements ActionListener
             }
         });
 
-        logText = new JTextArea(m_ic.getMessage("LOG__")+":\n", 8, 35);
-        logText.setAutoscrolls(true);
-        JScrollPane sp = new JScrollPane(logText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        resTable.setModel(model);
 
-        resTable = new GlucoTable(model);
 
-        JScrollPane sp2 = new JScrollPane(resTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-        tabPane = new JTabbedPane();
-        //tabPane.add("Values", sp2);
-        tabPane.add(m_ic.getMessage("VALUES"), GlucoTable.createGlucoTable(model));
-        tabPane.add(m_ic.getMessage("LOG"), sp);
-
-        progress = new JProgressBar(0, 100);
-        progress.setPreferredSize(new Dimension(100, 8));
-
-        startButton = new JButton(startImportAction);
-        saveButton = new JButton(new SaveAction());
-        saveButton.setEnabled(false);
-
-        JPanel importButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        importButtonPanel.add(startButton);
-        importButtonPanel.add(saveButton);
-
-        JPanel dialogButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton closeButton = new JButton(new CloseAction());
-        dialogButtonPanel.add(closeButton);
-
-        JPanel buttonPanel = new JPanel(new BorderLayout(0, 0));
-        buttonPanel.add(importButtonPanel, "West");
-        buttonPanel.add(dialogButtonPanel, "East");
-
-        JPanel infoPanel = new JPanel(new BorderLayout());
-        //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/euroflash.png")));
-        //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/freestyle.png")));
-        JLabel infoIcon = new JLabel((meterImport.getImage() == null)
+        infoIcon.setIcon((meterImport.getImage() == null)
                                      ? new ImageIcon(getClass().getResource("/icons/noMeter.gif"))
                                      : meterImport.getImage());
-        JLabel infoDescription = new JLabel((meterImport.getUseInfoMessage() == null) ? m_ic.getMessage("NO_TO_USE_INFORMATION") : meterImport.getUseInfoMessage());
-        infoDescription.setVerticalAlignment(JLabel.TOP);
-        infoPanel.add(infoIcon, "North");
-        infoPanel.add(infoDescription, "Center");
-        infoPanel.setBorder(new TitledBorder(meterImport.getName()));
-        infoPanel.setPreferredSize(new Dimension(160, 250));
 
-        JPanel importContent = new JPanel(new BorderLayout(5, 10));
-        importContent.add(buttonPanel, "North");
-        importContent.add(tabPane, "Center");
-        importContent.add(progress, "South");
+        this.infoDescription.setText((meterImport.getUseInfoMessage() == null) ? m_ic.getMessage("NO_TO_USE_INFORMATION") : meterImport.getUseInfoMessage());
 
-        JPanel content = new JPanel(new BorderLayout(5, 15))
-        {
-            public Insets getInsets()
-            {
-                return new Insets(8, 8, 8, 8);
-            }
-
-            public Insets getInsets(Insets insets)
-            {
-                insets.top = 8;
-                insets.left = 8;
-                insets.bottom = 8;
-                insets.right = 8;
-                return insets;
-            }
-        };
-        setContentPane(content);
-
-        content.add(importContent, "Center");
-        content.add(infoPanel, "West");
-        content.add(buttonPanel, "South");
-
-        pack();
     }
-
 
 
 
@@ -395,11 +416,11 @@ public class ReadMeterDialog extends JDialog implements ActionListener
     {
         String action = e.getActionCommand();
 
-        if (action.equals("")) 
-        {
-        }
-        else
-            System.out.println("Unknown command: " + action);
+        //if (action.equals("")) 
+        //{
+        //}
+        //else
+            System.out.println("ReadMeterDialog::Unknown command: " + action);
 
     }
 

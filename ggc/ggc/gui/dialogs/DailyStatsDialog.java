@@ -46,13 +46,13 @@ import javax.swing.event.TableModelListener;
 
 import org.hibernate.sql.Delete;
 
-import ggc.datamodels.DailyStatsTableModel;
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.DailyValuesRow;
-import ggc.datamodels.calendar.CalendarEvent;
-import ggc.datamodels.calendar.CalendarListener;
+import ggc.data.DailyStatsTableModel;
+import ggc.data.DailyValues;
+import ggc.data.DailyValuesRow;
+import ggc.data.calendar.CalendarEvent;
+import ggc.data.calendar.CalendarListener;
 //import ggc.db.DataBaseHandler;
-import ggc.db.datalayer.GGCDb;
+import ggc.db.GGCDb;
 import ggc.gui.MainFrame;
 import ggc.gui.calendar.CalendarPane;
 import ggc.gui.dialogs.*;

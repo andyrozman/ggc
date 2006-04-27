@@ -50,8 +50,8 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.DailyValuesRow;
+import ggc.data.DailyValues;
+import ggc.data.DailyValuesRow;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.gui.dialogs.SchemeDialog;
 import ggc.gui.view.DailyGraphView;

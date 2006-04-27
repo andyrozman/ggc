@@ -49,8 +49,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
-import ggc.datamodels.DailyValues;
-import ggc.datamodels.DailyValuesRow;
+import ggc.data.DailyValues;
+import ggc.data.DailyValuesRow;
 import ggc.errors.DateTimeError;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;

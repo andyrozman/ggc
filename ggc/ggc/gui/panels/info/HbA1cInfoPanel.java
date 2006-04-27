@@ -35,8 +35,8 @@ import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
-import ggc.datamodels.HbA1cValues;
-import ggc.db.datalayer.GGCDb;
+import ggc.data.HbA1cValues;
+import ggc.db.GGCDb;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 

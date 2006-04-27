@@ -36,7 +36,13 @@ import javax.swing.text.View;
 
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
-//import ggc.db.DataBaseHandler;
+import ggc.gui.dialogs.CourseGraphDialog;
+import ggc.gui.dialogs.DailyStatsDialog;
+import ggc.gui.dialogs.FrequencyGraphDialog;
+import ggc.gui.dialogs.HbA1cDialog;
+import ggc.gui.dialogs.PrintingDialog;
+import ggc.gui.dialogs.PropertiesDialog;
+import ggc.gui.dialogs.SpreadGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
 import ggc.nutrition.NutritionTreeDialog;
 import ggc.print.PrintMonthlyReport;
@@ -44,14 +50,6 @@ import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
-
-import ggc.gui.dialogs.DailyStatsDialog;
-//import ggc.gui.dialogs.DailyStatsDialog;
-import ggc.gui.dialogs.SpreadGraphDialog;
-import ggc.gui.dialogs.CourseGraphDialog;
-import ggc.gui.dialogs.FrequencyGraphDialog;
-import ggc.gui.dialogs.PropertiesDialog;
-import ggc.gui.dialogs.HbA1cDialog;
 
 
 public class MainFrame extends JFrame 
@@ -477,10 +475,12 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("report_pdf_simple")) 
             {
+                new PrintingDialog(MainFrame.this, 1);
                 System.out.println("Command N/A: Report PDF Simple");
             } 
             else if (command.equals("report_pdf_extended")) 
             {
+                new PrintingDialog(MainFrame.this, 2);
                 System.out.println("Command N/A: Report PDF Extended");
             } 
             else

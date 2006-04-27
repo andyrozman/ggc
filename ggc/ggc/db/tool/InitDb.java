@@ -41,7 +41,7 @@ import javax.swing.*;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.FoodHomeWeight;
-import ggc.db.datalayer.GGCDb;
+import ggc.db.GGCDb;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.SettingsMainH;
 //import ggc.gui.StatusBar;
