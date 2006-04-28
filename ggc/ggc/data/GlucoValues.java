@@ -40,8 +40,8 @@ import java.util.Hashtable;
 import javax.swing.event.EventListenerList;
 
 //import ggc.db.DataBaseHandler;
-import ggc.event.GlucoValueEvent;
-import ggc.event.GlucoValueEventListener;
+import ggc.data.event.GlucoValueEvent;
+import ggc.data.event.GlucoValueEventListener;
 import ggc.util.DataAccess;
 
 

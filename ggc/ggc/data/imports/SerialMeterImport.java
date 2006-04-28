@@ -21,8 +21,8 @@ import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
 import ggc.data.DailyValuesRow;
-import ggc.event.ImportEvent;
-import ggc.event.ImportEventListener;
+import ggc.data.event.ImportEvent;
+import ggc.data.event.ImportEventListener;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;

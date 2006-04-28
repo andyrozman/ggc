@@ -51,7 +51,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
-import ggc.errors.DateTimeError;
+//import ggc.errors.DateTimeError;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;

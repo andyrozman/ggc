@@ -38,12 +38,12 @@ public class DateInputVerifier extends InputVerifier
 
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         try 
-	{
+        {
             String dateStr = ((JTextField)input).getText();
             Date date = df.parse(dateStr);
         } 
-	catch (ParseException e) 
-	{
+        catch (ParseException e) 
+        {
             //System.out.println("verify failed");
             input.setBorder(new LineBorder(Color.red));
             return false;

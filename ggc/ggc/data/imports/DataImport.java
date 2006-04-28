@@ -9,7 +9,7 @@ package ggc.data.imports;
 
 
 import ggc.data.DailyValuesRow;
-import ggc.event.ImportEventListener;
+import ggc.data.event.ImportEventListener;
 
 
 /**

@@ -49,7 +49,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JOptionPane;
 
-import ggc.errors.DateTimeError;
+
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
@@ -74,17 +74,17 @@ public class SchemeDialog extends JDialog implements ActionListener
     public SchemeDialog(JDialog dialog, String[] schemes_names) 
     {
         super(dialog, "", true);
-	this.schemes_names = schemes_names;
-
-	Rectangle rec = dialog.getBounds();
-	int x = rec.x + (rec.width/2);
-	int y = rec.y + (rec.height/2);
-
-	setBounds(x-175, y-150, 350, 300);
-	this.setLayout(null);
+    	this.schemes_names = schemes_names;
+    
+    	Rectangle rec = dialog.getBounds();
+    	int x = rec.x + (rec.width/2);
+    	int y = rec.y + (rec.height/2);
+    
+    	setBounds(x-175, y-150, 350, 300);
+    	this.setLayout(null);
 
         init();
-	this.setVisible(true);
+        this.setVisible(true);
     }
 
 
@@ -92,52 +92,52 @@ public class SchemeDialog extends JDialog implements ActionListener
     private void init() 
     {
 
-	JPanel panel = new JPanel();
-	panel.setBounds(0, 0, 350, 250);
-	panel.setLayout(null);
-
-	this.getContentPane().add(panel);
-
-	JLabel label = new JLabel(m_ic.getMessage("CREATE_NEW_SCHEME"));
-	label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
-	label.setHorizontalAlignment(JLabel.CENTER);
-	label.setBounds(0, 20, 350, 35);
-	panel.add(label);
-	
-
-	label = new JLabel(m_ic.getMessage("NAME") + ":");
-	label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
-	label.setBounds(40, 90, 80, 25);
-	panel.add(label);
-
-	tfName = new JTextField();
-	tfName.setBounds(120, 90, 160, 25);
-	tfName.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-	panel.add(tfName);
-	
-	label = new JLabel(m_ic.getMessage("USE_AS_TEMPLATE") + ":" );
-	label.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-	label.setBounds(40, 130, 280, 25);
-	panel.add(label);
-
-	cb_template = new JComboBox(this.schemes_names);
-	cb_template.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-	cb_template.setBounds(40, 160, 230, 25);
-	panel.add(cb_template);
-
-	JButton button = new JButton(m_ic.getMessage("OK"));
-	button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-	button.setActionCommand("ok");
-	button.addActionListener(this);
-	button.setBounds(90, 210, 80, 25);
-	panel.add(button);
-
-	button = new JButton(m_ic.getMessage("CANCEL"));
-	button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-	button.setActionCommand("cancel");
-	button.addActionListener(this);
-	button.setBounds(180, 210, 80, 25);
-	panel.add(button);
+    	JPanel panel = new JPanel();
+    	panel.setBounds(0, 0, 350, 250);
+    	panel.setLayout(null);
+    
+    	this.getContentPane().add(panel);
+    
+    	JLabel label = new JLabel(m_ic.getMessage("CREATE_NEW_SCHEME"));
+    	label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+    	label.setHorizontalAlignment(JLabel.CENTER);
+    	label.setBounds(0, 20, 350, 35);
+    	panel.add(label);
+    	
+    
+    	label = new JLabel(m_ic.getMessage("NAME") + ":");
+    	label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
+    	label.setBounds(40, 90, 80, 25);
+    	panel.add(label);
+    
+    	tfName = new JTextField();
+    	tfName.setBounds(120, 90, 160, 25);
+    	tfName.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+    	panel.add(tfName);
+    	
+    	label = new JLabel(m_ic.getMessage("USE_AS_TEMPLATE") + ":" );
+    	label.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+    	label.setBounds(40, 130, 280, 25);
+    	panel.add(label);
+    
+    	cb_template = new JComboBox(this.schemes_names);
+    	cb_template.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+    	cb_template.setBounds(40, 160, 230, 25);
+    	panel.add(cb_template);
+    
+    	JButton button = new JButton(m_ic.getMessage("OK"));
+    	button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+    	button.setActionCommand("ok");
+    	button.addActionListener(this);
+    	button.setBounds(90, 210, 80, 25);
+    	panel.add(button);
+    
+    	button = new JButton(m_ic.getMessage("CANCEL"));
+    	button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+    	button.setActionCommand("cancel");
+    	button.addActionListener(this);
+    	button.setBounds(180, 210, 80, 25);
+    	panel.add(button);
 
     }
 
@@ -147,26 +147,25 @@ public class SchemeDialog extends JDialog implements ActionListener
      */
     public void actionPerformed(ActionEvent e)
     {
-	String action = e.getActionCommand();
-
-	if (action.equals("cancel"))
-	{
-	    m_actionDone = false;
-	    this.dispose();
-	}
-	else if (action.equals("ok"))
-	{
-	    if (this.tfName.getText().trim().equals(""))
-	    {
-		JOptionPane.showMessageDialog(this, m_ic.getMessage("TYPE_NAME_BEFORE"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
-		return;
-	    }
-	    m_actionDone = true;
-	    this.dispose();
-	}
-	else
-	    System.out.println("SchemeDialog: Unknown command: " + action);
-
+    	String action = e.getActionCommand();
+    
+    	if (action.equals("cancel"))
+    	{
+    	    m_actionDone = false;
+    	    this.dispose();
+    	}
+    	else if (action.equals("ok"))
+    	{
+    	    if (this.tfName.getText().trim().equals(""))
+    	    {
+    		JOptionPane.showMessageDialog(this, m_ic.getMessage("TYPE_NAME_BEFORE"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+    		return;
+    	    }
+    	    m_actionDone = true;
+    	    this.dispose();
+    	}
+    	else
+    	    System.out.println("SchemeDialog: Unknown command: " + action);
 
     }
 

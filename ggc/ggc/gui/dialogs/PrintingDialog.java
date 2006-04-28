@@ -42,7 +42,7 @@ import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
-import ggc.errors.DateTimeError;
+
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;

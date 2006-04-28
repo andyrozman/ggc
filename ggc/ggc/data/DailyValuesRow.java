@@ -36,7 +36,7 @@ import java.util.StringTokenizer;
 import javax.swing.*;
 
 import ggc.db.hibernate.DayValueH;
-import ggc.errors.DateTimeError;
+//import ggc.errors.DateTimeError;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 

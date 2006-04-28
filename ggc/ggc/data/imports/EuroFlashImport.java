@@ -9,7 +9,7 @@ package ggc.data.imports;
 
 
 import ggc.data.DailyValuesRow;
-import ggc.event.ImportEvent;
+import ggc.data.event.ImportEvent;
 
 import java.io.IOException;
 import java.io.InputStream;

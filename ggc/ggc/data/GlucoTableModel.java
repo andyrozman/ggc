@@ -33,8 +33,8 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.table.AbstractTableModel;
 
-import ggc.event.GlucoValueEvent;
-import ggc.event.GlucoValueEventListener;
+import ggc.data.event.GlucoValueEvent;
+import ggc.data.event.GlucoValueEventListener;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
