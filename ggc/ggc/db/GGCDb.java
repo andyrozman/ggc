@@ -73,7 +73,7 @@ import ggc.db.hibernate.FoodDescriptionH;
 import ggc.db.hibernate.FoodGroupH;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.SettingsMainH;
-import ggc.nutrition.GGCTreeRoot;
+import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
 
 

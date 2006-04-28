@@ -44,8 +44,8 @@ import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SpreadGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
-import ggc.nutrition.NutritionTreeDialog;
-import ggc.print.PrintMonthlyReport;
+import ggc.gui.nutrition.NutritionTreeDialog;
+//import ggc.data.print.PrintMonthlyReport;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
@@ -56,7 +56,7 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.2.1";
+    public  static String s_version = "0.2.2.2";
     private String full_version = "v" + s_version;
     private String version_date = "27th April 2006";
 
@@ -450,7 +450,8 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("print_test")) 
             {
-                new PrintMonthlyReport();
+                /*
+                //new PrintMonthlyReport();
 
                 try 
                 {
@@ -462,7 +463,7 @@ public class MainFrame extends JFrame
                 {
                     System.out.println("Error running AcrobatReader");
                 }
-
+                */
             } 
             else if (command.equals("food_nutrition")) 
             {

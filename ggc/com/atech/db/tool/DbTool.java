@@ -28,7 +28,7 @@ import javax.swing.tree.TreeSelectionModel;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.GGCDb;
-import ggc.nutrition.GGCTreeRoot;
+import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 

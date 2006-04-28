@@ -49,7 +49,7 @@ import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.little.StatusBarL;
 
-import ggc.nutrition.GGCTreeRoot;
+import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.db.tool.DbToolApplicationGGC;
 
 public class DataAccess 

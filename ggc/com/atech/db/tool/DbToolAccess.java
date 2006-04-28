@@ -25,7 +25,7 @@ import ggc.db.GGCDb;
 import ggc.db.GGCDbLoader;
 //import ggc.db.db_tool.DbToolApplicationGGC;
 //import ggc.gui.StatusBar;
-import ggc.nutrition.GGCTreeRoot;
+import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.util.I18nControl;
 
 public class DbToolAccess

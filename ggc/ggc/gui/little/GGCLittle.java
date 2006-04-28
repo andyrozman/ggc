@@ -46,7 +46,6 @@ import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 //import ggc.db.DataBaseHandler;
 import ggc.gui.*;
 import ggc.gui.panels.info.InfoPanel;
-import ggc.print.PrintMonthlyReport;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 import ggc.util.DataAccess;

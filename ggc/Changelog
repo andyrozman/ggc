@@ -1,3 +1,15 @@
+2006-04-28 (v0.2.2.2) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Meter handling. There are new files added for meter handling. I plan to add 
+      support for some of meters in future, and I will change way how to get data.
+      Old will be used same way as now, but new ones will use new dialog and new 
+      interfaces. 
+    * moved ggc.errors to ggc.data.errors
+    * moved ggc.event to ggc.data.event
+    * moved ggc.print to ggc.data.print and renamed and added one file (for simple 
+      and extended printing)
+    * moved ggc.nutrition to ggc.gui.nutrition
+
+
 2006-04-27 (v0.2.2.1) Andy Rozman <andyrozman@users.sourceforge.net>
     * moved ggc.datamodels to ggc.data
     * moved GGCDb and GGCDbLoader to ggc.db (from ggc.db.datalayer)
@@ -5,7 +17,6 @@
     * start working on printing (added PrintingDialog, MonthlyValues)
     * looking at meter import tool, trying to fix all exception that are thrown
       if no meter present
-
 
 2006-04-25 (v0.2.1.13) Andy Rozman <andyrozman@users.sourceforge.net>
     * Removal of DatabaseHandler and HibernateHandler. All classes were changed to 
