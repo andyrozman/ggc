@@ -477,6 +477,18 @@ public class DailyValues implements Serializable
     {
         return getRow(row).getDateTimeAsDate();
     }
+/*
+    public String getDateTimeAsTimeStringAt(int row)
+    {
+	return getRow(row).getD.getDateTimeAsTime();
+    }
+    */
+
+    public String getDateTimeAsTimeStringAt(int row)
+    {
+	return getRow(row).getDateTimeAsTime();
+    }
+
 
     public String getDateTimeAsStringAt(int row)
     {

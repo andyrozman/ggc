@@ -1,6 +1,6 @@
 package ggc.data.print;
 
-
+import java.io.File;
 import java.io.FileOutputStream;
 
 import com.lowagie.text.Document;
@@ -11,12 +11,210 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import ggc.data.MonthlyValues;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
 public class PrintSimpleMonthlyReport
 {
 
-    public PrintSimpleMonthlyReport()
+    public MonthlyValues m_mv = null;
+    private DataAccess m_da = DataAccess.getInstance();
+    private I18nControl ic = I18nControl.getInstance();
+    long name = 0L;
+
+    public PrintSimpleMonthlyReport(MonthlyValues mv)
     {
-        test();
+	m_mv = mv;
+	name = System.currentTimeMillis();
+	createDocument();
+//        test();
+    }
+
+    public String getName()
+    {
+	return name + ".pdf";
+    }
+
+
+    public void createDocument()
+    {
+	System.out.println("document.add(BigTable)");
+	// step1
+
+	File fl = new File("../data/temp/" + name + ".pdf");
+	Document document = new Document(PageSize.A4, 20, 20, 20, 20);
+	try 
+	{
+		// step2
+		PdfWriter writer = PdfWriter.getInstance(document,
+				new FileOutputStream(fl.getAbsoluteFile()));
+		// step3
+		document.open();
+		// step4
+		String[] bogusData = {"", "0.0", "0.0", "0.0", "0.0",
+				"0.0", "0.0", "0.0", "0.0", "Comm."
+				 };
+		int NumColumns = 13;
+
+		float groupWidth[] = { 30, 40, 30 };
+
+		PdfPTable datatable = new PdfPTable(NumColumns);
+		int headerwidths[] = { 8, 
+				               6, 8, 6,  
+				               6, 8, 6, 
+                               6, 8, 6, 
+                               6, 8, 6 
+				       }; // percentage
+		datatable.setWidths(headerwidths);
+		datatable.setWidthPercentage(100); // percentage
+		//datatable.getDefaultCell().setPadding(3);
+		//datatable.getDefaultCell().setBorderWidth(2);
+		datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+
+		PdfPCell pd = new PdfPCell();
+		pd.setPhrase(new Phrase(ic.getMessage("DATE")));
+		pd.setHorizontalAlignment(Element.ALIGN_CENTER);
+		pd.setBorderWidth(1);
+		
+
+		datatable.addCell(pd);
+
+
+		
+		// Breakfast
+		PdfPTable meal_b = new PdfPTable(3);
+		meal_b.setHorizontalAlignment(Element.ALIGN_CENTER);
+		meal_b.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+		meal_b.getDefaultCell().setBorderWidth(1);
+
+		meal_b.setWidths(groupWidth);
+
+		PdfPCell p1 = new PdfPCell();
+		p1.setPhrase(new Phrase(ic.getMessage("BREAKFAST")));
+		p1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		p1.setBorderWidth(1);
+		p1.setColspan(3);
+
+		meal_b.addCell(p1);
+        meal_b.addCell(ic.getMessage("BG"));
+		meal_b.addCell(ic.getMessage("INS_SHORT"));
+		meal_b.addCell(ic.getMessage("CH"));
+
+		PdfPCell m = new PdfPCell(meal_b);
+		m.setColspan(3);
+		datatable.addCell(m);
+
+		// Lunch
+		PdfPTable meal_l = new PdfPTable(3);
+		meal_l.setHorizontalAlignment(Element.ALIGN_CENTER);
+		meal_l.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+		meal_l.getDefaultCell().setBorderWidth(1);
+		meal_l.setWidths(groupWidth);
+
+		PdfPCell p2 = new PdfPCell();
+		p2.setPhrase(new Phrase(ic.getMessage("LUNCH")));
+		p2.setHorizontalAlignment(Element.ALIGN_CENTER);
+		p2.setBorderWidth(1);
+		p2.setColspan(3);
+
+		meal_l.addCell(p2);
+        meal_l.addCell(ic.getMessage("BG"));
+		meal_l.addCell(ic.getMessage("INS_SHORT"));
+		meal_l.addCell(ic.getMessage("CH"));
+
+		PdfPCell m2 = new PdfPCell(meal_l);
+		m2.setColspan(3);
+		datatable.addCell(m2);
+
+
+		// Dinner
+		PdfPTable meal_d = new PdfPTable(3);
+		meal_d.setHorizontalAlignment(Element.ALIGN_CENTER);
+		meal_d.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+		meal_d.getDefaultCell().setBorderWidth(1);
+		meal_d.setWidths(groupWidth);
+
+
+		PdfPCell p3 = new PdfPCell();
+		p3.setPhrase(new Phrase(ic.getMessage("DINNER")));
+		p3.setHorizontalAlignment(Element.ALIGN_CENTER);
+		p3.setBorderWidth(1);
+		p3.setColspan(3);
+
+		meal_d.addCell(p3);
+        meal_d.addCell(ic.getMessage("BG"));
+		meal_d.addCell(ic.getMessage("INS_SHORT"));
+		meal_d.addCell(ic.getMessage("CH"));
+
+		PdfPCell m3 = new PdfPCell(meal_d);
+		m3.setColspan(3);
+		datatable.addCell(m3);
+
+		// Night
+		PdfPTable meal_n = new PdfPTable(3);
+		meal_n.setHorizontalAlignment(Element.ALIGN_CENTER);
+		meal_n.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+		meal_n.getDefaultCell().setBorderWidth(1);
+		meal_n.setWidths(groupWidth);
+
+		PdfPCell p4 = new PdfPCell();
+		p4.setPhrase(new Phrase(ic.getMessage("NIGHT")));
+		p4.setHorizontalAlignment(Element.ALIGN_CENTER);
+		p4.setColspan(3);
+
+		meal_n.addCell(p4);
+        meal_n.addCell(ic.getMessage("BG"));
+		meal_n.addCell(ic.getMessage("INS_SHORT"));
+		meal_n.addCell(ic.getMessage("CH"));
+
+		PdfPCell m4 = new PdfPCell(meal_n);
+		m4.setColspan(3);
+		m4.setBorderWidth(1);
+		datatable.addCell(m4);
+		datatable.getDefaultCell().setBorderWidth(1);
+
+
+		for (int i = 1; i <= m_mv.getDaysInMonth(); i++) 
+		{
+		    String[][] dta = m_mv.getDayValuesSimple(i);
+
+		    if (i%2==1) 
+		    {
+			datatable.getDefaultCell().setGrayFill(0.9f);
+		    }
+
+		    datatable.addCell(i+"." + this.m_mv.getMonth());
+
+		    System.out.println(i);
+
+		    for (int x=0; x < 4; x++) 
+		    {
+			datatable.addCell(dta[x][0]);
+			datatable.addCell(dta[x][1]);
+			datatable.addCell(dta[x][2]);
+		    }
+
+		    if (i%2==1) 
+		    {
+			datatable.getDefaultCell().setGrayFill(0.0f);
+		    }
+		}
+
+		document.add(datatable);
+
+
+
+	    } 
+	    catch (Exception de) 
+	    {
+		de.printStackTrace();
+	    }
+	    // step5
+
+	    document.close();
+
+
     }
 
 
@@ -25,12 +223,14 @@ public class PrintSimpleMonthlyReport
 
 	System.out.println("document.add(BigTable)");
         // step1
+
+	File fl = new File("../data/temp/" + "HelloWorld2.pdf");
         Document document = new Document(PageSize.A4, 10, 10, 10, 10);
         try 
         {
                 // step2
                 PdfWriter writer = PdfWriter.getInstance(document,
-                                new FileOutputStream("HelloWorld2.pdf"));
+                                new FileOutputStream(fl.getAbsoluteFile()));
                 // step3
                 document.open();
                 // step4

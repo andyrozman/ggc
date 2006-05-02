@@ -1,3 +1,10 @@
+2006-05-02 (v0.2.2.3) Andy Rozman <andyrozman@users.sourceforge.net>
+    * MonthlyValues changed to work for simple PDF reports
+    * Create Simple PDF Reports (works with hardcoded values so far)
+      we can print only 2006 month 4, and times settings for meals are 
+      hardcoded. Dialog to select date is not ready and times settings
+      must be done in config (in next release).
+
 2006-04-28 (v0.2.2.2) Andy Rozman <andyrozman@users.sourceforge.net>
     * Meter handling. There are new files added for meter handling. I plan to add 
       support for some of meters in future, and I will change way how to get data.

@@ -63,15 +63,15 @@ import ggc.GGC;
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
 import ggc.data.HbA1cValues;
+import ggc.data.MonthlyValues;
 import ggc.data.WeeklyValues;
-//import ggc.db.DataBaseHandler;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
+import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.DayValueH;
 import ggc.db.hibernate.FoodDescriptionH;
 import ggc.db.hibernate.FoodGroupH;
-import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.SettingsMainH;
 import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
@@ -730,7 +730,8 @@ public class GGCDb
 	if (m_loadStatus<2)
 	    return null;
 
-	System.out.println("Hibernate: getDayStatsRange()");
+	if (debug)
+	    System.out.println("Hibernate: getDayStatsRange()");
 
         WeeklyValues wv = new WeeklyValues();
             
@@ -775,6 +776,64 @@ public class GGCDb
 	return wv;
     }
 
+
+
+    public MonthlyValues getMonthlyValues(int year, int month)
+    {
+
+	if (m_loadStatus<2)
+	    return null;
+
+	if (debug)
+	    System.out.println("Hibernate: getMonthlyValues()");
+
+	MonthlyValues mv = new MonthlyValues(year, month);
+
+	//WeeklyValues wv = new WeeklyValues();
+	//DailyValues dV = new DailyValues();
+
+	try 
+	{
+	    //System.out.println("Start " + start);
+/*
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	    String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
+		//sdf.format(start.getTime());
+	    String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
+		//sdf.format(end.getTime());
+		*/
+
+	    System.out.println("getMonthlyValues: "  + year + " - " + month);
+
+	    String days = "200604";
+
+	    Query q = getSession().createQuery("SELECT dv from " + 
+					       "ggc.db.hibernate.DayValueH as dv " +
+					       "WHERE dv.dt_info >=  " + 
+					       days + "010000 AND dv.dt_info <= " + days + 
+					       "312359 ORDER BY dv.dt_info");
+
+	    Iterator it = q.list().iterator();
+
+	    while (it.hasNext())
+	    {
+		DayValueH dv = (DayValueH)it.next();
+
+		DailyValuesRow dVR = new DailyValuesRow(dv);
+		mv.addDayValueRow(dVR);
+
+		//dV.setNewRow(dVR);
+	    }
+
+	} 
+	catch (Exception e) 
+	{
+	    System.err.println("gteDayRange:" + e);
+	}
+
+	return mv;
+
+    }
 
 
 

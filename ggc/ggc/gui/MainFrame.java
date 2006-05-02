@@ -325,8 +325,14 @@ public class MainFrame extends JFrame
         //write to prefs to file on close.
         //props.write();
         //dbH.disconnectDb();
-        m_da.getDb().closeDb();
-        m_da.deleteInstance();
+
+	if (m_da!=null)
+	{
+	    if (m_da.getDb()!=null)
+		m_da.getDb().closeDb();
+
+	    m_da.deleteInstance();
+	}
         dispose();
         System.exit(0);
     }

@@ -853,6 +853,42 @@ public class DbToolAccess
     }
 
 
+
+
+
+    public long getDateTimeLong(long dt, int ret_type)
+    {
+
+	int y = (int)(dt/100000000L);
+	dt -= y*100000000L;
+
+	int m = (int)(dt/1000000L);
+	dt -= m*1000000L;
+
+	int d = (int)(dt/10000L);
+	dt -= d*10000L;
+
+	int h = (int)(dt/100L);
+	dt -= h*100L;
+
+	int min = (int)dt;
+
+
+	if (ret_type==DT_DATETIME)
+	{
+	    return Integer.parseInt(y + getLeadingZero(m,2) + getLeadingZero(d,2) + getLeadingZero(h,2) + getLeadingZero(min,2));
+	}
+	else if (ret_type==DT_DATE)
+	{
+	    return Integer.parseInt(getLeadingZero(d,2) + getLeadingZero(m,2) + y);
+	}
+	else
+	    return Integer.parseInt(getLeadingZero(h,2) + getLeadingZero(min,2));
+
+    }
+
+
+
     public Date getDateTimeAsDateObject(long dt)
     {
 

@@ -31,7 +31,7 @@ public class DatabaseSettings
 
     public DatabaseSettings()
     {
-	settings = new Hashtable();
+        settings = new Hashtable();
     }
 
     public DatabaseSettings(String name, String driver, String url, String port, String dialect)
@@ -49,14 +49,14 @@ public class DatabaseSettings
 
     public void write(BufferedWriter bw) throws java.io.IOException
     {
-	bw.write("\n#\n# Database #" + this.number +" - " + this.name + "\n#\n");
-	bw.write("DB" + this.number + "_CONN_NAME=" + this.name +"\n");
-	bw.write("DB" + this.number + "_DB_NAME=" + this.db_name +"\n");
-	bw.write("DB" + this.number + "_CONN_DRIVER_CLASS=" + this.driver_class +"\n");
-	bw.write("DB" + this.number + "_CONN_URL=" + this.url +"\n");
-	bw.write("DB" + this.number + "_CONN_USERNAME=" + this.username +"\n");
-	bw.write("DB" + this.number + "_CONN_PASSWORD=" + this.password +"\n");
-	bw.write("DB" + this.number + "_HIBERNATE_DIALECT=" + this.dialect +"\n");
+    	bw.write("\n#\n# Database #" + this.number +" - " + this.name + "\n#\n");
+    	bw.write("DB" + this.number + "_CONN_NAME=" + this.name +"\n");
+    	bw.write("DB" + this.number + "_DB_NAME=" + this.db_name +"\n");
+    	bw.write("DB" + this.number + "_CONN_DRIVER_CLASS=" + this.driver_class +"\n");
+    	bw.write("DB" + this.number + "_CONN_URL=" + this.url +"\n");
+    	bw.write("DB" + this.number + "_CONN_USERNAME=" + this.username +"\n");
+    	bw.write("DB" + this.number + "_CONN_PASSWORD=" + this.password +"\n");
+    	bw.write("DB" + this.number + "_HIBERNATE_DIALECT=" + this.dialect +"\n");
     }
 
 

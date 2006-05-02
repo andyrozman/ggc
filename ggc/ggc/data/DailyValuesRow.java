@@ -252,6 +252,12 @@ public class DailyValuesRow implements Serializable
         return m_da.getDateTimeAsTimeString(datetime);
     }
 
+    public String getDateTimeAsTime()
+    {
+	long i = m_da.getDateTimeLong(datetime, DataAccess.DT_TIME);
+	System.out.println("X: " + i);
+	return "" + i;
+    }
 
     public void setDateTime(String date, String time)
     {
