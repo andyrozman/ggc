@@ -102,11 +102,10 @@ public class DataAccess
 	private GGCProperties m_settings = null;
 	private DbToolApplicationGGC m_configFile = null;
 
-	/**
-	 * Which BG unit is used: 1 = mg/dl, 2 = mmol/l
-	 */
-	public int m_BG_unit = 1;
-
+    /**
+     * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
+     */
+    public int m_BG_unit = BG_MGDL;
 
 	public String[] availableLanguages = {
 		"English",

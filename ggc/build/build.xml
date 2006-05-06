@@ -101,7 +101,7 @@
 
 
     <target name="jar_l"  description="Build GGC Little" depends="make">
-        <jar jarfile="${build.dir}/ggcl.jar"
+        <jar jarfile="${binary.dir}/ggcl.jar"
              update="false" 
              index="false"
              manifest="./manifest_ggc_little.mf">

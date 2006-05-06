@@ -608,7 +608,14 @@ public class GGCProperties //extends GGCPropertiesHelper
 	if (changed_db) 
 	{
 	    System.out.println("save Db");
-	    m_da.m_db.saveConfigData();
+        try
+        {
+            m_da.m_db.saveConfigData();
+        }
+        catch (NullPointerException e)
+        {
+            System.err.println(I18nControl.getInstance().getMessage("NO_DATABASE_FOUND"));
+        }
 	}
 
 	if (changed_config) 

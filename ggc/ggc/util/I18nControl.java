@@ -64,7 +64,7 @@ public class I18nControl
      */ 
     private I18nControl()
     {
-	getSelectedLanguage();
+	    getSelectedLanguage();
         setLanguage();
     } 
     
@@ -80,7 +80,9 @@ public class I18nControl
             FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
             props.load(in);
 
-            this.selected_language = (String)props.get("SELECTED_LANG");
+            String tempLang = (String)props.get("SELECTED_LANG");
+            if (tempLang != null)
+                this.selected_language = tempLang;
 
         }
         catch (Exception ex)
@@ -130,7 +132,11 @@ public class I18nControl
     public void setLanguage() 
     {
         //GGCProperties props = GGCProperties.getInstance();
-        setLanguage(this.selected_language); //props.getLanguage());
+        if (this.selected_language!=null)
+            setLanguage(this.selected_language);
+        else
+            setLanguage(this.defaultLocale);
+        //props.getLanguage());
     }
 
     //  Method:       setLanguage (String language)

@@ -25,6 +25,9 @@
     * looking at meter import tool, trying to fix all exception that are thrown
       if no meter present
 
+2006-04-26 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * README: some spellchecking and rewording
+
 2006-04-25 (v0.2.1.13) Andy Rozman <andyrozman@users.sourceforge.net>
     * Removal of DatabaseHandler and HibernateHandler. All classes were changed to 
       use Db directly trhorugh DataAccess static class
@@ -38,6 +41,14 @@
     * update of slovene language file
     * some of translation done
 
+2006-04-23 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * GGC_de.properties:
+        - merged in changes from GGC_en.properties
+        - sorted in alphabetical order
+    * moved ggcl.jar form the build directory to the binary directory in ant build task "jar_l"
+    * more translation...
+    * GGC_en.properties: removed superfluous "MEALS"
+
 2006-04-19 Andy Rozman <andyrozman@users.sourceforge.net>
     * changes to README file
     * added two tasks into ant: style_devel, style_deploy, which are used for 
@@ -49,9 +60,13 @@
 2006-04-18 (v0.2.1.12) Andy Rozman <andyrozman@users.sourceforge.net>
     * Color schemes changed, we reference colorscheme by name and not by id.
 
-2006-04-10 Reinhold Rumberger <rumbi@users.sourceforge.net>
+2006-04-15 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * had to merge in some conflicts in DataAccess.java; hope I made no mistakes.
       It compiles so I can't have broken too much...
+    * GGC_de.properties: merged in changes from GGC_en.properties
+    * added NO_DATABASE_FOUND to GGC_en.properties
+    * README: changed "CVS" to "SVN"
+    * added run.sh, the bash equivalent of run.cmd -- Note: some classpaths seem to be missing
 
 2006-04-15 (v0.2.1.11) Andy Rozman <andyrozman@users.sourceforge.net>
     * fixed Statistics (BG / Insulin) and Hba1c display

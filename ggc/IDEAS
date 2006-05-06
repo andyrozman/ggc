@@ -1,35 +1,4 @@
 This file should be filled with any ideas that pop into your heads and be discussed on the
 ggc-development mailing list or wherever appropriate.
 
- * How about putting the languages in XML files. This would make formatting easier and allow
-   for the use of dedicated XML editors. Does anybody by any chance have an idea how this
-   could be implemented
-   
-Yes and this looks like you are trying to invent hot water. Bundle files are a very fine 
-idea for languages beacuse they are simple, and easy changed. Look at the mess M$ made 
-with C# and language files. If you would use XML you would then have to implement all 
-things yourself, and make things harder for us developers. Now anybody can take language 
-file and translates it himself, or adds keywords or does anything he wants with it. Why 
-would you want to use XMLs anyway? It doesn't nothing good. Langauge files in 95% don't 
-need any formating, plus in 5% they do, it wouldn't work in XML, since you can't use tags
-in XMLs. Plus you would have to process this files before use.
-
-Gee, it was a *thought*, not even an intention. :-)
-A couple of responses:
- * I have so no idea about all this C#/.Net stuff, I couldn't even begin to see what you
-   mean here
- * I was hoping for some pre-existing package,
- * The main point was really having decent editors available, as opposed to no proper editor
-   for java properties files.
- * The one thing that really get's under my skin about java properties is the fact that
-   you basically have to use ascii+unicode escapes to get special characters, whereas you
-   could specify encoding in XML
- * OK, idea scrapped, I'd still like to do something about the previous point, though
- 
-He, he.
-For using ascii and escape codes: You can use normal editor (utf-8 like) and then when 
-you are finished convert this file, by using native2ascii tool. I usually use escape 
-codes, because I use same editor for resources as for programming, but for some 
-languages is better to use utf-8 editor and then convert. We used this tool on one 
-project where we had chinese characters inside. You will have to look how to use it on
-internet, because tool has no help (it comes with JDK).
+<language-in-XML idea scrapped, removed to make file more readable>

@@ -8,8 +8,8 @@ II.  USER INFORMATION
 III. TRANSLATORS INFORMATION
 IV.  DEVELOPERS INFORMATION
 
-End users, only need to read first section, translator first and second, and 
-developers, all 3 of them.
+End users only need to read the first section, translators first and second, and 
+developers all 3 of them.
 
 At this time there is no user release for GGC, so users must install everything 
 with help of development section.
@@ -22,19 +22,19 @@ I.  USER INFORMATION
 
 1. About
 ========
-GNU Gluco Control (GGC) is a pure Java application helping you to manage your
-diabetes.
+GNU Gluco Control (GGC) is a pure Java application intended to help you to manage
+your diabetes.
 
 
 2. Status
 =========
 
-As before we at very early stage of development. This latest version is little buggy. 
-We are in transition to Hibernate and we don't have 100% functionality at this point 
-of time.
+As before we are at a very early stage of development. This latest version is a little
+buggy. We are in transition to Hibernate and we don't have 100% functionality at this
+point of time.
 
-This version (0.2.1) is not intended for end users. Version intended for end users 
-will be deployed on sourceforge.net, at first point where we have somewhat workable 
+This version (0.2.1) is not intended for end users. Versions intended for end users 
+will be deployed on sourceforge.net, at first point we have a somewhat workable 
 version (planned for end of May 2006).
 
    
@@ -67,12 +67,12 @@ Note: Langauge file must be ASCII file with unicode escape codes. Translator are
 IV.  DEVELOPERS INFORMATION
 *******************************
 
-1. How to install (CVS Version)
+1. How to install (SVN Version)
 ===============================
 
-Install is little tricky. 
+Installation is a little tricky. 
 
-1. Please get newest version from CVS. 
+1. Please get newest version from SVN. 
 
 2. Go to build directory. Rename GGCBuild.properties_default to GGCBuild.properties. Edit 
     GGCBuild.properties to reflect your directories. 
@@ -85,12 +85,12 @@ Install is little tricky.
 	*.hbm.xml
 	run.cmd
 
-5. Install Database. For testing purposes there was built internal database placed into cvs.
+5. Install Database. For testing purposes there was built internal database placed into svn.
     You must download ggc_db.zip (ggc_db_nutr.zip if you want whole nutrition database).
     Put files into ../data directory. 
     
     If you wish to use your own external database see GGC_Config.properties and edit it
-    accordingly (don't forget to set SELECTED_DB). In CVS there is test_nutrition.zip 
+    accordingly (don't forget to set SELECTED_DB). In SVN there is test_nutrition.zip 
     where you can find special *.cmd file which must be edited and you can use it to create 
     database and add nutrition entries (you must put nutrition database (found in ggc-support 
     files on sf.net)) to directory ../data/nutrition.
