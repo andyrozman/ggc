@@ -557,7 +557,7 @@ public class GGCDb
      */
     public void saveConfigData()
     {
-	editHibernate(m_da.getSettings().getSettings());
+        editHibernate(m_da.getSettings().getSettings());
         // save config
         //DataAccess.notImplemented("GGCDb::saveConfigData()");
     }
@@ -594,19 +594,19 @@ public class GGCDb
     public ArrayList getFoodGroups()
     {
 
-	ArrayList list = new ArrayList();
+        ArrayList list = new ArrayList();
 
-	Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodGroupH as pst");
+        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodGroupH as pst");
 
-	Iterator it = q.iterate();
+        Iterator it = q.iterate();
 
-	while (it.hasNext())
-	{
-	    FoodGroupH eh = (FoodGroupH)it.next();
-	    list.add(new FoodGroup(eh));
-	}
+        while (it.hasNext())
+        {
+            FoodGroupH eh = (FoodGroupH)it.next();
+            list.add(new FoodGroup(eh));
+        }
 
-	return list;
+        return list;
 
     }
 
@@ -614,19 +614,19 @@ public class GGCDb
     public ArrayList getFoodDescriptions()
     {
 
-	ArrayList list = new ArrayList();
+        ArrayList list = new ArrayList();
 
-	Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodDescriptionH as pst");
+        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodDescriptionH as pst");
 
-	Iterator it = q.iterate();
+        Iterator it = q.iterate();
 
-	while (it.hasNext())
-	{
-	    FoodDescriptionH eh = (FoodDescriptionH)it.next();
-	    list.add(new FoodDescription(eh));
-	}
+        while (it.hasNext())
+    	{
+    	    FoodDescriptionH eh = (FoodDescriptionH)it.next();
+    	    list.add(new FoodDescription(eh));
+    	}
 
-	return list;
+        return list;
 
     }
 
@@ -642,22 +642,22 @@ public class GGCDb
     {
 	//System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
 
-	if (m_loadStatus<2)
-	    return null;
+    	if (m_loadStatus<2)
+    	    return null;
+    
+    	System.out.println("Hibernate: getHbA1c()");
+    	HbA1cValues hbVal = new HbA1cValues();
 
-	System.out.println("Hibernate: getHbA1c()");
-	HbA1cValues hbVal = new HbA1cValues();
-
-	try 
-	{
+        try 
+        {
             GregorianCalendar gc1 = (GregorianCalendar)day.clone();
             gc1.add(GregorianCalendar.DAY_OF_MONTH, -6);
 
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String eDay = sdf.format(day.getTime()) + "2359";
-	    String sDay = sdf.format(gc1.getTime()) + "0000";
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String eDay = sdf.format(day.getTime()) + "2359";
+            String sDay = sdf.format(gc1.getTime()) + "0000";
 
-	    Query q = getSession().createQuery("SELECT dv from " + 
+            Query q = getSession().createQuery("SELECT dv from " + 
 					       "ggc.db.hibernate.DayValueH as dv " +
 					       "WHERE dv.bg <> 0 AND dv.dt_info >=  " + 
 					       sDay + " AND dv.dt_info <= " + eDay + 
@@ -667,8 +667,8 @@ public class GGCDb
 
 	    while (it.hasNext())
 	    {
-		DayValueH dv = (DayValueH)it.next();
-		hbVal.addDayValueRow(new DailyValuesRow(dv));
+            DayValueH dv = (DayValueH)it.next();
+            hbVal.addDayValueRow(new DailyValuesRow(dv));
 	    }
 
 	    hbVal.processDayValues();
@@ -689,8 +689,10 @@ public class GGCDb
 
     	if (m_loadStatus<2)
     	    return null;
-    
-    	System.out.println("Hibernate: getDayStats()");
+
+        if (debug)
+            System.out.println("Hibernate: getDayStats()");
+        
     	DailyValues dV = new DailyValues();
     
     	try 
@@ -727,53 +729,50 @@ public class GGCDb
     public WeeklyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
     {
 
-	if (m_loadStatus<2)
-	    return null;
+        if (m_loadStatus<2)
+            return null;
 
-	if (debug)
-	    System.out.println("Hibernate: getDayStatsRange()");
+        if (debug)
+            System.out.println("Hibernate: getDayStatsRange()");
 
         WeeklyValues wv = new WeeklyValues();
             
-	//DailyValues dV = new DailyValues();
-
-	try 
-	{
+        try 
+        {
             //System.out.println("Start " + start);
 
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
-                //sdf.format(start.getTime());
-	    String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
-                //sdf.format(end.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
+            //sdf.format(start.getTime());
+            String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
+            //sdf.format(end.getTime());
 
-	    System.out.println("getDatStatsRange: "  + sDay + " - " + eDay);
+            if (debug)
+                System.out.println("getDatStatsRange: "  + sDay + " - " + eDay);
 
-	    Query q = getSession().createQuery("SELECT dv from " + 
+            Query q = getSession().createQuery("SELECT dv from " + 
 					       "ggc.db.hibernate.DayValueH as dv " +
 					       "WHERE dv.dt_info >=  " + 
 					       sDay + "0000 AND dv.dt_info <= " + eDay + 
 					       "2359 ORDER BY dv.dt_info");
 
-	    Iterator it = q.list().iterator();
+            Iterator it = q.list().iterator();
 
-	    while (it.hasNext())
-	    {
-		DayValueH dv = (DayValueH)it.next();
+            while (it.hasNext())
+            {
+                DayValueH dv = (DayValueH)it.next();
 
-		DailyValuesRow dVR = new DailyValuesRow(dv);
+                DailyValuesRow dVR = new DailyValuesRow(dv);
                 wv.addDayValueRow(dVR);
+            }
 
-		//dV.setNewRow(dVR);
-	    }
+        } 
+        catch (Exception e) 
+        {
+            System.err.println("getDayRange:" + e);
+        }
 
-	} 
-	catch (Exception e) 
-	{
-	    System.err.println("gteDayRange:" + e);
-	}
-
-	return wv;
+        return wv;
     }
 
 
@@ -781,57 +780,43 @@ public class GGCDb
     public MonthlyValues getMonthlyValues(int year, int month)
     {
 
-	if (m_loadStatus<2)
-	    return null;
+        if (m_loadStatus<2)
+            return null;
 
-	if (debug)
-	    System.out.println("Hibernate: getMonthlyValues()");
+        if (debug)
+            System.out.println("Hibernate: getMonthlyValues()");
 
-	MonthlyValues mv = new MonthlyValues(year, month);
+        MonthlyValues mv = new MonthlyValues(year, month);
 
-	//WeeklyValues wv = new WeeklyValues();
-	//DailyValues dV = new DailyValues();
+        try 
+        {
+            String days = year + "" + m_da.getLeadingZero(month, 2);
 
-	try 
-	{
-	    //System.out.println("Start " + start);
-/*
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
-		//sdf.format(start.getTime());
-	    String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
-		//sdf.format(end.getTime());
-		*/
-
-	    System.out.println("getMonthlyValues: "  + year + " - " + month);
-
-	    String days = "200604";
-
-	    Query q = getSession().createQuery("SELECT dv from " + 
+            Query q = getSession().createQuery("SELECT dv from " + 
 					       "ggc.db.hibernate.DayValueH as dv " +
 					       "WHERE dv.dt_info >=  " + 
 					       days + "010000 AND dv.dt_info <= " + days + 
 					       "312359 ORDER BY dv.dt_info");
 
-	    Iterator it = q.list().iterator();
+            Iterator it = q.list().iterator();
 
-	    while (it.hasNext())
-	    {
-		DayValueH dv = (DayValueH)it.next();
+            while (it.hasNext())
+            {
+                DayValueH dv = (DayValueH)it.next();
 
-		DailyValuesRow dVR = new DailyValuesRow(dv);
-		mv.addDayValueRow(dVR);
+                DailyValuesRow dVR = new DailyValuesRow(dv);
+                mv.addDayValueRow(dVR);
 
-		//dV.setNewRow(dVR);
-	    }
+                //dV.setNewRow(dVR);
+            }
 
-	} 
-	catch (Exception e) 
-	{
-	    System.err.println("gteDayRange:" + e);
-	}
+        } 
+        catch (Exception e) 
+        {
+            System.err.println("getMonthlyValues:" + e);
+        }
 
-	return mv;
+        return mv;
 
     }
 

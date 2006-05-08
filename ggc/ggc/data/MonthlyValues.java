@@ -26,9 +26,12 @@ public class MonthlyValues extends WeeklyValues
 
     //public Hashtable byDay = new Hashtable();
 
+    //DataAccess m_da = DataAccess.getInstance();
+
     private int m_month = 0;
     private int m_year = 0;
     private int max_days = 0;
+    String empty_value = "";
 
     public MonthlyValues(int year, int month)
     {
@@ -40,13 +43,25 @@ public class MonthlyValues extends WeeklyValues
         gc.set(GregorianCalendar.YEAR, year);
         gc.set(GregorianCalendar.MONTH, (month-1));
     
-    	max_days = gc.getMaximum(GregorianCalendar.DAY_OF_MONTH);
+    	max_days = gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+
+        //max_days = gc.getM
+
+        
+
+	// TO-DO Andy
+	this.empty_value = "";
 
     }
 
     public int getMonth()
     {
-        return m_month;
+        return this.m_month;
+    }
+
+    public int getYear()
+    {
+        return this.m_year;
     }
 
     public int getDaysInMonth()
@@ -95,21 +110,21 @@ public class MonthlyValues extends WeeklyValues
         if (dv==null)
         {
             System.out.println(day + " = null");
-            dataStr[0][0] = "0";
-            dataStr[0][1] = "0";
-            dataStr[0][2] = "0";
+            dataStr[0][0] = this.empty_value;
+            dataStr[0][1] = this.empty_value;
+            dataStr[0][2] = this.empty_value;
 
-            dataStr[1][0] = "0";
-            dataStr[1][1] = "0";
-            dataStr[1][2] = "0";
+            dataStr[1][0] = this.empty_value;
+            dataStr[1][1] = this.empty_value;
+            dataStr[1][2] = this.empty_value;
 
-            dataStr[2][0] = "0";
-            dataStr[2][1] = "0";
-            dataStr[2][2] = "0";
+            dataStr[2][0] = this.empty_value;
+            dataStr[2][1] = this.empty_value;
+            dataStr[2][2] = this.empty_value;
 
-            dataStr[3][0] = "0";
-            dataStr[3][1] = "0";
-            dataStr[3][2] = "0";
+            dataStr[3][0] = this.empty_value;
+            dataStr[3][1] = this.empty_value;
+            dataStr[3][2] = this.empty_value;
 
             return dataStr;
         }
@@ -120,7 +135,7 @@ public class MonthlyValues extends WeeklyValues
 
         for (int i=0; i<dv.getRowCount(); i++)
         {
-            System.out.println(" Day: " + day + " entry: " + i + " of " + dv.getRowCount());
+            //System.out.println(" Day: " + day + " entry: " + i + " of " + dv.getRowCount());
 
             int grp = whichGroup(dv.getDateTimeAsTimeStringAt(i));
 
@@ -133,14 +148,21 @@ public class MonthlyValues extends WeeklyValues
                 data[grp][0] += d;
                 data[grp][1]++;
             }
+	    //else
+	    //data[grp][0]
 
             data[grp][2] += dv.getIns1At(i);
             data[grp][3] += dv.getIns2At(i);
             data[grp][4] += dv.getCHAt(i);
         }
 
+	//     4 = B(reakfast), L(unch), D(inner), N(ight)
+	//     3 = BG (avg), Ins (1+1), CH(sum)
+
+
         for (int i=0; i<4; i++)
         {
+	    // BG
             if (data[i][1]>=1)
             {
                 if (m_da.getSettings().getBG_unit()==1)
@@ -149,8 +171,9 @@ public class MonthlyValues extends WeeklyValues
                     dataStr[i][0] = "" + data[i][0]/data[i][1];  // mmol/l
             }
             else
-                dataStr[i][0] = "0";
+                dataStr[i][0] = this.empty_value;
 
+	    // insulin
             if ((data[i][2]>0) && (data[i][3]>0))
             {
                 // both insulins present
@@ -161,15 +184,19 @@ public class MonthlyValues extends WeeklyValues
                 // first insulin present
                 dataStr[i][1] = "" + (int)data[i][2];
             }
-            else if ((data[i][3]>0))
+            else if (data[i][3]>0)
             {
                 // second insulin present
                 dataStr[i][1] = "0+" + (int)data[i][3];
             }
             else
-                dataStr[i][1] = "0";
+                dataStr[i][1] = this.empty_value;
 
-            dataStr[i][2] = "" + (int)data[i][4];
+	    // CH
+	    if (data[i][4]>0)
+		dataStr[i][2] = "" + (int)data[i][4];
+	    else
+                dataStr[i][2] = this.empty_value;
 
         }
 

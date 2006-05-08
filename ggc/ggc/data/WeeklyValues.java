@@ -35,14 +35,14 @@ public class WeeklyValues implements Serializable
 
     public void addDay(DailyValues dv)
     {
-	System.out.println(dv.getDate());
+        //System.out.println(dv.getDate());
         m_dataTable.put(""+dv.getDate(), dv);
     }
 
     public void addDayValueRow(DailyValuesRow dvr)
     {
         int date = (int)dvr.getDate();
-	System.out.println(date);
+        //System.out.println(date);
 
         if (m_dataTable.containsKey(""+date))
         {
@@ -59,18 +59,19 @@ public class WeeklyValues implements Serializable
 
     public DailyValues getDayValues(int year, int month, int day)
     {
-	String days = ""+year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2);
-	if (!m_dataTable.containsKey(days))
-	{
-	    return null;
-	}
-	else
-	{
-	    DailyValues dv = (DailyValues)m_dataTable.get(days);
-	    return dv;
-	}
+        String days = ""+year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2);
+        if (!m_dataTable.containsKey(days))
+        {
+            return null;
+        }
+        else
+        {
+            DailyValues dv = (DailyValues)m_dataTable.get(days);
+            return dv;
+        }
     }
 
+    
     public Hashtable getAllValues()
     {
         return this.m_dataTable;

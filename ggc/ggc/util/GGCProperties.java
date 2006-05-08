@@ -89,14 +89,14 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public void setColorSchemeObject(String name)
     {
-	ColorSchemeH cs = (ColorSchemeH)this.m_color_schemes.get("" + name);
+        ColorSchemeH cs = (ColorSchemeH)this.m_color_schemes.get(name);
 
-	if (!cs.equals(m_colors)) 
-	{
-	    this.m_colors = (ColorSchemeH)this.m_color_schemes.get("" + name);
-	    this.m_settings.setColor_scheme(name);
-	    this.changed_db = true;
-	}
+        if (!cs.equals(m_colors)) 
+        {
+            this.m_colors = (ColorSchemeH)this.m_color_schemes.get(name);
+            this.m_settings.setColor_scheme(name);
+            this.changed_db = true;
+        }
     }
 
     public void setColorSchemes(Hashtable table, boolean isnew)

@@ -69,6 +69,12 @@ public class PrefMeterConfPane extends AbstractPrefOptionsPanel
         }
         catch(java.lang.NoClassDefFoundError ex)
         {
+            comboPortId = null;
+        }
+        catch(Exception ex)
+        {
+            comboPortId = null;
+            System.out.println("Problem loading COMM API: " + ex);
         }
 
         JPanel a = new JPanel(new GridLayout(2, 2));

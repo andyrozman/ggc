@@ -386,6 +386,8 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     	}
     
     	settings.setColorSchemes(this.color_schemes, false);
+
+        System.out.println("Selected color: " + comboScheme.getSelectedItem().toString());
     	settings.setColorSchemeObject(comboScheme.getSelectedItem().toString());
 
     }

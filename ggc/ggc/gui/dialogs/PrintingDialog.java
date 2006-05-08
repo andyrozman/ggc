@@ -29,6 +29,7 @@ package ggc.gui.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Event;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -49,6 +50,7 @@ import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
+import java.util.GregorianCalendar;
 
 // fix this
 
@@ -64,6 +66,16 @@ public class PrintingDialog extends JDialog implements ActionListener
     private JComboBox cb_template = null;
     private String[] schemes_names = null;
 
+    GregorianCalendar gc = null;
+    JSpinner sl_year = null, sl_month = null;
+
+    public String[] report_types = 
+    {
+        m_ic.getMessage("SIMPLE_MONTHLY_REPORT"),
+        m_ic.getMessage("EXTENDED_MONTHLY_REPORT")
+    };
+
+    Font font_normal, font_normal_bold;
 
 
     public PrintingDialog(JFrame frame, int type) 
@@ -74,10 +86,18 @@ public class PrintingDialog extends JDialog implements ActionListener
         int x = rec.x + (rec.width/2);
         int y = rec.y + (rec.height/2);
 
-        setBounds(x-175, y-150, 350, 300);
+        setBounds(x-175, y-150, 350, 320);
         this.setLayout(null);
 
+        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_normal_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
+
+        gc = new GregorianCalendar();
+        
         init();
+
+        this.cb_template.setSelectedIndex(type-1);
+
         this.setVisible(true);
     }
 
@@ -87,11 +107,11 @@ public class PrintingDialog extends JDialog implements ActionListener
     {
 
     	JPanel panel = new JPanel();
-    	panel.setBounds(0, 0, 350, 250);
+    	panel.setBounds(0, 0, 350, 350);
     	panel.setLayout(null);
     
     	this.getContentPane().add(panel);
-    
+
     	JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
     	label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
     	label.setHorizontalAlignment(JLabel.CENTER);
@@ -100,16 +120,20 @@ public class PrintingDialog extends JDialog implements ActionListener
     	
     
     	label = new JLabel(m_ic.getMessage("TYPE_OF_REPORT") + ":" );
-    	label.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-    	label.setBounds(40, 90, 280, 25);
+    	label.setFont(this.font_normal_bold);
+    	label.setBounds(40, 75, 280, 25);
     	panel.add(label);
         
-    	cb_template = new JComboBox();
-    	cb_template.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-    	cb_template.setBounds(40, 130, 230, 25);
+    	cb_template = new JComboBox(report_types);
+    	cb_template.setFont(this.font_normal);
+    	cb_template.setBounds(40, 105, 230, 25);
     	panel.add(cb_template);
         
-    	int year = (new GregorianCalendar()).get(GregorianCalendar.YEAR);
+    	//int year = m_da.getC
+
+        int year = gc.get(GregorianCalendar.YEAR);
+        int month = gc.get(GregorianCalendar.MONTH)+1;
+            (new GregorianCalendar()).get(GregorianCalendar.YEAR);
     /*
         JSlider sl = new JSlider();
         BoundedRangeModel model = new BoundedRangeModel();
@@ -121,28 +145,45 @@ public class PrintingDialog extends JDialog implements ActionListener
     */
     
     	label = new JLabel(m_ic.getMessage("SELECT_YEAR_AND_MONTH") + ":");
-    	label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
-    	label.setBounds(40, 170, 80, 25);
+    	label.setFont(this.font_normal_bold);
+    	label.setBounds(40, 155, 180, 25);
     	panel.add(label);
-    
+    /*
     	tfName = new JTextField();
-    	tfName.setBounds(120, 210, 160, 25);
+    	tfName.setBounds(120, 205, 160, 25);
     	tfName.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
     	//panel.add(sl);
-    	
-    
+*/
+
+        sl_year = new JSpinner();
+        SpinnerNumberModel model = new SpinnerNumberModel(year, 1970, year+1, 1);
+        sl_year.setModel(model);
+        sl_year.setEditor(new JSpinner.NumberEditor(sl_year, "#"));
+        sl_year.setFont(this.font_normal);
+        sl_year.setBounds(40, 185, 60, 25);
+        panel.add(sl_year);
+
+        sl_month = new JSpinner();
+        SpinnerNumberModel model_m = new SpinnerNumberModel(month, 1, 12, 1);
+        sl_month.setModel(model_m);
+        //sl_month.setEditor(new JSpinner.NumberEditor(sl_month, "#"));
+        sl_month.setFont(this.font_normal);
+        sl_month.setBounds(120, 185, 40, 25);
+        panel.add(sl_month);
+
+        
     	JButton button = new JButton(m_ic.getMessage("OK"));
     	button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
     	button.setActionCommand("ok");
     	button.addActionListener(this);
-    	button.setBounds(90, 210, 80, 25);
+    	button.setBounds(100, 240, 80, 25);
     	panel.add(button);
     
     	button = new JButton(m_ic.getMessage("CANCEL"));
     	button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
     	button.setActionCommand("cancel");
     	button.addActionListener(this);
-    	button.setBounds(180, 210, 80, 25);
+    	button.setBounds(190, 240, 80, 25);
     	panel.add(button);
 
     }
@@ -162,11 +203,25 @@ public class PrintingDialog extends JDialog implements ActionListener
     	}
     	else if (action.equals("ok"))
     	{
+            int yr = ((Integer)sl_year.getValue()).intValue();
+	    int mnth = ((Integer)sl_month.getValue()).intValue();
 
-	    MonthlyValues mv = m_da.getDb().getMonthlyValues(2006, 4);
-	    PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
+	    /*
+            System.out.println(sl_year.getValue());
+            if (sl_year.getValue() instanceof Integer)
+            {
+                System.out.println("int");
+            }
 
-	    displayPDF(psm.getName());
+            if (sl_year.getValue() instanceof String)
+            {
+                System.out.println("str");
+            }*/
+            
+            MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
+            PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
+
+            displayPDF(psm.getName());
          
         
 /*

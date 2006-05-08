@@ -1,3 +1,12 @@
+2006-05-08 (v0.2.2.4) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Printing Dialog for selection of month and year which to print
+    * Basic installer script, which be used to create deployment file for Windows 
+      (NSIS). Deployment file for linux will be created at later time (as tar.gz 
+      image).
+    * Printing report internationalized, keywords added to master file (english).
+    * Slovenian translation for printing added
+    * Fixed problem with Daily graph display in Daily Stats Dialog
+
 2006-05-02 (v0.2.2.3) Andy Rozman <andyrozman@users.sourceforge.net>
     * MonthlyValues changed to work for simple PDF reports
     * Create Simple PDF Reports (works with hardcoded values so far)

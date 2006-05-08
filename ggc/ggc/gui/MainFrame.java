@@ -56,9 +56,9 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.2.2";
+    public  static String s_version = "0.2.2.4";
     private String full_version = "v" + s_version;
-    private String version_date = "27th April 2006";
+    private String version_date = "8th May 2006";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;

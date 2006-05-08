@@ -41,28 +41,20 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
     protected DataAccess m_da = DataAccess.getInstance();
 
     private boolean isPortOpen = false;
-
     private boolean dataFromMeter = false;
-
     protected SerialPort serialPort = null;
-
     protected CommPortIdentifier portIdentifier = null;
-
     protected OutputStream portOutputStream = null;
-
     protected InputStream portInputStream = null;
 
     private long startTime = System.currentTimeMillis();
-
     protected long timeOut = 50000;
 
     private EventListenerList listenerList = new EventListenerList();
-
     private ImageIcon image = null;
-
     private String useInfoMessage = null;
-
     private String name = null;
+
 
     /**
      * Constructor for SerialMeterImport.
@@ -423,16 +415,27 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
     public static Vector getAvailableSerialPorts()
     {
         Vector retVal = new Vector();
-        int counter = 0;
 
-        Enumeration enume = CommPortIdentifier.getPortIdentifiers();
-        while (enume.hasMoreElements()) 
+        try
         {
-            CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
-            if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
-                retVal.add(portID.getName());
+            //Vector retVal = new Vector();
+            int counter = 0;
+
+            Enumeration enume = CommPortIdentifier.getPortIdentifiers();
+            while (enume.hasMoreElements()) 
+            {
+                CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
+                if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
+                    retVal.add(portID.getName());
+            }
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception: getAvailableSerialPorts: " + ex);
+
         }
         return retVal;
+
     }
 
 }
