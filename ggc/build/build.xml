@@ -9,6 +9,8 @@
 
     <!-- These should *not* be modified on the command line! -->
     <property name="build.dir" value="${source.dir}/classes"/>
+    <property name="deploy.dir" value="${outdir.dir}/deploy"/>
+    
     
     <!-- Build GGC  -->
     
@@ -82,7 +84,7 @@
 -->
 
     <target name="jar"  description="Build GGC jar" depends="make">
-        <jar jarfile="${binary.dir}/ggc.jar"
+        <jar jarfile="${deploy.dir}/ggc.jar"
              update="false" 
              index="false"
              manifest="./manifest_ggc.mf">
@@ -94,6 +96,7 @@
                 <include name="icons/*.gif"/>
                 <exclude name="ggc/little/**"/>
                 <include name="GGC_*.properties"/>
+                <include name="*.hbm.xml"/>
             </fileset>
         </jar>
     </target>
@@ -101,7 +104,7 @@
 
 
     <target name="jar_l"  description="Build GGC Little" depends="make">
-        <jar jarfile="${binary.dir}/ggcl.jar"
+        <jar jarfile="${deploy.dir}/ggcl.jar"
              update="false" 
              index="false"
              manifest="./manifest_ggc_little.mf">
@@ -115,6 +118,7 @@
                 <include name="ggc/view/**"/>
                 <include name="icons/*.gif"/>
                 <include name="GGC_*.properties"/>
+                <include name="*.hbm.xml"/>
             </fileset>
         </jar>
     </target>
