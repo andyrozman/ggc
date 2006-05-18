@@ -77,7 +77,7 @@ public class InitDb
                        3.0f, 20.0f, 4.4f, 14.0f,
                        2, "blueMetalthemepack.zip",
                        0, 0, 0, 0, 0, 0, 0, 
-                       "", 1100, 1800, 2100, "Default Scheme");
+                       "", 1100, 1800, 2100, "0", "Default Scheme");
         seti.setId(1);
 
         m_db.addHibernate(seti);

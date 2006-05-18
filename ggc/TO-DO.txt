@@ -5,11 +5,10 @@ TO-DO LIST
 Level 1 (High Priority): 
 ----------------------------
 * Printing: 
-    o  Data gather (MonthlyValues)
-    o  Simple print sheet
+    o  Data gather - Extended (MonthlyValues)
     o  Detailed print sheet
-    o  Print dialog
 * Configuration:
+    o  main screen
     o  colors
     o  rendering
     o  printing
@@ -102,7 +101,13 @@ Level 7 (IN FAR FUTURE/MAYBE):
 
 
 
-
+METERS
+------
+- New Meter Dialog
+- New Meter Interface
+- Dummy Old Meter
+- Dummy New Meter
+- Implement meter support: ...
 
 
 
@@ -139,7 +144,10 @@ DONE
 	o  Default database 
 	o  Colors as separate table* Configuration:
         o  low/high BGs
-
+* Printing: 
+    o  Data gather (MonthlyValues)
+    o  Simple print sheet
+    o  Print dialog
 * GGC Little: 
         o  Add/Edit/Delete
         o  Daily graph

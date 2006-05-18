@@ -55,19 +55,18 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public GGCProperties(DataAccess da, DbToolApplicationGGC config) 
     {
-	this.m_da = da;
-	this.m_config = config;
+        this.m_da = da;
+        this.m_config = config;
         this.m_color_schemes = new Hashtable();
         this.m_settings = new SettingsMainH(I18nControl.getInstance().getMessage("UNNAMED_USER"), 
                        "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 
-                       2, 60.0f, 200.0f, 80.0f, 120.0f, 
-		       3.0f, 20.0f, 4.4f, 14.0f,
-		       2, "blueMetalthemepack.zip",
-                       0, 0, 0, 0, 0, 0, 0, 
-		       "", 1100, 1800, 2100, "Default Scheme");
+                                            2, 60.0f, 200.0f, 80.0f, 120.0f, 
+                                            3.0f, 20.0f, 4.4f, 14.0f,
+                                            2, "blueMetalthemepack.zip",
+                                            0, 0, 0, 0, 0, 0, 0, 
+                                            "", 1100, 1800, 2100, "", "Default Scheme");
 
-	//public SettingsMainH(String name, String ins1_name, String ins1_abbr, String ins2_name, String ins2_abbr, int meter_type, String meter_port, int bg_unit, float bg1_low, float bg1_high, float bg1_target_low, float bg1_target_high, float bg2_low, float bg2_high, float bg2_target_low, float bg2_target_high, int laf_type, String laf_name, int render_rendering, int render_dithering, int render_interpolation, int render_antialiasing, int render_textantialiasing, int render_colorrendering, int render_fractionalmetrics, String pdf_display_software_path, int lunch_start_time, int dinner_start_time, int night_start_time, String color_scheme) {
-
+            //public SettingsMainH(String name, String ins1_name, String ins1_abbr, String ins2_name, String ins2_abbr, int meter_type, String meter_port, int bg_unit, float bg1_low, float bg1_high, float bg1_target_low, float bg1_target_high, float bg2_low, float bg2_high, float bg2_target_low, float bg2_target_high, int laf_type, String laf_name, int render_rendering, int render_dithering, int render_interpolation, int render_antialiasing, int render_textantialiasing, int render_colorrendering, int render_fractionalmetrics, String print_pdf_viewer_path, int print_lunch_start_time, int print_dinner_start_time, int print_night_start_time, String print_empty_value, String color_scheme) {
 
         this.m_colors = new ColorSchemeH(
         "Default Scheme", 0, -65485, -6750208, -163654, -81409, -1184275, -16724788, 
@@ -116,16 +115,16 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public String getUserName() 
     {
-	return this.m_settings.getName();
+        return this.m_settings.getName();
     }
 
     public void setUserName(String value)
     {
-	if (!this.m_settings.getName().equals(value)) 
-	{
-	    this.m_settings.setName(value);
-	    changed_db = true;
-	}
+        if (!this.m_settings.getName().equals(value)) 
+        {
+            this.m_settings.setName(value);
+            changed_db = true;
+        }
     }
 
 
@@ -135,30 +134,30 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public String getIns1Name() 
     {
-	return this.m_settings.getIns1_name();
+        return this.m_settings.getIns1_name();
     }
 
     public void setIns1Name(String value)
     {
-	if (!this.m_settings.getIns1_name().equals(value)) 
-	{
-	    this.m_settings.setIns1_name(value);
-	    changed_db = true;
-	}
+        if (!this.m_settings.getIns1_name().equals(value)) 
+        {
+            this.m_settings.setIns1_name(value);
+            changed_db = true;
+        }
     }
 
     public String getIns2Name() 
     {
-	return this.m_settings.getIns2_name();
+        return this.m_settings.getIns2_name();
     }
 
     public void setIns2Name(String value)
     {
-	if (!this.m_settings.getIns2_name().equals(value)) 
-	{
-	    this.m_settings.setIns2_name(value);
-	    changed_db = true;
-	}
+        if (!this.m_settings.getIns2_name().equals(value)) 
+        {
+            this.m_settings.setIns2_name(value);
+            changed_db = true;
+        }
     }
 
 
@@ -170,11 +169,11 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public void setIns1Abbr(String value)
     {
-	if (!this.m_settings.getIns1_abbr().equals(value)) 
-	{
-	    this.m_settings.setIns1_abbr(value);
-	    changed_db = true;
-	}
+        if (!this.m_settings.getIns1_abbr().equals(value)) 
+        {
+            this.m_settings.setIns1_abbr(value);
+            changed_db = true;
+        }
     }
 
 
@@ -204,11 +203,11 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public void setBG_unit(int bgunit)
     {
-	if (this.m_settings.getBg_unit()!= bgunit) 
-	{
-	    this.m_settings.setBg_unit(bgunit);
-	    changed_db = true;
-	}
+        if (this.m_settings.getBg_unit()!= bgunit) 
+        {
+            this.m_settings.setBg_unit(bgunit);
+            changed_db = true;
+        }
     }
 
 
@@ -393,47 +392,114 @@ public class GGCProperties //extends GGCPropertiesHelper
     //
     // rendering stuff
     //
+
     public int getRendering() 
     {
-	return this.m_settings.getRender_rendering();
+        return this.m_settings.getRender_rendering();
+    }
+
+    public void setRendering(int value) 
+    {
+        if (this.m_settings.getRender_rendering()!=value) 
+        {
+            this.m_settings.setRender_rendering(value);
+            changed_db = true;
+        }
     }
 
     public int getAntiAliasing() 
     {
-	return this.m_settings.getRender_antialiasing();
+        return this.m_settings.getRender_antialiasing();
     }
 
+    public void setAntiAliasing(int value) 
+    {
+        if (this.m_settings.getRender_antialiasing()!=value) 
+        {
+            this.m_settings.setRender_antialiasing(value);
+            changed_db = true;
+        }
+    }
+
+    
     public int getColorRendering() 
     {
-	return this.m_settings.getRender_colorrendering();
+        return this.m_settings.getRender_colorrendering();
     }
 
+    public void setColorRendering(int value) 
+    {
+        if (this.m_settings.getRender_colorrendering()!=value) 
+        {
+            this.m_settings.setRender_colorrendering(value);
+            changed_db = true;
+        }
+    }
+    
     public int getDithering() 
     {
-	return this.m_settings.getRender_dithering();
+        return this.m_settings.getRender_dithering();
     }
 
+    public void setDithering(int value) 
+    {
+        if (this.m_settings.getRender_dithering()!=value) 
+        {
+            this.m_settings.setRender_dithering(value);
+            changed_db = true;
+        }
+    }
+    
     public int getFractionalMetrics() 
     {
-	return this.m_settings.getRender_fractionalmetrics();
+        return this.m_settings.getRender_fractionalmetrics();
     }
 
+    public void setFractionalMetrics(int value) 
+    {
+        if (this.m_settings.getRender_fractionalmetrics()!=value) 
+        {
+            this.m_settings.setRender_fractionalmetrics(value);
+            changed_db = true;
+        }
+    }
+
+    
     public int getInterpolation() 
     {
-	return this.m_settings.getRender_interpolation();
+        return this.m_settings.getRender_interpolation();
     }
 
+    public void setInterpolation(int value) 
+    {
+        if (this.m_settings.getRender_interpolation()!=value) 
+        {
+            this.m_settings.setRender_interpolation(value);
+            changed_db = true;
+        }
+    }
+
+    
     public int getTextAntiAliasing() 
     {
-	return this.m_settings.getRender_textantialiasing();
+        return this.m_settings.getRender_textantialiasing();
     }
 
+    public void setTextAntiAliasing(int value) 
+    {
+        if (this.m_settings.getRender_textantialiasing()!=value) 
+        {
+            this.m_settings.setRender_textantialiasing(value);
+            changed_db = true;
+        }
+    }
+    
 
     // colors
 
     public ColorSchemeH getSelectedColorScheme() 
     {
-	return this.m_colors;
+        return this.m_colors;
     }
 
     /*
@@ -542,45 +608,55 @@ public class GGCProperties //extends GGCPropertiesHelper
 
 
 
-
-    // 
-
-
-
+    // ---
+    // ---  Language methods
+    // ---
 
 
     public String getLanguage() 
     {
-	return this.m_config.selected_lang;
+        return this.m_config.selected_lang;
     }
 
     public void setLanguage(String name)
     {
-	//System.out.println("set Lang: " + name);
+        int idx = m_da.getLanguageIndexByName(name);
+        String post = m_da.avLangPostfix[idx];
 
-	int idx = m_da.getLanguageIndexByName(name);
-
-	String post = m_da.avLangPostfix[idx];
-
-	//System.out.println("  new Lang:" + post);
-
-	if (!this.m_config.selected_lang.equals(post)) 
-	{
-	    //System.out.println("  changed");
-	    this.m_config.selected_lang = post;
-	    this.changed_config = true;
-	}
-	//else
-	//    System.out.println("  same");
-
+        if (!this.m_config.selected_lang.equals(post)) 
+        {
+            this.m_config.selected_lang = post;
+            this.changed_config = true;
+        }
     }
 
+
+    // ---
+    // ---  Printing methods
+    // ---
+
+
+    public void Tt()
+    {
+        //this.m_settings.
+    }
+
+    
+
+    // ---
+    // ---  Utility methods
+    // ---
+
+    
     public Color getColor(int key)
     {
 	return new Color(key);
     }
 
 
+    // ---
+    // ---  Load/Save methods
+    // ---
 
 
     public void load()

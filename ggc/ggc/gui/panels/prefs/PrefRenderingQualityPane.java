@@ -90,13 +90,13 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
 
         setLayout(new BorderLayout());
 
-        //comboAntiAliasing.setSelectedIndex(m_da.getSettings().getAntiAliasing());
-        //comboColorRendering.setSelectedIndex(m_da.getSettings().getColorRendering());
-        //comboDithering.setSelectedIndex(m_da.getSettings().getDithering());
-        //comboFractionalMetrics.setSelectedIndex(m_da.getSettings().getFractionalMetrics());
-        //comboInterpolation.setSelectedIndex(m_da.getSettings().getInterpolation());
-        //comboTextAntiAliasing.setSelectedIndex(m_da.getSettings().getTextAntiAliasing());
-        //comboRendering.setSelectedIndex(m_da.getSettings().getRendering());
+        comboAntiAliasing.setSelectedIndex(m_da.getSettings().getAntiAliasing());
+        comboColorRendering.setSelectedIndex(m_da.getSettings().getColorRendering());
+        comboDithering.setSelectedIndex(m_da.getSettings().getDithering());
+        comboFractionalMetrics.setSelectedIndex(m_da.getSettings().getFractionalMetrics());
+        comboInterpolation.setSelectedIndex(m_da.getSettings().getInterpolation());
+        comboTextAntiAliasing.setSelectedIndex(m_da.getSettings().getTextAntiAliasing());
+        comboRendering.setSelectedIndex(m_da.getSettings().getRendering());
 
         comboAntiAliasing.addItemListener(this);
         comboColorRendering.addItemListener(this);
@@ -119,20 +119,18 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
 
     public void saveProps()
     {
-	/*
-        props.set("AntiAliasing", comboAntiAliasing.getSelectedIndex());
-        props.set("ColorRendering", comboColorRendering.getSelectedIndex());
-        props.set("Dithering", comboDithering.getSelectedIndex());
-        props.set("FractionalMetrics", comboFractionalMetrics.getSelectedIndex());
-        props.set("Interpolation", comboInterpolation.getSelectedIndex());
-        props.set("TextAntiAliasing", comboTextAntiAliasing.getSelectedIndex());
-        props.set("Rendering", comboRendering.getSelectedIndex());
-	*/
+        this.settings.setAntiAliasing(comboAntiAliasing.getSelectedIndex());
+        this.settings.setColorRendering(comboColorRendering.getSelectedIndex());
+        this.settings.setDithering(comboDithering.getSelectedIndex());
+        this.settings.setFractionalMetrics(comboFractionalMetrics.getSelectedIndex());
+        this.settings.setInterpolation(comboInterpolation.getSelectedIndex());
+        this.settings.setTextAntiAliasing(comboTextAntiAliasing.getSelectedIndex());
+        this.settings.setRendering(comboRendering.getSelectedIndex());
     }
 
     public void itemStateChanged(ItemEvent e)
     {
-        saveProps();
+        //saveProps();
         changed = true;
         dgv.setNewRenderingQuality();
         dgv.repaint();

@@ -50,16 +50,16 @@ public class PropertiesDialog extends JDialog implements ActionListener
     {
         super(parent, "", true);
 
-	Rectangle rec = parent.getBounds();
-	int x = rec.x + (rec.width/2);
-	int y = rec.y + (rec.height/2);
+        Rectangle rec = parent.getBounds();
+        int x = rec.x + (rec.width/2);
+        int y = rec.y + (rec.height/2);
 
-	setBounds(x-320, y-240, 640, 480);
+        setBounds(x-320, y-240, 640, 480);
         setTitle(m_ic.getMessage("PREFERENCES"));
 
-	createPanels();
+        createPanels();
         init();
-	this.setResizable(false);
+        this.setResizable(false);
         this.setVisible(true);
     }
 
@@ -68,7 +68,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
     {
         Dimension dim = new Dimension(80, 20);
 
-	createNodes();
+        createNodes();
 
 	/*
  private JTree prefTree;
@@ -140,20 +140,21 @@ public class PropertiesDialog extends JDialog implements ActionListener
 
     public void createNodes()
     {
-	prefNode = new DefaultMutableTreeNode(m_ic.getMessage("PREFERENCES"));
-	prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("GENERAL")));
-	prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MEDICAL_DATA")));
-	prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("COLORS_AND_FONTS")));
-	prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("RENDERING_QUALITY")));
-	//DefaultMutableTreeNode dataNode = new DefaultMutableTreeNode(m_ic.getMessage("DATA_STORING"));
-	//dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MYSQL_SETUP")));
-	//dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("TEXTFILE_SETUP")));
-	//prefNode.add(dataNode);
-	prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("METER_CONFIGURATION")));
-	prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("NUTRITION")));
-	/*DefaultMutableTreeNode meterNode = new DefaultMutableTreeNode("Meters");
-	meterNode.add(new DefaultMutableTreeNode("Glucocard"));
-	prefNode.add(meterNode);*/
+        prefNode = new DefaultMutableTreeNode(m_ic.getMessage("PREFERENCES"));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("GENERAL")));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MEDICAL_DATA")));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("COLORS_AND_FONTS")));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("RENDERING_QUALITY")));
+        //DefaultMutableTreeNode dataNode = new DefaultMutableTreeNode(m_ic.getMessage("DATA_STORING"));
+        //dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("MYSQL_SETUP")));
+        //dataNode.add(new DefaultMutableTreeNode(m_ic.getMessage("TEXTFILE_SETUP")));
+        //prefNode.add(dataNode);
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("METER_CONFIGURATION")));
+        //prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("NUTRITION")));
+        prefNode.add(new DefaultMutableTreeNode(m_ic.getMessage("PRINTING")));
+	    /*DefaultMutableTreeNode meterNode = new DefaultMutableTreeNode("Meters");
+	    meterNode.add(new DefaultMutableTreeNode("Glucocard"));
+        prefNode.add(meterNode);*/
     }
 
 
@@ -164,7 +165,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
     private int PANEL_COLORS = 3;
     private int PANEL_RENDERING = 4;
     private int PANEL_METER = 5;
-    private int PANEL_NUTRITION = 6;
+    private int PANEL_PRINTING = 6;
 
 
     public void createPanels()
@@ -172,16 +173,16 @@ public class PropertiesDialog extends JDialog implements ActionListener
 	// Each node must have a panel, and panel numbers must be as they are added 
 	// to. You must add panels in same order as you add, nodes.
 
-	panels = new ArrayList();
-	panel_id = new Hashtable();
+        panels = new ArrayList();
+        panel_id = new Hashtable();
 
-	addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new PrefMainPane());
-	addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane());
-	addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane());
+        addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new PrefMainPane());
+        addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane());
+        addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane());
         addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new PrefFontsAndColorPane(this));
-	addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane());
-	addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane());
-	addPanel(m_ic.getMessage("NUTRITION"), PANEL_NUTRITION, new PrefNutritionConfPane());
+        addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane());
+        addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane());
+        addPanel(m_ic.getMessage("PRINTING"), PANEL_PRINTING, new PrefPrintingPane());
     }
 
 
@@ -192,27 +193,27 @@ public class PropertiesDialog extends JDialog implements ActionListener
 
     private void addPanel(String name, int id, JPanel panel)
     {
-	panels.add(panel);
-	panel_id.put(name, ""+id);
+        panels.add(panel);
+        panel_id.put(name, ""+id);
     }
 
 
     public void selectPanel(String s)
     {
 
-	if (!panel_id.containsKey(s))
-	{
-	    System.out.println("No such panel: " + s);
-	    return;
-	}
+        if (!panel_id.containsKey(s))
+        {
+            System.out.println("No such panel: " + s);
+            return;
+        }
 
-	String id = (String)panel_id.get(s);
+        String id = (String)panel_id.get(s);
 
-	prefPane.remove(1);
-	prefPane.add((JPanel)panels.get(Integer.parseInt(id)), BorderLayout.CENTER);
-	prefPane.invalidate();
-	prefPane.validate();
-	prefPane.repaint();
+        prefPane.remove(1);
+        prefPane.add((JPanel)panels.get(Integer.parseInt(id)), BorderLayout.CENTER);
+        prefPane.invalidate();
+        prefPane.validate();
+        prefPane.repaint();
 
     }
 
@@ -226,12 +227,12 @@ public class PropertiesDialog extends JDialog implements ActionListener
 
         if (action.equals("ok")) 
         {
-	    save();
+            save();
             this.dispose();
         }
         else if (action.equals("cancel")) 
         {
-	    reset();
+            reset();
             this.dispose();
         }
         else if (action.equals("apply")) 
@@ -245,18 +246,18 @@ public class PropertiesDialog extends JDialog implements ActionListener
 
     public void save()
     {
-	for (int i=0; i<panels.size(); i++)
-	{
-	    AbstractPrefOptionsPanel pn = (AbstractPrefOptionsPanel)panels.get(i);
-	    pn.saveProps();
-	}
+        for (int i=0; i<panels.size(); i++)
+        {
+            AbstractPrefOptionsPanel pn = (AbstractPrefOptionsPanel)panels.get(i);
+            pn.saveProps();
+        }
 
-	DataAccess.getInstance().getSettings().save();
+        DataAccess.getInstance().getSettings().save();
     }
 
     public void reset()
     {
-	DataAccess.getInstance().getSettings().reload();
+        DataAccess.getInstance().getSettings().reload();
     }
 
 

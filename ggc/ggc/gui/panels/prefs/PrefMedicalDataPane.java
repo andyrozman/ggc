@@ -55,7 +55,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel
     private void init()
     {
 
-	JPanel ful = new JPanel(new GridLayout(4,0));
+	//JPanel ful = new JPanel(new GridLayout(4,0));
 
 	JPanel a = new JPanel(new GridLayout(0, 2));
 	a.setBorder(new TitledBorder(m_ic.getMessage("INSULIN_SETTINGS")));

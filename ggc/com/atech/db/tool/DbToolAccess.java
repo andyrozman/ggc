@@ -101,10 +101,10 @@ public class DbToolAccess
 //        loadConfig();
         loadFonts();
 
-	m_dataDefs = new DatabaseDefinitions();
-	m_databases_treeroot =  new DbToolTreeRoot(this);
+        m_dataDefs = new DatabaseDefinitions();
+        m_databases_treeroot =  new DbToolTreeRoot(this);
 
-	//loadApplicationData();
+        //loadApplicationData();
 
     } 
 
@@ -557,7 +557,7 @@ public class DbToolAccess
 
             }
 
-            ArrayList<String> list = new ArrayList<String>();
+            ArrayList list = new ArrayList();
 
             int count_db = 0;
 

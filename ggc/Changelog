@@ -1,3 +1,7 @@
+
+    * Added saving of Rendering settings
+    
+
 2006-05-08 (v0.2.2.4) Andy Rozman <andyrozman@users.sourceforge.net>
     * Printing Dialog for selection of month and year which to print
     * Basic installer script, which be used to create deployment file for Windows 

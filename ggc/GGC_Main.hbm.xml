@@ -85,10 +85,11 @@
         <property name="render_colorrendering"  type="int" />
         <property name="render_fractionalmetrics"  type="int" />
 
-        <property name="pdf_display_software_path"  type="string" length="100" />
-        <property name="lunch_start_time"  type="int" />
-        <property name="dinner_start_time"  type="int" />
-        <property name="night_start_time"  type="int" />
+        <property name="print_pdf_viewer_path"  type="string" length="100" />
+        <property name="print_lunch_start_time"  type="int" />
+        <property name="print_dinner_start_time"  type="int" />
+        <property name="print_night_start_time"  type="int" />
+        <property name="print_empty_value"  type="string" length="10" />
 
         <property name="color_scheme"  type="string" length="50" />
     </class>
