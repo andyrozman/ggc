@@ -166,6 +166,7 @@ public class NutritionImport
 
 
 
+    //XXX: see InitDb.insertNutritionData for similar problems
     public void insertNutritionData()
     {
 

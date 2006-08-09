@@ -83,7 +83,7 @@ public class GlucoTable extends JTable
     public static JComponent createGlucoTable(final GlucoTableModel model)
     {
         GlucoTable table = new GlucoTable(model);
-        JScrollPane scroller = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         final AddRowAction addRowAction = new AddRowAction(table);
         final DeleteRowAction deleteRowAction = new DeleteRowAction(table);

@@ -40,6 +40,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.*;
@@ -114,7 +115,7 @@ public class PrintingDialog extends JDialog implements ActionListener
 
     	JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
     	label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
-    	label.setHorizontalAlignment(JLabel.CENTER);
+    	label.setHorizontalAlignment(SwingConstants.CENTER);
     	label.setBounds(0, 20, 350, 35);
     	panel.add(label);
     	
@@ -131,9 +132,9 @@ public class PrintingDialog extends JDialog implements ActionListener
         
     	//int year = m_da.getC
 
-        int year = gc.get(GregorianCalendar.YEAR);
-        int month = gc.get(GregorianCalendar.MONTH)+1;
-            (new GregorianCalendar()).get(GregorianCalendar.YEAR);
+        int year = gc.get(Calendar.YEAR);
+        int month = gc.get(Calendar.MONTH)+1;
+            (new GregorianCalendar()).get(Calendar.YEAR);
     /*
         JSlider sl = new JSlider();
         BoundedRangeModel model = new BoundedRangeModel();
@@ -246,7 +247,7 @@ public class PrintingDialog extends JDialog implements ActionListener
 	File fl = new File("../data/temp/");
 
 	System.out.println(fl.getAbsolutePath());
-	System.out.println(fl.separator);
+	System.out.println(File.separator);
 
 	File acr = new File("c:/Program Files/Utils/Acrobat 7/Reader/AcroRd32.exe");
 	System.out.println(acr.exists());
@@ -258,7 +259,7 @@ public class PrintingDialog extends JDialog implements ActionListener
 	{
 //	    String pathToAcrobat = "c:\\Program Files\\Utils\\Acrobat 7.0\\Reader\\AcroRd32.exe ";
 	    //Runtime.getRuntime().e
-	    Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + fl.separator + name);
+	    Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + File.separator + name);
 	} 
 	catch(RuntimeException ex)
 	{

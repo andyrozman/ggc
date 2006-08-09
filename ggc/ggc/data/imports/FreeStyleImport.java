@@ -178,7 +178,7 @@ public class FreeStyleImport extends SerialMeterImport
      */
     private byte[] createByteBufferFromStream(InputStream stream)
     {
-        Vector bytes = new Vector();
+        Vector<Byte> bytes = new Vector<Byte>();
         int newData = 0;
 
         while (newData != -1)
@@ -191,7 +191,7 @@ public class FreeStyleImport extends SerialMeterImport
                     break;
                 }
                 System.out.println("byte : " + newData);
-                bytes.addElement(new Byte((byte)newData));
+                bytes.addElement((byte)newData);
 
             }
             catch (IOException ex)

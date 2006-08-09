@@ -138,11 +138,11 @@ public class ReadMeterDialog extends JDialog implements ActionListener
 
         logText = new JTextArea(m_ic.getMessage("LOG__")+":\n", 8, 35);
         logText.setAutoscrolls(true);
-        JScrollPane sp = new JScrollPane(logText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane sp = new JScrollPane(logText, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         resTable = new GlucoTable();
 
-        JScrollPane sp2 = new JScrollPane(resTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane sp2 = new JScrollPane(resTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         tabPane = new JTabbedPane();
         //tabPane.add("Values", sp2);
@@ -176,7 +176,7 @@ public class ReadMeterDialog extends JDialog implements ActionListener
         //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/freestyle.png")));
         infoIcon = new JLabel();
         infoDescription = new JLabel();
-        infoDescription.setVerticalAlignment(JLabel.TOP);
+        infoDescription.setVerticalAlignment(SwingConstants.TOP);
         infoPanel.add(infoIcon, "North");
         infoPanel.add(infoDescription, "Center");
         infoPanel.setBorder(new TitledBorder(meterImport.getName()));

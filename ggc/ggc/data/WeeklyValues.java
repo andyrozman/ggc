@@ -24,13 +24,13 @@ import ggc.data.DailyValuesRow;
 public class WeeklyValues implements Serializable
 {
     private I18nControl m_ic = I18nControl.getInstance();
-    private Hashtable m_dataTable = null;
+    private Hashtable<String, DailyValues> m_dataTable = null;
     public DataAccess m_da = DataAccess.getInstance();
 
 
     public WeeklyValues()
     {
-        m_dataTable = new Hashtable();
+        m_dataTable = new Hashtable<String, DailyValues>();
     }
 
     public void addDay(DailyValues dv)
@@ -46,7 +46,7 @@ public class WeeklyValues implements Serializable
 
         if (m_dataTable.containsKey(""+date))
         {
-            DailyValues dv_int = (DailyValues)m_dataTable.get(""+date);
+            DailyValues dv_int = m_dataTable.get(""+date);
             dv_int.addRow(dvr);
         }
         else
@@ -66,7 +66,7 @@ public class WeeklyValues implements Serializable
         }
         else
         {
-            DailyValues dv = (DailyValues)m_dataTable.get(days);
+            DailyValues dv = m_dataTable.get(days);
             return dv;
         }
     }

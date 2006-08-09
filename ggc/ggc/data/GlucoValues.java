@@ -50,7 +50,7 @@ import ggc.util.DataAccess;
 public class GlucoValues extends DailyValues
 {
 //    ArrayList dayValues = null;
-        Vector dayValues = null;
+        Vector<DailyValues> dayValues = null;
 
     private EventListenerList listenerList = new EventListenerList();
     private DataAccess m_da = DataAccess.getInstance();
@@ -59,7 +59,7 @@ public class GlucoValues extends DailyValues
 
     public GlucoValues()
     {
-        dayValues = new Vector();
+        dayValues = new Vector<DailyValues>();
         //dayValues = new ArrayList();
     }
 
@@ -106,7 +106,7 @@ public class GlucoValues extends DailyValues
 
         for (int i=0; i<dv.getRowCount(); i++) 
         {
-            addRow((DailyValuesRow)dv.getRowAt(i));
+            addRow(dv.getRowAt(i));
         }
 
     }
@@ -118,7 +118,7 @@ public class GlucoValues extends DailyValues
 
         for (int i = 0; i < dayValues.size(); i++) 
         {
-            DailyValues dV = (DailyValues)dayValues.elementAt(i);
+            DailyValues dV = dayValues.elementAt(i);
             //System.out.println("date1:" + s1 + "");
             //System.out.println("date2:" + dV.getDateAsString() + "");
             if (s1.equals(dV.getDateAsString())) 
@@ -158,14 +158,14 @@ public class GlucoValues extends DailyValues
     public void saveValues()
     {
         for (int i = 0; i < dayValues.size(); i++)
-            ((DailyValues)dayValues.elementAt(i)).saveDay();
+            dayValues.elementAt(i).saveDay();
     }
 
     public int getRowCount()
     {
         int c = 0;
         for (int i = 0; i < dayValues.size(); i++)
-            c += ((DailyValues)dayValues.elementAt(i)).getRowCount();
+            c += (dayValues.elementAt(i)).getRowCount();
         return c;
     }
 
@@ -174,11 +174,10 @@ public class GlucoValues extends DailyValues
         if (row != -1) 
         {
             int c = 0;
-            Object o = null;
             for (int i = 0; i < dayValues.size(); i++) 
             {
                 int old = c;
-                DailyValues dV = (DailyValues)dayValues.elementAt(i);
+                DailyValues dV = dayValues.elementAt(i);
                 c += dV.getRowCount();
                 if (old <= row && row < c) 
                 {
@@ -199,7 +198,7 @@ public class GlucoValues extends DailyValues
         for (int i = 0; i < dayValues.size(); i++) 
         {
             int old = c;
-            DailyValues dV = (DailyValues)dayValues.elementAt(i);
+            DailyValues dV = dayValues.elementAt(i);
             c += dV.getRowCount();
             if ((old <= row) && (row < c))
                 o = dV.getValueAt(row - old, column);
@@ -209,17 +208,16 @@ public class GlucoValues extends DailyValues
 
     public DailyValues getDailyValuesForDay(int day)
     {
-        return (DailyValues)dayValues.elementAt(day);
+        return dayValues.elementAt(day);
     }
 
     public void setValueAt(Object aValue, int row, int column)
     {
         int c = 0;
-        Object o = null;
         for (int i = 0; i < dayValues.size(); i++) 
         {
             int old = c;
-            DailyValues dV = (DailyValues)dayValues.elementAt(i);
+            DailyValues dV = dayValues.elementAt(i);
             c += dV.getRowCount();
             if ((old <= row) && (row < c)) 
                 dV.setValueAt(aValue, row - old, column);
@@ -238,7 +236,7 @@ public class GlucoValues extends DailyValues
 
     public String getDateForDayAt(int i)
     {
-        return ((DailyValues)dayValues.elementAt(i)).getDayAndMonthAsString();
+        return (dayValues.elementAt(i)).getDayAndMonthAsString();
     }
 
 

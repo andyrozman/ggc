@@ -9,6 +9,7 @@ package ggc.data;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -40,10 +41,10 @@ public class MonthlyValues extends WeeklyValues
     	m_year = year;
     
         GregorianCalendar gc = new GregorianCalendar();
-        gc.set(GregorianCalendar.YEAR, year);
-        gc.set(GregorianCalendar.MONTH, (month-1));
+        gc.set(Calendar.YEAR, year);
+        gc.set(Calendar.MONTH, (month-1));
     
-    	max_days = gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+    	max_days = gc.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         //max_days = gc.getM
 

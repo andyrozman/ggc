@@ -57,7 +57,7 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
 
         Font f = new Font(this.base_times , 16, Font.BOLD); 
         
-        p.setAlignment(Paragraph.ALIGN_CENTER);
+        p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
         p.add(new Paragraph(ic.getMessage("SIMPLE_MONTHLY_REPORT") + " - " + m_da.getMonthsArray()[m_mv.getMonth()-1] + " " + m_mv.getYear(), f));
         //p.add(new Paragraph("May 2006"));
@@ -268,7 +268,7 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
             Font f = new Font(this.base_times , 10, Font.ITALIC|Font.BOLD); // this.base_times
 
             pc.setPhrase(new Phrase(new Chunk(ic.getMessage("REPORT_FOOTER"), f)));
-            pc.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            pc.setHorizontalAlignment(Element.ALIGN_CENTER);
             foot.addCell(pc);
             foot.setTotalWidth(page.width() - document.leftMargin() - document.rightMargin());
             foot.writeSelectedRows(0, -1, document.leftMargin(), document.bottomMargin(),

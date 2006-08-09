@@ -386,7 +386,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
                 return;
             }
 
-            DailyValuesRow dvr = (DailyValuesRow)dayData.getRowAt(table.getSelectedRow());
+            DailyValuesRow dvr = dayData.getRowAt(table.getSelectedRow());
 
             DailyRowDialog aRF = new DailyRowDialog(dvr, this);
 

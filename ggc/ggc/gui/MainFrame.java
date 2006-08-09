@@ -341,7 +341,7 @@ public class MainFrame extends JFrame
     {
         JMenuItem item = menu.add(action);
 
-        KeyStroke keystroke = (KeyStroke) action.getValue(action.ACCELERATOR_KEY);
+        KeyStroke keystroke = (KeyStroke) action.getValue(Action.ACCELERATOR_KEY);
         if (keystroke != null)
             item.setAccelerator(keystroke);
 

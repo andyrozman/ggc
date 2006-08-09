@@ -414,12 +414,11 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 
     public static Vector getAvailableSerialPorts()
     {
-        Vector retVal = new Vector();
+        Vector<String> retVal = new Vector<String>();
 
         try
         {
             //Vector retVal = new Vector();
-            int counter = 0;
 
             Enumeration enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 

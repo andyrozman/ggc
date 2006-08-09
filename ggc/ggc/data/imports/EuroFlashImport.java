@@ -174,7 +174,7 @@ public class EuroFlashImport extends SerialMeterImport
     private void parseDataString(String dataStr) throws ImportException
     {
         String value = null;
-        Vector importDataVector = new Vector();
+        Vector<DailyValuesRow> importDataVector = new Vector<DailyValuesRow>();
 
         try
         {

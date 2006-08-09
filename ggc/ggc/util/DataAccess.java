@@ -35,6 +35,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
@@ -552,7 +553,7 @@ public class DataAccess
     public String getCurrentDateString()
     {
         GregorianCalendar gc = new GregorianCalendar();
-        return gc.get(GregorianCalendar.DAY_OF_MONTH) + "." + (gc.get(GregorianCalendar.MONTH)+1) + "." + gc.get(GregorianCalendar.YEAR);
+        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH)+1) + "." + gc.get(Calendar.YEAR);
     }
 
 
@@ -674,12 +675,12 @@ public class DataAccess
 
 		int min = (int) dt;
 
-		gc.set(GregorianCalendar.DATE, d);
-		gc.set(GregorianCalendar.MONTH, m - 1);
-		gc.set(GregorianCalendar.YEAR, y);
+		gc.set(Calendar.DATE, d);
+		gc.set(Calendar.MONTH, m - 1);
+		gc.set(Calendar.YEAR, y);
 
-		gc.set(GregorianCalendar.HOUR_OF_DAY, h);
-		gc.set(GregorianCalendar.MINUTE, min);
+		gc.set(Calendar.HOUR_OF_DAY, h);
+		gc.set(Calendar.MINUTE, min);
 
 		/*
 		 dt_obj.setHours(h);
@@ -737,11 +738,11 @@ public class DataAccess
 
 		String dx = "";
 
-		dx += "" + gc.get(GregorianCalendar.YEAR);
-		dx += "" + getLeadingZero(gc.get(GregorianCalendar.MONTH + 1), 2);
-		dx += "" + getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2);
-		dx += "" + getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2);
-		dx += "" + getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
+		dx += "" + gc.get(Calendar.YEAR);
+		dx += "" + getLeadingZero(gc.get(Calendar.MONTH + 1), 2);
+		dx += "" + getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
+		dx += "" + getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
+		dx += "" + getLeadingZero(gc.get(Calendar.MINUTE), 2);
 
 		return Long.parseLong(dx);
 
@@ -753,22 +754,22 @@ public class DataAccess
 	{
 		String st = "";
 
-		if (gc.get(GregorianCalendar.YEAR)<1000)
+		if (gc.get(Calendar.YEAR)<1000)
 		{
-			st+= gc.get(GregorianCalendar.YEAR)+1900;
+			st+= gc.get(Calendar.YEAR)+1900;
 		}
 		else
 		{
-			st+= gc.get(GregorianCalendar.YEAR);
+			st+= gc.get(Calendar.YEAR);
 		}
 
-		st+= getLeadingZero(gc.get(GregorianCalendar.MONTH)+1, 2);
-		st+= getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2);
+		st+= getLeadingZero(gc.get(Calendar.MONTH)+1, 2);
+		st+= getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
 
 		if (type==2)
 		{
-			st+= getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2);
-			st+= getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
+			st+= getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
+			st+= getLeadingZero(gc.get(Calendar.MINUTE), 2);
 
 		}
 
@@ -942,7 +943,7 @@ public class DataAccess
 		m_dvalues = m_db.getDayStats(day);
 
 		m_dateStart = (GregorianCalendar) day.clone();
-		m_dateStart.add(GregorianCalendar.DAY_OF_MONTH, -6);
+		m_dateStart.add(Calendar.DAY_OF_MONTH, -6);
 		//m_dateEnd = day;
 
 		m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
@@ -1035,9 +1036,9 @@ public class DataAccess
 		else
 		{
 
-			if ((gc1.get(GregorianCalendar.DAY_OF_MONTH) == gc2.get(GregorianCalendar.DAY_OF_MONTH))
-				&& (gc1.get(GregorianCalendar.MONTH) == gc2.get(GregorianCalendar.MONTH))
-				&& (gc1.get(GregorianCalendar.YEAR) == gc2.get(GregorianCalendar.YEAR)))
+			if ((gc1.get(Calendar.DAY_OF_MONTH) == gc2.get(Calendar.DAY_OF_MONTH))
+				&& (gc1.get(Calendar.MONTH) == gc2.get(Calendar.MONTH))
+				&& (gc1.get(Calendar.YEAR) == gc2.get(Calendar.YEAR)))
 			{
 				return true;
 			}
@@ -1052,9 +1053,9 @@ public class DataAccess
 	public GregorianCalendar getGregorianCalendar(Date date) 
     {
 		GregorianCalendar gc = new GregorianCalendar();
-		gc.set(GregorianCalendar.DAY_OF_MONTH, date.getDay());
-		gc.set(GregorianCalendar.MONTH, date.getMonth());
-		gc.set(GregorianCalendar.YEAR, date.getYear());
+		gc.set(Calendar.DAY_OF_MONTH, date.getDay());
+		gc.set(Calendar.MONTH, date.getMonth());
+		gc.set(Calendar.YEAR, date.getYear());
 
 		return gc;
 	}

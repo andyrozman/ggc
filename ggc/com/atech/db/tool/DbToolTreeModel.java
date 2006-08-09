@@ -19,7 +19,7 @@ public class DbToolTreeModel implements TreeModel
     private boolean m_debug = false;
 
     private boolean isRoot = false;
-    private Vector treeModelListeners = new Vector();
+    private Vector<TreeModelListener> treeModelListeners = new Vector<TreeModelListener>();
     private DbToolTreeRoot rootObj = null;
 
 
@@ -51,7 +51,7 @@ public class DbToolTreeModel implements TreeModel
 
 	for (int i = 0; i < len; i++) 
 	{
-            ((TreeModelListener)treeModelListeners.elementAt(i)).treeStructureChanged(e);
+            (treeModelListeners.elementAt(i)).treeStructureChanged(e);
         }
     }
 
@@ -101,10 +101,10 @@ public class DbToolTreeModel implements TreeModel
         {
 	    if (rootObj.type==DbToolTreeRoot.ROOT_SINGLE)
 	    {
-		return (DatabaseSettings)rootObj.m_app_list.get(index);
+		return rootObj.m_app_list.get(index);
 	    }
 	    else
-                return (DbToolApplicationInterface)rootObj.m_appGroup.get(index);
+                return rootObj.m_appGroup.get(index);
         }
 	else if (parent instanceof DbToolApplicationInterface)
 	{

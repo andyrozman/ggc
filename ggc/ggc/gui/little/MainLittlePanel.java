@@ -40,7 +40,7 @@ import ggc.gui.panels.info.AbstractInfoPanel;
 
 public class MainLittlePanel extends JPanel
 {
-    private Vector vInfoPanels = new Vector();
+    private Vector<JPanel> vInfoPanels = new Vector<JPanel>();
 
     GGCLittle m_little = null;
 
@@ -82,7 +82,7 @@ public class MainLittlePanel extends JPanel
     private void addPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
-            add((AbstractInfoPanel)vInfoPanels.get(i));
+            add(vInfoPanels.get(i));
     }
 
     public void refreshPanels()

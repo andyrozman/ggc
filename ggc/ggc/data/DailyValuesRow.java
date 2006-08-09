@@ -77,7 +77,7 @@ public class DailyValuesRow implements Serializable
         this.bg = bg; 
         this.ins1 = ins1;
         this.ins2 = ins2;
-        this.ch = ch; ;
+        this.ch = ch;
         this.act = act;
         this.comment = comment;
     }
@@ -89,7 +89,7 @@ public class DailyValuesRow implements Serializable
     	this.ins1 = dv.getIns1();
     	this.ins2 = dv.getIns2();
     	this.ch = dv.getCh();
-    	this.act = (int)dv.getAct();
+    	this.act = dv.getAct();
     	this.comment = dv.getComment();
     
     	m_dv = dv;
@@ -232,7 +232,7 @@ public class DailyValuesRow implements Serializable
 
     public long getDate()
     {
-        return (long)(datetime/10000);
+        return (datetime/10000);
     }
 
 

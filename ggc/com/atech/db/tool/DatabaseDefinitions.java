@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class DatabaseDefinitions
 {
 
-    Hashtable tableOfDatabases = null;
-    ArrayList listOfDatabases = null;
+    Hashtable<String, String> tableOfDatabases = null;
+    ArrayList<String> listOfDatabases = null;
 
     int hibernate_main_version = 3;
 
@@ -248,7 +248,7 @@ public class DatabaseDefinitions
     {
         if (listOfDatabases == null) 
         {
-            listOfDatabases = new ArrayList();
+            listOfDatabases = new ArrayList<String>();
 
             for (int i=0; i<this.databaseSettings.length; i+=5) 
             {
@@ -264,7 +264,7 @@ public class DatabaseDefinitions
     {
 	if (tableOfDatabases == null) 
 	{
-	    tableOfDatabases = new Hashtable();
+	    tableOfDatabases = new Hashtable<String, String>();
 
 	    for (int i=0; i<this.databaseSettings.length; i+=5) 
 	    {

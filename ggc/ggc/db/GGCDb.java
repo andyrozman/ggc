@@ -41,6 +41,7 @@ import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -564,7 +565,7 @@ public class GGCDb
 
     private void loadColorSchemes(Session sess)
     {
-        Hashtable table = new Hashtable();
+        Hashtable<String, ColorSchemeH> table = new Hashtable<String, ColorSchemeH>();
 
         Query q = sess.createQuery("select pst from ggc.db.hibernate.ColorSchemeH as pst");
 
@@ -594,7 +595,7 @@ public class GGCDb
     public ArrayList getFoodGroups()
     {
 
-        ArrayList list = new ArrayList();
+        ArrayList<FoodGroupH> list = new ArrayList<FoodGroupH>();
 
         Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodGroupH as pst");
 
@@ -611,10 +612,10 @@ public class GGCDb
     }
 
 
-    public ArrayList getFoodDescriptions()
+    public ArrayList<FoodDescription> getFoodDescriptions()
     {
 
-        ArrayList list = new ArrayList();
+        ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
 
         Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodDescriptionH as pst");
 
@@ -651,7 +652,7 @@ public class GGCDb
         try 
         {
             GregorianCalendar gc1 = (GregorianCalendar)day.clone();
-            gc1.add(GregorianCalendar.DAY_OF_MONTH, -6);
+            gc1.add(Calendar.DAY_OF_MONTH, -6);
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String eDay = sdf.format(day.getTime()) + "2359";

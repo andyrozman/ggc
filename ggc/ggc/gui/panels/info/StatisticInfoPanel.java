@@ -38,6 +38,7 @@ import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import ggc.data.StatisticValues;
@@ -63,7 +64,7 @@ public class StatisticInfoPanel extends AbstractInfoPanel
 
         endDate = new GregorianCalendar();
         startDate = new GregorianCalendar();
-        startDate.add(GregorianCalendar.DAY_OF_MONTH, -6);
+        startDate.add(java.util.Calendar.DAY_OF_MONTH, -6);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -80,67 +81,67 @@ public class StatisticInfoPanel extends AbstractInfoPanel
         PanelBG.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BG_STATISTICS")+":"));
         PanelBG.add(new JLabel(m_ic.getMessage("AVG_BG")+":"));
         PanelBG.add(lblAvgBG = new JLabel());
-	lblAvgBG.setHorizontalAlignment(JLabel.CENTER);
+	lblAvgBG.setHorizontalAlignment(SwingConstants.CENTER);
         PanelBG.add(new JLabel(m_ic.getMessage("READINGS")+":"));
         PanelBG.add(lblBGReadings = new JLabel());
-	lblBGReadings.setHorizontalAlignment(JLabel.CENTER);
+	lblBGReadings.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel PanelBU = new JPanel(new GridLayout(5, 2));
         PanelBU.setOpaque(false);
         PanelBU.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BU_STATISTICS")+":"));
         PanelBU.add(new JLabel(m_ic.getMessage("SUM_BU")+":"));
         PanelBU.add(lblSumBU = new JLabel());
-	lblSumBU.setHorizontalAlignment(JLabel.CENTER);
+	lblSumBU.setHorizontalAlignment(SwingConstants.CENTER);
         PanelBU.add(new JLabel(m_ic.getMessage("BU_PER_DAY")+":"));
         PanelBU.add(lblBUDay = new JLabel());
-	lblBUDay.setHorizontalAlignment(JLabel.CENTER);
+	lblBUDay.setHorizontalAlignment(SwingConstants.CENTER);
         PanelBU.add(new JLabel(m_ic.getMessage("MEALS")+":"));
         PanelBU.add(lblCountBU = new JLabel());
-	lblCountBU.setHorizontalAlignment(JLabel.CENTER);
+	lblCountBU.setHorizontalAlignment(SwingConstants.CENTER);
         PanelBU.add(new JLabel(m_ic.getMessage("AVG_MEAL_SIZE")+":"));
         PanelBU.add(lblAvgBU = new JLabel());
-	lblAvgBU.setHorizontalAlignment(JLabel.CENTER);
+	lblAvgBU.setHorizontalAlignment(SwingConstants.CENTER);
         PanelBU.add(new JLabel(m_ic.getMessage("MEALS_PER_DAY")+":"));
         PanelBU.add(lblBUCountDay = new JLabel());
-	lblBUCountDay.setHorizontalAlignment(JLabel.CENTER);
+	lblBUCountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel PanelIns1 = new JPanel(new GridLayout(5, 2));
         PanelIns1.setOpaque(false);
         PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
         PanelIns1.add(new JLabel(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr() + ":"));
         PanelIns1.add(lblSumIns1 = new JLabel());
-	lblSumIns1.setHorizontalAlignment(JLabel.CENTER);
+	lblSumIns1.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns1.add(new JLabel(m_da.getSettings().getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
         PanelIns1.add(lblIns1Day = new JLabel());
-	lblIns1Day.setHorizontalAlignment(JLabel.CENTER);
+	lblIns1Day.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns1.add(new JLabel(m_ic.getMessage("DOSE")+":"));
         PanelIns1.add(lblCountIns1 = new JLabel());
-	lblCountIns1.setHorizontalAlignment(JLabel.CENTER);
+	lblCountIns1.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns1.add(new JLabel(m_ic.getMessage("AVG_DOSE_SIZE")+":"));
         PanelIns1.add(lblAvgIns1 = new JLabel());
-	lblAvgIns1.setHorizontalAlignment(JLabel.CENTER);
+	lblAvgIns1.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns1.add(new JLabel(m_ic.getMessage("DOSES_PER_DAY")+":"));
         PanelIns1.add(lblIns1CountDay = new JLabel());
-	lblIns1CountDay.setHorizontalAlignment(JLabel.CENTER);
+	lblIns1CountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel PanelIns2 = new JPanel(new GridLayout(5, 2));
         PanelIns2.setOpaque(false);
         PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
         PanelIns2.add(new JLabel(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns2Abbr() + ":"));
         PanelIns2.add(lblSumIns2 = new JLabel());
-	lblSumIns2.setHorizontalAlignment(JLabel.CENTER);
+	lblSumIns2.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns2.add(new JLabel(m_da.getSettings().getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
         PanelIns2.add(lblIns2Day = new JLabel());
-	lblIns2Day.setHorizontalAlignment(JLabel.CENTER);
+	lblIns2Day.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns2.add(new JLabel(m_ic.getMessage("DOSE")+":"));
         PanelIns2.add(lblCountIns2 = new JLabel());
-	lblCountIns2.setHorizontalAlignment(JLabel.CENTER);
+	lblCountIns2.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns2.add(new JLabel(m_ic.getMessage("AVG_DOSE_SIZE")+":"));
         PanelIns2.add(lblAvgIns2 = new JLabel());
-	lblAvgIns2.setHorizontalAlignment(JLabel.CENTER);
+	lblAvgIns2.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns2.add(new JLabel(m_ic.getMessage("DOSES_PER_DAY")+":"));
         PanelIns2.add(lblIns2CountDay = new JLabel());
-	lblIns2CountDay.setHorizontalAlignment(JLabel.CENTER);
+	lblIns2CountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
         setLayout(new GridLayout(2,2));
 
@@ -158,6 +159,7 @@ public class StatisticInfoPanel extends AbstractInfoPanel
 
         StatisticValues sV = new StatisticValues(startDate, endDate);
 
+        //XXX: This can't actually become null since it just got assigned
         if (sV != null) 
 	{
             DecimalFormat df = new DecimalFormat("#0.00");

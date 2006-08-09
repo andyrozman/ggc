@@ -216,7 +216,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         this.getContentPane().add(panel);
 
         label_title.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
-        label_title.setHorizontalAlignment(JLabel.CENTER);
+        label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, 350, 35);
         panel.add(label_title);
 

@@ -100,7 +100,7 @@ public class SchemeDialog extends JDialog implements ActionListener
     
     	JLabel label = new JLabel(m_ic.getMessage("CREATE_NEW_SCHEME"));
     	label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
-    	label.setHorizontalAlignment(JLabel.CENTER);
+    	label.setHorizontalAlignment(SwingConstants.CENTER);
     	label.setBounds(0, 20, 350, 35);
     	panel.add(label);
     	

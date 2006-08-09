@@ -41,7 +41,7 @@ public class DbToolAccess
     String subSelectedLF = null;
 
     // Config file
-    Hashtable config_db_values = null;
+    Hashtable<String, String> config_db_values = null;
     public int selected_db = -1;
     public int selected_lang = 1;
     public String selected_LF_Class = null; // class
@@ -70,12 +70,12 @@ public class DbToolAccess
     public HbA1cValues m_HbA1c = null;
     public DailyValues m_dvalues = null;
 
-    public Hashtable m_tableOfDatabases = new Hashtable();
+    public Hashtable<String, DatabaseDefObject> m_tableOfDatabases = new Hashtable<String, DatabaseDefObject>();
     public ArrayList m_listOfDatabases = null;
 
     public Object[] m_availableDatabases = null;
 
-    public ArrayList listOfClasses = new ArrayList();
+    public ArrayList<DbToolApplicationInterface> listOfClasses = new ArrayList<DbToolApplicationInterface>();
 
     public DatabaseDefinitions m_dataDefs = null;
 
@@ -509,7 +509,7 @@ public class DbToolAccess
         //String selected_LF_Name = null; // name
         //String skinLFSelected = null;
 
-        config_db_values = new Hashtable();
+        config_db_values = new Hashtable<String, String>();
 
         try
         {
@@ -525,7 +525,7 @@ public class DbToolAccess
 
                 if (str.startsWith("DB")) 
                 {
-                    config_db_values.put(str, (String)props.get(str));
+                    config_db_values.put(str, props.getProperty(str));
                 }
                 else
                 {
@@ -557,7 +557,7 @@ public class DbToolAccess
 
             }
 
-            ArrayList list = new ArrayList();
+            ArrayList<String> list = new ArrayList<String>();
 
             int count_db = 0;
 
@@ -598,22 +598,22 @@ public class DbToolAccess
 
     public ArrayList getListOfDatabases()
     {
-    	ArrayList list = new ArrayList();
-    	int num = (int)(config_db_values.size()/7);
+    	ArrayList<DatabaseSettings> list = new ArrayList<DatabaseSettings>();
+    	int num = config_db_values.size()/7;
     
     	for (int i=0; i<num; i++)
     	{
     	    DatabaseSettings ds = new DatabaseSettings();
     	    ds.number = i;
-    	    ds.name = (String)config_db_values.get("DB" +i +"_CONN_NAME");
-    	    ds.db_name = (String)config_db_values.get("DB" +i +"_DB_NAME");
-    	    ds.driver = (String)config_db_values.get("DB" +i +"_CONN_DRIVER");
-    	    ds.url = (String)config_db_values.get("DB" +i +"_CONN_URL");
+    	    ds.name = config_db_values.get("DB" +i +"_CONN_NAME");
+    	    ds.db_name = config_db_values.get("DB" +i +"_DB_NAME");
+    	    ds.driver = config_db_values.get("DB" +i +"_CONN_DRIVER");
+    	    ds.url = config_db_values.get("DB" +i +"_CONN_URL");
     	    //ds.port = config_db_values.get("DB" +i +"_CONN_NAME");
-    	    ds.dialect = (String)config_db_values.get("DB" +i +"_HIBERNATE_DIALECT");
+    	    ds.dialect = config_db_values.get("DB" +i +"_HIBERNATE_DIALECT");
     
-    	    ds.username = (String)config_db_values.get("DB" +i +"_CONN_USERNAME");
-    	    ds.password = (String)config_db_values.get("DB" +i +"_CONN_PASSWORD");
+    	    ds.username = config_db_values.get("DB" +i +"_CONN_USERNAME");
+    	    ds.password = config_db_values.get("DB" +i +"_CONN_PASSWORD");
     
     	    if (this.selected_db==i)
     	    {
@@ -910,12 +910,12 @@ public class DbToolAccess
 
 	int min = (int)dt;
 
-	gc.set(GregorianCalendar.DATE, d);
-	gc.set(GregorianCalendar.MONTH, m-1);
-	gc.set(GregorianCalendar.YEAR, y);
+	gc.set(Calendar.DATE, d);
+	gc.set(Calendar.MONTH, m-1);
+	gc.set(Calendar.YEAR, y);
 
-	gc.set(GregorianCalendar.HOUR_OF_DAY, h);
-	gc.set(GregorianCalendar.MINUTE, min);
+	gc.set(Calendar.HOUR_OF_DAY, h);
+	gc.set(Calendar.MINUTE, min);
 
 /*
 	dt_obj.setHours(h);
@@ -942,11 +942,11 @@ public class DbToolAccess
 
 	String dx = "";
 
-	dx += "" + gc.get(GregorianCalendar.YEAR);
-	dx += "" + getLeadingZero(gc.get(GregorianCalendar.MONTH+1), 2);
-	dx += "" + getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2);
-	dx += "" + getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2);
-	dx += "" + getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
+	dx += "" + gc.get(Calendar.YEAR);
+	dx += "" + getLeadingZero(gc.get(Calendar.MONTH+1), 2);
+	dx += "" + getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
+	dx += "" + getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
+	dx += "" + getLeadingZero(gc.get(Calendar.MINUTE), 2);
 
 	return Long.parseLong(dx);
 

@@ -24,16 +24,16 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     //String selected_LF_Name = null; // name
     //String skinLFSelected = null;
 
-    private Hashtable staticDatabases;
-    private Hashtable customDatabases;
-    private Hashtable allDatabases;
+    private Hashtable<String, DatabaseSettings> staticDatabases;
+    private Hashtable<String, DatabaseSettings> customDatabases;
+    private Hashtable<String, DatabaseSettings> allDatabases;
 
 
     public DbToolApplicationGGC()
     {
-	this.staticDatabases = new Hashtable();
-	this.customDatabases = new Hashtable();
-	this.allDatabases = new Hashtable();
+	this.staticDatabases = new Hashtable<String, DatabaseSettings>();
+	this.customDatabases = new Hashtable<String, DatabaseSettings>();
+	this.allDatabases = new Hashtable<String, DatabaseSettings>();
 	initStaticDbs();
     }
 
@@ -170,7 +170,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 	    //for (int i=0; i<this.allDatabases.size(); i++)  fix, only non-static db data should be written
 	    for (int i=0; i<this.allDatabases.size(); i++) 
 	    {
-		DatabaseSettings dbs = (DatabaseSettings)this.allDatabases.get(""+i);
+		DatabaseSettings dbs = this.allDatabases.get(""+i);
 		dbs.write(bw);
 	    }
 
@@ -250,7 +250,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 	if (this.customDatabases.containsKey(""+dbnum)) 
 	{
 	    // we have database
-	    DatabaseSettings dbs = (DatabaseSettings)this.customDatabases.get(""+dbnum);
+	    DatabaseSettings dbs = this.customDatabases.get(""+dbnum);
 	    addDatabaseSetting(dbs, setting, value);
 	}
 	else

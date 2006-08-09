@@ -45,7 +45,7 @@ public class GGCTreeRoot
     private int m_type = 1;
 
     public ArrayList m_foodGroups = null;
-    public Hashtable m_foodDescByGroup = null;
+    public Hashtable<String, ArrayList<FoodDescription>> m_foodDescByGroup = null;
 
 
 
@@ -60,23 +60,23 @@ public class GGCTreeRoot
 	    m_foodGroups = db.getFoodGroups();
 	    Iterator it = m_foodGroups.iterator();
 
-	    m_foodDescByGroup = new Hashtable();
+	    m_foodDescByGroup = new Hashtable<String, ArrayList<FoodDescription>>();
 
 	    while (it.hasNext())
 	    {
 		FoodGroup fg = (FoodGroup)it.next();
-		m_foodDescByGroup.put(""+fg.getId(), new ArrayList());
+		m_foodDescByGroup.put(""+fg.getId(), new ArrayList<FoodDescription>());
 	    }
 
 	    
-	    ArrayList list = db.getFoodDescriptions();
+	    ArrayList<FoodDescription> list = db.getFoodDescriptions();
 	    it = list.iterator();
 
 	    while (it.hasNext())
 	    {
 		FoodDescription fd = (FoodDescription)it.next();
 
-		ArrayList al = (ArrayList)m_foodDescByGroup.get(""+fd.getFood_group_id());
+		ArrayList<FoodDescription> al = m_foodDescByGroup.get(""+fd.getFood_group_id());
 		al.add(fd);
 	    }
 
@@ -100,23 +100,23 @@ public class GGCTreeRoot
 	    m_foodGroups = db.getFoodGroups();
 	    Iterator it = m_foodGroups.iterator();
 
-	    m_foodDescByGroup = new Hashtable();
+	    m_foodDescByGroup = new Hashtable<String, ArrayList<FoodDescription>>();
 
 	    while (it.hasNext())
 	    {
 		FoodGroup fg = (FoodGroup)it.next();
-		m_foodDescByGroup.put(""+fg.getId(), new ArrayList());
+		m_foodDescByGroup.put(""+fg.getId(), new ArrayList<FoodDescription>());
 	    }
 
 	    
-	    ArrayList list = db.getFoodDescriptions();
+	    ArrayList<FoodDescription> list = db.getFoodDescriptions();
 	    it = list.iterator();
 
 	    while (it.hasNext())
 	    {
 		FoodDescription fd = (FoodDescription)it.next();
 
-		ArrayList al = (ArrayList)m_foodDescByGroup.get(""+fd.getFood_group_id());
+		ArrayList<FoodDescription> al = m_foodDescByGroup.get(""+fd.getFood_group_id());
 		al.add(fd);
 	    }
 

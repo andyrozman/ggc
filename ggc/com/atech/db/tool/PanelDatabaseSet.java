@@ -61,10 +61,10 @@ public class PanelDatabaseSet extends JPanel implements ActionListener, Document
     DatabaseSettings m_database_settings = null;
 
     Hashtable settings_table = new Hashtable();
-    ArrayList url_list = new ArrayList(); 
+    ArrayList<String> url_list = new ArrayList<String>(); 
 
-    Hashtable parameters_label = new Hashtable();
-    Hashtable parameters_textfield = new Hashtable();
+    Hashtable<String, JLabel> parameters_label = new Hashtable<String, JLabel>();
+    Hashtable<String, JTextField> parameters_textfield = new Hashtable<String, JTextField>();
 
     int posy = 320;
 
@@ -268,7 +268,7 @@ public class PanelDatabaseSet extends JPanel implements ActionListener, Document
 		continue;
 	    }
 
-	    this.remove((JTextField)this.parameters_textfield.get(key));
+	    this.remove(this.parameters_textfield.get(key));
 
 	}
 
@@ -349,11 +349,11 @@ public class PanelDatabaseSet extends JPanel implements ActionListener, Document
 		String p1 = par.substring(1, par.length()-1).toUpperCase();
 		posy += 30;
 
-		JLabel label = new JLabel(ic.getMessage(p1)+":");
-		label.setBounds(40, posy, 200, 25);
-		label.setFont(font_normal); 
-		this.add(label, null);
-		this.parameters_label.put(par, label);
+		JLabel param_label = new JLabel(ic.getMessage(p1)+":");
+		param_label.setBounds(40, posy, 200, 25);
+		param_label.setFont(font_normal); 
+		this.add(param_label, null);
+		this.parameters_label.put(par, param_label);
 
 		JTextField textfield = new JTextField();
 		textfield.setBounds(200, posy, 180, 25);
@@ -383,9 +383,9 @@ public class PanelDatabaseSet extends JPanel implements ActionListener, Document
 
 	    if ((i+2)<sz)
 	    {
-		String s1 = (String)this.url_list.get(i);
-		String s2 = (String)this.url_list.get(i+1);
-		String s3 = (String)this.url_list.get(i+2);
+		String s1 = this.url_list.get(i);
+		String s2 = this.url_list.get(i+1);
+		String s3 = this.url_list.get(i+2);
 
 		String par = url2.substring(s1.length());
 		par = par.substring(0, par.indexOf(s3));
@@ -394,20 +394,20 @@ public class PanelDatabaseSet extends JPanel implements ActionListener, Document
 
 		System.out.println(s2 + " = " + par);
 
-		JTextField tf = (JTextField)this.parameters_textfield.get(s2);
+		JTextField tf = this.parameters_textfield.get(s2);
 		tf.setText(par);
 
 	    }
 	    else if ((i+1)<sz)
 	    {
-		String s1 = (String)this.url_list.get(i);
-		String s2 = (String)this.url_list.get(i+1);
+		String s1 = this.url_list.get(i);
+		String s2 = this.url_list.get(i+1);
 
 		String par = url2.substring(s1.length());
 
 		System.out.println(s2 + " = " + par);
 
-		JTextField tf = (JTextField)this.parameters_textfield.get(s2);
+		JTextField tf = this.parameters_textfield.get(s2);
 		tf.setText(par);
 	    }
 	    else

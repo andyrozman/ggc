@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Vector;
 
 //import ggc.db.DataBaseHandler;
+import ggc.db.hibernate.DayValueH;
 import ggc.util.I18nControl;
 
 
@@ -32,7 +33,7 @@ public class DailyValues implements Serializable
                         m_ic.getMessage("ACT"),
                         m_ic.getMessage("COMMENT") };
 
-    ArrayList dataRows = new ArrayList();
+    ArrayList<DailyValuesRow> dataRows = new ArrayList<DailyValuesRow>();
     //static DataBaseHandler dbH;
     //private static DailyValues singleton = null;
     //java.util.Date date;
@@ -57,7 +58,7 @@ public class DailyValues implements Serializable
 
     boolean changed = false;
 
-    public ArrayList deleteList = null;
+    public ArrayList<DayValueH> deleteList = null;
 
 
     public void setStdDev(float stdDev)
@@ -244,7 +245,7 @@ public class DailyValues implements Serializable
     	    if (dVR.hasHibernateObject())
     	    {
         		if (deleteList==null)
-        		    deleteList = new ArrayList();
+        		    deleteList = new ArrayList<DayValueH>();
         
         		deleteList.add(dVR.getHibernateObject());
         		this.changed = true;
@@ -360,7 +361,7 @@ public class DailyValues implements Serializable
 
     public DailyValuesRow getRow(int index)
     {
-        return (DailyValuesRow)this.dataRows.get(index);
+        return this.dataRows.get(index);
     }
 
     public boolean hasDeletedItems()

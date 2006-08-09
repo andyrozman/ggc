@@ -229,6 +229,7 @@ public class InitDb
 		StringTokenizer strtok = new StringTokenizer(line, "^");
 		long id_2 = getLong(strtok.nextToken());
 
+        //XXX: probable NullPointer: if id_2==id fd will stay null!!
 		if (id_2!=id)
 		{
 		    if (id!=-1)
@@ -238,6 +239,7 @@ public class InitDb
 		    }
 
 		    id = id_2;
+            //IDEA: do the following three lines have to be inside the if?
 		    fd = new FoodDescription();
 		    fd.setId(id);
 		    m_db.get(fd);
@@ -404,6 +406,7 @@ public class InitDb
     }
 
 
+    //XXX: what if input isn't a valid int?
     public int getInt(String input)
     {
 
@@ -419,6 +422,7 @@ public class InitDb
     }
 
 
+    //XXX: what if input isn't a valid short?
     public short getShort(String input)
     {
 
@@ -435,6 +439,7 @@ public class InitDb
 
 
 
+    //XXX: what if input isn't a valid long?
     public long getLong(String input)
     {
 
@@ -450,6 +455,7 @@ public class InitDb
     }
 
 
+    //XXX: what if input isn't a valid float?
     public float getFloat(String input)
     {
 

@@ -61,7 +61,7 @@ public class GlucoCardImport extends SerialMeterImport
     public static final int CONTROL_LF = 0x0A;
     public static final int CONTROL_DC1 = 0x11;
 
-    private Vector importedData = null;
+    private Vector<DailyValuesRow> importedData = null;
 
 
     public GlucoCardImport()
@@ -208,7 +208,7 @@ public class GlucoCardImport extends SerialMeterImport
      */
     public void importData() throws ImportException
     {
-        importedData = new Vector();
+        importedData = new Vector<DailyValuesRow>();
         super.importData();
 
         try

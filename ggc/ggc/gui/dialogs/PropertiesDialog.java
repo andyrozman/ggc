@@ -42,8 +42,8 @@ public class PropertiesDialog extends JDialog implements ActionListener
     //private JScrollPane prefTreePane;
     //private AbstractPrefOptionsPanel prefOptionsPane;
 
-    public ArrayList panels = null;
-    public Hashtable panel_id = null;
+    public ArrayList<JPanel> panels = null;
+    public Hashtable<String, String> panel_id = null;
 
 
     public PropertiesDialog(JFrame parent)
@@ -94,7 +94,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
             }
         });
 
-        JScrollPane prefTreePane = new JScrollPane(prefTree, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane prefTreePane = new JScrollPane(prefTree, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         prefPane = new JPanel(new BorderLayout());
 
@@ -117,13 +117,13 @@ public class PropertiesDialog extends JDialog implements ActionListener
 
         //...and align them in a row at the buttom.
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setAlignmentX(JPanel.RIGHT_ALIGNMENT);
+        buttonPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
         buttonPanel.add(applyButton);
 
         prefPane.add(buttonPanel, BorderLayout.SOUTH);
-        prefPane.add((JPanel)panels.get(0), BorderLayout.CENTER);
+        prefPane.add(panels.get(0), BorderLayout.CENTER);
 
         getContentPane().add(prefTreePane, BorderLayout.WEST);
         getContentPane().add(prefPane, BorderLayout.CENTER);
@@ -173,8 +173,8 @@ public class PropertiesDialog extends JDialog implements ActionListener
 	// Each node must have a panel, and panel numbers must be as they are added 
 	// to. You must add panels in same order as you add, nodes.
 
-        panels = new ArrayList();
-        panel_id = new Hashtable();
+        panels = new ArrayList<JPanel>();
+        panel_id = new Hashtable<String, String>();
 
         addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new PrefMainPane());
         addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane());
@@ -207,10 +207,10 @@ public class PropertiesDialog extends JDialog implements ActionListener
             return;
         }
 
-        String id = (String)panel_id.get(s);
+        String id = panel_id.get(s);
 
         prefPane.remove(1);
-        prefPane.add((JPanel)panels.get(Integer.parseInt(id)), BorderLayout.CENTER);
+        prefPane.add(panels.get(Integer.parseInt(id)), BorderLayout.CENTER);
         prefPane.invalidate();
         prefPane.validate();
         prefPane.repaint();

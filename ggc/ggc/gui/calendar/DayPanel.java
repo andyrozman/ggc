@@ -34,6 +34,7 @@ import ggc.data.calendar.CalendarModel;
 import ggc.util.I18nControl;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -103,8 +104,8 @@ public class DayPanel extends JPanel implements CalendarListener
         for (int i=0; i<7; i++) 
         {
             JLabel label = new JLabel(this.m_days[i]);
-            label.setHorizontalTextPosition(JLabel.CENTER);
-            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setHorizontalTextPosition(SwingConstants.CENTER);
+            label.setHorizontalAlignment(SwingConstants.CENTER);
             this.add(label);
         }
 

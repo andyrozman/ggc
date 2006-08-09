@@ -44,7 +44,7 @@ public class GGCProperties //extends GGCPropertiesHelper
     private SettingsMainH m_settings = null;
     private ColorSchemeH m_colors = null;
     private DataAccess m_da = null;
-    private Hashtable m_color_schemes;
+    private Hashtable<String, ColorSchemeH> m_color_schemes;
 
     DbToolApplicationGGC m_config = null;
 
@@ -57,7 +57,7 @@ public class GGCProperties //extends GGCPropertiesHelper
     {
         this.m_da = da;
         this.m_config = config;
-        this.m_color_schemes = new Hashtable();
+        this.m_color_schemes = new Hashtable<String, ColorSchemeH>();
         this.m_settings = new SettingsMainH(I18nControl.getInstance().getMessage("UNNAMED_USER"), 
                        "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 
                                             2, 60.0f, 200.0f, 80.0f, 120.0f, 
@@ -88,23 +88,23 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public void setColorSchemeObject(String name)
     {
-        ColorSchemeH cs = (ColorSchemeH)this.m_color_schemes.get(name);
+        ColorSchemeH cs = this.m_color_schemes.get(name);
 
         if (!cs.equals(m_colors)) 
         {
-            this.m_colors = (ColorSchemeH)this.m_color_schemes.get(name);
+            this.m_colors = this.m_color_schemes.get(name);
             this.m_settings.setColor_scheme(name);
             this.changed_db = true;
         }
     }
 
-    public void setColorSchemes(Hashtable table, boolean isnew)
+    public void setColorSchemes(Hashtable<String, ColorSchemeH> table, boolean isnew)
     {
         this.m_color_schemes = table;
         this.changed_scheme = isnew;
     }
 
-    public Hashtable getColorSchemes()
+    public Hashtable<String, ColorSchemeH> getColorSchemes()
     {
         return this.m_color_schemes;
     }

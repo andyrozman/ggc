@@ -47,7 +47,7 @@ public class CalendarPane extends JPanel
 
     CalendarModel cModel;
 
-    Vector listeners = new Vector();
+    Vector<CalendarListener> listeners = new Vector<CalendarListener>();
 
     public CalendarPane()
     {

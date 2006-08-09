@@ -62,12 +62,12 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 {
     private JList itemList;
     private JLabel lblcolor;
-    private Vector items;
+    private Vector<String> items;
 
     private JButton btNewScheme = null;
     private JComboBox comboScheme = null;
 
-    private Hashtable color_schemes = null;
+    private Hashtable<String, ColorSchemeH> color_schemes = null;
     private ColorSchemeH selected_sheme = null;
     private String[] av_schemes_names = null;
 
@@ -88,7 +88,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 	int i=0;
 	for (Enumeration en = this.color_schemes.keys(); en.hasMoreElements(); ) 
 	{
-	    ColorSchemeH cs = (ColorSchemeH)color_schemes.get((String)en.nextElement());
+	    ColorSchemeH cs = color_schemes.get(en.nextElement());
 	    av_schemes_names[i] = cs.getName();
 	    i++;
 
@@ -107,7 +107,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 	}
 	*/
 
-        items = new Vector();
+        items = new Vector<String>();
 
 	items.add(m_ic.getMessage("BG_HIGH_ZONE")); 
 	items.add(m_ic.getMessage("BG_TARGET_ZONE")); 
@@ -311,7 +311,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
      */
     public void itemStateChanged(ItemEvent e)
     {
-        this.selected_sheme = (ColorSchemeH)this.color_schemes.get(this.comboScheme.getSelectedItem().toString());
+        this.selected_sheme = this.color_schemes.get(this.comboScheme.getSelectedItem().toString());
         dgv.setScheme(this.selected_sheme);
     }
 
@@ -330,16 +330,16 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     	{
     	    String[] str = sd.getActionResult();
     
-    	    ColorSchemeH cs = (ColorSchemeH)this.color_schemes.get(str[2]);
+    	    ColorSchemeH cs = this.color_schemes.get(str[2]);
 
             //System.out.println("As Template: " + str[2]);
     
-    	    this.selected_sheme = new ColorSchemeH(str[1], 1, cs.getColor_bg(),
+    	    selected_sheme = new ColorSchemeH(str[1], 1, cs.getColor_bg(),
     				cs.getColor_bg_avg(), cs.getColor_bg_low(), cs.getColor_bg_high(),
     				cs.getColor_bg_target(), cs.getColor_ins(), cs.getColor_ins1(),
     				cs.getColor_ins2(), cs.getColor_ins_perbu(), cs.getColor_ch());
     
-    	    this.color_schemes.put(this.selected_sheme.getName(), selected_sheme);
+    	    this.color_schemes.put(selected_sheme.getName(), selected_sheme);
     
     	    String[] strs = new String[(this.av_schemes_names.length +1)];
     
@@ -370,7 +370,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     	for (Enumeration en = this.color_schemes.keys(); en.hasMoreElements(); ) 
     	{
     	    String key = (String)en.nextElement();
-    	    ColorSchemeH cs = (ColorSchemeH)this.color_schemes.get(key);
+    	    ColorSchemeH cs = this.color_schemes.get(key);
     
     	    if (cs.getCustom_type()==1)
     	    {

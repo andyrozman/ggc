@@ -51,8 +51,6 @@ import ggc.util.I18nControl;
 import ggc.util.DataAccess;
 //import ggc.util.VersionChecker;
 
-import ggc.gui.dialogs.DailyStatsDialog;
-import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.*;
 
 
@@ -186,7 +184,7 @@ public class GGCLittle extends JFrame implements WindowListener
     {
         JMenuItem item = menu.add(action);
 
-        KeyStroke keystroke = (KeyStroke)action.getValue(action.ACCELERATOR_KEY);
+        KeyStroke keystroke = (KeyStroke)action.getValue(Action.ACCELERATOR_KEY);
         if (keystroke != null)
             item.setAccelerator(keystroke);
         return item;

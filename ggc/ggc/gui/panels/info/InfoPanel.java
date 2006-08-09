@@ -36,7 +36,7 @@ import java.util.Vector;
 
 public class InfoPanel extends JPanel
 {
-    private Vector vInfoPanels = new Vector();
+    private Vector<JPanel> vInfoPanels = new Vector<JPanel>();
 
     public InfoPanel()
     {
@@ -54,7 +54,7 @@ public class InfoPanel extends JPanel
     private void addPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
-            add((AbstractInfoPanel)vInfoPanels.get(i));
+            add(vInfoPanels.get(i));
     }
 
     public void refreshPanels()

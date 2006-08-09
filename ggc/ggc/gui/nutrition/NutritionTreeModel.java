@@ -47,7 +47,7 @@ public class NutritionTreeModel implements TreeModel
     private boolean m_debug = false;
 
     private boolean isRoot = false;
-    private Vector treeModelListeners = new Vector();
+    private Vector<TreeModelListener> treeModelListeners = new Vector<TreeModelListener>();
     private GGCTreeRoot rootObj = null;
 
 
@@ -79,7 +79,7 @@ public class NutritionTreeModel implements TreeModel
                                               new Object[] {oldRoot});
         for (int i = 0; i < len; i++) 
         {
-            ((TreeModelListener)treeModelListeners.elementAt(i)).treeStructureChanged(e);
+            (treeModelListeners.elementAt(i)).treeStructureChanged(e);
         }
     }
 
@@ -105,13 +105,13 @@ public class NutritionTreeModel implements TreeModel
 
         if (parent instanceof GGCTreeRoot)
         {
-            return (FoodGroup)rootObj.m_foodGroups.get(index);
+            return rootObj.m_foodGroups.get(index);
         }
     	else if (parent instanceof FoodGroup)
     	{
     	    FoodGroup fg = (FoodGroup)parent;
-    	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
-    	    return (FoodDescription)lst.get(index);
+    	    ArrayList lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    return lst.get(index);
     	}
     	else
     	    return null;
@@ -133,7 +133,7 @@ public class NutritionTreeModel implements TreeModel
     	else if (parent instanceof FoodGroup)
     	{
     	    FoodGroup fg = (FoodGroup)parent;
-    	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    ArrayList lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
     	    return lst.size();
     	}
     	else
@@ -171,7 +171,7 @@ public class NutritionTreeModel implements TreeModel
     	{
     
     	    FoodDescription dii = (FoodDescription)child;
-    	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+dii.getFood_group_id());
+    	    ArrayList lst = this.rootObj.m_foodDescByGroup.get(""+dii.getFood_group_id());
     	    Iterator it = lst.iterator();
     
     	    int i = -1;
@@ -213,7 +213,7 @@ public class NutritionTreeModel implements TreeModel
     	else if (node instanceof FoodGroup)
     	{
     	    FoodGroup fg = (FoodGroup)node;
-    	    ArrayList lst = (ArrayList)this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    ArrayList lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
     	    return lst.size() == 0;
     	}
     	else

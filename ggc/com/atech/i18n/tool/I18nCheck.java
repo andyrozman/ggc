@@ -24,7 +24,7 @@ public class I18nCheck
     ResourceBundle res;
 
     // Hashtable of Resource Bundles for different langauges
-    Hashtable resourceBundles;
+    Hashtable<String, ResourceBundle> resourceBundles;
 
     // Reversed Hashtable of Resource Bundles for different langauges
     //Hashtable reverseRBs;
@@ -32,7 +32,7 @@ public class I18nCheck
 
     //public String[] lang_short = null;
 
-    private ArrayList lang_short = null;
+    private ArrayList<String> lang_short = null;
 
     private String m_prefix = null;
     private String default_lang = null;
@@ -50,8 +50,8 @@ public class I18nCheck
      */ 
     public I18nCheck(String prefix, String default_lang)
     {
-        resourceBundles = new Hashtable();
-        lang_short = new ArrayList();
+        resourceBundles = new Hashtable<String, ResourceBundle>();
+        lang_short = new ArrayList<String>();
         this.m_prefix = prefix;
         this.default_lang = default_lang;
 
@@ -102,7 +102,7 @@ public class I18nCheck
         System.out.println(" --- Load Resource Bundles ---");
         for (int i=0; i<lang_short.size(); i++)
         {
-            String lang = (String)this.lang_short.get(i);
+            String lang = this.lang_short.get(i);
             String name = this.m_prefix + "_" + lang + ".properties";
 
             //Locale l = new Locale(lang_short[i]);
@@ -190,7 +190,7 @@ public class I18nCheck
         for(Enumeration en = this.resourceBundles.keys(); en.hasMoreElements(); )
         {
             String key = (String)en.nextElement();
-            ResourceBundle rb = (ResourceBundle)this.resourceBundles.get(key);
+            ResourceBundle rb = this.resourceBundles.get(key);
 
             System.out.println("==================================================================");
             System.out.println("Language " + this.m_prefix + "_" + key + ".properties");
@@ -222,7 +222,7 @@ public class I18nCheck
 
     public void checkIfLangFileHasAllKeywords(String short_lang)
     {
-        ResourceBundle rb = (ResourceBundle)resourceBundles.get(short_lang);
+        ResourceBundle rb = resourceBundles.get(short_lang);
         checkIfLangFileHasAllKeywords(rb);
     }
 

@@ -45,7 +45,7 @@ public class HbA1cValues
     private int exp;
     private int[] ReadingsPerDay;
 
-    private Hashtable m_dataTable = null;
+    private Hashtable<String, DailyValues> m_dataTable = null;
 
     public HbA1cValues()
     {
@@ -54,7 +54,7 @@ public class HbA1cValues
         dayCount = 0;
         exp = 0;
         ReadingsPerDay = new int[25];
-        m_dataTable = new Hashtable();
+        m_dataTable = new Hashtable<String, DailyValues>();
     }
 
     public void addDay(float avgBG, int readings)
@@ -73,7 +73,7 @@ public class HbA1cValues
 
         if (m_dataTable.containsKey(""+date))
         {
-            DailyValues dv_int = (DailyValues)m_dataTable.get(""+date);
+            DailyValues dv_int = m_dataTable.get(""+date);
             dv_int.addRow(dvr);
         }
         else
@@ -89,7 +89,7 @@ public class HbA1cValues
     {
     	for (Enumeration en = m_dataTable.keys(); en.hasMoreElements(); )
     	{
-    	    DailyValues dv = (DailyValues)m_dataTable.get((String)en.nextElement());
+    	    DailyValues dv = m_dataTable.get(en.nextElement());
     	    addDay(dv.getAvgBG(), dv.getBGCount());
     	}
 

@@ -132,7 +132,7 @@ public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
 	JLabel lab = new JLabel();
 	lab.setText(m_ic.getMessage("NUTRITION_DATA_DB"));
 	lab.setBounds(40, 30, 150, 25);
-	lab.setHorizontalAlignment(JLabel.LEFT);
+	lab.setHorizontalAlignment(SwingConstants.LEFT);
 	p2.add(lab);
 
 	lab_db = new JLabel("x");
@@ -144,7 +144,7 @@ public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
 	lab = new JLabel();
 	lab.setText(m_ic.getMessage("NUTRITION_DATA_FILE"));
 	lab.setBounds(40, 55, 150, 25);
-	lab.setHorizontalAlignment(JLabel.LEFT);
+	lab.setHorizontalAlignment(SwingConstants.LEFT);
 	p2.add(lab);
 
 	lab_file = new JLabel("x");

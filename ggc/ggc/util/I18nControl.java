@@ -50,7 +50,7 @@ public class I18nControl
     static I18nControl s_i18n = null;   // This is handle to unique 
                                                     // singelton instance
 
-    private static final Locale defaultLocale = Locale.ENGLISH;
+    private final static Locale defaultLocale = Locale.ENGLISH;
 
     private String selected_language = "en";
 
@@ -135,7 +135,7 @@ public class I18nControl
         if (this.selected_language!=null)
             setLanguage(this.selected_language);
         else
-            setLanguage(this.defaultLocale);
+            setLanguage(defaultLocale);
         //props.getLanguage());
     }
 

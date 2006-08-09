@@ -40,32 +40,32 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.StringTokenizer;
 
-public class VersionChecker 
+public class VersionChecker
 {
 
     private I18nControl m_ic = I18nControl.getInstance();
 
     private BufferedReader in = null;
 
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         VersionChecker vC = new VersionChecker();
         vC.checkForUpdate();
     }
 
-    public boolean checkForUpdate() 
+    public boolean checkForUpdate()
     {
 
         String installedVersion = MainFrame.s_version;
         String availableVersion = new String();
         HttpURLConnection conn = null;
 
-        try 
-	{
+        try
+        {
             URL url = new URL("http://ggc.sourceforge.net/LATEST_VERSION.txt");
             conn = (HttpURLConnection) url.openConnection();
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) 
-	    {
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK)
+            {
                 in = new BufferedReader(new InputStreamReader(conn
                         .getInputStream()));
                 availableVersion = nextLine();
@@ -93,39 +93,36 @@ public class VersionChecker
                         JOptionPane.INFORMATION_MESSAGE);
 
             }
-        } 
-	catch (UnknownHostException e) 
-	{
+        } catch (UnknownHostException e)
+        {
             JOptionPane.showMessageDialog(null, m_ic
                     .getMessage("HOST_UNAVAILABLE_MSG"), m_ic
                     .getMessage("HOST_UNAVAILABLE_INFO"),
                     JOptionPane.ERROR_MESSAGE);
-        } 
-	catch (java.io.IOException e) 
-	{
+        } catch (java.io.IOException e)
+        {
             System.err.println(e);
-        } 
-	finally 
-	{
+        } finally
+        {
+            if (conn != null)
             conn.disconnect();
         }
         return true;
 
     }
 
-    private String nextLine() 
+    private String nextLine()
     {
         if (in == null)
             return null;
 
         String tmp = null;
 
-        try 
-	{
+        try
+        {
             tmp = in.readLine();
-        } 
-	catch (IOException e) 
-	{
+        } catch (IOException e)
+        {
             System.out.println(e);
         }
 
@@ -140,7 +137,7 @@ public class VersionChecker
      * @return <code>true</code>, if newVers is newer than oldVers,
      *         <code>false</code> if it isn't.
      */
-    private boolean isNewVersion(String oldVers, String newVers) 
+    private boolean isNewVersion(String oldVers, String newVers)
     {
         int oldMajor = 0;
         int oldMinor = 0;
