@@ -25,6 +25,11 @@
  *  Author:   andyrozman
  */
 
+// MODIFICATIONS:
+//   +2006-09-05: RR getMessageFromCatalog(String): moved some of the code outside
+//                     the try...catch block to improve speed and also because it
+//                     just didn't belong there.
+
 
 package ggc.util;
 
@@ -497,27 +502,25 @@ public class I18nControl
     private synchronized String getMessageFromCatalog(String msg)
     {
 
+        if (msg==null)
+            return "null";
+        
+        String ret = null;
+        
         try
         {
-            
-            if (msg==null)
-                return "null";
-            
-            String ret = res.getString(msg);
-
-            if (ret==null)
-            {
-                System.out.println("Couldn't find message: ");
-                return returnSameValue(msg);
-            }
-            else
-                return ret;
-
+            ret = res.getString(msg);
         }
         catch(Exception ex)
+        {}
+
+        if (ret==null)
         {
+            System.out.println("Couldn't find message: " + msg);
             return returnSameValue(msg);
         }
+        else
+            return ret;
 
     }
 
