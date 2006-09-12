@@ -1,3 +1,7 @@
+2006-09-07 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * README: removed first preliminary release target date
+    * GGC_de.properties: some more translation
+
 2006-09-05 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * I18nControl: minor changes to the code
 

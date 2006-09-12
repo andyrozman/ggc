@@ -56,7 +56,7 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.2.4";
+    public  static final String s_version = "0.2.2.4";
     private String full_version = "v" + s_version;
     private String version_date = "8th May 2006";
 
