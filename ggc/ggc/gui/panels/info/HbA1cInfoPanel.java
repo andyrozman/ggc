@@ -79,6 +79,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
         add(lblPanel, BorderLayout.NORTH);
     }
 
+    @Override
     public void refreshInfo()
     {
         HbA1cValues hbVal = null;

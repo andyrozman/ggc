@@ -60,6 +60,7 @@ public class EuroFlashImport extends SerialMeterImport
     /**
      * @see data.imports.DataImport#importData()
      */
+    @Override
     public void importData() throws ImportException
     {
         super.importData();
@@ -78,6 +79,7 @@ public class EuroFlashImport extends SerialMeterImport
     /**
      * @see data.imports.DataImport#getImportedData()
      */
+    @Override
     public DailyValuesRow[] getImportedData()
     {
         return importedData;
@@ -87,6 +89,7 @@ public class EuroFlashImport extends SerialMeterImport
     /**
      * @see javax.comm.SerialPortEventListener#serialEvent(SerialPortEvent)
      */
+    @Override
     public void serialEvent(SerialPortEvent event)
     {
         super.serialEvent(event);

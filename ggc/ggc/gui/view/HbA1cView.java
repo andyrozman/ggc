@@ -57,6 +57,7 @@ public class HbA1cView extends AbstractGraphView
         this.hbValues = hbValues;
     }
 
+    @Override
     public void paint(Graphics g)
     {
         Graphics2D g2D = (Graphics2D)g;
@@ -74,10 +75,12 @@ public class HbA1cView extends AbstractGraphView
         drawValues(g2D);
     }
 
+    @Override
     protected void drawFramework(Graphics2D g2D)
     {
     }
 
+    @Override
     protected void drawValues(Graphics2D g2D)
     {
         g2D.setPaint(Color.white);

@@ -179,6 +179,7 @@ public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
         add(a, BorderLayout.NORTH);
     }
 
+    @Override
     public void saveProps()
     {
     }

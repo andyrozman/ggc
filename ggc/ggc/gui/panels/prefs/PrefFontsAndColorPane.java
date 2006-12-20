@@ -309,6 +309,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
      * The code written for this method performs the operations
      * that need to occur when an item is selected (or deselected).
      */
+    @Override
     public void itemStateChanged(ItemEvent e)
     {
         this.selected_sheme = this.color_schemes.get(this.comboScheme.getSelectedItem().toString());
@@ -322,6 +323,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     }
 
 
+    @Override
     public void actionPerformed(ActionEvent e)
     {
     	SchemeDialog sd = new SchemeDialog(this.parent, this.av_schemes_names);
@@ -364,6 +366,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     }
 
 
+    @Override
     public void saveProps()
     {
 

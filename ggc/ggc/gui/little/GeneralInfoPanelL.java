@@ -80,6 +80,7 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
         
     }
 
+    @Override
     public void refreshInfo()
     {
         lblName.setText(m_da.getSettings().getUserName());

@@ -50,6 +50,7 @@ public class GlucoTable extends JTable
     /**
      * @see javax.swing.JTable#createDefaultTableHeader()
      */
+    @Override
     protected JTableHeader createDefaultTableHeader()
     {
         JTableHeader header = super.createDefaultTableHeader();

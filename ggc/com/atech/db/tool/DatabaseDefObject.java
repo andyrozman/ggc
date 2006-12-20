@@ -22,6 +22,7 @@ public class DatabaseDefObject
 	this.short_dialect = sh_dialect;
     }
 
+    @Override
     public String toString()
     {
 	return name;

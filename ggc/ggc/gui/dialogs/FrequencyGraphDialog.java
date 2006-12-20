@@ -119,6 +119,7 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener
 
     private class CloseListener extends WindowAdapter
     {
+        @Override
         public void windowClosing(WindowEvent e)
         {
 	    closeDialog();

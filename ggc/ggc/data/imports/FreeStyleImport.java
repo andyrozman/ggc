@@ -55,6 +55,7 @@ public class FreeStyleImport extends SerialMeterImport
      * @see data.imports.DataImport#importData()
 
      */
+    @Override
     public void importData() throws ImportException
     {
         super.importData();
@@ -83,6 +84,7 @@ public class FreeStyleImport extends SerialMeterImport
      * @see data.imports.DataImport#getImportedData()
 
      */
+    @Override
     public DailyValuesRow[] getImportedData()
     {
         return importedData;
@@ -94,6 +96,7 @@ public class FreeStyleImport extends SerialMeterImport
      * @see javax.comm.SerialPortEventListener#serialEvent(SerialPortEvent)
 
      */
+    @Override
     public void serialEvent(SerialPortEvent event)
     {
         super.serialEvent(event);
@@ -203,7 +206,7 @@ public class FreeStyleImport extends SerialMeterImport
         byte[] allBytes = new byte[bytes.size()];
         for (int i = 0; i < bytes.size(); i++)
         {
-            allBytes[i] = ((Byte)bytes.elementAt(i)).byteValue();
+            allBytes[i] = bytes.elementAt(i).byteValue();
         }
 
         return allBytes;

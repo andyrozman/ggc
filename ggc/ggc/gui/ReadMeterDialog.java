@@ -189,11 +189,13 @@ public class ReadMeterDialog extends JDialog implements ActionListener
 
         JPanel content = new JPanel(new BorderLayout(5, 15))
         {
+            @Override
             public Insets getInsets()
             {
                 return new Insets(8, 8, 8, 8);
             }
 
+            @Override
             public Insets getInsets(Insets insets)
             {
                 insets.top = 8;

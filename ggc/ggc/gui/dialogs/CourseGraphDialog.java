@@ -216,6 +216,7 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
 
     private class CloseListener extends WindowAdapter
     {
+        @Override
         public void windowClosing(WindowEvent e)
         {
 	    closeDialog();

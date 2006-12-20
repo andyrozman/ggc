@@ -271,6 +271,7 @@ public class DbTool extends JFrame implements TreeSelectionListener
      *  Windows Process Event
      *  Used for redefining windows command (Close)
      */
+    @Override
     protected void processWindowEvent(WindowEvent e) 
     {
         super.processWindowEvent(e);

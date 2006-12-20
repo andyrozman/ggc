@@ -84,6 +84,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
         return model;
     }
 
+    @Override
     public void refreshInfo()
     {
         /*

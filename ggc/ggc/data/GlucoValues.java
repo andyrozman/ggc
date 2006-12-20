@@ -112,6 +112,7 @@ public class GlucoValues extends DailyValues
     }
 
 
+    @Override
     public void addRow(DailyValuesRow dRow)
     {
         String s1 = dRow.getDateAsString();
@@ -145,6 +146,7 @@ public class GlucoValues extends DailyValues
         }
     }
 
+    @Override
     public void setNewRow(DailyValuesRow dRow)
     {
         //DataBaseHandler dbH = DataBaseHandler.getInstance();
@@ -161,6 +163,7 @@ public class GlucoValues extends DailyValues
             dayValues.elementAt(i).saveDay();
     }
 
+    @Override
     public int getRowCount()
     {
         int c = 0;
@@ -169,6 +172,7 @@ public class GlucoValues extends DailyValues
         return c;
     }
 
+    @Override
     public void deleteRow(int row)
     {
         if (row != -1) 
@@ -191,6 +195,7 @@ public class GlucoValues extends DailyValues
         }
     }
 
+    @Override
     public Object getValueAt(int row, int column)
     {
         int c = 0;
@@ -211,6 +216,7 @@ public class GlucoValues extends DailyValues
         return dayValues.elementAt(day);
     }
 
+    @Override
     public void setValueAt(Object aValue, int row, int column)
     {
         int c = 0;

@@ -69,6 +69,7 @@ public class SpreadGraphView extends AbstractGraphView
     }
 
 
+    @Override
     public void paint(Graphics g)
     {
         Graphics2D g2D = (Graphics2D)g;
@@ -88,6 +89,7 @@ public class SpreadGraphView extends AbstractGraphView
     }
 
 
+    @Override
     protected void drawFramework(Graphics2D g2D)
     {
         Dimension dim = getSize();
@@ -141,6 +143,7 @@ public class SpreadGraphView extends AbstractGraphView
 
     }
 
+    @Override
     protected void drawValues(Graphics2D g2D)
     {
         //SpreadGraphFrame sGF = SpreadGraphFrame.getInstance();

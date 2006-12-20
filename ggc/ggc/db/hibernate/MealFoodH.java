@@ -81,6 +81,7 @@ public class MealFoodH implements Serializable
         this.food_id = food_id;
     }
 
+    @Override
     public String toString()
     {
         return new ToStringBuilder(this)
@@ -88,6 +89,7 @@ public class MealFoodH implements Serializable
         .toString();
     }
 
+    @Override
     public boolean equals(Object other)
     {
         if ( !(other instanceof MealFoodH) ) return false;
@@ -97,6 +99,7 @@ public class MealFoodH implements Serializable
         .isEquals();
     }
 
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder()

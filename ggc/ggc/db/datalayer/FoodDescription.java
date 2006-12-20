@@ -79,6 +79,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
     }
 
 
+    @Override
     public String toString()
     {
         return this.getShortDescription();

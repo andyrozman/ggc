@@ -63,6 +63,7 @@ public class CourseGraphView extends AbstractGraphView
         dayCount = gV.getDayCount();
     }
 
+    @Override
     public void paint(Graphics g)
     {
         Graphics2D g2D = (Graphics2D)g;
@@ -81,6 +82,7 @@ public class CourseGraphView extends AbstractGraphView
         drawValues(g2D);
     }
 
+    @Override
     protected void drawFramework(Graphics2D g2D)
     {
         Dimension dim = getSize();
@@ -138,6 +140,7 @@ public class CourseGraphView extends AbstractGraphView
 
     }
 
+    @Override
     protected void drawValues(Graphics2D g2D)
     {
         //CourseGraphFrame cGF = CourseGraphFrame.getInstance();

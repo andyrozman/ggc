@@ -69,6 +69,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
     }
 
 
+    @Override
     public String toString()
     {
 	//return this.getDescription();

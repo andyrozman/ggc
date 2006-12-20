@@ -349,6 +349,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
 
 
+    @Override
     public String toString()
     {
 	return getApplicationName();

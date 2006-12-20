@@ -295,6 +295,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
     }
 
     
+    @Override
     public void saveProps()
     {
     }

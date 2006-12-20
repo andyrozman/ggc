@@ -77,6 +77,7 @@ public class MealFoodDescription extends MealFoodDescriptionH implements Databas
     }
 
 
+    @Override
     public String toString()
     {
         return this.getShortDescription();

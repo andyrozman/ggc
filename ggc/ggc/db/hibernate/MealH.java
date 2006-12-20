@@ -137,6 +137,7 @@ public class MealH implements Serializable
         this.sugar_g = sugar_g;
     }
 
+    @Override
     public String toString()
     {
         return new ToStringBuilder(this)
@@ -144,6 +145,7 @@ public class MealH implements Serializable
         .toString();
     }
 
+    @Override
     public boolean equals(Object other)
     {
         if ( !(other instanceof MealH) ) return false;
@@ -153,6 +155,7 @@ public class MealH implements Serializable
         .isEquals();
     }
 
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder()

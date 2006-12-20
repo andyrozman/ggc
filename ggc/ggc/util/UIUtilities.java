@@ -42,6 +42,7 @@ public class UIUtilities
 
         button.addMouseListener(new MouseAdapter()
         {
+            @Override
             public void mouseEntered(MouseEvent e)
             {
                 if (button.isEnabled()) 
@@ -51,6 +52,7 @@ public class UIUtilities
                 }
             }
 
+            @Override
             public void mouseExited(MouseEvent e)
             {
                 button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));

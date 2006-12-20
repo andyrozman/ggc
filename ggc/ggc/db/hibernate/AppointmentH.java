@@ -81,6 +81,7 @@ public class AppointmentH implements Serializable
         this.comment = comment;
     }
 
+    @Override
     public String toString()
     {
         return new ToStringBuilder(this)
@@ -88,6 +89,7 @@ public class AppointmentH implements Serializable
         .toString();
     }
 
+    @Override
     public boolean equals(Object other)
     {
         if ( !(other instanceof AppointmentH) ) return false;
@@ -97,6 +99,7 @@ public class AppointmentH implements Serializable
         .isEquals();
     }
 
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder()

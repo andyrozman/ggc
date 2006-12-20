@@ -1,3 +1,11 @@
+2006-12-15 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * InitDb, NutritionImport: prevent probably buggy code from being reached
+    * StatisticInfoPanel: - renamed to StatisticsInfoPanel
+                          - commented out unnecessary if
+    * added @Override were it was necessary
+    * removed unnecessary casts
+    * DataAccess: replaced calls to deprecated methods
+
 2006-09-07 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * README: removed first preliminary release target date
     * GGC_de.properties: some more translation
@@ -7,7 +15,7 @@
 
 2006-08-09 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * Added new strings to GGC_de
-    * Some general cleanup and using java 1.5 niceties
+    * Some general cleanup and java 1.5 niceties
 
 2006-06-09 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * Added new strings to GGC_de, some translation

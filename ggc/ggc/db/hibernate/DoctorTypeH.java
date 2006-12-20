@@ -60,6 +60,7 @@ public class DoctorTypeH implements Serializable
         this.name_i18n = name_i18n;
     }
 
+    @Override
     public String toString()
     {
         return new ToStringBuilder(this)
@@ -67,6 +68,7 @@ public class DoctorTypeH implements Serializable
         .toString();
     }
 
+    @Override
     public boolean equals(Object other)
     {
         if ( !(other instanceof DoctorTypeH) ) return false;
@@ -76,6 +78,7 @@ public class DoctorTypeH implements Serializable
         .isEquals();
     }
 
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder()

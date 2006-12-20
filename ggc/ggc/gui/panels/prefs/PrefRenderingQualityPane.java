@@ -117,6 +117,7 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
         add(dgv, BorderLayout.CENTER);
     }
 
+    @Override
     public void saveProps()
     {
         this.settings.setAntiAliasing(comboAntiAliasing.getSelectedIndex());
@@ -128,6 +129,7 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
         this.settings.setRendering(comboRendering.getSelectedIndex());
     }
 
+    @Override
     public void itemStateChanged(ItemEvent e)
     {
         //saveProps();

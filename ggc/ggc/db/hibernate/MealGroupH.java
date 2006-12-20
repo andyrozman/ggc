@@ -67,6 +67,7 @@ public class MealGroupH implements Serializable
         this.type = type;
     }
 
+    @Override
     public String toString()
     {
         return new ToStringBuilder(this)
@@ -74,6 +75,7 @@ public class MealGroupH implements Serializable
         .toString();
     }
 
+    @Override
     public boolean equals(Object other)
     {
         if ( !(other instanceof MealGroupH) ) return false;
@@ -83,6 +85,7 @@ public class MealGroupH implements Serializable
         .isEquals();
     }
 
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder()

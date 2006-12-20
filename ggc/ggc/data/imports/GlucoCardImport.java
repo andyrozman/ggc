@@ -73,6 +73,7 @@ public class GlucoCardImport extends SerialMeterImport
         setName("GlucoCard");
     }
 
+    @Override
     public void serialEvent(SerialPortEvent event)
     {
         if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE)
@@ -196,6 +197,7 @@ public class GlucoCardImport extends SerialMeterImport
     /**
      * @see data.imports.DataImport#getImportedData()
      */
+    @Override
     public DailyValuesRow[] getImportedData()
     {
         DailyValuesRow[] values = new DailyValuesRow[importedData.size()];
@@ -206,6 +208,7 @@ public class GlucoCardImport extends SerialMeterImport
     /**
      * @see data.imports.DataImport#importData()
      */
+    @Override
     public void importData() throws ImportException
     {
         importedData = new Vector<DailyValuesRow>();

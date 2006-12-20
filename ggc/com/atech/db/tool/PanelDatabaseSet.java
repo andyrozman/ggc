@@ -246,7 +246,7 @@ public class PanelDatabaseSet extends JPanel implements ActionListener, Document
 	//System.out.println("tableOfDb: " + m_da.m_tableOfDatabases);
 	//System.out.println("dbName: " + dbName);
 
-	DatabaseDefObject ddo = (DatabaseDefObject)m_da.m_tableOfDatabases.get(dbName);
+	DatabaseDefObject ddo = m_da.m_tableOfDatabases.get(dbName);
 
 	label_class.setText(ddo.driver);
 	label_dialect.setText(ddo.short_dialect);
@@ -468,6 +468,8 @@ public class PanelDatabaseSet extends JPanel implements ActionListener, Document
 	{
 	    System.err.println("Text pane's document isn't an AbstractDocument!");
 	    System.exit(-1);
+        // stop complaint that doc may be null
+        return;
 	} 
 
 	doc.addDocumentListener(this);

@@ -117,6 +117,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     }
 
 
+    @Override
     public void refreshInfo()
     {
         boolean start = m_da.getDb().isDbStarted();

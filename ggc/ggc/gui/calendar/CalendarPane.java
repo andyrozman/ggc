@@ -105,7 +105,7 @@ public class CalendarPane extends JPanel
     {
         for (int i = 0; i < listeners.size(); i++) 
         {
-            CalendarListener l = (CalendarListener)listeners.elementAt(i);
+            CalendarListener l = listeners.elementAt(i);
             l.dateHasChanged(e);
         }
     }

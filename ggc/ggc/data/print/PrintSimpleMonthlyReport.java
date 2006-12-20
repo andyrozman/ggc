@@ -248,6 +248,7 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
     }
 
 
+    @Override
     public void onEndPage(PdfWriter writer, Document document) 
     {
         try 

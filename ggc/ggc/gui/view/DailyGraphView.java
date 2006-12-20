@@ -69,6 +69,7 @@ public class DailyGraphView extends AbstractGraphView
     }
 
 
+    @Override
     public void paint(Graphics g) 
     {
         Graphics2D g2D = (Graphics2D) g;
@@ -92,6 +93,7 @@ public class DailyGraphView extends AbstractGraphView
         dayData = dV;
     }
 
+    @Override
     protected void drawValues(Graphics2D g2D) 
     {
         if (dayData == null) 
@@ -159,6 +161,7 @@ public class DailyGraphView extends AbstractGraphView
     }
 
 
+    @Override
     protected void drawFramework(Graphics2D g2D) 
     {
         if (this.scheme==null)

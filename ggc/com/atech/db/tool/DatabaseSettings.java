@@ -60,6 +60,7 @@ public class DatabaseSettings
     }
 
 
+    @Override
     public String toString()
     {
 	return number + " - " + name;

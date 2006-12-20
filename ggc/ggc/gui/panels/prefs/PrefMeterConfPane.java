@@ -106,6 +106,7 @@ public class PrefMeterConfPane extends AbstractPrefOptionsPanel
     }
 
 
+    @Override
     public void itemStateChanged(ItemEvent e)
     {
         changed = true;
@@ -113,6 +114,7 @@ public class PrefMeterConfPane extends AbstractPrefOptionsPanel
     }
 
 
+    @Override
     public void saveProps()
     {
         settings.setMeterType(comboMeterType.getSelectedIndex());

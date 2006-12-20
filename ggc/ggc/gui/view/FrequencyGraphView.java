@@ -93,6 +93,7 @@ public class FrequencyGraphView extends AbstractGraphView
         avgBG = (int)(sum / c);
     }
 
+    @Override
     public void paint(Graphics g)
     {
         Graphics2D g2D = (Graphics2D)g;
@@ -111,6 +112,7 @@ public class FrequencyGraphView extends AbstractGraphView
         drawValues(g2D);
     }
 
+    @Override
     protected void drawFramework(Graphics2D g2D)
     {
         g2D.setPaint(Color.white);
@@ -161,6 +163,7 @@ public class FrequencyGraphView extends AbstractGraphView
 
     }
 
+    @Override
     protected void drawValues(Graphics2D g2D)
     {
         if (values != null) 

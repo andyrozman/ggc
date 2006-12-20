@@ -399,12 +399,14 @@ public class SettingsMainH implements Serializable {
         this.color_scheme = color_scheme;
     }
 
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
             .append("id", getId())
             .toString();
     }
 
+    @Override
     public boolean equals(Object other) {
         if ( !(other instanceof SettingsMainH) ) return false;
         SettingsMainH castOther = (SettingsMainH) other;
@@ -413,6 +415,7 @@ public class SettingsMainH implements Serializable {
             .isEquals();
     }
 
+    @Override
     public int hashCode() {
         return new HashCodeBuilder()
             .append(getId())

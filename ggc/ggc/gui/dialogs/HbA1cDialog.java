@@ -196,7 +196,8 @@ public class HbA1cDialog extends JDialog implements ActionListener
 
     private class CloseListener extends WindowAdapter
     {
-    	public void windowClosing(WindowEvent e)
+    	@Override
+        public void windowClosing(WindowEvent e)
     	{
     	    closeDialog();
     	}

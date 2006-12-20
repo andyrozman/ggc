@@ -80,7 +80,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     public NutritionTreeDialog(DataAccess da) 
     {
 
-        super((JFrame)da.getParent(), "", true);
+        super(da.getParent(), "", true);
 	//super((JDialog)null, "", true);
 
         m_da = da;

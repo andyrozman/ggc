@@ -91,6 +91,7 @@ public class DailyStatsTableModel extends AbstractTableModel
         return o;
     }
 
+    @Override
     public String getColumnName(int column)
     {
         if (column == 2)
@@ -101,7 +102,8 @@ public class DailyStatsTableModel extends AbstractTableModel
         return dayData.getColumnName(column);
     }
 
-    public Class getColumnClass(int c)
+    @Override
+    public Class<?> getColumnClass(int c)
     {
         Object o = getValueAt(0, c);
         if (o != null)
@@ -111,12 +113,14 @@ public class DailyStatsTableModel extends AbstractTableModel
         //return getValueAt(0,c).getClass();
     }
 
+    @Override
     public boolean isCellEditable(int row, int col)
     {
         //return true;
 	return false;
     }
 
+    @Override
     public void setValueAt(Object aValue, int row, int column)
     {
         dayData.setValueAt(aValue, row, column);

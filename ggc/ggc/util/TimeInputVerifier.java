@@ -31,6 +31,7 @@ public class TimeInputVerifier extends InputVerifier
     /**
      * @see javax.swing.InputVerifier#verify(JComponent)
      */
+    @Override
     public boolean verify(JComponent input)
     {
         if (border == null)

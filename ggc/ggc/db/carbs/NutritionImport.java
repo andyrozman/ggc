@@ -41,6 +41,7 @@ import javax.swing.*;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.FoodHomeWeight;
+import ggc.db.tool.InitDb;
 import ggc.db.GGCDb;
 import ggc.gui.StatusBar;
 import ggc.util.GGCProperties;
@@ -219,6 +220,12 @@ public class NutritionImport
 
 		    i++;
 		}
+        else
+        {
+            System.err.println(NutritionImport.class.getName()
+                    + ": returning to prevent NullPointerException! Please fix!");
+            return;
+        }
 
 
 		int type = getInt(strtok.nextToken());

@@ -50,6 +50,7 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
         add(new JLabel(m_ic.getMessage("WILL_BE_FOUND_HERE")+" NOT YET"));
     }
 
+    @Override
     public void refreshInfo()
     {
     }

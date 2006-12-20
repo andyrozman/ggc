@@ -209,6 +209,7 @@ public class DailyValuesRow implements Serializable
         return tmp;
     }
 
+    @Override
     public String toString()
     {
 //        return "DT="+datetime.getTime() + ";BG=" + BG + ";Ins1=" + Ins1 + ";Ins2=" + Ins2 + ";BE=" + BE + ";Act=" + Act + ";Comment=" + Comment + ";";

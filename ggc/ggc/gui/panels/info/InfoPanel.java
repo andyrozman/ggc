@@ -46,7 +46,7 @@ public class InfoPanel extends JPanel
         vInfoPanels.add(new GeneralInfoPanel());
         vInfoPanels.add(new HbA1cInfoPanel());
         vInfoPanels.add(new ScheduleInfoPanel());
-        vInfoPanels.add(new StatisticInfoPanel());
+        vInfoPanels.add(new StatisticsInfoPanel());
 
         addPanels();
     }

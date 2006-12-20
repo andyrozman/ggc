@@ -498,6 +498,7 @@ public class MainFrame extends JFrame
 
     private class CloseListener extends WindowAdapter 
     {
+        @Override
         public void windowClosing(WindowEvent e) 
 	{
             close();

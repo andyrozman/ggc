@@ -67,6 +67,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
         add(c);
     }
 
+    @Override
     public void saveProps() 
     {
 	settings.setUserName(fieldUserName.getText());

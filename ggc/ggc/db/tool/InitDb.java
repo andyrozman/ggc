@@ -249,6 +249,12 @@ public class InitDb
 
 		    i++;
 		}
+        else
+        {
+            System.err.println(InitDb.class.getName()
+                    + ": returning to prevent NullPointerException! Please fix!");
+            return;
+        }
 
 
 		int type = getInt(strtok.nextToken());

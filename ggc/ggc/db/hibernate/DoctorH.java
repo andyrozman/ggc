@@ -116,6 +116,7 @@ public class DoctorH implements Serializable
         this.comment = comment;
     }
 
+    @Override
     public String toString()
     {
         return new ToStringBuilder(this)
@@ -123,6 +124,7 @@ public class DoctorH implements Serializable
         .toString();
     }
 
+    @Override
     public boolean equals(Object other)
     {
         if ( !(other instanceof DoctorH) ) return false;
@@ -132,6 +134,7 @@ public class DoctorH implements Serializable
         .isEquals();
     }
 
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder()

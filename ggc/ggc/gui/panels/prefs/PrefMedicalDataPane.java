@@ -124,6 +124,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel
 
     }
 
+    @Override
     public void saveProps()
     {
 	// insulins

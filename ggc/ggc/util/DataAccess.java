@@ -1053,9 +1053,7 @@ public class DataAccess
 	public GregorianCalendar getGregorianCalendar(Date date) 
     {
 		GregorianCalendar gc = new GregorianCalendar();
-		gc.set(Calendar.DAY_OF_MONTH, date.getDay());
-		gc.set(Calendar.MONTH, date.getMonth());
-		gc.set(Calendar.YEAR, date.getYear());
+		gc.setTime(date);
 
 		return gc;
 	}

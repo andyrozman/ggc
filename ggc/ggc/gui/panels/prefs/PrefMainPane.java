@@ -59,6 +59,7 @@ public class PrefMainPane extends AbstractPrefOptionsPanel
         add(c);
     }
 
+    @Override
     public void saveProps() 
     {
     }

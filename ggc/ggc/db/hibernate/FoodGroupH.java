@@ -53,6 +53,7 @@ public class FoodGroupH implements Serializable
         this.description = description;
     }
 
+    @Override
     public String toString()
     {
         return new ToStringBuilder(this)
@@ -60,6 +61,7 @@ public class FoodGroupH implements Serializable
         .toString();
     }
 
+    @Override
     public boolean equals(Object other)
     {
         if ( !(other instanceof FoodGroupH) ) return false;
@@ -69,6 +71,7 @@ public class FoodGroupH implements Serializable
         .isEquals();
     }
 
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder()

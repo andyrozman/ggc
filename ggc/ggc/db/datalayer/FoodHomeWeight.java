@@ -71,6 +71,7 @@ public class FoodHomeWeight extends FoodHomeWeightH implements DatabaseObjectHib
     }
 
 
+    @Override
     public String toString()
     {
         //return this.getShortDescription();
