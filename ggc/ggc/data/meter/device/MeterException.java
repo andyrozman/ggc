@@ -5,7 +5,7 @@
  * Window>Preferences>Java>Templates.
  */
 
-package ggc.data.meter;
+package ggc.data.meter.device;
 
 
 /**

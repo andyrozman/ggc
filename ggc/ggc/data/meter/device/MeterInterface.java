@@ -5,7 +5,7 @@
  * Window>Preferences>Java>Templates.
  */
 
-package ggc.data.meter;
+package ggc.data.meter.device;
 
 
 import ggc.data.DailyValuesRow;
@@ -35,8 +35,8 @@ public interface MeterInterface
 {
 
     /**
-     * Will be called, to initialize the data import.
-     * @return boolean - initialize succesful or not
+     * Used for opening connection with device.
+     * @return boolean - if connection established
      */
     boolean open() throws MeterException;
 
@@ -44,11 +44,12 @@ public interface MeterInterface
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    void close();
+    void close() throws MeterException;
 
 
 
 
+    String getVersion() throws MeterException;
 
 
 
