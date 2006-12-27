@@ -64,6 +64,7 @@ public class GGCDbLoader extends Thread
     DataAccess m_da = null;
     StatusBar m_bar = null;
     StatusBarL m_barL = null;
+    public boolean real_run = false;
 
     public boolean run_once = false;
 
@@ -91,6 +92,7 @@ public class GGCDbLoader extends Thread
 
         run_once = true;
 
+        /*
         try 
         { 
             Thread.sleep(2000); 
@@ -98,7 +100,7 @@ public class GGCDbLoader extends Thread
         catch(Exception ex) 
         { 
         }
-
+*/
         GGCDb db = new GGCDb(m_da);
 
         if (m_bar!=null)
@@ -140,6 +142,8 @@ public class GGCDbLoader extends Thread
             mf.informationPanel.refreshPanels();
             mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
         }
+
+        
     }
 
     public void setDbStatus(int status)
