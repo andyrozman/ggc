@@ -1,3 +1,7 @@
+    * DailyRowDialog is replaced with older version, since new version is not working
+      yet
+
+
 2006-12-15 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * InitDb, NutritionImport: prevent probably buggy code from being reached
     * StatisticInfoPanel: - renamed to StatisticsInfoPanel
@@ -22,6 +26,7 @@
     * Some rewording in GGC_en
 
 2006-??-?? (v0.2.2.4) Andy Rozman <andyrozman@users.sourceforge.net>
+>>>>>>> .r208
     * Added saving of Rendering settings
     
 
