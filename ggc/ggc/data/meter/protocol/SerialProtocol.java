@@ -47,8 +47,13 @@ import ggc.data.meter.device.MeterException;
 public abstract class SerialProtocol implements MeterInterface, SerialPortEventListener //, Runnable
 {
 
+    protected int m_device_index = 0;
+
+
     protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccess m_da = DataAccess.getInstance();
+
+
 
     private boolean isPortOpen = false;
     private boolean dataFromMeter = false;
@@ -74,16 +79,15 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     /**
      * Constructor for SerialMeterImport.
      */
-    public SerialProtocol(int baudrate, int databits, int stopbits, int parity )
+    public SerialProtocol(int device_index, int baudrate, int databits, int stopbits, int parity )
     {
-
         super();
 
+	this.m_device_index = device_index;
 	this.baudrate = baudrate;
 	this.databits = databits;
 	this.stopbits = stopbits;
 	this.parity = parity;
-
     }
 
     public void addImportEventListener(ImportEventListener listener)
@@ -173,7 +177,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 
             try 
             {
-                Thread.sleep(10000);
+                //Thread.sleep(10000);
             } 
             catch (Exception exc) 
             {
@@ -182,6 +186,8 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
             isPortOpen = true;
             System.out.println("open port : " + portIdentifier.getName());
             serialPort.addEventListener(this);
+
+
 
         } 
         catch (PortInUseException exc) 
@@ -211,8 +217,8 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 
         }
 
-        if (isPortOpen)
-            fireImportChanged(new ImportEvent(this, ImportEvent.PORT_OPENED, portIdentifier));
+        //if (isPortOpen)
+        //    fireImportChanged(new ImportEvent(this, ImportEvent.PORT_OPENED, portIdentifier));
 
         return isPortOpen;
     }
@@ -443,24 +449,10 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     }
 
 
-    /**
-     * Gets the image
-     * @return Returns a ImageIcon
-     */
-    public ImageIcon getImage()
-    {
-        return image;
-    }
 
 
-    /**
-     * Sets the image
-     * @param image The image to set
-     */
-    public void setImage(ImageIcon image)
-    {
-        this.image = image;
-    }
+
+
 
 
     /**
@@ -481,23 +473,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         this.useInfoMessage = useInfoMessage;
     }
 
-    /**
-     * Gets the name
-     * @return Returns a String
-     */
-    public String getName()
-    {
-        return name;
-    }
 
-    /**
-     * Sets the name
-     * @param name The name to set
-     */
-    public void setName(String name)
-    {
-        this.name = name;
-    }
 
 
     public static String[] getAvailableMeters()
@@ -536,5 +512,36 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         return retVal;
 
     }
+
+
+
+    /**
+     * getName - Get Name of meter
+     */
+    public String getName()
+    {
+	return m_da.getMeterManager().meter_names[this.m_device_index];
+    }
+
+
+    /**
+     * getIcon - Get Icon of meter
+     */
+    public ImageIcon getIcon()
+    {
+	return m_da.getMeterManager().meter_pictures[this.m_device_index];
+    }
+
+
+    /**
+     * getMeterIndex - Get Index of Meter 
+     */
+    public int getMeterIndex()
+    {
+	return this.m_device_index;
+    }
+
+
+
 
 }

@@ -40,12 +40,33 @@ public class MeterManager
 
     protected I18nControl m_ic = I18nControl.getInstance();
 
+    public static final int METER_NONE = 0;
+
+    // old meters support
+    public static final int METER_GLUCO_CARD = 1;
+    public static final int METER_EURO_FLASH = 2;
+    public static final int METER_FREESTYLE = 3;
+    public static final int METER_ASCENSIA_CONTOUR = 4;
+    public static final int METER_ASCENSIA_DEX = 5;
+    public static final int METER_ASCENSIA_BREEZE = 6;
+    public static final int METER_ASCENSIA_ELITE_XL = 7;
+
+
+
     public String[] meter_names = {
         m_ic.getMessage("NONE"),
         "GlucoCard", 
         "EuroFlash",
-        "FreeStyle"
+        "FreeStyle",
+	"Ascensia Contour",
+	"Ascensia DEX",
+	"Ascensia Breeze",
+	"Ascensia Elite XL"
     };
+
+
+
+
 
     public String[] meter_classes = {
         "ggc.data.imports.DummyImport",
@@ -59,14 +80,33 @@ public class MeterManager
         "ggc.data.meter.device.DummyMeter",
         "ggc.data.meter.device.DummyMeter",
         "ggc.data.meter.device.DummyMeter",
+	"ggc.data.meter.device.AscensiaContourMeter",
+	"ggc.data.meter.device.AscensiaDEXMeter",
+	"ggc.data.meter.device.AscensiaBreezeMeter",
+	"ggc.data.meter.device.AscensiaEliteXLMeter",
     };
-    
+
+    // false =old interface, true = new interface
+    public boolean[] meter_interface_type = {
+	false,
+	false,
+	false,
+	false,
+	true,
+	true,
+	true,
+	true
+    };
 
     public ImageIcon[] meter_pictures = {
-        new ImageIcon(getClass().getResource("/icons/noMeter.gif")),
-        new ImageIcon(getClass().getResource("/icons/glucocard.gif")),
-        new ImageIcon(getClass().getResource("/icons/euroflash.gif")),
-        new ImageIcon(getClass().getResource("/icons/freestyle.gif")),
+        new ImageIcon(getClass().getResource("/icons/m_noMeter.gif")),
+        new ImageIcon(getClass().getResource("/icons/m_glucocard.gif")),
+        new ImageIcon(getClass().getResource("/icons/m_euroflash.gif")),
+        new ImageIcon(getClass().getResource("/icons/m_freestyle.gif")),
+	new ImageIcon(getClass().getResource("/icons/m_asc_contour.gif")),
+	new ImageIcon(getClass().getResource("/icons/m_asc_dex.gif")),
+	new ImageIcon(getClass().getResource("/icons/m_asc_breeze.gif")),
+	new ImageIcon(getClass().getResource("/icons/m_asc_elite.gif")),
     };
 
 

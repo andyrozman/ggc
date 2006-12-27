@@ -37,8 +37,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import ggc.data.DailyValuesRow;
-import ggc.data.meter.device.AscensiaMeter;
+import ggc.data.meter.device.AscensiaContourMeter;
 import ggc.data.meter.device.MeterInterface;
+import ggc.data.meter.protocol.SerialProtocol;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
@@ -50,19 +51,20 @@ public class MeterTester extends JFrame
 
     public static TextArea messageArea;
 
-    private AscensiaMeter m_meter;
+    private SerialProtocol m_meter;
 
     public MeterTester()
     {
 	try
 	{
-	    m_meter = new AscensiaMeter();
-	    m_meter.setPort("COM1");
-	    m_meter.open();
+	    m_meter = new AscensiaContourMeter("COM1");
+	    //m_meter.setPort("COM1");
+	    //m_meter.open();
 	}
 	catch(Exception ex)
 	{
 	    System.out.println("Tester -> Exception on creation of meter. " + ex);
+	    ex.printStackTrace();
 	}
 
 	//m_meter.setReturnWindow();
@@ -121,7 +123,23 @@ public class MeterTester extends JFrame
                 {
                     //readyToWrite("\n");
                     //messageArea.append("--> <Enter> sent.\n");
-		    m_meter.test2();
+		    //m_meter.test2();
+		    try
+		    {
+			m_meter.loadInitialData();
+
+			System.out.println("Info: \n" + m_meter.getInfo());
+			System.out.println("Time Difference: \n" + m_meter.getTimeDifference());
+
+			//m_meter.getDataFull();
+		    }
+		    catch(Exception ex)
+		    {
+			System.out.println("Exception: " + ex);
+		    }
+
+		    m_meter.getInfo();
+		    m_meter.getTimeDifference();
                 }
             });
         fullPanel.add(enterButton);
