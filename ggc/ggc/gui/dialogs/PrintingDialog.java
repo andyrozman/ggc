@@ -107,30 +107,30 @@ public class PrintingDialog extends JDialog implements ActionListener
     private void init() 
     {
 
-    	JPanel panel = new JPanel();
-    	panel.setBounds(0, 0, 350, 350);
-    	panel.setLayout(null);
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, 350, 350);
+        panel.setLayout(null);
     
-    	this.getContentPane().add(panel);
+        this.getContentPane().add(panel);
 
-    	JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
-    	label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
-    	label.setHorizontalAlignment(SwingConstants.CENTER);
-    	label.setBounds(0, 20, 350, 35);
-    	panel.add(label);
-    	
+        JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
+        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setBounds(0, 20, 350, 35);
+        panel.add(label);
+        
     
-    	label = new JLabel(m_ic.getMessage("TYPE_OF_REPORT") + ":" );
-    	label.setFont(this.font_normal_bold);
-    	label.setBounds(40, 75, 280, 25);
-    	panel.add(label);
+        label = new JLabel(m_ic.getMessage("TYPE_OF_REPORT") + ":" );
+        label.setFont(this.font_normal_bold);
+        label.setBounds(40, 75, 280, 25);
+        panel.add(label);
         
-    	cb_template = new JComboBox(report_types);
-    	cb_template.setFont(this.font_normal);
-    	cb_template.setBounds(40, 105, 230, 25);
-    	panel.add(cb_template);
+        cb_template = new JComboBox(report_types);
+        cb_template.setFont(this.font_normal);
+        cb_template.setBounds(40, 105, 230, 25);
+        panel.add(cb_template);
         
-    	//int year = m_da.getC
+        //int year = m_da.getC
 
         int year = gc.get(Calendar.YEAR);
         int month = gc.get(Calendar.MONTH)+1;
@@ -145,15 +145,15 @@ public class PrintingDialog extends JDialog implements ActionListener
         sl.setBounds(120, 210, 30, 25);
     */
     
-    	label = new JLabel(m_ic.getMessage("SELECT_YEAR_AND_MONTH") + ":");
-    	label.setFont(this.font_normal_bold);
-    	label.setBounds(40, 155, 180, 25);
-    	panel.add(label);
+        label = new JLabel(m_ic.getMessage("SELECT_YEAR_AND_MONTH") + ":");
+        label.setFont(this.font_normal_bold);
+        label.setBounds(40, 155, 180, 25);
+        panel.add(label);
     /*
-    	tfName = new JTextField();
-    	tfName.setBounds(120, 205, 160, 25);
-    	tfName.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-    	//panel.add(sl);
+        tfName = new JTextField();
+        tfName.setBounds(120, 205, 160, 25);
+        tfName.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        //panel.add(sl);
 */
 
         sl_year = new JSpinner();
@@ -173,19 +173,19 @@ public class PrintingDialog extends JDialog implements ActionListener
         panel.add(sl_month);
 
         
-    	JButton button = new JButton(m_ic.getMessage("OK"));
-    	button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-    	button.setActionCommand("ok");
-    	button.addActionListener(this);
-    	button.setBounds(100, 240, 80, 25);
-    	panel.add(button);
+        JButton button = new JButton(m_ic.getMessage("OK"));
+        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setActionCommand("ok");
+        button.addActionListener(this);
+        button.setBounds(100, 240, 80, 25);
+        panel.add(button);
     
-    	button = new JButton(m_ic.getMessage("CANCEL"));
-    	button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-    	button.setActionCommand("cancel");
-    	button.addActionListener(this);
-    	button.setBounds(190, 240, 80, 25);
-    	panel.add(button);
+        button = new JButton(m_ic.getMessage("CANCEL"));
+        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setActionCommand("cancel");
+        button.addActionListener(this);
+        button.setBounds(190, 240, 80, 25);
+        panel.add(button);
 
     }
 
@@ -195,19 +195,19 @@ public class PrintingDialog extends JDialog implements ActionListener
      */
     public void actionPerformed(ActionEvent e)
     {
-    	String action = e.getActionCommand();
+        String action = e.getActionCommand();
     
-    	if (action.equals("cancel"))
-    	{
-    	    m_actionDone = false;
-    	    this.dispose();
-    	}
-    	else if (action.equals("ok"))
-    	{
+        if (action.equals("cancel"))
+        {
+            m_actionDone = false;
+            this.dispose();
+        }
+        else if (action.equals("ok"))
+        {
             int yr = ((Integer)sl_year.getValue()).intValue();
-	    int mnth = ((Integer)sl_month.getValue()).intValue();
+        int mnth = ((Integer)sl_month.getValue()).intValue();
 
-	    /*
+        /*
             System.out.println(sl_year.getValue());
             if (sl_year.getValue() instanceof Integer)
             {
@@ -226,31 +226,46 @@ public class PrintingDialog extends JDialog implements ActionListener
          
         
 /*
-	    if (this.tfName.getText().trim().equals(""))
-    	    {
+        if (this.tfName.getText().trim().equals(""))
+            {
                 JOptionPane.showMessageDialog(this, m_ic.getMessage("TYPE_NAME_BEFORE"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                 return;
-    	    }
-    	    m_actionDone = true; */
-    	    this.dispose();
-    	}
-    	else
-    	    System.out.println("SchemeDialog: Unknown command: " + action);
+            }
+            m_actionDone = true; */
+            this.dispose();
+        }
+        else
+            System.out.println("SchemeDialog: Unknown command: " + action);
 
     }
 
     public void displayPDF(String name)
     {
-	//File fl = new File();
-	//fl.separator
-
 	File fl = new File("../data/temp/");
-
+    
 	System.out.println(fl.getAbsolutePath());
 	System.out.println(File.separator);
-
-	File acr = new File("c:/Program Files/Utils/Acrobat 7/Reader/AcroRd32.exe");
+    
+	File acr = new File("c:/Program Files/Adobe/Acrobat 7.0/Reader/AcroRd32.exe");
+				
 	System.out.println(acr.exists());
+	System.out.println(acr.getAbsoluteFile());
+	
+	try 
+	{
+    //      String pathToAcrobat = "c:\\Program Files\\Utils\\Acrobat 7.0\\Reader\\AcroRd32.exe ";
+	    //Runtime.getRuntime().e
+	    Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + fl.separator + name);
+	} 
+	catch(RuntimeException ex)
+	{
+	    System.out.println("RE running AcrobatReader: " + ex);
+	}
+	catch (Exception ex) 
+	{
+	    System.out.println("Error running AcrobatReader: " + ex);
+	    
+	}
 
 	System.out.println(acr.getAbsoluteFile());
 
@@ -282,17 +297,17 @@ public class PrintingDialog extends JDialog implements ActionListener
 
     public String[] getActionResult()
     {
-    	String[] res = new String[3];
+        String[] res = new String[3];
     
-    	if (m_actionDone)
-    	    res[0] = "1";
-    	else
-    	    res[0] = "0";
+        if (m_actionDone)
+            res[0] = "1";
+        else
+            res[0] = "0";
     
-    	res[1] = this.tfName.getText();
-    	res[2] = this.cb_template.getSelectedItem().toString();
+        res[1] = this.tfName.getText();
+        res[2] = this.cb_template.getSelectedItem().toString();
     
-    	return res;
+        return res;
     }
 
 }
