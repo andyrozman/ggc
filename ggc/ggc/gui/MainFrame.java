@@ -40,6 +40,7 @@ import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.FrequencyGraphDialog;
 import ggc.gui.dialogs.HbA1cDialog;
+import ggc.gui.dialogs.MeterReadDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SpreadGraphDialog;
@@ -56,9 +57,9 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static final String s_version = "0.2.2.4";
+    public  static String s_version = "0.2.2.5";
     private String full_version = "v" + s_version;
-    private String version_date = "8th May 2006";
+    private String version_date = "27th December 2006";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -115,34 +116,34 @@ public class MainFrame extends JFrame
         //MainFrame.setLookAndFeel("opusOSBluethemepack.zip"); ?
         //MainFrame.setLookAndFeel("underlingthemepack.zip"); ?
         //MainFrame.setLookAndFeel("royalInspiratthemepack.zip"); ?
-        //	MainFrame.setLookAndFeel("hmmXPBluethemepack.zip");
+        //  MainFrame.setLookAndFeel("hmmXPBluethemepack.zip");
         MainFrame.setLookAndFeel("blueMetalthemepack.zip"); // Win (not so bad) ???
-        //	MainFrame.setLookAndFeel("architectBluethemepack.zip");
-        //	MainFrame.setLookAndFeel("roueBluethemepack.zip");
-        //	MainFrame.setLookAndFeel("quickSilverRthemepack.zip");  
-        //	MainFrame.setLookAndFeel("chaNinja-Bluethemepack.zip");  // Mhm
-        //	MainFrame.setLookAndFeel("crystal2themepack.zip");  // mhm
-        //	MainFrame.setLookAndFeel("toxicthemepack.zip");
-        //	MainFrame.setLookAndFeel("amarachthemepack.zip");
-        //	MainFrame.setLookAndFeel("b0sumiErgothempack.zip");
-        //	MainFrame.setLookAndFeel("gfxOasisthemepack.zip");
-        //	MainFrame.setLookAndFeel("iBarthemepack.zip");
-        //      MainFrame.setLookAndFeel("midnightthemepack.zip");	 // not os bad
-        //	MainFrame.setLookAndFeel("solunaRthemepack.zip");		 // nn
-        //	MainFrame.setLookAndFeel("tigerGraphitethemepack.zip");
-        //	MainFrame.setLookAndFeel("gorillathemepack.zip");	  // nn
-        //	MainFrame.setLookAndFeel("fatalEthemepack.zip");
-        //	MainFrame.setLookAndFeel("b0sumithemepack.zip");
-        //	MainFrame.setLookAndFeel("architectOlivethemepack.zip");
-        //	MainFrame.setLookAndFeel("mmMagra-Xthemepack.zip");
-        //	MainFrame.setLookAndFeel("silverLunaXPthemepack.zip");
-        //	MainFrame.setLookAndFeel("opusOSDeepthemepack.zip");
-        //	MainFrame.setLookAndFeel("coronaHthemepack.zip");
-        //	MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //	MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //	MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //	MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //	MainFrame.setLookAndFeel("cougarthemepack.zip");
+        //  MainFrame.setLookAndFeel("architectBluethemepack.zip");
+        //  MainFrame.setLookAndFeel("roueBluethemepack.zip");
+        //  MainFrame.setLookAndFeel("quickSilverRthemepack.zip");  
+        //  MainFrame.setLookAndFeel("chaNinja-Bluethemepack.zip");  // Mhm
+        //  MainFrame.setLookAndFeel("crystal2themepack.zip");  // mhm
+        //  MainFrame.setLookAndFeel("toxicthemepack.zip");
+        //  MainFrame.setLookAndFeel("amarachthemepack.zip");
+        //  MainFrame.setLookAndFeel("b0sumiErgothempack.zip");
+        //  MainFrame.setLookAndFeel("gfxOasisthemepack.zip");
+        //  MainFrame.setLookAndFeel("iBarthemepack.zip");
+        //      MainFrame.setLookAndFeel("midnightthemepack.zip");   // not os bad
+        //  MainFrame.setLookAndFeel("solunaRthemepack.zip");        // nn
+        //  MainFrame.setLookAndFeel("tigerGraphitethemepack.zip");
+        //  MainFrame.setLookAndFeel("gorillathemepack.zip");     // nn
+        //  MainFrame.setLookAndFeel("fatalEthemepack.zip");
+        //  MainFrame.setLookAndFeel("b0sumithemepack.zip");
+        //  MainFrame.setLookAndFeel("architectOlivethemepack.zip");
+        //  MainFrame.setLookAndFeel("mmMagra-Xthemepack.zip");
+        //  MainFrame.setLookAndFeel("silverLunaXPthemepack.zip");
+        //  MainFrame.setLookAndFeel("opusOSDeepthemepack.zip");
+        //  MainFrame.setLookAndFeel("coronaHthemepack.zip");
+        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
+        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
+        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
+        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
+        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
 
     }
 
@@ -326,13 +327,13 @@ public class MainFrame extends JFrame
         //props.write();
         //dbH.disconnectDb();
 
-	if (m_da!=null)
-	{
-	    if (m_da.getDb()!=null)
-		m_da.getDb().closeDb();
+    if (m_da!=null)
+    {
+        if (m_da.getDb()!=null)
+        m_da.getDb().closeDb();
 
-	    m_da.deleteInstance();
-	}
+        m_da.deleteInstance();
+    }
         dispose();
         System.exit(0);
     }
@@ -442,7 +443,7 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("read_meter")) 
             {
-                new ReadMeterDialog(MainFrame.this);
+                new MeterReadDialog(MainFrame.this);
             } 
             else if (command.equals("hlp_about")) 
             {
@@ -500,7 +501,7 @@ public class MainFrame extends JFrame
     {
         @Override
         public void windowClosing(WindowEvent e) 
-	{
+    {
             close();
         }
     }
