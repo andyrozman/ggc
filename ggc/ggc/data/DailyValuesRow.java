@@ -96,6 +96,9 @@ public class DailyValuesRow implements Serializable
     }
 
 
+
+
+
     public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
     {
     	datetime = getDateTimeLong(date, time);
@@ -224,6 +227,10 @@ public class DailyValuesRow implements Serializable
     }
 
 
+    public void setDateTime(long dt)
+    {
+	this.datetime = dt;
+    }
 
     public Date getDateTimeAsDate()
     {
@@ -275,6 +282,24 @@ public class DailyValuesRow implements Serializable
     {
         setBG(m_da.getFloatValue(val));
     }
+
+
+    public static int BG_MMOLL = 1;
+    public static int BG_MGDL = 2;
+
+    public void setBG(int type, float val)
+    {
+	// FIX THIS
+
+    }
+
+    public void setBG(int type, String val)
+    {
+	// FIX THIS
+
+    }
+
+
 
     public void setBG(float val)
     {
