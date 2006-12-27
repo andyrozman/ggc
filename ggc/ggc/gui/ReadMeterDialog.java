@@ -80,8 +80,13 @@ public class ReadMeterDialog extends JDialog implements ActionListener
         super(owner);
 
         setTitle(m_ic.getMessage("READ_METER_DATA"));
+
+        initMeter();
         init();
-        //initMeter();
+        postInit();
+
+        this.setVisible(true);
+        
     }
 
     /**
@@ -180,6 +185,7 @@ public class ReadMeterDialog extends JDialog implements ActionListener
         infoPanel.add(infoIcon, "North");
         infoPanel.add(infoDescription, "Center");
         infoPanel.setBorder(new TitledBorder(meterImport.getName()));
+//        infoPanel.setBorder(new TitledBorder(""));
         infoPanel.setPreferredSize(new Dimension(160, 250));
 
         JPanel importContent = new JPanel(new BorderLayout(5, 10));
@@ -232,6 +238,9 @@ public class ReadMeterDialog extends JDialog implements ActionListener
             System.out.println(exc);
         }
 
+        //infoPanel.setBorder(new TitledBorder(meterImport.getName()));
+
+        
         //meterImport = new EuroFlashImport();
         //meterImport = new FreeStyleImport();
         //meterImport = new GlucoCardImport();
@@ -254,6 +263,11 @@ public class ReadMeterDialog extends JDialog implements ActionListener
             }
         });
 
+
+    }
+
+    public void postInit()
+    {
         resTable.setModel(model);
 
 
@@ -262,9 +276,9 @@ public class ReadMeterDialog extends JDialog implements ActionListener
                                      : meterImport.getImage());
 
         this.infoDescription.setText((meterImport.getUseInfoMessage() == null) ? m_ic.getMessage("NO_TO_USE_INFORMATION") : meterImport.getUseInfoMessage());
-
+        
     }
-
+    
 
 
     //////////////////////////////////////////////////////////////
