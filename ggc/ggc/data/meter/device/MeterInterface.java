@@ -8,9 +8,12 @@
 package ggc.data.meter.device;
 
 
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+
 import ggc.data.DailyValuesRow;
 import ggc.data.event.ImportEventListener;
-
 import ggc.data.imports.*;
 
 
@@ -47,32 +50,58 @@ public interface MeterInterface
     void close() throws MeterException;
 
 
-
-
-    String getVersion() throws MeterException;
-
-
-
-
-
-
+    /**
+     * getName - Get Name of meter
+     */
+    String getName();
 
 
     /**
-     * Import the data from the resource.
+     * getIcon - Get Icon of meter
      */
-    void importData() throws ImportException;
+    ImageIcon getIcon();
 
 
     /**
-     * Return a list with all imported data values.
-     * @return DailyValuesRow[]
+     * getMeterIndex - Get Index of Meter 
      */
-    DailyValuesRow[] getImportedData();
+    int getMeterIndex();
 
 
-    void addImportEventListener(ImportEventListener listener);
+    /**
+     * getTimeDifference - returns time difference between Meter and Computer
+     */
+    int getTimeDifference(); 
 
 
-    void removeImportEventListener(ImportEventListener listener);
+    /**
+     * getInfo - returns Meter information
+     */
+    String getInfo(); 
+
+    
+    /**
+     * getStatus - get Status of meter
+     */
+    int getStatus();
+
+
+    /**
+     * isStatusOK - has Meter OK status
+     */
+    boolean isStatusOK();
+    
+    
+    /**
+     * getDataFull - get all data from Meter
+     */
+    ArrayList getDataFull();
+
+
+    /**
+     * getData - get data for specified time
+     */
+    ArrayList getData(int from, int to);
+    
+
 }

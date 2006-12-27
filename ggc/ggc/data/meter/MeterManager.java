@@ -27,7 +27,7 @@
  */
 
 
-package ggc.data.imports;
+package ggc.data.meter;
 
 import ggc.data.DailyValuesRow;
 import ggc.util.GGCProperties;
@@ -54,6 +54,13 @@ public class MeterManager
         "ggc.data.imports.FreeStyleImport",
     };
 
+    public String[] meter_device_classes = {
+        "ggc.data.meter.device.DummyMeter",
+        "ggc.data.meter.device.DummyMeter",
+        "ggc.data.meter.device.DummyMeter",
+        "ggc.data.meter.device.DummyMeter",
+    };
+    
 
     public ImageIcon[] meter_pictures = {
         new ImageIcon(getClass().getResource("/icons/noMeter.gif")),
@@ -105,6 +112,11 @@ public class MeterManager
         return this.meter_classes[index];
     }
 
+    public String getMeterDeviceClassName(int index)
+    {
+        return this.meter_device_classes[index];
+    }
+    
 
     public String getMeterClassName(String name)
     {
