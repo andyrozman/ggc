@@ -1,80 +1,71 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.data.meter.device;
 
-
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.StringTokenizer;
 
 import javax.comm.*;
 import javax.comm.SerialPort;
 import javax.swing.ImageIcon;
 
-import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
 import ggc.data.event.ImportEventListener;
-import ggc.data.imports.*;
+import ggc.data.meter.MeterManager;
 import ggc.data.meter.protocol.SerialProtocol;
-import ggc.util.I18nControl;
 
-/**
 
- * @author stephan
-
+/*
+ *  GGC - GNU Gluco Control
  *
-
- * To change this generated comment edit the template variable "typecomment":
-
- * Window>Preferences>Java>Templates.
-
- * 
- *  This is new interface, that will in future replace DataImport, but so far we are 
- *  keeping all old methods.
- * 
- * 
- * 
+ *  A pure java app to help you manage your diabetes.
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *  Filename: AscensiaDEXMeter.java
+ *  Purpose:  This class is used for data retrival from Ascensia DEX Meter and
+ *            implements SerialProtocol.
+ *
+ *  Author:   andyrozman {andyrozman@sourceforge.net}
+ *
  */
-public abstract class AscensiaMeter extends SerialProtocol
+
+
+public class AscensiaDEXMeter extends SerialProtocol
 {
 
-    protected int m_status = 0;
-    protected I18nControl ic = I18nControl.getInstance();
+    private int m_status = 0;
 
-    protected String m_info = "";
-    protected int m_time_difference = 0;
-    protected ArrayList data = null;
-
-
-    public AscensiaMeter(int meter_type, String portName)
+    public AscensiaDEXMeter()
     {
-	super(meter_type,
+	super(MeterManager.METER_ASCENSIA_DEX,
 	      9600, 
 	      SerialPort.DATABITS_8, 
 	      SerialPort.STOPBITS_1, 
 	      SerialPort.PARITY_NONE);
 
-	data = new ArrayList();
-
+	/*
 	try
 	{
-	    this.setPort(portName);
-
-	    if (!this.open())
-	    {
-		this.m_status = 1;
-	    }
+	    System.out.println("AscensiaMeter -> Adding event listener");
+	    serialPort.addEventListener(this);
 	}
 	catch(Exception ex)
 	{
 	    System.out.println("AscensiaMeter -> Error adding listener: " + ex);
-	    ex.printStackTrace();
 	}
+	*/
     }
 
     /**
@@ -98,14 +89,36 @@ public abstract class AscensiaMeter extends SerialProtocol
 
 
 
-
-
     /**
      * getTimeDifference - returns time difference between Meter and Computer
      */
     public int getTimeDifference()
     {
-	return this.m_time_difference;
+	writePort(21);  // NAK
+	waitTime(500);
+	writePort(5);  // ENQ
+	waitTime(1000);
+	writePort("R|");
+	waitTime(500);
+	writePort("D|");
+	waitTime(500);
+
+	System.out.println("Received Text: " + this.receivedText);
+
+	writePort(21);  // NAK
+	waitTime(500);
+	writePort(5);  // ENQ
+	waitTime(1000);
+	writePort("R|");
+	waitTime(500);
+	writePort("T|");
+	waitTime(500);
+
+	System.out.println("Received Text: " + this.receivedText);
+
+
+
+	return 0;
     }
 
 
@@ -114,7 +127,7 @@ public abstract class AscensiaMeter extends SerialProtocol
      */
     public String getInfo()
     {
-	return m_info;
+	return "No Data";
     }
 
 
@@ -123,7 +136,7 @@ public abstract class AscensiaMeter extends SerialProtocol
      */
     public int getStatus()
     {
-	return m_status;
+	return 0;
     }
 
 
@@ -136,13 +149,12 @@ public abstract class AscensiaMeter extends SerialProtocol
     }
 
 
-
     /**
      * getDataFull - get all data from Meter
      */
     public ArrayList getDataFull()
     {
-	return this.data;
+	return null;
     }
 
 
@@ -151,193 +163,41 @@ public abstract class AscensiaMeter extends SerialProtocol
      */
     public ArrayList getData(int from, int to)
     {
-	ArrayList out = new ArrayList();
-
-	for (int i=0; i<this.data.size(); i++)
-	{
-	    DailyValuesRow dwr = (DailyValuesRow)this.data.get(i);
-
-	    if ((dwr.getDateTime() > from) && (dwr.getDateTime() < to))
-	    {
-		out.add(dwr);
-	    }
-	}
-
-	return out;
+	return null;
     }
 
+    
 
 
-
-    protected void processData(String input)
+    public void test()
     {
-	input = input.replace("||", "|_|");
-	input = input.replace("||", "|_|");
-	input = input.replace("||", "|_|");
+	try
+	{
+	    String data = "R|D|8E\n";
+	    this.portOutputStream.write(data.getBytes());
+	}
+	catch(Exception ex)
+	{
 
-	if (input.contains("|^^^Glucose|"))
-	{
-	    readData(input);
-	    //StringTokenizer strtok = new StringTokenizer(input, "|");
-	    //System.out.println("Data (" + strtok.countTokens() + "): " + input);
 	}
-	else if (input.contains("|Bayer"))
-	{
-	    //System.out.println("Device Id: " + input);
-	    readDeviceIdAndSettings(input);
-	}
+	/*
+	byte[] data = { (byte)"R",  
+			(byte)"|",
+			(byte)"D",
+			(byte)"|",
+			(byte)"8",
+			(byte)"E",
+			13
+	};
+	*/
     }
 
-
-    protected void readDeviceIdAndSettings(String input)
-    {
-	StringTokenizer strtok = new StringTokenizer(input, "|");
-
-	// -10751|Bayer7150^2.04\20.0^7150A1155328|_|_|_|_|_|_|P|1|200612272011
-	strtok.nextToken();
-
-	String devId = strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-
-	String date = strtok.nextToken();
-
-	//System.out.println("Device:\n" + devId + "\nDate: " + date);
-	//System.out.println("Data (" + strtok.countTokens() + "): " + input);
-
-	readDeviceId(devId);
-	readDateInformation(date);
-
-    }
-
-
-    protected void readDeviceId(String input)
-    {
-	StringTokenizer strtok = new StringTokenizer(input, "^");
-
-	String inf = "";
-
-	String id = strtok.nextToken();
-	String versions = strtok.nextToken();
-	String serial = strtok.nextToken();
-
-	inf += ic.getMessage("PRODUCT_CODE") + ": ";
-
-	if ((id.equals("Bayer6115")) || (id.equals("Bayer6116")))
-	{
-	    inf += "BREEZE™ Meter Family (";
-	}
-	else if (id.equals("Bayer7150"))
-	{
-	    inf += "CONTOUR™ Meter Family (";
-	}
-	else if (id.equals("Bayer3950"))
-	{
-	    inf += "DEX® Meter Family (";
-	}
-	else if (id.equals("Bayer3883"))
-	{
-	    inf += "ELITE® XL Meter Family (";
-	}
-	else
-	{
-	    inf += "Unknown Meter Family (";
-	}
-
-	inf += id;
-	inf += ")\n";
-
-	StringTokenizer strtok2 = new StringTokenizer(versions, "\\");
-
-	inf += ic.getMessage("SOFTWARE_VERSION") + ": " + strtok2.nextToken();
-	inf += ic.getMessage("\nEEPROM_VERSION") + ": " + strtok2.nextToken();
-
-	inf += ic.getMessage("\nSERIAL_NUMBER") + ": " + serial;
-
-	this.m_info = inf;
-
-    }
-
-    protected void readDateInformation(String dt)
+    /*
+    public byte getByte(String input)
     {
 
-	GregorianCalendar gc_meter = new GregorianCalendar();
-	gc_meter.setTime(m_da.getDateTimeAsDateObject(Long.parseLong(dt)));
-
-	GregorianCalendar gc_curr = new GregorianCalendar();
-	gc_curr.setTimeInMillis(System.currentTimeMillis());
-
-	GregorianCalendar gc_comp = new GregorianCalendar();
-	gc_comp.set(GregorianCalendar.DAY_OF_MONTH, gc_curr.get(GregorianCalendar.DAY_OF_MONTH));
-	gc_comp.set(GregorianCalendar.MONTH, gc_curr.get(GregorianCalendar.MONTH));
-	gc_comp.set(GregorianCalendar.YEAR, gc_curr.get(GregorianCalendar.YEAR));
-	gc_comp.set(GregorianCalendar.HOUR_OF_DAY, gc_curr.get(GregorianCalendar.HOUR_OF_DAY));
-	gc_comp.set(GregorianCalendar.MINUTE, gc_curr.get(GregorianCalendar.MINUTE));
-
-	long diff = gc_comp.getTimeInMillis() - gc_meter.getTimeInMillis();
-	this.m_time_difference = (-1) * (int)diff;
-
-	//System.out.println("Computer Time: " + gc_comp + "\nMeter Time: " + gc_meter + " Diff: " + this.m_time_difference);
-
-    }
-
-
-    protected void readData(String input)
-    {
-	StringTokenizer strtok = new StringTokenizer(input, "|");
-	//System.out.println("Data (" + strtok.countTokens() + "): " + input);
-
-	// 1R|2|^^^Glucose|2.83|mmol/L^P|_|_|_|_|_|_|200612190719
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-
-	String value = strtok.nextToken();
-	String unit = strtok.nextToken();
-
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-	strtok.nextToken();
-
-	String time = strtok.nextToken();
-
-
-
-	//mg/dL or mmol/L
-
-	System.out.println("Dt: " + time + " " + value + " " + unit);
-
-	DailyValuesRow dv = new DailyValuesRow();
-	dv.setDateTime(Long.parseLong(time));
-
-	if (unit.startsWith("mg/dL"))
-	{
-	    dv.setBG(DailyValuesRow.BG_MGDL, value);
-	}
-	else
-	{
-	    dv.setBG(DailyValuesRow.BG_MMOLL, value);
-	}
-
-	this.data.add(dv);
-
-    }
-
-
-
-    protected boolean stx = false;
-
-
-
+	
+    }*/
 
     public static final int MODE_ENQ = 1;
     public static final int MODE_OUT = 2;
@@ -576,9 +436,7 @@ public abstract class AscensiaMeter extends SerialProtocol
     }
 
 
-    public abstract void serialEvent(SerialPortEvent event);
-
-    /*
+    public void serialEvent(SerialPortEvent event)
     {
 
 
@@ -660,7 +518,7 @@ public abstract class AscensiaMeter extends SerialProtocol
 
 		    timeOut += 5000;
 */
-  /*              } break;
+                } break;
 
 
 		// If break event append BREAK RECEIVED message.
@@ -689,7 +547,7 @@ public abstract class AscensiaMeter extends SerialProtocol
 		System.out.println("recievied ri");
 		break;
 	}
-    } */
+    } 
 
 
 }

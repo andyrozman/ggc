@@ -50,6 +50,8 @@ public interface MeterInterface
     void close() throws MeterException;
 
 
+    void loadInitialData();
+
     /**
      * getName - Get Name of meter
      */
