@@ -90,6 +90,7 @@ public class AscensiaContourMeter extends AscensiaMeter
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
+    @Override
     public boolean open() throws MeterException
     {
 	return super.open();
@@ -100,7 +101,8 @@ public class AscensiaContourMeter extends AscensiaMeter
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    public void close() throws MeterException
+    @Override
+    public void close()
     {
 	return;
     }
@@ -152,6 +154,7 @@ public class AscensiaContourMeter extends AscensiaMeter
     public static final int METER_ENQ_WRITE = 2;
 
 
+    @Override
     public void test2()
     {
 	writeToMeter(1, "d", null);
@@ -160,6 +163,7 @@ public class AscensiaContourMeter extends AscensiaMeter
 
     
 
+    @Override
     public void writeToMeter(int type, String cmd1, String cmd2)
     {
 
@@ -364,6 +368,7 @@ public class AscensiaContourMeter extends AscensiaMeter
 
 
 
+    @Override
     public void serialEvent(SerialPortEvent event)
     {
 

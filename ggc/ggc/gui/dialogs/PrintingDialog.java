@@ -115,7 +115,7 @@ public class PrintingDialog extends JDialog implements ActionListener
 
         JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
         label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 350, 35);
         panel.add(label);
         
@@ -255,7 +255,7 @@ public class PrintingDialog extends JDialog implements ActionListener
 	{
     //      String pathToAcrobat = "c:\\Program Files\\Utils\\Acrobat 7.0\\Reader\\AcroRd32.exe ";
 	    //Runtime.getRuntime().e
-	    Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + fl.separator + name);
+	    Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + File.separator + name);
 	} 
 	catch(RuntimeException ex)
 	{

@@ -49,7 +49,7 @@ public class DummyMeter implements MeterInterface
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    public boolean open() throws MeterException
+    public boolean open()
     {
         return true;
     }
@@ -58,7 +58,7 @@ public class DummyMeter implements MeterInterface
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    public void close() throws MeterException
+    public void close()
     {
         return;
     }
@@ -125,7 +125,7 @@ public class DummyMeter implements MeterInterface
         return m_da.getMeterManager().getMeterImage(1); //m_meter_index);
     }
 
-    public ArrayList getDataFull() throws MeterException
+    public ArrayList getDataFull()
     {
         writeLog(LOG_DEBUG, "getDataFull() - Start");
         ArrayList al = new ArrayList();
@@ -133,12 +133,19 @@ public class DummyMeter implements MeterInterface
         return al;
     }
 
-    public ArrayList getData(int from, int to) throws MeterException
+    public ArrayList getData(int from, int to)
     {
         writeLog(LOG_DEBUG, "getData() - Start");
         ArrayList al = new ArrayList();
         writeLog(LOG_DEBUG, "getData() - End");
         return al;
+    }
+
+
+    public void loadInitialData()
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 

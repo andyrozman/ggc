@@ -8,12 +8,6 @@
 package ggc.gui.dialogs;
 
 import java.awt.*;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -175,11 +169,11 @@ public class MeterReadDialog extends JDialog implements ActionListener
 
         logText = new JTextArea(m_ic.getMessage("LOG__")+":\n", 8, 35);
         logText.setAutoscrolls(true);
-        JScrollPane sp = new JScrollPane(logText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane sp = new JScrollPane(logText, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         resTable = new GlucoTable();
 
-        JScrollPane sp2 = new JScrollPane(resTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane sp2 = new JScrollPane(resTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         tabPane = new JTabbedPane();
         //tabPane.add("Values", sp2);
@@ -205,12 +199,12 @@ public class MeterReadDialog extends JDialog implements ActionListener
 
         infoIcon = new JLabel(meterDevice.getIcon());
         infoIcon.setBounds(10, 20, 150, 200);
-        infoIcon.setHorizontalAlignment(JLabel.CENTER);
+        infoIcon.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(infoIcon);
         
         label = new JLabel(meterDevice.getName());
         label.setBounds(10, 230, 150, 25);
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(label);
 
 

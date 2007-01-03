@@ -1,6 +1,12 @@
+2006-12-27 (v0.2.2.4) Andy Rozman <andyrozman@users.sourceforge.net>
     * DailyRowDialog is replaced with older version, since new version is not working
       yet
 
+2006-12-26 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * GGCDb: - made connection detail fields protected instead of public since other
+               packages have no business reading things like password and username
+             - used constants for loadStatus to make code more readable and future
+               changes easier
 
 2006-12-15 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * InitDb, NutritionImport: prevent probably buggy code from being reached
@@ -26,7 +32,6 @@
     * Some rewording in GGC_en
 
 2006-??-?? (v0.2.2.4) Andy Rozman <andyrozman@users.sourceforge.net>
->>>>>>> .r208
     * Added saving of Rendering settings
     
 

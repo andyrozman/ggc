@@ -97,7 +97,7 @@ public class GGCDbLoader extends Thread
         { 
             Thread.sleep(2000); 
         } 
-        catch(Exception ex) 
+        catch(InterruptedException ex) 
         { 
         }
 */

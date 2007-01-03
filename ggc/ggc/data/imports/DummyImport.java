@@ -60,7 +60,8 @@ public class DummyImport extends SerialMeterImport
     /**
      * @see data.imports.DataImport#importData()
      */
-    public void importData() throws ImportException
+    @Override
+    public void importData()
     {
         /*
         super.importData();
@@ -79,6 +80,7 @@ public class DummyImport extends SerialMeterImport
     /**
      * @see data.imports.DataImport#getImportedData()
      */
+    @Override
     public DailyValuesRow[] getImportedData()
     {
         return importedData;
@@ -88,6 +90,7 @@ public class DummyImport extends SerialMeterImport
     /**
      * @see javax.comm.SerialPortEventListener#serialEvent(SerialPortEvent)
      */
+    @Override
     public void serialEvent(SerialPortEvent event)
     {
         /*
@@ -177,7 +180,7 @@ public class DummyImport extends SerialMeterImport
     private void parseDataString(String dataStr) throws ImportException
     {
         String value = null;
-        Vector importDataVector = new Vector();
+        Vector<DailyValuesRow> importDataVector = new Vector<DailyValuesRow>();
 
         try
         {

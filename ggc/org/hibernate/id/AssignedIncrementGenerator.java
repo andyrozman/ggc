@@ -34,7 +34,7 @@ import org.hibernate.util.StringHelper;
  * 
  * This generator is created by fusion of assigned and increment generator.
  *
- * @author Andy {andy@triera.ney}
+ * @author Andy {andy@triera.net}
  */
 
 

@@ -151,6 +151,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     }
 
     /**
+     * @throws MeterException 
      * @see data.imports.DataImport#open()
      */
     public boolean open() throws MeterException
@@ -268,7 +269,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     /**
      * @see data.imports.DataImport#close()
      */
-    public void close() throws MeterException
+    public void close()
     {
         if (!isPortOpen)
             return;
@@ -487,9 +488,9 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
     }
 
-    public static Vector getAvailableSerialPorts()
+    public static Vector<String> getAvailableSerialPorts()
     {
-        Vector retVal = new Vector();
+        Vector<String> retVal = new Vector<String>();
 
         try
         {

@@ -72,6 +72,7 @@ public class AscensiaDEXMeter extends SerialProtocol
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
+    @Override
     public boolean open() throws MeterException
     {
 	return super.open();
@@ -82,7 +83,8 @@ public class AscensiaDEXMeter extends SerialProtocol
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    public void close() throws MeterException
+    @Override
+    public void close()
     {
 	return;
     }
@@ -436,6 +438,7 @@ public class AscensiaDEXMeter extends SerialProtocol
     }
 
 
+    @Override
     public void serialEvent(SerialPortEvent event)
     {
 
@@ -547,6 +550,12 @@ public class AscensiaDEXMeter extends SerialProtocol
 		System.out.println("recievied ri");
 		break;
 	}
+    }
+
+    public void loadInitialData()
+    {
+        // TODO Auto-generated method stub
+        
     } 
 
 

@@ -80,6 +80,9 @@ import ggc.util.DataAccess;
 
 public class GGCDb
 {
+    public static final int DB_CONFIG_LOADED = 1;
+    public static final int DB_INITIALIZED = 2;
+    public static final int DB_STARTED = 3;
 
     private boolean debug = true;
 
@@ -91,36 +94,36 @@ public class GGCDb
     private String m_addId = "";
 
 
-    Configuration m_cfg = null;
-    DataAccess m_da; 
+    private Configuration m_cfg = null;
+    private DataAccess m_da; 
 
-    public int m_loadStatus = 0;
+    private int m_loadStatus = 0;
 
 
     // ---
     // ---  DB Settings
     // ---
-    public int db_num = 0;
-    public String db_hib_dialect = null; 
-    public String db_driver_class = null;
-    public String db_conn_name = null;
-    public String db_conn_url = null;
-    public String db_conn_username = null;
-    public String db_conn_password = null;
+    protected int db_num = 0;
+    protected String db_hib_dialect = null; 
+    protected String db_driver_class = null;
+    protected String db_conn_name = null;
+    protected String db_conn_url = null;
+    protected String db_conn_username = null;
+    protected String db_conn_password = null;
 
 
     public GGCDb(DataAccess da)
     {
         m_cfg = getConfiguration();
         m_da = da;
-        m_loadStatus = 1;
+        m_loadStatus = DB_CONFIG_LOADED;
     }
 
 
     public GGCDb()
     {
         m_cfg = getConfiguration();
-        m_loadStatus =1;
+        m_loadStatus = DB_CONFIG_LOADED;
     }
 
 
@@ -132,7 +135,7 @@ public class GGCDb
 
     public boolean isDbStarted()
     {
-        return (this.m_loadStatus==3);
+        return (this.m_loadStatus == DB_STARTED);
     }
 
     public void closeDb()
@@ -148,6 +151,9 @@ public class GGCDb
                 System.out.println("closeDb:Exception> " + ex);
             }
         }
+        getSession().close();
+        m_session = null;
+        m_loadStatus = DB_CONFIG_LOADED;
     }
 
 
@@ -155,7 +161,7 @@ public class GGCDb
     {
         sessions = m_cfg.buildSessionFactory();
         m_session = sessions.openSession();
-        m_loadStatus = 2;
+        m_loadStatus = DB_INITIALIZED;
     }
 
 
@@ -168,7 +174,7 @@ public class GGCDb
     public void loadStaticData()
     {
         m_da.m_nutrition_treeroot = new GGCTreeRoot(1, this);
-        m_loadStatus = 3;
+        m_loadStatus = DB_STARTED;
     }
 
 
@@ -195,7 +201,7 @@ public class GGCDb
 
     public void createDatabase()
     {
-	new SchemaExport(m_cfg).create(true, true);
+        new SchemaExport(m_cfg).create(true, true);
     }
 
 
@@ -643,7 +649,7 @@ public class GGCDb
     {
 	//System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
 
-    	if (m_loadStatus<2)
+    	if (m_loadStatus == DB_CONFIG_LOADED)
     	    return null;
     
     	System.out.println("Hibernate: getHbA1c()");
@@ -688,7 +694,7 @@ public class GGCDb
     public DailyValues getDayStats(GregorianCalendar day)
     {
 
-    	if (m_loadStatus<2)
+    	if (m_loadStatus == DB_CONFIG_LOADED)
     	    return null;
 
         if (debug)
@@ -730,7 +736,7 @@ public class GGCDb
     public WeeklyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
     {
 
-        if (m_loadStatus<2)
+        if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
         if (debug)
@@ -781,7 +787,7 @@ public class GGCDb
     public MonthlyValues getMonthlyValues(int year, int month)
     {
 
-        if (m_loadStatus<2)
+        if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
         if (debug)
@@ -909,7 +915,7 @@ public class GGCDb
 
     public boolean dateTimeExists(long datetime)
     {
-        if (m_loadStatus<2)
+        if (m_loadStatus == DB_CONFIG_LOADED)
             return false;
 
         if (debug)

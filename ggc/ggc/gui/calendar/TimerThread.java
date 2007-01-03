@@ -40,6 +40,7 @@ package ggc.gui.calendar;
 import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -75,6 +76,7 @@ public class TimerThread extends Thread
 
     
     
+    @Override
     public void run()
     {
 
@@ -85,10 +87,10 @@ public class TimerThread extends Thread
             
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTimeInMillis(System.currentTimeMillis());
-            this.time_1.setText(getParameter(gc, GregorianCalendar.HOUR_OF_DAY) + ":" + getParameter(gc, GregorianCalendar.MINUTE) + ":" + getParameter(gc, GregorianCalendar.SECOND));
+            this.time_1.setText(getParameter(gc, Calendar.HOUR_OF_DAY) + ":" + getParameter(gc, Calendar.MINUTE) + ":" + getParameter(gc, Calendar.SECOND));
 
             gc.setTimeInMillis(System.currentTimeMillis() + m_difference);
-            this.time_2.setText(getParameter(gc, GregorianCalendar.HOUR_OF_DAY) + ":" + getParameter(gc, GregorianCalendar.MINUTE) + ":" + getParameter(gc, GregorianCalendar.SECOND));
+            this.time_2.setText(getParameter(gc, Calendar.HOUR_OF_DAY) + ":" + getParameter(gc, Calendar.MINUTE) + ":" + getParameter(gc, Calendar.SECOND));
             
         }
 

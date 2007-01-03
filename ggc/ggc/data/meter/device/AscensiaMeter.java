@@ -9,11 +9,11 @@ package ggc.data.meter.device;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
 import javax.comm.*;
-import javax.comm.SerialPort;
 import javax.swing.ImageIcon;
 
 import ggc.data.DailyValues;
@@ -48,7 +48,7 @@ public abstract class AscensiaMeter extends SerialProtocol
 
     protected String m_info = "";
     protected int m_time_difference = 0;
-    protected ArrayList data = null;
+    protected ArrayList<DailyValuesRow> data = null;
 
 
     public AscensiaMeter(int meter_type, String portName)
@@ -59,7 +59,7 @@ public abstract class AscensiaMeter extends SerialProtocol
 	      SerialPort.STOPBITS_1, 
 	      SerialPort.PARITY_NONE);
 
-	data = new ArrayList();
+	data = new ArrayList<DailyValuesRow>();
 
 	try
 	{
@@ -81,6 +81,7 @@ public abstract class AscensiaMeter extends SerialProtocol
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
+    @Override
     public boolean open() throws MeterException
     {
 	return super.open();
@@ -91,7 +92,8 @@ public abstract class AscensiaMeter extends SerialProtocol
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    public void close() throws MeterException
+    @Override
+    public void close()
     {
 	return;
     }
@@ -149,13 +151,13 @@ public abstract class AscensiaMeter extends SerialProtocol
     /**
      * getData - get data for specified time
      */
-    public ArrayList getData(int from, int to)
+    public ArrayList<DailyValuesRow> getData(int from, int to)
     {
-	ArrayList out = new ArrayList();
+	ArrayList<DailyValuesRow> out = new ArrayList<DailyValuesRow>();
 
 	for (int i=0; i<this.data.size(); i++)
 	{
-	    DailyValuesRow dwr = (DailyValuesRow)this.data.get(i);
+	    DailyValuesRow dwr = this.data.get(i);
 
 	    if ((dwr.getDateTime() > from) && (dwr.getDateTime() < to))
 	    {
@@ -231,19 +233,19 @@ public abstract class AscensiaMeter extends SerialProtocol
 
 	if ((id.equals("Bayer6115")) || (id.equals("Bayer6116")))
 	{
-	    inf += "BREEZE™ Meter Family (";
+	    inf += "BREEZEï¿½ Meter Family (";
 	}
 	else if (id.equals("Bayer7150"))
 	{
-	    inf += "CONTOUR™ Meter Family (";
+	    inf += "CONTOURï¿½ Meter Family (";
 	}
 	else if (id.equals("Bayer3950"))
 	{
-	    inf += "DEX® Meter Family (";
+	    inf += "DEXï¿½ Meter Family (";
 	}
 	else if (id.equals("Bayer3883"))
 	{
-	    inf += "ELITE® XL Meter Family (";
+	    inf += "ELITEï¿½ XL Meter Family (";
 	}
 	else
 	{
@@ -274,11 +276,11 @@ public abstract class AscensiaMeter extends SerialProtocol
 	gc_curr.setTimeInMillis(System.currentTimeMillis());
 
 	GregorianCalendar gc_comp = new GregorianCalendar();
-	gc_comp.set(GregorianCalendar.DAY_OF_MONTH, gc_curr.get(GregorianCalendar.DAY_OF_MONTH));
-	gc_comp.set(GregorianCalendar.MONTH, gc_curr.get(GregorianCalendar.MONTH));
-	gc_comp.set(GregorianCalendar.YEAR, gc_curr.get(GregorianCalendar.YEAR));
-	gc_comp.set(GregorianCalendar.HOUR_OF_DAY, gc_curr.get(GregorianCalendar.HOUR_OF_DAY));
-	gc_comp.set(GregorianCalendar.MINUTE, gc_curr.get(GregorianCalendar.MINUTE));
+	gc_comp.set(Calendar.DAY_OF_MONTH, gc_curr.get(Calendar.DAY_OF_MONTH));
+	gc_comp.set(Calendar.MONTH, gc_curr.get(Calendar.MONTH));
+	gc_comp.set(Calendar.YEAR, gc_curr.get(Calendar.YEAR));
+	gc_comp.set(Calendar.HOUR_OF_DAY, gc_curr.get(Calendar.HOUR_OF_DAY));
+	gc_comp.set(Calendar.MINUTE, gc_curr.get(Calendar.MINUTE));
 
 	long diff = gc_comp.getTimeInMillis() - gc_meter.getTimeInMillis();
 	this.m_time_difference = (-1) * (int)diff;
@@ -576,6 +578,7 @@ public abstract class AscensiaMeter extends SerialProtocol
     }
 
 
+    @Override
     public abstract void serialEvent(SerialPortEvent event);
 
     /*
