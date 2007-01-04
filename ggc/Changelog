@@ -1,6 +1,9 @@
-2006-12-27 (v0.2.2.4) Andy Rozman <andyrozman@users.sourceforge.net>
+2006-12-27 (v0.2.2.6) Andy Rozman <andyrozman@users.sourceforge.net>
     * DailyRowDialog is replaced with older version, since new version is not working
       yet
+    * Added new code for supporting meters
+    * Added new dialog for meters 
+    * Meters support is in early testing phase, old meters code is disabled for now
 
 2006-12-26 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * GGCDb: - made connection detail fields protected instead of public since other
@@ -31,7 +34,7 @@
     * Added new strings to GGC_de, some translation
     * Some rewording in GGC_en
 
-2006-??-?? (v0.2.2.4) Andy Rozman <andyrozman@users.sourceforge.net>
+2006-06-08 (v0.2.2.5) Andy Rozman <andyrozman@users.sourceforge.net>
     * Added saving of Rendering settings
     
 
