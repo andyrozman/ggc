@@ -44,7 +44,7 @@ Level 4 (Medium 3 Priority):
 * Hibernate for Database handling
     o  Nutrition db
     o  Meals db
-    o  Apointments db
+    o  Appointments db
 * Entering daily data: 
     o  Time displayed as selectable entry
     o  Add CH entry through meals

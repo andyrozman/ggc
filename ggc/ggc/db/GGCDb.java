@@ -488,18 +488,18 @@ public class GGCDb
 	    //System.out.println(in);
 
 
-            db_num = Integer.parseInt((String)props.get("SELECTED_DB"));
-            db_conn_name = (String)props.get("DB"+db_num+"_CONN_NAME");
+            db_num = new Integer(props.getProperty("SELECTED_DB"));
+            db_conn_name = props.getProperty("DB"+db_num+"_CONN_NAME");
 
 	    System.out.println("Loading Db Configuration #"+ db_num + ": " + db_conn_name);
 
-            db_hib_dialect = (String)props.get("DB"+db_num+"_HIBERNATE_DIALECT");
+            db_hib_dialect = props.getProperty("DB"+db_num+"_HIBERNATE_DIALECT");
 
 
-            db_driver_class = (String)props.get("DB"+db_num+"_CONN_DRIVER_CLASS");
-            db_conn_url = (String)props.get("DB"+db_num+"_CONN_URL");
-            db_conn_username = (String)props.get("DB"+db_num+"_CONN_USERNAME");
-            db_conn_password = (String)props.get("DB"+db_num+"_CONN_PASSWORD");
+            db_driver_class = props.getProperty("DB"+db_num+"_CONN_DRIVER_CLASS");
+            db_conn_url = props.getProperty("DB"+db_num+"_CONN_URL");
+            db_conn_username = props.getProperty("DB"+db_num+"_CONN_USERNAME");
+            db_conn_password = props.getProperty("DB"+db_num+"_CONN_PASSWORD");
 
 
             Configuration cfg = new Configuration()
