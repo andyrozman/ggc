@@ -113,7 +113,7 @@
                 <include name="ggc/datamodels/**"/>
                 <include name="ggc/db/**"/>
                 <include name="ggc/event/**"/>
-                <include name="ggc/little/**"/>
+                <include name="ggc/gui/little/**"/>
                 <include name="ggc/util/**"/>
                 <include name="ggc/view/**"/>
                 <include name="icons/*.gif"/>

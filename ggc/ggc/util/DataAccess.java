@@ -54,7 +54,7 @@ import ggc.gui.little.StatusBarL;
 import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.db.tool.DbToolApplicationGGC;
 
-public class DataAccess 
+public class DataAccess
 {
 
     // LF
@@ -79,9 +79,9 @@ public class DataAccess
 
     public I18nControl m_i18n = null;
 
+    private static DataAccess s_da = null; // This is handle to unique 
 
-    private static DataAccess s_da = null;   // This is handle to unique 
-                                             // singelton instance
+    // singelton instance
 
     public GGCDb m_db = null;
 
@@ -92,16 +92,22 @@ public class DataAccess
     public Font fonts[] = null;
 
     public GGCTreeRoot m_nutrition_treeroot = null;
+
     public GGCTreeRoot m_meals_treeroot = null;
 
     // daily and weekly data
     private GregorianCalendar m_date = null, m_dateStart = null;
 
     private HbA1cValues m_HbA1c = null;
+
     private DailyValues m_dvalues = null;
+
     private WeeklyValues m_dRangeValues = null;
+
     private MeterManager m_meterManager = null;
+
     private GGCProperties m_settings = null;
+
     private DbToolApplicationGGC m_configFile = null;
 
     /**
@@ -109,19 +115,11 @@ public class DataAccess
      */
     public int m_BG_unit = BG_MGDL;
 
-    public String[] availableLanguages = {
-        "English",
-        "Deutsch",
-        "Slovenski",
-    };
+    public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
 
-    public String[] avLangPostfix = {
-        "en",
-        "de",
-        "si",
-    };
+    public String[] avLangPostfix = { "en", "de", "si", };
 
-    public String[] bg_units = { "mg/dl", "mmol/l"};
+    public String[] bg_units = { "mg/dl", "mmol/l" };
 
     // ********************************************************
     // ******      Constructors and Access methods        *****    
@@ -135,12 +133,12 @@ public class DataAccess
      *  method.<br><br>
      *
      */
-    private DataAccess() 
+    private DataAccess()
     {
         loadFonts();
         //m_i18n.createInstance(this);
-//        loadAvailableLFs();
-//        loadLanguageInfo();
+        //        loadAvailableLFs();
+        //        loadLanguageInfo();
         m_meterManager = new MeterManager();
 
         this.m_configFile = new DbToolApplicationGGC();
@@ -151,8 +149,7 @@ public class DataAccess
         m_i18n = I18nControl.getInstance();
 
         this.verifyComConfig();
-    } 
-
+    }
 
     //  Method:       getInstance
     //  Author:       Andy
@@ -164,27 +161,14 @@ public class DataAccess
      *  @return Reference to OmniI18nControl object
      * 
      */
-    public static DataAccess getInstance() 
+    public static DataAccess getInstance()
     {
         if (s_da == null)
             s_da = new DataAccess();
         return s_da;
     }
 
-    public static DataAccess createInstance(MainFrame main) 
-    {
-        if (s_da == null)
-        {
-            //GGCDb db = new GGCDb();
-            s_da = new DataAccess();
-            s_da.setParent(main);
-        }
-
-        return s_da;
-    }
-
-
-    public static DataAccess createInstance(GGCLittle main) 
+    public static DataAccess createInstance(MainFrame main)
     {
         if (s_da == null)
         {
@@ -196,6 +180,17 @@ public class DataAccess
         return s_da;
     }
 
+    public static DataAccess createInstance(GGCLittle main)
+    {
+        if (s_da == null)
+        {
+            //GGCDb db = new GGCDb();
+            s_da = new DataAccess();
+            s_da.setParent(main);
+        }
+
+        return s_da;
+    }
 
     /*
      static public DataAccess getInstance()
@@ -208,37 +203,33 @@ public class DataAccess
     /**
      *  This method sets handle to DataAccess to null and deletes the instance. <br><br>
      */
-    public void deleteInstance() 
+    public void deleteInstance()
     {
         m_i18n = null;
     }
 
-    public void startDb(StatusBar bar) 
+    public void startDb(StatusBar bar)
     {
         GGCDbLoader loader = new GGCDbLoader(this, bar);
         loader.start();
     }
 
-    public void startDb(StatusBarL bar2) 
+    public void startDb(StatusBarL bar2)
     {
         GGCDbLoader loader = new GGCDbLoader(this, bar2);
         loader.start();
     }
 
-
-
-    public GGCDb getDb() 
+    public GGCDb getDb()
     {
         return m_db;
     }
-
-
 
     // ********************************************************
     // ******                   Meters                    *****    
     // ********************************************************
 
-    public MeterManager getMeterManager() 
+    public MeterManager getMeterManager()
     {
         return this.m_meterManager;
     }
@@ -246,7 +237,6 @@ public class DataAccess
     // ********************************************************
     // ******                  Settings                   *****    
     // ********************************************************
-
 
     public GGCProperties getSettings()
     {
@@ -258,36 +248,30 @@ public class DataAccess
         this.m_settings.load();
     }
 
-    public Color getColor(int color) 
+    public Color getColor(int color)
     {
         return new Color(color);
     }
-
-
 
     // ********************************************************
     // ******                  Language                   *****    
     // ********************************************************
 
-
-
-    public String[] getAvailableLanguages() 
+    public String[] getAvailableLanguages()
     {
         return this.availableLanguages;
     }
-
 
     public int getSelectedLanguageIndex()
     {
         return this.getLanguageIndex(this.getSettings().getLanguage());
     }
 
-
     public int getLanguageIndex(String postfix)
     {
         //System.out.println(postfix);
 
-        for (int i=0; i<this.avLangPostfix.length; i++)
+        for (int i = 0; i < this.avLangPostfix.length; i++)
         {
             if (this.avLangPostfix[i].equals(postfix))
                 return i;
@@ -300,7 +284,7 @@ public class DataAccess
     {
         //stem.out.println(name);
 
-        for (int i=0; i<this.availableLanguages.length; i++)
+        for (int i = 0; i < this.availableLanguages.length; i++)
         {
             if (this.availableLanguages[i].equals(name))
                 return i;
@@ -309,13 +293,12 @@ public class DataAccess
         return 0;
     }
 
-
-
     // ********************************************************
     // ******             BG Measurement Type             *****    
     // ********************************************************
 
     public static final int BG_MGDL = 1;
+
     public static final int BG_MMOL = 2;
 
     public int getBGMeasurmentType()
@@ -329,6 +312,7 @@ public class DataAccess
     }
 
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
+
     private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
 
     /**
@@ -337,15 +321,15 @@ public class DataAccess
      * @param dbValue - The database's value (in float)
      * @return the BG in either mg/dl or mmol/l
      */
-    public float getDisplayedBG(float dbValue) 
+    public float getDisplayedBG(float dbValue)
     {
         switch (this.m_BG_unit)
         {
         case BG_MMOL:
             // this POS should return a float rounded to 3 decimal places,
             // if I understand the docu correctly
-            return(new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR,
-                                  new MathContext(3, RoundingMode.HALF_UP)).floatValue());
+            return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR,
+                    new MathContext(3, RoundingMode.HALF_UP)).floatValue());
         case BG_MGDL:
         default:
             return dbValue;
@@ -357,7 +341,7 @@ public class DataAccess
         switch (this.m_BG_unit)
         {
         case BG_MMOL:
-            return(bg_value * MGDL_TO_MMOL_FACTOR);
+            return (bg_value * MGDL_TO_MMOL_FACTOR);
         case BG_MGDL:
         default:
             return bg_value;
@@ -365,16 +349,17 @@ public class DataAccess
 
     }
 
-
     // ********************************************************
     // ******                   Fonts                     *****    
     // ********************************************************
 
     public static final int FONT_BIG_BOLD = 0;
+
     public static final int FONT_NORMAL = 1;
+
     public static final int FONT_NORMAL_BOLD = 2;
 
-    public void loadFonts() 
+    public void loadFonts()
     {
         fonts = new Font[3];
         fonts[0] = new Font("SansSerif", Font.BOLD, 22);
@@ -382,7 +367,7 @@ public class DataAccess
         fonts[2] = new Font("SansSerif", Font.BOLD, 12);
     }
 
-    public Font getFont(int font_id) 
+    public Font getFont(int font_id)
     {
         return fonts[font_id];
     }
@@ -391,32 +376,27 @@ public class DataAccess
     // ******          Parent handling (for UIs)          *****    
     // ********************************************************
 
-
-    public void setParent(MainFrame main) 
+    public void setParent(MainFrame main)
     {
         m_main = main;
     }
 
-
-    public void setParent(GGCLittle main) 
+    public void setParent(GGCLittle main)
     {
         m_main_little = main;
     }
 
-
-    public MainFrame getParent() 
+    public MainFrame getParent()
     {
         return m_main;
     }
 
-
-    public GGCLittle getParentLittle() 
+    public GGCLittle getParentLittle()
     {
         return m_main_little;
     }
 
-
-    public I18nControl getI18nInstance() 
+    public I18nControl getI18nInstance()
     {
         return m_i18n;
     }
@@ -485,13 +465,9 @@ public class DataAccess
      }
      */
 
-
-
     // ********************************************************
     // ******          COMMUNICATION API Config           *****    
     // ********************************************************
-
-
     /**
      * Preveri konfiguracijsko datoteko in vse parametre v njej.
      */
@@ -502,60 +478,61 @@ public class DataAccess
         pr.put("Driver", "com.ibm.comm.IBMCommDriver");
 
         /*
-        if (System.getProperty("os.name").indexOf("Win")!=-1) 
-        {
-            pr.put("Driver", "com.ibm.comm.IBMCommDriver");
-        }
-        else if (System.getProperty("os.name").indexOf("Lin")!=-1) 
-        {
-            pr.put("Driver", "com.ibm.comm.NSCommDriver");
-            pr.put("Polltime", "3");
-        }
-        else
-        {
-            editor.append(" [OPOZORILO]   Obstaja mo\u017Enost, da uporabljate nepodprto platformo. \u010Ce ste zagnali aplikacijo drugje kot na\n"+
-                          "                     Windows ali Linux platformi, vedite, da ne bo delovala.\n");
-            logger.warn("[ServerSBApp]  Moznost nepodprte platforme: "+System.getProperty("os.name"));
-        }
+         if (System.getProperty("os.name").indexOf("Win")!=-1) 
+         {
+         pr.put("Driver", "com.ibm.comm.IBMCommDriver");
+         }
+         else if (System.getProperty("os.name").indexOf("Lin")!=-1) 
+         {
+         pr.put("Driver", "com.ibm.comm.NSCommDriver");
+         pr.put("Polltime", "3");
+         }
+         else
+         {
+         editor.append(" [OPOZORILO]   Obstaja mo\u017Enost, da uporabljate nepodprto platformo. \u010Ce ste zagnali aplikacijo drugje kot na\n"+
+         "                     Windows ali Linux platformi, vedite, da ne bo delovala.\n");
+         logger.warn("[ServerSBApp]  Moznost nepodprte platforme: "+System.getProperty("os.name"));
+         }
 
 
 
-        if (System.getProperty("java.version").indexOf("1.4")==-1) 
-        {
-            editor.append(" [NAPAKA]   Uporabljate verzijo Jave, ki ni podprta. Instalirajte verzijo Jave 1.4.x in za\u017Eenite program znova.\n");
-            logger.error("[ServerSBApp]  Nepodprta Verzija Jave: "+System.getProperty("java.version"));
-        }
-        */
+         if (System.getProperty("java.version").indexOf("1.4")==-1) 
+         {
+         editor.append(" [NAPAKA]   Uporabljate verzijo Jave, ki ni podprta. Instalirajte verzijo Jave 1.4.x in za\u017Eenite program znova.\n");
+         logger.error("[ServerSBApp]  Nepodprta Verzija Jave: "+System.getProperty("java.version"));
+         }
+         */
 
-        
+        // XXX: is this really necessary?
         String jh = System.getProperty("java.home");
 
         try
         {
-            FileOutputStream fos = new FileOutputStream(jh+"\\lib\\javax.comm.properties");
+            FileOutputStream fos = new FileOutputStream(jh + File.pathSeparator
+                    + "lib" + File.pathSeparator + "javax.comm.properties");
             pr.store(fos, " Generated javax.comm.properties by GGC");
-        }
-        catch(Exception ex)
+        } catch (Exception ex)
         {
-            System.out.println("Problem writing COMM Api config file javax.comm.properties into %JAVA_HOME%\\lib\\: " + ex);
+            System.out
+                    .println("Problem writing COMM Api config file javax.comm.properties into %JAVA_HOME%"
+                            + File.pathSeparator
+                            + "lib"
+                            + File.pathSeparator
+                            + ": " + ex);
         }
-
 
     }
-
-
 
     // ********************************************************
     // ******          Dates and Times Handling           *****    
     // ********************************************************
 
-
     public String getCurrentDateString()
     {
         GregorianCalendar gc = new GregorianCalendar();
-        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH)+1) + "." + gc.get(Calendar.YEAR);
+        return gc.get(Calendar.DAY_OF_MONTH) + "."
+                + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
     }
-
 
     public String[] getMonthsArray()
     {
@@ -578,12 +555,12 @@ public class DataAccess
 
     }
 
-    public String getDateString(int date) 
+    public String getDateString(int date)
     {
         // 20051012
 
-        int year = date/10000;
-        int months = date - (year*10000);
+        int year = date / 10000;
+        int months = date - (year * 10000);
 
         months = months / 100;
 
@@ -592,10 +569,11 @@ public class DataAccess
         if (year == 0)
             return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2);
         else
-            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2) + "/" + year;
+            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2)
+                    + "/" + year;
     }
 
-    public String getTimeString(int time) 
+    public String getTimeString(int time)
     {
         int hours = time / 100;
         int min = time - hours * 100;
@@ -603,18 +581,17 @@ public class DataAccess
         return getLeadingZero(hours, 2) + ":" + getLeadingZero(min, 2);
     }
 
-
-    public String getDateTimeString(long date) 
+    public String getDateTimeString(long date)
     {
         return getDateTimeString(date, 1);
     }
 
-    public String getDateTimeAsDateString(long date) 
+    public String getDateTimeAsDateString(long date)
     {
         return getDateTimeString(date, 2);
     }
 
-    public String getDateTimeAsTimeString(long date) 
+    public String getDateTimeAsTimeString(long date)
     {
         return getDateTimeString(date, 3);
     }
@@ -624,10 +601,12 @@ public class DataAccess
     // ret_type = 3 (Time)
 
     public static final int DT_DATETIME = 1;
+
     public static final int DT_DATE = 2;
+
     public static final int DT_TIME = 3;
 
-    public String getDateTimeString(long dt, int ret_type) 
+    public String getDateTimeString(long dt, int ret_type)
     {
 
         int y = (int) (dt / 100000000L);
@@ -646,8 +625,8 @@ public class DataAccess
 
         if (ret_type == DT_DATETIME)
             return getLeadingZero(d, 2) + "." + getLeadingZero(m, 2) + "." + y
-            + "  " + getLeadingZero(h, 2) + ":"
-            + getLeadingZero(min, 2);
+                    + "  " + getLeadingZero(h, 2) + ":"
+                    + getLeadingZero(min, 2);
         else if (ret_type == DT_DATE)
             return getLeadingZero(d, 2) + "." + getLeadingZero(m, 2) + "." + y;
         else
@@ -655,7 +634,7 @@ public class DataAccess
 
     }
 
-    public Date getDateTimeAsDateObject(long dt) 
+    public Date getDateTimeAsDateObject(long dt)
     {
 
         //Date dt_obj = new Date();
@@ -675,11 +654,11 @@ public class DataAccess
 
         int min = (int) dt;
 
-	gc.set(Calendar.DATE, d);
-	gc.set(Calendar.MONTH, m - 1);
-	gc.set(Calendar.YEAR, y);
-	gc.set(Calendar.HOUR_OF_DAY, h);
-	gc.set(Calendar.MINUTE, min);
+        gc.set(Calendar.DATE, d);
+        gc.set(Calendar.MONTH, m - 1);
+        gc.set(Calendar.YEAR, y);
+        gc.set(Calendar.HOUR_OF_DAY, h);
+        gc.set(Calendar.MINUTE, min);
 
         /*
          dt_obj.setHours(h);
@@ -699,37 +678,36 @@ public class DataAccess
     public long getDateTimeLong(long dt, int ret_type)
     {
 
-        int y = (int)(dt/100000000L);
-        dt -= y*100000000L;
+        int y = (int) (dt / 100000000L);
+        dt -= y * 100000000L;
 
-        int m = (int)(dt/1000000L);
-        dt -= m*1000000L;
+        int m = (int) (dt / 1000000L);
+        dt -= m * 1000000L;
 
-        int d = (int)(dt/10000L);
-        dt -= d*10000L;
+        int d = (int) (dt / 10000L);
+        dt -= d * 10000L;
 
-        int h = (int)(dt/100L);
-        dt -= h*100L;
+        int h = (int) (dt / 100L);
+        dt -= h * 100L;
 
-        int min = (int)dt;
+        int min = (int) dt;
 
-
-        if (ret_type==DT_DATETIME)
+        if (ret_type == DT_DATETIME)
         {
-        return Integer.parseInt(y + getLeadingZero(m,2) + getLeadingZero(d,2) + getLeadingZero(h,2) + getLeadingZero(min,2));
-        }
-        else if (ret_type==DT_DATE)
+            return Integer.parseInt(y + getLeadingZero(m, 2)
+                    + getLeadingZero(d, 2) + getLeadingZero(h, 2)
+                    + getLeadingZero(min, 2));
+        } else if (ret_type == DT_DATE)
         {
-        return Integer.parseInt(getLeadingZero(d,2) + getLeadingZero(m,2) + y);
-        }
-        else
-        return Integer.parseInt(getLeadingZero(h,2) + getLeadingZero(min,2));
+            return Integer.parseInt(getLeadingZero(d, 2) + getLeadingZero(m, 2)
+                    + y);
+        } else
+            return Integer.parseInt(getLeadingZero(h, 2)
+                    + getLeadingZero(min, 2));
 
     }
 
-
-
-    public long getDateTimeFromDateObject(Date dt) 
+    public long getDateTimeFromDateObject(Date dt)
     {
 
         GregorianCalendar gc = new GregorianCalendar();
@@ -737,11 +715,11 @@ public class DataAccess
 
         String dx = "";
 
-	dx += "" + gc.get(Calendar.YEAR);
-	dx += "" + getLeadingZero(gc.get(Calendar.MONTH + 1), 2);
-	dx += "" + getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
-	dx += "" + getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
-	dx += "" + getLeadingZero(gc.get(Calendar.MINUTE), 2);
+        dx += "" + gc.get(Calendar.YEAR);
+        dx += "" + getLeadingZero(gc.get(Calendar.MONTH + 1), 2);
+        dx += "" + getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
+        dx += "" + getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
+        dx += "" + getLeadingZero(gc.get(Calendar.MINUTE), 2);
 
         return Long.parseLong(dx);
 
@@ -749,26 +727,26 @@ public class DataAccess
 
     // 1 = Db Date: yyyyMMdd
     // 2 = Db Full: yyyyMMddHHMM (24h format)
-    public String getDateTimeStringFromGregorianCalendar(GregorianCalendar gc, int type)
+    public String getDateTimeStringFromGregorianCalendar(GregorianCalendar gc,
+            int type)
     {
         String st = "";
 
-	if (gc.get(Calendar.YEAR)<1000)
-	{
-	    st+= gc.get(Calendar.YEAR)+1900;
-	}
-	else
-	{
-	    st+= gc.get(Calendar.YEAR);
-	}
+        if (gc.get(Calendar.YEAR) < 1000)
+        {
+            st += gc.get(Calendar.YEAR) + 1900;
+        } else
+        {
+            st += gc.get(Calendar.YEAR);
+        }
 
-	st+= getLeadingZero(gc.get(Calendar.MONTH)+1, 2);
-	st+= getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
+        st += getLeadingZero(gc.get(Calendar.MONTH) + 1, 2);
+        st += getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
 
-	if (type==2)
-	{
-	    st+= getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
-	    st+= getLeadingZero(gc.get(Calendar.MINUTE), 2);
+        if (type == 2)
+        {
+            st += getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
+            st += getLeadingZero(gc.get(Calendar.MINUTE), 2);
         }
 
         System.out.println(st);
@@ -776,14 +754,12 @@ public class DataAccess
         return st;
     }
 
-
-
     public String getDateTimeString(int date, int time)
     {
-        return getDateString(date)+" " + getTimeString(time);
+        return getDateString(date) + " " + getTimeString(time);
     }
 
-    public String getLeadingZero(int number, int places) 
+    public String getLeadingZero(int number, int places)
     {
         String nn = "" + number;
 
@@ -795,7 +771,7 @@ public class DataAccess
         return nn;
     }
 
-    public String getLeadingZero(String number, int places) 
+    public String getLeadingZero(String number, int places)
     {
         number = number.trim();
 
@@ -807,12 +783,12 @@ public class DataAccess
         return number;
     }
 
-    public int getStartYear() 
+    public int getStartYear()
     {
         return 1800;
     }
 
-    public float getFloatValue(Object aValue) 
+    public float getFloatValue(Object aValue)
     {
         float out = 0.0f;
 
@@ -825,12 +801,10 @@ public class DataAccess
             {
                 Float f = (Float) aValue;
                 out = f.floatValue();
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
             }
-        }
-        else if (aValue instanceof String)
+        } else if (aValue instanceof String)
         {
             String s = (String) aValue;
             if (s.length() > 0)
@@ -838,8 +812,7 @@ public class DataAccess
                 try
                 {
                     out = Float.parseFloat(s);
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                 }
             }
@@ -848,8 +821,7 @@ public class DataAccess
         return out;
     }
 
-
-    public int getIntValue(Object aValue) 
+    public int getIntValue(Object aValue)
     {
         int out = 0;
 
@@ -862,12 +834,10 @@ public class DataAccess
             {
                 Integer i = (Integer) aValue;
                 out = i.intValue();
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
             }
-        }
-        else if (aValue instanceof String)
+        } else if (aValue instanceof String)
         {
             String s = (String) aValue;
             if (s.length() > 0)
@@ -875,8 +845,7 @@ public class DataAccess
                 try
                 {
                     out = Integer.parseInt(s);
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                 }
             }
@@ -885,7 +854,7 @@ public class DataAccess
         return out;
     }
 
-    public long getLongValue(Object aValue) 
+    public long getLongValue(Object aValue)
     {
         long out = 0L;
 
@@ -898,12 +867,10 @@ public class DataAccess
             {
                 Long i = (Long) aValue;
                 out = i.longValue();
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
             }
-        }
-        else if (aValue instanceof String)
+        } else if (aValue instanceof String)
         {
             String s = (String) aValue;
             if (s.length() > 0)
@@ -911,8 +878,7 @@ public class DataAccess
                 try
                 {
                     out = Long.parseLong(s);
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                 }
             }
@@ -926,7 +892,8 @@ public class DataAccess
      public HbA1cValues m_HbA1c = null;
      public DailyValues m_dvalues = null;
      */
-    public synchronized void loadDailySettings(GregorianCalendar day, boolean force) 
+    public synchronized void loadDailySettings(GregorianCalendar day,
+            boolean force)
     {
         if ((m_db == null) || (m_db.getLoadStatus() < 2))
             return;
@@ -940,14 +907,14 @@ public class DataAccess
         m_HbA1c = m_db.getHbA1c(day);
         m_dvalues = m_db.getDayStats(day);
 
-	m_dateStart = (GregorianCalendar) day.clone();
-	m_dateStart.add(Calendar.DAY_OF_MONTH, -6);
+        m_dateStart = (GregorianCalendar) day.clone();
+        m_dateStart.add(Calendar.DAY_OF_MONTH, -6);
 
         m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
-
-    public synchronized void loadDailySettingsLittle(GregorianCalendar day, boolean force) 
+    public synchronized void loadDailySettingsLittle(GregorianCalendar day,
+            boolean force)
     {
         if ((m_db == null) || (m_db.getLoadStatus() < 2))
             return;
@@ -955,7 +922,8 @@ public class DataAccess
         if ((isSameDay(day)) && (!force))
             return;
 
-        System.out.println("(Re)Load daily settings Little - (force:" + force + ")");
+        System.out.println("(Re)Load daily settings Little - (force:" + force
+                + ")");
 
         m_date = day;
         //m_HbA1c = m_db.getHbA1c(day);
@@ -968,7 +936,7 @@ public class DataAccess
         //m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
-    public HbA1cValues getHbA1c(GregorianCalendar day) 
+    public HbA1cValues getHbA1c(GregorianCalendar day)
     {
         //System.out.println("DA::getHbA1c");
         //if (!isSameDay(day))
@@ -980,7 +948,7 @@ public class DataAccess
         return m_HbA1c;
     }
 
-    public DailyValues getDayStats(GregorianCalendar day) 
+    public DailyValues getDayStats(GregorianCalendar day)
     {
         //System.out.println("DA::getDayStats");
 
@@ -990,7 +958,8 @@ public class DataAccess
         return m_dvalues;
     }
 
-    public WeeklyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end) 
+    public WeeklyValues getDayStatsRange(GregorianCalendar start,
+            GregorianCalendar end)
     {
         //System.out.println("DA::getDayStatsRange");
 
@@ -1002,20 +971,19 @@ public class DataAccess
         {
             //System.out.println("Same day");
             return m_dRangeValues;
-        }
-        else
+        } else
         {
             //System.out.println("other range");
             return m_db.getDayStatsRange(start, end);
         }
     }
 
-    public boolean isSameDay(GregorianCalendar day) 
+    public boolean isSameDay(GregorianCalendar day)
     {
         return isSameDay(m_date, day);
     }
 
-    public boolean isDatabaseInitialized() 
+    public boolean isDatabaseInitialized()
     {
         if ((m_db == null) || (m_db.getLoadStatus() < 2))
             return false;
@@ -1023,39 +991,38 @@ public class DataAccess
             return true;
     }
 
-    public boolean isSameDay(GregorianCalendar gc1, GregorianCalendar gc2) 
+    public boolean isSameDay(GregorianCalendar gc1, GregorianCalendar gc2)
     {
 
         if ((gc1 == null) || (gc2 == null))
         {
             return false;
-        }
-        else
+        } else
         {
 
-	    if ((gc1.get(Calendar.DAY_OF_MONTH) == gc2.get(Calendar.DAY_OF_MONTH))
-		    && (gc1.get(Calendar.MONTH) == gc2.get(Calendar.MONTH))
-		    && (gc1.get(Calendar.YEAR) == gc2.get(Calendar.YEAR)))
-	    {
-		return true;
-	    }
-	    else
-	    {
-		return false;
-	    }
+            if ((gc1.get(Calendar.DAY_OF_MONTH) == gc2
+                    .get(Calendar.DAY_OF_MONTH))
+                    && (gc1.get(Calendar.MONTH) == gc2.get(Calendar.MONTH))
+                    && (gc1.get(Calendar.YEAR) == gc2.get(Calendar.YEAR)))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
 
         }
     }
 
-    public GregorianCalendar getGregorianCalendar(Date date) 
+    public GregorianCalendar getGregorianCalendar(Date date)
     {
-	GregorianCalendar gc = new GregorianCalendar();
-	gc.setTime(date);
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(date);
 
         return gc;
     }
 
-    public static void notImplemented(String source) 
+    public static void notImplemented(String source)
     {
         System.out.println("Not Implemented: " + source);
     }
@@ -1069,7 +1036,8 @@ public class DataAccess
      * 
      * @return Parsed string.
      */
-    public String replaceExpression(String input, String replace, String replacement) 
+    public String replaceExpression(String input, String replace,
+            String replacement)
     {
 
         int idx;

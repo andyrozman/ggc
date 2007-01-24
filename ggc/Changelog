@@ -1,3 +1,10 @@
+2006-01-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * made path to javax.comm.properties in DataAccess system-independant
+
+2006-01-21 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * build.xml: ggc_l might now work again
+    * translation
+
 2006-01-05 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * make run.sh work
 
