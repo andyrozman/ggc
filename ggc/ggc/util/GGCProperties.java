@@ -33,39 +33,41 @@ package ggc.util;
 import java.awt.Color;
 import java.util.Hashtable;
 
-
-import ggc.db.tool.DbToolApplicationGGC;
+import ggc.data.cfg.ConfigurationManager;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.SettingsMainH;
+import ggc.db.tool.DbToolApplicationGGC;
 
 public class GGCProperties //extends GGCPropertiesHelper 
 {
     //private static GGCProperties singleton = null;
-    private SettingsMainH m_settings = null;
+    //private SettingsMainH m_settings = null;
     private ColorSchemeH m_colors = null;
     private DataAccess m_da = null;
     private Hashtable<String, ColorSchemeH> m_color_schemes;
 
     DbToolApplicationGGC m_config = null;
 
-    private boolean changed_db = false;
+    //private boolean changed_db = false;
     private boolean changed_config = false;
     private boolean changed_scheme = false;
 
+    private ConfigurationManager m_cfg_mgr = null;
 
-    public GGCProperties(DataAccess da, DbToolApplicationGGC config) 
+    public GGCProperties(DataAccess da, DbToolApplicationGGC config, ConfigurationManager cfg_mgr) 
     {
         this.m_da = da;
         this.m_config = config;
+	this.m_cfg_mgr = cfg_mgr;
         this.m_color_schemes = new Hashtable<String, ColorSchemeH>();
-        this.m_settings = new SettingsMainH(I18nControl.getInstance().getMessage("UNNAMED_USER"), 
+/*        this.m_settings = new SettingsMainH(I18nControl.getInstance().getMessage("UNNAMED_USER"), 
                        "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 
                                             2, 60.0f, 200.0f, 80.0f, 120.0f, 
                                             3.0f, 20.0f, 4.4f, 14.0f,
                                             2, "blueMetalthemepack.zip",
                                             0, 0, 0, 0, 0, 0, 0, 
                                             "", 1100, 1800, 2100, "", "Default Scheme");
-
+*/
             //public SettingsMainH(String name, String ins1_name, String ins1_abbr, String ins2_name, String ins2_abbr, int meter_type, String meter_port, int bg_unit, float bg1_low, float bg1_high, float bg1_target_low, float bg1_target_high, float bg2_low, float bg2_high, float bg2_target_low, float bg2_target_high, int laf_type, String laf_name, int render_rendering, int render_dithering, int render_interpolation, int render_antialiasing, int render_textantialiasing, int render_colorrendering, int render_fractionalmetrics, String print_pdf_viewer_path, int print_lunch_start_time, int print_dinner_start_time, int print_night_start_time, String print_empty_value, String color_scheme) {
 
         this.m_colors = new ColorSchemeH(
@@ -76,25 +78,14 @@ public class GGCProperties //extends GGCPropertiesHelper
 
 
 
-    public void setSettings(SettingsMainH settings)
-    {
-        this.m_settings = settings;
-    }
-
-    public SettingsMainH getSettings()
-    {
-        return this.m_settings;
-    }
-
     public void setColorSchemeObject(String name)
     {
         ColorSchemeH cs = this.m_color_schemes.get(name);
 
         if (!cs.equals(m_colors)) 
         {
+	    this.setSelectedColorSchemeInCfg(name);
             this.m_colors = this.m_color_schemes.get(name);
-            this.m_settings.setColor_scheme(name);
-            this.changed_db = true;
         }
     }
 
@@ -115,16 +106,12 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public String getUserName() 
     {
-        return this.m_settings.getName();
+	return this.m_cfg_mgr.getStringValue("NAME");
     }
 
     public void setUserName(String value)
     {
-        if (!this.m_settings.getName().equals(value)) 
-        {
-            this.m_settings.setName(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setStringValue("NAME", value);
     }
 
 
@@ -134,62 +121,46 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public String getIns1Name() 
     {
-        return this.m_settings.getIns1_name();
+	return this.m_cfg_mgr.getStringValue("INS1_NAME");
     }
 
     public void setIns1Name(String value)
     {
-        if (!this.m_settings.getIns1_name().equals(value)) 
-        {
-            this.m_settings.setIns1_name(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setStringValue("INS1_NAME", value);
     }
 
     public String getIns2Name() 
     {
-        return this.m_settings.getIns2_name();
+	return this.m_cfg_mgr.getStringValue("INS2_NAME");
     }
 
     public void setIns2Name(String value)
     {
-        if (!this.m_settings.getIns2_name().equals(value)) 
-        {
-            this.m_settings.setIns2_name(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setStringValue("INS2_NAME", value);
     }
 
 
     public String getIns1Abbr() 
     {
-	return this.m_settings.getIns1_abbr();
+	return this.m_cfg_mgr.getStringValue("INS1_ABBR");
     }
 
 
     public void setIns1Abbr(String value)
     {
-        if (!this.m_settings.getIns1_abbr().equals(value)) 
-        {
-            this.m_settings.setIns1_abbr(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setStringValue("INS1_ABBR", value);
     }
 
 
 
     public String getIns2Abbr() 
     {
-	return this.m_settings.getIns2_abbr();
+	return this.m_cfg_mgr.getStringValue("INS2_ABBR");
     }
 
     public void setIns2Abbr(String value)
     {
-	if (!this.m_settings.getIns2_abbr().equals(value)) 
-	{
-	    this.m_settings.setIns2_abbr(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setStringValue("INS2_ABBR", value);
     }
 
 
@@ -197,17 +168,13 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public int getBG_unit()
     {
-	return this.m_settings.getBg_unit();
+	return this.m_cfg_mgr.getIntValue("BG_UNIT");
     }
 
 
     public void setBG_unit(int bgunit)
     {
-        if (this.m_settings.getBg_unit()!= bgunit) 
-        {
-            this.m_settings.setBg_unit(bgunit);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setIntValue("BG_UNIT", bgunit);
     }
 
 
@@ -229,158 +196,126 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public float getBG_High() 
     {
-	if (this.m_settings.getBg_unit()==1)
-	    return this.m_settings.getBg1_high();
+	if (this.getBG_unit()==1)
+	    return this.getBG1_High();
 	else
-	    return this.m_settings.getBg2_high();
+	    return this.getBG2_High();
     }
 
 
     public float getBG1_High() 
     {
-	return this.m_settings.getBg1_high();
+	return this.m_cfg_mgr.getFloatValue("BG1_HIGH");
     }
 
     public void setBG1_High(float value)
     {
-	if (this.m_settings.getBg1_high()!= value) 
-	{
-	    this.m_settings.setBg1_high(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setFloatValue("BG1_HIGH", value);
     }
 
 
     public float getBG2_High() 
     {
-	return this.m_settings.getBg2_high();
+	return this.m_cfg_mgr.getFloatValue("BG2_HIGH");
     }
 
     public void setBG2_High(float value)
     {
-	if (this.m_settings.getBg2_high()!= value) 
-	{
-	    this.m_settings.setBg2_high(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setFloatValue("BG2_HIGH", value);
     }
 
 
     public float getBG_Low() 
     {
-	if (this.m_settings.getBg_unit()==1)
-	    return this.m_settings.getBg1_low();
+	if (this.getBG_unit()==1)
+	    return this.getBG1_Low();
 	else
-	    return this.m_settings.getBg2_low();
+	    return this.getBG2_Low();
     }
 
 
     public float getBG1_Low() 
     {
-	return this.m_settings.getBg1_low();
+	return this.m_cfg_mgr.getFloatValue("BG1_LOW");
     }
 
     public void setBG1_Low(float value)
     {
-	if (this.m_settings.getBg1_low()!= value) 
-	{
-	    this.m_settings.setBg1_low(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setFloatValue("BG1_LOW", value);
     }
 
 
     public float getBG2_Low() 
     {
-	return this.m_settings.getBg2_low();
+	return this.m_cfg_mgr.getFloatValue("BG2_LOW");
     }
 
     public void setBG2_Low(float value)
     {
-	if (this.m_settings.getBg2_low()!= value) 
-	{
-	    this.m_settings.setBg2_low(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setFloatValue("BG2_LOW", value);
     }
 
 
     public float getBG_TargetHigh() 
     {
-	if (this.m_settings.getBg_unit()==1)
-	    return this.m_settings.getBg1_target_high();
+	if (this.getBG_unit()==1)
+	    return this.getBG1_TargetHigh();
 	else
-	    return this.m_settings.getBg2_target_high();
+	    return this.getBG2_TargetHigh();
     }
 
     public float getBG1_TargetHigh() 
     {
-	return this.m_settings.getBg1_target_high();
+	return this.m_cfg_mgr.getFloatValue("BG1_TARGET_HIGH");
     }
 
 
     public void setBG1_TargetHigh(float value)
     {
-	if (this.m_settings.getBg1_target_high()!= value) 
-	{
-	    this.m_settings.setBg1_target_high(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setFloatValue("BG1_TARGET_HIGH", value);
     }
 
 
     public float getBG2_TargetHigh() 
     {
-	return this.m_settings.getBg2_target_high();
+	return this.m_cfg_mgr.getFloatValue("BG2_TARGET_HIGH");
     }
 
     public void setBG2_TargetHigh(float value)
     {
-	if (this.m_settings.getBg2_target_high()!= value) 
-	{
-	    this.m_settings.setBg2_target_high(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setFloatValue("BG2_TARGET_HIGH", value);
     }
 
 
     public float getBG_TargetLow() 
     {
-	if (this.m_settings.getBg_unit()==1)
-	    return this.m_settings.getBg1_target_low();
+	if (this.getBG_unit()==1)
+	    return this.getBG1_TargetLow();
 	else
-	    return this.m_settings.getBg2_target_low();
+	    return this.getBG2_TargetLow();
     }
 
     public float getBG1_TargetLow() 
     {
-	return this.m_settings.getBg1_target_low();
+	return this.m_cfg_mgr.getFloatValue("BG1_TARGET_LOW");
     }
 
 
     public void setBG1_TargetLow(float value)
     {
-	if (this.m_settings.getBg1_target_low()!= value) 
-	{
-	    this.m_settings.setBg1_target_low(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setFloatValue("BG1_TARGET_LOW", value);
     }
 
 
     public float getBG2_TargetLow() 
     {
-	return this.m_settings.getBg2_target_low();
+	return this.m_cfg_mgr.getFloatValue("BG2_TARGET_LOW");
     }
 
 
     public void setBG2_TargetLow(float value)
     {
-	if (this.m_settings.getBg2_target_low()!= value) 
-	{
-	    this.m_settings.setBg2_target_low(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setFloatValue("BG2_TARGET_LOW", value);
     }
 
 
@@ -395,103 +330,75 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public int getRendering() 
     {
-        return this.m_settings.getRender_rendering();
+	return this.m_cfg_mgr.getIntValue("RENDER_RENDERING");
     }
 
     public void setRendering(int value) 
     {
-        if (this.m_settings.getRender_rendering()!=value) 
-        {
-            this.m_settings.setRender_rendering(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setIntValue("RENDER_RENDERING", value);
     }
 
     public int getAntiAliasing() 
     {
-        return this.m_settings.getRender_antialiasing();
+	return this.m_cfg_mgr.getIntValue("RENDER_ANTIALIASING");
     }
 
     public void setAntiAliasing(int value) 
     {
-        if (this.m_settings.getRender_antialiasing()!=value) 
-        {
-            this.m_settings.setRender_antialiasing(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setIntValue("RENDER_ANTIALIASING", value);
     }
 
     
     public int getColorRendering() 
     {
-        return this.m_settings.getRender_colorrendering();
+	return this.m_cfg_mgr.getIntValue("RENDER_COLOR_RENDERING");
     }
 
     public void setColorRendering(int value) 
     {
-        if (this.m_settings.getRender_colorrendering()!=value) 
-        {
-            this.m_settings.setRender_colorrendering(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setIntValue("RENDER_COLOR_RENDERING", value);
     }
     
     public int getDithering() 
     {
-        return this.m_settings.getRender_dithering();
+	return this.m_cfg_mgr.getIntValue("RENDER_DITHERING");
     }
 
     public void setDithering(int value) 
     {
-        if (this.m_settings.getRender_dithering()!=value) 
-        {
-            this.m_settings.setRender_dithering(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setIntValue("RENDER_DITHERING", value);
     }
     
     public int getFractionalMetrics() 
     {
-        return this.m_settings.getRender_fractionalmetrics();
+	return this.m_cfg_mgr.getIntValue("RENDER_FRACTIONAL_METRICS");
     }
 
     public void setFractionalMetrics(int value) 
     {
-        if (this.m_settings.getRender_fractionalmetrics()!=value) 
-        {
-            this.m_settings.setRender_fractionalmetrics(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setIntValue("RENDER_FRACTIONAL_METRICS", value);
     }
 
     
     public int getInterpolation() 
     {
-        return this.m_settings.getRender_interpolation();
+	return this.m_cfg_mgr.getIntValue("RENDER_INTERPOLATION");
     }
 
     public void setInterpolation(int value) 
     {
-        if (this.m_settings.getRender_interpolation()!=value) 
-        {
-            this.m_settings.setRender_interpolation(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setIntValue("RENDER_INTERPOLATION", value);
     }
 
     
     public int getTextAntiAliasing() 
     {
-        return this.m_settings.getRender_textantialiasing();
+	return this.m_cfg_mgr.getIntValue("RENDER_TEXT_ANTIALIASING");
     }
 
     public void setTextAntiAliasing(int value) 
     {
-        if (this.m_settings.getRender_textantialiasing()!=value) 
-        {
-            this.m_settings.setRender_textantialiasing(value);
-            changed_db = true;
-        }
+	this.m_cfg_mgr.setIntValue("RENDER_TEXT_ANTIALIASING", value);
     }
     
 
@@ -508,6 +415,16 @@ public class GGCProperties //extends GGCPropertiesHelper
 	return this.m_colors;
     }
     */
+
+    public String getSelectedColorSchemeInCfg() 
+    {
+	return this.m_cfg_mgr.getStringValue("SELECTED_COLOR_SCHEME");
+    }
+
+    public void setSelectedColorSchemeInCfg(String value) 
+    {
+	this.m_cfg_mgr.setStringValue("SELECTED_COLOR_SCHEME", value);
+    }
 
 
 
@@ -573,37 +490,34 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public int getMeterType() 
     {
-	return this.m_settings.getMeter_type();
+	return this.m_cfg_mgr.getIntValue("METER_TYPE");
     }
 
     public void setMeterType(int value) 
     {
-	if (this.m_settings.getMeter_type()!= value) 
-	{
-	    this.m_settings.setMeter_type(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setIntValue("METER_TYPE", value);
     }
 
     public String getMeterTypeString() 
     {
-	return m_da.getMeterManager().meter_names[this.m_settings.getMeter_type()];
+	if (this.getMeterType()==-1)
+	{
+	    return m_da.getI18nInstance().getMessage("NONE");
+	}
+	else
+            return m_da.getMeterManager().meter_names[this.getMeterType()];
     }
 
 
     public String getMeterPort() 
     {
-	return this.m_settings.getMeter_port();
+	return this.m_cfg_mgr.getStringValue("METER_PORT");
     }
 
 
     public void setMeterPort(String value) 
     {
-	if (!this.m_settings.getMeter_port().equals(value)) 
-	{
-	    this.m_settings.setMeter_port(value);
-	    changed_db = true;
-	}
+	this.m_cfg_mgr.setStringValue("METER_PORT", value);
     }
 
 
@@ -636,12 +550,60 @@ public class GGCProperties //extends GGCPropertiesHelper
     // ---
 
 
-    public void Tt()
+    public String getPdfVieverPath() 
     {
-        //this.m_settings.
+	return this.m_cfg_mgr.getStringValue("PRINT_PDF_VIEWER_PATH");
     }
 
+    public void setPdfVieverPath(String value) 
+    {
+	this.m_cfg_mgr.setStringValue("PRINT_PDF_VIEWER_PATH", value);
+    }
+
+
+    public String getPrintEmptyValue() 
+    {
+	return this.m_cfg_mgr.getStringValue("PRINT_EMPTY_VALUE");
+    }
+
+    public void setPrintEmptyValue(String value) 
+    {
+	this.m_cfg_mgr.setStringValue("PRINT_EMPTY_VALUE", value);
+    }
+
+
+    public int getPrintLunchStartTime() 
+    {
+	return this.m_cfg_mgr.getIntValue("PRINT_LUNCH_START_TIME");
+    }
+
+    public void setPrintLunchStartTime(int value) 
+    {
+	this.m_cfg_mgr.setIntValue("PRINT_LUNCH_START_TIME", value);
+    }
+
+
+    public int getPrintDinnerStartTime() 
+    {
+	return this.m_cfg_mgr.getIntValue("PRINT_DINNER_START_TIME");
+    }
+
+    public void setPrintDinnerStartTime(int value) 
+    {
+	this.m_cfg_mgr.setIntValue("PRINT_DINNER_START_TIME", value);
+    }
     
+
+    public int getPrintNightStartTime() 
+    {
+	return this.m_cfg_mgr.getIntValue("PRINT_NIGHT_START_TIME");
+    }
+
+    public void setPrintNightStartTime(int value) 
+    {
+	this.m_cfg_mgr.setIntValue("PRINT_NIGHT_START_TIME", value);
+    }
+
 
     // ---
     // ---  Utility methods
@@ -663,6 +625,7 @@ public class GGCProperties //extends GGCPropertiesHelper
     {
 	m_da.getDb().loadConfigData();
 	m_da.setBGMeasurmentType(this.getBG_unit());
+	this.setColorSchemeObject(this.m_cfg_mgr.getStringValue("SELECTED_COLOR_SCHEME"));
     }
 
     public void reload()
@@ -672,31 +635,21 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public void save()
     {
-	System.out.println("save");
+	//System.out.println("save");
 
 	// fix
-	if (changed_scheme) 
+	/*if (changed_scheme) 
 	{
+	    DataAccess.notImplemented("GGCProperties:save():: changed scheme");
 	    System.out.println("save Scheme");
 	    //m_da.m_db.s
-	}
+	}*/
 
-	if (changed_db) 
-	{
-	    System.out.println("save Db");
-        try
-        {
-            m_da.m_db.saveConfigData();
-        }
-        catch (NullPointerException e)
-        {
-            System.err.println(I18nControl.getInstance().getMessage("NO_DATABASE_FOUND"));
-        }
-	}
+	this.m_cfg_mgr.saveConfig();
 
-	if (changed_config) 
+	if ((changed_config) || (this.m_config.hasChanged()))
 	{
-	    System.out.println("save Config");
+	    //System.out.println("save Config REAL");
 	    this.m_config.saveConfig();
 	}
 

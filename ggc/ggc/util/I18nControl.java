@@ -25,11 +25,6 @@
  *  Author:   andyrozman
  */
 
-// MODIFICATIONS:
-//   +2006-09-05: RR getMessageFromCatalog(String): moved some of the code outside
-//                     the try...catch block to improve speed and also because it
-//                     just didn't belong there.
-
 
 package ggc.util;
 
@@ -41,10 +36,14 @@ import java.util.StringTokenizer;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory; 
+
 public class I18nControl
 {
 
-
+    private static Log s_logger = LogFactory.getLog(I18nControl.class); 
+    
     
     /**
      *  Resource bundle identificator
@@ -69,31 +68,31 @@ public class I18nControl
      */ 
     private I18nControl()
     {
-	    getSelectedLanguage();
+	getSelectedLanguage();
         setLanguage();
     } 
     
 
     private void getSelectedLanguage()
     {
-	//this.selected_language = DataAccess.getInstance().getSettings().getLanguage();
 
 	try
-        {
-            Properties props = new Properties();
+	{
+	    Properties props = new Properties();
 
-            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
-            props.load(in);
+	    FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
+	    props.load(in);
 
-            String tempLang = (String)props.get("SELECTED_LANG");
-            if (tempLang != null)
-                this.selected_language = tempLang;
+	    String tempLang = (String)props.get("SELECTED_LANG");
 
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
+	    if (tempLang != null)
+		this.selected_language = tempLang;
+	}
+	catch(Exception ex)
+	{
+	    System.out.println("I18nControl: Configuration file not found. Using default langauge ('en')");
+	    s_logger.warn("Configuration file not found. Using default langauge ('en')");
+	}
         
     }
 
@@ -129,10 +128,6 @@ public class I18nControl
 
     /**
      * This method sets the language according to the preferences.<br>
-     * <br>
-     * <h3>WARNING:</h3><br>
-     * Using this method before GGCProperties.getInstance() has been called at least
-     * once will create an endless loop.
      */
     public void setLanguage() 
     {
@@ -153,10 +148,8 @@ public class I18nControl
      */ 
     public void setLanguage(String language)
     {
-        
         Locale l = new Locale(language);
         setLanguage(l);
-
     }
 
 
@@ -192,19 +185,6 @@ public class I18nControl
 
         try
         {
-
-            //ResourceBundle.get
-            /*
-            try
-            {
-                File d = new File(".");
-
-                System.out.println(d.getCanonicalPath());
-            }
-            catch(Exception ex){
-                
-            }
-            */
             res = ResourceBundle.getBundle("GGC", locale);
         }
         catch (MissingResourceException mre)
@@ -473,7 +453,6 @@ public class I18nControl
     {
         try
         {
-
             String ret = getMessageFromCatalog(msg_id);
 
             Object[] back = resolveMnemonics(ret);
@@ -516,7 +495,8 @@ public class I18nControl
 
         if (ret==null)
         {
-            System.out.println("Couldn't find message: " + msg);
+            //System.out.println("I18nControl(" + this.selected_language +"): Couldn't find message: " + msg);
+	    s_logger.warn("I18nControl(" + this.selected_language +"): Couldn't find message: " + msg);
             return returnSameValue(msg);
         }
         else
@@ -535,20 +515,8 @@ public class I18nControl
      */    
     public String getMessage(String msg)
     {
-
         return getMessageFromCatalog(msg);
-
     }
 
-
-    public static void main(String args[])
-    {
-
-        I18nControl oc = I18nControl.getInstance();
-
-//        System.out.println(oc.getMessage(12, 1));
-
-
-    }
 
 }
