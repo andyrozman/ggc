@@ -65,7 +65,7 @@
         <property name="ins2_abbr" type="string" length="10" />
         <property name="meter_type"  type="int" />
         <property name="meter_port"  type="string" length="50" />
-        <property name="bg_unit"  type="int" />  <!-- 1= mmol/l, 2=mg/dl -->
+        <property name="bg_unit"  type="int" />  <!-- 2= mmol/l, 1=mg/dl -->
         <property name="bg1_low"  type="float"  />
         <property name="bg1_high"  type="float"  />
         <property name="bg1_target_low"  type="float"  />
@@ -93,6 +93,19 @@
 
         <property name="color_scheme"  type="string" length="50" />
     </class>
+
+
+    <class name="ggc.db.hibernate.SettingsH" table="ggc_settings">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="key" type="string"  length="44" not-null="true" />    
+        <property name="value" type="string"  length="255"/>    
+        <property name="type" type="int"  />    <!-- 1-string, 2-int, 3=float -->
+        <property name="description" type="string" length="255" />   
+    </class>
+
+
 
     <class name="ggc.db.hibernate.ColorSchemeH" table="ggc_sett_colorscheme">
         <id name="id" type="long" unsaved-value="0">

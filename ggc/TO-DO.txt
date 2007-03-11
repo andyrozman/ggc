@@ -1,41 +1,46 @@
 TO-DO LIST
 ==========
 
-
 Level 1 (High Priority): 
 ----------------------------
-* Printing: 
-    o  Data gather - Extended (MonthlyValues)
-    o  Detailed print sheet
 * Configuration:
-    o  main screen
-    o  colors
-    o  rendering
-    o  printing
-    o  L&F  
-    o  Db Selection     
+X    o  display icons on left side and not tree
+X    o  printing
+X    o  L&F (Config)
+X    o  Db Selection 
+    o  Scheme 
 
 
 
 Level 2 (Medium 1 Priority):
 ----------------------------
 
-* DB TOOL
-    o ???
+
 
 * Nutrition: 
     o  Config
     o  View nutrition data in tree
-* Properties: 
-    o  no error if no configuration present
 
-* Look and feel:
-    o  Loading of selected L&F
 
+* Import/Export Tool:
+    o  Export old data (daily values)
+    o  Import old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
+    o  Nice GUI
 
 
 Level 3 (Medium 2 Priority):
 ----------------------------
+
+* DB TOOL
+    o ???
+    o  Nutrition data Init
+    o  Basic Data Init
+
+* Printing: 
+    o  Data gather - Extended (MonthlyValues)
+    o  Detailed print sheet
+
+
 
 
 Level 4 (Medium 3 Priority):
@@ -51,17 +56,14 @@ Level 4 (Medium 3 Priority):
     o  Add daily entry must be changed (GUI is very...)
     o  option in which type we enter
     o  delete should ask: are you sure?
-* CONVERT DATA
-    o File
-    o MySQL
-    o HSQL
+
 
 
 
 Level 5 (Low Priority):
 ----------------------------
 
-* Appointments: 
+* Appointments/Doctors: 
     o  Create GUI
     o  Database entries
     o  Add/Edit/Delete
@@ -78,16 +80,32 @@ Level 5 (Low Priority):
 * Adding support for mmol/l (now we have only mG/DL):
     o  graphs
     o  database (write in database as mg/dl only, and display as what is set)
+* Meter Manager OLD
+    o  Change to support rtxos Java COM API
+    o  Dummy meter
+* Meter Manager NEW
+    o  Create New Meter Manager
+    o  Dummy meter 
+    o  Ascensia Meter family (add/test)
+    o  Try to rewrite old meters to new Meter Interface
+
+METERS
+------
+- New Meter Dialog
+- New Meter Interface
+- Dummy Old Meter
+- Dummy New Meter
+- Implement meter support: ...
 
 
 
 Level 6 (IN NEAR FUTURE):
 -------------------------
 
-* I18n Language: German
-* I18n Language: French
+* I18n Language: German (work in progress)
+* I18n Language: Slovenian (work in progress)
+* I18n Language: French 
 * I18n Language: Italian
-* I18n Language: Slovenian
 
 
 
@@ -99,15 +117,76 @@ Level 7 (IN FAR FUTURE/MAYBE):
 * Add aditional meters
 
 
+Level 8 (Stuff not needed but it might be)
+------------------------------------------
+
+* CONVERT OLD DATA
+    o File
+    o MySQL
+    o HSQL
 
 
-METERS
-------
-- New Meter Dialog
-- New Meter Interface
-- Dummy Old Meter
-- Dummy New Meter
-- Implement meter support: ...
+---------
+
+
+GGC (0.3)
+- General Settings (5-11.3.)
+//- Load L&F (12-18.3)
+- Enter Daily Data (19.3.-25.3)
+- New Meter Import framework (26.3.-1.4.)
+- Ascensia Meter Support (2.4.-8.4.)
+
+- Import/Export tool (9.4-15.4.)
+- Menus and About (16.4.-20.4.)
+
+Release on 25.4.
+
+
+
+==========
+
+
+BIG CHANGES: Configuration, Printing main, Printing extended, Nutrition, 
+      DbTool, Db Hibernate changes, Enter Daily Data, Apointments, Meals,
+      GGCLittle, mmol/L support full, Meter Mng NEW, rtx COMM API, 
+      Ascensia Family support
+
+SMALL CHANGES: Load LF, 
+
+
+0.3: 
+   - Configuration
+X   - Printing main
+   - Enter Daily Data NEW
+   - Meter Manager NEW
+X   - rtx COMM API
+   - Meter Import Base
+   - Meter: Ascensia Contour support
+   - Data Export/Import/Conversion (Daily Data only)
+
+0.4:
+   - Db Tool
+   - Db Hibernate changes 
+   - Nutrition
+   - GGCLittle
+   - Graphs, Db (mg/dl)
+
+0.5:
+   - Meals
+   - Ascensia Family support
+   - Printing extended
+   - Add Daily Data support for Meals
+   - mmol/L support full
+
+
+0.6:
+   - Apointments
+   - Doctors
+
+      
+      
+
+
 
 
 
@@ -123,8 +202,8 @@ DONE
         o  Import
 * ANT Build
 * Hibernate for Database handling
-	o  Full Hibernate loading
-	o  Entries (day-values)
+        o  Full Hibernate loading
+        o  Entries (day-values)
         o  Config
 * Adding support for mmol/l (now we have only mG/DL):
         o  settings
@@ -141,9 +220,10 @@ DONE
 * Properties: 
         o  put them into database
         o  move some of them from config to code (classes for meters)
-	o  Default database 
-	o  Colors as separate table* Configuration:
+        o  Default database 
+        o  Colors as separate table* Configuration:
         o  low/high BGs
+	o  no error if no configuration present
 * Printing: 
     o  Data gather (MonthlyValues)
     o  Simple print sheet
@@ -152,6 +232,15 @@ DONE
         o  Add/Edit/Delete
         o  Daily graph
         o  Show day
+* Configuration
+    o  Temp directory creation on startup   
+    o  New configuration model
+    o  rendering
+    o  colors
+* Look and feel:
+    o  Loading of selected L&F
+X* Printing: 
+X    o  Use data from configuration (pdf viewer, ...)
 
 
 
