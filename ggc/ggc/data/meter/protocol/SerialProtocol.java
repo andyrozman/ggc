@@ -16,7 +16,8 @@ import java.util.StringTokenizer;
 import java.util.TooManyListenersException;
 import java.util.Vector;
 
-import javax.comm.*;
+//import javax.comm.*;
+import gnu.io.*;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
@@ -89,7 +90,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 	this.stopbits = stopbits;
 	this.parity = parity;
     }
-
+/*
     public void addImportEventListener(ImportEventListener listener)
     {
         listenerList.add(ImportEventListener.class, listener);
@@ -130,7 +131,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     {
         fireImportChanged(new ImportEvent(this, ImportEvent.TIMEOUT));
     }
-
+*/
 
     /**
      * Return the COM-Port from which will be read.
@@ -279,7 +280,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         isPortOpen = false;
         dataFromMeter = false;
         System.out.println("close port : " + portIdentifier.getName());
-        fireImportChanged(new ImportEvent(this, ImportEvent.PORT_CLOSED, portIdentifier));
+//        fireImportChanged(new ImportEvent(this, ImportEvent.PORT_CLOSED, portIdentifier));
     }
 
     /**
@@ -430,7 +431,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     /**
      * @see java.lang.Runnable#run()
      */
-    public void run()
+/*    public void run()
     {
         while (System.currentTimeMillis() - startTime < getTimeOut()) 
         {
@@ -447,7 +448,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
             fireImportChanged(new ImportEvent(this, ImportEvent.IMPORT_FINISHED));
         else
             fireImportChanged(new ImportEvent(this, ImportEvent.TIMEOUT));
-    }
+    }*/
 
 
 

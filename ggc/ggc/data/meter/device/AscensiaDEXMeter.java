@@ -2,8 +2,9 @@ package ggc.data.meter.device;
 
 import java.util.ArrayList;
 
-import javax.comm.*;
-import javax.comm.SerialPort;
+//import javax.comm.*;
+//import javax.comm.SerialPort;
+import gnu.io.*;
 import javax.swing.ImageIcon;
 
 import ggc.data.DailyValuesRow;
@@ -334,7 +335,7 @@ public class AscensiaDEXMeter extends SerialProtocol
 	*/
 /*
 	if (mode == AscensiaMeter.MODE_ENQ)
-	{
+	
 	    writePort((byte)6); // ACK
 	    waitTime(500);
 	}

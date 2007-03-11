@@ -32,7 +32,12 @@ public class MonthlyValues extends WeeklyValues
     private int m_month = 0;
     private int m_year = 0;
     private int max_days = 0;
+
+
     String empty_value = "";
+    int times[] = { 1100, 1800, 2200 };
+
+
 
     public MonthlyValues(int year, int month)
     {
@@ -48,12 +53,26 @@ public class MonthlyValues extends WeeklyValues
 
         //max_days = gc.getM
 
-        
-
-        // TO-DO Andy
-        this.empty_value = "";
 
     }
+
+
+    public void loadConfiguration()
+    {
+	this.empty_value = this.m_da.getSettings().getPrintEmptyValue();
+	this.times[0] = this.m_da.getSettings().getPrintLunchStartTime();
+	this.times[1] = this.m_da.getSettings().getPrintDinnerStartTime();
+	this.times[2] = this.m_da.getSettings().getPrintNightStartTime();
+    }
+
+/*
+    public void getTime(String time, int default_value)
+    {
+
+    }
+*/
+
+
 
     public int getMonth()
     {
@@ -86,11 +105,11 @@ public class MonthlyValues extends WeeklyValues
 
 	// hard coded times
 
-        if ((time>0) & (time<1100))
+        if ((time>0) & (time<times[0]))
             return 0;
-        else if (time<1700)
+        else if (time<times[1])
             return 1;
-        else if (time<2200)
+        else if (time<times[2])
             return 2;
         else
             return 3;
