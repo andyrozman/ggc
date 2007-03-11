@@ -606,6 +606,7 @@ public class DataAccess
          }
          */
 
+	/*
         // XXX: is this really necessary?
         String jh = System.getProperty("java.home");
 
@@ -626,6 +627,8 @@ public class DataAccess
 */
 
     }
+
+
 
     // ********************************************************
     // ******          Dates and Times Handling           *****    
