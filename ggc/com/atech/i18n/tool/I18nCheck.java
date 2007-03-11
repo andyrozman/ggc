@@ -53,7 +53,7 @@ public class I18nCheck
         resourceBundles = new Hashtable<String, ResourceBundle>();
         lang_short = new ArrayList<String>();
         this.m_prefix = prefix;
-        this.default_lang = default_lang;
+        this.default_lang = default_lang.toUpperCase();
 
         getAvailableFiles();
 
@@ -118,9 +118,14 @@ public class I18nCheck
                 System.out.println("Resource File " + name + " loaded succesfully");
 
             //System.out.println("RB Full: " + resourceBundles + " loaded RB: " +rb);
-            
-            if (lang.equals(this.default_lang))
-                res = rb;
+
+	    System.out.println("Def: " + this.default_lang);
+
+            if (lang.toUpperCase().equals(this.default_lang))
+	    {
+		res = rb;
+		System.out.println("Default language");
+	    }
             else
                 resourceBundles.put(lang, rb);
 
