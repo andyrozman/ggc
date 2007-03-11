@@ -1,5 +1,24 @@
+2006-03-11 (v0.2.4.1)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Color scheme settings
+    * Configuration work finished - probably
+
+2006-03-10 (v0.2.3.1)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Loading L&F at startup
+    * Changing some debug information for Db
+
+2006-03-06 (v0.2.2.10 - 8)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Configuration save fixed
+    * General settings
+        o Setting Db
+	o Setting Look and Feel (and saving info to configuration file)
+
 2006-01-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * made path to javax.comm.properties in DataAccess system-independant
+
+2006-01-23 (v0.2.2.7) Andy Rozman <andyrozman@users.sourceforge.net>
+    * New configuration tables are now used (old databases won't work anymore)
+    * Fixing of configuration stuff:
+    	o Meter Configuration fixed
 
 2006-01-21 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * build.xml: ggc_l might now work again
