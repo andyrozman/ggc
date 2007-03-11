@@ -5,12 +5,30 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Properties;
 
+import javax.swing.UIManager;
+
 import com.atech.db.tool.DatabaseSettings;
 import com.atech.db.tool.DbToolApplicationInterface;
+
+/*
+New methods :
+    public String[] getAllDatabasesNamesPlusAsArray()
+    public String[] getAllDatabasesNamesAsArray()
+    public int getSelectedDatabaseIndex()
+
+    //setChanged();
+    //getChanged();
+
+    hasChanged();
+    setSelectedDatabaseIndex(int);
+
+*/
+
 
 public class DbToolApplicationGGC implements DbToolApplicationInterface
 {
@@ -20,13 +38,24 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
 
     Hashtable config_db_values = null;
-    //String selected_LF_Class = null; // class
-    //String selected_LF_Name = null; // name
-    //String skinLFSelected = null;
+
+
+    // LF
+    String selected_LF_Class = "com.l2fprod.gui.plaf.skin.SkinLookAndFeel"; // class
+    String selected_LF_Name = "SkinLF"; // name
+    String skinLFSelected = "blueMetalthemepack.zip";
+
+    Object[] availableLF = null;
+    Object[] availableLFClass = null;
+    Hashtable<String,String> availableLF_full = null;
+    int skinlf_LF = 0;
+
 
     private Hashtable<String, DatabaseSettings> staticDatabases;
     private Hashtable<String, DatabaseSettings> customDatabases;
     private Hashtable<String, DatabaseSettings> allDatabases;
+
+    private boolean m_changed = false;
 
 
     public DbToolApplicationGGC()
@@ -35,7 +64,125 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 	this.customDatabases = new Hashtable<String, DatabaseSettings>();
 	this.allDatabases = new Hashtable<String, DatabaseSettings>();
 	initStaticDbs();
+	loadAvailableLFs();
     }
+
+
+
+    public void loadAvailableLFs()
+    {
+
+	availableLF_full = new Hashtable<String,String>();
+	UIManager.LookAndFeelInfo[] info = UIManager.getInstalledLookAndFeels();
+
+	availableLF = new Object[info.length+1];
+	availableLFClass = new Object[info.length+1];
+
+	//ring selectedLF = null;
+	//String subSelectedLF = null;
+
+	int i;
+	for (i=0; i<info.length; i++) 
+	{
+	    String name = info[i].getName();
+	    String className = info[i].getClassName();
+
+	    availableLF_full.put(name, className);
+	    availableLF[i] = name;
+	    availableLFClass[i] = className;
+
+	    //System.out.println(humanReadableName);
+	}     
+
+	availableLF_full.put("SkinLF", "com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
+	availableLF[i] = "SkinLF";
+	availableLFClass[i] = "com.l2fprod.gui.plaf.skin.SkinLookAndFeel";
+	skinlf_LF = i;
+
+
+    }
+
+
+    public Object[] getAvailableLFs()
+    {
+	return availableLF;
+    }
+
+    public Object[] getAvailableLFsClass()
+    {
+	return this.availableLFClass;
+    }
+
+
+    public int getSelectedLFIndex()
+    {
+	for(int i=0; i<this.availableLFClass.length; i++)
+	{
+	    if (this.availableLFClass[i].equals(this.selected_LF_Class))
+	    {
+		return i;
+	    }
+	}
+
+	return this.skinlf_LF;
+
+    }
+
+
+    public void setSelectedLF(int index, String skin)
+    {
+
+	if (this.getSkinLFIndex()!=index)
+	{
+	    this.selected_LF_Class = (String)this.availableLFClass[index]; // class
+	    this.selected_LF_Name = (String)this.availableLF[index]; // name
+	    this.m_changed = true;
+	}
+
+	if (!skin.equals(this.skinLFSelected))
+	{
+	    this.skinLFSelected = skin;
+	    this.m_changed = true;
+	}
+
+    }
+
+
+
+    public String getSelectedLFSkin()
+    {
+	return this.skinLFSelected;
+    }
+
+
+    public int getSkinLFIndex()
+    {
+	return this.skinlf_LF;
+    }
+
+
+    public boolean isSkinLFSelected()
+    {
+	return isSkinLFSelected(getSelectedLFIndex());
+    }
+
+
+    public boolean isSkinLFSelected(int index)
+    {
+	return (this.skinlf_LF == index);
+    }
+
+
+    private void setDefaultLF()
+    {
+	this.selected_LF_Class = "com.l2fprod.gui.plaf.skin.SkinLookAndFeel"; // class
+	this.selected_LF_Name = "SkinLF"; // name
+	this.skinLFSelected = "blueMetalthemepack.zip";
+
+	this.m_changed = true;
+    }
+
+
 
 
     public void initStaticDbs()
@@ -58,13 +205,23 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
 	config_db_values = new Hashtable();
 
+	Properties props = new Properties();
+
+	boolean config_loaded = true;
+
 	try
 	{
-	    Properties props = new Properties();
-
 	    FileInputStream in = new FileInputStream(getApplicationDatabaseConfig());
 	    props.load(in);
+	}
+	catch(Exception ex)
+	{
+	    config_loaded = false;
+	}
 
+
+	if (config_loaded)
+	{
 
 	    for(Enumeration en = props.keys(); en.hasMoreElements(); )
 	    {
@@ -77,7 +234,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 		}
 		else
 		{
-/*
+
 		    if (str.equals("LF_NAME")) 
 		    {
 			selected_LF_Name = (String)props.get(str);
@@ -88,9 +245,10 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 		    }
 		    else if (str.equals("SKINLF_SELECTED")) 
 		    {
+			//System.out.println("!!!!!!!!!!!!!!!!! " + (String)props.get(str));
 			skinLFSelected = (String)props.get(str);
-		    } */
-		    if (str.equals("SELECTED_DB")) 
+		    } 
+		    else if (str.equals("SELECTED_DB")) 
 		    {
 			selected_db = Integer.parseInt((String)props.get(str));
 		    }
@@ -99,55 +257,63 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 			selected_lang = (String)props.get(str);
 		    }
 		    else 
-			System.out.println("DataAccess:loadConfig:: Unknown parameter : " + str);
+			System.out.println("DbToolApplicationGGC:loadConfig:: Unknown parameter : '" + str +"'");
 
 		}
 
 	    }
-
-	    /*
-	    ArrayList<String> list = new ArrayList<String>();
-
-	    int count_db = 0;
-
-	    list.add("0 - " + m_i18n.getMessage("INTERNAL_DATABASE"));
-	    for (int i=1; i<20; i++) 
-	    {
-		if (config_db_values.containsKey("DB"+i+"_CONN_NAME")) 
-		{
-		    count_db++;
-		    list.add(i+" - " + config_db_values.get("DB"+i+"_CONN_NAME"));
-		}
-
-		if ((count_db*6)>=config_db_values.size()) 
-		    break;
-
-	    }
-
-	    Iterator it = list.iterator();
-
-	    int j=0;
-	    allDbs = new String[list.size()];
-
-	    while (it.hasNext()) 
-	    {
-		String val = (String)it.next();
-		allDbs[j] = val;
-		j++;
-	    }
-	    */
 
 	}
-	catch(Exception ex)
+	else
 	{
-	    System.out.println("DataAccess::loadConfig::Exception> " + ex);
+
+	    // we don't have config, we try to create basic one
+
+	    System.out.println("DbToolApplicationGGC: Config file not found. Creating new config file with default settings.");
+
+	    try
+	    {
+		addDatabaseSetting("DB0_CONN_NAME", "Internal Database");
+		addDatabaseSetting("DB0_DB_NAME", "HypersonicSQL File");
+		addDatabaseSetting("DB0_CONN_DRIVER_CLASS", "org.hsqldb.jdbcDriver");
+		addDatabaseSetting("DB0_CONN_URL", "jdbc:hsqldb:file:../data/ggc_db");
+		addDatabaseSetting("DB0_CONN_USERNAME", "sa");
+		addDatabaseSetting("DB0_CONN_PASSWORD", "");
+		addDatabaseSetting("DB0_HIBERNATE_DIALECT", "org.hibernate.dialect.HSQLDialect");
+	    }
+	    catch(Exception ex)
+	    {
+		System.out.println("Exception on create default config: " + ex);
+	    }
+
+	    selected_db = 0;
+	    selected_lang = "en";
+
+	    saveConfig();
+
 	}
+
+    }
+
+    private String getCurrentTimeAsUserReadableString()
+    {
+	GregorianCalendar gc = new GregorianCalendar();
+	gc.setTimeInMillis(System.currentTimeMillis());
+
+	return gc.get(GregorianCalendar.DAY_OF_MONTH) + "." + 
+	    (gc.get(GregorianCalendar.MONTH) +1) + "." +
+	    gc.get(GregorianCalendar.YEAR) + "  " + 
+	    gc.get(GregorianCalendar.HOUR_OF_DAY) + ":" + 
+	    gc.get(GregorianCalendar.MINUTE) + ":" +
+	    gc.get(GregorianCalendar.SECOND);
 
     }
 
 
     public void saveConfig()
     {
+
+	System.out.println("SAVEEEEEEEEEEEEE !!!");
 
 	try
 	{
@@ -156,7 +322,8 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 	    BufferedWriter bw = new BufferedWriter(new FileWriter(getApplicationDatabaseConfig()));
 
 	    bw.write("#\n" +
-		     "# GGC_Config (Settings for GGC)\n" +
+		     "# GGC_Config (Settings for GGC)\n" + 
+		     "#" + getCurrentTimeAsUserReadableString() + "\n" + 
 		     "#\n"+
 		     "# Don't edit by hand\n" +
 		     "# Only settings need for application startup are written here. All other info\n"+
@@ -174,7 +341,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 		dbs.write(bw);
 	    }
 
-/*
+
 	    bw.write("\n\n#\n# Look and Feel Settings\n#\n\n");
 	    bw.write("LF_NAME=" + selected_LF_Name +"\n");
 
@@ -186,7 +353,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
 	    //props.put("LF_CLASS", selected_LF_Name);
 	    bw.write("SKINLF_SELECTED=" + skinLFSelected +"\n");
-	    //props.put("SKINLF_SELECTED", skinLFSelected); */
+	    //props.put("SKINLF_SELECTED", skinLFSelected); 
 
 
 	    bw.write("\n\n#\n# Db Selector\n#\n");
@@ -229,6 +396,37 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 	return this.allDatabases;
     }
 
+    public String[] getAllDatabasesNamesAsArray()
+    {
+	String[] arr = new String[this.allDatabases.size()];
+	
+	for(int i=0; i<this.allDatabases.size(); i++)
+	{
+	    arr[i] = this.allDatabases.get("" + i).name;
+
+	}
+
+	return arr;
+
+    }
+
+
+    public String[] getAllDatabasesNamesPlusAsArray()
+    {
+	String[] arr = new String[this.allDatabases.size()];
+
+	for(int i=0; i<this.allDatabases.size(); i++)
+	{
+	    arr[i] = i + " - " + this.allDatabases.get("" + i).name;
+
+	}
+
+	return arr;
+
+    }
+
+
+
     public DatabaseSettings getDatabase(int index)
     {
 	return null;
@@ -237,6 +435,11 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     public DatabaseSettings getSelectedDatabase()
     {
 	return null;
+    }
+
+    public int getSelectedDatabaseIndex()
+    {
+	return this.selected_db;
     }
 
 
@@ -346,6 +549,25 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
 	*/
     }
+
+
+    public boolean hasChanged()
+    {
+	return this.m_changed;
+    }
+
+
+    public void setSelectedDatabaseIndex(int index)
+    {
+	if (this.selected_db!=index)
+	{
+	    this.selected_db = index;
+	    this.m_changed = true;
+	}
+
+    }
+
+
 
 
 

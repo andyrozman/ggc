@@ -6,8 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class MealFoodH implements Serializable
-{
+public class MealFoodH implements Serializable {
 
     /** identifier field */
     private int id;
@@ -22,8 +21,7 @@ public class MealFoodH implements Serializable
     private long food_id;
 
     /** full constructor */
-    public MealFoodH(int id, long meal_id, int type, long food_id)
-    {
+    public MealFoodH(int id, long meal_id, int type, long food_id) {
         this.id = id;
         this.meal_id = meal_id;
         this.type = type;
@@ -31,80 +29,64 @@ public class MealFoodH implements Serializable
     }
 
     /** default constructor */
-    public MealFoodH()
-    {
+    public MealFoodH() {
     }
 
     /** minimal constructor */
-    public MealFoodH(int id)
-    {
+    public MealFoodH(int id) {
         this.id = id;
     }
 
-    public int getId()
-    {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(int id)
-    {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getMeal_id()
-    {
+    public long getMeal_id() {
         return this.meal_id;
     }
 
-    public void setMeal_id(long meal_id)
-    {
+    public void setMeal_id(long meal_id) {
         this.meal_id = meal_id;
     }
 
-    public int getType()
-    {
+    public int getType() {
         return this.type;
     }
 
-    public void setType(int type)
-    {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public long getFood_id()
-    {
+    public long getFood_id() {
         return this.food_id;
     }
 
-    public void setFood_id(long food_id)
-    {
+    public void setFood_id(long food_id) {
         this.food_id = food_id;
     }
 
-    @Override
-    public String toString()
-    {
+    public String toString() {
         return new ToStringBuilder(this)
-        .append("id", getId())
-        .toString();
+            .append("id", getId())
+            .toString();
     }
 
-    @Override
-    public boolean equals(Object other)
-    {
+    public boolean equals(Object other) {
         if ( !(other instanceof MealFoodH) ) return false;
         MealFoodH castOther = (MealFoodH) other;
         return new EqualsBuilder()
-        .append(this.getId(), castOther.getId())
-        .isEquals();
+            .append(this.getId(), castOther.getId())
+            .isEquals();
     }
 
-    @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return new HashCodeBuilder()
-        .append(getId())
-        .toHashCode();
+            .append(getId())
+            .toHashCode();
     }
 
 }

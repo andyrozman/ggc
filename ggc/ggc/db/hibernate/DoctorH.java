@@ -6,8 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class DoctorH implements Serializable
-{
+public class DoctorH implements Serializable {
 
     /** identifier field */
     private long id;
@@ -31,8 +30,7 @@ public class DoctorH implements Serializable
     private String comment;
 
     /** full constructor */
-    public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String comment)
-    {
+    public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String comment) {
         this.name = name;
         this.address = address;
         this.phone_gsm = phone_gsm;
@@ -42,104 +40,83 @@ public class DoctorH implements Serializable
     }
 
     /** default constructor */
-    public DoctorH()
-    {
+    public DoctorH() {
     }
 
-    public long getId()
-    {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(long id)
-    {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getAddress()
-    {
+    public String getAddress() {
         return this.address;
     }
 
-    public void setAddress(String address)
-    {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    public String getPhone_gsm()
-    {
+    public String getPhone_gsm() {
         return this.phone_gsm;
     }
 
-    public void setPhone_gsm(String phone_gsm)
-    {
+    public void setPhone_gsm(String phone_gsm) {
         this.phone_gsm = phone_gsm;
     }
 
-    public String getPhone()
-    {
+    public String getPhone() {
         return this.phone;
     }
 
-    public void setPhone(String phone)
-    {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public String getWorking_time()
-    {
+    public String getWorking_time() {
         return this.working_time;
     }
 
-    public void setWorking_time(String working_time)
-    {
+    public void setWorking_time(String working_time) {
         this.working_time = working_time;
     }
 
-    public String getComment()
-    {
+    public String getComment() {
         return this.comment;
     }
 
-    public void setComment(String comment)
-    {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 
-    @Override
-    public String toString()
-    {
+    public String toString() {
         return new ToStringBuilder(this)
-        .append("id", getId())
-        .toString();
+            .append("id", getId())
+            .toString();
     }
 
-    @Override
-    public boolean equals(Object other)
-    {
+    public boolean equals(Object other) {
         if ( !(other instanceof DoctorH) ) return false;
         DoctorH castOther = (DoctorH) other;
         return new EqualsBuilder()
-        .append(this.getId(), castOther.getId())
-        .isEquals();
+            .append(this.getId(), castOther.getId())
+            .isEquals();
     }
 
-    @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return new HashCodeBuilder()
-        .append(getId())
-        .toHashCode();
+            .append(getId())
+            .toHashCode();
     }
 
 }

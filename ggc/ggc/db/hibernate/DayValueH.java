@@ -6,8 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class DayValueH implements Serializable
-{
+public class DayValueH implements Serializable {
 
     /** identifier field */
     private long id;
@@ -37,8 +36,7 @@ public class DayValueH implements Serializable
     private String comment;
 
     /** full constructor */
-    public DayValueH(long dt_info, float bg, float ins1, float ins2, float ch, String meals_ids, int act, String comment)
-    {
+    public DayValueH(long dt_info, float bg, float ins1, float ins2, float ch, String meals_ids, int act, String comment) {
         this.dt_info = dt_info;
         this.bg = bg;
         this.ins1 = ins1;
@@ -50,130 +48,104 @@ public class DayValueH implements Serializable
     }
 
     /** default constructor */
-    public DayValueH()
-    {
+    public DayValueH() {
     }
 
     /** minimal constructor */
-    public DayValueH(long dt_info)
-    {
+    public DayValueH(long dt_info) {
         this.dt_info = dt_info;
     }
 
-    public long getId()
-    {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(long id)
-    {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public long getDt_info()
-    {
+    public long getDt_info() {
         return this.dt_info;
     }
 
-    public void setDt_info(long dt_info)
-    {
+    public void setDt_info(long dt_info) {
         this.dt_info = dt_info;
     }
 
-    public float getBg()
-    {
+    public float getBg() {
         return this.bg;
     }
 
-    public void setBg(float bg)
-    {
+    public void setBg(float bg) {
         this.bg = bg;
     }
 
-    public float getIns1()
-    {
+    public float getIns1() {
         return this.ins1;
     }
 
-    public void setIns1(float ins1)
-    {
+    public void setIns1(float ins1) {
         this.ins1 = ins1;
     }
 
-    public float getIns2()
-    {
+    public float getIns2() {
         return this.ins2;
     }
 
-    public void setIns2(float ins2)
-    {
+    public void setIns2(float ins2) {
         this.ins2 = ins2;
     }
 
-    public float getCh()
-    {
+    public float getCh() {
         return this.ch;
     }
 
-    public void setCh(float ch)
-    {
+    public void setCh(float ch) {
         this.ch = ch;
     }
 
-    public String getMeals_ids()
-    {
+    public String getMeals_ids() {
         return this.meals_ids;
     }
 
-    public void setMeals_ids(String meals_ids)
-    {
+    public void setMeals_ids(String meals_ids) {
         this.meals_ids = meals_ids;
     }
 
-    public int getAct()
-    {
+    public int getAct() {
         return this.act;
     }
 
-    public void setAct(int act)
-    {
+    public void setAct(int act) {
         this.act = act;
     }
 
-    public String getComment()
-    {
+    public String getComment() {
         return this.comment;
     }
 
-    public void setComment(String comment)
-    {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 
-    @Override
-    public String toString()
-    {
+    public String toString() {
         return new ToStringBuilder(this)
-        .append("id", getId())
-        .toString();
+            .append("id", getId())
+            .toString();
     }
 
-    @Override
-    public boolean equals(Object other)
-    {
+    public boolean equals(Object other) {
         if ( !(other instanceof DayValueH) ) return false;
         DayValueH castOther = (DayValueH) other;
         return new EqualsBuilder()
-        .append(this.getId(), castOther.getId())
-        .isEquals();
+            .append(this.getId(), castOther.getId())
+            .isEquals();
     }
 
-    @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return new HashCodeBuilder()
-        .append(getId())
-        .toHashCode();
+            .append(getId())
+            .toHashCode();
     }
 
 }

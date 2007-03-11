@@ -68,11 +68,13 @@ import ggc.data.MonthlyValues;
 import ggc.data.WeeklyValues;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
+import ggc.db.datalayer.Settings;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.DayValueH;
 import ggc.db.hibernate.FoodDescriptionH;
 import ggc.db.hibernate.FoodGroupH;
+import ggc.db.hibernate.SettingsH;
 import ggc.db.hibernate.SettingsMainH;
 import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
@@ -85,6 +87,7 @@ public class GGCDb
     public static final int DB_STARTED = 3;
 
     private boolean debug = true;
+    private boolean db_debug = false;
 
     private static Log s_logger = LogFactory.getLog(GGCDb.class); 
     private Session m_session = null;
@@ -365,6 +368,35 @@ public class GGCDb
     }
 
 
+    public boolean deleteHibernate(Object obj)
+    {
+
+	if (debug)
+	    System.out.println("deleteHibernate::" + obj.toString());
+
+	try
+	{
+	    Session sess = getSession();
+	    Transaction tx = sess.beginTransaction();
+
+	    //sess..update(obj);
+	    sess.delete(obj);
+
+	    tx.commit();
+
+	    return true;
+	}
+	catch(Exception ex)
+	{
+	    System.out.println("Exception on deleteHibernate: " + ex);
+	    ex.printStackTrace();
+	    return false;
+	}
+
+    }
+
+
+
 
     public boolean get(Object obj)
     {
@@ -482,34 +514,65 @@ public class GGCDb
 
             Properties props = new Properties();
 
-            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
-            props.load(in);
+	    boolean config_read = false;
+
+	    try
+	    {
+		FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
+		props.load(in);
+		in.close();
+
+		db_num = new Integer(props.getProperty("SELECTED_DB"));
+		db_conn_name = props.getProperty("DB"+db_num+"_CONN_NAME");
+
+		config_read = true;
+	    }
+	    catch(Exception ex)
+	    {
+
+	    }
 
 	    //System.out.println(in);
 
 
-            db_num = new Integer(props.getProperty("SELECTED_DB"));
-            db_conn_name = props.getProperty("DB"+db_num+"_CONN_NAME");
-
-	    System.out.println("Loading Db Configuration #"+ db_num + ": " + db_conn_name);
-
-            db_hib_dialect = props.getProperty("DB"+db_num+"_HIBERNATE_DIALECT");
+            //db_num = new Integer(props.getProperty("SELECTED_DB"));
+            //db_conn_name = props.getProperty("DB"+db_num+"_CONN_NAME");
 
 
-            db_driver_class = props.getProperty("DB"+db_num+"_CONN_DRIVER_CLASS");
-            db_conn_url = props.getProperty("DB"+db_num+"_CONN_URL");
-            db_conn_username = props.getProperty("DB"+db_num+"_CONN_USERNAME");
-            db_conn_password = props.getProperty("DB"+db_num+"_CONN_PASSWORD");
+	    if (config_read)
+	    {
+		System.out.println("GGCDb: Loading Db Configuration #"+ db_num + ": " + db_conn_name);
+
+		db_hib_dialect = props.getProperty("DB"+db_num+"_HIBERNATE_DIALECT");
+
+
+		db_driver_class = props.getProperty("DB"+db_num+"_CONN_DRIVER_CLASS");
+		db_conn_url = props.getProperty("DB"+db_num+"_CONN_URL");
+		db_conn_username = props.getProperty("DB"+db_num+"_CONN_USERNAME");
+		db_conn_password = props.getProperty("DB"+db_num+"_CONN_PASSWORD");
+	    }
+	    else
+	    {
+		// we had trouble reading config so we use default database
+
+		db_num = 0;
+		db_conn_name = "Internal Database";
+
+		System.out.println("GGCDb: Database configuration not found. Using default database.");
+		System.out.println("GGCDb: Loading Db Configuration #"+ db_num + ": " + db_conn_name);
+
+		db_hib_dialect = "org.hibernate.dialect.HSQLDialect";
+		db_driver_class = "org.hsqldb.jdbcDriver";
+		db_conn_url = "jdbc:hsqldb:file:../data/ggc_db";
+		db_conn_username = "sa";
+		db_conn_password = "";
+	    }
+
 
 
             Configuration cfg = new Configuration()
                             .addResource("GGC_Nutrition.hbm.xml")
                             .addResource("GGC_Main.hbm.xml")
-                            //.addResource("InternalData.hbm.xml")
-			    //.addResource("ParishData.hbm.xml")
-                            //.addResource("Person.hbm.xml")
-                            //.addResource("Planner.hbm.xml")
-                            //.addResource("Misc.hbm.xml")
 
                             .setProperty("hibernate.dialect", db_hib_dialect)
                             .setProperty("hibernate.connection.driver_class", db_driver_class)
@@ -524,7 +587,8 @@ public class GGCDb
                             .setProperty("hibernate.c3p0.timeout", "1800")
                             .setProperty("hibernate.c3p0.max_statements", "50"); */
 
-            in.close();
+
+//	    System.out.println("Config loaded.");
 
             return cfg;
         }
@@ -545,18 +609,91 @@ public class GGCDb
      */
     public void loadConfigData()
     {
-        Session sess = getSession();
-        SettingsMainH seti = (SettingsMainH)sess.get(SettingsMainH.class, new Long(1));
 
+        Session sess = getSession();
+        //SettingsMainH seti = (SettingsMainH)sess.get(SettingsMainH.class, new Long(1));
+
+	
         // load schemes
         loadColorSchemes(sess);
 
+	// sets settings
+	loadConfigDataEntries();
+
+	/*
         // sets settings
         m_da.getSettings().setSettings(seti);
 
         // sets active color scheme
         m_da.getSettings().setColorSchemeObject(seti.getColor_scheme());
+	*/
     }
+
+
+    public void loadConfigDataEntries()
+    {
+
+	Session sess = getSession();
+
+	Hashtable<String,Settings> table = new Hashtable<String,Settings>();
+
+
+	Query q = sess.createQuery("select cfg from ggc.db.hibernate.SettingsH as cfg");
+
+	Iterator it = q.iterate();
+
+	while (it.hasNext())
+	{
+	    SettingsH eh = (SettingsH)it.next();
+	    table.put(eh.getKey(), new Settings(eh));
+	}
+
+	m_da.getConfigurationManager().checkConfiguration(table);
+
+    }	
+
+
+    public void checkConfigDataEntries()
+    {
+	/*
+	<property name="name" type="string"  length="50"/>    
+	<property name="ins1_name" type="string" length="20" />
+	<property name="ins1_abbr" type="string" length="10" />
+	<property name="ins2_name" type="string" length="20" />
+	<property name="ins2_abbr" type="string" length="10" />
+	<property name="meter_type"  type="int" />
+	<property name="meter_port"  type="string" length="50" />
+	<property name="bg_unit"  type="int" />  <!-- 1= mmol/l, 2=mg/dl -->
+	<property name="bg1_low"  type="float"  />
+	<property name="bg1_high"  type="float"  />
+	<property name="bg1_target_low"  type="float"  />
+	<property name="bg1_target_high"  type="float"  />
+	<property name="bg2_low"  type="float"  />
+	<property name="bg2_high"  type="float"  />
+	<property name="bg2_target_low"  type="float"  />
+	<property name="bg2_target_high"  type="float"  />
+	<property name="laf_type" type="int"  /> <!-- 1= class specified, 2=skinlf -->   
+	<property name="laf_name" type="string" length="60"  /> <!-- 1= class, 2= file of skin -->   
+
+	<property name="render_rendering"  type="int" />
+	<property name="render_dithering"  type="int" />
+	<property name="render_interpolation"  type="int" />
+	<property name="render_antialiasing"  type="int" />
+	<property name="render_textantialiasing"  type="int" />
+	<property name="render_colorrendering"  type="int" />
+	<property name="render_fractionalmetrics"  type="int" />
+
+	<property name="print_pdf_viewer_path"  type="string" length="100" />
+	<property name="print_lunch_start_time"  type="int" />
+	<property name="print_dinner_start_time"  type="int" />
+	<property name="print_night_start_time"  type="int" />
+	<property name="print_empty_value"  type="string" length="10" />
+
+	<property name="color_scheme"  type="string" length="50" />
+	*/
+
+    }
+
 
 
     /**
@@ -564,7 +701,8 @@ public class GGCDb
      */
     public void saveConfigData()
     {
-        editHibernate(m_da.getSettings().getSettings());
+	m_da.getConfigurationManager().saveConfig();
+        //editHibernate(m_da.getSettings().getSettings());
         // save config
         //DataAccess.notImplemented("GGCDb::saveConfigData()");
     }
@@ -651,8 +789,10 @@ public class GGCDb
 
     	if (m_loadStatus == DB_CONFIG_LOADED)
     	    return null;
-    
-    	System.out.println("Hibernate: getHbA1c()");
+
+	if (db_debug)
+	    System.out.println("Hibernate: getHbA1c()");
+
     	HbA1cValues hbVal = new HbA1cValues();
 
         try 
@@ -674,8 +814,8 @@ public class GGCDb
 
 	    while (it.hasNext())
 	    {
-            DayValueH dv = (DayValueH)it.next();
-            hbVal.addDayValueRow(new DailyValuesRow(dv));
+		DayValueH dv = (DayValueH)it.next();
+		hbVal.addDayValueRow(new DailyValuesRow(dv));
 	    }
 
 	    hbVal.processDayValues();
@@ -697,7 +837,7 @@ public class GGCDb
     	if (m_loadStatus == DB_CONFIG_LOADED)
     	    return null;
 
-        if (debug)
+	if (db_debug)
             System.out.println("Hibernate: getDayStats()");
         
     	DailyValues dV = new DailyValues();
@@ -739,7 +879,7 @@ public class GGCDb
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        if (debug)
+	if (db_debug)
             System.out.println("Hibernate: getDayStatsRange()");
 
         WeeklyValues wv = new WeeklyValues();
@@ -754,7 +894,7 @@ public class GGCDb
             String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
             //sdf.format(end.getTime());
 
-            if (debug)
+	    if (db_debug)
                 System.out.println("getDatStatsRange: "  + sDay + " - " + eDay);
 
             Query q = getSession().createQuery("SELECT dv from " + 
@@ -790,7 +930,7 @@ public class GGCDb
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        if (debug)
+	if (db_debug)
             System.out.println("Hibernate: getMonthlyValues()");
 
         MonthlyValues mv = new MonthlyValues(year, month);
@@ -832,12 +972,13 @@ public class GGCDb
     public void saveDayStats(DailyValues dV)
     {
 
-        System.out.println("Hibernate: saveDayStats()");
+	if (db_debug)
+	    System.out.println("Hibernate: saveDayStats()");
 
 
         if (dV.hasChanged()) 
         {
-            if (debug)
+	    if (db_debug)
                 System.out.println("SDS: Has changed");
 
             Session sess = getSession();
@@ -849,7 +990,7 @@ public class GGCDb
 
                 if (dV.hasDeletedItems()) 
                 {
-                    if (debug)
+		    if (db_debug)
                         System.out.println("SDS: Deleted");
 
                     Transaction tx = sess.beginTransaction();
@@ -866,35 +1007,35 @@ public class GGCDb
 
                 // see if any of elements were changed or added
                 
-        		for (int i = 0; i < dV.getRowCount(); i++) 
-        		{
-        		    DailyValuesRow dwr = dV.getRowAt(i);
-        
-        		    if (dwr.isNew())
-        		    {
-                        if (debug)
-                            System.out.println("  New");
+		for (int i = 0; i < dV.getRowCount(); i++) 
+		{
+		    DailyValuesRow dwr = dV.getRowAt(i);
 
-            			Transaction tx = sess.beginTransaction();
-            
-            			DayValueH dvh = dwr.getHibernateObject();
-            			Long l = (Long)sess.save(dvh);
-            
-            			dvh.setId(l.longValue());
-            			tx.commit();
-        		    }
-                    else if (dwr.hasChanged())
-                    {
-                        Transaction tx = sess.beginTransaction();
+		    if (dwr.isNew())
+		    {
+			if (db_debug)
+			    System.out.println("  New");
+			
+			Transaction tx = sess.beginTransaction();
+    
+			DayValueH dvh = dwr.getHibernateObject();
+			Long l = (Long)sess.save(dvh);
+    
+			dvh.setId(l.longValue());
+			tx.commit();
+		    }
+		    else if (dwr.hasChanged())
+		    {
+			Transaction tx = sess.beginTransaction();
 
-                        if (debug)
-                            System.out.println("  Changed");
+			if (db_debug)
+			    System.out.println("  Changed");
 
-                        DayValueH dvh = dwr.getHibernateObject();
-                        sess.update(dvh);
+			DayValueH dvh = dwr.getHibernateObject();
+			sess.update(dvh);
 
-                        tx.commit();
-                    }
+			tx.commit();
+		    }
 
                 } // for
 
@@ -907,7 +1048,7 @@ public class GGCDb
         } // hasChanged
         else
         {
-            if (debug)
+	    if (db_debug)
                 System.out.println("SDS: Has not changed");
         }
 
@@ -918,7 +1059,7 @@ public class GGCDb
         if (m_loadStatus == DB_CONFIG_LOADED)
             return false;
 
-        if (debug)
+	if (db_debug)
             System.out.println("Hibernate: dateTimeExists()");
 
         DailyValues dV = new DailyValues();

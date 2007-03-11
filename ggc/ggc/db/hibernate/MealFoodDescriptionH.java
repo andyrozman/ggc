@@ -6,8 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class MealFoodDescriptionH implements Serializable
-{
+public class MealFoodDescriptionH implements Serializable {
 
     /** identifier field */
     private long id;
@@ -37,8 +36,7 @@ public class MealFoodDescriptionH implements Serializable
     private float sugar_g;
 
     /** full constructor */
-    public MealFoodDescriptionH(long id, int meal_group_id, String name, float refuse, float fat_g, float CH_g, float energy_kcal, float energy_kJ, float sugar_g)
-    {
+    public MealFoodDescriptionH(long id, int meal_group_id, String name, float refuse, float fat_g, float CH_g, float energy_kcal, float energy_kJ, float sugar_g) {
         this.id = id;
         this.meal_group_id = meal_group_id;
         this.name = name;
@@ -51,130 +49,104 @@ public class MealFoodDescriptionH implements Serializable
     }
 
     /** default constructor */
-    public MealFoodDescriptionH()
-    {
+    public MealFoodDescriptionH() {
     }
 
     /** minimal constructor */
-    public MealFoodDescriptionH(long id)
-    {
+    public MealFoodDescriptionH(long id) {
         this.id = id;
     }
 
-    public long getId()
-    {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(long id)
-    {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getMeal_group_id()
-    {
+    public int getMeal_group_id() {
         return this.meal_group_id;
     }
 
-    public void setMeal_group_id(int meal_group_id)
-    {
+    public void setMeal_group_id(int meal_group_id) {
         this.meal_group_id = meal_group_id;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public float getRefuse()
-    {
+    public float getRefuse() {
         return this.refuse;
     }
 
-    public void setRefuse(float refuse)
-    {
+    public void setRefuse(float refuse) {
         this.refuse = refuse;
     }
 
-    public float getFat_g()
-    {
+    public float getFat_g() {
         return this.fat_g;
     }
 
-    public void setFat_g(float fat_g)
-    {
+    public void setFat_g(float fat_g) {
         this.fat_g = fat_g;
     }
 
-    public float getCH_g()
-    {
+    public float getCH_g() {
         return this.CH_g;
     }
 
-    public void setCH_g(float CH_g)
-    {
+    public void setCH_g(float CH_g) {
         this.CH_g = CH_g;
     }
 
-    public float getEnergy_kcal()
-    {
+    public float getEnergy_kcal() {
         return this.energy_kcal;
     }
 
-    public void setEnergy_kcal(float energy_kcal)
-    {
+    public void setEnergy_kcal(float energy_kcal) {
         this.energy_kcal = energy_kcal;
     }
 
-    public float getEnergy_kJ()
-    {
+    public float getEnergy_kJ() {
         return this.energy_kJ;
     }
 
-    public void setEnergy_kJ(float energy_kJ)
-    {
+    public void setEnergy_kJ(float energy_kJ) {
         this.energy_kJ = energy_kJ;
     }
 
-    public float getSugar_g()
-    {
+    public float getSugar_g() {
         return this.sugar_g;
     }
 
-    public void setSugar_g(float sugar_g)
-    {
+    public void setSugar_g(float sugar_g) {
         this.sugar_g = sugar_g;
     }
 
-    @Override
-    public String toString()
-    {
+    public String toString() {
         return new ToStringBuilder(this)
-        .append("id", getId())
-        .toString();
+            .append("id", getId())
+            .toString();
     }
 
-    @Override
-    public boolean equals(Object other)
-    {
+    public boolean equals(Object other) {
         if ( !(other instanceof MealFoodDescriptionH) ) return false;
         MealFoodDescriptionH castOther = (MealFoodDescriptionH) other;
         return new EqualsBuilder()
-        .append(this.getId(), castOther.getId())
-        .isEquals();
+            .append(this.getId(), castOther.getId())
+            .isEquals();
     }
 
-    @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return new HashCodeBuilder()
-        .append(getId())
-        .toHashCode();
+            .append(getId())
+            .toHashCode();
     }
 
 }
