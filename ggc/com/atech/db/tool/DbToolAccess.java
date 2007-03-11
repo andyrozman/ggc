@@ -551,7 +551,7 @@ public class DbToolAccess
                         selected_lang = Integer.parseInt((String)props.get(str));
                     }
                     else 
-                        System.out.println("DataAccess:loadConfig:: Unknown parameter : " + str);
+                        System.out.println("DataAccess:loadConfig:: Unknown parameter : '" + str  +"'");
 
                 }
 
