@@ -29,8 +29,8 @@
 
 package ggc.util;
 
-import java.awt.Font;
 import java.awt.Color;
+import java.awt.Font;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -38,23 +38,27 @@ import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 import java.util.Properties;
 
-import ggc.data.meter.MeterManager;
+import javax.swing.ImageIcon;
+
 import ggc.data.DailyValues;
 import ggc.data.HbA1cValues;
 import ggc.data.WeeklyValues;
+import ggc.data.cfg.ConfigurationManager;
+import ggc.data.meter.MeterManager;
 import ggc.db.GGCDb;
 import ggc.db.GGCDbLoader;
+import ggc.db.tool.DbToolApplicationGGC;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.little.StatusBarL;
-
 import ggc.gui.nutrition.GGCTreeRoot;
-import ggc.db.tool.DbToolApplicationGGC;
 
-public class DataAccess
+
+public class DataAccess 
 {
 
     // LF
@@ -109,6 +113,7 @@ public class DataAccess
     private GGCProperties m_settings = null;
 
     private DbToolApplicationGGC m_configFile = null;
+    private ConfigurationManager m_cfgMgr = null;
 
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
@@ -120,6 +125,41 @@ public class DataAccess
     public String[] avLangPostfix = { "en", "de", "si", };
 
     public String[] bg_units = { "mg/dl", "mmol/l" };
+
+
+    public ImageIcon config_icons[] = {
+	    new ImageIcon("icons/cfg_general.png"), 
+	    new ImageIcon("icons/cfg_medical.png"), 
+	    new ImageIcon("icons/cfg_colors.png"), 
+	    new ImageIcon("icons/cfg_render.png"), 
+	    new ImageIcon("icons/cfg_meter.png"), 
+	    new ImageIcon("icons/cfg_print.png")
+	};
+
+/*	public ImageIcon config_icons[] = {
+	    new ImageIcon("images/cfg_db.gif"), 
+	    new ImageIcon("images/cfg_look.gif"), 
+	    new ImageIcon("images/cfg_myparish.gif"), 
+	    new ImageIcon("images/cfg_masses.gif"), 
+	    new ImageIcon("images/cfg_users.gif"), 
+	    new ImageIcon("images/cfg_lang.gif"), 
+	    new ImageIcon("images/cfg_web.gif"), 
+	    null
+	};
+
+    public String config_types[] = { 
+	m_ic.getMessage("GENERAL"),
+	m_ic.getMessage("MEDICAL_DATA"),
+	m_ic.getMessage("COLORS_AND_FONTS"),
+	m_ic.getMessage("RENDERING_QUALITY"),
+	m_ic.getMessage("METER_CONFIGURATION"),
+	m_ic.getMessage("PRINTING")
+    };
+
+
+
+
+
 
     // ********************************************************
     // ******      Constructors and Access methods        *****    
@@ -144,12 +184,17 @@ public class DataAccess
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
 
-        this.m_settings = new GGCProperties(this, this.m_configFile);
+	m_cfgMgr = new ConfigurationManager(this);
+
+	this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
 
         m_i18n = I18nControl.getInstance();
 
         this.verifyComConfig();
-    }
+
+	checkPrerequisites();
+
+    } 
 
     //  Method:       getInstance
     //  Author:       Andy
@@ -192,6 +237,18 @@ public class DataAccess
         return s_da;
     }
 
+    public void checkPrerequisites()
+    {
+	// check that ../data/temp exists (needed for printing)
+
+	File f = new File("../data/temp/");
+	if (!f.exists())
+	{
+	    f.mkdir();
+	}
+    }
+
+
     /*
      static public DataAccess getInstance()
      {
@@ -225,6 +282,18 @@ public class DataAccess
         return m_db;
     }
 
+
+    // ********************************************************
+    // ******                    Db                       *****    
+    // ********************************************************
+
+
+    public DbToolApplicationGGC getDbConfig()
+    {
+	return this.m_configFile;
+    }
+
+
     // ********************************************************
     // ******                   Meters                    *****    
     // ********************************************************
@@ -252,6 +321,12 @@ public class DataAccess
     {
         return new Color(color);
     }
+
+    public ConfigurationManager getConfigurationManager()
+    {
+	return this.m_cfgMgr;
+    }
+
 
     // ********************************************************
     // ******                  Language                   *****    
@@ -465,6 +540,33 @@ public class DataAccess
      }
      */
 
+
+    public static String[] getLFData()
+    {
+        String out[] = new String[2];
+
+        try
+        {
+            Properties props = new Properties();
+
+            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
+            props.load(in);
+
+            out[0] = (String)props.get("LF_CLASS");
+            out[1] = (String)props.get("SKINLF_SELECTED");
+
+            return out;
+
+        }
+        catch(Exception ex)
+        {
+            System.out.println("DataAccess::getLFData::Exception> " + ex);
+            return null;
+        }
+    }
+
+
+
     // ********************************************************
     // ******          COMMUNICATION API Config           *****    
     // ********************************************************
@@ -473,6 +575,7 @@ public class DataAccess
      */
     private void verifyComConfig()
     {
+	/*&
         Properties pr = new Properties();
 
         pr.put("Driver", "com.ibm.comm.IBMCommDriver");
@@ -520,6 +623,7 @@ public class DataAccess
                             + File.pathSeparator
                             + ": " + ex);
         }
+*/
 
     }
 
@@ -749,7 +853,7 @@ public class DataAccess
             st += getLeadingZero(gc.get(Calendar.MINUTE), 2);
         }
 
-        System.out.println(st);
+        //System.out.println(st);
 
         return st;
     }
@@ -1060,5 +1164,7 @@ public class DataAccess
         return returning.toString();
 
     }
+
+
 
 }
