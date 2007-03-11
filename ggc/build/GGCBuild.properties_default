@@ -1,16 +1,23 @@
 #
-# GNU Gluco Control
+# GNU Gluco Control (Ant Build file)
 #
 #
 
-# Change this settings to reflect your paths
+
+
+#
+#  Root directory of ggc
+#
+outdir.dir=d:/ggc
+
+
+#
+#  Change this options if you are sure what are you doing
 #
 
-# output.dir = where output files (classes) and files will be put
-outdir.dir=d:/My_Projects/ggc
 
 # binary.dir = where output files (jars) will be places
-binary.dir=${outdir.dir}
+binary.dir=${outdir.dir}/bin
 
 # source.dir = location of source files
 source.dir=../
@@ -21,7 +28,13 @@ library.dir=${outdir.dir}/lib
 # build.dir = output for .class files
 build.dir=${outdir.dir}/build/classes
 
+
+
+#
+# Additional jdbc driver needed for your database
+#
 # set this if you use database that is not our default one (HypersonicSQL)
+#
 additional.jdbc.driver=${jdbc_path}/some.jdbc.driver.jar
 
 #
