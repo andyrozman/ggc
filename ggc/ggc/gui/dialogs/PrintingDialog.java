@@ -246,7 +246,8 @@ public class PrintingDialog extends JDialog implements ActionListener
 	System.out.println(fl.getAbsolutePath());
 	System.out.println(File.separator);
     
-	File acr = new File("c:/Program Files/Adobe/Acrobat 7.0/Reader/AcroRd32.exe");
+	File acr = new File(m_da.getSettings().getPdfVieverPath());
+	    //"c:/Program Files/Adobe/Acrobat 7.0/Reader/AcroRd32.exe");
 				
 	System.out.println(acr.exists());
 	System.out.println(acr.getAbsoluteFile());

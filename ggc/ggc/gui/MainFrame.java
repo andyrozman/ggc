@@ -53,18 +53,33 @@ import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
 
 
+// 
+//   Short History 
+// 
+//   0.2.2  Configuration with pictures and in database 	
+// 
+// 
+// 
+// 
+//   0.2.3   Configuration
+//   0.2.4
+// 
+// 
+// 
+
+
 public class MainFrame extends JFrame 
 {
 
     // Version information
-    public  static String s_version = "0.2.2.5";
+    public  static String s_version = "0.2.4.1";
     private String full_version = "v" + s_version;
-    private String version_date = "27th December 2006";
+    private String version_date = "11th March 2007";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
 
-    private static final String skinLFdir = "../lib/skinLFThemes/";
+    private static final String skinLFdir = "../data/skinlf_themes/";
 
     //fields
     private JMenuBar menuBar = new JMenuBar();
@@ -117,7 +132,7 @@ public class MainFrame extends JFrame
         //MainFrame.setLookAndFeel("underlingthemepack.zip"); ?
         //MainFrame.setLookAndFeel("royalInspiratthemepack.zip"); ?
         //  MainFrame.setLookAndFeel("hmmXPBluethemepack.zip");
-        MainFrame.setLookAndFeel("blueMetalthemepack.zip"); // Win (not so bad) ???
+    //    MainFrame.setLookAndFeel("blueMetalthemepack.zip"); // Win (not so bad) ???
         //  MainFrame.setLookAndFeel("architectBluethemepack.zip");
         //  MainFrame.setLookAndFeel("roueBluethemepack.zip");
         //  MainFrame.setLookAndFeel("quickSilverRthemepack.zip");  
@@ -145,8 +160,12 @@ public class MainFrame extends JFrame
         //  MainFrame.setLookAndFeel("cougarthemepack.zip");
         //  MainFrame.setLookAndFeel("cougarthemepack.zip");
 
+	MainFrame.setLookAndFeel();
+
     }
 
+
+    /*
     public static void setLookAndFeel(String name) 
     {
         try 
@@ -164,6 +183,53 @@ public class MainFrame extends JFrame
             System.err.println("Error loading L&F: " + ex);
         }
     }
+*/
+
+
+    public static void setLookAndFeel()
+    {
+
+        try
+        {
+
+            String data[] = DataAccess.getLFData();
+
+            if (data==null)
+                return;
+            else
+            {
+                if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
+                {
+                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));      
+
+                    s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
+                    UIManager.setLookAndFeel(s_skinlf);
+                }
+                else
+                {
+                    UIManager.setLookAndFeel(data[0]);
+                    //DataAccess.notImplemented(null, "PISMain:SetLookAndFeel - Non SkinLF");
+                }
+
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                JDialog.setDefaultLookAndFeelDecorated(true);
+
+            }
+
+        }
+        catch (Exception ex)
+        {
+            System.err.println("Error loading L&F: " + ex);
+        }
+
+
+    }
+
+
+
+
+
+
 
     //constructor
     public MainFrame(String title, boolean developer_version) 
@@ -318,6 +384,7 @@ public class MainFrame extends JFrame
         viewFrequencyGraphAction.setEnabled(opened);
         viewHbA1cAction.setEnabled(opened);
         readMeterAction.setEnabled(opened);
+	prefAction.setEnabled(opened);
         //s_dbH.setStatus();
     }
 

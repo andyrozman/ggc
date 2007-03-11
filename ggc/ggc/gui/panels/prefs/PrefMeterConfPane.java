@@ -30,6 +30,7 @@ package ggc.gui.panels.prefs;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Vector;
 
 import javax.swing.*;
 
@@ -56,16 +57,32 @@ public class PrefMeterConfPane extends AbstractPrefOptionsPanel
 
         //String[] choicesMeterType = {"GlucoCard"};
         comboMeterType = new JComboBox(m_da.getMeterManager().getAvailableMeters());
-        comboMeterType.setSelectedItem(m_da.getSettings().getMeterType());
+
+	System.out.println("Meter selected: " + m_da.getSettings().getMeterType());
+
+        comboMeterType.setSelectedIndex(m_da.getSettings().getMeterType());
         comboMeterType.addItemListener(this);
 
         //System.out.println(props.getMeterType());
 
         try
         {
-            comboPortId = new JComboBox(SerialMeterImport.getAvailableSerialPorts());
-            comboPortId.setSelectedItem(m_da.getSettings().getMeterPort());
-            comboPortId.addItemListener(this);
+
+	    Vector vct = SerialMeterImport.getAvailableSerialPorts();
+
+	    if (vct.size()==0)
+	    {
+		vct.add(m_ic.getMessage("NO_COM_PORT_AVAILABLE"));
+		comboPortId = new JComboBox(vct);
+	    }
+	    else
+	    {
+		comboPortId = new JComboBox(SerialMeterImport.getAvailableSerialPorts());
+		comboPortId.setSelectedItem(m_da.getSettings().getMeterPort());
+	    }
+
+	    comboPortId.addItemListener(this);
+
         }
         catch(java.lang.NoClassDefFoundError ex)
         {
@@ -118,7 +135,15 @@ public class PrefMeterConfPane extends AbstractPrefOptionsPanel
     public void saveProps()
     {
         settings.setMeterType(comboMeterType.getSelectedIndex());
+
+	System.out.println("Meter index: " + comboMeterType.getSelectedIndex());
+
         if (comboPortId!=null)
-            settings.setMeterPort(comboPortId.getSelectedItem().toString());
+	{
+	    if (comboPortId.getSelectedItem()==null)
+
+	    settings.setMeterPort(comboPortId.getSelectedItem().toString());
+	}
+
     }
 }

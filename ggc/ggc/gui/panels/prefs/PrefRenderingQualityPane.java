@@ -28,11 +28,14 @@
 package ggc.gui.panels.prefs;
 
 
-import ggc.gui.view.DailyGraphView;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
+import ggc.gui.view.DailyGraphView;
 
 
 public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
@@ -52,6 +55,10 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
 
     private void init()
     {
+
+	this.setBorder(new TitledBorder(m_ic.getMessage("RENDERING_QUALITY")));
+
+
         JPanel a = new JPanel(new GridLayout(0, 1));
         a.add(new JLabel(m_ic.getMessage("ANTIALIASING")+":"));
         a.add(new JLabel(m_ic.getMessage("COLOR_RENDERING")+":"));

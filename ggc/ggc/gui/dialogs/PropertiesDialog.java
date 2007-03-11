@@ -24,19 +24,26 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+
+
+import ggc.data.cfg.ConfigCellRenderer;
 import ggc.gui.panels.prefs.*;
 
 import ggc.util.I18nControl;
 import ggc.util.DataAccess;
 
 
-public class PropertiesDialog extends JDialog implements ActionListener
+public class PropertiesDialog extends JDialog implements ListSelectionListener, ActionListener
 {
 
     private I18nControl m_ic = I18nControl.getInstance();        
+    private DataAccess m_da = DataAccess.getInstance();
 
     private DefaultMutableTreeNode prefNode;
-    private JTree prefTree;
+    //private JTree prefTree;
+    private JList list = null;
     private JPanel prefPane;
     //private DefaultTreeModel prefTreeModel;
     //private JScrollPane prefTreePane;
@@ -44,6 +51,19 @@ public class PropertiesDialog extends JDialog implements ActionListener
 
     public ArrayList<JPanel> panels = null;
     public Hashtable<String, String> panel_id = null;
+
+    int current_index = 0;
+
+
+    public String config_types[] = { 
+	m_ic.getMessage("GENERAL"),
+	m_ic.getMessage("MEDICAL_DATA"),
+	m_ic.getMessage("COLORS_AND_FONTS"),
+	m_ic.getMessage("RENDERING_QUALITY"),
+	m_ic.getMessage("METER_CONFIGURATION"),
+	m_ic.getMessage("PRINTING")
+    };
+
 
 
     public PropertiesDialog(JFrame parent)
@@ -68,7 +88,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
     {
         Dimension dim = new Dimension(80, 20);
 
-        createNodes();
+        //createNodes();
 
 	/*
  private JTree prefTree;
@@ -77,6 +97,38 @@ public class PropertiesDialog extends JDialog implements ActionListener
 
 	*/
 
+	// Configuration icons
+/*	public ImageIcon config_icons[] = {
+	    new ImageIcon("images/cfg_db.gif"), 
+	    new ImageIcon("images/cfg_look.gif"), 
+	    new ImageIcon("images/cfg_myparish.gif"), 
+	    new ImageIcon("images/cfg_masses.gif"), 
+	    new ImageIcon("images/cfg_users.gif"), 
+	    new ImageIcon("images/cfg_lang.gif"), 
+	    new ImageIcon("images/cfg_web.gif"), 
+	    null
+	};
+
+    public String config_types[] = { 
+	m_ic.getMessage("GENERAL"),
+	m_ic.getMessage("MEDICAL_DATA"),
+	m_ic.getMessage("COLORS_AND_FONTS"),
+	m_ic.getMessage("RENDERING_QUALITY"),
+	m_ic.getMessage("METER_CONFIGURATION"),
+	m_ic.getMessage("PRINTING")
+    };
+
+*/
+	list = new JList(config_types); //m_da.config_types);
+	list.addListSelectionListener(this);
+	ConfigCellRenderer renderer = new ConfigCellRenderer();
+	renderer.setPreferredSize(new Dimension(100, 75));
+	list.setCellRenderer(renderer);
+
+
+
+
+	/*
         DefaultTreeModel prefTreeModel = new DefaultTreeModel(prefNode);
 
         prefTree = new JTree(prefTreeModel);
@@ -95,9 +147,12 @@ public class PropertiesDialog extends JDialog implements ActionListener
         });
 
         JScrollPane prefTreePane = new JScrollPane(prefTree, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	*/
 
-        prefPane = new JPanel(new BorderLayout());
+	JScrollPane prefTreePane = new JScrollPane(list, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+	prefPane = new JPanel(new BorderLayout());
+	
 
         //set the buttons up...
         JButton okButton = new JButton(m_ic.getMessage("OK"));
@@ -126,6 +181,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
         prefPane.add(panels.get(0), BorderLayout.CENTER);
 
         getContentPane().add(prefTreePane, BorderLayout.WEST);
+	//getContentPane().add(list, BorderLayout.WEST);
         getContentPane().add(prefPane, BorderLayout.CENTER);
     }
 
@@ -137,7 +193,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
     // ---    following methods and add values)
     // ---
 
-
+/*
     public void createNodes()
     {
         prefNode = new DefaultMutableTreeNode(m_ic.getMessage("PREFERENCES"));
@@ -155,17 +211,17 @@ public class PropertiesDialog extends JDialog implements ActionListener
 	    /*DefaultMutableTreeNode meterNode = new DefaultMutableTreeNode("Meters");
 	    meterNode.add(new DefaultMutableTreeNode("Glucocard"));
         prefNode.add(meterNode);*/
-    }
+  //  }
 
 
 
-    private int PANEL_MAIN = 0;
-    private int PANEL_GENERAL = 1;
-    private int PANEL_MEDICAL_DATA = 2;
-    private int PANEL_COLORS = 3;
-    private int PANEL_RENDERING = 4;
-    private int PANEL_METER = 5;
-    private int PANEL_PRINTING = 6;
+    //private int PANEL_MAIN = 0;
+    private int PANEL_GENERAL = 0;
+    private int PANEL_MEDICAL_DATA = 1;
+    private int PANEL_COLORS = 2;
+    private int PANEL_RENDERING = 3;
+    private int PANEL_METER = 4;
+    private int PANEL_PRINTING = 5;
 
 
     public void createPanels()
@@ -176,7 +232,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
         panels = new ArrayList<JPanel>();
         panel_id = new Hashtable<String, String>();
 
-        addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new PrefMainPane());
+        //addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new PrefMainPane());
         addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane());
         addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane());
         addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new PrefFontsAndColorPane(this));
@@ -194,7 +250,7 @@ public class PropertiesDialog extends JDialog implements ActionListener
     private void addPanel(String name, int id, JPanel panel)
     {
         panels.add(panel);
-        panel_id.put(name, ""+id);
+        //panel_id.put(name, ""+id);
     }
 
 
@@ -216,6 +272,26 @@ public class PropertiesDialog extends JDialog implements ActionListener
         prefPane.repaint();
 
     }
+
+    public void selectPanel(int index)
+    {
+	/*
+	if (!panel_id.containsKey(s))
+	{
+	    System.out.println("No such panel: " + s);
+	    return;
+	}
+
+	String id = panel_id.get(s); */
+
+	prefPane.remove(1);
+	prefPane.add(panels.get(index), BorderLayout.CENTER);
+	prefPane.invalidate();
+	prefPane.validate();
+	prefPane.repaint();
+
+    }
+
 
 
     /**
@@ -252,12 +328,36 @@ public class PropertiesDialog extends JDialog implements ActionListener
             pn.saveProps();
         }
 
-        DataAccess.getInstance().getSettings().save();
+        m_da.getSettings().save();
+
+	/*
+	if (m_da.getDbConfig().hasChanged())
+	{
+	    m_da.getDbConfig().saveConfig();
+	}
+	*/
     }
 
     public void reset()
     {
         DataAccess.getInstance().getSettings().reload();
+    }
+
+
+
+    /**
+     * Called whenever the value of the selection changes.
+     * @param e the event that characterizes the change.
+     */
+    public void valueChanged(ListSelectionEvent e)
+    {
+	if (current_index != list.getSelectedIndex())
+	{
+	    current_index = list.getSelectedIndex();
+	    selectPanel(current_index);
+	    //System.out.println(list.getSelectedValue());
+	}
+
     }
 
 

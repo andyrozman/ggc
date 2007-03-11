@@ -55,6 +55,8 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel
     private void init()
     {
 
+	setLayout(new BorderLayout());
+
 	//JPanel ful = new JPanel(new GridLayout(4,0));
 
 	JPanel a = new JPanel(new GridLayout(0, 2));

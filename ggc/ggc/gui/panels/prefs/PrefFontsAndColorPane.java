@@ -50,10 +50,12 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.gui.dialogs.SchemeDialog;
+import ggc.gui.dialogs.SchemeEDDialog;
 import ggc.gui.view.DailyGraphView;
 import ggc.util.DataAccess;
 
@@ -64,12 +66,16 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     private JLabel lblcolor;
     private Vector<String> items;
 
-    private JButton btNewScheme = null;
-    private JComboBox comboScheme = null;
+    private JButton bt_new_scheme, bt_edit_scheme;
+    private JComboBox cb_scheme = null;
 
     private Hashtable<String, ColorSchemeH> color_schemes = null;
     private ColorSchemeH selected_sheme = null;
     private String[] av_schemes_names = null;
+
+    private ArrayList<ColorSchemeH> deleted_schemes = null;
+    private boolean item_changed_status = false;
+
 
     private DailyGraphView dgv = null;
 
@@ -83,16 +89,10 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
 	color_schemes = settings.getColorSchemes();
 	selected_sheme = settings.getSelectedColorScheme();
-	av_schemes_names = new String[color_schemes.size()];
 
-	int i=0;
-	for (Enumeration en = this.color_schemes.keys(); en.hasMoreElements(); ) 
-	{
-	    ColorSchemeH cs = color_schemes.get(en.nextElement());
-	    av_schemes_names[i] = cs.getName();
-	    i++;
+	refreshColorSchemeList(false, false);
 
-	}
+	this.deleted_schemes = new ArrayList<ColorSchemeH>();
 
 /*
 	for (int i=1; i<=color_schemes.size(); i++)
@@ -131,26 +131,33 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     	schemePanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_SCHEME_SELECT")));
     
     	schemePanel.add(new JLabel(m_ic.getMessage("SELECTED_COLOR_SCHEME")+":"));
-    	schemePanel.add(comboScheme = new JComboBox(av_schemes_names));
+    	schemePanel.add(cb_scheme = new JComboBox(av_schemes_names));
 
         JPanel butPanel = new JPanel(new GridLayout(1, 3));
 
-        schemePanel.add(new JButton(m_ic.getMessage("ADD")));
-        schemePanel.add(new JButton(m_ic.getMessage("EDIT_DEL_SHORT")));
-        //butPanel.add(btNewScheme = new JButton(m_ic.getMessage("ADD")));
+        schemePanel.add(bt_new_scheme =new JButton(m_ic.getMessage("ADD")));
+        schemePanel.add(bt_edit_scheme = new JButton(m_ic.getMessage("EDIT_DEL_SHORT")));
+        //butPanel.add(bt_new_scheme = new JButton(m_ic.getMessage("ADD")));
 
         //butPanel.add(new JButton(m_ic.getMessage("EDIT_DEL")));
         //butPanel.add(new JButton(m_ic.getMessage("-")));
 
-    	//schemePanel.add(btNewScheme = new JButton(m_ic.getMessage("NEW")));
+    	//schemePanel.add(bt_new_scheme = new JButton(m_ic.getMessage("NEW")));
         //schemePanel.add(butPanel);
-    	//btNewScheme.addActionListener(this);
-        //btNewScheme.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+    	bt_new_scheme.addActionListener(this);
+	bt_new_scheme.setActionCommand("add");
+
+	bt_edit_scheme.addActionListener(this);
+	bt_edit_scheme.setActionCommand("edit");
+
+
+
+        //bt_new_scheme.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
 
     	//System.out.println("SS: " + this.selected_sheme.getName());
     
-    	comboScheme.setSelectedItem(this.selected_sheme.getName());
-    	comboScheme.addItemListener(this);
+    	cb_scheme.setSelectedItem(this.selected_sheme.getName());
+    	cb_scheme.addItemListener(this);
 
         itemList = new JList(items);
         itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -172,7 +179,8 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
 
     	JPanel testingPanel = new JPanel(new BorderLayout());
-    	dgv = new DailyGraphView(this.selected_sheme, createDailyGraphValues());
+	testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
+	dgv = new DailyGraphView(this.selected_sheme, createDailyGraphValues());
     	testingPanel.setPreferredSize(new Dimension(150, 170));
     	testingPanel.add(dgv, BorderLayout.CENTER);
     
@@ -312,8 +320,12 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     @Override
     public void itemStateChanged(ItemEvent e)
     {
-        this.selected_sheme = this.color_schemes.get(this.comboScheme.getSelectedItem().toString());
+	if (this.item_changed_status)
+	    return;
+
+        this.selected_sheme = this.color_schemes.get(this.cb_scheme.getSelectedItem().toString());
         dgv.setScheme(this.selected_sheme);
+	lblcolor.setBackground(getColor(itemList.getSelectedValue().toString()));
     }
 
 
@@ -326,44 +338,135 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     @Override
     public void actionPerformed(ActionEvent e)
     {
-    	SchemeDialog sd = new SchemeDialog(this.parent, this.av_schemes_names);
-    
-    	if (sd.actionSuccesful())
-    	{
-    	    String[] str = sd.getActionResult();
-    
-    	    ColorSchemeH cs = this.color_schemes.get(str[2]);
 
-            //System.out.println("As Template: " + str[2]);
-    
-    	    selected_sheme = new ColorSchemeH(str[1], 1, cs.getColor_bg(),
-    				cs.getColor_bg_avg(), cs.getColor_bg_low(), cs.getColor_bg_high(),
-    				cs.getColor_bg_target(), cs.getColor_ins(), cs.getColor_ins1(),
-    				cs.getColor_ins2(), cs.getColor_ins_perbu(), cs.getColor_ch());
-    
-    	    this.color_schemes.put(selected_sheme.getName(), selected_sheme);
-    
-    	    String[] strs = new String[(this.av_schemes_names.length +1)];
-    
-    	    int i=0;
-    
-    	    for ( ; i<this.av_schemes_names.length; i++)
-    	    {
-                strs[i] = this.av_schemes_names[i];
-    	    }
-    
-    	    strs[i] = str[1];
-    
-    	    this.av_schemes_names = strs;
-    
-    	    this.comboScheme.addItem(str[1]);
-    	    this.comboScheme.setSelectedIndex(av_schemes_names.length-1);
-    	    // sel
-    	    dgv.setScheme(this.selected_sheme);
-    
-    	}
+	if (e.getActionCommand().equals("add"))
+	{
+	    SchemeDialog sd = new SchemeDialog(this.parent, this.av_schemes_names);
+
+	    if (sd.actionSuccesful())
+	    {
+		String[] str = sd.getActionResult();
+
+		ColorSchemeH cs = this.color_schemes.get(str[2]);
+
+		//System.out.println("As Template: " + str[2]);
+
+		selected_sheme = new ColorSchemeH(str[1], 1, cs.getColor_bg(),
+				    cs.getColor_bg_avg(), cs.getColor_bg_low(), cs.getColor_bg_high(),
+				    cs.getColor_bg_target(), cs.getColor_ins(), cs.getColor_ins1(),
+				    cs.getColor_ins2(), cs.getColor_ins_perbu(), cs.getColor_ch());
+
+		this.color_schemes.put(selected_sheme.getName(), selected_sheme);
+
+		String[] strs = new String[(this.av_schemes_names.length +1)];
+
+		int i=0;
+
+		for ( ; i<this.av_schemes_names.length; i++)
+		{
+		    strs[i] = this.av_schemes_names[i];
+		}
+
+		strs[i] = str[1];
+
+		this.av_schemes_names = strs;
+
+		this.cb_scheme.addItem(str[1]);
+		this.cb_scheme.setSelectedIndex(av_schemes_names.length-1);
+		// sel
+		dgv.setScheme(this.selected_sheme);
+
+	    }
+	}
+	else
+	{
+
+	    ColorSchemeH cs = this.color_schemes.get(this.cb_scheme.getSelectedItem());
+
+	    if (cs.getCustom_type()==0)
+	    {
+		JOptionPane.showMessageDialog(this, m_ic.getMessage("PREDEFINED_SCHEME_CANT_BE_CHANGED"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+		return;
+	    }
+	    else
+	    {
+//		DataAccess.notImplemented("PrefFonts...:actionPerformed.edit Non Custom");
+		SchemeEDDialog sed = new SchemeEDDialog(this.parent, av_schemes_names, (String)this.cb_scheme.getSelectedItem());
+
+		if (sed.actionSuccesful())
+		{
+		    String[] res = sed.getActionResult();
+
+		    System.out.println("Action: " + res[0] + " " + res[1]);
+
+		    if (res[0].equals("1"))
+		    {
+			this.color_schemes.remove(cs.getName());
+			cs.setName(res[1]);
+			this.color_schemes.put(res[1], cs);
+
+			refreshColorSchemeList(true, false);
+		    }
+		    else if (res[0].equals("2"))
+		    {
+			// add scheme to deleted
+			this.deleted_schemes.add(cs);
+
+			// remove scheme from active color schemes
+			this.color_schemes.remove(this.cb_scheme.getSelectedItem());
+
+			refreshColorSchemeList(true, true);
+		    }
+
+		}
+	    }
+
+	}
 
     }
+
+
+
+    private void refreshColorSchemeList(boolean force_update_to_combo, boolean action_delete)
+    {
+
+	item_changed_status = true;
+
+	av_schemes_names = new String[color_schemes.size()];
+
+	int i=0;
+	for (Enumeration en = this.color_schemes.keys(); en.hasMoreElements(); ) 
+	{
+	    ColorSchemeH cs = color_schemes.get(en.nextElement());
+	    av_schemes_names[i] = cs.getName();
+	    i++;
+	}
+
+
+	if (force_update_to_combo)
+	{
+	    int sel_item = this.cb_scheme.getSelectedIndex();
+
+	    this.cb_scheme.removeAllItems();
+
+	    for(int j=0; j<this.av_schemes_names.length; j++)
+	    {
+		this.cb_scheme.addItem(this.av_schemes_names[j]);
+	    }
+
+	    item_changed_status = true;
+
+	    if (action_delete)
+		this.cb_scheme.setSelectedIndex(0);
+	    else
+		this.cb_scheme.setSelectedIndex(sel_item);
+	}
+
+
+
+    }
+
+
 
 
     @Override
@@ -377,21 +480,28 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     
     	    if (cs.getCustom_type()==1)
     	    {
-        		if (cs.getId()==0)
-        		{
-        		    cs.setId(m_da.getDb().addHibernate(cs));
-        		}
-        		else
-        		{
-        		    m_da.getDb().editHibernate(cs);
-        		}
+		if (cs.getId()==0)
+		{
+		    cs.setId(m_da.getDb().addHibernate(cs));
+		}
+		else
+		{
+		    m_da.getDb().editHibernate(cs);
+		}
     	    }
     	}
     
     	settings.setColorSchemes(this.color_schemes, false);
 
-        System.out.println("Selected color: " + comboScheme.getSelectedItem().toString());
-    	settings.setColorSchemeObject(comboScheme.getSelectedItem().toString());
+        //System.out.println("Selected color: " + cb_scheme.getSelectedItem().toString());
+    	settings.setColorSchemeObject(cb_scheme.getSelectedItem().toString());
+
+
+	// remove deleted schemes
+	for(int i=0; i<this.deleted_schemes.size(); i++)
+	{
+	    m_da.getDb().deleteHibernate(this.deleted_schemes.get(i));
+	}
 
     }
 }

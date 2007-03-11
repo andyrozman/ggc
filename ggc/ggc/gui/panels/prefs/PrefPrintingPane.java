@@ -28,13 +28,16 @@
 package ggc.gui.panels.prefs;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
 import javax.swing.*;
+import javax.swing.JFileChooser;
 import javax.swing.JSpinner.DateEditor;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileFilter;
 
 import ggc.gui.MainFrame;
 
@@ -48,16 +51,16 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
 
 
 // insulins
-    private JTextField fieldIns1Name, fieldIns2Name, fieldIns1Abbr, fieldIns2Abbr;
+//    private JTextField fieldIns1Name, fieldIns2Name, fieldIns1Abbr, fieldIns2Abbr;
 
     // bg (mg/dl)
-    private JTextField fieldHighBG1, fieldLowBG1, fieldTargetHighBG1, fieldTargetLowBG1;
+//    private JTextField fieldHighBG1, fieldLowBG1, fieldTargetHighBG1, fieldTargetLowBG1;
 
     // bg (mmol/l)
-    private JTextField fieldHighBG2, fieldLowBG2, fieldTargetHighBG2, fieldTargetLowBG2;
+//    private JTextField fieldHighBG2, fieldLowBG2, fieldTargetHighBG2, fieldTargetLowBG2;
 
 
-    private JTextField fieldEmpty, fieldPDFViewer;
+    private JTextField fieldEmpty, fieldPDFViewer, fieldLunchST, fieldDinnerST, fieldNightST;
     private JButton buttonBrowse;
 
     
@@ -66,30 +69,17 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
         init();
     }
 
-    public void getDbData()
-    {
-        /*
-    	if (MainFrame.dbH.isConnected())
-    	{
-    	    lab_db.setText("PROBLEM");
-    	}
-    	else
-    	{
-    	    lab_db.setText(m_ic.getMessage("DB_IS_NOT_CONNECTED"));
-    	}
-        */
-
-    }
 
 
     public void init()
     {
 
+	setLayout(new BorderLayout());
 
         //JPanel ful = new JPanel(new GridLayout(4,0));
 
 
-        JPanel b = new JPanel(new GridLayout(0, 3));
+        JPanel b = new JPanel(new GridLayout(0, 2));
         b.setBorder(new TitledBorder(m_ic.getMessage("BASIC_SETTINGS")));
         b.add(new JLabel(m_ic.getMessage("EMPTY_VALUE") + ":"));
         b.add(fieldEmpty = new JTextField(m_da.getSettings().getIns1Name(), 20));
@@ -101,22 +91,40 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
         a.add(new JLabel(""));
         a.add(buttonBrowse = new JButton(m_ic.getMessage("BROWSE")));
 
+	buttonBrowse.addActionListener(this);
+
 
         //fieldIns1Name.getDocument().addDocumentListener(this);
         //fieldIns2Name.getDocument().addDocumentListener(this);
         //fieldIns1Abbr.getDocument().addDocumentListener(this);
         //fieldIns2Abbr.getDocument().addDocumentListener(this);
 
-        JLabel lab_from = new JLabel(m_ic.getMessage("FROM"));
+        //JLabel lab_from = new JLabel(m_ic.getMessage("FROM"));
         
         // bg 1 
-        JPanel c = new JPanel(new GridLayout(0, 3));
-        c.setBorder(new TitledBorder(m_ic.getMessage("SIMPLE_MONTHLY_REPORT")));
 
-        c.add(new JLabel("BR"));
-        //c.add(new JLabel("BR"));
+	JPanel c1 = new JPanel(new GridLayout(0, 1));
+	c1.setBorder(new TitledBorder(m_ic.getMessage("SIMPLE_MONTHLY_REPORT")));
+	
+
+
+        JPanel c = new JPanel(new GridLayout(0, 3));
+        //c.setBorder(new TitledBorder(m_ic.getMessage("SIMPLE_MONTHLY_REPORT")));
+
+        c.add(new JLabel(m_ic.getMessage("LUNCH_START_TIME")+":"));
+	c.add(new JLabel());
+        c.add(this.fieldLunchST = new JTextField("", 6));
         
-        
+	c.add(new JLabel(m_ic.getMessage("DINNER_START_TIME")+":"));
+	c.add(new JLabel());
+	c.add(this.fieldDinnerST = new JTextField("", 3));
+
+	c.add(new JLabel(m_ic.getMessage("NIGHT_START_TIME")+":"));
+	c.add(new JLabel());
+	c.add(this.fieldNightST = new JTextField("", 4));
+
+
+	c1.add(c);
 /*        
         c.add(new JLabel(m_ic.getMessage("BREAKFAST")+":"));
         createLittlePanel(c, new JLabel(m_ic.getMessage("FROM")), new JLabel("0:00"));
@@ -176,7 +184,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
         i.add(b);
         i.add(a);
         //i.add(d);
-        i.add(c);
+        i.add(c1);
         //i.add(b);
 
         add(i, BorderLayout.NORTH);
@@ -269,6 +277,17 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
 
 
 //        add(a, BorderLayout.NORTH);
+
+	
+	// init values
+
+        fieldEmpty.setText(settings.getPrintEmptyValue());
+	fieldPDFViewer.setText(settings.getPdfVieverPath());
+
+	fieldLunchST.setText(m_da.getTimeString(settings.getPrintLunchStartTime()));
+	fieldDinnerST.setText(m_da.getTimeString(settings.getPrintDinnerStartTime()));
+	fieldNightST.setText(m_da.getTimeString(settings.getPrintNightStartTime()));
+
     }
 
 
@@ -294,9 +313,86 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
         parent.add(pp);
     }
 
+    private int getTimeValue(JTextField field, int default_value)
+    {
+	try
+	{
+	    String st = field.getText();
+	    st = st.replaceAll(":", "");
+
+	    return Integer.parseInt(st);
+	}
+	catch(Exception ex)
+	{
+	    return default_value;
+	}
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+	JFileChooser jfc = new JFileChooser();
+
+	jfc.setCurrentDirectory(new File("."));
+	jfc.setDialogTitle(m_ic.getMessage("SELECT_PDF_VIEWER"));
+	jfc.setDialogType(JFileChooser.OPEN_DIALOG);
+	jfc.setFileFilter(new FileFilter(){
+		/**
+		 * Whether the given file is accepted by this filter.
+		 */
+		public boolean accept(File f)
+		{
+		    if (f.isDirectory())
+			return true;
+
+		    int idx = f.getName().lastIndexOf(".");
+
+		    if (idx>-1)
+		    {
+			String ext = f.getName().toLowerCase().substring(idx);
+
+			if (ext.equals(".exe"))
+			    return true;
+			else
+			    return false;
+		    }
+		    else
+			return false;
+
+		}
+		/**
+		 * The description of this filter. For example: "JPG and GIF Images"
+		 * @see FileView#getName
+		 */
+		public String getDescription()
+		{
+		    return m_ic.getMessage("EXECUTABLE_FILES");
+		}
+	});
+
+	jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+	int res = jfc.showOpenDialog(this);
+
+	if (res==JFileChooser.APPROVE_OPTION)
+	{
+	    File f = jfc.getSelectedFile();
+	    this.fieldPDFViewer.setText(f.getPath() + "\\" + f.getName());
+	}
+
+    }
+
+
     
     @Override
     public void saveProps()
     {
+	settings.setPrintEmptyValue(fieldEmpty.getText()); 
+	settings.setPdfVieverPath(fieldPDFViewer.getText());
+
+	settings.setPrintLunchStartTime(getTimeValue(fieldLunchST, 1100));
+	settings.setPrintDinnerStartTime(getTimeValue(fieldDinnerST, 1800));
+	settings.setPrintNightStartTime(getTimeValue(fieldNightST, 2100));
+
     }
 }
