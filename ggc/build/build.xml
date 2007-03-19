@@ -21,7 +21,7 @@
         <echo message=""/>
         <echo message="     copy = copies all needed files"/>
         <echo message="     clean = clean build dir"/>
-        <echo message="     build_ggc = build GGC (recompile classes)"/>
+        <echo message="     build_ggc (make) = build GGC (recompile classes)"/>
         <echo message="     jar = create GGC jar"/>
         <echo message="     jar_l = create GGC Little jar"/>
         <echo message="     full = clean, build_ggc, copy, jar, jar_l"/>
@@ -63,7 +63,7 @@
         <javac srcdir="${source.dir}"
             destdir="${build.dir}"
             includes="ggc/**, org/**, com/**"
-            excludes="ggc/db/DummyHandler.java, ggc/db/HSQLHandler.java, ggc/db/MySQLHandler.java, ggc/db/TextFileHandler.java"
+            excludes="ggc/db/DummyHandler.java, ggc/db/HSQLHandler.java, ggc/db/MySQLHandler.java, ggc/db/TextFileHandler.java, ggc/data/meter2/**"
            deprecation="off" debug="true"> <!-- debug="${debug}    DummyHandler.java, ggc/db/HSQLHandler.java, ggc\db\MySQLHandler, ggc/db/TextFileHandler.java"  --> 
             
             <classpath>
