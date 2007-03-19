@@ -148,7 +148,7 @@ Release on 25.4.
 
 BIG CHANGES: Configuration, Printing main, Printing extended, Nutrition, 
       DbTool, Db Hibernate changes, Enter Daily Data, Apointments, Meals,
-      GGCLittle, mmol/L support full, Meter Mng NEW, rtx COMM API, 
+      GGCLittle, mmol/L support full, Meter Mng NEW, rxtx COMM API, 
       Ascensia Family support
 
 SMALL CHANGES: Load LF, 
