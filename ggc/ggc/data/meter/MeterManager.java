@@ -52,6 +52,27 @@ public class MeterManager
     public static final int METER_ASCENSIA_ELITE_XL = 7;
 
 
+    public static final int METER_COMPANY_NO = 0;
+    public static final int METER_COMPANY_UNKNOWN = 1;
+    public static final int METER_COMPANY_ASCENSIA_BAYER = 2;
+
+    public int[] meter_company = {
+	METER_COMPANY_NO, // 0
+	METER_COMPANY_UNKNOWN, // 1
+	METER_COMPANY_UNKNOWN, // 2
+	METER_COMPANY_UNKNOWN, // 3
+	METER_COMPANY_ASCENSIA_BAYER, // 4
+	METER_COMPANY_ASCENSIA_BAYER, // 5
+	METER_COMPANY_ASCENSIA_BAYER, // 6
+	METER_COMPANY_ASCENSIA_BAYER, // 7
+    };
+
+
+
+    
+
+
+
 
     public String[] meter_names = {
         m_ic.getMessage("NONE"),
@@ -173,6 +194,13 @@ public class MeterManager
 
     return this.meter_classes[index];
     }
+
+
+
+
+    
+
+
 
 
 /*

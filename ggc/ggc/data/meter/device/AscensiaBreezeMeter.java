@@ -2,8 +2,8 @@ package ggc.data.meter.device;
 
 import java.util.ArrayList;
 
-import javax.comm.*;
-import javax.comm.SerialPort;
+import gnu.io.*;
+import gnu.io.SerialPort;
 
 import ggc.data.DailyValuesRow;
 import ggc.data.event.ImportEventListener;
@@ -40,19 +40,22 @@ import ggc.data.meter.protocol.SerialProtocol;
  *
  */
 
-public class AscensiaBreezeMeter extends SerialProtocol
+public class AscensiaBreezeMeter extends AscensiaMeter //SerialProtocol
 {
 
     private int m_status = 0;
 
-    public AscensiaBreezeMeter()
+    public AscensiaBreezeMeter(String portName)
     {
+	super(MeterManager.METER_ASCENSIA_BREEZE, portName);
+
+	/*
 	super(MeterManager.METER_ASCENSIA_BREEZE,
 	      9600, 
 	      SerialPort.DATABITS_8, 
 	      SerialPort.STOPBITS_1, 
 	      SerialPort.PARITY_NONE);
-
+	*/
 	/*
 	try
 	{

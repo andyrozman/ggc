@@ -2,15 +2,15 @@ package ggc.data.meter.device;
 
 import java.util.ArrayList;
 
-//import javax.comm.*;
-//import javax.comm.SerialPort;
-import gnu.io.*;
 import javax.swing.ImageIcon;
+
 
 import ggc.data.DailyValuesRow;
 import ggc.data.event.ImportEventListener;
 import ggc.data.meter.MeterManager;
 import ggc.data.meter.protocol.SerialProtocol;
+
+import gnu.io.*;
 
 
 /*
@@ -43,28 +43,44 @@ import ggc.data.meter.protocol.SerialProtocol;
  */
 
 
-public class AscensiaDEXMeter extends SerialProtocol
+public class AscensiaDEXMeter extends AscensiaMeter
+//extends SerialProtocol
 {
 
     private int m_status = 0;
 
-    public AscensiaDEXMeter()
+    private boolean stx = false;
+
+    private ArrayList raw_data = new ArrayList();
+
+    //public static Log log = 
+
+
+    public AscensiaDEXMeter(String portName)
     {
+	super(MeterManager.METER_ASCENSIA_DEX, portName);
+
+/*	
 	super(MeterManager.METER_ASCENSIA_DEX,
 	      9600, 
 	      SerialPort.DATABITS_8, 
 	      SerialPort.STOPBITS_1, 
 	      SerialPort.PARITY_NONE);
 
-	/*
+	//this.setPort(portName);
+
+	
 	try
 	{
-	    System.out.println("AscensiaMeter -> Adding event listener");
-	    serialPort.addEventListener(this);
+	    this.setPort(portName);
+	    this.open();
+	    //System.out.println("AscensiaMeter -> Adding event listener");
+	  //  serialPort.addEventListener(this);
 	}
 	catch(Exception ex)
 	{
 	    System.out.println("AscensiaMeter -> Error adding listener: " + ex);
+	    ex.printStackTrace();
 	}
 	*/
     }
@@ -97,6 +113,9 @@ public class AscensiaDEXMeter extends SerialProtocol
      */
     public int getTimeDifference()
     {
+/*
+	System.out.println("getTimeDifference: ");
+
 	writePort(21);  // NAK
 	waitTime(500);
 	writePort(5);  // ENQ
@@ -118,11 +137,18 @@ public class AscensiaDEXMeter extends SerialProtocol
 	waitTime(500);
 
 	System.out.println("Received Text: " + this.receivedText);
+*/
 
-
-
+	writeToMeter(1, "d", null);
+	//test();
 	return 0;
     }
+
+
+    public void readCommData()
+    {
+    }
+
 
 
     /**
@@ -226,38 +252,56 @@ public class AscensiaDEXMeter extends SerialProtocol
     public void writeToMeter(int type, String cmd1, String cmd2)
     {
 
-	/*
+//	/*
 
 	// read everything
 	while(mode != MODE_ENQ)
 	    waitTime(100);
 
-	writePort(5);  // ENQ
+	while(mode != MODE_ENQ)
+	    waitTime(100);
 
+	writePort(6);  // ACK
+
+
+
+/*
+	while(mode == MODE_EOT)
+	{
+	    waitTime(500);
+	}
+*/
+
+	if (mode == MODE_EOT)
+	{
+
+	}
+
+	/*
+	writePort(5);  // ENQ
 	waitTime(1000); 
 
 	if (mode == MODE_EOT)
 	{
 	    writePort(5);  // ENQ
-
 	    waitTime(1000); 
 	}
 
 	//writePort(6);  // ACK
-
+*/
 	
 	while (mode != MODE_EOT)
 	{
 	    writePort(6);  // ACK
 	    waitTime(500);
 	}
-	*/
+//	*/
 	
 
 	// commands
 
 	
-
+/*
 	writePort(21);  // NAK
 	waitTime(500);
 
@@ -268,11 +312,9 @@ public class AscensiaDEXMeter extends SerialProtocol
 	//    waitTime(100);
 
 	writePort("R|");
-
 	waitTime(500);
 
 	writePort("D|");
-
 	waitTime(500);
 
 	System.out.println("Received Text: " + this.receivedText);
@@ -280,6 +322,8 @@ public class AscensiaDEXMeter extends SerialProtocol
 	//Enumeration en = new Enumerator(type);
 	//en.hasMoreElements()
 	//en.nextElement();
+
+
 /*
 	waitTime(1000); 
 
@@ -439,6 +483,9 @@ public class AscensiaDEXMeter extends SerialProtocol
     }
 
 
+    private int cr_lf = 0;
+
+
     @Override
     public void serialEvent(SerialPortEvent event)
     {
@@ -462,46 +509,63 @@ public class AscensiaDEXMeter extends SerialProtocol
 				case 6:
 				    System.out.println("<ACK>");
 				    mode = AscensiaMeter.MODE_ACK;
+				    cr_lf = 0;
 				    break;
 
 				case 13:
-				    System.out.println("<CR>");
+				    //System.out.println("<CR>");
+				    cr_lf = 1;
 				    break;
 
 				case 5:
 				    System.out.println("<ENQ>");
 				    mode = AscensiaMeter.MODE_ENQ;
+				    cr_lf = 0;
 				    //this.portOutputStream.write(6);
 				    break;
 				case 4:
 				    System.out.println("<EOT>");
 				    mode = AscensiaMeter.MODE_EOT;
+				    cr_lf = 0;
 				    break;
 
-				case 23:
-				    System.out.println("<ETB>");
+				case 23:  // etb
+				case 3: // etx
+				    //System.out.println("<ETB>");
+				    stx = false;
+				    this.receivedText += "<ETB>";
+				    //System.out.println("recivedText: " + this.receivedText);
 				    break;
 
-				case 3:
-				    System.out.println("<ETX>");
-				    break;
+				//case 3:
+				//    System.out.println("<ETX>");
+				//    break;
 
 				case 10:
-				    System.out.println("<LF>");
+				    if (cr_lf==1)
+				    {
+					System.out.println("recivedLine: " + this.receivedText);
+				    }
+				    cr_lf = 0;
+				    //System.out.println("<LF>");
+				    //System.out.println("<EOT>");
 				    break;
 
 				case 21:
 				    System.out.println("<NAK>");
 				    mode = AscensiaMeter.MODE_NAK;
+				    cr_lf = 0;
 				    break;
 
 				case 2:
-				    System.out.println("<STX>");
+				    //System.out.println("<STX>");
+				    cr_lf = 0;
+				    stx = true;
 				    break;
 
 				default:
 				    {
-					System.out.print((char)newData);
+					//System.out.print((char)newData);
 					receivedText += (new Character((char)newData)).toString();
 				    }
 			    }
@@ -517,9 +581,7 @@ public class AscensiaDEXMeter extends SerialProtocol
 		    //System.out.print(newData + " ");
 /*
 		    dataFromMeter = true;
-
 		    System.out.println("Data");
-
 		    timeOut += 5000;
 */
                 } break;

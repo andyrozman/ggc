@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
-import javax.comm.*;
+import gnu.io.*;
 import javax.swing.ImageIcon;
 
 import ggc.data.DailyValues;
@@ -23,23 +23,7 @@ import ggc.data.imports.*;
 import ggc.data.meter.protocol.SerialProtocol;
 import ggc.util.I18nControl;
 
-/**
 
- * @author stephan
-
- *
-
- * To change this generated comment edit the template variable "typecomment":
-
- * Window>Preferences>Java>Templates.
-
- * 
- *  This is new interface, that will in future replace DataImport, but so far we are 
- *  keeping all old methods.
- * 
- * 
- * 
- */
 public abstract class AscensiaMeter extends SerialProtocol
 {
 
@@ -693,6 +677,68 @@ public abstract class AscensiaMeter extends SerialProtocol
 		break;
 	}
     } */
+
+
+
+
+
+    public void readDeviceData() throws MeterException
+    {
+    }
+
+
+
+
+    //************************************************
+    //***          Process Meter Data              ***
+    //************************************************
+
+
+    /**
+     * processMeterDataMain - this is main method for processing data. It should be called on all data received, and 
+     * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
+     * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
+     */
+    public void processMeterData(String data)
+    {
+    }
+
+    /**
+     * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
+     */
+    public void processMeterIdentification(String data)
+    {
+    }
+
+    /**
+     * processMeterTime - this should be used to process time and date of meter
+     */
+    public void processMeterTime(String data)
+    {
+    }
+
+    /**
+     * processMeterBGEntry - this should be used to process BG data from meter
+     */
+    public void processMeterBGEntry(String data)
+    {
+    }
+
+
+
+    //************************************************
+    //***                    Test                  ***
+    //************************************************
+
+    public void test()
+    {
+    }
+
+
+
+
+
+
 
 
 }

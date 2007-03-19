@@ -10,8 +10,8 @@ package ggc.data.meter.device;
 
 import java.util.ArrayList;
 
-import javax.comm.*;
-import javax.comm.SerialPort;
+import gnu.io.*;
+import gnu.io.SerialPort;
 import javax.swing.ImageIcon;
 
 import ggc.data.DailyValuesRow;
@@ -37,19 +37,22 @@ import ggc.data.meter.protocol.SerialProtocol;
  * 
  * 
  */
-public class AscensiaEliteXLMeter extends SerialProtocol
+public class AscensiaEliteXLMeter extends AscensiaMeter
+				  //extends SerialProtocol
 {
 
     private int m_status = 0;
 
-    public AscensiaEliteXLMeter()
+    public AscensiaEliteXLMeter(String portName)
     {
+	super(MeterManager.METER_ASCENSIA_ELITE_XL, portName);
+	/*
 	super(MeterManager.METER_ASCENSIA_ELITE_XL,
 	      9600, 
 	      SerialPort.DATABITS_8, 
 	      SerialPort.STOPBITS_1, 
 	      SerialPort.PARITY_NONE);
-
+*/
 	/*
 	try
 	{

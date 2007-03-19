@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 import java.util.TooManyListenersException;
 import java.util.Vector;
 
-//import javax.comm.*;
+//import gnu.io.*;
 import gnu.io.*;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
@@ -306,7 +306,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 
 
     /**
-     * @see javax.comm.SerialPortEventListener#serialEvent(SerialPortEvent)
+     * @see gnu.io.SerialPortEventListener#serialEvent(SerialPortEvent)
      */
     public abstract void serialEvent(SerialPortEvent event);
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
-import javax.comm.*;
-import javax.comm.SerialPort;
+import gnu.io.*;
+import gnu.io.SerialPort;
 import javax.swing.ImageIcon;
 
 import ggc.data.DailyValuesRow;
@@ -55,6 +55,8 @@ public class AscensiaContourMeter extends AscensiaMeter
 
     public void loadInitialData()
     {
+	
+
 	// read everything
 	while(mode != MODE_ENQ)
 	    waitTime(100);
@@ -66,7 +68,6 @@ public class AscensiaContourMeter extends AscensiaMeter
 	if (mode == MODE_EOT)
 	{
 	    writePort(5);  // ENQ
-
 	    waitTime(1000); 
 	}
 
@@ -134,6 +135,15 @@ public class AscensiaContourMeter extends AscensiaMeter
 	*/
     }
 
+    public void readCommData()
+    {
+	//this.loadInitialData();
+	//this.test();
+	writeToMeter(1, "", "");
+    }
+
+
+
     /*
     public byte getByte(String input)
     {
@@ -198,6 +208,7 @@ public class AscensiaContourMeter extends AscensiaMeter
 	// commands
 
 	
+	
 
 	writePort(21);  // NAK
 	waitTime(500);
@@ -205,8 +216,8 @@ public class AscensiaContourMeter extends AscensiaMeter
 	writePort(5);  // ENQ
 	waitTime(1000);
 
-	//while(mode != MODE_ACK)
-	//    waitTime(100);
+	while(mode != MODE_ACK)
+	    waitTime(100);
 
 	writePort("R|");
 
@@ -215,6 +226,7 @@ public class AscensiaContourMeter extends AscensiaMeter
 	writePort("D|");
 
 	waitTime(500);
+	waitTime(1000);
 
 	System.out.println("Received Text: " + this.receivedText);
 
@@ -445,7 +457,7 @@ public class AscensiaContourMeter extends AscensiaMeter
 				    {
 					if (stx)
 					{
-					    if (debug)
+					    ///if (debug)
 						System.out.print((char)newData);
 
 					    receivedText += (new Character((char)newData)).toString();
@@ -501,5 +513,38 @@ public class AscensiaContourMeter extends AscensiaMeter
 		break;
 	}
     } 
+
+
+    public int getTimeDifference()
+    {
+	writePort(21);  // NAK
+	waitTime(500);
+	writePort(5);  // ENQ
+	waitTime(1000);
+	writePort("R|");
+	waitTime(500);
+	writePort("D|");
+	waitTime(500);
+
+	System.out.println("Received Text: " + this.receivedText);
+
+	writePort(21);  // NAK
+	waitTime(500);
+	writePort(5);  // ENQ
+	waitTime(1000);
+	writePort("R|");
+	waitTime(500);
+	writePort("T|");
+	waitTime(500);
+
+	System.out.println("Received Text: " + this.receivedText);
+
+
+
+	return 0;
+    }
+
+
+
 
 }

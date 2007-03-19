@@ -38,6 +38,7 @@ import javax.swing.JFrame;
 
 import ggc.data.DailyValuesRow;
 import ggc.data.meter.device.AscensiaContourMeter;
+import ggc.data.meter.device.AscensiaDEXMeter;
 import ggc.data.meter.device.MeterInterface;
 import ggc.data.meter.protocol.SerialProtocol;
 import ggc.util.GGCProperties;
@@ -57,9 +58,16 @@ public class MeterTester extends JFrame
     {
 	try
 	{
-	    m_meter = new AscensiaContourMeter("COM1");
+	    m_meter = //new AscensiaContourMeter("COM9");
+	    new AscensiaDEXMeter("COM9");
 	    //m_meter.setPort("COM1");
 	    //m_meter.open();
+
+
+	    //m_meter.readCommData();
+	    m_meter.getTimeDifference();
+
+	    m_meter.test(); 
 	}
 	catch(Exception ex)
 	{
@@ -71,7 +79,7 @@ public class MeterTester extends JFrame
 
 
 
-
+/*
 
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
@@ -167,6 +175,7 @@ public class MeterTester extends JFrame
         fullPanel.add(messageArea, null);
 
 	this.setVisible(true);
+	*/
     }
 
 
