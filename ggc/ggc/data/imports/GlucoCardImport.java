@@ -36,7 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
-import javax.comm.SerialPortEvent;
+import gnu.io.SerialPortEvent;
 import javax.swing.ImageIcon;
 
 import ggc.util.DataAccess;

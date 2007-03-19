@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Vector;
 
-import javax.comm.SerialPortEvent;
+import gnu.io.SerialPortEvent;
 import javax.swing.ImageIcon;
 
 
@@ -93,7 +93,7 @@ public class FreeStyleImport extends SerialMeterImport
 
     /**
 
-     * @see javax.comm.SerialPortEventListener#serialEvent(SerialPortEvent)
+     * @see gnu.io.SerialPortEventListener#serialEvent(SerialPortEvent)
 
      */
     @Override

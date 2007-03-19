@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 import java.util.TooManyListenersException;
 import java.util.Vector;
 
-import javax.comm.*;
+import gnu.io.*;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
@@ -264,7 +264,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 
 
     /**
-     * @see javax.comm.SerialPortEventListener#serialEvent(SerialPortEvent)
+     * @see gnu.io.SerialPortEventListener#serialEvent(SerialPortEvent)
      */
     public void serialEvent(SerialPortEvent event)
     {

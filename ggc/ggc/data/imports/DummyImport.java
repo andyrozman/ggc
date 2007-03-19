@@ -20,8 +20,8 @@ import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import javax.comm.NoSuchPortException;
-import javax.comm.SerialPortEvent;
+import gnu.io.NoSuchPortException;
+import gnu.io.SerialPortEvent;
 import javax.swing.ImageIcon;
 
 import ggc.util.DataAccess;
@@ -88,7 +88,7 @@ public class DummyImport extends SerialMeterImport
 
 
     /**
-     * @see javax.comm.SerialPortEventListener#serialEvent(SerialPortEvent)
+     * @see gnu.io.SerialPortEventListener#serialEvent(SerialPortEvent)
      */
     @Override
     public void serialEvent(SerialPortEvent event)
