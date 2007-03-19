@@ -613,12 +613,12 @@ public class DataAccess
         try
         {
             FileOutputStream fos = new FileOutputStream(jh + File.pathSeparator
-                    + "lib" + File.pathSeparator + "javax.comm.properties");
-            pr.store(fos, " Generated javax.comm.properties by GGC");
+                    + "lib" + File.pathSeparator + "gnu.io.properties");
+            pr.store(fos, " Generated gnu.io.properties by GGC");
         } catch (Exception ex)
         {
             System.out
-                    .println("Problem writing COMM Api config file javax.comm.properties into %JAVA_HOME%"
+                    .println("Problem writing COMM Api config file gnu.io.properties into %JAVA_HOME%"
                             + File.pathSeparator
                             + "lib"
                             + File.pathSeparator
