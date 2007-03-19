@@ -8,7 +8,7 @@
 package ggc.data.event;
 
 
-import javax.comm.CommPortIdentifier;
+import gnu.io.CommPortIdentifier;
 import java.util.EventObject;
 
 
