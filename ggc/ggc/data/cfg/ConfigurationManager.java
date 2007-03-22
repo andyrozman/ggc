@@ -82,6 +82,7 @@ public class ConfigurationManager
 
 	this.cfg_values = values;
 
+    //XXX: The following is pretty ugly code; better to store arrays in another array and use foreach loop?
 	for(int j=1; j<4; j++)
 	{
 	    String[] arr = null;
@@ -265,7 +266,7 @@ public class ConfigurationManager
 	    return true;
 	else
 	{
-	    s_logger.warn("Configuration key " + key + " doesn't exists.");
+	    s_logger.warn("Configuration key " + key + " doesn't exist.");
 	    return false;
 	}
     }

@@ -147,6 +147,7 @@ public class AscensiaEliteXLMeter extends AscensiaMeter
     
 
 
+    @Override
     public void test()
     {
 	try

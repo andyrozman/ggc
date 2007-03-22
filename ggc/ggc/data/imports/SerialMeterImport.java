@@ -412,7 +412,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
     }
 
-    public static Vector getAvailableSerialPorts()
+    public static Vector<String> getAvailableSerialPorts()
     {
         Vector<String> retVal = new Vector<String>();
 

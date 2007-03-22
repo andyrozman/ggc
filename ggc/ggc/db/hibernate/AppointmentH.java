@@ -69,12 +69,14 @@ public class AppointmentH implements Serializable {
         this.comment = comment;
     }
 
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
             .append("id", getId())
             .toString();
     }
 
+    @Override
     public boolean equals(Object other) {
         if ( !(other instanceof AppointmentH) ) return false;
         AppointmentH castOther = (AppointmentH) other;
@@ -83,6 +85,7 @@ public class AppointmentH implements Serializable {
             .isEquals();
     }
 
+    @Override
     public int hashCode() {
         return new HashCodeBuilder()
             .append(getId())

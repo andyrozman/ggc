@@ -173,6 +173,8 @@ public class DailyGraphView extends AbstractGraphView
         int markPos = 0;
         int diffH = h - lowerSpace - upperSpace;
         int diffW = w - rightSpace - leftSpace;
+        // distance between lables on the vertical scale
+        float labelDeltaV = ((float) BGDiff) / counter;
 
         Rectangle2D.Float rect0 = new Rectangle2D.Float(0, 0, w, h);
         g2D.setPaint(Color.white);
@@ -190,7 +192,7 @@ public class DailyGraphView extends AbstractGraphView
             //System.out.println((maxBG - BGDiff / counter * i));
 
             markPos = upperSpace + i * diffH / counter;
-            g2D.drawString((maxBG - BGDiff / counter * i) + "", 5, markPos + 5);
+            g2D.drawString(Math.round(maxBG - labelDeltaV * i) + "", 5, markPos + 5);
             //g2D.drawString((maxBG - BGDiff / counter * i) + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }

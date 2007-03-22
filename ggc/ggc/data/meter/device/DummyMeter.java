@@ -152,7 +152,7 @@ public class DummyMeter implements MeterInterface
 
 
 
-    public void readDeviceData() throws MeterException
+    public void readDeviceData()
     {
     }
 

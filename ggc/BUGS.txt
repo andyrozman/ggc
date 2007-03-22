@@ -1,2 +1,17 @@
 Know Bugs:
-none ATM
+
+    - In Preferences->General: changing language also changes selected L&F name, but not class
+    - Changed preferences mostly apply only after restart (names, language)
+    - L&F loading is inconsistent and currently fails on Linux
+    - at least one undiscovered infinite loop, can't repsoduce, happened while the preferences frame was open (found by: developer rumbi)
+    - infinite loop when trying to display hba1c without data
+    - division by zero when displaying graphs without data
+    - german translation is somewhat behind schedule
+    - hba1c of 2.09% with ZERO readings...
+    - switching L&F from CDE/Motif to SkinLF doesn't result in settings being saved
+
+Bugs fixed in version X:
+
+0.2.4.2:
+    - graphs axis: labels should start at 0, not 4 (works for mg/dl but not mmol/l)
+      (NOTE: seems to have been a rounding error due to using ints)

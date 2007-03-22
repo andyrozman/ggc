@@ -96,9 +96,10 @@ public class SpreadGraphView extends AbstractGraphView
         int h = dim.height, w = dim.width;
 
         int markPos = 0;
-        int diffBG = maxBG - minBG;
         int diffH = h - lowerSpace - upperSpace;
         int diffW = w - rightSpace - leftSpace;
+        // distance between lables on the vertical scale
+        float labelDeltaV = ((float) BGDiff) / counter;
 
         Rectangle2D.Float rect0 = new Rectangle2D.Float(0, 0, w, h);
         g2D.setPaint(Color.white);
@@ -111,7 +112,7 @@ public class SpreadGraphView extends AbstractGraphView
         for (int i = 0; i <= counter; i++) 
 	{
             markPos = upperSpace + i * (diffH) / counter;
-            g2D.drawString((maxBG - (diffBG) / counter * i) + "", 5, markPos + 5);
+            g2D.drawString(Math.round(maxBG - labelDeltaV * i) + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }
         g2D.drawLine(leftSpace, h - lowerSpace, w - rightSpace, h - lowerSpace);

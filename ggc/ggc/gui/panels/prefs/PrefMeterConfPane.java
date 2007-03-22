@@ -68,7 +68,7 @@ public class PrefMeterConfPane extends AbstractPrefOptionsPanel
         try
         {
 
-	    Vector vct = SerialMeterImport.getAvailableSerialPorts();
+	    Vector<String> vct = SerialMeterImport.getAvailableSerialPorts();
 
 	    if (vct.size()==0)
 	    {

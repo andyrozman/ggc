@@ -340,6 +340,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
 		/**
 		 * Whether the given file is accepted by this filter.
 		 */
+        @Override
 		public boolean accept(File f)
 		{
 		    if (f.isDirectory())
@@ -364,7 +365,8 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
 		 * The description of this filter. For example: "JPG and GIF Images"
 		 * @see FileView#getName
 		 */
-		public String getDescription()
+		@Override
+        public String getDescription()
 		{
 		    return m_ic.getMessage("EXECUTABLE_FILES");
 		}
