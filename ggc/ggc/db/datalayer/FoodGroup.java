@@ -55,6 +55,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
     {
         this.setId(ch.getId());
 	this.setDescription(ch.getDescription());
+	this.setDescription_i18n(ch.getDescription_i18n());
     }
 
 
@@ -93,6 +94,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 
         ch.setId(this.getId());
 	ch.setDescription(this.getDescription());
+	ch.setDescription_i18n(this.getDescription_i18n());
 
         Integer id = (Integer)sess.save(ch);
 
@@ -120,6 +122,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 
 	ch.setId(this.getId());
 	ch.setDescription(this.getDescription());
+	ch.setDescription_i18n(this.getDescription_i18n());
 
         sess.update(ch);
         tx.commit();
@@ -184,6 +187,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 
 	this.setId(ch.getId());
 	this.setDescription(ch.getDescription());
+	this.setDescription_i18n(ch.getDescription_i18n());
 
         return true;
     }

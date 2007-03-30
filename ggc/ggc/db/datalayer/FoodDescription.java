@@ -49,12 +49,9 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	this.setFood_group_id(0);
 	this.setName("");
 	this.setI18n_name("");
-	this.setCH_g(0.0f);
-	this.setEnergy_kcal(0.0f);
-	this.setEnergy_kJ(0.0f);
-	this.setFat_g(0.0f);
 	this.setRefuse(0.0f);
-	this.setSugar_g(0.0f);
+	this.setNutritions("");
+	this.setRefuse(0.0f);
     }
 
 
@@ -64,12 +61,14 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	this.setFood_group_id(ch.getFood_group_id());
 	this.setName(ch.getName());
 	this.setI18n_name(ch.getI18n_name());
-	this.setCH_g(ch.getCH_g());
-	this.setEnergy_kcal(ch.getEnergy_kcal());
-	this.setEnergy_kJ(ch.getEnergy_kJ());
-	this.setFat_g(ch.getFat_g());
+//	this.setCH_g(ch.getCH_g());
+//	this.setEnergy_kcal(ch.getEnergy_kcal());
+//	this.setEnergy_kJ(ch.getEnergy_kJ());
+//	this.setFat_g(ch.getFat_g());
 	this.setRefuse(ch.getRefuse());
-	this.setSugar_g(ch.getSugar_g());
+	this.setNutritions(ch.getNutritions());
+
+//	this.setSugar_g(ch.getSugar_g());
     }
 
 
@@ -109,13 +108,15 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	ch.setFood_group_id(this.getFood_group_id());
 	ch.setName(this.getName());
 	ch.setI18n_name(this.getI18n_name());
-	ch.setCH_g(this.getCH_g());
+	ch.setNutritions(this.getNutritions());
+	ch.setRefuse(this.getRefuse());
+/*	ch.setCH_g(this.getCH_g());
 	ch.setEnergy_kcal(this.getEnergy_kcal());
 	ch.setEnergy_kJ(this.getEnergy_kJ());
 	ch.setFat_g(this.getFat_g());
 	ch.setRefuse(this.getRefuse());
 	ch.setSugar_g(this.getSugar_g());
-
+*/
         Long id = (Long)sess.save(ch);
 
         tx.commit();
@@ -144,12 +145,14 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	ch.setFood_group_id(this.getFood_group_id());
 	ch.setName(this.getName());
 	ch.setI18n_name(this.getI18n_name());
-	ch.setCH_g(this.getCH_g());
+	ch.setNutritions(this.getNutritions());
+	ch.setRefuse(this.getRefuse());
+/*	ch.setCH_g(this.getCH_g());
 	ch.setEnergy_kcal(this.getEnergy_kcal());
 	ch.setEnergy_kJ(this.getEnergy_kJ());
 	ch.setFat_g(this.getFat_g());
 	ch.setRefuse(this.getRefuse());
-	ch.setSugar_g(this.getSugar_g());
+	ch.setSugar_g(this.getSugar_g());*/
 
         sess.update(ch);
         tx.commit();
@@ -216,12 +219,16 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	this.setFood_group_id(ch.getFood_group_id());
 	this.setName(ch.getName());
 	this.setI18n_name(ch.getI18n_name());
-	this.setCH_g(ch.getCH_g());
+	this.setNutritions(ch.getNutritions());
+
+/*	this.setCH_g(ch.getCH_g());
 	this.setEnergy_kcal(ch.getEnergy_kcal());
 	this.setEnergy_kJ(ch.getEnergy_kJ());
 	this.setFat_g(ch.getFat_g());
-	this.setRefuse(ch.getRefuse());
 	this.setSugar_g(ch.getSugar_g());
+	*/
+	this.setRefuse(ch.getRefuse());
+	//this.setSugar_g(ch.getSugar_g());
 
         return true;
     }
