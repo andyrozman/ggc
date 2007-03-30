@@ -18,12 +18,20 @@ public class AppointmentH implements Serializable {
     private long dt_apoint;
 
     /** nullable persistent field */
+    private String apoint_text;
+
+    /** nullable persistent field */
+    private String extended;
+
+    /** nullable persistent field */
     private String comment;
 
     /** full constructor */
-    public AppointmentH(long doctor_id, long dt_apoint, String comment) {
+    public AppointmentH(long doctor_id, long dt_apoint, String apoint_text, String extended, String comment) {
         this.doctor_id = doctor_id;
         this.dt_apoint = dt_apoint;
+        this.apoint_text = apoint_text;
+        this.extended = extended;
         this.comment = comment;
     }
 
@@ -61,6 +69,22 @@ public class AppointmentH implements Serializable {
         this.dt_apoint = dt_apoint;
     }
 
+    public String getApoint_text() {
+        return this.apoint_text;
+    }
+
+    public void setApoint_text(String apoint_text) {
+        this.apoint_text = apoint_text;
+    }
+
+    public String getExtended() {
+        return this.extended;
+    }
+
+    public void setExtended(String extended) {
+        this.extended = extended;
+    }
+
     public String getComment() {
         return this.comment;
     }
@@ -69,14 +93,12 @@ public class AppointmentH implements Serializable {
         this.comment = comment;
     }
 
-    @Override
     public String toString() {
         return new ToStringBuilder(this)
             .append("id", getId())
             .toString();
     }
 
-    @Override
     public boolean equals(Object other) {
         if ( !(other instanceof AppointmentH) ) return false;
         AppointmentH castOther = (AppointmentH) other;
@@ -85,7 +107,6 @@ public class AppointmentH implements Serializable {
             .isEquals();
     }
 
-    @Override
     public int hashCode() {
         return new HashCodeBuilder()
             .append(getId())

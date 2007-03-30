@@ -15,7 +15,7 @@ public class DayValueH implements Serializable {
     private long dt_info;
 
     /** nullable persistent field */
-    private float bg;
+    private int bg;
 
     /** nullable persistent field */
     private float ins1;
@@ -30,13 +30,16 @@ public class DayValueH implements Serializable {
     private String meals_ids;
 
     /** nullable persistent field */
-    private int act;
+    private String act;
+
+    /** nullable persistent field */
+    private String extended;
 
     /** nullable persistent field */
     private String comment;
 
     /** full constructor */
-    public DayValueH(long dt_info, float bg, float ins1, float ins2, float ch, String meals_ids, int act, String comment) {
+    public DayValueH(long dt_info, int bg, float ins1, float ins2, float ch, String meals_ids, String act, String extended, String comment) {
         this.dt_info = dt_info;
         this.bg = bg;
         this.ins1 = ins1;
@@ -44,6 +47,7 @@ public class DayValueH implements Serializable {
         this.ch = ch;
         this.meals_ids = meals_ids;
         this.act = act;
+        this.extended = extended;
         this.comment = comment;
     }
 
@@ -72,11 +76,11 @@ public class DayValueH implements Serializable {
         this.dt_info = dt_info;
     }
 
-    public float getBg() {
+    public int getBg() {
         return this.bg;
     }
 
-    public void setBg(float bg) {
+    public void setBg(int bg) {
         this.bg = bg;
     }
 
@@ -112,12 +116,20 @@ public class DayValueH implements Serializable {
         this.meals_ids = meals_ids;
     }
 
-    public int getAct() {
+    public String getAct() {
         return this.act;
     }
 
-    public void setAct(int act) {
+    public void setAct(String act) {
         this.act = act;
+    }
+
+    public String getExtended() {
+        return this.extended;
+    }
+
+    public void setExtended(String extended) {
+        this.extended = extended;
     }
 
     public String getComment() {

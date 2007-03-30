@@ -14,10 +14,14 @@ public class FoodGroupH implements Serializable {
     /** nullable persistent field */
     private String description;
 
+    /** nullable persistent field */
+    private String description_i18n;
+
     /** full constructor */
-    public FoodGroupH(int id, String description) {
+    public FoodGroupH(int id, String description, String description_i18n) {
         this.id = id;
         this.description = description;
+        this.description_i18n = description_i18n;
     }
 
     /** default constructor */
@@ -43,6 +47,14 @@ public class FoodGroupH implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDescription_i18n() {
+        return this.description_i18n;
+    }
+
+    public void setDescription_i18n(String description_i18n) {
+        this.description_i18n = description_i18n;
     }
 
     public String toString() {

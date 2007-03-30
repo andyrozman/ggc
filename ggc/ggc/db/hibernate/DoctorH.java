@@ -12,6 +12,9 @@ public class DoctorH implements Serializable {
     private long id;
 
     /** nullable persistent field */
+    private long doctor_type_id;
+
+    /** nullable persistent field */
     private String name;
 
     /** nullable persistent field */
@@ -27,15 +30,20 @@ public class DoctorH implements Serializable {
     private String working_time;
 
     /** nullable persistent field */
+    private String extended;
+
+    /** nullable persistent field */
     private String comment;
 
     /** full constructor */
-    public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String comment) {
+    public DoctorH(long doctor_type_id, String name, String address, String phone_gsm, String phone, String working_time, String extended, String comment) {
+        this.doctor_type_id = doctor_type_id;
         this.name = name;
         this.address = address;
         this.phone_gsm = phone_gsm;
         this.phone = phone;
         this.working_time = working_time;
+        this.extended = extended;
         this.comment = comment;
     }
 
@@ -49,6 +57,14 @@ public class DoctorH implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getDoctor_type_id() {
+        return this.doctor_type_id;
+    }
+
+    public void setDoctor_type_id(long doctor_type_id) {
+        this.doctor_type_id = doctor_type_id;
     }
 
     public String getName() {
@@ -89,6 +105,14 @@ public class DoctorH implements Serializable {
 
     public void setWorking_time(String working_time) {
         this.working_time = working_time;
+    }
+
+    public String getExtended() {
+        return this.extended;
+    }
+
+    public void setExtended(String extended) {
+        this.extended = extended;
     }
 
     public String getComment() {
