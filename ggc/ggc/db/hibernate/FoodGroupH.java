@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class FoodGroupH implements Serializable {
 
     /** identifier field */
-    private int id;
+    private long id;
 
     /** nullable persistent field */
     private String description;
@@ -18,8 +18,7 @@ public class FoodGroupH implements Serializable {
     private String description_i18n;
 
     /** full constructor */
-    public FoodGroupH(int id, String description, String description_i18n) {
-        this.id = id;
+    public FoodGroupH(String description, String description_i18n) {
         this.description = description;
         this.description_i18n = description_i18n;
     }
@@ -28,16 +27,11 @@ public class FoodGroupH implements Serializable {
     public FoodGroupH() {
     }
 
-    /** minimal constructor */
-    public FoodGroupH(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

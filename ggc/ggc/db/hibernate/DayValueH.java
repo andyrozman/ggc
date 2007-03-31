@@ -18,10 +18,10 @@ public class DayValueH implements Serializable {
     private int bg;
 
     /** nullable persistent field */
-    private float ins1;
+    private int ins1;
 
     /** nullable persistent field */
-    private float ins2;
+    private int ins2;
 
     /** nullable persistent field */
     private float ch;
@@ -39,7 +39,7 @@ public class DayValueH implements Serializable {
     private String comment;
 
     /** full constructor */
-    public DayValueH(long dt_info, int bg, float ins1, float ins2, float ch, String meals_ids, String act, String extended, String comment) {
+    public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String act, String extended, String comment) {
         this.dt_info = dt_info;
         this.bg = bg;
         this.ins1 = ins1;
@@ -84,19 +84,19 @@ public class DayValueH implements Serializable {
         this.bg = bg;
     }
 
-    public float getIns1() {
+    public int getIns1() {
         return this.ins1;
     }
 
-    public void setIns1(float ins1) {
+    public void setIns1(int ins1) {
         this.ins1 = ins1;
     }
 
-    public float getIns2() {
+    public int getIns2() {
         return this.ins2;
     }
 
-    public void setIns2(float ins2) {
+    public void setIns2(int ins2) {
         this.ins2 = ins2;
     }
 

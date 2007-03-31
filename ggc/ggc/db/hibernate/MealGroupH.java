@@ -9,19 +9,23 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class MealGroupH implements Serializable {
 
     /** identifier field */
-    private int id;
+    private long id;
 
     /** nullable persistent field */
-    private String description;
+    private String name;
 
     /** nullable persistent field */
-    private int type;
+    private String name_18n;
+
+    /** nullable persistent field */
+    private int parent_id;
 
     /** full constructor */
-    public MealGroupH(int id, String description, int type) {
+    public MealGroupH(long id, String name, String name_18n, int parent_id) {
         this.id = id;
-        this.description = description;
-        this.type = type;
+        this.name = name;
+        this.name_18n = name_18n;
+        this.parent_id = parent_id;
     }
 
     /** default constructor */
@@ -29,32 +33,40 @@ public class MealGroupH implements Serializable {
     }
 
     /** minimal constructor */
-    public MealGroupH(int id) {
+    public MealGroupH(long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getName() {
+        return this.name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getType() {
-        return this.type;
+    public String getName_18n() {
+        return this.name_18n;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setName_18n(String name_18n) {
+        this.name_18n = name_18n;
+    }
+
+    public int getParent_id() {
+        return this.parent_id;
+    }
+
+    public void setParent_id(int parent_id) {
+        this.parent_id = parent_id;
     }
 
     public String toString() {

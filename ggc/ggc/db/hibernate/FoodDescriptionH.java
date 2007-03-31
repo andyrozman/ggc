@@ -12,7 +12,7 @@ public class FoodDescriptionH implements Serializable {
     private long id;
 
     /** nullable persistent field */
-    private int food_group_id;
+    private long food_group_id;
 
     /** nullable persistent field */
     private String name;
@@ -30,8 +30,7 @@ public class FoodDescriptionH implements Serializable {
     private String home_weights;
 
     /** full constructor */
-    public FoodDescriptionH(long id, int food_group_id, String name, String i18n_name, float refuse, String nutritions, String home_weights) {
-        this.id = id;
+    public FoodDescriptionH(long food_group_id, String name, String i18n_name, float refuse, String nutritions, String home_weights) {
         this.food_group_id = food_group_id;
         this.name = name;
         this.i18n_name = i18n_name;
@@ -44,11 +43,6 @@ public class FoodDescriptionH implements Serializable {
     public FoodDescriptionH() {
     }
 
-    /** minimal constructor */
-    public FoodDescriptionH(long id) {
-        this.id = id;
-    }
-
     public long getId() {
         return this.id;
     }
@@ -57,11 +51,11 @@ public class FoodDescriptionH implements Serializable {
         this.id = id;
     }
 
-    public int getFood_group_id() {
+    public long getFood_group_id() {
         return this.food_group_id;
     }
 
-    public void setFood_group_id(int food_group_id) {
+    public void setFood_group_id(long food_group_id) {
         this.food_group_id = food_group_id;
     }
 

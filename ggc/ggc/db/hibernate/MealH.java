@@ -12,36 +12,20 @@ public class MealH implements Serializable {
     private long id;
 
     /** nullable persistent field */
-    private int meal_group;
+    private long meal_group_id;
 
     /** nullable persistent field */
-    private String name;
+    private int type;
 
     /** nullable persistent field */
-    private float fat_g;
-
-    /** nullable persistent field */
-    private float CH_g;
-
-    /** nullable persistent field */
-    private float energy_kcal;
-
-    /** nullable persistent field */
-    private float energy_kJ;
-
-    /** nullable persistent field */
-    private float sugar_g;
+    private long food_id;
 
     /** full constructor */
-    public MealH(long id, int meal_group, String name, float fat_g, float CH_g, float energy_kcal, float energy_kJ, float sugar_g) {
+    public MealH(long id, long meal_group_id, int type, long food_id) {
         this.id = id;
-        this.meal_group = meal_group;
-        this.name = name;
-        this.fat_g = fat_g;
-        this.CH_g = CH_g;
-        this.energy_kcal = energy_kcal;
-        this.energy_kJ = energy_kJ;
-        this.sugar_g = sugar_g;
+        this.meal_group_id = meal_group_id;
+        this.type = type;
+        this.food_id = food_id;
     }
 
     /** default constructor */
@@ -61,60 +45,28 @@ public class MealH implements Serializable {
         this.id = id;
     }
 
-    public int getMeal_group() {
-        return this.meal_group;
+    public long getMeal_group_id() {
+        return this.meal_group_id;
     }
 
-    public void setMeal_group(int meal_group) {
-        this.meal_group = meal_group;
+    public void setMeal_group_id(long meal_group_id) {
+        this.meal_group_id = meal_group_id;
     }
 
-    public String getName() {
-        return this.name;
+    public int getType() {
+        return this.type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public float getFat_g() {
-        return this.fat_g;
+    public long getFood_id() {
+        return this.food_id;
     }
 
-    public void setFat_g(float fat_g) {
-        this.fat_g = fat_g;
-    }
-
-    public float getCH_g() {
-        return this.CH_g;
-    }
-
-    public void setCH_g(float CH_g) {
-        this.CH_g = CH_g;
-    }
-
-    public float getEnergy_kcal() {
-        return this.energy_kcal;
-    }
-
-    public void setEnergy_kcal(float energy_kcal) {
-        this.energy_kcal = energy_kcal;
-    }
-
-    public float getEnergy_kJ() {
-        return this.energy_kJ;
-    }
-
-    public void setEnergy_kJ(float energy_kJ) {
-        this.energy_kJ = energy_kJ;
-    }
-
-    public float getSugar_g() {
-        return this.sugar_g;
-    }
-
-    public void setSugar_g(float sugar_g) {
-        this.sugar_g = sugar_g;
+    public void setFood_id(long food_id) {
+        this.food_id = food_id;
     }
 
     public String toString() {
