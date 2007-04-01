@@ -6,7 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class MeterImplementationH implements Serializable {
+public class MeterInterfaceH implements Serializable {
 
     /** identifier field */
     private long id;
@@ -17,28 +17,14 @@ public class MeterImplementationH implements Serializable {
     /** persistent field */
     private String class_name;
 
-    /** nullable persistent field */
-    private long interface_id;
-
-    /** nullable persistent field */
-    private int status;
-
     /** full constructor */
-    public MeterImplementationH(String description, String class_name, long interface_id, int status) {
+    public MeterInterfaceH(String description, String class_name) {
         this.description = description;
         this.class_name = class_name;
-        this.interface_id = interface_id;
-        this.status = status;
     }
 
     /** default constructor */
-    public MeterImplementationH() {
-    }
-
-    /** minimal constructor */
-    public MeterImplementationH(String description, String class_name) {
-        this.description = description;
-        this.class_name = class_name;
+    public MeterInterfaceH() {
     }
 
     public long getId() {
@@ -65,22 +51,6 @@ public class MeterImplementationH implements Serializable {
         this.class_name = class_name;
     }
 
-    public long getInterface_id() {
-        return this.interface_id;
-    }
-
-    public void setInterface_id(long interface_id) {
-        this.interface_id = interface_id;
-    }
-
-    public int getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public String toString() {
         return new ToStringBuilder(this)
             .append("id", getId())
@@ -88,8 +58,8 @@ public class MeterImplementationH implements Serializable {
     }
 
     public boolean equals(Object other) {
-        if ( !(other instanceof MeterImplementationH) ) return false;
-        MeterImplementationH castOther = (MeterImplementationH) other;
+        if ( !(other instanceof MeterInterfaceH) ) return false;
+        MeterInterfaceH castOther = (MeterInterfaceH) other;
         return new EqualsBuilder()
             .append(this.getId(), castOther.getId())
             .isEquals();
