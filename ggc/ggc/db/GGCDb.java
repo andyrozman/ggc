@@ -1005,7 +1005,12 @@ public class GGCDb
 	if (db_debug)
 	    System.out.println("Hibernate: getHbA1c()");
 
+
+	System.out.println("Hibernate: getHbA1c()");
+
     	HbA1cValues hbVal = new HbA1cValues();
+
+	System.out.println("getHbA1c(): readings: " + hbVal.getDayCount() + " " + hbVal.getReadings());
 
         try 
         {
@@ -1026,11 +1031,14 @@ public class GGCDb
 
 	    while (it.hasNext())
 	    {
+		System.out.println("Found");
 		DayValueH dv = (DayValueH)it.next();
 		hbVal.addDayValueRow(new DailyValuesRow(dv));
 	    }
 
 	    hbVal.processDayValues();
+
+	    System.out.println("getHbA1c(): readings: " +hbVal.getDayCount() + " " + hbVal.getReadings());
 
 	} 
 	catch (Exception e) 

@@ -1,3 +1,11 @@
+
+2006-04-02 (v0.2.5.3)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Bug fixes (from BUGS.txt):
+	- In Preferences->General: changing language also changes selected L&F name, but not class
+	- Changed preferences mostly apply only after restart (names, language)
+	- hba1c of 2.09% with ZERO readings...
+
+
 2006-04-01 (v0.2.5.2)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Fixing reading of configuration
     * Refresh of Info panels fixed

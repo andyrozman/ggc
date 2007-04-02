@@ -54,6 +54,8 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
     int current_index = 0;
 
+    boolean ok_action = false;
+
 
     public String config_types[] = { 
 	m_ic.getMessage("GENERAL"),
@@ -304,6 +306,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         if (action.equals("ok")) 
         {
             save();
+	    ok_action = true;
             this.dispose();
         }
         else if (action.equals("cancel")) 
@@ -319,6 +322,13 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
             System.out.println("PropertiesFrame: Unknown command: " + action);
 
     }
+
+
+    public boolean wasOKAction()
+    {
+	return ok_action;
+    }
+
 
     public void save()
     {

@@ -149,7 +149,10 @@ public class HbA1cValues
 
     public float getHbA1c_Method1()
     {
-        if (dayCount > 0)
+	if (readings==0)
+	    return 0;
+
+        if (dayCount > 0) 
             return (float)((getAvgBG() + 66.1) / 31.7);
         else
             return 0;
@@ -157,7 +160,10 @@ public class HbA1cValues
 
     public float getHbA1c_Method2()
     {
-        if (dayCount > 0)
+	if (readings==0)
+	    return 0;
+
+	if (dayCount > 0)
             return (getAvgBG() / 30 + 2);
         else
             return 0;

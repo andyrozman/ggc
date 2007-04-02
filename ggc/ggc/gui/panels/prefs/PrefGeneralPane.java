@@ -98,7 +98,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 	a.add(langBox);
 	
 	fieldUserName.getDocument().addDocumentListener(this);
-	langBox.addItemListener(this);
+	//langBox.addItemListener(this);
 
 	this.add(a);
 
@@ -132,12 +132,6 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 	p3.setBorder(new TitledBorder(m_ic.getMessage("LAF_SETTINGS")));
 	p3.setBounds(10,280,490,135);
 	p3.setLayout(null);
-
-	/*
-	label = new JLabel(m_ic.getMessage("LAF_SETTINGS_DESC"));
-	label.setBounds(20, 10, 400, 30);
-	p3.add(label);
-	*/
 
 	addLabel(p3, m_ic.getMessage("LAF_SETTINGS_DESC"), 20, 10, 400, 30);
 	
@@ -195,119 +189,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 	int idx = this.m_dbc.getSelectedLFIndex();
 	this.cb_lf_type.setSelectedIndex(idx);
 	
-
-	//p_p_3.add(new JLabel(m_ic.getMessage("SELECTED_SKINLF_DEF")));
-	//p_p_3.add(this.tf_lf = new JTextField());
-	//p_p_3.add(this.b_browse = new JButton(m_ic.getMessage("BROWSE")+"..."));
-
-
-	//cb_lf_type, cb_lf_type_class
-
-
-/*
-	//JPanel p_p_3 = new JPanel(new GridLayout(3, 3));
-	//p_p_3.setBounds(20, 50, 300, 75);
-	p_p_3.add(new JLabel(m_ic.getMessage("SELECTED_LAF_TYPE_NAME")));
-	p_p_3.add(this.cb_lf_type = new JComboBox());
-	p_p_3.add(new JLabel());
-	p_p_3.add(new JLabel(m_ic.getMessage("SELECTED_LAF_TYPE_CLASS")));
-	p_p_3.add(this.tf_lf = new JTextField());
-	p_p_3.add(new JLabel());
-	p_p_3.add(new JLabel(m_ic.getMessage("SELECTED_SKINLF_DEF")));
-	p_p_3.add(this.tf_lf = new JTextField());
-	p_p_3.add(this.b_browse = new JButton(m_ic.getMessage("BROWSE")+"..."));
-
-	p3.add(p_p_3);
-*/
-	//this.cb_lf_type.addItemListener(this);
-
-
 	this.add(p3);
-
-
-
-	//this.setLayout(new BorderLayout());
-
-
-/*
-        JPanel a = new JPanel(new GridLayout(2,32));
-	a.setBorder(new TitledBorder(m_ic.getMessage("GENERAL_SETTINGS")));
-        langBox = new JComboBox(m_da.getAvailableLanguages());
-        langBox.setSelectedIndex(m_da.getSelectedLanguageIndex());
-
-        a.add(new JLabel(m_ic.getMessage("YOUR_NAME") + ":"));
-        a.add(fieldUserName = new JTextField(m_da.getSettings().getUserName(), 10));
-	a.add(new JLabel());
-
-        a.add(new JLabel(m_ic.getMessage("YOUR_LANGUAGE") + ":"));
-        a.add(langBox);
-	a.add(new JLabel());
-
-        fieldUserName.getDocument().addDocumentListener(this);
-        langBox.addItemListener(this);
-
-	// database settings
-	JPanel par_p_2 = new JPanel(new GridLayout(1,1));
-
-	JPanel p_2 = new JPanel(); //new GridLayout(2, 1));
-	p_2.setLayout(null);
-	p_2.setSize(300, 130);
-	//p_2.setBounds(0, 0, 300, 200);
-	//p_2.setBackground(Color.red);
-	p_2.setBorder(new TitledBorder(m_ic.getMessage("DATABASE_SETTINGS")));
-
-	JLabel label = new JLabel(m_ic.getMessage("DATABASE_SETTINGS_DESC"));
-	label.setBounds(10, 15, 450, 90);
-	p_2.add(label); //new JLabel(m_ic.getMessage("DATABASE_SETTINGS_DESC")));
-
-	label = new JLabel(m_ic.getMessage("SELECTED_DATABASE") + ":");
-	label.setBounds(10, 120, 120, 25);
-	p_2.add(label);
-
-	this.cb_database = new JComboBox();
-	this.cb_database.setBounds(140, 120, 280, 25);
-	p_2.add(this.cb_database);
-	//JPanel p_p_2 = new JPanel(new GridLayout(1, 2));
-	//p_p_2.add(new JLabel(m_ic.getMessage("SELECTED_DATABASE")));
-	//p_p_2.add(this.cb_database = new JComboBox());
-	//p_2.add(p_p_2);
-
-	par_p_2.add(p_2);
-
-
-	JPanel p_3 = new JPanel(new GridLayout(2, 1));
-	p_3.setBorder(new TitledBorder(m_ic.getMessage("LAF_SETTINGS")));
-	p_3.add(new JLabel(m_ic.getMessage("LAF_SETTINGS_DESC")));
-
-	
-	JPanel p_p_3 = new JPanel(new GridLayout(3, 3));
-	p_p_3.add(new JLabel(m_ic.getMessage("SELECTED_LAF_TYPE_NAME")));
-	p_p_3.add(this.cb_lf_type = new JComboBox());
-	p_p_3.add(new JLabel());
-	p_p_3.add(new JLabel(m_ic.getMessage("SELECTED_LAF_TYPE_CLASS")));
-	p_p_3.add(this.tf_lf = new JTextField());
-	p_p_3.add(new JLabel());
-	p_p_3.add(new JLabel(m_ic.getMessage("SELECTED_SKINLF_DEF")));
-	p_p_3.add(this.tf_lf = new JTextField());
-	p_p_3.add(this.b_browse = new JButton(m_ic.getMessage("BROWSE")+"..."));
-
-	p_3.add(p_p_3);
-
-	this.cb_lf_type.addItemListener(this);
-
-	
-/*
-        Box c = Box.createVerticalBox();
-	//c.add
-        c.add(a);
-	c.add(par_p_2);
-	c.add(p_3);
-*/
-/*
-        add(a, BorderLayout.NORTH);
-	add(p_2, BorderLayout.CENTER);
-	add(p_3, BorderLayout.SOUTH);
-*/
 
     }
 

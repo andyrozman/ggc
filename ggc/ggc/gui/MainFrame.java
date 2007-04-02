@@ -73,7 +73,7 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.5.2";
+    public  static String s_version = "0.2.5.3";
     private String full_version = "v" + s_version;
 
     private String version_date = "1st April 2007";
@@ -630,7 +630,13 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("tools_pref")) 
             {
-                new PropertiesDialog(MainFrame.this);
+                PropertiesDialog pd = new PropertiesDialog(MainFrame.this);
+
+		if (pd.wasOKAction())
+		{
+		    informationPanel.invalidatePanelsConstants();
+		    informationPanel.refreshPanels();
+		}
             } 
 /*            else if (command.equals("read_meter")) 
             {

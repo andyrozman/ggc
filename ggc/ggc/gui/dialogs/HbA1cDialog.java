@@ -90,7 +90,7 @@ public class HbA1cDialog extends JDialog implements ActionListener
         getContentPane().setLayout(new BorderLayout());
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
-        setBounds(100, 100, 500, 400);
+        setBounds(100, 100, 500, 430);
 
         JPanel infoPanel = new JPanel(new BorderLayout());
 
