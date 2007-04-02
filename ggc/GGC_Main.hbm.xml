@@ -4,24 +4,35 @@
     
     <!-- ***************** ggc::Main SCHEMA  ******************* -->
 
+
+    <!-- ****************************************** -->
+    <!-- ***               Patient Data           **** -->
+    <!-- ****************************************** -->
+
     <!--  Day values -->
-    <class name="ggc.db.hibernate.DayValueH" table="ggc_main_dayvalues">
+    <class name="ggc.db.hibernate.DayValueH" table="data_dayvalues" >
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
         <property name="dt_info" type="long" not-null="true"/>    
-        <property name="bg"  type="float" />
-        <property name="ins1"  type="float" />
-        <property name="ins2"  type="float" />
+        <property name="bg"  type="int" />
+        <property name="ins1"  type="int" />
+        <property name="ins2"  type="int" />
         <property name="ch"  type="float" />
         <property name="meals_ids"  type="string" length="1000" />
-        <property name="act"  type="int" />
+        <property name="act"  type="text" />
+        <property name="extended"  type="text" />
         <property name="comment" type="string" length="2000" />
     </class>
 
 
+    <!-- ****************************************** -->
+    <!-- ***                  Doctors              **** -->
+    <!-- ****************************************** -->
+
+
     <!--  Doctor types -->
-    <class name="ggc.db.hibernate.DoctorTypeH" table="ggc_doc_types">
+    <class name="ggc.db.hibernate.DoctorTypeH" table="doc_types">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -29,73 +40,80 @@
         <property name="name_i18n"  type="string" length="1000" />
     </class>
 
-    <!--  Doctor types -->
-    <class name="ggc.db.hibernate.DoctorH" table="ggc_doc_doctors">
+    <!--  Doctor -->
+    <class name="ggc.db.hibernate.DoctorH" table="doc_doctors">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
+        <property name="doctor_type_id"  type="long"  />
         <property name="name"  type="string" length="100" />
         <property name="address"  type="string" length="2000" />
         <property name="phone_gsm"  type="string" length="500" />
         <property name="phone"  type="string" length="500" />
-        <property name="working_time"  type="string" length="1000" />
+        <property name="working_time"  type="text"  />
+        <property name="extended"  type="text" />
         <property name="comment"  type="string" length="4000" />
     </class>
 
     <!--  Appointment -->
-    <class name="ggc.db.hibernate.AppointmentH" table="ggc_appointment">
+    <class name="ggc.db.hibernate.AppointmentH" table="doc_appointment">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
         <property name="doctor_id"  type="long" not-null="true" />
         <property name="dt_apoint"  type="long" not-null="true" />
+        <property name="apoint_text"  type="string" length="1000" />
+        <property name="extended"  type="text" />
         <property name="comment"  type="string" length="4000" />
     </class>
 
 
-    <!--  Settings main -->
-    <class name="ggc.db.hibernate.SettingsMainH" table="ggc_sett_main">
+    <!-- ****************************************** -->
+    <!-- ***                  Stocks               **** -->
+    <!-- ****************************************** -->
+
+    <!--  Stock types -->
+    <class name="ggc.db.hibernate.StockTypeH" table="stock_types">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
-        <property name="name" type="string"  length="50"/>    
-        <property name="ins1_name" type="string" length="20" />
-        <property name="ins1_abbr" type="string" length="10" />
-        <property name="ins2_name" type="string" length="20" />
-        <property name="ins2_abbr" type="string" length="10" />
-        <property name="meter_type"  type="int" />
-        <property name="meter_port"  type="string" length="50" />
-        <property name="bg_unit"  type="int" />  <!-- 2= mmol/l, 1=mg/dl -->
-        <property name="bg1_low"  type="float"  />
-        <property name="bg1_high"  type="float"  />
-        <property name="bg1_target_low"  type="float"  />
-        <property name="bg1_target_high"  type="float"  />
-        <property name="bg2_low"  type="float"  />
-        <property name="bg2_high"  type="float"  />
-        <property name="bg2_target_low"  type="float"  />
-        <property name="bg2_target_high"  type="float"  />
-        <property name="laf_type" type="int"  /> <!-- 1= class specified, 2=skinlf -->   
-        <property name="laf_name" type="string" length="60"  /> <!-- 1= class, 2= file of skin -->   
-
-        <property name="render_rendering"  type="int" />
-        <property name="render_dithering"  type="int" />
-        <property name="render_interpolation"  type="int" />
-        <property name="render_antialiasing"  type="int" />
-        <property name="render_textantialiasing"  type="int" />
-        <property name="render_colorrendering"  type="int" />
-        <property name="render_fractionalmetrics"  type="int" />
-
-        <property name="print_pdf_viewer_path"  type="string" length="100" />
-        <property name="print_lunch_start_time"  type="int" />
-        <property name="print_dinner_start_time"  type="int" />
-        <property name="print_night_start_time"  type="int" />
-        <property name="print_empty_value"  type="string" length="10" />
-
-        <property name="color_scheme"  type="string" length="50" />
+        <property name="name"  type="string" length="1000" />
+        <property name="name_i18n"  type="string" length="1000" />
     </class>
 
 
-    <class name="ggc.db.hibernate.SettingsH" table="ggc_settings">
+    <class name="ggc.db.hibernate.StockSubTypeH" table="stock_types">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="stock_type_id"  type="long"  />
+        <property name="name"  type="string" length="1000" />
+        <property name="description"  type="text" />
+        <property name="content"  type="float" />
+        <property name="comment" type="string" length="2000" />
+    </class>
+
+
+
+    <class name="ggc.db.hibernate.Stocks" table="stock_stocks">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="stock_type_sub_id"  type="long"  />
+        <property name="dt_stock"  type="long"  />
+        <property name="amount"  type="float" />
+        <property name="usage_per_day_min" type="float" />
+        <property name="usage_per_day_max" type="float" />
+    </class>
+
+
+
+    <!-- ****************************************** -->
+    <!-- ***               Configuration          **** -->
+    <!-- ****************************************** -->
+
+
+    <class name="ggc.db.hibernate.SettingsH" table="cfg_settings">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -107,7 +125,7 @@
 
 
 
-    <class name="ggc.db.hibernate.ColorSchemeH" table="ggc_sett_colorscheme">
+    <class name="ggc.db.hibernate.ColorSchemeH" table="cfg_colorscheme">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
