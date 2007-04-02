@@ -68,14 +68,11 @@ import ggc.data.MonthlyValues;
 import ggc.data.WeeklyValues;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
+//import ggc.db.datalayer.FoodHomeWeight;
+import ggc.db.datalayer.NutritionDefinition;
+import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.datalayer.Settings;
-import ggc.db.hibernate.ColorSchemeH;
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.DayValueH;
-import ggc.db.hibernate.FoodDescriptionH;
-import ggc.db.hibernate.FoodGroupH;
-import ggc.db.hibernate.SettingsH;
-import ggc.db.hibernate.SettingsMainH;
+import ggc.db.hibernate.*;
 import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
 
@@ -102,6 +99,15 @@ public class GGCDb
 
     private int m_loadStatus = 0;
 
+    // GLOBAL DATA
+    public Hashtable<String,NutritionDefinition> nutrition_defs = null;
+    public Hashtable<String,NutritionHomeWeightType> homeweight_defs = null;
+
+    public ArrayList<MeterCompanyH> meter_companies = null;
+    public Hashtable<String,ArrayList<MeterH>> meters_by_cmp = null;
+
+
+
 
     // ---
     // ---  DB Settings
@@ -117,16 +123,43 @@ public class GGCDb
 
     public GGCDb(DataAccess da)
     {
-        m_cfg = getConfiguration();
+        m_cfg = createConfiguration();
         m_da = da;
         m_loadStatus = DB_CONFIG_LOADED;
+//	debugConfig();
     }
 
 
     public GGCDb()
     {
-        m_cfg = getConfiguration();
+        m_cfg = createConfiguration();
         m_loadStatus = DB_CONFIG_LOADED;
+//	debugConfig();
+    }
+
+    public Configuration getConfiguration()
+    {
+	return this.m_cfg;
+    }
+
+
+    private void debugConfig()
+    {
+	System.out.println("Debug Configuration:");
+
+	//this.m_cfg.g
+	//this.m_cfg.
+
+	Iterator it = this.m_cfg.getClassMappings();
+
+	while(it.hasNext())
+	{
+            org.hibernate.mapping.RootClass rc = (org.hibernate.mapping.RootClass)it.next();
+	    //System.out.println(it.next());
+//	    exploreRootClass(rc);
+	}
+
+
     }
 
 
@@ -181,6 +214,12 @@ public class GGCDb
     }
 
 
+
+
+
+
+
+
     public void displayError(String source, Exception ex)
     {
 
@@ -208,10 +247,13 @@ public class GGCDb
     }
 
 
+    // *************************************************************
+    // ****                     SETTINGS                        ****
+    // *************************************************************
 
-    //
-    //  BASIC METHODS
-    //
+    //---
+    //---  BASIC METHODS (Hibernate and DataLayer processing)
+    //---
 
 
 
@@ -281,8 +323,8 @@ public class GGCDb
     public long addHibernate(Object obj)
     {
 
-        if (debug)
-            System.out.println("addHibernate::" + obj.toString());
+        //if (debug)
+        //    System.out.println("addHibernate::" + obj.toString());
 
         try
         {
@@ -505,7 +547,12 @@ public class GGCDb
     }
 
 
-    public Configuration getConfiguration()
+    // *************************************************************
+    // ****                     SETTINGS                        ****
+    // *************************************************************
+
+
+    public Configuration createConfiguration()
     {
 
 
@@ -573,6 +620,7 @@ public class GGCDb
             Configuration cfg = new Configuration()
                             .addResource("GGC_Nutrition.hbm.xml")
                             .addResource("GGC_Main.hbm.xml")
+			    .addResource("GGC_Other.hbm.xml")
 
                             .setProperty("hibernate.dialect", db_hib_dialect)
                             .setProperty("hibernate.connection.driver_class", db_driver_class)
@@ -598,6 +646,103 @@ public class GGCDb
         }
         return null;
     }
+
+
+    // *************************************************************
+    // ****               DATABASE INIT METHODS                 ****
+    // *************************************************************
+
+
+    public void loadNutritionDb1()
+    {
+	// tree root, now in static data
+
+	this.loadNutritionDefinitions();
+	this.loadHomeWeights();
+    }
+
+
+    public void loadImplementedMeterData()
+    {
+
+	// loading implemented meters
+
+	Hashtable<String, ArrayList<MeterH>> table = new Hashtable<String, ArrayList<MeterH>>();
+
+	Query q = this.getSession().createQuery("select pst from ggc.db.hibernate.MeterH as pst where pst.implementation_id>0 order by pst.company_id, pst.name asc");
+
+	Iterator it = q.iterate();
+
+	System.out.println("Meter implementations: " + q.list().size());
+
+	String company_id = null;
+
+	ArrayList<MeterH> mtrs = null;
+
+	while (it.hasNext())
+	{
+	    MeterH mh = (MeterH)it.next();
+
+	    if (company_id==null)
+	    {
+		mtrs = new ArrayList<MeterH>();
+		company_id = "" + mh.getCompany_id();
+//		mtrs = new Hashtable<String,MeterH>();
+	    }
+
+	    if (!company_id.equals(""+mh.getCompany_id()))
+	    {
+		table.put(company_id, mtrs);
+		mtrs = new ArrayList<MeterH>();
+		company_id = "" + mh.getCompany_id();
+	    }
+
+	    mtrs.add(mh);
+	}
+
+	table.put(company_id, mtrs);
+	this.meters_by_cmp = table;
+
+
+	StringBuffer buf = new StringBuffer();
+	boolean first = true;
+
+	for(Enumeration<String> en=table.keys(); en.hasMoreElements(); )
+	{
+	    String key = en.nextElement();
+
+	    if (first)
+	    {
+		first = false;
+	    }
+	    else
+		buf.append(" OR ");
+
+	    buf.append("pst.id=");
+	    buf.append(key);
+	}
+
+	System.out.println("Where : " + buf.toString());
+
+
+	// resolve meter names
+	Query q2 = this.getSession().createQuery("select pst from ggc.db.hibernate.MeterCompanyH as pst where " + buf.toString() + " order by pst.id asc");
+
+	Iterator it2 = q2.iterate();
+
+	ArrayList<MeterCompanyH> mtrs_cmp = new ArrayList<MeterCompanyH>();
+
+	while (it2.hasNext())
+	{
+	    MeterCompanyH mc = (MeterCompanyH)it2.next();
+	    mtrs_cmp.add(mc);
+	}
+
+	this.meter_companies = mtrs_cmp;
+
+    }
+
+
 
 
     // *************************************************************
@@ -774,6 +919,73 @@ public class GGCDb
         return list;
 
     }
+
+
+    public void loadNutritionDefinitions()
+    {
+
+	Hashtable<String,NutritionDefinition> nut_defs = new Hashtable<String,NutritionDefinition>();
+
+	Query q = getSession().createQuery("select pst from ggc.db.hibernate.NutritionDefinitionH as pst");
+
+	Iterator it = q.iterate();
+
+	while (it.hasNext())
+	{
+	    NutritionDefinitionH eh = (NutritionDefinitionH)it.next();
+
+	    NutritionDefinition fnd = new NutritionDefinition(eh);
+	    nut_defs.put("" + fnd.getId(), fnd);
+	}
+
+	this.nutrition_defs = nut_defs;
+
+    }
+
+
+    public void loadHomeWeights()
+    {
+
+	Hashtable<String,NutritionHomeWeightType> nut_defs = new Hashtable<String,NutritionHomeWeightType>();
+
+	Query q = getSession().createQuery("select pst from ggc.db.hibernate.NutritionHomeWeightTypeH as pst");
+
+	Iterator it = q.iterate();
+
+	while (it.hasNext())
+	{
+	    NutritionHomeWeightTypeH eh = (NutritionHomeWeightTypeH)it.next();
+
+	    NutritionHomeWeightType fnd = new NutritionHomeWeightType(eh);
+	    nut_defs.put(""+fnd.getId(), fnd);
+	}
+
+	this.homeweight_defs = nut_defs;
+
+    }
+
+
+
+/*
+    public ArrayList<FoodHomeWeight> getFoodHomeWeight(long id)
+    {
+
+	ArrayList<FoodHomeWeight> list = new ArrayList<FoodHomeWeight>();
+
+	Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodHomeWeightH as pst where pst.food_number=" + id);
+
+	Iterator it = q.iterate();
+
+	while (it.hasNext())
+	{
+	    FoodHomeWeightH eh = (FoodHomeWeightH)it.next();
+	    list.add(new FoodHomeWeight(eh));
+	}
+
+	return list;
+
+    }
+*/
 
 
 

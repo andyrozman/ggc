@@ -31,12 +31,12 @@ package ggc.gui.panels.info;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 public class InfoPanel extends JPanel
 {
-    private Vector<JPanel> vInfoPanels = new Vector<JPanel>();
+    private ArrayList<AbstractInfoPanel> vInfoPanels = new ArrayList<AbstractInfoPanel>();
 
     public InfoPanel()
     {
@@ -57,10 +57,23 @@ public class InfoPanel extends JPanel
             add(vInfoPanels.get(i));
     }
 
+
+    public void invalidatePanelsConstants()
+    {
+	for (int i = 0; i < vInfoPanels.size(); i++)
+	{
+	    vInfoPanels.get(i).invalidateFirstRefresh();
+	}
+    }
+
+
+
     public void refreshPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
-            ((AbstractInfoPanel)vInfoPanels.get(i)).refreshInfo();
+	{
+	    vInfoPanels.get(i).refreshInfo();
+	}
     }
 
     public void addPanelAt(int index, AbstractInfoPanel panel)

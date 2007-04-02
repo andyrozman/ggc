@@ -38,7 +38,7 @@ import ggc.db.hibernate.MealGroupH;
 
 
 
-public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
+public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
 {
 
     public boolean debug = false;
@@ -49,23 +49,24 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
     public MealGroup()
     {
         this.setId(0);
-	this.setDescription("");
-	this.setType(1);
+//	this.setDescription("");
+//	this.setType(1);
 	
     }
 
-
+/*
     public MealGroup(MealGroupH ch)
     {
         this.setId(ch.getId());
 	this.setDescription(ch.getDescription());
 	this.setType(ch.getType());
     }
-
+*/
 
     public String getShortDescription()
     {
-        return this.getDescription();
+        //return this.getDescription();
+	return "";
     }
 
 
@@ -89,7 +90,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return id in type of String
      */
-    public String DbAdd(Session sess) throws Exception
+/*    public String DbAdd(Session sess) throws Exception
     {
         
         Transaction tx = sess.beginTransaction();
@@ -107,7 +108,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
         return ""+id.longValue();
         
     }
-
+*/
 
 
     /**
@@ -117,7 +118,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-    public boolean DbEdit(Session sess) throws Exception
+/*    public boolean DbEdit(Session sess) throws Exception
     {
 
         Transaction tx = sess.beginTransaction();
@@ -134,7 +135,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
         return true;
 
     }
-
+*/
 
 
     /**
@@ -144,7 +145,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-    public boolean DbDelete(Session sess) throws Exception
+/*    public boolean DbDelete(Session sess) throws Exception
     {
 
         Transaction tx = sess.beginTransaction();
@@ -168,7 +169,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-    public boolean DbHasChildren(Session sess) throws Exception
+/*    public boolean DbHasChildren(Session sess) throws Exception
     {
         System.out.println("Not implemented: FoodGroup::DbHasChildren");
         return true;
@@ -184,7 +185,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-    public boolean DbGet(Session sess) throws Exception
+  /*  public boolean DbGet(Session sess) throws Exception
     {
 
 	MealGroupH ch = (MealGroupH)sess.get(MealGroupH.class, new Integer(this.getId()));
@@ -196,7 +197,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
         return true;
     }
 
-
+*/
 
     /**
      * getObjectName - returns name of DatabaseObject

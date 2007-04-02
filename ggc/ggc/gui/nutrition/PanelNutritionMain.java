@@ -17,7 +17,7 @@ import ggc.util.DataAccess;
 // andyrozman
 
 
-public class PanelNutritionMain extends JPanel
+public class PanelNutritionMain extends GGCTreePanel //JPanel
 {
 
     I18nControl ic = I18nControl.getInstance();
@@ -87,6 +87,13 @@ public class PanelNutritionMain extends JPanel
 //        this.add(label, null);
 
         return;
+    }
+
+
+
+    public void setData(Object obj)
+    {
+
     }
 
 

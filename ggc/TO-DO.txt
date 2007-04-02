@@ -3,29 +3,28 @@ TO-DO LIST
 
 Level 1 (High Priority): 
 ----------------------------
-* Configuration:
-X    o  display icons on left side and not tree
-X    o  printing
-X    o  L&F (Config)
-X    o  Db Selection 
-    o  Scheme 
 
-
+* Configuration: 
+    o  Fix setting com port
 
 Level 2 (Medium 1 Priority):
 ----------------------------
 
+* Db:
+    o Private nutrition
 
+* About dialog
+
+* Db Load:
+    o Add levels of loading (1=main(settings, daily stat), 2=Other data(docs,meters,links),3=Nutrition, 4=Finished)
 
 * Nutrition: 
-    o  Config
     o  View nutrition data in tree
 
-
-* Import/Export Tool:
-    o  Export old data (daily values)
-    o  Import old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
-    o  Nice GUI
+* Import/Export Tool (old data):
+    o  Export old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
+    o  Import old data (daily values)
+    o  Db Maintainance GUI
 
 
 Level 3 (Medium 2 Priority):
@@ -36,28 +35,50 @@ Level 3 (Medium 2 Priority):
     o  Nutrition data Init
     o  Basic Data Init
 
+
 * Printing: 
     o  Data gather - Extended (MonthlyValues)
     o  Detailed print sheet
 
+* Meters List
+    o  Db (meter_company, meters, meters_interface)
+    o  Table
+    o  Change Meter Manager
+
+* Import/Export Tool (for real time):
+    o  Backup
+    o  Restore
 
 
 
 Level 4 (Medium 3 Priority):
 ----------------------------
 
-* Hibernate for Database handling
-    o  Nutrition db
-    o  Meals db
-    o  Appointments db
+* User Nutrition:
+    o  Private nutrition database
+
+
+* Hibernate Db:
+    o  Daily Data        1
+    o  Configuration     1
+    o  Meters            1
+    o  Nutrition         1
+    o  User Nutrition    2
+    o  Meals             3
+    o  Doctors           3
+    o  Appointments      3
+    o  Web Links         2
+
+
 * Entering daily data: 
     o  Time displayed as selectable entry
     o  Add CH entry through meals
     o  Add daily entry must be changed (GUI is very...)
     o  option in which type we enter
     o  delete should ask: are you sure?
-
-
+* Java Help:
+    o  Integration
+    o  Write English help
 
 
 Level 5 (Low Priority):
@@ -88,6 +109,9 @@ Level 5 (Low Priority):
     o  Dummy meter 
     o  Ascensia Meter family (add/test)
     o  Try to rewrite old meters to new Meter Interface
+* Web Links:
+    o  Db
+
 
 METERS
 ------
@@ -129,17 +153,6 @@ Level 8 (Stuff not needed but it might be)
 ---------
 
 
-GGC (0.3)
-- General Settings (5-11.3.)
-//- Load L&F (12-18.3)
-- Enter Daily Data (19.3.-25.3)
-- New Meter Import framework (26.3.-1.4.)
-- Ascensia Meter Support (2.4.-8.4.)
-
-- Import/Export tool (9.4-15.4.)
-- Menus and About (16.4.-20.4.)
-
-Release on 25.4.
 
 
 
@@ -154,22 +167,67 @@ BIG CHANGES: Configuration, Printing main, Printing extended, Nutrition,
 SMALL CHANGES: Load LF, 
 
 
+------
+
+
+Version 0.3:
+- Enter Daily Data (19.3.-25.3)
+- Meters list 
+- Db Hibernate Redesign !!!
+- Old meters support only
+- Import/Export Old Data (9.4-15.4.)
+- About (16.4.-20.4.)
+- Nutrition display in tree
+- Meters List -> MeterManager changes
+
+
+
+Release on 25.4.
+
+
+
+Version 0.4:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 0.3: 
-   - Configuration
+   - Configuration: COM
 X   - Printing main
    - Enter Daily Data NEW
-   - Meter Manager NEW
 X   - rtx COMM API
-   - Meter Import Base
-   - Meter: Ascensia Contour support
    - Data Export/Import/Conversion (Daily Data only)
+   - Nutrition Display
 
 0.4:
    - Db Tool
+   - Backup/Restore
    - Db Hibernate changes 
-   - Nutrition
+   - Nutrition User
    - GGCLittle
    - Graphs, Db (mg/dl)
+   - Meter Manager NEW
+- New Meter Import framework (26.3.-1.4.)
+- Ascensia Meter Support (2.4.-8.4.)
+   - Meter Import Base
+   - Meter: Ascensia Contour support
 
 0.5:
    - Meals
@@ -182,6 +240,7 @@ X   - rtx COMM API
 0.6:
    - Apointments
    - Doctors
+   - Web Links
 
       
       
@@ -239,8 +298,17 @@ DONE
     o  colors
 * Look and feel:
     o  Loading of selected L&F
-X* Printing: 
-X    o  Use data from configuration (pdf viewer, ...)
+* Printing: 
+    o  Use data from configuration (pdf viewer, ...)
+* Configuration:
+    o  display icons on left side and not tree
+    o  printing
+    o  L&F (Config)
+    o  Db Selection 
+    o  Scheme 
+* Nutrition: 
+    o  Db Import
+    o  Config
 
 
 

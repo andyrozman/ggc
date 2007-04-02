@@ -96,7 +96,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 	ch.setDescription(this.getDescription());
 	ch.setDescription_i18n(this.getDescription_i18n());
 
-        Integer id = (Integer)sess.save(ch);
+        Long id = (Long)sess.save(ch);
 
         tx.commit();
 
@@ -118,7 +118,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 
         Transaction tx = sess.beginTransaction();
 
-	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Integer(this.getId()));
+	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Long(this.getId()));
 
 	ch.setId(this.getId());
 	ch.setDescription(this.getDescription());
@@ -145,7 +145,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 
         Transaction tx = sess.beginTransaction();
 
-	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Integer(this.getId()));
+	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Long(this.getId()));
 
         sess.delete(ch);
         tx.commit();
@@ -183,7 +183,7 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
     public boolean DbGet(Session sess) throws Exception
     {
 
-	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Integer(this.getId()));
+	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Long(this.getId()));
 
 	this.setId(ch.getId());
 	this.setDescription(ch.getDescription());

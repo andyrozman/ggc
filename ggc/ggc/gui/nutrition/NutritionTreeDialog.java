@@ -72,7 +72,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
 
     private I18nControl ic = null;
-    public JPanel  panels[] = null;
+    public GGCTreePanel  panels[] = null;
     private int selectedPanel = 0;
 
 
@@ -86,9 +86,9 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
         m_da = da;
         ic = m_da.m_i18n;
 
-        this.setResizable(false);
-        this.setBounds(80, 50, 640, 500);
-        this.setTitle(ic.getMessage("NUTRITION_DATA"));
+        //this.setResizable(false);
+        this.setBounds(80, 50, 740, 560);
+        this.setTitle(ic.getMessage("USDA_NUTRITION_DATABASE"));
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1,0));
@@ -132,7 +132,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     public void createPanels()
     {
 
-	panels = new JPanel[3];
+	panels = new GGCTreePanel[3];
         //panels = new JPanel[9];
 
         panels[0] = new PanelNutritionMain(this);
@@ -179,25 +179,23 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     /** Required by TreeSelectionListener interface. */
     public void valueChanged(TreeSelectionEvent e) 
     {
-	System.out.println("NutritionTreeDialog::valueChanged:: NOT IMPLEMENTED");
 
 	if (tree.getLastSelectedPathComponent() instanceof GGCTreeRoot)
 	{
 	    makePanelVisible(NutritionTreeDialog.PANEL_MAIN);
+	    System.out.println("NutritionTreeDialog::valueChanged:: NOT IMPLEMENTED");
 	    //Diocese dio = (Diocese)tree.getLastSelectedPathComponent();
 	    //((ViewDiocesePanel)panels[DioceseCfgDialog.PANEL_VIEW_DIOCESE]).setData((DioceseH)dio); //node2.getObject());
 	}
 	else if (tree.getLastSelectedPathComponent() instanceof FoodGroup)
 	{
 	    makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP);
-//	    Parish pi = (Parish)tree.getLastSelectedPathComponent();
-//	    ((ViewParishPanel)panels[DioceseCfgDialog.PANEL_VIEW_PARISH]).setData((ParishH)pi);
+	    this.panels[NutritionTreeDialog.PANEL_FOODGROUP].setData(tree.getLastSelectedPathComponent());
 	}
 	else if (tree.getLastSelectedPathComponent() instanceof FoodDescription)
 	{
 	    makePanelVisible(NutritionTreeDialog.PANEL_FOOD);
-//	    Parish pi = (Parish)tree.getLastSelectedPathComponent();
-//	    ((ViewParishPanel)panels[DioceseCfgDialog.PANEL_VIEW_PARISH]).setData((ParishH)pi);
+	    this.panels[NutritionTreeDialog.PANEL_FOOD].setData(tree.getLastSelectedPathComponent());
 	}
 
 

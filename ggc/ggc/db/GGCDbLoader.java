@@ -61,6 +61,18 @@ import ggc.gui.little.StatusBarL;
 public class GGCDbLoader extends Thread
 {
 
+
+    // 1 - init
+    // 2 - load configuration
+    // 3 - load doctors data
+    // 4 - load statistics for display, apointments
+    // 5 - load nutrition(1) root data
+    // 6 - load nutrition(2) root data
+    // 7 - load meals root data
+
+    // 99 - loading complete
+
+
     DataAccess m_da = null;
     StatusBar m_bar = null;
     StatusBarL m_barL = null;
@@ -113,6 +125,12 @@ public class GGCDbLoader extends Thread
         setDbStatus(StatusBar.DB_INIT_OK); 
 
         db.loadStaticData();
+
+	db.loadNutritionDb1();
+
+	db.loadImplementedMeterData();
+
+
         setDbStatus(StatusBar.DB_LOAD);
         m_da.m_db = db;
 

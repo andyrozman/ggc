@@ -37,12 +37,20 @@ import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
+import ggc.data.meter.MeterManager;
+
 
 /**
  * @author stephan
  *
  * To change this generated comment edit the template variable "typecomment":
  * Window>Preferences>Java>Templates.
+ * 
+ * 
+ * Andy:
+ *  - changed this to use gnu.io.*;
+ *  - uses meter manager for managing meters
+ * 
  */
 public class ReadMeterDialog extends JDialog implements ActionListener
 {
@@ -157,10 +165,16 @@ public class ReadMeterDialog extends JDialog implements ActionListener
         progress = new JProgressBar(0, 100);
         progress.setPreferredSize(new Dimension(100, 8));
 
-        startButton = new JButton(); // startImportAction
-        startButton.setActionCommand("start");
-        saveButton = new JButton();  // new SaveAction()
-        saveButton.setActionCommand("save");
+
+	//AbstractAction start = new StartImportAction();
+
+	AbstractAction start =new StartImportAction();
+	startButton = new JButton(start);
+	//    m_ic.getMessage("START")); // startImportAction
+        //startButton.setActionCommand("start");
+        saveButton = createButton("ME_SAVE", "save");
+	    //new JButton(m_ic.getMessage("SAVE"));  // new SaveAction()
+        //saveButton.setActionCommand("save");
         saveButton.setEnabled(false);
 
         JPanel importButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -168,8 +182,11 @@ public class ReadMeterDialog extends JDialog implements ActionListener
         importButtonPanel.add(saveButton);
 
         JPanel dialogButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton closeButton = new JButton();  // new CloseAction()
-        closeButton.setActionCommand("save");
+
+	JButton closeButton = createButton("ME_CLOSE", "close");
+	    //new JButton(m_ic.getMessage("CLOSE"));  // new CloseAction()
+	
+        //closeButton.setActionCommand("save");
         dialogButtonPanel.add(closeButton);
 
         JPanel buttonPanel = new JPanel(new BorderLayout(0, 0));
@@ -224,7 +241,14 @@ public class ReadMeterDialog extends JDialog implements ActionListener
     public void initMeter()
     {
 
-        String meterClassName = m_da.getMeterManager().meter_classes[m_da.getSettings().getMeterType()];
+	int mtype = m_da.getMeterManager().getSelectedMeterIndex(MeterManager.METER_INTERFACE_1, m_da.getSettings().getMeterType());
+
+	System.out.println(mtype);
+
+
+//        String meterClassName = m_da.getMeterManager().meter_classes[m_da.getSettings().getMeterType()];
+	String meterClassName = m_da.getMeterManager().meter_classes[mtype];
+
 
         if (meterClassName == null || meterClassName.equals(""))
             throw new NullPointerException(m_ic.getMessage("NO_CLASS_FOR_METER_DEFINED"));
@@ -272,13 +296,27 @@ public class ReadMeterDialog extends JDialog implements ActionListener
 
 
         infoIcon.setIcon((meterImport.getImage() == null)
-                                     ? new ImageIcon(getClass().getResource("/icons/noMeter.gif"))
+                                     ? new ImageIcon(getClass().getResource("/icons/m_noMeter.gif"))
                                      : meterImport.getImage());
 
         this.infoDescription.setText((meterImport.getUseInfoMessage() == null) ? m_ic.getMessage("NO_TO_USE_INFORMATION") : meterImport.getUseInfoMessage());
         
     }
     
+
+
+    protected JButton createButton(String command_name, String action_command)
+    {
+
+	JButton b = new JButton(m_ic.getMessageWithoutMnemonic(command_name));
+	b.setMnemonic(m_ic.getMnemonic(command_name));
+	b.setToolTipText(m_ic.getMessage(command_name + "_DESC"));
+	b.setActionCommand(action_command);
+	b.addActionListener(this);
+
+	return b;
+    }
+
 
 
     //////////////////////////////////////////////////////////////
@@ -348,8 +386,16 @@ public class ReadMeterDialog extends JDialog implements ActionListener
             
             char ch = m_ic.getMnemonic("ME_IMPORT");
 
+	    
+
             if (ch!='0') 
-                putValue(Action.MNEMONIC_KEY, ""+ch);
+	    {
+		//Character c = new Character(ch);
+		int i = (int)ch;
+		//putValue(Action.MNEMONIC_KEY, ""+ch);
+		putValue(Action.MNEMONIC_KEY, new Integer(i));
+	    }
+
         }
 
         public void actionPerformed(ActionEvent e)
@@ -432,13 +478,25 @@ public class ReadMeterDialog extends JDialog implements ActionListener
     {
         String action = e.getActionCommand();
 
-        //if (action.equals("")) 
-        //{
-        //}
-        //else
+        if (action.equals("close")) 
+        {
+	    meterImport.stopImport();
+	    meterImport.removeImportEventListener(startImportAction);
+	    meterImport.close();
+	    this.dispose();
+        }
+	else if (action.equals("save"))
+	{
+	    glucoValues.saveValues();
+	}
+        else
+	    
             System.out.println("ReadMeterDialog::Unknown command: " + action);
 
     }
+
+
+
 
 
 }

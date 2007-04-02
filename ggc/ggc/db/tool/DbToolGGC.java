@@ -1,7 +1,7 @@
 package ggc.db.tool;
 
-import com.atech.db.tool.DbTool;
-import com.atech.db.tool.DbToolApplicationInterface;
+import com.atech.db.hibernate.tool.DbTool;
+import com.atech.db.hibernate.tool.DbToolApplicationInterface;
 import java.util.ArrayList;
 import java.util.Iterator;
 

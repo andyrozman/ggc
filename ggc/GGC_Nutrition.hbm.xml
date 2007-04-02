@@ -4,34 +4,82 @@
     
     <!-- ***************** GGC::Nutrition SCHEMA  ******************* -->
 
-    <!--  Food Group -->
-    <class name="ggc.db.hibernate.FoodGroupH" table="ggc_nutrition_food_group">
-        <id name="id" type="int" unsaved-value="0">
-            <generator class="assigned"/>
-        </id>            
-        <property name="description" type="string" length="60" />
+
+    <!--  Nutrition Definition - Global -->
+    <class name="ggc.db.hibernate.NutritionDefinitionH" table="nutrition_definition">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>           
+        <property name="weight_unit" type="string"  length="50" />
+        <property name="tag" type="string" length="50" />
+        <property name="name" type="string" length="100" />
+        <property name="decimal_places" type="text" length="10" />
+    </class>
+
+    <!--  Nutrition Home Weight Type - Global -->
+    <class name="ggc.db.hibernate.NutritionHomeWeightTypeH" table="nutrition_home_weight_type">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>           
+        <property name="name" type="string" length="255"  />
     </class>
 
 
-    <!--  Food Description -->
-    <class name="ggc.db.hibernate.FoodDescriptionH" table="ggc_nutrition_food_description">
+
+    <!--  Food Group - Nutrition 1 -->
+    <class name="ggc.db.hibernate.FoodGroupH" table="nutrition_food_group">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="assigned"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="description" type="string" length="60" />
+        <property name="description_i18n" type="string" length="60" />
+    </class>
+
+
+    <!--  Food Description - - Nutrition 1-->
+    <class name="ggc.db.hibernate.FoodDescriptionH" table="nutrition_food_description">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
-        <property name="food_group_id" type="int"  />
+        <property name="food_group_id" type="long"  />
         <property name="name" type="string" length="200" />
         <property name="i18n_name" type="string" length="60" />
         <property name="refuse" type="float" />
-        <property name="fat_g" type="float" />
-        <property name="CH_g" type="float" />
-        <property name="energy_kcal" type="float" />
-        <property name="energy_kJ" type="float" />
-        <property name="sugar_g" type="float" />
+        <property name="nutritions" type="text" />
+        <property name="home_weights" type="text" />
     </class>
 
 
+    <!--  Food Group - Nutrition 2 -->
+    <class name="ggc.db.hibernate.FoodUserGroupH" table="nut_user_food_group">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="description" type="string" length="60" />
+        <property name="description_i18n" type="string" length="60" />
+        <property name="parent_id" type="long"  />
+    </class>
+
+
+    <!--  Food Description - - Nutrition 2-->
+    <class name="ggc.db.hibernate.FoodUserDescriptionH" table="nut_user_food_description">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>           
+        <property name="food_user_group_id" type="long"  />
+        <property name="name" type="string" length="200" />
+        <property name="i18n_name" type="string" length="60" />
+        <property name="refuse" type="float" />
+        <property name="nutritions" type="text" />
+        <property name="home_weights" type="text" />
+    </class>
+
+
+
+
+
     <!--  Food Description -->
-    <class name="ggc.db.hibernate.FoodHomeWeightH" table="ggc_nutrition_food_home_weight">
+<!--    <class name="ggc.db.hibernate.FoodHomeWeightH" table="nutrition_food_home_weight">
         <id name="id" type="long" unsaved-value="0">
             <generator class="native"/>
         </id>           
@@ -41,54 +89,26 @@
         <property name="msr_desc" type="string" length="2000" />
         <property name="weight_g" type="float" />
     </class>
+-->
 
 
 
-
-    <class name="ggc.db.hibernate.MealGroupH" table="ggc_meal_group">
-        <id name="id" type="int" unsaved-value="0">
-            <generator class="assigned"/>
-        </id>            
-        <property name="description" type="string" length="60" />
-        <property name="type" type="int"  />  <!-- 1 = Meals, 2= Nutrition Data -->
-    </class>
-
-    <class name="ggc.db.hibernate.MealH" table="ggc_meal">
+    <class name="ggc.db.hibernate.MealGroupH" table="meals_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="assigned"/>
         </id>            
-        <property name="meal_group" type="int"  />  
-        <property name="name" type="string" length="60" />
-        <property name="fat_g" type="float" />
-        <property name="CH_g" type="float" />
-        <property name="energy_kcal" type="float" />
-        <property name="energy_kJ" type="float" />
-        <property name="sugar_g" type="float" />
+        <property name="name" type="string" length="255" />
+        <property name="name_18n" type="string" length="255" />
+        <property name="parent_id" type="int"  />  
     </class>
 
-    <class name="ggc.db.hibernate.MealFoodH" table="ggc_meal_food">
-        <id name="id" type="int" unsaved-value="0">
-            <generator class="assigned"/>
-        </id>            
-        <property name="meal_id" type="long"  />  
-        <property name="type" type="int"  />  <!-- 1 = Meals, 2= Nutrition Data -->
-        <property name="food_id" type="long"  />
-    </class>
-
-
-
-    <class name="ggc.db.hibernate.MealFoodDescriptionH" table="ggc_meal_food_desc">
+    <class name="ggc.db.hibernate.MealH" table="meals_meal">
         <id name="id" type="long" unsaved-value="0">
             <generator class="assigned"/>
-        </id>           
-        <property name="meal_group_id" type="int"  />
-        <property name="name" type="string" length="200" />
-        <property name="refuse" type="float" />
-        <property name="fat_g" type="float" />
-        <property name="CH_g" type="float" />
-        <property name="energy_kcal" type="float" />
-        <property name="energy_kJ" type="float" />
-        <property name="sugar_g" type="float" />
+        </id>            
+        <property name="meal_group_id" type="long"  />  
+        <property name="type" type="int"  />  <!-- 1=Nutrition USDBA, 2=Nutrition User -->
+        <property name="food_id" type="long"  />  <!-- 1=Nutrition USDBA, 2=Nutrition User -->
     </class>
 
 

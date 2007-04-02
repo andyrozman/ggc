@@ -57,12 +57,13 @@ public class DailyValuesRow implements Serializable
     */
 
     private long datetime;
-    private float bg;
-    private float ins1;
-    private float ins2;
+    private int bg;
+    private int ins1;
+    private int ins2;
     private float ch;
-    private int act;
+    private String act;
     private String comment;
+    private String extended;
 
     private boolean changed = false;
 
@@ -71,7 +72,21 @@ public class DailyValuesRow implements Serializable
 
 
 
-    public DailyValuesRow(long datetime, float bg, float ins1, float ins2, float ch, int act, String comment)
+    public DailyValuesRow()
+    {
+	this.datetime = 0L;
+	this.bg = 0;
+	this.ins1 = 0;
+	this.ins2 = 0;
+	this.ch = 0.0f;
+	this.act = null;
+	this.extended = null;
+	this.comment = "";
+    }
+
+
+
+    public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String act, String extended, String comment)
     {
         this.datetime = datetime;
         this.bg = bg; 
@@ -96,10 +111,14 @@ public class DailyValuesRow implements Serializable
     }
 
 
-
-
-
     public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
+    {
+	this(date,time,BG,Ins1,Ins2,BU,Act,null,Comment);
+    }
+
+
+
+    public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String extended, String Comment)
     {
     	datetime = getDateTimeLong(date, time);
     
@@ -187,16 +206,6 @@ public class DailyValuesRow implements Serializable
 	*/
 //    }
 
-    public DailyValuesRow()
-    {
-    	this.datetime = 0L;
-    	this.bg = 0.0f;
-    	this.ins1 = 0.0f;
-    	this.ins2 = 0.0f;
-    	this.ch = 0.0f;
-    	this.act = 0;
-    	this.comment = "";
-    }
 
     public String[] getRowString()
     {
@@ -280,7 +289,7 @@ public class DailyValuesRow implements Serializable
 
     public void setBG(String val)
     {
-        setBG(m_da.getFloatValue(val));
+        setBG(m_da.getIntValue(val));
     }
 
 
@@ -301,7 +310,7 @@ public class DailyValuesRow implements Serializable
 
 
 
-    public void setBG(float val)
+    public void setBG(int val)
     {
         if (bg!=val) 
         {
@@ -318,10 +327,10 @@ public class DailyValuesRow implements Serializable
 
     public void setIns1(String val)
     {
-        setIns1(m_da.getFloatValue(val));
+        setIns1(m_da.getIntValue(val));
     }
 
-    public void setIns1(float val)
+    public void setIns1(int val)
     {
         if (ins1!=val) 
         {
@@ -338,10 +347,10 @@ public class DailyValuesRow implements Serializable
 
     public void setIns2(String val)
     {
-        setIns2(m_da.getFloatValue(val));
+        setIns2(m_da.getIntValue(val));
     }
 
-    public void setIns2(float val)
+    public void setIns2(int val)
     {
         if (ins2!=val) 
         {
@@ -372,19 +381,19 @@ public class DailyValuesRow implements Serializable
     }
 
 
-    public int getAct()
+    public String getAct()
     {
         return act;
     }
-
+/*
     public void setAct(String val)
     {
-        act = m_da.getIntValue(val);
+        act = val;
     }
-
-    public void setAct(int val)
+*/
+    public void setAct(String val)
     {
-        if (act!=val) 
+        if (!act.equals(val)) 
         {
             act = val;
             changed = true;
@@ -500,19 +509,19 @@ public class DailyValuesRow implements Serializable
     		} break;
     	    case 1:
     		{
-    		    bg = m_da.getFloatValue(aValue);
-    		    if (bg!=0.0f)
+    		    bg = m_da.getIntValue(aValue);
+    		    if (bg>0)
     			changed = true;
     		} break;
             case 2:
     		{
-    		    ins1 = m_da.getFloatValue(aValue);
+    		    ins1 = m_da.getIntValue(aValue);
     		    if (ins1!=0.0f)
     			changed = true;
     		} break;
             case 3:
     		{
-    		    ins2 = m_da.getFloatValue(aValue);
+    		    ins2 = m_da.getIntValue(aValue);
     		    if (ins2!=0.0f)
     			changed = true;
     		} break;
@@ -525,8 +534,9 @@ public class DailyValuesRow implements Serializable
     		} break;
             case 5:
     		{
-    		    act = m_da.getIntValue(aValue);
-    		    if (act!=0)
+    		    act = (String)aValue; // m_da.getIntValue(
+    		    //if (act!=0)
+		    if ((act!=null) && (act.length()!=0))
     			changed = true;
     		} break;
             case 6:

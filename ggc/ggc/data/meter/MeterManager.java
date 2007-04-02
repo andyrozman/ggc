@@ -196,7 +196,33 @@ public class MeterManager
     }
 
 
+    public static final int METER_INTERFACE_1 = 1;  // old meter interface (stephen)
+    public static final int METER_INTERFACE_2 = 2;  // new meter interface (andy)
 
+    public int getSelectedMeterIndex(int type, int index)
+    {
+	if (type==1)
+	{
+	    if (index<4)
+	    {
+		return index;
+	    }
+	    else
+		return 0;
+	}
+	else if (type==2)
+	{
+	    if (index>3)
+	    {
+		return index;
+	    }
+	    else
+		return 0;
+	}
+	else
+	    return 0;
+
+    }
 
     
 

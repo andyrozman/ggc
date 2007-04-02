@@ -12,8 +12,8 @@ import java.util.Properties;
 
 import javax.swing.UIManager;
 
-import com.atech.db.tool.DatabaseSettings;
-import com.atech.db.tool.DbToolApplicationInterface;
+import com.atech.db.hibernate.tool.DatabaseSettings;
+import com.atech.db.hibernate.tool.DbToolApplicationInterface;
 
 /*
 New methods :

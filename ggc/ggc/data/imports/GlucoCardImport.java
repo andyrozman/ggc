@@ -149,13 +149,13 @@ public class GlucoCardImport extends SerialMeterImport
 
                             SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
                             Date date = null;
-                            float bgvalue = 0;
+                            int bgvalue = 0;
                             try
                             {
                                 date = new Date(sf.parse(datetime).getTime());
                                 date.setTime(date.getTime() - (date.getTime() % 60000L));
 
-                                bgvalue = (new Float(value).floatValue());
+                                bgvalue = (new Integer(value).intValue());
                             }
                             catch (ParseException e)
                             {
@@ -166,7 +166,12 @@ public class GlucoCardImport extends SerialMeterImport
 
                             if (date != null)
                             {
-                                DailyValuesRow dVR = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), bgvalue, 0, 0, 0, 0, "");
+                                DailyValuesRow dVR = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), 
+									bgvalue, 0, 0, 0.0f, null, null, "");
+
+				//public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String act, String extended, String comment)
+
+
                                 importedData.addElement(dVR);
                             }
 

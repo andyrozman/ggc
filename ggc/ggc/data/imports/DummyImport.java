@@ -52,7 +52,7 @@ public class DummyImport extends SerialMeterImport
     {
         super();
 
-        setImage(new ImageIcon(getClass().getResource("/icons/euroflash.gif")));
+        //setImage(new ImageIcon(getClass().getResource("/icons/m_no.gif")));
         setUseInfoMessage("<html>" + m_ic.getMessage("CONNECT_YOUR_CABLE_WITH_METER") +".<br>" + m_ic.getMessage("TURN_OFF_METER_PRESS_IMPORT") + "</html>");
         setName("Dummy Meter");
     }
@@ -255,13 +255,20 @@ public class DummyImport extends SerialMeterImport
                     continue;
                 subValue = vstk.nextToken();
                 subValue = subValue.substring(1, subValue.length() - 2).trim();
-                float bzValue = Float.parseFloat(subValue);
+                //float bzValue = Float.parseFloat(subValue);
+		int bzValue = Integer.parseInt(subValue);
 
                 //
                 //Value dataValue = new Value(date, bzValue);
 
                 //DataAccess.getInstance().getDateTimeFromDateObject(Date dt)
-                DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), bzValue, 0, 0, 0, 0, "");
+                DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), 
+							      bzValue, 0, 0, 0.0f, null, null, "");
+
+
+		//public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String act, String extended, String comment)
+
+
                 importDataVector.addElement(dataValue);
                 //Log.getLogger().info("new value : " + dataValue);
 

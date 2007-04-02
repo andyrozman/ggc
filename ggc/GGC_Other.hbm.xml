@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+    
+    <!-- ***************** ggc::Meters SCHEMA  ******************* -->
+
+    <!--  MeterCompany -->
+    <class name="ggc.db.hibernate.MeterCompanyH" table="mtr_companies">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="name" type="string" not-null="true" length="255" />    
+        <property name="aka_names"  type="string" length="1000" />
+        <property name="www"  type="string" length="255" />
+        <property name="description"  type="text" />
+    </class>
+
+
+    <!--  Meter -->
+    <class name="ggc.db.hibernate.MeterH" table="mtr_meters">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="company_id" type="long" />
+        <property name="name"  type="string" length="255" />
+        <property name="picture_name" type="string" length="1000" />
+        <property name="extended" type="text" />
+        <property name="implementation_id" type="long" />
+    </class>
+
+
+    <class name="ggc.db.hibernate.MeterInterfaceH" table="mtr_interface">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="description" type="string" not-null="true" length="1000" />    
+        <property name="class_name" type="string" not-null="true" length="1000" />    
+    </class>
+
+
+
+    <class name="ggc.db.hibernate.MeterImplementationH" table="mtr_implement">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="description" type="string" not-null="true" length="1000" />    
+        <property name="class_name" type="string" not-null="true" length="1000" />    
+        <property name="interface_id" type="long" />
+        <property name="status" type="int" />  <!-- 0 = Unknown/Untested,  1=In testing, 2=In implementation, 3=Planned, 99=Complete  -->
+    </class>
+
+
+
+
+    <class name="ggc.db.hibernate.InetGroupH" table="inet_group">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="parent"  type="string" length="255" />
+
+        <property name="name"  type="string" length="255" />
+        <property name="name_i18n"  type="string" length="255" />
+        <property name="description"  type="string" length="2000" />
+        <property name="comment"  type="string" length="2000" />
+    </class>
+
+
+    <class name="ggc.db.hibernate.InetTypeH" table="inet_type">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="name"  type="string" length="255" />
+        <property name="name_i18n"  type="string" length="255" />
+        <property name="description"  type="string" length="2000" />
+        <property name="comment"  type="string" length="2000" />
+    </class>
+
+    <class name="ggc.db.hibernate.InetLinkGroupH" table="inet_link_group">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="group_id"  type="string" length="1000" />
+        <property name="link_id"  type="string" length="1000" />
+    </class>
+
+    <class name="ggc.db.hibernate.InetLinkH" table="inet_links">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="name"  type="string" length="1000" />
+        <property name="description"  type="string" length="2000" />
+        <property name="comment"  type="string" length="2000" />
+    </class>
+
+
+</hibernate-mapping>

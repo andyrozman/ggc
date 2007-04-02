@@ -19,47 +19,29 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: AbstractInfoPanel.java
- *  Purpose:  defines Methods all InfoPanels must define.
+ *  Filename: GGCTreeRoot
+ *  Purpose:  Used for holding tree information for nutrition and meals
  *
- *  Author:   schultd
+ *  Author:   andyrozman
  */
 
-package ggc.gui.panels.info;
+package ggc.gui.nutrition;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
-import javax.swing.BorderFactory;
 
+import ggc.db.datalayer.FoodDescription;
+import ggc.db.datalayer.FoodGroup;
+import ggc.db.GGCDb;
 import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
-import javax.swing.border.TitledBorder;
-
-
-public abstract class AbstractInfoPanel extends JPanel
+public abstract class GGCTreePanel extends JPanel
 {
-    protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccess m_da = DataAccess.getInstance();
-    protected boolean first_refresh = true;
 
-    public AbstractInfoPanel(String title)
-    {
-        super();
-        setBorder(BorderFactory.createTitledBorder(title));
-        setOpaque(false);
-    }
+    public abstract void setData(Object obj);
 
-    public void setTitle(String title)
-    {
-        TitledBorder tb = (TitledBorder)this.getBorder();
-        tb.setTitle(title);
-    }
-
-    public abstract void refreshInfo();
-
-    public void invalidateFirstRefresh()
-    {
-	this.first_refresh = true;
-    }
 
 }

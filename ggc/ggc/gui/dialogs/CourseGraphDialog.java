@@ -36,8 +36,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-import com.sun.org.apache.bcel.internal.classfile.Unknown;
 
 import ggc.data.GlucoValues;
 import ggc.gui.calendar.DateRangeSelectionPanel;

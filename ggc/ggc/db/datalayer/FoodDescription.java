@@ -51,6 +51,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	this.setI18n_name("");
 	this.setRefuse(0.0f);
 	this.setNutritions("");
+	this.setHome_weights("");
 	this.setRefuse(0.0f);
     }
 
@@ -66,6 +67,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 //	this.setEnergy_kJ(ch.getEnergy_kJ());
 //	this.setFat_g(ch.getFat_g());
 	this.setRefuse(ch.getRefuse());
+	this.setHome_weights(ch.getHome_weights());
 	this.setNutritions(ch.getNutritions());
 
 //	this.setSugar_g(ch.getSugar_g());
@@ -109,6 +111,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	ch.setName(this.getName());
 	ch.setI18n_name(this.getI18n_name());
 	ch.setNutritions(this.getNutritions());
+	ch.setHome_weights(this.getHome_weights());
 	ch.setRefuse(this.getRefuse());
 /*	ch.setCH_g(this.getCH_g());
 	ch.setEnergy_kcal(this.getEnergy_kcal());
@@ -146,6 +149,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	ch.setName(this.getName());
 	ch.setI18n_name(this.getI18n_name());
 	ch.setNutritions(this.getNutritions());
+	ch.setHome_weights(this.getHome_weights());
 	ch.setRefuse(this.getRefuse());
 /*	ch.setCH_g(this.getCH_g());
 	ch.setEnergy_kcal(this.getEnergy_kcal());
@@ -220,6 +224,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	this.setName(ch.getName());
 	this.setI18n_name(ch.getI18n_name());
 	this.setNutritions(ch.getNutritions());
+	this.setHome_weights(ch.getHome_weights());
 
 /*	this.setCH_g(ch.getCH_g());
 	this.setEnergy_kcal(ch.getEnergy_kcal());

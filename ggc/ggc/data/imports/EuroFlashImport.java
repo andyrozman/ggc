@@ -8,9 +8,6 @@
 package ggc.data.imports;
 
 
-import ggc.data.DailyValuesRow;
-import ggc.data.event.ImportEvent;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParsePosition;
@@ -20,11 +17,14 @@ import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import gnu.io.NoSuchPortException;
-import gnu.io.SerialPortEvent;
 import javax.swing.ImageIcon;
 
+import ggc.data.DailyValuesRow;
+import ggc.data.event.ImportEvent;
 import ggc.util.DataAccess;
+
+import gnu.io.NoSuchPortException;
+import gnu.io.SerialPortEvent;
 
 /**
  * @author stephan
@@ -252,13 +252,19 @@ public class EuroFlashImport extends SerialMeterImport
                     continue;
                 subValue = vstk.nextToken();
                 subValue = subValue.substring(1, subValue.length() - 2).trim();
-                float bzValue = Float.parseFloat(subValue);
+                //float bzValue = Float.parseFloat(subValue);
+		int bzValue = Integer.parseInt(subValue);
 
                 //
                 //Value dataValue = new Value(date, bzValue);
 
                 //DataAccess.getInstance().getDateTimeFromDateObject(Date dt)
-                DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), bzValue, 0, 0, 0, 0, "");
+                //DailyValuesRow dataValue = new DailyValuesRow(, bzValue, 0, 0, 0, 0, "");
+
+		DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), 
+				   bzValue, 0, 0, 0.0f, null, null, null);
+		//new DailyValuesRow(
+
                 importDataVector.addElement(dataValue);
                 //Log.getLogger().info("new value : " + dataValue);
 

@@ -535,7 +535,7 @@ public class DailyValues implements Serializable
         return getRow(row).getCH();
     }
 
-    public int getActAt(int row)
+    public String getActAt(int row)
     {
         return getRow(row).getAct();
     }

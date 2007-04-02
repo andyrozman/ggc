@@ -55,6 +55,12 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     JLabel lblSumIns1, lblIns1Day, lblCountIns1, lblAvgIns1, lblIns1CountDay;
     JLabel lblSumIns2, lblIns2Day, lblCountIns2, lblAvgIns2, lblIns2CountDay;
 
+    JLabel lbl_sum_ins1_day_name, lbl_sum_ins1_name, lbl_sum_ins2_day_name, lbl_sum_ins2_name;
+
+    JPanel PanelIns1, PanelIns2;
+
+
+
 
     public StatisticsInfoPanel()
     {
@@ -105,13 +111,13 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         PanelBU.add(lblBUCountDay = new JLabel());
 	lblBUCountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JPanel PanelIns1 = new JPanel(new GridLayout(5, 2));
+        PanelIns1 = new JPanel(new GridLayout(5, 2));
         PanelIns1.setOpaque(false);
-        PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
-        PanelIns1.add(new JLabel(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr() + ":"));
+        PanelIns1.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN_1") + " " +m_ic.getMessage("STATISTICS") + ":"));
+        PanelIns1.add(lbl_sum_ins1_name = new JLabel(m_ic.getMessage("SUM") + " " + m_ic.getMessage("INS_1") + ":"));
         PanelIns1.add(lblSumIns1 = new JLabel());
 	lblSumIns1.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns1.add(new JLabel(m_da.getSettings().getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
+        PanelIns1.add(lbl_sum_ins1_day_name = new JLabel(m_ic.getMessage("INS_1") + " " + m_ic.getMessage("PER_DAY")+":"));
         PanelIns1.add(lblIns1Day = new JLabel());
 	lblIns1Day.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns1.add(new JLabel(m_ic.getMessage("DOSE")+":"));
@@ -124,13 +130,13 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         PanelIns1.add(lblIns1CountDay = new JLabel());
 	lblIns1CountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JPanel PanelIns2 = new JPanel(new GridLayout(5, 2));
+        PanelIns2 = new JPanel(new GridLayout(5, 2));
         PanelIns2.setOpaque(false);
-        PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
-        PanelIns2.add(new JLabel(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns2Abbr() + ":"));
+        PanelIns2.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN_2") + " " + m_ic.getMessage("STATISTICS")+":"));
+        PanelIns2.add(lbl_sum_ins2_name = new JLabel(m_ic.getMessage("SUM") + " " + m_ic.getMessage("INS_2") + ":"));
         PanelIns2.add(lblSumIns2 = new JLabel());
 	lblSumIns2.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(new JLabel(m_da.getSettings().getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":"));
+        PanelIns2.add(lbl_sum_ins2_day_name = new JLabel(m_ic.getMessage("INS_2") + " " + m_ic.getMessage("PER_DAY")+":"));
         PanelIns2.add(lblIns2Day = new JLabel());
 	lblIns2Day.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns2.add(new JLabel(m_ic.getMessage("DOSE")+":"));
@@ -186,5 +192,21 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
             lblAvgIns2.setText(df.format(sV.getAvgIns2()));
             lblIns2CountDay.setText(df.format(sV.getIns2CountPerDay()));
         }
+
+	if (first_refresh)
+	{
+	    PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
+	    PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
+
+	    lbl_sum_ins1_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr() + ":");
+	    lbl_sum_ins1_day_name.setText(m_da.getSettings().getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
+
+	    lbl_sum_ins2_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns2Abbr() + ":");
+	    lbl_sum_ins2_day_name.setText(m_da.getSettings().getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
+
+	    first_refresh = false;
+	}
+
+
     }
 }

@@ -73,6 +73,7 @@ public class HbA1cDialog extends JDialog implements ActionListener
         updateLabels();
 
         hbView.setHbA1cValues(hbValues);
+	this.setVisible(true);
     }
 
     public void updateLabels()
