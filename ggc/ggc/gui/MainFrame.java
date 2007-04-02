@@ -30,6 +30,7 @@ package ggc.gui;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.Hashtable;
 
 import javax.swing.*;
 import javax.swing.text.View;
@@ -44,9 +45,8 @@ import ggc.gui.dialogs.MeterReadDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SpreadGraphDialog;
-import ggc.gui.panels.info.InfoPanel;
 import ggc.gui.nutrition.NutritionTreeDialog;
-//import ggc.data.print.PrintMonthlyReport;
+import ggc.gui.panels.info.InfoPanel;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
@@ -62,9 +62,10 @@ import ggc.util.VersionChecker;
 // 
 // 
 //   0.2.3   Configuration
-//   0.2.4
+//   0.2.4   Menus
+//   0.2.5   Nutrition-1
 // 
-// 
+//    Menus (all), About, Db (all)
 // 
 
 
@@ -72,9 +73,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.4.2";
+    public  static String s_version = "0.2.5.2";
     private String full_version = "v" + s_version;
-    private String version_date = "21st March 2007";
+
+    private String version_date = "1st April 2007";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -83,10 +85,22 @@ public class MainFrame extends JFrame
 
     //fields
     private JMenuBar menuBar = new JMenuBar();
-
     private JToolBar toolBar = new JToolBar();
 
     private JLabel lblTest = new JLabel();
+
+
+    private JMenu menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;
+
+
+    private Hashtable<String,GGCAction> actions = null;
+
+    /*
+    private GGCAction ac_file_quit,    // file
+	ac_bgs_daily,
+	ac_rep_simple, ac_rep_ext,     // reports
+	ac_food_nutr, ac_food_meals,   // food
+	ac_doc_docs, ac_doc_appoint;   // doctors
 
     //private GGCAction connectAction, disconnectAction, newAction, openAction, closeAction, 
     private GGCAction quitAction, prefAction, readMeterAction;
@@ -100,90 +114,22 @@ public class MainFrame extends JFrame
             reportPDFExtendedAction;
 
     private GGCAction aboutAction, checkVersionAction;
-
+*/
     //private DailyStatsFrame dailyStatsWindow;
     public StatusBar statusPanel;
 
     public InfoPanel informationPanel;
 
-    //public static DataBaseHandler s_dbH;
-
     private DataAccess m_da = null;
 
-    //public static boolean s_developer_version = false;
-
-    //GGCProperties props = GGCProperties.getInstance();
 
     /**
      *   Static definitions (Look and Feel)
      */
     static 
     {
-
-        //DataAccess.getInstance();
-
-        //MainFrame.setLookAndFeel("coronaHthemepack.zip");
-        //MainFrame.setLookAndFeel("midnightthemepack.zip");
-        //MainFrame.setLookAndFeel("solunaRthemepack.zip");
-
-        //MainFrame.setLookAndFeel("blueTurquesathemepack.zip");  OK
-        //MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //MainFrame.setLookAndFeel("opusOSBluethemepack.zip"); ?
-        //MainFrame.setLookAndFeel("underlingthemepack.zip"); ?
-        //MainFrame.setLookAndFeel("royalInspiratthemepack.zip"); ?
-        //  MainFrame.setLookAndFeel("hmmXPBluethemepack.zip");
-    //    MainFrame.setLookAndFeel("blueMetalthemepack.zip"); // Win (not so bad) ???
-        //  MainFrame.setLookAndFeel("architectBluethemepack.zip");
-        //  MainFrame.setLookAndFeel("roueBluethemepack.zip");
-        //  MainFrame.setLookAndFeel("quickSilverRthemepack.zip");  
-        //  MainFrame.setLookAndFeel("chaNinja-Bluethemepack.zip");  // Mhm
-        //  MainFrame.setLookAndFeel("crystal2themepack.zip");  // mhm
-        //  MainFrame.setLookAndFeel("toxicthemepack.zip");
-        //  MainFrame.setLookAndFeel("amarachthemepack.zip");
-        //  MainFrame.setLookAndFeel("b0sumiErgothempack.zip");
-        //  MainFrame.setLookAndFeel("gfxOasisthemepack.zip");
-        //  MainFrame.setLookAndFeel("iBarthemepack.zip");
-        //      MainFrame.setLookAndFeel("midnightthemepack.zip");   // not os bad
-        //  MainFrame.setLookAndFeel("solunaRthemepack.zip");        // nn
-        //  MainFrame.setLookAndFeel("tigerGraphitethemepack.zip");
-        //  MainFrame.setLookAndFeel("gorillathemepack.zip");     // nn
-        //  MainFrame.setLookAndFeel("fatalEthemepack.zip");
-        //  MainFrame.setLookAndFeel("b0sumithemepack.zip");
-        //  MainFrame.setLookAndFeel("architectOlivethemepack.zip");
-        //  MainFrame.setLookAndFeel("mmMagra-Xthemepack.zip");
-        //  MainFrame.setLookAndFeel("silverLunaXPthemepack.zip");
-        //  MainFrame.setLookAndFeel("opusOSDeepthemepack.zip");
-        //  MainFrame.setLookAndFeel("coronaHthemepack.zip");
-        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
-        //  MainFrame.setLookAndFeel("cougarthemepack.zip");
-
 	MainFrame.setLookAndFeel();
-
     }
-
-
-    /*
-    public static void setLookAndFeel(String name) 
-    {
-        try 
-        {
-            SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir+ name));
-
-            s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
-            UIManager.setLookAndFeel(s_skinlf);
-
-            JFrame.setDefaultLookAndFeelDecorated(true);
-            JDialog.setDefaultLookAndFeelDecorated(true);
-        } 
-        catch (Exception ex) 
-        {
-            System.err.println("Error loading L&F: " + ex);
-        }
-    }
-*/
 
 
     public static void setLookAndFeel()
@@ -208,14 +154,11 @@ public class MainFrame extends JFrame
                 else
                 {
                     UIManager.setLookAndFeel(data[0]);
-                    //DataAccess.notImplemented(null, "PISMain:SetLookAndFeel - Non SkinLF");
                 }
 
                 JFrame.setDefaultLookAndFeelDecorated(true);
                 JDialog.setDefaultLookAndFeelDecorated(true);
-
             }
-
         }
         catch (Exception ex)
         {
@@ -242,6 +185,8 @@ public class MainFrame extends JFrame
 
         statusPanel = new StatusBar();
 
+	this.actions = new Hashtable<String,GGCAction>();
+
         setTitle(title + " (" + full_version + ")");
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -249,36 +194,85 @@ public class MainFrame extends JFrame
 
       //  MainFrame.developer_version = developer_version;
 
-        JMenu fileMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FILE"));
-        JMenu viewMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_VIEW"));
-        JMenu readMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_READ"));
-        JMenu foodMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_FOOD"));
-        JMenu reportMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_REPORT"));
-        JMenu optionMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_OPTION"));
-        JMenu helpMenu = new JMenu(m_ic.getMessageWithoutMnemonic("MN_HELP"));
-        //JMenu testMenu = new JMenu("Test");
 
-        fileMenu.setMnemonic(m_ic.getMnemonic("MN_FILE"));
-        viewMenu.setMnemonic(m_ic.getMnemonic("MN_VIEW"));
-        optionMenu.setMnemonic(m_ic.getMnemonic("MN_OPTION"));
-        helpMenu.setMnemonic(m_ic.getMnemonic("MN_HELP"));
-        foodMenu.setMnemonic(m_ic.getMnemonic("MN_FOOD"));
-        reportMenu.setMnemonic(m_ic.getMnemonic("MN_REPORT"));
+//menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;
 
-        quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
 
-        viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
-        viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
-        viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
-        viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
-        viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
-        viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
-        viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
-        viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
-        viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
+	// file menu
+	this.menu_file = this.createMenu("MN_FILE", null);
+	this.createAction(this.menu_file, "MN_QUIT", "MN_QUIT_DESC", "file_quit", null);
 
-        readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
-        readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
+	// bgs menu
+	this.menu_bgs = this.createMenu("MN_BGS", null);
+	this.createAction(this.menu_bgs, "MN_DAILY", "MN_DAILY_DESC", "view_daily", "daily.gif"); 
+	this.createAction(this.menu_bgs, "MN_COURSE", "MN_COURSE_DESC", "view_course", "course.gif");
+	this.createAction(this.menu_bgs, "MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "spread.gif");
+	this.createAction(this.menu_bgs, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "frequency.gif");
+	this.menu_bgs.addSeparator();
+	this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", null);
+	this.menu_bgs.addSeparator();
+	this.createAction(this.menu_bgs, "MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter", "readmeter.gif");
+
+	//viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
+	//viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
+	//viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
+	//viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
+	//viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
+	//viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
+	//viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
+	//viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
+	//viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
+
+	//readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
+	//readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
+
+
+
+
+	// food menu
+	this.menu_food = this.createMenu("MN_FOOD", null);
+	this.createAction(this.menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
+	this.menu_food.addSeparator();
+	this.createAction(this.menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
+	this.menu_food.addSeparator();
+	this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
+
+	
+	// doctors menu
+	this.menu_doctor = this.createMenu("MN_DOCTOR", null);
+	this.createAction(this.menu_doctor, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
+	this.menu_doctor.addSeparator();
+	this.createAction(this.menu_doctor, "MN_APPOINT", "MN_APPOINT_DESC", "doc_appoint", null);
+	this.menu_doctor.addSeparator();
+	this.createAction(this.menu_doctor, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
+
+	// reports menu
+	this.menu_reports = this.createMenu("MN_REPORTS", null);
+	this.createAction(this.menu_reports, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", null);
+	this.createAction(this.menu_reports, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", null);
+
+	// tools menu
+	this.menu_tools = this.createMenu("MN_TOOLS", null);
+	this.createAction(this.menu_tools, "MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", null);
+	this.menu_tools.addSeparator();
+	this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC", "tools_db_maint", null);
+	this.menu_tools.addSeparator();
+	this.createAction(this.menu_tools, "MN_METER_LIST", "MN_METER_LIST_DESC", "tools_mlist", null);
+
+	//addMenuItem(menu_tools, prefAction);
+
+	// help menu
+	this.menu_help = this.createMenu("MN_HELP", null);
+	this.menu_help.addSeparator();
+	this.createAction(this.menu_help,"MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check", null);
+	this.menu_help.addSeparator();
+	this.createAction(this.menu_help,"MN_ABOUT", "MN_ABOUT_DESC", "hlp_about", null);
+
+
+	this.createAction(null, "&Test", "Testing option", "test", null);
+
+/*
+
 
         foodNutrAction = new GGCAction("MN_NUTRDB", "MN_NUTRDB_DESC", "food_nutrition");
         foodMealsAction = new GGCAction("MN_MEALS", "MN_MEALS_DESC", "food_meals");
@@ -286,7 +280,6 @@ public class MainFrame extends JFrame
         reportPDFSimpleAction = new GGCAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple");
         reportPDFExtendedAction = new GGCAction("MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended");
 
-        prefAction = new GGCAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "option_pref");
 
         aboutAction = new GGCAction("MN_ABOUT", "MN_ABOUT_DESC", "hlp_about");
         checkVersionAction = new GGCAction("MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check");
@@ -294,61 +287,111 @@ public class MainFrame extends JFrame
         //GGCAction test = new GGCAction("Print", "Print Test", "print_test");
 
         // File menu
-        addMenuItem(fileMenu, quitAction);
+	quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
+        addMenuItem(menu_file, quitAction);
+
+
 
         // View menu
-        addMenuItem(viewMenu, viewDailyAction);
-        addMenuItem(viewMenu, viewCourseGraphAction);
-        addMenuItem(viewMenu, viewSpreadGraphAction);
-        addMenuItem(viewMenu, viewFrequencyGraphAction);
-        viewMenu.addSeparator();
-        addMenuItem(viewMenu, viewHbA1cAction);
+	viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
+	viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
+	viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
+	viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
+	viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
+	viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
+	viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
+	viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
+	viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
+
+	readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
+	readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
+
+
+
+
+	addMenuItem(menu_bgs, viewDailyAction);
+        addMenuItem(menu_bgs, viewCourseGraphAction);
+        addMenuItem(menu_bgs, viewSpreadGraphAction);
+        addMenuItem(menu_bgs, viewFrequencyGraphAction);
+        menu_bgs.addSeparator();
+        addMenuItem(menu_bgs, viewHbA1cAction);
+	menu_bgs.addSeparator();
+
 
         // Read menu
-        addMenuItem(readMenu, readMeterAction);
+        //addMenuItem(readMenu, readMeterAction);
 
         // Food menu
-        addMenuItem(foodMenu, foodNutrAction);
-        addMenuItem(foodMenu, foodMealsAction);
+        addMenuItem(menu_food, foodNutrAction);
+        addMenuItem(menu_food, foodMealsAction);
 
         // report menu
-        addMenuItem(reportMenu, reportPDFSimpleAction);
-        addMenuItem(reportMenu, reportPDFExtendedAction);
+        addMenuItem(menu_reports, reportPDFSimpleAction);
+        addMenuItem(menu_reports, reportPDFExtendedAction);
 
-        // Option menu
-        addMenuItem(optionMenu, prefAction);
+        // Tools menu
+	prefAction = new GGCAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "option_pref");
+        addMenuItem(menu_tools, prefAction);
 
         // Help menu
-        addMenuItem(helpMenu, aboutAction);
-        addMenuItem(helpMenu, checkVersionAction);
+        addMenuItem(menu_help, aboutAction);
+        addMenuItem(menu_help, checkVersionAction);
+*/
+
+
+// REMOVE
 
         //addMenuItem(testMenu, test);
-
-        menuBar.add(fileMenu);
+/*
+        menuBar.add(menu_file);
         menuBar.add(viewMenu);
-        menuBar.add(readMenu);
+  //      menuBar.add(readMenu);
         menuBar.add(foodMenu);
         menuBar.add(reportMenu);
         menuBar.add(optionMenu);
         menuBar.add(helpMenu);
-
+*/
         //if (MainFrame.developer_version)
         //    menuBar.add(testMenu);
 
         toolBar.setFloatable(false);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
-        addToolBarButton(viewDailyAction);
-        addToolBarButton(viewCourseGraphAction);
-        addToolBarButton(viewSpreadGraphAction);
-        addToolBarButton(viewFrequencyGraphAction);
+        addToolBarButtonWithName("view_daily");
+        addToolBarButtonWithName("view_course"); 
+        addToolBarButtonWithName("view_spread");
+        addToolBarButtonWithName("view_freq");
         addToolBarSpacer();
         addToolBarSpacer();
 
-        addToolBarButton(viewHbA1cAction);
+        addToolBarButtonWithName("view_hba1c");
         addToolBarSpacer();
         addToolBarSpacer();
 
-        addToolBarButton(readMeterAction);
+        addToolBarButtonWithName("read_meter");
+	addToolBarSpacer();
+	addToolBarSpacer();
+
+	addToolBarButtonWithName("tools_pref");
+	addToolBarSpacer();
+	addToolBarSpacer();
+
+	addToolBarButtonWithName("test");
+
+
+	//viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
+	//viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
+	//viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
+	//viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
+	//viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
+	//viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
+	//viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
+	//viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
+	//viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
+
+	//readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
+	//readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
+
+
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
 
@@ -376,8 +419,72 @@ public class MainFrame extends JFrame
         return this;
     }
 
+
+    public void invalidatePanels()
+    {
+	this.informationPanel.invalidatePanelsConstants();
+    }
+
+    public void refreshPanels()
+    {
+	this.informationPanel.refreshPanels();
+    }
+
+
+    private JMenu createMenu(String name, String tool_tip)
+    {
+	JMenu item = new JMenu(m_ic.getMessageWithoutMnemonic(name));
+	item.setMnemonic(m_ic.getMnemonic(name));
+
+	if (tool_tip!=null)
+	{
+	    item.setToolTipText(tool_tip);
+	}
+
+	//System.out.println("Item: " + item);
+
+	this.menuBar.add(item);
+
+	return item;
+    }
+
+
+    private void createAction(JMenu menu, String name, String tip, String action_command, String icon_small)
+    {
+	GGCAction action = new GGCAction(name, tip, action_command);
+
+	if (icon_small!=null)
+	{
+	    action.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/" + icon_small)));
+	}
+
+	if (menu!=null)
+	    menu.add(action);
+
+	this.actions.put(action_command, action);
+
+	//return action;
+    }
+
+
     public void setDbActions(boolean opened) 
     {
+
+	this.menu_bgs.setEnabled(opened);
+	this.menu_food.setEnabled(opened);
+	this.menu_doctor.setEnabled(opened);
+	this.menu_reports.setEnabled(opened);
+
+	this.actions.get("view_daily").setEnabled(opened);
+	this.actions.get("view_course").setEnabled(opened);
+	this.actions.get("view_spread").setEnabled(opened);
+	this.actions.get("view_freq").setEnabled(opened);
+	this.actions.get("view_hba1c").setEnabled(opened);
+	this.actions.get("read_meter").setEnabled(opened);
+	this.actions.get("tools_pref").setEnabled(opened);
+
+
+	/*   FIXXXXXXXXXXXX
         viewDailyAction.setEnabled(opened);
         viewSpreadGraphAction.setEnabled(opened);
         viewCourseGraphAction.setEnabled(opened);
@@ -386,6 +493,9 @@ public class MainFrame extends JFrame
         readMeterAction.setEnabled(opened);
 	prefAction.setEnabled(opened);
         //s_dbH.setStatus();
+	*/
+
+	System.out.println("FIIIIIIIIIIIIIIIIIIIIIIXXXX this");
     }
 
     private void close() 
@@ -394,13 +504,14 @@ public class MainFrame extends JFrame
         //props.write();
         //dbH.disconnectDb();
 
-    if (m_da!=null)
-    {
-        if (m_da.getDb()!=null)
-        m_da.getDb().closeDb();
+	if (m_da!=null)
+	{
+	    if (m_da.getDb()!=null)
+		m_da.getDb().closeDb();
+    
+	    m_da.deleteInstance();
+	}
 
-        m_da.deleteInstance();
-    }
         dispose();
         System.exit(0);
     }
@@ -433,6 +544,13 @@ public class MainFrame extends JFrame
     }
 
 
+    private JButton addToolBarButtonWithName(String cmd) 
+    {
+	return addToolBarButton(this.actions.get(cmd));
+    }
+
+
+
     class GGCAction extends AbstractAction 
     {
 
@@ -445,7 +563,7 @@ public class MainFrame extends JFrame
 
             char ch = m_ic.getMnemonic(name);
 
-            if (ch != '0')
+            if (ch != '0') 
                 putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch,
                         Event.CTRL_MASK));
 
@@ -474,6 +592,12 @@ public class MainFrame extends JFrame
             if (command != null)
                 putValue(ACTION_COMMAND_KEY, command);
         }
+
+	public String getName()
+	{
+	    return (String)getValue(Action.NAME);
+	}
+
 
         public void actionPerformed(ActionEvent e) 
         {
@@ -504,65 +628,89 @@ public class MainFrame extends JFrame
             {
                 new HbA1cDialog(MainFrame.this);
             } 
-            else if (command.equals("option_pref")) 
+            else if (command.equals("tools_pref")) 
             {
                 new PropertiesDialog(MainFrame.this);
             } 
-            else if (command.equals("read_meter")) 
+/*            else if (command.equals("read_meter")) 
             {
                 new MeterReadDialog(MainFrame.this);
-            } 
-            else if (command.equals("hlp_about")) 
+            } */
+/*            else if (command.equals("hlp_about")) 
             {
                 JOptionPane.showMessageDialog(null,
                                 "GNU Gluco Control " + s_version, "About GGC",
                                 JOptionPane.INFORMATION_MESSAGE);
-            } 
+            } */
             else if (command.equals("hlp_check")) 
             {
                 new VersionChecker().checkForUpdate();
             } 
-            else if (command.equals("print_test")) 
-            {
-                /*
-                //new PrintMonthlyReport();
-
-                try 
-                {
-                    String pathToAcrobat = "d:/Program Files/Adobe/Acrobat 6.0/Reader/AcroRd32.exe";
-                    Runtime.getRuntime().exec(
-                            pathToAcrobat + " " + "HelloWorld2.pdf");
-                } 
-                catch (Exception ex) 
-                {
-                    System.out.println("Error running AcrobatReader");
-                }
-                */
-            } 
-            else if (command.equals("food_nutrition")) 
+            else if (command.equals("food_nutrition_1")) 
             {
                 new NutritionTreeDialog(m_da);
                 //System.out.println("Command N/A: Food Nutrition");
             } 
-            else if (command.equals("food_meals")) 
+/*            else if (command.equals("food_nutrition_2")) 
+	    {
+
+	    }*/
+/*            else if (command.equals("food_meals")) 
             {
                 System.out.println("Command N/A: Food Meals");
-            } 
+            }  */
             else if (command.equals("report_pdf_simple")) 
             {
                 new PrintingDialog(MainFrame.this, 1);
-                System.out.println("Command N/A: Report PDF Simple");
             } 
-            else if (command.equals("report_pdf_extended")) 
+            /*else if (command.equals("report_pdf_extended")) 
             {
-                new PrintingDialog(MainFrame.this, 2);
-                System.out.println("Command N/A: Report PDF Extended");
-            } 
+                //new PrintingDialog(MainFrame.this, 2);
+                //System.out.println("Command N/A: Report PDF Extended");
+            } */
+	    else if ((command.equals("hlp_about")) ||
+		     (command.equals("tools_db_maint")))
+	    {
+		featureNotImplemented(command, "0.3");
+	    }
+	    else if ((command.equals("read_meter")) ||
+		     (command.equals("food_nutrition_2")) || 
+		     (command.equals("tools_mlist"))) 
+	    {
+		featureNotImplemented(command, "0.4");
+	    }
+	    else if ((command.equals("report_pdf_extended")) ||
+		     (command.equals("doc_docs")) ||
+		     (command.equals("doc_appoint")) ||
+		     (command.equals("doc_stocks")) ||
+		     (command.equals("food_meals")))
+	    {
+		featureNotImplemented(command, "0.5");
+	    }
+	    else if (command.equals("test"))
+	    {
+		ggc.gui.ReadMeterDialog rm = new ggc.gui.ReadMeterDialog(MainFrame.this);
+	    }
             else
                 System.out.println("Unknown Command: " + command);
 
         }
     }
+
+
+    public void featureNotImplemented(String cmd, String version)
+    {
+
+	String text = m_ic.getMessage("FEATURE");
+
+	text += " '" + this.actions.get(cmd).getName() +"' ";
+	text += m_ic.getMessage("IMPLEMENTED_VERSION");
+	text += " " + version+" !";
+
+	JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
 
     private class CloseListener extends WindowAdapter 
     {
