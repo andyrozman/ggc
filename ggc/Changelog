@@ -1,3 +1,24 @@
+2006-04-01 (v0.2.5.2)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Fixing reading of configuration
+    * Refresh of Info panels fixed
+    * Extensive database changes, a lot of added files to ggc.db.hibernate (some of files also removed):
+         - added: Doctors (doctor types, doctors, appointments), Stocks (stock type, srock subtype, stocks),
+	          Nutrition (added global data, changed nutrition from usdb, added user nutrition db, changed 
+		  meals definitions), Meter (meter companies, meters, meter interface (for import), meter 
+		  implementations), Inet stuff (inet group, inet links, ...)
+    * Some file rename in ggc.db.datalayer
+    * Loading and init of Nutrition database changed
+    * Added User Nutrition Database
+    * Display USDB Nutrition Database
+    * Changed menus: restructuring, added entries: Stocks, Doctors, Appointments, Database Maintainance, 
+        User Nutrition Database, Meter List (added are items, not functionality).
+    * Meter Management will be done in Database. We will try to have database filled with all different 
+        meters available arround, those that are supported by GGC will have some other entries, so 
+	that user has overview over most available meters. (so far list has 34 meters, only 3 are supported 
+	to be read by application, another 7 are in the works (Ascensia) and will be available in 0.4 version 
+	(End of 2007)
+
+
 2006-03-21 (v0.2.4.2) Reinhold Rumberger <rumbi@users.sourceforge.net>
     * german translation
     * several bugs in BUGS.txt
