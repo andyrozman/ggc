@@ -2,7 +2,7 @@ Know Bugs:
 
     - L&F loading is inconsistent and currently fails on Linux (why ???)
     - at least one undiscovered infinite loop, can't repsoduce, happened while the preferences frame was open (found by: developer rumbi)
-    - infinite loop when trying to display hba1c without data: can't reproduce, looks ok.
+    - infinite loop when trying to display hba1c without data (rumbi): can't reproduce, looks ok. (andy)
     - division by zero when displaying graphs without data
     - german translation is somewhat behind schedule
     - switching L&F from CDE/Motif to SkinLF doesn't result in settings being saved : can't reproduce, you must 
