@@ -1,6 +1,6 @@
 Know Bugs:
 
-    - L&F loading is inconsistent and currently fails on Linux (???)
+    - L&F loading is inconsistent and currently fails on Linux (why ???)
     - at least one undiscovered infinite loop, can't repsoduce, happened while the preferences frame was open (found by: developer rumbi)
     - infinite loop when trying to display hba1c without data: can't reproduce, looks ok.
     - division by zero when displaying graphs without data

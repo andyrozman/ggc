@@ -56,6 +56,6 @@ comunication.api=${comunication.api_ibm}
 ### STOP EDITING HERE
 #
 
-utils_cpath=${utils_path}/itext-1.2.jar;${utils_path}/skinlf-1.2.11.jar;${comunication.api}
+utils_cpath=${utils_path}/itext-1.2.jar;${utils_path}/skinlf-1.2.11.jar;${comunication.api};${utils_path}/atech-tools-0.1.2.jar
 hibernate_cpath=${hibernate_path}/asm.jar;${hibernate_path}/asm-attrs.jar;${hibernate_path}/c3p0-0.9.0.jar;${hibernate_path}/cglib-2.1.3.jar;${hibernate_path}/commons-collections-2.1.1.jar;${hibernate_path}/commons-logging-1.0.4.jar;${hibernate_path}/dom4j-1.6.1.jar;${hibernate_path}/hibernate3.jar;${hibernate_path}/jdbc2_0-stdext.jar;${hibernate_path}/jta.jar;${hibernate_path}/log4j-1.2.11.jar;${hibernate_path}/ehcache-1.1.jar;${hibernate_path}/commons-lang-2.0.jar;${hibernate_path}/antlr-2.7.6rc1.jar
 jdbc_cpath=${jdbc_path}\hsqldb.jar;${additional.jdbc.driver}
