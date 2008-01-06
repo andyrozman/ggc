@@ -284,7 +284,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         int x = 0;
         int y = 0;
         int width = 400;
-        int height = 500;
+        int height = 480;
 
         Rectangle bnd = m_parent.getBounds();
 
@@ -316,14 +316,14 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         addLabel(m_ic.getMessage("COMMENT") + ":", 348, panel);
 
         this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5);
-        dtc.setBounds(160, 75, 100, 35);
+        dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 
         addComponent(cob_bg_type = new JComboBox(this.m_da.bg_units), 220, 138, 80, panel);
-        addComponent(BGField = new JTextField(), 160, 138, 35, panel);
-        addComponent(Ins1Field = new JTextField(), 160, 168, 35, panel);
-        addComponent(Ins2Field = new JTextField(), 160, 198, 35, panel);
-        addComponent(BUField = new JTextField(), 160, 228, 35, panel);
+        addComponent(BGField = new JTextField(), 140, 138, 55, panel);
+        addComponent(Ins1Field = new JTextField(), 140, 168, 55, panel);
+        addComponent(Ins2Field = new JTextField(), 140, 198, 55, panel);
+        addComponent(BUField = new JTextField(), 140, 228, 55, panel);
         addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 110, 260, 200, panel);
         addComponent(UrineField = new JTextField(), 110, 288, 220, panel);
         addComponent(ActField = new JTextField(), 110, 318, 220, panel);
@@ -438,148 +438,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             
             
         }
-
-        
-        
-        //b.add(ActField = new JTextField());
-
-        //d.add(BUField = new JTextField());
-        //d.add(Ins2Field = new JTextField());
-        //d.add(CommentField = new JTextField());
-
-
-
-        //addLabel(m_ic.getMessage("DATE") + ":", 40, panel);
-        //a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
-
-        
-/*
-        JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
-        a.add(new JLabel(m_ic.getMessage("BG") + ":", SwingConstants.RIGHT));
-        a.add(new JLabel(m_da.getSettings().getIns1Abbr() + ":", SwingConstants.RIGHT));
-        a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
-
-        JPanel b = new JPanel(new GridLayout(0, 1));
-        DateField = new JTextField(10);
-        if (sDate != null) 
-        {
-            DateField.setText(sDate);
-            DateField.setEditable(false);
-        }
-        b.add(DateField);
-
-
-        b.add(BGField = new JTextField());
-        components[1] = BGField;
-        BGField.addKeyListener(this);
-
-        b.add(Ins1Field = new JTextField());
-        components[3] = Ins1Field;
-        Ins1Field.addKeyListener(this);
-
-
-        b.add(ActField = new JTextField());
-        components[5] = ActField;
-        ActField.addKeyListener(this);
-
-
-        JPanel c = new JPanel(new GridLayout(0, 1));
-        c.add(new JLabel(m_ic.getMessage("TIME") + ":", SwingConstants.RIGHT));
-        c.add(new JLabel(m_ic.getMessage("BU") + ":", SwingConstants.RIGHT));
-        c.add(new JLabel(m_da.getSettings().getIns2Abbr() + ":", SwingConstants.RIGHT));
-        c.add(new JLabel(m_ic.getMessage("COMMENT") + ":", SwingConstants.RIGHT));
-
-        JPanel d = new JPanel(new GridLayout(0, 1));
-        d.add(TimeField = new JTextField(10));
-        components[0] = TimeField;
-        TimeField.addKeyListener(this);
-
-
-        d.add(BUField = new JTextField());
-        components[2] = BUField;
-        BUField.addKeyListener(this);
-
-
-        d.add(Ins2Field = new JTextField());
-        components[4] = Ins2Field;
-        Ins2Field.addKeyListener(this);
-
-
-        d.add(CommentField = new JTextField());
-        components[6] = CommentField;
-        CommentField.addKeyListener(this);
-
-
-        Box e = Box.createHorizontalBox();
-        e.add(a);
-        e.add(b);
-        e.add(c);
-        e.add(d);
-
-        Box g = Box.createHorizontalBox();
-        AddButton = new JButton(m_ic.getMessage("OK"));
-        components[7] = AddButton;
-        AddButton.addKeyListener(this);
-        AddButton.setActionCommand("ok");
-        AddButton.addActionListener(this);
-
-        g.add(Box.createHorizontalGlue());
-        getRootPane().setDefaultButton(AddButton);
-
-        g.add(AddButton);
-        JButton CloseButton = new JButton(m_ic.getMessage("CANCEL"));
-        components[8] = CloseButton;
-        CloseButton.addKeyListener(this);
-        CloseButton.setActionCommand("close");
-        CloseButton.addActionListener(this);
-
-
-        g.add(Box.createHorizontalStrut(10));
-        g.add(CloseButton);
-        g.add(Box.createHorizontalGlue());
-        this.getContentPane().add(g, BorderLayout.SOUTH);
-
-        getContentPane().add(e, BorderLayout.NORTH);
-        getContentPane().add(g, BorderLayout.SOUTH);
-
-  */      
-
-/*        
-        label = new JLabel(m_ic.getMessage("NAME") + ":");
-        label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
-        label.setBounds(40, 90, 80, 25);
-        panel.add(label);
-
-        tfName = new JTextField();
-        tfName.setBounds(120, 90, 160, 25);
-        tfName.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-        panel.add(tfName);
-
-        label = new JLabel(m_ic.getMessage("USE_AS_TEMPLATE") + ":" );
-        label.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-        label.setBounds(40, 130, 280, 25);
-        panel.add(label);
-
-        cb_template = new JComboBox(this.schemes_names);
-        cb_template.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-        cb_template.setBounds(40, 160, 230, 25);
-        panel.add(cb_template);
-
-        JButton button = new JButton(m_ic.getMessage("OK"));
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-        button.setActionCommand("ok");
-        button.addActionListener(this);
-        button.setBounds(90, 210, 80, 25);
-        panel.add(button);
-
-        button = new JButton(m_ic.getMessage("CANCEL"));
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-        button.setActionCommand("cancel");
-        button.addActionListener(this);
-        button.setBounds(180, 210, 80, 25);
-        panel.add(button);
-*/
         
     }
 
@@ -719,17 +577,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 // add
 
 
-                System.out.println("dV: " + dV);
+                if (debug)
+                    System.out.println("dV: " + dV);
 
-
-                //System.out.println("dtc: " + this.dtc);
-                //System.out.println(BGField);
-                        //System.out.println(Ins1Field);
-                //        System.out.println(Ins2Field);
-                //        System.out.println(BUField);
-                //        System.out.println(ActField);
-                //        System.out.println(UrineField);
-                //        System.out.println(CommentField);
 
                 this.m_dailyValuesRow = new DailyValuesRow();
 

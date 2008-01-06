@@ -52,6 +52,8 @@
         <copy todir="${build.dir}/icons" overwrite="true">
             <fileset dir="${source.dir}/icons" casesensitive="no">
                 <include name="**/*.gif"/>
+                <include name="**/*.jpg"/>
+                <include name="**/*.png"/>
             </fileset>
         </copy>
     </target>
@@ -84,7 +86,7 @@
 -->
 
     <target name="jar"  description="Build GGC jar" depends="make">
-        <jar jarfile="${deploy.dir}/ggc.jar"
+        <jar jarfile="${binary.dir}/ggc.jar"
              update="false" 
              index="false"
              manifest="./manifest_ggc.mf">
@@ -94,6 +96,8 @@
                 <include name="com/**"/>
                 <include name="org/**"/>
                 <include name="icons/*.gif"/>
+                <include name="icons/*.jpg"/>
+                <include name="icons/*.png"/>
                 <exclude name="ggc/little/**"/>
                 <include name="GGC_*.properties"/>
                 <include name="*.hbm.xml"/>
@@ -104,7 +108,7 @@
 
 
     <target name="jar_l"  description="Build GGC Little" depends="make">
-        <jar jarfile="${deploy.dir}/ggcl.jar"
+        <jar jarfile="${binary.dir}/ggcl.jar"
              update="false" 
              index="false"
              manifest="./manifest_ggc_little.mf">
@@ -117,6 +121,8 @@
                 <include name="ggc/util/**"/>
                 <include name="ggc/view/**"/>
                 <include name="icons/*.gif"/>
+                <include name="icons/*.jpg"/>
+                <include name="icons/*.png"/>
                 <include name="GGC_*.properties"/>
                 <include name="*.hbm.xml"/>
             </fileset>
