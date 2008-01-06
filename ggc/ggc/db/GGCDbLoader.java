@@ -122,16 +122,19 @@ public class GGCDbLoader extends Thread
 
 
         db.initDb();
+
         setDbStatus(StatusBar.DB_INIT_OK); 
 
+
+        db.loadConfigData();
+
+
         db.loadStaticData();
-
-	db.loadNutritionDb1();
-
-	db.loadImplementedMeterData();
-
+    	db.loadNutritionDb1();
+    	db.loadImplementedMeterData();
 
         setDbStatus(StatusBar.DB_LOAD);
+
         m_da.m_db = db;
 
         if (m_da.getParent()!=null)

@@ -14,13 +14,9 @@ public class DoctorTypeH implements Serializable {
     /** nullable persistent field */
     private String name;
 
-    /** nullable persistent field */
-    private String name_i18n;
-
     /** full constructor */
-    public DoctorTypeH(String name, String name_i18n) {
+    public DoctorTypeH(String name) {
         this.name = name;
-        this.name_i18n = name_i18n;
     }
 
     /** default constructor */
@@ -41,14 +37,6 @@ public class DoctorTypeH implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getName_i18n() {
-        return this.name_i18n;
-    }
-
-    public void setName_i18n(String name_i18n) {
-        this.name_i18n = name_i18n;
     }
 
     public String toString() {

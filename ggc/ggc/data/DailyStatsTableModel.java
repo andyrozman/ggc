@@ -42,6 +42,32 @@ public class DailyStatsTableModel extends AbstractTableModel
     DailyValues dayData;
     DataAccess m_da = DataAccess.getInstance();
 
+    /*
+    Object objects[] = 
+    { 
+        new Long(0L), 
+        new String(""),
+        new Float(0.0d),
+        new Float(0.0d),
+        new Float(0.0d),
+        new String(""),
+        new String(""),
+        new String("")
+    };*/
+
+    Object objects[] = 
+    { 
+        new String(""), 
+        new String(""),
+        new String(""),
+        new String(""),
+        new String(""),
+        new String(""),
+        new String(""),
+        new String("")
+    };
+
+
     public DailyStatsTableModel(DailyValues dayData)
     {
         this.dayData = dayData;
@@ -82,11 +108,11 @@ public class DailyStatsTableModel extends AbstractTableModel
 	
         if (o != null && column == 0) 
 	{
-	    return m_da.getDateTimeAsTimeString(Long.parseLong((String)o));
+	    return m_da.getDateTimeAsTimeString(((Long)o).longValue());
 	    //System.out.println("DailyStatsTableModel: " + o);
             //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             //return sdf.format(o);
-        }
+        } 
 
         return o;
     }
@@ -105,11 +131,15 @@ public class DailyStatsTableModel extends AbstractTableModel
     @Override
     public Class<?> getColumnClass(int c)
     {
+        return this.objects[c].getClass();
+
+        /*
         Object o = getValueAt(0, c);
         if (o != null)
             return o.getClass();
         else
             return null;
+            */
         //return getValueAt(0,c).getClass();
     }
 
@@ -120,10 +150,12 @@ public class DailyStatsTableModel extends AbstractTableModel
 	return false;
     }
 
+    /*
     @Override
     public void setValueAt(Object aValue, int row, int column)
     {
         dayData.setValueAt(aValue, row, column);
         fireTableChanged(null);
     }
+    */
 }

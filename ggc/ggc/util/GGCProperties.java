@@ -418,12 +418,12 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public String getSelectedColorSchemeInCfg() 
     {
-	return this.m_cfg_mgr.getStringValue("SELECTED_COLOR_SCHEME");
+        return this.m_cfg_mgr.getStringValue("SELECTED_COLOR_SCHEME");
     }
 
     public void setSelectedColorSchemeInCfg(String value) 
     {
-	this.m_cfg_mgr.setStringValue("SELECTED_COLOR_SCHEME", value);
+        this.m_cfg_mgr.setStringValue("SELECTED_COLOR_SCHEME", value);
     }
 
 
@@ -431,12 +431,12 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public Color getColorTargetBG() 
     {
-	return getColor(this.m_colors.getColor_bg_target());
+        return getColor(this.m_colors.getColor_bg_target());
     }
 
     public Color getColorBG() 
     {
-	return getColor(this.m_colors.getColor_bg());
+        return getColor(this.m_colors.getColor_bg());
     }
 
     /*
@@ -520,6 +520,26 @@ public class GGCProperties //extends GGCPropertiesHelper
 	this.m_cfg_mgr.setStringValue("METER_PORT", value);
     }
 
+
+    public boolean getMeterDaylightSavingsFix()
+    {
+        return this.m_cfg_mgr.getBooleanValue("METER_DAYLIGHTSAVING_TIME_FIX");
+    }
+
+    public void setMeterDaylightSavingsFix(boolean value)
+    {
+        this.m_cfg_mgr.setBooleanValue("METER_DAYLIGHTSAVING_TIME_FIX", value);
+    }
+
+    public String getTimeZone()
+    {
+        return this.m_cfg_mgr.getStringValue("TIMEZONE");
+    }
+    
+    public void setTimeZone(String value)
+    {
+        this.m_cfg_mgr.setStringValue("TIMEZONE", value);
+    }
 
 
     // ---

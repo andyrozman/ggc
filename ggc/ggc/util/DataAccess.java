@@ -30,11 +30,14 @@
 package ggc.util;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -115,6 +118,9 @@ public class DataAccess
     private DbToolApplicationGGC m_configFile = null;
     private ConfigurationManager m_cfgMgr = null;
 
+
+    public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
+
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
      */
@@ -125,6 +131,8 @@ public class DataAccess
     public String[] avLangPostfix = { "en", "de", "si", };
 
     public String[] bg_units = { "mg/dl", "mmol/l" };
+
+    public Hashtable<String,String> timeZones;
 
 
     public ImageIcon config_icons[] = {
@@ -156,7 +164,8 @@ public class DataAccess
 	m_ic.getMessage("PRINTING")
     };
 
-
+*/
+        public String[] options_yes_no = null;
 
 
 
@@ -175,7 +184,8 @@ public class DataAccess
      */
     private DataAccess()
     {
-        loadFonts();
+        this.loadFonts();
+
         //m_i18n.createInstance(this);
         //        loadAvailableLFs();
         //        loadLanguageInfo();
@@ -184,15 +194,18 @@ public class DataAccess
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
 
-	m_cfgMgr = new ConfigurationManager(this);
+        m_cfgMgr = new ConfigurationManager(this);
 
-	this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
+        this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
 
         m_i18n = I18nControl.getInstance();
 
-        this.verifyComConfig();
+        loadOptions();
 
-	checkPrerequisites();
+        //this.verifyComConfig();
+        this.loadTimeZones();
+
+        checkPrerequisites();
 
     } 
 
@@ -302,6 +315,98 @@ public class DataAccess
     {
         return this.m_meterManager;
     }
+
+
+    // ********************************************************
+    // ******                   Meters                    *****    
+    // ********************************************************
+
+    public void loadTimeZones()
+    {
+        this.timeZones = new Hashtable<String,String>();
+
+        // Posible needed enchancment. We should probably list all ID's as values. On windows default ID can be different 
+        // as in this table. We should add this names, if we encounter problems.
+
+        this.timeZones.put("(GMT+13:00) Nuku'alofa", "Pacific/Tongatapu");
+        this.timeZones.put("(GMT+12:00) Fiji, Kamchatka, Marshall Is.", "Pacific/Fiji");
+        this.timeZones.put("(GMT+12:00) Auckland, Wellington", "Pacific/Auckland");
+        this.timeZones.put("(GMT+11:00) Magadan, Solomon Is., New Caledonia", "Asia/Magadan");
+        this.timeZones.put("(GMT+10:00) Vladivostok", "Asia/Vladivostok");
+        this.timeZones.put("(GMT+10:00) Hobart", "Australia/Hobart");
+        this.timeZones.put("(GMT+10:00) Guam, Port Moresby", "Pacific/Guam");
+        this.timeZones.put("(GMT+10:00) Canberra, Melbourne, Sydney", "Australia/Sydney");
+        this.timeZones.put("(GMT+10:00) Brisbane", "Australia/Brisbane");
+        this.timeZones.put("(GMT+09:30) Adelaide", "Australia/Adelaide");
+        this.timeZones.put("(GMT+09:00) Yakutsk", "Asia/Yakutsk");
+        this.timeZones.put("(GMT+09:00) Seoul", "Asia/Seoul");
+        this.timeZones.put("(GMT+09:00) Osaka, Sapporo, Tokyo", "Asia/Tokyo");
+        this.timeZones.put("(GMT+08:00) Taipei", "Asia/Taipei");
+        this.timeZones.put("(GMT+08:00) Perth", "Australia/Perth");
+        this.timeZones.put("(GMT+08:00) Kuala Lumpur, Singapore", "Asia/Kuala_Lumpur");
+        this.timeZones.put("(GMT+08:00) Irkutsk, Ulaan Bataar", "Asia/Irkutsk");
+        this.timeZones.put("(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi", "Asia/Hong_Kong");
+        this.timeZones.put("(GMT+07:00) Krasnoyarsk", "Asia/Krasnoyarsk");
+        this.timeZones.put("(GMT+07:00) Bangkok, Hanoi, Jakarta", "Asia/Bangkok");
+        this.timeZones.put("(GMT+06:30) Rangoon", "Asia/Rangoon");
+        this.timeZones.put("(GMT+06:00) Sri Jayawardenepura", "Asia/Colombo");
+        this.timeZones.put("(GMT+06:00) Astana, Dhaka", "Asia/Dhaka");
+        this.timeZones.put("(GMT+06:00) Almaty, Novosibirsk", "Asia/Almaty");
+        this.timeZones.put("(GMT+05:45) Kathmandu", "Asia/Katmandu");
+        this.timeZones.put("(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi", "Asia/Calcutta");
+        this.timeZones.put("(GMT+05:00) Islamabad, Karachi, Tashkent", "Asia/Karachi");
+        this.timeZones.put("(GMT+05:00) Ekaterinburg", "Asia/Yekaterinburg");
+        this.timeZones.put("(GMT+04:30) Kabul", "Asia/Kabul");
+        this.timeZones.put("(GMT+04:00) Baku, Tbilisi, Yerevan", "Asia/Baku");
+        this.timeZones.put("(GMT+04:00) Abu Dhabi, Muscat", "Asia/Dubai");
+        this.timeZones.put("(GMT+03:30) Tehran", "Asia/Tehran");
+        this.timeZones.put("(GMT+03:00) Nairobi", "Africa/Nairobi");
+        this.timeZones.put("(GMT+03:00) Moscow, St. Petersburg, Volgograd", "Europe/Moscow");
+        this.timeZones.put("(GMT+03:00) Kuwait, Riyadh", "Asia/Kuwait");
+        this.timeZones.put("(GMT+03:00) Baghdad", "Asia/Baghdad");
+        this.timeZones.put("(GMT+02:00) Jerusalem", "Asia/Jerusalem");
+        this.timeZones.put("(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Europe/Helsinki");
+        this.timeZones.put("(GMT+02:00) Harare, Pretoria", "Africa/Harare");
+        this.timeZones.put("(GMT+02:00) Cairo", "Africa/Cairo");
+        this.timeZones.put("(GMT+02:00) Bucharest", "Europe/Bucharest");
+        this.timeZones.put("(GMT+02:00) Athens, Istanbul, Minsk", "Europe/Athens");
+        this.timeZones.put("(GMT+01:00) West Central Africa", "Africa/Lagos");
+        this.timeZones.put("(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb", "Europe/Warsaw");
+        this.timeZones.put("(GMT+01:00) Brussels, Copenhagen, Madrid, Paris", "Europe/Brussels");
+        this.timeZones.put("(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague", "Europe/Prague,Europe/Belgrade");
+        this.timeZones.put("(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Europe/Amsterdam");
+        this.timeZones.put("(GMT) Casablanca, Monrovia", "Africa/Casablanca");
+        this.timeZones.put("(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London", "Europe/Dublin");
+        this.timeZones.put("(GMT-01:00) Azores", "Atlantic/Azores");
+        this.timeZones.put("(GMT-01:00) Cape Verde Is.", "Atlantic/Cape_Verde");
+        this.timeZones.put("(GMT-02:00) Mid-Atlantic", "Atlantic/South_Georgia");
+        this.timeZones.put("(GMT-03:00) Brasilia", "America/Sao_Paulo");
+        this.timeZones.put("(GMT-03:00) Buenos Aires, Georgetown", "America/Buenos_Aires");
+        this.timeZones.put("(GMT-03:00) Greenland", "America/Thule");
+        this.timeZones.put("(GMT-03:30) Newfoundland", "America/St_Johns");
+        this.timeZones.put("(GMT-04:00) Atlantic Time (Canada)", "America/Halifax");
+        this.timeZones.put("(GMT-04:00) Caracas, La Paz", "America/Caracas");
+        this.timeZones.put("(GMT-04:00) Santiago", "America/Santiago");
+        this.timeZones.put("(GMT-05:00) Bogota, Lima, Quito", "America/Bogota");
+       this.timeZones.put("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
+       this.timeZones.put("(GMT-05:00) Indiana (East)", "America/Indianapolis");
+       this.timeZones.put("(GMT-06:00) Central America", "America/Costa_Rica");
+       this.timeZones.put("(GMT-06:00) Central Time (US & Canada)", "America/Chicago");
+       this.timeZones.put("(GMT-06:00) Guadalajara, Mexico City, Monterrey", "America/Mexico_City");
+       this.timeZones.put("(GMT-06:00) Saskatchewan", "America/Winnipeg");
+       this.timeZones.put("(GMT-07:00) Arizona", "America/Phoenix");
+       this.timeZones.put("(GMT-07:00) Chihuahua, La Paz, Mazatlan", "America/Tegucigalpa");
+       this.timeZones.put("(GMT-07:00) Mountain Time (US & Canada)", "America/Denver");
+       this.timeZones.put("(GMT-08:00) Pacific Time (US & Canada); Tijuana", "America/Los_Angeles");
+       this.timeZones.put("(GMT-09:00) Alaska", "America/Anchorage");
+       this.timeZones.put("(GMT-10:00) Hawaii", "Pacific/Honolulu");
+       this.timeZones.put("(GMT-11:00) Midway Island, Samoa", "Pacific/Apia");
+       this.timeZones.put("(GMT-12:00) International Date Line West", "MIT");
+
+    }
+
+
+
 
     // ********************************************************
     // ******                  Settings                   *****    
@@ -424,6 +529,56 @@ public class DataAccess
 
     }
 
+
+    public float getBGValueByType(int type, float bg_value)
+    {
+        switch (type)
+        {
+        case BG_MMOL:
+            return (bg_value * MGDL_TO_MMOL_FACTOR);
+        case BG_MGDL:
+        default:
+            return bg_value;
+        }
+
+    }
+
+
+    public float getBGValueByType(int input_type, int output_type, float bg_value)
+    {
+        
+        if (input_type==output_type)
+            return bg_value;
+        else
+        {
+            if (output_type==DataAccess.BG_MGDL)
+            {
+                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+            }
+            else
+            {
+                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+            }
+        }
+
+    }
+
+
+    public float getBGValueDifferent(int type, float bg_value)
+    {
+
+            if (type==DataAccess.BG_MGDL)
+            {
+                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+            }
+            else
+            {
+                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+            }
+
+    }
+
+
     // ********************************************************
     // ******                   Fonts                     *****    
     // ********************************************************
@@ -475,6 +630,42 @@ public class DataAccess
     {
         return m_i18n;
     }
+
+    /**
+     *  Utils
+     */
+
+
+    public Image getImage(String filename, Component cmp)
+    {
+        Image img;
+
+        InputStream is = this.getClass().getResourceAsStream(filename);
+
+        if (is==null)
+            System.out.println("Error reading image: "+filename);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try
+        {
+            int c;
+            while ((c = is.read()) >=0)
+            baos.write(c);
+
+
+            //JDialog.getT
+            //JFrame.getToolkit();
+            img = cmp.getToolkit().createImage(baos.toByteArray());
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+        return img;
+    }
+
+
 
     // ********************************************************
     // ******               Look and Feel                 *****    
@@ -628,6 +819,17 @@ public class DataAccess
 
     }
 
+
+    // ********************************************************
+    // ******                  Options                    *****    
+    // ********************************************************
+
+    public void loadOptions()
+    {
+        this.options_yes_no = new String[2];
+        this.options_yes_no[0] = m_i18n.getMessage("YES");
+        this.options_yes_no[1] = m_i18n.getMessage("NO");
+    }
 
 
     // ********************************************************

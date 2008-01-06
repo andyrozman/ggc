@@ -24,7 +24,7 @@ import ggc.data.meter.protocol.SerialProtocol;
 import ggc.util.I18nControl;
 
 
-public abstract class AscensiaMeter extends SerialProtocol
+public class GenericMeter implements MeterInterface //extends SerialProtocol
 {
 
     protected int m_status = 0;
@@ -35,8 +35,15 @@ public abstract class AscensiaMeter extends SerialProtocol
     protected ArrayList<DailyValuesRow> data = null;
 
 
-    public AscensiaMeter(int meter_type, String portName)
+    public GenericMeter()
     {
+        super();
+    }
+
+    /*
+    public GenericMeter(int meter_type, String portName)
+    {
+
 	super(meter_type,
 	      9600, 
 	      SerialPort.DATABITS_8, 
@@ -60,38 +67,52 @@ public abstract class AscensiaMeter extends SerialProtocol
 	    ex.printStackTrace();
 	}
     }
-
+*/
     /**
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    @Override
+    //@Override
     public boolean open() throws MeterException
     {
-	return super.open();
+        //return super.open();
 	//return false;
+        return true;
     }
 
 
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    @Override
+    //@Override
     public void close()
     {
-	return;
+        return;
     }
 
 
+    public int getMeterIndex()
+    {
+        return 0;
+    }
 
+    public ImageIcon getIcon()
+    {
+        return null;
+    }
 
+    public String getName()
+    {
+        return "Generic device";
+    }
 
     /**
      * getTimeDifference - returns time difference between Meter and Computer
      */
     public int getTimeDifference()
     {
-	return this.m_time_difference;
+	//return this.m_time_difference;
+        return 0;
     }
 
 
@@ -100,7 +121,7 @@ public abstract class AscensiaMeter extends SerialProtocol
      */
     public String getInfo()
     {
-	return m_info;
+        return "Generic Device, v0.1\nNo real device connected.";
     }
 
 
@@ -109,7 +130,7 @@ public abstract class AscensiaMeter extends SerialProtocol
      */
     public int getStatus()
     {
-	return m_status;
+        return m_status;
     }
 
 
@@ -118,7 +139,7 @@ public abstract class AscensiaMeter extends SerialProtocol
      */
     public boolean isStatusOK()
     {
-	return (m_status == 0);
+        return (m_status == 0);
     }
 
 
@@ -128,7 +149,7 @@ public abstract class AscensiaMeter extends SerialProtocol
      */
     public ArrayList getDataFull()
     {
-	return this.data;
+        return this.data;
     }
 
 
@@ -253,6 +274,7 @@ public abstract class AscensiaMeter extends SerialProtocol
     protected void readDateInformation(String dt)
     {
 
+        /*
     	GregorianCalendar gc_meter = new GregorianCalendar();
     	gc_meter.setTime(m_da.getDateTimeAsDateObject(Long.parseLong(dt)));
     
@@ -270,7 +292,7 @@ public abstract class AscensiaMeter extends SerialProtocol
     	this.m_time_difference = (-1) * (int)diff;
     
     	//System.out.println("Computer Time: " + gc_comp + "\nMeter Time: " + gc_meter + " Diff: " + this.m_time_difference);
-
+*/
     }
 
 
@@ -532,14 +554,15 @@ public abstract class AscensiaMeter extends SerialProtocol
 
     private void writePort(byte[] input)
     {
-	try
-	{
-	    this.portOutputStream.write(input);
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Error writing to Serial: "+ ex);
-	}
+        /*
+    	try
+    	{
+    	    this.portOutputStream.write(input);
+    	}
+    	catch(Exception ex)
+    	{
+    	    System.out.println("Error writing to Serial: "+ ex);
+    	}*/
     }
 
     private byte[] getBytes(String inp)
@@ -561,9 +584,6 @@ public abstract class AscensiaMeter extends SerialProtocol
 	}
     }
 
-
-    
-    public abstract void serialEvent(SerialPortEvent event);
 
     /*
     {
@@ -725,6 +745,8 @@ public abstract class AscensiaMeter extends SerialProtocol
     }
 
 
+
+
     //************************************************
     //***        Available Functionality           ***
     //************************************************
@@ -735,7 +757,7 @@ public abstract class AscensiaMeter extends SerialProtocol
      */
     public boolean canReadData()
     {
-        return true;
+        return false;
     }
 
     /**

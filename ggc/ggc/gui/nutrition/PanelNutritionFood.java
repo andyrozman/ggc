@@ -17,7 +17,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.*;
 
-import com.atech.graphics.ZeroLayout;
+import com.atech.graphics.layout.ZeroLayout;
+
 import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.i18n.I18nControlAbstract;

@@ -67,24 +67,24 @@ public class InitDb
 
     public InitDb()
     {
-	this(true);
+        this(true);
     }
 
 
     public InitDb(boolean load_nutr)
     {
-	m_db = new GGCDb();
-	m_db.initDb();
-	m_db.createDatabase();
-	this.load_nutrition = load_nutr;
+    	m_db = new GGCDb();
+    	m_db.initDb();
+    	m_db.createDatabase();
+    	this.load_nutrition = load_nutr;
 
         loadSettings();
 
-	if (load_nutrition)
-	    loadNutritionDatabase();
-
-	loadMeters();
-	System.out.println();
+    	if (load_nutrition)
+    	    loadNutritionDatabase();
+    
+    	loadMeters();
+    	System.out.println();
     }
 
 

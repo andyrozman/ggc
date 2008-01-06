@@ -1,17 +1,19 @@
 package ggc.data.meter.device;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
-import gnu.io.*;
-import gnu.io.SerialPort;
 import javax.swing.ImageIcon;
 
 import ggc.data.DailyValuesRow;
 import ggc.data.meter.MeterManager;
 import ggc.data.meter.protocol.SerialProtocol;
 import ggc.util.I18nControl;
+
+import gnu.io.*;
+import gnu.io.SerialPort;
 
 
 /*
@@ -94,8 +96,8 @@ public class AscensiaContourMeter extends AscensiaMeter
     @Override
     public boolean open() throws MeterException
     {
-	return super.open();
-	//return false;
+        return super.open();
+        //return false;
     }
 
 
@@ -111,7 +113,31 @@ public class AscensiaContourMeter extends AscensiaMeter
 
     
 
+    public String getInfo()
+    {
+        try
+        {
+            System.out.println("getInfo");
 
+            String data = "R|D|8E\n";
+            this.portOutputStream.write(data.getBytes());
+
+            while(portInputStream.available()>0)
+            {
+                System.out.println(portInputStream.read());
+            }
+            return "data. not converted.";
+        }
+        catch(IOException ex)
+        {
+            System.out.println("getInfo. Ex: " + ex);
+            return "no data";
+        }
+        //this.portInputStream
+    }
+
+
+/*
     public void test()
     {
 	try
@@ -133,13 +159,11 @@ public class AscensiaContourMeter extends AscensiaMeter
 			13
 	};
 	*/
-    }
+  //  }
 
-    public void readCommData()
+    public void test()
     {
-	//this.loadInitialData();
-	//this.test();
-	writeToMeter(1, "", "");
+        writeToMeter(1, "", "");
     }
 
 
@@ -347,14 +371,14 @@ public class AscensiaContourMeter extends AscensiaMeter
 
     private void writePort(String input)
     {
-	writePort(getBytes(input));
+        writePort(getBytes(input));
     }
 
     private void writePort(int input)
     {
-	byte[] b = new byte[1];
-	b[0] = (byte)input;
-	writePort(b);
+    	byte[] b = new byte[1];
+    	b[0] = (byte)input;
+    	writePort(b);
     }
 
 
@@ -374,7 +398,7 @@ public class AscensiaContourMeter extends AscensiaMeter
 
     private byte[] getBytes(String inp)
     {
-	return inp.getBytes();
+        return inp.getBytes();
     }
 
 
@@ -543,6 +567,38 @@ public class AscensiaContourMeter extends AscensiaMeter
 
 	return 0;
     }
+
+
+
+    //************************************************
+    //***        Available Functionality           ***
+    //************************************************
+
+
+    /**
+     * canReadData - Can Meter Class read data from device
+     */
+    public boolean canReadData()
+    {
+        return true;
+    }
+
+    /**
+     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
+     */
+    public boolean canReadPartitialData()
+    {
+        return false;
+    }
+
+    /**
+     * canClearData - Can Meter class clear data from meter.
+     */
+    public boolean canClearData()
+    {
+        return false;
+    }
+
 
 
 

@@ -61,10 +61,16 @@ import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory; 
+
 
 public class DailyStatsDialog extends JDialog implements ActionListener
 {
+
+    private static Log log = LogFactory.getLog(DailyStatsDialog.class); 
     
+
     private I18nControl m_ic = I18nControl.getInstance();    
     private DataAccess m_da = DataAccess.getInstance();
 
@@ -296,8 +302,8 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
         JButton delButton = new JButton(m_ic.getMessage("DELETE_ROW"));
         delButton.setPreferredSize(dim);
-	delButton.setActionCommand("delete_row");
-	delButton.addActionListener(this);
+        delButton.setActionCommand("delete_row");
+        delButton.addActionListener(this);
         EntryBox.add(delButton);
 
         saveButton = new JButton(m_ic.getMessage("CLOSE"));
@@ -404,7 +410,26 @@ public class DailyStatsDialog extends JDialog implements ActionListener
                 JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-    
+
+            
+
+            int option_selected = JOptionPane.showOptionDialog(this, 
+                                         m_ic.getMessage("ARE_YOU_SURE_DELETE_ROW"),
+                                         m_ic.getMessage("QUESTION"),
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.QUESTION_MESSAGE,
+                                         null,
+                                         m_da.options_yes_no,
+                                         JOptionPane.YES_OPTION);
+
+
+            if (option_selected == JOptionPane.NO_OPTION)
+            {
+                //System.out.println("Option NO was here!");
+                return;
+            }
+            //System.out.println("Option YES was here!");
+
     	    try 
     	    {
                 dayData.deleteRow(table.getSelectedRow());
@@ -414,6 +439,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener
     	    catch (Exception ex) 
     	    {
                 System.out.println("DailyStatsDialog:Action:Delete Row: " + ex);
+                log.error("Action::Delete Row::Exception: " + ex, ex); 
     	    }
     	}
     	else if (command.equals("close"))

@@ -73,13 +73,24 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     @Override
     public void refreshInfo()
     {
-	if (!this.m_da.isDatabaseInitialized())
-	    return;
+        if (!this.m_da.isDatabaseInitialized())
+            return;
 
-	lblName.setText(m_da.getSettings().getUserName());
+        lblName.setText(m_da.getSettings().getUserName());
         lblIns1.setText(m_da.getSettings().getIns1Name() + "  (" + m_da.getSettings().getIns1Abbr() + ")");
         lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
-        lblMeter.setText(m_da.getSettings().getMeterTypeString() + "  (" + m_da.getSettings().getMeterPort() + ")");
+
+        int meter_type = m_da.getSettings().getMeterType();
+        if (meter_type>0)
+        {
+            lblMeter.setText(m_da.getDb().getMeterById(meter_type).getName() + "  (" + m_da.getSettings().getMeterPort() + ")");
+        }
+        else
+        {
+            lblMeter.setText(m_ic.getMessage("NO_METER_SELECTED"));
+        }
+
+        //lblMeter.setText(m_da.getDb().getMeterById(m_da.getSettings().getMeterType()).getName() + "  (" + m_da.getSettings().getMeterPort() + ")");
         lblUnit.setText(m_da.getSettings().getBG_unitString());
     }
 

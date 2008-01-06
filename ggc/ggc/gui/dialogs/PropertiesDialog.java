@@ -239,7 +239,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane());
         addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new PrefFontsAndColorPane(this));
         addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane());
-        addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane());
+        addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane(this));
         addPanel(m_ic.getMessage("PRINTING"), PANEL_PRINTING, new PrefPrintingPane());
     }
 

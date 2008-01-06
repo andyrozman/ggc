@@ -428,7 +428,7 @@ public class AscensiaDEXMeter extends AscensiaMeter
 
     private String getModeString()
     {
-	String[] modes = { "None", "ENQuiry", "Out", "ACKnowledge", "Negative AcKnowledge", "End Of Transmition"
+        String[] modes = { "None", "ENQuiry", "Out", "ACKnowledge", "Negative AcKnowledge", "End Of Transmition"
 	};
 
 	return modes[mode];
@@ -453,33 +453,31 @@ public class AscensiaDEXMeter extends AscensiaMeter
 
     private void writePort(byte[] input)
     {
-	try
-	{
-	    this.portOutputStream.write(input);
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Error writing to Serial: "+ ex);
-	}
+    	try
+    	{
+    	    this.portOutputStream.write(input);
+    	}
+    	catch(Exception ex)
+    	{
+    	    System.out.println("Error writing to Serial: "+ ex);
+    	}
     }
 
     private byte[] getBytes(String inp)
     {
-	
-	return inp.getBytes();
+        return inp.getBytes();
     }
 
 
     public void waitTime(long time)
     {
-	try
-	{
-	    Thread.sleep(time);
-
-	}
-	catch(Exception ex)
-	{
-	}
+    	try
+    	{
+    	    Thread.sleep(time);
+    	}
+    	catch(Exception ex)
+    	{
+    	}
     }
 
 
@@ -620,6 +618,38 @@ public class AscensiaDEXMeter extends AscensiaMeter
         // TODO Auto-generated method stub
         
     } 
+
+
+    //************************************************
+    //***        Available Functionality           ***
+    //************************************************
+
+
+    /**
+     * canReadData - Can Meter Class read data from device
+     */
+    public boolean canReadData()
+    {
+        return true;
+    }
+
+    /**
+     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
+     */
+    public boolean canReadPartitialData()
+    {
+        return false;
+    }
+
+    /**
+     * canClearData - Can Meter class clear data from meter.
+     */
+    public boolean canClearData()
+    {
+        return false;
+    }
+
+
 
 
 }

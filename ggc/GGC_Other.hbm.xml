@@ -83,7 +83,7 @@
         <property name="link_id"  type="string" length="1000" />
     </class>
 
-    <class name="ggc.db.hibernate.InetLinkH" table="inet_links">
+    <class name="ggc.db.hibernate.InetLinkH" table="inet_link">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            

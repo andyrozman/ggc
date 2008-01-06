@@ -32,10 +32,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.JFileChooser;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileSystemView;
 
 import ggc.db.tool.DbToolApplicationGGC;
 import ggc.util.I18nControl;
@@ -173,12 +175,14 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 		    jfc.setDialogType(JFileChooser.CUSTOM_DIALOG);
 		    jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
+		    processJFileChooser(jfc);
+
 		    int res = jfc.showDialog(parent, m_ic.getMessage("SELECT"));
 
 
 		    if (res==JFileChooser.APPROVE_OPTION)
 		    {
-			tf_lf.setText(jfc.getSelectedFile().getName());
+                tf_lf.setText(jfc.getSelectedFile().getName());
 		    }
 
 		}
@@ -244,4 +248,52 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 	this.m_dbc.setSelectedDatabaseIndex(this.cb_database.getSelectedIndex());
 	this.m_dbc.setSelectedLF(this.cb_lf_type.getSelectedIndex(), this.tf_lf.getText());
     }
+
+
+    private void processJFileChooser(Container c)
+    {
+	Component[] comps = c.getComponents();
+
+        for( int i = 0; i < comps.length; i++ )
+        {
+
+	    if (comps[i] instanceof JPanel)
+	    {
+		processJFileChooser((Container)comps[i]);
+	    }
+
+            if( comps[ i ] instanceof JButton )
+            {
+                JButton b = (JButton) comps[ i ];
+ 
+                String ttText = b.getToolTipText(  );
+                String buttonText = b.getText(  );
+
+                if( ( ttText != null ) && 
+		    (ttText.equals( "Create New Folder" ) || ttText.equals("Desktop") || ttText.equals("Up One Level")) )
+                {
+                    b.setEnabled( false );
+                }
+            }
+
+	    if (comps[i] instanceof JComboBox)
+	    {
+		JComboBox box = (JComboBox)comps[i];
+		String s = (String)box.getSelectedItem().toString();
+		if (s.indexOf("skinlf_themes")!=-1)
+		{
+		    box.setEnabled(false);
+		}
+	    }
+
+        }
+    }
+
+
+
+
+
+
+
+
 }

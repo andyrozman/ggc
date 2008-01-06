@@ -169,6 +169,29 @@ public interface MeterInterface
 
 
     //************************************************
+    //***        Available Functionality           ***
+    //************************************************
+
+
+    /**
+     * canReadData - Can Meter Class read data from device
+     */
+    public boolean canReadData();
+
+    /**
+     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
+     */
+    public boolean canReadPartitialData();
+
+    /**
+     * canClearData - Can Meter class clear data from meter.
+     */
+    public boolean canClearData();
+
+
+
+
+    //************************************************
     //***                    Test                  ***
     //************************************************
 

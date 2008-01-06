@@ -197,16 +197,18 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
     public DailyValues createDailyGraphValues()
     {
+        // TO-DO
     	DailyValues dv = new DailyValues(); 
-    
-    	dv.addRow(new DailyValuesRow("04.04.2006", "7:30", "4.3", "6", "", "8", "", ""));
-    	dv.addRow(new DailyValuesRow("04.04.2006", "9:35", "5.9", "", "", "", "", ""));
-    	dv.addRow(new DailyValuesRow("04.04.2006", "12:15", "8.1", "10", "", "12", "", ""));
-    	dv.addRow(new DailyValuesRow("04.04.2006", "14:15", "6.7", "", "", "", "", ""));
-    	dv.addRow(new DailyValuesRow("04.04.2006", "19:30", "7.8", "12", "", "14", "", ""));
-    	dv.addRow(new DailyValuesRow("04.04.2006", "21:15", "5.9", "", "", "", "", ""));
-    	dv.addRow(new DailyValuesRow("04.04.2006", "23:30", "", "", "36", "", "", ""));
-    
+/*
+        long datetime, int bg, int ins1, int ins2, float ch, String extended, String comment
+    	dv.addRow(new DailyValuesRow(200604040730, 4.3, 6, 0, 0.0d "6", "", "8", "", ""));
+    	dv.addRow(new DailyValuesRow(200604040730, "5.9", "", "", "", "", ""));
+    	dv.addRow(new DailyValuesRow(200604040730, "8.1", "10", "", "12", "", ""));
+    	dv.addRow(new DailyValuesRow(200604040730, "6.7", "", "", "", "", ""));
+    	dv.addRow(new DailyValuesRow(200604040730, "7.8", "12", "", "14", "", ""));
+    	dv.addRow(new DailyValuesRow(200604040730, "5.9", "", "", "", "", ""));
+    	dv.addRow(new DailyValuesRow(200604040730, "", "", "36", "", "", ""));
+  */  
     	return dv;
     }
 

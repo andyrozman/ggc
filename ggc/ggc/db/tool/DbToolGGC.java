@@ -10,12 +10,12 @@ public class DbToolGGC
     public DbToolGGC()
     {
         DbToolApplicationGGC appl = new DbToolApplicationGGC();
-	DbTool tool = new DbTool(appl);
+        DbTool tool = new DbTool(appl);
     }
 
     public static void main(String args[])
     {
-	new DbToolGGC();
+        new DbToolGGC();
     }
 
 }

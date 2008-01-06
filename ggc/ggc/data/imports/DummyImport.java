@@ -265,6 +265,8 @@ public class DummyImport extends SerialMeterImport
                 DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), 
 							      bzValue, 0, 0, 0.0f, null, null, "");
 
+                //new DailyValuesRow(
+
 
 		//public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String act, String extended, String comment)
 

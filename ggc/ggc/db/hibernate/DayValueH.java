@@ -30,23 +30,19 @@ public class DayValueH implements Serializable {
     private String meals_ids;
 
     /** nullable persistent field */
-    private String act;
-
-    /** nullable persistent field */
     private String extended;
 
     /** nullable persistent field */
     private String comment;
 
     /** full constructor */
-    public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String act, String extended, String comment) {
+    public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String extended, String comment) {
         this.dt_info = dt_info;
         this.bg = bg;
         this.ins1 = ins1;
         this.ins2 = ins2;
         this.ch = ch;
         this.meals_ids = meals_ids;
-        this.act = act;
         this.extended = extended;
         this.comment = comment;
     }
@@ -114,14 +110,6 @@ public class DayValueH implements Serializable {
 
     public void setMeals_ids(String meals_ids) {
         this.meals_ids = meals_ids;
-    }
-
-    public String getAct() {
-        return this.act;
-    }
-
-    public void setAct(String act) {
-        this.act = act;
     }
 
     public String getExtended() {

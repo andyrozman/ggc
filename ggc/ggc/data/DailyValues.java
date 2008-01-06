@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
-//import ggc.db.DataBaseHandler;
 import ggc.db.hibernate.DayValueH;
+import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
 
@@ -25,12 +25,13 @@ public class DailyValues implements Serializable
     private I18nControl m_ic = I18nControl.getInstance();
 
     private String[] column_names = { 
-                        m_ic.getMessage("TIME"),
+                        m_ic.getMessage("DATE_TIME"),
                         m_ic.getMessage("BG"),
                         m_ic.getMessage("INS_1"),
                         m_ic.getMessage("INS_2"),
                         m_ic.getMessage("BU"),
-                        m_ic.getMessage("ACT"),
+                        m_ic.getMessage("ACTIVITY"),
+                        m_ic.getMessage("URINE"),
                         m_ic.getMessage("COMMENT") };
 
     ArrayList<DailyValuesRow> dataRows = new ArrayList<DailyValuesRow>();
@@ -244,11 +245,19 @@ public class DailyValues implements Serializable
     
     	    if (dVR.hasHibernateObject())
     	    {
+                /*
         		if (deleteList==null)
         		    deleteList = new ArrayList<DayValueH>();
         
-        		deleteList.add(dVR.getHibernateObject());
+        		deleteList.add(dVR.getHibernateObject()); 
         		this.changed = true;
+                */
+
+                // problem on delete
+                DataAccess.getInstance().getDb().deleteHibernate(dVR.getHibernateObject());
+                //DailyValueH dvh = dVR.getHibernateObject();
+                
+
     	    }
     
         } 
@@ -535,10 +544,16 @@ public class DailyValues implements Serializable
         return getRow(row).getCH();
     }
 
-    public String getActAt(int row)
+    public String getActivityAt(int row)
     {
-        return getRow(row).getAct();
+        return getRow(row).getActivity();
     }
+
+    public String getUrineAt(int row)
+    {
+        return getRow(row).getUrine();
+    }
+
 
     public String getCommentAt(int row)
     {

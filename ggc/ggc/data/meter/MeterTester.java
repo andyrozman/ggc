@@ -56,26 +56,33 @@ public class MeterTester extends JFrame
 
     public MeterTester()
     {
-	try
-	{
-	    m_meter = //new AscensiaContourMeter("COM9");
-	    new AscensiaDEXMeter("COM9");
-	    //m_meter.setPort("COM1");
-	    //m_meter.open();
+        /*
+    	try
+    	{
+    	    m_meter = new AscensiaContourMeter("COM9");
+    	    //new AscensiaContourMeter("COM9");
+    	    m_meter.setPort("COM9");
+    	    //m_meter.open();
+    
+    
+    	    m_meter.readCommData();
+    	    //m_meter.getTimeDifference();
+    
+    	    //m_meter.test(); 
+    	}
+    	catch(Exception ex)
+    	{
+    	    System.out.println("Tester -> Exception on creation of meter. " + ex);
+    	    ex.printStackTrace();
+    	} */
 
 
-	    //m_meter.readCommData();
-	    m_meter.getTimeDifference();
+        MeterImportManager mim = new MeterImportManager();
 
-	    m_meter.test(); 
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Tester -> Exception on creation of meter. " + ex);
-	    ex.printStackTrace();
-	}
-
-	//m_meter.setReturnWindow();
+        if (mim.getErrorCode()!=0)
+        {
+            System.exit(1);
+        }
 
 
 

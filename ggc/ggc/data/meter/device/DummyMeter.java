@@ -189,6 +189,37 @@ public class DummyMeter implements MeterInterface
 
 
     //************************************************
+    //***        Available Functionality           ***
+    //************************************************
+
+
+    /**
+     * canReadData - Can Meter Class read data from device
+     */
+    public boolean canReadData()
+    {
+        return false;
+    }
+
+    /**
+     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
+     */
+    public boolean canReadPartitialData()
+    {
+        return false;
+    }
+
+    /**
+     * canClearData - Can Meter class clear data from meter.
+     */
+    public boolean canClearData()
+    {
+        return false;
+    }
+
+
+
+    //************************************************
     //***                    Test                  ***
     //************************************************
 

@@ -1,3 +1,13 @@
+2008-01-06 (v0.2.9.1)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * adding new daily entry changed, some options are still unavailable, but it has totally new look
+    * BG data is now written in mg/dl format, user can select on entry in which format he wishes to write
+    * about dialog finalized
+    * bugs with daily data fixed
+    * delete changed
+    * added new menus for future functionalities
+
+
+
 2006-04-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * updated german translation
 

@@ -37,6 +37,7 @@ import javax.swing.text.View;
 
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
+import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.FrequencyGraphDialog;
@@ -64,6 +65,11 @@ import ggc.util.VersionChecker;
 //   0.2.3   Configuration
 //   0.2.4   Menus
 //   0.2.5   Nutrition-1
+//   0.2.6   Config COM
+// 
+//   0.2.7   New entry dialog
+//   0.2.8   About Dialog
+//   0.2.9   New entry finalization
 // 
 //    Menus (all), About, Db (all)
 // 
@@ -73,10 +79,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.5.3";
+    public  static String s_version = "0.2.9.1";
     private String full_version = "v" + s_version;
 
-    private String version_date = "1st April 2007";
+    private String version_date = "6th January 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -128,7 +134,7 @@ public class MainFrame extends JFrame
      */
     static 
     {
-	MainFrame.setLookAndFeel();
+        MainFrame.setLookAndFeel();
     }
 
 
@@ -185,7 +191,7 @@ public class MainFrame extends JFrame
 
         statusPanel = new StatusBar();
 
-	this.actions = new Hashtable<String,GGCAction>();
+        this.actions = new Hashtable<String,GGCAction>();
 
         setTitle(title + " (" + full_version + ")");
         setJMenuBar(menuBar);
@@ -368,30 +374,28 @@ public class MainFrame extends JFrame
         addToolBarSpacer();
 
         addToolBarButtonWithName("read_meter");
-	addToolBarSpacer();
-	addToolBarSpacer();
+        addToolBarSpacer();
+        addToolBarSpacer();
 
-	addToolBarButtonWithName("tools_pref");
-	addToolBarSpacer();
-	addToolBarSpacer();
+        addToolBarButtonWithName("tools_pref");
+        addToolBarSpacer();
+        addToolBarSpacer();
 
-	addToolBarButtonWithName("test");
-
-
-	//viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
-	//viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
-	//viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
-	//viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
-	//viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
-	//viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
-	//viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
-	//viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
-	//viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
-
-	//readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
-	//readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
+        addToolBarButtonWithName("test");
 
 
+    	//viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
+    	//viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
+    	//viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
+    	//viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
+    	//viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
+    	//viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
+    	//viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
+    	//viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
+    	//viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
+    
+    	//readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
+    	//readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
 
@@ -422,66 +426,66 @@ public class MainFrame extends JFrame
 
     public void invalidatePanels()
     {
-	this.informationPanel.invalidatePanelsConstants();
+        this.informationPanel.invalidatePanelsConstants();
     }
 
     public void refreshPanels()
     {
-	this.informationPanel.refreshPanels();
+        this.informationPanel.refreshPanels();
     }
 
 
     private JMenu createMenu(String name, String tool_tip)
     {
-	JMenu item = new JMenu(m_ic.getMessageWithoutMnemonic(name));
-	item.setMnemonic(m_ic.getMnemonic(name));
-
-	if (tool_tip!=null)
-	{
-	    item.setToolTipText(tool_tip);
-	}
-
-	//System.out.println("Item: " + item);
-
-	this.menuBar.add(item);
-
-	return item;
+    	JMenu item = new JMenu(m_ic.getMessageWithoutMnemonic(name));
+    	item.setMnemonic(m_ic.getMnemonic(name));
+    
+    	if (tool_tip!=null)
+    	{
+    	    item.setToolTipText(tool_tip);
+    	}
+    
+    	//System.out.println("Item: " + item);
+    
+    	this.menuBar.add(item);
+    
+    	return item;
     }
 
 
     private void createAction(JMenu menu, String name, String tip, String action_command, String icon_small)
     {
-	GGCAction action = new GGCAction(name, tip, action_command);
+    	GGCAction action = new GGCAction(name, tip, action_command);
+    
+    	if (icon_small!=null)
+    	{
+    	    action.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/" + icon_small)));
+    	}
+    
+    	if (menu!=null)
+    	    menu.add(action);
+    
+    	this.actions.put(action_command, action);
 
-	if (icon_small!=null)
-	{
-	    action.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/" + icon_small)));
-	}
-
-	if (menu!=null)
-	    menu.add(action);
-
-	this.actions.put(action_command, action);
-
-	//return action;
+        //return action;
     }
 
 
     public void setDbActions(boolean opened) 
     {
 
-	this.menu_bgs.setEnabled(opened);
-	this.menu_food.setEnabled(opened);
-	this.menu_doctor.setEnabled(opened);
-	this.menu_reports.setEnabled(opened);
-
-	this.actions.get("view_daily").setEnabled(opened);
-	this.actions.get("view_course").setEnabled(opened);
-	this.actions.get("view_spread").setEnabled(opened);
-	this.actions.get("view_freq").setEnabled(opened);
-	this.actions.get("view_hba1c").setEnabled(opened);
-	this.actions.get("read_meter").setEnabled(opened);
-	this.actions.get("tools_pref").setEnabled(opened);
+    	this.menu_bgs.setEnabled(opened);
+    	this.menu_food.setEnabled(opened);
+    	this.menu_doctor.setEnabled(opened);
+    	this.menu_reports.setEnabled(opened);
+    
+    	this.actions.get("view_daily").setEnabled(opened);
+    	this.actions.get("view_course").setEnabled(opened);
+    	this.actions.get("view_spread").setEnabled(opened);
+    	this.actions.get("view_freq").setEnabled(opened);
+    	this.actions.get("view_hba1c").setEnabled(opened);
+    	this.actions.get("read_meter").setEnabled(opened);
+    	this.actions.get("tools_pref").setEnabled(opened);
 
 
 	/*   FIXXXXXXXXXXXX
@@ -495,7 +499,7 @@ public class MainFrame extends JFrame
         //s_dbH.setStatus();
 	*/
 
-	System.out.println("FIIIIIIIIIIIIIIIIIIIIIIXXXX this");
+        System.out.println("FIIIIIIIIIIIIIIIIIIIIIIXXXX this");
     }
 
     private void close() 
@@ -519,6 +523,8 @@ public class MainFrame extends JFrame
     private JMenuItem addMenuItem(JMenu menu, Action action) 
     {
         JMenuItem item = menu.add(action);
+
+        System.out.println(action.getValue(Action.ACCELERATOR_KEY));
 
         KeyStroke keystroke = (KeyStroke) action.getValue(Action.ACCELERATOR_KEY);
         if (keystroke != null)
@@ -561,11 +567,23 @@ public class MainFrame extends JFrame
 
             putValue(Action.NAME, m_ic.getMessageWithoutMnemonic(name));
 
-            char ch = m_ic.getMnemonic(name);
+//            char ch = m_ic.getMnemonic(name);
 
-            if (ch != '0') 
+//            System.out.println("Char ch: '" + ch + "'");
+
+            //if ((ch != '0') || (ch != ' '))
+            if (m_ic.hasMnemonic(name))
+            {
+                char ch = m_ic.getMnemonic(name);
                 putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch,
                         Event.CTRL_MASK));
+//                System.out.println("Found");
+            }
+            else
+            {
+                putValue(ACCELERATOR_KEY, null);
+//                System.out.println("NOT Found");
+            }
 
             if (command != null)
                 putValue(ACTION_COMMAND_KEY, command);
@@ -580,11 +598,24 @@ public class MainFrame extends JFrame
 
             putValue(Action.NAME, m_ic.getMessageWithoutMnemonic(name));
 
-            char ch = m_ic.getMnemonic(name);
+            //char ch = m_ic.getMnemonic(name);
 
-            if (ch != '0')
+            //System.out.println("Char ch: '" + ch + "'");
+
+            //if ((ch != '0') || (ch != ' '))
+            if (m_ic.hasMnemonic(name))
+            {
+                char ch = m_ic.getMnemonic(name);
+
                 putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch,
                         Event.CTRL_MASK));
+//                System.out.println("Found");
+            }
+            else
+            {
+                putValue(ACCELERATOR_KEY, null);
+//                System.out.println("NOT Found");
+            }
 
             if (tooltip != null)
                 putValue(SHORT_DESCRIPTION, m_ic.getMessage(tooltip));
@@ -593,10 +624,11 @@ public class MainFrame extends JFrame
                 putValue(ACTION_COMMAND_KEY, command);
         }
 
-	public String getName()
-	{
-	    return (String)getValue(Action.NAME);
-	}
+
+    	public String getName()
+    	{
+    	    return (String)getValue(Action.NAME);
+    	}
 
 
         public void actionPerformed(ActionEvent e) 
@@ -632,11 +664,11 @@ public class MainFrame extends JFrame
             {
                 PropertiesDialog pd = new PropertiesDialog(MainFrame.this);
 
-		if (pd.wasOKAction())
-		{
-		    informationPanel.invalidatePanelsConstants();
-		    informationPanel.refreshPanels();
-		}
+        		if (pd.wasOKAction())
+        		{
+        		    informationPanel.invalidatePanelsConstants();
+        		    informationPanel.refreshPanels();
+        		}
             } 
 /*            else if (command.equals("read_meter")) 
             {
@@ -674,30 +706,39 @@ public class MainFrame extends JFrame
                 //new PrintingDialog(MainFrame.this, 2);
                 //System.out.println("Command N/A: Report PDF Extended");
             } */
+	    else if (command.equals("hlp_about"))
+	    {
+		AboutGGCDialog ab = new AboutGGCDialog(getMyParent());
+		//ab.sh
+		//featureNotImplemented(command, "0.3");
+	    }
+
+
+
 	    else if ((command.equals("hlp_about")) ||
 		     (command.equals("tools_db_maint")))
 	    {
-		featureNotImplemented(command, "0.3");
+            featureNotImplemented(command, "0.3");
 	    }
 	    else if ((command.equals("read_meter")) ||
-		     (command.equals("food_nutrition_2")) || 
-		     (command.equals("tools_mlist"))) 
+                 (command.equals("food_nutrition_2")) || 
+                 (command.equals("tools_mlist"))) 
 	    {
-		featureNotImplemented(command, "0.4");
+            featureNotImplemented(command, "0.4");
 	    }
 	    else if ((command.equals("report_pdf_extended")) ||
-		     (command.equals("doc_docs")) ||
-		     (command.equals("doc_appoint")) ||
-		     (command.equals("doc_stocks")) ||
-		     (command.equals("food_meals")))
+                 (command.equals("doc_docs")) ||
+                 (command.equals("doc_appoint")) ||
+                 (command.equals("doc_stocks")) ||
+                 (command.equals("food_meals")))
 	    {
-		featureNotImplemented(command, "0.5");
+            featureNotImplemented(command, "0.5");
 	    }
 	    else if (command.equals("test"))
 	    {
-		ggc.gui.ReadMeterDialog rm = new ggc.gui.ReadMeterDialog(MainFrame.this);
+            ggc.gui.ReadMeterDialog rm = new ggc.gui.ReadMeterDialog(MainFrame.this);
 	    }
-            else
+        else
                 System.out.println("Unknown Command: " + command);
 
         }
@@ -707,13 +748,13 @@ public class MainFrame extends JFrame
     public void featureNotImplemented(String cmd, String version)
     {
 
-	String text = m_ic.getMessage("FEATURE");
-
-	text += " '" + this.actions.get(cmd).getName() +"' ";
-	text += m_ic.getMessage("IMPLEMENTED_VERSION");
-	text += " " + version+" !";
-
-	JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
+    	String text = m_ic.getMessage("FEATURE");
+    
+    	text += " '" + this.actions.get(cmd).getName() +"' ";
+    	text += m_ic.getMessage("IMPLEMENTED_VERSION");
+    	text += " " + version+" !";
+    
+    	JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -722,7 +763,7 @@ public class MainFrame extends JFrame
     {
         @Override
         public void windowClosing(WindowEvent e) 
-    {
+        {
             close();
         }
     }

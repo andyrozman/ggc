@@ -43,7 +43,7 @@
         </id>           
         <property name="food_group_id" type="long"  />
         <property name="name" type="string" length="200" />
-        <property name="i18n_name" type="string" length="60" />
+        <property name="i18n_name" type="string" length="200" />
         <property name="refuse" type="float" />
         <property name="nutritions" type="text" />
         <property name="home_weights" type="text" />
@@ -93,7 +93,7 @@
 
 
 
-    <class name="ggc.db.hibernate.MealGroupH" table="meals_group">
+    <class name="ggc.db.hibernate.MealGroupH" table="meal_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="assigned"/>
         </id>            
@@ -102,13 +102,18 @@
         <property name="parent_id" type="int"  />  
     </class>
 
-    <class name="ggc.db.hibernate.MealH" table="meals_meal">
+    <class name="ggc.db.hibernate.MealH" table="meal_meal">
         <id name="id" type="long" unsaved-value="0">
             <generator class="assigned"/>
         </id>            
-        <property name="meal_group_id" type="long"  />  
-        <property name="type" type="int"  />  <!-- 1=Nutrition USDBA, 2=Nutrition User -->
-        <property name="food_id" type="long"  />  <!-- 1=Nutrition USDBA, 2=Nutrition User -->
+        <property name="meal_group_id" type="long"  />
+        <property name="name" type="string" length="255" />
+        <property name="description" type="string" length="2000" />
+        <property name="parts" type="text" />  <!--  1:x;2:y;1:z   -->
+                                                                     <!--  type:id     type=[1=Nutrition USDBA, 2=Nutrition User ]; id = id in db -->
+        <property name="req_values" type="text" />  <!-- calories, joule, OH -->
+        <property name="extended" type="text" />
+        <property name="comment" type="string" length="2000" />
     </class>
 
 

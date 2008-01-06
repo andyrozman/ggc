@@ -20,7 +20,6 @@
         <property name="ins2"  type="int" />
         <property name="ch"  type="float" />
         <property name="meals_ids"  type="string" length="1000" />
-        <property name="act"  type="text" />
         <property name="extended"  type="text" />
         <property name="comment" type="string" length="2000" />
     </class>
@@ -37,7 +36,6 @@
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
         <property name="name"  type="string" length="1000" />
-        <property name="name_i18n"  type="string" length="1000" />
     </class>
 
     <!--  Doctor -->
@@ -82,7 +80,7 @@
     </class>
 
 
-    <class name="ggc.db.hibernate.StockSubTypeH" table="stock_types">
+    <class name="ggc.db.hibernate.StockSubTypeH" table="stock_subtypes">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -99,11 +97,14 @@
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
-        <property name="stock_type_sub_id"  type="long"  />
+        <property name="stock_subtype_id"  type="long"  />
         <property name="dt_stock"  type="long"  />
         <property name="amount"  type="float" />
+        <property name="desc"  type="string" length="255" />
         <property name="usage_per_day_min" type="float" />
         <property name="usage_per_day_max" type="float" />
+        <property name="extended"  type="text" />
+        <property name="comment"  type="string" length="4000" />
     </class>
 
 

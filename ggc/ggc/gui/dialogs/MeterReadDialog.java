@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import gnu.io.NoSuchPortException;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
@@ -26,12 +25,15 @@ import ggc.data.event.ImportEvent;
 import ggc.data.event.ImportEventListener;
 import ggc.data.imports.ImportException;
 import ggc.data.imports.SerialMeterImport;
+import ggc.data.meter.MeterImportManager;
 import ggc.data.meter.device.MeterInterface;
 import ggc.gui.*;
 import ggc.gui.calendar.TimerThread;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
+
+import gnu.io.NoSuchPortException;
 
 
 /**
@@ -70,13 +72,21 @@ public class MeterReadDialog extends JDialog implements ActionListener
     private SerialMeterImport meterImport = null;
     private StartImportAction startImportAction = new StartImportAction();
 
-    private MeterInterface meterDevice = null;
+    //private MeterInterface meterDevice = null;
+    private MeterImportManager m_mim = null;
 
     JLabel lbl_status;
 
     JTextArea ta_info = null;
     
     TimerThread m_timer = null;
+
+    int x,y;
+
+    JFrame parentMy;
+
+
+
     /**
      * Constructor for ReadMeterDialog.
      * @param owner
@@ -85,16 +95,33 @@ public class MeterReadDialog extends JDialog implements ActionListener
     public MeterReadDialog(JFrame owner)
     {
         super(owner);
+        this.parentMy = owner;
+        
+        dialogPreInit();
+    }
 
+
+    public MeterReadDialog()
+    {
+        super();
+        dialogPreInit();
+    }
+
+
+    private void dialogPreInit()
+    {
         setTitle(m_ic.getMessage("READ_METER_DATA"));
 
-        initMeter();
+        m_mim = new MeterImportManager();
+//        initMeter();
         init();
         postInit();
 
         this.setVisible(true);
-        
+
     }
+
+
 
     /**
      * Method getInstance.
@@ -152,16 +179,23 @@ public class MeterReadDialog extends JDialog implements ActionListener
         panel.setSize(500, 500);
 
         JLabel label;
-        
-        Rectangle rec = this.getParent().getBounds();
-        int x = rec.x + (rec.width/2);
-        int y = rec.y + (rec.height/2);
 
-        setBounds(x-250, y-250, 500, 500);
+        int xkor=300;
+        int ykor=300;
+
+        if (this.parentMy!=null)
+        {
+            Rectangle rec = this.parentMy.getBounds();
+            xkor = rec.x + (rec.width/2);
+            ykor = rec.y + (rec.height/2);
+        }
+
+        setBounds(xkor-250, ykor-250, 500, 500);
         //dWindowListener(new CloseListener());
 
         //setBounds(300, 300, 300, 300);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         getContentPane().add(panel, BorderLayout.CENTER);
 
         
@@ -193,16 +227,16 @@ public class MeterReadDialog extends JDialog implements ActionListener
         sp3.setBounds(180, 300, 300, 50);
         panel.add(sp3);
 
-        ta_info.setText(this.meterDevice.getInfo());
+        ta_info.setText(this.m_mim.getInfo());
 
 
 
-        infoIcon = new JLabel(meterDevice.getIcon());
+        infoIcon = new JLabel(this.m_mim.getIcon());
         infoIcon.setBounds(10, 20, 150, 200);
         infoIcon.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(infoIcon);
         
-        label = new JLabel(meterDevice.getName());
+        label = new JLabel(this.m_mim.getName());
         label.setBounds(10, 230, 150, 25);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(label);
@@ -225,7 +259,7 @@ public class MeterReadDialog extends JDialog implements ActionListener
         label_1.setBounds(320, 380, 100, 25);
         panel.add(label_1);
 
-        m_timer = new TimerThread(m_da, label, label_1, meterDevice.getTimeDifference());
+        m_timer = new TimerThread(m_da, label, label_1, this.m_mim.getTimeDifference());
         m_timer.start();
         
 
@@ -258,7 +292,7 @@ public class MeterReadDialog extends JDialog implements ActionListener
 */
         bt_get = new JButton(m_ic.getMessage("GET_DATA"));
         bt_get.setBounds(20, 360, 140, 25);
-        bt_get.setEnabled(meterDevice.isStatusOK());
+        bt_get.setEnabled(this.m_mim.isStatusOK());
         bt_get.setActionCommand("get_data");
         bt_get.addActionListener(this);
         panel.add(bt_get);
@@ -350,7 +384,7 @@ IMPORT_TO_DB=Import to Db
 
     public void initMeter()
     {
-
+/*
         String meterClassName = m_da.getMeterManager().meter_classes[m_da.getSettings().getMeterType()];
 
         if (meterClassName == null || meterClassName.equals(""))
@@ -365,14 +399,9 @@ IMPORT_TO_DB=Import to Db
         {
             System.out.println(exc);
         }
-
+*/
         //infoPanel.setBorder(new TitledBorder(meterImport.getName()));
-
-        
-        //meterImport = new EuroFlashImport();
-        //meterImport = new FreeStyleImport();
-        //meterImport = new GlucoCardImport();
-
+/*
         meterImport.addImportEventListener(startImportAction);
 
 //        this.addWindowListener(new CloseListener());
@@ -390,7 +419,7 @@ IMPORT_TO_DB=Import to Db
                     saveButton.setEnabled(true);
             }
         });
-
+*/
 
     }
 
@@ -411,7 +440,7 @@ IMPORT_TO_DB=Import to Db
 
     private void setStatus()
     {
-        if (meterDevice.isStatusOK())
+        if (this.m_mim.isStatusOK())
             lbl_status.setText("<html><font color=\"green\" >" + m_ic.getMessage("OK") + "</font></html>");
         else
             lbl_status.setText("<html><font color=\"red\" >" + m_ic.getMessage("ERROR") + "</font></html>");
@@ -585,6 +614,14 @@ IMPORT_TO_DB=Import to Db
             System.out.println("ReadMeterDialog::Unknown command: " + action);
 
     }
+
+
+    public static void main(String[] args)
+    {
+        MeterReadDialog mrd = new MeterReadDialog();
+    }
+
+    
 
 
 }

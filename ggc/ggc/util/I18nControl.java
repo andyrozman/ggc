@@ -67,8 +67,8 @@ public class I18nControl extends I18nControlAbstract
      */ 
     private I18nControl()
     {
-	init();
-	getSelectedLanguage();
+        init();
+        getSelectedLanguage();
         setLanguage();
     } 
 
@@ -83,23 +83,23 @@ public class I18nControl extends I18nControlAbstract
     private void getSelectedLanguage()
     {
 
-	try
-	{
-	    Properties props = new Properties();
-
-	    FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
-	    props.load(in);
-
-	    String tempLang = (String)props.get("SELECTED_LANG");
-
-	    if (tempLang != null)
-		this.selected_language = tempLang;
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("I18nControl: Configuration file not found. Using default langauge ('en')");
-	    s_logger.warn("Configuration file not found. Using default langauge ('en')");
-	}
+    	try
+    	{
+    	    Properties props = new Properties();
+    
+    	    FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
+    	    props.load(in);
+    
+    	    String tempLang = (String)props.get("SELECTED_LANG");
+    
+    	    if (tempLang != null)
+    		this.selected_language = tempLang;
+    	}
+    	catch(Exception ex)
+    	{
+    	    System.out.println("I18nControl: Configuration file not found. Using default langauge ('en')");
+    	    s_logger.warn("Configuration file not found. Using default langauge ('en')");
+    	}
         
     }
 

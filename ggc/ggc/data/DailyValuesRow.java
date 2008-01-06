@@ -30,22 +30,29 @@ package ggc.data;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
 
 import javax.swing.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory; 
+
+import com.atech.utils.ATechDate;
+
 import ggc.db.hibernate.DayValueH;
-//import ggc.errors.DateTimeError;
 import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
 
 public class DailyValuesRow implements Serializable
 {
 
-    private I18nControl m_ic = I18nControl.getInstance();
+    private static Log log = LogFactory.getLog(DailyValuesRow.class); 
 
+    private I18nControl m_ic = I18nControl.getInstance();
     /*
     private Date datetime;
     private Float BG;
@@ -61,41 +68,67 @@ public class DailyValuesRow implements Serializable
     private int ins1;
     private int ins2;
     private float ch;
-    private String act;
+    private String activity;
     private String comment;
     private String extended;
+    private String urine;
+    private String meals;
 
     private boolean changed = false;
 
     DayValueH m_dv = null;
     DataAccess m_da = DataAccess.getInstance();
+    GGCProperties props = m_da.getSettings();
 
+    ArrayList<String> meals_ids;
+
+    boolean debug = false;
+
+    Float float_instance = new Float(0.0);
 
 
     public DailyValuesRow()
     {
-	this.datetime = 0L;
-	this.bg = 0;
-	this.ins1 = 0;
-	this.ins2 = 0;
-	this.ch = 0.0f;
-	this.act = null;
-	this.extended = null;
-	this.comment = "";
+    	this.datetime = 0L;
+    	this.bg = 0;
+    	this.ins1 = 0;
+    	this.ins2 = 0;
+    	this.ch = 0.0f;
+    	this.extended = null;
+    	this.comment = "";
+
+        loadExtended();
     }
 
 
 
-    public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String act, String extended, String comment)
+    public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String extended, String comment)
     {
         this.datetime = datetime;
         this.bg = bg; 
         this.ins1 = ins1;
         this.ins2 = ins2;
         this.ch = ch;
-        this.act = act;
+        this.extended = extended;
+        this.comment = comment;
+
+        loadExtended();
+    }
+
+
+    public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String activity, String urine, String comment)
+    {
+        this.datetime = datetime;
+        this.bg = bg; 
+        this.ins1 = ins1;
+        this.ins2 = ins2;
+        this.ch = ch;
+        this.activity = activity;
+        this.urine = urine;
         this.comment = comment;
     }
+
+
 
     public DailyValuesRow(DayValueH dv)
     {
@@ -104,30 +137,162 @@ public class DailyValuesRow implements Serializable
     	this.ins1 = dv.getIns1();
     	this.ins2 = dv.getIns2();
     	this.ch = dv.getCh();
-    	this.act = dv.getAct();
+        this.meals = dv.getMeals_ids();
+        this.extended = dv.getExtended();
     	this.comment = dv.getComment();
     
     	m_dv = dv;
     }
 
-
-    public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String Comment)
+    /*
+    public DailyValuesRow(long datetime, String BG, String Ins1, String Ins2, String BU, String Activity, String urine, String Comment, ArrayList<String> lst_meals)
     {
-	this(date,time,BG,Ins1,Ins2,BU,Act,null,Comment);
-    }
+        // XX
+        this(date,time,BG,Ins1,Ins2,BU,Act,null,Comment,false);
+    }*/
 
 
 
-    public DailyValuesRow(String date, String time, String BG, String Ins1, String Ins2, String BU, String Act, String extended, String Comment)
+    public DailyValuesRow(long datetime, String BG, String Ins1, String Ins2, String BU, String Act, String urine, String Comment, ArrayList<String> lst_meals)
     {
-    	datetime = getDateTimeLong(date, time);
+        //X
+    	this.datetime = datetime;
     
     	setValueAt(BG, 1);
     	setValueAt(Ins1, 2);
     	setValueAt(Ins2, 3);
     	setValueAt(BU, 4);
     	setValueAt(Act, 5);
-    	setValueAt(Comment, 6);
+        setValueAt(urine, 6);
+    	setValueAt(Comment, 7);
+    }
+
+    public void loadExtended()
+    {
+        if ((this.extended==null) || (this.extended.trim().length()==0))
+        {
+            this.activity = "";
+            this.urine = "";
+        }
+        else
+        {
+            this.urine = this.getExtendedEntry("URINE");
+            this.activity = this.getExtendedEntry("ACTIVITY");
+        }
+    }
+
+
+    public String createExtended()
+    {
+        StringBuffer sb = new StringBuffer();
+
+        if (this.isExtendedValueSet(DailyValuesRow.EXTENDED_URINE))
+        {
+            sb.append("URINE=" + getExtendedValue(DailyValuesRow.EXTENDED_URINE) + ";");
+        }
+
+        if (this.isExtendedValueSet(DailyValuesRow.EXTENDED_ACTIVITY))
+        {
+            sb.append("ACTIVITY=" + getExtendedValue(DailyValuesRow.EXTENDED_ACTIVITY) + ";");
+        }
+
+        return sb.toString();
+    }
+
+    public static final int EXTENDED_ACTIVITY = 1;
+    public static final int EXTENDED_URINE = 2;
+
+
+    private boolean isExtendedValueSet(int type)
+    {
+        String val = getExtendedValue(type);
+
+        if ((val==null) || (val.trim().length()==0))
+            return false;
+        else
+            return true;
+    }
+
+
+    public String getExtendedValue(int type)
+    {
+        switch(type)
+        {
+            case DailyValuesRow.EXTENDED_URINE:
+                {
+                    return this.urine;
+                } 
+
+            default:
+            case DailyValuesRow.EXTENDED_ACTIVITY:
+                {
+                    return this.activity;
+                } 
+        }
+    }
+
+
+
+    public String getExtendedEntry(String key)
+    {
+        if (this.extended.contains(key + "="))
+        {
+            String val = this.extended.substring(this.extended.indexOf(key +"=") + key.length() +1);
+            if (val.contains(";"))
+            {
+                val = val.substring(0, val.indexOf(";"));
+            }
+
+            return val;
+        }
+        else
+            return "";
+
+    }
+
+
+    private void loadMealsIds()
+    {
+        // to-do
+        if ((this.meals!=null) && (this.meals.trim().length()>0))
+        {
+            meals_ids = new ArrayList<String>();
+
+
+        }
+    }
+
+    private String createMealsIds()
+    {
+        if ((this.meals_ids==null) || (this.meals_ids.size()==0))
+        {
+            return "";
+        }
+        else
+        {
+            // TO-DO
+            return "";
+        }
+    }
+
+    public ArrayList<String> getMealIdsList()
+    {
+        return this.meals_ids;
+    }
+
+    public void setMealIdsList(ArrayList<String> lst)
+    {
+        this.meals_ids = lst;
+    }
+
+
+
+    public boolean areMealsSet()
+    {
+        if ((this.meals_ids==null) || (this.meals_ids.size()==0))
+            return false;
+        else
+            return true;
     }
 
 
@@ -209,14 +374,16 @@ public class DailyValuesRow implements Serializable
 
     public String[] getRowString()
     {
-        String[] tmp = new String[7];
+        // to-do
+        String[] tmp = new String[8];
         tmp[0] = "" + datetime;
         tmp[1] = "" + bg;
         tmp[2] = "" + ins1;
         tmp[3] = "" + ins2;
         tmp[4] = "" + ch;
-        tmp[5] = "" + act;
-        tmp[6] = comment;
+        tmp[5] = "" + activity;
+        tmp[6] = "" + urine;
+        tmp[7] = comment;
 
         return tmp;
     }
@@ -225,7 +392,7 @@ public class DailyValuesRow implements Serializable
     public String toString()
     {
 //        return "DT="+datetime.getTime() + ";BG=" + BG + ";Ins1=" + Ins1 + ";Ins2=" + Ins2 + ";BE=" + BE + ";Act=" + Act + ";Comment=" + Comment + ";";
-        return getDateTime() + ";" + bg + ";" + ins1 + ";" + ins2 + ";" + ch + ";" + act + ";" + comment + ";";
+        return "DailyValuesRow [dt=" + getDateTime() + ";bg=" + bg + ";ins1=" + ins1 + ";ins2=" + ins2 + ";CH=" + ch + ";activity=" + activity + ";urine=" + urine + ";comment=" + comment + "]";
     }
 
 
@@ -284,27 +451,147 @@ public class DailyValuesRow implements Serializable
 
     public float getBG()
     {
-        return bg;
+        if (debug)
+        {
+            System.out.println("getBg [type=" + props.getBG_unit() + "]");
+            System.out.println("getBg [internal_value=" + this.bg + "]");
+        }
+
+        if (props.getBG_unit()==2)
+        {
+            float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+
+            if (debug)
+                System.out.println("getBg [type=2,return=" + v + "]");
+
+            return v;
+
+            //return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+        }
+        else
+        {
+            if (debug)
+                System.out.println("getBg [type=1,return=" + this.bg + "]");
+
+            return bg;
+        }
+
     }
 
+
+    public String getBGAsString()
+    {
+        if (debug)
+        {
+            System.out.println("getBgAsString [type=" + props.getBG_unit() + "]");
+            System.out.println("getBgAsString [internal_value=" + this.bg + "]");
+        }
+
+        if (props.getBG_unit()==2)
+        {
+            float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+
+            if (debug)
+                System.out.println("getBgAsString [type=2,return=" + v + "]");
+
+            String ss = DataAccess.MmolDecimalFormat.format(v);
+            ss = ss.replace(",", ".");
+            return ss;
+
+            //return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+        }
+        else
+        {
+            if (debug)
+                System.out.println("getBgAsString [type=1,return=" + this.bg + "]");
+
+            return "" + bg;
+        }
+
+    }
+
+
+
+    public float getBRaw()
+    {
+        return bg;
+
+    }
+
+
+    public float getBG(int type)
+    {
+
+        if (debug)
+            System.out.println("Intenal value: " + this.bg);
+
+        if (type==DataAccess.BG_MGDL)
+            return bg;
+        else
+        {
+            return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+        }
+
+    }
+
+
+
+
+
+/*
     public void setBG(String val)
     {
         setBG(m_da.getIntValue(val));
     }
+*/
 
-
-    public static int BG_MMOLL = 1;
-    public static int BG_MGDL = 2;
+    public static int BG_MMOLL = 2;
+    public static int BG_MGDL = 1;
 
     public void setBG(int type, float val)
     {
-	// FIX THIS
+        // FIX THIS
+
+        if (debug)
+            System.out.println("SET BG: type=" + type + ",value=" + val);
+
+
+        if (type==BG_MMOLL)
+        {
+            if (debug)
+            {
+                System.out.println("SET BG :: MMOL");
+                System.out.println("     " + (int)m_da.getBGValueDifferent(type, val));
+            }
+
+            this.setBG((int)m_da.getBGValueDifferent(type, val));
+        }
+        else
+        {
+            this.setBG((int)val);
+        }
+        
+
+/*
+
+        int unit = getBG_unit();
+
+        if (unit==1) 
+            return "mg/dl";
+        else if (unit==2) 
+            return "mmol/l";
+        else
+            return m_da.getI18nInstance().getMessage("UNKNOWN");
+*/
 
     }
 
     public void setBG(int type, String val)
     {
 	// FIX THIS
+        float f = Float.parseFloat(val);
+
+        setBG(type,f);
 
     }
 
@@ -317,6 +604,9 @@ public class DailyValuesRow implements Serializable
             bg = val;
             changed = true;
         }
+
+        if (debug)
+            System.out.println("Bg Raw: " + bg);
     }
 
 
@@ -325,9 +615,17 @@ public class DailyValuesRow implements Serializable
         return ins1;
     }
 
+    public String getIns1AsString()
+    {
+        return this.getFloatAsString(ins1);
+    }
+
+
+
     public void setIns1(String val)
     {
-        setIns1(m_da.getIntValue(val));
+        if (val.length()!=0)
+            setIns1(m_da.getIntValue(val));
     }
 
     public void setIns1(int val)
@@ -344,6 +642,12 @@ public class DailyValuesRow implements Serializable
     {
         return ins2;
     }
+
+    public String getIns2AsString()
+    {
+        return this.getFloatAsString(ins2);
+    }
+
 
     public void setIns2(String val)
     {
@@ -366,6 +670,12 @@ public class DailyValuesRow implements Serializable
     }
 
 
+    public String getCHAsString()
+    {
+        return this.getFloatAsString(ch);
+    }
+
+
     public void setCH(String val)
     {
         setCH(m_da.getFloatValue(val));
@@ -381,9 +691,9 @@ public class DailyValuesRow implements Serializable
     }
 
 
-    public String getAct()
+    public String getActivity()
     {
-        return act;
+        return activity;
     }
 /*
     public void setAct(String val)
@@ -391,12 +701,35 @@ public class DailyValuesRow implements Serializable
         act = val;
     }
 */
+    public void setActivity(String val)
+    {
+        if ((activity==null) || (!activity.equals(val)))
+        {
+            activity = val;
+            if (activity.trim().length()!=0)
+                changed = true;
+        }
+    }
+
+
+
+    public String getUrine()
+    {
+        return urine;
+    }
+/*
     public void setAct(String val)
     {
-        if (!act.equals(val)) 
+        act = val;
+    }
+*/
+    public void setUrine(String val)
+    {
+        if ((urine==null) || (!urine.equals(val)) )
         {
-            act = val;
-            changed = true;
+            urine = val;
+            if (urine.trim().length()!=0)
+                changed = true;
         }
     }
 
@@ -419,6 +752,8 @@ public class DailyValuesRow implements Serializable
 
 
 
+
+
     public boolean hasChanged()
     {
         return changed;
@@ -437,24 +772,26 @@ public class DailyValuesRow implements Serializable
         if (m_dv==null)
         {
             m_dv = new DayValueH();
-            m_dv.setAct(act);
+            //m_dv.setAct(act);
             m_dv.setBg(bg);
             m_dv.setCh(ch);
             m_dv.setComment(comment);
             m_dv.setDt_info(datetime);
             m_dv.setIns1(ins1);
             m_dv.setIns2(ins2);
+            m_dv.setExtended(createExtended());
 //	    m_dv.setMeals_ids("");
         }
         else
         {
-            m_dv.setAct(act);
+            //m_dv.setAct(act);
             m_dv.setBg(bg);
             m_dv.setCh(ch);
             m_dv.setComment(comment);
             m_dv.setDt_info(datetime);
             m_dv.setIns1(ins1);
             m_dv.setIns2(ins2);
+            m_dv.setExtended(createExtended());
         }
 
         return m_dv;
@@ -467,28 +804,68 @@ public class DailyValuesRow implements Serializable
     }
 
 
+    public String getFloatAsIntString(float fl)
+    {
+        if (fl == 0.0)
+        {
+            return "";
+        }
+        else
+        {
+            int i = this.getFloatAsInt(fl);
+            return "" + i;
+        }
+    }
+
+    public String getFloatAsString(float fl)
+    {
+        if (fl == 0.0)
+        {
+            return "";
+        }
+        else
+        {
+            return m_da.MmolDecimalFormat.format(fl);
+        }
+    }
+
+
+    public int getFloatAsInt(float f)
+    {
+        Float f_i = new Float(f);
+        return f_i.intValue();
+    }
+
+
 
     //stupid but TableModel needs Objects...
     public Object getValueAt(int column)
     {
+        //return "X";
+
         switch (column) 
         {
             case 0:
-                return ""+datetime; //m_da.getDateTimeAsTimeString(datetime);
+                return new Long(datetime); //m_da.getDateTimeAsTimeString(datetime);
             case 1:
-                return ""+bg;
+                return this.getBGAsString();
             case 2:
-                return ""+ins1;
+                return this.getIns1AsString();
             case 3:
-                return ""+ins2;
+                return this.getIns2AsString();
             case 4:
-                return ""+ch;
+                return this.getFloatAsString(ch);
             case 5:
-                return ""+act;
+                return activity;
             case 6:
+                return urine;
+            case 7:
                 return comment;
             default:
-                return null;
+                {
+                    log.warn("Shouldn't have reached by here: " + column);
+                    return "";
+                } 
         }
     }
 
@@ -500,11 +877,11 @@ public class DailyValuesRow implements Serializable
     	    case 0:
     		{
     		    if (aValue instanceof String)
-    			datetime = Long.parseLong((String)aValue);
+                    datetime = Long.parseLong((String)aValue);
     		    else if (aValue instanceof Integer)
-    			datetime = ((Integer)aValue).intValue();
+                    datetime = ((Integer)aValue).intValue();
     		    else if (aValue instanceof Long)
-    			datetime = ((Long)aValue).longValue();
+                    datetime = ((Long)aValue).longValue();
     		    changed = true;
     		} break;
     	    case 1:
@@ -534,12 +911,19 @@ public class DailyValuesRow implements Serializable
     		} break;
             case 5:
     		{
-    		    act = (String)aValue; // m_da.getIntValue(
+    		    this.activity = (String)aValue; // m_da.getIntValue(
     		    //if (act!=0)
-		    if ((act!=null) && (act.length()!=0))
-    			changed = true;
+                if ((activity!=null) && (activity.length()!=0))
+                    changed = true;
     		} break;
             case 6:
+            {
+                this.urine = (String)aValue; 
+
+                if ((urine!=null) && (urine.length()!=0))
+                    changed = true;
+            } break;
+            case 7:
     		{
     		    if (aValue instanceof String)
     			comment = (String)aValue;
