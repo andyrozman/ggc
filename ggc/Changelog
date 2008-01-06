@@ -5,6 +5,14 @@
     * bugs with daily data fixed
     * delete changed
     * added new menus for future functionalities
+    * fixed menu's mnemonic display
+    * slovenian translation updated
+    * meter support removed, at least for any new devices ... meter support will be done through separate
+      project, called meter_tool in next release
+    * changes to main gui
+    * atech-tools 0.1.7 linked to project (about dialog mainly, several component: DateTimeComponent, 
+      I18nControl moved)
+    * build fixed, with support for newer version of libraries (ggc-support updated)
 
 
 

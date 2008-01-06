@@ -34,6 +34,7 @@ import javax.swing.ImageIcon;
 import ggc.data.DailyValuesRow;
 import ggc.data.meter.device.AscensiaContourMeter;
 import ggc.data.meter.device.AscensiaDEXMeter;
+import ggc.data.meter.device.GenericMeter;
 import ggc.data.meter.device.MeterInterface;
 import ggc.db.GGCDb;
 import ggc.db.hibernate.MeterH;
@@ -41,7 +42,7 @@ import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
-public class MeterImportManager
+public class MeterConfiguration
 {
 
     protected I18nControl m_ic = I18nControl.getInstance();
@@ -54,7 +55,7 @@ public class MeterImportManager
     /**
      * Constructor for SerialMeterImport.
      */
-    public MeterImportManager()
+    public MeterConfiguration()
     {
         int meter_id = m_da.getSettings().getMeterType();
 
