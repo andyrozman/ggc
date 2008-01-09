@@ -30,7 +30,7 @@ package ggc.gui.panels.prefs;
 
 import ggc.db.hibernate.MeterCompanyH;
 import ggc.db.hibernate.MeterH;
-import ggc.gui.dialogs.PortSelectionDialog;
+//import ggc.gui.dialogs.PortSelectionDialog;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -199,7 +199,7 @@ public class PrefMeterConfPane extends AbstractPrefOptionsPanel
                 public void actionPerformed(ActionEvent e)
                 {
                     /*PortSelectionDialog psd =*/
-                    new PortSelectionDialog(parent);
+                    //new PortSelectionDialog(parent);
 
                 }
                 });
