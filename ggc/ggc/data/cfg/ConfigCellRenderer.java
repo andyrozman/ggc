@@ -33,7 +33,7 @@ public class ConfigCellRenderer extends DefaultListCellRenderer
 
         /* We additionally set the JLabels icon property here.
          */
-        String s = value.toString();
+        //String s = value.toString();
 
         //DataAccess da = DataAccess.getInstance();
 
@@ -44,12 +44,6 @@ public class ConfigCellRenderer extends DefaultListCellRenderer
         this.setHorizontalTextPosition(JLabel.CENTER);
         this.setHorizontalAlignment(JLabel.CENTER);
         this.setVerticalTextPosition(JLabel.BOTTOM);
-        //this.setVerticalAlignment(JLabel.CENTER);
-        // 
-        //this.setI
-
-
-        //setIcon((s.length > 10) ? longIcon : shortIcon);
 
         return this;
     }

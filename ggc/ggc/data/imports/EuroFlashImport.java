@@ -37,7 +37,7 @@ public class EuroFlashImport extends SerialMeterImport
 
     //private I18nControl m_ic = I18nControl.getInstance();
 
-    private int counter = 0;
+    //private int counter = 0;
 
     private DailyValuesRow[] importedData = new DailyValuesRow[0];
 
@@ -183,11 +183,11 @@ public class EuroFlashImport extends SerialMeterImport
         {
             int currentCount = 0;
             int valueCount = 0;
-            String measure = "";
+//x            String measure = "";
 
             StringTokenizer stk = new StringTokenizer(dataStr, "\n");
 
-            String tmp = null;
+            //String tmp = null;
             StringTokenizer vstk = null;
 
             ////////////////////////////////////////
@@ -212,7 +212,7 @@ public class EuroFlashImport extends SerialMeterImport
             if (pos != -1)
             {
                 //Log.getLogger().info("subValue : " + subValue);
-                measure = subValue.substring(0, pos);
+//x                measure = subValue.substring(0, pos);
             }
             ////////////////////////////////////////
 

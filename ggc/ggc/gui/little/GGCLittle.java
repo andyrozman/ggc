@@ -1,3 +1,5 @@
+package ggc.gui.little;
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -32,26 +34,35 @@
 // andyrozman
 
 
-package ggc.gui.little;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Event;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
-//import ggc.db.DataBaseHandler;
-import ggc.gui.*;
-import ggc.gui.panels.info.InfoPanel;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
 import ggc.util.DataAccess;
-//import ggc.util.VersionChecker;
-
-import ggc.gui.dialogs.*;
+import ggc.util.I18nControl;
 
 
 public class GGCLittle extends JFrame implements WindowListener

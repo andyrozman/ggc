@@ -27,31 +27,32 @@
 
 package ggc.gui.dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.Event;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.JFrame;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+
+//import javax.swing.*;
 
 import ggc.data.MonthlyValues;
 import ggc.data.print.PrintSimpleMonthlyReport;
 import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
-import java.util.GregorianCalendar;
 
 // fix this
 
@@ -65,7 +66,7 @@ public class PrintingDialog extends JDialog implements ActionListener
 
     private JTextField tfName;
     private JComboBox cb_template = null;
-    private String[] schemes_names = null;
+//x    private String[] schemes_names = null;
 
     GregorianCalendar gc = null;
     JSpinner sl_year = null, sl_month = null;

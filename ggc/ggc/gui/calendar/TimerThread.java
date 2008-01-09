@@ -37,22 +37,10 @@
 
 package ggc.gui.calendar;
 
-import java.io.FileInputStream;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.StringTokenizer;
-
 import javax.swing.JLabel;
 
-import ggc.GGC;
-import ggc.gui.MainFrame;
 import ggc.util.DataAccess;
 
 

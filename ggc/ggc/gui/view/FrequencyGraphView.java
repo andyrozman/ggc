@@ -122,16 +122,16 @@ public class FrequencyGraphView extends AbstractGraphView
         g2D.drawLine(leftSpace, upperSpace, leftSpace, viewHeight - lowerSpace);
 
         int markPos = 0;
-        int diffBG = maxBG - minBG;
+//x        int diffBG = maxBG - minBG;
         int diffH = (int)drawableHeight;
-        int diffW = (int)drawableWidth;
+//x        int diffW = (int)drawableWidth;
 
         if (maxcount == 0)
             maxcount = 1;
         int z = (int)Math.floor(maxcount / 10);
         if (z == 0)
             z = 1;
-        int steps = (maxcount / z);
+//x        int steps = (maxcount / z);
 
         for (int i = 0; i <= maxcount; i += z) 
 	{
@@ -150,7 +150,7 @@ public class FrequencyGraphView extends AbstractGraphView
         }
 
         int lower = (int)m_da.getSettings().getBG_Low();
-        int upper = (int)m_da.getSettings().getBG_High();
+//        int upper = (int)m_da.getSettings().getBG_High();
 
         g2D.setPaint(m_da.getSettings().getColorLowBG());
         g2D.fillRect(leftSpace + 1, upperSpace, lower, (int)drawableHeight);

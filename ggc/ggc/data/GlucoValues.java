@@ -29,17 +29,12 @@
 package ggc.data;
 
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
-//import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-
 import javax.swing.event.EventListenerList;
 
-//import ggc.db.DataBaseHandler;
 import ggc.data.event.GlucoValueEvent;
 import ggc.data.event.GlucoValueEventListener;
 import ggc.util.DataAccess;

@@ -3,11 +3,9 @@ package ggc.db.tool;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Properties;
 
 import javax.swing.UIManager;
@@ -172,7 +170,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
         return(this.skinlf_LF == index);
     }
 
-
+/*
     private void setDefaultLF()
     {
         this.selected_LF_Class = "com.l2fprod.gui.plaf.skin.SkinLookAndFeel"; // class
@@ -181,7 +179,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
         this.m_changed = true;
     }
-
+*/
 
 
 
@@ -332,7 +330,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
                      "#\n# Databases settings\n#\n");
 
 
-            int count_db = 0;
+//            int count_db = 0;
 
             //for (int i=0; i<this.allDatabases.size(); i++)  fix, only non-static db data should be written
             for (int i=0; i<this.allDatabases.size(); i++)

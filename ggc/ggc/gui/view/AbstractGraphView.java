@@ -34,10 +34,12 @@ package ggc.gui.view;
 
 
 import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
+import javax.swing.JComponent;
 
 
 public abstract class AbstractGraphView extends JComponent

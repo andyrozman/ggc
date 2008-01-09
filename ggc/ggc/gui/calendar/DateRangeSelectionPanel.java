@@ -27,19 +27,27 @@
 
 package ggc.gui.calendar;
 
-import java.awt.*;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 
 public class DateRangeSelectionPanel extends JPanel implements ChangeListener

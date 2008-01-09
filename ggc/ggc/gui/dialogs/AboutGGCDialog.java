@@ -1,7 +1,10 @@
+package ggc.gui.dialogs;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
- *  A pure java app to help you manage your diabetes.
+ *  A pure java application to help you manage your diabetes.
  *
  *  See AUTHORS for copyright information.
  *
@@ -21,22 +24,22 @@
  *
  *  Filename: HbA1cFrame.java
  *  Purpose:  gives a "guess" about the current HbA1c
- *
- *  Author:   schultd
+ *  
+ *  @author andyrozman {andy@atech-software.com}
+ * 
  */
 
-package ggc.gui.dialogs;
 
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 
 import com.atech.graphics.components.about.AboutCustomPanel;
 import com.atech.graphics.components.about.AboutDialog;
@@ -45,8 +48,6 @@ import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.graphics.components.about.LicenceInfo;
 
-import ggc.GGC;
-import ggc.data.HbA1cValues;
 import ggc.util.DataAccess;
 
 

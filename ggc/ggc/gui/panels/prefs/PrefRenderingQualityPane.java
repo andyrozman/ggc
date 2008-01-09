@@ -28,14 +28,18 @@
 package ggc.gui.panels.prefs;
 
 
-import java.awt.*;
+import ggc.gui.view.DailyGraphView;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.ItemEvent;
 
-import javax.swing.*;
-import javax.swing.border.LineBorder;
+import javax.swing.Box;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-
-import ggc.gui.view.DailyGraphView;
 
 
 public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel

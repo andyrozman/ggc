@@ -10,6 +10,8 @@ package ggc.data.imports;
 
 import ggc.data.DailyValuesRow;
 import ggc.data.event.ImportEvent;
+import ggc.util.DataAccess;
+import gnu.io.SerialPortEvent;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,12 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
-import gnu.io.NoSuchPortException;
-import gnu.io.SerialPortEvent;
-import javax.swing.ImageIcon;
-
-import ggc.util.DataAccess;
 
 /**
  * @author stephan
@@ -37,7 +33,7 @@ public class DummyImport extends SerialMeterImport
 
     //private I18nControl m_ic = I18nControl.getInstance();
 
-    private int counter = 0;
+//    private int counter = 0;
 
     private DailyValuesRow[] importedData = new DailyValuesRow[0];
 
@@ -143,7 +139,7 @@ public class DummyImport extends SerialMeterImport
     /**
      *
      */
-    private StringBuffer createBufferFromStream(InputStream stream)
+/*    private StringBuffer createBufferFromStream(InputStream stream)
     {
         StringBuffer inputBuffer = new StringBuffer();
         int newData = 0;
@@ -176,7 +172,7 @@ public class DummyImport extends SerialMeterImport
 
         return inputBuffer;
     }
-
+*/
     private void parseDataString(String dataStr) throws ImportException
     {
         String value = null;
@@ -190,7 +186,7 @@ public class DummyImport extends SerialMeterImport
 
             StringTokenizer stk = new StringTokenizer(dataStr, "\n");
 
-            String tmp = null;
+            //String tmp = null;
             StringTokenizer vstk = null;
 
             ////////////////////////////////////////

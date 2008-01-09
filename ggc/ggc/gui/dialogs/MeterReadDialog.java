@@ -7,17 +7,6 @@
 
 package ggc.gui.dialogs;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
 import ggc.data.DailyValuesRow;
 import ggc.data.GlucoTableModel;
 import ggc.data.GlucoValues;
@@ -26,14 +15,31 @@ import ggc.data.event.ImportEventListener;
 import ggc.data.imports.ImportException;
 import ggc.data.imports.SerialMeterImport;
 import ggc.data.meter.MeterImportManager;
-import ggc.data.meter.device.MeterInterface;
-import ggc.gui.*;
+import ggc.gui.GlucoTable;
 import ggc.gui.calendar.TimerThread;
 import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
-
 import gnu.io.NoSuchPortException;
+
+import java.awt.BorderLayout;
+import java.awt.HeadlessException;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -61,8 +67,8 @@ public class MeterReadDialog extends JDialog implements ActionListener
     private GlucoTableModel model = null;
     private GlucoTable resTable;
 
-    private JButton startButton;
-    private JButton saveButton;
+//    private JButton startButton;
+//    private JButton saveButton;
 
     private JButton bt_get, bt_import;
 
@@ -618,7 +624,8 @@ IMPORT_TO_DB=Import to Db
 
     public static void main(String[] args)
     {
-        MeterReadDialog mrd = new MeterReadDialog();
+        //MeterReadDialog mrd = 
+        new MeterReadDialog();
     }
 
     

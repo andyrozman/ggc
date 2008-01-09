@@ -29,22 +29,22 @@ package ggc.gui.nutrition;
  
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.logging.Level;
+//import java.util.ArrayList;
+//import java.util.Hashtable;
+//import java.util.Iterator;
+//import java.util.logging.Level;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+//import javax.swing.JFrame;
+//import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
-import javax.swing.UIManager;
+//import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
+//import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import ggc.db.GGCDb;
@@ -249,13 +249,14 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
 	DataAccess da = DataAccess.getInstance();
 
-	JFrame fr = new JFrame();
+	/*JFrame fr = new JFrame();
 	//fr.setBounds(0,0,640,480);
 	//fr.setVisible(true);
-	//da.setParent(fr);
+	//da.setParent(fr); */
 	da.m_nutrition_treeroot = new GGCTreeRoot(1);
 
-	NutritionTreeDialog ntd = new NutritionTreeDialog(da);
+	/*NutritionTreeDialog ntd =*/ 
+	new NutritionTreeDialog(da);
 
     }
 

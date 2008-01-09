@@ -29,15 +29,14 @@
 package ggc.data;
 
 
-import java.text.SimpleDateFormat;
-
-import javax.swing.table.AbstractTableModel;
-
 import ggc.data.event.GlucoValueEvent;
 import ggc.data.event.GlucoValueEventListener;
 import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
+
+import java.text.SimpleDateFormat;
+
+import javax.swing.table.AbstractTableModel;
 
 
 public class GlucoTableModel extends AbstractTableModel implements GlucoValueEventListener

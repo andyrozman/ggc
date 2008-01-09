@@ -19,20 +19,41 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: GGCTreeRoot
- *  Purpose:  Used for holding tree information for nutrition and meals
+ *  Filename: ScheduleInfoPanel.java
+ *  Purpose:  This Panel contains information on your Schedule. Like your
+ *            next check, when you see your doctor again, ...
  *
- *  Author:   andyrozman
+ *  Author:   schultd
  */
 
-package ggc.gui.nutrition;
+package ggc.gui.panels.info;
 
-import javax.swing.JPanel;
+import ggc.util.I18nControl;
+
+import java.awt.GridLayout;
 
 
-public abstract class GGCTreePanel extends JPanel
+public class OtherInfoPanel extends AbstractInfoPanel
 {
+    public OtherInfoPanel()
+    {
+        super(I18nControl.getInstance().getMessage("OTHER_INFO"));
+        setLayout(new GridLayout(2, 0));
+        init();
+        //refreshInfo();
+    }
 
-    public abstract void setData(Object obj);
+    private void init()
+    {
+        add(new ScheduleInfoPanel());
+        add(new StocksInfoPanel());
 
+        //add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
+        //add(new JLabel(m_ic.getMessage("WILL_BE_FOUND_HERE")+" NOT YET"));
+    }
+
+    @Override
+    public void refreshInfo()
+    {
+    }
 }

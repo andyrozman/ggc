@@ -30,27 +30,24 @@
 
 package ggc.gui.little;
 
-//import ggc.gui.*;
 
-import java.awt.*;
+import ggc.data.DailyValues;
+import ggc.gui.dialogs.DailyGraphDialog;
+import ggc.gui.dialogs.DailyRowDialog;
+import ggc.gui.panels.info.AbstractInfoPanel;
+import ggc.util.I18nControl;
+
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.GregorianCalendar;
 
-import javax.swing.*;
-
-import ggc.data.DailyStatsTableModel;
-import ggc.data.DailyValues;
-import ggc.data.calendar.CalendarEvent;
-import ggc.data.calendar.CalendarListener;
-import ggc.db.GGCDb;
-import ggc.gui.calendar.CalendarPane;
-import ggc.gui.dialogs.*;
-import ggc.gui.panels.info.AbstractInfoPanel;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 public class DailyStatsControlsL extends AbstractInfoPanel implements ActionListener
 {

@@ -8,18 +8,28 @@
 package ggc.gui;
 
 
-import ggc.data.DailyValuesRow;
 import ggc.data.GlucoTableModel;
 import ggc.util.I18nControl;
 import ggc.util.UIUtilities;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.JTableHeader;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 
 /**
@@ -125,18 +135,22 @@ public class GlucoTable extends JTable
          */
         public void actionPerformed(ActionEvent e)
         {
+/*
+  TO-DO
+ 
             Window window = (Window)table.getTopLevelAncestor();
             if (window == null)
                 return;
 
             DailyValuesRow valueRow = null;
             if (window instanceof Dialog)
-                valueRow = DailyValuesRowDialog.getNewDailyValuesRow((Dialog)window);
+                valueRow = DailyRowDialog.getNewDailyValuesRow((Dialog)window);
             else if (window instanceof Frame)
-                valueRow = DailyValuesRowDialog.getNewDailyValuesRow((Frame)window);
+                valueRow = DailyRowDialog.getNewDailyValuesRow((Frame)window);
 
             if (valueRow != null)
                 ((GlucoTableModel)table.getModel()).getDayData().setNewRow(valueRow);
+                */
         }
 
     }

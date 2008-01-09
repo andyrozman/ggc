@@ -27,24 +27,18 @@
 
 package ggc.data;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.StringTokenizer;
-
-import javax.swing.*;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory; 
-
-import com.atech.utils.ATechDate;
-
 import ggc.db.hibernate.DayValueH;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.StringTokenizer;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class DailyValuesRow implements Serializable
@@ -52,7 +46,7 @@ public class DailyValuesRow implements Serializable
 
     private static Log log = LogFactory.getLog(DailyValuesRow.class); 
 
-    private I18nControl m_ic = I18nControl.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();
     /*
     private Date datetime;
     private Float BG;
@@ -825,7 +819,7 @@ public class DailyValuesRow implements Serializable
         }
         else
         {
-            return m_da.MmolDecimalFormat.format(fl);
+            return DataAccess.MmolDecimalFormat.format(fl);
         }
     }
 

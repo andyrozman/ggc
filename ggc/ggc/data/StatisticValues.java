@@ -27,16 +27,11 @@
 
 package ggc.data;
 
-
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
-//import ggc.db.DataBaseHandler;
 import ggc.util.DataAccess;
-
 
 public class StatisticValues
 {

@@ -83,7 +83,7 @@ public class GlucoCardImport extends SerialMeterImport
             {
                 byte[] rBuffer = new byte[40];
 
-                int numBytes = portInputStream.read(rBuffer);
+                //int numBytes = portInputStream.read(rBuffer);
                 //rmf.addLogText("Getting data buffer[0]=" + rBuffer[0]);
 
                 if (rBuffer[0] == CONTROL_EOT && counter == 0)

@@ -28,20 +28,15 @@
 
 package ggc.db.tool;
 
-
-import java.io.*;
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Date;
-
-import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 import ggc.db.GGCDb;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
-//import ggc.db.datalayer.FoodHomeWeight;
 import ggc.db.datalayer.NutritionDefinition;
 import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.hibernate.ColorSchemeH;
@@ -49,8 +44,6 @@ import ggc.db.hibernate.MeterCompanyH;
 import ggc.db.hibernate.MeterH;
 import ggc.db.hibernate.MeterImplementationH;
 import ggc.db.hibernate.MeterInterfaceH;
-//import ggc.db.hibernate.NutritionHomeWeightTypeH;
-import ggc.util.I18nControl;
 
 
 public class InitDb 

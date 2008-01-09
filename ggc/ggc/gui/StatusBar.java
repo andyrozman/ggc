@@ -27,22 +27,17 @@
 
 package ggc.gui;
 
+import ggc.util.I18nControl;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
-import javax.swing.border.Border;
-
-import ggc.util.I18nControl;
-
-import org.hibernate.Hibernate;
 
 
 public class StatusBar extends JPanel
@@ -50,7 +45,7 @@ public class StatusBar extends JPanel
     I18nControl m_ic = I18nControl.getInstance();
 
     private JLabel lblMessage = null;
-    private JLabel lblDataSource = null;
+//    private JLabel lblDataSource = null;
     private JLabel lblLed = null;
     private JLabel lblName = null;
 

@@ -5,20 +5,10 @@
 
 package ggc.data;
 
-
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Vector;
 
 import ggc.data.DailyValues;
-import ggc.data.DailyValuesRow;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 
 public class MonthlyValues extends WeeklyValues

@@ -45,7 +45,8 @@ public class InfoPanel extends JPanel
 
         vInfoPanels.add(new GeneralInfoPanel());
         vInfoPanels.add(new HbA1cInfoPanel());
-        vInfoPanels.add(new ScheduleInfoPanel());
+        //vInfoPanels.add(new ScheduleInfoPanel());
+        vInfoPanels.add(new OtherInfoPanel());
         vInfoPanels.add(new StatisticsInfoPanel());
 
         addPanels();
@@ -60,10 +61,10 @@ public class InfoPanel extends JPanel
 
     public void invalidatePanelsConstants()
     {
-	for (int i = 0; i < vInfoPanels.size(); i++)
-	{
-	    vInfoPanels.get(i).invalidateFirstRefresh();
-	}
+        for (int i = 0; i < vInfoPanels.size(); i++)
+        {
+            vInfoPanels.get(i).invalidateFirstRefresh();
+        }
     }
 
 
@@ -71,9 +72,9 @@ public class InfoPanel extends JPanel
     public void refreshPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
-	{
-	    vInfoPanels.get(i).refreshInfo();
-	}
+        {
+            vInfoPanels.get(i).refreshInfo();
+        }
     }
 
     public void addPanelAt(int index, AbstractInfoPanel panel)

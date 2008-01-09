@@ -28,17 +28,20 @@
 package ggc.gui.panels.info;
 
 
-import java.awt.*;
-import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javax.swing.*;
-
 import ggc.data.HbA1cValues;
 import ggc.db.GGCDb;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.text.DecimalFormat;
+import java.util.GregorianCalendar;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 public class HbA1cInfoPanel extends AbstractInfoPanel

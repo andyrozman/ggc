@@ -29,12 +29,20 @@
 package ggc.gui.panels.prefs;
 
 
-import java.awt.*;
+import ggc.data.DailyValues;
+import ggc.db.hibernate.ColorSchemeH;
+import ggc.gui.dialogs.SchemeDialog;
+import ggc.gui.dialogs.SchemeEDDialog;
+import ggc.gui.view.DailyGraphView;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -42,22 +50,19 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.border.Border;
+import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-
-import ggc.data.DailyValues;
-import ggc.data.DailyValuesRow;
-import ggc.db.hibernate.ColorSchemeH;
-import ggc.gui.dialogs.SchemeDialog;
-import ggc.gui.dialogs.SchemeEDDialog;
-import ggc.gui.view.DailyGraphView;
-import ggc.util.DataAccess;
 
 
 public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements MouseListener, ActionListener, ListSelectionListener, ItemListener

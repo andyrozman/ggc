@@ -28,7 +28,9 @@
 
 package ggc.gui.nutrition;
 
-import java.lang.reflect.Constructor;
+import ggc.db.datalayer.FoodDescription;
+import ggc.db.datalayer.FoodGroup;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
@@ -37,9 +39,6 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.FoodDescription;
 
 public class NutritionTreeModel implements TreeModel 
 {

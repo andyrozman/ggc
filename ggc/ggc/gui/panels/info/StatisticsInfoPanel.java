@@ -29,10 +29,12 @@
 package ggc.gui.panels.info;
 
 
+import ggc.data.StatisticValues;
+import ggc.util.DataAccess;
+
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
@@ -40,9 +42,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
-
-import ggc.data.StatisticValues;
-import ggc.util.DataAccess;
 
 
 public class StatisticsInfoPanel extends AbstractInfoPanel

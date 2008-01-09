@@ -28,18 +28,25 @@
 package ggc.gui.dialogs;
 
 
-import java.awt.*;
+//import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.GregorianCalendar;
+import java.awt.Font;
+import java.awt.FlowLayout;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.Box;
+
+//import javax.swing.*;
 
 import ggc.data.HbA1cValues;
-//import ggc.db.DataBaseHandler;
-import ggc.gui.MainFrame;
 import ggc.gui.view.HbA1cView;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;

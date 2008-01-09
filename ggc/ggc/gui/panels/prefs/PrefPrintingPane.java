@@ -27,27 +27,29 @@
 
 package ggc.gui.panels.prefs;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.io.File;
-import java.text.SimpleDateFormat;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JSpinner.DateEditor;
-import javax.swing.border.Border;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
-
-import ggc.gui.MainFrame;
+import javax.swing.filechooser.FileView;
 
 
 public class PrefPrintingPane extends AbstractPrefOptionsPanel
 {
     //private JComboBox comboMeterType;
     //private JComboBox comboPortId;
-    private JLabel lab_db = null;
-    private JLabel lab_file = null;
+//x    private JLabel lab_db = null;
+//x    private JLabel lab_file = null;
 
 
 // insulins

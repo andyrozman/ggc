@@ -10,29 +10,35 @@
 package ggc.gui.dialogs;
 
 
-import java.awt.*;
+import ggc.data.cfg.ConfigCellRenderer;
+import ggc.gui.panels.prefs.AbstractPrefOptionsPanel;
+import ggc.gui.panels.prefs.PrefFontsAndColorPane;
+import ggc.gui.panels.prefs.PrefGeneralPane;
+import ggc.gui.panels.prefs.PrefMedicalDataPane;
+import ggc.gui.panels.prefs.PrefMeterConfPane;
+import ggc.gui.panels.prefs.PrefPrintingPane;
+import ggc.gui.panels.prefs.PrefRenderingQualityPane;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
-import javax.swing.event.ListSelectionListener;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
-
-
-import ggc.data.cfg.ConfigCellRenderer;
-import ggc.gui.panels.prefs.*;
-
-import ggc.util.I18nControl;
-import ggc.util.DataAccess;
+import javax.swing.event.ListSelectionListener;
 
 
 public class PropertiesDialog extends JDialog implements ListSelectionListener, ActionListener
@@ -41,13 +47,10 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccess m_da = DataAccess.getInstance();
 
-    private DefaultMutableTreeNode prefNode;
+//    private DefaultMutableTreeNode prefNode;
     //private JTree prefTree;
     private JList list = null;
     private JPanel prefPane;
-    //private DefaultTreeModel prefTreeModel;
-    //private JScrollPane prefTreePane;
-    //private AbstractPrefOptionsPanel prefOptionsPane;
 
     public ArrayList<JPanel> panels = null;
     public Hashtable<String, String> panel_id = null;
@@ -62,7 +65,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 	m_ic.getMessage("MEDICAL_DATA"),
 	m_ic.getMessage("COLORS_AND_FONTS"),
 	m_ic.getMessage("RENDERING_QUALITY"),
-	m_ic.getMessage("METER_CONFIGURATION"),
+//	m_ic.getMessage("METER_CONFIGURATION"),
 	m_ic.getMessage("PRINTING")
     };
 
@@ -222,8 +225,8 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     private int PANEL_MEDICAL_DATA = 1;
     private int PANEL_COLORS = 2;
     private int PANEL_RENDERING = 3;
-    private int PANEL_METER = 4;
-    private int PANEL_PRINTING = 5;
+    private int PANEL_PRINTING = 4;
+//    private int PANEL_METER = 4;
 
 
     public void createPanels()
@@ -239,8 +242,8 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane());
         addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new PrefFontsAndColorPane(this));
         addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane());
-        addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane(this));
         addPanel(m_ic.getMessage("PRINTING"), PANEL_PRINTING, new PrefPrintingPane());
+//        addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane(this));
     }
 
 
@@ -277,20 +280,20 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
     public void selectPanel(int index)
     {
-	/*
-	if (!panel_id.containsKey(s))
-	{
-	    System.out.println("No such panel: " + s);
-	    return;
-	}
-
-	String id = panel_id.get(s); */
-
-	prefPane.remove(1);
-	prefPane.add(panels.get(index), BorderLayout.CENTER);
-	prefPane.invalidate();
-	prefPane.validate();
-	prefPane.repaint();
+    	/*
+    	if (!panel_id.containsKey(s))
+    	{
+    	    System.out.println("No such panel: " + s);
+    	    return;
+    	}
+    
+    	String id = panel_id.get(s); */
+    
+    	prefPane.remove(1);
+    	prefPane.add(panels.get(index), BorderLayout.CENTER);
+    	prefPane.invalidate();
+    	prefPane.validate();
+    	prefPane.repaint();
 
     }
 
@@ -306,7 +309,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         if (action.equals("ok")) 
         {
             save();
-	    ok_action = true;
+            ok_action = true;
             this.dispose();
         }
         else if (action.equals("cancel")) 
@@ -326,7 +329,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
     public boolean wasOKAction()
     {
-	return ok_action;
+        return ok_action;
     }
 
 
@@ -361,13 +364,12 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
      */
     public void valueChanged(ListSelectionEvent e)
     {
-	if (current_index != list.getSelectedIndex())
-	{
-	    current_index = list.getSelectedIndex();
-	    selectPanel(current_index);
-	    //System.out.println(list.getSelectedValue());
-	}
-
+    	if (current_index != list.getSelectedIndex())
+    	{
+    	    current_index = list.getSelectedIndex();
+    	    selectPanel(current_index);
+    	    //System.out.println(list.getSelectedValue());
+    	}
     }
 
 

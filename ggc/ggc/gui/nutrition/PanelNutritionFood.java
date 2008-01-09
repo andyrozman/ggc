@@ -1,6 +1,6 @@
 package ggc.gui.nutrition;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import javax.swing.*;
-import javax.swing.BorderFactory;
+//import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JDialog;
+//import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+//import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.*;
@@ -24,7 +24,7 @@ import com.atech.graphics.components.ATTableModel;
 import com.atech.i18n.I18nControlAbstract;
 
 import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.NutritionHomeWeightType;
+//import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.datalayer.NutritionDefinition;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;

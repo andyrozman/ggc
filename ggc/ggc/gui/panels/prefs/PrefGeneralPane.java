@@ -27,20 +27,23 @@
 
 package ggc.gui.panels.prefs;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.File;
-import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import javax.swing.filechooser.FileSystemView;
 
 import ggc.db.tool.DbToolApplicationGGC;
-import ggc.util.I18nControl;
+
 
 public class PrefGeneralPane extends AbstractPrefOptionsPanel 
 {
@@ -50,12 +53,12 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 
     private JComboBox langBox, cb_database, cb_lf_type, cb_lf_type_class;
     private JTextField tf_lf;
-    private JLabel l_db_desc, l_lf_desc;
+//x    private JLabel l_db_desc, l_lf_desc;
     private JButton b_browse;
 
-    private Object[] databases = null;
-    private Object[] lf_classes_name = null;
-    private Object[] lf_classes_class = null;    
+    //private Object[] databases = null;
+//x    private Object[] lf_classes_name = null;
+//x    private Object[] lf_classes_class = null;    
 
     private PrefGeneralPane parent = null;
 
@@ -267,7 +270,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
                 JButton b = (JButton) comps[ i ];
  
                 String ttText = b.getToolTipText(  );
-                String buttonText = b.getText(  );
+//x                String buttonText = b.getText();
 
                 if( ( ttText != null ) && 
 		    (ttText.equals( "Create New Folder" ) || ttText.equals("Desktop") || ttText.equals("Up One Level")) )

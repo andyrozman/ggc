@@ -28,10 +28,6 @@
 
 package ggc.util;
 
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 
 import java.io.FileInputStream;
 import java.util.Properties;

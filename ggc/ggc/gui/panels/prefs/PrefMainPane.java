@@ -29,16 +29,19 @@ package ggc.gui.panels.prefs;
 
 import ggc.util.I18nControl;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
+
+import javax.swing.Box;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class PrefMainPane extends AbstractPrefOptionsPanel 
 {
-    private JTextField fieldUserName;
+//x    private JTextField fieldUserName;
 
-    //private I18nControl m_ic = I18nControl.getInstance();
+    private I18nControl m_ic = I18nControl.getInstance();
 
-    private JComboBox langBox;
+//x    private JComboBox langBox;
 
     public PrefMainPane() 
     {

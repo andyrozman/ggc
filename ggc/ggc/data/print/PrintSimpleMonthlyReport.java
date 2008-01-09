@@ -1,5 +1,34 @@
 package ggc.data.print;
 
+/*
+ *  GGC - GNU Gluco Control
+ *
+ *  A pure java app to help you manage your diabetes.
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *  Filename: PrintSimpleonthlyReport.java
+
+ *  Purpose:  Creating PDF for Simple Monthly Report (used for printing)
+ *
+ *  Author:   andyrozman {andy@t-2.net}
+ */
+
+
 import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -271,9 +300,11 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
             pc.setPhrase(new Phrase(new Chunk(ic.getMessage("REPORT_FOOTER"), f)));
             pc.setHorizontalAlignment(Element.ALIGN_CENTER);
             foot.addCell(pc);
-            foot.setTotalWidth(page.width() - document.leftMargin() - document.rightMargin());
+            foot.setTotalWidth(page.getWidth() - document.leftMargin() - document.rightMargin());
             foot.writeSelectedRows(0, -1, document.leftMargin(), document.bottomMargin(),
             writer.getDirectContent());
+            
+            
         }
         catch (Exception e) 
         {

@@ -29,7 +29,7 @@ public class PrintExtendedMonthlyReport
         try 
         {
                 // step2
-                PdfWriter writer = PdfWriter.getInstance(document,
+                /*PdfWriter writer =*/ PdfWriter.getInstance(document,
                                 new FileOutputStream("HelloWorld2.pdf"));
                 // step3
                 document.open();
@@ -87,30 +87,15 @@ public class PrintExtendedMonthlyReport
                 p1.addElement(p_down);
 
   */
-                //p1.
-
-                
-                //datatable.addCell(p1);
-
-                //datatable.addCell(p1);
-
-                //datatable.a.addCell(p_up);
-                //datatable.addCell(p_down);
-
 
 
                 PdfPTable ins = new PdfPTable(4);
                 ins.setHorizontalAlignment(Element.ALIGN_CENTER);
-                //ins.getRow(1).s
-                //ins.setB
-                
-                //ins.getDefaultCell().setBorderWidth(2);
                 ins.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
                 
                 PdfPCell p1 = new PdfPCell();
                 p1.setPhrase(new Phrase("Insulin"));
                 p1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                //pp.setHorizontalAlignment(Element.ALIGN_CENTER);
                 p1.setColspan(4);
 
                 ins.addCell(p1);

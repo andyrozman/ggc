@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Properties;
@@ -52,7 +52,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory; 
-import org.hibernate.Hibernate;
+//import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -60,7 +60,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.*;
 
-import ggc.GGC;
+//import ggc.GGC;
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
 import ggc.data.HbA1cValues;
@@ -86,7 +86,7 @@ public class GGCDb
     private boolean debug = true;
     private boolean db_debug = false;
 
-    private static Log s_logger = LogFactory.getLog(GGCDb.class); 
+    private static Log log = LogFactory.getLog(GGCDb.class); 
     private Session m_session = null;
     private SessionFactory sessions = null;
     private int m_errorCode = 0;
@@ -148,13 +148,16 @@ public class GGCDb
 
     private void debugConfig()
     {
-        System.out.println("Debug Configuration:");
+/*
+	System.out.println("Debug Configuration:");
 
         //this.m_cfg.g
         //this.m_cfg.
 
         Iterator it = this.m_cfg.getClassMappings();
 
+        //m_cfg.get
+        
         while (it.hasNext())
         {
             org.hibernate.mapping.RootClass rc = (org.hibernate.mapping.RootClass)it.next();
@@ -162,7 +165,7 @@ public class GGCDb
 //	    exploreRootClass(rc);
         }
 
-
+*/
     }
 
 
@@ -227,6 +230,7 @@ public class GGCDb
     {
 
         System.out.println("Exception ["+ source + "]: " + ex);
+        log.error("Exception [" + source + "]: " + ex, ex);
 
         if (debug)
         {
@@ -880,10 +884,12 @@ public class GGCDb
 
     }
 
+    /*
     private void saveColorSchemes(Session sess)
     {
         DataAccess.notImplemented("GGCDb::saveColorSchemes()");
     }
+    */
 
 
     // *************************************************************
@@ -1145,7 +1151,7 @@ public class GGCDb
         {
             //System.out.println("Start " + start);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//x            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
             //sdf.format(start.getTime());
             String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
@@ -1318,8 +1324,6 @@ public class GGCDb
 
         if (db_debug)
             System.out.println("Hibernate: dateTimeExists()");
-
-        DailyValues dV = new DailyValues();
 
         try
         {

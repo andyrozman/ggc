@@ -27,31 +27,46 @@
 
 package ggc.gui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.util.Hashtable;
-
-import javax.swing.*;
-import javax.swing.text.View;
-
-import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
-
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.FrequencyGraphDialog;
 import ggc.gui.dialogs.HbA1cDialog;
-import ggc.gui.dialogs.MeterReadDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SpreadGraphDialog;
 import ggc.gui.nutrition.NutritionTreeDialog;
 import ggc.gui.panels.info.InfoPanel;
 import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 import ggc.util.VersionChecker;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Event;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Hashtable;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+
+import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
 
 // 
@@ -71,6 +86,9 @@ import ggc.util.VersionChecker;
 //   0.2.8   About Dialog
 //   0.2.9   New entry finalization
 // 
+//   0.2.9.1   new entry done
+//   0.2.9.2   new windows added (stock, schedule)
+//   0.2.9.3   remove meters support
 //    Menus (all), About, Db (all)
 // 
 
@@ -79,10 +97,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.9.1";
+    public  static String s_version = "0.2.9.3";
     private String full_version = "v" + s_version;
 
-    private String version_date = "6th January 2008";
+    private String version_date = "8th January 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -216,23 +234,8 @@ public class MainFrame extends JFrame
 	this.createAction(this.menu_bgs, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "frequency.gif");
 	this.menu_bgs.addSeparator();
 	this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", null);
-	this.menu_bgs.addSeparator();
-	this.createAction(this.menu_bgs, "MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter", "readmeter.gif");
-
-	//viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
-	//viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
-	//viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
-	//viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
-	//viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
-	//viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
-	//viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
-	//viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
-	//viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
-
-	//readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
-	//readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
-
-
+//	this.menu_bgs.addSeparator();
+//	this.createAction(this.menu_bgs, "MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter", "readmeter.gif");
 
 
 	// food menu
@@ -275,90 +278,8 @@ public class MainFrame extends JFrame
 	this.createAction(this.menu_help,"MN_ABOUT", "MN_ABOUT_DESC", "hlp_about", null);
 
 
-	this.createAction(null, "&Test", "Testing option", "test", null);
+	//this.createAction(null, "&Test", "Testing option", "test", null);
 
-/*
-
-
-        foodNutrAction = new GGCAction("MN_NUTRDB", "MN_NUTRDB_DESC", "food_nutrition");
-        foodMealsAction = new GGCAction("MN_MEALS", "MN_MEALS_DESC", "food_meals");
-
-        reportPDFSimpleAction = new GGCAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple");
-        reportPDFExtendedAction = new GGCAction("MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended");
-
-
-        aboutAction = new GGCAction("MN_ABOUT", "MN_ABOUT_DESC", "hlp_about");
-        checkVersionAction = new GGCAction("MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check");
-
-        //GGCAction test = new GGCAction("Print", "Print Test", "print_test");
-
-        // File menu
-	quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
-        addMenuItem(menu_file, quitAction);
-
-
-
-        // View menu
-	viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
-	viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
-	viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
-	viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
-	viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
-	viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
-	viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
-	viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
-	viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
-
-	readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
-	readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
-
-
-
-
-	addMenuItem(menu_bgs, viewDailyAction);
-        addMenuItem(menu_bgs, viewCourseGraphAction);
-        addMenuItem(menu_bgs, viewSpreadGraphAction);
-        addMenuItem(menu_bgs, viewFrequencyGraphAction);
-        menu_bgs.addSeparator();
-        addMenuItem(menu_bgs, viewHbA1cAction);
-	menu_bgs.addSeparator();
-
-
-        // Read menu
-        //addMenuItem(readMenu, readMeterAction);
-
-        // Food menu
-        addMenuItem(menu_food, foodNutrAction);
-        addMenuItem(menu_food, foodMealsAction);
-
-        // report menu
-        addMenuItem(menu_reports, reportPDFSimpleAction);
-        addMenuItem(menu_reports, reportPDFExtendedAction);
-
-        // Tools menu
-	prefAction = new GGCAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "option_pref");
-        addMenuItem(menu_tools, prefAction);
-
-        // Help menu
-        addMenuItem(menu_help, aboutAction);
-        addMenuItem(menu_help, checkVersionAction);
-*/
-
-
-// REMOVE
-
-        //addMenuItem(testMenu, test);
-/*
-        menuBar.add(menu_file);
-        menuBar.add(viewMenu);
-  //      menuBar.add(readMenu);
-        menuBar.add(foodMenu);
-        menuBar.add(reportMenu);
-        menuBar.add(optionMenu);
-        menuBar.add(helpMenu);
-*/
-        //if (MainFrame.developer_version)
-        //    menuBar.add(testMenu);
 
         toolBar.setFloatable(false);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
@@ -372,10 +293,12 @@ public class MainFrame extends JFrame
         addToolBarButtonWithName("view_hba1c");
         addToolBarSpacer();
         addToolBarSpacer();
-
+/* 
+        // meters removed for 0.3
         addToolBarButtonWithName("read_meter");
         addToolBarSpacer();
         addToolBarSpacer();
+        */
 
         addToolBarButtonWithName("tools_pref");
         addToolBarSpacer();
@@ -383,31 +306,12 @@ public class MainFrame extends JFrame
 
         addToolBarButtonWithName("test");
 
-
-    	//viewDailyAction = new GGCAction("MN_DAILY", "MN_DAILY_DESC", "view_daily");
-    	//viewDailyAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/daily.gif")));
-    	//viewCourseGraphAction = new GGCAction("MN_COURSE", "MN_COURSE_DESC", "view_course");
-    	//viewCourseGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/course.gif")));
-    	//viewSpreadGraphAction = new GGCAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread");
-    	//viewSpreadGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/spread.gif")));
-    	//viewFrequencyGraphAction = new GGCAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq");
-    	//viewFrequencyGraphAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/frequency.gif")));
-    	//viewHbA1cAction = new GGCAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c");
-    
-    	//readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
-    	//readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
-
         getContentPane().add(toolBar, BorderLayout.NORTH);
-
-        //statusPanel = StatusBar.getInstance();
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
         m_da.startDb(statusPanel);
 
         statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
-
-        //s_dbH = DataBaseHandler.getInstance();
-        //s_dbH.setStatus();
 
         //Information Portal Setup
         informationPanel = new InfoPanel();
@@ -484,7 +388,7 @@ public class MainFrame extends JFrame
     	this.actions.get("view_spread").setEnabled(opened);
     	this.actions.get("view_freq").setEnabled(opened);
     	this.actions.get("view_hba1c").setEnabled(opened);
-    	this.actions.get("read_meter").setEnabled(opened);
+//x    	this.actions.get("read_meter").setEnabled(opened);
     	this.actions.get("tools_pref").setEnabled(opened);
 
 
@@ -524,7 +428,7 @@ public class MainFrame extends JFrame
     {
         JMenuItem item = menu.add(action);
 
-        System.out.println(action.getValue(Action.ACCELERATOR_KEY));
+        //System.out.println(action.getValue(Action.ACCELERATOR_KEY));
 
         KeyStroke keystroke = (KeyStroke) action.getValue(Action.ACCELERATOR_KEY);
         if (keystroke != null)
@@ -567,22 +471,14 @@ public class MainFrame extends JFrame
 
             putValue(Action.NAME, m_ic.getMessageWithoutMnemonic(name));
 
-//            char ch = m_ic.getMnemonic(name);
-
-//            System.out.println("Char ch: '" + ch + "'");
-
-            //if ((ch != '0') || (ch != ' '))
             if (m_ic.hasMnemonic(name))
             {
                 char ch = m_ic.getMnemonic(name);
-                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch,
-                        Event.CTRL_MASK));
-//                System.out.println("Found");
+                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
             }
             else
             {
                 putValue(ACCELERATOR_KEY, null);
-//                System.out.println("NOT Found");
             }
 
             if (command != null)
@@ -591,6 +487,7 @@ public class MainFrame extends JFrame
             command = name;
         }
 
+        
         GGCAction(String name, String tooltip, String command) 
         {
             super();
@@ -701,30 +598,16 @@ public class MainFrame extends JFrame
             {
                 new PrintingDialog(MainFrame.this, 1);
             } 
-            /*else if (command.equals("report_pdf_extended")) 
-            {
-                //new PrintingDialog(MainFrame.this, 2);
-                //System.out.println("Command N/A: Report PDF Extended");
-            } */
 	    else if (command.equals("hlp_about"))
 	    {
-		AboutGGCDialog ab = new AboutGGCDialog(getMyParent());
-		//ab.sh
-		//featureNotImplemented(command, "0.3");
-	    }
-
-
-
-	    else if ((command.equals("hlp_about")) ||
-		     (command.equals("tools_db_maint")))
-	    {
-            featureNotImplemented(command, "0.3");
+		new AboutGGCDialog(getMyParent());
 	    }
 	    else if ((command.equals("read_meter")) ||
                  (command.equals("food_nutrition_2")) || 
-                 (command.equals("tools_mlist"))) 
+                 (command.equals("tools_mlist")) ||
+                 (command.equals("tools_db_maint"))) 
 	    {
-            featureNotImplemented(command, "0.4");
+		featureNotImplemented(command, "0.4");
 	    }
 	    else if ((command.equals("report_pdf_extended")) ||
                  (command.equals("doc_docs")) ||
@@ -732,11 +615,11 @@ public class MainFrame extends JFrame
                  (command.equals("doc_stocks")) ||
                  (command.equals("food_meals")))
 	    {
-            featureNotImplemented(command, "0.5");
+		featureNotImplemented(command, "0.5");
 	    }
 	    else if (command.equals("test"))
 	    {
-            ggc.gui.ReadMeterDialog rm = new ggc.gui.ReadMeterDialog(MainFrame.this);
+            //ggc.gui.ReadMeterDialog rm = new ggc.gui.ReadMeterDialog(MainFrame.this);
 	    }
         else
                 System.out.println("Unknown Command: " + command);

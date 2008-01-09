@@ -52,7 +52,8 @@ public class BGInputVerifier extends InputVerifier
                     return true;
             }
 
-            float bg = Float.parseFloat(bgStr);
+            //float bg = 
+            Float.parseFloat(bgStr);
         } 
         catch (NumberFormatException e) 
         {

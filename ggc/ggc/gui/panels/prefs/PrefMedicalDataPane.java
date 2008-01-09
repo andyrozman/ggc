@@ -28,10 +28,15 @@
 package ggc.gui.panels.prefs;
 
 
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.Box;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
 
 
 public class PrefMedicalDataPane extends AbstractPrefOptionsPanel

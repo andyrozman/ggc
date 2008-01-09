@@ -32,15 +32,12 @@
 
 package ggc.gui.little;
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
+import ggc.gui.panels.info.AbstractInfoPanel;
 import ggc.util.I18nControl;
 
-import ggc.gui.panels.info.AbstractInfoPanel;
+import java.awt.GridLayout;
+
+import javax.swing.JLabel;
 
 
 public class GeneralInfoPanelL extends AbstractInfoPanel

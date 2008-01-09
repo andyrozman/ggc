@@ -29,12 +29,9 @@
 package ggc.data;
 
 
-import java.text.SimpleDateFormat;
+import ggc.util.DataAccess;
 
 import javax.swing.table.AbstractTableModel;
-
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 
 
 public class DailyStatsTableModel extends AbstractTableModel

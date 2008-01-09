@@ -8,24 +8,28 @@
 package ggc.data.imports;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
-import java.util.StringTokenizer;
-import java.util.TooManyListenersException;
-import java.util.Vector;
-
-import gnu.io.*;
-import javax.swing.*;
-import javax.swing.event.EventListenerList;
-
 import ggc.data.DailyValuesRow;
 import ggc.data.event.ImportEvent;
 import ggc.data.event.ImportEventListener;
 import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
+import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
+import gnu.io.UnsupportedCommOperationException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.TooManyListenersException;
+import java.util.Vector;
+
+import javax.swing.ImageIcon;
+import javax.swing.event.EventListenerList;
 
 
 /**
@@ -192,12 +196,14 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         if (serialPort == null)
             return;
 
+        /*
         // Save state of parameters before trying a set.
         int oldBaudRate = serialPort.getBaudRate();
         int oldDatabits = serialPort.getDataBits();
         int oldStopbits = serialPort.getStopBits();
         int oldParity = serialPort.getParity();
         int oldFlowControl = serialPort.getFlowControlMode();
+        */
 
         // Set connection parameters, if set fails return parameters object
         // to original state.
@@ -236,7 +242,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         serialPort.removeEventListener();
         serialPort.close();
         isPortOpen = false;
-        dataFromMeter = false;
+        this.dataFromMeter = false;
         System.out.println("close port : " + portIdentifier.getName());
         fireImportChanged(new ImportEvent(this, ImportEvent.PORT_CLOSED, portIdentifier));
     }
@@ -275,7 +281,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         switch (event.getEventType()) 
         {
             case SerialPortEvent.DATA_AVAILABLE:
-                dataFromMeter = true;
+                this.dataFromMeter = true;
                 timeOut += 5000;
                 break;
 
@@ -420,7 +426,9 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         {
             //Vector retVal = new Vector();
 
-            Enumeration enume = CommPortIdentifier.getPortIdentifiers();
+            //CommPortIdentifier.getP
+            
+            Enumeration<Object> enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 
             {
                 CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();

@@ -309,8 +309,8 @@ public class DataAccess
         config_icons[1] = new ImageIcon(getImage("/icons/cfg_medical.png", m_main));
         config_icons[2] = new ImageIcon(getImage("/icons/cfg_colors.png", m_main));
         config_icons[3] = new ImageIcon(getImage("/icons/cfg_render.png", m_main));
-        config_icons[4] = new ImageIcon(getImage("/icons/cfg_meter.png", m_main));
-        config_icons[5] = new ImageIcon(getImage("/icons/cfg_print.png", m_main));
+        config_icons[4] = new ImageIcon(getImage("/icons/cfg_print.png", m_main));
+//        config_icons[4] = new ImageIcon(getImage("/icons/cfg_meter.png", m_main));
 
     }
 
@@ -785,7 +785,7 @@ public class DataAccess
     /**
      * Preveri konfiguracijsko datoteko in vse parametre v njej.
      */
-    private void verifyComConfig()
+/*    private void verifyComConfig()
     {
 	/*&
         Properties pr = new Properties();
@@ -837,9 +837,9 @@ public class DataAccess
                             + ": " + ex);
         }
 */
-
+/*
     }
-
+*/
 
     // ********************************************************
     // ******                  Options                    *****    

@@ -32,11 +32,13 @@ import ggc.data.DailyValues;
 import ggc.data.GlucoValues;
 import ggc.gui.dialogs.SpreadGraphDialog;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
-
-import ggc.gui.dialogs.*;
 
 
 public class SpreadGraphView extends AbstractGraphView

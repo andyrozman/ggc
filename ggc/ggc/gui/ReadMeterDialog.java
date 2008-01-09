@@ -8,36 +8,43 @@
 package ggc.gui;
 
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import gnu.io.NoSuchPortException;
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
-import ggc.data.imports.ImportException;
-import ggc.data.imports.SerialMeterImport;
 import ggc.data.DailyValuesRow;
 import ggc.data.GlucoTableModel;
 import ggc.data.GlucoValues;
 import ggc.data.event.ImportEvent;
 import ggc.data.event.ImportEventListener;
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-
+import ggc.data.imports.ImportException;
+import ggc.data.imports.SerialMeterImport;
 import ggc.data.meter.MeterManager;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+import gnu.io.NoSuchPortException;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.HeadlessException;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 
 /**
@@ -155,7 +162,7 @@ public class ReadMeterDialog extends JDialog implements ActionListener
 
         resTable = new GlucoTable();
 
-        JScrollPane sp2 = new JScrollPane(resTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//        JScrollPane sp2 = new JScrollPane(resTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         tabPane = new JTabbedPane();
         //tabPane.add("Values", sp2);

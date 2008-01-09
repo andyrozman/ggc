@@ -37,25 +37,13 @@
 
 package ggc.db;
 
-import java.io.FileInputStream;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.StringTokenizer;
 
-
-import ggc.GGC;
-//import ggc.db.HibernateHandler;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
-import ggc.util.DataAccess;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.little.StatusBarL;
+import ggc.util.DataAccess;
 
 
 public class GGCDbLoader extends Thread

@@ -29,40 +29,43 @@
 
 package ggc.gui.dialogs;
 
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import org.hibernate.sql.Delete;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ggc.data.DailyStatsTableModel;
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
 import ggc.data.calendar.CalendarEvent;
 import ggc.data.calendar.CalendarListener;
-//import ggc.db.DataBaseHandler;
 import ggc.db.GGCDb;
 import ggc.gui.MainFrame;
 import ggc.gui.calendar.CalendarPane;
-import ggc.gui.dialogs.*;
-import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory; 
 
 
 public class DailyStatsDialog extends JDialog implements ActionListener

@@ -28,20 +28,28 @@
 package ggc.gui.dialogs;
 
 
-import java.awt.*;
+import ggc.data.GlucoValues;
+import ggc.gui.calendar.DateRangeSelectionPanel;
+import ggc.gui.view.SpreadGraphView;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.*;
-
-import ggc.data.GlucoValues;
-import ggc.gui.calendar.DateRangeSelectionPanel;
-import ggc.gui.view.SpreadGraphView;
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 public class SpreadGraphDialog extends JDialog implements ActionListener

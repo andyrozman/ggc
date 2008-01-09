@@ -6,15 +6,14 @@
 package ggc.data;
 
 
+import ggc.db.hibernate.DayValueH;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
-
-import ggc.db.hibernate.DayValueH;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 
 public class DailyValues implements Serializable
@@ -381,7 +380,7 @@ public class DailyValues implements Serializable
     	    return (deleteList.size()!=0);
     }
 
-    public ArrayList getDeletedItems()
+    public ArrayList<DayValueH> getDeletedItems()
     {
         return deleteList;
     }

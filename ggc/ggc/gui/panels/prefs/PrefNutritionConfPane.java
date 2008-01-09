@@ -27,13 +27,13 @@
 
 package ggc.gui.panels.prefs;
 
-import ggc.gui.MainFrame;
-
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.io.File;
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 public class PrefNutritionConfPane extends AbstractPrefOptionsPanel

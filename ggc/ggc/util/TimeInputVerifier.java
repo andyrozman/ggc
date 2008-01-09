@@ -41,7 +41,8 @@ public class TimeInputVerifier extends InputVerifier
         try 
 	{
             String dateStr = ((JTextField)input).getText();
-            Date date = df.parse(dateStr);
+            /*Date date =*/ 
+            df.parse(dateStr);
         } 
 	catch (ParseException e) 
 	{
