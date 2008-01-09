@@ -1,18 +1,5 @@
 package ggc.data.meter.device;
 
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-
-
-import ggc.data.DailyValuesRow;
-import ggc.data.event.ImportEventListener;
-import ggc.data.meter.MeterManager;
-import ggc.data.meter.protocol.SerialProtocol;
-
-import gnu.io.*;
-
-
 /*
  *  GGC - GNU Gluco Control
  *
@@ -43,17 +30,20 @@ import gnu.io.*;
  */
 
 
+import ggc.data.meter.MeterManager;
+import gnu.io.SerialPortEvent;
+
+import java.util.ArrayList;
+
+
 public class AscensiaDEXMeter extends AscensiaMeter
 //extends SerialProtocol
 {
 
     private int m_status = 0;
 
-    private boolean stx = false;
-
-    private ArrayList raw_data = new ArrayList();
-
-    //public static Log log = 
+    //private boolean stx = false;
+    //private ArrayList raw_data = new ArrayList();
 
 
     public AscensiaDEXMeter(String portName)

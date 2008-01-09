@@ -1,8 +1,8 @@
 package ggc.data.meter.device;
 
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
-import ggc.data.DailyValuesRow;
 
 
 /*

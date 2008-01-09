@@ -5,20 +5,6 @@
  * Window>Preferences>Java>Templates.
  */
 
-package ggc.data.meter.device;
-
-
-import java.util.ArrayList;
-
-import gnu.io.*;
-import gnu.io.SerialPort;
-import javax.swing.ImageIcon;
-
-import ggc.data.DailyValuesRow;
-import ggc.data.event.ImportEventListener;
-import ggc.data.imports.*;
-import ggc.data.meter.MeterManager;
-import ggc.data.meter.protocol.SerialProtocol;
 
 /**
 
@@ -37,6 +23,16 @@ import ggc.data.meter.protocol.SerialProtocol;
  * 
  * 
  */
+
+package ggc.data.meter.device;
+
+
+import ggc.data.meter.MeterManager;
+import gnu.io.SerialPortEvent;
+
+import java.util.ArrayList;
+
+
 public class AscensiaEliteXLMeter extends AscensiaMeter
 				  //extends SerialProtocol
 {

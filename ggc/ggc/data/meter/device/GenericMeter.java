@@ -9,18 +9,10 @@ package ggc.data.meter.device;
 
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
-
-import gnu.io.*;
 import javax.swing.ImageIcon;
 
-import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
-import ggc.data.event.ImportEventListener;
-import ggc.data.imports.*;
-import ggc.data.meter.protocol.SerialProtocol;
 import ggc.util.I18nControl;
 
 

@@ -1,14 +1,9 @@
 package ggc.data.meter.device;
 
-import java.util.ArrayList;
-
-import gnu.io.*;
-import gnu.io.SerialPort;
-
-import ggc.data.DailyValuesRow;
-import ggc.data.event.ImportEventListener;
 import ggc.data.meter.MeterManager;
-import ggc.data.meter.protocol.SerialProtocol;
+import gnu.io.SerialPortEvent;
+
+import java.util.ArrayList;
 
 
 /*

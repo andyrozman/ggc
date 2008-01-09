@@ -8,35 +8,29 @@
 package ggc.data.meter.protocol;
 
 
+import ggc.data.DailyValuesRow;
+import ggc.data.imports.ImportException;
+import ggc.data.meter.device.MeterException;
+import ggc.data.meter.device.MeterInterface;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
+import gnu.io.UnsupportedCommOperationException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
-import java.util.StringTokenizer;
 import java.util.TooManyListenersException;
 import java.util.Vector;
 
-//import gnu.io.*;
-import gnu.io.*;
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import javax.swing.event.EventListenerList;
-
-
-
-import ggc.data.DailyValuesRow;
-import ggc.data.event.ImportEvent;
-import ggc.data.event.ImportEventListener;
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
-
-
-import ggc.data.imports.*;
-
-
-
-import ggc.data.meter.device.MeterInterface;
-import ggc.data.meter.device.MeterException;
 
 
 /**
@@ -66,10 +60,10 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     private long startTime = System.currentTimeMillis();
     protected long timeOut = 50000;
 
-    private EventListenerList listenerList = new EventListenerList();
-    private ImageIcon image = null;
+//x    private EventListenerList listenerList = new EventListenerList();
+//x    private ImageIcon image = null;
     private String useInfoMessage = null;
-    private String name = null;
+//x    private String name = null;
 
     int baudrate;
     int databits;
@@ -231,13 +225,14 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         if (serialPort == null)
             return;
 
+/*        
         // Save state of parameters before trying a set.
         int oldBaudRate = serialPort.getBaudRate();
         int oldDatabits = serialPort.getDataBits();
         int oldStopbits = serialPort.getStopBits();
         int oldParity = serialPort.getParity();
         int oldFlowControl = serialPort.getFlowControlMode();
-
+*/
         // Set connection parameters, if set fails return parameters object
         // to original state.
         try 
@@ -496,8 +491,8 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         try
         {
             //Vector retVal = new Vector();
-            int counter = 0;
-
+//            int counter = 0;
+            
             Enumeration enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 
             {

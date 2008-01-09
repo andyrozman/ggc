@@ -1,19 +1,5 @@
 package ggc.data.meter.device;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.StringTokenizer;
-
-import javax.swing.ImageIcon;
-
-import ggc.data.DailyValuesRow;
-import ggc.data.meter.MeterManager;
-import ggc.data.meter.protocol.SerialProtocol;
-import ggc.util.I18nControl;
-
-import gnu.io.*;
-import gnu.io.SerialPort;
 
 
 /*
@@ -44,6 +30,12 @@ import gnu.io.SerialPort;
  *  Author:   andyrozman {andyrozman@sourceforge.net}
  *
  */
+
+import ggc.data.meter.MeterManager;
+import gnu.io.SerialPortEvent;
+
+import java.io.IOException;
+
 
 public class AscensiaContourMeter extends AscensiaMeter
 {

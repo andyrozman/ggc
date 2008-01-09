@@ -7,33 +7,23 @@
 
 package ggc.data.meter.device;
 
-import javax.swing.ImageIcon;
-import java.util.ArrayList;
-
-import ggc.data.DailyValuesRow;
-import ggc.data.event.ImportEventListener;
-import ggc.data.imports.*;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 
 /**
-
- * @author stephan
-
+ * @author andyrozman
  *
-
- * To change this generated comment edit the template variable "typecomment":
-
- * Window>Preferences>Java>Templates.
-
- * 
- *  This is new interface, that will in future replace DataImport, but so far we are 
- *  keeping all old methods.
- * 
- * 
  * 
  */
+
+
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+
+
 public class DummyMeter implements MeterInterface
 {
 
