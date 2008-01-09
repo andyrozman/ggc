@@ -62,7 +62,7 @@ public class PrefMeterConfPane extends AbstractPrefOptionsPanel
     private JTextField tb_port;
     private JButton b_select;
 
-//x    private JComboBox comboPortId;
+//x	    private JComboBox comboPortId;
     private JLabel    meterPicture;
 
     //private JComboBox c

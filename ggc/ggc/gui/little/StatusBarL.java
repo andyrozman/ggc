@@ -46,7 +46,7 @@ public class StatusBarL extends JPanel
     I18nControl m_ic = I18nControl.getInstance();
 
     private JLabel lblMessage = null;
-    private JLabel lblDataSource = null;
+    //private JLabel lblDataSource = null;
     private JLabel lblLed = null;
     private JLabel lblName = null;
 
