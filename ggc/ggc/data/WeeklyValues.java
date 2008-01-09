@@ -23,7 +23,7 @@ import ggc.data.DailyValuesRow;
 
 public class WeeklyValues implements Serializable
 {
-    private I18nControl m_ic = I18nControl.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();
     private Hashtable<String, DailyValues> m_dataTable = null;
     public DataAccess m_da = DataAccess.getInstance();
 

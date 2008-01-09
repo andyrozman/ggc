@@ -1,6 +1,4 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
-<hibernate-mapping>
+<?xml version="1.0"?><hibernate-mapping>
     
     <!-- ***************** ggc::Main SCHEMA  ******************* -->
 
@@ -10,17 +8,17 @@
     <!-- ****************************************** -->
 
     <!--  Day values -->
-    <class name="ggc.db.hibernate.DayValueH" table="data_dayvalues" >
+    <class name="ggc.db.hibernate.DayValueH" table="data_dayvalues">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="dt_info" type="long" not-null="true"/>    
-        <property name="bg"  type="int" />
-        <property name="ins1"  type="int" />
-        <property name="ins2"  type="int" />
-        <property name="ch"  type="float" />
-        <property name="meals_ids"  type="string" length="1000" />
-        <property name="extended"  type="text" />
+        <property name="dt_info" type="long" not-null="true" />    
+        <property name="bg" type="int" />
+        <property name="ins1" type="int" />
+        <property name="ins2" type="int" />
+        <property name="ch" type="float" />
+        <property name="meals_ids" type="string" length="1000" />
+        <property name="extended" type="text" />
         <property name="comment" type="string" length="2000" />
     </class>
 
@@ -33,36 +31,36 @@
     <!--  Doctor types -->
     <class name="ggc.db.hibernate.DoctorTypeH" table="doc_types">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="name"  type="string" length="1000" />
+        <property name="name" type="string" length="1000" />
     </class>
 
     <!--  Doctor -->
     <class name="ggc.db.hibernate.DoctorH" table="doc_doctors">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="doctor_type_id"  type="long"  />
-        <property name="name"  type="string" length="100" />
-        <property name="address"  type="string" length="2000" />
-        <property name="phone_gsm"  type="string" length="500" />
-        <property name="phone"  type="string" length="500" />
-        <property name="working_time"  type="text"  />
-        <property name="extended"  type="text" />
-        <property name="comment"  type="string" length="4000" />
+        <property name="doctor_type_id" type="long" />
+        <property name="name" type="string" length="100" />
+        <property name="address" type="string" length="2000" />
+        <property name="phone_gsm" type="string" length="500" />
+        <property name="phone" type="string" length="500" />
+        <property name="working_time" type="text" />
+        <property name="extended" type="text" />
+        <property name="comment" type="string" length="4000" />
     </class>
 
     <!--  Appointment -->
     <class name="ggc.db.hibernate.AppointmentH" table="doc_appointment">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="doctor_id"  type="long" not-null="true" />
-        <property name="dt_apoint"  type="long" not-null="true" />
-        <property name="apoint_text"  type="string" length="1000" />
-        <property name="extended"  type="text" />
-        <property name="comment"  type="string" length="4000" />
+        <property name="doctor_id" type="long" not-null="true" />
+        <property name="dt_apoint" type="long" not-null="true" />
+        <property name="apoint_text" type="string" length="1000" />
+        <property name="extended" type="text" />
+        <property name="comment" type="string" length="4000" />
     </class>
 
 
@@ -73,21 +71,21 @@
     <!--  Stock types -->
     <class name="ggc.db.hibernate.StockTypeH" table="stock_types">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="name"  type="string" length="1000" />
-        <property name="name_i18n"  type="string" length="1000" />
+        <property name="name" type="string" length="1000" />
+        <property name="name_i18n" type="string" length="1000" />
     </class>
 
 
     <class name="ggc.db.hibernate.StockSubTypeH" table="stock_subtypes">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="stock_type_id"  type="long"  />
-        <property name="name"  type="string" length="1000" />
-        <property name="description"  type="text" />
-        <property name="content"  type="float" />
+        <property name="stock_type_id" type="long" />
+        <property name="name" type="string" length="1000" />
+        <property name="description" type="text" />
+        <property name="content" type="float" />
         <property name="comment" type="string" length="2000" />
     </class>
 
@@ -95,16 +93,16 @@
 
     <class name="ggc.db.hibernate.Stocks" table="stock_stocks">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="stock_subtype_id"  type="long"  />
-        <property name="dt_stock"  type="long"  />
-        <property name="amount"  type="float" />
-        <property name="desc"  type="string" length="255" />
+        <property name="stock_subtype_id" type="long" />
+        <property name="dt_stock" type="long" />
+        <property name="amount" type="float" />
+        <property name="desc" type="string" length="255" />
         <property name="usage_per_day_min" type="float" />
         <property name="usage_per_day_max" type="float" />
-        <property name="extended"  type="text" />
-        <property name="comment"  type="string" length="4000" />
+        <property name="extended" type="text" />
+        <property name="comment" type="string" length="4000" />
     </class>
 
 
@@ -116,11 +114,11 @@
 
     <class name="ggc.db.hibernate.SettingsH" table="cfg_settings">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="key" type="string"  length="44" not-null="true" />    
-        <property name="value" type="string"  length="255"/>    
-        <property name="type" type="int"  />    <!-- 1-string, 2-int, 3=float -->
+        <property name="key" type="string" length="44" not-null="true" />    
+        <property name="value" type="string" length="255" />    
+        <property name="type" type="int" />    <!-- 1-string, 2-int, 3=float -->
         <property name="description" type="string" length="255" />   
     </class>
 
@@ -128,20 +126,22 @@
 
     <class name="ggc.db.hibernate.ColorSchemeH" table="cfg_colorscheme">
         <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+            <generator class="org.hibernate.id.AssignedIncrementGenerator" />
         </id>            
-        <property name="name" type="string"  length="50"/>    
+        <property name="name" type="string" length="50" />    
         <property name="custom_type" type="int" />    
-        <property name="color_bg"  type="int" />
-        <property name="color_bg_avg"  type="int" />
-        <property name="color_bg_low"  type="int" />
-        <property name="color_bg_high"  type="int" />
-        <property name="color_bg_target"  type="int" />
-        <property name="color_ins"  type="int" />
-        <property name="color_ins1"  type="int" />
-        <property name="color_ins2"  type="int" />
-        <property name="color_ins_perbu"  type="int" />
-        <property name="color_ch"  type="int" />
+        <property name="color_bg" type="int" />
+        <property name="color_bg_avg" type="int" />
+        <property name="color_bg_low" type="int" />
+        <property name="color_bg_high" type="int" />
+        <property name="color_bg_target" type="int" />
+        <property name="color_ins" type="int" />
+        <property name="color_ins1" type="int" />
+        <property name="color_ins2" type="int" />
+        <property name="color_ins_perbu" type="int" />
+        <property name="color_ch" type="int" />
     </class>
 
 </hibernate-mapping>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
