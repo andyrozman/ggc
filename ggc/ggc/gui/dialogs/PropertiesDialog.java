@@ -15,7 +15,7 @@ import ggc.gui.panels.prefs.AbstractPrefOptionsPanel;
 import ggc.gui.panels.prefs.PrefFontsAndColorPane;
 import ggc.gui.panels.prefs.PrefGeneralPane;
 import ggc.gui.panels.prefs.PrefMedicalDataPane;
-import ggc.gui.panels.prefs.PrefMeterConfPane;
+//import ggc.gui.panels.prefs.PrefMeterConfPane;
 import ggc.gui.panels.prefs.PrefPrintingPane;
 import ggc.gui.panels.prefs.PrefRenderingQualityPane;
 import ggc.util.DataAccess;
