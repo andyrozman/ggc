@@ -30,7 +30,7 @@ package ggc.data;
 import ggc.db.hibernate.DayValueH;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
+//import ggc.util.I18nControl;
 
 import java.io.Serializable;
 import java.util.ArrayList;

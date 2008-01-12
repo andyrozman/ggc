@@ -678,6 +678,10 @@ public class GGCDb
 
         Query q = this.getSession().createQuery("select pst from ggc.db.hibernate.MeterH as pst where pst.implementation_id>0 order by pst.company_id, pst.name asc");
 
+        //org.hibernate.collections.Iterator ittt = null;
+        //org.hibernate.util.
+
+        
         Iterator it = q.iterate();
 
         System.out.println("Meter implementations: " + q.list().size());
@@ -924,10 +928,10 @@ public class GGCDb
     // ****                NUTRITION DATA                       ****
     // *************************************************************
 
-    public ArrayList getFoodGroups()
+    public ArrayList<FoodGroup> getFoodGroups()
     {
 
-        ArrayList<FoodGroupH> list = new ArrayList<FoodGroupH>();
+        ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
 
         Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodGroupH as pst");
 
@@ -1258,10 +1262,10 @@ public class GGCDb
 
                     Transaction tx = sess.beginTransaction();
 
-                    ArrayList list = dV.getDeletedItems();
+                    ArrayList<DayValueH> list = dV.getDeletedItems();
                     for (int i=0; i<list.size(); i++)
                     {
-                        DayValueH d = (DayValueH)list.get(i);
+                        DayValueH d = list.get(i);
                         sess.delete(d);
                         tx.commit();
                     }

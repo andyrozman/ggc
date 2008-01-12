@@ -72,7 +72,7 @@ public class WeeklyValues implements Serializable
     }
 
     
-    public Hashtable getAllValues()
+    public Hashtable<String, DailyValues> getAllValues()
     {
         return this.m_dataTable;
     }

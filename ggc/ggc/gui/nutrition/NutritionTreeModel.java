@@ -109,7 +109,7 @@ public class NutritionTreeModel implements TreeModel
     	else if (parent instanceof FoodGroup)
     	{
     	    FoodGroup fg = (FoodGroup)parent;
-    	    ArrayList lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    ArrayList<FoodDescription> lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
     	    return lst.get(index);
     	}
     	else
@@ -132,7 +132,7 @@ public class NutritionTreeModel implements TreeModel
     	else if (parent instanceof FoodGroup)
     	{
     	    FoodGroup fg = (FoodGroup)parent;
-    	    ArrayList lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    ArrayList<FoodDescription> lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
     	    return lst.size();
     	}
     	else

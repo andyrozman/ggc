@@ -221,7 +221,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
         if (config_loaded)
         {
 
-            for (Enumeration en = props.keys(); en.hasMoreElements(); )
+            for (Enumeration<Object> en = props.keys(); en.hasMoreElements(); )
             {
                 String  str = (String)en.nextElement();
 

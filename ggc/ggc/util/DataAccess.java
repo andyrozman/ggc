@@ -50,7 +50,7 @@ import ggc.data.DailyValues;
 import ggc.data.HbA1cValues;
 import ggc.data.WeeklyValues;
 import ggc.data.cfg.ConfigurationManager;
-import ggc.data.meter.MeterManager;
+//import ggc.data.meter.MeterManager;
 import ggc.db.GGCDb;
 import ggc.db.GGCDbLoader;
 import ggc.db.tool.DbToolApplicationGGC;
@@ -111,7 +111,7 @@ public class DataAccess
 
     private WeeklyValues m_dRangeValues = null;
 
-    private MeterManager m_meterManager = null;
+//x    private MeterManager m_meterManager = null;
 
     private GGCProperties m_settings = null;
 
@@ -191,7 +191,7 @@ public class DataAccess
         //m_i18n.createInstance(this);
         //        loadAvailableLFs();
         //        loadLanguageInfo();
-        m_meterManager = new MeterManager();
+//x        m_meterManager = new MeterManager();
 
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
@@ -330,12 +330,12 @@ public class DataAccess
     // ********************************************************
     // ******                   Meters                    *****    
     // ********************************************************
-
+/*
     public MeterManager getMeterManager()
     {
         return this.m_meterManager;
     }
-
+*/
 
     // ********************************************************
     // ******                   Meters                    *****    

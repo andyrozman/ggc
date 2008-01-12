@@ -500,12 +500,15 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public String getMeterTypeString() 
     {
+	    return m_da.getI18nInstance().getMessage("NONE");
+/*
 	if (this.getMeterType()==-1)
 	{
 	    return m_da.getI18nInstance().getMessage("NONE");
 	}
 	else
             return m_da.getMeterManager().meter_names[this.getMeterType()];
+            */
     }
 
 

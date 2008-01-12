@@ -106,12 +106,14 @@ public class MainFrame extends JFrame
     public static SkinLookAndFeel s_skinlf;
 
     private static final String skinLFdir = "../data/skinlf_themes/";
+    
+    public static boolean developer_version = false;
 
     //fields
     private JMenuBar menuBar = new JMenuBar();
     private JToolBar toolBar = new JToolBar();
 
-    private JLabel lblTest = new JLabel();
+    //private JLabel lblTest = new JLabel();
 
 
     private JMenu menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;
@@ -216,7 +218,7 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-      //  MainFrame.developer_version = developer_version;
+        MainFrame.developer_version = developer_version;
 
 
 //menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;

@@ -64,11 +64,11 @@ public class StatisticValues
     public void setDayRange(GregorianCalendar sDay, GregorianCalendar eDay)
     {
         WeeklyValues wv = DataAccess.getInstance().getDayStatsRange(sDay, eDay);
-        Hashtable table = wv.getAllValues();
+        Hashtable<String, DailyValues> table = wv.getAllValues();
 
-        for (Enumeration en = table.keys(); en.hasMoreElements(); ) 
+        for (Enumeration<String> en = table.keys(); en.hasMoreElements(); ) 
         {
-            String key = (String)en.nextElement();
+            String key = en.nextElement();
             addDayValues((DailyValues)table.get(key));
         }
 
