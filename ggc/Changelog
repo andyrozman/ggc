@@ -1,3 +1,8 @@
+2008-01-20 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * removed a couple of @Override Tags to make to project compile again
+    * partial sync between GGC_de and GGC_en
+    * small correction of slovene that slipped into GGC_en
+
 2008-01-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * updated german translation
     * corrected english translation

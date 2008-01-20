@@ -142,21 +142,18 @@ public class DoctorsDialog extends JDialog implements ActionListener
         this.t_doctors = new JTable(new AbstractTableModel()
             {
 
-		@Override
 		public int getColumnCount()
 		{
 		    // TODO Auto-generated method stub
 		    return 2;
 		}
 
-		@Override
 		public int getRowCount()
 		{
 		    active_list.size();
 		    return 0;
 		}
 
-		@Override
 		public Object getValueAt(int row, int column)
 		{
 		    // TODO Auto-generated method stub
