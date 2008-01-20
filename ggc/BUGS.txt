@@ -1,15 +1,19 @@
 Know Bugs:
 
-    - L&F loading is inconsistent (makes a hardcoded assumption where themepacks are stored) and currently fails
-      on Linux (and probably because of that)
     - at least one undiscovered infinite loop, can't reproduce, happened while the preferences frame was open (found by: developer rumbi)
     - infinite loop when trying to display hba1c without data (rumbi): can't reproduce, looks ok. (andy)
     - division by zero when displaying graphs without data
     - german translation is somewhat behind schedule
     - switching L&F from CDE/Motif to SkinLF doesn't result in settings being saved : can't reproduce, you must 
-      click on OK to save changes...
+      click on OK to save changes... IS THIS STILL THERE?
 
 Bugs fixed in version X:
+
+0.2.x.x:
+    - L&F loading is inconsistent (makes a hardcoded assumption where themepacks are stored) and currently fails
+      on Linux (and probably because of that) -- You need to have files in specified directory,
+      which is ../data/skinlf_themes/ - Andy
+
 
 0.2.5.3:
     - In Preferences->General: changing language also changes selected L&F name, but not class

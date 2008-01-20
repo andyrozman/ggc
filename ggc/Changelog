@@ -1,3 +1,20 @@
+2008-01-20 (v0.2.9.2 - 0.2.9.4) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Added code for future versions
+    * Import of old DailiyValues data (from 0.3 export or MeterTool), just class, no gui
+    * fixing of several warnings that Eclipse produced
+    * main display changed, instead schedule we now have schedule and stocks.
+    * added dialogs for doctors and appointments (visible through developer version)
+    * changed code a little, to allow starting GGC in development mode (add any paramter 
+      to startup class)
+    * atech-tools 0.1.8 linked to project
+    * meter tool project started (it's in same SVN just in another directory). All changes 
+      that are relevant to meters (and not directly to GGC main are visible from path 
+      /ggc-meter). TO-DO file is also changed, all meter specific tasks have been moved 
+      to ggc-meter project.
+    * ant build files changed (GGCBuild.properties_default)
+    * nutrition (usdb) db view fixed, nutrition (USDb) is with this change finished 
+
+
 2008-01-20 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * removed a couple of @Override Tags to make to project compile again
     * partial sync between GGC_de and GGC_en

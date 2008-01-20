@@ -4,22 +4,12 @@ TO-DO LIST
 Level 1 (High Priority): 
 ----------------------------
 
-* Configuration: 
-    o  Fix setting com port
 
 Level 2 (Medium 1 Priority):
 ----------------------------
 
-* Db:
-    o Private nutrition
-
-* About dialog
-
 * Db Load:
     o Add levels of loading (1=main(settings, daily stat), 2=Other data(docs,meters,links),3=Nutrition, 4=Finished)
-
-* Nutrition: 
-    o  View nutrition data in tree
 
 * Import/Export Tool (old data):
     o  Export old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
@@ -35,15 +25,9 @@ Level 3 (Medium 2 Priority):
     o  Nutrition data Init
     o  Basic Data Init
 
-
 * Printing: 
     o  Data gather - Extended (MonthlyValues)
     o  Detailed print sheet
-
-* Meters List
-    o  Db (meter_company, meters, meters_interface)
-    o  Table
-    o  Change Meter Manager
 
 * Import/Export Tool (for real time):
     o  Backup
@@ -69,13 +53,9 @@ Level 4 (Medium 3 Priority):
     o  Appointments      3
     o  Web Links         2
 
-
 * Entering daily data: 
-    o  Time displayed as selectable entry
     o  Add CH entry through meals
-    o  Add daily entry must be changed (GUI is very...)
-    o  option in which type we enter
-    o  delete should ask: are you sure?
+    
 * Java Help:
     o  Integration
     o  Write English help
@@ -100,26 +80,8 @@ Level 5 (Low Priority):
     o  meter import, add/edit should be centered
 * Adding support for mmol/l (now we have only mG/DL):
     o  graphs
-    o  database (write in database as mg/dl only, and display as what is set)
-* Meter Manager OLD
-    o  Change to support rtxos Java COM API
-    o  Dummy meter
-* Meter Manager NEW
-    o  Create New Meter Manager
-    o  Dummy meter 
-    o  Ascensia Meter family (add/test)
-    o  Try to rewrite old meters to new Meter Interface
 * Web Links:
     o  Db
-
-
-METERS
-------
-- New Meter Dialog
-- New Meter Interface
-- Dummy Old Meter
-- Dummy New Meter
-- Implement meter support: ...
 
 
 
@@ -138,16 +100,8 @@ Level 7 (IN FAR FUTURE/MAYBE):
 ------------------------------
 
 * Pump support
-* Add aditional meters
 
 
-Level 8 (Stuff not needed but it might be)
-------------------------------------------
-
-* CONVERT OLD DATA
-    o File
-    o MySQL
-    o HSQL
 
 
 ---------
@@ -180,6 +134,14 @@ Version 0.3:
 - Nutrition display in tree
 - Meters List -> MeterManager changes
 
+* Configuration: <moved to meter development tree> 
+    o  Fix setting com port
+
+* Db:
+    o Private nutrition
+
+* About dialog
+
 
 
 Release on 25.4.
@@ -209,17 +171,17 @@ Version 0.4:
 
 
 0.3: 
-   - Configuration: COM
+X   - Configuration: COM
 X   - Printing main
-   - Enter Daily Data NEW
+X   - Enter Daily Data NEW
 X   - rtx COMM API
-   - Data Export/Import/Conversion (Daily Data only)
-   - Nutrition Display
+X   - Nutrition Display
 
 0.4:
+   - Data Export/Import/Conversion (Daily Data only)
    - Db Tool
    - Backup/Restore
-   - Db Hibernate changes 
+X   - Db Hibernate changes 
    - Nutrition User
    - GGCLittle
    - Graphs, Db (mg/dl)
@@ -309,8 +271,29 @@ DONE
 * Nutrition: 
     o  Db Import
     o  Config
+    o  View nutrition data in tree
+* Adding support for mmol/l (now we have only mG/DL):
+    o  database (write in database as mg/dl only, and display as what is set)
+* Entering daily data: 
+    o  Time displayed as selectable entry
+    o  Add daily entry must be changed (GUI is very...)
+    o  option in which type we enter
+    o  delete should ask: are you sure?
 
 
 
 I18N TOOL
 * Check langauge files        
+
+
+STOPED SUB-TASKS
+================
+
+* CONVERT OLD DATA
+    o File
+    o MySQL
+    o HSQL
+
+
+
+

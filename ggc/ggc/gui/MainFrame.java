@@ -99,10 +99,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.9.3";
-    private String full_version = "v" + s_version;
+    public  static String s_version = "0.2.9.4";
+    public static String full_version = "v" + s_version;
 
-    private String version_date = "8th January 2008";
+    public static String version_date = "20th January 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
