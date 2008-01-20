@@ -667,8 +667,8 @@ public class MainFrame extends JFrame
     	String text = m_ic.getMessage("FEATURE");
     
     	text += " '" + this.actions.get(cmd).getName() +"' ";
-    	text += m_ic.getMessage("IMPLEMENTED_VERSION");
-    	text += " " + version+" !";
+    	text += String.format(m_ic.getMessage("IMPLEMENTED_VERSION"), version);
+    	text += "!";
     
     	JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
 

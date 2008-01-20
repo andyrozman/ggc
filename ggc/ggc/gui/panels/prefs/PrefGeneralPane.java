@@ -282,7 +282,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 	    if (comps[i] instanceof JComboBox)
 	    {
 		JComboBox box = (JComboBox)comps[i];
-		String s = (String)box.getSelectedItem().toString();
+		String s = box.getSelectedItem().toString();
 		if (s.indexOf("skinlf_themes")!=-1)
 		{
 		    box.setEnabled(false);
