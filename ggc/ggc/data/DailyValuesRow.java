@@ -244,7 +244,7 @@ public class DailyValuesRow implements Serializable
 
     }
 
-
+/*
     private void loadMealsIds()
     {
         // to-do
@@ -268,7 +268,8 @@ public class DailyValuesRow implements Serializable
             return "";
         }
     }
-
+*/
+    
     public ArrayList<String> getMealIdsList()
     {
         return this.meals_ids;

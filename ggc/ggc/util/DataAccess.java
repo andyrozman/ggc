@@ -1393,4 +1393,74 @@ public class DataAccess
 
 
 
+    public String parseExpression(String in, String expression, String replace)
+    {
+
+        StringBuffer buffer;
+
+        int idx=in.indexOf(expression);
+        
+        if (replace==null)
+            replace ="";
+        
+        if (idx==-1)
+            return in;
+
+        buffer = new StringBuffer();
+        
+        while (idx!=-1)
+        {
+            buffer.append(in.substring(0,idx));
+            buffer.append(replace);
+
+            in = in.substring(idx+expression.length());
+            
+            idx=in.indexOf(expression);
+        }
+
+        buffer.append(in);
+
+        return buffer.toString();
+
+    }
+
+
+
+    public String parseExpressionFull(String in, String expression, String replace)
+    {
+
+        String buffer;
+
+        int idx=in.indexOf(expression);
+        
+        if (replace==null)
+            replace ="";
+        
+        if (idx==-1)
+            return in;
+
+        buffer = "";
+        
+        if (idx!=-1)
+        {
+            
+            buffer = in.substring(0,idx) + replace + in.substring(idx+expression.length());
+            
+            idx=in.indexOf(expression);
+
+            if (idx!=-1) 
+                buffer = parseExpressionFull(buffer,expression,replace);
+
+        }
+
+        return buffer;
+
+    }
+    
+    
+    
+    
+    
+    
+    
 }

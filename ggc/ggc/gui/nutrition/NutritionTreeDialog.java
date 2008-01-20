@@ -73,7 +73,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     private I18nControl ic = null;
     public GGCTreePanel  panels[] = null;
-    private int selectedPanel = 0;
+// x   private int selectedPanel = 0;
 
 
 
@@ -165,7 +165,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
      */
     public void makePanelVisible(int num)
     {
-        selectedPanel = num;
+//x        selectedPanel = num;
 
         for(int i = 0; i < panels.length; i++)
             if(i == num)

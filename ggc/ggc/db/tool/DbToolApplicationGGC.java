@@ -35,7 +35,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     public String selected_lang = "en";
 
 
-    Hashtable config_db_values = null;
+    Hashtable<String,String> config_db_values = null;
 
 
     // LF
@@ -201,7 +201,7 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     public void loadConfig()
     {
 
-        config_db_values = new Hashtable();
+        config_db_values = new Hashtable<String,String>();
 
         Properties props = new Properties();
 

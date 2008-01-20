@@ -41,7 +41,7 @@ import javax.swing.table.JTableHeader;
 public class GlucoTable extends JTable
 {
 
-    private I18nControl m_ic = I18nControl.getInstance();    
+//x    private I18nControl m_ic = I18nControl.getInstance();    
     GlucoTableModel model = null;
 
     public GlucoTable()

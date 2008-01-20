@@ -6,19 +6,10 @@
 package ggc.data;
 
 
-import java.io.Serializable;
-//import java.text.SimpleDateFormat;
-//import java.util.ArrayList;
-//import java.util.Date;
-import java.util.Hashtable;
-//import java.util.Vector;
-
-//import ggc.db.DataBaseHandler;
-import ggc.util.I18nControl;
 import ggc.util.DataAccess;
 
-import ggc.data.DailyValues;
-import ggc.data.DailyValuesRow;
+import java.io.Serializable;
+import java.util.Hashtable;
 
 
 public class WeeklyValues implements Serializable

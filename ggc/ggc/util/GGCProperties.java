@@ -50,7 +50,7 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     //private boolean changed_db = false;
     private boolean changed_config = false;
-    private boolean changed_scheme = false;
+    //private boolean changed_scheme = false;
 
     private ConfigurationManager m_cfg_mgr = null;
 
@@ -92,7 +92,7 @@ public class GGCProperties //extends GGCPropertiesHelper
     public void setColorSchemes(Hashtable<String, ColorSchemeH> table, boolean isnew)
     {
         this.m_color_schemes = table;
-        this.changed_scheme = isnew;
+        //this.changed_scheme = isnew;
     }
 
     public Hashtable<String, ColorSchemeH> getColorSchemes()

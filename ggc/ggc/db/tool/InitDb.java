@@ -28,22 +28,24 @@
 
 package ggc.db.tool;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
-
 import ggc.db.GGCDb;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.NutritionDefinition;
 import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.hibernate.ColorSchemeH;
+import ggc.db.hibernate.DoctorTypeH;
 import ggc.db.hibernate.MeterCompanyH;
 import ggc.db.hibernate.MeterH;
 import ggc.db.hibernate.MeterImplementationH;
 import ggc.db.hibernate.MeterInterfaceH;
+import ggc.util.DataAccess;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 
 public class InitDb 
@@ -55,6 +57,7 @@ public class InitDb
     GGCDb m_db = null;
 
     Hashtable<String,NutritionHomeWeightType> home_weight_type_list = null;
+    DataAccess m_da = DataAccess.getInstance();
 
 
 
@@ -236,7 +239,7 @@ public class InitDb
 	    while ((line=br.readLine())!=null) 
 	    {
 
-		line = parseExpressionFull(line, "^^", "^0.0^");
+		line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
 		if (line.charAt(line.length()-1)=='^') 
 		    line = line+"0.0";
@@ -297,7 +300,7 @@ public class InitDb
 	    while ((line=br.readLine())!=null) 
 	    {
 
-		line = parseExpressionFull(line, "^^", "^0.0^");
+		line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
 		if (line.charAt(line.length()-1)=='^') 
 		    line = line+"0.0";
@@ -402,7 +405,7 @@ public class InitDb
             
             while ((line=br.readLine())!=null) 
             {
-                line = parseExpressionFull(line, "^^", "^0.0^");
+                line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
                 if (line.charAt(line.length()-1)=='^') 
                     line = line+"0.0";
@@ -455,7 +458,7 @@ public class InitDb
 
 	    while ((line=br.readLine())!=null) 
 	    {
-		line = parseExpressionFull(line, "^^", "^0.0^");
+		line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
 		if (line.charAt(line.length()-1)=='^') 
 		    line = line+"0.0";
@@ -523,7 +526,7 @@ public class InitDb
 	    while ((line=br.readLine())!=null) 
 	    {
 
-		line = parseExpressionFull(line, "^^", "^0.0^");
+		line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
 		if (line.charAt(line.length()-1)=='^') 
 		    line = line+"0.0";
@@ -626,6 +629,113 @@ public class InitDb
     }
 
 
+    public void insertDoctorTypes()
+    {
+	
+	System.out.println("\nLoading Doctor Types (4/dot)");
+
+	// id, name, predefined
+	
+	String data[] = { 
+	    "1", "ADDICTION_MEDICINE", "1",            
+	    "2", "ADOLESCENT_MEDICINE", "1",          
+	    "3", "AIDS_HIV_CARE=AIDS/HIV Care", "1",                
+	    "4", "ANESTHESIOLOGY", "1",          
+	    "5", "ASTHMA_ALLERGY_IMMUNOLOGY", "1", 
+	    "6", "BREAST_CANCER_SURGERY", "1",
+	    "7", "CARDIAC_SURGERY", "1",
+	    "8", "CHILD_CARE", "1",
+	    "9", "CARDIOLOGY", "1",
+	    "10", "COLORECTAL_SURGERY", "1",   
+	    "11", "COSMETIC_SURGERY", "1",
+	    "12", "CRITICAL_CARE", "1",                
+	    "13", "DENTAL_SPECIALTIES", "1", 
+	    "14", "DERMATOLOGY", "1",                   
+	    "15", "DIABETES", "1",                     
+	    "16", "EMERGENCY_MEDICINE", "1",
+	    "17", "ENDOCRINOLOGY", "1",                
+	    "18", "EPILEPSY", "1",                     
+	    "19", "FAMILY_MEDICINE", "1",              
+	    "20", "GASTROENTEROLOGY", "1",                          
+	    "21", "GENERAL_SURGERY", "1",
+	    "22", "GENERAL_INTERNAL_MEDICINE", "1",
+	    "23", "GERIATRICS", "1",                   
+	    "24", "GYNECOLOGIC_ONCOLOGY", "1",         
+	    "25", "GYNECOLOGY", "1",                   
+	    "26", "HAND_SURGERY", "1",                 
+	    "27", "HEAD_AND_NECK_SURGERY", "1",        
+	    "28", "HEADACHE", "1",                     
+	    "29", "HEMATOLOGY", "1",
+	    "30", "HOSPITAL_INTERNAL_MEDICINE", "1",
+	    "31", "INFECTIOUS_DISEASES", "1",           
+	    "32", "INFERTILITY_MEDICINE", "1",                
+	    "33", "INTERNAL_MEDICINE", "1",
+	    "34", "LABORATORY_MEDICINE", "1",
+	    "35", "MIDWIFE", "1",   
+	    "36", "MEDICAL_GENETICS", "1",
+	    "37", "METABOLISM", "1",
+	    "38", "MOVEMENT_DISORDERS", "1",           
+	    "39", "NEONATOLOGY", "1",                  
+	    "40", "NEPHROLOGY", "1",                   
+	    "41", "NEUROLOGY", "1",                    
+	    "42", "NEURO_OPTHALMOLOGY", "1",
+	    "43", "NEUROSURGERY", "1",                 
+	    "44", "NUCLEAR_MEDICINE", "1",
+	    "45", "NUTRITION_MEDICINE", "1",
+	    "46", "OBSTETRICS_AND_GYNECOLOGY", "1",       
+	    "47", "ONCOLOGY_MEDICAL", "1",           
+	    "48", "ONCOLOGY_RADIATION", "1",         
+	    "49", "OPTHALMOLOGY", "1",                
+	    "50", "ORAL_MAXILLOFACIAL_SURGERY", "1",   
+	    "51", "ORTHOPEDIC_SURGERY", "1",  
+	    "52", "OTOLARYNGOLOGY", "1",              
+	    "53", "OTOLOGY", "1",                      
+	    "54", "PAIN_MANAGEMENT", "1",              
+	    "55", "PATHOLOGY", "1",                   
+	    "56", "PEDIATRIC", "1",                   
+	    "57", "PEDIATRIC_SPECIALISTS", "1",
+	    "58", "PERINATOLOGY", "1",              
+	    "59", "PHYSIATRY", "1",                    
+	    "60", "PHYSICAL_REHABILITATION", "1",  
+	    "61", "PLASTIC_RECONSTRUCTIVE_SURGERY", "1",              
+	    "62", "PODIATRY", "1",                     
+	    "63", "PROSTATE_CARE", "1",           
+	    "64", "PSYCHIATRY", "1",                   
+	    "65", "PSYCHOLOGY", "1",                   
+	    "66", "PULMONARY_MEDICINE", "1",           
+	    "67", "RADIOLOGY", "1",    
+	    "68", "RADIATION_ONCOLOGY", "1",
+	    "69", "REPRODUCTIVE_ENDOCRINOLOGY_INFERTILITY", "1",
+	    "70", "RHEUMATOLOGY", "1",                 
+	    "71", "SLEEP_DISOREDERS", "1",                              
+	    "72", "SPORTS_MEDICINE", "1",              
+	    "73", "THORACIC_SURGERY", "1",  
+	    "74", "TRANSPLANT", "1",                   
+	    "75", "UROLOGY", "1",
+	    "76", "VASCULAR_SURGERY", "1"                     	
+	};
+
+	
+	int j = 0;
+	
+	for(int i=0; i<data.length; i+=3)
+	{
+	    //new DoctorTypeH()
+	    DoctorTypeH dth = new DoctorTypeH(data[i+1], 1); 
+	    dth.setId(Long.parseLong(data[i]));
+
+	    m_db.addHibernate(dth);
+	    
+	    j++;
+	    
+	    if (j%4==0)
+		System.out.print(".");
+	}
+	
+    }
+    
+    
+    
     public void insertMeters()
     {
 	// implementation id=special
@@ -826,72 +936,7 @@ public class InitDb
 
 
 
-    private String parseExpression(String in, String expression, String replace)
-    {
 
-        StringBuffer buffer;
-
-        int idx=in.indexOf(expression);
-        
-        if (replace==null)
-            replace ="";
-        
-        if (idx==-1)
-            return in;
-
-        buffer = new StringBuffer();
-        
-        while (idx!=-1)
-        {
-            buffer.append(in.substring(0,idx));
-            buffer.append(replace);
-
-            in = in.substring(idx+expression.length());
-            
-            idx=in.indexOf(expression);
-        }
-
-        buffer.append(in);
-
-        return buffer.toString();
-
-    }
-
-
-
-    private String parseExpressionFull(String in, String expression, String replace)
-    {
-
-        String buffer;
-
-        int idx=in.indexOf(expression);
-        
-        if (replace==null)
-            replace ="";
-        
-        if (idx==-1)
-            return in;
-
-        buffer = "";
-        
-        if (idx!=-1)
-        {
-            
-            buffer = in.substring(0,idx) + replace + in.substring(idx+expression.length());
-            
-            idx=in.indexOf(expression);
-
-            if (idx!=-1) 
-                buffer = parseExpressionFull(buffer,expression,replace);
-
-        }
-
-        return buffer;
-
-    }
-
-
-    //XXX: what if input isn't a valid int?
     public int getInt(String input)
     {
 

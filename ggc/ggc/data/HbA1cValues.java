@@ -87,7 +87,7 @@ public class HbA1cValues
 
     public void processDayValues()
     {
-    	for (Enumeration en = m_dataTable.keys(); en.hasMoreElements(); )
+    	for (Enumeration<String> en = m_dataTable.keys(); en.hasMoreElements(); )
     	{
     	    DailyValues dv = m_dataTable.get(en.nextElement());
     	    addDay(dv.getAvgBG(), dv.getBGCount());

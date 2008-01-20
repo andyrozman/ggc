@@ -152,7 +152,6 @@ public class GGCDbLoader extends Thread
             mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
         }
 
-        
     }
 
     public void setDbStatus(int status)

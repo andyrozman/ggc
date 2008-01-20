@@ -100,7 +100,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
         label = new JLabel(ic.getMessage("FOOD_DESCRIPTION"));
-        label.setBounds(30, 35, 460, 40);
+        label.setBounds(30, 30, 460, 40);
         label.setFont(font_big); 
 	//label.setBackground(Color.red);
 	//label.setBorder(BorderFactory.createLineBorder(Color.blue));
@@ -117,10 +117,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	label_name = new JLabel();
 	label_name.setBounds(30, 105, 460, 50);
 	label_name.setVerticalAlignment(JLabel.TOP);
-	//label_name.setBackground(Color.red);
-	//label_name.setBorder(BorderFactory.createLineBorder(Color.blue));
 	label_name.setFont(fnt_14); 
-	//this.add(label_name, null);
 	this.add(label_name, ZeroLayout.DYNAMIC);
 
 
@@ -130,12 +127,10 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	this.add(label, null);
 
 
-	this.label_name_i18n = new JLabel();
-	this.label_name_i18n.setBounds(30, 180, 460, 50);
+	this.label_name_i18n = new JLabel();  // 180
+	this.label_name_i18n.setBounds(30, 165, 460, 50);
 	label_name.setVerticalAlignment(JLabel.TOP);
 	this.label_name_i18n.setFont(fnt_14); 
-	//label_name_i18n.setBackground(Color.red);
-	//label_name_i18n.setBorder(BorderFactory.createLineBorder(Color.blue));
 	this.add(this.label_name_i18n, ZeroLayout.DYNAMIC);
 
 
@@ -339,8 +334,8 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	while(strtok.hasMoreTokens())
 	{
 	    NutritionDataDisplay ndd1 = new NutritionDataDisplay(ic, strtok.nextToken());
-	    ndd.setNutritionDefinition(this.m_da.getDb().nutrition_defs.get(ndd1.getId()));
-	    list_nutrition.add(ndd);
+	    ndd1.setNutritionDefinition(this.m_da.getDb().nutrition_defs.get(ndd1.getId()));
+	    list_nutrition.add(ndd1);
 	}
 
 
@@ -350,7 +345,10 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	while(strtok.hasMoreTokens())
 	{
 	    HomeWeightDataDisplay hwd1 = new HomeWeightDataDisplay(ic, strtok.nextToken());
-	    hwd.setHomeWeightDefinition(this.m_da.getDb().homeweight_defs.get(hwd1.getId()).getName());
+	    //String name = this.m_da.getDb().homeweight_defs.get(hwd1.getId()).getName();
+	    
+	    //System.out.println("Home Weight: " + name);
+	    hwd1.setHomeWeightDefinition(this.m_da.getDb().homeweight_defs.get(hwd1.getId()).getName());
 	    this.list_weight.add(hwd1);
 	}
 
@@ -368,7 +366,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	ATTableModel model = new ATTableModel(lst, object);
 	table.setModel(model);	
 
-	int twidth2 = this.getWidth()-50;
+//	int twidth2 = this.getWidth()-50;
 	table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 	TableColumnModel cm2 = table.getColumnModel();
 
@@ -412,6 +410,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	public NutritionDataDisplay(I18nControlAbstract ic, String full)
 	{
 	    super(ic);
+	//    System.out.println("Nutr: " + full);
 	    int index = full.indexOf("=");
 	    this.id = full.substring(0, index);
 	    this.value = full.substring(index+1);
@@ -420,7 +419,9 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 	private void setNutritionDefinition(NutritionDefinition def)
 	{
+	    this.id = "" + def.getId();
 	    this.name = def.getName();
+	    //this.value = def.get.getTag();
 	    this.weight_unit = def.getWeight_unit();
 	}
 
@@ -539,7 +540,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 	private void setHomeWeightDefinition(String name)
 	{
-	    this.weight_type = name;
+	    this.weight_type = ic.getMessage(name);
 	}
 
     }

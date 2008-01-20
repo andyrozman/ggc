@@ -45,14 +45,14 @@ public class NutritionTreeModel implements TreeModel
 
     private boolean m_debug = false;
 
-    private boolean isRoot = false;
+//x    private boolean isRoot = false;
     private Vector<TreeModelListener> treeModelListeners = new Vector<TreeModelListener>();
     private GGCTreeRoot rootObj = null;
 
 
     public NutritionTreeModel(GGCTreeRoot rt) 
     {
-        isRoot = true;
+        //x isRoot = true;
         rootObj = rt;
     }
 
@@ -151,7 +151,7 @@ public class NutritionTreeModel implements TreeModel
         if (parent instanceof GGCTreeRoot)
         {
             FoodGroup dii = (FoodGroup)child;
-            Iterator it = rootObj.m_foodGroups.iterator();
+            Iterator<FoodGroup> it = rootObj.m_foodGroups.iterator();
 
             int i = -1;
 
@@ -170,19 +170,20 @@ public class NutritionTreeModel implements TreeModel
     	{
     
     	    FoodDescription dii = (FoodDescription)child;
-    	    ArrayList lst = this.rootObj.m_foodDescByGroup.get(""+dii.getFood_group_id());
-    	    Iterator it = lst.iterator();
+    	    ArrayList<FoodDescription> lst = this.rootObj.m_foodDescByGroup.get(""+dii.getFood_group_id());
+    	    Iterator<FoodDescription> it = lst.iterator();
     
     	    int i = -1;
     
     	    while (it.hasNext()) 
     	    {
-        		i++;
-        
-        		FoodDescription c = (FoodDescription)it.next();
-        
-        		if (dii.getId()==c.getId()) 
-        		    return i;
+    		i++;
+    
+    		//FoodDescription c = (FoodDescription)it.next();
+    		FoodDescription c = it.next();
+    
+    		if (dii.getId()==c.getId()) 
+    		    return i;
     	    }
     
     	}
@@ -212,7 +213,7 @@ public class NutritionTreeModel implements TreeModel
     	else if (node instanceof FoodGroup)
     	{
     	    FoodGroup fg = (FoodGroup)node;
-    	    ArrayList lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
+    	    ArrayList<FoodDescription> lst = this.rootObj.m_foodDescByGroup.get(""+fg.getId());
     	    return lst.size() == 0;
     	}
     	else

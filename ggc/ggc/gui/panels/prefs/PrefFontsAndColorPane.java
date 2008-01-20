@@ -138,7 +138,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     	schemePanel.add(new JLabel(m_ic.getMessage("SELECTED_COLOR_SCHEME")+":"));
     	schemePanel.add(cb_scheme = new JComboBox(av_schemes_names));
 
-        JPanel butPanel = new JPanel(new GridLayout(1, 3));
+//x        JPanel butPanel = new JPanel(new GridLayout(1, 3));
 
         schemePanel.add(bt_new_scheme =new JButton(m_ic.getMessage("ADD")));
         schemePanel.add(bt_edit_scheme = new JButton(m_ic.getMessage("EDIT_DEL_SHORT")));
@@ -304,7 +304,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
     }
 
-
+/* x
     private int findIndex(String col)
     {
     	for (int i=0; i<this.av_schemes_names.length; i++)
@@ -317,7 +317,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     
     	return -1;
     }
-
+*/
 
     /**
      * Invoked when an item has been selected or deselected by the user.
@@ -442,7 +442,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 	av_schemes_names = new String[color_schemes.size()];
 
 	int i=0;
-	for (Enumeration en = this.color_schemes.keys(); en.hasMoreElements(); ) 
+	for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements(); ) 
 	{
 	    ColorSchemeH cs = color_schemes.get(en.nextElement());
 	    av_schemes_names[i] = cs.getName();
@@ -480,7 +480,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     public void saveProps()
     {
 
-    	for (Enumeration en = this.color_schemes.keys(); en.hasMoreElements(); ) 
+    	for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements(); ) 
     	{
     	    String key = (String)en.nextElement();
     	    ColorSchemeH cs = this.color_schemes.get(key);

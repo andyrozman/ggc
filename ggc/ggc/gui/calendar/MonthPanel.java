@@ -28,21 +28,21 @@
 package ggc.gui.calendar;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-
 import ggc.data.calendar.CalendarEvent;
 import ggc.data.calendar.CalendarListener;
 import ggc.data.calendar.CalendarModel;
 import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
 
 
 public class MonthPanel extends JPanel implements CalendarListener
 {
-    private I18nControl m_ic = I18nControl.getInstance();    
+    //xprivate I18nControl m_ic = I18nControl.getInstance();    
     private DataAccess m_da = DataAccess.getInstance();
 
     /*

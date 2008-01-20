@@ -66,7 +66,7 @@ public class GlucoValues extends DailyValues
 
 
         WeeklyValues wv = DataAccess.getInstance().getDayStatsRange(sDate, eDate);
-        Hashtable table = wv.getAllValues();
+        Hashtable<String,DailyValues> table = wv.getAllValues();
 
     	//System.out.println("GlucoValues: " + table.size());
     
@@ -74,7 +74,7 @@ public class GlucoValues extends DailyValues
     	//System.out.println("Start: " + m_da.getDateTimeStringFromGregorianCalendar(sDate,2));
     	//System.out.println("End: " + m_da.getDateTimeStringFromGregorianCalendar(eDate,2));
 
-        for (Enumeration en = table.keys(); en.hasMoreElements(); ) 
+        for (Enumeration<String> en = table.keys(); en.hasMoreElements(); ) 
         {
             String key = (String)en.nextElement();
             addDayValues((DailyValues)table.get(key));

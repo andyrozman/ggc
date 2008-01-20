@@ -71,7 +71,7 @@ public class TimerThread extends Thread
         while(running)
         {
             
-            long time1 = System.currentTimeMillis();
+//x            long time1 = System.currentTimeMillis();
             
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTimeInMillis(System.currentTimeMillis());

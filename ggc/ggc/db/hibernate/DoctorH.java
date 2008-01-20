@@ -12,9 +12,6 @@ public class DoctorH implements Serializable {
     private long id;
 
     /** nullable persistent field */
-    private long doctor_type_id;
-
-    /** nullable persistent field */
     private String name;
 
     /** nullable persistent field */
@@ -33,18 +30,25 @@ public class DoctorH implements Serializable {
     private String extended;
 
     /** nullable persistent field */
+    private int visible;
+
+    /** nullable persistent field */
     private String comment;
 
+    /** nullable persistent field */
+    private ggc.db.hibernate.DoctorTypeH doctor_type;
+
     /** full constructor */
-    public DoctorH(long doctor_type_id, String name, String address, String phone_gsm, String phone, String working_time, String extended, String comment) {
-        this.doctor_type_id = doctor_type_id;
+    public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String extended, int visible, String comment, ggc.db.hibernate.DoctorTypeH doctor_type) {
         this.name = name;
         this.address = address;
         this.phone_gsm = phone_gsm;
         this.phone = phone;
         this.working_time = working_time;
         this.extended = extended;
+        this.visible = visible;
         this.comment = comment;
+        this.doctor_type = doctor_type;
     }
 
     /** default constructor */
@@ -57,14 +61,6 @@ public class DoctorH implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getDoctor_type_id() {
-        return this.doctor_type_id;
-    }
-
-    public void setDoctor_type_id(long doctor_type_id) {
-        this.doctor_type_id = doctor_type_id;
     }
 
     public String getName() {
@@ -115,12 +111,28 @@ public class DoctorH implements Serializable {
         this.extended = extended;
     }
 
+    public int getVisible() {
+        return this.visible;
+    }
+
+    public void setVisible(int visible) {
+        this.visible = visible;
+    }
+
     public String getComment() {
         return this.comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public ggc.db.hibernate.DoctorTypeH getDoctor_type() {
+        return this.doctor_type;
+    }
+
+    public void setDoctor_type(ggc.db.hibernate.DoctorTypeH doctor_type) {
+        this.doctor_type = doctor_type;
     }
 
     public String toString() {

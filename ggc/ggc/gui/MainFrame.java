@@ -28,8 +28,10 @@
 package ggc.gui;
 
 import ggc.gui.dialogs.AboutGGCDialog;
+import ggc.gui.dialogs.AppointmentsDialog;
 import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
+import ggc.gui.dialogs.DoctorsDialog;
 import ggc.gui.dialogs.FrequencyGraphDialog;
 import ggc.gui.dialogs.HbA1cDialog;
 import ggc.gui.dialogs.PrintingDialog;
@@ -57,7 +59,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -91,6 +92,7 @@ import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 //   0.2.9.3   remove meters support
 //    Menus (all), About, Db (all)
 // 
+//Specialty Definitions - Types of Doctors
 
 
 public class MainFrame extends JFrame 
@@ -195,6 +197,7 @@ public class MainFrame extends JFrame
     }
 
 
+	//Specialty Definitions - Types of Doctors
 
 
 
@@ -212,13 +215,19 @@ public class MainFrame extends JFrame
         statusPanel = new StatusBar();
 
         this.actions = new Hashtable<String,GGCAction>();
+        MainFrame.developer_version = developer_version;
 
-        setTitle(title + " (" + full_version + ")");
+        String title_full = title + " (" + full_version + ")";
+        
+        if (developer_version)
+            title_full += " - Developer edition";
+        
+        
+        setTitle(title_full);
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-        MainFrame.developer_version = developer_version;
 
 
 //menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;
@@ -267,8 +276,8 @@ public class MainFrame extends JFrame
 	this.createAction(this.menu_tools, "MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", null);
 	this.menu_tools.addSeparator();
 	this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC", "tools_db_maint", null);
-	this.menu_tools.addSeparator();
-	this.createAction(this.menu_tools, "MN_METER_LIST", "MN_METER_LIST_DESC", "tools_mlist", null);
+	//this.menu_tools.addSeparator();
+	//this.createAction(this.menu_tools, "MN_METER_LIST", "MN_METER_LIST_DESC", "tools_mlist", null);
 
 	//addMenuItem(menu_tools, prefAction);
 
@@ -306,7 +315,7 @@ public class MainFrame extends JFrame
         addToolBarSpacer();
         addToolBarSpacer();
 
-        addToolBarButtonWithName("test");
+        //y addToolBarButtonWithName("test");
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
@@ -611,9 +620,31 @@ public class MainFrame extends JFrame
 	    {
 		featureNotImplemented(command, "0.4");
 	    }
+	    else if (command.equals("doc_docs"))
+	    {
+		if (MainFrame.developer_version)
+		{
+		    new DoctorsDialog(MainFrame.this);
+		}
+		else
+		    featureNotImplemented(command, "0.5");
+		    
+		
+	    }
+	    else if (command.equals("doc_appoint"))
+	    {
+		if (MainFrame.developer_version)
+		{
+		    new AppointmentsDialog(MainFrame.this);
+		}
+		else
+		    featureNotImplemented(command, "0.5");
+		    
+		
+	    }
 	    else if ((command.equals("report_pdf_extended")) ||
-                 (command.equals("doc_docs")) ||
-                 (command.equals("doc_appoint")) ||
+                 //(command.equals("doc_docs")) ||
+                 //(command.equals("doc_appoint")) ||
                  (command.equals("doc_stocks")) ||
                  (command.equals("food_meals")))
 	    {

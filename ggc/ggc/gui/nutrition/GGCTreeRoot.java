@@ -44,7 +44,7 @@ public class GGCTreeRoot
 
     private int m_type = 1;
 
-    public ArrayList m_foodGroups = null;
+    public ArrayList<FoodGroup> m_foodGroups = null;
     public Hashtable<String, ArrayList<FoodDescription>> m_foodDescByGroup = null;
 
 
@@ -58,23 +58,24 @@ public class GGCTreeRoot
         if (type==1)
         {
 	    m_foodGroups = db.getFoodGroups();
-	    Iterator it = m_foodGroups.iterator();
+	    Iterator<FoodGroup> it = m_foodGroups.iterator();
 
 	    m_foodDescByGroup = new Hashtable<String, ArrayList<FoodDescription>>();
 
 	    while (it.hasNext())
 	    {
-		FoodGroup fg = (FoodGroup)it.next();
+		//FoodGroup fg = (FoodGroup)it.next();
+		FoodGroup fg = it.next();
 		m_foodDescByGroup.put(""+fg.getId(), new ArrayList<FoodDescription>());
 	    }
 
 	    
 	    ArrayList<FoodDescription> list = db.getFoodDescriptions();
-	    it = list.iterator();
+	    Iterator<FoodDescription> it2 = list.iterator();
 
-	    while (it.hasNext())
+	    while (it2.hasNext())
 	    {
-		FoodDescription fd = (FoodDescription)it.next();
+		FoodDescription fd = (FoodDescription)it2.next();
 
 		ArrayList<FoodDescription> al = m_foodDescByGroup.get(""+fd.getFood_group_id());
 		al.add(fd);
@@ -98,7 +99,7 @@ public class GGCTreeRoot
         if (type==1)
         {
 	    m_foodGroups = db.getFoodGroups();
-	    Iterator it = m_foodGroups.iterator();
+	    Iterator<FoodGroup> it = m_foodGroups.iterator();
 
 	    m_foodDescByGroup = new Hashtable<String, ArrayList<FoodDescription>>();
 
@@ -110,11 +111,12 @@ public class GGCTreeRoot
 
 	    
 	    ArrayList<FoodDescription> list = db.getFoodDescriptions();
-	    it = list.iterator();
+	    Iterator<FoodDescription> it2 = list.iterator();
 
-	    while (it.hasNext())
+	    while (it2.hasNext())
 	    {
-		FoodDescription fd = (FoodDescription)it.next();
+		//FoodDescription fd = (FoodDescription)it2.next();
+		FoodDescription fd = it2.next();
 
 		ArrayList<FoodDescription> al = m_foodDescByGroup.get(""+fd.getFood_group_id());
 		al.add(fd);

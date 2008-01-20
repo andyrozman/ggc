@@ -14,9 +14,13 @@ public class DoctorTypeH implements Serializable {
     /** nullable persistent field */
     private String name;
 
+    /** nullable persistent field */
+    private int predefined;
+
     /** full constructor */
-    public DoctorTypeH(String name) {
+    public DoctorTypeH(String name, int predefined) {
         this.name = name;
+        this.predefined = predefined;
     }
 
     /** default constructor */
@@ -37,6 +41,14 @@ public class DoctorTypeH implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPredefined() {
+        return this.predefined;
+    }
+
+    public void setPredefined(int predefined) {
+        this.predefined = predefined;
     }
 
     public String toString() {

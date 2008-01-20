@@ -36,6 +36,7 @@
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
         <property name="name"  type="string" length="1000" />
+        <property name="predefined" type="int" />
     </class>
 
     <!--  Doctor -->
@@ -43,13 +44,14 @@
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
-        <property name="doctor_type_id"  type="long"  />
+        <many-to-one name="doctor_type" class="ggc.db.hibernate.DoctorTypeH" lazy="false" /> 
         <property name="name"  type="string" length="100" />
         <property name="address"  type="string" length="2000" />
         <property name="phone_gsm"  type="string" length="500" />
         <property name="phone"  type="string" length="500" />
         <property name="working_time"  type="text"  />
         <property name="extended"  type="text" />
+        <property name="visible" type="int" />
         <property name="comment"  type="string" length="4000" />
     </class>
 
@@ -58,7 +60,7 @@
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
-        <property name="doctor_id"  type="long" not-null="true" />
+        <many-to-one name="doctor" class="ggc.db.hibernate.DoctorH" lazy="false" /> 
         <property name="dt_apoint"  type="long" not-null="true" />
         <property name="apoint_text"  type="string" length="1000" />
         <property name="extended"  type="text" />
@@ -143,5 +145,17 @@
         <property name="color_ins_perbu"  type="int" />
         <property name="color_ch"  type="int" />
     </class>
+
+    <class name="ggc.db.hibernate.DbInfoH" table="db_info">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="key" type="string"  length="44" not-null="true" />    
+        <property name="value" type="string"  length="255"/>    
+        <property name="type" type="int"  />    <!-- 1-string, 2-int, 3=float -->
+        <property name="description" type="string" length="255" />   
+    </class>
+
+
 
 </hibernate-mapping>
