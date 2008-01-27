@@ -237,7 +237,15 @@ public class GlucoValues extends DailyValues
 
     public String getDateForDayAt(int i)
     {
-        return (dayValues.elementAt(i)).getDayAndMonthAsString();
+        // if the caller requests a key we can't supply, return null (not an exception)
+        if (dayValues.size() <= i)
+        {
+            return null;
+        }
+        else
+        {
+            return (dayValues.elementAt(i)).getDayAndMonthAsString();
+        }
     }
 
 

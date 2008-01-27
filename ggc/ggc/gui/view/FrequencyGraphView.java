@@ -90,7 +90,15 @@ public class FrequencyGraphView extends AbstractGraphView
                 }
             }
         }
-        avgBG = (int)(sum / c);
+        
+        if (c > 0)
+        {
+            avgBG = (int)(sum / c);
+        }
+        else
+        {
+            avgBG = 0;
+        }
     }
 
     @Override

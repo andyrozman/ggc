@@ -1,3 +1,9 @@
+2008-01-21 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * removed YOUR_CURRENT from GGC_en and GGC_de
+    * key "SPREAD_GRAPH" seems to have gone missing
+    * some more translation
+    * documented some bugs
+
 2008-01-20 (v0.2.9.2 - 0.2.9.4) Andy Rozman <andyrozman@users.sourceforge.net>
     * Added code for future versions
     * Import of old DailiyValues data (from 0.3 export or MeterTool), just class, no gui
@@ -14,11 +20,11 @@
     * ant build files changed (GGCBuild.properties_default)
     * nutrition (usdb) db view fixed, nutrition (USDb) is with this change finished 
 
-
 2008-01-20 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * removed a couple of @Override Tags to make to project compile again
-    * partial sync between GGC_de and GGC_en
+    * sync between GGC_de and GGC_en
     * small correction of slovene that slipped into GGC_en
+    * fixed some small problems with graphs display when no data is present
 
 2008-01-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * updated german translation
