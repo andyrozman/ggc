@@ -1,0 +1,141 @@
+TO-DO LIST
+==========
+
+Development of Meter Tools runs totally independent on GGC project
+
+
+Tasks:
+
+Basic:
+- Configuration
+- Read data
+- Create data structures for Meter imports
+- Meter Manager (should contain ALL meters sold everywhere)
+- Meters List - Display of Meter Manager
+- Output classes for exporting/displaying data
+
+GGC:
+- Plugin support for GGC
+- Read data from GGC
+
+
+Different meters implementations:
+* EuroFlash - rewrite for use with Meter Tool
+* FreeStyle - rewrite for use with Meter Tool
+* GlucoCard - rewrite for use with Meter Tool
+* Ascensia support
+
+
+
+
+
+
+Level 1 (High Priority): 
+----------------------------
+
+
+Level 2 (Medium 1 Priority):
+----------------------------
+
+
+
+Level 3 (Medium 2 Priority):
+----------------------------
+
+* Meters List
+    o  Db (meter_company, meters, meters_interface)
+    o  Table
+    o  Change Meter Manager
+
+
+
+
+Level 4 (Medium 3 Priority):
+----------------------------
+
+
+
+Level 5 (Low Priority):
+----------------------------
+
+* Meter Manager OLD
+    o  Change to support rtxos Java COM API
+    o  Dummy meter
+* Meter Manager NEW
+    o  Create New Meter Manager
+    o  Dummy meter 
+    o  Ascensia Meter family (add/test)
+    o  Try to rewrite old meters to new Meter Interface
+
+
+METERS
+------
+- New Meter Dialog
+- New Meter Interface
+- Dummy Old Meter
+- Dummy New Meter
+- Implement meter support: ...
+
+
+---------
+
+
+
+
+
+
+------
+
+
+Version 0.3:
+- Meters list 
+- Old meters support only
+- Meters List -> MeterManager changes
+
+* Configuration: <moved to meter development tree> 
+    o  Fix setting com port
+
+
+
+Release on 25.4.
+
+
+
+Version 0.4:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   - Meter Manager NEW
+- New Meter Import framework (26.3.-1.4.)
+- Ascensia Meter Support (2.4.-8.4.)
+   - Meter Import Base
+   - Meter: Ascensia Contour support
+
+0.5:
+   - Ascensia Family support
+
+
+
+
+===============================================================================
+DONE
+===============================================================================
+
