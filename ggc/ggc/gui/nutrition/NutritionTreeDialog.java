@@ -30,6 +30,7 @@ package ggc.gui.nutrition;
 import ggc.db.GGCDb;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
+import ggc.db.datalayer.MealGroup;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
@@ -37,8 +38,11 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Hashtable;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -51,8 +55,9 @@ import javax.swing.tree.TreeSelectionModel;
 
 
 
-public class NutritionTreeDialog extends JDialog implements TreeSelectionListener, MouseListener
+public class NutritionTreeDialog extends JDialog implements TreeSelectionListener, MouseListener, ActionListener
 {
+
     private JPanel mainPane;
     private JTree tree;
 
@@ -70,6 +75,8 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 // x   private int selectedPanel = 0;
 
     public int m_tree_type = 1;
+    
+    private Hashtable<String,MenuItem> menus; 
     
 
     
@@ -133,6 +140,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
         createPanels();
         this.add(panel);
         makePanelVisible(0);
+        initMenu();
  
         this.setVisible(true);
         
@@ -281,6 +289,8 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     public void mouseEntered(MouseEvent me)
     {}
 
+    private Object mouse_selected_object = null;
+    
     public void mouseReleased(MouseEvent me)
     {
 	
@@ -288,8 +298,10 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 	
 	if (me.isPopupTrigger()) // right click, show popup menu
 	{
+	    mouse_selected_object = me.getSource();
+	    createMenu();
 		System.out.println("Mouse: popUp trigger");
-		pop.add(new MenuItem("Test"));
+		//pop.add(new MenuItem("Test"));
 	    pop.show(me.getComponent(), me.getX(), me.getY());
 	}
 	else
@@ -307,6 +319,155 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     
     
     
+    public void initMenu()
+    {
+	this.menus = new Hashtable<String,MenuItem>();
+	
+	String mens[];
+	
+	if (this.m_tree_type == 1)
+	{
+	    mens = new String[] {
+		"view", "VIEW", 
+		"close", "CLOSE"
+	    };
+	    
+	    
+	    
+	}
+	else if (this.m_tree_type==2)
+	{
+	    mens = new String[] {
+			"view", "VIEW", 
+			"close", "CLOSE",
+			"edit_group", "EDIT_GROUP",
+			"add_group", "ADD_GROUP",
+			"add_item", "ADD_FOOD_DESCRIPTION",
+			"edit_item", "EDIT_FOOD_DESCRIPTION"
+		    };
+	} 
+	else 
+	{
+	    mens = new String[] {
+			"view", "VIEW", 
+			"close", "CLOSE",
+			"edit_group", "EDIT_GROUP",
+			"add_group", "ADD_GROUP",
+			"add_item", "ADD_MEAL",
+			"edit_item", "EDIT_MEAL"
+		    };
+	}
+
+	for(int i=0; i<mens.length; i+=2)
+	{
+	    MenuItem men = new MenuItem();
+	    men.setActionCommand(mens[i]);
+	    men.setLabel(ic.getMessage("PM_NUT" + mens[i+1]));
+	    men.addActionListener(this);
+	    
+	    this.menus.put(mens[i], men);
+	}
+	
+	
+    }
+    
+    boolean made = false;
+    int menu_prev_type = 0;
+    
+    public void createMenu()
+    {
+	if (this.m_tree_type==1)
+	{
+	    if (made)
+	    	return;
+	    
+	    this.pop.add(menus.get("view"));
+	    this.pop.addSeparator();
+	    this.pop.add(menus.get("view"));
+	    made = true;
+	}
+	else
+	{
+	    int curr_type = getTreeItemType();
+	    
+	    if (this.menu_prev_type == curr_type)
+		return;
+	    else
+	    {
+		if (curr_type == 2)
+		{
+		    pop.removeAll();
+		    
+		    pop.add(menus.get("view"));
+		    pop.addSeparator();
+
+		    pop.add(menus.get("edit_group"));
+		    pop.add(menus.get("add_group"));
+		    pop.add(menus.get("add_item"));
+		    pop.addSeparator();
+		    
+		    pop.add(menus.get("close"));
+		    
+		}
+		else if (curr_type==3)
+		{
+		    pop.removeAll();
+		    
+		    pop.add(menus.get("view"));
+		    pop.addSeparator();
+		    pop.add(menus.get("edit_item"));
+		    pop.addSeparator();
+		    pop.add(menus.get("close"));
+		}
+		else
+		{
+		    pop.removeAll();
+		    
+		    pop.add(menus.get("view"));
+		    pop.addSeparator();
+		    pop.add(menus.get("close"));
+		}
+	    }
+		
+		
+	    
+	}
+    }
+
+    
+    public int getTreeItemType()
+    {
+	if (this.mouse_selected_object instanceof GGCTreeRoot)
+	{
+	    return 1;
+	}
+	else
+	{
+	    if (this.m_tree_type==2)
+	    {
+		if (this.mouse_selected_object instanceof FoodGroup)
+		    return 2;
+		else
+		    return 3;
+	    }
+	    else if (this.m_tree_type==3)
+	    {
+		if (this.mouse_selected_object instanceof MealGroup)
+		    return 2;
+		else
+		    return 3;
+		
+	    }
+	    else
+            {
+                System.out.println("Error on mouse click: Wrong type:" + this.mouse_selected_object);
+                return -1;
+            }
+	    
+	}
+	//else
+	
+    }
     
     
     
@@ -354,4 +515,14 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent arg0)
+    {
+	// TODO Auto-generated method stub
+	System.out.println("Action performed, NOT handled");
+	
+    }
+    
+    
+    
 }
