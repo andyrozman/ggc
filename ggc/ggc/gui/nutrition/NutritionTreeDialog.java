@@ -27,37 +27,31 @@
 
 package ggc.gui.nutrition;
  
+import ggc.db.GGCDb;
+import ggc.db.datalayer.FoodDescription;
+import ggc.db.datalayer.FoodGroup;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
-//import java.util.ArrayList;
-//import java.util.Hashtable;
-//import java.util.Iterator;
-//import java.util.logging.Level;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JDialog;
-//import javax.swing.JFrame;
-//import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
-//import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-//import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import ggc.db.GGCDb;
-import ggc.gui.nutrition.GGCTreeRoot;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
-
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.FoodGroup;
 
 
-
-public class NutritionTreeDialog extends JDialog implements TreeSelectionListener 
+public class NutritionTreeDialog extends JDialog implements TreeSelectionListener, MouseListener
 {
     private JPanel mainPane;
     private JTree tree;
@@ -75,9 +69,18 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     public GGCTreePanel  panels[] = null;
 // x   private int selectedPanel = 0;
 
+    public int m_tree_type = 1;
+    
 
+    
+    
+    PopupMenu pop = new PopupMenu(); // the popup menu you want to use with the tree
 
-    public NutritionTreeDialog(DataAccess da) 
+//    addMouseListener(this);
+//    add(pop);
+    
+    
+    public NutritionTreeDialog(DataAccess da, int type) 
     {
 
         super(da.getParent(), "", true);
@@ -85,20 +88,28 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
         m_da = da;
         ic = m_da.m_i18n;
+        this.m_tree_type = type;
 
         //this.setResizable(false);
         this.setBounds(80, 50, 740, 560);
-        this.setTitle(ic.getMessage("USDA_NUTRITION_DATABASE"));
+        setTitle();
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1,0));
+        
+        //this.pop.s
+        //add(pop);
 
 
         //Create a tree that allows one selection at a time.
         tree = new JTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
+        this.setTreeModel(tree);
+        //tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
         tree.addTreeSelectionListener(this);
+        tree.addMouseListener(this);
+        tree.add(pop);
+
 
         JScrollPane treeView = new JScrollPane(tree);
 
@@ -127,8 +138,27 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
         
     }
 
+    
+    public int getType()
+    {
+	return this.m_tree_type;
+    }
+    
 
+    public void setTitle()
+    {
+        this.setTitle(ic.getMessage("USDA_NUTRITION_DATABASE"));
+    }
 
+    public void setTreeModel(JTree tree)
+    {
+	if ((this.m_tree_type==1) || (this.m_tree_type==2))
+	    tree.setModel(new NutritionTreeModel(m_da.tree_roots.get("" + this.m_tree_type)));
+	//else
+	    
+    }
+    
+    
     public void createPanels()
     {
 
@@ -242,21 +272,84 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 */
     }
 
+
+    
+    
+    public void mouseExited(MouseEvent me)
+    {}
+
+    public void mouseEntered(MouseEvent me)
+    {}
+
+    public void mouseReleased(MouseEvent me)
+    {
+	
+	System.out.println("Mouse released");
+	
+	if (me.isPopupTrigger()) // right click, show popup menu
+	{
+		System.out.println("Mouse: popUp trigger");
+		pop.add(new MenuItem("Test"));
+	    pop.show(me.getComponent(), me.getX(), me.getY());
+	}
+	else
+	{
+		System.out.println("Mouse: popUp NO trigger");
+	    // 	put the image stuff here
+	}
+    }
+
+    public void mousePressed(MouseEvent me)
+    {}
+
+    public void mouseClicked(MouseEvent me)
+    {}     
+    
+    
+    
+    
+    
+    
     public static void main(String args[])
     {
-	GGCDb db = new GGCDb();
-	db.initDb();
-
 	DataAccess da = DataAccess.getInstance();
+	
+	GGCDb db = new GGCDb(da);
+	db.initDb();
+	
+	da.setDb(db);
+	
+	//System.out.println("Load Nutrition #1");
+	//db.loadNutritionDb1();
 
+	/*
+	System.out.println("Load Nutrition #2");
+	db.loadNutritionDb2();
+	*/
+	//System.out.println("Load Meals");
+	//db.loadMealsDb();
+	
+	
+	//db.initDb();
+
+	//DataAccess da = DataAccess.getInstance();
+
+	
+	//GGCDbLoader loader = new GGCDbLoader(da);
+        //loader.start();
+	
+	
+	//makeFakeData();
+	
+	
 	/*JFrame fr = new JFrame();
 	//fr.setBounds(0,0,640,480);
 	//fr.setVisible(true);
 	//da.setParent(fr); */
-	da.m_nutrition_treeroot = new GGCTreeRoot(1);
+	//da.m_nutrition_treeroot = new GGCTreeRoot(1);
 
 	/*NutritionTreeDialog ntd =*/ 
-	new NutritionTreeDialog(da);
+	new NutritionTreeDialog(da, GGCTreeRoot.TREE_MEALS);
 
     }
 

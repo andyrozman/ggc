@@ -51,14 +51,14 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
     public void createPanel()
     {
 
-        this.setSize(420, 460);
+        this.setSize(460, 460);
         this.setLayout(null);
 
         Font fnt_18 = new Font("Times New Roman", Font.BOLD, 18);
 
 
         label = new JLabel(ic.getMessage("NUTRITION_DATA"));
-        label.setBounds(0, 35, 420, 40);
+        label.setBounds(0, 35, 520, 40);
         label.setFont(font_big); 
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, null);
