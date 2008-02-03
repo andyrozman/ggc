@@ -12,6 +12,8 @@ Know Bugs:
     - "DAILY_CONTROL", "SHOW_DAILY_GRAPH" and "DAILY_VALUES" missing in GGC Little
     - GGC Little: meters button is unresponsive
     - GGC Little: About button is static (problematic when size is changed)
+    - changing time in entry will not re-order cells
+    - mmol values are rounded to ints, which does not make sense
 
 Bugs fixed in version X:
 

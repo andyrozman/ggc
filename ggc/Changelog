@@ -1,3 +1,7 @@
+2008-01-02 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * fix for NumberFormatException when no BG is entered
+    * a BG of 0 isn't shown as a value in the table or the dialog anymore
+
 2008-01-21 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * removed YOUR_CURRENT from GGC_en and GGC_de
     * key "SPREAD_GRAPH" seems to have gone missing
@@ -6,7 +10,7 @@
 
 2008-01-20 (v0.2.9.2 - 0.2.9.4) Andy Rozman <andyrozman@users.sourceforge.net>
     * Added code for future versions
-    * Import of old DailiyValues data (from 0.3 export or MeterTool), just class, no gui
+    * Import of old DailyValues data (from 0.3 export or MeterTool), just class, no gui
     * fixing of several warnings that Eclipse produced
     * main display changed, instead schedule we now have schedule and stocks.
     * added dialogs for doctors and appointments (visible through developer version)

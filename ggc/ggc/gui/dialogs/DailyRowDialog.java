@@ -230,7 +230,14 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         // which format
         this.cob_bg_type.setSelectedIndex(props.getBG_unit()-1);
-        this.BGField.setText(""+ this.m_dailyValuesRow.getBGAsString());
+        if (m_dailyValuesRow.getBGAsString().equals("0"))
+        {
+            BGField.setText("");
+        }
+        else
+        {
+            this.BGField.setText(""+ this.m_dailyValuesRow.getBGAsString());
+        }
 
         if (debug)
         {
@@ -371,7 +378,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                         }
                         else
                             BGField.setText("" + m_da.getBGValueDifferent(prev, v));
-
+                        
                         fixDecimals();
                     }
                     catch(Exception ex)
@@ -696,10 +703,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void fixDecimals()
     {
-        if (this.BGField.getText().trim().equals(""))
+        if (BGField.getText().trim().isEmpty())
             return;
 
-        String s = this.BGField.getText().trim().replace(",", ".");
+        // FIXME: ',' is the thousands separator in an english locale, and should be accepted as such 
+        String s = BGField.getText().trim().replace(",", ".");
 
         if (this.cob_bg_type.getSelectedIndex()==1)
         {

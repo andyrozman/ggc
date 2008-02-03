@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -583,8 +585,22 @@ public class DailyValuesRow implements Serializable
 
     public void setBG(int type, String val)
     {
-	// FIX THIS
-        float f = Float.parseFloat(val);
+        if ((val == null) || (val.isEmpty()))
+        {
+            setBG(0);
+            return;
+        }
+        
+        float f;
+        try
+        {
+            f = Float.parseFloat(val);
+        }
+        catch (NumberFormatException e)
+        {
+            f = 0;
+            System.err.println("ERROR: unparsable folat string: " + val);
+        }
 
         setBG(type,f);
 
@@ -619,7 +635,7 @@ public class DailyValuesRow implements Serializable
 
     public void setIns1(String val)
     {
-        if (val.length()!=0)
+        if (! val.isEmpty())
             setIns1(m_da.getIntValue(val));
     }
 
@@ -646,7 +662,14 @@ public class DailyValuesRow implements Serializable
 
     public void setIns2(String val)
     {
-        setIns2(m_da.getIntValue(val));
+        if (! val.isEmpty())
+        {
+            setIns2(m_da.getIntValue(val));
+        }
+        else
+        {
+            setIns2(0);
+        }
     }
 
     public void setIns2(int val)
@@ -843,6 +866,8 @@ public class DailyValuesRow implements Serializable
             case 0:
                 return new Long(datetime); //m_da.getDateTimeAsTimeString(datetime);
             case 1:
+                if (getBGAsString().equals("0"))
+                    return "";
                 return this.getBGAsString();
             case 2:
                 return this.getIns1AsString();

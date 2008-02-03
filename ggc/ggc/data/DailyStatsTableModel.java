@@ -104,13 +104,13 @@ public class DailyStatsTableModel extends AbstractTableModel
 
 	
         if (o != null && column == 0) 
-	{
-	    return m_da.getDateTimeAsTimeString(((Long)o).longValue());
-	    //System.out.println("DailyStatsTableModel: " + o);
+        {
+            return m_da.getDateTimeAsTimeString(((Long)o).longValue());
+            //System.out.println("DailyStatsTableModel: " + o);
             //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             //return sdf.format(o);
         } 
-
+        
         return o;
     }
 
