@@ -31,7 +31,6 @@ package ggc.meter.data;
 
 import ggc.data.event.GlucoValueEvent;
 import ggc.data.event.GlucoValueEventListener;
-import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
 import java.text.SimpleDateFormat;
@@ -44,7 +43,7 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
 	static final long serialVersionUID = 0;
 
     private I18nControl m_ic = I18nControl.getInstance();
-    private DataAccess m_da = DataAccess.getInstance();
+//x    private DataAccess m_da = DataAccess.getInstance();
 
     GlucoValues dayData;
     //GGCProperties props = GGCProperties.getInstance();

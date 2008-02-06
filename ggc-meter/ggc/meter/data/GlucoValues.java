@@ -29,15 +29,15 @@
 package ggc.meter.data;
 
 
-import java.util.GregorianCalendar;
-import java.util.Vector;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import javax.swing.event.EventListenerList;
-
 import ggc.data.event.GlucoValueEvent;
 import ggc.data.event.GlucoValueEventListener;
-import ggc.util.DataAccess;
+
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import javax.swing.event.EventListenerList;
 
 
 // FIX

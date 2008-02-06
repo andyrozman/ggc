@@ -622,9 +622,9 @@ CommPortOwnershipListener
      */
     public static String[] getAvailablePorts()
     {
-        Enumeration en = CommPortIdentifier.getPortIdentifiers();
+        Enumeration<CommPortIdentifier> en = CommPortIdentifier.getPortIdentifiers();
         String[] retStr = null;        
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
 
         while (en.hasMoreElements())
         {

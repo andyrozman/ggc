@@ -106,7 +106,7 @@ public class FreeStyleImport extends SerialMeterImport
 
             try
             {
-                byte[] inputBuffer = createByteBufferFromStream(portInputStream);
+                //xbyte[] inputBuffer = createByteBufferFromStream(portInputStream);
 
                 /*char ident = (char)inputBuffer[0]; */
 

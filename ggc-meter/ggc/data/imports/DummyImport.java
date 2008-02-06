@@ -9,15 +9,7 @@ package ggc.data.imports;
 
 
 import ggc.meter.data.DailyValuesRow;
-import ggc.util.DataAccess;
 import gnu.io.SerialPortEvent;
-
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.StringTokenizer;
-import java.util.Vector;
 
 /**
  * @author stephan
@@ -170,6 +162,7 @@ public class DummyImport extends SerialMeterImport
         return inputBuffer;
     }
 */
+    /*
     private void parseDataString(String dataStr) throws ImportException
     {
         String value = null;
@@ -178,8 +171,8 @@ public class DummyImport extends SerialMeterImport
         try
         {
             int currentCount = 0;
-            int valueCount = 0;
-            String measure = "";
+            //x int valueCount = 0;
+//            String measure = "";
 
             StringTokenizer stk = new StringTokenizer(dataStr, "\n");
 
@@ -196,7 +189,9 @@ public class DummyImport extends SerialMeterImport
 
             // P 150
             String subValue = vstk.nextToken();
-            valueCount = Integer.decode(subValue.substring(2)).intValue();
+            /*valueCount =*/ 
+    /*
+            Integer.decode(subValue.substring(2)).intValue();
 
             // "NNS210DPN"; not used
             vstk.nextToken();
@@ -208,7 +203,7 @@ public class DummyImport extends SerialMeterImport
             if (pos != -1)
             {
                 //Log.getLogger().info("subValue : " + subValue);
-                measure = subValue.substring(0, pos);
+//x                measure = subValue.substring(0, pos);
             }
             ////////////////////////////////////////
 
@@ -284,7 +279,7 @@ public class DummyImport extends SerialMeterImport
         //Log.getLogger().info("parse count="+valueCount+", measure="+measure);
         //System.out.println("parsing finished; found : " + getImportedData().length);
     }
-
+*/
     public static void main(String[] args)
     {
         /*
