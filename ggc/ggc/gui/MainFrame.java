@@ -62,7 +62,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -119,7 +118,8 @@ public class MainFrame extends JFrame
     //private JLabel lblTest = new JLabel();
 
 
-    private JMenu menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;
+    private JMenu menu_file, menu_bgs, menu_food, menu_doctor, 
+    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps;
 
 
     private Hashtable<String,GGCAction> actions = null;
@@ -268,10 +268,21 @@ public class MainFrame extends JFrame
 	this.createAction(this.menu_doctor, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
 
 	// reports menu
-	this.menu_reports = this.createMenu("MN_REPORTS", null);
-	this.createAction(this.menu_reports, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", null);
-	this.createAction(this.menu_reports, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", null);
+	this.menu_printing = this.createMenu("MN_PRINTING", null);
+	
+	JMenu menu_reports = this.createMenu(this.menu_printing, "MN_REPORTS", "MN_REPORTS_DESC");
+	
+	this.createAction(menu_reports, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", null);
+	this.createAction(menu_reports, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", null);
 
+	// meters
+	this.menu_meters = this.createMenu("MN_METERS", null);
+	
+	
+	
+	// pumps
+	this.menu_pumps = this.createMenu("MN_PUMPS", null);
+	
 	// tools menu
 	this.menu_tools = this.createMenu("MN_TOOLS", null);
 	this.createAction(this.menu_tools, "MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", null);
@@ -369,6 +380,27 @@ public class MainFrame extends JFrame
     }
 
 
+    
+    private JMenu createMenu(JMenu parent, String name, String tool_tip)
+    {
+    	JMenu item = new JMenu(m_ic.getMessageWithoutMnemonic(name));
+    	item.setMnemonic(m_ic.getMnemonic(name));
+    
+    	if (tool_tip!=null)
+    	{
+    	    item.setToolTipText(tool_tip);
+    	}
+    
+    	//System.out.println("Item: " + item);
+    
+    	parent.add(item);
+    	//this.menuBar.add(item);
+    
+    	return item;
+    }
+    
+    
+    
     private void createAction(JMenu menu, String name, String tip, String action_command, String icon_small)
     {
     	GGCAction action = new GGCAction(name, tip, action_command);
@@ -393,7 +425,10 @@ public class MainFrame extends JFrame
     	this.menu_bgs.setEnabled(opened);
     	this.menu_food.setEnabled(opened);
     	this.menu_doctor.setEnabled(opened);
-    	this.menu_reports.setEnabled(opened);
+    	this.menu_printing.setEnabled(opened);
+    	
+    	this.menu_meters.setEnabled(false);
+    	this.menu_pumps.setEnabled(false);
     
     	this.actions.get("view_daily").setEnabled(opened);
     	this.actions.get("view_course").setEnabled(opened);
@@ -415,7 +450,7 @@ public class MainFrame extends JFrame
         //s_dbH.setStatus();
 	*/
 
-        System.out.println("FIIIIIIIIIIIIIIIIIIIIIIXXXX this");
+        //System.out.println("FIIIIIIIIIIIIIIIIIIIIIIXXXX this");
     }
 
     private void close() 
@@ -436,6 +471,7 @@ public class MainFrame extends JFrame
         System.exit(0);
     }
 
+    /*
     private JMenuItem addMenuItem(JMenu menu, Action action) 
     {
         JMenuItem item = menu.add(action);
@@ -447,7 +483,7 @@ public class MainFrame extends JFrame
             item.setAccelerator(keystroke);
 
         return item;
-    }
+    }*/
 
     private void addToolBarSpacer() 
     {

@@ -30,14 +30,11 @@ package ggc.data;
 import ggc.db.hibernate.DayValueH;
 import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
-//import ggc.util.I18nControl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
-
-import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -68,7 +65,7 @@ public class DailyValuesRow implements Serializable
     private String comment;
     private String extended;
     private String urine;
-    private String meals;
+    public String meals;
 
     private boolean changed = false;
 

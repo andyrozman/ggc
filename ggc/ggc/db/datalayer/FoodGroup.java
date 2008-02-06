@@ -85,6 +85,12 @@ public class FoodGroup implements DatabaseObjectHibernate
     }
     
 
+    public int getGroupType()
+    {
+	return this.group_type;
+    }
+    
+    
     public String getShortDescription()
     {
         return this.getDescription();

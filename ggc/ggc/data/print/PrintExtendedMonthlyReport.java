@@ -113,9 +113,9 @@ public class PrintExtendedMonthlyReport extends PdfPageEventHelper
                 document.add(getTitle());
 
                 // step4
-                String[] bogusData = {"", "00:00", "00.0", "00", "00",
+                /*String[] bogusData = {"", "00:00", "00.0", "00", "00",
                                 "000", "00000", "Comm."
-                                 };
+                                 }; */
                 int NumColumns = 8;
 
                 PdfPTable datatable = new PdfPTable(NumColumns);

@@ -142,7 +142,7 @@ public class GGCDbLoader extends Thread
             db.loadConfigData();
     
             db.loadStaticData();
-            db.loadNutritionDb1();
+//x            db.loadNutritionDb1();
 //            db.loadImplementedMeterData();
         }
 

@@ -35,6 +35,9 @@ package ggc.gui.little;
 
 
 
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Event;
@@ -52,7 +55,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
@@ -60,9 +63,6 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
-
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 
 public class GGCLittle extends JFrame implements WindowListener
@@ -133,8 +133,11 @@ public class GGCLittle extends JFrame implements WindowListener
     	}
 */
 
+        JMenuBar jmb = new JMenuBar();
+        this.setJMenuBar(jmb);
 
         quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
+        jmb.add(new JMenuItem(quitAction));
 
         readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");
         readMeterAction.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/readmeter.gif")));
@@ -190,7 +193,7 @@ public class GGCLittle extends JFrame implements WindowListener
         dispose();
         System.exit(0);
     }
-
+/*
     private JMenuItem addMenuItem(JMenu menu, Action action)
     {
         JMenuItem item = menu.add(action);
@@ -200,7 +203,7 @@ public class GGCLittle extends JFrame implements WindowListener
             item.setAccelerator(keystroke);
         return item;
     }
-
+*/
     private void addToolBarSpacer()
     {
         toolBar.addSeparator();

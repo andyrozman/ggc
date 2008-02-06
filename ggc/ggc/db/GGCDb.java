@@ -693,7 +693,8 @@ public class GGCDb
     {
 	m_da.tree_roots.put("3", new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, this));
     }
-
+    
+    @SuppressWarnings("unchecked")
     public void loadImplementedMeterData()
     {
 
@@ -817,7 +818,7 @@ public class GGCDb
         */
     }
 
-
+    @SuppressWarnings("unchecked")
     public void loadConfigDataEntries()
     {
 
@@ -895,6 +896,7 @@ public class GGCDb
         //DataAccess.notImplemented("GGCDb::saveConfigData()");
     }
 
+    @SuppressWarnings("unchecked")
     private void loadColorSchemes(Session sess)
     {
         Hashtable<String, ColorSchemeH> table = new Hashtable<String, ColorSchemeH>();
@@ -953,7 +955,7 @@ public class GGCDb
     // ****                NUTRITION DATA                       ****
     // *************************************************************
 
-    
+    @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUSDAFoodGroups()
     {
 
@@ -973,7 +975,7 @@ public class GGCDb
 
     }
 
-
+    @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUserFoodGroups()
     {
 
@@ -993,7 +995,7 @@ public class GGCDb
 
     }
     
-
+    @SuppressWarnings("unchecked")
     public ArrayList<MealGroup> getMealGroups()
     {
 
@@ -1014,7 +1016,7 @@ public class GGCDb
     }
     
     
-    
+    @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUSDAFoodDescriptions()
     {
 
@@ -1035,6 +1037,7 @@ public class GGCDb
     }
 
 
+    @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUserFoodDescriptions()
     {
 
@@ -1057,6 +1060,7 @@ public class GGCDb
     }
 
     
+    @SuppressWarnings("unchecked")
     public Hashtable<String, Meal> getMeals()
     {
 
@@ -1079,7 +1083,7 @@ public class GGCDb
     
     
     
-    
+    @SuppressWarnings("unchecked")
     public void loadNutritionDefinitions()
     {
 
@@ -1102,6 +1106,7 @@ public class GGCDb
     }
 
 
+    @SuppressWarnings("unchecked")
     public void loadHomeWeights()
     {
 
@@ -1153,7 +1158,8 @@ public class GGCDb
     // ****      Comment: Were implemnted in DataBaseHandler    ****  
     // *************************************************************
 
-
+    
+    @SuppressWarnings("unchecked")
     public HbA1cValues getHbA1c(GregorianCalendar day)
     {
         //System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
@@ -1209,7 +1215,7 @@ public class GGCDb
     }
 
 
-
+    @SuppressWarnings("unchecked")
     public DailyValues getDayStats(GregorianCalendar day)
     {
 
@@ -1251,7 +1257,8 @@ public class GGCDb
         return dV;
     }
 
-
+    
+    @SuppressWarnings("unchecked")
     public WeeklyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
     {
 
@@ -1302,7 +1309,7 @@ public class GGCDb
     }
 
 
-
+    @SuppressWarnings("unchecked")
     public MonthlyValues getMonthlyValues(int year, int month)
     {
 

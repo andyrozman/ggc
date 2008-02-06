@@ -28,7 +28,6 @@
 
 package ggc.gui.nutrition;
 
-import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.MealGroup;
 
