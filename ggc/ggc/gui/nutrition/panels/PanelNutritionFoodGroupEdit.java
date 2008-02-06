@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 // andyrozman
 
     
-public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
+public class PanelNutritionFoodGroupEdit extends GGCTreePanel //JPanel
 {
 
     I18nControl ic = I18nControl.getInstance();
@@ -28,7 +28,7 @@ public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
     NutritionTreeDialog m_dialog = null;
 
 
-    public PanelNutritionFoodGroup(NutritionTreeDialog dia)
+    public PanelNutritionFoodGroupEdit(NutritionTreeDialog dia)
     {
 
         super();
@@ -56,7 +56,7 @@ public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
 	Font fnt_14 = new Font("Times New Roman", Font.PLAIN, 14);
 
 
-        label = new JLabel(ic.getMessage("FOOD_GROUP"));
+        label = new JLabel(ic.getMessage("FOOD_GROUP_EDIT_ADD"));
         label.setBounds(0, 35, 520, 40);
         label.setFont(font_big); 
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -66,55 +66,43 @@ public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
 	//this.setDescription_i18n(ch.getDescription_i18n());
 
         label = new JLabel(ic.getMessage("GROUP_NAME") + ":" );
-        label.setBounds(40, 130, 100, 30);
+        label.setBounds(40, 150, 100, 30);
         label.setFont(fnt_14_bold); 
         this.add(label, null);
+
+        label = new JLabel(ic.getMessage("TRANSLATED_NAME") + ":");
+        label.setBounds(40, 230, 300, 60);
+        label.setFont(fnt_14_bold); 
+        this.add(label, null);
+
 
 	label_name = new JLabel();
-	label_name.setBounds(80, 160, 300, 30);
+	label_name.setBounds(80, 180, 300, 30);
 	label_name.setFont(fnt_14); 
 	this.add(label_name, null);
-        
-        
-        label = new JLabel(ic.getMessage("TRANSLATED_NAME") + ":");
-        label.setBounds(40, 210, 300, 60);
-        label.setFont(fnt_14_bold); 
-        this.add(label, null);
-
-
 
 	label_name_i18n = new JLabel();
-	label_name_i18n.setBounds(80, 240, 300, 60);
+	label_name_i18n.setBounds(80, 260, 300, 60);
 	label_name_i18n.setFont(fnt_14); 
 	this.add(label_name_i18n, null);
 
 
-	
+
+
+
         label = new JLabel(ic.getMessage("PARENT_GROUP"));
-        label.setBounds(40, 290, 300, 30);
-        label.setFont(fnt_14);
+        label.setBounds(40, 340, 300, 30);
+        label.setFont(fnt_14); 
+        this.add(label, null);
         
-        if (this.m_dialog.getType()!=1)
-            this.add(label, null);
+        
+        
 
-
-        label_parent = new JLabel("");
-        label_parent.setBounds(40, 310, 300, 60);
+        label_parent = new JLabel(ic.getMessage("Desc"));
+        label_parent.setBounds(40, 370, 300, 60);
         label_parent.setFont(font_normal); 
         this.add(label_parent, null);
-        
-        
-/*
-        label = new JLabel(ic.getMessage("EDIT_VIEW"));
-        label.setBounds(40, 280, 300, 30);
-        label.setFont(fnt_18); 
-        this.add(label, null);
 
-        label = new JLabel(ic.getMessage("EDIT_VIEW_DESC"));
-        label.setBounds(40, 310, 300, 60);
-        label.setFont(font_normal); 
-        this.add(label, null);
-*/
         return;
     }
 
@@ -124,12 +112,14 @@ public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
 	//label_name_i18n
     }
 
+    FoodGroup parent_group;
 
     public void setParent(Object obj)
     {
-	
+	this.parent_group = (FoodGroup)obj;
+
+	this.label_parent.setText(this.parent_group.getName());
     }
-    
     
     
     public void setData(Object obj)

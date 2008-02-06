@@ -19,39 +19,56 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: ScheduleInfoPanel.java
- *  Purpose:  This Panel contains information on your Schedule. Like your
- *            next check, when you see your doctor again, ...
+ *  Filename: FoodDescription
+ *  Purpose:  This is datalayer file (data file, with methods to work with database or in 
+ *      this case Hibernate). 
+ *      This one is used for description of food.
  *
- *  Author:   schultd
+ *  Author:   andyrozman
  */
 
-package ggc.gui.panels.info;
 
-import ggc.util.I18nControl;
+package ggc.db.datalayer;
 
-import javax.swing.*;
-import java.awt.*;
+import ggc.util.DataAccess;
 
 
-public class ScheduleInfoPanel extends AbstractInfoPanel
+public class MealPart 
 {
-    public ScheduleInfoPanel()
+
+    public boolean debug = false;
+    private int meal_type = 0;
+    private long meal_type_id = 0L;
+
+    private Meal meal_obj_meal = null;
+    private FoodDescription meal_obj_food = null;
+    
+    
+
+    public MealPart(String id)
     {
-        super(I18nControl.getInstance().getMessage("SCHEDULE"));
-        setLayout(new GridLayout(0, 2));
-        init();
-        refreshInfo();
     }
 
-    private void init()
+
+    public MealPart()
     {
-        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
-        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
     }
+
+
+    public void loadMealPart()
+    {
+	//DataAccess.getInstance().getDb().getMeals();
+	
+    }
+
 
     @Override
-    public void refreshInfo()
+    public String toString()
     {
+        return "MealPart";
     }
+
+
 }
+
+

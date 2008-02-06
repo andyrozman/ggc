@@ -5,10 +5,10 @@
 
 package ggc.data;
 
+import ggc.util.DataAccess;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import ggc.data.DailyValues;
 
 
 public class MonthlyValues extends WeeklyValues
@@ -157,6 +157,8 @@ public class MonthlyValues extends WeeklyValues
             {
                 data[grp][0] += d;
                 data[grp][1]++;
+                
+                //data[grp][0] = DataAccess.MmolDecimalFormat.format(data[grp][0]);
             }
 	    //else
 	    //data[grp][0]
@@ -178,7 +180,7 @@ public class MonthlyValues extends WeeklyValues
                 if (m_da.getSettings().getBG_unit()==1)
                     dataStr[i][0] = "" + (int)(data[i][0]/data[i][1]); // mg/dl
                 else
-                    dataStr[i][0] = "" + data[i][0]/data[i][1];  // mmol/l
+                    dataStr[i][0] = "" + DataAccess.MmolDecimalFormat.format(data[i][0]/data[i][1]);  // mmol/l
             }
             else
                 dataStr[i][0] = this.empty_value;
@@ -227,8 +229,10 @@ public class MonthlyValues extends WeeklyValues
 
     // arraylist of table[5]:
     //   5 = BG, Insulin 1, Insulin 2, CH, Comment
-    public void getDayValuesExtended()
+    public DailyValues getDayValuesExtended(int day)
     {
+	return this.getDayValues(this.m_year, this.m_month, day);
+	
     }
 
 

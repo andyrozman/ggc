@@ -24,7 +24,7 @@ public class MealH implements Serializable {
     private String parts;
 
     /** nullable persistent field */
-    private String req_values;
+    private String values;
 
     /** nullable persistent field */
     private String extended;
@@ -33,24 +33,18 @@ public class MealH implements Serializable {
     private String comment;
 
     /** full constructor */
-    public MealH(long id, long meal_group_id, String name, String description, String parts, String req_values, String extended, String comment) {
-        this.id = id;
+    public MealH(long meal_group_id, String name, String description, String parts, String values, String extended, String comment) {
         this.meal_group_id = meal_group_id;
         this.name = name;
         this.description = description;
         this.parts = parts;
-        this.req_values = req_values;
+        this.values = values;
         this.extended = extended;
         this.comment = comment;
     }
 
     /** default constructor */
     public MealH() {
-    }
-
-    /** minimal constructor */
-    public MealH(long id) {
-        this.id = id;
     }
 
     public long getId() {
@@ -93,12 +87,12 @@ public class MealH implements Serializable {
         this.parts = parts;
     }
 
-    public String getReq_values() {
-        return this.req_values;
+    public String getValues() {
+        return this.values;
     }
 
-    public void setReq_values(String req_values) {
-        this.req_values = req_values;
+    public void setValues(String values) {
+        this.values = values;
     }
 
     public String getExtended() {

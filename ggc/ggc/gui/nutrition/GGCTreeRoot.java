@@ -30,7 +30,7 @@ package ggc.gui.nutrition;
 import ggc.db.GGCDb;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.MealDescription;
+import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealGroup;
 import ggc.util.DataAccess;
 
@@ -53,7 +53,7 @@ public class GGCTreeRoot
     private ArrayList<FoodDescription> import1_foods= null;
     
     private ArrayList<MealGroup> import2_grp = null;
-    private ArrayList<MealDescription> import2_foods= null;
+    private ArrayList<Meal> import2_foods= null;
     
     
     public ArrayList<FoodGroup> m_groups = null;
@@ -66,7 +66,11 @@ public class GGCTreeRoot
 
     public ArrayList<MealGroup> m_meal_groups = null;
     public Hashtable<String,MealGroup> m_meal_groups_ht = null;
-    public Hashtable<String, ArrayList<MealDescription>> m_meal_desc_by_group = null;
+    //public Hashtable<String, ArrayList<Meal>> m_meal_desc_by_group = null;
+    public ArrayList<MealGroup> m_meal_groups_tree = null;
+
+    
+    
     
     
     //    public ArrayList<Object> m_groups = null;
@@ -79,7 +83,7 @@ public class GGCTreeRoot
 
     GGCDb m_db = null;
     public boolean debug = true;
-    public boolean dev = true;
+    public boolean dev = false;
     
     public GGCTreeRoot(int type, GGCDb db) 
     {
@@ -132,9 +136,30 @@ public class GGCTreeRoot
     
     public void readDbData(int type)
     {
+	System.out.println("ReadDbData [type=" + type + "]");
+	
 	if (dev==true)
 	    return;
+
+	System.out.println("After dev");
 	
+	if (type == GGCTreeRoot.TREE_USDA_NUTRITION)
+	{
+	    System.out.println("USDA Load Failed !!!!!!!!");
+	}
+	else if (type == GGCTreeRoot.TREE_USER_NUTRITION)
+	{
+	    //System.out.println("USer nutrition loading !!!!!!!!");
+	    this.import1_grp = this.m_db.getUserFoodGroups();
+	    this.import1_foods = this.m_db.getUserFoodDescriptions();
+	}
+	else if (type == GGCTreeRoot.TREE_MEALS)
+	{
+	    System.out.println("Meals Load Failed !!!!!!!!");
+	}
+	else
+	    System.out.println("Unknown database type: " + type);
+
 	
     }
     
@@ -375,7 +400,7 @@ public class GGCTreeRoot
 	    }
 	    
 	    
-	    System.out.println("fillGroups::nutrition done (I Hope) !!!");
+	    //System.out.println("fillGroups::nutrition done (I Hope) !!!");
 	}
 	else if (m_type == GGCTreeRoot.TREE_MEALS)
 	{
@@ -389,7 +414,10 @@ public class GGCTreeRoot
 	
     }
     
-    
+    public int getType()
+    {
+	return m_type;
+    }
     
     
     @Override

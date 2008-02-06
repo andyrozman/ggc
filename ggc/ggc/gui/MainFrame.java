@@ -37,6 +37,7 @@ import ggc.gui.dialogs.HbA1cDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SpreadGraphDialog;
+import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.gui.nutrition.NutritionTreeDialog;
 import ggc.gui.panels.info.InfoPanel;
 import ggc.util.DataAccess;
@@ -99,10 +100,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.9.4";
+    public  static String s_version = "0.3.0.1";
     public static String full_version = "v" + s_version;
 
-    public static String version_date = "20th January 2008";
+    public static String version_date = "4th February 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -594,7 +595,7 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("food_nutrition_1")) 
             {
-                new NutritionTreeDialog(m_da);
+                new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_USDA_NUTRITION);
                 //System.out.println("Command N/A: Food Nutrition");
             } 
 /*            else if (command.equals("food_nutrition_2")) 
@@ -614,7 +615,7 @@ public class MainFrame extends JFrame
 		new AboutGGCDialog(getMyParent());
 	    }
 	    else if ((command.equals("read_meter")) ||
-                 (command.equals("food_nutrition_2")) || 
+//                 (command.equals("food_nutrition_2")) || 
                  (command.equals("tools_mlist")) ||
                  (command.equals("tools_db_maint"))) 
 	    {
@@ -631,6 +632,25 @@ public class MainFrame extends JFrame
 		    
 		
 	    }
+	    else if (command.equals("food_nutrition_2"))
+	    {
+		if (MainFrame.developer_version)
+		{
+	            new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_USER_NUTRITION);
+		}
+		else
+		    featureNotImplemented(command, "0.4");
+	    }
+	    else if (command.equals("food_meals"))
+	    {
+		if (MainFrame.developer_version)
+		{
+	            new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_MEALS);
+		}
+		else
+		    featureNotImplemented(command, "0.5");
+		
+	    }
 	    else if (command.equals("doc_appoint"))
 	    {
 		if (MainFrame.developer_version)
@@ -645,8 +665,8 @@ public class MainFrame extends JFrame
 	    else if ((command.equals("report_pdf_extended")) ||
                  //(command.equals("doc_docs")) ||
                  //(command.equals("doc_appoint")) ||
-                 (command.equals("doc_stocks")) ||
-                 (command.equals("food_meals")))
+                 (command.equals("doc_stocks"))) //||
+//                 (command.equals("food_meals")))
 	    {
 		featureNotImplemented(command, "0.5");
 	    }

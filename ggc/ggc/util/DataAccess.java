@@ -98,9 +98,12 @@ public class DataAccess
 
     public Font fonts[] = null;
 
-    public GGCTreeRoot m_nutrition_treeroot = null;
-
-    public GGCTreeRoot m_meals_treeroot = null;
+    //public GGCTreeRoot m_nutrition_treeroot = null;
+    //public GGCTreeRoot m_meals_treeroot = null;
+    
+    public Hashtable<String,GGCTreeRoot> tree_roots = null;
+    
+    
 
     // daily and weekly data
     private GregorianCalendar m_date = null, m_dateStart = null;
@@ -193,6 +196,8 @@ public class DataAccess
         //        loadLanguageInfo();
 //x        m_meterManager = new MeterManager();
 
+        this.tree_roots = new Hashtable<String,GGCTreeRoot>();
+        
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
 
@@ -297,6 +302,10 @@ public class DataAccess
         return m_db;
     }
 
+    public void setDb(GGCDb db)
+    {
+	this.m_db =db;
+    }
 
     // ********************************************************
     // ******                 Icons                       *****    

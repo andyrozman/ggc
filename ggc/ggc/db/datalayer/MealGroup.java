@@ -36,6 +36,12 @@ package ggc.db.datalayer;
 //import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.MealGroupH;
 
+import java.util.ArrayList;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 
 
 public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
@@ -45,28 +51,67 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
 
     public static final int MEAL_GROUP_MEALS = 1;
     public static final int MEAL_GROUP_NUTRITION = 2;
+    
+    private ArrayList<MealGroup> children_group = new ArrayList<MealGroup>();
+    private ArrayList<Object> children = new ArrayList<Object>();
+    
+    
+    
 
     public MealGroup()
     {
         this.setId(0);
-//	this.setDescription("");
-//	this.setType(1);
-	
+        this.setName("");
+        this.setDescription("");
+        this.setParent_id(0);
     }
 
-/*
+
     public MealGroup(MealGroupH ch)
     {
         this.setId(ch.getId());
-	this.setDescription(ch.getDescription());
-	this.setType(ch.getType());
+        this.setName(ch.getName());
+        this.setDescription(ch.getDescription());
+        this.setParent_id(ch.getParent_id());
     }
-*/
+
+    
+    public int getChildCount()
+    {
+	return this.children.size();
+    }
+    
+    public boolean hasChildren()
+    {
+	return (getChildCount()!=0);
+    }
+    
+    public void addChild(MealGroup fg)
+    {
+	children_group.add(fg);
+	children.add(fg);
+    }
+    
+    public void addChild(Meal fd)
+    {
+	children.add(fd);
+    }
+    
+    public Object getChild(int index)
+    {
+	return this.children.get(index);
+    }
+    
+    public int findChild(Object child)
+    {
+	return this.children.indexOf(child);
+    }
+    
+    
 
     public String getShortDescription()
     {
-        //return this.getDescription();
-	return "";
+        return this.getName();
     }
 
 
@@ -90,7 +135,7 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return id in type of String
      */
-/*    public String DbAdd(Session sess) throws Exception
+    public String DbAdd(Session sess) throws Exception
     {
         
         Transaction tx = sess.beginTransaction();
@@ -98,17 +143,18 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
         MealGroupH ch = new MealGroupH();
 
         ch.setId(this.getId());
+        ch.setName(this.getName());
 	ch.setDescription(this.getDescription());
-	ch.setType(this.getType());
+        ch.setParent_id(this.getParent_id());
 
-        Integer id = (Integer)sess.save(ch);
+        Long id = (Long)sess.save(ch);
 
         tx.commit();
 
         return ""+id.longValue();
         
     }
-*/
+
 
 
     /**
@@ -118,16 +164,16 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-/*    public boolean DbEdit(Session sess) throws Exception
+    public boolean DbEdit(Session sess) throws Exception
     {
 
         Transaction tx = sess.beginTransaction();
 
-	MealGroupH ch = (MealGroupH)sess.get(MealGroupH.class, new Integer(this.getId()));
+	MealGroupH ch = (MealGroupH)sess.get(MealGroupH.class, new Long(this.getId()));
 
-	ch.setId(this.getId());
+        ch.setName(this.getName());
 	ch.setDescription(this.getDescription());
-	ch.setType(this.getType());
+        ch.setParent_id(this.getParent_id());
 
         sess.update(ch);
         tx.commit();
@@ -135,7 +181,7 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
         return true;
 
     }
-*/
+
 
 
     /**
@@ -145,12 +191,12 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-/*    public boolean DbDelete(Session sess) throws Exception
+    public boolean DbDelete(Session sess) throws Exception
     {
 
         Transaction tx = sess.beginTransaction();
 
-	MealGroupH ch = (MealGroupH)sess.get(MealGroupH.class, new Integer(this.getId()));
+	MealGroupH ch = (MealGroupH)sess.get(MealGroupH.class, new Long(this.getId()));
 
         sess.delete(ch);
         tx.commit();
@@ -169,10 +215,22 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-/*    public boolean DbHasChildren(Session sess) throws Exception
+    public boolean DbHasChildren(Session sess) throws Exception
     {
-        System.out.println("Not implemented: FoodGroup::DbHasChildren");
-        return true;
+        Query q = sess.createQuery("select pst from ggc.db.hibernate.MealH as pst where pst.meal_group_id=" + getId());
+        int size = q.list().size();
+        
+        if (size>0)
+            return true;
+
+        q = sess.createQuery("select pst from ggc.db.hibernate.MealGroupH as pst where pst.parent_id=" + getId());
+        size = q.list().size();
+        
+        if (size>0)
+            return true;
+        else
+            return false;
+        
     }
 
 
@@ -185,19 +243,19 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
-  /*  public boolean DbGet(Session sess) throws Exception
+    public boolean DbGet(Session sess) throws Exception
     {
 
-	MealGroupH ch = (MealGroupH)sess.get(MealGroupH.class, new Integer(this.getId()));
+	MealGroupH ch = (MealGroupH)sess.get(MealGroupH.class, new Long(this.getId()));
 
 	this.setId(ch.getId());
+        this.setName(ch.getName());
 	this.setDescription(ch.getDescription());
-	this.setType(ch.getType());
-
+        this.setParent_id(ch.getParent_id());
+	
         return true;
     }
 
-*/
 
     /**
      * getObjectName - returns name of DatabaseObject
@@ -206,7 +264,7 @@ public class MealGroup extends MealGroupH //implements DatabaseObjectHibernate
      */
     public String getObjectName()
     {
-        return "Food Group";
+        return "Meal Group";
     }
 
 

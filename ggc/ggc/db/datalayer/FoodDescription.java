@@ -30,21 +30,28 @@
 
 package ggc.db.datalayer;
 
+import ggc.db.hibernate.FoodDescriptionH;
+import ggc.db.hibernate.FoodUserDescriptionH;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.FoodDescriptionH;
 
-
-public class FoodDescription extends FoodDescriptionH implements DatabaseObjectHibernate
+public class FoodDescription //extends FoodDescriptionH implements DatabaseObjectHibernate
 {
 
     public boolean debug = false;
+    public int type = 1;
 
-
+    private FoodDescriptionH m_food_desc1; 
+    private FoodUserDescriptionH m_food_desc2;
+    private long id;
+    
+    
     public FoodDescription()
     {
+	this.type = 1;
+	/*
         this.setId(0);
 	this.setFood_group_id(0);
 	this.setName("");
@@ -52,12 +59,16 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	this.setRefuse(0.0f);
 	this.setNutritions("");
 	this.setHome_weights("");
-	this.setRefuse(0.0f);
+	this.setRefuse(0.0f); */
     }
 
 
     public FoodDescription(FoodDescriptionH ch)
     {
+	this.m_food_desc1 = ch;
+	this.type = 1;
+	
+	/*
 	this.setId(ch.getId());
 	this.setFood_group_id(ch.getFood_group_id());
 	this.setName(ch.getName());
@@ -70,15 +81,150 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 	this.setHome_weights(ch.getHome_weights());
 	this.setNutritions(ch.getNutritions());
 
-//	this.setSugar_g(ch.getSugar_g());
+//	this.setSugar_g(ch.getSugar_g()); */
     }
 
+    public FoodDescription(FoodUserDescriptionH ch)
+    {
+	this.m_food_desc2 = ch;
+	this.type = 2;
+    }
+    
+    
 
     public String getShortDescription()
     {
         return this.getName();
     }
 
+    
+    
+    public long getId() 
+    {
+	if ((this.m_food_desc1==null) && (this.m_food_desc2==null))
+	{
+	    return this.id;
+	}
+	
+	if (type==1)
+	    return this.m_food_desc1.getId();
+	else
+	    return this.m_food_desc2.getId();
+    }
+
+    public void setId(long id) 
+    {
+	if ((this.m_food_desc1==null) && (this.m_food_desc2==null))
+	{
+	    this.id = id;
+	}
+
+	if (type==1)
+	    this.m_food_desc1.setId(id);
+	else
+	    this.m_food_desc2.setId(id);
+    }
+
+    public long getFood_group_id() 
+    {
+	if (type==1)
+	    return this.m_food_desc1.getFood_group_id();
+	else
+	    return this.m_food_desc2.getFood_user_group_id();
+    }
+
+    public void setFood_group_id(long food_user_group_id) 
+    {
+	if (type==1)
+	    this.m_food_desc1.setFood_group_id(food_user_group_id);
+	else
+	    this.m_food_desc2.setFood_user_group_id(food_user_group_id);
+    }
+
+    public String getName() 
+    {
+	if (type==1)
+	    return this.m_food_desc1.getName();
+	else
+	    return this.m_food_desc2.getName();
+    }
+
+    public void setName(String name) 
+    {
+	if (type==1)
+	    this.m_food_desc1.setName(name);
+	else
+	    this.m_food_desc2.setName(name);
+    }
+
+    public String getI18n_name() 
+    {
+	if (type==1)
+	    return this.m_food_desc1.getI18n_name();
+	else
+	    return this.m_food_desc2.getI18n_name();
+    }
+
+    public void setI18n_name(String i18n_name) 
+    {
+	if (type==1)
+	    this.m_food_desc1.setI18n_name(i18n_name);
+	else
+	    this.m_food_desc2.setI18n_name(i18n_name);
+    }
+
+    public float getRefuse() 
+    {
+	if (type==1)
+	    return this.m_food_desc1.getRefuse();
+	else
+	    return this.m_food_desc2.getRefuse();
+    }
+
+    public void setRefuse(float refuse) 
+    {
+	if (type==1)
+	    this.m_food_desc1.setRefuse(refuse);
+	else
+	    this.m_food_desc2.setRefuse(refuse);
+    }
+
+    public String getNutritions() 
+    {
+	if (type==1)
+	    return this.m_food_desc1.getNutritions();
+	else
+	    return this.m_food_desc2.getNutritions();
+    }
+
+    public void setNutritions(String nutritions) 
+    {
+	if (type==1)
+	    this.m_food_desc1.setNutritions(nutritions);
+	else
+	    this.m_food_desc2.setNutritions(nutritions);
+    }
+
+    public String getHome_weights() 
+    {
+	if (type==1)
+	    return this.m_food_desc1.getHome_weights();
+	else
+	    return this.m_food_desc2.getHome_weights();
+    }
+
+    public void setHome_weights(String home_weights) 
+    {
+	if (type==1)
+	    this.m_food_desc1.setHome_weights(home_weights);
+	else
+	    this.m_food_desc2.setHome_weights(home_weights);
+    }
+    
+    
+    
+    
+    
 
     @Override
     public String toString()
@@ -104,23 +250,12 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
         
         Transaction tx = sess.beginTransaction();
 
-	FoodDescriptionH ch = new FoodDescriptionH();
-
-	ch.setId(this.getId());
-	ch.setFood_group_id(this.getFood_group_id());
-	ch.setName(this.getName());
-	ch.setI18n_name(this.getI18n_name());
-	ch.setNutritions(this.getNutritions());
-	ch.setHome_weights(this.getHome_weights());
-	ch.setRefuse(this.getRefuse());
-/*	ch.setCH_g(this.getCH_g());
-	ch.setEnergy_kcal(this.getEnergy_kcal());
-	ch.setEnergy_kJ(this.getEnergy_kJ());
-	ch.setFat_g(this.getFat_g());
-	ch.setRefuse(this.getRefuse());
-	ch.setSugar_g(this.getSugar_g());
-*/
-        Long id = (Long)sess.save(ch);
+        Long id;
+        
+        if (this.type == 1)
+            id = (Long)sess.save(this.m_food_desc1);
+        else
+            id = (Long)sess.save(this.m_food_desc2);
 
         tx.commit();
 
@@ -141,24 +276,12 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
     {
 
         Transaction tx = sess.beginTransaction();
+        
+        if (this.type == 1)
+            sess.update(this.m_food_desc1); 
+        else
+            sess.update(this.m_food_desc2);
 
-	FoodDescriptionH ch = (FoodDescriptionH)sess.get(FoodDescriptionH.class, new Long(this.getId()));
-
-	ch.setId(this.getId());
-	ch.setFood_group_id(this.getFood_group_id());
-	ch.setName(this.getName());
-	ch.setI18n_name(this.getI18n_name());
-	ch.setNutritions(this.getNutritions());
-	ch.setHome_weights(this.getHome_weights());
-	ch.setRefuse(this.getRefuse());
-/*	ch.setCH_g(this.getCH_g());
-	ch.setEnergy_kcal(this.getEnergy_kcal());
-	ch.setEnergy_kJ(this.getEnergy_kJ());
-	ch.setFat_g(this.getFat_g());
-	ch.setRefuse(this.getRefuse());
-	ch.setSugar_g(this.getSugar_g());*/
-
-        sess.update(ch);
         tx.commit();
 
         return true;
@@ -179,9 +302,11 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
 
         Transaction tx = sess.beginTransaction();
 
-	FoodDescriptionH ch = (FoodDescriptionH)sess.get(FoodDescriptionH.class, new Long(this.getId()));
-
-        sess.delete(ch);
+        if (this.type == 1)
+            sess.delete(this.m_food_desc1); 
+        else
+            sess.delete(this.m_food_desc2);
+	
         tx.commit();
 
         return true;
@@ -200,7 +325,7 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        System.out.println("Not implemented: FoodDescription::DbHasChildren");
+        //System.out.println("Not implemented: FoodDescription::DbHasChildren");
         return true;
     }
 
@@ -216,25 +341,12 @@ public class FoodDescription extends FoodDescriptionH implements DatabaseObjectH
      */
     public boolean DbGet(Session sess) throws Exception
     {
-
-	FoodDescriptionH ch = (FoodDescriptionH)sess.get(FoodDescriptionH.class, new Long(this.getId()));
-
-	this.setId(ch.getId());
-	this.setFood_group_id(ch.getFood_group_id());
-	this.setName(ch.getName());
-	this.setI18n_name(ch.getI18n_name());
-	this.setNutritions(ch.getNutritions());
-	this.setHome_weights(ch.getHome_weights());
-
-/*	this.setCH_g(ch.getCH_g());
-	this.setEnergy_kcal(ch.getEnergy_kcal());
-	this.setEnergy_kJ(ch.getEnergy_kJ());
-	this.setFat_g(ch.getFat_g());
-	this.setSugar_g(ch.getSugar_g());
-	*/
-	this.setRefuse(ch.getRefuse());
-	//this.setSugar_g(ch.getSugar_g());
-
+	
+	if (type==1)
+	    this.m_food_desc1 = (FoodDescriptionH)sess.get(FoodDescriptionH.class, new Long(this.getId()));
+	else
+	    this.m_food_desc2 = (FoodUserDescriptionH)sess.get(FoodUserDescriptionH.class, new Long(this.getId()));
+	
         return true;
     }
 

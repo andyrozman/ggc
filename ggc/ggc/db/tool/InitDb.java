@@ -192,11 +192,11 @@ public class InitDb
 	    {
 		StringTokenizer strtok = new StringTokenizer(line, "^");
 
-		FoodGroup fg = new FoodGroup();
+		FoodGroup fg = new FoodGroup(1);
 		fg.setId(getInt(strtok.nextToken()));
 
 		String st = getString(strtok.nextToken());
-		String st_i18n = st.replace(' ', '_');
+		String st_i18n = st.replaceAll(" ", "_");
 		st_i18n = st_i18n.replaceAll(",", "");
 
 		//System.out.println(st_i18n.toUpperCase());

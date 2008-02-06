@@ -25,14 +25,15 @@
  *  Author:   andyrozman
  */
 
-package ggc.gui.nutrition;
+package ggc.gui.nutrition.panels;
 
 import javax.swing.JPanel;
 
 
 public abstract class GGCTreePanel extends JPanel
 {
-
+    public abstract void setParent(Object obj);
+    
     public abstract void setData(Object obj);
 
 }

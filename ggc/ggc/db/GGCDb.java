@@ -37,30 +37,6 @@
 
 package ggc.db;
 
-import java.io.FileInputStream;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-//import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.StringTokenizer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory; 
-//import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.tool.hbm2ddl.*;
-
-//import ggc.GGC;
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
 import ggc.data.HbA1cValues;
@@ -68,13 +44,48 @@ import ggc.data.MonthlyValues;
 import ggc.data.WeeklyValues;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
-//import ggc.db.datalayer.FoodHomeWeight;
+import ggc.db.datalayer.Meal;
+import ggc.db.datalayer.MealGroup;
 import ggc.db.datalayer.NutritionDefinition;
 import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.datalayer.Settings;
-import ggc.db.hibernate.*;
+import ggc.db.hibernate.ColorSchemeH;
+import ggc.db.hibernate.DatabaseObjectHibernate;
+import ggc.db.hibernate.DayValueH;
+import ggc.db.hibernate.FoodDescriptionH;
+import ggc.db.hibernate.FoodGroupH;
+import ggc.db.hibernate.FoodUserDescriptionH;
+import ggc.db.hibernate.FoodUserGroupH;
+import ggc.db.hibernate.MealGroupH;
+import ggc.db.hibernate.MealH;
+import ggc.db.hibernate.MeterCompanyH;
+import ggc.db.hibernate.MeterH;
+import ggc.db.hibernate.NutritionDefinitionH;
+import ggc.db.hibernate.NutritionHomeWeightTypeH;
+import ggc.db.hibernate.SettingsH;
 import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
+
+import java.io.FileInputStream;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.StringTokenizer;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 
 public class GGCDb
@@ -213,18 +224,7 @@ public class GGCDb
     }
 
 
-    public void loadStaticData()
-    {
-        m_da.m_nutrition_treeroot = new GGCTreeRoot(1, this);
-        m_loadStatus = DB_STARTED;
-    }
-
-
-
-
-
-
-
+    
 
     public void displayError(String source, Exception ex)
     {
@@ -664,14 +664,35 @@ public class GGCDb
     // *************************************************************
 
 
+    public void loadStaticData()
+    {
+        m_loadStatus = DB_STARTED;
+    }
+    
+    
+    
     public void loadNutritionDb1()
     {
         // tree root, now in static data
+	m_da.tree_roots.put("1", new GGCTreeRoot(GGCTreeRoot.TREE_USDA_NUTRITION, this));
+	
+        //m_da.m_nutrition_treeroot = new GGCTreeRoot(1, this);
 
         this.loadNutritionDefinitions();
         this.loadHomeWeights();
     }
 
+    
+    public void loadNutritionDb2()
+    {
+	m_da.tree_roots.put("2", new GGCTreeRoot(GGCTreeRoot.TREE_USER_NUTRITION, this));
+    }
+    
+    
+    public void loadMealsDb()
+    {
+	m_da.tree_roots.put("3", new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, this));
+    }
 
     public void loadImplementedMeterData()
     {
@@ -932,7 +953,8 @@ public class GGCDb
     // ****                NUTRITION DATA                       ****
     // *************************************************************
 
-    public ArrayList<FoodGroup> getFoodGroups()
+    
+    public ArrayList<FoodGroup> getUSDAFoodGroups()
     {
 
         ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
@@ -952,7 +974,48 @@ public class GGCDb
     }
 
 
-    public ArrayList<FoodDescription> getFoodDescriptions()
+    public ArrayList<FoodGroup> getUserFoodGroups()
+    {
+
+        ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
+
+        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodUserGroupH as pst");
+
+        Iterator it = q.iterate();
+
+        while (it.hasNext())
+        {
+            FoodUserGroupH eh = (FoodUserGroupH)it.next();
+            list.add(new FoodGroup(eh));
+        }
+
+        return list;
+
+    }
+    
+
+    public ArrayList<MealGroup> getMealGroups()
+    {
+
+        ArrayList<MealGroup> list = new ArrayList<MealGroup>();
+
+        Query q = getSession().createQuery("select pst from ggc.db.hibernate.MealGroupH as pst");
+
+        Iterator it = q.iterate();
+
+        while (it.hasNext())
+        {
+            MealGroupH eh = (MealGroupH)it.next();
+            list.add(new MealGroup(eh));
+        }
+
+        return list;
+
+    }
+    
+    
+    
+    public ArrayList<FoodDescription> getUSDAFoodDescriptions()
     {
 
         ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
@@ -972,6 +1035,51 @@ public class GGCDb
     }
 
 
+    public ArrayList<FoodDescription> getUserFoodDescriptions()
+    {
+
+        ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+
+        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodUserDescriptionH as pst order by pst.food_user_group_id, pst.name");
+
+        Iterator it = q.iterate();
+
+        while (it.hasNext())
+        {
+            FoodUserDescriptionH eh = (FoodUserDescriptionH)it.next();
+            list.add(new FoodDescription(eh));
+        }
+
+        System.out.println("Loaded Food Descriptions: " + list.size()); 
+        
+        return list;
+
+    }
+
+    
+    public Hashtable<String, Meal> getMeals()
+    {
+
+	Hashtable<String, Meal> list = new Hashtable<String, Meal>();
+        //ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+
+        Query q = getSession().createQuery("select pst from ggc.db.hibernate.MealH as pst order by pst.meal_group_id, pst.name");
+
+        Iterator it = q.iterate();
+
+        while (it.hasNext())
+        {
+            MealH eh = (MealH)it.next();
+            list.put("" + eh.getId(), new Meal(eh));
+        }
+
+        return list;
+
+    }
+    
+    
+    
+    
     public void loadNutritionDefinitions()
     {
 

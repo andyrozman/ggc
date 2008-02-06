@@ -127,6 +127,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     public DailyRowDialog(DailyValues ndV, String nDate, JDialog dialog) 
     {
         super(dialog, "", true);
+        
         m_parent = dialog;
         initParameters(ndV,nDate);
     }
@@ -188,7 +189,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         //    setTitle(m_ic.getMessage("ADD_NEW_ROW"));
         //else
 
-        System.out.println(props.getBG_unit());
+        //System.out.println(props.getBG_unit());
 
 
         setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
@@ -350,7 +351,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                     try
                     {
                         long now = System.currentTimeMillis();
-                        System.out.println("last=" + last_change + ",now=" + now);
+                        //System.out.println("last=" + last_change + ",now=" + now);
 
                         if ((now - last_change) < 500) 
                         {
@@ -370,7 +371,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
                         float v = Float.parseFloat(BGField.getText());
 
-                        System.out.println("Item state vhanged: value_old=" + v + ", value_new=" + m_da.getBGValueDifferent(prev, v));
+                        //System.out.println("Item state vhanged: value_old=" + v + ", value_new=" + m_da.getBGValueDifferent(prev, v));
 
                         if (prev==2)
                         {
@@ -410,7 +411,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                         return;
 
                     in_process = true;
-                    System.out.println("State: " + cb_food_set.isSelected());
+                    //System.out.println("State: " + cb_food_set.isSelected());
                     cb_food_set.setSelected(!cb_food_set.isSelected());
                     in_process = false;
                 }
@@ -466,6 +467,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         //JLabel label = new JLabel(text);
         comp.setBounds(posX, posY, width, 23);
         comp.setFont(f_normal);
+        comp.addKeyListener(this);
         parent.add(comp);
     }
     
@@ -580,68 +582,89 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         else if (action.equals("ok"))
         {
-            // to-do
-            if (this.m_add_action) 
-            {
-                // add
-
-
-                if (debug)
-                    System.out.println("dV: " + dV);
-
-
-                this.m_dailyValuesRow = new DailyValuesRow();
-
-                this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime()); 
-                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, checkDecimalFields(BGField.getText()));
-                this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText()));
-                this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
-                this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
-                this.m_dailyValuesRow.setActivity(ActField.getText());
-                this.m_dailyValuesRow.setUrine(UrineField.getText());
-                this.m_dailyValuesRow.setComment(CommentField.getText());
-                this.m_dailyValuesRow.setMealIdsList(null);
-
-                dV.setNewRow(this.m_dailyValuesRow);
-                /*
-                dV.setNewRow(new DailyValuesRow(this.dtc.getDateTime(),
-                        checkDecimalFields(BGField.getText()), 
-                        checkDecimalFields(Ins1Field.getText()), 
-                        checkDecimalFields(Ins2Field.getText()), 
-                        checkDecimalFields(BUField.getText()), 
-                        ActField.getText(),
-                        UrineField.getText(),
-                        CommentField.getText(), 
-                        null));  // List of ids
-                //mod.fireTableChanged(null);
-                //clearFields();
-                */
-                this.m_actionDone = true;
-                this.dispose();
-            }
-            else
-            {
-
-                // edit
-                this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime()); 
-                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, checkDecimalFields(BGField.getText()));
-                this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText()));
-                this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
-                this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
-                this.m_dailyValuesRow.setActivity(ActField.getText());
-                this.m_dailyValuesRow.setUrine(UrineField.getText());
-                this.m_dailyValuesRow.setComment(CommentField.getText());
-                this.m_dailyValuesRow.setMealIdsList(null);
-                
-                //mod.fireTableChanged(null);
-                //clearFields();
-                this.m_actionDone = true;
-                this.dispose();
-            }
+            cmdOk();
         }
 
     }
 
+
+    private void cmdOk()
+    {
+        // to-do
+        if (this.m_add_action) 
+        {
+            // add
+
+
+            if (debug)
+                System.out.println("dV: " + dV);
+
+
+            this.m_dailyValuesRow = new DailyValuesRow();
+
+            this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime()); 
+
+            if (isFieldSet(BGField.getText()))
+                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, checkDecimalFields(BGField.getText()));
+
+            this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText()));
+            this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
+            this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
+            this.m_dailyValuesRow.setActivity(ActField.getText());
+            this.m_dailyValuesRow.setUrine(UrineField.getText());
+            this.m_dailyValuesRow.setComment(CommentField.getText());
+            this.m_dailyValuesRow.setMealIdsList(null);
+
+            dV.setNewRow(this.m_dailyValuesRow);
+            /*
+            dV.setNewRow(new DailyValuesRow(this.dtc.getDateTime(),
+                    checkDecimalFields(BGField.getText()), 
+                    checkDecimalFields(Ins1Field.getText()), 
+                    checkDecimalFields(Ins2Field.getText()), 
+                    checkDecimalFields(BUField.getText()), 
+                    ActField.getText(),
+                    UrineField.getText(),
+                    CommentField.getText(), 
+                    null));  // List of ids
+            //mod.fireTableChanged(null);
+            //clearFields();
+            */
+            this.m_actionDone = true;
+            this.dispose();
+        }
+        else
+        {
+
+            // edit
+            this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
+
+            if (isFieldSet(BGField.getText()))
+                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, checkDecimalFields(BGField.getText()));
+            this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText()));
+            this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
+            this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
+            this.m_dailyValuesRow.setActivity(ActField.getText());
+            this.m_dailyValuesRow.setUrine(UrineField.getText());
+            this.m_dailyValuesRow.setComment(CommentField.getText());
+            this.m_dailyValuesRow.setMealIdsList(null);
+
+            //mod.fireTableChanged(null);
+            //clearFields();
+            this.m_actionDone = true;
+            this.dispose();
+        }
+
+    }
+
+
+    public boolean isFieldSet(String text)
+    {
+    	if ((text == null) || (text.trim().length()==0))
+    	    return false;
+    	else
+    	    return true;
+    }
+    
     public boolean actionSuccesful()
     {
         return m_actionDone;
@@ -658,6 +681,13 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
      */
     public void keyReleased(KeyEvent e)
     {
+
+        if (e.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            cmdOk();
+        }
+
+        /*
         int change = 0;
 
         if ((e.getKeyCode() == KeyEvent.VK_LEFT)) // || (e.getKeyCode() == KeyEvent.VK_TAB)
@@ -698,7 +728,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
 
         components[newres].requestFocus();
-
+        */
     }
 
     private void fixDecimals()

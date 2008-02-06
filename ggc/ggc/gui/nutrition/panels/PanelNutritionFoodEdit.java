@@ -30,7 +30,7 @@ import com.atech.i18n.I18nControlAbstract;
 // andyrozman
 
 
-public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements ActionListener
+public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements ActionListener
 {
 
     I18nControl ic = I18nControl.getInstance();
@@ -54,7 +54,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
     NutritionDataDisplay ndd = null;
 
 
-    public PanelNutritionFood(NutritionTreeDialog dia)
+    public PanelNutritionFoodEdit(NutritionTreeDialog dia)
     {
 
         super();
@@ -96,8 +96,8 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
 
-        label = new JLabel(ic.getMessage("FOOD_DESCRIPTION"));
-        label.setBounds(30, 30, 460, 40);
+        label = new JLabel(ic.getMessage("FOOD_DESCRIPTION_EDIT_ADD"));
+        label.setBounds(30, 30, 520, 40);
         label.setFont(font_big); 
 	//label.setBackground(Color.red);
 	//label.setBorder(BorderFactory.createLineBorder(Color.blue));
@@ -107,12 +107,12 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
 	label = new JLabel(ic.getMessage("FOOD_NAME") + ":" );
-	label.setBounds(30, 100, 100, 30);
+	label.setBounds(30, 80, 100, 30);
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
 
 	label_name = new JLabel();
-	label_name.setBounds(30, 125, 460, 50);
+	label_name.setBounds(30, 105, 460, 50);
 	label_name.setVerticalAlignment(JLabel.TOP);
 	label_name.setFont(fnt_14); 
 	this.add(label_name, ZeroLayout.DYNAMIC);
@@ -133,19 +133,19 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
 	label = new JLabel(ic.getMessage("REFUSE") + ":");
-	label.setBounds(30, 210, 300, 30);
+	label.setBounds(30, 230, 300, 30);
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
 
 
 	label_refuse = new JLabel();
-	label_refuse.setBounds(300, 210, 50, 30);
+	label_refuse.setBounds(300, 230, 50, 30);
 	label_refuse.setFont(fnt_14); 
 	this.add(label_refuse, null);
 
 
 	label = new JLabel(ic.getMessage("NUTRITIONS_FOOD") + ":");
-	label.setBounds(30, 235, 300, 60);
+	label.setBounds(30, 250, 300, 60);
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
 
@@ -216,7 +216,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
         table_1.setDoubleBuffered(true);
 
         scroll_1 = new JScrollPane(table_1);
-        scroll_1.setBounds(30, 280, 460, 100);
+        scroll_1.setBounds(30, 295, 460, 100);
         this.add(scroll_1, ZeroLayout.DYNAMIC);
         scroll_1.repaint();
 
@@ -228,7 +228,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
 	label = new JLabel(ic.getMessage("HOME_WEIGHTS") + ":");
-	label.setBounds(30, 370, 300, 60);
+	label.setBounds(30, 385, 300, 60);
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
 
@@ -304,7 +304,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	table_2.setDoubleBuffered(true);
 
 	scroll_2 = new JScrollPane(table_2);
-	scroll_2.setBounds(30, 415, 460, 80);
+	scroll_2.setBounds(30, 430, 460, 80);
 	//scroll_2.
 	this.add(scroll_2, ZeroLayout.DYNAMIC);
 	scroll_2.repaint();
@@ -319,7 +319,8 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
     {
 	
     }
-
+    
+    
 
     public void setData(Object obj)
     {

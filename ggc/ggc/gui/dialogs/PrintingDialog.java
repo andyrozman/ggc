@@ -27,6 +27,11 @@
 
 package ggc.gui.dialogs;
 
+import ggc.data.MonthlyValues;
+import ggc.data.print.PrintExtendedMonthlyReport;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
+
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -35,23 +40,16 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.JFrame;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-
-//import javax.swing.*;
-
-import ggc.data.MonthlyValues;
-import ggc.data.print.PrintSimpleMonthlyReport;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 
 // fix this
@@ -206,7 +204,7 @@ public class PrintingDialog extends JDialog implements ActionListener
         else if (action.equals("ok"))
         {
             int yr = ((Integer)sl_year.getValue()).intValue();
-        int mnth = ((Integer)sl_month.getValue()).intValue();
+            int mnth = ((Integer)sl_month.getValue()).intValue();
 
         /*
             System.out.println(sl_year.getValue());
@@ -221,7 +219,8 @@ public class PrintingDialog extends JDialog implements ActionListener
             }*/
             
             MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
-            PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
+            //PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
+            PrintExtendedMonthlyReport psm = new PrintExtendedMonthlyReport(mv);
 
             displayPDF(psm.getName());
          
@@ -242,12 +241,19 @@ public class PrintingDialog extends JDialog implements ActionListener
 
     public void displayPDF(String name)
     {
-	File fl = new File("../data/temp/");
+	File fl = new File("..\\data\\temp/");
     
 	System.out.println(fl.getAbsolutePath());
-	System.out.println(File.separator);
+	//System.out.println(File.separator);
     
-	File acr = new File(m_da.getSettings().getPdfVieverPath());
+	String pdf_viewer = m_da.getSettings().getPdfVieverPath().replace('\\', '/');
+	String file_path = fl.getAbsolutePath().replace('\\', '/');
+
+	System.out.println(pdf_viewer);
+	System.out.println(file_path);
+	
+	
+	File acr = new File(pdf_viewer);
 	    //"c:/Program Files/Adobe/Acrobat 7.0/Reader/AcroRd32.exe");
 				
 	System.out.println(acr.exists());
@@ -257,7 +263,12 @@ public class PrintingDialog extends JDialog implements ActionListener
 	{
     //      String pathToAcrobat = "c:\\Program Files\\Utils\\Acrobat 7.0\\Reader\\AcroRd32.exe ";
 	    //Runtime.getRuntime().e
-	    Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + File.separator + name);
+	    //Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + File.separator + name);
+	    //Runtime.getRuntime().exec(pdf_viewer + " " + file_path + "/" + name);
+	    
+	    System.out.println("Runtime: " + acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + File.separator + name);
+	    
+	    Runtime.getRuntime().exec(acr.getAbsoluteFile() + " \"" +  fl.getAbsolutePath() + File.separator + name + "\"");
 	} 
 	catch(RuntimeException ex)
 	{
@@ -266,9 +277,10 @@ public class PrintingDialog extends JDialog implements ActionListener
 	catch (Exception ex) 
 	{
 	    System.out.println("Error running AcrobatReader: " + ex);
+	    ex.printStackTrace();
 	    
 	}
-
+/*
 	System.out.println(acr.getAbsoluteFile());
 
 	
@@ -287,7 +299,7 @@ public class PrintingDialog extends JDialog implements ActionListener
 	    System.out.println("Error running AcrobatReader: " + ex);
 	    
 	}
-
+*/
     }
 
 

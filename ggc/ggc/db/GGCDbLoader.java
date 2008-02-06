@@ -68,6 +68,19 @@ public class GGCDbLoader extends Thread
 
     public boolean run_once = false;
 
+    
+    public boolean part_start = false;
+    
+    
+    public GGCDbLoader(DataAccess da)
+    {
+        m_da = da;
+        System.out.println("GGCDbLoader in development mode");
+        part_start = true;
+    }
+    
+    
+    
     public GGCDbLoader(DataAccess da, StatusBar bar)
     {
         m_da = da;
@@ -103,10 +116,13 @@ public class GGCDbLoader extends Thread
 */
         GGCDb db = new GGCDb(m_da);
 
-        if (m_bar!=null)
-            m_bar.setDatabaseName(db.db_conn_name);
-        else
-            m_barL.setDatabaseName(db.db_conn_name);
+        if (!part_start)
+        {
+            if (m_bar!=null)
+                m_bar.setDatabaseName(db.db_conn_name);
+            else
+                m_barL.setDatabaseName(db.db_conn_name);
+        }
 
 
         db.initDb();
@@ -114,17 +130,31 @@ public class GGCDbLoader extends Thread
         setDbStatus(StatusBar.DB_INIT_OK); 
 
 
-        db.loadConfigData();
-
-
-        db.loadStaticData();
-    	db.loadNutritionDb1();
-    	db.loadImplementedMeterData();
+        if (part_start)
+        {
+            db.loadNutritionDb1();
+            db.loadNutritionDb2();
+            db.loadMealsDb();
+            
+        }
+        else
+        {
+            db.loadConfigData();
+    
+            db.loadStaticData();
+            db.loadNutritionDb1();
+//            db.loadImplementedMeterData();
+        }
 
         setDbStatus(StatusBar.DB_LOAD);
 
         m_da.m_db = db;
 
+        if (part_start)
+            return;
+        
+        
+        
         if (m_da.getParent()!=null)
             m_da.loadDailySettings(new GregorianCalendar(), true);
         else
@@ -132,6 +162,7 @@ public class GGCDbLoader extends Thread
 
         //m_bar.setDatabaseName(db.db_conn_name);
 
+            
         if (m_da.getParent()!=null)
         {
             // GGC
@@ -156,6 +187,9 @@ public class GGCDbLoader extends Thread
 
     public void setDbStatus(int status)
     {
+        if (part_start)
+            return;
+	
         if (m_bar!=null)
             m_bar.setDbStatus(status);
         else

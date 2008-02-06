@@ -245,6 +245,11 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
                 {
                     datatable.getDefaultCell().setGrayFill(0.9f);
                 }
+                else
+                {
+                    datatable.getDefaultCell().setBackgroundColor(Color.white); //.setGrayFill(0.0f);
+                    //datatable.getDefaultCell().se
+                }
 
                 datatable.addCell(i+"." + this.m_mv.getMonth());
 

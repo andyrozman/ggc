@@ -31,6 +31,7 @@ package ggc.gui.panels.info;
 import ggc.util.I18nControl;
 
 import javax.swing.*;
+
 import java.awt.*;
 
 
@@ -50,7 +51,7 @@ public class StocksInfoPanel extends AbstractInfoPanel
         //JLabel left_margin = new JLabel
 
         add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE")+":"));
-        add(new JLabel(m_ic.getMessage("WILL_BE_FOUND_HERE")+" "  + m_ic.getMessage("NOT YET")));
+        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
 /*        add(new JLabel("label"));
         add(new JLabel("label"));
         add(new JLabel("label"));

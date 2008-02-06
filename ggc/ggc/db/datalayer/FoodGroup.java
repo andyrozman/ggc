@@ -30,46 +30,196 @@
 
 package ggc.db.datalayer;
 
+import ggc.db.hibernate.DatabaseObjectHibernate;
+import ggc.db.hibernate.FoodGroupH;
+import ggc.db.hibernate.FoodUserGroupH;
+
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.FoodGroupH;
 
 
-
-public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
+public class FoodGroup implements DatabaseObjectHibernate 
+//extends FoodGroupH implements DatabaseObjectHibernate
 {
 
     public boolean debug = false;
+    
+    //ggc.db.hibernate.FoodGroupH
+    //ggc.db.hibernate.FoodUserGroupH;
 
-
+    FoodGroupH group_db1 = null;
+    FoodUserGroupH group_db2 = null;
+    
+    int group_type = 0;
+    long id;
+    
+    ArrayList<FoodGroup> children_group = new ArrayList<FoodGroup>();
+    ArrayList<Object> children = new ArrayList<Object>();
+    
+/*
     public FoodGroup()
     {
         this.setId(0);
 	this.setDescription("");
     }
+*/
 
-
+    public FoodGroup(int type)
+    {
+	group_type = 1;
+    }
+    
     public FoodGroup(FoodGroupH ch)
     {
-        this.setId(ch.getId());
-	this.setDescription(ch.getDescription());
-	this.setDescription_i18n(ch.getDescription_i18n());
+	this.group_db1 = ch;
+	group_type = 1;
     }
 
+    public FoodGroup(FoodUserGroupH ch)
+    {
+	this.group_db2 = ch;
+	group_type = 2;
+    }
+    
 
     public String getShortDescription()
     {
         return this.getDescription();
     }
 
+    
+    public String getDescription()
+    {
+	if (group_type==1)
+	    return this.group_db1.getDescription();
+	else
+	    return this.group_db2.getDescription();
+    }
 
+    
+    public void setDescription(String desc)
+    {
+	if (group_type==1)
+	    this.group_db1.setDescription(desc);
+	else
+	    this.group_db2.setDescription(desc);
+    }
+    
+    
+    public long getId()
+    {
+	if ((this.group_db1==null) && (this.group_db2==null))
+	{
+	    return this.id;
+	}
+	
+	if (group_type==1)
+	    return this.group_db1.getId();
+	else
+	    return this.group_db2.getId();
+    }
+
+    public void setId(int id)
+    {
+	setId((long)id);
+    }
+    
+    public void setId(long id)
+    {
+	if ((this.group_db1==null) && (this.group_db2==null))
+	    this.id = id;
+	else
+	{
+	    if (group_type==1)
+		this.group_db1.setId(id);
+	    else
+		this.group_db2.setId(id);
+	}
+    }
+    
+
+    public String getName()
+    {
+	if (group_type==1)
+	    return this.group_db1.getDescription();
+	else
+	    return this.group_db2.getName();
+    }
+    
+    public void setName(String name)
+    {
+	if (group_type==2)
+	    this.group_db2.setName(name);
+    }
+    
+    
+
+    public void setDescription_i18n(String name)
+    {
+	if (group_type==1)
+	    this.group_db1.setDescription_i18n(name);
+	//else
+	//    return this.group_db2.getDescription();
+    }
+    
+    
+    public String getDescription_i18n()
+    {
+	if (group_type==1)
+	    return this.group_db1.getDescription_i18n();
+	else
+	    return this.group_db2.getDescription();
+    }
+    
+    
+    public int getChildCount()
+    {
+	return this.children.size();
+    }
+    
+    public boolean hasChildren()
+    {
+	return (getChildCount()!=0);
+    }
+    
+    public void addChild(FoodGroup fg)
+    {
+	children_group.add(fg);
+	children.add(fg);
+    }
+    
+    public void addChild(FoodDescription fd)
+    {
+	children.add(fd);
+    }
+    
+    public Object getChild(int index)
+    {
+	return this.children.get(index);
+    }
+    
+    public int findChild(Object child)
+    {
+	return this.children.indexOf(child);
+    }
+    
+
+    public long getParentId()
+    {
+	if (this.group_type == 1)
+	    return 0L;
+	else
+	    return this.group_db2.getParent_id();
+    }
+    
+    
     @Override
     public String toString()
     {
-	//return this.getDescription();
-        return this.getShortDescription();
+        return this.getName();
     }
 
 
@@ -89,19 +239,20 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
     {
         
         Transaction tx = sess.beginTransaction();
-
-        FoodGroupH ch = new FoodGroupH();
-
-        ch.setId(this.getId());
-	ch.setDescription(this.getDescription());
-	ch.setDescription_i18n(this.getDescription_i18n());
-
-        Long id = (Long)sess.save(ch);
-
+	Long id; 
+	
+	if (this.group_type==1)
+	{
+	    id = (Long)sess.save(this.group_db1);
+	}
+	else
+	{
+	    id = (Long)sess.save(this.group_db2);
+	}
+	
         tx.commit();
 
         return ""+id.longValue();
-        
     }
 
 
@@ -118,13 +269,15 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 
         Transaction tx = sess.beginTransaction();
 
-	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Long(this.getId()));
-
-	ch.setId(this.getId());
-	ch.setDescription(this.getDescription());
-	ch.setDescription_i18n(this.getDescription_i18n());
-
-        sess.update(ch);
+	if (this.group_type==1)
+	{
+	    sess.update(this.group_db1);
+	}
+	else
+	{
+	    sess.update(this.group_db2);
+	}
+        
         tx.commit();
 
         return true;
@@ -142,16 +295,20 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
      */
     public boolean DbDelete(Session sess) throws Exception
     {
-
         Transaction tx = sess.beginTransaction();
 
-	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Long(this.getId()));
-
-        sess.delete(ch);
+	if (this.group_type==1)
+	{
+	    sess.delete(this.group_db1);
+	}
+	else
+	{
+	    sess.delete(this.group_db2);
+	}
+        
         tx.commit();
 
         return true;
-
     }
 
 
@@ -166,8 +323,11 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
+	/*
         System.out.println("Not implemented: FoodGroup::DbHasChildren");
         return true;
+        */
+	return true;
     }
 
 
@@ -182,7 +342,17 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
      */
     public boolean DbGet(Session sess) throws Exception
     {
-
+	if (this.group_type==1)
+	{
+	    this.group_db1 = (FoodGroupH)sess.get(FoodGroupH.class, new Long(this.getId()));
+	    sess.update(this.group_db1);
+	}
+	else
+	{
+	    sess.update(this.group_db2);
+	}
+	
+/*
 	FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new Long(this.getId()));
 
 	this.setId(ch.getId());
@@ -190,6 +360,9 @@ public class FoodGroup extends FoodGroupH implements DatabaseObjectHibernate
 	this.setDescription_i18n(ch.getDescription_i18n());
 
         return true;
+        */
+	
+	return false;
     }
 
 

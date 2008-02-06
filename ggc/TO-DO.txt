@@ -12,9 +12,11 @@ Level 2 (Medium 1 Priority):
     o Add levels of loading (1=main(settings, daily stat), 2=Other data(docs,meters,links),3=Nutrition, 4=Finished)
 
 * Import/Export Tool (old data):
-    o  Export old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
-    o  Import old data (daily values)
+//    o  Export old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
+//    o  Import old data (daily values)
     o  Db Maintainance GUI
+
+* Add external library for graphs (something with pictures creations, so we can use it in pdfs)
 
 
 Level 3 (Medium 2 Priority):
@@ -33,10 +35,17 @@ Level 3 (Medium 2 Priority):
     o  Backup
     o  Restore
 
-
+* Add new daily data: - Check all parameters for validity (internal java checker)
+                      - Enter is OK (Date component)
+                      //- Tab for switching fields
+                      - 0.0 not displayed in table
+                      - double click edit
 
 Level 4 (Medium 3 Priority):
 ----------------------------
+
+* USDB: - Main panel
+        - Group panel
 
 * User Nutrition:
     o  Private nutrition database

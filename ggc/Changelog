@@ -1,3 +1,6 @@
+2008-01-29 (0.2.9.5) Andy Rozman <andyrozman@users.sourceforge.net>
+    * fixing daily input values
+
 2008-01-02 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * fix for NumberFormatException when no BG is entered
     * a BG of 0 isn't shown as a value in the table or the dialog anymore

@@ -1,16 +1,14 @@
-package ggc.gui.nutrition;
+package ggc.gui.nutrition.panels;
+
+import ggc.gui.nutrition.NutritionTreeDialog;
+import ggc.util.DataAccess;
+import ggc.util.I18nControl;
 
 import java.awt.Font;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-import javax.swing.JButton;
-//import javax.swing.JDialog;
-import javax.swing.JLabel;
-//import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-import ggc.util.I18nControl;
-import ggc.util.DataAccess;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH
@@ -29,6 +27,13 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
 
     NutritionTreeDialog m_dialog = null;
 
+    String[] nutrition_db = {
+	    "",
+	    "USDA_NUTRITION_DATABASE",
+	    "USER_NUTRITION_DATABASE",
+	    "MEAL_DATABASE"
+    };
+    
 
     public PanelNutritionMain(NutritionTreeDialog dia)
     {
@@ -51,24 +56,31 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
     public void createPanel()
     {
 
-        this.setSize(460, 460);
+	
+	
+        this.setSize(460, 520);
         this.setLayout(null);
 
-        Font fnt_18 = new Font("Times New Roman", Font.BOLD, 18);
+        Font fnt_18 = new Font("Times New Roman", Font.PLAIN, 14);
 
+        String nut_db = nutrition_db[this.m_dialog.getType()];
+        
+        
 
-        label = new JLabel(ic.getMessage("NUTRITION_DATA"));
+        label = new JLabel(ic.getMessage(nut_db));
         label.setBounds(0, 35, 520, 40);
         label.setFont(font_big); 
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, null);
 
 
-        label = new JLabel(ic.getMessage("NUTRITION_DATA_DESC"));
-        label.setBounds(40, 100, 100, 30);
+        label = new JLabel(ic.getMessage(nut_db + "_DESC"));
+        label.setBounds(40, 120, 400, 250);
+        label.setVerticalAlignment(JLabel.TOP);
         label.setFont(fnt_18); 
         this.add(label, null);
 
+        /*
         label = new JLabel(ic.getMessage("ADD_DIOCESE_DESC"));
         label.setBounds(40, 130, 300, 60);
         label.setFont(font_normal); 
@@ -85,15 +97,17 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
         label.setBounds(40, 310, 300, 60);
         label.setFont(font_normal); 
 //        this.add(label, null);
-
+*/
         return;
     }
 
+    public void setParent(Object obj)
+    {
+    }
 
 
     public void setData(Object obj)
     {
-
     }
 
 
