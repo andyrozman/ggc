@@ -28,10 +28,11 @@ public class FileOutputWriter implements OutputWriter
 		}
 	}
 
+	/* x
 	private void setReadData()
 	{
 		this.out_util.setLastChangedTime();
-	}
+	} */
 	
 	public void writeRawData(String input)
 	{

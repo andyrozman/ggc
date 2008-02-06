@@ -45,7 +45,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
     protected DataAccess m_da = DataAccess.getInstance();
 
     private boolean isPortOpen = false;
-    private boolean dataFromMeter = false;
+    protected boolean dataFromMeter = false;
     protected SerialPort serialPort = null;
     protected CommPortIdentifier portIdentifier = null;
     protected OutputStream portOutputStream = null;
@@ -418,6 +418,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
     }
 
+    @SuppressWarnings("unchecked")
     public static Vector<String> getAvailableSerialPorts()
     {
         Vector<String> retVal = new Vector<String>();
@@ -428,7 +429,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 
             //CommPortIdentifier.getP
             
-            Enumeration<Object> enume = CommPortIdentifier.getPortIdentifiers();
+            Enumeration enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 
             {
                 CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
@@ -445,4 +446,83 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 
     }
 
+    
+    /**
+    *
+    */
+   public StringBuffer createBufferFromStream(InputStream stream)
+   {
+       StringBuffer inputBuffer = new StringBuffer();
+       int newData = 0;
+
+       while (newData != -1)
+       {
+           try
+           {
+               newData = stream.read();
+               if (newData == -1)
+               {
+                   break;
+               }
+               if ('\r' == (char)newData)
+               {
+                   inputBuffer.append('\n');
+               }
+               else
+               {
+                   System.out.println("byte : " + newData);
+                   inputBuffer.append((char)newData);
+               }
+           }
+           catch (IOException ex)
+           {
+               System.err.println(ex);
+               return inputBuffer;
+           }
+       }
+
+       return inputBuffer;
+   }
+
+
+   /**
+    *
+    */
+   public byte[] createByteBufferFromStream(InputStream stream)
+   {
+       Vector<Byte> bytes = new Vector<Byte>();
+       int newData = 0;
+
+       while (newData != -1)
+       {
+           try
+           {
+               newData = stream.read();
+               if (newData == -1)
+               {
+                   break;
+               }
+               System.out.println("byte : " + newData);
+               bytes.addElement((byte)newData);
+
+           }
+           catch (IOException ex)
+           {
+               System.err.println(ex);
+           }
+       }
+
+       byte[] allBytes = new byte[bytes.size()];
+       for (int i = 0; i < bytes.size(); i++)
+       {
+           allBytes[i] = bytes.elementAt(i).byteValue();
+       }
+
+       return allBytes;
+   }
+    
+    
+    
+    
+    
 }

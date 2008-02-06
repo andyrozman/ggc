@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
 public class ConfigurationManager
 {
 
-    private static Log s_logger = LogFactory.getLog(ConfigurationManager.class); 
+    private Log log = LogFactory.getLog(ConfigurationManager.class); 
     //private boolean changed = false;
 
 
@@ -83,6 +83,7 @@ public class ConfigurationManager
     public ConfigurationManager(DataAccess da)
     {
         this.m_da = da;
+        this.log.debug("ConfigurationManager() ");
     }
 
 /*

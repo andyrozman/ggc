@@ -15,7 +15,6 @@ import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -136,42 +135,6 @@ public class EuroFlashImport extends SerialMeterImport
         }
     }
 
-    /**
-     *
-     */
-    private StringBuffer createBufferFromStream(InputStream stream)
-    {
-        StringBuffer inputBuffer = new StringBuffer();
-        int newData = 0;
-
-        while (newData != -1)
-        {
-            try
-            {
-                newData = stream.read();
-                if (newData == -1)
-                {
-                    break;
-                }
-                if ('\r' == (char)newData)
-                {
-                    inputBuffer.append('\n');
-                }
-                else
-                {
-                    //System.out.println("byte : " + newData);
-                    inputBuffer.append((char)newData);
-                }
-            }
-            catch (IOException ex)
-            {
-                System.err.println(ex);
-                return inputBuffer;
-            }
-        }
-
-        return inputBuffer;
-    }
 
     private void parseDataString(String dataStr) throws ImportException
     {

@@ -12,9 +12,7 @@ import ggc.meter.data.DailyValuesRow;
 import gnu.io.SerialPortEvent;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -138,79 +136,6 @@ public class FreeStyleImport extends SerialMeterImport
         }
     }
 
-    /**
-     *
-     */
-    private StringBuffer createBufferFromStream(InputStream stream)
-    {
-        StringBuffer inputBuffer = new StringBuffer();
-        int newData = 0;
-
-        while (newData != -1)
-        {
-            try
-            {
-                newData = stream.read();
-                if (newData == -1)
-                {
-                    break;
-                }
-                if ('\r' == (char)newData)
-                {
-                    inputBuffer.append('\n');
-                }
-                else
-                {
-                    System.out.println("byte : " + newData);
-                    inputBuffer.append((char)newData);
-                }
-            }
-            catch (IOException ex)
-            {
-                System.err.println(ex);
-                return inputBuffer;
-            }
-        }
-
-        return inputBuffer;
-    }
-
-
-    /**
-     *
-     */
-    private byte[] createByteBufferFromStream(InputStream stream)
-    {
-        Vector<Byte> bytes = new Vector<Byte>();
-        int newData = 0;
-
-        while (newData != -1)
-        {
-            try
-            {
-                newData = stream.read();
-                if (newData == -1)
-                {
-                    break;
-                }
-                System.out.println("byte : " + newData);
-                bytes.addElement((byte)newData);
-
-            }
-            catch (IOException ex)
-            {
-                System.err.println(ex);
-            }
-        }
-
-        byte[] allBytes = new byte[bytes.size()];
-        for (int i = 0; i < bytes.size(); i++)
-        {
-            allBytes[i] = bytes.elementAt(i).byteValue();
-        }
-
-        return allBytes;
-    }
 
 }
 

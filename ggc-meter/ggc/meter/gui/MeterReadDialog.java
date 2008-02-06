@@ -66,7 +66,7 @@ public class MeterReadDialog extends JDialog implements ActionListener
 
     private GlucoValues glucoValues = null;
     private GlucoTableModel model = null;
-    private GlucoTable resTable;
+//    private GlucoTable resTable;
 
 //    private JButton startButton;
 //    private JButton saveButton;
@@ -212,7 +212,7 @@ public class MeterReadDialog extends JDialog implements ActionListener
         logText.setAutoscrolls(true);
         JScrollPane sp = new JScrollPane(logText, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        resTable = new GlucoTable();
+//x        resTable = new GlucoTable();
 
 //x        JScrollPane sp2 = new JScrollPane(resTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 

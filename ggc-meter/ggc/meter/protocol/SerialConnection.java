@@ -620,9 +620,10 @@ CommPortOwnershipListener
      * Get serial ports 
      * @return String array of ports on workstation (may return null)
      */
+    @SuppressWarnings("unchecked")
     public static String[] getAvailablePorts()
     {
-        Enumeration<CommPortIdentifier> en = CommPortIdentifier.getPortIdentifiers();
+        Enumeration en = CommPortIdentifier.getPortIdentifiers();
         String[] retStr = null;        
         ArrayList<String> list = new ArrayList<String>();
 
@@ -658,7 +659,7 @@ CommPortOwnershipListener
     class MessageQueue
     {
         /** Queue containing responses */
-        private LinkedList queue = new LinkedList();
+        private LinkedList<String> queue = new LinkedList<String>();
 
         /**
          * Add message to queue
@@ -682,7 +683,7 @@ CommPortOwnershipListener
         {
             synchronized (queue)
             {
-                queue.addLast(chars);
+                queue.addLast(new String(chars));
             }
         }
 
@@ -705,7 +706,9 @@ CommPortOwnershipListener
 
                 synchronized (queue)
                 {
-                    chars = (char[]) queue.removeFirst();
+                	String s = queue.removeFirst();
+                	chars = s.toCharArray();
+                    //chars = (char[]) queue.removeFirst();
                 }
             }
 
@@ -755,7 +758,9 @@ CommPortOwnershipListener
             {
                 synchronized (queue)
                 {
-                    char[] chars = (char[]) queue.removeFirst();
+                	String s = queue.removeFirst();
+                    char[] chars = s.toCharArray(); 
+                    	//(char[]) queue.removeFirst();
                     if (chars != null)
                     {
                         msg = new String(chars);

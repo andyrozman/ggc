@@ -50,13 +50,13 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 
 
     private boolean isPortOpen = false;
-    private boolean dataFromMeter = false;
+    public boolean dataFromMeter = false;
     public SerialPort serialPort = null;
     protected CommPortIdentifier portIdentifier = null;
     public OutputStream portOutputStream = null;
     public InputStream portInputStream = null;
 
-    private long startTime = System.currentTimeMillis();
+    public long startTime = System.currentTimeMillis();
     protected long timeOut = 50000;
 
 //x    private EventListenerList listenerList = new EventListenerList();
@@ -487,6 +487,8 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
     }
 
+    
+    @SuppressWarnings("unchecked")
     public static Vector<String> getAvailableSerialPorts()
     {
         Vector<String> retVal = new Vector<String>();

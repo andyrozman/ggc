@@ -249,8 +249,9 @@ public class DailyValuesRow //implements Serializable
     }
 
 
-    private void loadMealsIds()
+    public void loadMealsIds()
     {
+    	// private
         // to-do
         if ((this.meals!=null) && (this.meals.trim().length()>0))
         {
@@ -260,8 +261,9 @@ public class DailyValuesRow //implements Serializable
         }
     }
 
-    private String createMealsIds()
+    public String createMealsIds()
     {
+    	// ptivate
         if ((this.meals_ids==null) || (this.meals_ids.size()==0))
         {
             return "";
