@@ -19,21 +19,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: GGCDb
- *  Purpose:  This is main datalayer file. It contains all methods for initialization of
- *      Hibernate framework, for adding/updating/deleting data from database (hibernate).
- *      It also contains all methods for mass readings of data from hibernate. 
+ *  Filename: TimerThread
+ *  Purpose:  This is timer thread. 
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
-
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// 
-// Methods are added to this class, whenever we make changes to our existing database,
-// either add methods for handling data or adding new tables.
-// 
-// andyrozman
-
 
 package ggc.gui.calendar;
 

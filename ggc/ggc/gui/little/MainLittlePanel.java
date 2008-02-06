@@ -19,11 +19,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: InfoPanel.java
+ *  Filename: MainLittlePanel
  *  Purpose:  Container for all InfoPanels an the MainFrame. Responsible for
  *            managing the handling of its children. (fix)
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman {andy@atech-software.com}
  */
 
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH

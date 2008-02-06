@@ -1,7 +1,7 @@
 /*
  *  GGC - GNU Gluco Control
  *
- *  A pure java app to help you manage your diabetes.
+ *  A pure Java application to help you manage your diabetes.
  *
  *  See AUTHORS for copyright information.
  *
@@ -24,7 +24,7 @@
  *      Hibernate framework, for adding/updating/deleting data from database (hibernate).
  *      It also contains all methods for mass readings of data from hibernate. 
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH
@@ -156,7 +156,7 @@ public class GGCDb
         return this.m_cfg;
     }
 
-
+/*
     private void debugConfig()
     {
 /*
@@ -177,7 +177,7 @@ public class GGCDb
         }
 
 */
-    }
+//    }
 
 
 

@@ -26,7 +26,7 @@ package ggc.gui.little;
  *      database, for example when you make measurement or take insulin and you don't 
  *      need the whole application.
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman {andy@atech-software.com}
  */
 
 

@@ -22,7 +22,7 @@
  *  Filename: I18nControl
  *  Purpose:  Used for internationalization
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 

@@ -24,7 +24,7 @@
  *      class which holds all our definitions, so that we don't need to create them
  *      again for each class.      
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 package ggc.util;

@@ -19,12 +19,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: FoodDescription
+ *  Filename: Settings
  *  Purpose:  This is datalayer file (data file, with methods to work with database or in 
  *      this case Hibernate). 
- *      This one is used for description of food groups.
+ *      This one is used for Settings.
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 
@@ -35,7 +35,6 @@ import org.hibernate.Transaction;
 
 import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.SettingsH;
-
 
 
 public class Settings extends SettingsH implements DatabaseObjectHibernate

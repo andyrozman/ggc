@@ -19,12 +19,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: FoodDescription
+ *  Filename: NutritionHomeWeightType
  *  Purpose:  This is datalayer file (data file, with methods to work with database or in 
  *      this case Hibernate). 
- *      This one is used for food's home wiights.
+ *      This one is used for Food's Home Weights.
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 package ggc.db.datalayer;
@@ -34,7 +34,6 @@ import org.hibernate.Transaction;
 
 import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.NutritionHomeWeightTypeH;
-
 
 
 public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements DatabaseObjectHibernate

@@ -23,6 +23,8 @@
  *  Purpose:  Draws the spread of values over the day.
  *
  *  Author:   schultd
+ *  Author:   reini
+ *  
  */
 
 package ggc.gui.view;

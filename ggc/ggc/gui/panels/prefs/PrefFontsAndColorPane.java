@@ -23,7 +23,7 @@
  *  Purpose:  Preferences Pane to choose Fonts and Colors.
  *
  *  Author:   schultd
- *  Author:   andyrozman 
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 package ggc.gui.panels.prefs;

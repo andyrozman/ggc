@@ -19,10 +19,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: <filename>
- *  Purpose:  <enter purpose here> 
+ *  Filename: StatisticValues
+ *  Purpose:  Data class for storing statistic data  
  *
- *  Author:   <enter your name here>
+ *  Author:   schultd
  */
 
 package ggc.data;

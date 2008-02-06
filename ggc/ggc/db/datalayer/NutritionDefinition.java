@@ -19,12 +19,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: FoodDNutritionDefinition
+ *  Filename: NutritionDefinition
  *  Purpose:  This is datalayer file (data file, with methods to work with database or in 
  *      this case Hibernate). 
- *      This one is used for Nutritions definitions.
+ *      This one is used for nutritions definition.
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 

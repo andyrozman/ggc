@@ -40,7 +40,6 @@ import ggc.data.event.GlucoValueEventListener;
 import ggc.util.DataAccess;
 
 
-// FIX
 
 public class GlucoValues extends DailyValues
 {

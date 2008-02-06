@@ -1,3 +1,6 @@
+package ggc.data;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -25,13 +28,10 @@
  *  Author:   schultd
  */
 
-package ggc.data;
-
+import ggc.util.I18nControl;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-
-import ggc.util.I18nControl;
 
 
 public class HbA1cValues

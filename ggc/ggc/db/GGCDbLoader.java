@@ -1,7 +1,7 @@
 /*
  *  GGC - GNU Gluco Control
  *
- *  A pure java app to help you manage your diabetes.
+ *  A pure Java application to help you manage your diabetes.
  *
  *  See AUTHORS for copyright information.
  *
@@ -19,13 +19,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: GGCDb
- *  Purpose:  This is main datalayer file. It contains all methods for initialization of
- *      Hibernate framework, for adding/updating/deleting data from database (hibernate).
- *      It also contains all methods for mass readings of data from hibernate. 
+ *  Filename: GGCDbLoader
+ *  Purpose:  This is GGCDb Loader. It help system to load all needed data for 
+ *      GGC "Session".
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
+
 
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH
 // 

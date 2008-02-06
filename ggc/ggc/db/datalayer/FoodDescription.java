@@ -24,7 +24,7 @@
  *      this case Hibernate). 
  *      This one is used for description of food.
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 

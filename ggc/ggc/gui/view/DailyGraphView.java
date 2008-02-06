@@ -23,6 +23,8 @@
  *  Purpose:  Drawing all data for one day.
  *
  *  Author:   schultd
+ *  Author:   reini
+ *  
  */
 
 package ggc.gui.view;

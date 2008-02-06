@@ -23,6 +23,8 @@
  *  Purpose:  Visualize the HbA1c quality.
  *
  *  Author:   schultd
+ *  Author:   reini
+ *  
  */
 
 package ggc.gui.view;

@@ -1,3 +1,6 @@
+package ggc.data.calendar;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -19,14 +22,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: CalendarListener.java
+ *  Filename: CalendarListener
  *  Purpose:  Interface which must be implemented by all classes which want
  *            to get CalendarEvents.
  *
  *  Author:   schultd
  */
-
-package ggc.data.calendar;
 
 
 public interface CalendarListener

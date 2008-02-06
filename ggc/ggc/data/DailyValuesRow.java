@@ -23,6 +23,7 @@
  *  Purpose:  One row in the DailyValues Data Model.
  *
  *  Author:   schultd
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 package ggc.data;

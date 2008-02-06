@@ -22,7 +22,8 @@
  *  Filename: prefGeneralPane.java
  *  Purpose:  General options. Now containg also database selection and look and feel changes.
  *
- *  Author:   schultd, andyrozman
+ *  Author:   schultd 
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 package ggc.gui.panels.prefs;

@@ -23,6 +23,7 @@
  *  Purpose:  Common methods and variables for all views.
  *
  *  Author:   schultd
+ *  Author:   reini
  *  
  *  MODIFICATIONS:
  *    - 2006-04-08: RR * changed maxBG to 450 for mg/dl and 25 for mmol

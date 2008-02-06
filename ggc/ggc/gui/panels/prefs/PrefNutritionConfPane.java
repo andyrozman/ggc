@@ -22,7 +22,7 @@
  *  Filename: prefMeterConfPane.java
  *  Purpose:  Preferences Pane to configure the meter.
  *
- *  Author:   schultd
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 package ggc.gui.panels.prefs;

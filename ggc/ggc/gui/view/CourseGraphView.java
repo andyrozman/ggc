@@ -23,6 +23,8 @@
  *  Purpose:  View to draw the course.
  *
  *  Author:   schultd
+ *  Author:   reini
+ *  
  */
 
 package ggc.gui.view;

@@ -22,7 +22,7 @@
  *  Filename: MainFrame.java
  *  Purpose:  The MainFrame of the app. Contains MenuBars, ToolBars, StatusBars, ...
  *
- *  Author:   schultd
+ *  Author:   schultd, andyrozman
  */
 
 package ggc.gui;

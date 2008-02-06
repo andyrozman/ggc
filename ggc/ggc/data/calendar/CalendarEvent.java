@@ -1,3 +1,6 @@
+package ggc.data.calendar;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -19,18 +22,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: CalendarEvent.java
+ *  Filename: CalendarEvent
  *  Purpose:  Event for CalendarListeners.
  *
  *  Author:   schultd
  */
 
-package ggc.data.calendar;
-
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 
 public class CalendarEvent
 {

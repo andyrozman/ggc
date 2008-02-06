@@ -19,10 +19,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: DailyStatsFrame.java
+ *  Filename: DailyStatsPanelL
  *  Purpose:  Enter and view all data for one day. (fix)
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman {andy@atech-software.com}
  */
 
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH

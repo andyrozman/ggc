@@ -1,3 +1,6 @@
+package ggc.data.errors;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -20,20 +23,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *  Filename: DateTimeError.java
- *  Purpose:  signals there was an error to do with date/time
+ *  Purpose:  DateTimeError is used to signal there was an error with some date 
+ *     or time.
  *
  *  Author:   rumbi
  */
 
-package ggc.data.errors;
 
-/**
- * DateTimeError is used to signal there was an error with some date or time.
- * 
- * Created on 11.03.2006 by user reini
- * 
- * @author Reinhold Rumberger
- */
 public class DateTimeError extends Error 
 {
 

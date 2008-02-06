@@ -19,11 +19,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: NutritionImport
- *  Purpose:  Imports nutrition data from USDA Nutrient Database for Standard 
- *      Reference (from Release 18 up)
+ *  Filename: ImportDailyValues
+ *  Purpose:  Imports daily values (from export from Meter Tool Import, or some export) 
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 package ggc.db.datalayer;

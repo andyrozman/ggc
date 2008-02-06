@@ -25,7 +25,7 @@ package ggc.data.print;
 
  *  Purpose:  Creating PDF for Simple Monthly Report (used for printing)
  *
- *  Author:   andyrozman {andy@t-2.net}
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 

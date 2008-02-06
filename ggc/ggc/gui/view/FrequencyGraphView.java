@@ -23,6 +23,8 @@
  *  Purpose:  Shows the frequency of some values.
  *
  *  Author:   schultd
+ *  Author:   reini
+ *  
  */
 
 package ggc.gui.view;

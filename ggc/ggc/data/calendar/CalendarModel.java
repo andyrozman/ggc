@@ -1,3 +1,6 @@
+package ggc.data.calendar;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -19,14 +22,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: CalendarModel.java
+ *  Filename: CalendarModel
  *  Purpose:  A model for every JComponent which is involved in the Calendar
  *            widgets, to get calendardata.
  *
  *  Author:   schultd
  */
-
-package ggc.data.calendar;
 
 
 import ggc.gui.calendar.CalendarPane;

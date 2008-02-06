@@ -23,7 +23,7 @@
  *  Purpose:  This is interface for creating datalayer files. It contains all methods that 
  *      must be implemented for correct working of hibernate and database.
  *
- *  Author:   andyrozman
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 

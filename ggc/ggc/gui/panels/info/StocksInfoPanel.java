@@ -19,11 +19,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: ScheduleInfoPanel.java
- *  Purpose:  This Panel contains information on your Schedule. Like your
- *            next check, when you see your doctor again, ...
+ *  Filename: StocksInfoPanel
+ *  Purpose:  This Panel contains information on your Stocks (of medical material)
  *
- *  Author:   schultd
+ *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 package ggc.gui.panels.info;

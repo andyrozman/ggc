@@ -23,8 +23,7 @@
  *  Purpose:  Store all Properties for the GGC app.
  *
  *  Author:   schultd
- * 
- *  Author:   andyrozman (in Db)
+ *  Author:   andyrozman  {andy@atech-software.com}
  *
  */
 
