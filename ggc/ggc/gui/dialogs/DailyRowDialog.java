@@ -733,7 +733,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void fixDecimals()
     {
-        if (BGField.getText().trim().isEmpty())
+        if (m_da.isEmptyOrUnset(BGField.getText()))
             return;
 
         // FIXME: ',' is the thousands separator in an english locale, and should be accepted as such 

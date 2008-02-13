@@ -581,9 +581,12 @@ public class DailyValuesRow implements Serializable
 
     }
 
+    
+
+    
     public void setBG(int type, String val)
     {
-        if ((val == null) || (val.isEmpty()))
+        if (m_da.isEmptyOrUnset(val))
         {
             setBG(0);
             return;
@@ -633,7 +636,7 @@ public class DailyValuesRow implements Serializable
 
     public void setIns1(String val)
     {
-        if (! val.isEmpty())
+        if (!m_da.isEmptyOrUnset(val))
             setIns1(m_da.getIntValue(val));
     }
 
@@ -660,7 +663,7 @@ public class DailyValuesRow implements Serializable
 
     public void setIns2(String val)
     {
-        if (! val.isEmpty())
+        if (! m_da.isEmptyOrUnset(val))
         {
             setIns2(m_da.getIntValue(val));
         }

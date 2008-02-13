@@ -1,3 +1,16 @@
+2008-02-13 (0.2.9.7) Andy Rozman <andyrozman@users.sourceforge.net>
+    * source code changes to be compilable on java 1.5 
+    (java 1.5 compatibility must be maintained) !!!!
+    * use of atech-tools 0.1.9 required (java 1.5 compatibility issue)
+    * implementation of update/startup mechanism started in atech-tools (0.1.9), files
+      added to support testing on GGC. Startup will be implemented first, because update 
+      functionality needs to have server side done, which will take some time.
+    * jar files creation will change in near future (instead of two files, we will produce 
+      3: ggc, ggc-core and ggc-little). ggc will contains files specific to main gui, while 
+      core contains all data, db and utill classes. ggc-little contains only GGC Little 
+      specific code. Change is planned and division has started.
+       
+
 2008-02-08 (0.2.9.6) Andy Rozman <andyrozman@users.sourceforge.net>
     * major changed to whole nutrition db and framework
     * final changes to USDA nutrition databases

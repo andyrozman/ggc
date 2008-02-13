@@ -121,7 +121,7 @@ public class CourseGraphView extends AbstractGraphView
                 dayDate = gV.getDateForDayAt(Math.round(i * scale));
                 
                 // handle small data sets
-                if ((dayDate == null) || (dayDate.isEmpty()))
+                if (m_da.isEmptyOrUnset(dayDate))
                 {
                     break;
                 }

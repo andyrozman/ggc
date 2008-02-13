@@ -1406,6 +1406,15 @@ public class DataAccess
     }
     
     
+    public boolean isEmptyOrUnset(String val)
+    {
+        if ((val == null) || (val.trim().length()==0))
+        {
+            return true;
+        }
+        else
+            return false;
+    }
     
     
     
