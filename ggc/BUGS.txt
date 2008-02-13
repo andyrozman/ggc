@@ -1,19 +1,17 @@
 Know Bugs:
 
-    - at least one undiscovered infinite loop, can't reproduce, happened while the preferences frame was open (found by: developer rumbi)
-    - infinite loop when trying to display hba1c without data (rumbi): can't reproduce, looks ok. (andy)
-    - german translation is somewhat behind schedule
-    - switching L&F from CDE/Motif to SkinLF doesn't result in settings being saved : can't reproduce, you must 
-      click on OK to save changes... IS THIS STILL THERE?
-    - changes made to "medical data" don't get applied to "Colors & Fonts" until dialog is re-opened
-    - Title for spread graph suggests a lost key in GGC_*.properties
+    - [sf] german translation is somewhat behind schedule
+    - [sf] switching L&F from CDE/Motif to SkinLF doesn't result in settings being saved : can't reproduce, you must 
+           click on OK to save changes... IS THIS STILL THERE? (see sf)
+    - [sf] changes made to "medical data" don't get applied to "Colors & Fonts" until dialog is re-opened
+    - [sf] Title for spread graph suggests a lost key in GGC_*.properties
     - HbA1c-Frame: "your current HbA1c" is right-aligned, which looks crappy
-    - Entering plain text in numerical only fields should at least result in a warning (is ignored, and the numerical value is set to 0)
-    - "DAILY_CONTROL", "SHOW_DAILY_GRAPH" and "DAILY_VALUES" missing in GGC Little
+    - [sf] Entering plain text in numerical only fields should at least result in a warning (is ignored, and the numerical value is set to 0)
+    - [sf] "DAILY_CONTROL", "SHOW_DAILY_GRAPH" and "DAILY_VALUES" missing in GGC Little
     - GGC Little: meters button is unresponsive
     - GGC Little: About button is static (problematic when size is changed)
-    - changing time in entry will not re-order cells
-    - mmol values are rounded to ints, which does not make sense
+    - [sf] changing time in entry will not re-order cells
+    - [sf] mmol values are rounded to ints, which does not make sense
 
 Bugs fixed in version X:
 
@@ -21,6 +19,11 @@ Bugs fixed in version X:
     - L&F loading is inconsistent (makes a hardcoded assumption where themepacks are stored) and currently fails
       on Linux (and probably because of that) -- You need to have files in specified directory,
       which is ../data/skinlf_themes/ - Andy
+    - at least one undiscovered infinite loop, can't reproduce, happened while the preferences frame was open (found by: developer rumbi)
+      (not sure whether/how this was fixed, but since I haven't seen this in ages, and pretty much everything 
+      has been changed, I guess this was fixed along the way)
+    - infinite loop when trying to display hba1c without data (rumbi): can't reproduce, looks ok. (andy)
+      (same as above)
 
 0.2.9.3
     - division by zero when displaying graphs without data (RR)

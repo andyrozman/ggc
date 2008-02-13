@@ -1,3 +1,6 @@
+2008-02-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * added entries from BUGS.txt marked with [sf] to sourceforge's bugtracker
+
 2008-02-13 (0.2.9.7) Andy Rozman <andyrozman@users.sourceforge.net>
     * source code changes to be compilable on java 1.5 
     (java 1.5 compatibility must be maintained) !!!!
@@ -10,7 +13,6 @@
       core contains all data, db and utill classes. ggc-little contains only GGC Little 
       specific code. Change is planned and division has started.
        
-
 2008-02-08 (0.2.9.6) Andy Rozman <andyrozman@users.sourceforge.net>
     * major changed to whole nutrition db and framework
     * final changes to USDA nutrition databases
