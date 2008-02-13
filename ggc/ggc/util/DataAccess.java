@@ -788,67 +788,6 @@ public class DataAccess
 
 
 
-    // ********************************************************
-    // ******          COMMUNICATION API Config           *****    
-    // ********************************************************
-    /**
-     * Preveri konfiguracijsko datoteko in vse parametre v njej.
-     */
-/*    private void verifyComConfig()
-    {
-	/*&
-        Properties pr = new Properties();
-
-        pr.put("Driver", "com.ibm.comm.IBMCommDriver");
-
-        /*
-         if (System.getProperty("os.name").indexOf("Win")!=-1) 
-         {
-         pr.put("Driver", "com.ibm.comm.IBMCommDriver");
-         }
-         else if (System.getProperty("os.name").indexOf("Lin")!=-1) 
-         {
-         pr.put("Driver", "com.ibm.comm.NSCommDriver");
-         pr.put("Polltime", "3");
-         }
-         else
-         {
-         editor.append(" [OPOZORILO]   Obstaja mo\u017Enost, da uporabljate nepodprto platformo. \u010Ce ste zagnali aplikacijo drugje kot na\n"+
-         "                     Windows ali Linux platformi, vedite, da ne bo delovala.\n");
-         logger.warn("[ServerSBApp]  Moznost nepodprte platforme: "+System.getProperty("os.name"));
-         }
-
-
-
-         if (System.getProperty("java.version").indexOf("1.4")==-1) 
-         {
-         editor.append(" [NAPAKA]   Uporabljate verzijo Jave, ki ni podprta. Instalirajte verzijo Jave 1.4.x in za\u017Eenite program znova.\n");
-         logger.error("[ServerSBApp]  Nepodprta Verzija Jave: "+System.getProperty("java.version"));
-         }
-         */
-
-	/*
-        // XXX: is this really necessary?
-        String jh = System.getProperty("java.home");
-
-        try
-        {
-            FileOutputStream fos = new FileOutputStream(jh + File.pathSeparator
-                    + "lib" + File.pathSeparator + "gnu.io.properties");
-            pr.store(fos, " Generated gnu.io.properties by GGC");
-        } catch (Exception ex)
-        {
-            System.out
-                    .println("Problem writing COMM Api config file gnu.io.properties into %JAVA_HOME%"
-                            + File.pathSeparator
-                            + "lib"
-                            + File.pathSeparator
-                            + ": " + ex);
-        }
-*/
-/*
-    }
-*/
 
     // ********************************************************
     // ******                  Options                    *****    

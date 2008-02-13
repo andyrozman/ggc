@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 
 public class Meal extends MealH implements DatabaseObjectHibernate
@@ -52,7 +53,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate
     {
 	this.setId(0L);
 	this.setName("");
-	this.setMeal_group_id(0);
+	this.setGroup_id(0);
 	this.setDescription("");
 	this.setParts("");
 	this.setValues("");
@@ -66,14 +67,14 @@ public class Meal extends MealH implements DatabaseObjectHibernate
 
     public Meal(MealH ch)
     {
-	this.setId(0L);
-	this.setName("");
-	this.setMeal_group_id(0);
-	this.setDescription("");
-	this.setParts("");
-	this.setValues("");
-	this.setExtended("");
-	this.setComment("");
+	this.setId(ch.getId());
+	this.setName(ch.getName());
+	this.setGroup_id(ch.getGroup_id());
+	this.setDescription(ch.getDescription());
+	this.setParts(ch.getParts());
+	this.setValues(ch.getValues());
+	this.setExtended(ch.getExtended());
+	this.setComment(ch.getComment());
 
 	loadParts();
 	loadValues();
@@ -125,29 +126,24 @@ public class Meal extends MealH implements DatabaseObjectHibernate
      */
     public String DbAdd(Session sess) throws Exception
     {
-      /*  
         Transaction tx = sess.beginTransaction();
 
-	MealFoodDescriptionH ch = new MealFoodDescriptionH();
+	MealH ch = new MealH();
 
 	ch.setId(this.getId());
-	ch.setMeal_group_id(this.getMeal_group_id());
 	ch.setName(this.getName());
-	ch.setCH_g(this.getCH_g());
-	ch.setEnergy_kcal(this.getEnergy_kcal());
-	ch.setEnergy_kJ(this.getEnergy_kJ());
-	ch.setFat_g(this.getFat_g());
-	ch.setRefuse(this.getRefuse());
-	ch.setSugar_g(this.getSugar_g());
+	ch.setGroup_id(this.getGroup_id());
+	ch.setDescription(this.getDescription());
+	ch.setParts(this.getParts());
+	ch.setValues(this.getValues());
+	ch.setExtended(this.getExtended());
+	ch.setComment(this.getComment());
 
         Long id = (Long)sess.save(ch);
 
         tx.commit();
 
         return ""+id.longValue();
-        */
-	
-	return null;
     }
 
 
@@ -161,27 +157,24 @@ public class Meal extends MealH implements DatabaseObjectHibernate
      */
     public boolean DbEdit(Session sess) throws Exception
     {
-/*
+
         Transaction tx = sess.beginTransaction();
 
-	MealFoodDescriptionH ch = (MealFoodDescriptionH)sess.get(MealFoodDescriptionH.class, new Long(this.getId()));
+	MealH ch = (MealH)sess.get(MealH.class, new Long(this.getId()));
 
 	ch.setId(this.getId());
-	ch.setMeal_group_id(this.getMeal_group_id());
 	ch.setName(this.getName());
-	ch.setCH_g(this.getCH_g());
-	ch.setEnergy_kcal(this.getEnergy_kcal());
-	ch.setEnergy_kJ(this.getEnergy_kJ());
-	ch.setFat_g(this.getFat_g());
-	ch.setRefuse(this.getRefuse());
-	ch.setSugar_g(this.getSugar_g());
+	ch.setGroup_id(this.getGroup_id());
+	ch.setDescription(this.getDescription());
+	ch.setParts(this.getParts());
+	ch.setValues(this.getValues());
+	ch.setExtended(this.getExtended());
+	ch.setComment(this.getComment());
 
         sess.update(ch);
         tx.commit();
 
         return true;
-*/
-	return false;
     }
 
 
@@ -221,7 +214,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        System.out.println("Not implemented: FoodDescription::DbHasChildren");
+        //System.out.println("Not implemented: FoodDescription::DbHasChildren");
         return true;
     }
 
@@ -237,22 +230,19 @@ public class Meal extends MealH implements DatabaseObjectHibernate
      */
     public boolean DbGet(Session sess) throws Exception
     {
-/*
-	MealFoodDescriptionH ch = (MealFoodDescriptionH)sess.get(MealFoodDescriptionH.class, new Long(this.getId()));
+
+	MealH ch = (MealH)sess.get(MealH.class, new Long(this.getId()));
 
 	this.setId(ch.getId());
-	this.setMeal_group_id(ch.getMeal_group_id());
 	this.setName(ch.getName());
-	this.setCH_g(ch.getCH_g());
-	this.setEnergy_kcal(ch.getEnergy_kcal());
-	this.setEnergy_kJ(ch.getEnergy_kJ());
-	this.setFat_g(ch.getFat_g());
-	this.setRefuse(ch.getRefuse());
-	this.setSugar_g(ch.getSugar_g());
+	this.setGroup_id(ch.getGroup_id());
+	this.setDescription(ch.getDescription());
+	this.setParts(ch.getParts());
+	this.setValues(ch.getValues());
+	this.setExtended(ch.getExtended());
+	this.setComment(ch.getComment());
 
         return true;
-*/
-	return false;
     }
 
 

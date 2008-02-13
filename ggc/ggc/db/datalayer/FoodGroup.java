@@ -69,7 +69,13 @@ public class FoodGroup implements DatabaseObjectHibernate
 
     public FoodGroup(int type)
     {
-	group_type = 1;
+	group_type = type;
+	
+	if (type==1)
+	    this.group_db1 = new FoodGroupH();
+	else
+	    this.group_db2 = new FoodUserGroupH();
+	
     }
     
     public FoodGroup(FoodGroupH ch)
@@ -91,28 +97,21 @@ public class FoodGroup implements DatabaseObjectHibernate
     }
     
     
+    public Object getHibernateObject()
+    {
+	if (group_type==1)
+	    return this.group_db1;
+	else
+	    return this.group_db2;
+    }
+    
+    
     public String getShortDescription()
     {
         return this.getDescription();
     }
 
     
-    public String getDescription()
-    {
-	if (group_type==1)
-	    return this.group_db1.getDescription();
-	else
-	    return this.group_db2.getDescription();
-    }
-
-    
-    public void setDescription(String desc)
-    {
-	if (group_type==1)
-	    this.group_db1.setDescription(desc);
-	else
-	    this.group_db2.setDescription(desc);
-    }
     
     
     public long getId()
@@ -150,34 +149,60 @@ public class FoodGroup implements DatabaseObjectHibernate
     public String getName()
     {
 	if (group_type==1)
-	    return this.group_db1.getDescription();
+	    return this.group_db1.getName();
 	else
 	    return this.group_db2.getName();
     }
     
     public void setName(String name)
     {
-	if (group_type==2)
+	if (group_type==1)
+	    this.group_db1.setName(name);
+	else
 	    this.group_db2.setName(name);
     }
     
-    
 
-    public void setDescription_i18n(String name)
+    public String getName_i18n()
     {
 	if (group_type==1)
-	    this.group_db1.setDescription_i18n(name);
-	//else
-	//    return this.group_db2.getDescription();
+	    return this.group_db1.getName_i18n();
+	else
+	    return this.group_db2.getName_i18n();
+    }
+    
+    public void setName_i18n(String name)
+    {
+	if (group_type==1)
+	    this.group_db1.setName_i18n(name);
+	else
+	    this.group_db2.setName_i18n(name);
     }
     
     
-    public String getDescription_i18n()
+    
+
+    public void setDescription(String name)
     {
 	if (group_type==1)
-	    return this.group_db1.getDescription_i18n();
+	    this.group_db1.setDescription(name);
+	else
+	    this.group_db2.setDescription(name);
+    }
+    
+    
+    public String getDescription()
+    {
+	if (group_type==1)
+	    return this.group_db1.getDescription();
 	else
 	    return this.group_db2.getDescription();
+    }
+    
+
+    public int getGroupChildrenCount()
+    {
+	return this.children_group.size();
     }
     
     
@@ -185,6 +210,13 @@ public class FoodGroup implements DatabaseObjectHibernate
     {
 	return this.children.size();
     }
+
+    
+    public boolean hasGroupChildren()
+    {
+	return (getGroupChildrenCount()!=0);
+    }
+    
     
     public boolean hasChildren()
     {
@@ -201,11 +233,26 @@ public class FoodGroup implements DatabaseObjectHibernate
     {
 	children.add(fd);
     }
+
+    
+    public Object getGroupChild(int index)
+    {
+	return this.children_group.get(index);
+    }
+    
     
     public Object getChild(int index)
     {
 	return this.children.get(index);
     }
+
+    
+    public int findGroupChild(Object child)
+    {
+	return this.children_group.indexOf(child);
+    }
+    
+    
     
     public int findChild(Object child)
     {

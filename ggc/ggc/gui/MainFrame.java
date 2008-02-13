@@ -99,10 +99,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.3.0.1";
+    public  static String s_version = "0.2.9.6";
     public static String full_version = "v" + s_version;
 
-    public static String version_date = "4th February 2008";
+    public static String version_date = "8th February 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -645,7 +645,11 @@ public class MainFrame extends JFrame
             else if (command.equals("report_pdf_simple")) 
             {
                 new PrintingDialog(MainFrame.this, 1);
-            } 
+            }
+            else if (command.equals("report_pdf_extended"))
+            {
+        	new PrintingDialog(MainFrame.this, 2);
+            }
 	    else if (command.equals("hlp_about"))
 	    {
 		new AboutGGCDialog(getMyParent());
@@ -675,7 +679,7 @@ public class MainFrame extends JFrame
 	            new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_USER_NUTRITION);
 		}
 		else
-		    featureNotImplemented(command, "0.4");
+		    featureNotImplemented(command, "0.3");
 	    }
 	    else if (command.equals("food_meals"))
 	    {
@@ -684,7 +688,7 @@ public class MainFrame extends JFrame
 	            new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_MEALS);
 		}
 		else
-		    featureNotImplemented(command, "0.5");
+		    featureNotImplemented(command, "0.3");
 		
 	    }
 	    else if (command.equals("doc_appoint"))
@@ -698,10 +702,10 @@ public class MainFrame extends JFrame
 		    
 		
 	    }
-	    else if ((command.equals("report_pdf_extended")) ||
+	    else //if ((command.equals("report_pdf_extended")) ||
                  //(command.equals("doc_docs")) ||
                  //(command.equals("doc_appoint")) ||
-                 (command.equals("doc_stocks"))) //||
+                 if ((command.equals("doc_stocks"))) //||
 //                 (command.equals("food_meals")))
 	    {
 		featureNotImplemented(command, "0.5");

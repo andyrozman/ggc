@@ -195,14 +195,11 @@ public class InitDb
 		FoodGroup fg = new FoodGroup(1);
 		fg.setId(getInt(strtok.nextToken()));
 
-		String st = getString(strtok.nextToken());
-		String st_i18n = st.replaceAll(" ", "_");
-		st_i18n = st_i18n.replaceAll(",", "");
-
-		//System.out.println(st_i18n.toUpperCase());
-
+		String st = getString(strtok.nextToken()); // name
+		
+		fg.setName(st);
+		fg.setName_i18n(this.makeI18nKeyword(st));
 		fg.setDescription(st);
-		fg.setDescription_i18n(st_i18n.toUpperCase());
 
 		m_db.add(fg);
 		System.out.print(".");
@@ -212,6 +209,7 @@ public class InitDb
 	catch (Exception ex) 
 	{
 	    System.err.println("Error on insertFoodGroups(): " + ex);
+	    ex.printStackTrace();
 	}
 
     }
@@ -245,12 +243,12 @@ public class InitDb
 		    line = line+"0.0";
 
 		StringTokenizer strtok = new StringTokenizer(line, "^");
-		FoodDescription fd = new FoodDescription();
+		FoodDescription fd = new FoodDescription(1);
 
 		fd.setId(getLong(strtok.nextToken()));		 // NDB_No	
-		fd.setFood_group_id(getInt(strtok.nextToken()));    // FdGrp_Cd
+		fd.setGroup_id(getInt(strtok.nextToken()));    // FdGrp_Cd
 		fd.setName(getString(strtok.nextToken()));  // Long Desc
-		fd.setI18n_name(getString(strtok.nextToken()));  // Short Desc
+		fd.setName_i18n(getString(strtok.nextToken()));  // Short Desc
 
 		strtok.nextToken();                              // - ComName
 		strtok.nextToken();                              // - ManufName
@@ -260,6 +258,7 @@ public class InitDb
 		fd.setRefuse(getFloat(strtok.nextToken()));    // Refuse
 
 		m_db.add(fd);
+		//m_db.addHibernate(fd.getHibernateObject());
 
 		if (i%100==0)
 		    System.out.print(".");
@@ -324,7 +323,7 @@ public class InitDb
 		    }
 
 		    id = id_2;
-		    fd = new FoodDescription();
+		    fd = new FoodDescription(1);
 		    fd.setId(id);
 		    m_db.get(fd);
 		    data.delete(0, data.length());
@@ -544,7 +543,7 @@ public class InitDb
 		    }
 
 		    id = id_2;
-		    fd = new FoodDescription();
+		    fd = new FoodDescription(1);
 		    fd.setId(id);
 		    m_db.get(fd);
 		    data.delete(0, data.length());
@@ -1010,6 +1009,16 @@ public class InitDb
     }
 
 
+    public String makeI18nKeyword(String input)
+    {
+	String i = input.toUpperCase();
+	i = i.replaceAll(" " , "");
+	i = i.replaceAll(",", "_");
+	
+	return i;
+	
+    }
+    
 
 
     public static void main(String args[])

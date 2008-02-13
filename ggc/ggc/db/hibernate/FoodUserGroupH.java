@@ -15,14 +15,18 @@ public class FoodUserGroupH implements Serializable {
     private String name;
 
     /** nullable persistent field */
+    private String name_i18n;
+
+    /** nullable persistent field */
     private String description;
 
     /** nullable persistent field */
     private long parent_id;
 
     /** full constructor */
-    public FoodUserGroupH(String name, String description, long parent_id) {
+    public FoodUserGroupH(String name, String name_i18n, String description, long parent_id) {
         this.name = name;
+        this.name_i18n = name_i18n;
         this.description = description;
         this.parent_id = parent_id;
     }
@@ -45,6 +49,14 @@ public class FoodUserGroupH implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName_i18n() {
+        return this.name_i18n;
+    }
+
+    public void setName_i18n(String name_i18n) {
+        this.name_i18n = name_i18n;
     }
 
     public String getDescription() {

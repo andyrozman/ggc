@@ -23,6 +23,7 @@
         <echo message="     clean = clean build dir"/>
         <echo message="     build_ggc (make) = build GGC (recompile classes)"/>
         <echo message="     jar = create GGC jar"/>
+        <echo message="     jar_core = create GGC Core jar"/>
         <echo message="     jar_l = create GGC Little jar"/>
         <echo message="     full = clean, build_ggc, copy, jar, jar_l"/>
         <echo message="     dist = full, and create distribution zip file (contains needed libs, and data files)" />
@@ -99,6 +100,23 @@
                 <include name="icons/*.jpg"/>
                 <include name="icons/*.png"/>
                 <exclude name="ggc/little/**"/>
+                <include name="GGC_*.properties"/>
+                <include name="*.hbm.xml"/>
+            </fileset>
+        </jar>
+    </target>
+
+
+    <target name="jar_core"  description="Build GGC Core" depends="make">
+        <jar jarfile="${binary.dir}/ggc_core.jar"
+             update="false" 
+             index="false"
+             manifest="./manifest_ggc_core.mf">
+
+            <fileset dir="${build.dir}">
+                <include name="ggc/data/**"/>
+                <include name="ggc/db/**"/>
+                <include name="ggc/util/**"/>
                 <include name="GGC_*.properties"/>
                 <include name="*.hbm.xml"/>
             </fileset>

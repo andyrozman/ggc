@@ -80,6 +80,7 @@ public class GGCTreeRoot
     public static int TREE_USDA_NUTRITION = 1;
     public static int TREE_USER_NUTRITION = 2;
     public static int TREE_MEALS = 3;
+    
 
     GGCDb m_db = null;
     public boolean debug = true;
@@ -133,6 +134,19 @@ public class GGCTreeRoot
 	fillGroups();
     }
 
+
+    public void manualCreate2(ArrayList<MealGroup> lst_grp, ArrayList<Meal> lst_food)
+    {
+	
+	this.import2_grp = lst_grp;
+	this.import2_foods = lst_food;
+	
+	initReceivedData();
+	createGroupTree();
+	fillGroups();
+    }
+    
+    
     
     public void readDbData(int type)
     {
@@ -145,119 +159,26 @@ public class GGCTreeRoot
 	
 	if (type == GGCTreeRoot.TREE_USDA_NUTRITION)
 	{
+	    //System.out.println("USDA Load Failed !!!!!!!!");
 	    this.import1_grp = this.m_db.getUSDAFoodGroups();
 	    this.import1_foods = this.m_db.getUSDAFoodDescriptions();
-	    //System.out.println("USDA Load Failed !!!!!!!!");
+	    //System.out.println("ImportGRP: " + this.import1_grp);
 	}
 	else if (type == GGCTreeRoot.TREE_USER_NUTRITION)
 	{
-	    //System.out.println("USer nutrition loading !!!!!!!!");
 	    this.import1_grp = this.m_db.getUserFoodGroups();
 	    this.import1_foods = this.m_db.getUserFoodDescriptions();
 	}
 	else if (type == GGCTreeRoot.TREE_MEALS)
 	{
-	    System.out.println("Meals Load Failed !!!!!!!!");
+	    //System.out.println("Meals Load Failed !!!!!!!!");
+	    this.import2_grp = this.m_db.getMealGroups();
+	    this.import2_foods = this.m_db.getMeals();
 	}
 	else
 	    System.out.println("Unknown database type: " + type);
 
 	
-    }
-    
-    
-    public void loadTypeData()
-    {
-	/*
-        if (m_type== GGCTreeRoot.TREE_USDA_NUTRITION)
-        {
-	    m_groups = m_db.getUSDAFoodGroups();
-	    Iterator<FoodGroup> it = m_groups.iterator();
-
-	    this.m_food_desc_by_group = new Hashtable<String, ArrayList<FoodDescription>>();
-
-	    while (it.hasNext())
-	    {
-		//FoodGroup fg = (FoodGroup)it.next();
-		FoodGroup fg = it.next();
-		this.m_food_desc_by_group.put(""+fg.getId(), new ArrayList<FoodDescription>());
-	    }
-
-	    
-	    ArrayList<FoodDescription> list = m_db.getFoodDescriptions();
-	    Iterator<FoodDescription> it2 = list.iterator();
-
-	    while (it2.hasNext())
-	    {
-		FoodDescription fd = (FoodDescription)it2.next();
-
-		ArrayList<FoodDescription> al = this.m_food_desc_by_group.get(""+fd.getFood_group_id());
-		al.add(fd);
-	    }
-
-        }
-        else if (m_type == GGCTreeRoot.TREE_USER_NUTRITION)
-        {
-            System.out.println("Tree User Nutrition load fails. Not Implemented yet.");
-            
-	    m_groups = m_db.getUserFoodGroups();
-	    Iterator<FoodGroup> it = m_groups.iterator();
-
-	    this.m_food_desc_by_group = new Hashtable<String, ArrayList<FoodDescription>>();
-
-	    while (it.hasNext())
-	    {
-		//FoodGroup fg = (FoodGroup)it.next();
-		FoodGroup fg = it.next();
-		this.m_food_desc_by_group.put(""+fg.getId(), new ArrayList<FoodDescription>());
-	    }
-
-	    
-	    ArrayList<FoodDescription> list = m_db.getFoodDescriptions();
-	    Iterator<FoodDescription> it2 = list.iterator();
-
-	    while (it2.hasNext())
-	    {
-		FoodDescription fd = (FoodDescription)it2.next();
-
-		ArrayList<FoodDescription> al = this.m_food_desc_by_group.get(""+fd.getFood_group_id());
-		al.add(fd);
-	    }
-            
-            
-        }
-        else
-        {
-	    // meals -- Not implemented yet
-            System.out.println("Tree Meals data load fails. Not Implemented yet.");
-            
-	    m_groups = m_db.getUSDAFoodGroups();
-	    Iterator<FoodGroup> it = m_groups.iterator();
-
-	    this.m_food_desc_by_group = new Hashtable<String, ArrayList<FoodDescription>>();
-
-	    while (it.hasNext())
-	    {
-		//FoodGroup fg = (FoodGroup)it.next();
-		FoodGroup fg = it.next();
-		this.m_food_desc_by_group.put(""+fg.getId(), new ArrayList<FoodDescription>());
-	    }
-
-	    
-	    ArrayList<FoodDescription> list = m_db.getFoodDescriptions();
-	    Iterator<FoodDescription> it2 = list.iterator();
-
-	    while (it2.hasNext())
-	    {
-		FoodDescription fd = (FoodDescription)it2.next();
-
-		ArrayList<FoodDescription> al = this.m_food_desc_by_group.get(""+fd.getFood_group_id());
-		al.add(fd);
-	    }
-            
-            
-        }
-*/	
     }
     
 
@@ -283,61 +204,25 @@ public class GGCTreeRoot
 		this.m_groups_tree.add(fg);
 	    }
 	}
-/*	else if (this.m_type==GGCTreeRoot.TREE_USER_NUTRITION)
-	{
-
-	    this.m_groups_tree = new ArrayList<FoodGroup>();
-	    this.m_groups_ht = new Hashtable<String,FoodGroup>();
-
-	    // create group hashtable and tree
-	    Iterator<FoodGroup> it = this.import1_grp.iterator();
-
-	    while (it.hasNext())
-	    {
-		FoodGroup fg = it.next();
-		this.m_groups_ht.put("" + fg.getId(), fg);
-		this.m_groups_tree.add(fg);
-	    }
-	    
-	    
-	    
-	    
-	    this.m_groups_ht = new Hashtable<String,FoodGroup>();
-
-	    // create group hashtable
-	    Iterator<FoodGroup> it = this.import1_grp.iterator();
-
-	    while (it.hasNext())
-	    {
-		FoodGroup fg = it.next();
-		this.m_groups_ht.put("" + fg.getId(), fg);
-	    }
-	    
-	    
-	    this.m_groups_tree = new ArrayList<FoodGroup>();
-	    for(int i=0; i<this.m_groups.size(); i++)
-	    {
-		FoodGroup fg = this.m_groups.get(i);
-		//int id = this.m_groups.get(i).getId();
-		
-		for(int j=0; j<this.m_groups.size(); j++)
-		{
-		    if (j==i)
-			continue;
-		    
-		    FoodGroup fg2 = this.m_groups.get(j);
-		    
-		    if (fg2.getParentId()==fg.getId())
-			fg.addChild(fg2);
-		}
-		
-		if (fg.getParentId()==0)
-		    this.m_groups_tree.add(fg);
-	    }
-	} */
 	else if (this.m_type==GGCTreeRoot.TREE_MEALS)
 	{
-	    System.out.println("CreateTree Meals failed");
+	    
+	    this.m_meal_groups_tree = new ArrayList<MealGroup>();
+	    this.m_meal_groups_ht = new Hashtable<String,MealGroup>();
+
+	    System.out.println("Db output: " + this.import2_grp);
+	    
+	    
+	    // create group hashtable and tree
+	    Iterator<MealGroup> it = this.import2_grp.iterator();
+
+	    while (it.hasNext())
+	    {
+		MealGroup fg = it.next();
+		this.m_meal_groups_ht.put("" + fg.getId(), fg);
+		this.m_meal_groups_tree.add(fg);
+	    }
+
 	}
 	
     }
@@ -345,14 +230,8 @@ public class GGCTreeRoot
     
     public void createGroupTree()
     {
-/*	if (this.m_type==GGCTreeRoot.TREE_USDA_NUTRITION)
+	if (this.m_type==GGCTreeRoot.TREE_USER_NUTRITION)  
 	{
-	    this.m_groups_tree = this.import1_grp; 
-	}
-	else*/ if (this.m_type==GGCTreeRoot.TREE_USER_NUTRITION)  
-		 //(this.m_type==GGCTreeRoot.TREE_USDA_NUTRITION)) 
-	{
-	    //this.m_groups_tree = new ArrayList<FoodGroup>();
 
 	    ArrayList<FoodGroup> rt = new ArrayList<FoodGroup>();
 	    
@@ -360,42 +239,38 @@ public class GGCTreeRoot
 	    {
 		FoodGroup fg = this.import1_grp.get(i);
 		
-/*		if (fg.getGroupType()==1)
-		{
-		    rt.add(fg);
-		}
-		else */
-		{
 		    if (fg.getParentId()==0)
 			rt.add(fg);
 		    else
 		    {
 			this.m_groups_ht.get("" + fg.getParentId()).addChild(fg);
 		    }
-		}
 		
 	    }
 	    
 	    this.m_groups_tree = rt;
 	    
-	    /*
-	    this.m_groups_tree = new ArrayList<FoodGroup>();
-	    this.m_groups_ht = new Hashtable<String,FoodGroup>();
-
-	    // create group hashtable and tree
-	    Iterator<FoodGroup> it = this.import1_grp.iterator();
-
-	    while (it.hasNext())
-	    {
-		FoodGroup fg = it.next();
-		this.m_groups_ht.put("" + fg.getId(), fg);
-		this.m_groups_tree.add(fg);
-	    }*/
-	    
 	}
 	else if (this.m_type==GGCTreeRoot.TREE_MEALS)
 	{
 	    System.out.println("CreateTree Meals failed");
+	    
+	    ArrayList<MealGroup> rt = new ArrayList<MealGroup>();
+	    
+	    for(int i=0; i< this.import2_grp.size(); i++)
+	    {
+		MealGroup fg = this.import2_grp.get(i);
+		
+		if (fg.getParent_id()==0)
+		    rt.add(fg);
+		else
+		{
+		    this.m_meal_groups_ht.get("" + fg.getParent_id()).addChild(fg);
+		}
+	    }
+	    
+	    this.m_meal_groups_tree = rt;
+	    
 	}
 	
     }
@@ -414,7 +289,7 @@ public class GGCTreeRoot
 	    {
 		FoodDescription fd = it2.next();
 //		System.out.println("FoodDescription: group=" + fd.getFood_group_id() + "id=" + fd.getId() );
-		this.m_groups_ht.get("" + fd.getFood_group_id()).addChild(fd);
+		this.m_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
 	    }
 	    
 	    
@@ -423,6 +298,25 @@ public class GGCTreeRoot
 	else if (m_type == GGCTreeRoot.TREE_MEALS)
 	{
 	    System.out.println("fillGroups::meal failed !!!");
+	    
+	    
+	    Iterator<Meal> it2 = this.import2_foods.iterator();
+
+	    //System.out.println("Groups HT: " + this.m_groups_ht);
+	    
+	    while (it2.hasNext())
+	    {
+		Meal fd = it2.next();
+//		System.out.println("FoodDescription: group=" + fd.getFood_group_id() + "id=" + fd.getId() );
+		
+		//System.out.println("m_meal_groups_ht: " + m_meal_groups_ht);
+		//System.out.println("fd: " + fd);
+		//System.out.println("fd.getMeal_group_id(): " + fd.getMeal_group_id());
+		
+		this.m_meal_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
+	    }
+	    
+	    
 	}
     }
     

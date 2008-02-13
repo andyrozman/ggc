@@ -144,7 +144,6 @@ public class AppointmentsDialog extends JDialog implements ActionListener
 
 		public int getColumnCount()
 		{
-		    // TODO Auto-generated method stub
 		    return 2;
 		}
 
@@ -156,7 +155,6 @@ public class AppointmentsDialog extends JDialog implements ActionListener
 
 		public Object getValueAt(int row, int column)
 		{
-		    // TODO Auto-generated method stub
 		    DoctorH dh = active_list.get(row);
 		    
 		    switch(column)

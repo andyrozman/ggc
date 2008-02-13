@@ -1,3 +1,11 @@
+2008-02-08 (0.2.9.6) Andy Rozman <andyrozman@users.sourceforge.net>
+    * major changed to whole nutrition db and framework
+    * final changes to USDA nutrition databases
+    * menu changes
+    * finalized changes to Printing (added Extended)
+    * display plug-ins: meters_tool and pumps tool  
+
+
 2008-01-29 (0.2.9.5) Andy Rozman <andyrozman@users.sourceforge.net>
     * fixing daily input values
 

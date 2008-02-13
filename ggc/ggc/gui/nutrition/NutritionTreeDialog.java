@@ -173,8 +173,10 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     public void setTreeModel(JTree tree)
     {
-	if ((this.m_tree_type==1) || (this.m_tree_type==2))
+	//if ((this.m_tree_type==1) || (this.m_tree_type==2))
 	    tree.setModel(new NutritionTreeModel(m_da.tree_roots.get("" + this.m_tree_type)));
+	//else
+	//    tree.setModel(new NutritionTreeModel(m_da.tree_roots.get("" + this.m_tree_type)));
 	//else
 	    
     }

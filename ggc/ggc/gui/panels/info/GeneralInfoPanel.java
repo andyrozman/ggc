@@ -39,8 +39,9 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private JLabel lblName = new JLabel();
     private JLabel lblIns1 = new JLabel();
     private JLabel lblIns2 = new JLabel();
-    private JLabel lblMeter = new JLabel();
     private JLabel lblUnit = new JLabel();
+    private JLabel lblMeter = new JLabel();
+    private JLabel lblPumps = new JLabel();
 
 
     public GeneralInfoPanel()
@@ -60,10 +61,12 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         add(lblIns1);
         add(new JLabel(m_ic.getMessage("BASAL_INSULIN")+":"));
         add(lblIns2);
-        add(new JLabel(m_ic.getMessage("GLUCOMETER")+":"));
-        add(lblMeter);
         add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
         add(lblUnit);
+        add(new JLabel(m_ic.getMessage("METERS_PLUGIN")+":"));
+        add(lblMeter);
+        add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN")+":"));
+        add(lblPumps);
 
         add(new JLabel());
         add(new JLabel());
@@ -79,7 +82,13 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         lblName.setText(m_da.getSettings().getUserName());
         lblIns1.setText(m_da.getSettings().getIns1Name() + "  (" + m_da.getSettings().getIns1Abbr() + ")");
         lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
+        lblUnit.setText(m_da.getSettings().getBG_unitString());
+        
+        lblMeter.setText(m_ic.getMessage("NOT_INSTALLED"));
+        lblPumps.setText(m_ic.getMessage("NOT_AVAILABLE"));
+        
 
+        /*
         int meter_type = m_da.getSettings().getMeterType();
         if (meter_type>0)
         {
@@ -89,9 +98,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         {
             lblMeter.setText(m_ic.getMessage("NO_METER_SELECTED"));
         }
-
-        //lblMeter.setText(m_da.getDb().getMeterById(m_da.getSettings().getMeterType()).getName() + "  (" + m_da.getSettings().getMeterPort() + ")");
-        lblUnit.setText(m_da.getSettings().getBG_unitString());
+*/
     }
 
 /*

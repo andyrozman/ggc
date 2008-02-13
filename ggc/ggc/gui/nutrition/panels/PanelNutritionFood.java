@@ -328,7 +328,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	//JLabel label, label_refuse, label_name, label_name_i18n;
 
 	this.label_name.setText("<html><body>" +  fd.getName() + "</body></html>");
-	this.label_name_i18n.setText("<html><body>" + fd.getI18n_name()+ "</body></html>");
+	this.label_name_i18n.setText("<html><body>" + fd.getName_i18n()+ "</body></html>");
 	this.label_refuse.setText("" + fd.getRefuse() +" %");
 
 	StringTokenizer strtok = new StringTokenizer(fd.getNutritions(), ";");
@@ -341,21 +341,25 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	    list_nutrition.add(ndd1);
 	}
 
+	this.createModel(this.list_nutrition, this.table_1, this.ndd);
+
 
 	this.list_weight.clear();
-	strtok = new StringTokenizer(fd.getHome_weights(), ";");
-
-	while(strtok.hasMoreTokens())
+	
+	
+	if ((fd.getHome_weights()!=null) && (!fd.getHome_weights().equals("")) && (!fd.getHome_weights().equals("null")))
 	{
-	    HomeWeightDataDisplay hwd1 = new HomeWeightDataDisplay(ic, strtok.nextToken());
-	    //String name = this.m_da.getDb().homeweight_defs.get(hwd1.getId()).getName();
-	    
-	    //System.out.println("Home Weight: " + name);
-	    hwd1.setHomeWeightDefinition(this.m_da.getDb().homeweight_defs.get(hwd1.getId()).getName());
-	    this.list_weight.add(hwd1);
+	    strtok = new StringTokenizer(fd.getHome_weights(), ";");
+       
+            while(strtok.hasMoreTokens())
+            {
+                HomeWeightDataDisplay hwd1 = new HomeWeightDataDisplay(ic, strtok.nextToken());
+                //System.out.println("Home Weight: " + name);
+                hwd1.setHomeWeightDefinition(this.m_da.getDb().homeweight_defs.get(hwd1.getId()).getName());
+                this.list_weight.add(hwd1);
+            }
 	}
 
-	this.createModel(this.list_nutrition, this.table_1, this.ndd);
 	this.createModel(this.list_weight, this.table_2, this.hwd);
 
     }

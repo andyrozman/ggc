@@ -381,7 +381,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
 	if (res==JFileChooser.APPROVE_OPTION)
 	{
 	    File f = jfc.getSelectedFile();
-	    this.fieldPDFViewer.setText(f.getPath() + "\\" + f.getName());
+	    this.fieldPDFViewer.setText(f.getPath());
 	}
 
     }

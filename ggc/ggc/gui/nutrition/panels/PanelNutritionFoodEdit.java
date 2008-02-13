@@ -329,7 +329,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 	//JLabel label, label_refuse, label_name, label_name_i18n;
 
 	this.label_name.setText("<html><body>" +  fd.getName() + "</body></html>");
-	this.label_name_i18n.setText("<html><body>" + fd.getI18n_name()+ "</body></html>");
+	this.label_name_i18n.setText("<html><body>" + fd.getName_i18n() + "</body></html>");
 	this.label_refuse.setText("" + fd.getRefuse() +" %");
 
 	StringTokenizer strtok = new StringTokenizer(fd.getNutritions(), ";");

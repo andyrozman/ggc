@@ -105,6 +105,32 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
     }
     
     
+    
+    public int getGroupChildrenCount()
+    {
+	return this.children_group.size();
+    }
+    
+    
+    public boolean hasGroupChildren()
+    {
+	return (getGroupChildrenCount()!=0);
+    }
+    
+    
+    public Object getGroupChild(int index)
+    {
+	return this.children_group.get(index);
+    }
+    
+    
+    public int findGroupChild(Object child)
+    {
+	return this.children_group.indexOf(child);
+    }
+    
+    
+    
 
     public String getShortDescription()
     {

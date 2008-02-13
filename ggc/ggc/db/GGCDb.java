@@ -1043,7 +1043,7 @@ public class GGCDb
 
         ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodUserDescriptionH as pst order by pst.food_user_group_id, pst.name");
+        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
 
         Iterator it = q.iterate();
 
@@ -1061,20 +1061,23 @@ public class GGCDb
 
     
     @SuppressWarnings("unchecked")
-    public Hashtable<String, Meal> getMeals()
+    //public Hashtable<String, Meal> getMeals()
+    public ArrayList<Meal> getMeals()
     {
 
-	Hashtable<String, Meal> list = new Hashtable<String, Meal>();
+	//Hashtable<String, Meal> list = new Hashtable<String, Meal>();
         //ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+	ArrayList<Meal> list = new ArrayList<Meal>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.MealH as pst order by pst.meal_group_id, pst.name");
+        Query q = getSession().createQuery("select pst from ggc.db.hibernate.MealH as pst order by pst.group_id, pst.name");
 
         Iterator it = q.iterate();
 
         while (it.hasNext())
         {
             MealH eh = (MealH)it.next();
-            list.put("" + eh.getId(), new Meal(eh));
+            //list.put("" + eh.getId(), new Meal(eh));
+            list.add(new Meal(eh));
         }
 
         return list;

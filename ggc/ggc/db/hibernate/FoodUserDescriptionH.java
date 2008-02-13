@@ -12,13 +12,16 @@ public class FoodUserDescriptionH implements Serializable {
     private long id;
 
     /** nullable persistent field */
-    private long food_user_group_id;
+    private long group_id;
 
     /** nullable persistent field */
     private String name;
 
     /** nullable persistent field */
-    private String i18n_name;
+    private String name_i18n;
+
+    /** nullable persistent field */
+    private String description;
 
     /** nullable persistent field */
     private float refuse;
@@ -30,10 +33,11 @@ public class FoodUserDescriptionH implements Serializable {
     private String home_weights;
 
     /** full constructor */
-    public FoodUserDescriptionH(long food_user_group_id, String name, String i18n_name, float refuse, String nutritions, String home_weights) {
-        this.food_user_group_id = food_user_group_id;
+    public FoodUserDescriptionH(long group_id, String name, String name_i18n, String description, float refuse, String nutritions, String home_weights) {
+        this.group_id = group_id;
         this.name = name;
-        this.i18n_name = i18n_name;
+        this.name_i18n = name_i18n;
+        this.description = description;
         this.refuse = refuse;
         this.nutritions = nutritions;
         this.home_weights = home_weights;
@@ -51,12 +55,12 @@ public class FoodUserDescriptionH implements Serializable {
         this.id = id;
     }
 
-    public long getFood_user_group_id() {
-        return this.food_user_group_id;
+    public long getGroup_id() {
+        return this.group_id;
     }
 
-    public void setFood_user_group_id(long food_user_group_id) {
-        this.food_user_group_id = food_user_group_id;
+    public void setGroup_id(long group_id) {
+        this.group_id = group_id;
     }
 
     public String getName() {
@@ -67,12 +71,20 @@ public class FoodUserDescriptionH implements Serializable {
         this.name = name;
     }
 
-    public String getI18n_name() {
-        return this.i18n_name;
+    public String getName_i18n() {
+        return this.name_i18n;
     }
 
-    public void setI18n_name(String i18n_name) {
-        this.i18n_name = i18n_name;
+    public void setName_i18n(String name_i18n) {
+        this.name_i18n = name_i18n;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public float getRefuse() {

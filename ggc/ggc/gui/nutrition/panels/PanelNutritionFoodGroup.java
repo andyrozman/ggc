@@ -136,8 +136,8 @@ public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
     {
 	FoodGroup group = (FoodGroup)obj;
 
-	label_name.setText(group.getDescription());
-	label_name_i18n.setText(group.getDescription_i18n());
+	label_name.setText(group.getName());
+	label_name_i18n.setText(group.getName_i18n());
 
     }
 

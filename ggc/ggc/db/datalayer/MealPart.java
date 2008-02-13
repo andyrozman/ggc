@@ -29,7 +29,6 @@
 
 package ggc.db.datalayer;
 
-import ggc.util.DataAccess;
 
 
 public class MealPart 

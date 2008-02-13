@@ -30,6 +30,7 @@
 
 package ggc.db.datalayer;
 
+import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.FoodDescriptionH;
 import ggc.db.hibernate.FoodUserDescriptionH;
 
@@ -37,7 +38,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
-public class FoodDescription //extends FoodDescriptionH implements DatabaseObjectHibernate
+public class FoodDescription implements DatabaseObjectHibernate //extends FoodDescriptionH implements DatabaseObjectHibernate
 {
 
     public boolean debug = false;
@@ -48,9 +49,18 @@ public class FoodDescription //extends FoodDescriptionH implements DatabaseObjec
     private long id;
     
     
-    public FoodDescription()
+    public FoodDescription(int type)
     {
-	this.type = 1;
+	this.type = type;
+	
+	if (type == 1)
+	    this.m_food_desc1 = new FoodDescriptionH();
+	else
+	    this.m_food_desc2 = new FoodUserDescriptionH();
+	
+	
+	
+	
 	/*
         this.setId(0);
 	this.setFood_group_id(0);
@@ -91,6 +101,15 @@ public class FoodDescription //extends FoodDescriptionH implements DatabaseObjec
     }
     
     
+    public Object getHibernateObject()
+    {
+	if (this.type==1)
+	    return this.m_food_desc1;
+	else
+	    return this.m_food_desc2;
+    }
+    
+    
 
     public String getShortDescription()
     {
@@ -125,20 +144,20 @@ public class FoodDescription //extends FoodDescriptionH implements DatabaseObjec
 	    this.m_food_desc2.setId(id);
     }
 
-    public long getFood_group_id() 
+    public long getGroup_id() 
     {
 	if (type==1)
-	    return this.m_food_desc1.getFood_group_id();
+	    return this.m_food_desc1.getGroup_id();
 	else
-	    return this.m_food_desc2.getFood_user_group_id();
+	    return this.m_food_desc2.getGroup_id();
     }
 
-    public void setFood_group_id(long food_user_group_id) 
+    public void setGroup_id(long group_id) 
     {
 	if (type==1)
-	    this.m_food_desc1.setFood_group_id(food_user_group_id);
+	    this.m_food_desc1.setGroup_id(group_id);
 	else
-	    this.m_food_desc2.setFood_user_group_id(food_user_group_id);
+	    this.m_food_desc2.setGroup_id(group_id);
     }
 
     public String getName() 
@@ -157,20 +176,20 @@ public class FoodDescription //extends FoodDescriptionH implements DatabaseObjec
 	    this.m_food_desc2.setName(name);
     }
 
-    public String getI18n_name() 
+    public String getName_i18n() 
     {
 	if (type==1)
-	    return this.m_food_desc1.getI18n_name();
+	    return this.m_food_desc1.getName_i18n();
 	else
-	    return this.m_food_desc2.getI18n_name();
+	    return this.m_food_desc2.getName_i18n();
     }
 
-    public void setI18n_name(String i18n_name) 
+    public void setName_i18n(String name_i18n) 
     {
 	if (type==1)
-	    this.m_food_desc1.setI18n_name(i18n_name);
+	    this.m_food_desc1.setName_i18n(name_i18n);
 	else
-	    this.m_food_desc2.setI18n_name(i18n_name);
+	    this.m_food_desc2.setName_i18n(name_i18n);
     }
 
     public float getRefuse() 

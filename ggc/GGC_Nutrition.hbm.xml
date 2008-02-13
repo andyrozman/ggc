@@ -27,23 +27,24 @@
 
 
     <!--  Food Group - Nutrition 1 -->
-    <class name="ggc.db.hibernate.FoodGroupH" table="nutrition_usdb_food_group">
+    <class name="ggc.db.hibernate.FoodGroupH" table="nutrition_usda_food_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
-        <property name="description" type="string" length="60" />
-        <property name="description_i18n" type="string" length="60" />
+        <property name="name" type="string" length="60" />
+        <property name="name_i18n" type="string" length="60" />
+        <property name="description" type="string" length="255" />
     </class>
 
 
     <!--  Food Description - - Nutrition 1-->
-    <class name="ggc.db.hibernate.FoodDescriptionH" table="nutrition_usdb_food_description">
+    <class name="ggc.db.hibernate.FoodDescriptionH" table="nutrition_usda_food_description">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
-        <property name="food_group_id" type="long"  />
+        <property name="group_id" type="long"  />
         <property name="name" type="string" length="200" />
-        <property name="i18n_name" type="string" length="200" />
+        <property name="name_i18n" type="string" length="200" />
         <property name="refuse" type="float" />
         <property name="nutritions" type="text" />
         <property name="home_weights" type="text" />
@@ -56,8 +57,9 @@
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
         <property name="name" type="string" length="60" />
-        <property name="description" type="string" length="60" />
-        <property name="parent_id" type="long"  />
+        <property name="name_i18n" type="string" length="60" />
+        <property name="description" type="string" length="255" />
+        <property name="parent_id" type="long" />
     </class>
 
 
@@ -66,9 +68,10 @@
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
-        <property name="food_user_group_id" type="long"  />
+        <property name="group_id" type="long"  />
         <property name="name" type="string" length="200" />
-        <property name="i18n_name" type="string" length="60" />
+        <property name="name_i18n" type="string" length="60" />
+        <property name="description" type="string" length="1000" />
         <property name="refuse" type="float" />
         <property name="nutritions" type="text" />
         <property name="home_weights" type="text" />
@@ -97,18 +100,20 @@
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
-        <property name="name" type="string" length="255" />
-        <property name="description" type="string" length="60" />
-        <property name="parent_id" type="int"  />
+        <property name="name" type="string" length="60" />
+        <property name="name_i18n" type="string" length="60" />
+        <property name="description" type="string" length="255" />
+        <property name="parent_id" type="long" />
     </class>
 
     <class name="ggc.db.hibernate.MealH" table="meal_meal">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
-        <property name="meal_group_id" type="long"  />
-        <property name="name" type="string" length="255" />
-        <property name="description" type="string" length="2000" />
+        <property name="group_id" type="long"  />
+        <property name="name" type="string" length="60" />
+        <property name="name_i18n" type="string" length="60" />
+        <property name="description" type="string" length="255" />
         <property name="parts" type="text" />  <!--  1:x;2:y;1:z   -->
                                                                      <!--  type:id     type=[1=Nutrition USDBA, 2=Nutrition User ]; id = id in db -->
         <property name="values" type="text" />  <!-- calories, joule, OH -->
