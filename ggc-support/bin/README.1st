@@ -1,0 +1,85 @@
+
+GGC - GNU Gluco Control
+=======================
+
+This are short instruction on how to star application. As prerequisite you need to have java 1.5 
+or higher installed.
+
+
+A) How to start software
+=========================
+
+1.) Windows
+
+After install program should run by itself (by clicking on icon), if you are not sure where problems 
+lie, run cmd.exe (command line shell) and run following command: run_win.cmd. Error should be written 
+somewhere on screen. 
+In most cases problem is with java path ('java' is not recognized as an internal or external command,
+operable program or batch file). In this case follow instructions under C): 1.
+
+
+2.) Linux
+On linux platform you need to issue following command 'sh run_linux.sh'. If application doesn't start
+see on screen where the problem is. 
+Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
+resolve this)
+
+3.) Mac
+On Mac platform you need to issue following command 'bash run_mac.sh'. If application doesn't start
+see on screen where the problem is. 
+Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
+resolve this)
+
+
+
+
+B) Support for meters
+======================
+
+In some future version, we will add support for meters. For this purpose, we have special library, which 
+needs to be installed. In most cases installation is very simple, open zip file in \lib (rxtx something)
+and find your OS and architecture type and copy file to bin folder. In some casses you need to copy this 
+files to Java Runtime folder in subfolder \bin.
+
+Supported OSes at this time are: Windows (x32, works with x64), Solaris (32/64), Mac OS X, Linux (x32, 
+ia64, x64).
+
+If you have USB device, you should configure USB so, that it will show virtual COM port.
+
+
+
+
+C) Troubleshooting
+===================
+
+1.) Java Path is not correct
+----------------------------
+
+a) Change path in StartupConfig
+
+Open StartupConfig.properties with your favorite editor. Change JAVA_EXE parameter to point to your java 
+executable (if you have Windows you should enclose path in " ", so that whole path is used. Also if you 
+use \, you should use doubles (\\), like "c:\\Program Files\\Java\\jre_1.5.0_06\\bin\\java.exe". When 
+this file is read single \ are removed.
+
+
+b) Change path in startup file (see section D)
+
+Open startup file and change path to java, similar to change in C.1.a, but here you must use single \ instead
+of double (like: "c:\Program Files\Java\jre_1.5.0_06\bin\java.exe")
+
+
+2.) Unsupported OS
+If you have reached this section then you have unsupported system. As first you ne
+
+
+
+
+D) Startup file
+================
+
+For each platform we have different startup file: 
+
+Windows = run_win.cmd
+Linux = run_linux.sh  (for linux you need to have Sh installed (usually installed by default))
+Mac = run_mac.sh (for Mac you need to have Bash installed (usually installed by default))
