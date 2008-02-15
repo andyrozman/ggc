@@ -8,7 +8,7 @@
     <property file="./GGCBuild.properties"/>
 
     <!-- These should *not* be modified on the command line! -->
-    <property name="build.dir" value="${source.dir}/classes"/>
+    <property name="build.dir" value="${outdir.dir}/classes"/>
     <property name="deploy.dir" value="${outdir.dir}/deploy"/>
     
     
