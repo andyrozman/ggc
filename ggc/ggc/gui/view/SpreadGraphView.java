@@ -135,13 +135,15 @@ public class SpreadGraphView extends AbstractGraphView
         g2D.draw(rect1);
 
         //High Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(m_da.getSettings().getBG_High()) - BGtoCoord(maxBG));
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG),
+                drawableWidth, BGtoCoord(maxGoodBG) - BGtoCoord(maxBG) - 1);
         g2D.setPaint(m_da.getSettings().getColorHighBG());
         g2D.fill(rect1);
         g2D.draw(rect1);
 
         //Low Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(m_da.getSettings().getBG_Low()), drawableWidth, BGtoCoord(0) - BGtoCoord(m_da.getSettings().getBG_Low()) - 1);
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(minGoodBG),
+                drawableWidth, BGtoCoord(0) - BGtoCoord(minGoodBG) - 1);
         g2D.setPaint(m_da.getSettings().getColorLowBG());
         g2D.fill(rect1);
         g2D.draw(rect1);

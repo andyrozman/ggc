@@ -121,22 +121,22 @@ public abstract class AbstractGraphView extends JComponent
 
     protected int BGtoCoord(float BG)
     {
-        return (int)(drawableHeight + upperSpace - drawableHeight / BGDiff * BG);
+        return (int)(drawableHeight + upperSpace - (drawableHeight / BGDiff) * BG);
     }
 
     protected int BUtoCoord(float BU)
     {
-        return (int)(drawableHeight + upperSpace - drawableHeight / 60 * BU);
+        return (int)(drawableHeight + upperSpace - (drawableHeight / 60) * BU);
     }
 
     protected int InstoCoord(float Ins)
     {
-        return (int)(drawableHeight + upperSpace - drawableHeight / 60 * Ins);
+        return (int)(drawableHeight + upperSpace - (drawableHeight / 60) * Ins);
     }
 
     protected int InsPerBUtoCoord(float factor)
     {
-        return (int)(drawableHeight + upperSpace - drawableHeight / 4 * factor);
+        return (int)(drawableHeight + upperSpace - (drawableHeight / 4) * factor);
     }
 /*
     protected int DateTimetoCoord(java.util.Date time)

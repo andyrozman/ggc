@@ -1,4 +1,8 @@
 2008-02-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * added new keys to GGC_de
+    * fixed graph display offset bug
+
+2008-02-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * added entries from BUGS.txt marked with [sf] to sourceforge's bugtracker
 
 2008-02-13 (0.2.9.7) Andy Rozman <andyrozman@users.sourceforge.net>

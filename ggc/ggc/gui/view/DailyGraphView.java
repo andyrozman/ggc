@@ -220,15 +220,14 @@ public class DailyGraphView extends AbstractGraphView
 
         // High Zone
         rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG),
-                drawableWidth, BGtoCoord(m_da.getSettings().getBG_High()) - BGtoCoord(maxBG));
+                drawableWidth, BGtoCoord(maxGoodBG) - BGtoCoord(maxBG) - 1);
         g2D.setPaint(m_da.getColor(this.scheme.getColor_bg_high()));
         g2D.fill(rect1);
         g2D.draw(rect1);
 
         // Low Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1,
-                BGtoCoord(m_da.getSettings().getBG_Low()), drawableWidth, BGtoCoord(0)
-                        - BGtoCoord(m_da.getSettings().getBG_Low()) - 1);
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(minGoodBG),
+                drawableWidth, BGtoCoord(0) - BGtoCoord(minGoodBG) - 1);
         g2D.setPaint(m_da.getColor(this.scheme.getColor_bg_low()));
         g2D.fill(rect1);
         g2D.draw(rect1);

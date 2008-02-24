@@ -162,14 +162,15 @@ public class FrequencyGraphView extends AbstractGraphView
         int lower = (int)m_da.getSettings().getBG_Low();
 //        int upper = (int)m_da.getSettings().getBG_High();
 
+        // XXX: these need something similar to BGtoCoord, but that's too much effort
         g2D.setPaint(m_da.getSettings().getColorLowBG());
-        g2D.fillRect(leftSpace + 1, upperSpace, lower, (int)drawableHeight);
+        g2D.fillRect(leftSpace + 1, upperSpace, (int) minGoodBG, (int)drawableHeight);
 
         g2D.setPaint(m_da.getSettings().getColorTargetBG());
-        g2D.fillRect((int)(leftSpace + m_da.getSettings().getBG_TargetLow()), upperSpace, (int)(m_da.getSettings().getBG_TargetHigh() - m_da.getSettings().getBG_TargetLow()), (int)drawableHeight);
+        g2D.fillRect((int)(leftSpace + minGoodBG), upperSpace, (int)(maxGoodBG - minGoodBG), (int)drawableHeight);
 
         g2D.setPaint(m_da.getSettings().getColorHighBG());
-        g2D.fillRect((int)(leftSpace + m_da.getSettings().getBG_High()), upperSpace, (int)(drawableWidth - m_da.getSettings().getBG_High()), (int)drawableHeight);
+        g2D.fillRect((int)(leftSpace + maxGoodBG), upperSpace, (int)(drawableWidth - maxGoodBG), (int)drawableHeight);
 
     }
 
