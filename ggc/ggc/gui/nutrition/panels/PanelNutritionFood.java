@@ -2,8 +2,9 @@ package ggc.gui.nutrition.panels;
 
 //import java.awt.Color;
 import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.NutritionDefinition;
 import ggc.gui.nutrition.NutritionTreeDialog;
+import ggc.gui.nutrition.display.HomeWeightDataDisplay;
+import ggc.gui.nutrition.display.NutritionDataDisplay;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
@@ -24,7 +25,6 @@ import javax.swing.table.TableColumnModel;
 import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.layout.ZeroLayout;
-import com.atech.i18n.I18nControlAbstract;
 
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH
 // andyrozman
@@ -33,7 +33,9 @@ import com.atech.i18n.I18nControlAbstract;
 public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements ActionListener
 {
 
-    I18nControl ic = I18nControl.getInstance();
+
+
+    //I18nControl ic = I18nControl.getInstance();
     DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
@@ -57,7 +59,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
     public PanelNutritionFood(NutritionTreeDialog dia)
     {
 
-        super();
+        super(false, I18nControl.getInstance());
 
         m_dialog = dia;
         m_da = DataAccess.getInstance();
@@ -154,63 +156,6 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 	this.createModel(this.list_nutrition, this.table_1, this.ndd);
 
-/*
-	new AbstractTableModel()
-                           {
-
-                               public int getColumnCount() 
-                               {
-                                   return 4; //list.getColumnCount();
-                               }
-
-
-                               public int getRowCount() 
-                               {
-				   //System.out.println(list.size());
-				   //return list.size();
-				   return list_nutrition.size();
-                               }
-
-
-                               public Object getValueAt(int rowIndex, int columnIndex) 
-                               {
-				   NutritionDataDisplay ndd = (NutritionDataDisplay)list_nutrition.get(rowIndex);
-
-				   switch(columnIndex)
-				   {
-				       case 1:
-					   return ndd.getName();
-				       case 2:
-					   return ndd.getValue();
-				       case 3:
-					   return ndd.getWeightUnit();
-
-				       case 0:
-				       default:
-					   return ndd.getId();
-
-
-				   }
-
-                                   //return list.get(rowIndex);
-                               }
-                           });  // table
-
-
-        int twidth = this.getWidth()-50;
-        table_1.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-        TableColumnModel cm = table_1.getColumnModel();
-
-	NutritionDataDisplay ndd = new NutritionDataDisplay();
-	
-        for (int i=0; i< ndd.getColumnsCount(); i++)
-        {
-            cm.getColumn(i).setHeaderValue(ndd.getColumnHeader(i));
-            cm.getColumn(i).setPreferredWidth(ndd.getColumnWidth(i, 430)); 
-	    //cm.getColumn(i).setPreferredWidth(
-
-        }
-*/
         table_1.setRowSelectionAllowed(true);
         table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table_1.setDoubleBuffered(true);
@@ -233,72 +178,13 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	this.add(label, null);
 
 //	HomeWeightDataDisplay hwd = new HomeWeightDataDisplay(ic);
-
 	//System.out.println(hwd.getColumnsCount());
 
 	table_2 = new JTable();
 
 	createModel(this.list_weight, this.table_2, this.hwd);
 
-/*
-        this.model_2 = new ATTableModel(this.list_weight, hwd);
 
-	table_2.setModel(this.model_2);
-*/
-
-/*
-	new AbstractTableModel()
-			   {
-
-			       public int getColumnCount() 
-			       {
-				   return 3; //list.getColumnCount();
-			       }
-
-
-			       public int getRowCount() 
-			       {
-				   //System.out.println(list.size());
-				   //return list.size();
-				   return list_weight.size();
-			       }
-
-
-			       public Object getValueAt(int rowIndex, int columnIndex) 
-			       {
-				   HomeWeightDataDisplay hwd = (HomeWeightDataDisplay)list_weight.get(rowIndex);
-				   //NutritionDataDisplay ndd = (NutritionDataDisplay)list.get(rowIndex);
-
-				   switch(columnIndex)
-				   {
-				       case 1:
-					   return "" + hwd.getAmount();
-				       case 2:
-					   return "" + hwd.getWeight();
-
-				       case 0:
-				       default:
-					   return hwd.getWeightType();
-
-				   }
-
-				   //return list.get(rowIndex);
-			       }
-			   });  // table
-*/
-/*
-	int twidth2 = this.getWidth()-50;
-	table_2.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-	TableColumnModel cm2 = table_2.getColumnModel();
-
-	for (int i=0; i< hwd.getColumnsCount(); i++)
-	{
-	    cm2.getColumn(i).setHeaderValue(hwd.getColumnHeader(i));
-	    cm2.getColumn(i).setPreferredWidth(hwd.getColumnWidth(i, 430)); 
-	    //cm.getColumn(i).setPreferredWidth(
-
-	}
-*/
 	table_2.setRowSelectionAllowed(true);
 	table_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	table_2.setDoubleBuffered(true);
@@ -399,159 +285,59 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
     }
 
 
-    private class NutritionDataDisplay extends ATTableData
+
+    
+    
+    
+    /**
+     * Get Warning string. This method returns warning string for either add or edit.
+     * If value returned is null, then no warning message box will be displayed.
+     * 
+     * @param action_type type of action (ACTION_ADD, ACTION_EDIT)
+     * @return String value as warning string
+     */
+    public String getWarningString(int action_type)
     {
-
-	private String id;
-	private String value;
-	private String name;
-	private String weight_unit;
-
-
-	public NutritionDataDisplay(I18nControlAbstract ic)
-	{
-	    super(ic);
-	}
-
-
-	public NutritionDataDisplay(I18nControlAbstract ic, String full)
-	{
-	    super(ic);
-	//    System.out.println("Nutr: " + full);
-	    int index = full.indexOf("=");
-	    this.id = full.substring(0, index);
-	    this.value = full.substring(index+1);
-	}
-
-
-	private void setNutritionDefinition(NutritionDefinition def)
-	{
-	    this.id = "" + def.getId();
-	    this.name = def.getName();
-	    //this.value = def.get.getTag();
-	    this.weight_unit = def.getWeight_unit();
-	}
-
-
-	public void init()
-	{
-	    String[] col = { "ID", "NUTRITION", "AMOUNT", "UNITS" };
-	    float[] col_size = { 0.1f, 0.5f, 0.2f, 0.2f  };
-
-	    init(col, col_size);
-	}
-
-	public String getId()
-	{
-	    return this.id;
-	}
-
-
-	public String getColumnValue(int column)
-	{
-	    switch(column)
-	    {
-		case 1:
-		    return this.name;
-		case 2:
-		    return this.value;
-		case 3:
-		    return this.weight_unit;
-
-		case 0:
-		default:
-		    return "" + this.id;
-
-	    }
-	}
+	return null;
     }
 
 
-    private class HomeWeightDataDisplay extends ATTableData
+
+    /**
+     * Was data in this panel changed.
+     * 
+     * @return true if data changed, false otherwise
+     */
+    public boolean hasDataChanged()
     {
-
-	private String id;
-	private String weight_type;
-	private float amount = 1.0f;
-	private float weight;
-
-
-	public HomeWeightDataDisplay(I18nControlAbstract ic)
-	{
-	    super(ic);
-	}
-
-
-	public HomeWeightDataDisplay(I18nControlAbstract ic, String full)
-	{
-	    super(ic);
-
-	    int index = full.indexOf("=");
-	    this.id = full.substring(0, index);
-
-	    String val = full.substring(index+1);
-
-	    if (val.indexOf("*")>-1)
-	    {
-		index = val.indexOf("*");
-		this.amount = Float.parseFloat(val.substring(0, index));
-
-		String ww = val.substring(index+1);
-
-		if (ww.startsWith("."))
-		    ww = "0" + ww;
-
-		this.weight = Float.parseFloat(ww);
-	    }
-	    else
-	    {
-		this.weight = Float.parseFloat(val);
-	    }
-	}
-
-
-
-	public void init()
-	{
-	    String[] cols = { /*"ID",*/ "WEIGHT_TYPE", "AMOUNT", "WEIGHT" };
-	    float[] cols_size = { /*0.1f,*/ 0.5f, 0.25f, 0.25f  };
-
-	    init(cols, cols_size);
-	}
-
-
-
-	public String getColumnValue(int column)
-	{
-	    switch(column)
-	    {
-		case 1:
-		    return "" + this.amount;
-
-		case 2:
-		    return "" + this.weight;
-
-		case 0:
-		default:
-		    return this.weight_type;
-
-
-	    }
-	}
-
-
-	public String getId()
-	{
-	    return this.id;
-	}
-
-	private void setHomeWeightDefinition(String name)
-	{
-	    this.weight_type = ic.getMessage(name);
-	}
-
+	return false;
     }
 
+
+
+    /**
+     * Save data in panel
+     * 
+     * @return true if save was successful
+     */
+    public boolean saveData()
+    {
+	return false;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
     

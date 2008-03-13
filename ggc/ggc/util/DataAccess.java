@@ -29,11 +29,28 @@
 
 package ggc.util;
 
+import ggc.data.DailyValues;
+import ggc.data.HbA1cValues;
+import ggc.data.WeeklyValues;
+import ggc.data.cfg.ConfigurationManager;
+import ggc.db.GGCDb;
+import ggc.db.GGCDbLoader;
+import ggc.db.tool.DbToolApplicationGGC;
+import ggc.gui.MainFrame;
+import ggc.gui.StatusBar;
+import ggc.gui.little.GGCLittle;
+import ggc.gui.little.StatusBarL;
+import ggc.gui.nutrition.GGCTreeRoot;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -45,20 +62,6 @@ import java.util.Hashtable;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
-
-import ggc.data.DailyValues;
-import ggc.data.HbA1cValues;
-import ggc.data.WeeklyValues;
-import ggc.data.cfg.ConfigurationManager;
-//import ggc.data.meter.MeterManager;
-import ggc.db.GGCDb;
-import ggc.db.GGCDbLoader;
-import ggc.db.tool.DbToolApplicationGGC;
-import ggc.gui.MainFrame;
-import ggc.gui.StatusBar;
-import ggc.gui.little.GGCLittle;
-import ggc.gui.little.StatusBarL;
-import ggc.gui.nutrition.GGCTreeRoot;
 
 
 public class DataAccess 
@@ -123,6 +126,9 @@ public class DataAccess
 
 
     public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
+    public static DecimalFormat Decimal0Format = new DecimalFormat("#0");
+    public static DecimalFormat Decimal2Format = new DecimalFormat("#0.00");
+    public static DecimalFormat Decimal3Format = new DecimalFormat("#0.000");
 
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
@@ -307,6 +313,38 @@ public class DataAccess
 	this.m_db =db;
     }
 
+    // ********************************************************
+    // ******               Static Methods                *****    
+    // ********************************************************
+
+    
+    public static String getFloatAsString(float f, String decimal_places)
+    {
+	return DataAccess.getFloatAsString(f, Integer.parseInt(decimal_places));
+    }
+    
+    
+    public static String getFloatAsString(float f, int decimal_places)
+    {
+	switch (decimal_places)
+	{
+	    case 1:
+		return DataAccess.MmolDecimalFormat.format(f);
+		
+	    case 2:
+		return DataAccess.Decimal2Format.format(f);
+		
+	    case 3:
+		return DataAccess.Decimal3Format.format(f);
+		
+	    default:
+		return DataAccess.Decimal0Format.format(f);
+	}
+    }
+    
+    
+    
+    
     // ********************************************************
     // ******                 Icons                       *****    
     // ********************************************************
@@ -695,6 +733,22 @@ public class DataAccess
         return img;
     }
 
+    
+    // ********************************************************
+    // ******               I18n Utils                    *****    
+    // ********************************************************
+    
+     
+    
+    public String makeI18nKeyword(String input)
+    {
+	String process = input.replaceAll(" ", "_");
+	process = process.toUpperCase();
+	
+	return process;
+    }
+    
+    
 
 
     // ********************************************************

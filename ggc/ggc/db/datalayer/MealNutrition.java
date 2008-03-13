@@ -32,7 +32,7 @@ package ggc.db.datalayer;
 import ggc.util.DataAccess;
 
 
-public class MealValue
+public class MealNutrition
 {
 
     public boolean debug = false;
@@ -40,8 +40,10 @@ public class MealValue
     private String nutrition_desc;
     private float amount = 0.0f;
     
+    private boolean no_desc = false;
+    
     // value pack: id=amount
-    public MealValue(String packed, boolean load_description)
+    public MealNutrition(String packed, boolean load_description)
     {
 	int index = packed.indexOf("=");
 	
@@ -52,8 +54,53 @@ public class MealValue
 	    this.nutrition_desc = DataAccess.getInstance().getDb().nutrition_defs.get("" + this.nutrition_type_id).getName();
     }
 
+    
+    public MealNutrition(MealNutrition mn)
+    {
+	this.nutrition_type_id = mn.nutrition_type_id;
+	this.amount = mn.amount;
+	this.nutrition_desc = mn.nutrition_desc;
+    }
+    
 
+    public MealNutrition(int id, float amount, String desc)
+    {
+	this.nutrition_type_id = id;
+	this.amount = amount;
+	this.nutrition_desc = desc;
+	
+	this.no_desc = true;
+    }
+    
+    
+    
+    public int getId()
+    {
+	return this.nutrition_type_id;
+    }
 
+    public float getAmount()
+    {
+	return this.amount;
+    }
+    
+    
+    public void setAmount(float val)
+    {
+	this.amount = val;
+    }
+    
+    public void addToAmount(float val)
+    {
+	this.amount += val;
+    }
+    
+    
+    public String getDescription()
+    {
+	return this.nutrition_desc;
+    }
+    
 
     public void loadMealPart()
     {

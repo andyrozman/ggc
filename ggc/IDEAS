@@ -1,7 +1,16 @@
 This file should be filled with any ideas that pop into your heads and be discussed on the
 ggc-development mailing list or wherever appropriate.
 
-<language-in-XML idea scrapped, removed to make file more readable>
 
 
-Two kinds of insulin seems a bit minimalistic
+I: Two kinds of insulin seems a bit minimalistic
+
+A: All data tables, which could have additional parameters were added and extended column
+   of type text (unlimited size - string), which allows us to add data, if data is present,
+   so for example we could add third insulin option, but for time beeing 2 insulins are what
+   is mostly used for insulin treatment. 
+
+
+
+
+I: Pump and CGM support   

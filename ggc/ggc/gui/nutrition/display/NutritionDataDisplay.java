@@ -1,0 +1,74 @@
+
+package ggc.gui.nutrition.display;
+
+import ggc.db.datalayer.NutritionDefinition;
+
+import com.atech.graphics.components.ATTableData;
+import com.atech.i18n.I18nControlAbstract;
+
+public class NutritionDataDisplay extends ATTableData
+    {
+
+	private String id;
+	private String value;
+	private String name;
+	private String weight_unit;
+
+
+	public NutritionDataDisplay(I18nControlAbstract ic)
+	{
+	    super(ic);
+	}
+
+
+	public NutritionDataDisplay(I18nControlAbstract ic, String full)
+	{
+	    super(ic);
+	//    System.out.println("Nutr: " + full);
+	    int index = full.indexOf("=");
+	    this.id = full.substring(0, index);
+	    this.value = full.substring(index+1);
+	}
+
+
+	public void setNutritionDefinition(NutritionDefinition def)
+	{
+	    this.id = "" + def.getId();
+	    this.name = def.getName();
+	    //this.value = def.get.getTag();
+	    this.weight_unit = def.getWeight_unit();
+	}
+
+
+	public void init()
+	{
+	    String[] col = { "ID", "NUTRITION", "AMOUNT", "UNITS" };
+	    float[] col_size = { 0.1f, 0.5f, 0.2f, 0.2f  };
+
+	    init(col, col_size);
+	}
+
+	public String getId()
+	{
+	    return this.id;
+	}
+
+
+	public String getColumnValue(int column)
+	{
+	    switch(column)
+	    {
+		case 1:
+		    return this.name;
+		case 2:
+		    return this.value;
+		case 3:
+		    return this.weight_unit;
+
+		case 0:
+		default:
+		    return "" + this.id;
+
+	    }
+	}
+    }

@@ -59,8 +59,9 @@ public class GGCTreeRoot
     public ArrayList<FoodGroup> m_groups = null;
     public Hashtable<String,FoodGroup> m_groups_ht = null;
     public ArrayList<FoodGroup> m_groups_tree = null;
+    public Hashtable<String,FoodDescription> m_foods_ht = null;
     
-    public Hashtable<String, ArrayList<FoodDescription>> m_food_desc_by_group = null;
+    //public Hashtable<String, ArrayList<FoodDescription>> m_food_desc_by_group = null;
     
     
 
@@ -68,7 +69,7 @@ public class GGCTreeRoot
     public Hashtable<String,MealGroup> m_meal_groups_ht = null;
     //public Hashtable<String, ArrayList<Meal>> m_meal_desc_by_group = null;
     public ArrayList<MealGroup> m_meal_groups_tree = null;
-
+    public Hashtable<String,Meal> m_meals_ht = null;
     
     
     
@@ -191,7 +192,7 @@ public class GGCTreeRoot
 	    this.m_groups_tree = new ArrayList<FoodGroup>();
 	    this.m_groups_ht = new Hashtable<String,FoodGroup>();
 
-	    System.out.println("Db output: " + this.import1_grp);
+	//    System.out.println("Db output: " + this.import1_grp);
 	    
 	    
 	    // create group hashtable and tree
@@ -281,6 +282,8 @@ public class GGCTreeRoot
 	if ((m_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (m_type == GGCTreeRoot.TREE_USER_NUTRITION))
 	{
 
+	    this.m_foods_ht = new Hashtable<String,FoodDescription>();
+	    
 	    Iterator<FoodDescription> it2 = this.import1_foods.iterator();
 
 	    System.out.println("Groups HT: " + this.m_groups_ht);
@@ -289,6 +292,7 @@ public class GGCTreeRoot
 	    {
 		FoodDescription fd = it2.next();
 //		System.out.println("FoodDescription: group=" + fd.getFood_group_id() + "id=" + fd.getId() );
+		this.m_foods_ht.put("" + fd.getId(), fd);
 		this.m_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
 	    }
 	    
@@ -297,8 +301,9 @@ public class GGCTreeRoot
 	}
 	else if (m_type == GGCTreeRoot.TREE_MEALS)
 	{
-	    System.out.println("fillGroups::meal failed !!!");
+	    //System.out.println("fillGroups::meal failed !!!");
 	    
+	    this.m_meals_ht = new Hashtable<String,Meal>();
 	    
 	    Iterator<Meal> it2 = this.import2_foods.iterator();
 
@@ -313,6 +318,7 @@ public class GGCTreeRoot
 		//System.out.println("fd: " + fd);
 		//System.out.println("fd.getMeal_group_id(): " + fd.getMeal_group_id());
 		
+		this.m_meals_ht.put("" + fd.getId(), fd);
 		this.m_meal_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
 	    }
 	    

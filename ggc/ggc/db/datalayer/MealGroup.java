@@ -60,6 +60,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
         this.setId(0);
         this.setName("");
         this.setDescription("");
+        this.setName_i18n("");
         this.setParent_id(0);
     }
 
@@ -69,6 +70,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
         this.setId(ch.getId());
         this.setName(ch.getName());
         this.setDescription(ch.getDescription());
+        this.setName_i18n(ch.getName_i18n());
         this.setParent_id(ch.getParent_id());
     }
 
@@ -93,6 +95,20 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
     {
 	children.add(fd);
     }
+    
+    
+    public void removeChild(MealGroup fg)
+    {
+	children_group.remove(fg);
+	children.remove(fg);
+    }
+    
+    public void removeChild(Meal fd)
+    {
+	children.remove(fd);
+    }
+    
+    
     
     public Object getChild(int index)
     {
@@ -169,6 +185,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
         ch.setName(this.getName());
 	ch.setDescription(this.getDescription());
         ch.setParent_id(this.getParent_id());
+        ch.setName_i18n(this.getName_i18n());
 
         Long id = (Long)sess.save(ch);
 
@@ -197,6 +214,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
         ch.setName(this.getName());
 	ch.setDescription(this.getDescription());
         ch.setParent_id(this.getParent_id());
+        ch.setName_i18n(this.getName_i18n());
 
         sess.update(ch);
         tx.commit();
@@ -275,6 +293,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
         this.setName(ch.getName());
 	this.setDescription(ch.getDescription());
         this.setParent_id(ch.getParent_id());
+        this.setName_i18n(ch.getName_i18n());
 	
         return true;
     }

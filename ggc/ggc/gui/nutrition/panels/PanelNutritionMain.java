@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 public class PanelNutritionMain extends GGCTreePanel //JPanel
 {
 
-    I18nControl ic = I18nControl.getInstance();
+    //I18nControl ic = I18nControl.getInstance();
     DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
@@ -31,14 +31,14 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
 	    "",
 	    "USDA_NUTRITION_DATABASE",
 	    "USER_NUTRITION_DATABASE",
-	    "MEAL_DATABASE"
+	    "MEALS_DATABASE"
     };
     
 
     public PanelNutritionMain(NutritionTreeDialog dia)
     {
 
-        super();
+        super(false, I18nControl.getInstance());
 
         m_dialog = dia;
         m_da = DataAccess.getInstance();
@@ -110,6 +110,44 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
     {
     }
 
+    
+    /**
+     * Get Warning string. This method returns warning string for either add or edit.
+     * If value returned is null, then no warning message box will be displayed.
+     * 
+     * @param action_type type of action (ACTION_ADD, ACTION_EDIT)
+     * @return String value as warning string
+     */
+    public String getWarningString(int action_type)
+    {
+	return null;
+    }
+
+
+
+    /**
+     * Was data in this panel changed.
+     * 
+     * @return true if data changed, false otherwise
+     */
+    public boolean hasDataChanged()
+    {
+	return false;
+    }
+
+
+
+    /**
+     * Save data in panel
+     * 
+     * @return true if save was successful
+     */
+    public boolean saveData()
+    {
+	return false;
+    }
+    
+    
 
 }
     

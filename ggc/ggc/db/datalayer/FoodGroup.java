@@ -234,6 +234,17 @@ public class FoodGroup implements DatabaseObjectHibernate
 	children.add(fd);
     }
 
+    public void removeChild(FoodGroup fg)
+    {
+	children_group.remove(fg);
+	children.remove(fg);
+    }
+    
+    public void removeChild(FoodDescription fd)
+    {
+	children.remove(fd);
+    }
+    
     
     public Object getGroupChild(int index)
     {
@@ -267,6 +278,14 @@ public class FoodGroup implements DatabaseObjectHibernate
 	else
 	    return this.group_db2.getParent_id();
     }
+    
+
+    public void setParentId(long parent_id)
+    {
+	if (this.group_type == 2)
+	    this.group_db2.setParent_id(parent_id);
+    }
+    
     
     
     @Override

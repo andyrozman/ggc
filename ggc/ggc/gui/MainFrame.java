@@ -51,8 +51,14 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Hashtable;
 
+import javax.help.CSH;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -62,11 +68,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
+import com.atech.update.client.UpdateDialog;
+import com.atech.update.config.UpdateConfiguration;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
 
@@ -119,8 +128,9 @@ public class MainFrame extends JFrame
 
 
     private JMenu menu_file, menu_bgs, menu_food, menu_doctor, 
-    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps;
+    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_misc;
 
+    public GGCHelp m_help;
 
     private Hashtable<String,GGCAction> actions = null;
 
@@ -229,13 +239,19 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
-
+        helpInit();
+        
+        
+        
 
 //menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;
 
 
 	// file menu
 	this.menu_file = this.createMenu("MN_FILE", null);
+	this.createAction(this.menu_file, "MN_LOGIN", "MN_LOGIN_DESC", "file_login", null);
+	this.createAction(this.menu_file, "MN_LOGOUT", "MN_LOGOUT_DESC", "file_logout", null);
+	this.menu_file.addSeparator();
 	this.createAction(this.menu_file, "MN_QUIT", "MN_QUIT_DESC", "file_quit", null);
 
 	// bgs menu
@@ -277,11 +293,25 @@ public class MainFrame extends JFrame
 
 	// meters
 	this.menu_meters = this.createMenu("MN_METERS", null);
+	this.createAction(menu_meters, "MN_METERS_READ", "MN_METERS_READ_DESC", "meters_read", null);
+	this.menu_meters.addSeparator();
+	this.createAction(menu_meters, "MN_METERS_LIST", "MN_METERS_LIST_DESC", "meters_list", null);
+	this.menu_meters.addSeparator();
+	this.createAction(menu_meters, "MN_METERS_CONFIG", "MN_METERS_CONFIG_DESC", "meters_config", null);
 	
 	
 	
 	// pumps
 	this.menu_pumps = this.createMenu("MN_PUMPS", null);
+	this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
+	this.menu_pumps.addSeparator();
+	this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
+	this.menu_pumps.addSeparator();
+	this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
+	
+	
+	//this.menu_misc = this.createMenu("MN_MISC", "MN_MISC_DESC");
+	//this.createAction(menu_misc, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
 	
 	// tools menu
 	this.menu_tools = this.createMenu("MN_TOOLS", null);
@@ -289,14 +319,19 @@ public class MainFrame extends JFrame
 	this.menu_tools.addSeparator();
 	this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC", "tools_db_maint", null);
 	//this.menu_tools.addSeparator();
+	this.createAction(this.menu_tools, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
 	//this.createAction(this.menu_tools, "MN_METER_LIST", "MN_METER_LIST_DESC", "tools_mlist", null);
 
 	//addMenuItem(menu_tools, prefAction);
 
 	// help menu
 	this.menu_help = this.createMenu("MN_HELP", null);
+	this.menu_help.add(GGCHelp.helpItem);
+	//this.actions.put("hlp_help", GGCHelp.helpItem);
 	this.menu_help.addSeparator();
-	this.createAction(this.menu_help,"MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check", null);
+	this.createAction(this.menu_help,"MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
+	//this.menu_help.addSeparator();
+	//this.createAction(this.menu_help,"MN_CHECK_FOR_UPDATE2", "MN_CHECK_FOR_UPDATE2_DESC", "hlp_check_update", null);
 	this.menu_help.addSeparator();
 	this.createAction(this.menu_help,"MN_ABOUT", "MN_ABOUT_DESC", "hlp_about", null);
 
@@ -316,6 +351,7 @@ public class MainFrame extends JFrame
         addToolBarButtonWithName("view_hba1c");
         addToolBarSpacer();
         addToolBarSpacer();
+        //addToolBarButtonWithName("view_freq");
 /* 
         // meters removed for 0.3
         addToolBarButtonWithName("read_meter");
@@ -323,9 +359,25 @@ public class MainFrame extends JFrame
         addToolBarSpacer();
         */
 
+	this.createAction(null,"MN_HELP", "MN_HELP_DESC", "hlp_help", "help.gif");
+        
+        
         addToolBarButtonWithName("tools_pref");
         addToolBarSpacer();
         addToolBarSpacer();
+        addToolBarButtonWithName("hlp_help");
+
+
+	//this.menu_help.add(GGCHelp.helpItem);
+
+        
+        /*
+        JMenuItem hlp = new JMenuItem(); //m_ic.getMessage("HELP"));
+        hlp.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
+        
+        hlp.addActionListener(m_help.csh);
+        hlp.setHideActionText(true);
+        toolBar.add(hlp);*/
 
         //y addToolBarButtonWithName("test");
 
@@ -345,6 +397,140 @@ public class MainFrame extends JFrame
 
     }
 
+    
+    public void helpInit()
+    {
+        GGCHelp.helpItem = new JMenuItem(m_ic.getMessage("HELP")+"...");
+        GGCHelp.helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
+//        	new ImageIcon(m_da.getImage("/icons/help.png", this)));
+        // add the helpItem to the menubar
+
+        
+        GGCHelp.mainHelpSetName = "../data/help/GGC.hs";
+        GGCHelp.mainHelpSetName = GGCHelp.mainHelpSetName.replace("/", File.separator);
+
+
+        //PISMain.mainHelpSetName = "/data/help/PIS.hs";
+        //PISMain.mainHelpSetName = "PIS.hs";
+
+        //System.out.println("main help set: " + PISMain.mainHelpSetName);
+        //System.out.println("separator: " + File.separator);
+
+        //mainHelpSetName.replace(
+
+
+        //System.out.println("Help init");
+
+        // try to find the helpset and create a HelpBroker object
+        if (GGCHelp.mainHelpBroker == null)
+        {
+
+            //System.out.println("Help init broker");
+
+            GGCHelp.mainHelpSet = null;
+
+            ClassLoader cl = MainFrame.class.getClassLoader();
+
+            //String help_url = "jar:file:pis_lang-0.1.jar!/help/PIS.hs";
+
+            String help_url = "jar:file:ggc_help-0.1.jar!/help/en/GGC.hs"; 
+        	//this.m_da.getHelpPathForLanguage();
+
+
+            try
+            {
+                URL hsURL = new URL(help_url);
+                    //HelpSet.findHelpSet(cl, PISMain.mainHelpSetName);
+
+                if (hsURL == null)
+                    System.out.println("HelpSet " + help_url /*PISMain.mainHelpSetName*/ + " not found.");
+                else
+                    GGCHelp.mainHelpSet = new HelpSet(null, hsURL);
+            }
+            catch (HelpSetException ee)
+            {
+                System.out.println("HelpSet " + GGCHelp.mainHelpSetName + " could not be opened.");
+                System.out.println(ee.getMessage());  
+                
+            }
+            catch (MalformedURLException ee)
+            {
+                System.out.println("Problem with HelpSet path: " + help_url + "\n" + ee);
+            }
+
+
+            //checkTest();
+
+
+
+
+            //System.out.println("Class: " + mainHelpSet.getKeyData(mainHelpSet.implRegistry, "helpBroker/class"));
+
+            //System.out.println("Setting DUMMY Help Broker");
+            //mainHelpSet.setKeyData(mainHelpSet.implRegistry, "helpBroker/class", "com.atech.graphics.help.DummyHelpBroker");
+
+            if (GGCHelp.mainHelpSet != null)
+            {
+                //System.out.println("Help: Main Help Set present, creating broker");
+        	GGCHelp.mainHelpBroker = GGCHelp.mainHelpSet.createHelpBroker();
+            }
+
+
+            //HelpSet hs = mainHelpBroker.getHelpSet();
+            //System.out.println("HelpSet: " + hs);
+
+            //javax.help.Map m = mainHelpSet.getLocalMap();
+            //System.out.println("Map: " + m);
+
+/*
+            for(int i=0; i<m.size(); i++)
+            {
+                System.out.println(m.get(
+            }
+*/
+            //helpBroker/class
+            // helpBroker/loader
+
+            //System.out.println(" " + HelpSet.helpBrokerClass);
+            //System.out.println(" " + HelpSet.helpBrokerLoader);
+
+            //System.out.println("Class: " + mainHelpSet.getKeyData(mainHelpSet.implRegistry, "helpBroker/class"));
+            //System.out.println("Class: " + mainHelpSet.getKeyData(mainHelpSet.implRegistry, "helpBroker/loader"));
+
+
+            //mainHelpBroker = new DummyHelpBroker();
+
+
+            //inHelpBroker = new DummyHelpBroker();
+            //mainHelpSet.helpBrokerClass = "com.atech.graphics.help.DummyHelpBroker.class";
+            //com.atech.graphics.help.DummyHelpBroker
+
+
+            if (GGCHelp.mainHelpBroker != null)
+            {
+                // CSH.DisplayHelpFromSource is a convenience class to display the helpset
+                m_help.csh = new CSH.DisplayHelpFromSource(GGCHelp.mainHelpBroker);
+
+                if (m_help.csh != null)
+                {
+                    // listen to ActionEvents from the helpItem
+                    m_help.helpItem.addActionListener(m_help.csh);
+                }
+
+            }
+
+
+            CSH.trackCSEvents();
+            //mainHelpBroker.
+
+        }
+
+
+    }
+    
+    
+    
+    
     public MainFrame getMyParent() 
     {
         return this;
@@ -427,8 +613,8 @@ public class MainFrame extends JFrame
     	this.menu_doctor.setEnabled(opened);
     	this.menu_printing.setEnabled(opened);
     	
-    	this.menu_meters.setEnabled(false);
-    	this.menu_pumps.setEnabled(false);
+    	this.menu_meters.setEnabled(true);
+    	this.menu_pumps.setEnabled(true);
     
     	this.actions.get("view_daily").setEnabled(opened);
     	this.actions.get("view_course").setEnabled(opened);
@@ -601,6 +787,10 @@ public class MainFrame extends JFrame
             {
                 new FrequencyGraphDialog(MainFrame.this); //.showMe();
             } 
+            else if (command.equals("hlp_help"))
+            {
+        	m_help.csh.actionPerformed(e);
+            }
             else if (command.equals("view_hba1c")) 
             {
                 new HbA1cDialog(MainFrame.this);
@@ -632,16 +822,7 @@ public class MainFrame extends JFrame
             else if (command.equals("food_nutrition_1")) 
             {
                 new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_USDA_NUTRITION);
-                //System.out.println("Command N/A: Food Nutrition");
             } 
-/*            else if (command.equals("food_nutrition_2")) 
-	    {
-
-	    }*/
-/*            else if (command.equals("food_meals")) 
-            {
-                System.out.println("Command N/A: Food Meals");
-            }  */
             else if (command.equals("report_pdf_simple")) 
             {
                 new PrintingDialog(MainFrame.this, 1);
@@ -653,13 +834,6 @@ public class MainFrame extends JFrame
 	    else if (command.equals("hlp_about"))
 	    {
 		new AboutGGCDialog(getMyParent());
-	    }
-	    else if ((command.equals("read_meter")) ||
-//                 (command.equals("food_nutrition_2")) || 
-                 (command.equals("tools_mlist")) ||
-                 (command.equals("tools_db_maint"))) 
-	    {
-		featureNotImplemented(command, "0.4");
 	    }
 	    else if (command.equals("doc_docs"))
 	    {
@@ -702,22 +876,53 @@ public class MainFrame extends JFrame
 		    
 		
 	    }
+     	    else if ((command.equals("read_meter")) ||
+//                   (command.equals("food_nutrition_2")) || 
+                     (command.equals("tools_mlist")) ||
+                     (command.equals("tools_db_maint")) || 
+                     (command.equals("meters_read")) ||
+        	     (command.equals("meters_list")) ||
+        	     (command.equals("meters_config")))
+            {
+        	featureNotImplemented(command, "0.4");
+            }
 	    else //if ((command.equals("report_pdf_extended")) ||
-                 //(command.equals("doc_docs")) ||
-                 //(command.equals("doc_appoint")) ||
-                 if ((command.equals("doc_stocks"))) //||
-//                 (command.equals("food_meals")))
+                if ((command.equals("doc_stocks")) ||
+                    (command.equals("file_login")) ||
+                    (command.equals("file_logout")))
 	    {
 		featureNotImplemented(command, "0.5");
 	    }
-	    else if (command.equals("test"))
+            else if ((command.equals("misc_synchronize")))
+            {
+        	featureNotImplemented(command, "0.6");
+            }
+            else if ((command.equals("pumps_read")) ||
+        	    (command.equals("pumps_list")) ||
+        	    (command.equals("pumps_config"))
+        	    )
+            {
+        	featureNotImplemented(command, "1.1");
+            }
+            else if (command.equals("test"))
 	    {
             //ggc.gui.ReadMeterDialog rm = new ggc.gui.ReadMeterDialog(MainFrame.this);
 	    }
-        else
-                System.out.println("Unknown Command: " + command);
-
-        }
+	    else if (command.equals("hlp_check_update"))
+	    {
+		System.out.println("Running Update manager");
+		
+		//UpdateSystem usys = new UpdateSystem();
+		UpdateConfiguration uconf = new UpdateConfiguration();
+		
+		/*UpdateDialog ud =*/ new UpdateDialog((JFrame)MainFrame.this, uconf);
+		
+		
+	    }
+            else
+                    System.out.println("Unknown Command: " + command);
+    
+            }
     }
 
 

@@ -114,9 +114,9 @@
         <property name="name" type="string" length="60" />
         <property name="name_i18n" type="string" length="60" />
         <property name="description" type="string" length="255" />
-        <property name="parts" type="text" />  <!--  1:x;2:y;1:z   -->
+        <property name="parts" type="text" />  <!--  1:x=1.0;2:y;1:z   -->
                                                                      <!--  type:id     type=[1=Nutrition USDBA, 2=Nutrition User ]; id = id in db -->
-        <property name="values" type="text" />  <!-- calories, joule, OH -->
+        <property name="nutritions" column="values" type="text" />
         <property name="extended" type="text" />
         <property name="comment" type="string" length="2000" />
     </class>

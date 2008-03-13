@@ -30,15 +30,23 @@
 
 package ggc.db.datalayer;
 
+import ggc.db.hibernate.DatabaseObjectHibernate;
+import ggc.db.hibernate.NutritionDefinitionH;
+import ggc.util.DataAccess;
+
+import com.atech.graphics.components.selector.ColumnSorter;
+import com.atech.graphics.components.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.NutritionDefinitionH;
 
-
-public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate
+public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface
 {
+
+    public I18nControlAbstract ic = null;
+
 
     public boolean debug = false;
 
@@ -50,6 +58,9 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.setName("");
 	this.setWeight_unit("");
 	this.setDecimal_places("");
+	
+	//ic = DataAccess
+	ic = DataAccess.getInstance().getI18nInstance();
     }
 
 
@@ -60,6 +71,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.setName(ch.getName());
 	this.setWeight_unit(ch.getWeight_unit());
 	this.setDecimal_places(ch.getDecimal_places());
+	ic = DataAccess.getInstance().getI18nInstance();
     }
 
 
@@ -243,6 +255,179 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return 0;
     }
 
+    
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#compareTo(java.lang.Object)
+     */
+    public int compareTo(Object o)
+    {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnCount()
+     */
+    public int getColumnCount()
+    {
+	return 3;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnName(int)
+     */
+    public String getColumnName(int num)
+    {
+	//this.getId();
+	/*this.getName();
+	this.getTag();
+	this.getWeight_unit(); */
+	switch(num)
+	{
+	    case 1:
+		return ic.getMessage("TAG");
+		
+	    case 2:
+		return ic.getMessage("WEIGHT_UNIT");
+
+	    default:
+	    case 0:
+		return ic.getMessage("NAME");
+		
+	}
+	
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnValue(int)
+     */
+    public String getColumnValue(int num)
+    {
+
+	//this.getId();
+	/*this.getName();
+	this.getTag();
+	this.getWeight_unit(); */
+	switch(num)
+	{
+	    case 1:
+		return this.getTag();
+		
+	    case 2:
+		return this.getWeight_unit();
+
+	    default:
+	    case 0:
+		return this.getName(); 
+		
+	}
+	
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnValueObject(int)
+     */
+    public Object getColumnValueObject(int num)
+    {
+	switch(num)
+	{
+	    case 1:
+		return this.getTag();
+		
+	    case 2:
+		return this.getWeight_unit();
+
+	    default:
+	    case 0:
+		return this.getName(); 
+		
+	}
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnWidth(int, int)
+     */
+    public int getColumnWidth(int num, int width)
+    {
+	switch(num)
+	{
+            case 1:
+                return(int)(width*20);
+            case 2:
+                return(int)(width*40);
+            default:
+                return(int)(width*40);
+		
+	}
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#getItemId()
+     */
+    public long getItemId()
+    {
+	return this.getId();
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#isFound(int, int, int)
+     */
+    public boolean isFound(int from, int till, int state)
+    {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#isFound(int)
+     */
+    public boolean isFound(int value)
+    {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#isFound(java.lang.String)
+     */
+    public boolean isFound(String text)
+    {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#setColumnSorter(com.atech.graphics.components.selector.ColumnSorter)
+     */
+    public void setColumnSorter(ColumnSorter cs)
+    {
+	// TODO Auto-generated method stub
+	
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectableInterface#setSearchContext()
+     */
+    public void setSearchContext()
+    {
+	// TODO Auto-generated method stub
+	
+    }
+    
+    
+    
+    
 }
 
 

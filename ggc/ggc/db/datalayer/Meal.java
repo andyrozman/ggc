@@ -53,10 +53,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate
     {
 	this.setId(0L);
 	this.setName("");
+	this.setName_i18n("");
 	this.setGroup_id(0);
 	this.setDescription("");
 	this.setParts("");
-	this.setValues("");
+	this.setNutritions("");
 	this.setExtended("");
 	this.setComment("");
 	
@@ -69,15 +70,16 @@ public class Meal extends MealH implements DatabaseObjectHibernate
     {
 	this.setId(ch.getId());
 	this.setName(ch.getName());
+	this.setName_i18n(ch.getName_i18n());
 	this.setGroup_id(ch.getGroup_id());
 	this.setDescription(ch.getDescription());
 	this.setParts(ch.getParts());
-	this.setValues(ch.getValues());
+	this.setNutritions(ch.getNutritions());
 	this.setExtended(ch.getExtended());
 	this.setComment(ch.getComment());
 
-	loadParts();
-	loadValues();
+	//loadParts();
+	//loadValues();
     }
 
 
@@ -132,10 +134,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate
 
 	ch.setId(this.getId());
 	ch.setName(this.getName());
+	ch.setName_i18n(this.getName_i18n());
 	ch.setGroup_id(this.getGroup_id());
 	ch.setDescription(this.getDescription());
 	ch.setParts(this.getParts());
-	ch.setValues(this.getValues());
+	ch.setNutritions(this.getNutritions());
 	ch.setExtended(this.getExtended());
 	ch.setComment(this.getComment());
 
@@ -164,10 +167,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate
 
 	ch.setId(this.getId());
 	ch.setName(this.getName());
+	ch.setName_i18n(this.getName_i18n());
 	ch.setGroup_id(this.getGroup_id());
 	ch.setDescription(this.getDescription());
 	ch.setParts(this.getParts());
-	ch.setValues(this.getValues());
+	ch.setNutritions(this.getNutritions());
 	ch.setExtended(this.getExtended());
 	ch.setComment(this.getComment());
 
@@ -235,10 +239,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate
 
 	this.setId(ch.getId());
 	this.setName(ch.getName());
+	this.setName_i18n(ch.getName_i18n());
 	this.setGroup_id(ch.getGroup_id());
 	this.setDescription(ch.getDescription());
 	this.setParts(ch.getParts());
-	this.setValues(ch.getValues());
+	this.setNutritions(ch.getNutritions());
 	this.setExtended(ch.getExtended());
 	this.setComment(ch.getComment());
 
@@ -254,7 +259,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate
      */
     public String getObjectName()
     {
-        return "Meal Food Description";
+        return "Meal";
     }
 
 

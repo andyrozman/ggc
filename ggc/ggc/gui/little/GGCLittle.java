@@ -71,7 +71,9 @@ public class GGCLittle extends JFrame implements WindowListener
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccess m_da = null;
     public static SkinLookAndFeel s_skinlf;
+    private static final String skinLFdir = "../data/skinlf_themes/";
 
+    
     // GUI
     public MainLittlePanel informationPanel = null;
     public StatusBarL statusPanel;
@@ -86,28 +88,47 @@ public class GGCLittle extends JFrame implements WindowListener
      */
     static
     {
-        GGCLittle.setLookAndFeel("blueMetalthemepack.zip");  // Win (not so bad) ???
+        GGCLittle.setLookAndFeel();  // Win (not so bad) ???
     }
 
 
-
-    public static void setLookAndFeel(String name)
+    public static void setLookAndFeel()
     {
-    	try
-    	{
-    	    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("../lib/skinLFThemes/"+name));      
-        
-    	    s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
-    	    UIManager.setLookAndFeel(s_skinlf);
-    
-            JFrame.setDefaultLookAndFeelDecorated(true);
-            JDialog.setDefaultLookAndFeelDecorated(true);
-    	}
-    	catch(Exception ex)
-    	{
+
+        try
+        {
+
+            String data[] = DataAccess.getLFData();
+
+            if (data==null)
+                return;
+            else
+            {
+                if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
+                {
+                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));      
+
+                    s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
+                    UIManager.setLookAndFeel(s_skinlf);
+                }
+                else
+                {
+                    UIManager.setLookAndFeel(data[0]);
+                }
+
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                JDialog.setDefaultLookAndFeelDecorated(true);
+            }
+        }
+        catch (Exception ex)
+        {
             System.err.println("Error loading L&F: " + ex);
-    	}
+        }
+
+
     }
+    
+    
 
 
 

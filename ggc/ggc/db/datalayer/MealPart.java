@@ -29,22 +29,49 @@
 
 package ggc.db.datalayer;
 
+import ggc.gui.nutrition.GGCTreeRoot;
+import ggc.util.DataAccess;
+
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 
 
 public class MealPart 
 {
 
+    DataAccess m_da = DataAccess.getInstance();
     public boolean debug = false;
     private int meal_type = 0;
-    private long meal_type_id = 0L;
+    //private long meal_type_id = 0L;
 
     private Meal meal_obj_meal = null;
     private FoodDescription meal_obj_food = null;
+    private float amount = 0.0f;
     
+    private ArrayList<MealNutrition> nutritions = null; 
     
 
-    public MealPart(String id)
+    public MealPart(String meal_str)
     {
+	// 1:122=1.0
+	
+	StringTokenizer strtok = new StringTokenizer(meal_str, "=");
+	
+	String meal_id_in = strtok.nextToken();
+	String amount_in = strtok.nextToken();
+	
+	StringTokenizer strtok2 = new StringTokenizer(meal_id_in, ":");
+	
+	String type_in = strtok2.nextToken();
+	String type_id_in = strtok2.nextToken();
+	
+	this.meal_type = Integer.parseInt(type_in);
+	
+	loadMealPart(this.meal_type, type_id_in);
+	
+	this.amount = Float.parseFloat(amount_in);
+	
     }
 
 
@@ -52,14 +79,142 @@ public class MealPart
     {
     }
 
-
-    public void loadMealPart()
+    
+    public MealPart(int type, Object obj, float amount)
     {
-	//DataAccess.getInstance().getDb().getMeals();
+	this.meal_type = type;
+	
+	if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+	    (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
+	{
+	    this.meal_obj_food = (FoodDescription)obj;
+//	    this.meal_type_id = this.meal_obj_food.getId();
+	    this.amount = amount;
+	}
+	else
+	{
+	    this.meal_obj_meal = (Meal)obj;
+//	    this.meal_type_id = this.meal_obj_meal.getId();
+	    this.amount = amount;
+	}
 	
     }
 
+    
+    public void loadMealPart(int type, String id)
+    {
+	if ((type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+	    (type == GGCTreeRoot.TREE_USER_NUTRITION))
+	{
+	    this.meal_obj_food = m_da.tree_roots.get("" + type).m_foods_ht.get(id);
+	}
+	else
+	{
+	    this.meal_obj_meal = m_da.tree_roots.get("3").m_meals_ht.get(id);
+	}
+	
+    }
+    
+    
+    public long getId()
+    {
+	if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+	    (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
+	{
+	    return this.meal_obj_food.getId();
+	}
+	else
+	{
+	    return this.meal_obj_meal.getId();
+	}
+    }
 
+    
+    public String getName()
+    {
+	if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+	    (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
+	{
+	    return this.meal_obj_food.getName();
+	}
+	else
+	{
+	    return this.meal_obj_meal.getName();
+	}
+    }
+    
+    public int getType()
+    {
+	return this.meal_type;
+    }
+    
+    
+    
+    
+    public float getAmount()
+    {
+	return this.amount;
+    }
+    
+    
+    public void setAmount(float amount)
+    {
+	this.amount = amount;
+    }
+    
+
+    public FoodDescription getFoodObject()
+    {
+	return this.meal_obj_food;
+    }
+    
+    
+    public Meal getMealObject()
+    {
+	return this.meal_obj_meal;
+    }
+    
+    
+    
+
+
+    private void loadNutritions()
+    {
+	String nutr;
+	
+	if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+            (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
+	{
+	    nutr = this.meal_obj_food.getNutritions();
+	}
+	else
+	{
+	    nutr = this.meal_obj_meal.getNutritions();
+	}
+	
+	this.nutritions = new ArrayList<MealNutrition>();
+	
+	StringTokenizer strtok = new StringTokenizer(nutr, ";");
+	
+	while(strtok.hasMoreTokens())
+	{
+	    MealNutrition mn = new MealNutrition(strtok.nextToken(), true);
+	    this.nutritions.add(mn);
+	}
+	
+    }
+    
+    
+    public ArrayList<MealNutrition> getNutritions()
+    {
+	if (this.nutritions == null)
+	    loadNutritions();
+	
+	return this.nutritions;
+    }
+    
+    
+    
     @Override
     public String toString()
     {

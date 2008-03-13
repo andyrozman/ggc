@@ -27,6 +27,7 @@
 
 package ggc.gui.nutrition.dialogs;
  
+import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.gui.nutrition.data.NutritionGroupModel;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
@@ -50,7 +51,7 @@ import javax.swing.tree.TreeSelectionModel;
 public class NutritionGroupDialog extends JDialog implements TreeSelectionListener, ActionListener
 {
 
-    private JPanel mainPane;
+    //private JPanel mainPane;
     private JTree tree;
     
     JTextField tf_selected;
@@ -119,23 +120,24 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         panel.setBounds(0, 0, 300, 150);
         
         JLabel label = new JLabel(ic.getMessage("SELECTED_GROUP"));
-        label.setBounds(30, 30, 120, 25);
+        label.setBounds(30, 70, 120, 25);
         panel.add(label, null);
         
         
         tf_selected = new JTextField();
-        tf_selected.setBounds(30, 60, 200, 25);
+        tf_selected.setBounds(30, 100, 230, 25);
+        tf_selected.setEditable(false);
         panel.add(tf_selected);
         
-        JButton button = new JButton(ic.getMessage("SELECT"));
+        JButton button = new JButton(ic.getMessage("OK"));
         button.setActionCommand("select");
-        button.setBounds(230, 30, 70, 25);
+        button.setBounds(180, 30, 80, 25);
         button.addActionListener(this);
         panel.add(button);
         
-        button = new JButton(ic.getMessage("CLOSE"));
+        button = new JButton(ic.getMessage("CANCEL"));
         button.setActionCommand("close");
-        button.setBounds(230, 60, 70, 25);
+        button.setBounds(180, 60, 80, 25);
         button.addActionListener(this);
         panel.add(button);
         		
@@ -153,7 +155,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
 
 
         JScrollPane treeView = new JScrollPane(tree);
-        treeView.setBounds(30, 150, 200, 100);
+        treeView.setBounds(30, 150, 230, 140);
 
         /*
         mainPane = new JPanel();
@@ -199,6 +201,8 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
     {
 
 	this.selected_last_path = tree.getLastSelectedPathComponent();
+	
+	this.tf_selected.setText(this.selected_last_path.toString());
 
 	//this.displayPanel(NutritionTreeDialog.PANEL_VIEW);
 	
@@ -271,6 +275,11 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
 	return (this.action_object!=null);
     }
     
+    public Object getSelectedObject()
+    {
+	return this.action_object;
+    }
+    
 
     public void actionPerformed(ActionEvent e)
     {
@@ -278,7 +287,11 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
 	
 	if (cmd.equals("select"))
 	{
-	    this.action_object = this.selected_last_path;
+	    if ((this.selected_last_path == null) || (this.selected_last_path instanceof GGCTreeRoot))
+		this.action_object = null;
+	    else
+		this.action_object = this.selected_last_path;
+	    
 	    this.dispose();
 	}
 	else if (cmd.equals("close"))

@@ -27,13 +27,22 @@
 
 package ggc.gui.nutrition.panels;
 
-import javax.swing.JPanel;
+import com.atech.graphics.components.EditableAbstractPanel;
+import com.atech.i18n.I18nControlAbstract;
 
 
-public abstract class GGCTreePanel extends JPanel
+public abstract class GGCTreePanel extends EditableAbstractPanel //JPanel implements EditablePanel
 {
-    public abstract void setParent(Object obj);
-    
-    public abstract void setData(Object obj);
 
+
+    public GGCTreePanel(boolean is_editable, I18nControlAbstract ic)
+    {
+	super(is_editable, ic);
+    }
+    
+    public void setParentRoot(Object obj)
+    {
+	
+    }
+    
 }

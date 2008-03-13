@@ -1104,6 +1104,25 @@ public class GGCDb
             nut_defs.put("" + fnd.getId(), fnd);
         }
 
+        
+        // static nutrition - not in database yet
+        
+	// GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, 
+        // GL_MIN = 4004, GL_MAX = 4005
+        
+        int[] ids = { 4000, 4001, 4002, 4003, 4004, 4005 };
+        String[] tags = { "GI", "GL", "GI_MIN", "GI_MAX", "GL_MIN", "GL_MAX" };
+        String[] units = { "gi", "gl", "gi", "gi", "gl", "gl" };
+        String[] name = { "Glycemic Index", "Glycemic Load", "Glycemic Index (Min)", "Glycemic Index (Max)", "Glycemic Load (Min)", "Glycemic Load (Max)" }; 
+
+        for(int i=0; i<ids.length; i++)
+        {
+            NutritionDefinitionH eh = new NutritionDefinitionH(units[i], tags[i], name[i], "0");
+            eh.setId(ids[i]);
+            
+            nut_defs.put("" + eh.getId(), new NutritionDefinition(eh));
+        }
+        
         this.nutrition_defs = nut_defs;
 
     }
