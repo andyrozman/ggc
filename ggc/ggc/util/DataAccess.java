@@ -44,6 +44,7 @@ import ggc.gui.nutrition.GGCTreeRoot;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
@@ -55,6 +56,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -63,8 +65,10 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 
+import com.atech.utils.ATDataAccessAbstract;
 
-public class DataAccess 
+
+public class DataAccess extends ATDataAccessAbstract
 {
 
     // LF
@@ -143,6 +147,8 @@ public class DataAccess
 
     public Hashtable<String,String> timeZones;
 
+    
+    public ArrayList<Container> parents_list;
 
     public ImageIcon config_icons[] = null;
 /*
@@ -195,6 +201,7 @@ public class DataAccess
      */
     private DataAccess()
     {
+	super();
         this.loadFonts();
 
         //m_i18n.createInstance(this);
@@ -218,7 +225,7 @@ public class DataAccess
         //this.verifyComConfig();
         this.loadTimeZones();
 
-        checkPrerequisites();
+        //checkPrerequisites();
 
     } 
 
@@ -246,6 +253,7 @@ public class DataAccess
             //GGCDb db = new GGCDb();
             s_da = new DataAccess();
             s_da.setParent(main);
+            s_da.setMainParent(main);
         }
 
         return s_da;
@@ -258,11 +266,20 @@ public class DataAccess
             //GGCDb db = new GGCDb();
             s_da = new DataAccess();
             s_da.setParent(main);
+            s_da.setMainParent(main);
         }
 
         return s_da;
     }
 
+    
+    public String getApplicationName()
+    {
+	return "GGC";
+    }
+    
+    
+    
     public void checkPrerequisites()
     {
 	// check that ../data/temp exists (needed for printing)
@@ -747,6 +764,11 @@ public class DataAccess
 	
 	return process;
     }
+    
+
+    
+    
+    
     
     
 

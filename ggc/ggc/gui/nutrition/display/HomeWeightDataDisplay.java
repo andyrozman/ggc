@@ -88,5 +88,13 @@ public class HomeWeightDataDisplay extends ATTableData
 	{
 	    this.weight_type = ic.getMessage(name);
 	}
+	
+	
+	public String getSaveData()
+	{
+	    return this.id + "=" + this.amount;
+	}
+	
+	
 
     }

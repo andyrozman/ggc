@@ -30,7 +30,6 @@ package ggc.gui.nutrition.dialogs;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealPart;
-import ggc.gui.nutrition.NutritionTreeDialog;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
@@ -44,12 +43,13 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
+
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 
 
@@ -69,7 +69,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     private DataAccess m_da = null;
     private I18nControl ic = null;
     
-    Object action_object;
+    SelectableInterface action_object;
     int action_object_type = 0;
     long input_id = 0L;
     
@@ -88,18 +88,25 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     private int selector_type = 0;
     
     
-    public FoodPartMainSelectorDialog(DataAccess da, int type) 
+    private SelectableInterface selected_object = null;
+    
+    
+    public FoodPartMainSelectorDialog(DataAccess da, int type, String except) 
     {
         super(da.getParent(), "", true);
 
         m_da = da;
         ic = m_da.m_i18n;
 
-	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
+        if (type == FoodPartMainSelectorDialog.SELECTOR_NUTRITION)
+            this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
+        else
+            this.setTitle(ic.getMessage("HOME_WEIGHT_SELECTOR"));
+            
 //	this.input_id = meal_id;
 	this.selector_type = type;
         
-        this.setBounds(160, 100, 300, 460);
+        this.setBounds(160, 100, 300, 300);
         init();
         
  
@@ -116,7 +123,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
 	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
         
-        this.setBounds(160, 100, 300, 460);
+        this.setBounds(160, 100, 300, 300);
         this.meal_part = part;
         init();
         
@@ -139,14 +146,14 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 	    FoodDescription fd = this.meal_part.getFoodObject();
 	    this.label_item.setText(fd.getName());
 	    
-	    this.action_object = fd;
+	    //this.action_object = fd;
 	}
 	else
 	{
 	    Meal m = this.meal_part.getMealObject();
 	    this.label_item.setText(m.getName());
 
-	    this.action_object = m;
+	    //this.action_object = m;
 	}
 	
 	this.label_item_type.setText("" + this.cb_type.getSelectedItem());
@@ -162,12 +169,12 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     {
 	
 	this.setLayout(null);
-
+/*
 	type = new String[3];
 	type[0] = ic.getMessage("USDA_NUTRITION");
 	type[1] = ic.getMessage("USER_NUTRITION");
 	type[2] = ic.getMessage("MEAL");
-	
+*/	
 	
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
         font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
@@ -299,13 +306,13 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         
         JButton button = new JButton(ic.getMessage("OK"));
         button.setActionCommand("ok");
-        button.setBounds(65, 387, 80, 25);
+        button.setBounds(65, 230, 80, 25);
         button.addActionListener(this);
         panel.add(button, null);
         
         button = new JButton(ic.getMessage("CANCEL"));
         button.setActionCommand("cancel");
-        button.setBounds(160, 387, 80, 25);
+        button.setBounds(160, 230, 80, 25);
         button.addActionListener(this);
         panel.add(button);
         		
@@ -355,15 +362,13 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 	
 	if (o instanceof Long)
 	{
-	    System.out.println("Amount(long): " + this.amountField.getValue());
+	    //System.out.println("Amount(long): " + this.amountField.getValue());
 	    Long l = (Long)o;
 	    return l.floatValue();
 	}
 	else
 	{
-	
-	    System.out.println("Amount(double): " + this.amountField.getValue());
-	
+	    //System.out.println("Amount(double): " + this.amountField.getValue());
 	    Double d = (Double)this.amountField.getValue();
 	    return d.floatValue();
 	}
@@ -384,12 +389,18 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 	}
 	else if (cmd.equals("select_item"))
 	{
+	    //System.out.println("select_item: m_da: " + m_da);
 	    FoodPartSelectorDialog fpsd = new FoodPartSelectorDialog(m_da, this.selector_type, null);
 
 	    if (fpsd.wasAction())
 	    {
-		
+		//System.out.println("was Action");
+		this.action_object = fpsd.getSelectedObject();
+		//System.out.println("actionObject in main: " + this.action_object);
+		this.label_item.setText(this.action_object.getShortDescription());
 	    }
+	    //else
+	    //	System.out.println("was not Action");
 	    
 	    
 	    

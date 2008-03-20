@@ -27,30 +27,13 @@
 
 package ggc.gui.nutrition.dialogs;
  
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.MealPart;
-import ggc.gui.nutrition.NutritionTreeDialog;
+import ggc.db.datalayer.NutritionDefinition;
+import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
-import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.text.NumberFormat;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
-
-import com.atech.graphics.components.selector.SelectorAbstractDialog;
+import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 
 
 
@@ -61,333 +44,95 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     //private JTree tree;
     
 
-
+/*
     JTextField tf_selected;
     JComboBox cb_type;
     JLabel label_item, label_item_type;
     Font font_normal, font_normal_b;
     JButton button_select;
-
+*/
     private DataAccess m_da = null;
-    private I18nControl ic = null;
     
-    Object action_object;
-    int action_object_type = 0;
-    long input_id = 0L;
+    //Object action_object;
+    //int action_object_type = 0;
+    //long input_id = 0L;
     
-    String[] type;  
+    //String[] type;  
 
-    private NumberFormat amountDisplayFormat;
-    private NumberFormat amountEditFormat;    
-    JFormattedTextField amountField;
     
-    MealPart meal_part;
     
     public static final int SELECTOR_NUTRITION = 1;
     public static final int SELECTOR_HOME_WEIGHT = 2;
     
     
-    
-    
     public FoodPartSelectorDialog(DataAccess da, int type, String except) 
     {
-	//super()
         super(da.getParent(), da.getI18nInstance(), type, except, true);
-
-        m_da = da;
-        ic = m_da.m_i18n;
-/*
-	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
-	//this.input_id = meal_id;
-        
-        this.setBounds(160, 100, 300, 460);
-        init();
- 
-        this.setVisible(true); */
     }
 
-    /*
-    public FoodPartSelectorDialog(DataAccess da, MealPart part) 
-    {
-        super(da.getParent(), "", true);
-
-        m_da = da;
-        ic = m_da.m_i18n;
-
-	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
-        
-        this.setBounds(160, 100, 300, 460);
-        this.meal_part = part;
-        init();
-        
-        loadMeal();
- 
-        this.setVisible(true);
-    }
-    */
-    
-    private void loadMeal()
-    {
-	this.cb_type.setSelectedIndex(this.meal_part.getType()-1);
-	this.cb_type.setEnabled(false);
-	this.button_select.setEnabled(false);
-
-	this.action_object_type = (this.meal_part.getType()-1);
-	
-	if (this.cb_type.getSelectedIndex() < 2)
-	{
-	    FoodDescription fd = this.meal_part.getFoodObject();
-	    this.label_item.setText(fd.getName());
-	    
-	    this.action_object = fd;
-	}
-	else
-	{
-	    Meal m = this.meal_part.getMealObject();
-	    this.label_item.setText(m.getName());
-
-	    this.action_object = m;
-	}
-	
-	this.label_item_type.setText("" + this.cb_type.getSelectedItem());
-	
-        this.amountField.setValue(new Double(this.meal_part.getAmount()));
-	
-    }
-    
   
-    /*
-    public void init()
-    {
-	
-	this.setLayout(null);
 
-	type = new String[3];
-	type[0] = ic.getMessage("USDA_NUTRITION");
-	type[1] = ic.getMessage("USER_NUTRITION");
-	type[2] = ic.getMessage("MEAL");
-	
-	
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-	
-	
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBounds(0, 0, 300, 440);
-
-        
-        // sub panel - selector
-        
-        JPanel panel1 = new JPanel();
-        panel1.setBorder(new TitledBorder(ic.getMessage("SELECTOR")));
-        panel1.setLayout(null);
-        panel1.setBounds(10, 10, 270, 140);
-        panel.add(panel1, null);
-        
-        //new javax.swing.border.TitledBorder("Some");
-        
-        //javax.swing.border.
-        
-        JLabel label = new JLabel(ic.getMessage("NUTRITION_TYPE_FOR_SELECTOR"));
-        label.setBounds(30, 20, 220, 25);
-        label.setFont(font_normal_b);
-        panel1.add(label, null);
-        
-        cb_type = new JComboBox(type);
-        cb_type.setBounds(30, 50, 210, 25);
-        panel1.add(cb_type);
-
-        
-        button_select = new JButton(ic.getMessage("SELECT_ITEM"));
-        button_select.setActionCommand("select_item");
-        button_select.setBounds(30, 95, 210, 25);
-        button_select.addActionListener(this);
-        panel1.add(button_select, null);
-        
-        //if (meal_part!=null)
-        //    button.setEnabled(false);
-
-        // sub panel - selected item
-        
-        JPanel panel2 = new JPanel();
-        panel2.setBorder(new TitledBorder(ic.getMessage("SELECTED_ITEM")));
-        panel2.setLayout(null);
-        panel2.setBounds(10, 160, 270, 135);
-        panel.add(panel2, null);
-        
-        
-        label = new JLabel(ic.getMessage("NUTRITION_TYPE")+ ":");
-        label.setBounds(20, 25, 220, 25);
-        label.setFont(font_normal_b);
-        panel2.add(label, null);
-        
-        label_item_type = new JLabel(ic.getMessage("NONE"));
-        label_item_type.setBounds(20, 45, 220, 25);
-        label_item_type.setFont(font_normal);
-        panel2.add(label_item_type, null);
-        
-        label = new JLabel(ic.getMessage("SELECTED_ITEM") + ":");
-        label.setBounds(20, 75, 220, 25);
-        label.setFont(font_normal_b);
-        panel2.add(label, null);
-        
-        label_item = new JLabel(ic.getMessage(ic.getMessage("NONE")) );
-        label_item.setBounds(20, 95, 220, 25);
-        label_item.setFont(font_normal);
-        panel2.add(label_item, null);
-
-        
-        
-
-        JPanel panel3 = new JPanel();
-        panel3.setBorder(new TitledBorder(ic.getMessage("AMOUNT")));
-        panel3.setLayout(null);
-        panel3.setBounds(10, 310, 270, 65);
-        panel.add(panel3, null);
-        
-
-        label = new JLabel(ic.getMessage("AMOUNT") + ":");
-        label.setBounds(20, 25, 100, 25);
-        panel3.add(label, null);
-        
-        
-        //JFormattedTextField jftf = JFormattedTextField(percentFormat);
-
-        amountDisplayFormat = NumberFormat.getNumberInstance();
-        amountDisplayFormat.setMinimumFractionDigits(1);
-        amountEditFormat = NumberFormat.getNumberInstance();        
-        amountEditFormat.setMinimumFractionDigits(1);
-        
-        
-        amountField = new JFormattedTextField(
-                new DefaultFormatterFactory(
-                    new NumberFormatter(amountDisplayFormat),
-                    new NumberFormatter(amountDisplayFormat),
-                    new NumberFormatter(amountEditFormat)));
-        amountField.setValue(new Double(1.0d));
-        amountField.setColumns(4);
-        amountField.setBounds(140, 25, 100, 25);
-        amountField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
-        panel3.add(amountField);
-        
-      /*
-        percentDisplayFormat = NumberFormat.getPercentInstance();
-        percentDisplayFormat.setMinimumFractionDigits(2);
-        percentEditFormat = NumberFormat.getNumberInstance();
-        percentEditFormat.setMinimumFractionDigits(2);
-        */        
-        
-        //amountField.addPropertyChangeListener("value", this);        
-/*        
-        JButton button = new JButton(ic.getMessage("OK"));
-        button.setActionCommand("ok");
-        button.setBounds(65, 387, 80, 25);
-        button.addActionListener(this);
-        panel.add(button, null);
-        
-        button = new JButton(ic.getMessage("CANCEL"));
-        button.setActionCommand("cancel");
-        button.setBounds(160, 387, 80, 25);
-        button.addActionListener(this);
-        panel.add(button);
-        		
-        this.add(panel, null);
-    }
-  */  
 
     
-    public boolean wasAction()
-    {
-	return (this.action_object!=null);
-    }
 
-    public int getSelectedObjectType()
-    {
-	return this.action_object_type;
-    }
-    /*
-    public Object getSelectedObject()
-    {
-	return this.action_object;
-    }*/
     
-    public float getAmountValue()
+    public void initSelectorValuesForType()
     {
-	Object o = this.amountField.getValue();
-	
-	if (o instanceof Long)
+	if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_NUTRITION)
 	{
-	    System.out.println("Amount(long): " + this.amountField.getValue());
-	    Long l = (Long)o;
-	    return l.floatValue();
+            setSelectorObject(new NutritionDefinition());
+            setSelectorName(ic.getMessage("SELECTOR_NUTRITION_DEFINITION"));
+            setHelpStringId("ggc.food.user.select.nutrition");
+            setNewItemString(ic.getMessage("NEW_NUTR_DEF"));
+    	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
+    	    this.getDescriptions().put("DESC_1", ic.getMessage("NUTRITION_NAME"));
+    	    setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
+	}
+	else if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_HOME_WEIGHT)
+	{
+            setSelectorObject(new NutritionHomeWeightType());
+            setSelectorName(ic.getMessage("SELECTOR_HOME_WEIGHT"));
+            setHelpStringId("ggc.food.user.select.home_weight");
+            setNewItemString(ic.getMessage("NEW_HOME_WEIGHT"));
+    	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
+    	    this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));
+    	    setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
+	}
+	
+    }
+
+     
+    
+
+
+    /* (non-Javadoc)
+     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#getFullData()
+     */
+    public void getFullData()
+    {
+	this.m_da = DataAccess.getInstance();
+	
+	if (this.getSelectorType()==FoodPartSelectorDialog.SELECTOR_NUTRITION)
+	{
+	    this.full = this.m_da.getDb().getNutritionDefinitions();
+	}
+	else if (this.getSelectorType()==FoodPartSelectorDialog.SELECTOR_HOME_WEIGHT)
+	{
+	    this.full = this.m_da.getDb().getNutritionHomeWeights();
 	}
 	else
-	{
-	
-	    System.out.println("Amount(double): " + this.amountField.getValue());
-	
-	    Double d = (Double)this.amountField.getValue();
-	    return d.floatValue();
-	}
+	    System.out.println("getFullData(): type not handled (" + this.getSelectorType() + ")");
     }
     
-
-/*
-    public void actionPerformed(ActionEvent e)
+    
+    public void setHelpContext()
     {
-	String cmd = e.getActionCommand();
-	
-	if (cmd.equals("ok"))
-	{
-	    this.dispose();
-	}
-	else if (cmd.equals("cancel"))
-	{
-	    this.dispose();
-	}
-	else if (cmd.equals("select_item"))
-	{
-	    //System.out.println("Select item");
-	    
-	    NutritionTreeDialog ntd = new NutritionTreeDialog(m_da, this.cb_type.getSelectedIndex()+1, true);
-	    
-	    if (ntd.wasAction())
-	    {
-		
-		if (this.cb_type.getSelectedIndex()==2)
-		{
-		    Meal m = (Meal)ntd.getSelectedObject();
-
-		    if (m.getId() == this.input_id)
-		    {
-			JOptionPane.showMessageDialog(this, ic.getMessage("CANT_SELECT_CIRCULAR_MEAL"), ic.getMessage("WARNING"),JOptionPane.WARNING_MESSAGE);
-			return;
-		    }
-		}
-		
-		
-		this.label_item_type.setText("" + this.cb_type.getSelectedItem());
-		
-		this.action_object_type = (this.cb_type.getSelectedIndex() + 1);
-		this.action_object = (ntd.getSelectedObject());
-		
-		if (this.cb_type.getSelectedIndex() < 2)
-		{
-		    FoodDescription fd = (FoodDescription)this.action_object;
-		    this.label_item.setText(fd.getName());
-		}
-		else
-		{
-		    Meal m = (Meal)this.action_object;
-		    this.label_item.setText(m.getName());
-		}
-	    }
-	}
-	    
+	m_da.getHelpContext().getMainHelpBroker().enableHelpOnButton(this.getHelpButton(), this.getHelpId(), null);
+	m_da.getHelpContext().getMainHelpBroker().enableHelpKey(this.getRootPane(), this.getHelpId(), null);
     }
-*/
     
+
+
     /* (non-Javadoc)
      * @see com.atech.graphics.components.selector.SelectorAbstractDialog#checkAndExecuteActionEdit()
      */
@@ -418,85 +163,20 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     @Override
     public void checkAndExecuteActionSelect()
     {
-	// TODO Auto-generated method stub
-	System.out.println("checkAndExecuteActionSelect()");
+        if (table!=null)
+        {
+//            System.out.println("in select action");
+            if (table.getSelectedRow()==-1)
+                return;
+
+            this.selected_object = list.get(table.getSelectedRow());
+//            System.out.println("in select action: selected:" + this.selected_object);
+            
+            this.dispose();
+        }
 	
     }
 
-    
-    public void initSelectorValuesForType(int type)
-    {
-        //select_typeObj = new Profession();
-        setSelectorObject(null);
-        setSelectorName(ic.getMessage("SELECTOR_OCCUPATION"));
-//        CSH.setHelpIDString(this, "selector.occupation");
-
-	setNewItemString(ic.getMessage("NEW_M"));
-	
-    }
-
-    
-    
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#filterEntries()
-     */
-    @Override
-    public void filterEntries()
-    {
-	// TODO Auto-generated method stub
-	System.out.println("filterEntries()");
-
-	
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#getFullData()
-     */
-    @Override
-    public void getFullData()
-    {
-	// TODO Auto-generated method stub
-	System.out.println("getFullData()");
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#getInitialValues()
-     */
-    @Override
-    public void getInitialValues()
-    {
-	// TODO Auto-generated method stub
-	System.out.println("getInitialValues()");
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#initFilterType_ComboBox()
-     */
-    @Override
-    public void initFilterType_ComboBox()
-    {
-	// TODO Auto-generated method stub
-	System.out.println("initFilterType_ComboBox()");
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#initFilterType_SingleText()
-     */
-    @Override
-    public void initFilterType_SingleText()
-    {
-	// TODO Auto-generated method stub
-	System.out.println("initFilterType_SingleText()");
-	
-    }
 
 
     /* (non-Javadoc)

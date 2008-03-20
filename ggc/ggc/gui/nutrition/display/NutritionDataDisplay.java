@@ -2,6 +2,7 @@
 package ggc.gui.nutrition.display;
 
 import ggc.db.datalayer.NutritionDefinition;
+import ggc.util.DataAccess;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
@@ -31,6 +32,16 @@ public class NutritionDataDisplay extends ATTableData
 	}
 
 
+	public NutritionDataDisplay(I18nControlAbstract ic, NutritionDefinition def, float value)
+	{
+	    super(ic);
+	    setNutritionDefinition(def);
+	    this.value = DataAccess.getFloatAsString(value, def.getDecimal_places());
+	}
+	
+	
+	
+	
 	public void setNutritionDefinition(NutritionDefinition def)
 	{
 	    this.id = "" + def.getId();
@@ -71,4 +82,12 @@ public class NutritionDataDisplay extends ATTableData
 
 	    }
 	}
+	
+	
+	public String getSaveData()
+	{
+	    return this.id + "=" + this.value;
+	}
+	
+	
     }

@@ -36,7 +36,9 @@ import ggc.db.hibernate.FoodUserDescriptionH;
 import ggc.db.hibernate.FoodUserGroupH;
 import ggc.db.hibernate.MealGroupH;
 import ggc.db.hibernate.MealH;
+import ggc.gui.nutrition.dialogs.FoodPartMainSelectorDialog;
 import ggc.util.DataAccess;
+import ggc.util.I18nControl;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,10 @@ public class TestNutritionData
 	
 	m_da.setDb(db);
 	
+	m_da.m_i18n = I18nControl.getInstance();
+	
+	
+	db.loadNutritionDbBase();
 	
 	if (type==1)
 	{
@@ -87,17 +93,17 @@ public class TestNutritionData
 
 	
 	// I don't know load
-	db.loadNutritionDefinitions();
+	//db.loadNutritionDefinitions();
 
 	//createFakeData_Meals();
 	//createFakeData_User();
 	
 	
+	System.out.println("m_da: " + m_da);
 	
+//	new FoodPartMainSelectorDialog(m_da, FoodPartMainSelectorDialog.SELECTOR_NUTRITION, null);
 	
-	
-	
-	
+	new NutritionTreeDialog(m_da, type);
 	
 	/*JFrame fr = new JFrame();
 	//fr.setBounds(0,0,640,480);
@@ -105,7 +111,8 @@ public class TestNutritionData
 	//da.setParent(fr); */
 	//da.m_nutrition_treeroot = new GGCTreeRoot(1);
 
-	/*NutritionTreeDialog ntd =*/ new NutritionTreeDialog(m_da, type); 
+	/*NutritionTreeDialog ntd =*/ 
+	// XX new NutritionTreeDialog(m_da, type); 
 	//new NutritionGroupDialog(m_da, type);
 	
 	

@@ -35,10 +35,6 @@ import ggc.db.datalayer.NutritionDefinition;
 import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.DoctorTypeH;
-import ggc.db.hibernate.MeterCompanyH;
-import ggc.db.hibernate.MeterH;
-import ggc.db.hibernate.MeterImplementationH;
-import ggc.db.hibernate.MeterInterfaceH;
 import ggc.util.DataAccess;
 
 import java.io.BufferedReader;
@@ -79,7 +75,7 @@ public class InitDb
     	if (load_nutrition)
     	    loadNutritionDatabase();
     
-    	loadMeters();
+//    	loadMeters();
     	System.out.println();
     }
 
@@ -119,7 +115,7 @@ public class InitDb
 	System.out.println();
     }
 
-
+/*
     public void loadMeters()
     {
 	System.out.println("\n --- Loading Meter Data --- ");
@@ -131,7 +127,7 @@ public class InitDb
 
 	System.out.println();
     }
-    
+  */  
 
 
 
@@ -596,7 +592,7 @@ public class InitDb
     }
 
 
-
+/*
     public void insertMeterCompanies()
     {
 
@@ -626,7 +622,7 @@ public class InitDb
 	}
 
     }
-
+*/
 
     public void insertDoctorTypes()
     {
@@ -734,7 +730,7 @@ public class InitDb
     }
     
     
-    
+/*    
     public void insertMeters()
     {
 	// implementation id=special
@@ -880,7 +876,7 @@ public class InitDb
 	    System.out.print(".");
 	}
     }
-
+*/
 
 
 /*

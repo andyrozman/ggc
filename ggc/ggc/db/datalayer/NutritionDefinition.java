@@ -34,21 +34,24 @@ import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.NutritionDefinitionH;
 import ggc.util.DataAccess;
 
-import com.atech.graphics.components.selector.ColumnSorter;
-import com.atech.graphics.components.selector.SelectableInterface;
+import java.util.Comparator;
+
+import com.atech.graphics.dialogs.selector.ColumnSorter;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
-public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface
+public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface, Comparator<NutritionDefinition>
 {
 
     public I18nControlAbstract ic = null;
 
 
     public boolean debug = false;
+    String text_idx = "";
 
 
     public NutritionDefinition()
@@ -61,6 +64,8 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	
 	//ic = DataAccess
 	ic = DataAccess.getInstance().getI18nInstance();
+	
+	this.setSearchContext();
     }
 
 
@@ -72,12 +77,13 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.setWeight_unit(ch.getWeight_unit());
 	this.setDecimal_places(ch.getDecimal_places());
 	ic = DataAccess.getInstance().getI18nInstance();
+	this.setSearchContext();
     }
 
 
     public String getShortDescription()
     {
-        return this.getName();
+        return this.getName() + " (" + this.getWeight_unit() + ")";
     }
 
 
@@ -210,6 +216,8 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.setWeight_unit(ch.getWeight_unit());
 	this.setDecimal_places(ch.getDecimal_places());
 
+	this.setSearchContext();
+
         return true;
     }
 
@@ -256,22 +264,13 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     }
 
     
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#compareTo(java.lang.Object)
-     */
-    public int compareTo(Object o)
-    {
-	// TODO Auto-generated method stub
-	return 0;
-    }
-
 
     /* (non-Javadoc)
      * @see com.atech.graphics.components.selector.SelectableInterface#getColumnCount()
      */
     public int getColumnCount()
     {
-	return 3;
+	return 4;
     }
 
 
@@ -286,15 +285,17 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.getWeight_unit(); */
 	switch(num)
 	{
-	    case 1:
+	    case 4:
 		return ic.getMessage("TAG");
 		
-	    case 2:
+	    case 3:
 		return ic.getMessage("WEIGHT_UNIT");
 
-	    default:
-	    case 0:
+	    case 2:
 		return ic.getMessage("NAME");
+
+	    default:
+		return ic.getMessage("ID");
 		
 	}
 	
@@ -313,15 +314,17 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.getWeight_unit(); */
 	switch(num)
 	{
-	    case 1:
+	    case 4:
 		return this.getTag();
 		
-	    case 2:
+	    case 3:
 		return this.getWeight_unit();
 
-	    default:
-	    case 0:
+	    case 2:
 		return this.getName(); 
+
+	    default:
+		return "" + this.getId();
 		
 	}
 	
@@ -335,15 +338,17 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     {
 	switch(num)
 	{
-	    case 1:
+	    case 4:
 		return this.getTag();
 		
-	    case 2:
+	    case 3:
 		return this.getWeight_unit();
 
+	    case 2:
+		return this.getName();
+		
 	    default:
-	    case 0:
-		return this.getName(); 
+		return this.getId();
 		
 	}
     }
@@ -356,12 +361,14 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     {
 	switch(num)
 	{
-            case 1:
+            case 4:
+                return(int)(width*20);
+            case 3:
                 return(int)(width*20);
             case 2:
                 return(int)(width*40);
             default:
-                return(int)(width*40);
+                return(int)(width*20);
 		
 	}
     }
@@ -381,8 +388,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      */
     public boolean isFound(int from, int till, int state)
     {
-	// TODO Auto-generated method stub
-	return false;
+	return true;
     }
 
 
@@ -391,8 +397,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      */
     public boolean isFound(int value)
     {
-	// TODO Auto-generated method stub
-	return false;
+	return true;
     }
 
 
@@ -401,19 +406,13 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      */
     public boolean isFound(String text)
     {
-	// TODO Auto-generated method stub
-	return false;
+        if ((this.text_idx.indexOf(text.toUpperCase())!=-1) || (text.length()==0))
+            return true;
+        else
+            return false;
     }
 
 
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#setColumnSorter(com.atech.graphics.components.selector.ColumnSorter)
-     */
-    public void setColumnSorter(ColumnSorter cs)
-    {
-	// TODO Auto-generated method stub
-	
-    }
 
 
     /* (non-Javadoc)
@@ -421,11 +420,108 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      */
     public void setSearchContext()
     {
-	// TODO Auto-generated method stub
-	
+        this.text_idx = this.getName().toUpperCase();
     }
     
     
+    //---
+    //---  Column sorting 
+    //---
+
+
+    private ColumnSorter columnSorter = null;
+
+
+    /**
+     * setColumnSorter - sets class that will help with column sorting
+     * 
+     * @param cs ColumnSorter instance
+     */
+    public void setColumnSorter(ColumnSorter cs)
+    {
+	this.columnSorter = cs;
+    }
+
+
+    /**
+     * Compares this object with the specified object for order.  Returns a
+     * negative integer, zero, or a positive integer as this object is less
+     * than, equal to, or greater than the specified object.
+     *
+     * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
+     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
+     * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
+     * <tt>y.compareTo(x)</tt> throws an exception.)
+     *
+     * <p>The implementor must also ensure that the relation is transitive:
+     * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
+     * <tt>x.compareTo(z)&gt;0</tt>.
+     *
+     * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
+     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
+     * all <tt>z</tt>.
+     *
+     * <p>It is strongly recommended, but <i>not</i> strictly required that
+     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
+     * class that implements the <tt>Comparable</tt> interface and violates
+     * this condition should clearly indicate this fact.  The recommended
+     * language is "Note: this class has a natural ordering that is
+     * inconsistent with equals."
+     *
+     * <p>In the foregoing description, the notation
+     * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
+     * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
+     * <tt>0</tt>, or <tt>1</tt> according to whether the value of
+     * <i>expression</i> is negative, zero or positive.
+     *
+     * @param   o the object to be compared.
+     * @return  a negative integer, zero, or a positive integer as this object
+     *		is less than, equal to, or greater than the specified object.
+     *
+     * @throws ClassCastException if the specified object's type prevents it
+     *         from being compared to this object.
+     */
+    public int compareTo(Object o)
+    {
+
+	if (o instanceof SelectableInterface)
+	{
+	    return this.columnSorter.compareObjects(this, (SelectableInterface)o);
+	}
+	else
+	    throw new ClassCastException();
+
+    }
+    
+    
+    
+    /**
+     * compare (MealPartsDisplay, MealPartsDisplay)
+     * 
+     * Compares its two arguments for order. Returns a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+     * 
+     * The implementor must ensure that sgn(compare(x, y)) == -sgn(compare(y, x)) for all x and y. (This implies that compare(x, y) must throw an exception if and only if compare(y, x) throws an exception.)
+     * 
+     * The implementor must also ensure that the relation is transitive: ((compare(x, y)>0) && (compare(y, z)>0)) implies compare(x, z)>0.
+     * 
+     * Finally, the implementer must ensure that compare(x, y)==0 implies that sgn(compare(x, z))==sgn(compare(y, z)) for all z.
+     * 
+     * It is generally the case, but not strictly required that (compare(x, y)==0) == (x.equals(y)). Generally speaking, any comparator that violates this condition should clearly indicate this fact. The recommended language is "Note: this comparator imposes orderings that are inconsistent with equals."
+     * 
+     * @param mpd1 - the first object to be compared.       
+     * @param mpd2 - the second object to be compared.       
+     *  
+     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+     * 
+     * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+     */
+    public int compare(NutritionDefinition mnd1, NutritionDefinition mnd2)
+    {
+	long id1 = mnd1.getId();
+	long id2 = mnd2.getId();
+	    
+	return (int)(id1-id2);
+    }
     
     
 }

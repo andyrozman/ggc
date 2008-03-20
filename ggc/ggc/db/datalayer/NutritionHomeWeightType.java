@@ -29,15 +29,21 @@
 
 package ggc.db.datalayer;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.NutritionHomeWeightTypeH;
 
+import com.atech.graphics.dialogs.selector.ColumnSorter;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements DatabaseObjectHibernate
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+
+public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements DatabaseObjectHibernate, SelectableInterface
 {
+
+
+
 
     public boolean debug = false;
 
@@ -230,6 +236,134 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return 0;
     }
 
+
+    //---
+    //---  SelectorInterface
+    //---
+    
+    
+    
+    /* 
+     * compareTo
+     */
+    public int compareTo(Object o)
+    {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+
+
+    /* 
+     * getColumnCount
+     */
+    public int getColumnCount()
+    {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+
+
+    /* 
+     * getColumnName
+     */
+    public String getColumnName(int num)
+    {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+
+    /* 
+     * getColumnValue
+     */
+    public String getColumnValue(int num)
+    {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+
+    /* 
+     * getColumnValueObject
+     */
+    public Object getColumnValueObject(int num)
+    {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+
+    /* 
+     * getColumnWidth
+     */
+    public int getColumnWidth(int num, int width)
+    {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+
+
+    /* 
+     * getItemId
+     */
+    public long getItemId()
+    {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+
+
+    /* 
+     * isFound
+     */
+    public boolean isFound(int from, int till, int state)
+    {
+	return true;
+    }
+
+
+    /* 
+     * isFound
+     */
+    public boolean isFound(int value)
+    {
+	return true;
+    }
+
+
+    /* 
+     * isFound
+     */
+    public boolean isFound(String text)
+    {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+
+    /* 
+     * setColumnSorter
+     */
+    public void setColumnSorter(ColumnSorter cs)
+    {
+	
+	// TODO Auto-generated method stub
+	
+    }
+
+
+    /* 
+     * setSearchContext
+     */
+    public void setSearchContext()
+    {
+	// TODO Auto-generated method stub
+	
+    }
+    
+    
+    
+    
 }
 
 

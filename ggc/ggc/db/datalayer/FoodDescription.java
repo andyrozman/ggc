@@ -241,7 +241,7 @@ public class FoodDescription implements DatabaseObjectHibernate //extends FoodDe
     }
     
     
-    public String getDescription(String desc)
+    public String getDescription()
     {
 	if (type==2)
 	    return this.m_food_desc2.getDescription();

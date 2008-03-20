@@ -58,8 +58,6 @@ import ggc.db.hibernate.FoodUserDescriptionH;
 import ggc.db.hibernate.FoodUserGroupH;
 import ggc.db.hibernate.MealGroupH;
 import ggc.db.hibernate.MealH;
-import ggc.db.hibernate.MeterCompanyH;
-import ggc.db.hibernate.MeterH;
 import ggc.db.hibernate.NutritionDefinitionH;
 import ggc.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.db.hibernate.SettingsH;
@@ -71,12 +69,13 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.StringTokenizer;
+
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -113,11 +112,14 @@ public class GGCDb
     // GLOBAL DATA
     public Hashtable<String,NutritionDefinition> nutrition_defs = null;
     public Hashtable<String,NutritionHomeWeightType> homeweight_defs = null;
+    public ArrayList<SelectableInterface> nutrition_defs_list = null;
+    public ArrayList<SelectableInterface> homeweight_defs_list = null;
 
+    /*
     public ArrayList<MeterCompanyH> meter_companies = null;
     public Hashtable<String,ArrayList<MeterH>> meters_by_cmp = null;
     public Hashtable<String,MeterH> meters_full = null;
-
+*/
 
 
 
@@ -670,6 +672,12 @@ public class GGCDb
     }
     
     
+    public void loadNutritionDbBase()
+    {
+        this.loadNutritionDefinitions();
+        this.loadHomeWeights();
+   }
+    
     
     public void loadNutritionDb1()
     {
@@ -678,8 +686,6 @@ public class GGCDb
 	
         //m_da.m_nutrition_treeroot = new GGCTreeRoot(1, this);
 
-        this.loadNutritionDefinitions();
-        this.loadHomeWeights();
     }
 
     
@@ -694,6 +700,7 @@ public class GGCDb
 	m_da.tree_roots.put("3", new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, this));
     }
     
+    /*
     @SuppressWarnings("unchecked")
     public void loadImplementedMeterData()
     {
@@ -785,7 +792,7 @@ public class GGCDb
         this.meter_companies = mtrs_cmp;
 
     }
-
+*/
 
 
 
@@ -927,6 +934,7 @@ public class GGCDb
     // ****                METERS                       ****
     // *************************************************************
 
+    /*
     public MeterH getMeterById(int id)
     {
         if (id<=0)
@@ -948,7 +956,7 @@ public class GGCDb
 
         return null;
     }
-
+*/
 
 
     // *************************************************************
@@ -1089,8 +1097,11 @@ public class GGCDb
     @SuppressWarnings("unchecked")
     public void loadNutritionDefinitions()
     {
+	
+	System.out.println("loadNutritionDefinitions() !!!!!!!!!!!!!!!!!!!!!");
 
         Hashtable<String,NutritionDefinition> nut_defs = new Hashtable<String,NutritionDefinition>();
+        ArrayList<SelectableInterface> nut_defs_lst = new ArrayList<SelectableInterface>();
 
         Query q = getSession().createQuery("select pst from ggc.db.hibernate.NutritionDefinitionH as pst");
 
@@ -1102,6 +1113,7 @@ public class GGCDb
 
             NutritionDefinition fnd = new NutritionDefinition(eh);
             nut_defs.put("" + fnd.getId(), fnd);
+            nut_defs_lst.add(fnd);
         }
 
         
@@ -1117,13 +1129,17 @@ public class GGCDb
 
         for(int i=0; i<ids.length; i++)
         {
-            NutritionDefinitionH eh = new NutritionDefinitionH(units[i], tags[i], name[i], "0");
+            NutritionDefinitionH eh = new NutritionDefinitionH(units[i], tags[i], name[i], "0", 1);
             eh.setId(ids[i]);
             
-            nut_defs.put("" + eh.getId(), new NutritionDefinition(eh));
+            NutritionDefinition ndef = new NutritionDefinition(eh);
+            
+            nut_defs.put("" + eh.getId(), ndef);
+            nut_defs_lst.add(ndef);
         }
         
         this.nutrition_defs = nut_defs;
+        this.nutrition_defs_list = nut_defs_lst;
 
     }
 
@@ -1132,7 +1148,8 @@ public class GGCDb
     public void loadHomeWeights()
     {
 
-        Hashtable<String,NutritionHomeWeightType> nut_defs = new Hashtable<String,NutritionHomeWeightType>();
+        Hashtable<String,NutritionHomeWeightType> nut_hw = new Hashtable<String,NutritionHomeWeightType>();
+        ArrayList<SelectableInterface> nut_hw_lst = new ArrayList<SelectableInterface>();
 
         Query q = getSession().createQuery("select pst from ggc.db.hibernate.NutritionHomeWeightTypeH as pst");
 
@@ -1143,14 +1160,19 @@ public class GGCDb
             NutritionHomeWeightTypeH eh = (NutritionHomeWeightTypeH)it.next();
 
             NutritionHomeWeightType fnd = new NutritionHomeWeightType(eh);
-            nut_defs.put(""+fnd.getId(), fnd);
+            nut_hw.put(""+fnd.getId(), fnd);
+            nut_hw_lst.add(fnd);
         }
 
-        this.homeweight_defs = nut_defs;
+        this.homeweight_defs = nut_hw;
+        this.homeweight_defs_list = nut_hw_lst;
 
     }
 
 
+    
+    
+    
 
 /*
     public ArrayList<FoodHomeWeight> getFoodHomeWeight(long id)
@@ -1487,6 +1509,22 @@ public class GGCDb
     }
 
 
+    // *************************************************************
+    // ****                NUTRITION DATA                       ****
+    // *************************************************************
+    
+    
+    public ArrayList<SelectableInterface> getNutritionHomeWeights()
+    {
+	return this.homeweight_defs_list;
+    }
+    
+    
+    public ArrayList<SelectableInterface> getNutritionDefinitions()
+    {
+	return this.nutrition_defs_list;
+    }
+    
 
     // *************************************************************
     // ****                       U T I L S                     ****

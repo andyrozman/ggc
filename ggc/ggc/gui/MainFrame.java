@@ -57,6 +57,7 @@ import java.net.URL;
 import java.util.Hashtable;
 
 import javax.help.CSH;
+import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
 import javax.swing.AbstractAction;
@@ -74,6 +75,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
+import com.atech.help.HelpContext;
 import com.atech.update.client.UpdateDialog;
 import com.atech.update.config.UpdateConfiguration;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
@@ -130,7 +132,7 @@ public class MainFrame extends JFrame
     private JMenu menu_file, menu_bgs, menu_food, menu_doctor, 
     menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_misc;
 
-    public GGCHelp m_help;
+    //public GGCHelp m_help;
 
     private Hashtable<String,GGCAction> actions = null;
 
@@ -326,7 +328,7 @@ public class MainFrame extends JFrame
 
 	// help menu
 	this.menu_help = this.createMenu("MN_HELP", null);
-	this.menu_help.add(GGCHelp.helpItem);
+	this.menu_help.add(m_da.getHelpContext().getHelpItem());
 	//this.actions.put("hlp_help", GGCHelp.helpItem);
 	this.menu_help.addSeparator();
 	this.createAction(this.menu_help,"MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
@@ -400,58 +402,51 @@ public class MainFrame extends JFrame
     
     public void helpInit()
     {
-        GGCHelp.helpItem = new JMenuItem(m_ic.getMessage("HELP")+"...");
-        GGCHelp.helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
-//        	new ImageIcon(m_da.getImage("/icons/help.png", this)));
-        // add the helpItem to the menubar
+	HelpContext hc = new HelpContext("../data/help/GGC.hs");
+	
+	m_da.setHelpContext(hc);
+	
+	JMenuItem helpItem = new JMenuItem(m_ic.getMessage("HELP")+"...");
+	helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
+	
+	hc.setHelpItem(helpItem);
 
+        String mainHelpSetName = "../data/help/GGC.hs";
+        mainHelpSetName = mainHelpSetName.replace("/", File.separator);
         
-        GGCHelp.mainHelpSetName = "../data/help/GGC.hs";
-        GGCHelp.mainHelpSetName = GGCHelp.mainHelpSetName.replace("/", File.separator);
+        hc.setMainHelpSetName(mainHelpSetName);
 
 
-        //PISMain.mainHelpSetName = "/data/help/PIS.hs";
-        //PISMain.mainHelpSetName = "PIS.hs";
 
-        //System.out.println("main help set: " + PISMain.mainHelpSetName);
-        //System.out.println("separator: " + File.separator);
-
-        //mainHelpSetName.replace(
-
-
-        //System.out.println("Help init");
 
         // try to find the helpset and create a HelpBroker object
-        if (GGCHelp.mainHelpBroker == null)
+        if (hc.getMainHelpBroker() == null)
         {
 
             //System.out.println("Help init broker");
 
-            GGCHelp.mainHelpSet = null;
+            HelpSet main_help_set = null;            
+            //HelpContext.mainHelpSet = null;
 
             ClassLoader cl = MainFrame.class.getClassLoader();
-
             //String help_url = "jar:file:pis_lang-0.1.jar!/help/PIS.hs";
 
             String help_url = "jar:file:ggc_help-0.1.jar!/help/en/GGC.hs"; 
-        	//this.m_da.getHelpPathForLanguage();
 
 
             try
             {
                 URL hsURL = new URL(help_url);
-                    //HelpSet.findHelpSet(cl, PISMain.mainHelpSetName);
 
                 if (hsURL == null)
                     System.out.println("HelpSet " + help_url /*PISMain.mainHelpSetName*/ + " not found.");
                 else
-                    GGCHelp.mainHelpSet = new HelpSet(null, hsURL);
+                    main_help_set = new HelpSet(null, hsURL);
             }
             catch (HelpSetException ee)
             {
-                System.out.println("HelpSet " + GGCHelp.mainHelpSetName + " could not be opened.");
+                System.out.println("HelpSet " + help_url + " could not be opened.");
                 System.out.println(ee.getMessage());  
-                
             }
             catch (MalformedURLException ee)
             {
@@ -459,69 +454,36 @@ public class MainFrame extends JFrame
             }
 
 
-            //checkTest();
 
-
-
-
-            //System.out.println("Class: " + mainHelpSet.getKeyData(mainHelpSet.implRegistry, "helpBroker/class"));
-
-            //System.out.println("Setting DUMMY Help Broker");
-            //mainHelpSet.setKeyData(mainHelpSet.implRegistry, "helpBroker/class", "com.atech.graphics.help.DummyHelpBroker");
-
-            if (GGCHelp.mainHelpSet != null)
+            HelpBroker main_help_broker = null;
+            
+            
+            if (main_help_set != null)
             {
                 //System.out.println("Help: Main Help Set present, creating broker");
-        	GGCHelp.mainHelpBroker = GGCHelp.mainHelpSet.createHelpBroker();
+        	main_help_broker = main_help_set.createHelpBroker();
             }
 
 
-            //HelpSet hs = mainHelpBroker.getHelpSet();
-            //System.out.println("HelpSet: " + hs);
-
-            //javax.help.Map m = mainHelpSet.getLocalMap();
-            //System.out.println("Map: " + m);
-
-/*
-            for(int i=0; i<m.size(); i++)
-            {
-                System.out.println(m.get(
-            }
-*/
-            //helpBroker/class
-            // helpBroker/loader
-
-            //System.out.println(" " + HelpSet.helpBrokerClass);
-            //System.out.println(" " + HelpSet.helpBrokerLoader);
-
-            //System.out.println("Class: " + mainHelpSet.getKeyData(mainHelpSet.implRegistry, "helpBroker/class"));
-            //System.out.println("Class: " + mainHelpSet.getKeyData(mainHelpSet.implRegistry, "helpBroker/loader"));
-
-
-            //mainHelpBroker = new DummyHelpBroker();
-
-
-            //inHelpBroker = new DummyHelpBroker();
-            //mainHelpSet.helpBrokerClass = "com.atech.graphics.help.DummyHelpBroker.class";
-            //com.atech.graphics.help.DummyHelpBroker
-
-
-            if (GGCHelp.mainHelpBroker != null)
+            CSH.DisplayHelpFromSource csh = null;
+            
+            if (main_help_broker != null)
             {
                 // CSH.DisplayHelpFromSource is a convenience class to display the helpset
-                m_help.csh = new CSH.DisplayHelpFromSource(GGCHelp.mainHelpBroker);
+        	csh = new CSH.DisplayHelpFromSource(main_help_broker);
 
-                if (m_help.csh != null)
+                if (csh != null)
                 {
                     // listen to ActionEvents from the helpItem
-                    m_help.helpItem.addActionListener(m_help.csh);
+                    hc.getHelpItem().addActionListener(csh);
                 }
-
             }
 
-
+            hc.setDisplayHelpFromSourceInstance(csh);
+            hc.setMainHelpBroker(main_help_broker);
+            hc.setMainHelpSet(main_help_set);
+            
             CSH.trackCSEvents();
-            //mainHelpBroker.
 
         }
 
@@ -789,7 +751,8 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("hlp_help"))
             {
-        	m_help.csh.actionPerformed(e);
+        	m_da.getHelpContext().getDisplayHelpFromSourceInstance().actionPerformed(e);
+        	//GGCHelp.csh.actionPerformed(e);
             }
             else if (command.equals("view_hba1c")) 
             {
@@ -888,7 +851,7 @@ public class MainFrame extends JFrame
             }
 	    else //if ((command.equals("report_pdf_extended")) ||
                 if ((command.equals("doc_stocks")) ||
-                    (command.equals("file_login")) ||
+                    (command.equals("file_loginx")) ||
                     (command.equals("file_logout")))
 	    {
 		featureNotImplemented(command, "0.5");
@@ -904,9 +867,22 @@ public class MainFrame extends JFrame
             {
         	featureNotImplemented(command, "1.1");
             }
-            else if (command.equals("test"))
+            else if (command.equals("file_login"))
 	    {
             //ggc.gui.ReadMeterDialog rm = new ggc.gui.ReadMeterDialog(MainFrame.this);
+        	
+        	System.out.println("In login");
+        	
+        	try
+        	{
+        	    throw new Exception("Test Exception");
+        	}
+        	catch(Exception ex)
+        	{
+        	    System.out.println("we falled into exception");
+        	    m_da.createErrorDialog("MainFrame", "", ex, "Exception in mainframe.");
+        	}
+        	
 	    }
 	    else if (command.equals("hlp_check_update"))
 	    {

@@ -14,6 +14,7 @@
         <property name="tag" type="string" length="50" />
         <property name="name" type="string" length="100" />
         <property name="decimal_places" type="text" length="10" />
+        <property name="static_entry" type="int"  />
     </class>
 
     <!--  Nutrition Home Weight Type - Global -->
@@ -22,6 +23,7 @@
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
         <property name="name" type="string" length="255"  />
+        <property name="static_entry" type="int"  />
     </class>
 
 

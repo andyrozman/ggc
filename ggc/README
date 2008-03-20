@@ -2,7 +2,11 @@
 GNU Gluco Control (GGC)
 =======================
 
-This readme file has now four section, which are:
+Version 0.3, 4th June 2008
+---------------------------
+
+This readme file has now four section:
+--------------------------------------
 I.   GGC BASIC INFORMATION
 II.  USER INFORMATION
 III. TRANSLATORS INFORMATION
@@ -10,9 +14,6 @@ IV.  DEVELOPERS INFORMATION
 
 End users only need to read the first section, translators first and second, and 
 developers all 3 of them.
-
-At this time there is no user release for GGC, so users must install everything 
-with help of development section.
 
 
 
@@ -29,13 +30,68 @@ your diabetes.
 2. Status
 =========
 
-As before we are at a very early stage of development. For database we are now using
-hibernate so all old ways of storing data are removed... Sorry. (if you used ggc in 
-old times, please contact us and we will help you to get data in new database)
+At this point we are at version 0.3, which is first public release. If you 
+installed any version prior to that, please deinstall. This version has
+ability to update it-self, when new version is available. 
 
-This version (0.2.4) is not intended for end users. Versions intended for end users 
-will be deployed on sourceforge.net, at first point we have a somewhat workable 
-version (1st release with some additional functionaly is planned for May 2007).
+This first public release can use only internal database. If you have more that
+little computer knowledge, you can try to make it work with any database (see 
+section III) with just a little action. 
+
+New (major) versions are planned to occur in 6 month intervals.
+
+
+3. What functionalites are available:
+===================================== 
+
+- Adding Daily data about Insulin, BG entries, Activity, Urine, Comments
+- Display graphs for this daily data (still work in progress)
+- Food databases for "Carb Counting": USDA Nutrition Db, User Nutrition Db
+  and Meals database
+- Printing reports
+- Update mechanism (client side only), this means that until server side of 
+  update is done, you won't be able to update, but as soon as that works
+  you will have option to update.   
+
+
+4. Planned functionalities:
+===========================
+
+Version 0.4
+------------
+- Db Tool (for using other databases and install of initial data)
+- Multi person instance
+- Finalization of GGC Little, which is used as resident application for adding
+  new data through day
+- GGC PPC - Version of application to be used by Pocket PC (not all 
+  functionalities of full version will be available)
+- Update mechanism (server side)   
+- Integration of Meter Tool (Meter Tool is being developed as separate project)
+- Appointments (adding appointment, adding data from doctor's visit), Doctors 
+  management (adding)
+- Medical stock - Listing of everything that patient has, and what he needs to
+  get to handle diabetes (and also any other condition) 
+- Fully write Help files and add help through application (english version so far)
+
+
+Version 0.5
+------------
+- Export/Import Management
+- Export/Import data
+- GGC Network (running several instances of GGC on several computers)
+- Synchronization (for GGC network)
+- Links to data about diabetes on internet
+- Pump Tool integration
+
+
+
+5. Sub-projects
+===============
+
+
+
+
+
 
   
 
