@@ -23,12 +23,16 @@ public class NutritionDefinitionH implements Serializable {
     /** nullable persistent field */
     private String decimal_places;
 
+    /** nullable persistent field */
+    private int static_entry;
+
     /** full constructor */
-    public NutritionDefinitionH(String weight_unit, String tag, String name, String decimal_places) {
+    public NutritionDefinitionH(String weight_unit, String tag, String name, String decimal_places, int static_entry) {
         this.weight_unit = weight_unit;
         this.tag = tag;
         this.name = name;
         this.decimal_places = decimal_places;
+        this.static_entry = static_entry;
     }
 
     /** default constructor */
@@ -73,6 +77,14 @@ public class NutritionDefinitionH implements Serializable {
 
     public void setDecimal_places(String decimal_places) {
         this.decimal_places = decimal_places;
+    }
+
+    public int getStatic_entry() {
+        return this.static_entry;
+    }
+
+    public void setStatic_entry(int static_entry) {
+        this.static_entry = static_entry;
     }
 
     public String toString() {

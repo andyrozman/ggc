@@ -23,12 +23,16 @@ public class SettingsH implements Serializable {
     /** nullable persistent field */
     private String description;
 
+    /** persistent field */
+    private int person_id;
+
     /** full constructor */
-    public SettingsH(String key, String value, int type, String description) {
+    public SettingsH(String key, String value, int type, String description, int person_id) {
         this.key = key;
         this.value = value;
         this.type = type;
         this.description = description;
+        this.person_id = person_id;
     }
 
     /** default constructor */
@@ -36,8 +40,9 @@ public class SettingsH implements Serializable {
     }
 
     /** minimal constructor */
-    public SettingsH(String key) {
+    public SettingsH(String key, int person_id) {
         this.key = key;
+        this.person_id = person_id;
     }
 
     public long getId() {
@@ -78,6 +83,14 @@ public class SettingsH implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getPerson_id() {
+        return this.person_id;
+    }
+
+    public void setPerson_id(int person_id) {
+        this.person_id = person_id;
     }
 
     public String toString() {

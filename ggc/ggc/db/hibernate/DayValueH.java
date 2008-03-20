@@ -32,11 +32,14 @@ public class DayValueH implements Serializable {
     /** nullable persistent field */
     private String extended;
 
+    /** persistent field */
+    private int person_id;
+
     /** nullable persistent field */
     private String comment;
 
     /** full constructor */
-    public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String extended, String comment) {
+    public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String extended, int person_id, String comment) {
         this.dt_info = dt_info;
         this.bg = bg;
         this.ins1 = ins1;
@@ -44,6 +47,7 @@ public class DayValueH implements Serializable {
         this.ch = ch;
         this.meals_ids = meals_ids;
         this.extended = extended;
+        this.person_id = person_id;
         this.comment = comment;
     }
 
@@ -52,8 +56,9 @@ public class DayValueH implements Serializable {
     }
 
     /** minimal constructor */
-    public DayValueH(long dt_info) {
+    public DayValueH(long dt_info, int person_id) {
         this.dt_info = dt_info;
+        this.person_id = person_id;
     }
 
     public long getId() {
@@ -118,6 +123,14 @@ public class DayValueH implements Serializable {
 
     public void setExtended(String extended) {
         this.extended = extended;
+    }
+
+    public int getPerson_id() {
+        return this.person_id;
+    }
+
+    public void setPerson_id(int person_id) {
+        this.person_id = person_id;
     }
 
     public String getComment() {

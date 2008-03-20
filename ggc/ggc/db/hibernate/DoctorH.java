@@ -32,6 +32,9 @@ public class DoctorH implements Serializable {
     /** nullable persistent field */
     private int visible;
 
+    /** persistent field */
+    private int person_id;
+
     /** nullable persistent field */
     private String comment;
 
@@ -39,7 +42,7 @@ public class DoctorH implements Serializable {
     private ggc.db.hibernate.DoctorTypeH doctor_type;
 
     /** full constructor */
-    public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String extended, int visible, String comment, ggc.db.hibernate.DoctorTypeH doctor_type) {
+    public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String extended, int visible, int person_id, String comment, ggc.db.hibernate.DoctorTypeH doctor_type) {
         this.name = name;
         this.address = address;
         this.phone_gsm = phone_gsm;
@@ -47,12 +50,18 @@ public class DoctorH implements Serializable {
         this.working_time = working_time;
         this.extended = extended;
         this.visible = visible;
+        this.person_id = person_id;
         this.comment = comment;
         this.doctor_type = doctor_type;
     }
 
     /** default constructor */
     public DoctorH() {
+    }
+
+    /** minimal constructor */
+    public DoctorH(int person_id) {
+        this.person_id = person_id;
     }
 
     public long getId() {
@@ -117,6 +126,14 @@ public class DoctorH implements Serializable {
 
     public void setVisible(int visible) {
         this.visible = visible;
+    }
+
+    public int getPerson_id() {
+        return this.person_id;
+    }
+
+    public void setPerson_id(int person_id) {
+        this.person_id = person_id;
     }
 
     public String getComment() {

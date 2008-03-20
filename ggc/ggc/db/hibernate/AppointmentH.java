@@ -20,6 +20,9 @@ public class AppointmentH implements Serializable {
     /** nullable persistent field */
     private String extended;
 
+    /** persistent field */
+    private int person_id;
+
     /** nullable persistent field */
     private String comment;
 
@@ -27,10 +30,11 @@ public class AppointmentH implements Serializable {
     private ggc.db.hibernate.DoctorH doctor;
 
     /** full constructor */
-    public AppointmentH(long dt_apoint, String apoint_text, String extended, String comment, ggc.db.hibernate.DoctorH doctor) {
+    public AppointmentH(long dt_apoint, String apoint_text, String extended, int person_id, String comment, ggc.db.hibernate.DoctorH doctor) {
         this.dt_apoint = dt_apoint;
         this.apoint_text = apoint_text;
         this.extended = extended;
+        this.person_id = person_id;
         this.comment = comment;
         this.doctor = doctor;
     }
@@ -40,8 +44,9 @@ public class AppointmentH implements Serializable {
     }
 
     /** minimal constructor */
-    public AppointmentH(long dt_apoint) {
+    public AppointmentH(long dt_apoint, int person_id) {
         this.dt_apoint = dt_apoint;
+        this.person_id = person_id;
     }
 
     public long getId() {
@@ -74,6 +79,14 @@ public class AppointmentH implements Serializable {
 
     public void setExtended(String extended) {
         this.extended = extended;
+    }
+
+    public int getPerson_id() {
+        return this.person_id;
+    }
+
+    public void setPerson_id(int person_id) {
+        this.person_id = person_id;
     }
 
     public String getComment() {
