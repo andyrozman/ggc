@@ -154,14 +154,15 @@ public class ConfigurationManager
 
     private void addNewValue(String name, String def_value, int type)
     {
-        System.out.println("addNewValue:: name=" + name);
+        //System.out.println("addNewValue:: name=" + name);
 
         Settings s = new Settings();
 
         s.setKey(name);
-        s.setDescription(m_da.getI18nInstance().getMessage("CFG_"+name));
+        s.setDescription(m_da.getI18nControlInstance().getMessage("CFG_"+name));
         s.setType(type);
         s.setValue(def_value);
+        s.setPerson_id(m_da.getCurrentPersonId());
         s.setElementAdded();
 
         this.cfg_values.put(name, s);   

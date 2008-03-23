@@ -30,7 +30,6 @@ package ggc.gui.nutrition.dialogs;
 import ggc.gui.nutrition.GGCTreeRoot;
 import ggc.gui.nutrition.data.NutritionGroupModel;
 import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,6 +44,8 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
+
+import com.atech.i18n.I18nControlAbstract;
 
 
 
@@ -64,7 +65,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
     
 //    private static boolean useSystemLookAndFeel = false;
 
-    private I18nControl ic = null;
+    private I18nControlAbstract ic = null;
     //public GGCTreePanel  panels[] = null;
 // x   private int selectedPanel = 0;
 
@@ -86,7 +87,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         System.out.println("type:" + type);
         
         m_da = da;
-        ic = m_da.m_i18n;
+        ic = m_da.getI18nControlInstance();
         this.m_tree_type = type;
 
         //this.setResizable(false);

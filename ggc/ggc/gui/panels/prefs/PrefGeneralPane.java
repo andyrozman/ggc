@@ -28,6 +28,9 @@
 
 package ggc.gui.panels.prefs;
 
+import ggc.db.tool.DbToolApplicationGGC;
+import ggc.gui.dialogs.PropertiesDialog;
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -43,10 +46,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import ggc.db.tool.DbToolApplicationGGC;
+import com.atech.help.HelpCapable;
 
 
-public class PrefGeneralPane extends AbstractPrefOptionsPanel 
+public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCapable 
 {
     private JTextField fieldUserName;
 
@@ -61,16 +64,18 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 //x    private Object[] lf_classes_name = null;
 //x    private Object[] lf_classes_class = null;    
 
-    private PrefGeneralPane parent = null;
+    //private PrefGeneralPane parent = null;
 
 
     DbToolApplicationGGC m_dbc = m_da.getDbConfig();
 
 
-    public PrefGeneralPane() 
+    public PrefGeneralPane(PropertiesDialog dia) 
     {
+	super(dia);
         init();
-	parent = this;
+        //m_da.enableHelp(this);
+	//parent = this;
     }
 
     private void init() 
@@ -296,8 +301,33 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel
 
 
 
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
 
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.parent.getHelpButton();
+    }
 
-
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_Prefs_General";
+    }
+    
 
 }

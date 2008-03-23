@@ -49,17 +49,19 @@ import ggc.util.DataAccess;
 public class GGCDbLoader extends Thread
 {
 
-
+    // red status
     // 1 - init
+    // yellow
     // 2 - load configuration
-    // 3 - load doctors data
-    // 4 - load statistics for display, apointments
+    // 3 - load statistics for display, apointments
+    // blue
+    // 4 - load doctors data
     // 5 - load nutrition(1) root data
     // 6 - load nutrition(2) root data
     // 7 - load meals root data
 
     // 99 - loading complete
-
+    // green
 
     DataAccess m_da = null;
     StatusBar m_bar = null;
@@ -105,15 +107,8 @@ public class GGCDbLoader extends Thread
 
         run_once = true;
 
-        /*
-        try 
-        { 
-            Thread.sleep(2000); 
-        } 
-        catch(InterruptedException ex) 
-        { 
-        }
-*/
+        // 1 - init
+        
         GGCDb db = new GGCDb(m_da);
 
         if (!part_start)
@@ -127,9 +122,72 @@ public class GGCDbLoader extends Thread
 
         db.initDb();
 
-        setDbStatus(StatusBar.DB_INIT_OK); 
+        setDbStatus(StatusBar.DB_INIT_DONE); 
+
+        
+        // 2 - load configuration
+        
+        db.loadConfigData();
+        db.loadStaticData();
+        m_da.m_db = db;
+        
+        
+        // 3 - load daily data for display, appointments
+        
+        if (m_da.getParent()!=null)
+            m_da.loadDailySettings(new GregorianCalendar(), true);
+        else
+            m_da.loadDailySettingsLittle(new GregorianCalendar(), true);
+
+            
+        if (m_da.getParent()!=null)
+        {
+            // GGC
+            MainFrame mf = m_da.getParent();
+            //mf.setDbActions(true);
+            m_da.loadSettingsFromDb();
+            mf.informationPanel.refreshPanels();
+            mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
+        }
+        else
+        {
+            /// GGC Little
+            GGCLittle mf = m_da.getParentLittle();
+            //mf.setDbActions(true);
+            m_da.loadSettingsFromDb();
+            mf.informationPanel.dailyStats.model.setDailyValues(m_da.getDayStats(new GregorianCalendar()));
+            mf.informationPanel.refreshPanels();
+            mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
+        }
+
+        setDbStatus(StatusBar.DB_BASE_DONE); 
+        
+        
+        // 4 - load doctors data
+        
+        // TODO: in version 0.4
+
+        
+        // 5 - load nutrition(1) root data
+        
+        db.loadNutritionDb1();
+
+        
+        // 6 - load nutrition(2) root data
+        
+        db.loadNutritionDb2();
+        
+        
+        // 7 - load meals root data
+        
+        db.loadMealsDb();
 
 
+        setDbStatus(StatusBar.DB_LOADED);
+        
+        
+        
+/*        
         if (part_start)
         {
             db.loadNutritionDb1();
@@ -145,43 +203,7 @@ public class GGCDbLoader extends Thread
             db.loadNutritionDb1();
 //            db.loadImplementedMeterData();
         }
-
-        setDbStatus(StatusBar.DB_LOAD);
-
-        m_da.m_db = db;
-
-        if (part_start)
-            return;
-        
-        
-        
-        if (m_da.getParent()!=null)
-            m_da.loadDailySettings(new GregorianCalendar(), true);
-        else
-            m_da.loadDailySettingsLittle(new GregorianCalendar(), true);
-
-        //m_bar.setDatabaseName(db.db_conn_name);
-
-            
-        if (m_da.getParent()!=null)
-        {
-            // GGC
-            MainFrame mf = m_da.getParent();
-            mf.setDbActions(true);
-            m_da.loadSettingsFromDb();
-            mf.informationPanel.refreshPanels();
-            mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
-        }
-        else
-        {
-            /// GGC Little
-            GGCLittle mf = m_da.getParentLittle();
-            mf.setDbActions(true);
-            m_da.loadSettingsFromDb();
-            mf.informationPanel.dailyStats.model.setDailyValues(m_da.getDayStats(new GregorianCalendar()));
-            mf.informationPanel.refreshPanels();
-            mf.statusPanel.setStatusMessage(m_da.getI18nInstance().getMessage("READY"));
-        }
+*/
 
     }
 
@@ -191,9 +213,17 @@ public class GGCDbLoader extends Thread
             return;
 	
         if (m_bar!=null)
+        {
             m_bar.setDbStatus(status);
+            ((MainFrame)m_da.getMainParent()).setMenusByDbLoad(status);
+        }
         else
+        {
             m_barL.setDbStatus(status);
+            
+            // TODO: version 0.4, when fixing GGC Little
+            //setMenusByDbLoad(int status)
+        }
     }
 
 

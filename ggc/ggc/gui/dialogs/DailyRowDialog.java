@@ -33,6 +33,7 @@ import ggc.util.DataAccess;
 import ggc.util.GGCProperties;
 import ggc.util.I18nControl;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -57,10 +58,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.DateTimeComponent;
+import com.atech.help.HelpCapable;
 
 // fix this
 
-public class DailyRowDialog extends JDialog implements ActionListener, KeyListener
+public class DailyRowDialog extends JDialog implements ActionListener, KeyListener, HelpCapable
 {
 
 
@@ -114,6 +116,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = false;
+    JButton help_button = null;
 
 
 
@@ -161,8 +164,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     public void initParameters(DailyValues ndV, String nDate)
     {
         //if (add) 
-            setTitle(m_ic.getMessage("ADD_NEW_ROW"));
-            label_title.setText(m_ic.getMessage("ADD_NEW_ROW"));
+            setTitle(m_ic.getMessage("ADD_ROW"));
+            label_title.setText(m_ic.getMessage("ADD_ROW"));
 
         //else
         //    setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
@@ -192,8 +195,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         //System.out.println(props.getBG_unit());
 
 
-        setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
-        label_title.setText(m_ic.getMessage("EDIT_NEW_ROW"));
+        setTitle(m_ic.getMessage("EDIT_ROW"));
+        label_title.setText(m_ic.getMessage("EDIT_ROW"));
 
         sDate = ndr.getDateAsString();
         this.m_dailyValuesRow = ndr;
@@ -334,10 +337,10 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         addComponent(Ins1Field = new JTextField(), 140, 168, 55, panel);
         addComponent(Ins2Field = new JTextField(), 140, 198, 55, panel);
         addComponent(BUField = new JTextField(), 140, 228, 55, panel);
-        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 110, 260, 200, panel);
-        addComponent(UrineField = new JTextField(), 110, 288, 220, panel);
-        addComponent(ActField = new JTextField(), 110, 318, 220, panel);
-        addComponent(CommentField = new JTextField(), 110, 348, 220, panel);
+        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 120, 260, 200, panel);
+        addComponent(UrineField = new JTextField(), 120, 288, 240, panel);
+        addComponent(ActField = new JTextField(), 120, 318, 240, panel);
+        addComponent(CommentField = new JTextField(), 120, 348, 240, panel);
 
         this.cob_bg_type.setSelectedIndex(props.getBG_unit()-1);
         cob_bg_type.addItemListener(new ItemListener(){
@@ -421,33 +424,57 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                                     "edit", m_ic.getMessage("EDIT"),
                                     "ok", m_ic.getMessage("OK"),
                                     "cancel", m_ic.getMessage("CANCEL"),
-                                    "help", m_ic.getMessage("HELP")
+  //                                  "help", m_ic.getMessage("HELP")
         };
 
-        int button_coord[] = { 210, 228, 120, 0, 
-                               230, 258, 100, 0,
-                               50, 390, 80, 1,
-                               140, 390, 80, 1,
-                               250, 390, 80, 0
+        String button_icon[] = {
+        	null,
+        	null,
+        	"ok.png",
+        	"cancel.png"
+        };
+        
+        int button_coord[] = { 210, 228, 140, 0, 
+                               230, 258, 120, 0,
+                               30, 390, 110, 1,
+                               145, 390, 110, 1,
+//                               250, 390, 80, 0
         };
 
         JButton button;
         //int j=0;
-        for (int i=0, j=0; i<button_coord.length; i+=4, j+=2)
+        for (int i=0, j=0, k=0; i<button_coord.length; i+=4, j+=2, k++)
         {
-            button = new JButton(button_command[j+1]);
+            button = new JButton("   " + button_command[j+1]);
             button.setActionCommand(button_command[j]);
+            //button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
             button.addActionListener(this);
 
+            if (button_icon[k]!=null)
+            {
+        	button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
+            }
+            
+            
             if (button_coord[i+3]==0)
             {
                 button.setEnabled(false);
             }
 
-            addComponent(button, button_coord[i], button_coord[i+1], button_coord[i+2], panel);
+            if (k<=1)
+        	addComponent(button, button_coord[i], button_coord[i+1], button_coord[i+2], panel);
+            else
+        	addComponent(button, button_coord[i], button_coord[i+1], button_coord[i+2], 25, false, panel);
             
             
         }
+        
+        
+        help_button = m_da.createHelpButtonByBounds(260, 390, 100, 25, this);
+
+        panel.add(help_button);
+
+        m_da.enableHelp(this);
         
     }
 
@@ -464,9 +491,21 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     public void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
     {
-        //JLabel label = new JLabel(text);
+/*        //JLabel label = new JLabel(text);
         comp.setBounds(posX, posY, width, 23);
         comp.setFont(f_normal);
+        comp.addKeyListener(this);
+        parent.add(comp); */
+        addComponent(comp, posX, posY, width, 23, true, parent);
+    }
+
+    
+    public void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
+    {
+        //JLabel label = new JLabel(text);
+        comp.setBounds(posX, posY, width, height);
+        //if (change_font)
+        //    comp.setFont(f_normal);
         comp.addKeyListener(this);
         parent.add(comp);
     }
@@ -736,7 +775,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         if (m_da.isEmptyOrUnset(BGField.getText()))
             return;
 
-        // FIXME: ',' is the thousands separator in an english locale, and should be accepted as such 
         String s = BGField.getText().trim().replace(",", ".");
 
         if (this.cob_bg_type.getSelectedIndex()==1)
@@ -744,7 +782,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             try
             {
 
-                System.out.println(s);
+                //System.out.println(s);
 
                 float f = Float.parseFloat(s);
                 String ss = DataAccess.MmolDecimalFormat.format(f);
@@ -767,28 +805,38 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     }
 
 
-/*
-    private void close() 
+    
+    
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
     {
-        this.dispose();
-        singleton = null;
+	return this.getRootPane();
     }
-*/
- /*   private void clearFields() 
-    {
-        TimeField.setText("");
-        BGField.setText("");
-        Ins1Field.setText("");
-        Ins2Field.setText("");
-        BUField.setText("");
-        ActField.setText("");
-        CommentField.setText("");
-    }*/
 
-    /*
-    private class CloseListener extends WindowAdapter {
-        public void windowClosing(WindowEvent e) {
-            close();
-        }
-    }*/
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.help_button;
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_BG_Daily_Add";
+    }
+    
+    
+    
+    
 }

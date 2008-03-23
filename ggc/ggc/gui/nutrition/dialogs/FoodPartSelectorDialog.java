@@ -67,7 +67,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     
     public FoodPartSelectorDialog(DataAccess da, int type, String except) 
     {
-        super(da.getParent(), da.getI18nInstance(), type, except, true);
+        super(da.getParent(), da.getI18nControlInstance(), type, except, true);
     }
 
   
@@ -153,6 +153,8 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     {
 	// TODO Auto-generated method stub
 	System.out.println("checkAndExecuteActionNew()");
+	
+	
 	
     }
 

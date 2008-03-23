@@ -186,7 +186,7 @@ public class GGCProperties //extends GGCPropertiesHelper
 	else if (unit==2) 
 	    return "mmol/l";
 	else
-	    return m_da.getI18nInstance().getMessage("UNKNOWN");
+	    return m_da.getI18nControlInstance().getMessage("UNKNOWN");
 
     }
 
@@ -499,7 +499,7 @@ public class GGCProperties //extends GGCPropertiesHelper
 
     public String getMeterTypeString() 
     {
-	    return m_da.getI18nInstance().getMessage("NONE");
+	    return m_da.getI18nControlInstance().getMessage("NONE");
 /*
 	if (this.getMeterType()==-1)
 	{

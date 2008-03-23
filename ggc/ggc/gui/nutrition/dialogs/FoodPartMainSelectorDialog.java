@@ -31,7 +31,6 @@ import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealPart;
 import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -50,6 +49,7 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 
 
@@ -67,7 +67,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     JPanel panel2;
 
     private DataAccess m_da = null;
-    private I18nControl ic = null;
+    private I18nControlAbstract ic = null;
     
     SelectableInterface action_object;
     int action_object_type = 0;
@@ -96,7 +96,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         super(da.getParent(), "", true);
 
         m_da = da;
-        ic = m_da.m_i18n;
+        ic = m_da.getI18nControlInstance();
 
         if (type == FoodPartMainSelectorDialog.SELECTOR_NUTRITION)
             this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
@@ -119,7 +119,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         super(da.getParent(), "", true);
 
         m_da = da;
-        ic = m_da.m_i18n;
+        ic = m_da.getI18nControlInstance();
 
 	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
         

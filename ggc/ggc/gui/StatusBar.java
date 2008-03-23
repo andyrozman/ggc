@@ -56,11 +56,12 @@ public class StatusBar extends JPanel
     public StatusBar()
     {
 
-        statusIcons = new ImageIcon[3];
+        statusIcons = new ImageIcon[4];
 
         statusIcons[0] = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
         statusIcons[1] = new ImageIcon(getClass().getResource("/icons/led_yellow.gif"));
-        statusIcons[2] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));
+        statusIcons[2] = new ImageIcon(getClass().getResource("/icons/led_blue.gif"));
+        statusIcons[3] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));
 
         lblMessage = new JLabel();
         lblMessage.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
@@ -118,10 +119,32 @@ public class StatusBar extends JPanel
     }
 
     public static final int DB_STOPPED = 0;
-    public static final int DB_INIT = 0;
-    public static final int DB_INIT_OK = 1;
-    public static final int DB_LOAD = 2;
+    public static final int DB_INIT_DONE = 1;
+    public static final int DB_BASE_DONE = 2;
+    public static final int DB_EXTENDED_DONE = 3;
+    
+    public static final int DB_LOADED = 3;
 
+    
+    
+    
+    
+    
+    // red status
+    // 1 - init
+    // yellow
+    // 2 - load configuration
+    // 3 - load statistics for display, apointments
+    // blue
+    // 4 - load doctors data
+    // 5 - load nutrition(1) root data
+    // 6 - load nutrition(2) root data
+    // 7 - load meals root data
+
+    // 99 - loading complete
+    // green
+    
+    
     public void setDbStatus(int status)
     {
         this.lblLed.setIcon(statusIcons[status]);

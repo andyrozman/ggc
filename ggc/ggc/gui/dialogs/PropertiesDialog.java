@@ -15,7 +15,6 @@ import ggc.gui.panels.prefs.AbstractPrefOptionsPanel;
 import ggc.gui.panels.prefs.PrefFontsAndColorPane;
 import ggc.gui.panels.prefs.PrefGeneralPane;
 import ggc.gui.panels.prefs.PrefMedicalDataPane;
-//import ggc.gui.panels.prefs.PrefMeterConfPane;
 import ggc.gui.panels.prefs.PrefPrintingPane;
 import ggc.gui.panels.prefs.PrefRenderingQualityPane;
 import ggc.util.DataAccess;
@@ -24,7 +23,6 @@ import ggc.util.I18nControl;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -32,7 +30,6 @@ import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,17 +37,20 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.atech.help.HelpCapable;
 
-public class PropertiesDialog extends JDialog implements ListSelectionListener, ActionListener
+
+public class PropertiesDialog extends JDialog implements ListSelectionListener, ActionListener, HelpCapable
 {
 
     private I18nControl m_ic = I18nControl.getInstance();        
-    private DataAccess m_da = DataAccess.getInstance();
+    private DataAccess m_da; // = DataAccess.getInstance();
 
 //    private DefaultMutableTreeNode prefNode;
     //private JTree prefTree;
     private JList list = null;
     private JPanel prefPane;
+    JButton help_button;
 
     public ArrayList<JPanel> panels = null;
     public Hashtable<String, String> panel_id = null;
@@ -71,19 +71,26 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
 
 
-    public PropertiesDialog(JFrame parent)
+    public PropertiesDialog(DataAccess da)
     {
-        super(parent, "", true);
+        super(da.getMainParent(), "", true);
+        
+        m_da = da;
 
-        Rectangle rec = parent.getBounds();
+/*        Rectangle rec = parent.getBounds();
         int x = rec.x + (rec.width/2);
         int y = rec.y + (rec.height/2);
 
-        setBounds(x-320, y-240, 640, 480);
+        setBounds(x-320, y-240, 640, 480);*/
+        setSize(640,480);
         setTitle(m_ic.getMessage("PREFERENCES"));
+        m_da.centerJDialog(this, da.getMainParent());
 
+        help_button = m_da.createHelpButtonBySize(100, 25, this);
         createPanels();
+
         init();
+        selectPanel(0);
         this.setResizable(false);
         this.setVisible(true);
     }
@@ -91,7 +98,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
     private void init()
     {
-        Dimension dim = new Dimension(80, 20);
+        Dimension dim = new Dimension(100, 25);
 
         //createNodes();
 
@@ -160,18 +167,21 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 	
 
         //set the buttons up...
-        JButton okButton = new JButton(m_ic.getMessage("OK"));
+        JButton okButton = new JButton("   " + m_ic.getMessage("OK"));
         okButton.setPreferredSize(dim);
+        okButton.setIcon(m_da.getImageIcon_22x22("ok.png", this));
         okButton.setActionCommand("ok");
         okButton.addActionListener(this);
 
-        JButton cancelButton = new JButton(m_ic.getMessage("CANCEL"));
+        JButton cancelButton = new JButton("   " +m_ic.getMessage("CANCEL"));
         cancelButton.setPreferredSize(dim);
+        cancelButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         cancelButton.setActionCommand("cancel");
         cancelButton.addActionListener(this);
 
-        JButton applyButton = new JButton(m_ic.getMessage("APPLY"));
+        JButton applyButton = new JButton("   " +m_ic.getMessage("APPLY"));
         applyButton.setPreferredSize(dim);
+        applyButton.setIcon(m_da.getImageIcon_22x22("flash.png", this));
         applyButton.setActionCommand("apply");
         applyButton.addActionListener(this);
 
@@ -181,6 +191,8 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
         buttonPanel.add(applyButton);
+        
+        buttonPanel.add(help_button);
 
         prefPane.add(buttonPanel, BorderLayout.SOUTH);
         prefPane.add(panels.get(0), BorderLayout.CENTER);
@@ -238,11 +250,11 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         panel_id = new Hashtable<String, String>();
 
         //addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new PrefMainPane());
-        addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane());
-        addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane());
+        addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane(this));
+        addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane(this));
         addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new PrefFontsAndColorPane(this));
-        addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane());
-        addPanel(m_ic.getMessage("PRINTING"), PANEL_PRINTING, new PrefPrintingPane());
+        addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane(this));
+        addPanel(m_ic.getMessage("PRINTING"), PANEL_PRINTING, new PrefPrintingPane(this));
 //        addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane(this));
     }
 
@@ -272,12 +284,17 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
         prefPane.remove(1);
         prefPane.add(panels.get(Integer.parseInt(id)), BorderLayout.CENTER);
+    	selected_panel = panels.get(Integer.parseInt(id));
         prefPane.invalidate();
         prefPane.validate();
         prefPane.repaint();
-
+        
+        m_da.enableHelp(this);
     }
 
+    JPanel selected_panel = null;
+    
+    
     public void selectPanel(int index)
     {
     	/*
@@ -291,10 +308,12 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     
     	prefPane.remove(1);
     	prefPane.add(panels.get(index), BorderLayout.CENTER);
+    	selected_panel = panels.get(index);
     	prefPane.invalidate();
     	prefPane.validate();
     	prefPane.repaint();
 
+    	m_da.enableHelp(this);    	
     }
 
 
@@ -326,6 +345,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
     }
 
+    
 
     public boolean wasOKAction()
     {
@@ -373,4 +393,35 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     }
 
 
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.help_button;
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return ((HelpCapable)this.selected_panel).getHelpId();
+    }
+    
+    
+    
+    
 }

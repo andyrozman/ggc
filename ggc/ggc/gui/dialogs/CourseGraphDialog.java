@@ -35,50 +35,46 @@ import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.atech.help.HelpCapable;
 
-public class CourseGraphDialog extends JDialog implements ActionListener //JFrame
+
+public class CourseGraphDialog extends JDialog implements ActionListener, HelpCapable //JFrame
 {
 
     private I18nControl m_ic = I18nControl.getInstance();    
-    private DataAccess m_da = DataAccess.getInstance();
+    private DataAccess m_da = null;
 
     private CourseGraphView cGV;
 
     private JCheckBox chkBG, chkAvgBGDay, chkSumBU, chkMeals, chkSumIns1, chkSumIns2,
 	    	      chkSumIns, chkInsPerBU;
     private DateRangeSelectionPanel dRS;
+    private JButton help_button = null;
 
 
-    public CourseGraphDialog(JFrame parent)
+    public CourseGraphDialog(DataAccess da)
     {
-        super(parent, "Course Graph", true);
+        super(da.getMainParent(), "Course Graph", true);
         setTitle(m_ic.getMessage("COURSE_GRAPH"));
 
-	//System.out.println(parent.getBounds());
+        this.m_da = da;
 
-	Rectangle rec = parent.getBounds();
-	int x = rec.x + (rec.width/2);
-	int y = rec.y + (rec.height/2);
+        setSize(700, 520);
+        m_da.centerJDialog(this, da.getMainParent());
 
-
-        setBounds(x-350, y-250, 700, 500);
-        addWindowListener(new CloseListener());
 
         cGV = new CourseGraphView(this);
         getContentPane().add(cGV, BorderLayout.CENTER);
@@ -86,6 +82,8 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
         JPanel controlPanel = initControlPanel();
         getContentPane().add(controlPanel, BorderLayout.SOUTH);
 
+        m_da.enableHelp(this);
+        
         setVisible(true);
     }
 
@@ -106,16 +104,26 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
         selectionPanel.add(chkSumIns2 = new JCheckBox("  " + m_ic.getMessage("SUM")+" " + m_da.getSettings().getIns2Abbr(), false));
         selectionPanel.add(chkInsPerBU = new JCheckBox("  " + m_ic.getMessage("INS_SLASH_BU"), false));
 
+        Dimension dim = new Dimension(120, 25);
+        
+        
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        Dimension dim = new Dimension(80, 20);
-        JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
+        
+        
+        help_button = m_da.createHelpButtonBySize(120, 25, this);
+        buttonPanel.add(help_button);
+        
+        //Dimension dim = new Dimension(80, 20);
+        JButton drawButton = new JButton("    " + m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
+        drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", this));
         drawButton.setActionCommand("draw");
         drawButton.addActionListener(this);
 
-	JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
+	JButton closeButton = new JButton("    " + m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
         closeButton.setActionCommand("close");
+        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         closeButton.addActionListener(this);
         buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);
@@ -132,39 +140,6 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
         cGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
-    /*
-    public static void showMe()
-    {
-        if (singleton == null)
-            singleton = new CourseGraphFrame();
-        singleton.show();
-    }
-    */
-/*
-    public static void closeMe()
-    {
-        if (singleton != null) {
-            singleton.dispose();
-            singleton = null;
-            cGV = null;
-        }
-        this.dispose();
-    } */
-
-    /*
-    public static CourseGraphFrame getInstance()
-    {
-        if (singleton == null)
-            singleton = new CourseGraphFrame();
-        return singleton;
-    }*/
-
-    /*
-    public static void redraw()
-    {
-        if (singleton != null)
-            singleton.repaint();
-    }*/
 
     public boolean getDrawBG()
     {
@@ -219,16 +194,7 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
     }
 
 
-    private class CloseListener extends WindowAdapter
-    {
-        @Override
-        public void windowClosing(WindowEvent e)
-        {
-	    closeDialog();
-        }
-    }
-
-
+    
     /**
      * Invoked when an action occurs.
      */
@@ -250,4 +216,35 @@ public class CourseGraphDialog extends JDialog implements ActionListener //JFram
             System.out.println("CourseGraphFrame: Unknown command: " + action);
     }
 
+
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.help_button;
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_BG_Graph_Course";
+    }
+    
+    
+    
 }

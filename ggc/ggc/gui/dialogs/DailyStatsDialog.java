@@ -29,33 +29,6 @@
 
 package ggc.gui.dialogs;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.data.DailyStatsTableModel;
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
@@ -67,15 +40,44 @@ import ggc.gui.calendar.CalendarPane;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
-public class DailyStatsDialog extends JDialog implements ActionListener
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+
+import com.atech.help.HelpCapable;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+
+public class DailyStatsDialog extends JDialog implements ActionListener, HelpCapable
 {
+
 
     private static Log log = LogFactory.getLog(DailyStatsDialog.class); 
     
 
     private I18nControl m_ic = I18nControl.getInstance();    
-    private DataAccess m_da = DataAccess.getInstance();
+    private DataAccess m_da = null; //DataAccess.getInstance();
 
     DailyStatsTableModel model = null;
     JScrollPane resultsPane;
@@ -95,51 +97,26 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
     JLabel lblDate;
     JButton saveButton;
-    //private DailyGraphDialog dailyGraphWindow;
+    JButton help_button;
     DailyValues dayData;
 
-    GGCDb m_db = m_da.getDb();
-    //private DataBaseHandler dbH = DataBaseHandler.getInstance();
-    // 
-    // 
-    //private static DailyStatsFrame singleton = null;
 
-    //private GGCProperties props = GGCProperties.getInstance();
+    GGCDb m_db = null;
 
-
-    public DailyStatsDialog(JFrame parent)
+    public DailyStatsDialog(DataAccess da)
     {
-        super(parent, "DailyStatsFrame", false);
+        super(da.getMainParent(), "DailyStatsDialog", false);
         setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
 
-    	Rectangle rec = parent.getBounds();
-    	int x = rec.x + (rec.width/2);
-    	int y = rec.y + (rec.height/2);
-    
-    	setBounds(x-275, y-250, 550, 500);
-    
-    	//setBounds(150, 150, 550, 500);
-
+        this.m_da = da;
+        this.m_db = m_da.getDb();
+        
+    	setSize(640, 500);
+    	m_da.centerJDialog(this, m_da.getMainParent());
+    	
         init();
     }
 
-    /*
-    public static DailyStatsFrame getInstance()
-    {
-        if (singleton == null)
-            singleton = new DailyStatsFrame();
-        return singleton;
-    }
-    */
-
-    /*
-    public static void showMe()
-    {
-        /*if (singleton == null)
-            singleton = new DailyStatsFrame();
-        singleton.show(); */
-        //DailyGraphFrame.showMe();
-    //}
 
     public DailyStatsTableModel getTableModel()
     {
@@ -267,50 +244,60 @@ public class DailyStatsDialog extends JDialog implements ActionListener
         resultsPane = new JScrollPane(table);
 
 
-	Dimension dim = new Dimension(100, 20);
+	Dimension dim = new Dimension(95, 25);
         
 	JPanel gg = new JPanel();
 	gg.setLayout(new BorderLayout());
 	//gg.setPreferredSize(dim);
 
 
-	JPanel EntryBox1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 2));
+	JPanel EntryBox1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
 	
 
-        JButton tButton = new JButton(m_ic.getMessage("GRAPH"));
+        JButton tButton = new JButton("  " + m_ic.getMessage("GRAPH"));
         tButton.setPreferredSize(dim);
+        tButton.setIcon(m_da.getImageIcon_22x22("course.png", this));
 	//tButton.setMaximumSize(dim);
 	tButton.setActionCommand("show_daily_graph");
 	tButton.addActionListener(this);
 
 	EntryBox1.add(tButton);
 
+	
+        help_button = m_da.createHelpButtonBySize(95, 25, this); 
+
+        EntryBox1.add(help_button);
+	
 	gg.add(EntryBox1, BorderLayout.WEST);
 	
 	
 	JPanel EntryBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 1, 2));
         //Dimension dim = new Dimension(120, 20);
 
-        JButton addButton = new JButton(m_ic.getMessage("ADD_ROW"));
+        JButton addButton = new JButton("  " + m_ic.getMessage("ADD"));
         addButton.setPreferredSize(dim);
+        addButton.setIcon(m_da.getImageIcon_22x22("table_add.png", this)); 
 	addButton.setActionCommand("add_row");
 	addButton.addActionListener(this);
 	EntryBox.add(addButton);
 
-	JButton editButton = new JButton(m_ic.getMessage("EDIT_ROW"));
+	JButton editButton = new JButton("  " + m_ic.getMessage("EDIT"));
 	editButton.setPreferredSize(dim);
+        editButton.setIcon(m_da.getImageIcon_22x22("table_edit.png", this)); 
 	editButton.setActionCommand("edit_row");
 	editButton.addActionListener(this);
         EntryBox.add(editButton);
 
-        JButton delButton = new JButton(m_ic.getMessage("DELETE_ROW"));
+        JButton delButton = new JButton("  " + m_ic.getMessage("DELETE"));
         delButton.setPreferredSize(dim);
+        delButton.setIcon(m_da.getImageIcon_22x22("table_delete.png", this)); 
         delButton.setActionCommand("delete_row");
         delButton.addActionListener(this);
         EntryBox.add(delButton);
 
-        saveButton = new JButton(m_ic.getMessage("CLOSE"));
+        saveButton = new JButton("  " + m_ic.getMessage("CLOSE"));
         saveButton.setPreferredSize(dim);
+        saveButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this)); 
 	saveButton.setActionCommand("close");
 	saveButton.addActionListener(this);
         EntryBox.add(saveButton);
@@ -323,10 +310,14 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 	getContentPane().add(gg, BorderLayout.SOUTH);
 
         updateLabels();
+        
+        m_da.enableHelp(this);
 
         setVisible(true);
     }
 
+    
+    
     public void updateLabels()
     {
         if (dayData == null)
@@ -461,13 +452,39 @@ public class DailyStatsDialog extends JDialog implements ActionListener
 
     }
 
-/*
-    private class CloseListener extends WindowAdapter
+    
+    
+
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
     {
-        public void windowClosing(WindowEvent e)
-        {
-            close();
-        }
+	return this.getRootPane();
     }
-  */  
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.help_button;
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_BG_Daily_View";
+    }
+    
+    
+    
+    
 }

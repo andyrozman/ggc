@@ -35,25 +35,25 @@ import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.atech.help.HelpCapable;
 
-public class SpreadGraphDialog extends JDialog implements ActionListener
+
+public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCapable
 {
+    private JButton help_button = null;
 
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
@@ -72,20 +72,13 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
     private DateRangeSelectionPanel dRS;
 
 
-    public SpreadGraphDialog(JFrame parent)
+    public SpreadGraphDialog(DataAccess da)
     {
-        super();
+        super(da.getParent(), "", true);
         setTitle(m_ic.getMessage("SPREAD_GRAPH"));
 
-	Rectangle rec = parent.getBounds();
-	int x = rec.x + (rec.width/2);
-	int y = rec.y + (rec.height/2);
-
-
-	setBounds(x-350, y-250, 700, 500);
-
-
-        addWindowListener(new CloseListener());
+        setSize(700, 520);
+        m_da.centerJDialog(this, da.getMainParent());
 
         sGV = new SpreadGraphView(this);
         getContentPane().add(sGV, BorderLayout.CENTER);
@@ -93,6 +86,8 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
         JPanel controlPanel = initControlPanel();
         getContentPane().add(controlPanel, BorderLayout.SOUTH);
 
+        m_da.enableHelp(this);
+        
         setVisible(true);
     }
 
@@ -114,15 +109,22 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
         optionsPanel.add(chkConnect = new JCheckBox("  " + m_ic.getMessage("CONNECT_VALUES_FOR_ONE_DAY"), false));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        Dimension dim = new Dimension(80, 20);
-        JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
+        Dimension dim = new Dimension(120, 25);
+        
+        help_button = m_da.createHelpButtonBySize(120, 25, this);
+        buttonPanel.add(help_button);
+
+        
+        JButton drawButton = new JButton("    " + m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
+        drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", this));
 	drawButton.setActionCommand("draw");
 	drawButton.addActionListener(this);
 
-        JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
+        JButton closeButton = new JButton("    " + m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
 	closeButton.setActionCommand("close");
+        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
 	closeButton.addActionListener(this);
         buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);
@@ -132,6 +134,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
         cPanel.add(optionsPanel, BorderLayout.EAST);
         cPanel.add(buttonPanel, BorderLayout.SOUTH);
 
+      
         return cPanel;
     }
 
@@ -139,41 +142,6 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
     {
         sGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
-
-    /*
-    public static void showMe()
-    {
-        if (singleton == null)
-            singleton = new SpreadGraphFrame();
-        singleton.show();
-    }*/
-
-/*
-    public static void closeMe()
-    {
-        if (singleton != null) {
-            singleton.dispose();
-            singleton = null;
-            sGV = null;
-        }
-    }
-    */
-
-/*
-    public static SpreadGraphFrame getInstance()
-    {
-        if (singleton == null)
-            singleton = new SpreadGraphFrame();
-        return singleton;
-    }
-*/
-
-    /*
-    public static void redraw()
-    {
-        if (singleton != null)
-            singleton.repaint();
-    }*/
 
     public boolean getDrawBG()
     {
@@ -209,14 +177,6 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
 
 
 
-    private class CloseListener extends WindowAdapter
-    {
-        @Override
-        public void windowClosing(WindowEvent e)
-        {
-            closeDialog();
-        }
-    }
 
 
 
@@ -243,4 +203,35 @@ public class SpreadGraphDialog extends JDialog implements ActionListener
     }
 
 
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.help_button;
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_BG_Graph_Spread";
+    }
+    
+    
+    
 }

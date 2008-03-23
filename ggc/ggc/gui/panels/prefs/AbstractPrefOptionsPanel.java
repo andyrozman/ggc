@@ -29,20 +29,20 @@
 package ggc.gui.panels.prefs;
 
 
+import ggc.gui.dialogs.PropertiesDialog;
+import ggc.util.DataAccess;
+import ggc.util.GGCProperties;
+import ggc.util.I18nControl;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-//import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
 
 
 public abstract class AbstractPrefOptionsPanel extends JPanel implements DocumentListener, ItemListener, ActionListener
@@ -56,8 +56,14 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     protected boolean changed = false;
 
     public abstract void saveProps();
+    PropertiesDialog parent;
 
-
+    public AbstractPrefOptionsPanel(PropertiesDialog dialog)
+    {
+	this.parent = dialog;
+    }
+    
+    
     public void setChanged(boolean change)
     {
         changed = change;

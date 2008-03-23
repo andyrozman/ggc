@@ -28,25 +28,34 @@
 package ggc.gui.dialogs;
 
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.GregorianCalendar;
-
-import javax.swing.*;
-
 import ggc.data.HbA1cValues;
-//import ggc.db.DataBaseHandler;
-import ggc.gui.MainFrame;
 import ggc.gui.view.HbA1cView;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 
-public class HbA1cDialog extends JDialog implements ActionListener
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import com.atech.help.HelpCapable;
+
+
+public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 {
+    
+    JButton help_button;    
+
     private I18nControl m_ic = I18nControl.getInstance();        
 
     //private static HbA1cFrame singleton = null;
@@ -62,17 +71,19 @@ public class HbA1cDialog extends JDialog implements ActionListener
     private DataAccess m_da = null;
 
 
-    public HbA1cDialog(MainFrame parent)
+    public HbA1cDialog(DataAccess da)
     {
-        super(parent, "HbA1c", true);
+        super(da.getMainParent(), "HbA1c", true);
+        this.m_da = da;
         init();
 
-        m_da = DataAccess.getInstance();
-
-        hbValues = m_da.getHbA1c(new GregorianCalendar());
+        hbValues = this.m_da.getHbA1c(new GregorianCalendar());
         updateLabels();
 
         hbView.setHbA1cValues(hbValues);
+        
+        this.m_da.enableHelp(this);
+        
 	this.setVisible(true);
     }
 
@@ -88,8 +99,6 @@ public class HbA1cDialog extends JDialog implements ActionListener
     private void init()
     {
         getContentPane().setLayout(new BorderLayout());
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new CloseListener());
         setBounds(100, 100, 500, 430);
 
         JPanel infoPanel = new JPanel(new BorderLayout());
@@ -122,13 +131,19 @@ public class HbA1cDialog extends JDialog implements ActionListener
         e.add(d);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
-        closeButton.setPreferredSize(new Dimension(80, 20));
+        JButton closeButton = new JButton("   " + m_ic.getMessage("CLOSE"));
+        closeButton.setPreferredSize(new Dimension(100, 25));
+        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));        
 	closeButton.addActionListener(this);
 	closeButton.setActionCommand("close");
 
         buttonPanel.add(closeButton);
 
+        //System.out.println("m_da: " + this.m_da);
+        
+        this.help_button = this.m_da.createHelpButtonBySize(100, 25, this);
+        buttonPanel.add(help_button);
+        
         infoPanel.add(buttonPanel, BorderLayout.SOUTH);
         infoPanel.add(e, BorderLayout.NORTH);
 
@@ -138,6 +153,9 @@ public class HbA1cDialog extends JDialog implements ActionListener
         getContentPane().add(infoPanel, BorderLayout.EAST);
     }
 
+    
+    
+    
     public void setHbA1cText(String s)
     {
         lblHbA1c.setText(s);
@@ -163,48 +181,12 @@ public class HbA1cDialog extends JDialog implements ActionListener
         lblExp.setText(s);
     }
 
-    /*
-    public static void showMe()
-    {
-        if (singleton == null)
-            singleton = new HbA1cFrame();
-        singleton.show();
-    }
-
-    public static void closeMe()
-    {
-        if (singleton != null) {
-            singleton.dispose();
-            singleton = null;
-        }
-    }
-
-    public static HbA1cFrame getInstance()
-    {
-        if (singleton == null)
-            singleton = new HbA1cFrame();
-        return singleton;
-    }
-    */
-
 
     private void closeDialog()
     {
         hbView = null;
         this.dispose();
     }
-
-
-    private class CloseListener extends WindowAdapter
-    {
-    	@Override
-        public void windowClosing(WindowEvent e)
-    	{
-    	    closeDialog();
-    	}
-    }
-
-
 
 
 
@@ -221,7 +203,36 @@ public class HbA1cDialog extends JDialog implements ActionListener
         }
         else
             System.out.println("HbA1cDialog:Unknown command: " + action);
-
-
     }
+    
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.help_button;
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_BG_HbA1c";
+    }
+
+    
 }

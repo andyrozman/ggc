@@ -27,7 +27,10 @@
 
 package ggc.gui.panels.prefs;
 
+import ggc.gui.dialogs.PropertiesDialog;
+
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -43,8 +46,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileView;
 
+import com.atech.help.HelpCapable;
 
-public class PrefPrintingPane extends AbstractPrefOptionsPanel
+
+public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCapable
 {
     //private JComboBox comboMeterType;
     //private JComboBox comboPortId;
@@ -66,9 +71,11 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
     private JButton buttonBrowse;
 
     
-    public PrefPrintingPane()
+    public PrefPrintingPane(PropertiesDialog dia)
     {
+	super(dia);
         init();
+        //m_da.enableHelp(this);
     }
 
 
@@ -399,4 +406,39 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel
 	settings.setPrintNightStartTime(getTimeValue(fieldNightST, 2100));
 
     }
+    
+    
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.parent.getHelpButton();
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_Prefs_Printing";
+    }
+    
+    
+    
+    
+    
 }

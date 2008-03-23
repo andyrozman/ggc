@@ -78,9 +78,10 @@
 
   </tocitem>
   <tocitem text="Preferences ">
-   <tocitem text="Main " target="pages.GGC_Prefs_Main"/>
 
    <tocitem text="General " target="pages.GGC_Prefs_General"/>
+
+   <tocitem text="Medial Data " target="pages.GGC_Prefs_MedicalData"/>
 
    <tocitem text="Colors &amp; Fonts " target="pages.GGC_Prefs_Colors_Fonts"/>
 

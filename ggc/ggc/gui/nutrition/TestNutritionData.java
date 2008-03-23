@@ -36,7 +36,6 @@ import ggc.db.hibernate.FoodUserDescriptionH;
 import ggc.db.hibernate.FoodUserGroupH;
 import ggc.db.hibernate.MealGroupH;
 import ggc.db.hibernate.MealH;
-import ggc.gui.nutrition.dialogs.FoodPartMainSelectorDialog;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
@@ -58,10 +57,9 @@ public class TestNutritionData
 	
 	db = new GGCDb(m_da);
 	db.initDb();
-	
 	m_da.setDb(db);
 	
-	m_da.m_i18n = I18nControl.getInstance();
+	m_da.setI18nControlInstance(I18nControl.getInstance());
 	
 	
 	db.loadNutritionDbBase();

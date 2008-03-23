@@ -28,21 +28,26 @@
 package ggc.gui.panels.prefs;
 
 
+import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.view.DailyGraphView;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ItemEvent;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import com.atech.help.HelpCapable;
 
-public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
+
+public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implements HelpCapable
 {
     private JComboBox comboAntiAliasing, comboColorRendering, comboDithering,
 		      comboFractionalMetrics, comboInterpolation, comboTextAntiAliasing,
@@ -52,9 +57,11 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
 
     private JPanel testingPanel;
 
-    public PrefRenderingQualityPane()
+    public PrefRenderingQualityPane(PropertiesDialog dia)
     {
+	super(dia);
         init();
+        //m_da.enableHelp(this);
     }
 
     private void init()
@@ -149,4 +156,37 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel
         dgv.repaint();
     }
 
+    
+    
+    
+
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.parent.getHelpButton();
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_Prefs_Rendering";
+    }
+    
+    
 }

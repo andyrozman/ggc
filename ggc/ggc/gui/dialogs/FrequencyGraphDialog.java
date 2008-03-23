@@ -31,45 +31,50 @@ package ggc.gui.dialogs;
 import ggc.data.GlucoValues;
 import ggc.gui.calendar.DateRangeSelectionPanel;
 import ggc.gui.view.FrequencyGraphView;
+import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.atech.help.HelpCapable;
 
-public class FrequencyGraphDialog extends JDialog implements ActionListener
+
+public class FrequencyGraphDialog extends JDialog implements ActionListener, HelpCapable
 {
     private I18nControl m_ic = I18nControl.getInstance();    
-    //private DataAccess m_da = DataAccess.getInstance();
+    private DataAccess m_da = null;
 
     private FrequencyGraphView fGV;
+    JButton help_button = null;
 
     //ivate GGCProperties props = GGCProperties.getInstance();
     private DateRangeSelectionPanel dRS;
 
 
-    public FrequencyGraphDialog(JFrame parent)
+    public FrequencyGraphDialog(DataAccess da)
     {
-        super(parent, "CourseGraphFrame", true);
+        super(da.getMainParent(), "CourseGraphFrame", true);
         setTitle(m_ic.getMessage("FREQGRAPHFRAME"));
 
+        this.m_da = da;
+        /*
 	Rectangle rec = parent.getBounds();
 	int x = rec.x + (rec.width/2);
 	int y = rec.y + (rec.height/2);
 
 	setBounds(x-350, y-250, 700, 500);
         addWindowListener(new CloseListener());
+        */
+        setSize(700, 520);
 
         fGV = new FrequencyGraphView();
         getContentPane().add(fGV, BorderLayout.CENTER);
@@ -77,6 +82,8 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener
         JPanel controlPanel = initControlPanel();
         getContentPane().add(controlPanel, BorderLayout.SOUTH);
 
+        m_da.enableHelp(this);
+        
         setVisible(true);
     }
 
@@ -88,15 +95,22 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener
         dRS = new DateRangeSelectionPanel();
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        Dimension dim = new Dimension(80, 20);
+        Dimension dim = new Dimension(120, 25);
+
+        help_button = m_da.createHelpButtonBySize(120, 25, this);
+        buttonPanel.add(help_button);
+        
+        
         JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
 	drawButton.setActionCommand("draw");
+        drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", this));
 	drawButton.addActionListener(this);
 
         JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
 	closeButton.setActionCommand("close");
+        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
 	closeButton.addActionListener(this);
 
 	buttonPanel.add(drawButton);
@@ -120,15 +134,6 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener
 	this.dispose();
     }
 
-
-    private class CloseListener extends WindowAdapter
-    {
-        @Override
-        public void windowClosing(WindowEvent e)
-        {
-	    closeDialog();
-        }
-    }
 
 
     /**
@@ -154,4 +159,36 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener
 	    System.out.println("FrequencyGraphFrame: Unknown command: " + action);
     }
 
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.help_button;
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_BG_Graph_Frequency";
+    }
+    
+    
+    
 }
+

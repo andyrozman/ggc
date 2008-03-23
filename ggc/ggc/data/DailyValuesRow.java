@@ -799,6 +799,7 @@ public class DailyValuesRow implements Serializable
             m_dv.setIns1(ins1);
             m_dv.setIns2(ins2);
             m_dv.setExtended(createExtended());
+            m_dv.setPerson_id(m_da.getCurrentPersonId());
 //	    m_dv.setMeals_ids("");
         }
         else

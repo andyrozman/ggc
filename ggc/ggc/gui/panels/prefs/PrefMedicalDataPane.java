@@ -28,18 +28,24 @@
 package ggc.gui.panels.prefs;
 
 
+import ggc.gui.dialogs.PropertiesDialog;
+
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import com.atech.help.HelpCapable;
 
-public class PrefMedicalDataPane extends AbstractPrefOptionsPanel
+
+public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements HelpCapable
 {
     // insulins
     private JTextField fieldIns1Name, fieldIns2Name, fieldIns1Abbr, fieldIns2Abbr;
@@ -52,9 +58,11 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel
 
     JComboBox cbUnit = null;
 
-    public PrefMedicalDataPane()
+    public PrefMedicalDataPane(PropertiesDialog dia)
     {
+	super(dia);
         init();
+        //m_da.enableHelp(this);
     }
 
     private void init()
@@ -156,4 +164,37 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel
 	settings.setBG_unit(cbUnit.getSelectedIndex()+1);
 
     }
+    
+    
+
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.parent.getHelpButton();
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_Prefs_MedicalData";
+    }
+    
+    
+    
 }

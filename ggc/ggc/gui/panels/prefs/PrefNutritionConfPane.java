@@ -27,6 +27,8 @@
 
 package ggc.gui.panels.prefs;
 
+import ggc.gui.dialogs.PropertiesDialog;
+
 import java.awt.BorderLayout;
 import java.io.File;
 
@@ -44,8 +46,9 @@ public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
     private JLabel lab_file = null;
 
 
-    public PrefNutritionConfPane()
+    public PrefNutritionConfPane(PropertiesDialog dia)
     {
+	super(dia);
         init();
         getLocalData();
         getDbData();

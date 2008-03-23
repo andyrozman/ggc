@@ -91,7 +91,7 @@ public class DataAccess extends ATDataAccessAbstract
 
     public static final String pathPrefix = ".";
 
-    public I18nControl m_i18n = null;
+    //public I18nControl m_i18n = null;
 
     private static DataAccess s_da = null; // This is handle to unique 
 
@@ -218,7 +218,9 @@ public class DataAccess extends ATDataAccessAbstract
 
         this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
 
-        m_i18n = I18nControl.getInstance();
+        //m_i18n = I18nControl.getInstance();
+        
+        this.setI18nControlInstance(I18nControl.getInstance());
 
         loadOptions();
 
@@ -273,23 +275,6 @@ public class DataAccess extends ATDataAccessAbstract
     }
 
     
-    public String getApplicationName()
-    {
-	return "GGC";
-    }
-    
-    
-    
-    public void checkPrerequisites()
-    {
-	// check that ../data/temp exists (needed for printing)
-
-	File f = new File("../data/temp/");
-	if (!f.exists())
-	{
-	    f.mkdir();
-	}
-    }
 
 
     /*
@@ -359,8 +344,35 @@ public class DataAccess extends ATDataAccessAbstract
 	}
     }
     
+    // ********************************************************
+    // ******         Abstract Methods                    *****    
+    // ********************************************************
+    
+
+
+    public String getApplicationName()
+    {
+	return "GGC";
+    }
     
     
+    
+    public void checkPrerequisites()
+    {
+	// check that ../data/temp exists (needed for printing)
+
+	File f = new File("../data/temp/");
+	if (!f.exists())
+	{
+	    f.mkdir();
+	}
+    }
+    
+    
+    public String getImagesRoot()
+    {
+	return "/icons/";
+    }
     
     // ********************************************************
     // ******                 Icons                       *****    
@@ -711,10 +723,11 @@ public class DataAccess extends ATDataAccessAbstract
         return m_main_little;
     }
 
+    /*
     public I18nControl getI18nInstance()
     {
-        return m_i18n;
-    }
+        return this.getI18nInstance();
+    } */ 
 
     /**
      *  Utils
@@ -727,6 +740,8 @@ public class DataAccess extends ATDataAccessAbstract
 
         InputStream is = this.getClass().getResourceAsStream(filename);
 
+        //System.out.println("getImage: " + filename);
+        
         if (is==null)
             System.out.println("Error reading image: "+filename);
 
@@ -750,6 +765,19 @@ public class DataAccess extends ATDataAccessAbstract
         return img;
     }
 
+    
+    // ********************************************************
+    // ******            Person Id / Login                *****    
+    // ********************************************************
+    
+    private int current_person_id = 1;
+    
+    public int getCurrentPersonId()
+    {
+	return this.current_person_id;
+    }
+    
+    
     
     // ********************************************************
     // ******               I18n Utils                    *****    

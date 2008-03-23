@@ -33,6 +33,7 @@ import ggc.data.print.PrintSimpleMonthlyReport;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -52,10 +53,12 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
+import com.atech.help.HelpCapable;
+
 
 // fix this
 
-public class PrintingDialog extends JDialog implements ActionListener
+public class PrintingDialog extends JDialog implements ActionListener, HelpCapable
 {
 
     private I18nControl m_ic = I18nControl.getInstance();
@@ -69,6 +72,7 @@ public class PrintingDialog extends JDialog implements ActionListener
 
     GregorianCalendar gc = null;
     JSpinner sl_year = null, sl_month = null;
+    JButton help_button;
 
     public String[] report_types = 
     {
@@ -94,6 +98,7 @@ public class PrintingDialog extends JDialog implements ActionListener
         font_normal_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
 
         gc = new GregorianCalendar();
+        setTitle(m_ic.getMessage("PRINTING"));
         
         init();
 
@@ -173,20 +178,37 @@ public class PrintingDialog extends JDialog implements ActionListener
         panel.add(sl_month);
 
         
-        JButton button = new JButton(m_ic.getMessage("OK"));
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        JButton button = new JButton("   " + m_ic.getMessage("OK"));
+        //button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
         button.setActionCommand("ok");
         button.addActionListener(this);
-        button.setBounds(100, 240, 80, 25);
+        button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
+        button.setBounds(90, 240, 100, 25);
         panel.add(button);
     
-        button = new JButton(m_ic.getMessage("CANCEL"));
+        button = new JButton("   " + m_ic.getMessage("CANCEL"));
+        //button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setActionCommand("cancel");
+        button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        button.addActionListener(this);
+        button.setBounds(200, 240, 100, 25);
+        panel.add(button);
+
+        
+        help_button = m_da.createHelpButtonByBounds(210, 210, 90, 25, this);
+        panel.add(help_button);
+            
+        m_da.enableHelp(this);
+        
+        /*
+            new JButton(m_ic.getMessage("CANCEL"));
         button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
         button.setActionCommand("cancel");
         button.addActionListener(this);
-        button.setBounds(190, 240, 80, 25);
+        button.setBounds(190, 240, 110, 25);
         panel.add(button);
-
+        */
+        
     }
 
 
@@ -342,4 +364,37 @@ public class PrintingDialog extends JDialog implements ActionListener
         return res;
     }
 
+    
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.help_button;
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_Print_Selector";
+    }
+    
+    
+    
+    
 }

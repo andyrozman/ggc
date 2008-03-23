@@ -63,7 +63,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.setDecimal_places("");
 	
 	//ic = DataAccess
-	ic = DataAccess.getInstance().getI18nInstance();
+	ic = DataAccess.getInstance().getI18nControlInstance();
 	
 	this.setSearchContext();
     }
@@ -76,7 +76,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.setName(ch.getName());
 	this.setWeight_unit(ch.getWeight_unit());
 	this.setDecimal_places(ch.getDecimal_places());
-	ic = DataAccess.getInstance().getI18nInstance();
+	ic = DataAccess.getInstance().getI18nControlInstance();
 	this.setSearchContext();
     }
 

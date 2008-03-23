@@ -59,7 +59,7 @@ public class AboutGGCDialog extends AboutDialog
 	
     public AboutGGCDialog(JFrame parent)
     {
-        super(parent, true, DataAccess.getInstance().getI18nInstance());
+        super(parent, true, DataAccess.getInstance().getI18nControlInstance());
 
         // licence
         this.setLicenceType(LicenceInfo.LICENCE_LGPL_v2_1);

@@ -31,12 +31,14 @@ package ggc.gui.panels.prefs;
 
 import ggc.data.DailyValues;
 import ggc.db.hibernate.ColorSchemeH;
+import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SchemeDialog;
 import ggc.gui.dialogs.SchemeEDDialog;
 import ggc.gui.view.DailyGraphView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -55,7 +57,6 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -64,8 +65,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.atech.help.HelpCapable;
 
-public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements MouseListener, ActionListener, ListSelectionListener, ItemListener
+
+public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements MouseListener, ActionListener, ListSelectionListener, ItemListener, HelpCapable
 {
     private JList itemList;
     private JLabel lblcolor;
@@ -84,13 +87,14 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
     private DailyGraphView dgv = null;
 
-    JDialog parent = null;
+//    JDialog parent = null;
 
     long selected_id = 0;
 
-    public PrefFontsAndColorPane(JDialog dialog)
+    public PrefFontsAndColorPane(PropertiesDialog dia)
     {
-	this.parent = dialog;
+	super(dia);
+	//this.parent = dialog;
 
 	color_schemes = settings.getColorSchemes();
 	selected_sheme = settings.getSelectedColorScheme();
@@ -126,6 +130,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 	items.add(m_ic.getMessage("INS_SLASH_BU_QUOTIENT")); 
 
         init();
+        //m_da.enableHelp(this);
     }
 
     private void init()
@@ -511,4 +516,38 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 	}
 
     }
+    
+    
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /* 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+	return this.getRootPane();
+    }
+
+    /* 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+	return this.parent.getHelpButton();
+    }
+
+    /* 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+	return "pages.GGC_Prefs_Colors_Fonts";
+    }
+    
+    
+    
+    
 }

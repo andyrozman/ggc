@@ -2,7 +2,6 @@
 package ggc.gui.nutrition.data;
 
 import ggc.gui.nutrition.display.HomeWeightDataDisplay;
-import ggc.gui.nutrition.display.NutritionDataDisplay;
 
 import java.util.Comparator;
 

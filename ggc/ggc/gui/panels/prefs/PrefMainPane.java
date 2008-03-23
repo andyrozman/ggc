@@ -27,6 +27,7 @@
 
 package ggc.gui.panels.prefs;
 
+import ggc.gui.dialogs.PropertiesDialog;
 import ggc.util.I18nControl;
 
 import java.awt.GridLayout;
@@ -43,8 +44,9 @@ public class PrefMainPane extends AbstractPrefOptionsPanel
 
 //x    private JComboBox langBox;
 
-    public PrefMainPane() 
+    public PrefMainPane(PropertiesDialog dialog) 
     {
+	super(dialog);
         init();
     }
 

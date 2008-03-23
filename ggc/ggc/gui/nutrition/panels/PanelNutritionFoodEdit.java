@@ -4,7 +4,6 @@ package ggc.gui.nutrition.panels;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.MealGroup;
 import ggc.db.datalayer.NutritionDefinition;
 import ggc.gui.nutrition.NutritionTreeDialog;
 import ggc.gui.nutrition.data.HomeWeightComparator;

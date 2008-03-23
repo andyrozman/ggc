@@ -1,3 +1,18 @@
+
+2008-03-22 (0.2.9.8) Andy Rozman <andyrozman@users.sourceforge.net>
+    * many changes in atech-tools, added selector, abstract DataAccess and some
+      other files. It is now required to use version of atech-tools 
+      directly from sourceforge (SVN)
+    * changed db loading. Partitial loading and menus/toolbar displaying
+    * changed database to refect multi person functionality
+    * added javahelp framework
+    * added help buttons in whole application
+    * through whole application icons were added and some code chenged to
+      be able to do this
+    * meal db added and 80% implemented
+    * usda nutrition db fixed (90% done)
+    * user nutrition db work started (about 40% done)
+
 2008-02-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * added new keys to GGC_de
     * fixed graph display offset bug

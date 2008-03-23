@@ -102,6 +102,8 @@ import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 //   0.2.9.2   new windows added (stock, schedule)
 //   0.2.9.3   remove meters support
 //    Menus (all), About, Db (all)
+//   0.2.9.7   Help integration
+//   0.2.9.8   
 // 
 //Specialty Definitions - Types of Doctors
 
@@ -135,6 +137,7 @@ public class MainFrame extends JFrame
     //public GGCHelp m_help;
 
     private Hashtable<String,GGCAction> actions = null;
+    private Hashtable<String,GGCAction> toolbar_items = null;
 
     /*
     private GGCAction ac_file_quit,    // file
@@ -248,101 +251,12 @@ public class MainFrame extends JFrame
 
 //menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;
 
-
-	// file menu
-	this.menu_file = this.createMenu("MN_FILE", null);
-	this.createAction(this.menu_file, "MN_LOGIN", "MN_LOGIN_DESC", "file_login", null);
-	this.createAction(this.menu_file, "MN_LOGOUT", "MN_LOGOUT_DESC", "file_logout", null);
-	this.menu_file.addSeparator();
-	this.createAction(this.menu_file, "MN_QUIT", "MN_QUIT_DESC", "file_quit", null);
-
-	// bgs menu
-	this.menu_bgs = this.createMenu("MN_BGS", null);
-	this.createAction(this.menu_bgs, "MN_DAILY", "MN_DAILY_DESC", "view_daily", "daily.gif"); 
-	this.createAction(this.menu_bgs, "MN_COURSE", "MN_COURSE_DESC", "view_course", "course.gif");
-	this.createAction(this.menu_bgs, "MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "spread.gif");
-	this.createAction(this.menu_bgs, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "frequency.gif");
-	this.menu_bgs.addSeparator();
-	this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", null);
-//	this.menu_bgs.addSeparator();
-//	this.createAction(this.menu_bgs, "MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter", "readmeter.gif");
+        createMenus();
 
 
-	// food menu
-	this.menu_food = this.createMenu("MN_FOOD", null);
-	this.createAction(this.menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
-	this.menu_food.addSeparator();
-	this.createAction(this.menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
-	this.menu_food.addSeparator();
-	this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
 
-	
-	// doctors menu
-	this.menu_doctor = this.createMenu("MN_DOCTOR", null);
-	this.createAction(this.menu_doctor, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
-	this.menu_doctor.addSeparator();
-	this.createAction(this.menu_doctor, "MN_APPOINT", "MN_APPOINT_DESC", "doc_appoint", null);
-	this.menu_doctor.addSeparator();
-	this.createAction(this.menu_doctor, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
-
-	// reports menu
-	this.menu_printing = this.createMenu("MN_PRINTING", null);
-	
-	JMenu menu_reports = this.createMenu(this.menu_printing, "MN_REPORTS", "MN_REPORTS_DESC");
-	
-	this.createAction(menu_reports, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", null);
-	this.createAction(menu_reports, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", null);
-
-	// meters
-	this.menu_meters = this.createMenu("MN_METERS", null);
-	this.createAction(menu_meters, "MN_METERS_READ", "MN_METERS_READ_DESC", "meters_read", null);
-	this.menu_meters.addSeparator();
-	this.createAction(menu_meters, "MN_METERS_LIST", "MN_METERS_LIST_DESC", "meters_list", null);
-	this.menu_meters.addSeparator();
-	this.createAction(menu_meters, "MN_METERS_CONFIG", "MN_METERS_CONFIG_DESC", "meters_config", null);
-	
-	
-	
-	// pumps
-	this.menu_pumps = this.createMenu("MN_PUMPS", null);
-	this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
-	this.menu_pumps.addSeparator();
-	this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
-	this.menu_pumps.addSeparator();
-	this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
-	
-	
-	//this.menu_misc = this.createMenu("MN_MISC", "MN_MISC_DESC");
-	//this.createAction(menu_misc, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
-	
-	// tools menu
-	this.menu_tools = this.createMenu("MN_TOOLS", null);
-	this.createAction(this.menu_tools, "MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", null);
-	this.menu_tools.addSeparator();
-	this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC", "tools_db_maint", null);
-	//this.menu_tools.addSeparator();
-	this.createAction(this.menu_tools, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
-	//this.createAction(this.menu_tools, "MN_METER_LIST", "MN_METER_LIST_DESC", "tools_mlist", null);
-
-	//addMenuItem(menu_tools, prefAction);
-
-	// help menu
-	this.menu_help = this.createMenu("MN_HELP", null);
-	this.menu_help.add(m_da.getHelpContext().getHelpItem());
-	//this.actions.put("hlp_help", GGCHelp.helpItem);
-	this.menu_help.addSeparator();
-	this.createAction(this.menu_help,"MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
-	//this.menu_help.addSeparator();
-	//this.createAction(this.menu_help,"MN_CHECK_FOR_UPDATE2", "MN_CHECK_FOR_UPDATE2_DESC", "hlp_check_update", null);
-	this.menu_help.addSeparator();
-	this.createAction(this.menu_help,"MN_ABOUT", "MN_ABOUT_DESC", "hlp_about", null);
-
-
-	//this.createAction(null, "&Test", "Testing option", "test", null);
-
-
-        toolBar.setFloatable(false);
-        toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
+        createToolBar();
+        /*
         addToolBarButtonWithName("view_daily");
         addToolBarButtonWithName("view_course"); 
         addToolBarButtonWithName("view_spread");
@@ -354,14 +268,7 @@ public class MainFrame extends JFrame
         addToolBarSpacer();
         addToolBarSpacer();
         //addToolBarButtonWithName("view_freq");
-/* 
-        // meters removed for 0.3
-        addToolBarButtonWithName("read_meter");
-        addToolBarSpacer();
-        addToolBarSpacer();
-        */
 
-	this.createAction(null,"MN_HELP", "MN_HELP_DESC", "hlp_help", "help.gif");
         
         
         addToolBarButtonWithName("tools_pref");
@@ -369,19 +276,10 @@ public class MainFrame extends JFrame
         addToolBarSpacer();
         addToolBarButtonWithName("hlp_help");
 
-
+*/
 	//this.menu_help.add(GGCHelp.helpItem);
 
         
-        /*
-        JMenuItem hlp = new JMenuItem(); //m_ic.getMessage("HELP"));
-        hlp.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
-        
-        hlp.addActionListener(m_help.csh);
-        hlp.setHideActionText(true);
-        toolBar.add(hlp);*/
-
-        //y addToolBarButtonWithName("test");
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
@@ -394,11 +292,128 @@ public class MainFrame extends JFrame
         informationPanel = new InfoPanel();
         getContentPane().add(informationPanel, BorderLayout.CENTER);
 
-        setDbActions(false);
+        //setDbActions(false);
+        setMenusByDbLoad(StatusBar.DB_STOPPED);
         this.setVisible(true);
 
     }
 
+    
+    public void createMenus()
+    {
+	// file menu
+	this.menu_file = this.createMenu("MN_FILE", null);
+	this.createAction(this.menu_file, "MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png");
+	this.createAction(this.menu_file, "MN_LOGOUT", "MN_LOGOUT_DESC", "file_logout", "logout.png");
+	this.menu_file.addSeparator();
+	this.createAction(this.menu_file, "MN_QUIT", "MN_QUIT_DESC", "file_quit", null);
+
+	// bgs menu
+	this.menu_bgs = this.createMenu("MN_BGS", null);
+	this.createAction(this.menu_bgs, "MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png"); //"daily.gif"); 
+	this.createAction(this.menu_bgs, "MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png"); //"course.gif");
+	this.createAction(this.menu_bgs, "MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png"); //"spread.gif");
+	this.createAction(this.menu_bgs, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png"); //"frequency.gif");
+	this.menu_bgs.addSeparator();
+	this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png"); //null);
+	
+	// food menu
+	this.menu_food = this.createMenu("MN_FOOD", null);
+	this.createAction(this.menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
+	this.menu_food.addSeparator();
+	this.createAction(this.menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
+	this.menu_food.addSeparator();
+	this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
+	
+	// doctors menu
+	this.menu_doctor = this.createMenu("MN_DOCTOR", null);
+	this.createAction(this.menu_doctor, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
+	this.menu_doctor.addSeparator();
+	this.createAction(this.menu_doctor, "MN_APPOINT", "MN_APPOINT_DESC", "doc_appoint", null);
+	this.menu_doctor.addSeparator();
+	this.createAction(this.menu_doctor, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
+
+	// reports menu
+	this.menu_printing = this.createMenu("MN_PRINTING", null);
+	JMenu menu_reports = this.createMenu(this.menu_printing, "MN_REPORTS", "MN_REPORTS_DESC");
+	this.createAction(menu_reports, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png");
+	this.createAction(menu_reports, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", "print.png");
+
+	// meters
+	this.menu_meters = this.createMenu("MN_METERS", null);
+	this.createAction(menu_meters, "MN_METERS_READ", "MN_METERS_READ_DESC", "meters_read", null);
+	this.menu_meters.addSeparator();
+	this.createAction(menu_meters, "MN_METERS_LIST", "MN_METERS_LIST_DESC", "meters_list", null);
+	this.menu_meters.addSeparator();
+	this.createAction(menu_meters, "MN_METERS_CONFIG", "MN_METERS_CONFIG_DESC", "meters_config", null);
+	
+	// pumps
+	this.menu_pumps = this.createMenu("MN_PUMPS", null);
+	this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
+	this.menu_pumps.addSeparator();
+	this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
+	this.menu_pumps.addSeparator();
+	this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
+	
+	// tools menu
+	this.menu_tools = this.createMenu("MN_TOOLS", null);
+	this.createAction(this.menu_tools, "MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png");
+	this.menu_tools.addSeparator();
+	this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC", "tools_db_maint", null);
+	this.menu_tools.addSeparator();
+	this.createAction(this.menu_tools, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
+
+
+	// help menu
+	this.menu_help = this.createMenu("MN_HELP", null);
+	this.menu_help.add(m_da.getHelpContext().getHelpItem());
+	this.menu_help.addSeparator();
+	this.createAction(this.menu_help,"MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
+	this.menu_help.addSeparator();
+	this.createAction(this.menu_help,"MN_ABOUT", "MN_ABOUT_DESC", "hlp_about", null);
+	
+    }
+    
+
+    private void createToolBar()
+    {
+
+        toolBar.setFloatable(false);
+        toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
+	
+	
+	this.toolbar_items = new Hashtable<String,GGCAction>();
+	
+	Dimension d = new Dimension(25, 25);
+	
+	toolBar.addSeparator(d);
+	this.createToolbarAction("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png");
+	toolBar.addSeparator(d);
+	
+	this.createToolbarAction("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png"); 
+	this.createToolbarAction("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png");
+	this.createToolbarAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png");
+	this.createToolbarAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png");
+	this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png");
+	toolBar.addSeparator(d);
+
+
+	this.createToolbarAction("MN_MEALS", "MN_MEALS_DESC", "food_meals", "food.png");
+	toolBar.addSeparator(d);
+	
+	this.createToolbarAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png");
+	toolBar.addSeparator(d);
+	
+	this.createToolbarAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png");
+	toolBar.addSeparator(d);
+	toolBar.addSeparator(d);
+	toolBar.addSeparator(d);
+	
+	this.createToolbarAction("MN_HELP", "MN_HELP_DESC", "hlp_help", "help.png");
+	
+    }
+    
+    
     
     public void helpInit()
     {
@@ -547,6 +562,23 @@ public class MainFrame extends JFrame
     	return item;
     }
     
+
+    private void createToolbarAction(String name, String tip, String action_command, String icon_small)
+    {
+    	GGCAction action = new GGCAction(name, tip, action_command);
+    
+    	if (icon_small!=null)
+    	{
+    	    action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small, 24, 24, this)); 
+    	}
+    	
+    	//this.toolBar.add(action);
+    	this.toolbar_items.put(action_command, action);
+    	
+    	addToolBarButton(action);
+    	
+    }
+    
     
     
     private void createAction(JMenu menu, String name, String tip, String action_command, String icon_small)
@@ -555,7 +587,9 @@ public class MainFrame extends JFrame
     
     	if (icon_small!=null)
     	{
-    	    action.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/" + icon_small)));
+    	    action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small, 15, 15, this)); 
+//    		    new ImageIcon(getClass().getResource("/icons/" + icon_small)));
+    	    //action.putValue(Action.LARGE_ICON_KEY, new ImageIcon(getClass().getResource("/icons/" + icon_small)));
     	}
     
     	if (menu!=null)
@@ -567,6 +601,152 @@ public class MainFrame extends JFrame
     }
 
 
+    public void setMenusByDbLoad(int status)
+    {
+	if (status == StatusBar.DB_STOPPED)
+	{
+	    // bgs menu
+	    this.menu_bgs.setEnabled(false);
+	    this.actions.get("view_daily").setEnabled(false);
+	    this.actions.get("view_course").setEnabled(false);
+	    this.actions.get("view_spread").setEnabled(false);
+	    this.actions.get("view_freq").setEnabled(false);
+	    this.actions.get("view_hba1c").setEnabled(false);
+		
+	    // reports menu
+	    this.menu_printing.setEnabled(false);
+	    this.actions.get("report_pdf_simple").setEnabled(false);
+	    this.actions.get("report_pdf_extended").setEnabled(false);
+	    
+	    // food menu
+	    this.menu_food.setEnabled(false);
+	    this.actions.get("food_nutrition_1").setEnabled(false);
+	    this.actions.get("food_nutrition_2").setEnabled(false);
+	    this.actions.get("food_meals").setEnabled(false);
+
+	    // tools menu
+	    this.menu_tools.setEnabled(false);
+	    this.actions.get("tools_pref").setEnabled(false);
+	    
+	    // help menu
+	    this.actions.get("hlp_check_update").setEnabled(false);
+	    
+	}
+	else if (status == StatusBar.DB_INIT_DONE)
+	{
+	    
+	    // bgs menu
+	    this.menu_bgs.setEnabled(true);
+	    this.actions.get("view_daily").setEnabled(true);
+	    this.actions.get("view_course").setEnabled(true);
+	    this.actions.get("view_spread").setEnabled(true);
+	    this.actions.get("view_freq").setEnabled(true);
+	    this.actions.get("view_hba1c").setEnabled(true);
+
+	    // reports menu
+	    this.menu_printing.setEnabled(true);
+	    this.actions.get("report_pdf_simple").setEnabled(true);
+	    this.actions.get("report_pdf_extended").setEnabled(true);
+
+	    // tools menu
+	    this.menu_tools.setEnabled(true);
+	    this.actions.get("tools_pref").setEnabled(true);
+		
+	    // help menu
+	    this.actions.get("hlp_check_update").setEnabled(true);
+	    
+	}
+	else if (status == StatusBar.DB_BASE_DONE)
+	{
+	    
+	}
+	else if (status == StatusBar.DB_LOADED)
+	{
+	    // food menu
+	    this.menu_food.setEnabled(true);
+	    this.actions.get("food_nutrition_1").setEnabled(true);
+	    this.actions.get("food_nutrition_2").setEnabled(true);
+	    this.actions.get("food_meals").setEnabled(true);
+	}
+	
+	/*
+
+	// file menu
+	this.createAction(this.menu_file, "MN_LOGIN", "MN_LOGIN_DESC", "file_login", null);
+	this.createAction(this.menu_file, "MN_LOGOUT", "MN_LOGOUT_DESC", "file_logout", null);
+	 
+	 
+	// tools menu
+	this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC", "tools_db_maint", null);
+	this.createAction(this.menu_tools, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
+
+	// meters
+	this.createAction(menu_meters, "MN_METERS_READ", "MN_METERS_READ_DESC", "meters_read", null);
+	this.createAction(menu_meters, "MN_METERS_LIST", "MN_METERS_LIST_DESC", "meters_list", null);
+	this.createAction(menu_meters, "MN_METERS_CONFIG", "MN_METERS_CONFIG_DESC", "meters_config", null);
+		
+	// pumps
+	this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
+	this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
+	this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
+	 
+	// doctors menu
+	this.createAction(this.menu_doctor, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
+	this.createAction(this.menu_doctor, "MN_APPOINT", "MN_APPOINT_DESC", "doc_appoint", null);
+	this.createAction(this.menu_doctor, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
+	 
+	 */
+	
+	setToolbarByDbLoad(status);
+    }
+    
+
+    public void setToolbarByDbLoad(int status)
+    {
+
+	//this.toolbar_items.get("hlp_help").setEnabled(true)
+	this.toolbar_items.get("file_login").setEnabled(false);
+	
+	if (status == StatusBar.DB_STOPPED)
+	{
+	    //this.createToolbarAction("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png");
+	    this.toolbar_items.get("view_daily").setEnabled(false);
+	    this.toolbar_items.get("view_course").setEnabled(false);
+	    this.toolbar_items.get("view_spread").setEnabled(false);
+	    this.toolbar_items.get("view_freq").setEnabled(false);
+	    this.toolbar_items.get("view_hba1c").setEnabled(false);
+
+	    this.toolbar_items.get("food_meals").setEnabled(false);
+		
+	    this.toolbar_items.get("report_pdf_simple").setEnabled(false);
+		
+	    this.toolbar_items.get("tools_pref").setEnabled(false);
+	}
+	else if (status == StatusBar.DB_INIT_DONE)
+	{
+	    this.toolbar_items.get("view_daily").setEnabled(true);
+	    this.toolbar_items.get("view_course").setEnabled(true);
+	    this.toolbar_items.get("view_spread").setEnabled(true);
+	    this.toolbar_items.get("view_freq").setEnabled(true);
+	    this.toolbar_items.get("view_hba1c").setEnabled(true);
+
+	    this.toolbar_items.get("report_pdf_simple").setEnabled(true);
+	}
+	else if (status == StatusBar.DB_BASE_DONE)
+	{
+	    this.toolbar_items.get("tools_pref").setEnabled(true);
+	}
+	else if (status == StatusBar.DB_LOADED)
+	{
+	    this.toolbar_items.get("food_meals").setEnabled(true);
+	}
+	
+	
+    }
+    
+    
+    
+/*    
     public void setDbActions(boolean opened) 
     {
 
@@ -599,7 +779,7 @@ public class MainFrame extends JFrame
 	*/
 
         //System.out.println("FIIIIIIIIIIIIIIIIIIIIIIXXXX this");
-    }
+  //  }
 
     private void close() 
     {
@@ -642,9 +822,9 @@ public class MainFrame extends JFrame
     {
         final JButton button = toolBar.add(action);
 
-        button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        button.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         button.setFocusPainted(false);
-        button.setPreferredSize(new Dimension(24, 24));
+        button.setPreferredSize(new Dimension(28, 28));
 
         return button;
     }
@@ -735,19 +915,19 @@ public class MainFrame extends JFrame
             } 
             else if (command.equals("view_daily")) 
             {
-                new DailyStatsDialog(getMyParent());
+                new DailyStatsDialog(m_da);
             } 
             else if (command.equals("view_course")) 
             {
-                new CourseGraphDialog(MainFrame.this); //.showMe();
+                new CourseGraphDialog(m_da); 
             } 
             else if (command.equals("view_spread")) 
             {
-                new SpreadGraphDialog(MainFrame.this);
+                new SpreadGraphDialog(m_da);
             } 
             else if (command.equals("view_freq")) 
             {
-                new FrequencyGraphDialog(MainFrame.this); //.showMe();
+                new FrequencyGraphDialog(m_da); 
             } 
             else if (command.equals("hlp_help"))
             {
@@ -756,17 +936,17 @@ public class MainFrame extends JFrame
             }
             else if (command.equals("view_hba1c")) 
             {
-                new HbA1cDialog(MainFrame.this);
+                new HbA1cDialog(m_da);
             } 
             else if (command.equals("tools_pref")) 
             {
-                PropertiesDialog pd = new PropertiesDialog(MainFrame.this);
+                PropertiesDialog pd = new PropertiesDialog(m_da);
 
-        		if (pd.wasOKAction())
-        		{
-        		    informationPanel.invalidatePanelsConstants();
-        		    informationPanel.refreshPanels();
-        		}
+    		if (pd.wasOKAction())
+    		{
+    		    informationPanel.invalidatePanelsConstants();
+    		    informationPanel.refreshPanels();
+    		}
             } 
 /*            else if (command.equals("read_meter")) 
             {
