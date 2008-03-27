@@ -115,7 +115,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
     Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
-    boolean debug = false;
+    boolean debug = true;
     JButton help_button = null;
 
 

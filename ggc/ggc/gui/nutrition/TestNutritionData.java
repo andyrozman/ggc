@@ -59,7 +59,7 @@ public class TestNutritionData
 	db.initDb();
 	m_da.setDb(db);
 	
-	m_da.setI18nControlInstance(I18nControl.getInstance());
+	//m_da.setI18nControlInstance(I18nControl.getInstance());
 	
 	
 	db.loadNutritionDbBase();

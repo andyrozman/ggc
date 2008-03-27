@@ -33,6 +33,7 @@ package ggc.gui.little;
 import ggc.data.DailyStatsTableModel;
 import ggc.data.DailyValues;
 import ggc.gui.panels.info.AbstractInfoPanel;
+import ggc.util.DataAccess;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -49,7 +50,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
     JScrollPane resultsPane;
     public JTable table;
 
-    DailyValues dayData;
+    public DailyValues dayData;
 
 
     public DailyStatsPanelL()
@@ -69,8 +70,12 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
     @Override
     public void refreshInfo()
     {
-        /*
-        System.out.println("Refresh Data Table");
+	refreshDayData();
+    }
+
+    
+    public void refreshDayData()
+    {
         DailyValues dv = m_da.getDayStats(new GregorianCalendar());
 
         if (dv!=null)
@@ -79,18 +84,22 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
             model.setDailyValues(dayData);
             this.model.fireTableChanged(null);
         }
-        */
     }
-
+    
+    
+    
     private void init()
     {
         this.setLayout(new GridLayout(1,1));
 
         dayData = m_da.getDayStats(new GregorianCalendar());
 
-        if (dayData==null)
-            dayData = new DailyValues();
-
+        //if (dayData==null)
+        //    dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
+//        refreshDayData();
+  
+        System.out.println("DailyStatPanelL: " + dayData);
+        
         model = new DailyStatsTableModel(dayData);
         /*model.addTableModelListener(new TableModelListener()
         {

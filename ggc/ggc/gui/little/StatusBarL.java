@@ -55,17 +55,19 @@ public class StatusBarL extends JPanel
     public StatusBarL()
     {
 
-        statusIcons = new ImageIcon[3];
+        statusIcons = new ImageIcon[4];
+
         statusIcons[0] = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
         statusIcons[1] = new ImageIcon(getClass().getResource("/icons/led_yellow.gif"));
-        statusIcons[2] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));
+        statusIcons[2] = new ImageIcon(getClass().getResource("/icons/led_blue.gif"));
+        statusIcons[3] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));
 
         lblMessage = new JLabel();
         lblMessage.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-        lblMessage.setPreferredSize(new Dimension(245, 18));
+        lblMessage.setPreferredSize(new Dimension(350, 18));
 
         JPanel pan = new JPanel();
-        pan.setPreferredSize(new Dimension(340, 18));
+        pan.setPreferredSize(new Dimension(275, 18));
         pan.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
         SpringLayout layout = new SpringLayout();
         pan.setLayout(layout); 

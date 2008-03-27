@@ -93,32 +93,16 @@ public class DailyGraphDialog extends JDialog
 
         setVisible(true);
 
-//        this(dialog);
-//        setDailyValues(dV);
-/*
-    	super(dialog, "DailyGraphFrame", true);
-    	setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
-    
-    	dGV = new DailyGraphView();
-    
-    	Rectangle rec = dialog.getBounds();
-    	int x = rec.x + (rec.width/2);
-    	int y = rec.y + (rec.height/2);
-    
-    	setBounds(x-200, y-150, 400, 300);
-    	//addWindowListener(new CloseListener());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    
-    	dGV.setDailyValues(dV);
-    	//setBounds(300, 300, 300, 300);
-    	//setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    	getContentPane().add(dGV, BorderLayout.CENTER);
-    	setVisible(true);
-        */
     }
 
 
     public DailyGraphDialog(JFrame frame)
+    {
+	this(frame, null);
+    }
+    
+    
+    public DailyGraphDialog(JFrame frame, DailyValues dV)
     {
         super(frame, "DailyGraphFrame", true);
         setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
@@ -129,6 +113,10 @@ public class DailyGraphDialog extends JDialog
         int x = rec.x + (rec.width/2);
         int y = rec.y + (rec.height/2);
 
+        if (dV!=null)
+            setDailyValues(dV);
+        
+        
         setBounds(x-200, y-150, 400, 300);
         //dWindowListener(new CloseListener());
 

@@ -1,19 +1,32 @@
 Know Bugs:
 
     - [sf] german translation is somewhat behind schedule
-    - [sf] switching L&F from CDE/Motif to SkinLF doesn't result in settings being saved : can't reproduce, you must 
-           click on OK to save changes... IS THIS STILL THERE? (see sf)
+    - Slovene translation is also somewhat behind schedule
     - [sf] changes made to "medical data" don't get applied to "Colors & Fonts" until dialog is re-opened
-    - [sf] Title for spread graph suggests a lost key in GGC_*.properties
-    - HbA1c-Frame: "your current HbA1c" is right-aligned, which looks crappy
+      A: changes are saved on exit of dialog... I guess we have to change that.
     - [sf] Entering plain text in numerical only fields should at least result in a warning (is ignored, and the numerical value is set to 0)
-    - [sf] "DAILY_CONTROL", "SHOW_DAILY_GRAPH" and "DAILY_VALUES" missing in GGC Little
     - GGC Little: meters button is unresponsive
     - GGC Little: About button is static (problematic when size is changed)
     - [sf] changing time in entry will not re-order cells
-    - [sf] mmol values are rounded to ints, which does not make sense
+    
 
 Bugs fixed in version X:
+
+0.2.9.9:
+    - months not translated !!
+      Andy: fixed
+    - [sf] mmol values are rounded to ints, which does not make sense
+      Andy: all BG values are saved as mg/dl format (in db), so they aren't rounded,
+         they are converted        
+    - [sf] Title for spread graph suggests a lost key in GGC_*.properties
+      Andy: fixed
+    - [sf] "DAILY_CONTROL", "SHOW_DAILY_GRAPH" and "DAILY_VALUES" missing in GGC Little
+      Andy: added
+    - [sf] switching L&F from CDE/Motif to SkinLF doesn't result in settings being saved : can't reproduce, you must 
+           click on OK to save changes... IS THIS STILL THERE? (see sf)
+      Andy: fixed
+    - HbA1c-Frame: "your current HbA1c" is right-aligned, which looks crappy
+      Andy: total change of this dialog.
 
 0.2.x.x:
     - L&F loading is inconsistent (makes a hardcoded assumption where themepacks are stored) and currently fails

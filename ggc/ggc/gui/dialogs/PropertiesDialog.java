@@ -98,7 +98,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
     private void init()
     {
-        Dimension dim = new Dimension(100, 25);
+        Dimension dim = new Dimension(120, 25);
 
         //createNodes();
 

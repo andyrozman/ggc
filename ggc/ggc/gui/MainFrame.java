@@ -103,7 +103,7 @@ import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 //   0.2.9.3   remove meters support
 //    Menus (all), About, Db (all)
 //   0.2.9.7   Help integration
-//   0.2.9.8   
+//   0.2.9.8   Menu's changes, added icons
 // 
 //Specialty Definitions - Types of Doctors
 
@@ -112,10 +112,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.9.6";
+    public  static String s_version = "0.2.9.9";
     public static String full_version = "v" + s_version;
 
-    public static String version_date = "8th February 2008";
+    public static String version_date = "22nd March 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -252,8 +252,6 @@ public class MainFrame extends JFrame
 //menu_file, menu_bgs, menu_food, menu_doctor, menu_reports, menu_tools, menu_help;
 
         createMenus();
-
-
 
         createToolBar();
         /*

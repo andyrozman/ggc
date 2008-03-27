@@ -94,7 +94,7 @@ public class HbA1cView extends AbstractGraphView
         int CenterY = offset;
         float arc = 0;
         float sumarc = 0;
-        int h = viewHeight - 70;
+        int h = viewHeight - 110; // -70
 
         g2D.setPaint(Color.red);
         arc = hbValues.getPercentOfDaysInClass(0) * 360;
@@ -125,6 +125,7 @@ public class HbA1cView extends AbstractGraphView
         g2D.fillArc(CenterX, CenterY, width, width, (int)sumarc, (int)arc);
         g2D.fillRect(offset, h + 50, 12, 12);
 
+      
         //Legend
         g2D.setPaint(Color.black);
         DecimalFormat df = new DecimalFormat("00.00");

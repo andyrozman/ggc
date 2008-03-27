@@ -1,5 +1,123 @@
-TO-DO LIST
-==========
+
+****************************************************************
+*****                      TO-DO LIST                      *****
+****************************************************************
+
+This TO-DO list is sorted by several types:
+I. Projects and sub-projects
+II. Sorted by version
+III. Sorted by Levels of priority
+
+
+=========
+
+
+I. PROJECTS AND SUB-PROJECTS
+==============================
+
+GGC Main project
+----------------
+This is main project of GGC. All information about that project is in sections
+II. and III.
+
+
+GGC Translations
+---------------- 
+
+ENGLISH:  Main language
+Status:    100% (520 words in resource file)
+Help:      Help not written yet.
+
+GERMAN:   Translation into german language.
+Status:    ?
+Help:      No help available
+
+SLOVENE:  Translation into slovenian language.
+Status:    74% (384 / 520)
+Help:      No help available
+
+
+GGC Meter
+----------
+  See TO-DO_MeterTool.txt (in svn/trunk/ggc-meter)
+
+
+GGC Pumps
+----------
+  See TO-DO.txt (in svn/trunk/ggc-pumps)
+  !!! Project not started yet. Planned for end of 2008
+
+
+
+
+II. SORTED BY VERSION
+=========================
+
+
+Version 0.3
+------------
+* User Nutrition Db
+    - AED groups
+    - AED nutritions
+* Meals
+* Add Daily Data support for Meals
+* Web for 0.3
+* Readme
+* Db Versioning
+* Error handling (and logger)
+* Daily Values – Check values, Double click edit
+* Update (client side): 
+    - Software updater framework
+    - Db Updater framework
+* Printing error display
+* Startup
+    - Run GGC
+    - Db Tool
+    - Db Check
+
+
+Version 0.4
+------------
+
+* Db Tools Integration:  - InitDb
+* Atech Tools integration
+* Multi Person 
+* GGC Little
+* GGC PPC
+* Meter integration
+    - GGC Output
+    - Configuration
+* Update (server) 
+    - Software updater Server
+    - Db Updater Server
+* Appoinmtments Mngr
+    - AED doctor
+    - AED appointment
+* Stocks
+    - AED subtypes
+    - AED stocks
+* Java Help – Write help pages
+* Graphs with new framework 
+
+
+Version 0.5
+------------
+
+* Export/Import other data
+* Synchronization
+* Export/Import daily data
+* Export/Import manager
+* GGC Network
+* Inet Data
+    - AED Inet Group
+    - AED Inet Type
+    - AED Inet Links
+
+
+
+
+III. SORTED BY LEVELS OF PRIORITY  (not updated !!!)
+=================================
 
 Level 1 (High Priority): 
 ----------------------------
@@ -8,8 +126,6 @@ Level 1 (High Priority):
 Level 2 (Medium 1 Priority):
 ----------------------------
 
-* Db Load:
-    o Add levels of loading (1=main(settings, daily stat), 2=Other data(docs,meters,links),3=Nutrition, 4=Finished)
 
 * Import/Export Tool (old data):
 //    o  Export old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
@@ -51,16 +167,6 @@ Level 4 (Medium 3 Priority):
     o  Private nutrition database
 
 
-* Hibernate Db:
-    o  Daily Data        1
-    o  Configuration     1
-    o  Meters            1
-    o  Nutrition         1
-    o  User Nutrition    2
-    o  Meals             3
-    o  Doctors           3
-    o  Appointments      3
-    o  Web Links         2
 
 * Entering daily data: 
     o  Add CH entry through meals
@@ -98,122 +204,17 @@ Level 6 (IN NEAR FUTURE):
 -------------------------
 
 * I18n Language: German (work in progress)
-* I18n Language: Slovenian (work in progress)
+* I18n Language: Slovenian (work in progress 74% done)
+
+
 * I18n Language: French 
 * I18n Language: Italian
 
 
 
 
-Level 7 (IN FAR FUTURE/MAYBE):
-------------------------------
-
-* Pump support
 
 
-
-
----------
-
-
-
-
-
-==========
-
-
-BIG CHANGES: Configuration, Printing main, Printing extended, Nutrition, 
-      DbTool, Db Hibernate changes, Enter Daily Data, Apointments, Meals,
-      GGCLittle, mmol/L support full, Meter Mng NEW, rxtx COMM API, 
-      Ascensia Family support
-
-SMALL CHANGES: Load LF, 
-
-
-------
-
-
-Version 0.3:
-- Enter Daily Data (19.3.-25.3)
-- Meters list 
-- Db Hibernate Redesign !!!
-- Old meters support only
-- Import/Export Old Data (9.4-15.4.)
-- About (16.4.-20.4.)
-- Nutrition display in tree
-- Meters List -> MeterManager changes
-
-* Configuration: <moved to meter development tree> 
-    o  Fix setting com port
-
-* Db:
-    o Private nutrition
-
-* About dialog
-
-
-
-Release on 25.4.
-
-
-
-Version 0.4:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-0.3: 
-X   - Configuration: COM
-X   - Printing main
-X   - Enter Daily Data NEW
-X   - rtx COMM API
-X   - Nutrition Display
-
-0.4:
-   - Data Export/Import/Conversion (Daily Data only)
-   - Db Tool
-   - Backup/Restore
-X   - Db Hibernate changes 
-   - Nutrition User
-   - GGCLittle
-   - Graphs, Db (mg/dl)
-   - Meter Manager NEW
-- New Meter Import framework (26.3.-1.4.)
-- Ascensia Meter Support (2.4.-8.4.)
-   - Meter Import Base
-   - Meter: Ascensia Contour support
-
-0.5:
-   - Meals
-   - Ascensia Family support
-   - Printing extended
-   - Add Daily Data support for Meals
-   - mmol/L support full
-
-
-0.6:
-   - Apointments
-   - Doctors
-   - Web Links
-
-      
       
 
 
@@ -225,6 +226,8 @@ X   - Db Hibernate changes
 DONE
 ===============================================================================
 ===============================================================================
+
+
 
 * HypersonicSQL Test
 * Nutrition: 
@@ -288,7 +291,45 @@ DONE
     o  Add daily entry must be changed (GUI is very...)
     o  option in which type we enter
     o  delete should ask: are you sure?
+* Db Load:
+    o Add levels of loading (1=main(settings, daily stat), 2=Other data(docs,meters,links),3=Nutrition, 4=Finished)
 
+
+* Db:
+    o Private nutrition
+
+* About dialog
+
+- Db Hibernate Redesign !!!
+- About (16.4.-20.4.)
+- Nutrition display in tree
+X   - Configuration: COM
+X   - Printing main
+X   - Enter Daily Data NEW
+X   - rtx COMM API
+X   - Nutrition Display
+
+* Configuration: <moved to meter development tree> 
+    o  Fix setting com port
+
+* Hibernate Db:
+    o  Daily Data        1
+    o  Configuration     1
+    o  Meters            1
+    o  Nutrition         1
+    o  User Nutrition    2
+    o  Meals             3
+    o  Doctors           3
+    o  Appointments      3
+    o  Web Links         2
+
+   - mmol/L support full
+   - Printing extended
+
+* Db Load partitial (progress)
+* Multi person Db
+* Java Help Framework
+* Icons where possible
 
 
 I18N TOOL

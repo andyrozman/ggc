@@ -1,3 +1,5 @@
+2008-03-22 (0.2.9.9) Andy Rozman <andyrozman@users.sourceforge.net>
+    * see BUGS.txt (some of bugs were fixed)
 
 2008-03-22 (0.2.9.8) Andy Rozman <andyrozman@users.sourceforge.net>
     * many changes in atech-tools, added selector, abstract DataAccess and some

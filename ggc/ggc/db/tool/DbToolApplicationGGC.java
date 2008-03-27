@@ -134,12 +134,13 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     public void setSelectedLF(int index, String skin)
     {
 
-        if (this.getSkinLFIndex()!=index)
+        if (this.getSelectedLFIndex()!=index)  // .getSkinLFIndex()
         {
             this.selected_LF_Class = (String)this.availableLFClass[index]; // class
             this.selected_LF_Name = (String)this.availableLF[index]; // name
             this.m_changed = true;
         }
+        
 
         if (!skin.equals(this.skinLFSelected))
         {

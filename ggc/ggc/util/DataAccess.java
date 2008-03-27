@@ -201,7 +201,7 @@ public class DataAccess extends ATDataAccessAbstract
      */
     private DataAccess()
     {
-	super();
+	super(I18nControl.getInstance());
         this.loadFonts();
 
         //m_i18n.createInstance(this);
@@ -220,7 +220,7 @@ public class DataAccess extends ATDataAccessAbstract
 
         //m_i18n = I18nControl.getInstance();
         
-        this.setI18nControlInstance(I18nControl.getInstance());
+        //this.setI18nControlInstance(I18nControl.getInstance());
 
         loadOptions();
 
