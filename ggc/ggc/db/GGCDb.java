@@ -1516,6 +1516,7 @@ public class GGCDb
     
     public ArrayList<SelectableInterface> getNutritionHomeWeights()
     {
+	System.out.println("hw list: " + this.homeweight_defs_list.size());
 	return this.homeweight_defs_list;
     }
     

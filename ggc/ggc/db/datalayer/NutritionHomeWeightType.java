@@ -31,6 +31,7 @@ package ggc.db.datalayer;
 
 import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.NutritionHomeWeightTypeH;
+import ggc.util.I18nControl;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -43,15 +44,17 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 {
 
 
-
+    I18nControl ic = I18nControl.getInstance(); 
 
     public boolean debug = false;
+    String text_idx;
 
 
     public NutritionHomeWeightType()
     {
 	this.setId(0L);
 	this.setName("");
+	setSearchContext();
     }
 
 
@@ -59,13 +62,14 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
 	this.setId(ch.getId());
 	this.setName(ch.getName());
+	setSearchContext();
     }
 
 
     public String getShortDescription()
     {
         //return this.getDescription();
-	return "unknown";
+	return ic.getMessage(this.getName());
     }
 
 
@@ -73,7 +77,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     public String toString()
     {
         //return this.getShortDescription();
-	return "unknown";
+	return getShortDescription();
     }
 
 
@@ -241,16 +245,6 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     //---  SelectorInterface
     //---
     
-    
-    
-    /* 
-     * compareTo
-     */
-    public int compareTo(Object o)
-    {
-	// TODO Auto-generated method stub
-	return 0;
-    }
 
 
     /* 
@@ -258,8 +252,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public int getColumnCount()
     {
-	// TODO Auto-generated method stub
-	return 0;
+	return 3;
     }
 
 
@@ -268,8 +261,18 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public String getColumnName(int num)
     {
-	// TODO Auto-generated method stub
-	return null;
+	switch(num)
+	{
+	    case 3:
+		return ic.getMessage("USER_DEFINED");
+		
+	    case 2:
+		return ic.getMessage("NAME");
+
+	    default:
+		return ic.getMessage("ID");
+		
+	}
     }
 
 
@@ -278,18 +281,47 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public String getColumnValue(int num)
     {
-	// TODO Auto-generated method stub
-	return null;
+	switch(num)
+	{
+	    case 3:
+		return getYesNo(this.getStatic_entry());
+		
+	    case 2:
+		return this.getName();
+
+	    default:
+		return "" + this.getItemId();
+		
+	}
     }
 
+    
+    private String getYesNo(int value)
+    {
+	if (value == 1)
+	    return ic.getMessage("NO");
+	else
+	    return ic.getMessage("YES");
+    }
+    
 
     /* 
      * getColumnValueObject
      */
     public Object getColumnValueObject(int num)
     {
-	// TODO Auto-generated method stub
-	return null;
+	switch(num)
+	{
+	    case 3:
+		return getYesNo(this.getStatic_entry());
+		
+	    case 2:
+		return this.getName();
+
+	    default:
+		return new Long(this.getItemId());
+		
+	}
     }
 
 
@@ -298,8 +330,17 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public int getColumnWidth(int num, int width)
     {
-	// TODO Auto-generated method stub
-	return 0;
+	
+	switch(num)
+	{
+            case 3:
+                return(int)(width*20);
+            case 2:
+                return(int)(width*60);
+            default:
+                return(int)(width*20);
+		
+	}
     }
 
 
@@ -308,8 +349,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public long getItemId()
     {
-	// TODO Auto-generated method stub
-	return 0;
+	return this.getId();
     }
 
 
@@ -336,20 +376,12 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public boolean isFound(String text)
     {
-	// TODO Auto-generated method stub
-	return false;
+        if ((this.text_idx.indexOf(text.toUpperCase())!=-1) || (text.length()==0))
+            return true;
+        else
+            return false;
     }
 
-
-    /* 
-     * setColumnSorter
-     */
-    public void setColumnSorter(ColumnSorter cs)
-    {
-	
-	// TODO Auto-generated method stub
-	
-    }
 
 
     /* 
@@ -357,11 +389,78 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public void setSearchContext()
     {
-	// TODO Auto-generated method stub
-	
+	text_idx = this.getName().toUpperCase();
     }
     
     
+    //---
+    //---  Column sorting 
+    //---
+
+
+    private ColumnSorter columnSorter = null;
+
+
+    /**
+     * setColumnSorter - sets class that will help with column sorting
+     * 
+     * @param cs ColumnSorter instance
+     */
+    public void setColumnSorter(ColumnSorter cs)
+    {
+	this.columnSorter = cs;
+    }
+
+
+    /**
+     * Compares this object with the specified object for order.  Returns a
+     * negative integer, zero, or a positive integer as this object is less
+     * than, equal to, or greater than the specified object.
+     *
+     * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
+     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
+     * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
+     * <tt>y.compareTo(x)</tt> throws an exception.)
+     *
+     * <p>The implementor must also ensure that the relation is transitive:
+     * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
+     * <tt>x.compareTo(z)&gt;0</tt>.
+     *
+     * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
+     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
+     * all <tt>z</tt>.
+     *
+     * <p>It is strongly recommended, but <i>not</i> strictly required that
+     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
+     * class that implements the <tt>Comparable</tt> interface and violates
+     * this condition should clearly indicate this fact.  The recommended
+     * language is "Note: this class has a natural ordering that is
+     * inconsistent with equals."
+     *
+     * <p>In the foregoing description, the notation
+     * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
+     * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
+     * <tt>0</tt>, or <tt>1</tt> according to whether the value of
+     * <i>expression</i> is negative, zero or positive.
+     *
+     * @param   o the object to be compared.
+     * @return  a negative integer, zero, or a positive integer as this object
+     *		is less than, equal to, or greater than the specified object.
+     *
+     * @throws ClassCastException if the specified object's type prevents it
+     *         from being compared to this object.
+     */
+    public int compareTo(Object o)
+    {
+
+	if (o instanceof SelectableInterface)
+	{
+	    return this.columnSorter.compareObjects(this, (SelectableInterface)o);
+	}
+	else
+	    throw new ClassCastException();
+
+    }
     
     
 }
