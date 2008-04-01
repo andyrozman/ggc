@@ -40,26 +40,7 @@ import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 public class FoodPartSelectorDialog extends SelectorAbstractDialog
 {
 
-    //private JPanel mainPane;
-    //private JTree tree;
-    
-
-/*
-    JTextField tf_selected;
-    JComboBox cb_type;
-    JLabel label_item, label_item_type;
-    Font font_normal, font_normal_b;
-    JButton button_select;
-*/
     private DataAccess m_da = null;
-    
-    //Object action_object;
-    //int action_object_type = 0;
-    //long input_id = 0L;
-    
-    //String[] type;  
-
-    
     
     public static final int SELECTOR_NUTRITION = 1;
     public static final int SELECTOR_HOME_WEIGHT = 2;
@@ -71,10 +52,6 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     }
 
   
-
-
-    
-
     
     public void initSelectorValuesForType()
     {
@@ -153,9 +130,6 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     {
 	// TODO Auto-generated method stub
 	System.out.println("checkAndExecuteActionNew()");
-	
-	
-	
     }
 
 

@@ -97,7 +97,7 @@ public class TestNutritionData
 	//createFakeData_User();
 	
 	
-	System.out.println("m_da: " + m_da);
+	//System.out.println("m_da: " + m_da);
 	
 //	new FoodPartMainSelectorDialog(m_da, FoodPartMainSelectorDialog.SELECTOR_NUTRITION, null);
 	

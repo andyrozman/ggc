@@ -30,6 +30,7 @@ package ggc.gui.nutrition.dialogs;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealPart;
+import ggc.gui.nutrition.display.NutritionDataDisplay;
 import ggc.util.DataAccess;
 
 import java.awt.Font;
@@ -74,13 +75,14 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     long input_id = 0L;
     
     String[] type;  
+    String m_except = null;
 
     private NumberFormat amountDisplayFormat;
     private NumberFormat amountEditFormat;    
     JFormattedTextField amountField;
+    JFormattedTextField weightField;
     
-    MealPart meal_part;
-    
+    NutritionDataDisplay nutrition_data;
     
     public static final int SELECTOR_NUTRITION = 1;
     public static final int SELECTOR_HOME_WEIGHT = 2;
@@ -89,6 +91,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     
     
     private SelectableInterface selected_object = null;
+    boolean action_done = false;
     
     
     public FoodPartMainSelectorDialog(DataAccess da, int type, String except) 
@@ -105,61 +108,43 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
             
 //	this.input_id = meal_id;
 	this.selector_type = type;
+	
+	m_except = except;
         
-        this.setBounds(160, 100, 300, 300);
         init();
         
- 
+        
         this.setVisible(true);
     }
 
     
-    public FoodPartMainSelectorDialog(DataAccess da, MealPart part) 
+    public FoodPartMainSelectorDialog(DataAccess da, NutritionDataDisplay ndd) 
     {
         super(da.getParent(), "", true);
 
         m_da = da;
         ic = m_da.getI18nControlInstance();
 
-	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
+        this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
         
-        this.setBounds(160, 100, 300, 300);
-        this.meal_part = part;
+        this.nutrition_data = ndd; 
         init();
         
-        loadMeal();
+        loadNutrition();
  
         this.setVisible(true);
     }
     
     
-    private void loadMeal()
+    private void loadNutrition()
     {
-	this.cb_type.setSelectedIndex(this.meal_part.getType()-1);
-	this.cb_type.setEnabled(false);
 	this.button_select.setEnabled(false);
-
-	this.action_object_type = (this.meal_part.getType()-1);
+	this.label_item.setText(this.nutrition_data.getName() + " (" + this.nutrition_data.getWeightUnit() + ")");
 	
-	if (this.cb_type.getSelectedIndex() < 2)
-	{
-	    FoodDescription fd = this.meal_part.getFoodObject();
-	    this.label_item.setText(fd.getName());
-	    
-	    //this.action_object = fd;
-	}
-	else
-	{
-	    Meal m = this.meal_part.getMealObject();
-	    this.label_item.setText(m.getName());
-
-	    //this.action_object = m;
-	}
+	System.out.println("Amount input: " + this.nutrition_data.getAmount());
 	
-	this.label_item_type.setText("" + this.cb_type.getSelectedItem());
 	
-        this.amountField.setValue(new Double(this.meal_part.getAmount()));
-	
+        this.amountField.setValue(new Double(this.nutrition_data.getAmount()));
     }
     
 
@@ -167,8 +152,28 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     
     public void init()
     {
+	int button_y;
+	int panel_height;
+	String panel_title;
 	
+        if (this.selector_type == FoodPartMainSelectorDialog.SELECTOR_HOME_WEIGHT)
+        {
+            this.setBounds(160, 100, 300, 355);
+            button_y = 275;
+            panel_height = 110;
+            panel_title = ic.getMessage("AMOUNT_WEIGHT");
+        }
+        else
+        {
+            this.setBounds(160, 100, 300, 305);
+            button_y = 230;
+            panel_height = 65;
+            panel_title = ic.getMessage("AMOUNT");
+        }
+
 	this.setLayout(null);
+	
+	action_done = false;
 /*
 	type = new String[3];
 	type[0] = ic.getMessage("USDA_NUTRITION");
@@ -265,9 +270,9 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         
 
         JPanel panel3 = new JPanel();
-        panel3.setBorder(new TitledBorder(ic.getMessage("AMOUNT")));
+        panel3.setBorder(new TitledBorder(panel_title));
         panel3.setLayout(null);
-        panel3.setBounds(10, 150, 270, 65);
+        panel3.setBounds(10, 150, 270, panel_height);
         panel.add(panel3, null);
         
 
@@ -280,8 +285,10 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
         amountDisplayFormat = NumberFormat.getNumberInstance();
         amountDisplayFormat.setMinimumFractionDigits(1);
+        amountDisplayFormat.setMaximumFractionDigits(2);
         amountEditFormat = NumberFormat.getNumberInstance();        
         amountEditFormat.setMinimumFractionDigits(1);
+        amountEditFormat.setMaximumFractionDigits(2);
         
         
         amountField = new JFormattedTextField(
@@ -294,6 +301,27 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         amountField.setBounds(140, 25, 100, 25);
         amountField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
         panel3.add(amountField);
+
+        if (this.selector_type == FoodPartMainSelectorDialog.SELECTOR_HOME_WEIGHT)
+        {
+            
+            label = new JLabel(ic.getMessage("WEIGHT") + ":");
+            label.setBounds(20, 65, 100, 25);
+            panel3.add(label, null);
+            
+            
+            this.weightField = new JFormattedTextField(
+                    new DefaultFormatterFactory(
+                        new NumberFormatter(amountDisplayFormat),
+                        new NumberFormatter(amountDisplayFormat),
+                        new NumberFormatter(amountEditFormat)));
+            this.weightField.setValue(new Double(1.0d));
+            this.weightField.setColumns(4);
+            this.weightField.setBounds(140, 65, 100, 25);
+            this.weightField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+            panel3.add(this.weightField);
+        }
+        
         
       /*
         percentDisplayFormat = NumberFormat.getPercentInstance();
@@ -303,16 +331,20 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         */        
         
         //amountField.addPropertyChangeListener("value", this);        
+
+        
+        
+        
         
         JButton button = new JButton(ic.getMessage("OK"));
         button.setActionCommand("ok");
-        button.setBounds(65, 230, 80, 25);
+        button.setBounds(65, button_y, 80, 25);
         button.addActionListener(this);
         panel.add(button, null);
         
         button = new JButton(ic.getMessage("CANCEL"));
         button.setActionCommand("cancel");
-        button.setBounds(160, 230, 80, 25);
+        button.setBounds(160, button_y, 80, 25);
         button.addActionListener(this);
         panel.add(button);
         		
@@ -343,7 +375,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     
     public boolean wasAction()
     {
-	return (this.action_object!=null);
+	return ((this.action_object!=null) || (this.action_done)) ;
     }
 
     public int getSelectedObjectType()
@@ -358,6 +390,14 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     
     public float getAmountValue()
     {
+	try
+	{
+	    this.amountField.commitEdit();
+	}
+	catch(Exception ex)
+	{
+	    System.out.println("Exception on commit value:" + ex);
+	}
 	Object o = this.amountField.getValue();
 	
 	if (o instanceof Long)
@@ -366,21 +406,64 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 	    Long l = (Long)o;
 	    return l.floatValue();
 	}
+	else if (o instanceof Integer)
+	{
+	    //System.out.println("Amount(long): " + this.amountField.getValue());
+	    Integer l = (Integer)o;
+	    return l.floatValue();
+	}
 	else
 	{
 	    //System.out.println("Amount(double): " + this.amountField.getValue());
-	    Double d = (Double)this.amountField.getValue();
+	    Double d = (Double)o;
 	    return d.floatValue();
 	}
     }
     
 
+    
+    public float getWeightValue()
+    {
+	try
+	{
+	    this.weightField.commitEdit();
+	}
+	catch(Exception ex)
+	{
+	    System.out.println("Exception on commit value:" + ex);
+	}
+	
+	Object o = this.weightField.getValue();
+	
+	if (o instanceof Long)
+	{
+	    //System.out.println("Amount(long): " + this.amountField.getValue());
+	    Long l = (Long)o;
+	    return l.floatValue();
+	}
+	else if (o instanceof Integer)
+	{
+	    //System.out.println("Amount(long): " + this.amountField.getValue());
+	    Integer l = (Integer)o;
+	    return l.floatValue();
+	}
+	else
+	{
+	    //System.out.println("Amount(double): " + this.amountField.getValue());
+	    Double d = (Double)o;
+	    return d.floatValue();
+	}
+    }
+    
+    
+    
     public void actionPerformed(ActionEvent e)
     {
 	String cmd = e.getActionCommand();
 	
 	if (cmd.equals("ok"))
 	{
+	    this.action_done = true;
 	    this.dispose();
 	}
 	else if (cmd.equals("cancel"))
@@ -390,7 +473,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 	else if (cmd.equals("select_item"))
 	{
 	    //System.out.println("select_item: m_da: " + m_da);
-	    FoodPartSelectorDialog fpsd = new FoodPartSelectorDialog(m_da, this.selector_type, null);
+	    FoodPartSelectorDialog fpsd = new FoodPartSelectorDialog(m_da, this.selector_type, this.m_except);
 
 	    if (fpsd.wasAction())
 	    {

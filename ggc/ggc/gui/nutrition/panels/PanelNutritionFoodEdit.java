@@ -5,6 +5,7 @@ import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.NutritionDefinition;
+import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.gui.nutrition.NutritionTreeDialog;
 import ggc.gui.nutrition.data.HomeWeightComparator;
 import ggc.gui.nutrition.data.NutritionsComparator;
@@ -26,6 +27,7 @@ import java.util.Collections;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -495,9 +497,62 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
             }
             
         }
+        else if (action.equals("edit_nutrition"))
+        {
+            if (this.table_1.getSelectedRowCount()==0)
+            {
+                JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                return;
+            }
+
+            NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
+
+            FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, ndd);            
+            
+            if (fpmsd.wasAction())
+            {
+        	System.out.println("Returned value: " + fpmsd.getAmountValue());
+        	
+        	ndd.setAmount(fpmsd.getAmountValue());
+        	this.createModel(this.list_nutritions, this.table_1, this.ndd);
+            }
+            
+        }
+        else if (action.equals("remove_nutrition"))
+        {
+            //System.out.println("Remove Meal");
+            
+            
+            if (this.table_1.getSelectedRowCount()==0)
+            {
+                JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                return;
+            }
+
+            int ii = JOptionPane.showConfirmDialog(this, ic.getMessage("ARE_YOU_SURE_DELETE"), ic.getMessage("ERROR"), JOptionPane.YES_NO_OPTION);
+
+            if (ii==JOptionPane.YES_OPTION)
+            {
+                NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
+        	
+                this.list_nutritions.remove(ndd);
+        	this.createModel(this.list_nutritions, this.table_1, this.ndd);
+            }
+            
+        }
         else if (action.equals("add_home_weight"))
         {
             FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, FoodPartMainSelectorDialog.SELECTOR_HOME_WEIGHT, getExistingIds(FoodPartMainSelectorDialog.SELECTOR_HOME_WEIGHT));
+
+            if (fpmsd.wasAction())
+            {
+        	HomeWeightDataDisplay hwd = new HomeWeightDataDisplay(ic, (NutritionHomeWeightType)fpmsd.getSelectedObject(), fpmsd.getAmountValue(), fpmsd.getWeightValue()); 
+        	
+        	this.list_hweight.add(hwd);
+        	this.createModel(this.list_hweight, this.table_2, this.hwd);
+            }
+        
+        
         }
         else
             System.out.println("PanelNutritionFoodEdit::Unknown command: " + action);
@@ -509,19 +564,44 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
     {
 	if (type == FoodPartMainSelectorDialog.SELECTOR_NUTRITION)
 	{
+	    
 	    if (this.list_nutritions.size()==0)
 	    {
 		return null;
 	    }
 	    else
 	    {
-		//
-		return null;
+		StringBuffer sb = new StringBuffer(".");
+		
+		for(int i=0; i<this.list_nutritions.size(); i++)
+		{
+		    sb.append(this.list_nutritions.get(i).getId());
+		    sb.append(".");
+		}
+		
+		String stt = sb.toString();
+		return stt;
 	    }
 	}
 	else
 	{
-	    return null;
+	    if (this.list_hweight.size()==0)
+	    {
+		return null;
+	    }
+	    else
+	    {
+		StringBuffer sb = new StringBuffer(".");
+		
+		for(int i=0; i<this.list_hweight.size(); i++)
+		{
+		    sb.append(this.list_hweight.get(i).getId());
+		    sb.append(".");
+		}
+		
+		String stt = sb.toString();
+		return stt;
+	    }
 	}
     }
     

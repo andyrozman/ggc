@@ -14,6 +14,7 @@ public class NutritionDataDisplay extends ATTableData
 	private String value;
 	private String name;
 	private String weight_unit;
+	private String decimal_places;
 
 
 	public NutritionDataDisplay(I18nControlAbstract ic)
@@ -36,7 +37,8 @@ public class NutritionDataDisplay extends ATTableData
 	{
 	    super(ic);
 	    setNutritionDefinition(def);
-	    this.value = DataAccess.getFloatAsString(value, def.getDecimal_places());
+	    this.decimal_places = def.getDecimal_places();
+	    this.setAmount(value);
 	}
 	
 	
@@ -83,6 +85,38 @@ public class NutritionDataDisplay extends ATTableData
 	    }
 	}
 	
+	public String getName()
+	{
+	    return this.name;
+	}
+	
+	public float getAmount()
+	{
+
+	    //return DataAccess.getFloatAsString(this.value, this.decimal_places);
+	    float f = 0.0f;
+	    try
+	    {
+		f = Float.parseFloat(this.value.replace(',', '.'));
+	    }
+	    catch(Exception ex)
+	    {
+		System.out.println("Float parse ex: " + ex);
+	    }
+
+	    return f;
+	}
+	
+	public String getWeightUnit()
+	{
+	    return this.weight_unit;
+	}
+	
+	
+	public void setAmount(float val)
+	{
+	    this.value = DataAccess.getFloatAsString(val, this.decimal_places);
+	}
 	
 	public String getSaveData()
 	{
