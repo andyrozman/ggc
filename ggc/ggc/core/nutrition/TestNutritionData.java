@@ -25,7 +25,7 @@
  *  Author:   andyrozman
  */
 
-package ggc.gui.nutrition;
+package ggc.core.nutrition;
  
 import ggc.db.GGCDb;
 import ggc.db.datalayer.FoodDescription;
@@ -37,7 +37,6 @@ import ggc.db.hibernate.FoodUserGroupH;
 import ggc.db.hibernate.MealGroupH;
 import ggc.db.hibernate.MealH;
 import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 import java.util.ArrayList;
 

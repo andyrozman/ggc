@@ -25,7 +25,7 @@
  *  Author:   andyrozman
  */
 
-package ggc.gui.nutrition.panels;
+package ggc.core.nutrition.panels;
 
 import com.atech.graphics.components.EditableAbstractPanel;
 import com.atech.i18n.I18nControlAbstract;

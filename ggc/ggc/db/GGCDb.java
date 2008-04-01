@@ -61,7 +61,7 @@ import ggc.db.hibernate.MealH;
 import ggc.db.hibernate.NutritionDefinitionH;
 import ggc.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.db.hibernate.SettingsH;
-import ggc.gui.nutrition.GGCTreeRoot;
+import ggc.core.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
 
 import java.io.FileInputStream;

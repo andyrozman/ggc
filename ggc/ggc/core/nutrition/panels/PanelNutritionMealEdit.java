@@ -1,4 +1,4 @@
-package ggc.gui.nutrition.panels;
+package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
 import ggc.db.datalayer.Meal;
@@ -6,13 +6,13 @@ import ggc.db.datalayer.MealGroup;
 import ggc.db.datalayer.MealNutrition;
 import ggc.db.datalayer.MealPart;
 import ggc.db.datalayer.NutritionDefinition;
-import ggc.gui.nutrition.NutritionTreeDialog;
-import ggc.gui.nutrition.data.MealNutritionsComparator;
-import ggc.gui.nutrition.data.MealPartsComparator;
-import ggc.gui.nutrition.dialogs.MealSelectorDialog;
-import ggc.gui.nutrition.dialogs.NutritionGroupDialog;
-import ggc.gui.nutrition.display.MealNutritionsDisplay;
-import ggc.gui.nutrition.display.MealPartsDisplay;
+import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.data.MealNutritionsComparator;
+import ggc.core.nutrition.data.MealPartsComparator;
+import ggc.core.nutrition.dialogs.MealSelectorDialog;
+import ggc.core.nutrition.dialogs.NutritionGroupDialog;
+import ggc.core.nutrition.display.MealNutritionsDisplay;
+import ggc.core.nutrition.display.MealPartsDisplay;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 

@@ -1,6 +1,6 @@
 
 
-package ggc.sync.sidiary.data;
+package ggc.core.sync.sidiary.data;
 
 
 public class DailyData

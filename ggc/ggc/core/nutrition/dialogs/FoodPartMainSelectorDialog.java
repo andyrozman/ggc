@@ -25,12 +25,10 @@
  *  Author:   andyrozman
  */
 
-package ggc.gui.nutrition.dialogs;
+package ggc.core.nutrition.dialogs;
  
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.MealPart;
-import ggc.gui.nutrition.display.NutritionDataDisplay;
+import ggc.core.nutrition.display.HomeWeightDataDisplay;
+import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.util.DataAccess;
 
 import java.awt.Font;
@@ -83,6 +81,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     JFormattedTextField weightField;
     
     NutritionDataDisplay nutrition_data;
+    HomeWeightDataDisplay home_weight_data;
     
     public static final int SELECTOR_NUTRITION = 1;
     public static final int SELECTOR_HOME_WEIGHT = 2;
@@ -134,6 +133,27 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
  
         this.setVisible(true);
     }
+    
+
+    
+    public FoodPartMainSelectorDialog(DataAccess da, HomeWeightDataDisplay hwd) 
+    {
+        super(da.getParent(), "", true);
+
+        m_da = da;
+        ic = m_da.getI18nControlInstance();
+
+        this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
+        
+ //       this.nutrition_data = ndd;
+        this.home_weight_data = hwd;
+        init();
+        
+        loadNutrition();
+ 
+        this.setVisible(true);
+    }
+    
     
     
     private void loadNutrition()

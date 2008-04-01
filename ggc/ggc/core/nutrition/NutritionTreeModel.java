@@ -26,7 +26,7 @@
  */
 
 
-package ggc.gui.nutrition;
+package ggc.core.nutrition;
 
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.MealGroup;

@@ -25,12 +25,12 @@
  *  Author:   andyrozman
  */
 
-package ggc.gui.nutrition.dialogs;
+package ggc.core.nutrition.dialogs;
  
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealPart;
-import ggc.gui.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.util.DataAccess;
 
 import java.awt.Font;

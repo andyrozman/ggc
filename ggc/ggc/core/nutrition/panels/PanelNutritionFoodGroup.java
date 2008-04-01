@@ -1,9 +1,9 @@
-package ggc.gui.nutrition.panels;
+package ggc.core.nutrition.panels;
 
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.MealGroup;
-import ggc.gui.nutrition.GGCTreeRoot;
-import ggc.gui.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.GGCTreeRoot;
+import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 

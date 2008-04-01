@@ -25,21 +25,21 @@
  *  Author:   andyrozman
  */
 
-package ggc.gui.nutrition;
+package ggc.core.nutrition;
  
 import ggc.db.GGCDb;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealGroup;
-import ggc.gui.nutrition.panels.GGCTreePanel;
-import ggc.gui.nutrition.panels.PanelNutritionFood;
-import ggc.gui.nutrition.panels.PanelNutritionFoodEdit;
-import ggc.gui.nutrition.panels.PanelNutritionFoodGroup;
-import ggc.gui.nutrition.panels.PanelNutritionFoodGroupEdit;
-import ggc.gui.nutrition.panels.PanelNutritionMain;
-import ggc.gui.nutrition.panels.PanelNutritionMeal;
-import ggc.gui.nutrition.panels.PanelNutritionMealEdit;
+import ggc.core.nutrition.panels.GGCTreePanel;
+import ggc.core.nutrition.panels.PanelNutritionFood;
+import ggc.core.nutrition.panels.PanelNutritionFoodEdit;
+import ggc.core.nutrition.panels.PanelNutritionFoodGroup;
+import ggc.core.nutrition.panels.PanelNutritionFoodGroupEdit;
+import ggc.core.nutrition.panels.PanelNutritionMain;
+import ggc.core.nutrition.panels.PanelNutritionMeal;
+import ggc.core.nutrition.panels.PanelNutritionMealEdit;
 import ggc.util.DataAccess;
 
 import java.awt.Dimension;

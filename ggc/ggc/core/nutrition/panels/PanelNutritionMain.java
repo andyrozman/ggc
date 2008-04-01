@@ -1,6 +1,6 @@
-package ggc.gui.nutrition.panels;
+package ggc.core.nutrition.panels;
 
-import ggc.gui.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 

@@ -1,5 +1,5 @@
 
-package ggc.gui.nutrition.display;
+package ggc.core.nutrition.display;
 
 import ggc.db.datalayer.MealPart;
 

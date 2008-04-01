@@ -25,7 +25,7 @@
  *  Author:   andyrozman
  */
 
-package ggc.gui.nutrition;
+package ggc.core.nutrition;
 
 import ggc.db.GGCDb;
 import ggc.db.datalayer.FoodDescription;

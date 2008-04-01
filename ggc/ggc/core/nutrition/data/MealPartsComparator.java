@@ -1,7 +1,7 @@
 
-package ggc.gui.nutrition.data;
+package ggc.core.nutrition.data;
 
-import ggc.gui.nutrition.display.MealPartsDisplay;
+import ggc.core.nutrition.display.MealPartsDisplay;
 
 import java.util.Comparator;
 

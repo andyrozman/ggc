@@ -29,7 +29,7 @@
 
 package ggc.db.datalayer;
 
-import ggc.gui.nutrition.GGCTreeRoot;
+import ggc.core.nutrition.GGCTreeRoot;
 import ggc.util.DataAccess;
 
 import java.util.ArrayList;

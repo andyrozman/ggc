@@ -40,7 +40,7 @@ import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.little.StatusBarL;
-import ggc.gui.nutrition.GGCTreeRoot;
+import ggc.core.nutrition.GGCTreeRoot;
 
 import java.awt.Color;
 import java.awt.Component;

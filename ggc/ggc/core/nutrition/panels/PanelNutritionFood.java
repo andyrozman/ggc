@@ -1,10 +1,10 @@
-package ggc.gui.nutrition.panels;
+package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
 import ggc.db.datalayer.FoodDescription;
-import ggc.gui.nutrition.NutritionTreeDialog;
-import ggc.gui.nutrition.display.HomeWeightDataDisplay;
-import ggc.gui.nutrition.display.NutritionDataDisplay;
+import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.display.HomeWeightDataDisplay;
+import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 

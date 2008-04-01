@@ -1,4 +1,4 @@
-package ggc.gui.nutrition.panels;
+package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
 import ggc.db.datalayer.FoodDescription;
@@ -6,13 +6,13 @@ import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.NutritionDefinition;
 import ggc.db.datalayer.NutritionHomeWeightType;
-import ggc.gui.nutrition.NutritionTreeDialog;
-import ggc.gui.nutrition.data.HomeWeightComparator;
-import ggc.gui.nutrition.data.NutritionsComparator;
-import ggc.gui.nutrition.dialogs.FoodPartMainSelectorDialog;
-import ggc.gui.nutrition.dialogs.NutritionGroupDialog;
-import ggc.gui.nutrition.display.HomeWeightDataDisplay;
-import ggc.gui.nutrition.display.NutritionDataDisplay;
+import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.data.HomeWeightComparator;
+import ggc.core.nutrition.data.NutritionsComparator;
+import ggc.core.nutrition.dialogs.FoodPartMainSelectorDialog;
+import ggc.core.nutrition.dialogs.NutritionGroupDialog;
+import ggc.core.nutrition.display.HomeWeightDataDisplay;
+import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.util.DataAccess;
 import ggc.util.I18nControl;
 
@@ -553,6 +553,31 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
             }
         
         
+        }
+        else if (action.equals("edit_home_weight"))
+        {
+            if (this.table_2.getSelectedRowCount()==0)
+            {
+                JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                return;
+            }
+
+            HomeWeightDataDisplay hwd = this.list_hweight.get(this.table_2.getSelectedRow());
+            //NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
+
+            //FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, ndd);            
+            FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, hwd);            
+            
+            if (fpmsd.wasAction())
+            {
+        	//System.out.println("Returned value: " + fpmsd.getAmountValue());
+        	
+        	//ndd.setAmount(fpmsd.getAmountValue());
+        	hwd.setAmount(fpmsd.getAmountValue());
+        	//hwd.setHomeWeightDefinition(name)
+        	this.createModel(this.list_nutritions, this.table_1, this.ndd);
+            }
+            
         }
         else
             System.out.println("PanelNutritionFoodEdit::Unknown command: " + action);

@@ -26,11 +26,11 @@
  */
 
 
-package ggc.gui.nutrition.data;
+package ggc.core.nutrition.data;
 
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.MealGroup;
-import ggc.gui.nutrition.GGCTreeRoot;
+import ggc.core.nutrition.GGCTreeRoot;
 
 import java.util.Vector;
 

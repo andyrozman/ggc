@@ -25,7 +25,7 @@
  *  Author:   andyrozman
  */
 
-package ggc.gui.nutrition.dialogs;
+package ggc.core.nutrition.dialogs;
  
 import ggc.db.datalayer.NutritionDefinition;
 import ggc.db.datalayer.NutritionHomeWeightType;

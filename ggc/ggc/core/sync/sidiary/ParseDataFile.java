@@ -1,5 +1,5 @@
 
-package ggc.sync.sidiary;
+package ggc.core.sync.sidiary;
 
 
 public class ParseDataFile
