@@ -29,6 +29,8 @@
 
 package ggc.util;
 
+import ggc.core.nutrition.GGCTreeRoot;
+import ggc.core.util.NutriI18nControl;
 import ggc.data.DailyValues;
 import ggc.data.HbA1cValues;
 import ggc.data.WeeklyValues;
@@ -40,7 +42,6 @@ import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.little.StatusBarL;
-import ggc.core.nutrition.GGCTreeRoot;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -783,7 +784,16 @@ public class DataAccess extends ATDataAccessAbstract
     // ******               I18n Utils                    *****    
     // ********************************************************
     
-     
+    
+    NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
+    
+    
+    public NutriI18nControl getNutriI18nControl()
+    {
+	return this.m_nutri_i18n;
+    }
+    
+    
     
     public String makeI18nKeyword(String input)
     {

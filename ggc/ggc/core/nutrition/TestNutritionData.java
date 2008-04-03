@@ -32,13 +32,22 @@ import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealGroup;
+import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.hibernate.FoodUserDescriptionH;
 import ggc.db.hibernate.FoodUserGroupH;
 import ggc.db.hibernate.MealGroupH;
 import ggc.db.hibernate.MealH;
 import ggc.util.DataAccess;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
+
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 
 
@@ -100,7 +109,8 @@ public class TestNutritionData
 	
 //	new FoodPartMainSelectorDialog(m_da, FoodPartMainSelectorDialog.SELECTOR_NUTRITION, null);
 	
-	new NutritionTreeDialog(m_da, type);
+//	this.getKeywords(db);
+	//new NutritionTreeDialog(m_da, type);
 	
 	/*JFrame fr = new JFrame();
 	//fr.setBounds(0,0,640,480);
@@ -109,8 +119,7 @@ public class TestNutritionData
 	//da.m_nutrition_treeroot = new GGCTreeRoot(1);
 
 	/*NutritionTreeDialog ntd =*/ 
-	// XX new NutritionTreeDialog(m_da, type); 
-	//new NutritionGroupDialog(m_da, type);
+	new NutritionTreeDialog(m_da, type); 
 	
 	
     }
@@ -228,6 +237,121 @@ public class TestNutritionData
     }
     
     
+    public void getKeywords(GGCDb db)
+    {
+	
+	ArrayList<FoodDescription> lst = db.getUSDAFoodDescriptions();
+	// ArrayList<SelectableInterface> lst = sb.getNutritionHomeWeights();
+	
+	Hashtable ht = new Hashtable();
+	
+	for(int i=0; i< lst.size(); i++)
+	{
+	    //NutritionHomeWeightType nh = (NutritionHomeWeightType)lst.get(i);
+	    
+	    //StringTokenizer st = new StringTokenizer(nh.getName(), "_");
+	    
+	    StringTokenizer st = new StringTokenizer(lst.get(i).getName_i18n(), ",");
+	    
+	    while (st.hasMoreTokens())
+	    {
+		String s = process((String)st.nextToken());
+		
+		if (s==null)
+		    continue;
+
+		StringTokenizer st1 = new StringTokenizer(s, " ");
+		
+		while(st1.hasMoreTokens())
+		{
+
+		    String ss = st1.nextToken().toUpperCase();
+		    
+		    if (!ht.containsKey(ss))
+		    {
+			ht.put(ss,ss);
+		    }
+		}
+	    }
+	}
+	
+	System.out.println("Keywords: " + ht.size());
+	
+	//ArrayList lst 
+	
+	ArrayList<String> lst1 = new ArrayList<String>();
+	
+	for(Enumeration en=ht.keys(); en.hasMoreElements(); )
+	{
+	    String s = (String)en.nextElement();
+	    
+	    lst1.add(s);
+	    //s = s.replace(",", "");
+	    //System.out.println(s);
+	}
+	
+	//Collections.sort(lst1);
+	
+	java.util.Collections.sort(lst1);
+
+	try
+	{
+	
+	    java.io.BufferedWriter bw = new BufferedWriter(new FileWriter(new File("foods.ttx")));
+        	
+	    //BufferedFileWriter 
+        	
+	    for(int i=0; i< lst1.size(); i++)
+	    {
+		String s = lst1.get(i);
+		//System.out.println(s);
+		bw.write(s);
+		bw.newLine();
+		bw.flush();
+	    }
+	    
+	    bw.close();
+	}
+	catch(Exception ex)
+	{
+	    
+	}
+	
+	
+    }
+    
+    
+    public String process(String input)
+    {
+//	input = input.replaceAll(",", "");
+	input = input.replace("(", "");
+	input = input.replace(")", "");
+	input = input.replace("\"", "");
+
+	
+	if (isNumber(input))
+	{
+	    return null;
+	}
+	
+	
+	return input;
+    }
+    
+    
+    public boolean isNumber(String input)
+    {
+	try
+	{
+	    Float.parseFloat(input);
+	    return true;
+	}
+	catch(Exception ex)
+	{
+	    return false;
+	}
+	
+    }
     
     
 

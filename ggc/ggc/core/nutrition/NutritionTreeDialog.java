@@ -80,7 +80,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 //    private static boolean useSystemLookAndFeel = false;
 
 
-    private I18nControlAbstract ic = null;
+    public I18nControlAbstract ic = null;
     public GGCTreePanel  panels[] = null;
     private int selectedPanel = 0;
 
@@ -107,7 +107,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
         this.selector = selector;
         this.m_da = da;
-        this.ic = m_da.getI18nControlInstance();
+        this.ic = m_da.getNutriI18nControl();
         this.m_tree_type = type;
 
         init();

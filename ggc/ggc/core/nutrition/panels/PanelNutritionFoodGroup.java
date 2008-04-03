@@ -35,7 +35,7 @@ public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
     public PanelNutritionFoodGroup(NutritionTreeDialog dia, int type)
     {
 
-        super(true, I18nControl.getInstance());
+        super(true, dia.ic);
         
         this.group_type = type;
 

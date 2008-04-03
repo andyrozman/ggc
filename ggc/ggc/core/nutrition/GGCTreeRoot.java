@@ -151,12 +151,12 @@ public class GGCTreeRoot
     
     public void readDbData(int type)
     {
-	System.out.println("ReadDbData [type=" + type + "]");
+	//System.out.println("ReadDbData [type=" + type + "]");
 	
 	if (dev==true)
 	    return;
 
-	System.out.println("After dev");
+	//System.out.println("After dev");
 	
 	if (type == GGCTreeRoot.TREE_USDA_NUTRITION)
 	{
@@ -286,7 +286,7 @@ public class GGCTreeRoot
 	    
 	    Iterator<FoodDescription> it2 = this.import1_foods.iterator();
 
-	    System.out.println("Groups HT: " + this.m_groups_ht);
+//	    System.out.println("Groups HT: " + this.m_groups_ht);
 	    
 	    while (it2.hasNext())
 	    {
@@ -343,11 +343,11 @@ public class GGCTreeRoot
     {
 
 	if (m_type==GGCTreeRoot.TREE_USDA_NUTRITION)
-            return DataAccess.getInstance().m_i18n.getMessage("USDA_NUTRITION_DB");
+            return DataAccess.getInstance().getNutriI18nControl().getMessage("USDA_NUTRITION_DB");
 	else if (m_type==GGCTreeRoot.TREE_USER_NUTRITION)
-            return DataAccess.getInstance().m_i18n.getMessage("USER_NUTRITION_DB");
+            return DataAccess.getInstance().getNutriI18nControl().getMessage("USER_NUTRITION_DB");
         else
-            return DataAccess.getInstance().m_i18n.getMessage("MEALS_DB");
+            return DataAccess.getInstance().getNutriI18nControl().getMessage("MEALS_DB");
 
     }
 

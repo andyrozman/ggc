@@ -85,7 +85,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /*JPanel*/ implements A
     public PanelNutritionMealEdit(NutritionTreeDialog dia)
     {
 
-        super(true, I18nControl.getInstance());
+        super(true, dia.ic);
 
         m_dialog = dia;
         m_da = DataAccess.getInstance();

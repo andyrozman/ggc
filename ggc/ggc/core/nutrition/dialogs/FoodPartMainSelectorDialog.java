@@ -98,7 +98,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         super(da.getParent(), "", true);
 
         m_da = da;
-        ic = m_da.getI18nControlInstance();
+        ic = m_da.getNutriI18nControl();
 
         if (type == FoodPartMainSelectorDialog.SELECTOR_NUTRITION)
             this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
@@ -122,9 +122,10 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         super(da.getParent(), "", true);
 
         m_da = da;
-        ic = m_da.getI18nControlInstance();
+        ic = m_da.getNutriI18nControl();
 
         this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
+        this.selector_type = FoodPartMainSelectorDialog.SELECTOR_NUTRITION; 
         
         this.nutrition_data = ndd; 
         init();
@@ -141,15 +142,18 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         super(da.getParent(), "", true);
 
         m_da = da;
-        ic = m_da.getI18nControlInstance();
+        ic = m_da.getNutriI18nControl();
 
-        this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
+        this.setTitle(ic.getMessage("HOME_WEIGHT_SELECTOR"));
+        
+        this.selector_type = FoodPartMainSelectorDialog.SELECTOR_HOME_WEIGHT; 
         
  //       this.nutrition_data = ndd;
         this.home_weight_data = hwd;
         init();
         
-        loadNutrition();
+        //loadNutrition();
+        loadHomeWeighs();
  
         this.setVisible(true);
     }
@@ -161,13 +165,25 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 	this.button_select.setEnabled(false);
 	this.label_item.setText(this.nutrition_data.getName() + " (" + this.nutrition_data.getWeightUnit() + ")");
 	
-	System.out.println("Amount input: " + this.nutrition_data.getAmount());
+	//System.out.println("Amount input: " + this.nutrition_data.getAmount());
 	
 	
         this.amountField.setValue(new Double(this.nutrition_data.getAmount()));
     }
     
+    private void loadHomeWeighs()
+    {
+	this.button_select.setEnabled(false);
+	this.label_item.setText(this.home_weight_data.getName());
+	
+	//System.out.println("Amount input: " + this.nutrition_data.getAmount());
+	
+	
+        this.amountField.setValue(new Double(this.home_weight_data.getAmount()));
+        this.weightField.setValue(new Double(this.home_weight_data.getWeight()));
+    }
 
+    
     
     
     public void init()

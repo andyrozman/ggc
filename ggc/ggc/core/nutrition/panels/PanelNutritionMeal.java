@@ -75,7 +75,7 @@ public class PanelNutritionMeal extends GGCTreePanel /*JPanel*/ implements Actio
     public PanelNutritionMeal(NutritionTreeDialog dia)
     {
 
-        super(false, I18nControl.getInstance());
+        super(false, dia.ic);
 
         m_dialog = dia;
         m_da = DataAccess.getInstance();

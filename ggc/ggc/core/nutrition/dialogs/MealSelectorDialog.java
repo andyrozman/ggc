@@ -86,7 +86,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener
         super(da.getParent(), "", true);
 
         m_da = da;
-        ic = m_da.getI18nControlInstance();
+        ic = m_da.getNutriI18nControl();
 
 	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
 	this.input_id = meal_id;
@@ -103,7 +103,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener
         super(da.getParent(), "", true);
 
         m_da = da;
-        ic = m_da.getI18nControlInstance();
+        ic = m_da.getNutriI18nControl();
 
 	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
         
@@ -308,14 +308,14 @@ public class MealSelectorDialog extends JDialog implements ActionListener
 	
 	if (o instanceof Long)
 	{
-	    System.out.println("Amount(long): " + this.amountField.getValue());
+	    //System.out.println("Amount(long): " + this.amountField.getValue());
 	    Long l = (Long)o;
 	    return l.floatValue();
 	}
 	else
 	{
 	
-	    System.out.println("Amount(double): " + this.amountField.getValue());
+	    //System.out.println("Amount(double): " + this.amountField.getValue());
 	
 	    Double d = (Double)this.amountField.getValue();
 	    return d.floatValue();

@@ -33,7 +33,6 @@ package ggc.gui.little;
 import ggc.data.DailyStatsTableModel;
 import ggc.data.DailyValues;
 import ggc.gui.panels.info.AbstractInfoPanel;
-import ggc.util.DataAccess;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

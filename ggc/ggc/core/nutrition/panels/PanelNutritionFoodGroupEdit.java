@@ -62,7 +62,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
     public PanelNutritionFoodGroupEdit(NutritionTreeDialog dia, int type)
     {
 
-        super(true, I18nControl.getInstance());
+        super(true, dia.ic);
         
         this.group_type = type;
 

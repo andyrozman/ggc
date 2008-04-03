@@ -2,7 +2,6 @@
 package ggc.core.nutrition.display;
 
 import ggc.db.datalayer.NutritionHomeWeightType;
-import ggc.util.DataAccess;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
@@ -105,6 +104,12 @@ public class HomeWeightDataDisplay extends ATTableData
 	    return this.id;
 	}
 
+	public String getName()
+	{
+	    return this.weight_type;
+	}
+	
+	
 	public void setHomeWeightDefinition(String name)
 	{
 	    this.weight_type = ic.getMessage(name);
@@ -128,10 +133,20 @@ public class HomeWeightDataDisplay extends ATTableData
 	    return f; */
 	}
 	
-	
 	public void setAmount(float val)
 	{
 	    this.amount = val; //.value = DataAccess.getFloatAsString(val, this.decimal_places);
+	}
+
+	
+	public float getWeight()
+	{
+	    return this.weight;
+	}
+
+	public void setWeight(float weight)
+	{
+	    this.weight = weight;
 	}
 	
 	

@@ -84,10 +84,10 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         super(da.getParent(), "", true);
 	//super((JDialog)null, "", true);
 
-        System.out.println("type:" + type);
+        //System.out.println("type:" + type);
         
         m_da = da;
-        ic = m_da.getI18nControlInstance();
+        ic = m_da.getNutriI18nControl();
         this.m_tree_type = type;
 
         //this.setResizable(false);
@@ -300,20 +300,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
 	    this.dispose();
 	}
 	    
-	
-	
-	
     }
 
-    
-
-
-    
-    
-    
-    
-
-    
-    
     
 }

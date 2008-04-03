@@ -1,12 +1,12 @@
 package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
-import ggc.db.datalayer.FoodDescription;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.display.HomeWeightDataDisplay;
 import ggc.core.nutrition.display.NutritionDataDisplay;
+import ggc.core.util.NutriI18nControl;
+import ggc.db.datalayer.FoodDescription;
 import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -59,7 +59,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
     public PanelNutritionFood(NutritionTreeDialog dia)
     {
 
-        super(false, I18nControl.getInstance());
+        super(false, dia.ic);
 
         m_dialog = dia;
         m_da = DataAccess.getInstance();

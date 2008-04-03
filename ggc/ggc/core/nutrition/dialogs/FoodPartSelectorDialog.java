@@ -48,7 +48,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     
     public FoodPartSelectorDialog(DataAccess da, int type, String except) 
     {
-        super(da.getParent(), da.getI18nControlInstance(), type, except, true);
+        super(da.getParent(), da.getNutriI18nControl(), type, except, true);
     }
 
   
