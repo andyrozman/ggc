@@ -1,16 +1,15 @@
 package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
+import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.display.MealNutritionsDisplay;
+import ggc.core.nutrition.display.MealPartsDisplay;
+import ggc.core.util.DataAccess;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealGroup;
 import ggc.db.datalayer.MealNutrition;
 import ggc.db.datalayer.MealPart;
 import ggc.db.datalayer.NutritionDefinition;
-import ggc.core.nutrition.NutritionTreeDialog;
-import ggc.core.nutrition.display.MealNutritionsDisplay;
-import ggc.core.nutrition.display.MealPartsDisplay;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

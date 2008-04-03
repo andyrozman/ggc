@@ -40,9 +40,9 @@ import ggc.gui.dialogs.SpreadGraphDialog;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.gui.panels.info.InfoPanel;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
-import ggc.util.VersionChecker;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
+import ggc.core.util.VersionChecker;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -132,7 +132,7 @@ public class MainFrame extends JFrame
 
 
     private JMenu menu_file, menu_bgs, menu_food, menu_doctor, 
-    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_misc;
+    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps /*, menu_misc*/;
 
     //public GGCHelp m_help;
 
@@ -441,7 +441,7 @@ public class MainFrame extends JFrame
             HelpSet main_help_set = null;            
             //HelpContext.mainHelpSet = null;
 
-            ClassLoader cl = MainFrame.class.getClassLoader();
+//X            ClassLoader cl = MainFrame.class.getClassLoader();
             //String help_url = "jar:file:pis_lang-0.1.jar!/help/PIS.hs";
 
             String help_url = "jar:file:ggc_help-0.1.jar!/help/en/GGC.hs"; 
@@ -811,10 +811,11 @@ public class MainFrame extends JFrame
         return item;
     }*/
 
+    /*
     private void addToolBarSpacer() 
     {
         toolBar.addSeparator();
-    }
+    }*/
 
     private JButton addToolBarButton(Action action) 
     {
@@ -827,12 +828,12 @@ public class MainFrame extends JFrame
         return button;
     }
 
-
+/*
     private JButton addToolBarButtonWithName(String cmd) 
     {
 	return addToolBarButton(this.actions.get(cmd));
     }
-
+*/
 
 
     class GGCAction extends AbstractAction 

@@ -62,7 +62,7 @@ import ggc.db.hibernate.NutritionDefinitionH;
 import ggc.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.db.hibernate.SettingsH;
 import ggc.core.nutrition.GGCTreeRoot;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.io.FileInputStream;
 import java.sql.SQLException;

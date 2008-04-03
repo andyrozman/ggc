@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JLabel;
 
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 
 public class TimerThread extends Thread

@@ -33,7 +33,7 @@
 package ggc.gui.little;
 
 import ggc.gui.panels.info.AbstractInfoPanel;
-import ggc.util.I18nControl;
+import ggc.core.util.I18nControl;
 
 import java.awt.GridLayout;
 

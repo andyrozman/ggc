@@ -30,7 +30,7 @@ package ggc.gui.panels.info;
 
 
 import ggc.data.StatisticValues;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.awt.GridLayout;
 import java.text.DecimalFormat;

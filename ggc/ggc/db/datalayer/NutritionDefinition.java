@@ -32,7 +32,7 @@ package ggc.db.datalayer;
 
 import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.NutritionDefinitionH;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.util.Comparator;
 

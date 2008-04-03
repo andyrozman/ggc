@@ -50,8 +50,8 @@ import javax.swing.SwingConstants;
 
 import ggc.data.MonthlyValues;
 import ggc.data.print.PrintSimpleMonthlyReport;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 
 // fix this

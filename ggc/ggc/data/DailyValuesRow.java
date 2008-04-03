@@ -29,8 +29,8 @@
 package ggc.data;
 
 import ggc.db.hibernate.DayValueH;
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;

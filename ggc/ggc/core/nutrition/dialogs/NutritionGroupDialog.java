@@ -29,7 +29,7 @@ package ggc.core.nutrition.dialogs;
  
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.data.NutritionGroupModel;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -35,7 +35,7 @@ import ggc.db.datalayer.NutritionDefinition;
 import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.hibernate.ColorSchemeH;
 import ggc.db.hibernate.DoctorTypeH;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.io.BufferedReader;
 import java.io.File;

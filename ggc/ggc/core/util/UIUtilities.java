@@ -33,13 +33,18 @@
  */
 
 
-package ggc.util;
+package ggc.core.util;
 
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JToolBar;
 
 
 public class UIUtilities

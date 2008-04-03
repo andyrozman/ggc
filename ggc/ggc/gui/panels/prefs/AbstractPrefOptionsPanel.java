@@ -30,9 +30,9 @@ package ggc.gui.panels.prefs;
 
 
 import ggc.gui.dialogs.PropertiesDialog;
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
+import ggc.core.util.I18nControl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

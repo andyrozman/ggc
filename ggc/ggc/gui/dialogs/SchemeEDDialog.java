@@ -27,8 +27,8 @@
 
 package ggc.gui.dialogs;
 
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;

@@ -28,7 +28,7 @@ package ggc.data;
  */
 
 
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.io.Serializable;
 import java.util.Hashtable;

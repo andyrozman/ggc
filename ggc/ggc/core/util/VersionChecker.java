@@ -25,7 +25,7 @@
  *  Author:   schultd
  */
 
-package ggc.util;
+package ggc.core.util;
 
 // import ggc.GGC;
 import ggc.gui.MainFrame;

@@ -4,9 +4,8 @@ package ggc.core.nutrition.panels;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.display.HomeWeightDataDisplay;
 import ggc.core.nutrition.display.NutritionDataDisplay;
-import ggc.core.util.NutriI18nControl;
+import ggc.core.util.DataAccess;
 import ggc.db.datalayer.FoodDescription;
-import ggc.util.DataAccess;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

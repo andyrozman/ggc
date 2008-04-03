@@ -31,7 +31,7 @@ package ggc.data.cfg;
 
 import ggc.db.GGCDb;
 import ggc.db.datalayer.Settings;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.util.Enumeration;
 import java.util.Hashtable;

@@ -35,7 +35,7 @@ import ggc.data.DailyValues;
 import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;
 import ggc.gui.panels.info.AbstractInfoPanel;
-import ggc.util.I18nControl;
+import ggc.core.util.I18nControl;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

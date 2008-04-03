@@ -28,8 +28,8 @@
 package ggc.gui.dialogs;
 
 import ggc.db.hibernate.DoctorH;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.awt.Font;
 import java.awt.Rectangle;

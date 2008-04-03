@@ -29,7 +29,7 @@ package ggc.core.nutrition.dialogs;
  
 import ggc.db.datalayer.NutritionDefinition;
 import ggc.db.datalayer.NutritionHomeWeightType;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.awt.event.ItemEvent;
 

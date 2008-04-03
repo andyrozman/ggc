@@ -48,7 +48,7 @@ import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.graphics.components.about.LicenceInfo;
 
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 
 public class AboutGGCDialog extends AboutDialog 

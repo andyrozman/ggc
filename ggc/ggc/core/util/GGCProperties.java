@@ -27,7 +27,7 @@
  *
  */
 
-package ggc.util;
+package ggc.core.util;
 
 import java.awt.Color;
 import java.util.Hashtable;

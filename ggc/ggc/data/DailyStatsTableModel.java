@@ -29,7 +29,7 @@
 package ggc.data;
 
 
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import javax.swing.table.AbstractTableModel;
 

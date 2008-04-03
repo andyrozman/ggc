@@ -31,7 +31,7 @@ package ggc.gui.view;
 
 
 import ggc.data.HbA1cValues;
-import ggc.util.I18nControl;
+import ggc.core.util.I18nControl;
 
 import java.awt.*;
 import java.text.DecimalFormat;

@@ -37,8 +37,8 @@ import ggc.data.calendar.CalendarListener;
 import ggc.db.GGCDb;
 import ggc.gui.MainFrame;
 import ggc.gui.calendar.CalendarPane;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

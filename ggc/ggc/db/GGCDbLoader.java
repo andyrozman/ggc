@@ -43,7 +43,7 @@ import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.little.StatusBarL;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 
 public class GGCDbLoader extends Thread

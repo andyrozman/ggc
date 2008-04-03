@@ -1,11 +1,6 @@
 package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.NutritionDefinition;
-import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.data.HomeWeightComparator;
 import ggc.core.nutrition.data.NutritionsComparator;
@@ -13,8 +8,11 @@ import ggc.core.nutrition.dialogs.FoodPartMainSelectorDialog;
 import ggc.core.nutrition.dialogs.NutritionGroupDialog;
 import ggc.core.nutrition.display.HomeWeightDataDisplay;
 import ggc.core.nutrition.display.NutritionDataDisplay;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.db.datalayer.FoodDescription;
+import ggc.db.datalayer.FoodGroup;
+import ggc.db.datalayer.NutritionDefinition;
+import ggc.db.datalayer.NutritionHomeWeightType;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,7 +22,6 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

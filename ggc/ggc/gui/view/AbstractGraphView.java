@@ -34,7 +34,7 @@
 package ggc.gui.view;
 
 
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;

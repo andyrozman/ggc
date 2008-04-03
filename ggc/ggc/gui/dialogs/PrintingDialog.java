@@ -30,8 +30,8 @@ package ggc.gui.dialogs;
 import ggc.data.MonthlyValues;
 import ggc.data.print.PrintExtendedMonthlyReport;
 import ggc.data.print.PrintSimpleMonthlyReport;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Font;

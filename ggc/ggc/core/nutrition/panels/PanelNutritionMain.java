@@ -1,8 +1,7 @@
 package ggc.core.nutrition.panels;
 
 import ggc.core.nutrition.NutritionTreeDialog;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
 
 import java.awt.Font;
 

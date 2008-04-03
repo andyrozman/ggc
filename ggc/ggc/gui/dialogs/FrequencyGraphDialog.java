@@ -31,8 +31,8 @@ package ggc.gui.dialogs;
 import ggc.data.GlucoValues;
 import ggc.gui.calendar.DateRangeSelectionPanel;
 import ggc.gui.view.FrequencyGraphView;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

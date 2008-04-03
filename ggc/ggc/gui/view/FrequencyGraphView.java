@@ -159,7 +159,7 @@ public class FrequencyGraphView extends AbstractGraphView
             g2D.drawString(i + "", markPos - 10, viewHeight - lowerSpace + 20);
         }
 
-        int lower = (int)m_da.getSettings().getBG_Low();
+//x        int lower = (int)m_da.getSettings().getBG_Low();
 //        int upper = (int)m_da.getSettings().getBG_High();
 
         // XXX: these need something similar to BGtoCoord, but that's too much effort

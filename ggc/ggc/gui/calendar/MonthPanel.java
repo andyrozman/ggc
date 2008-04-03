@@ -31,7 +31,7 @@ package ggc.gui.calendar;
 import ggc.data.calendar.CalendarEvent;
 import ggc.data.calendar.CalendarListener;
 import ggc.data.calendar.CalendarModel;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

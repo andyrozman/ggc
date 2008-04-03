@@ -33,8 +33,8 @@ package ggc.data.print;
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
 import ggc.data.MonthlyValues;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.awt.Color;
 import java.io.File;

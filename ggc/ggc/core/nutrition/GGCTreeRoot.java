@@ -32,7 +32,7 @@ import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealGroup;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

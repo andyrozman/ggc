@@ -29,7 +29,7 @@
  */
 
 
-package ggc.util;
+package ggc.core.util;
 
 
 import javax.swing.*;

@@ -27,7 +27,7 @@
 
 package ggc.gui;
 
-import ggc.util.I18nControl;
+import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

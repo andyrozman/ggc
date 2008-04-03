@@ -30,8 +30,8 @@ package ggc.gui.dialogs;
 
 import ggc.data.HbA1cValues;
 import ggc.gui.view.HbA1cView;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Font;

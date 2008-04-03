@@ -31,8 +31,8 @@ package ggc.data;
 
 import ggc.data.event.GlucoValueEvent;
 import ggc.data.event.GlucoValueEventListener;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.text.SimpleDateFormat;
 

@@ -40,7 +40,7 @@ import ggc.core.nutrition.panels.PanelNutritionFoodGroupEdit;
 import ggc.core.nutrition.panels.PanelNutritionMain;
 import ggc.core.nutrition.panels.PanelNutritionMeal;
 import ggc.core.nutrition.panels.PanelNutritionMealEdit;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

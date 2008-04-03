@@ -29,7 +29,7 @@ package ggc.core.nutrition.dialogs;
  
 import ggc.core.nutrition.display.HomeWeightDataDisplay;
 import ggc.core.nutrition.display.NutritionDataDisplay;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -89,7 +89,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     private int selector_type = 0;
     
     
-    private SelectableInterface selected_object = null;
+    //private SelectableInterface selected_object = null;
     boolean action_done = false;
     
     

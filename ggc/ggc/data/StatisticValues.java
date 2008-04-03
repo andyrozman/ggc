@@ -31,7 +31,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 public class StatisticValues
 {

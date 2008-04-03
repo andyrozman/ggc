@@ -37,7 +37,7 @@ import ggc.db.hibernate.FoodUserDescriptionH;
 import ggc.db.hibernate.FoodUserGroupH;
 import ggc.db.hibernate.MealGroupH;
 import ggc.db.hibernate.MealH;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.io.BufferedWriter;
 import java.io.File;

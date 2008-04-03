@@ -29,7 +29,7 @@
 
 package ggc.db.datalayer;
 
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 
 public class MealNutrition
@@ -40,7 +40,7 @@ public class MealNutrition
     private String nutrition_desc;
     private float amount = 0.0f;
     
-    private boolean no_desc = false;
+    //private boolean no_desc = false;
     
     // value pack: id=amount
     public MealNutrition(String packed, boolean load_description)
@@ -69,7 +69,7 @@ public class MealNutrition
 	this.amount = amount;
 	this.nutrition_desc = desc;
 	
-	this.no_desc = true;
+	//this.no_desc = true;
     }
     
     

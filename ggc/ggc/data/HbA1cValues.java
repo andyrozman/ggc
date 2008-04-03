@@ -28,7 +28,7 @@ package ggc.data;
  *  Author:   schultd
  */
 
-import ggc.util.I18nControl;
+import ggc.core.util.I18nControl;
 
 import java.util.Enumeration;
 import java.util.Hashtable;

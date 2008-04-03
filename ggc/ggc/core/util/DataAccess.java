@@ -27,7 +27,7 @@
  *  Author:   andyrozman  {andy@atech-software.com}
  */
 
-package ggc.util;
+package ggc.core.util;
 
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.NutriI18nControl;

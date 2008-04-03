@@ -30,8 +30,8 @@ package ggc.gui.panels.info;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import javax.swing.border.TitledBorder;
 

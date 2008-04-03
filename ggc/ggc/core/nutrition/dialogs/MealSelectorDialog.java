@@ -31,7 +31,7 @@ import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealPart;
 import ggc.core.nutrition.NutritionTreeDialog;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

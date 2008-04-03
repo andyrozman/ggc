@@ -36,7 +36,7 @@ import java.util.GregorianCalendar;
 
 import ggc.data.DailyValues;
 import ggc.db.hibernate.ColorSchemeH;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 public class DailyGraphView extends AbstractGraphView 
 {

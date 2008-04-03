@@ -30,7 +30,7 @@
 package ggc.db.datalayer;
 
 import ggc.core.nutrition.GGCTreeRoot;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;

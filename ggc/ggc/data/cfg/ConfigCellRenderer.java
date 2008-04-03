@@ -29,7 +29,7 @@ package ggc.data.cfg;
  */
 
 
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;

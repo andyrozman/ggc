@@ -32,8 +32,8 @@ package ggc.data;
 
 
 import ggc.db.hibernate.DayValueH;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

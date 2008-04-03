@@ -35,13 +35,12 @@ package ggc.gui.little;
 
 
 
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 import ggc.data.DailyValuesRow;
 import ggc.db.GGCDb;
-import ggc.gui.MainFrame;
 import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -392,10 +391,11 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         return item;
     }
 */
+    /*
     private void addToolBarSpacer()
     {
         toolBar.addSeparator();
-    }
+    }*/
 
     private JButton addToolBarButton(Action action)
     {
@@ -640,7 +640,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             HelpSet main_help_set = null;            
             //HelpContext.mainHelpSet = null;
 
-            ClassLoader cl = MainFrame.class.getClassLoader();
+            //ClassLoader cl = MainFrame.class.getClassLoader();
             //String help_url = "jar:file:pis_lang-0.1.jar!/help/PIS.hs";
 
             String help_url = "jar:file:ggc_help-0.1.jar!/help/en/GGC.hs"; 

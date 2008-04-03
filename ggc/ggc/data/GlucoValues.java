@@ -37,7 +37,7 @@ import javax.swing.event.EventListenerList;
 
 import ggc.data.event.GlucoValueEvent;
 import ggc.data.event.GlucoValueEventListener;
-import ggc.util.DataAccess;
+import ggc.core.util.DataAccess;
 
 
 

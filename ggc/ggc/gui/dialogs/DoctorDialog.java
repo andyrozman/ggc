@@ -29,9 +29,9 @@ package ggc.gui.dialogs;
 
 import ggc.data.DailyValues;
 import ggc.data.DailyValuesRow;
-import ggc.util.DataAccess;
-import ggc.util.GGCProperties;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
+import ggc.core.util.I18nControl;
 
 import java.awt.Container;
 import java.awt.Font;

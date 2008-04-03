@@ -42,8 +42,8 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.BaseFont;
 
 import ggc.data.MonthlyValues;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 public class PrintSimpleMonthlyReport extends PdfPageEventHelper 
 {

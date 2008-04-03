@@ -9,8 +9,8 @@ package ggc.gui;
 
 
 import ggc.data.GlucoTableModel;
-import ggc.util.I18nControl;
-import ggc.util.UIUtilities;
+import ggc.core.util.I18nControl;
+import ggc.core.util.UIUtilities;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

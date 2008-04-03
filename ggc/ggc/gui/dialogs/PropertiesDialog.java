@@ -17,8 +17,8 @@ import ggc.gui.panels.prefs.PrefGeneralPane;
 import ggc.gui.panels.prefs.PrefMedicalDataPane;
 import ggc.gui.panels.prefs.PrefPrintingPane;
 import ggc.gui.panels.prefs.PrefRenderingQualityPane;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

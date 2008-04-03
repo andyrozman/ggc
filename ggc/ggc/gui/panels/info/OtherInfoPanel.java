@@ -27,7 +27,7 @@
 
 package ggc.gui.panels.info;
 
-import ggc.util.I18nControl;
+import ggc.core.util.I18nControl;
 
 import java.awt.GridLayout;
 
