@@ -27,8 +27,8 @@
 
 package ggc.gui.dialogs;
 
-import ggc.data.DailyValues;
-import ggc.data.DailyValuesRow;
+import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 import ggc.core.util.I18nControl;

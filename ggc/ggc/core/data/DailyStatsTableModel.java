@@ -26,7 +26,7 @@
  *  Author:   schultd
  */
 
-package ggc.data;
+package ggc.core.data;
 
 
 import ggc.core.util.DataAccess;

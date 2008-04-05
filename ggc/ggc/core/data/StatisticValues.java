@@ -25,13 +25,13 @@
  *  Author:   schultd
  */
 
-package ggc.data;
+package ggc.core.data;
+
+import ggc.core.util.DataAccess;
 
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-
-import ggc.core.util.DataAccess;
 
 public class StatisticValues
 {

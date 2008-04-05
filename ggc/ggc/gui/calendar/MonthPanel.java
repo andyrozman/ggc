@@ -28,9 +28,9 @@
 package ggc.gui.calendar;
 
 
-import ggc.data.calendar.CalendarEvent;
-import ggc.data.calendar.CalendarListener;
-import ggc.data.calendar.CalendarModel;
+import ggc.core.data.calendar.CalendarEvent;
+import ggc.core.data.calendar.CalendarListener;
+import ggc.core.data.calendar.CalendarModel;
 import ggc.core.util.DataAccess;
 
 import java.awt.event.ActionEvent;

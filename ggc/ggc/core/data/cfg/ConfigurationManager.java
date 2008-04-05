@@ -1,4 +1,4 @@
-package ggc.data.cfg;
+package ggc.core.data.cfg;
 
 
 /*

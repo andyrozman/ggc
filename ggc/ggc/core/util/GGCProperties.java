@@ -29,13 +29,12 @@
 
 package ggc.core.util;
 
+import ggc.core.data.cfg.ConfigurationManager;
+import ggc.db.hibernate.ColorSchemeH;
+import ggc.db.tool.DbToolApplicationGGC;
+
 import java.awt.Color;
 import java.util.Hashtable;
-
-import ggc.data.cfg.ConfigurationManager;
-import ggc.db.hibernate.ColorSchemeH;
-//import ggc.db.hibernate.SettingsMainH;
-import ggc.db.tool.DbToolApplicationGGC;
 
 public class GGCProperties //extends GGCPropertiesHelper 
 {

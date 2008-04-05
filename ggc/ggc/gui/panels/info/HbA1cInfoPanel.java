@@ -28,10 +28,10 @@
 package ggc.gui.panels.info;
 
 
-import ggc.data.HbA1cValues;
-import ggc.db.GGCDb;
+import ggc.core.data.HbA1cValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
+import ggc.db.GGCDb;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

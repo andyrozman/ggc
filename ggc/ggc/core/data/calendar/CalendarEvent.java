@@ -1,4 +1,4 @@
-package ggc.data.calendar;
+package ggc.core.data.calendar;
 
 
 /*

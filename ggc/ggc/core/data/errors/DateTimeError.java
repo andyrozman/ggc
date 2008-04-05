@@ -1,4 +1,4 @@
-package ggc.data.errors;
+package ggc.core.data.errors;
 
 
 /*

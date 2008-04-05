@@ -28,10 +28,10 @@
 package ggc.gui.dialogs;
 
 
-import ggc.data.HbA1cValues;
-import ggc.gui.view.HbA1cView;
+import ggc.core.data.HbA1cValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
+import ggc.gui.view.HbA1cView;
 
 import java.awt.Component;
 import java.awt.Font;

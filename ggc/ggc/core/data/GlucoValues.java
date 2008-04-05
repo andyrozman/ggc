@@ -26,18 +26,15 @@
  *  Author:   schultd
  */
 
-package ggc.data;
+package ggc.core.data;
 
 
-import java.util.GregorianCalendar;
-import java.util.Vector;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import javax.swing.event.EventListenerList;
-
-import ggc.data.event.GlucoValueEvent;
-import ggc.data.event.GlucoValueEventListener;
 import ggc.core.util.DataAccess;
+
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -46,7 +43,7 @@ public class GlucoValues extends DailyValues
 //    ArrayList dayValues = null;
         Vector<DailyValues> dayValues = null;
 
-    private EventListenerList listenerList = new EventListenerList();
+    //private EventListenerList listenerList = new EventListenerList();
     private DataAccess m_da = DataAccess.getInstance();
 
     //private int recordCount = 0;
@@ -120,8 +117,8 @@ public class GlucoValues extends DailyValues
             {
                 dV.setNewRow(dRow);
 
-                GlucoValueEvent event = new GlucoValueEvent(this, i, i, 0, GlucoValueEvent.INSERT);
-                fireGlucoValueChanged(event);
+//X                GlucoValueEvent event = new GlucoValueEvent(this, i, i, 0, GlucoValueEvent.INSERT);
+//X                fireGlucoValueChanged(event);
                 return;
             }
         }
@@ -135,8 +132,8 @@ public class GlucoValues extends DailyValues
             dV.setIsNew(true);
             dayValues.add(dV);
 
-            GlucoValueEvent event = new GlucoValueEvent(this, dayValues.size(), dayValues.size(), 0, GlucoValueEvent.INSERT);
-            fireGlucoValueChanged(event);
+//X            GlucoValueEvent event = new GlucoValueEvent(this, dayValues.size(), dayValues.size(), 0, GlucoValueEvent.INSERT);
+//X            fireGlucoValueChanged(event);
         }
     }
 
@@ -181,8 +178,8 @@ public class GlucoValues extends DailyValues
                 {
                     dV.deleteRow(row - old);
 
-                    GlucoValueEvent event = new GlucoValueEvent(this, row, row, 0, GlucoValueEvent.DELETE);
-                    fireGlucoValueChanged(event);
+//X                    GlucoValueEvent event = new GlucoValueEvent(this, row, row, 0, GlucoValueEvent.DELETE);
+//X                    fireGlucoValueChanged(event);
                     return;
                 }
             }
@@ -223,8 +220,8 @@ public class GlucoValues extends DailyValues
                 dV.setValueAt(aValue, row - old, column);
         }
 
-        GlucoValueEvent event = new GlucoValueEvent(this, row, row, column, GlucoValueEvent.UPDATE);
-        fireGlucoValueChanged(event);
+//X        GlucoValueEvent event = new GlucoValueEvent(this, row, row, column, GlucoValueEvent.UPDATE);
+//X        fireGlucoValueChanged(event);
     }
 
     public int getDayCount()
@@ -247,7 +244,7 @@ public class GlucoValues extends DailyValues
         }
     }
 
-
+/*
     public void addGlucoValueEventListener(GlucoValueEventListener listener)
     {
         listenerList.add(GlucoValueEventListener.class, listener);
@@ -274,5 +271,5 @@ public class GlucoValues extends DailyValues
                     ((GlucoValueEventListener)listeners[i + 1]).glucoValuesChanged(event);
             }
         }
-    }
+    } */
 }

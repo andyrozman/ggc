@@ -29,14 +29,18 @@
 
 package ggc.gui.view;
 
-import java.awt.*;
+import ggc.core.data.DailyValues;
+import ggc.core.util.DataAccess;
+import ggc.db.hibernate.ColorSchemeH;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.util.GregorianCalendar;
-
-import ggc.data.DailyValues;
-import ggc.db.hibernate.ColorSchemeH;
-import ggc.core.util.DataAccess;
 
 public class DailyGraphView extends AbstractGraphView 
 {

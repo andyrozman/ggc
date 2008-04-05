@@ -29,12 +29,11 @@
 
 package ggc.core.util;
 
+import ggc.core.data.DailyValues;
+import ggc.core.data.HbA1cValues;
+import ggc.core.data.WeeklyValues;
+import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.nutrition.GGCTreeRoot;
-import ggc.core.util.NutriI18nControl;
-import ggc.data.DailyValues;
-import ggc.data.HbA1cValues;
-import ggc.data.WeeklyValues;
-import ggc.data.cfg.ConfigurationManager;
 import ggc.db.GGCDb;
 import ggc.db.GGCDbLoader;
 import ggc.db.tool.DbToolApplicationGGC;

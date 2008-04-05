@@ -29,13 +29,15 @@
 package ggc.gui.calendar;
 
 
-import ggc.data.calendar.CalendarEvent;
-import ggc.data.calendar.CalendarListener;
-import ggc.data.calendar.CalendarModel;
+import ggc.core.data.calendar.CalendarEvent;
+import ggc.core.data.calendar.CalendarListener;
+import ggc.core.data.calendar.CalendarModel;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 public class YearPanel extends JPanel implements CalendarListener

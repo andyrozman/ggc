@@ -30,8 +30,8 @@
 
 package ggc.gui.little;
 
-import ggc.data.DailyStatsTableModel;
-import ggc.data.DailyValues;
+import ggc.core.data.DailyStatsTableModel;
+import ggc.core.data.DailyValues;
 import ggc.gui.panels.info.AbstractInfoPanel;
 
 import java.awt.BorderLayout;

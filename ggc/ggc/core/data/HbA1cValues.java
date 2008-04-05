@@ -1,4 +1,4 @@
-package ggc.data;
+package ggc.core.data;
 
 
 /*

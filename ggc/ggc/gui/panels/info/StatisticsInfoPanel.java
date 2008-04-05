@@ -29,7 +29,7 @@
 package ggc.gui.panels.info;
 
 
-import ggc.data.StatisticValues;
+import ggc.core.data.StatisticValues;
 import ggc.core.util.DataAccess;
 
 import java.awt.GridLayout;

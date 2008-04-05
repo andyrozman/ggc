@@ -30,8 +30,8 @@
 package ggc.gui.view;
 
 
-import ggc.data.DailyValues;
-import ggc.data.GlucoValues;
+import ggc.core.data.DailyValues;
+import ggc.core.data.GlucoValues;
 import ggc.gui.dialogs.SpreadGraphDialog;
 
 import java.awt.Color;

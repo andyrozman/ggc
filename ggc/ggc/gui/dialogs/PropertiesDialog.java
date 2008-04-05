@@ -10,15 +10,15 @@
 package ggc.gui.dialogs;
 
 
-import ggc.data.cfg.ConfigCellRenderer;
+import ggc.core.data.cfg.ConfigCellRenderer;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 import ggc.gui.panels.prefs.AbstractPrefOptionsPanel;
 import ggc.gui.panels.prefs.PrefFontsAndColorPane;
 import ggc.gui.panels.prefs.PrefGeneralPane;
 import ggc.gui.panels.prefs.PrefMedicalDataPane;
 import ggc.gui.panels.prefs.PrefPrintingPane;
 import ggc.gui.panels.prefs.PrefRenderingQualityPane;
-import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

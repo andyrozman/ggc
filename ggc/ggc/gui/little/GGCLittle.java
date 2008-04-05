@@ -35,9 +35,9 @@ package ggc.gui.little;
 
 
 
+import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.data.DailyValuesRow;
 import ggc.db.GGCDb;
 import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;

@@ -30,10 +30,13 @@
 package ggc.gui.view;
 
 
-import ggc.data.DailyValues;
-import ggc.data.GlucoValues;
+import ggc.core.data.DailyValues;
+import ggc.core.data.GlucoValues;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 
 public class FrequencyGraphView extends AbstractGraphView

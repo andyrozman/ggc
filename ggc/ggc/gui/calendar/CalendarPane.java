@@ -28,15 +28,17 @@
 package ggc.gui.calendar;
 
 
-import ggc.data.calendar.CalendarEvent;
-import ggc.data.calendar.CalendarListener;
-import ggc.data.calendar.CalendarModel;
+import ggc.core.data.calendar.CalendarEvent;
+import ggc.core.data.calendar.CalendarListener;
+import ggc.core.data.calendar.CalendarModel;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
+
+import javax.swing.Box;
+import javax.swing.JPanel;
 
 
 public class CalendarPane extends JPanel

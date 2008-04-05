@@ -37,11 +37,13 @@
 
 package ggc.db;
 
-import ggc.data.DailyValues;
-import ggc.data.DailyValuesRow;
-import ggc.data.HbA1cValues;
-import ggc.data.MonthlyValues;
-import ggc.data.WeeklyValues;
+import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.HbA1cValues;
+import ggc.core.data.MonthlyValues;
+import ggc.core.data.WeeklyValues;
+import ggc.core.nutrition.GGCTreeRoot;
+import ggc.core.util.DataAccess;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.Meal;
@@ -61,8 +63,6 @@ import ggc.db.hibernate.MealH;
 import ggc.db.hibernate.NutritionDefinitionH;
 import ggc.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.db.hibernate.SettingsH;
-import ggc.core.nutrition.GGCTreeRoot;
-import ggc.core.util.DataAccess;
 
 import java.io.FileInputStream;
 import java.sql.SQLException;

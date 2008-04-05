@@ -28,9 +28,9 @@
 package ggc.gui.dialogs;
 
 
-import ggc.data.DailyValues;
-import ggc.gui.view.DailyGraphView;
+import ggc.core.data.DailyValues;
 import ggc.core.util.I18nControl;
+import ggc.gui.view.DailyGraphView;
 
 import java.awt.BorderLayout;
 import java.awt.Rectangle;

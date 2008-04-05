@@ -27,9 +27,9 @@
 
 package ggc.gui.dialogs;
 
-import ggc.data.MonthlyValues;
-import ggc.data.print.PrintExtendedMonthlyReport;
-import ggc.data.print.PrintSimpleMonthlyReport;
+import ggc.core.data.MonthlyValues;
+import ggc.core.print.PrintExtendedMonthlyReport;
+import ggc.core.print.PrintSimpleMonthlyReport;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 

@@ -29,11 +29,15 @@
 
 package ggc.gui.view;
 
-import ggc.data.DailyValues;
-import ggc.data.GlucoValues;
+import ggc.core.data.DailyValues;
+import ggc.core.data.GlucoValues;
 import ggc.gui.dialogs.CourseGraphDialog;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 

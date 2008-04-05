@@ -27,6 +27,11 @@
 
 package ggc.gui.dialogs;
 
+import ggc.core.data.MonthlyValues;
+import ggc.core.print.PrintSimpleMonthlyReport;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
+
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -35,23 +40,16 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.JFrame;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-
-//import javax.swing.*;
-
-import ggc.data.MonthlyValues;
-import ggc.data.print.PrintSimpleMonthlyReport;
-import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 
 // fix this

@@ -26,7 +26,7 @@
  *  Author:   andyrozman  {andy@atech-software.com}
  */
 
-package ggc.data;
+package ggc.core.data;
 
 import ggc.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;

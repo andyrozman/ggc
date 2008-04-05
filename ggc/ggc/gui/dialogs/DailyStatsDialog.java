@@ -29,16 +29,16 @@
 
 package ggc.gui.dialogs;
 
-import ggc.data.DailyStatsTableModel;
-import ggc.data.DailyValues;
-import ggc.data.DailyValuesRow;
-import ggc.data.calendar.CalendarEvent;
-import ggc.data.calendar.CalendarListener;
+import ggc.core.data.DailyStatsTableModel;
+import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.calendar.CalendarEvent;
+import ggc.core.data.calendar.CalendarListener;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 import ggc.db.GGCDb;
 import ggc.gui.MainFrame;
 import ggc.gui.calendar.CalendarPane;
-import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

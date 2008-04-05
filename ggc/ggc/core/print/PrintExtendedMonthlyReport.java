@@ -1,4 +1,4 @@
-package ggc.data.print;
+package ggc.core.print;
 
 
 /*
@@ -30,9 +30,9 @@ package ggc.data.print;
  */
 
 
-import ggc.data.DailyValues;
-import ggc.data.DailyValuesRow;
-import ggc.data.MonthlyValues;
+import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.MonthlyValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 

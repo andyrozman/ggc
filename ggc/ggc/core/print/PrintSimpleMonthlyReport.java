@@ -1,4 +1,4 @@
-package ggc.data.print;
+package ggc.core.print;
 
 /*
  *  GGC - GNU Gluco Control
@@ -29,21 +29,28 @@ package ggc.data.print;
  */
 
 
+import ggc.core.data.MonthlyValues;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
+
 import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import com.lowagie.text.*;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.ExceptionConverter;
+import com.lowagie.text.Font;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfPageEventHelper;
 import com.lowagie.text.pdf.PdfWriter;
-
-import com.lowagie.text.pdf.BaseFont;
-
-import ggc.data.MonthlyValues;
-import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 public class PrintSimpleMonthlyReport extends PdfPageEventHelper 
 {

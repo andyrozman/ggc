@@ -28,11 +28,11 @@
 package ggc.gui.dialogs;
 
 
-import ggc.data.GlucoValues;
-import ggc.gui.calendar.DateRangeSelectionPanel;
-import ggc.gui.view.FrequencyGraphView;
+import ggc.core.data.GlucoValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
+import ggc.gui.calendar.DateRangeSelectionPanel;
+import ggc.gui.view.FrequencyGraphView;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

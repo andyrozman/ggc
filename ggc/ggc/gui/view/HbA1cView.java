@@ -30,10 +30,13 @@
 package ggc.gui.view;
 
 
-import ggc.data.HbA1cValues;
+import ggc.core.data.HbA1cValues;
 import ggc.core.util.I18nControl;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.text.DecimalFormat;
 
 
