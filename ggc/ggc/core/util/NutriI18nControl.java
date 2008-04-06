@@ -31,11 +31,12 @@ package ggc.core.util;
 
 import java.io.FileInputStream;
 import java.util.Properties;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory; 
+import java.util.StringTokenizer;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class NutriI18nControl extends I18nControlAbstract
 {
@@ -141,10 +142,71 @@ public class NutriI18nControl extends I18nControlAbstract
     }
 
 
-    public String getPartitialTranslation()
+    public String getPartitialTranslation(String keyword, String default_delim)
     {
-	return null;
+	
+	StringTokenizer strtok = new StringTokenizer(keyword, default_delim);
+	StringBuffer sb = new StringBuffer();
+	
+	
+	while(strtok.hasMoreTokens())
+	{
+	    String k = strtok.nextToken();
+	    
+	    char[] chars = { ',', '(', ')' };
+	    boolean checked = false;
+	    int i =0;
+	    
+	    while (!checked)
+	    {
+		checked = checkStartEnd(k, chars[i], sb);
+		i++;
+		
+		if (i == chars.length)
+		    break;
+	    }
+	    
+	    //boolean found = checkStartEnd(k, ',', sb);
+	    
+	    //if (!found
+	    
+	    if (!checked)
+		sb.append(this.getMessage(k));
+	    
+	    sb.append(" ");
+	}
+
+	return sb.toString();
+	
     }
+    
+    
+    public boolean checkStartEnd(String key, char char_el, StringBuffer sb)
+    {
+	if (key.charAt(0)==char_el)
+	{
+	    sb.append(char_el);
+	    
+	    key = key.substring(1,key.length());
+	    
+	    sb.append(this.getMessage(key));
+	    return true;
+	}
+	else if (key.charAt(key.length()-1)==char_el)
+	{
+	    
+	    key = key.substring(0,key.length()-1);
+	    
+	    sb.append(this.getMessage(key));
+	    sb.append(char_el);
+	    return true;
+	    
+	}
+	
+	return false;
+	
+    }
+    
     
     
     

@@ -6,6 +6,7 @@ import ggc.core.nutrition.display.HomeWeightDataDisplay;
 import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.core.util.DataAccess;
 import ggc.db.datalayer.FoodDescription;
+import ggc.db.datalayer.FoodGroup;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
@@ -38,8 +40,9 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
     DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
-    JLabel label, label_refuse, label_name, label_name_i18n;
+    JLabel label, label_refuse, label_name, label_name_i18n, label_name_i18n_key, label_group;
     JButton button;
+    JTextArea jta_desc;
 
     NutritionTreeDialog m_dialog = null;
     ArrayList<NutritionDataDisplay> list_nutrition = new ArrayList<NutritionDataDisplay>();
@@ -53,6 +56,8 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
     HomeWeightDataDisplay hwd = null;
     NutritionDataDisplay ndd = null;
+    
+    FoodGroup food_group = null;
 
 
     public PanelNutritionFood(NutritionTreeDialog dia)
@@ -98,7 +103,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
         label = new JLabel(ic.getMessage("FOOD_DESCRIPTION"));
-        label.setBounds(30, 30, 460, 40);
+        label.setBounds(0, 25, 520, 40);
         label.setFont(font_big); 
 	//label.setBackground(Color.red);
 	//label.setBorder(BorderFactory.createLineBorder(Color.blue));
@@ -108,17 +113,46 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
 	label = new JLabel(ic.getMessage("FOOD_NAME") + ":" );
-	label.setBounds(30, 100, 100, 30);
+	label.setBounds(30, 80, 100, 25);
+//	label.setBounds(30, 100, 100, 30);
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
 
 	label_name = new JLabel();
-	label_name.setBounds(30, 125, 460, 50);
+//	label_name.setBounds(30, 125, 460, 50);
+	label_name.setBounds(190, 80, 300, 25);
 	label_name.setVerticalAlignment(JLabel.TOP);
 	label_name.setFont(fnt_14); 
 	this.add(label_name, ZeroLayout.DYNAMIC);
 
 
+	label = new JLabel(ic.getMessage("TRANSLATION_KEYWORD_MEAL") + ":");
+	label.setBounds(30, 115, 300, 25);
+	label.setFont(fnt_14_bold); 
+	this.add(label, null);
+	
+	label_name_i18n_key = new JLabel();
+	label_name_i18n_key.setBounds(190, 115, 300, 25);
+	label_name_i18n_key.setFont(fnt_14);
+	///tf_name_i18n_key.setEditable(false);
+	
+	this.add(label_name_i18n_key, null);
+
+	
+	label = new JLabel(ic.getMessage("TRANSLATED_NAME_MEAL") + ":");
+	label.setBounds(30, 150, 300, 25);
+	label.setFont(fnt_14_bold); 
+	this.add(label, null);
+
+	
+	label_name_i18n = new JLabel();
+	label_name_i18n.setBounds(190, 150, 300, 25);
+	label_name_i18n.setFont(fnt_14);
+	//tf_name_i18n.setEditable(false);
+	this.add(label_name_i18n, null);
+	
+	
+	/*
 	label = new JLabel(ic.getMessage("TRANSLATED_NAME") + ":");
 	label.setBounds(30, 140, 300, 60);
 	label.setFont(fnt_14_bold); 
@@ -130,23 +164,52 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	label_name.setVerticalAlignment(JLabel.TOP);
 	this.label_name_i18n.setFont(fnt_14); 
 	this.add(this.label_name_i18n, ZeroLayout.DYNAMIC);
+*/
 
+	
+	label = new JLabel(ic.getMessage("DESCRIPTION") + ":");
+	label.setBounds(30, 180, 300, 30);
+	label.setFont(fnt_14_bold); 
+	this.add(label, null);
 
+	jta_desc = new JTextArea();
+	jta_desc.setRows(2);
+	jta_desc.setEditable(false);
+	//jta.setBounds(100, 190, 300, 60);
+	
+	JScrollPane scroll_3 = new JScrollPane(jta_desc);
+	scroll_3.setBounds(140, 185, 350, 40);
+	this.add(scroll_3, null);
 
-	label = new JLabel(ic.getMessage("REFUSE") + ":");
-	label.setBounds(30, 210, 300, 30);
+	
+	label = new JLabel(ic.getMessage("GROUP") + ":");
+	label.setBounds(30, 235, 300, 25);
+	label.setFont(fnt_14_bold); 
+	this.add(label, null);
+	
+        label_group = new JLabel();
+        label_group.setBounds(140, 235, 200, 25);
+        //label_group.setEditable(false);
+	label_group.setFont(fnt_14); 
+        this.add(label_group, null);
+	
+	
+
+	label = new JLabel(ic.getMessage("REFUSE_LBL") + ":");
+	label.setBounds(30, 260, 300, 30);
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
 
 
 	label_refuse = new JLabel();
-	label_refuse.setBounds(300, 210, 50, 30);
+	label_refuse.setBounds(300, 260, 50, 30);
 	label_refuse.setFont(fnt_14); 
 	this.add(label_refuse, null);
 
 
 	label = new JLabel(ic.getMessage("NUTRITIONS_FOOD") + ":");
-	label.setBounds(30, 235, 300, 60);
+	label.setBounds(30, 270, 300, 60);
+//	label.setBounds(30, 235, 300, 60);
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
 
@@ -160,7 +223,8 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
         table_1.setDoubleBuffered(true);
 
         scroll_1 = new JScrollPane(table_1);
-        scroll_1.setBounds(30, 280, 460, 100);
+//        scroll_1.setBounds(30, 280, 460, 100);
+        scroll_1.setBounds(30, 315, 460, 80);
         this.add(scroll_1, ZeroLayout.DYNAMIC);
         scroll_1.repaint();
 
@@ -172,7 +236,9 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
 	label = new JLabel(ic.getMessage("HOME_WEIGHTS") + ":");
-	label.setBounds(30, 370, 300, 60);
+//	label.setBounds(30, 370, 300, 60);
+	label.setBounds(30, 385, 300, 60);
+	
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
 
@@ -189,7 +255,8 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	table_2.setDoubleBuffered(true);
 
 	scroll_2 = new JScrollPane(table_2);
-	scroll_2.setBounds(30, 415, 460, 80);
+//	scroll_2.setBounds(30, 415, 460, 80);
+	scroll_2.setBounds(30, 430, 460, 80);
 	//scroll_2.
 	this.add(scroll_2, ZeroLayout.DYNAMIC);
 	scroll_2.repaint();
@@ -212,10 +279,30 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 	//JLabel label, label_refuse, label_name, label_name_i18n;
 
-	this.label_name.setText("<html><body>" +  fd.getName() + "</body></html>");
-	this.label_name_i18n.setText("<html><body>" + fd.getName_i18n()+ "</body></html>");
+	//this.label_name.setText("<html><body>" +  fd.getName() + "</body></html>");
+	//this.label_name_i18n.setText("<html><body>" + fd.getName_i18n()+ "</body></html>");
+	
+	
+	this.label_name.setText(fd.getName());
+	this.label_name_i18n_key.setText(fd.getName_i18n());
+	this.label_name_i18n.setText(ic.getMessage(fd.getName_i18n()));
+	this.jta_desc.setText(fd.getDescription());
 	this.label_refuse.setText("" + fd.getRefuse() +" %");
 
+	
+	if (fd.getGroup_id()>0)
+	{
+	    this.food_group = m_da.tree_roots.get("2").m_groups_ht.get("" + fd.getGroup_id());
+	    this.label_group.setText(this.food_group.getName());
+	}
+	else
+	{
+	    this.food_group = null;
+	    this.label_group.setText(ic.getMessage("ROOT"));
+	}
+	
+	
+	
 	StringTokenizer strtok = new StringTokenizer(fd.getNutritions(), ";");
 	list_nutrition.clear();
 

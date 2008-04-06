@@ -29,9 +29,10 @@
 
 package ggc.db.datalayer;
 
+import ggc.core.util.I18nControl;
+import ggc.core.util.NutriI18nControl;
 import ggc.db.hibernate.DatabaseObjectHibernate;
 import ggc.db.hibernate.NutritionHomeWeightTypeH;
-import ggc.core.util.I18nControl;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -44,7 +45,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 {
 
 
-    I18nControl ic = I18nControl.getInstance(); 
+    //I18nControl ic = I18nControl.getInstance();
+    NutriI18nControl ic = NutriI18nControl.getInstance();
 
     public boolean debug = false;
     String text_idx;
@@ -253,6 +255,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     public int getColumnCount()
     {
 	return 3;
+//	return 4;
     }
 
 
@@ -273,6 +276,23 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 		return ic.getMessage("ID");
 		
 	}
+	/*
+	switch(num)
+	{
+	    case 4:
+		return ic.getMessage("TRANSLATED");
+		
+	    case 3:
+		return ic.getMessage("USER_DEFINED");
+		
+	    case 2:
+		return ic.getMessage("NAME");
+
+	    default:
+		return ic.getMessage("ID");
+		
+	}*/
+	
     }
 
 
@@ -292,7 +312,27 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 	    default:
 		return "" + this.getItemId();
 		
-	}
+	} 
+	
+	/*
+	switch(num)
+	{
+	    
+	    
+	    case 4:
+		return ic.getPartitialTranslation(this.getName(), "_");
+	    
+	    case 3:
+		return getYesNo(this.getStatic_entry());
+		
+	    case 2:
+		return this.getName();
+
+	    default:
+		return "" + this.getItemId();
+		
+	}*/
+	
     }
 
     
@@ -312,6 +352,10 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
 	switch(num)
 	{
+	    //
+	    //case 4:
+	    //	return ic.getPartitialTranslation(this.getName(), "_");
+
 	    case 3:
 		return getYesNo(this.getStatic_entry());
 		
@@ -340,7 +384,22 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
             default:
                 return(int)(width*20);
 		
-	}
+	} /*
+	
+	switch(num)
+	{
+            case 4:
+                return(int)(width*40);
+            case 3:
+                return(int)(width*10);
+            case 2:
+                return(int)(width*40);
+            default:
+                return(int)(width*10);
+		
+	} */
+	
+	
     }
 
 

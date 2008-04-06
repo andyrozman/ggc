@@ -258,7 +258,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 	*/
 
         
-	label = new JLabel(ic.getMessage("REFUSE") + ":");
+	label = new JLabel(ic.getMessage("REFUSE_LBL") + ":");
 	label.setBounds(30, 250, 300, 25);
 	label.setFont(fnt_14_bold); 
 	this.add(label, null);
@@ -654,7 +654,6 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
     {
 	setTypeOfAction(EditableAbstractPanel.ACTION_ADD);
 
-	// TODO: Fix
 	this.food = new FoodDescription(2);
 	
 	this.label_title.setText(ic.getMessage("ADD_FOOD"));
@@ -663,7 +662,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 	this.tf_group.setText(this.food_group.getName());
 	this.button_select.setEnabled(false);
 	
-	this.tf_name.setText(ic.getMessage("NEW_MEAL"));
+	this.tf_name.setText(ic.getMessage("NEW_FOOD"));
 	this.tf_name_i18n_key.setText("");
 	this.tf_name_i18n.setText("");
 	this.jta_desc.setText("");

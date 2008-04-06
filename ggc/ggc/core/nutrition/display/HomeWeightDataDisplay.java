@@ -1,6 +1,7 @@
 
 package ggc.core.nutrition.display;
 
+import ggc.core.util.NutriI18nControl;
 import ggc.db.datalayer.NutritionHomeWeightType;
 
 import com.atech.graphics.components.ATTableData;
@@ -16,17 +17,21 @@ public class HomeWeightDataDisplay extends ATTableData
 	private float amount = 1.0f;
 	//private String value;
 	private float weight;
+	private NutriI18nControl nic;
 
 
 	public HomeWeightDataDisplay(I18nControlAbstract ic)
 	{
 	    super(ic);
+	    
+	    nic = (NutriI18nControl)ic;
 	}
 
 
 	public HomeWeightDataDisplay(I18nControlAbstract ic, String full)
 	{
 	    super(ic);
+	    nic = (NutriI18nControl)ic;
 
 	    int index = full.indexOf("=");
 	    this.id = full.substring(0, index);
@@ -58,6 +63,8 @@ public class HomeWeightDataDisplay extends ATTableData
 	public HomeWeightDataDisplay(I18nControlAbstract ic, NutritionHomeWeightType def, float amount, float weight)
 	{
 	    super(ic);
+	    nic = (NutriI18nControl)ic;
+
 	    this.id = "" + def.getId();
 	    this.setHomeWeightDefinition(def.getName());
 	    //this.setAmount(amount);
@@ -72,7 +79,7 @@ public class HomeWeightDataDisplay extends ATTableData
 
 	public void init()
 	{
-	    String[] cols = { /*"ID",*/ "WEIGHT_TYPE", "AMOUNT", "WEIGHT" };
+	    String[] cols = { /*"ID",*/ "WEIGHT_TYPE", "AMOUNT_BG", "WEIGHT" };
 	    float[] cols_size = { /*0.1f,*/ 0.5f, 0.25f, 0.25f  };
 
 	    init(cols, cols_size);
@@ -112,7 +119,8 @@ public class HomeWeightDataDisplay extends ATTableData
 	
 	public void setHomeWeightDefinition(String name)
 	{
-	    this.weight_type = ic.getMessage(name);
+	    //this.weight_type = ic.getMessage(name);
+	    this.weight_type = nic.getPartitialTranslation(name, "_");
 	}
 	
 

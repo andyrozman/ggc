@@ -27,17 +27,17 @@
 
 package ggc.core.nutrition;
  
+import ggc.core.nutrition.dialogs.FoodPartSelectorDialog;
+import ggc.core.util.DataAccess;
 import ggc.db.GGCDb;
 import ggc.db.datalayer.FoodDescription;
 import ggc.db.datalayer.FoodGroup;
 import ggc.db.datalayer.Meal;
 import ggc.db.datalayer.MealGroup;
-import ggc.db.datalayer.NutritionHomeWeightType;
 import ggc.db.hibernate.FoodUserDescriptionH;
 import ggc.db.hibernate.FoodUserGroupH;
 import ggc.db.hibernate.MealGroupH;
 import ggc.db.hibernate.MealH;
-import ggc.core.util.DataAccess;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -46,8 +46,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
-
-import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 
 
@@ -118,8 +116,13 @@ public class TestNutritionData
 	//da.setParent(fr); */
 	//da.m_nutrition_treeroot = new GGCTreeRoot(1);
 
-	/*NutritionTreeDialog ntd =*/ 
-	new NutritionTreeDialog(m_da, type); 
+	/*NutritionTreeDialog ntd =*/
+	
+	// for dialog checking
+	new NutritionTreeDialog(m_da, type);
+	
+	// for partitial translation checking
+	//FoodPartSelectorDialog fd = new FoodPartSelectorDialog(m_da, 2, null);
 	
 	
     }
@@ -359,7 +362,7 @@ public class TestNutritionData
     {
 	
 	new TestNutritionData(GGCTreeRoot.TREE_USER_NUTRITION);
-
+	//new TestNutritionData(GGCTreeRoot.TREE_MEALS);
     }
 
 

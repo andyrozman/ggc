@@ -55,7 +55,7 @@ public class NutritionDataDisplay extends ATTableData
 
 	public void init()
 	{
-	    String[] col = { "ID", "NUTRITION", "AMOUNT", "UNITS" };
+	    String[] col = { "ID", "NUTRITION", "AMOUNT_BG", "UNITS" };
 	    float[] col_size = { 0.1f, 0.5f, 0.2f, 0.2f  };
 
 	    init(col, col_size);

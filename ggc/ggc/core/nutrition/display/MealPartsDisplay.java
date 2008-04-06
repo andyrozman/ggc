@@ -93,7 +93,7 @@ public class MealPartsDisplay extends ATTableData
 
 	public void init()
 	{
-	    String[] col = { "MEAL_TYPE", "DESCRIPTION", "AMOUNT" };
+	    String[] col = { "MEAL_TYPE", "DESCRIPTION", "AMOUNT_BG" };
 	    float[] col_size = { 0.25f, 0.65f, 0.1f  };
 
 	    init(col, col_size);
