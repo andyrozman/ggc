@@ -35,7 +35,7 @@
 // andyrozman
 
 
-package ggc.db;
+package ggc.core.db;
 
 import ggc.core.util.DataAccess;
 import ggc.gui.MainFrame;

@@ -28,11 +28,11 @@
  */
 
 
-package ggc.db.datalayer;
+package ggc.core.db.datalayer;
 
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.FoodDescriptionH;
-import ggc.db.hibernate.FoodUserDescriptionH;
+import ggc.core.db.hibernate.DatabaseObjectHibernate;
+import ggc.core.db.hibernate.FoodDescriptionH;
+import ggc.core.db.hibernate.FoodUserDescriptionH;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

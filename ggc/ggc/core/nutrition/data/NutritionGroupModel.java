@@ -28,8 +28,8 @@
 
 package ggc.core.nutrition.data;
 
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.MealGroup;
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.MealGroup;
 import ggc.core.nutrition.GGCTreeRoot;
 
 import java.util.Vector;

@@ -2,7 +2,7 @@
 package ggc.core.nutrition.display;
 
 import ggc.core.util.NutriI18nControl;
-import ggc.db.datalayer.NutritionHomeWeightType;
+import ggc.core.db.datalayer.NutritionHomeWeightType;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;

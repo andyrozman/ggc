@@ -29,8 +29,8 @@ package ggc.core.data.cfg;
  */
 
 
-import ggc.db.GGCDb;
-import ggc.db.datalayer.Settings;
+import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.Settings;
 import ggc.core.util.DataAccess;
 
 import java.util.Enumeration;

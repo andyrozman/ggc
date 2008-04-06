@@ -27,7 +27,7 @@
 
 package ggc.gui.dialogs;
 
-import ggc.db.hibernate.DoctorH;
+import ggc.core.db.hibernate.DoctorH;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 

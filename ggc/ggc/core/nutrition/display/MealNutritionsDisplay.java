@@ -1,8 +1,8 @@
 
 package ggc.core.nutrition.display;
 
-import ggc.db.datalayer.MealNutrition;
-import ggc.db.datalayer.NutritionDefinition;
+import ggc.core.db.datalayer.MealNutrition;
+import ggc.core.db.datalayer.NutritionDefinition;
 import ggc.core.util.DataAccess;
 
 import java.util.Comparator;

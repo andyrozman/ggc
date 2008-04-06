@@ -27,7 +27,7 @@
  */
 
 
-package ggc.db.hibernate;
+package ggc.core.db.hibernate;
 
 import org.hibernate.Session;
 

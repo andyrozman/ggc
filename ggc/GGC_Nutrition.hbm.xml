@@ -6,7 +6,7 @@
 
 
     <!--  Nutrition Definition - Global -->
-    <class name="ggc.db.hibernate.NutritionDefinitionH" table="nutrition_definition">
+    <class name="ggc.core.db.hibernate.NutritionDefinitionH" table="nutrition_definition">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
@@ -18,7 +18,7 @@
     </class>
 
     <!--  Nutrition Home Weight Type - Global -->
-    <class name="ggc.db.hibernate.NutritionHomeWeightTypeH" table="nutrition_home_weight_type">
+    <class name="ggc.core.db.hibernate.NutritionHomeWeightTypeH" table="nutrition_home_weight_type">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
@@ -29,7 +29,7 @@
 
 
     <!--  Food Group - Nutrition 1 -->
-    <class name="ggc.db.hibernate.FoodGroupH" table="nutrition_usda_food_group">
+    <class name="ggc.core.db.hibernate.FoodGroupH" table="nutrition_usda_food_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -40,7 +40,7 @@
 
 
     <!--  Food Description - - Nutrition 1-->
-    <class name="ggc.db.hibernate.FoodDescriptionH" table="nutrition_usda_food_description">
+    <class name="ggc.core.db.hibernate.FoodDescriptionH" table="nutrition_usda_food_description">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
@@ -54,7 +54,7 @@
 
 
     <!--  Food Group - Nutrition 2 -->
-    <class name="ggc.db.hibernate.FoodUserGroupH" table="nutrition_user_food_group">
+    <class name="ggc.core.db.hibernate.FoodUserGroupH" table="nutrition_user_food_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -66,7 +66,7 @@
 
 
     <!--  Food Description - - Nutrition 2-->
-    <class name="ggc.db.hibernate.FoodUserDescriptionH" table="nutrition_user_food_description">
+    <class name="ggc.core.db.hibernate.FoodUserDescriptionH" table="nutrition_user_food_description">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
@@ -84,7 +84,7 @@
 
 
     <!--  Food Description -->
-<!--    <class name="ggc.db.hibernate.FoodHomeWeightH" table="nutrition_food_home_weight">
+<!--    <class name="ggc.core.db.hibernate.FoodHomeWeightH" table="nutrition_food_home_weight">
         <id name="id" type="long" unsaved-value="0">
             <generator class="native"/>
         </id>           
@@ -98,7 +98,7 @@
 
 
 
-    <class name="ggc.db.hibernate.MealGroupH" table="meal_group">
+    <class name="ggc.core.db.hibernate.MealGroupH" table="meal_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           
@@ -108,7 +108,7 @@
         <property name="parent_id" type="long" />
     </class>
 
-    <class name="ggc.db.hibernate.MealH" table="meal_meal">
+    <class name="ggc.core.db.hibernate.MealH" table="meal_meal">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>           

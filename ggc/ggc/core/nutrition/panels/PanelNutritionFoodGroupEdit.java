@@ -4,8 +4,8 @@ import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.dialogs.NutritionGroupDialog;
 import ggc.core.util.DataAccess;
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.MealGroup;
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.MealGroup;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

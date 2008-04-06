@@ -36,7 +36,7 @@ import ggc.core.data.calendar.CalendarEvent;
 import ggc.core.data.calendar.CalendarListener;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.db.GGCDb;
+import ggc.core.db.GGCDb;
 import ggc.gui.MainFrame;
 import ggc.gui.calendar.CalendarPane;
 

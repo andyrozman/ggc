@@ -25,10 +25,10 @@
  *  Author:   andyrozman  {andy@atech-software.com}
  */
 
-package ggc.db.datalayer;
+package ggc.core.db.datalayer;
 
-import ggc.db.GGCDb;
-import ggc.db.hibernate.DayValueH;
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.DayValueH;
 
 import java.io.BufferedReader;
 import java.io.File;

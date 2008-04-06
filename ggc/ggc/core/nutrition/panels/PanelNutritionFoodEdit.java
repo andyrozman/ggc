@@ -9,10 +9,10 @@ import ggc.core.nutrition.dialogs.NutritionGroupDialog;
 import ggc.core.nutrition.display.HomeWeightDataDisplay;
 import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.core.util.DataAccess;
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.NutritionDefinition;
-import ggc.db.datalayer.NutritionHomeWeightType;
+import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.NutritionDefinition;
+import ggc.core.db.datalayer.NutritionHomeWeightType;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

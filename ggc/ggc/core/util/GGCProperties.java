@@ -30,8 +30,8 @@
 package ggc.core.util;
 
 import ggc.core.data.cfg.ConfigurationManager;
-import ggc.db.hibernate.ColorSchemeH;
-import ggc.db.tool.DbToolApplicationGGC;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.tool.DbToolApplicationGGC;
 
 import java.awt.Color;
 import java.util.Hashtable;

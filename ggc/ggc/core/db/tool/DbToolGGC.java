@@ -1,4 +1,4 @@
-package ggc.db.tool;
+package ggc.core.db.tool;
 
 import com.atech.db.hibernate.tool.DbTool;
 //import com.atech.db.hibernate.tool.DbToolApplicationInterface;

@@ -4,7 +4,7 @@
     
     <!-- ***************** ggc::Meters SCHEMA  ******************* -->
 
-    <class name="ggc.db.hibernate.InetGroupH" table="inet_group">
+    <class name="ggc.core.db.hibernate.InetGroupH" table="inet_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -17,7 +17,7 @@
     </class>
 
 
-    <class name="ggc.db.hibernate.InetTypeH" table="inet_type">
+    <class name="ggc.core.db.hibernate.InetTypeH" table="inet_type">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -27,7 +27,7 @@
         <property name="comment"  type="string" length="2000" />
     </class>
 
-    <class name="ggc.db.hibernate.InetLinkGroupH" table="inet_link_group">
+    <class name="ggc.core.db.hibernate.InetLinkGroupH" table="inet_link_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -35,7 +35,7 @@
         <property name="link_id"  type="string" length="1000" />
     </class>
 
-    <class name="ggc.db.hibernate.InetLinkH" table="inet_link">
+    <class name="ggc.core.db.hibernate.InetLinkH" table="inet_link">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            

@@ -5,8 +5,8 @@ import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.display.HomeWeightDataDisplay;
 import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.core.util.DataAccess;
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.FoodGroup;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

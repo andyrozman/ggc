@@ -27,17 +27,16 @@
 
 package ggc.core.nutrition;
  
-import ggc.core.nutrition.dialogs.FoodPartSelectorDialog;
+import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.Meal;
+import ggc.core.db.datalayer.MealGroup;
+import ggc.core.db.hibernate.FoodUserDescriptionH;
+import ggc.core.db.hibernate.FoodUserGroupH;
+import ggc.core.db.hibernate.MealGroupH;
+import ggc.core.db.hibernate.MealH;
 import ggc.core.util.DataAccess;
-import ggc.db.GGCDb;
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.MealGroup;
-import ggc.db.hibernate.FoodUserDescriptionH;
-import ggc.db.hibernate.FoodUserGroupH;
-import ggc.db.hibernate.MealGroupH;
-import ggc.db.hibernate.MealH;
 
 import java.io.BufferedWriter;
 import java.io.File;

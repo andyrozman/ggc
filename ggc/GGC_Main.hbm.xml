@@ -10,7 +10,7 @@
     <!-- ****************************************** -->
 
     <!--  Day values -->
-    <class name="ggc.db.hibernate.DayValueH" table="data_dayvalues" >
+    <class name="ggc.core.db.hibernate.DayValueH" table="data_dayvalues" >
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -32,7 +32,7 @@
 
 
     <!--  Doctor types -->
-    <class name="ggc.db.hibernate.DoctorTypeH" table="doc_types">
+    <class name="ggc.core.db.hibernate.DoctorTypeH" table="doc_types">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -41,7 +41,7 @@
     </class>
 
     <!--  Doctor -->
-    <class name="ggc.db.hibernate.DoctorH" table="doc_doctors">
+    <class name="ggc.core.db.hibernate.DoctorH" table="doc_doctors">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -58,7 +58,7 @@
     </class>
 
     <!--  Appointment -->
-    <class name="ggc.db.hibernate.AppointmentH" table="doc_appointment">
+    <class name="ggc.core.db.hibernate.AppointmentH" table="doc_appointment">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -76,7 +76,7 @@
     <!-- ****************************************** -->
 
     <!--  Stock types -->
-    <class name="ggc.db.hibernate.StockTypeH" table="stock_types">
+    <class name="ggc.core.db.hibernate.StockTypeH" table="stock_types">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -85,7 +85,7 @@
     </class>
 
 
-    <class name="ggc.db.hibernate.StockSubTypeH" table="stock_subtypes">
+    <class name="ggc.core.db.hibernate.StockSubTypeH" table="stock_subtypes">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -98,7 +98,7 @@
 
 
 
-    <class name="ggc.db.hibernate.StocksH" table="stock_stocks">
+    <class name="ggc.core.db.hibernate.StocksH" table="stock_stocks">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -120,7 +120,7 @@
     <!-- ****************************************** -->
 
 
-    <class name="ggc.db.hibernate.SettingsH" table="cfg_settings">
+    <class name="ggc.core.db.hibernate.SettingsH" table="cfg_settings">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -133,7 +133,7 @@
 
 
 
-    <class name="ggc.db.hibernate.ColorSchemeH" table="cfg_colorscheme">
+    <class name="ggc.core.db.hibernate.ColorSchemeH" table="cfg_colorscheme">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -151,7 +151,7 @@
         <property name="color_ch"  type="int" />
     </class>
 
-    <class name="ggc.db.hibernate.DbInfoH" table="db_info">
+    <class name="ggc.core.db.hibernate.DbInfoH" table="db_info">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            

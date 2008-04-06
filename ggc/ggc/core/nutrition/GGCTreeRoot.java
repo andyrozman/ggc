@@ -27,11 +27,11 @@
 
 package ggc.core.nutrition;
 
-import ggc.db.GGCDb;
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.MealGroup;
+import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.Meal;
+import ggc.core.db.datalayer.MealGroup;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;

@@ -28,10 +28,10 @@
  */
 
 
-package ggc.db.datalayer;
+package ggc.core.db.datalayer;
 
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.MealH;
+import ggc.core.db.hibernate.DatabaseObjectHibernate;
+import ggc.core.db.hibernate.MealH;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;

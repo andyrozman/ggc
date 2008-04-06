@@ -1,4 +1,4 @@
-package ggc.db.tool;
+package ggc.core.db.tool;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;

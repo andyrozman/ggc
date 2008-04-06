@@ -28,10 +28,10 @@
  */
 
 
-package ggc.db.datalayer;
+package ggc.core.db.datalayer;
 
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.NutritionDefinitionH;
+import ggc.core.db.hibernate.DatabaseObjectHibernate;
+import ggc.core.db.hibernate.NutritionDefinitionH;
 import ggc.core.util.DataAccess;
 
 import java.util.Comparator;

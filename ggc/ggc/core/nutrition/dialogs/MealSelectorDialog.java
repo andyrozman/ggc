@@ -27,9 +27,9 @@
 
 package ggc.core.nutrition.dialogs;
  
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.MealPart;
+import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.Meal;
+import ggc.core.db.datalayer.MealPart;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.util.DataAccess;
 

@@ -27,7 +27,7 @@
  */
 
 
-package ggc.db.datalayer;
+package ggc.core.db.datalayer;
 
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;

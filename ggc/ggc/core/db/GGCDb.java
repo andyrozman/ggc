@@ -35,7 +35,7 @@
 // andyrozman
 
 
-package ggc.db;
+package ggc.core.db;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
@@ -44,25 +44,25 @@ import ggc.core.data.MonthlyValues;
 import ggc.core.data.WeeklyValues;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.MealGroup;
-import ggc.db.datalayer.NutritionDefinition;
-import ggc.db.datalayer.NutritionHomeWeightType;
-import ggc.db.datalayer.Settings;
-import ggc.db.hibernate.ColorSchemeH;
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.DayValueH;
-import ggc.db.hibernate.FoodDescriptionH;
-import ggc.db.hibernate.FoodGroupH;
-import ggc.db.hibernate.FoodUserDescriptionH;
-import ggc.db.hibernate.FoodUserGroupH;
-import ggc.db.hibernate.MealGroupH;
-import ggc.db.hibernate.MealH;
-import ggc.db.hibernate.NutritionDefinitionH;
-import ggc.db.hibernate.NutritionHomeWeightTypeH;
-import ggc.db.hibernate.SettingsH;
+import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.Meal;
+import ggc.core.db.datalayer.MealGroup;
+import ggc.core.db.datalayer.NutritionDefinition;
+import ggc.core.db.datalayer.NutritionHomeWeightType;
+import ggc.core.db.datalayer.Settings;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.DatabaseObjectHibernate;
+import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.FoodDescriptionH;
+import ggc.core.db.hibernate.FoodGroupH;
+import ggc.core.db.hibernate.FoodUserDescriptionH;
+import ggc.core.db.hibernate.FoodUserGroupH;
+import ggc.core.db.hibernate.MealGroupH;
+import ggc.core.db.hibernate.MealH;
+import ggc.core.db.hibernate.NutritionDefinitionH;
+import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
+import ggc.core.db.hibernate.SettingsH;
 
 import java.io.FileInputStream;
 import java.sql.SQLException;
@@ -709,7 +709,7 @@ public class GGCDb
 
         Hashtable<String, ArrayList<MeterH>> table = new Hashtable<String, ArrayList<MeterH>>();
 
-        Query q = this.getSession().createQuery("select pst from ggc.db.hibernate.MeterH as pst where pst.implementation_id>0 order by pst.company_id, pst.name asc");
+        Query q = this.getSession().createQuery("select pst from ggc.core.db.hibernate.MeterH as pst where pst.implementation_id>0 order by pst.company_id, pst.name asc");
 
         //org.hibernate.collections.Iterator ittt = null;
         //org.hibernate.util.
@@ -777,7 +777,7 @@ public class GGCDb
 
 
         // resolve meter names
-        Query q2 = this.getSession().createQuery("select pst from ggc.db.hibernate.MeterCompanyH as pst where " + buf.toString() + " order by pst.id asc");
+        Query q2 = this.getSession().createQuery("select pst from ggc.core.db.hibernate.MeterCompanyH as pst where " + buf.toString() + " order by pst.id asc");
 
         Iterator it2 = q2.iterate();
 
@@ -834,7 +834,7 @@ public class GGCDb
         Hashtable<String,Settings> table = new Hashtable<String,Settings>();
 
 
-        Query q = sess.createQuery("select cfg from ggc.db.hibernate.SettingsH as cfg");
+        Query q = sess.createQuery("select cfg from ggc.core.db.hibernate.SettingsH as cfg");
 
         Iterator it = q.iterate();
 
@@ -908,7 +908,7 @@ public class GGCDb
     {
         Hashtable<String, ColorSchemeH> table = new Hashtable<String, ColorSchemeH>();
 
-        Query q = sess.createQuery("select pst from ggc.db.hibernate.ColorSchemeH as pst");
+        Query q = sess.createQuery("select pst from ggc.core.db.hibernate.ColorSchemeH as pst");
 
         Iterator it = q.iterate();
 
@@ -969,7 +969,7 @@ public class GGCDb
 
         ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodGroupH as pst");
+        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst");
 
         Iterator it = q.iterate();
 
@@ -989,7 +989,7 @@ public class GGCDb
 
         ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodUserGroupH as pst");
+        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst");
 
         Iterator it = q.iterate();
 
@@ -1009,7 +1009,7 @@ public class GGCDb
 
         ArrayList<MealGroup> list = new ArrayList<MealGroup>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.MealGroupH as pst");
+        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst");
 
         Iterator it = q.iterate();
 
@@ -1030,7 +1030,7 @@ public class GGCDb
 
         ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodDescriptionH as pst");
+        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst");
 
         Iterator it = q.iterate();
 
@@ -1051,7 +1051,7 @@ public class GGCDb
 
         ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
+        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
 
         Iterator it = q.iterate();
 
@@ -1077,7 +1077,7 @@ public class GGCDb
         //ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
 	ArrayList<Meal> list = new ArrayList<Meal>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.MealH as pst order by pst.group_id, pst.name");
+        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.MealH as pst order by pst.group_id, pst.name");
 
         Iterator it = q.iterate();
 
@@ -1103,7 +1103,7 @@ public class GGCDb
         Hashtable<String,NutritionDefinition> nut_defs = new Hashtable<String,NutritionDefinition>();
         ArrayList<SelectableInterface> nut_defs_lst = new ArrayList<SelectableInterface>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.NutritionDefinitionH as pst");
+        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.NutritionDefinitionH as pst");
 
         Iterator it = q.iterate();
 
@@ -1151,7 +1151,7 @@ public class GGCDb
         Hashtable<String,NutritionHomeWeightType> nut_hw = new Hashtable<String,NutritionHomeWeightType>();
         ArrayList<SelectableInterface> nut_hw_lst = new ArrayList<SelectableInterface>();
 
-        Query q = getSession().createQuery("select pst from ggc.db.hibernate.NutritionHomeWeightTypeH as pst");
+        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.NutritionHomeWeightTypeH as pst");
 
         Iterator it = q.iterate();
 
@@ -1180,7 +1180,7 @@ public class GGCDb
 
     ArrayList<FoodHomeWeight> list = new ArrayList<FoodHomeWeight>();
 
-    Query q = getSession().createQuery("select pst from ggc.db.hibernate.FoodHomeWeightH as pst where pst.food_number=" + id);
+    Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodHomeWeightH as pst where pst.food_number=" + id);
 
     Iterator it = q.iterate();
 
@@ -1231,7 +1231,7 @@ public class GGCDb
             String sDay = sdf.format(gc1.getTime()) + "0000";
 
             Query q = getSession().createQuery("SELECT dv from " + 
-                                               "ggc.db.hibernate.DayValueH as dv " +
+                                               "ggc.core.db.hibernate.DayValueH as dv " +
                                                "WHERE dv.bg <> 0 AND dv.dt_info >=  " + 
                                                sDay + " AND dv.dt_info <= " + eDay + 
                                                " ORDER BY dv.dt_info");
@@ -1277,7 +1277,7 @@ public class GGCDb
             String sDay = sdf.format(day.getTime());
 
             Query q = getSession().createQuery("SELECT dv from " + 
-                                               "ggc.db.hibernate.DayValueH as dv " +
+                                               "ggc.core.db.hibernate.DayValueH as dv " +
                                                "WHERE dv.dt_info >=  " + 
                                                sDay + "0000 AND dv.dt_info <= " + sDay + 
                                                "2359 ORDER BY dv.dt_info");
@@ -1328,7 +1328,7 @@ public class GGCDb
                 System.out.println("getDatStatsRange: "  + sDay + " - " + eDay);
 
             Query q = getSession().createQuery("SELECT dv from " + 
-                                               "ggc.db.hibernate.DayValueH as dv " +
+                                               "ggc.core.db.hibernate.DayValueH as dv " +
                                                "WHERE dv.dt_info >=  " + 
                                                sDay + "0000 AND dv.dt_info <= " + eDay + 
                                                "2359 ORDER BY dv.dt_info");
@@ -1370,7 +1370,7 @@ public class GGCDb
             String days = year + "" + m_da.getLeadingZero(month, 2);
 
             Query q = getSession().createQuery("SELECT dv from " + 
-                                               "ggc.db.hibernate.DayValueH as dv " +
+                                               "ggc.core.db.hibernate.DayValueH as dv " +
                                                "WHERE dv.dt_info >=  " + 
                                                days + "010000 AND dv.dt_info <= " + days + 
                                                "312359 ORDER BY dv.dt_info");
@@ -1495,7 +1495,7 @@ public class GGCDb
         try
         {
             Query q = getSession().createQuery("SELECT dv from " + 
-                                               "ggc.db.hibernate.DayValueH as dv " +
+                                               "ggc.core.db.hibernate.DayValueH as dv " +
                                                "WHERE dv.dt_info = " + datetime );
 
             return(q.list().size()==1);

@@ -28,7 +28,7 @@
 
 package ggc.gui.panels.prefs;
 
-import ggc.db.tool.DbToolApplicationGGC;
+import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.gui.dialogs.PropertiesDialog;
 
 import java.awt.Component;

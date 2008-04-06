@@ -28,7 +28,7 @@
 
 package ggc.core.data;
 
-import ggc.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 

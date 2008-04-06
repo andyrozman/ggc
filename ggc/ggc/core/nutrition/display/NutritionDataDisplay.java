@@ -1,7 +1,7 @@
 
 package ggc.core.nutrition.display;
 
-import ggc.db.datalayer.NutritionDefinition;
+import ggc.core.db.datalayer.NutritionDefinition;
 import ggc.core.util.DataAccess;
 
 import com.atech.graphics.components.ATTableData;

@@ -5,11 +5,11 @@ import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.display.MealNutritionsDisplay;
 import ggc.core.nutrition.display.MealPartsDisplay;
 import ggc.core.util.DataAccess;
-import ggc.db.datalayer.Meal;
-import ggc.db.datalayer.MealGroup;
-import ggc.db.datalayer.MealNutrition;
-import ggc.db.datalayer.MealPart;
-import ggc.db.datalayer.NutritionDefinition;
+import ggc.core.db.datalayer.Meal;
+import ggc.core.db.datalayer.MealGroup;
+import ggc.core.db.datalayer.MealNutrition;
+import ggc.core.db.datalayer.MealPart;
+import ggc.core.db.datalayer.NutritionDefinition;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

@@ -28,10 +28,10 @@
  */
 
 
-package ggc.db.datalayer;
+package ggc.core.db.datalayer;
 
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.MealGroupH;
+import ggc.core.db.hibernate.DatabaseObjectHibernate;
+import ggc.core.db.hibernate.MealGroupH;
 
 import java.util.ArrayList;
 
@@ -258,13 +258,13 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        Query q = sess.createQuery("select pst from ggc.db.hibernate.MealH as pst where pst.meal_group_id=" + getId());
+        Query q = sess.createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.meal_group_id=" + getId());
         int size = q.list().size();
         
         if (size>0)
             return true;
 
-        q = sess.createQuery("select pst from ggc.db.hibernate.MealGroupH as pst where pst.parent_id=" + getId());
+        q = sess.createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.parent_id=" + getId());
         size = q.list().size();
         
         if (size>0)

@@ -1,4 +1,4 @@
-package ggc.db.hibernate;
+package ggc.core.db.hibernate;
 
 import java.io.Serializable;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -27,10 +27,10 @@ public class AppointmentH implements Serializable {
     private String comment;
 
     /** nullable persistent field */
-    private ggc.db.hibernate.DoctorH doctor;
+    private ggc.core.db.hibernate.DoctorH doctor;
 
     /** full constructor */
-    public AppointmentH(long dt_apoint, String apoint_text, String extended, int person_id, String comment, ggc.db.hibernate.DoctorH doctor) {
+    public AppointmentH(long dt_apoint, String apoint_text, String extended, int person_id, String comment, ggc.core.db.hibernate.DoctorH doctor) {
         this.dt_apoint = dt_apoint;
         this.apoint_text = apoint_text;
         this.extended = extended;
@@ -97,11 +97,11 @@ public class AppointmentH implements Serializable {
         this.comment = comment;
     }
 
-    public ggc.db.hibernate.DoctorH getDoctor() {
+    public ggc.core.db.hibernate.DoctorH getDoctor() {
         return this.doctor;
     }
 
-    public void setDoctor(ggc.db.hibernate.DoctorH doctor) {
+    public void setDoctor(ggc.core.db.hibernate.DoctorH doctor) {
         this.doctor = doctor;
     }
 

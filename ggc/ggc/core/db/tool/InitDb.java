@@ -26,15 +26,15 @@
  *  Author:   andyrozman
  */
 
-package ggc.db.tool;
+package ggc.core.db.tool;
 
-import ggc.db.GGCDb;
-import ggc.db.datalayer.FoodDescription;
-import ggc.db.datalayer.FoodGroup;
-import ggc.db.datalayer.NutritionDefinition;
-import ggc.db.datalayer.NutritionHomeWeightType;
-import ggc.db.hibernate.ColorSchemeH;
-import ggc.db.hibernate.DoctorTypeH;
+import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.NutritionDefinition;
+import ggc.core.db.datalayer.NutritionHomeWeightType;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.DoctorTypeH;
 import ggc.core.util.DataAccess;
 
 import java.io.BufferedReader;

@@ -28,11 +28,11 @@
  */
 
 
-package ggc.db.datalayer;
+package ggc.core.db.datalayer;
 
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.FoodGroupH;
-import ggc.db.hibernate.FoodUserGroupH;
+import ggc.core.db.hibernate.DatabaseObjectHibernate;
+import ggc.core.db.hibernate.FoodGroupH;
+import ggc.core.db.hibernate.FoodUserGroupH;
 
 import java.util.ArrayList;
 
@@ -47,8 +47,8 @@ public class FoodGroup implements DatabaseObjectHibernate
 
     public boolean debug = false;
     
-    //ggc.db.hibernate.FoodGroupH
-    //ggc.db.hibernate.FoodUserGroupH;
+    //ggc.core.db.hibernate.FoodGroupH
+    //ggc.core.db.hibernate.FoodUserGroupH;
 
     FoodGroupH group_db1 = null;
     FoodUserGroupH group_db2 = null;

@@ -30,7 +30,7 @@ package ggc.gui.panels.prefs;
 
 
 import ggc.core.data.DailyValues;
-import ggc.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SchemeDialog;
 import ggc.gui.dialogs.SchemeEDDialog;

@@ -31,7 +31,7 @@ package ggc.gui.view;
 
 import ggc.core.data.DailyValues;
 import ggc.core.util.DataAccess;
-import ggc.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.ColorSchemeH;
 
 import java.awt.Color;
 import java.awt.Dimension;

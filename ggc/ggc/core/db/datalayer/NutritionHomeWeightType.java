@@ -27,12 +27,11 @@
  *  Author:   andyrozman  {andy@atech-software.com}
  */
 
-package ggc.db.datalayer;
+package ggc.core.db.datalayer;
 
-import ggc.core.util.I18nControl;
+import ggc.core.db.hibernate.DatabaseObjectHibernate;
+import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.core.util.NutriI18nControl;
-import ggc.db.hibernate.DatabaseObjectHibernate;
-import ggc.db.hibernate.NutritionHomeWeightTypeH;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
