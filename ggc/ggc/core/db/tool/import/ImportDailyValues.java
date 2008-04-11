@@ -25,7 +25,7 @@
  *  Author:   andyrozman  {andy@atech-software.com}
  */
 
-package ggc.core.db.datalayer;
+package ggc.core.db.import;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.DayValueH;
