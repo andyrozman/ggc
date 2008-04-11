@@ -34,6 +34,7 @@ import ggc.core.db.datalayer.FoodGroup;
 import ggc.core.db.datalayer.NutritionDefinition;
 import ggc.core.db.datalayer.NutritionHomeWeightType;
 import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.DbInfoH;
 import ggc.core.db.hibernate.DoctorTypeH;
 import ggc.core.util.DataAccess;
 
@@ -70,6 +71,7 @@ public class InitDb
     	m_db.createDatabase();
     	this.load_nutrition = load_nutr;
 
+    	setDbInfo();
         loadSettings();
 
     	if (load_nutrition)
@@ -80,6 +82,19 @@ public class InitDb
     }
 
 
+    public void setDbInfo()
+    {
+	DbInfoH dbi = new DbInfoH();
+	
+	dbi.setId(1);
+	dbi.setKey("DB_INFO");
+	dbi.setValue(m_da.currentDbVersion);
+	
+	m_db.addHibernate(dbi);
+    }
+    
+    
+    
     public void setLoadNutrition(boolean load_nutr)
     {
 	this.load_nutrition = load_nutr;
