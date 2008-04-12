@@ -71,6 +71,10 @@ import com.atech.utils.ATDataAccessAbstract;
 public class DataAccess extends ATDataAccessAbstract
 {
 
+    
+    public String currentDbVersion = "3";
+    
+    
     // LF
     //    Hashtable<String,String> availableLF_full = null;
     //    Object[]  availableLF = null;
@@ -100,7 +104,6 @@ public class DataAccess extends ATDataAccessAbstract
     public GGCDb m_db = null;
 
     public MainFrame m_main = null;
-
     public GGCLittle m_main_little = null;
 
     public Font fonts[] = null;
@@ -116,9 +119,7 @@ public class DataAccess extends ATDataAccessAbstract
     private GregorianCalendar m_date = null, m_dateStart = null;
 
     private HbA1cValues m_HbA1c = null;
-
     private DailyValues m_dvalues = null;
-
     private WeeklyValues m_dRangeValues = null;
 
 //x    private MeterManager m_meterManager = null;
@@ -182,8 +183,7 @@ public class DataAccess extends ATDataAccessAbstract
     };
 
 */
-        public String[] options_yes_no = null;
-
+    public String[] options_yes_no = null;
 
 
 

@@ -231,13 +231,13 @@ public class MealSelectorDialog extends JDialog implements ActionListener
         
 
         JPanel panel3 = new JPanel();
-        panel3.setBorder(new TitledBorder(ic.getMessage("AMOUNT")));
+        panel3.setBorder(new TitledBorder(ic.getMessage("AMOUNT_LBL")));
         panel3.setLayout(null);
         panel3.setBounds(10, 310, 270, 65);
         panel.add(panel3, null);
         
 
-        label = new JLabel(ic.getMessage("AMOUNT") + ":");
+        label = new JLabel(ic.getMessage("AMOUNT_LBL") + ":");
         label.setBounds(20, 25, 100, 25);
         panel3.add(label, null);
         

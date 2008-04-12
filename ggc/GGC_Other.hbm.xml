@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
     
-    <!-- ***************** ggc::Meters SCHEMA  ******************* -->
+    <!-- ***************** ggc::Other SCHEMA  ******************* -->
 
     <class name="ggc.core.db.hibernate.InetGroupH" table="inet_group">
         <id name="id" type="long" unsaved-value="0">

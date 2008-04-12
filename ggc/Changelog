@@ -1,3 +1,22 @@
+2008-03-22 (0.2.9.10) Andy Rozman <andyrozman@users.sourceforge.net>
+    * some files were moved to different packages (ggc.core package created), we
+      have now more distinct split beetween files for creation of different jars
+      From now on, we create 4 jars: 
+         - ggc-core.jar: contains all classes needed by any GUI
+         - ggc-main.jar: contains main GUI (for main application)
+         - ggc-little.jar: containing Little GUI (resident version of GGC, that
+           can input only data for today)
+         - ggc-lang.jar: contains all language files and help files
+    * Nutrition and meals functionalities completed
+    * language files were split. Now we have main language file and nutrition 
+      language file, which also contains translation for Nutritions in database
+    * changes to ant files (added new libraries, more jars creation and 
+      versioning of created jars)
+    * export of nutrition db done (need to rework whole import/export stuff)  
+    * work started on connecting nutrition databases to daily values entries
+    
+
+
 2008-03-22 (0.2.9.9) Andy Rozman <andyrozman@users.sourceforge.net>
     * see BUGS.txt (some of bugs were fixed)
 

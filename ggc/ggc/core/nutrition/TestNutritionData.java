@@ -36,6 +36,7 @@ import ggc.core.db.hibernate.FoodUserDescriptionH;
 import ggc.core.db.hibernate.FoodUserGroupH;
 import ggc.core.db.hibernate.MealGroupH;
 import ggc.core.db.hibernate.MealH;
+import ggc.core.nutrition.dialogs.DailyValuesMealSelectorDialog;
 import ggc.core.util.DataAccess;
 
 import java.io.BufferedWriter;
@@ -95,35 +96,25 @@ public class TestNutritionData
 	}
 
 	
-	// I don't know load
-	//db.loadNutritionDefinitions();
 
+	// no db available
 	//createFakeData_Meals();
 	//createFakeData_User();
 	
 	
-	//System.out.println("m_da: " + m_da);
 	
 //	new FoodPartMainSelectorDialog(m_da, FoodPartMainSelectorDialog.SELECTOR_NUTRITION, null);
 	
-//	this.getKeywords(db);
-	//new NutritionTreeDialog(m_da, type);
-	
-	/*JFrame fr = new JFrame();
-	//fr.setBounds(0,0,640,480);
-	//fr.setVisible(true);
-	//da.setParent(fr); */
-	//da.m_nutrition_treeroot = new GGCTreeRoot(1);
-
-	/*NutritionTreeDialog ntd =*/
 	
 	// for dialog checking
-	new NutritionTreeDialog(m_da, type);
+	//new NutritionTreeDialog(m_da, type);
 	
 	// for partitial translation checking
 	//FoodPartSelectorDialog fd = new FoodPartSelectorDialog(m_da, 2, null);
 	
-	
+	// Meal selector for DailyValues
+	new DailyValuesMealSelectorDialog(DataAccess.getInstance(), null);
+
     }
 
 
@@ -238,7 +229,7 @@ public class TestNutritionData
 	return new Meal(fuh);
     }
     
-    
+    @SuppressWarnings("unchecked")
     public void getKeywords(GGCDb db)
     {
 	

@@ -25,7 +25,7 @@
  *  Author:   andyrozman  {andy@atech-software.com}
  */
 
-package ggc.core.db.import;
+package ggc.core.db.tool.transfer;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.DayValueH;
@@ -35,21 +35,30 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.StringTokenizer;
 
+import com.atech.db.hibernate.transfer.ImportTool;
 
-public class ImportDailyValues 
+import org.hibernate.cfg.Configuration;
+
+
+public class ImportDailyValues extends ImportTool
 {
 
     GGCDb m_db = null;
     public String file_name;
 
 
-
+    public ImportDailyValues(Configuration cfg)
+    {
+	super(cfg);
+	
+    }
 
 
     public ImportDailyValues(String file_name)
     {
-    	m_db = new GGCDb();
-    	m_db.initDb();
+	super(new GGCDb().getConfiguration());
+    	//m_db = new GGCDb();
+    	//m_db.initDb();
     	this.file_name = file_name;
 
     	loadDailyValues();
@@ -152,83 +161,6 @@ public class ImportDailyValues
 
 
 
-    public int getInt(String input)
-    {
-
-        if (input.startsWith("~")) 
-            input = input.substring(1, input.length()-1);
-
-
-        if (input.length()==0) 
-            return 0;
-        else
-            return Integer.parseInt(input);
-
-    }
-
-
-
-
-    public short getShort(String input)
-    {
-
-        if (input.startsWith("~")) 
-            input = input.substring(1, input.length()-1);
-
-
-        if (input.length()==0) 
-            return 0;
-        else
-            return Short.parseShort(input);
-
-    }
-
-
-    public long getLong(String input)
-    {
-
-        if (input.startsWith("~")) 
-            input = input.substring(1, input.length()-1);
-
-
-        if (input.length()==0) 
-            return 0;
-        else
-            return Long.parseLong(input);
-
-    }
-
-
-    public float getFloat(String input)
-    {
-
-        if (input.startsWith("~")) 
-            input = input.substring(1, input.length()-1);
-
-
-        if (input.length()==0) 
-            return 0;
-        else
-            return Float.parseFloat(input);
-
-    }
-
-
-    public String getString(String input)
-    {
-
-        if (input.startsWith("~")) 
-            input = input.substring(1, input.length()-1);
-        
-        if (input.trim().length()==0)
-            return null;
-        
-        if (input.equals("null"))
-            return null;
-
-        return input;
-
-    }
 
 
 

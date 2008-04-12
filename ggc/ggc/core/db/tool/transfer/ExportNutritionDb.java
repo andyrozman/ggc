@@ -1,4 +1,4 @@
-package ggc.core.db.tool.export;
+package ggc.core.db.tool.transfer;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.FoodUserDescriptionH;
@@ -6,6 +6,7 @@ import ggc.core.db.hibernate.FoodUserGroupH;
 import ggc.core.db.hibernate.MealGroupH;
 import ggc.core.db.hibernate.MealH;
 
+import java.io.File;
 import java.util.Iterator;
 
 import com.atech.db.hibernate.transfer.ExportTool;
@@ -23,9 +24,26 @@ public class ExportNutritionDb extends ExportTool
     {
 	super(cfg);
 	
+	this.setTypeOfStatus(ExportNutritionDb.STATUS_DOT);
+	
+	checkPrerequisites();
 	exportAll();
     }
 
+    
+    private void checkPrerequisites()
+    {
+	File f = new File("../data");
+	
+	if (!f.exists())
+	    f.mkdir();
+	
+	f = new File("../data/export");
+
+	if (!f.exists())
+	    f.mkdir();
+	
+    }
     
     private void exportAll()
     {
@@ -48,15 +66,23 @@ public class ExportNutritionDb extends ExportTool
 
         Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserGroupH as grp");
 
+        this.statusSetMaxEntry(q.list().size());
+        
         Iterator it = q.iterate();
+        
+        int dot_mark = 5;
+        int count = 0;
 
         while (it.hasNext())
         {
             FoodUserGroupH eh = (FoodUserGroupH)it.next();
             
-            this.writeToFile(eh.getId() + ";" + eh.getName() + ";" + 
-        	             eh.getName_i18n() + ";" + eh.getDescription() + 
-        	             ";" + eh.getParent_id() + "\n");
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + 
+        	             eh.getName_i18n() + "|" + eh.getDescription() + 
+        	             "|" + eh.getParent_id() + "\n");
+
+            count++;
+            this.writeStatus(dot_mark, count);
         }
         
         closeFile();
@@ -74,17 +100,25 @@ public class ExportNutritionDb extends ExportTool
 
         Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserDescriptionH as grp");
 
+        this.statusSetMaxEntry(q.list().size());
+        
         Iterator it = q.iterate();
+
+        int dot_mark = 5;
+        int count = 0;
 
         while (it.hasNext())
         {
             FoodUserDescriptionH eh = (FoodUserDescriptionH)it.next();
             
-            this.writeToFile(eh.getId() + ";" + eh.getName() + ";" + 
-        	             eh.getName_i18n() + ";" + eh.getGroup_id() + ";" +
-        	             eh.getRefuse() + ";" + eh.getDescription() + ";" +
-        	             eh.getHome_weights() + ";" + eh.getNutritions() +
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + 
+        	             eh.getName_i18n() + "|" + eh.getGroup_id() + "|" +
+        	             eh.getRefuse() + "|" + eh.getDescription() + "|" +
+        	             eh.getHome_weights() + "|" + eh.getNutritions() +
         	             "\n");
+
+            count++;
+            this.writeStatus(dot_mark, count);
         }
         
         closeFile();
@@ -104,15 +138,24 @@ public class ExportNutritionDb extends ExportTool
 
         Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealGroupH as grp");
 
+        this.statusSetMaxEntry(q.list().size());
+        
         Iterator it = q.iterate();
+
+        int dot_mark = 5;
+        int count = 0;
+
 
         while (it.hasNext())
         {
             MealGroupH eh = (MealGroupH)it.next();
             
-            writeToFile(eh.getId() + ";" + eh.getName() + ";" + 
-        	        eh.getName_i18n() + ";" + eh.getDescription() + 
-        	        ";" + eh.getParent_id() + "\n");
+            writeToFile(eh.getId() + "|" + eh.getName() + "|" + 
+        	        eh.getName_i18n() + "|" + eh.getDescription() + 
+        	        "|" + eh.getParent_id() + "\n");
+
+            count++;
+            this.writeStatus(dot_mark, count);
         }
         
         closeFile();
@@ -131,17 +174,27 @@ public class ExportNutritionDb extends ExportTool
 
         Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealH as grp");
 
+        this.statusSetMaxEntry(q.list().size());
+        
         Iterator it = q.iterate();
+
+        int dot_mark = 5;
+        int count = 0;
+
 
         while (it.hasNext())
         {
             MealH eh = (MealH)it.next();
             
-            this.writeToFile(eh.getId() + ";" + eh.getName() + ";" + 
-        	             eh.getName_i18n() + ";" + eh.getGroup_id() + ";" +
-        	             eh.getDescription() + ";" + eh.getParts() + ";" + 
-        	             eh.getNutritions() + ";" + eh.getExtended() + ";" +
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + 
+        	             eh.getName_i18n() + "|" + eh.getGroup_id() + "|" +
+        	             eh.getDescription() + "|" + eh.getParts() + "|" + 
+        	             eh.getNutritions() + "|" + eh.getExtended() + "|" +
         	             eh.getComment() + "\n" );
+
+            count++;
+            this.writeStatus(dot_mark, count);
+        
         }
         
         closeFile();

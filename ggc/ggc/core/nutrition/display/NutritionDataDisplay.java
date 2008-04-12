@@ -46,6 +46,9 @@ public class NutritionDataDisplay extends ATTableData
 	
 	public void setNutritionDefinition(NutritionDefinition def)
 	{
+	    if (def==null)
+	    	return;
+	    
 	    this.id = "" + def.getId();
 	    this.name = def.getName();
 	    //this.value = def.get.getTag();

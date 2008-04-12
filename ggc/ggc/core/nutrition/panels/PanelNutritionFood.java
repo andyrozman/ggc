@@ -292,7 +292,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	
 	if (fd.getGroup_id()>0)
 	{
-	    this.food_group = m_da.tree_roots.get("2").m_groups_ht.get("" + fd.getGroup_id());
+	    this.food_group = m_da.tree_roots.get("" + fd.type).m_groups_ht.get("" + fd.getGroup_id());
 	    this.label_group.setText(this.food_group.getName());
 	}
 	else
@@ -302,6 +302,7 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	}
 	
 	
+	//System.out.println(fd.getNutritions());
 	
 	StringTokenizer strtok = new StringTokenizer(fd.getNutritions(), ";");
 	list_nutrition.clear();
@@ -309,6 +310,9 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 	while(strtok.hasMoreTokens())
 	{
 	    NutritionDataDisplay ndd1 = new NutritionDataDisplay(ic, strtok.nextToken());
+	    
+	    //System.out.println(ndd1.getId());
+	    
 	    ndd1.setNutritionDefinition(this.m_da.getDb().nutrition_defs.get(ndd1.getId()));
 	    list_nutrition.add(ndd1);
 	}
@@ -326,7 +330,8 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
             while(strtok.hasMoreTokens())
             {
                 HomeWeightDataDisplay hwd1 = new HomeWeightDataDisplay(ic, strtok.nextToken());
-                //System.out.println("Home Weight: " + name);
+                //System.out.println("Home Weight: " + hwd1.getId());
+                
                 hwd1.setHomeWeightDefinition(this.m_da.getDb().homeweight_defs.get(hwd1.getId()).getName());
                 this.list_weight.add(hwd1);
             }
