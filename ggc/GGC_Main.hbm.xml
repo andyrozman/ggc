@@ -19,7 +19,7 @@
         <property name="ins1"  type="int" />
         <property name="ins2"  type="int" />
         <property name="ch"  type="float" />
-        <property name="meals_ids"  type="string" length="1000" />
+        <property name="meals_ids"  type="text" />
         <property name="extended"  type="text" />
         <property name="person_id"  type="int" not-null="true" />
         <property name="comment" type="string" length="2000" />

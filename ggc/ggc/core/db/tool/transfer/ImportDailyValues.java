@@ -47,27 +47,35 @@ public class ImportDailyValues extends ImportTool
     public String file_name;
 
 
-    public ImportDailyValues(Configuration cfg)
-    {
-	super(cfg);
-	
-    }
-
 
     public ImportDailyValues(String file_name)
     {
-	super(new GGCDb().getConfiguration());
+	super(false);
+
+    	m_db = new GGCDb();
+    	m_db.initDb();
+    	this.file_name = file_name;
+
+    	importDailyValues();
+    
+    	System.out.println();
+	
+    }
+
+    public ImportDailyValues(Configuration cfg, String file_name)
+    {
+	super(cfg);
     	//m_db = new GGCDb();
     	//m_db.initDb();
     	this.file_name = file_name;
 
-    	loadDailyValues();
+    	importDailyValues();
     
     	System.out.println();
     }
 
 
-    public void loadDailyValues()
+    public void importDailyValues()
     {
 	try 
 	{
@@ -78,6 +86,7 @@ public class ImportDailyValues extends ImportTool
 	    
 	    int i=0;
 
+	    
 	    while ((line=br.readLine())!=null) 
 	    {
 		if (line.startsWith(";"))
@@ -92,6 +101,7 @@ public class ImportDailyValues extends ImportTool
 		//; Columns: id,dt_info,bg,ins1,ins2,ch,meals_ids,act,comment
 		
 		//1|200603250730|0|10.0|0.0|0.0|null|null|
+// id; dt_info; bg; ins1; ins2; ch; meals_ids; extended; person_id; comment 
 
 		long id = this.getLong(strtok.nextToken());
 		
@@ -104,7 +114,18 @@ public class ImportDailyValues extends ImportTool
 		dvh.setIns2((int)getFloat(strtok.nextToken()));
 		dvh.setCh(getFloat(strtok.nextToken()));
 		dvh.setMeals_ids(getString(strtok.nextToken()));
+		dvh.setExtended(getString(strtok.nextToken()));
 		
+		int person_id = this.getInt(strtok.nextToken());
+		
+		if (person_id==0)
+		    dvh.setPerson_id(1);
+		else
+		    dvh.setPerson_id(person_id);
+		
+		dvh.setComment(getString(strtok.nextToken()));
+		
+		/*
 		String act = getString(strtok.nextToken());
 		
 		if (act != null)
@@ -132,10 +153,8 @@ public class ImportDailyValues extends ImportTool
         		dvh.setComment(bef);
 		}
 		
+		*/
 		
-		
-		// bg,ins1,ins2,ch,meals_ids,act,comment
-
 		m_db.addHibernate(dvh);
 		
 		i++;
@@ -154,19 +173,16 @@ public class ImportDailyValues extends ImportTool
     }
     
 
-    
-
-
-
-
-
-
-
-
-
-
     public static void main(String args[])
     {
+	if (args.length == 0)
+	{
+	    System.out.println("You need to specify import file !");
+	    return;
+	}
+	
+	//GGCDb db = new GGCDb();
+	
 	new ImportDailyValues(args[0]);
     }
 

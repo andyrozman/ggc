@@ -78,6 +78,7 @@ public class InitDb
     	    loadNutritionDatabase();
     
 //    	loadMeters();
+    	m_db.closeDb();
     	System.out.println();
     }
 
