@@ -1,0 +1,5 @@
+0.0.1
+There is a new version available at http://ggc.sourceforge.net !
+
+Version Information:
+This is the first alpha release. Don't expect too much for now.

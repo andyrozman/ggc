@@ -1,0 +1,38 @@
+body {
+	FONT-FAMILY: Arial, helvetica, sans-serif;
+	font-size: small;
+}
+
+td{
+	FONT-FAMILY: Arial, helvetica, sans-serif;
+}
+tr.newsheader{
+	background-color: #b2c1ff;
+}
+
+table.container {
+	background-color: #ffffff;
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+}
+td.menu {
+	border-color: #000000;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	background-color: #EBEBEB;
+}
+
+a.menu {
+	font-weight: bold;
+	color: #000000;
+}
+
+a:hover {
+	color: #676767;
+	text-decoration: none;
+}
+
+
