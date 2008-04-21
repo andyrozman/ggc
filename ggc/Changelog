@@ -1,3 +1,8 @@
+2008-04-18 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * german translation: keywords brought up-to-date
+    * GGC_Nutrition initialized
+    * slight corrections to english language files
+
 2008-03-22 (0.2.9.10) Andy Rozman <andyrozman@users.sourceforge.net>
     * some files were moved to different packages (ggc.core package created), we
       have now more distinct split beetween files for creation of different jars
@@ -33,6 +38,9 @@
     * meal db added and 80% implemented
     * usda nutrition db fixed (90% done)
     * user nutrition db work started (about 40% done)
+
+2008-03-02 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * german translation
 
 2008-02-13 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * added new keys to GGC_de
