@@ -36,9 +36,9 @@ package ggc.gui.little;
 
 
 import ggc.core.data.DailyValuesRow;
+import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.core.db.GGCDb;
 import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;
 
@@ -46,6 +46,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.FlowLayout;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -79,8 +81,6 @@ import javax.swing.UIManager;
 import com.atech.help.HelpContext;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
-import org.jdesktop.jdic.tray.SystemTray;
-import org.jdesktop.jdic.tray.TrayIcon;
 
 
 public class GGCLittle extends JFrame implements WindowListener, ActionListener
@@ -286,6 +286,8 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     
     private void createSystemTrayInstance()
     {
+
+/*	
 	JPopupMenu menu = new JPopupMenu();
 	
 	menu.add(createItem("SHOW_APP", "SHOW_APP_DESC", "show_app"));
@@ -296,7 +298,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 	menu.add(new JLabel());
 	
 	
-	SystemTray tray = SystemTray.getDefaultSystemTray();  
+	SystemTray tray = SystemTray.getSystemTray();  
 	
         TrayIcon ti = new TrayIcon(m_da.getImageIcon("medical_bag.png", 15, 15, this)
         	, m_ic.getMessage("GGC_LITTLE_TITLE"), menu);
@@ -310,7 +312,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             }
         });
         tray.addTrayIcon(ti); 	
-	
+*/	
 	
 	
 	

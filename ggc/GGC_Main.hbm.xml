@@ -54,7 +54,7 @@
         <property name="extended"  type="text" />
         <property name="visible" type="int" />
         <property name="person_id"  type="int" not-null="true" />
-        <property name="comment"  type="string" length="4000" />
+        <property name="comment" type="string" length="4000" />
     </class>
 
     <!--  Appointment -->
@@ -105,7 +105,7 @@
         <property name="stock_subtype_id"  type="long"  />
         <property name="dt_stock"  type="long"  />
         <property name="amount"  type="float" />
-        <property name="desc"  type="string" length="255" />
+        <property name="description"  type="string" length="255" />
         <property name="usage_per_day_min" type="float" />
         <property name="usage_per_day_max" type="float" />
         <property name="extended"  type="text" />
@@ -124,8 +124,8 @@
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
-        <property name="key" type="string"  length="44" not-null="true" />    
-        <property name="value" type="string"  length="255"/>    
+        <property name="key" column="el_key" type="string"  length="44" not-null="true" />    
+        <property name="value" column="el_value" type="string"  length="255"/>    
         <property name="type" type="int"  />    <!-- 1-string, 2-int, 3=float -->
         <property name="description" type="string" length="255" />   
         <property name="person_id"  type="int" not-null="true" />
@@ -155,8 +155,8 @@
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
-        <property name="key" type="string"  length="44" not-null="true" />    
-        <property name="value" type="string"  length="255"/>    
+        <property name="key" column="el_key" type="string"  length="44" not-null="true" />    
+        <property name="value" column="el_value" type="string"  length="255"/>    
         <property name="type" type="int"  />    <!-- 1-string, 2-int, 3=float -->
         <property name="description" type="string" length="255" />   
     </class>

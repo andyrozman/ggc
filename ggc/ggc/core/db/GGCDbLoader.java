@@ -109,6 +109,8 @@ public class GGCDbLoader extends Thread
 
         // 1 - init
         
+        long start_time = System.currentTimeMillis();
+        
         GGCDb db = new GGCDb(m_da);
 
         if (!part_start)
@@ -204,6 +206,9 @@ public class GGCDbLoader extends Thread
 //            db.loadImplementedMeterData();
         }
 */
+    	long dif = System.currentTimeMillis() - start_time;
+
+    	System.out.println("We needed "  + (dif/1000) + " seconds to startup.");
 
     }
 

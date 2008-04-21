@@ -36,14 +36,20 @@ import ggc.core.db.hibernate.FoodUserGroupH;
 
 import java.util.ArrayList;
 
+import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
 
-public class FoodGroup implements DatabaseObjectHibernate 
+public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 //extends FoodGroupH implements DatabaseObjectHibernate
 {
+
+
+
 
     public boolean debug = false;
     
@@ -56,8 +62,12 @@ public class FoodGroup implements DatabaseObjectHibernate
     int group_type = 0;
     long id;
     
+    private boolean selected = false;
+    
     ArrayList<FoodGroup> children_group = new ArrayList<FoodGroup>();
     ArrayList<Object> children = new ArrayList<Object>();
+  
+    boolean empty = false;
     
 /*
     public FoodGroup()
@@ -67,6 +77,11 @@ public class FoodGroup implements DatabaseObjectHibernate
     }
 */
 
+    public FoodGroup()
+    {
+	this.empty = true;
+    }
+    
     public FoodGroup(int type)
     {
 	group_type = type;
@@ -291,7 +306,10 @@ public class FoodGroup implements DatabaseObjectHibernate
     @Override
     public String toString()
     {
-        return this.getName();
+	if (this.empty)
+	    return this.getTargetName();
+	else
+	    return this.getName();
     }
 
 
@@ -479,6 +497,42 @@ public class FoodGroup implements DatabaseObjectHibernate
         return 0;
     }
 
+    
+    
+    /* 
+     * getTargetName
+     */
+    public String getTargetName()
+    {
+	return "FOOD_GROUP";
+    }
+
+    /* 
+     * getChildren
+     */
+    public ArrayList<CheckBoxTreeNodeInterface> getChildren()
+    {
+	return null;
+    }
+
+    /* 
+     * isSelected
+     */
+    public boolean isSelected()
+    {
+	return selected;
+    }
+
+    /* 
+     * setSelected
+     */
+    public void setSelected(boolean newValue)
+    {
+	this.selected = newValue;
+    }
+    
+    
+    
 }
 
 

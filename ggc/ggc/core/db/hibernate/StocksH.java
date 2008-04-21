@@ -21,7 +21,7 @@ public class StocksH implements Serializable {
     private float amount;
 
     /** nullable persistent field */
-    private String desc;
+    private String description;
 
     /** nullable persistent field */
     private float usage_per_day_min;
@@ -39,11 +39,11 @@ public class StocksH implements Serializable {
     private String comment;
 
     /** full constructor */
-    public StocksH(long stock_subtype_id, long dt_stock, float amount, String desc, float usage_per_day_min, float usage_per_day_max, String extended, int person_id, String comment) {
+    public StocksH(long stock_subtype_id, long dt_stock, float amount, String description, float usage_per_day_min, float usage_per_day_max, String extended, int person_id, String comment) {
         this.stock_subtype_id = stock_subtype_id;
         this.dt_stock = dt_stock;
         this.amount = amount;
-        this.desc = desc;
+        this.description = description;
         this.usage_per_day_min = usage_per_day_min;
         this.usage_per_day_max = usage_per_day_max;
         this.extended = extended;
@@ -92,12 +92,12 @@ public class StocksH implements Serializable {
         this.amount = amount;
     }
 
-    public String getDesc() {
-        return this.desc;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public float getUsage_per_day_min() {

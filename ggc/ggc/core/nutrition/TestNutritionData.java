@@ -28,6 +28,7 @@
 package ggc.core.nutrition;
  
 import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.DailyValue;
 import ggc.core.db.datalayer.FoodDescription;
 import ggc.core.db.datalayer.FoodGroup;
 import ggc.core.db.datalayer.Meal;
@@ -47,6 +48,11 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+import javax.swing.JFrame;
+
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.db.hibernate.transfer.BackupRestoreDialog;
+
 
 
 public class TestNutritionData  
@@ -56,6 +62,14 @@ public class TestNutritionData
     //private I18nControl ic = null;
     private GGCDb db = null;
 
+    
+    public TestNutritionData()
+    {
+	m_da = DataAccess.getInstance();
+	createTree();
+    }
+    
+    
     public TestNutritionData(int type) 
     {
 
@@ -118,6 +132,64 @@ public class TestNutritionData
     }
 
 
+    public void createTree()
+    {
+	JFrame frame = new JFrame("CheckBox Tree");
+	
+	m_da.setParent(frame);
+
+	// root
+	BackupRestoreCollection brc = new BackupRestoreCollection("GGC Backup Context");
+	
+	brc.addChild(new DailyValue());
+	
+
+	BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS");
+	
+	brc_nut.addChild(new FoodGroup());
+	
+	brc.addChild(brc_nut);
+	
+	frame.setBounds(0,0, 640, 480);
+	
+	
+	BackupRestoreDialog brd = new BackupRestoreDialog(frame, m_da, brc);
+	
+	
+	/*
+	CheckBoxNode accessibilityOptions[] = {
+			new CheckBoxNode(
+					"Move system caret with focus/selection changes", false),
+			new CheckBoxNode("Always expand alt text for images", true) };
+	
+	CheckBoxNode browsingOptions[] = {
+			new CheckBoxNode("Notify when downloads complete", true),
+			new CheckBoxNode("Disable script debugging", true),
+			new CheckBoxNode("Use AutoComplete", true),
+			new CheckBoxNode("Browse in a new process", false) };
+	
+	Vector accessVector = new NamedVector("Accessibility",
+			accessibilityOptions);
+	Vector browseVector = new NamedVector("Browsing", browsingOptions);
+	Object rootNodes[] = { accessVector, browseVector };
+	Vector rootVector = new NamedVector("Root", rootNodes);
+	*/
+	
+	//JTree tree = new JTree(rootVector);
+/*	
+	CheckNodeTree cbt = new CheckNodeTree(brc, CheckNode.DIG_IN_SELECTION);
+	
+
+	JScrollPane scrollPane = new JScrollPane(cbt);
+	frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+	frame.setSize(400, 400);
+	frame.setVisible(true);
+	*/
+	
+    }
+    
+    
+    
     public void createFakeData_Meals()
     {
 	ArrayList<MealGroup> lst = new ArrayList<MealGroup>();
@@ -351,8 +423,9 @@ public class TestNutritionData
     public static void main(String args[])
     {
 	
-	new TestNutritionData(GGCTreeRoot.TREE_USER_NUTRITION);
+	//new TestNutritionData(GGCTreeRoot.TREE_USER_NUTRITION);
 	//new TestNutritionData(GGCTreeRoot.TREE_MEALS);
+	new TestNutritionData();
     }
 
 

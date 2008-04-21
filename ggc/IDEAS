@@ -1,16 +1,27 @@
 This file should be filled with any ideas that pop into your heads and be discussed on the
 ggc-development mailing list or wherever appropriate.
 
-
+============================================================================
 
 I: Two kinds of insulin seems a bit minimalistic
 
 A: All data tables, which could have additional parameters were added and extended column
    of type text (unlimited size - string), which allows us to add data, if data is present,
    so for example we could add third insulin option, but for time beeing 2 insulins are what
-   is mostly used for insulin treatment. 
+   is mostly used for insulin treatment. If someone nneed more than two insulins
+   we only need to add code to change GUI. (Andy) 
 
+============================================================================
 
+I: Pump and CGM support
 
-
-I: Pump and CGM support   
+A: Pump support is in plan. When I get a pump, then some type of support will
+   be added. At start probably just manual entry (by end of 2008) and at later 
+   time also reading data from pump. Support will be added for pump companies, 
+   which will help us with providing protocol for communication.  
+   If users will supply log of communication, it will be possible even 
+   without this protocols. (Andy)
+   
+   As for CGM... no support planned at this moment... (Andy)
+   
+============================================================================

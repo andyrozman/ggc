@@ -66,6 +66,8 @@ public class InitDb
 
     public InitDb(boolean load_nutr)
     {
+	long time_start = System.currentTimeMillis();
+	
     	m_db = new GGCDb();
     	m_db.initDb();
     	m_db.createDatabase();
@@ -80,6 +82,11 @@ public class InitDb
 //    	loadMeters();
     	m_db.closeDb();
     	System.out.println();
+    	
+    	long dif = System.currentTimeMillis() - time_start;
+    	
+    	System.out.println("We needed "  + (dif/1000) + " seconds to create and fill database.");
+    	
     }
 
 
