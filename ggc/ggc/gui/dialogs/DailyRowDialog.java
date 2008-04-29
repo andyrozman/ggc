@@ -119,7 +119,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private boolean m_actionDone = false;
 
-    private long last_change = 0;
+    //private long last_change = 0;
 
 //    static AddRowFrame singleton = null;
 

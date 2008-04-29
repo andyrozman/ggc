@@ -112,7 +112,7 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.9.11";
+    public  static String s_version = "0.2.9.12";
     public static String full_version = "v" + s_version;
 
     public static String version_date = "29th April 2008";
@@ -347,7 +347,11 @@ public class MainFrame extends JFrame
 	
 	// pumps
 	this.menu_pumps = this.createMenu("MN_PUMPS", null);
+	this.createAction(menu_pumps, "MN_PUMP_PROFILES", "MN_PUMP_PROFILES_DESC", "pumps_profile", null);
+	this.menu_pumps.addSeparator();
+	this.createAction(menu_pumps, "MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry", null);
 	this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
+	this.createAction(menu_pumps, "MN_PUMPS_ADDITIONAL_DATA", "MN_PUMPS_ADDITIONAL_DATA_DESC", "pumps_additional_data", null);
 	this.menu_pumps.addSeparator();
 	this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
 	this.menu_pumps.addSeparator();
@@ -928,11 +932,6 @@ public class MainFrame extends JFrame
             {
                 new FrequencyGraphDialog(m_da); 
             } 
-            else if (command.equals("hlp_help"))
-            {
-        	m_da.getHelpContext().getDisplayHelpFromSourceInstance().actionPerformed(e);
-        	//GGCHelp.csh.actionPerformed(e);
-            }
             else if (command.equals("view_hba1c")) 
             {
                 new HbA1cDialog(m_da);
@@ -947,17 +946,15 @@ public class MainFrame extends JFrame
     		    informationPanel.refreshPanels();
     		}
             } 
-/*            else if (command.equals("read_meter")) 
+	    else if (command.equals("hlp_about"))
+	    {
+		new AboutGGCDialog(getMyParent());
+	    }
+            else if (command.equals("hlp_help"))
             {
-                new MeterReadDialog(MainFrame.this);
-            } */
-/*            else if (command.equals("hlp_about")) 
-            {
-                JOptionPane.showMessageDialog(null,
-                                "GNU Gluco Control " + s_version, "About GGC",
-                                JOptionPane.INFORMATION_MESSAGE);
-            } */
-            else if (command.equals("hlp_check")) 
+        	m_da.getHelpContext().getDisplayHelpFromSourceInstance().actionPerformed(e);
+            }
+           else if (command.equals("hlp_check")) 
             {
                 new VersionChecker().checkForUpdate();
             } 
@@ -965,6 +962,14 @@ public class MainFrame extends JFrame
             {
                 new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_USDA_NUTRITION);
             } 
+	    else if (command.equals("food_nutrition_2"))
+	    {
+		new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_USER_NUTRITION);
+	    }
+	    else if (command.equals("food_meals"))
+	    {
+		new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_MEALS);
+	    }
             else if (command.equals("report_pdf_simple")) 
             {
                 new PrintingDialog(MainFrame.this, 1);
@@ -973,10 +978,6 @@ public class MainFrame extends JFrame
             {
         	new PrintingDialog(MainFrame.this, 2);
             }
-	    else if (command.equals("hlp_about"))
-	    {
-		new AboutGGCDialog(getMyParent());
-	    }
 	    else if (command.equals("doc_docs"))
 	    {
 		if (MainFrame.developer_version)
@@ -986,25 +987,6 @@ public class MainFrame extends JFrame
 		else
 		    featureNotImplemented(command, "0.5");
 		    
-		
-	    }
-	    else if (command.equals("food_nutrition_2"))
-	    {
-		if (MainFrame.developer_version)
-		{
-	            new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_USER_NUTRITION);
-		}
-		else
-		    featureNotImplemented(command, "0.3");
-	    }
-	    else if (command.equals("food_meals"))
-	    {
-		if (MainFrame.developer_version)
-		{
-	            new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_MEALS);
-		}
-		else
-		    featureNotImplemented(command, "0.3");
 		
 	    }
 	    else if (command.equals("doc_appoint"))
@@ -1041,10 +1023,13 @@ public class MainFrame extends JFrame
             }
             else if ((command.equals("pumps_read")) ||
         	    (command.equals("pumps_list")) ||
+        	    (command.equals("pumps_profile")) ||
+        	    (command.equals("pumps_manual_entry")) ||
+        	    (command.equals("pumps_additional_data")) ||
         	    (command.equals("pumps_config"))
         	    )
             {
-        	featureNotImplemented(command, "1.1");
+        	featureNotImplemented(command, "0.5 or 0.6");
             }
             else if (command.equals("file_login"))
 	    {

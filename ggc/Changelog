@@ -1,3 +1,7 @@
+2008-04-30 (0.2.9.12) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Backup implementation finished
+    * Added some pumps menus (still in planning... don't worry)
+
 2008-04-29 (0.2.9.11) Andy Rozman <andyrozman@users.sourceforge.net>
     * Backup implementation 0.1 finished (non-gui backup)
     * Backup implementation 0.2 started (GUI)
