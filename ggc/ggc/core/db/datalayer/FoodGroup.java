@@ -33,11 +33,13 @@ package ggc.core.db.datalayer;
 import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.FoodGroupH;
 import ggc.core.db.hibernate.FoodUserGroupH;
+import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
 
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -68,6 +70,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     ArrayList<Object> children = new ArrayList<Object>();
   
     boolean empty = false;
+    I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
     
 /*
     public FoodGroup()
@@ -499,14 +502,23 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 
     
     
+
+
+    //---
+    //---  BackupRestoreObject
+    //---
+    
+
     /* 
      * getTargetName
      */
     public String getTargetName()
     {
-	return "FOOD_GROUP";
+	return ic.getMessage("USER_FOOD_GROUPS");
     }
-
+    
+    
+    
     /* 
      * getChildren
      */
@@ -531,6 +543,12 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 	this.selected = newValue;
     }
     
+    
+    public boolean isCollection()
+    {
+	return false;
+    }
+
     
     
 }

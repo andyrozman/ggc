@@ -1,3 +1,10 @@
+2008-04-29 (0.2.9.11) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Backup implementation 0.1 finished (non-gui backup)
+    * Backup implementation 0.2 started (GUI)
+    * Daily Values input changed: validation done via JFormattedTextField, added
+      values for both types of BG (we had one before, but switching types make
+      that impossible). Double click opens edit. 
+
 2008-04-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * german translation
 

@@ -34,9 +34,9 @@ import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.calendar.CalendarEvent;
 import ggc.core.data.calendar.CalendarListener;
+import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.core.db.GGCDb;
 import ggc.gui.MainFrame;
 import ggc.gui.calendar.CalendarPane;
 
@@ -47,6 +47,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -60,6 +62,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -123,6 +126,12 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         return model;
     }
 
+    public DailyStatsDialog getThisParent()
+    {
+	return this;
+    }
+    
+    
     protected void close()
     {
         DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
@@ -241,6 +250,36 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         });
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        
+        
+        //MouseAdapter ma = new MouseAdapter();
+        
+        table.addMouseListener(new MouseAdapter()
+           {
+            	public void mouseClicked(MouseEvent e)
+            	{
+            	    if ((SwingUtilities.isLeftMouseButton(e)) &&
+            		(e.getClickCount()==2))
+            	    {
+            		//System.out.println("mouse 2x clicked");
+            		
+                        DailyValuesRow dvr = dayData.getRowAt(table.getSelectedRow());
+
+                        DailyRowDialog aRF = new DailyRowDialog(dvr, getThisParent());
+
+                        if (aRF.actionSuccesful()) 
+                        {
+                            m_db.saveDayStats(dayData);
+                            dayData.sort();
+                            getTableModel().fireTableChanged(null);
+                        }
+            	    }
+            	}
+            
+           }
+        );
+ //       MouseListener ml =  new MouseListener();
+        
         resultsPane = new JScrollPane(table);
 
 
@@ -371,6 +410,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             if (aRF.actionSuccesful()) 
             {
                 m_db.saveDayStats(dayData);
+                dayData.sort();
                 this.model.fireTableChanged(null);
             }
     	}
@@ -393,6 +433,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             if (aRF.actionSuccesful()) 
             {
                 m_db.saveDayStats(dayData);
+                dayData.sort();
                 this.model.fireTableChanged(null);
             }
     

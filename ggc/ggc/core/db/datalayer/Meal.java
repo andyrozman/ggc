@@ -32,21 +32,34 @@ package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.MealH;
+import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+
+import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
-public class Meal extends MealH implements DatabaseObjectHibernate
+public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
     public boolean debug = false;
     ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();
     //ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();
     
+    boolean selected = false;
+    I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
+    boolean meal_empty = false;
+    
+    public Meal(boolean meal_empty)
+    {
+	this.meal_empty = meal_empty;
+    }
 
 
     public Meal()
@@ -110,7 +123,10 @@ public class Meal extends MealH implements DatabaseObjectHibernate
     @Override
     public String toString()
     {
-        return this.getShortDescription();
+	if (this.meal_empty)
+	    return this.getTargetName();
+	else
+	    return this.getShortDescription();
     }
 
 
@@ -292,6 +308,64 @@ public class Meal extends MealH implements DatabaseObjectHibernate
         return 0;
     }
 
+    
+    //---
+    //---  BackupRestoreObject
+    //---
+    
+
+    /* 
+     * getTargetName
+     */
+    public String getTargetName()
+    {
+	return ic.getMessage("MEALS");
+    }
+    
+    
+    
+    /* 
+     * getChildren
+     */
+    public ArrayList<CheckBoxTreeNodeInterface> getChildren()
+    {
+	return null;
+    }
+
+    
+    /* 
+     * hasChildren
+     */
+    public boolean hasChildren()
+    {
+	return false;
+    }
+    
+    
+    /* 
+     * isSelected
+     */
+    public boolean isSelected()
+    {
+	return selected;
+    }
+
+    /* 
+     * setSelected
+     */
+    public void setSelected(boolean newValue)
+    {
+	this.selected = newValue;
+    }
+    
+    
+    public boolean isCollection()
+    {
+	return false;
+    }
+    
+    
+    
 }
 
 

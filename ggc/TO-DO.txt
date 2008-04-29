@@ -37,15 +37,15 @@ Status:    74% (384 / 520)
 Help:      No help available
 
 
-GGC Meter
-----------
+GGC Meter Tool
+--------------
   See TO-DO_MeterTool.txt (in svn/trunk/ggc-meter)
 
 
-GGC Pumps
-----------
+GGC Pump Tool
+-------------
   See TO-DO.txt (in svn/trunk/ggc-pumps)
-  !!! Project not started yet. Planned for end of 2008
+  !!! Project not started yet. Planned for end of 2008 or maybe before
 
 
 
@@ -56,12 +56,7 @@ II. SORTED BY VERSION
 
 Version 0.3
 ------------
-* User Nutrition Db
-    - AED groups
-    - AED nutritions
-* Meals
 * Add Daily Data support for Meals
-* Web for 0.3
 * Readme
 * Db Versioning
 * Error handling (and logger)
@@ -74,6 +69,10 @@ Version 0.3
     - Run GGC
     - Db Tool
     - Db Check
+* Added functiuonality for Nutrition Db: 
+#    - Export data
+    - Import data (full)
+    - Nutrition Definition [GI_GL] should be added on init
 
 
 Version 0.4
@@ -81,37 +80,59 @@ Version 0.4
 
 * Db Tools Integration:  - InitDb
 * Atech Tools integration
-* Multi Person 
 * GGC Little
-* GGC PPC
-* Meter integration
+* Meter Tool integration
     - GGC Output
     - Configuration
 * Update (server) 
     - Software updater Server
     - Db Updater Server
+* Java Help – Write help pages
+* Graphs with new library 
+* Added functionality for Nutrition Db: 
+    - Import data (selective)
+    - Import Entry
+    - Duplicate
+    - Create Nutrition
+    - Create Home Weight
+    - Column Sorting in meal
+    - Column Sorting in Food
+* Pump: 
+    - Basic Pump support (for manual input of data)
+    - Integration of Pump Tool
+    This means only basic input of data, no reading from actual pump, no graphs,
+    pump list.
+* Add ratios 
+* Smart insulin usage rcommendations
+
+
+
+Version 0.5
+------------
+
 * Appoinmtments Mngr
     - AED doctor
     - AED appointment
 * Stocks
     - AED subtypes
     - AED stocks
-* Java Help – Write help pages
-* Graphs with new framework 
-
-
-Version 0.5
-------------
 
 * Export/Import other data
 * Synchronization
 * Export/Import daily data
 * Export/Import manager
 * GGC Network
-* Inet Data
+* Internet data (links for pages, forums, blogs - informational)
     - AED Inet Group
     - AED Inet Type
     - AED Inet Links
+* GGC PPC
+* Support for multiple persons
+* Restore data (partitial/update)
+* GGC Network - Support for multiple instances of GGC and their communication
+* Import of data from SiDiary Desktop application. SiDiary has its sister 
+    applications running on many small devices (PocketPC, Palms, SmartPhones, 
+    Java Phones), and it has import for a lot of Meters and also some pumps...
 
 
 

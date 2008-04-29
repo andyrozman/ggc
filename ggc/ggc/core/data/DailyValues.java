@@ -38,6 +38,7 @@ import ggc.core.util.I18nControl;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 
@@ -247,6 +248,7 @@ public class DailyValues implements Serializable
 
 
 
+    
 
 
 
@@ -734,6 +736,13 @@ public class DailyValues implements Serializable
     }
 */
 
+    
+    public void sort()
+    {
+	System.out.println("Sort");
+	Collections.sort(this.dataRows);
+    }
+    
 
 
 }

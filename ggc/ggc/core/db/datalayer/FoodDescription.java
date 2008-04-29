@@ -33,12 +33,20 @@ package ggc.core.db.datalayer;
 import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.FoodDescriptionH;
 import ggc.core.db.hibernate.FoodUserDescriptionH;
+import ggc.core.util.DataAccess;
+
+import java.util.ArrayList;
+
+import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
-public class FoodDescription implements DatabaseObjectHibernate //extends FoodDescriptionH implements DatabaseObjectHibernate
+public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreObject 
+//extends FoodDescriptionH implements DatabaseObjectHibernate
 {
 
     public boolean debug = false;
@@ -48,6 +56,14 @@ public class FoodDescription implements DatabaseObjectHibernate //extends FoodDe
     private FoodUserDescriptionH m_food_desc2;
     private long id;
     
+    boolean selected = false;
+    I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
+    boolean food_empty = false;
+    
+    public FoodDescription(boolean food_empty)
+    {
+	this.food_empty = food_empty;
+    }
     
     public FoodDescription(int type)
     {
@@ -260,7 +276,10 @@ public class FoodDescription implements DatabaseObjectHibernate //extends FoodDe
     @Override
     public String toString()
     {
-        return this.getShortDescription();
+	if (this.food_empty)
+	    return this.getTargetName();
+	else
+	    return this.getShortDescription();
     }
 
 
@@ -423,6 +442,64 @@ public class FoodDescription implements DatabaseObjectHibernate //extends FoodDe
         return 0;
     }
 
+    
+    //---
+    //---  BackupRestoreObject
+    //---
+    
+
+    /* 
+     * getTargetName
+     */
+    public String getTargetName()
+    {
+	return ic.getMessage("FOODS");
+    }
+    
+    
+    
+    /* 
+     * getChildren
+     */
+    public ArrayList<CheckBoxTreeNodeInterface> getChildren()
+    {
+	return null;
+    }
+
+    
+    /* 
+     * hasChildren
+     */
+    public boolean hasChildren()
+    {
+	return false;
+    }
+    
+    
+    /* 
+     * isSelected
+     */
+    public boolean isSelected()
+    {
+	return selected;
+    }
+
+    /* 
+     * setSelected
+     */
+    public void setSelected(boolean newValue)
+    {
+	this.selected = newValue;
+    }
+    
+    
+    public boolean isCollection()
+    {
+	return false;
+    }
+    
+    
+    
 }
 
 

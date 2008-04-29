@@ -37,6 +37,7 @@ import ggc.core.db.hibernate.FoodUserDescriptionH;
 import ggc.core.db.hibernate.FoodUserGroupH;
 import ggc.core.db.hibernate.MealGroupH;
 import ggc.core.db.hibernate.MealH;
+import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.nutrition.dialogs.DailyValuesMealSelectorDialog;
 import ggc.core.util.DataAccess;
 
@@ -51,7 +52,6 @@ import java.util.StringTokenizer;
 import javax.swing.JFrame;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
-import com.atech.db.hibernate.transfer.BackupRestoreDialog;
 
 
 
@@ -66,6 +66,10 @@ public class TestNutritionData
     public TestNutritionData()
     {
 	m_da = DataAccess.getInstance();
+	db = new GGCDb(m_da);
+	db.initDb();
+	m_da.setDb(db);
+	
 	createTree();
     }
     
@@ -83,7 +87,7 @@ public class TestNutritionData
 	
 	
 	db.loadNutritionDbBase();
-	
+/*	
 	if (type==1)
 	{
 	    System.out.println("Load Nutrition #1");
@@ -100,15 +104,13 @@ public class TestNutritionData
 	    System.out.println("Load Nutrition #1 (Meals)");
 	    db.loadNutritionDb1();
 	    
-	    /*
 	    System.out.println("Load Nutrition #2 (Meals)");
 	    db.loadNutritionDb2();
-	    */
 	    
 	    System.out.println("Load Meals");
 	    db.loadMealsDb();
 	}
-
+*/
 	
 
 	// no db available
@@ -139,22 +141,24 @@ public class TestNutritionData
 	m_da.setParent(frame);
 
 	// root
-	BackupRestoreCollection brc = new BackupRestoreCollection("GGC Backup Context");
-	
+	BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", m_da.getI18nControlInstance());
 	brc.addChild(new DailyValue());
 	
-
-	BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS");
-	
+	BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", m_da.getI18nControlInstance());
 	brc_nut.addChild(new FoodGroup());
+	brc_nut.addChild(new FoodDescription(true));
+	
+	brc_nut.addChild(new MealGroup(true));
+	brc_nut.addChild(new Meal(true));
 	
 	brc.addChild(brc_nut);
 	
 	frame.setBounds(0,0, 640, 480);
 	
 	
-	BackupRestoreDialog brd = new BackupRestoreDialog(frame, m_da, brc);
+	//BackupRestoreDialog brd = new BackupRestoreDialog(frame, m_da, brc);
 	
+	BackupDialog brd = new BackupDialog(frame, m_da, brc);
 	
 	/*
 	CheckBoxNode accessibilityOptions[] = {
@@ -426,6 +430,16 @@ public class TestNutritionData
 	//new TestNutritionData(GGCTreeRoot.TREE_USER_NUTRITION);
 	//new TestNutritionData(GGCTreeRoot.TREE_MEALS);
 	new TestNutritionData();
+	
+	/*
+	System.out.println("in main");
+	File f = new File("./tya/ad/dss");
+	
+	if (!f.exists())
+	{
+	    f.mkdir();
+	} */
+	
     }
 
 

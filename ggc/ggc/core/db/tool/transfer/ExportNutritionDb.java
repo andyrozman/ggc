@@ -5,10 +5,12 @@ import ggc.core.db.hibernate.FoodUserDescriptionH;
 import ggc.core.db.hibernate.FoodUserGroupH;
 import ggc.core.db.hibernate.MealGroupH;
 import ggc.core.db.hibernate.MealH;
+import ggc.core.util.DataAccess;
 
 import java.io.File;
 import java.util.Iterator;
 
+import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
 
 import org.hibernate.Query;
@@ -18,7 +20,20 @@ import org.hibernate.cfg.Configuration;
 
 public class ExportNutritionDb extends ExportTool
 {
+ 
     
+    public ExportNutritionDb(BackupRestoreWorkGiver giver)
+    {
+	super(DataAccess.getInstance().getDb().getConfiguration());
+	
+	checkPrerequisitesForAutoBackup();
+	
+	this.setStatusReceiver(giver);
+	this.setTypeOfStatus(ExportTool.STATUS_SPECIAL);
+	
+	//exportAll();
+    }
+   
     
     public ExportNutritionDb(Configuration cfg)
     {
@@ -43,6 +58,29 @@ public class ExportNutritionDb extends ExportTool
 	if (!f.exists())
 	    f.mkdir();
 	
+	this.setRootPath("../data/export/");
+	this.setFileLastPart("_" + getCurrentDateForFile());
+    }
+    
+    private void checkPrerequisitesForAutoBackup()
+    {
+	File f = new File("../data");
+	
+	if (!f.exists())
+	    f.mkdir();
+	
+	f = new File("../data/export");
+
+	if (!f.exists())
+	    f.mkdir();
+
+	f = new File("../data/export/tmp");
+
+	if (!f.exists())
+	    f.mkdir();
+	
+	this.setRootPath("../data/export/tmp/");
+	this.setFileLastPart("");
     }
     
     private void exportAll()
@@ -56,15 +94,17 @@ public class ExportNutritionDb extends ExportTool
 
     
     @SuppressWarnings("unchecked")
-    private void export_UserFoodGroups()
+    public void export_UserFoodGroups()
     {
-	openFile("../data/export/food_user_group.txt");
+	openFile(this.getRootPath() + "FoodUSerGroupH" + this.getFileLastPart() + ".txt");
+
+//	openFile("../data/export/food_user_group.txt");
 	writeHeader("ggc.core.db.hibernate.FoodUserGroupH", 
 		    "id; name; name_i18n; description; parent_id");
 	
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserGroupH as grp");
+        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserGroupH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
         
@@ -90,15 +130,16 @@ public class ExportNutritionDb extends ExportTool
     
     
     @SuppressWarnings("unchecked")
-    private void export_UserFoods()
+    public void export_UserFoods()
     {
-	openFile("../data/export/food_user_foods.txt");
+	openFile(this.getRootPath() + "FoodUserDescriptionH" + this.getFileLastPart() + ".txt");
+//	openFile("../data/export/food_user_foods.txt");
 	writeHeader("ggc.core.db.hibernate.FoodUserDescriptionH", 
 		    "id; name; name_i18n; group_id; refuse; description; home_weights; nutritions");
 	
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserDescriptionH as grp");
+        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserDescriptionH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
         
@@ -128,15 +169,16 @@ public class ExportNutritionDb extends ExportTool
     
     
     @SuppressWarnings("unchecked")
-    private void export_MealGroups()
+    public void export_MealGroups()
     {
-	openFile("../data/export/meal_groups.txt");
+	openFile(this.getRootPath() + "MealGroupH" + this.getFileLastPart() + ".txt");
+//	openFile("../data/export/meal_groups.txt");
 	writeHeader("ggc.core.db.hibernate.MealGroupH", 
 		    "id; name; name_i18n; description; parent_id");
 	
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealGroupH as grp");
+        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealGroupH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
         
@@ -163,16 +205,17 @@ public class ExportNutritionDb extends ExportTool
 
 
     @SuppressWarnings("unchecked")
-    private void export_Meals()
+    public void export_Meals()
     {
-	openFile("../data/export/meal_meals.txt");
+	openFile(this.getRootPath() + "MealH" + this.getFileLastPart() + ".txt");
+//	openFile("../data/export/meal_meals.txt");
 	writeHeader("ggc.core.db.hibernate.MealH", 
 		    "id; name; name_i18n; group_id; description; parts;" +
 		    "nutritions; extended; comment");
 	
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealH as grp");
+        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
         

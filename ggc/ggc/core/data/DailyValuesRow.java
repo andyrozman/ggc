@@ -41,7 +41,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class DailyValuesRow implements Serializable
+public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 {
 
     private static Log log = LogFactory.getLog(DailyValuesRow.class); 
@@ -400,7 +400,11 @@ public class DailyValuesRow implements Serializable
 
     public void setDateTime(long dt)
     {
-	this.datetime = dt;
+	if (this.datetime!=dt)
+	{
+	    this.datetime = dt;
+	    this.changed=true;
+	}
     }
 
     public Date getDateTimeAsDate()
@@ -507,10 +511,9 @@ public class DailyValuesRow implements Serializable
 
 
 
-    public float getBRaw()
+    public float getBGRaw()
     {
         return bg;
-
     }
 
 
@@ -518,7 +521,7 @@ public class DailyValuesRow implements Serializable
     {
 
         if (debug)
-            System.out.println("Intenal value: " + this.bg);
+            System.out.println("Internal value: " + this.bg);
 
         if (type==DataAccess.BG_MGDL)
             return bg;
@@ -629,7 +632,8 @@ public class DailyValuesRow implements Serializable
 
     public String getIns1AsString()
     {
-        return this.getFloatAsString(ins1);
+	return getFloatAsIntString(ins1);
+        //return this.getFloatAsString(ins1);
     }
 
 
@@ -657,7 +661,8 @@ public class DailyValuesRow implements Serializable
 
     public String getIns2AsString()
     {
-        return this.getFloatAsString(ins2);
+	return getFloatAsIntString(ins2);
+//        return this.getFloatAsString(ins2);
     }
 
 
@@ -761,7 +766,12 @@ public class DailyValuesRow implements Serializable
 
     public void setComment(String val)
     {
-        if (!comment.equals(val)) 
+	if (comment==null) 
+	{
+	    comment = val;
+            changed = true;
+	}
+	else if (!comment.equals(val)) 
         {
             comment = val;
             changed = true;
@@ -850,6 +860,20 @@ public class DailyValuesRow implements Serializable
     }
 
 
+    public String getFloat2AsString(float fl)
+    {
+        if (fl == 0.0)
+        {
+            return "";
+        }
+        else
+        {
+            return DataAccess.Decimal2Format.format(fl);
+        }
+    }
+    
+    
+    
     public int getFloatAsInt(float f)
     {
         Float f_i = new Float(f);
@@ -868,7 +892,8 @@ public class DailyValuesRow implements Serializable
             case 0:
                 return new Long(datetime); //m_da.getDateTimeAsTimeString(datetime);
             case 1:
-                if (getBGAsString().equals("0"))
+        	if (this.getBG()==0.0f)
+                //if (getBGAsString().equals("0"))
                     return "";
                 return this.getBGAsString();
             case 2:
@@ -876,7 +901,7 @@ public class DailyValuesRow implements Serializable
             case 3:
                 return this.getIns2AsString();
             case 4:
-                return this.getFloatAsString(ch);
+                return this.getFloat2AsString(ch);
             case 5:
                 return activity;
             case 6:
@@ -983,5 +1008,19 @@ public class DailyValuesRow implements Serializable
 	//return datetime.getHours()*100 + datetime.getMinutes();
     }
 
+    
+    
+    ///
+    /// Comparable<DailyValuesRow>
+    ///
+
+    /* 
+     * compareTo
+     */
+    public int compareTo(DailyValuesRow dvr)
+    {
+	return (int)(this.getDateTime()-dvr.getDateTime());
+    }
+    
 
 }
