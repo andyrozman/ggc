@@ -52,6 +52,7 @@ import java.util.StringTokenizer;
 import javax.swing.JFrame;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.i18n.I18nControlAbstract;
 
 
 
@@ -140,16 +141,18 @@ public class TestNutritionData
 	
 	m_da.setParent(frame);
 
+	I18nControlAbstract ic = m_da.getI18nControlInstance();
+	
 	// root
-	BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", m_da.getI18nControlInstance());
-	brc.addChild(new DailyValue());
+	BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", ic);
+	brc.addChild(new DailyValue(ic));
 	
-	BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", m_da.getI18nControlInstance());
-	brc_nut.addChild(new FoodGroup());
-	brc_nut.addChild(new FoodDescription(true));
+	BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", ic);
+	brc_nut.addChild(new FoodGroup(ic));
+	brc_nut.addChild(new FoodDescription(ic));
 	
-	brc_nut.addChild(new MealGroup(true));
-	brc_nut.addChild(new Meal(true));
+	brc_nut.addChild(new MealGroup(ic));
+	brc_nut.addChild(new Meal(ic));
 	
 	brc.addChild(brc_nut);
 	
@@ -158,7 +161,7 @@ public class TestNutritionData
 	
 	//BackupRestoreDialog brd = new BackupRestoreDialog(frame, m_da, brc);
 	
-	BackupDialog brd = new BackupDialog(frame, m_da, brc);
+	BackupDialog brd = new BackupDialog(frame, m_da /*, brc*/);
 	
 	/*
 	CheckBoxNode accessibilityOptions[] = {

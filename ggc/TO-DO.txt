@@ -84,6 +84,8 @@ Version 0.4
 * Meter Tool integration
     - GGC Output
     - Configuration
+* Update (client)
+    - Update configuration in DA
 * Update (server) 
     - Software updater Server
     - Db Updater Server

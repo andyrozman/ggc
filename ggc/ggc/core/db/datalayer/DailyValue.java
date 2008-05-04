@@ -30,20 +30,20 @@
 
 package ggc.core.db.datalayer;
 
-import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.util.ArrayList;
 
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 
 public class DailyValue implements BackupRestoreObject
 {
 
     private boolean selected = false;
-    I18nControl ic = (I18nControl)DataAccess.getInstance().getI18nControlInstance();
+    I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
     
     /* 
      * getTargetName
@@ -64,9 +64,9 @@ public class DailyValue implements BackupRestoreObject
 
     
     
-    public DailyValue()
+    public DailyValue(I18nControlAbstract ic)
     {
-	
+	this.ic = (I18nControl)ic;
     }
 
 

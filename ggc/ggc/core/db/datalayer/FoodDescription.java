@@ -57,12 +57,20 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     private long id;
     
     boolean selected = false;
-    I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
+    I18nControlAbstract ic = null; //DataAccess.getInstance().getI18nControlInstance();
     boolean food_empty = false;
+    
+    
+    public FoodDescription(I18nControlAbstract ic)
+    {
+	this.ic = ic;
+	this.food_empty = true;
+    }
     
     public FoodDescription(boolean food_empty)
     {
 	this.food_empty = food_empty;
+	ic = DataAccess.getInstance().getI18nControlInstance();
     }
     
     public FoodDescription(int type)
@@ -74,7 +82,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 	else
 	    this.m_food_desc2 = new FoodUserDescriptionH();
 	
-	
+	ic = DataAccess.getInstance().getI18nControlInstance();
 	
 	
 	/*
@@ -94,6 +102,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 	this.m_food_desc1 = ch;
 	this.type = 1;
 	
+	ic = DataAccess.getInstance().getI18nControlInstance();
 	/*
 	this.setId(ch.getId());
 	this.setFood_group_id(ch.getFood_group_id());
@@ -114,6 +123,8 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
 	this.m_food_desc2 = ch;
 	this.type = 2;
+	
+	ic = DataAccess.getInstance().getI18nControlInstance();
     }
     
     

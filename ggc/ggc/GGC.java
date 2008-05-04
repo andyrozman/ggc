@@ -52,6 +52,7 @@ public class GGC
 
     public static void main(String[] args)
     {
+	/*
         try 
 	{
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -60,7 +61,7 @@ public class GGC
 	{
 	    System.out.println("Error loading L&F: " + ex);
         }
-        
+        */
         boolean dev = false;
 
         if (args.length>0) 

@@ -22,8 +22,9 @@ package ggc.gui.dialogs;
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: HbA1cFrame.java
- *  Purpose:  gives a "guess" about the current HbA1c
+ *  Filename: AboutGGCDialog
+ *  
+ *  Purpose:  About dialog
  *  
  *  @author andyrozman {andy@atech-software.com}
  * 
@@ -62,7 +63,7 @@ public class AboutGGCDialog extends AboutDialog
         super(parent, true, DataAccess.getInstance().getI18nControlInstance());
 
         // licence
-        this.setLicenceType(LicenceInfo.LICENCE_LGPL_v2_1);
+        this.setLicenceType(LicenceInfo.LICENCE_GPL_v2_0);
 
         // credits
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
@@ -110,21 +111,19 @@ public class AboutGGCDialog extends AboutDialog
         this.showAbout();
     }
 
+    /*
     public void initCustom()
     {
 	System.out.println("init Custom");
 	this.about_image = "/icons/t_asc_dex.gif";
-    }
+    } */
 
 
     public void createCustomTab()
     {
         AboutCustomPanel acp = new AboutCustomPanel(m_ic);
         acp.setTabName(m_ic.getMessage("ABOUT"));
-
-
         acp.setLayout(new BoxLayout(acp, BoxLayout.PAGE_AXIS));
-        //new BoxLayout(acp, BoxLayout.LINE_AXIS);
 
         JPanel p1 = new JPanel();
         p1.setLayout(new BorderLayout());
@@ -134,20 +133,8 @@ public class AboutGGCDialog extends AboutDialog
 
         JLabel l2 = new JLabel();
         l2.setPreferredSize(new Dimension(100,10));
-        
 
         p1.add(l2, BorderLayout.SOUTH);
-
-
-        /*
-        JButton jButton1 = new JButton();
-        jButton1.setIcon(new ImageIcon(DataAccess.getInstance().getImage("/icons/jat_church.jpg", this).getScaledInstance(300,225,java.awt.Image.SCALE_SMOOTH)));
-        */
-
-        //JPanel p = new JPanel();
-
-        //p.add(jButton1, BoxLayout.PAGE_AXIS);
-        //acp.add(jButton1);
         acp.add(p1);
 
         JEditorPane jEditorPaneAbout = new javax.swing.JEditorPane();
@@ -164,68 +151,11 @@ public class AboutGGCDialog extends AboutDialog
                                  m_ic.getMessage("GGC_DEVELOPMENT_TEAM")+ "<br>" +
                                  m_ic.getMessage("SEE_CREDITS") + 
                                  "<br><A HREF=\"http://ggc.sourceforge.net/\">http://ggc.sourceforge.net/</A><br>" + 
-                                 m_ic.getMessage("LICENCE") + " LGPL v2.1<br></font></body></html>");
+                                 m_ic.getMessage("LICENCE") + " GPL v2.0<br></font></body></html>");
 
         acp.add(jEditorPaneAbout); //, BoxLayout.PAGE_AXIS);
 
-
-
-        /*
-        java.awt.GridBagConstraints gridBagConstraints;
-
-    // tabbed
-    //jTabbedPane1 = new javax.swing.JTabbedPane();
-
-    // about
-
-        JPanel jPanel1 = new javax.swing.JPanel();
-        JButton jButton2 = new javax.swing.JButton();
-        JPanel jPanel2 = new javax.swing.JPanel();
-        //jButton1 = new javax.swing.JButton();
-        JLabel jButton1 = new javax.swing.JLabel();
-        JEditorPane jEditorPaneAbout = new javax.swing.JEditorPane();
-        JEditorPane jEditorPane1 = new javax.swing.JEditorPane();
-        //jScrollPane2 = new javax.swing.JScrollPane();
-        //jEditorPane2 = new javax.swing.JEditorPane();
-
-
-
-        jButton1.setIcon(new ImageIcon(DataAccess.getInstance().getImage("/icons/jat_church.jpg", this).getScaledInstance(300,225,java.awt.Image.SCALE_SMOOTH)));
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        //jButton1.setMargin(new java.awt.Insets(2, 0, 2, 0));
-        jButton1.setOpaque(false);
-    //jButton1.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        acp.add(jButton1, gridBagConstraints);
-        
-        jEditorPaneAbout.setBackground(new java.awt.Color(204, 204, 204));
-        jEditorPaneAbout.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jEditorPaneAbout.setEditable(false);
-        jEditorPaneAbout.setMinimumSize(new java.awt.Dimension(104, 90));
-        jEditorPaneAbout.setOpaque(false);
-        jEditorPaneAbout.setPreferredSize(new java.awt.Dimension(104, 90));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 4, 4, 4);
-        acp.add(jEditorPaneAbout, gridBagConstraints);
-
-//        jTabbedPane1.addTab(m_ic.getMessage("ABOUT"), jPanel2);
-        
-
-        // jPanel3, jScroolPane1
-
-        // jScrollPane3, Jpanel4
-*/
-
         this.addCustomPanel(AboutDialog.PLACEMENT_BEFORE_STATIC_TABS, acp);
-
 
     }
 

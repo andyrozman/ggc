@@ -19,12 +19,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: AddRowFrame.java
- *  Purpose:  Add a new row with Values to ReadMeterFrame or DailyValuesFrame.
+ *  Filename: <filename>
  *
- *  Author:   schultd
+ *  Purpose:  <enter purpose here>
+ *
+ *  Author:   andyrozman {andy@atech-software.com}
+ *
  */
-
 package ggc.gui.dialogs;
 
 import ggc.core.db.hibernate.DoctorH;

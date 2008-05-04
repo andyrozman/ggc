@@ -19,7 +19,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: yearPanel.java
+ *  Filename: YearPanel
+ *  
  *  Purpose:  currently only a textfield to enter a year. will be changed to
  *            something better in the future.
  *

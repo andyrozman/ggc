@@ -20,13 +20,19 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *  Filename: MainFrame.java
- *  Purpose:  The MainFrame of the app. Contains MenuBars, ToolBars, StatusBars, ...
+ *  Purpose:  The MainFrame of the app. Contains MenuBars, ToolBars, 
+ *            StatusBars, ...
  *
  *  Author:   schultd, andyrozman
  */
 
 package ggc.gui;
 
+import ggc.core.db.tool.transfer.BackupDialog;
+import ggc.core.nutrition.GGCTreeRoot;
+import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.AppointmentsDialog;
 import ggc.gui.dialogs.CourseGraphDialog;
@@ -37,12 +43,7 @@ import ggc.gui.dialogs.HbA1cDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SpreadGraphDialog;
-import ggc.core.nutrition.GGCTreeRoot;
-import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.gui.panels.info.InfoPanel;
-import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
-import ggc.core.util.VersionChecker;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -361,7 +362,14 @@ public class MainFrame extends JFrame
 	this.menu_tools = this.createMenu("MN_TOOLS", null);
 	this.createAction(this.menu_tools, "MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png");
 	this.menu_tools.addSeparator();
-	this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC", "tools_db_maint", null);
+
+	JMenu menu_db_maint = this.createMenu(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC");
+	this.createAction(menu_db_maint, "MN_DB_BACKUP", "MN_DB_BACKUP_DESC", "tools_db_backup", "export1.png");
+	this.createAction(menu_db_maint, "MN_DB_RESTORE", "MN_DB_RESTORE_DESC", "tools_db_restore", "import1.png");
+	
+	
+	
+	//this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC", "tools_db_maint", null);
 	this.menu_tools.addSeparator();
 	this.createAction(this.menu_tools, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
 
@@ -950,14 +958,23 @@ public class MainFrame extends JFrame
 	    {
 		new AboutGGCDialog(getMyParent());
 	    }
+	    else if (command.equals("hlp_check_update"))
+	    {
+		//TODO: Should be in DataAccess
+		UpdateConfiguration uconf = new UpdateConfiguration();
+		
+		UpdateDialog ud = new UpdateDialog((JFrame)MainFrame.this, uconf, m_da);
+		ud.enableHelp("pages.GGC_Tools_Update");
+		ud.showDialog();
+	    }
             else if (command.equals("hlp_help"))
             {
         	m_da.getHelpContext().getDisplayHelpFromSourceInstance().actionPerformed(e);
             }
-           else if (command.equals("hlp_check")) 
+            /*else if (command.equals("hlp_check")) 
             {
                 new VersionChecker().checkForUpdate();
-            } 
+            } */
             else if (command.equals("food_nutrition_1")) 
             {
                 new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_USDA_NUTRITION);
@@ -969,6 +986,10 @@ public class MainFrame extends JFrame
 	    else if (command.equals("food_meals"))
 	    {
 		new NutritionTreeDialog(m_da, GGCTreeRoot.TREE_MEALS);
+	    }
+	    else if (command.equals("tools_db_backup"))
+	    {
+		new BackupDialog(MainFrame.this, m_da); 
 	    }
             else if (command.equals("report_pdf_simple")) 
             {
@@ -1000,10 +1021,11 @@ public class MainFrame extends JFrame
 		    
 		
 	    }
-     	    else if ((command.equals("read_meter")) ||
+     	    else if ( //(command.equals("read_meter")) ||
 //                   (command.equals("food_nutrition_2")) || 
-                     (command.equals("tools_mlist")) ||
-                     (command.equals("tools_db_maint")) || 
+                     //(command.equals("tools_mlist")) ||
+                     //(command.equals("tools_db_maint")) ||
+     		     (command.equals("tools_db_restore")) ||
                      (command.equals("meters_read")) ||
         	     (command.equals("meters_list")) ||
         	     (command.equals("meters_config")))
@@ -1047,17 +1069,6 @@ public class MainFrame extends JFrame
         	    m_da.createErrorDialog("MainFrame", "", ex, "Exception in mainframe.");
         	}
         	
-	    }
-	    else if (command.equals("hlp_check_update"))
-	    {
-		System.out.println("Running Update manager");
-		
-		//UpdateSystem usys = new UpdateSystem();
-		UpdateConfiguration uconf = new UpdateConfiguration();
-		
-		/*UpdateDialog ud =*/ new UpdateDialog((JFrame)MainFrame.this, uconf);
-		
-		
 	    }
             else
                     System.out.println("Unknown Command: " + command);

@@ -1,5 +1,20 @@
+<blockquote>
+<br>
 <h2 class="head">News</h2>
 
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2008-04-20 16:44</td>
+<td>Update to web page</td>
+</tr>
+<tr>
+<td colspan="2">
+Major update of this web page. All pages were changed, and added were 'Sub-Projects' and 'Help Us' pages.
+</td></tr>
+</table>
+
+<br><br>
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
 <tr class="newsheader">
@@ -108,3 +123,5 @@ Today we opened the project.
 </table>
 
 <br><br>
+
+<blockquote>

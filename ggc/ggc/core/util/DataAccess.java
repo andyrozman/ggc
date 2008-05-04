@@ -36,6 +36,11 @@ import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
+import ggc.core.db.datalayer.DailyValue;
+import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.Meal;
+import ggc.core.db.datalayer.MealGroup;
 import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
@@ -65,6 +70,7 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
 
 
@@ -202,7 +208,7 @@ public class DataAccess extends ATDataAccessAbstract
     private DataAccess()
     {
 	super(I18nControl.getInstance());
-        this.loadFonts();
+//        this.loadFonts();
 
         //m_i18n.createInstance(this);
         //        loadAvailableLFs();
@@ -228,6 +234,7 @@ public class DataAccess extends ATDataAccessAbstract
         this.loadTimeZones();
 
         //checkPrerequisites();
+        //this.loadBackupRestoreCollection();
 
     } 
 
@@ -373,6 +380,26 @@ public class DataAccess extends ATDataAccessAbstract
     {
 	return "/icons/";
     }
+    
+    public void loadBackupRestoreCollection()
+    {
+	
+	BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
+	brc.addChild(new DailyValue(this.m_i18n));
+	
+	BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
+	brc_nut.addChild(new FoodGroup(this.m_i18n));
+	brc_nut.addChild(new FoodDescription(this.m_i18n));
+	
+	brc_nut.addChild(new MealGroup(this.m_i18n));
+	brc_nut.addChild(new Meal(this.m_i18n));
+	
+	brc.addChild(brc_nut);
+
+	this.backup_restore_collection = brc;
+    }
+    
+    
     
     // ********************************************************
     // ******                 Icons                       *****    
@@ -663,14 +690,14 @@ public class DataAccess extends ATDataAccessAbstract
     public float getBGValueDifferent(int type, float bg_value)
     {
 
-            if (type==DataAccess.BG_MGDL)
-            {
-                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
-            }
-            else
-            {
-                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
-            }
+	if (type==DataAccess.BG_MGDL)
+	{
+	    return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+	}
+	else
+	{
+	    return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+	}
 
     }
 
@@ -679,10 +706,9 @@ public class DataAccess extends ATDataAccessAbstract
     // ******                   Fonts                     *****    
     // ********************************************************
 
+    /*
     public static final int FONT_BIG_BOLD = 0;
-
     public static final int FONT_NORMAL = 1;
-
     public static final int FONT_NORMAL_BOLD = 2;
 
     public void loadFonts()
@@ -697,7 +723,10 @@ public class DataAccess extends ATDataAccessAbstract
     {
         return fonts[font_id];
     }
-
+*/
+    
+    
+    
     // ********************************************************
     // ******          Parent handling (for UIs)          *****    
     // ********************************************************
@@ -1531,6 +1560,7 @@ public class DataAccess extends ATDataAccessAbstract
     
     
     
+
     
     
 }

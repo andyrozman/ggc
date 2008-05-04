@@ -11,9 +11,9 @@
 <body bgcolor="#E6E5FF">
 
 
-<table cellpadding="0" cellspacing="0" align="center" width="750" class="container">
+<table cellpadding="0" cellspacing="0" align="center" width="900" height="800" class="container">
 <tr>
-	<td><img src="./logo.jpg" border="0" width="750" height="150" alt="GGC - GNU Gluco Control"></td>
+	<td height="150"><img src="./logo.jpg" border="0" width="750" height="150" alt="GGC - GNU Gluco Control"></td>
 </tr>
 <tr>
 	<td height="25" align="center" valign="middle" class="menu">
@@ -23,20 +23,22 @@
 	<a href="index.php?show=screenshots" class="menu">Screenshots</a> |
 	<a href="index.php?show=projects" class="menu">Sub-Projects</a> |
 	<a href="index.php?show=download" class="menu">Download</a> |
+	<a href="index.php?show=help_us" class="menu">Help Us</a> |
 	<a href="index.php?show=support" class="menu">Support</a>
 	</td>
 </tr>
 <tr>
-	<td>
+	<td valign="top">
 	<table cellpadding="15" border="0" align="center" valign="top" width="100%"> 
 	<td>
 	<!-- content goes here -->
 	<?
-	if ($show == "") {
-		$show = "news";        //default to news
+	if ($show == "") 
+	{
+		$show = "screenshots";        //default to news
 	}
 	
-	$incfile = sprintf("./inc_%s.inc",$show);
+	$incfile = sprintf("inc_%s.inc",$show);
 	include $incfile;
 	
 	?>
@@ -46,27 +48,26 @@
 	</table>
 </tr>
 <tr>
-	<td align="center">
+	<td align="center" valign="bottom">
 	This site is hosted on:<br>
-	<a href="http://sourceforge.net">
-	<img src="http://sourceforge.net/sflogo.php?group_id=49749&amp;type=5" width="210" height="62" border="0" alt="SourceForge Logo">
+
+    <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=49749&amp;type=4" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a><br>
+
+<!--	<a href="http://sourceforge.net">
+
+	<img src="http://sourceforge.net/sflogo.php?group_id=49749&amp;type=5" width="210" height="62" border="0" alt="SourceForge Logo"> -->
 	</a>
+	<br>
+	<font size="-2">
+	Created by Dieter Schultschik (schultd(at)users.sourceforge.net), Maintained by Andy (Aleksander) Rozman (andyrozman(at)users.sourceforge.net).
+</font>
+
+
 	</td>
 </tr>
 </table>
 
-<hr>
 
-	<table border="0" width="100%">
-	    <tr>
-		<td align="left">
-		    schultd at chello dot at
-		</td>
-		<td align="right">
-		    <a href="http://stud3.tuwien.ac.at/~e0125258/">schultd</a>
-		</td>
-	    </tr>
-	</table>
 	
 </body>
 </html>

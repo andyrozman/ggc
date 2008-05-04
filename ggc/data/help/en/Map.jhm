@@ -74,6 +74,12 @@
 
 <mapID target="pages.GGC_Food_USDA_Main" url="pages/GGC_Food_USDA_Main.html"/>
 
+<mapID target="pages.GGC_Tools_Update" url="pages/GGC_Tools_Update.html"/>
+
+<mapID target="pages.GGC_Tools_Backup" url="pages/GGC_Tools_Backup.html"/>
+
+<mapID target="pages.GGC_Tools_Restore" url="pages/GGC_Tools_Restore.html"/>
+
 <mapID target="images.popup" url="images/popup.gif"/>
 
 </map>

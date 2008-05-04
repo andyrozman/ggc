@@ -58,17 +58,26 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     private ArrayList<Object> children = new ArrayList<Object>();
     
     boolean selected = false;
-    I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
+    I18nControlAbstract ic = null; //DataAccess.getInstance().getI18nControlInstance();
     boolean meal_empty = false;
+    
+    
+    public MealGroup(I18nControlAbstract ic)
+    {
+	this.ic = ic;
+	this.meal_empty = true;
+    }
     
     public MealGroup(boolean meal_empty)
     {
 	this.meal_empty = meal_empty;
+	ic = DataAccess.getInstance().getI18nControlInstance();
     }
     
 
     public MealGroup()
     {
+	ic = DataAccess.getInstance().getI18nControlInstance();
         this.setId(0);
         this.setName("");
         this.setDescription("");
@@ -79,6 +88,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     public MealGroup(MealGroupH ch)
     {
+	ic = DataAccess.getInstance().getI18nControlInstance();
         this.setId(ch.getId());
         this.setName(ch.getName());
         this.setDescription(ch.getDescription());

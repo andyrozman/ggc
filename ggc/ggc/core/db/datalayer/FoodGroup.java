@@ -70,7 +70,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     ArrayList<Object> children = new ArrayList<Object>();
   
     boolean empty = false;
-    I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
+    I18nControlAbstract ic = null; //DataAccess.getInstance().getI18nControlInstance();
     
 /*
     public FoodGroup()
@@ -80,13 +80,18 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     }
 */
 
-    public FoodGroup()
+    
+    
+    
+    public FoodGroup(I18nControlAbstract ic)
     {
 	this.empty = true;
+	this.ic= ic;
     }
     
     public FoodGroup(int type)
     {
+	ic = DataAccess.getInstance().getI18nControlInstance();
 	group_type = type;
 	
 	if (type==1)

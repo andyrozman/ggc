@@ -53,12 +53,19 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     //ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();
     
     boolean selected = false;
-    I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
+    I18nControlAbstract ic = null; //DataAccess.getInstance().getI18nControlInstance();
     boolean meal_empty = false;
+    
+    public Meal(I18nControlAbstract ic)
+    {
+	this.ic = ic;
+	this.meal_empty = true;
+    }
     
     public Meal(boolean meal_empty)
     {
 	this.meal_empty = meal_empty;
+	ic = DataAccess.getInstance().getI18nControlInstance();
     }
 
 
@@ -74,6 +81,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 	this.setExtended("");
 	this.setComment("");
 	
+	ic = DataAccess.getInstance().getI18nControlInstance();
+	
 	loadParts();
 	loadValues();
     }
@@ -81,6 +90,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
     public Meal(MealH ch)
     {
+	ic = DataAccess.getInstance().getI18nControlInstance();
+	
 	this.setId(ch.getId());
 	this.setName(ch.getName());
 	this.setName_i18n(ch.getName_i18n());

@@ -90,7 +90,16 @@
    <tocitem text="Printing " target="pages.GGC_Prefs_Printing"/>
 
   </tocitem>
-  <tocitem text="Tools "/>
+  <tocitem text="Tools ">
+
+   <tocitem text="Update " target="pages.GGC_Tools_Update"/>
+   
+   <tocitem text="Backup " target="pages.GGC_Tools_Backup"/>
+   
+   <tocitem text="Restore " target="pages.GGC_Tools_Restore"/>
+
+  </tocitem>
+
 
   <tocitem text="Plug-ins "/>
 
