@@ -1051,7 +1051,7 @@ public class MainFrame extends JFrame
         	    (command.equals("pumps_config"))
         	    )
             {
-        	featureNotImplemented(command, "0.5 or 0.6");
+        	featureNotImplemented(command, "0.5 " + m_ic.getMessage("OR") + " 0.6");
             }
             else if (command.equals("file_login"))
 	    {

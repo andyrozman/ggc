@@ -206,11 +206,11 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
         {
             setNewDateRange();
             //cGV.repaint(this.getBounds());
-	    cGV.repaint();
+            cGV.repaint();
         }
         else if (action.equals("close")) 
         {
-	    closeDialog();
+            closeDialog();
         }
         else
             System.out.println("CourseGraphFrame: Unknown command: " + action);

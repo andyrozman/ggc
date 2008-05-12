@@ -8,7 +8,16 @@ Know Bugs:
     - GGC Little: meters button is unresponsive
     - GGC Little: About button is static (problematic when size is changed)
     - [sf] changing time in entry will not re-order cells
-    
+    - when a settings change could not be propagated to the database (sql exception or whatever), the changes are still applied to GGC, but
+      obviously can't be loaded from the DB on startup; the behaviour in this case should be as if the user had selected "Cancel"
+    - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, depending on preferences
+    - this is a general problem whenever a static layout is used, but german strings tend to be a bit longer that their english counterparts,
+      resulting in a lot of truncated strings
+    - The code relies on there being at least one entry per day; days without entries will be ignored in the date range selection code, resulting
+      in the GlucoValues passed to CourseGraphView.setGlucoValues() containing only one day if there is only one value in the database, even  if
+      a larger range was selected. (The problem lies in GlucoValues.getDayCount(), see FIXME-comment)
+    - Backup without anything selected will cause a ZipException
+
 
 Bugs fixed in version X:
 

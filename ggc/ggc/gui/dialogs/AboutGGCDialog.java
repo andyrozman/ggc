@@ -69,7 +69,7 @@ public class AboutGGCDialog extends AboutDialog
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
 
         CreditsGroup cg = new CreditsGroup(m_ic.getMessage("CURRENT_DEVELOPERS"));
-        cg.addCreditsEntry(new CreditsEntry("Dieter Schultschik", "schultd@users.sourceforge.net", "Creator and Designer of application"));
+        cg.addCreditsEntry(new CreditsEntry("Dieter Schultschik", "schultd@users.sourceforge.net", "Creator and Designer of this application"));
         cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andyrozman@users.sourceforge.net", "Current main developer"));
         cg.addCreditsEntry(new CreditsEntry("Reinhold Rumberger", "rumbi@users.sourceforge.net", "Tester and developer"));
         lst_credits.add(cg);
@@ -85,9 +85,9 @@ public class AboutGGCDialog extends AboutDialog
 
         // libraries
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
-        lst_libs.add(new LibraryInfoEntry("Hibernate", "3.1", "www.hibernate.org", "LGPL", "Library for Object oriented access to Db"));
+        lst_libs.add(new LibraryInfoEntry("Hibernate", "3.1", "www.hibernate.org", "LGPL", "Library for object-oriented access to DBs"));
 
-        LibraryInfoEntry li = new LibraryInfoEntry("HSqlDb", "1.8.0", "hsqldb.org", "Hypersonic", "Internal Java Db", "Copyright (c) 1995-2000 by the Hypersonic SQL Group. All rights reserved.");
+        LibraryInfoEntry li = new LibraryInfoEntry("HSQLDB", "1.8.0", "hsqldb.org", "Hypersonic", "Internal Java DB", "Copyright (c) 1995-2000 by the Hypersonic SQL Group. All rights reserved.");
         li.setCopyRightNotice2("Copyright (c) 2001-2005, The HSQL Development Group. All rights reserved.");
         lst_libs.add(li);
 

@@ -274,13 +274,19 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
 
     public void displayPDF(String name)
     {
-	File fl = new File("..\\data\\temp/");
+	File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
     
 	//y System.out.println(fl.getAbsolutePath());
 	//System.out.println(File.separator);
     
 	String pdf_viewer = m_da.getSettings().getPdfVieverPath().replace('\\', '/');
 	String file_path = fl.getAbsolutePath().replace('\\', '/');
+	
+	if (pdf_viewer.equals(""))
+	{
+	    // TODO: tell the user to configure the viewer executable setting
+	    return;
+	}
 
 	// ySystem.out.println(pdf_viewer);
 	// y System.out.println(file_path);
@@ -304,7 +310,7 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
 	    //System.out.println("Runtime: " + acr.getAbsoluteFile() + " " +  fl.getAbsolutePath() + File.separator + name);
 	    
 	    Runtime.getRuntime().exec(acr.getAbsoluteFile() + " \"" +  fl.getAbsolutePath() + File.separator + name + "\"");
-	    System.out.println(pdf_viewer +  " " +  file_path + "/"  + name);
+	    System.out.println(pdf_viewer +  " " +  file_path + File.separator  + name);
 	    
 	    //Runtime.getRuntime().exec("\"" + pdf_viewer +  "\" " +  file_path + "/"  + name);
 	    

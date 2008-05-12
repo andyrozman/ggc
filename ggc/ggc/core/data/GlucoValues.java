@@ -224,6 +224,8 @@ public class GlucoValues extends DailyValues
 //X        fireGlucoValueChanged(event);
     }
 
+    // FIXME: does not get the amount of days represented by this GV, but rather
+    // the amount of days with entries
     public int getDayCount()
     {
         if (dayValues != null)

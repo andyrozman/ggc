@@ -1,3 +1,10 @@
+2008-05-11 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * translation
+    * changed the statistics to display counts as integers (as there can be no
+      such thing as half an injection)
+    * fixed division-by-zero in getAvgBG()
+    * new bugs
+
 2008-05-03 (0.2.10) Andy Rozman <andyrozman@users.sourceforge.net>
     * Startup has gone through big changes, UpdateConfig has changed much
       so now Atech Tools (0.1.13) is needed

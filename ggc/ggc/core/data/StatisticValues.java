@@ -114,14 +114,14 @@ public class StatisticValues
 
     }
 
-    public float getCountBG()
+    public int getCountBG()
     {
         return countBG;
     }
 
     public float getAvgBG()
     {
-        if(dayCounter > 0)
+        if(countBG > 0)
             return sumBG / countBG;
         else
             return 0;
@@ -132,7 +132,7 @@ public class StatisticValues
         return sumBU;
     }
 
-    public float getCountBU()
+    public int getCountBU()
     {
         return countBU;
     }
@@ -166,7 +166,7 @@ public class StatisticValues
         return sumIns1;
     }
 
-    public float getCountIns1()
+    public int getCountIns1()
     {
         return countIns1;
     }
@@ -200,7 +200,7 @@ public class StatisticValues
         return sumIns2;
     }
 
-    public float getCountIns2()
+    public int getCountIns2()
     {
         return countIns2;
     }

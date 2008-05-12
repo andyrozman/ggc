@@ -1,7 +1,7 @@
 This file should be filled with any ideas that pop into your heads and be discussed on the
 ggc-development mailing list or wherever appropriate.
 
-============================================================================
+=============================================================================================
 
 I: Two kinds of insulin seems a bit minimalistic
 
@@ -11,7 +11,7 @@ A: All data tables, which could have additional parameters were added and extend
    is mostly used for insulin treatment. If someone nneed more than two insulins
    we only need to add code to change GUI. (Andy) 
 
-============================================================================
+=============================================================================================
 
 I: Pump and CGM support
 
@@ -24,4 +24,11 @@ A: Pump support is in plan. When I get a pump, then some type of support will
    
    As for CGM... no support planned at this moment... (Andy)
    
-============================================================================
+=============================================================================================
+
+I: Let the user enter the name of the carbohydrates unit he wants to use instead
+   of hardcoding one particular name. It won't matter to the calculations (we can
+   just regard them as an abstract carbohydrates units), and the user won't be
+   dissatisfied because we use some outdated unit/don't offer his preferred unit.
+   
+=============================================================================================

@@ -171,23 +171,23 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
             DecimalFormat df = new DecimalFormat("#0.00");
 
             lblAvgBG.setText(df.format(sV.getAvgBG()));
-            lblBGReadings.setText(df.format(sV.getCountBG()));
+            lblBGReadings.setText(sV.getCountBG() + "");
 
             lblSumBU.setText(df.format(sV.getSumBU()));
             lblBUDay.setText(df.format(sV.getAvgBUPerDay()));
-            lblCountBU.setText(df.format(sV.getCountBU()));
+            lblCountBU.setText(sV.getCountBU() + "");
             lblAvgBU.setText(df.format(sV.getAvgBU()));
             lblBUCountDay.setText(df.format(sV.getBUCountPerDay()));
 
             lblSumIns1.setText(df.format(sV.getSumIns1()));
             lblIns1Day.setText(df.format(sV.getAvgIns1PerDay()));
-            lblCountIns1.setText(df.format(sV.getCountIns1()));
+            lblCountIns1.setText(sV.getCountIns1() + "");
             lblAvgIns1.setText(df.format(sV.getAvgIns1()));
             lblIns1CountDay.setText(df.format(sV.getIns1CountPerDay()));
 
             lblSumIns2.setText(df.format(sV.getSumIns2()));
             lblIns2Day.setText(df.format(sV.getAvgIns2PerDay()));
-            lblCountIns2.setText(df.format(sV.getCountIns2()));
+            lblCountIns2.setText(sV.getCountIns2() + "");
             lblAvgIns2.setText(df.format(sV.getAvgIns2()));
             lblIns2CountDay.setText(df.format(sV.getIns2CountPerDay()));
         }
