@@ -27,7 +27,9 @@
 
 package ggc.core.nutrition.dialogs;
  
+import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.FoodDescription;
+import ggc.core.db.datalayer.HomeWeightSpecial;
 import ggc.core.db.datalayer.Meal;
 import ggc.core.db.datalayer.MealPart;
 import ggc.core.nutrition.NutritionTreeDialog;
@@ -63,7 +65,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     //private JPanel mainPane;
     //private JTree tree;
     
-
+    HomeWeightSpecial hws_selected = null;
 
     JTextField tf_selected;
     JComboBox cb_type;
@@ -72,7 +74,8 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     JButton button_select;
 
     JComboBox cb_weight_type;
-    String[] wt_types = null;
+    String[] wt_types_1 = null;
+    String[] wt_types_2 = null;
 
     
     JLabel label_home_weight, label_home_weight_item; 
@@ -99,6 +102,11 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     JFormattedTextField amountField;
     
     MealPart meal_part;
+    
+    FoodDescription dsc_food;
+    Meal dsc_meal;
+    
+    JPanel amount_panel = null;
     
     public MealSpecialSelectorDialog(DataAccess da, long meal_id) 
     {
@@ -175,9 +183,13 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 	type[1] = ic.getMessage("USER_NUTRITION");
 	type[2] = ic.getMessage("MEAL");
 	
-	wt_types = new String[2];
-	wt_types[0] = ic.getMessage("WEIGHT_LBL2");
-	wt_types[1] = ic.getMessage("HOME_WEIGHTS_LBL");
+	wt_types_1 = new String[2];
+	wt_types_1[0] = ic.getMessage("WEIGHT_LBL2");
+	wt_types_1[1] = ic.getMessage("HOME_WEIGHTS_LBL");
+
+	wt_types_2 = new String[1];
+	wt_types_2[0] = ic.getMessage("AMOUNT_LBL");
+	
 	
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
         font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
@@ -257,14 +269,16 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         panel3.setBounds(10, 310, 270, 110);
         panel.add(panel3, null);
         
+        amount_panel = panel3;
 
         label = new JLabel(ic.getMessage("WEIGHT_TYPE") + ":");
         label.setBounds(20, 25, 100, 25);
         panel3.add(label, null);
         
-        cb_weight_type = new JComboBox(this.wt_types);
+        cb_weight_type = new JComboBox(this.wt_types_1);
         cb_weight_type.setBounds(130, 25, 125, 25);
         cb_weight_type.addItemListener(this);
+        cb_weight_type.setEnabled(false);
         panel3.add(cb_weight_type, null);
         
         label_amount = new JLabel(ic.getMessage("WEIGHT") + ":");
@@ -289,6 +303,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         amountField.setColumns(4);
         amountField.setBounds(130, 65, 100, 25);
         amountField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+        amountField.setEnabled(false);
         panel3.add(amountField);
 
         
@@ -300,6 +315,8 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         
         button_hw_select = new JButton(ic.getMessage("SELECT"));
         button_hw_select.setBounds(155, 65, 100, 20);
+        button_hw_select.setActionCommand("hw_select");
+        button_hw_select.addActionListener(this);
         button_hw_select.setVisible(false);
         panel3.add(button_hw_select, null);
         
@@ -353,7 +370,12 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     
     public void setWeightType(int type)
     {
-	if (current_weight_type==type)
+	this.setWeightType(type, false);
+    }
+    
+    public void setWeightType(int type, boolean forced)
+    {
+	if ((current_weight_type==type) && (!forced))
 	    return;
 	
 	
@@ -376,7 +398,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 	    button_hw_select.setVisible(false);
 	    
 	    amountField.setBounds(130, 65, 100, 25);
-	        label_amount.setBounds(20, 65, 100, 25);
+	    label_amount.setBounds(20, 65, 100, 25);
 	    
 	}
 	else
@@ -401,7 +423,59 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 	
     }
     
+    
+    public void setEnabledWithType()
+    {
+	if (this.isAnyObjectSelected())
+	{
+	    cb_weight_type.setEnabled(true);
+	    amountField.setEnabled(true);
+	}
 
+	if (this.dsc_meal!=null)
+	{
+	    //this.cb_weight_type.removeAllItems(); //.setModel(new DeafultComboBoxModel());
+	    //this.cb_weight_type.setModel(new ComboBoxModel(this.wt_types_2));
+	    reFillItems(this.wt_types_2);
+	    setWeightType(0, true);
+	    this.label_amount.setText(ic.getMessage("AMOUNT_LBL"));
+	}
+	else
+	{
+	    reFillItems(this.wt_types_1);
+	    setWeightType(this.cb_weight_type.getSelectedIndex(), true);
+	}
+	
+    }
+    
+
+    public void reFillItems(Object[] items)
+    {
+/*
+	this.cb_weight_type.removeAllItems();
+	
+	for(int i =0; i<items.length; i++ )
+	{
+	    this.cb_weight_type.addItem(items[i]);
+	}*/
+	
+	this.amount_panel.remove(cb_weight_type);
+	
+	
+	
+        cb_weight_type = new JComboBox(items);
+        cb_weight_type.setBounds(130, 25, 125, 25);
+        cb_weight_type.addItemListener(this);
+        //cb_weight_type.setEnabled(false);
+	this.amount_panel.add(cb_weight_type, null);
+	
+	this.amount_panel.repaint();
+	
+    }
+    
+    
+    
+    
     /* 
      * itemStateChanged
      */
@@ -489,17 +563,95 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 		
 		if (this.cb_type.getSelectedIndex() < 2)
 		{
-		    FoodDescription fd = (FoodDescription)this.action_object;
-		    this.label_item.setText(fd.getName());
+		    this.dsc_food = (FoodDescription)this.action_object;
+		    this.dsc_meal = null;
+		    this.label_item.setText(this.dsc_food.getName());
 		}
 		else
 		{
-		    Meal m = (Meal)this.action_object;
-		    this.label_item.setText(m.getName());
+		    this.dsc_meal = (Meal)this.action_object;
+		    this.dsc_food = null;
+		    this.label_item.setText(this.dsc_meal.getName());
 		}
+
+		this.setEnabledWithType();
 	    }
 	}
+	else if (cmd.equals("hw_select"))
+	{
+	    /*
+	    if (!this.isAnyObjectSelected())
+	    {
+		System.out.println("No Object selected");
+	    } */
+	    HWSelectorDialog hwsd = new HWSelectorDialog(m_da, this.getHomeWeightOfObjects());
+	    
+	    if (hwsd.wasAction())
+	    {
+		this.hws_selected = (HomeWeightSpecial)hwsd.getSelectedObject();
+		this.label_home_weight_item.setText(this.hws_selected.getShortDescription());
+	    }
+	    
+	}
+	else
+	    System.out.println("MealSpecialSelector: unknown command:" + cmd);
 	    
     }
 
+    
+    public boolean isAnyObjectSelected()
+    {
+	if ((this.dsc_food!=null) || (this.dsc_meal!=null))
+	    return true;
+	else
+	    return false;
+    }
+    
+    public String getHomeWeightOfObjects()
+    {
+	if (this.dsc_food!=null)
+	{
+	    return this.dsc_food.getHome_weights();
+	}
+	
+	if (this.dsc_meal!=null)
+	{
+	    return null; 
+	}
+	
+	return null;
+    }
+    
+    
+    public DailyFoodEntry getDailyFoodEntry()
+    {
+	if (!this.isAnyObjectSelected())
+	    return null;
+	
+	//DailyFoodEntry dfe = null;
+	if (this.dsc_food!=null)
+	{
+	    if (this.cb_weight_type.getSelectedIndex()==0)
+	    {
+		return new DailyFoodEntry(this.dsc_food, this.getAmountValue());
+	    }
+	    else
+	    {
+		if (this.hws_selected!=null)
+		{
+		    return new DailyFoodEntry(this.dsc_food, this.hws_selected, this.getAmountValue());
+		}
+		else
+		    return null;
+	    }
+	    
+	}
+	else
+	{
+	    return new DailyFoodEntry(this.dsc_meal, this.getAmountValue());
+	}
+	
+    }
+    
+    
 }

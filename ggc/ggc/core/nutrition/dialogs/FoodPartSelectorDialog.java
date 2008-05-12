@@ -36,6 +36,11 @@ import java.awt.event.ItemEvent;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 
 
+/**
+ * Selector component for Nutrition and HomeWeight parts...
+ * @author arozman
+ *
+ */
 
 public class FoodPartSelectorDialog extends SelectorAbstractDialog
 {
@@ -49,6 +54,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     public FoodPartSelectorDialog(DataAccess da, int type, String except) 
     {
         super(da.getParent(), da.getNutriI18nControl(), type, except, true);
+        this.showDialog();
     }
 
   

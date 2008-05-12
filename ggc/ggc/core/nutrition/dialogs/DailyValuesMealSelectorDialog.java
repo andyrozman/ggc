@@ -51,7 +51,11 @@ import javax.swing.JTextField;
 import com.atech.i18n.I18nControlAbstract;
 
 
-
+/**
+ * Dialog used for selecting meals and foods for Daily Values.
+ * @author arozman
+ *
+ */
 public class DailyValuesMealSelectorDialog extends JDialog implements ActionListener
 {
 

@@ -1516,8 +1516,14 @@ public class GGCDb
     
     public ArrayList<SelectableInterface> getNutritionHomeWeights()
     {
-	System.out.println("hw list: " + this.homeweight_defs_list.size());
+	//System.out.println("hw list: " + this.homeweight_defs_list.size());
 	return this.homeweight_defs_list;
+    }
+
+    
+    public NutritionHomeWeightType getNutritionHomeWeight(long id)
+    {
+	return this.homeweight_defs.get(""+ id);
     }
     
     

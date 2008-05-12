@@ -35,8 +35,11 @@ public class MealH implements Serializable {
     /** nullable persistent field */
     private String comment;
 
+    /** nullable persistent field */
+    private long changed;
+
     /** full constructor */
-    public MealH(long group_id, String name, String name_i18n, String description, String parts, String nutritions, String extended, String comment) {
+    public MealH(long group_id, String name, String name_i18n, String description, String parts, String nutritions, String extended, String comment, long changed) {
         this.group_id = group_id;
         this.name = name;
         this.name_i18n = name_i18n;
@@ -45,6 +48,7 @@ public class MealH implements Serializable {
         this.nutritions = nutritions;
         this.extended = extended;
         this.comment = comment;
+        this.changed = changed;
     }
 
     /** default constructor */
@@ -121,6 +125,14 @@ public class MealH implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public long getChanged() {
+        return this.changed;
+    }
+
+    public void setChanged(long changed) {
+        this.changed = changed;
     }
 
     public String toString() {

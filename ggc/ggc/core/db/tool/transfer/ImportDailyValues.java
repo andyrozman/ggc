@@ -29,6 +29,7 @@ package ggc.core.db.tool.transfer;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.DayValueH;
+import ggc.core.util.DataAccess;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,6 +38,8 @@ import java.util.StringTokenizer;
 
 import com.atech.db.hibernate.transfer.ImportTool;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.cfg.Configuration;
 
 
@@ -45,8 +48,9 @@ public class ImportDailyValues extends ImportTool
 
     GGCDb m_db = null;
     public String file_name;
+    private static Log log = LogFactory.getLog(ImportDailyValues.class); 
 
-
+    DataAccess m_da = DataAccess.getInstance();
 
     public ImportDailyValues(String file_name)
     {
@@ -77,12 +81,14 @@ public class ImportDailyValues extends ImportTool
 
     public void importDailyValues()
     {
+	
+	String line = null;
+
 	try 
 	{
 	    System.out.println("\nLoading DailiyValues (5/dot)");
 
 	    BufferedReader br = new BufferedReader(new FileReader(new File("./" + file_name)));
-	    String line = null;
 	    
 	    int i=0;
 
@@ -91,6 +97,10 @@ public class ImportDailyValues extends ImportTool
 	    {
 		if (line.startsWith(";"))
 		    continue;
+	
+		
+		//line = line.replaceAll("||", "| |");
+		line = m_da.replaceExpression(line, "||","| |");
 		
 		StringTokenizer strtok = new StringTokenizer(line, "|");
 
@@ -124,6 +134,7 @@ public class ImportDailyValues extends ImportTool
 		    dvh.setPerson_id(person_id);
 		
 		dvh.setComment(getString(strtok.nextToken()));
+		dvh.setChanged(getLong(strtok.nextToken()));
 		
 		/*
 		String act = getString(strtok.nextToken());
@@ -166,8 +177,9 @@ public class ImportDailyValues extends ImportTool
 	} 
 	catch (Exception ex) 
 	{
-	    System.err.println("Error on loadDailyValues: " + ex);
-	    ex.printStackTrace();
+	    //System.err.println("Error on loadDailyValues: " + ex);
+	    log.error("Error on importDailyValues: \nData: " + line +"\nException: " + ex, ex);
+	    //ex.printStackTrace();
 	}
 	
     }

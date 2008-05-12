@@ -91,7 +91,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
 	    init(cols, cols_size);
 	    */
 	    
-	    String[] cols = { "NUTRITION", "AMOUNT_BG", "UNITS" };
+	    String[] cols = { "NUTRITION", "AMOUNT_LBL", "UNITS" };
 	    float[] cols_size = { 0.6f, 0.2f, 0.2f  };
 
 	    init(cols, cols_size);

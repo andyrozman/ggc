@@ -1,10 +1,10 @@
 package ggc.core.nutrition.panels;
 
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.MealGroup;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.util.DataAccess;
-import ggc.core.db.datalayer.FoodGroup;
-import ggc.core.db.datalayer.MealGroup;
 
 import java.awt.Font;
 
@@ -16,10 +16,10 @@ import javax.swing.SwingConstants;
 // andyrozman
 
     
-public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
+public class PanelNutritionFoodGroup extends GGCTreePanel 
 {
 
-//    I18nControl ic = I18nControl.getInstance();
+    //    I18nControl ic = I18nControl.getInstance();
     DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
@@ -121,6 +121,8 @@ public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
         label_parent.setBounds(60, 380, 300, 25);
         label_parent.setFont(fnt_14); 
         this.add(label_parent, null);
+        
+        
         
         
 /*
@@ -241,6 +243,7 @@ public class PanelNutritionFoodGroup extends GGCTreePanel //JPanel
 	return false;
     }
 
+    
 
 }
     

@@ -88,7 +88,7 @@ public class TestNutritionData
 	
 	
 	db.loadNutritionDbBase();
-/*	
+	
 	if (type==1)
 	{
 	    System.out.println("Load Nutrition #1");
@@ -111,7 +111,7 @@ public class TestNutritionData
 	    System.out.println("Load Meals");
 	    db.loadMealsDb();
 	}
-*/
+
 	
 
 	// no db available
@@ -124,7 +124,7 @@ public class TestNutritionData
 	
 	
 	// for dialog checking
-	//new NutritionTreeDialog(m_da, type);
+//	new NutritionTreeDialog(m_da, type);
 	
 	// for partitial translation checking
 	//FoodPartSelectorDialog fd = new FoodPartSelectorDialog(m_da, 2, null);
@@ -256,7 +256,7 @@ public class TestNutritionData
 	
 //	    public FoodUserGroupH(String name, String name_i18n, String description, long parent_id) {
 
-	FoodUserGroupH f = new FoodUserGroupH("Group " + id, "GROUP_" + id, "Group " + id, parent_id);
+	FoodUserGroupH f = new FoodUserGroupH("Group " + id, "GROUP_" + id, "Group " + id, parent_id, System.currentTimeMillis());
 	f.setId(id);
 	
 	db.addHibernate(f);
@@ -271,7 +271,7 @@ public class TestNutritionData
 	
 //	    public FoodUserDescriptionH(long group_id, String name, String name_i18n, String description, float refuse, String nutritions, String home_weights) {
 
-	FoodUserDescriptionH fuh = new FoodUserDescriptionH(group_id, "Food " + id, "FOOD_" + id, "Food " + id, 0.0f, "", "");
+	FoodUserDescriptionH fuh = new FoodUserDescriptionH(group_id, "Food " + id, "FOOD_" + id, "Food " + id, 0.0f, "", "", System.currentTimeMillis());
 	fuh.setId(id);
 
 	db.addHibernate(fuh);
@@ -285,7 +285,7 @@ public class TestNutritionData
     {
 	    //public MealGroupH(String name, String name_i18n, String description, long parent_id) {
 
-	MealGroupH f = new MealGroupH("Group " + id, "GROUP_" + id, "Group " + id, parent_id);
+	MealGroupH f = new MealGroupH("Group " + id, "GROUP_" + id, "Group " + id, parent_id, System.currentTimeMillis());
 	f.setId(id);
 	
 	db.addHibernate(f);
@@ -300,7 +300,7 @@ public class TestNutritionData
 	//new MealH(group_id, "Meal " + id, "MEAL_" + id, "", "", "", "");
 //	    public MealH(long group_id, String name, String name_i18n, String description, String parts, String values, String extended, String comment) {
 	
-	MealH fuh = new MealH(group_id, "Meal " + id, "MEAL_" + id, "", "", "", "", "");
+	MealH fuh = new MealH(group_id, "Meal " + id, "MEAL_" + id, "", "", "", "", "", System.currentTimeMillis());
 	fuh.setId(id);
 
 	db.addHibernate(fuh);

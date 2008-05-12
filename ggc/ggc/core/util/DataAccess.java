@@ -78,7 +78,7 @@ public class DataAccess extends ATDataAccessAbstract
 {
 
     
-    public String currentDbVersion = "3";
+    public String currentDbVersion = "4";
     
     
     // LF
@@ -1208,104 +1208,6 @@ public class DataAccess extends ATDataAccessAbstract
         return 1800;
     }
 
-    public float getFloatValue(Object aValue)
-    {
-        float out = 0.0f;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Float)
-        {
-            try
-            {
-                Float f = (Float) aValue;
-                out = f.floatValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Float.parseFloat(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
-    }
-
-    public int getIntValue(Object aValue)
-    {
-        int out = 0;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Integer)
-        {
-            try
-            {
-                Integer i = (Integer) aValue;
-                out = i.intValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Integer.parseInt(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
-    }
-
-    public long getLongValue(Object aValue)
-    {
-        long out = 0L;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Long)
-        {
-            try
-            {
-                Long i = (Long) aValue;
-                out = i.longValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Long.parseLong(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
-    }
 
     /*
      public Date m_date = null;

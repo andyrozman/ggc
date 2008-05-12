@@ -177,6 +177,15 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         button_select.addActionListener(this);
         button_select.setBounds(260, 430, 140,25);
         this.add(button_select, null);
+       
+        
+        button = new JButton();
+        button.setBounds(200, 25, 25, 25);
+        button.setIcon(m_da.getImageIcon_22x22("disk_blue.png", this));
+        button.addActionListener(this);
+        button.setActionCommand("save");
+        this.add(button, null);
+        
         
 /*
         label_parent = new JLabel(ic.getMessage("Desc"));
@@ -420,6 +429,14 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 	    
 	    
 	}
+	else if (command.equals("save"))
+	{
+	    if (this.hasDataChanged())
+	    {
+		this.saveData();
+	    }
+	}
+			
 	
 	
     }

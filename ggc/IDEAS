@@ -31,4 +31,14 @@ I: Let the user enter the name of the carbohydrates unit he wants to use instead
    just regard them as an abstract carbohydrates units), and the user won't be
    dissatisfied because we use some outdated unit/don't offer his preferred unit.
    
+A: This was possible till now, but with introduction of USDA and other food 
+   databases, we can use only CH (carbo hydrates). Old BU (bread unit) can't be 
+   used anymore. If user won't use database for getting CH info (which will be 
+   preffered way in 0.3), he/she can write any value he/she wants, but it will
+   be written as CH. If we give option to user to write here whatever he/she 
+   wants, then there will be problems, because data retrived from database is 
+   always CH, and if he/she writes that this is BU, I think that this won't 
+   work... except if CH is same as BU (I never used BU myself), but even then it 
+   would be weird. (Andy) 
+   
 =============================================================================================

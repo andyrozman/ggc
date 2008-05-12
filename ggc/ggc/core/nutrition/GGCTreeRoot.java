@@ -160,19 +160,20 @@ public class GGCTreeRoot
 	
 	if (type == GGCTreeRoot.TREE_USDA_NUTRITION)
 	{
-	    //System.out.println("USDA Load Failed !!!!!!!!");
+	    System.out.println("USDA Load Started !!!!!!!!");
 	    this.import1_grp = this.m_db.getUSDAFoodGroups();
 	    this.import1_foods = this.m_db.getUSDAFoodDescriptions();
 	    //System.out.println("ImportGRP: " + this.import1_grp);
 	}
 	else if (type == GGCTreeRoot.TREE_USER_NUTRITION)
 	{
+	    System.out.println("USER Load Started !!!!!!!!");
 	    this.import1_grp = this.m_db.getUserFoodGroups();
 	    this.import1_foods = this.m_db.getUserFoodDescriptions();
 	}
 	else if (type == GGCTreeRoot.TREE_MEALS)
 	{
-	    //System.out.println("Meals Load Failed !!!!!!!!");
+	    System.out.println("Meals Load Started !!!!!!!!");
 	    this.import2_grp = this.m_db.getMealGroups();
 	    this.import2_foods = this.m_db.getMeals();
 	}

@@ -23,6 +23,7 @@
         <property name="extended"  type="text" />
         <property name="person_id"  type="int" not-null="true" />
         <property name="comment" type="string" length="2000" />
+        <property name="changed" type="long" not-null="false" />    
     </class>
 
 

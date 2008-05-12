@@ -283,6 +283,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 	    this.m_food_desc2.setDescription(description);
     }
     
+    
+    public int getFoodType()
+    {
+	return type;
+    }
 
     @Override
     public String toString()

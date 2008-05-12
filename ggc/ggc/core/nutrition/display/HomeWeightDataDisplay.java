@@ -79,7 +79,7 @@ public class HomeWeightDataDisplay extends ATTableData
 
 	public void init()
 	{
-	    String[] cols = { /*"ID",*/ "WEIGHT_TYPE", "AMOUNT_BG", "WEIGHT" };
+	    String[] cols = { /*"ID",*/ "WEIGHT_TYPE", "AMOUNT_LBK", "WEIGHT" };
 	    float[] cols_size = { /*0.1f,*/ 0.5f, 0.25f, 0.25f  };
 
 	    init(cols, cols_size);

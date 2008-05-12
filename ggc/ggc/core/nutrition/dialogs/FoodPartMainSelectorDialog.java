@@ -51,7 +51,11 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
 
 
-
+/**
+ * Selector for Nutritions and Home Weights, when defining User Foods. 
+ * @author arozman
+ *
+ */
 public class FoodPartMainSelectorDialog extends JDialog implements ActionListener
 {
 
@@ -204,7 +208,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
             this.setBounds(160, 100, 300, 305);
             button_y = 230;
             panel_height = 65;
-            panel_title = ic.getMessage("AMOUNT");
+            panel_title = ic.getMessage("AMOUNT_LBL");
         }
 
 	this.setLayout(null);
