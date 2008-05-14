@@ -130,7 +130,13 @@ public class TestNutritionData
 	//FoodPartSelectorDialog fd = new FoodPartSelectorDialog(m_da, 2, null);
 	
 	// Meal selector for DailyValues
-	new DailyValuesMealSelectorDialog(DataAccess.getInstance(), null);
+	DailyValuesMealSelectorDialog dl = new DailyValuesMealSelectorDialog(DataAccess.getInstance(), null);
+	
+	if (dl.wasAction())
+	{
+	    System.out.println("Db String: " + dl.getStringForDb());
+	    System.out.println("CH: " + dl.getCHSum());
+	}
 
     }
 
@@ -431,8 +437,8 @@ public class TestNutritionData
     {
 	
 	//new TestNutritionData(GGCTreeRoot.TREE_USER_NUTRITION);
-	//new TestNutritionData(GGCTreeRoot.TREE_MEALS);
-	new TestNutritionData();
+	new TestNutritionData(GGCTreeRoot.TREE_MEALS);
+	//new TestNutritionData();
 	
 	/*
 	System.out.println("in main");

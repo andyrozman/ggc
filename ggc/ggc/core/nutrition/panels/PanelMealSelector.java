@@ -1,13 +1,14 @@
 package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
-import ggc.core.db.datalayer.Meal;
-import ggc.core.db.datalayer.MealGroup;
+import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.MealNutrition;
 import ggc.core.db.datalayer.NutritionDefinition;
-import ggc.core.nutrition.data.MealNutritionsComparator;
-import ggc.core.nutrition.display.MealFoodDisplay;
+import ggc.core.nutrition.dialogs.FoodPartMainSelectorDialog;
+import ggc.core.nutrition.dialogs.MealSpecialSelectorDialog;
+import ggc.core.nutrition.display.DailyFoodEntryDisplay;
 import ggc.core.nutrition.display.MealNutritionsDisplay;
+import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.core.util.DataAccess;
 import ggc.core.util.NutriI18nControl;
 
@@ -15,7 +16,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -43,7 +44,6 @@ import com.atech.graphics.layout.ZeroLayout;
 public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements ActionListener
 {
 
-    //I18nControl ic = I18nControl.getInstance();
     DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
@@ -52,31 +52,25 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
     JButton button, button_select;
     JTextField tf_name, tf_name_i18n, tf_name_i18n_key, tf_group;
     JTextArea jta_desc;
-
-    ArrayList<MealFoodDisplay> list_parts = new ArrayList<MealFoodDisplay>();
-    ArrayList<MealNutritionsDisplay> list_nutritions = new ArrayList<MealNutritionsDisplay>();
-
     JTable table_1, table_2 = null;
     JScrollPane scroll_1, scroll_2 = null;
-
-    ATTableModel model_2 = null;
-    
-    boolean was_saved = true;
-
-
-    //HomeWeightDataDisplay hwd = null;
-    //NutritionDataDisplay ndd = null;
-    MealFoodDisplay mpd = null;
-    MealNutritionsDisplay mnd = null;
-
-    Meal meal;
-    MealGroup meal_group;
-    
-    NutriI18nControl ic = null;
     JDialog m_dialog;
     ActionListener action_listener;
+
+    ATTableModel model_2 = null;
+    ArrayList<DailyFoodEntryDisplay> list_food_entries = new ArrayList<DailyFoodEntryDisplay>();
+    ArrayList<MealNutritionsDisplay> list_nutritions = new ArrayList<MealNutritionsDisplay>();
+
+    boolean was_saved = true;
+
+    DailyFoodEntryDisplay dfed = null;
+    MealNutritionsDisplay mnd = null;
     
-    public PanelMealSelector(JDialog dialog, ActionListener list)
+
+    NutriI18nControl ic = null;
+    String meals_ids;
+    
+    public PanelMealSelector(JDialog dialog, ActionListener list, String meals_ids)
     {
 	super();
 
@@ -88,19 +82,104 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
         ic = m_da.getNutriI18nControl();
 
 
-	this.mpd = new MealFoodDisplay(ic);
+	//this.mpd = new MealFoodDisplay(ic);
+        this.dfed = new DailyFoodEntryDisplay(ic);
 	this.mnd = new MealNutritionsDisplay(ic);
 
 	font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
         font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-
+        
+        this.meals_ids = meals_ids;
+        
         createPanel();
+
+        loadFoodParts();
 
     }
 
+    
+    public void loadFoodParts()
+    {
+	System.out.println("Food parts: " + this.meals_ids);
+	
+	//System.out.println("Load Food Parts N/A");
+	if ((this.meals_ids!=null) && (this.meals_ids.length()!=0))
+	{
+	    String[] arrays = m_da.splitString(this.meals_ids, ";");
+	    
+	    for(int i=0; i<arrays.length; i++)
+	    {
+		DailyFoodEntry dfe = new DailyFoodEntry(arrays[i]);
+		
+		addFoodPart(new DailyFoodEntryDisplay(ic, dfe), false);
+	    }
+	    
+	    this.refreshFoodParts();
+	}
+	
+    }
+    
+    public void addFoodPart(DailyFoodEntryDisplay dfed)
+    {
+	this.addFoodPart(dfed, true);
+    }
 
+    
+    public void addFoodPart(DailyFoodEntryDisplay dfed, boolean refresh)
+    {
+	this.list_food_entries.add(dfed);
+	
+	if (refresh)
+	    this.refreshFoodParts();
+    }
+    /*
+    public void removeFoodPart(DailyFoodEntryDisplay dfed)
+    {
+	//this.list_food_entries.r.add(dfed);
+	this.refreshFoodParts();
+    }*/
+    
+    public String getStringForDb()
+    {
+	int last = this.list_food_entries.size()-1;
+	StringBuffer sb = new StringBuffer();
+	
+	for(int i=0; i<=last; i++)
+	{
+	    sb.append(this.list_food_entries.get(i).getStringForDb());
+	    
+	    if (i!=last)
+		sb.append(";");
+	}
+	
+	return sb.toString();
+    }
+    
 
+    public String getCHSumString()
+    {
+	// 205
+	//ArrayList<MealNutritionsDisplay>
+	for(int i=0; i<this.list_nutritions.size(); i++)
+	{
+	    MealNutritionsDisplay mnd1 = this.list_nutritions.get(i);
+	    
+	    //System.out.println(mnd1);
+	    
+	    if (mnd1.getId().equals("205"))
+	    {
+		//    System.out.println("Found !!!!!!!!!!!" + mnd1);
+		return mnd1.getValue();
+	    }
+		
+	}
+	
+	
+	return "0,0";
+    }
+    
+    
     public void createPanel()
     {
 
@@ -139,7 +218,7 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 
         table_1 = new JTable();
 
-	this.createModel(this.list_parts, this.table_1, this.mpd);
+	this.createModel(this.list_food_entries, this.table_1, this.dfed);
 
         table_1.setRowSelectionAllowed(true);
         table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -155,14 +234,14 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
         
         this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_add.gif", this)));
         //this.button.addActionListener(this);
-        this.button.addActionListener(this.action_listener);
+        this.button.addActionListener(this);
         this.button.setActionCommand("add_food");
         this.button.setToolTipText(ic.getMessage("MEAL_FOOD_ADD_DESC"));
         this.button.setBounds(370, 95, 32, 32);
         this.add(button, null);
 
         this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_edit.gif", this)));
-        this.button.addActionListener(this.action_listener);
+        this.button.addActionListener(this);
 //        this.button.addActionListener(this);
         this.button.setActionCommand("edit_food");
         this.button.setToolTipText(ic.getMessage("MEAL_FOOD_EDIT_DESC"));
@@ -170,7 +249,7 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
         this.add(button, null);
         
         this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_delete.gif", this)));
-        this.button.addActionListener(this.action_listener);
+        this.button.addActionListener(this);
 //      this.button.addActionListener(this);
         this.button.setActionCommand("remove_food");
         this.button.setToolTipText(ic.getMessage("MEAL_FOOD_DELETE_DESC"));
@@ -208,14 +287,14 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
         button.setActionCommand("ok");
         button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
         button.setBounds(55, 410, 120, 25);
-        button.addActionListener(this);
+        button.addActionListener(this.action_listener);
         this.add(button, null);
         
         button = new JButton("  " + ic.getMessage("CANCEL"));
         button.setActionCommand("cancel");
         button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         button.setBounds(190, 410, 120, 25);
-        button.addActionListener(this);
+        button.addActionListener(this.action_listener);
         this.add(button);
 	
         button = m_da.createHelpButtonByBounds(380, 410, 110, 25, this);
@@ -246,14 +325,29 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 
     }
 
-
+/*
     private void createKeyWord()
     {
 	String key = m_da.makeI18nKeyword(tf_name.getText());
 	tf_name_i18n_key.setText(key);
 	tf_name_i18n.setText(ic.getMessage(key));
     }
+  */  
     
+    private void refreshFoodParts()
+    {
+	this.createModel(this.list_food_entries, this.table_1, this.dfed);
+	
+	this.refreshNutritions();
+    }
+    
+   
+    public JTable getFoodTable()
+    {
+	return this.table_1;
+    }
+    
+
     
 
     /**
@@ -264,6 +358,63 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 
         String action = e.getActionCommand();
         
+        
+	if (action.equals("add_food"))
+	{
+	    MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_da, 0L);
+	    DailyFoodEntryDisplay dfed = new DailyFoodEntryDisplay(ic, mssd.getDailyFoodEntry());
+	    
+	    this.addFoodPart(dfed);
+	}
+        else if (action.equals("edit_food"))
+        {
+            if (this.table_1.getSelectedRowCount()==0)
+            {
+                JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                return;
+            }
+
+            DailyFoodEntryDisplay dfed = this.list_food_entries.get(this.table_1.getSelectedRow());
+	    MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_da, dfed.getDailyFoodEntry());
+            
+            if (mssd.wasAction())
+            {
+        	System.out.println(dfed);
+        	DailyFoodEntry dfed_new = mssd.getDailyFoodEntry();
+        	
+        	System.out.println(dfed_new);
+        	
+        	
+        	dfed.resetWeightValues(mssd.getDailyFoodEntry());
+        	this.refreshFoodParts();
+            }
+            else 
+            {
+        	System.out.println("NO Action !");
+            }
+        }
+        else if (action.equals("remove_food"))
+        {
+            
+            if (this.table_1.getSelectedRowCount()==0)
+            {
+                JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                return;
+            }
+
+            int ii = JOptionPane.showConfirmDialog(this, ic.getMessage("ARE_YOU_SURE_DELETE"), ic.getMessage("ERROR"), JOptionPane.YES_NO_OPTION);
+
+            if (ii==JOptionPane.YES_OPTION)
+            {
+                DailyFoodEntryDisplay dfed = this.list_food_entries.get(this.table_1.getSelectedRow());
+        	
+                this.list_food_entries.remove(dfed);
+                this.refreshFoodParts();
+            }
+            
+        }
+        else
+            System.out.println("PanelMealSelector::Unknown command: " + action);
         
         
 /*        
@@ -332,27 +483,24 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
             
         } */
         
-        if (action.equals("cancel"))
-        {
-            this.m_dialog.dispose();
-        }
-        else
-            System.out.println("PanelMealSelector::Unknown command: " + action);
   
     }
 
 
-    public void refreshNutritions()
+    private void refreshNutritions()
     {
+	System.out.println("Refresh Nutritions");
+	
+	
 	Hashtable<String,MealNutrition> nutres = new Hashtable<String,MealNutrition>();
 	
 	loadGI_GL(nutres);
 	
-	for(int i=0; i< this.list_parts.size(); i++)
+	for(int i=0; i< this.list_food_entries.size(); i++)
 	{
-	    ArrayList<MealNutrition> lst = this.list_parts.get(i).getMealPart().getNutritions();
+	    ArrayList<MealNutrition> lst = this.list_food_entries.get(i).getDailyFoodEntry().getNutritions();
 	    
-	    float amount = this.list_parts.get(i).getMealPart().getAmount();
+	    float amount = this.list_food_entries.get(i).getDailyFoodEntry().getMultiplier();
 	    
 	    for(int j=0; j<lst.size(); j++)
 	    {
@@ -654,6 +802,9 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
     {
 	//xCollections.sort(this.list_parts, new MealPartsComparator());
 	
+	System.out.println("Process Data");
+	
+	/*
 	StringBuffer sb = new StringBuffer();
 	
 	for(int i=0; i<this.list_parts.size(); i++)
@@ -679,128 +830,13 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 	}
 	
 	this.temp_nutritions = sb.toString();
-	
+	*/
     }
     
     
-    
-    /**
-     * Was data in this panel changed.
-     * 
-     * @return true if data changed, false otherwise
-     */
- /*   public boolean hasDataChanged()
-    {
-	
-	System.out.println("hasDataChanged");
-	
-	
-	if (this.was_saved)
-	    return false;
-	
-	processData();
-
-	
-	if (this.isAddAction())
-	{
-	    return true;
-	}
-	else
-	{
-	    if ((hasChangedEntry(this.meal.getName(), this.tf_name.getText())) ||
-		(hasChangedEntry(this.meal.getName_i18n(), this.tf_name_i18n_key.getText())) || 
-	        (hasChangedEntry(this.meal.getDescription(), this.jta_desc.getText())) ||
-	        (hasChangedEntry(this.meal.getParts(), this.temp_parts)) ||
-	        (hasChangedEntry(this.meal.getNutritions(), this.temp_nutritions)) ||
-	        (this.meal.getGroup_id()!= this.meal_group.getId()) )
-	        return true;
-	    else
-	        return false;
-	}
-    }
-*/
-
-    private boolean hasChangedEntry(String old_value, String new_value)
-    {
-	System.out.println("hasChangedEntry [old=" + old_value + ",new=" + new_value + "]");
-	
-	
-	if ((m_da.isEmptyOrUnset(old_value)) ||
-	    (!old_value.equals(new_value)))
-	    return true;
-	else
-	    return false;
-	
-    }
     
     
 
-    /**
-     * Save data in panel
-     * 
-     * @return true if save was successful
-     */
-/*    public boolean saveData()
-    {
-	
-
-	if (this.isAddAction())
-	{
-	    this.meal.setName(this.tf_name.getText());
-	    this.meal.setName_i18n(this.tf_name_i18n_key.getText()); 
-	    this.meal.setDescription(this.jta_desc.getText());
-	    this.meal.setParts(this.temp_parts);
-	    this.meal.setNutritions(this.temp_nutritions);
-	    this.meal.setGroup_id(this.meal_group.getId());
-	    
-	    this.m_da.getDb().add(this.meal);
-	    this.was_saved = true;
-	    
-	    addMeal2Tree(this.meal);
-	    
-	    
-	    return true;
-	}
-	else
-	{
-	    
-	    long prev_group_id = this.meal.getGroup_id();
-	    
-	    this.meal.setName(this.tf_name.getText());
-	
-	    this.meal.setName_i18n(this.tf_name_i18n_key.getText()); 
-	    this.meal.setDescription(this.jta_desc.getText());
-	    this.meal.setParts(this.temp_parts);
-	    this.meal.setNutritions(this.temp_nutritions);
-	    this.meal.setGroup_id(this.meal_group.getId());
-	    
-	    this.m_da.getDb().edit(this.meal);
-	    this.was_saved = true;
-	    
-	    if (prev_group_id != this.meal.getGroup_id())
-	    {
-		removeMealFromTree(this.meal, prev_group_id);
-		addMeal2Tree(this.meal);
-	    }
-	    
-	    return true;
-	}
-	
-	
-    }
-    
-    
-    private void addMeal2Tree(Meal meal)
-    {
-	m_da.tree_roots.get("3").m_meal_groups_ht.get("" + meal.getGroup_id()).addChild(meal);
-    }
-    
-    
-    public void removeMealFromTree(Meal meal, long prev_group_id)
-    {
-	m_da.tree_roots.get("3").m_meal_groups_ht.get("" + prev_group_id).removeChild(meal);
-    }
-  */  
 }
     
     

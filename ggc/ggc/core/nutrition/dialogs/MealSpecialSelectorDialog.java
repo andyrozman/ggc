@@ -58,7 +58,13 @@ import javax.swing.text.NumberFormatter;
 import com.atech.i18n.I18nControlAbstract;
 
 
-
+/**
+ * 
+ * Selector for single food
+ * 
+ * @author arozman
+ *
+ */
 public class MealSpecialSelectorDialog extends JDialog implements ActionListener, ItemListener
 {
 
@@ -101,7 +107,8 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     private NumberFormat amountEditFormat;    
     JFormattedTextField amountField;
     
-    MealPart meal_part;
+    //MealPart meal_part;
+    DailyFoodEntry daily_food_entry;
     
     FoodDescription dsc_food;
     Meal dsc_meal;
@@ -124,7 +131,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     }
 
     
-    public MealSpecialSelectorDialog(DataAccess da, MealPart part) 
+    public MealSpecialSelectorDialog(DataAccess da, DailyFoodEntry part) 
     {
         super(da.getParent(), "", true);
 
@@ -133,7 +140,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
 	this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
         
-        this.meal_part = part;
+        this.daily_food_entry = part;
         init();
         
         loadMeal();
@@ -144,30 +151,47 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     
     private void loadMeal()
     {
-	this.cb_type.setSelectedIndex(this.meal_part.getType()-1);
+	this.cb_type.setSelectedIndex(this.daily_food_entry.nutrition_food_type-1);
 	this.cb_type.setEnabled(false);
 	this.button_select.setEnabled(false);
 
-	this.action_object_type = (this.meal_part.getType()-1);
+	this.action_object_type = (this.daily_food_entry.nutrition_food_type-1);
 	
 	if (this.cb_type.getSelectedIndex() < 2)
 	{
-	    FoodDescription fd = this.meal_part.getFoodObject();
-	    this.label_item.setText(fd.getName());
-	    
-	    this.action_object = fd;
+	    this.dsc_food = this.daily_food_entry.m_food;
+	    this.label_item.setText(this.dsc_food.getName());
+	    //this.action_object = fd;
 	}
 	else
 	{
-	    Meal m = this.meal_part.getMealObject();
-	    this.label_item.setText(m.getName());
+	    this.dsc_meal = this.daily_food_entry.m_meal;
+	    //Meal m = this.meal_part.getMealObject();
+	    this.label_item.setText(this.dsc_meal.getName());
 
-	    this.action_object = m;
+//	    this.action_object = m;
 	}
 	
 	this.label_item_type.setText("" + this.cb_type.getSelectedItem());
 	
-        this.amountField.setValue(new Double(this.meal_part.getAmount()));
+	setEnabledWithType();
+
+	if (this.daily_food_entry.m_food!=null)
+	{
+	    this.cb_weight_type.setSelectedIndex(this.daily_food_entry.amount_type-1);
+	    
+	    if (this.daily_food_entry.amount_type==DailyFoodEntry.AMOUNT_HOME_WEIGHT)
+	    {
+		this.hws_selected = this.daily_food_entry.m_home_weight_special;
+		this.label_home_weight_item.setText(this.hws_selected.getName());
+	    }
+	}
+	else
+	{
+	    this.cb_weight_type.setSelectedIndex(0);
+	}
+	
+        this.amountField.setValue(new Double(this.daily_food_entry.amount));
 	
     }
     
@@ -489,23 +513,20 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     
     public boolean wasAction()
     {
-	return (this.action_object!=null);
+	return (this.action_done);
     }
 
-    public int getSelectedObjectType()
-    {
-	return this.action_object_type;
-    }
-    
-    public Object getSelectedObject()
-    {
-	return this.action_object;
-    }
     
     public float getAmountValue()
     {
-	Object o = this.amountField.getValue();
 	
+	return m_da.getJFormatedTextValueFloat(this.amountField);
+	
+	//Object o = this.amountField.getValue();
+	
+	//return m_da.getFloatValue(o);
+	
+	/*
 	if (o instanceof Long)
 	{
 	    //System.out.println("Amount(long): " + this.amountField.getValue());
@@ -519,9 +540,10 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 	
 	    Double d = (Double)this.amountField.getValue();
 	    return d.floatValue();
-	}
+	}*/
     }
     
+    private boolean action_done = false;
 
     public void actionPerformed(ActionEvent e)
     {
@@ -529,10 +551,12 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 	
 	if (cmd.equals("ok"))
 	{
+	    this.action_done = true;
 	    this.dispose();
 	}
 	else if (cmd.equals("cancel"))
 	{
+	    this.action_done = false;
 	    this.dispose();
 	}
 	else if (cmd.equals("select_item"))

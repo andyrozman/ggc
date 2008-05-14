@@ -1,3 +1,8 @@
+2008-05-14 (0.2.12) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Implementation of DailyValueEntry adding Food (connecting foods 
+      databases, with daily entries)
+    * some bugs fixed
+
 2008-05-11 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * translation
     * changed the statistics to display counts as integers (as there can be no

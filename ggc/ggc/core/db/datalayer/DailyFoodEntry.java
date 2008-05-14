@@ -33,6 +33,7 @@ import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
 import ggc.core.util.NutriI18nControl;
 
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
@@ -59,23 +60,18 @@ public class DailyFoodEntry implements SelectableInterface
     
     
     // 1=usda food, 2=user food, 3=meal
-    private int nutrition_food_type = 0;
-    
-    private long nutrition_food_id = 0L;
-    
+    public int nutrition_food_type = 0;
+    public long nutrition_food_id = 0L;
     private long home_weight_id = 0L;
-    
-    private int amount_type = 0;
-
-    private float amount = 0.0f;
-    
+    public int amount_type = 0;
+    public float amount = 0.0f;
     public String[] amount_type_str = { "", "W", "HW", "A"};
     
     
-    private FoodDescription m_food = null;
-    private Meal m_meal = null;
+    public FoodDescription m_food = null;
+    public Meal m_meal = null;
     
-    private HomeWeightSpecial m_home_weight_special = null;
+    public HomeWeightSpecial m_home_weight_special = null;
     
     public static final int WEIGHT_TYPE_WEIGHT = 1;
     public static final int WEIGHT_TYPE_HOME_WEIGHT = 2;
@@ -83,6 +79,10 @@ public class DailyFoodEntry implements SelectableInterface
     
     private float calculated_multiplier = 0.0f;
 
+    private ArrayList<MealNutrition> nutritions = null; 
+    
+    
+    
     // food + weight
     public DailyFoodEntry(/*int food_type,*/ FoodDescription fd, float weight)  
     {
@@ -177,7 +177,7 @@ public class DailyFoodEntry implements SelectableInterface
 	}
 	else
 	{
-	    this.amount_type = m_da.getIntValueFromString(ids[0]);
+	    this.amount_type = this.getAmountType(ids[0]);
 	    this.home_weight_id = m_da.getLongValueFromString(ids[1]);
 	    this.amount = m_da.getFloatValueFromString(ids[2]);
 	}
@@ -208,6 +208,69 @@ public class DailyFoodEntry implements SelectableInterface
 	    }
 	}
 
+    }
+    
+    public void resetWeightValues(DailyFoodEntry dfe)
+    {
+	this.amount_type = dfe.amount_type;
+	this.amount = dfe.amount;
+	this.m_home_weight_special = dfe.m_home_weight_special;
+	this.home_weight_id = dfe.home_weight_id;
+	
+	this.calculated_multiplier = 0.0f;
+    }
+    
+    
+    public String getName()
+    {
+	if (this.m_food!=null)
+	{
+	    return this.m_food.getName();
+	}
+	else
+	{
+	    return this.m_meal.getName();
+	}
+    }
+    
+    public int getFoodType()
+    {
+	if (this.m_food!=null)
+	{
+	    return this.m_food.getFoodType();
+	}
+	else
+	{
+	    return 3; //this.m_meal.getName();
+	}
+    }
+
+    
+    public int getWeightType()
+    {
+	return this.amount_type;
+    }
+    
+    
+    public String getWeightTypeString()
+    {
+	return this.amount_type_str[this.amount_type];
+    }
+    
+    public String getHomeWeightDescription()
+    {
+	if (this.amount_type==DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
+	{
+	    return this.m_home_weight_special.getName();
+	}
+	else
+	    return "";
+    }
+    
+    
+    public String getAmountString()
+    {
+	return DataAccess.Decimal2Format.format(this.amount);
     }
     
     private void loadHomeWeight()
@@ -278,12 +341,12 @@ public class DailyFoodEntry implements SelectableInterface
         //return this.getShortDescription();
 	return getShortDescription();
     }
-
+/*
     public String getName()
     {
 	return this.name;
     }
-    
+  */  
     
     public String getValueString()
     {
@@ -312,6 +375,42 @@ public class DailyFoodEntry implements SelectableInterface
     }
     
 
+    private void loadNutritions()
+    {
+	String nutr;
+	
+	if ((this.nutrition_food_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+            (this.nutrition_food_type == GGCTreeRoot.TREE_USER_NUTRITION))
+	{
+	    nutr = this.m_food.getNutritions();
+	}
+	else
+	{
+	    nutr = this.m_meal.getNutritions();
+	}
+	
+	this.nutritions = new ArrayList<MealNutrition>();
+	
+	StringTokenizer strtok = new StringTokenizer(nutr, ";");
+	
+	while(strtok.hasMoreTokens())
+	{
+	    MealNutrition mn = new MealNutrition(strtok.nextToken(), true);
+	    this.nutritions.add(mn);
+	}
+	
+    }
+    
+    
+    public ArrayList<MealNutrition> getNutritions()
+    {
+	if (this.nutritions == null)
+	    loadNutritions();
+	
+	return this.nutritions;
+    }
+    
+    
 
     /**
      * getObjectName - returns name of DatabaseObject

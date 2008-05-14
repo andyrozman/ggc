@@ -593,7 +593,7 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
                 this.m_dailyValuesRow.setActivity(ActField.getText());
                 this.m_dailyValuesRow.setUrine(UrineField.getText());
                 this.m_dailyValuesRow.setComment(CommentField.getText());
-                this.m_dailyValuesRow.setMealIdsList(null);
+                //this.m_dailyValuesRow.setMealIdsList(null);
 
                 dV.setNewRow(this.m_dailyValuesRow);
                 /*
@@ -624,7 +624,7 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
                 this.m_dailyValuesRow.setActivity(ActField.getText());
                 this.m_dailyValuesRow.setUrine(UrineField.getText());
                 this.m_dailyValuesRow.setComment(CommentField.getText());
-                this.m_dailyValuesRow.setMealIdsList(null);
+                //this.m_dailyValuesRow.setMealIdsList(null);
                 
                 //mod.fireTableChanged(null);
                 //clearFields();

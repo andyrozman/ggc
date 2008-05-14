@@ -228,12 +228,12 @@ public class DailyValues implements Serializable
     
     	    for ( ; i < size; i++)
     	    {
-        		if (getDateTimeAt(i) > time) 
-        		{
-        		    dataRows.add(i, dVR);
-        		    added = true;
-        		    break;
-        		}
+    		if (getDateTimeAt(i) > time) 
+    		{
+    		    dataRows.add(i, dVR);
+    		    added = true;
+    		    break;
+    		}
     	    }
     
     	    if (!added)
@@ -739,7 +739,7 @@ public class DailyValues implements Serializable
     
     public void sort()
     {
-	System.out.println("Sort");
+	//System.out.println("Sort");
 	Collections.sort(this.dataRows);
     }
     

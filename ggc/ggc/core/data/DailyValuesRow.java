@@ -74,7 +74,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     DataAccess m_da = DataAccess.getInstance();
     GGCProperties props = m_da.getSettings();
 
-    ArrayList<String> meals_ids;
+    //ArrayList<String> meals_ids;
 
     boolean debug = false;
 
@@ -269,7 +269,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
         }
     }
 */
-    
+    /*
     public ArrayList<String> getMealIdsList()
     {
         return this.meals_ids;
@@ -278,18 +278,28 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     public void setMealIdsList(ArrayList<String> lst)
     {
         this.meals_ids = lst;
-    }
+    }*/
 
 
 
     public boolean areMealsSet()
     {
-        if ((this.meals_ids==null) || (this.meals_ids.size()==0))
+        if ((this.meals==null) || (this.meals.trim().length()==0))
             return false;
         else
             return true;
     }
 
+    public String getMealsIds()
+    {
+	return this.meals;
+    }
+    
+    public void setMealsIds(String val)
+    {
+	this.meals = val;
+    }
+    
 
     public long getDateTimeLong(String date, String time)
     {
@@ -810,7 +820,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
             m_dv.setIns2(ins2);
             m_dv.setExtended(createExtended());
             m_dv.setPerson_id(m_da.getCurrentPersonId());
-//	    m_dv.setMeals_ids("");
+	    m_dv.setMeals_ids(this.meals);
         }
         else
         {
@@ -822,6 +832,8 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
             m_dv.setIns1(ins1);
             m_dv.setIns2(ins2);
             m_dv.setExtended(createExtended());
+            m_dv.setPerson_id(m_da.getCurrentPersonId());
+	    m_dv.setMeals_ids(this.meals);
         }
 
         return m_dv;

@@ -27,32 +27,26 @@
 
 package ggc.core.nutrition.dialogs;
  
-import ggc.core.db.datalayer.FoodDescription;
-import ggc.core.db.datalayer.Meal;
-import ggc.core.db.datalayer.MealPart;
-import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.display.DailyFoodEntryDisplay;
+import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.core.nutrition.panels.PanelMealSelector;
 import ggc.core.util.DataAccess;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.atech.i18n.I18nControlAbstract;
 
 
 /**
- * Dialog used for selecting meals and foods for Daily Values.
+ * Main Dialog used for selecting meals and foods for Daily Values.
  * @author arozman
  *
  */
@@ -64,26 +58,30 @@ public class DailyValuesMealSelectorDialog extends JDialog implements ActionList
     
     JTextField tf_selected;
     JComboBox cb_type;
-    JLabel label_item, label_item_type;
+    //JLabel label_item, label_item_type;
     Font font_normal, font_normal_b;
     JButton button_select;
 
     private DataAccess m_da = null;
     private I18nControlAbstract ic = null;
     
-    Object action_object;
-    int action_object_type = 0;
-    long input_id = 0L;
+    //Object action_object;
+    //int action_object_type = 0;
+    //long input_id = 0L;
     
     String[] type;  
 
-    private NumberFormat amountDisplayFormat;
-    private NumberFormat amountEditFormat;    
-    JFormattedTextField amountField;
+    //private NumberFormat amountDisplayFormat;
+    //private NumberFormat amountEditFormat;    
+    //JFormattedTextField amountField;
     
-    MealPart meal_part;
+    //MealPart meal_part;
     
-    public DailyValuesMealSelectorDialog(DataAccess da, String meal_desc) 
+    String meals_ids = null;
+    PanelMealSelector panel_meal_selector = null;
+    
+    
+    public DailyValuesMealSelectorDialog(DataAccess da, String meals_id) 
     {
         super(da.getParent(), "", true);
 
@@ -94,6 +92,7 @@ public class DailyValuesMealSelectorDialog extends JDialog implements ActionList
 	//this.input_id = meal_id;
         
         this.setBounds(160, 100, 550, 500);
+        this.meals_ids = meals_id;
         init();
  
         this.setVisible(true);
@@ -101,40 +100,10 @@ public class DailyValuesMealSelectorDialog extends JDialog implements ActionList
 
         
     
-    private void loadMeal()
-    {
-	this.cb_type.setSelectedIndex(this.meal_part.getType()-1);
-	this.cb_type.setEnabled(false);
-	this.button_select.setEnabled(false);
-
-	this.action_object_type = (this.meal_part.getType()-1);
-	
-	if (this.cb_type.getSelectedIndex() < 2)
-	{
-	    FoodDescription fd = this.meal_part.getFoodObject();
-	    this.label_item.setText(fd.getName());
-	    
-	    this.action_object = fd;
-	}
-	else
-	{
-	    Meal m = this.meal_part.getMealObject();
-	    this.label_item.setText(m.getName());
-
-	    this.action_object = m;
-	}
-	
-	this.label_item_type.setText("" + this.cb_type.getSelectedItem());
-	
-        this.amountField.setValue(new Double(this.meal_part.getAmount()));
-	
-    }
-    
-    
     public void init()
     {
-	
-	JPanel panel = new PanelMealSelector(this, this); 
+	this.panel_meal_selector = new PanelMealSelector(this, this, this.meals_ids);
+	//PanelMealSelector panel = new PanelMealSelector(this, this); 
 	
 	/*
 	this.setLayout(null);
@@ -269,26 +238,13 @@ public class DailyValuesMealSelectorDialog extends JDialog implements ActionList
         button.addActionListener(this);
         panel.add(button);
         		*/
-        this.add(panel, null); 
+        this.add(this.panel_meal_selector, null); 
     }
     
 
     
-    public boolean wasAction()
-    {
-	return (this.action_object!=null);
-    }
 
-    public int getSelectedObjectType()
-    {
-	return this.action_object_type;
-    }
-    
-    public Object getSelectedObject()
-    {
-	return this.action_object;
-    }
-    
+/*    
     public float getAmountValue()
     {
 	Object o = this.amountField.getValue();
@@ -308,26 +264,75 @@ public class DailyValuesMealSelectorDialog extends JDialog implements ActionList
 	    return d.floatValue();
 	}
     }
-    
+  */  
 
+    private boolean action_done = false;
+    
     public void actionPerformed(ActionEvent e)
     {
 	String cmd = e.getActionCommand();
 	
 	if (cmd.equals("ok"))
 	{
+	    action_done = true;
 	    this.dispose();
 	}
 	else if (cmd.equals("cancel"))
 	{
+	    action_done = false;
+	    //System.out.println("Cancel");
 	    this.dispose();
 	}
-	else if (cmd.equals("add_food"))
+	/*else if (cmd.equals("add_food"))
 	{
 	    MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_da, 0L);
+	    DailyFoodEntryDisplay dfed = new DailyFoodEntryDisplay(ic, mssd.getDailyFoodEntry());
 	    
+	    this.panel_meal_selector.addFoodPart(dfed);
 	}
-	else if (cmd.equals("select_item"))
+        else if (cmd.equals("edit_food"))
+        {
+            
+            if (this.panel_meal_selector.getFoodTable().getSelectedRowCount()==0)
+            {
+                JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                return;
+            }
+
+            NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
+
+            FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, ndd);            
+            
+            if (fpmsd.wasAction())
+            {
+        	System.out.println("Returned value: " + fpmsd.getAmountValue());
+        	
+        	ndd.setAmount(fpmsd.getAmountValue());
+        	this.createModel(this.list_nutritions, this.table_1, this.ndd);
+            }
+            
+        }
+        else if (action.equals("remove_nutrition"))
+        {
+            if (this.table_1.getSelectedRowCount()==0)
+            {
+                JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                return;
+            }
+
+            int ii = JOptionPane.showConfirmDialog(this, ic.getMessage("ARE_YOU_SURE_DELETE"), ic.getMessage("ERROR"), JOptionPane.YES_NO_OPTION);
+
+            if (ii==JOptionPane.YES_OPTION)
+            {
+                NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
+        	
+                this.list_nutritions.remove(ndd);
+        	this.createModel(this.list_nutritions, this.table_1, this.ndd);
+            }
+            
+        }*/
+	
+	/*else if (cmd.equals("select_item"))
 	{
 	    //System.out.println("Select item");
 	    
@@ -364,10 +369,28 @@ public class DailyValuesMealSelectorDialog extends JDialog implements ActionList
 		    this.label_item.setText(m.getName());
 		}
 	    }
-	}
+	}*/
+	else
+	    System.out.println("DailyValuesMealSelectorDialog::unknown command = " + cmd);
 	    
     }
 
+    
+    public boolean wasAction()
+    {
+	return this.action_done;
+    }
+    
+    public String getStringForDb()
+    {
+	return this.panel_meal_selector.getStringForDb();
+    }
+    
+    public String getCHSum()
+    {
+	return this.panel_meal_selector.getCHSumString();
+    }
+    
     
     public static void main(String[] args)
     {

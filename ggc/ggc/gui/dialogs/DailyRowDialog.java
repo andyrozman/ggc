@@ -30,6 +30,8 @@ package ggc.gui.dialogs;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
+import ggc.core.nutrition.dialogs.DailyValuesMealSelectorDialog;
+import ggc.core.nutrition.panels.PanelMealSelector;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 import ggc.core.util.I18nControl;
@@ -235,6 +237,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         init();
         setDate();
         //load();
+        
+        if (this.m_dailyValuesRow==null)
+        {
+            this.m_dailyValuesRow = new DailyValuesRow();
+        }
 
         this.setVisible(true);
     }
@@ -337,7 +344,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         
         this.ftf_ins1.setValue(new Integer((int)this.m_dailyValuesRow.getIns1()));
         this.ftf_ins2.setValue(new Integer((int)this.m_dailyValuesRow.getIns2()));
-        this.ftf_ch.setValue(new Float((int)this.m_dailyValuesRow.getCH()));
+        this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
 
 //        Ins1Field.setText(""+this.m_dailyValuesRow.getIns1AsString());
 //        Ins2Field.setText(""+this.m_dailyValuesRow.getIns2AsString());
@@ -437,7 +444,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         
         this.ftf_ins1 = getTextField(2, 0, new Integer(0), 140, 198, 55, 25, panel);
         this.ftf_ins2 = getTextField(2, 0, new Integer(0), 140, 228, 55, 25, panel);
-        this.ftf_ch = getTextField(0, 2, new Float(0.0f), 140, 258, 55, 25, panel);
+        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, 258, 55, 25, panel);
 
         this.ftf_bg1.addFocusListener(this);
         this.ftf_bg2.addFocusListener(this);
@@ -572,13 +579,13 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
                     in_process = true;
                     //System.out.println("State: " + cb_food_set.isSelected());
-                    cb_food_set.setSelected(!cb_food_set.isSelected());
+                    cb_food_set.setSelected(isMealSet());
                     in_process = false;
                 }
                 });
 
         String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
-                                    "edit", m_ic.getMessage("EDIT"),
+                                    "edit_food", m_ic.getMessage("EDIT_FOOD"),
                                     "ok", m_ic.getMessage("OK"),
                                     "cancel", m_ic.getMessage("CANCEL"),
   //                                  "help", m_ic.getMessage("HELP")
@@ -591,8 +598,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         	"cancel.png"
         };
         
-        int button_coord[] = { 210, 228, 140, 0, 
-                               230, 258, 120, 0,
+        int button_coord[] = { 210, 228, 140, 1, 
+                               210, 258, 140, 1,
                                30, 420, 110, 1,
                                145, 420, 110, 1,
 //                               250, 390, 80, 0
@@ -635,6 +642,16 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         
     }
 
+    
+    
+    public boolean isMealSet()
+    {
+	if ((this.m_dailyValuesRow.meals==null) || (this.m_dailyValuesRow.meals.trim().length()==0))
+	    return false;
+	else
+	    return true;
+    }
+    
     
     public JFormattedTextField getTextField(int columns, int decimal_places, Object value,
 	        int x, int y, int width, int height, Container cont)
@@ -913,10 +930,41 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         {
             cmdOk();
         }
+        else if (action.equals("edit_food"))
+        {
+            DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(m_da, this.m_dailyValuesRow.getMealsIds());
+            
+            if (dvms.wasAction())
+            {
+        	this.m_dailyValuesRow.setMealsIds(dvms.getStringForDb());
+        	this.ftf_ch.setValue(new Float(dvms.getCHSum().replace(',', '.')));
+        	
+        	if (!dvms.getStringForDb().equals(""))
+        	{
+        	    this.cb_food_set.setSelected(true);
+        	}
+            }
+        }
+        else if (action.equals("update_ch"))
+        {
+            PanelMealSelector pms = new PanelMealSelector(this, null, this.m_dailyValuesRow.getMealsIds());
+            this.ftf_ch.setValue(new Float(pms.getCHSumString().replace(',', '.')));
+        }
+        else
+            System.out.println("DailyRowDialog::unknown command: " + action);
 
     }
 
-
+/*
+    String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
+            "edit_food", m_ic.getMessage("EDIT_FOOD"),
+            "ok", m_ic.getMessage("OK"),
+            "cancel", m_ic.getMessage("CANCEL"),
+//                                  "help", m_ic.getMessage("HELP")
+    
+  */  
+    
+    
     private void cmdOk()
     {
         // to-do
@@ -929,7 +977,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 System.out.println("dV: " + dV);
 
 
-            this.m_dailyValuesRow = new DailyValuesRow();
+            //this.m_dailyValuesRow = new DailyValuesRow();
 
             this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime()); 
 
@@ -953,7 +1001,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             this.m_dailyValuesRow.setActivity(ActField.getText());
             this.m_dailyValuesRow.setUrine(UrineField.getText());
             this.m_dailyValuesRow.setComment(CommentField.getText());
-            this.m_dailyValuesRow.setMealIdsList(null);
+            //this.m_dailyValuesRow.setMealIdsList(null);
 
             dV.setNewRow(this.m_dailyValuesRow);
             /*
@@ -1006,7 +1054,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             this.m_dailyValuesRow.setActivity(ActField.getText());
             this.m_dailyValuesRow.setUrine(UrineField.getText());
             this.m_dailyValuesRow.setComment(CommentField.getText());
-            this.m_dailyValuesRow.setMealIdsList(null);
+            //this.m_dailyValuesRow.setMealIdsList(null);
 
             //mod.fireTableChanged(null);
             //clearFields();
