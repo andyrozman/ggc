@@ -128,7 +128,8 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
     
     public void addFoodPart(DailyFoodEntryDisplay dfed, boolean refresh)
     {
-	this.list_food_entries.add(dfed);
+        if (dfed.getDailyFoodEntry() != null)
+            this.list_food_entries.add(dfed);
 	
 	if (refresh)
 	    this.refreshFoodParts();
@@ -498,6 +499,13 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 	
 	for(int i=0; i< this.list_food_entries.size(); i++)
 	{
+	    if (this.list_food_entries.get(i).getDailyFoodEntry() == null)
+	    {
+	        // XXX: damage control: item does not contain a valid DailyFoodEntry, so delete it?
+	        // this.list_food_entries.remove(i);
+	        continue;
+	    }
+	    
 	    ArrayList<MealNutrition> lst = this.list_food_entries.get(i).getDailyFoodEntry().getNutritions();
 	    
 	    float amount = this.list_food_entries.get(i).getDailyFoodEntry().getMultiplier();

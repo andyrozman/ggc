@@ -125,6 +125,8 @@ public class DailyFoodEntryDisplay extends ATTableData
     {
 	//String[] col = { "NAME", "WEIGHT_TYPE", "HOME_WEIGHT", "AMOUNT_LBL" };
 
+        if (this.daily_food_entry == null)
+            return null;
 	
 	switch (column)
 	{

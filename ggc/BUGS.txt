@@ -21,11 +21,13 @@ Know Bugs:
       in the GlucoValues passed to CourseGraphView.setGlucoValues() containing only one day if there is only one value in the database, even  if
       a larger range was selected. (The problem lies in GlucoValues.getDayCount(), see FIXME-comment)
     - Backup without anything selected will cause a ZipException
+    - If e.g. the USDA DB is opened, GGC won't react to a "Close" command from the task bar (at least in KDE)
 
 Not A Bug:
     - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, 
       depending on preferences.
       * This is not a bug. It's feature 
+        * It was a bug before the other field was updated when one lost focus
 
 
 Bugs fixed in version X:
@@ -33,6 +35,7 @@ Bugs fixed in version X:
 0.2.12:
     - [sf] changing time in entry will not re-order cells
     - [sf] Entering plain text in numerical only fields should at least result in a warning (is ignored, and the numerical value is set to 0)
+    - Add Entry -> Edit Food -> Add -> Cancel will still attempt to add something
 
 0.2.9.9:
     - months not translated !!

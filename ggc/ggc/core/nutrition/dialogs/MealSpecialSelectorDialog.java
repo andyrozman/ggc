@@ -649,7 +649,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     
     public DailyFoodEntry getDailyFoodEntry()
     {
-	if (!this.isAnyObjectSelected())
+	if ((!this.isAnyObjectSelected()) || (!action_done))
 	    return null;
 	
 	//DailyFoodEntry dfe = null;
