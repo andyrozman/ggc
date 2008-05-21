@@ -2,6 +2,12 @@
     * adding log4j support to GGCDb and some other important classes
     * checking log4j configurations
 
+2008-05-21 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * fixed date display bug in course graph - still looks ugly though
+    * GGCLittle now uses the same about-dialog as the rest of ggc
+    * translation
+    * corrected bug in DailyValues: getDayAndMonthAsString() and getDateAsString()
+
 2008-05-19 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * Fixed a bug where selecting cancel in "Meals, Foods Selector"
       (or selecting nothing) would cause several NullPointerExceptions

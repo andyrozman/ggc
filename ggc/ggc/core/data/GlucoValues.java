@@ -31,6 +31,8 @@ package ggc.core.data;
 
 import ggc.core.util.DataAccess;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -75,7 +77,6 @@ public class GlucoValues extends DailyValues
             String key = (String)en.nextElement();
             addDayValues((DailyValues)table.get(key));
         }
-
 
 
 /*
@@ -224,13 +225,53 @@ public class GlucoValues extends DailyValues
 //X        fireGlucoValueChanged(event);
     }
 
-    // FIXME: does not get the amount of days represented by this GV, but rather
-    // the amount of days with entries
-    public int getDayCount()
+    // FIXME wontwork
+    public long getDayCount()
     {
-        if (dayValues != null)
-            return dayValues.size();
-        return 0;
+        long firstDay = Long.MAX_VALUE, lastDay = Long.MIN_VALUE, currentDay, dayCount;
+        
+        for (DailyValues dayValue : dayValues)
+        {
+            currentDay = dayValue.getDate();
+            if (currentDay > lastDay)
+                lastDay = currentDay;
+            if (currentDay < firstDay)
+                firstDay = currentDay;
+        }
+        
+        if (firstDay == Long.MAX_VALUE)
+            return 0L;
+        if (firstDay == lastDay)
+        {
+            return 1L;
+        }
+        
+        int day, month, year;
+        GregorianCalendar firstCal, lastCal;
+
+        day = (int) (firstDay % 100);
+        month = ((int) (firstDay % 10000))/100;
+        year = (int) (firstDay / 10000);
+        firstCal = new GregorianCalendar(year, month - 1, day);
+        firstDay = firstCal.getTimeInMillis();
+
+        day = (int) (lastDay % 100);
+        month = ((int) (lastDay % 10000))/100;
+        year = (int) (lastDay / 10000);
+        lastCal = new GregorianCalendar(year, month - 1, day);
+        lastDay = lastCal.getTimeInMillis();
+
+        long timeDiff = lastDay - firstDay;
+        dayCount = (timeDiff / (1000 * 60 * 60 * 24));
+        
+        // round up if neccessary
+        if ((dayCount * (1000 * 60 * 60 * 24)) != timeDiff)
+            dayCount++;
+        
+        // add 1 as the first day needs to be counted, too
+        dayCount++;
+        
+        return dayCount;
     }
 
     public String getDateForDayAt(int i)

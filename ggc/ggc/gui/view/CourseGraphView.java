@@ -118,9 +118,15 @@ public class CourseGraphView extends AbstractGraphView
 
         if (gV != null)
         {
-            float scale = (float) (dayCount - 1) / 9;
+            int days = 10;
+            if (dayCount < days)
+            {
+                days = (int) dayCount;
+            }
+            
+            float scale = (float) (dayCount - 1) / (days - 1);
             String dayDate;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < days; i++)
             {
                 dayDate = gV.getDateForDayAt(Math.round(i * scale));
                 
@@ -130,7 +136,7 @@ public class CourseGraphView extends AbstractGraphView
                     break;
                 }
                 
-                markPos = leftSpace + i * (diffW) / 9;
+                markPos = leftSpace + i * (diffW) / (days - 1);
                 g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace
                         + 5);
                 g2D.drawString(dayDate, markPos - 10, h - lowerSpace + 20);

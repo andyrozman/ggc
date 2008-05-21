@@ -17,11 +17,46 @@ Know Bugs:
       possible. If it can't be done abbrev. must be used. We don't actually use
       static layout... I use null layout, because most of java's layouts are 
       unpredictable
+      R: So, how's null layout not java's static layout? I know about their
+      unpredictability (boy, do I!), but they at least adapt sizes to fit the contents
     - The code relies on there being at least one entry per day; days without entries will be ignored in the date range selection code, resulting
       in the GlucoValues passed to CourseGraphView.setGlucoValues() containing only one day if there is only one value in the database, even  if
       a larger range was selected. (The problem lies in GlucoValues.getDayCount(), see FIXME-comment)
     - Backup without anything selected will cause a ZipException
     - If e.g. the USDA DB is opened, GGC won't react to a "Close" command from the task bar (at least in KDE)
+    - GGCLittle -> (no data in DB) New Entry -> the following message:
+0 year: 200 month: 85 day: 21  hour: 0 min: 0
+Exception in thread "AWT-EventQueue-0" java.lang.ArrayIndexOutOfBoundsException: 84
+	at com.atech.graphics.components.DateTimeComponent.setDateTime(DateTimeComponent.java:332)
+	at ggc.gui.dialogs.DailyRowDialog.setDate(DailyRowDialog.java:285)
+	at ggc.gui.dialogs.DailyRowDialog.initParameters(DailyRowDialog.java:238)
+	at ggc.gui.dialogs.DailyRowDialog.<init>(DailyRowDialog.java:199)
+	at ggc.gui.little.DailyStatsControlsL.actionPerformed(DailyStatsControlsL.java:161)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1849)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2169)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:420)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:258)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:236)
+	at java.awt.Component.processMouseEvent(Component.java:5517)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3135)
+	at java.awt.Component.processEvent(Component.java:5282)
+	at java.awt.Container.processEvent(Container.java:1966)
+	at java.awt.Component.dispatchEventImpl(Component.java:3984)
+	at java.awt.Container.dispatchEventImpl(Container.java:2024)
+	at java.awt.Component.dispatchEvent(Component.java:3819)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4212)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:3892)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:3822)
+	at java.awt.Container.dispatchEventImpl(Container.java:2010)
+	at java.awt.Window.dispatchEventImpl(Window.java:1791)
+	at java.awt.Component.dispatchEvent(Component.java:3819)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:463)
+	at java.awt.EventDispatchThread.pumpOneEventForHierarchy(EventDispatchThread.java:242)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:163)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:157)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:149)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:110)
+
 
 Not A Bug:
     - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, 

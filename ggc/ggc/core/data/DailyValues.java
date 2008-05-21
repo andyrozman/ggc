@@ -40,6 +40,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Formatter;
+import java.util.logging.SimpleFormatter;
 
 
 public class DailyValues implements Serializable
@@ -487,10 +489,15 @@ public class DailyValues implements Serializable
 
     public String getDayAndMonthAsString()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
-        return sdf.format(date);
+        int day, month;
+        day = (int) (date % 100);
+        month = ((int) (date % 10000))/100;
+        return String.format("%1$02d.%2$02d.", day, month);
     }
 
+    /**
+     * @return A {@code long} with &quot;YYYYMMDD&quot; as contents. E.g. the 3rd January 2012 would be 20120103.
+     */
     public long getDate()
     {
         return date;
@@ -498,8 +505,11 @@ public class DailyValues implements Serializable
 
     public String getDateAsString()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(date);
+        int day, month, year;
+        day = (int) (date % 100);
+        month = ((int) (date % 10000))/100;
+        year = (int) (date / 10000);
+        return String.format("%1$04d-%2$02d-%3$02d", year, month, day);
     }
 
 

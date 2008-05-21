@@ -36,6 +36,7 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
+import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;
 
@@ -599,7 +600,8 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             else if (command.equals("hlp_about")) 
             {
                 // FIX This
-                JOptionPane.showMessageDialog(null, "GNU Gluco Control v0.0.1", "About GGC", JOptionPane.INFORMATION_MESSAGE);
+                new AboutGGCDialog(getMyParent());
+                //JOptionPane.showMessageDialog(null, "GNU Gluco Control v0.0.1", "About GGC", JOptionPane.INFORMATION_MESSAGE);
             } 
             else
                 System.out.println("GGCLittle:Unknown Command: " + command);

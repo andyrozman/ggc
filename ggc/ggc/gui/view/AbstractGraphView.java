@@ -67,7 +67,7 @@ public abstract class AbstractGraphView extends JComponent
     float dayWidth = 0;
     float hourWidth = 0;
     float minuteWidth = 0;
-    int dayCount = 0;
+    long dayCount = 0L;
     
     String unitLabel;
 
