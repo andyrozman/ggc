@@ -1,6 +1,6 @@
 #!/bin/sh
 
-JAVA_EXE=../../Linux/jre_16/bin/java;
+JAVA_EXE=java;
 export JAVA_EXE;
 
 

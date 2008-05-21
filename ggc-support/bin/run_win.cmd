@@ -1,5 +1,5 @@
 @echo off
-set JAVA_EXE=..\..\Windows\jre_16\bin\java
+set JAVA_EXE=java
 
 
 echo.  Build Startup
