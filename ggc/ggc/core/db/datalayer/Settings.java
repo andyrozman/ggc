@@ -30,11 +30,12 @@
 
 package ggc.core.db.datalayer;
 
+import ggc.core.db.hibernate.SettingsH;
+
+import com.atech.db.hibernate.DatabaseObjectHibernate;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import ggc.core.db.hibernate.DatabaseObjectHibernate;
-import ggc.core.db.hibernate.SettingsH;
 
 
 public class Settings extends SettingsH implements DatabaseObjectHibernate

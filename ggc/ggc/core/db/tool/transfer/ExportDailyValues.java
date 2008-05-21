@@ -90,6 +90,7 @@ public class ExportDailyValues extends ExportTool implements Runnable
 	export_DailyValues();
     }
 
+    /*
     private void sleep(long ms)
     {
 	try
@@ -101,7 +102,7 @@ public class ExportDailyValues extends ExportTool implements Runnable
 	    
 	}
     }
-    
+    */
     
     
     @SuppressWarnings("unchecked")

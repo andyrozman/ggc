@@ -34,6 +34,8 @@ import ggc.core.util.DataAccess;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 
 import javax.swing.JButton;
@@ -56,7 +58,7 @@ import com.atech.i18n.I18nControlAbstract;
  * @author arozman
  *
  */
-public class FoodPartMainSelectorDialog extends JDialog implements ActionListener
+public class FoodPartMainSelectorDialog extends JDialog implements ActionListener, KeyListener
 {
 
     //private JPanel mainPane;
@@ -316,7 +318,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         panel.add(panel3, null);
         
 
-        JLabel label = new JLabel(ic.getMessage("AMOUNT") + ":");
+        JLabel label = new JLabel(ic.getMessage("AMOUNT_LBL") + ":");
         label.setBounds(20, 25, 100, 25);
         panel3.add(label, null);
         
@@ -340,6 +342,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         amountField.setColumns(4);
         amountField.setBounds(140, 25, 100, 25);
         amountField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+        amountField.addKeyListener(this);
         panel3.add(amountField);
 
         if (this.selector_type == FoodPartMainSelectorDialog.SELECTOR_HOME_WEIGHT)
@@ -359,6 +362,8 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
             this.weightField.setColumns(4);
             this.weightField.setBounds(140, 65, 100, 25);
             this.weightField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+            this.weightField.addKeyListener(this);
+
             panel3.add(this.weightField);
         }
         
@@ -503,8 +508,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 	
 	if (cmd.equals("ok"))
 	{
-	    this.action_done = true;
-	    this.dispose();
+	    cmdOk();
 	}
 	else if (cmd.equals("cancel"))
 	{
@@ -512,61 +516,42 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 	}
 	else if (cmd.equals("select_item"))
 	{
-	    //System.out.println("select_item: m_da: " + m_da);
 	    FoodPartSelectorDialog fpsd = new FoodPartSelectorDialog(m_da, this.selector_type, this.m_except);
 
 	    if (fpsd.wasAction())
 	    {
-		//System.out.println("was Action");
 		this.action_object = fpsd.getSelectedObject();
-		//System.out.println("actionObject in main: " + this.action_object);
 		this.label_item.setText(this.action_object.getShortDescription());
 	    }
-	    //else
-	    //	System.out.println("was not Action");
-	    
-	    
-	    
-	    
-	    
-	    //System.out.println("Select item");
-
-	    /*
-	    NutritionTreeDialog ntd = new NutritionTreeDialog(m_da, this.cb_type.getSelectedIndex()+1, true);
-	    
-	    if (ntd.wasAction())
-	    {
-		
-		if (this.cb_type.getSelectedIndex()==2)
-		{
-		    Meal m = (Meal)ntd.getSelectedObject();
-
-		    if (m.getId() == this.input_id)
-		    {
-			JOptionPane.showMessageDialog(this, ic.getMessage("CANT_SELECT_CIRCULAR_MEAL"), ic.getMessage("WARNING"),JOptionPane.WARNING_MESSAGE);
-			return;
-		    }
-		}
-		
-		
-		this.label_item_type.setText("" + this.cb_type.getSelectedItem());
-		
-		this.action_object_type = (this.cb_type.getSelectedIndex() + 1);
-		this.action_object = (ntd.getSelectedObject());
-		
-		if (this.cb_type.getSelectedIndex() < 2)
-		{
-		    FoodDescription fd = (FoodDescription)this.action_object;
-		    this.label_item.setText(fd.getName());
-		}
-		else
-		{
-		    Meal m = (Meal)this.action_object;
-		    this.label_item.setText(m.getName());
-		}
-	    }*/
 	}
 	    
     }
 
+    
+    private void cmdOk()
+    {
+	this.action_done = true;
+	this.dispose();
+    }
+    
+    
+    public void keyTyped(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {}
+
+    /**
+     * Invoked when a key has been released.
+     * See the class description for {@link KeyEvent} for a definition of
+     * a key released event.
+     */
+    public void keyReleased(KeyEvent e)
+    {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            cmdOk();
+        }
+    }
+    
+    
+    
+    
 }

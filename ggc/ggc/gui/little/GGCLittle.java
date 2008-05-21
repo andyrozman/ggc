@@ -312,7 +312,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 	
     }
     
-    
+    /*
     private JMenuItem createItem(String name, String desc, String action)
     {
 	JMenuItem item = new JMenuItem(m_ic.getMessage(name));
@@ -323,7 +323,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 	
 	
 	return item;
-    }
+    }*/
     
     
     private JLabel getEmptyLabel(int width, int height)

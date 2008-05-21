@@ -30,13 +30,13 @@
 
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.FoodDescriptionH;
 import ggc.core.db.hibernate.FoodUserDescriptionH;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
 
+import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;

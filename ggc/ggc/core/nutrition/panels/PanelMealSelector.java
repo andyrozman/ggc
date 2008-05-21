@@ -4,11 +4,9 @@ package ggc.core.nutrition.panels;
 import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.MealNutrition;
 import ggc.core.db.datalayer.NutritionDefinition;
-import ggc.core.nutrition.dialogs.FoodPartMainSelectorDialog;
 import ggc.core.nutrition.dialogs.MealSpecialSelectorDialog;
 import ggc.core.nutrition.display.DailyFoodEntryDisplay;
 import ggc.core.nutrition.display.MealNutritionsDisplay;
-import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.core.util.DataAccess;
 import ggc.core.util.NutriI18nControl;
 
@@ -188,7 +186,7 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
         this.setLayout(null); //new ZeroLayout(this.getSize()));
 
 	Font fnt_14_bold = new Font("Times New Roman", Font.BOLD, 14);
-	Font fnt_14 = new Font("Times New Roman", Font.PLAIN, 14);
+	//Font fnt_14 = new Font("Times New Roman", Font.PLAIN, 14);
 
 	/*
 	this.setId(ch.getId());
@@ -796,52 +794,10 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
     }
 */    
     
-    
-    
-    
-    
 
-
-    private String temp_parts;
-    private String temp_nutritions;
     
-
-    private void processData()
-    {
-	//xCollections.sort(this.list_parts, new MealPartsComparator());
-	
-	System.out.println("Process Data");
-	
-	/*
-	StringBuffer sb = new StringBuffer();
-	
-	for(int i=0; i<this.list_parts.size(); i++)
-	{
-	    if (i!=0)
-		sb.append(";");
-		
-	    sb.append(this.list_parts.get(i).getSaveData());
-	}
-	
-	this.temp_parts = sb.toString();
-
-	Collections.sort(this.list_nutritions, new MealNutritionsComparator());
-	
-	sb = new StringBuffer();
-	
-	for(int i=0; i<this.list_nutritions.size(); i++)
-	{
-	    if (i!=0)
-		sb.append(";");
-		
-	    sb.append(this.list_nutritions.get(i).getSaveData());
-	}
-	
-	this.temp_nutritions = sb.toString();
-	*/
-    }
-    
-    
+  
+  
     
     
 

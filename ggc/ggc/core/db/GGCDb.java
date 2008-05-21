@@ -42,8 +42,6 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.data.HbA1cValues;
 import ggc.core.data.MonthlyValues;
 import ggc.core.data.WeeklyValues;
-import ggc.core.nutrition.GGCTreeRoot;
-import ggc.core.util.DataAccess;
 import ggc.core.db.datalayer.FoodDescription;
 import ggc.core.db.datalayer.FoodGroup;
 import ggc.core.db.datalayer.Meal;
@@ -52,7 +50,6 @@ import ggc.core.db.datalayer.NutritionDefinition;
 import ggc.core.db.datalayer.NutritionHomeWeightType;
 import ggc.core.db.datalayer.Settings;
 import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.FoodDescriptionH;
 import ggc.core.db.hibernate.FoodGroupH;
@@ -63,6 +60,8 @@ import ggc.core.db.hibernate.MealH;
 import ggc.core.db.hibernate.NutritionDefinitionH;
 import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.core.db.hibernate.SettingsH;
+import ggc.core.nutrition.GGCTreeRoot;
+import ggc.core.util.DataAccess;
 
 import java.io.FileInputStream;
 import java.sql.SQLException;
@@ -72,9 +71,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.db.hibernate.check.DbCheckInterface;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 import org.apache.commons.logging.Log;
@@ -87,7 +89,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 
-public class GGCDb
+public class GGCDb implements DbCheckInterface
 {
     public static final int DB_CONFIG_LOADED = 1;
     public static final int DB_INITIALIZED = 2;
@@ -95,7 +97,7 @@ public class GGCDb
 
     private boolean debug = true;
     private boolean db_debug = false;
-
+    
     private static Log log = LogFactory.getLog(GGCDb.class); 
     private Session m_session = null;
     private SessionFactory sessions = null;
@@ -153,6 +155,9 @@ public class GGCDb
 //	debugConfig();
     }
 
+    
+    
+    
     public Configuration getConfiguration()
     {
         return this.m_cfg;
@@ -214,11 +219,27 @@ public class GGCDb
 
     public void openHibernateSimple()
     {
+	getStartStatus();
         sessions = m_cfg.buildSessionFactory();
+	getStartStatus();
+        
+        
+        
         m_session = sessions.openSession();
         m_loadStatus = DB_INITIALIZED;
     }
 
+    
+    public void getStartStatus()
+    {
+	Map mpp = m_cfg.getSqlResultSetMappings();
+
+	System.out.println("isEmpty: " + mpp.isEmpty());
+	
+	//log.debug(arg0);
+	
+    }
+    
 
     public int getLoadStatus()
     {
@@ -243,6 +264,21 @@ public class GGCDb
     }
 
 
+
+    
+    private void logException(String source, Exception ex)
+    {
+	log.error(source + "::Exception: " + ex.getMessage(), ex);
+    }
+    
+    private void logDebug(String source, String action)
+    {
+	log.debug(source + " - " + action);
+    }
+    
+
+    
+    
     public Session getSession()
     {
         m_session.clear();
@@ -254,8 +290,6 @@ public class GGCDb
     {
         new SchemaExport(m_cfg).create(true, true);
     }
-
-    
     
     
     
@@ -277,8 +311,7 @@ public class GGCDb
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate)obj;
 
-            if (doh.isDebugMode())
-                System.out.println(doh.getObjectName()+"::DbAdd");
+            log.trace(doh.getObjectName()+"::DbAdd");
 
             try
             {
@@ -289,42 +322,28 @@ public class GGCDb
             catch (SQLException ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                System.out.println("SQLException on add: " + ex);
-                ex.printStackTrace();
+                log.error("SQLException on add: " + ex, ex);
                 Exception eee = ex.getNextException();
 
                 if (eee!=null)
                 {
-                    eee.printStackTrace();
-                    System.out.println(eee);
+                    log.error("Nested Exception on add: " + eee.getMessage(), eee);
                 }
-                //System.exit(1);
                 return false;
             }
             catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                System.out.println("Exception on add: " + ex);
-                ex.printStackTrace();
-/*
-                Exception eee = ex.getNextException();
-
-                if (eee!=null)
-                {
-                    eee.printStackTrace();
-                    System.out.println(eee);
-                }
-*/
-
-                //              System.exit(1);
+                log.error("Exception on add: " + ex, ex);
                 return false;
             }
 
         }
         else
         {
-            setError(-2, "Object is not DatabaseObjectHibernate instance", "ZisDb");
-            System.out.println("Internal error on add: " + obj);
+            setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
+            
+            log.error("Internal error on add: " + obj);
             return false;
         }
 
@@ -336,8 +355,7 @@ public class GGCDb
     public long addHibernate(Object obj)
     {
 
-        //if (debug)
-        //    System.out.println("addHibernate::" + obj.toString());
+        log.trace("addHibernate::" + obj.toString());
 
         try
         {
@@ -351,8 +369,7 @@ public class GGCDb
         }
         catch (Exception ex)
         {
-            System.out.println("Exception on addHibernate: " + ex);
-            ex.printStackTrace();
+            log.error("Exception on addHibernate: " + ex, ex);
             return -1;
         }
 
@@ -363,31 +380,40 @@ public class GGCDb
     public boolean edit(Object obj)
     {
 
-        //System.out.println("edit");
-
         if (obj instanceof DatabaseObjectHibernate)
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate)obj;
 
-
-            if (doh.isDebugMode())
-                System.out.println(doh.getObjectName()+"::DbEdit");
+            log.debug(doh.getObjectName()+"::DbEdit");
 
             try
             {
                 doh.DbEdit(getSession()); 
                 return true;
             }
+            catch (SQLException ex)
+            {
+                setError(1, ex.getMessage(), doh.getObjectName());
+                log.error("SQLException on edit: " + ex, ex);
+                Exception eee = ex.getNextException();
+
+                if (eee!=null)
+                {
+                    log.error("Nested Exception on edit: " + eee.getMessage(), eee);
+                }
+                return false;
+            }
             catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
+                log.error("Exception on edit: " + ex, ex);
                 return false;
             }
         }
         else
         {
-            setError(-2, "Object is not DatabaseObjectHibernate instance", "ZisDb");
-            System.out.println("Internal error on edit: " + obj);
+            setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
+            log.error("Internal error on edit: " + obj);
             return false;
         }
 
@@ -399,8 +425,7 @@ public class GGCDb
     public boolean editHibernate(Object obj)
     {
 
-        if (debug)
-            System.out.println("editHibernate::" + obj.toString());
+        log.debug("editHibernate::" + obj.toString());
 
         try
         {
@@ -415,8 +440,8 @@ public class GGCDb
         }
         catch (Exception ex)
         {
-            System.out.println("Exception on editHibernate: " + ex);
-            ex.printStackTrace();
+            log.error("Exception on editHibernate: " + ex, ex);
+            //ex.printStackTrace();
             return false;
         }
 
@@ -426,15 +451,13 @@ public class GGCDb
     public boolean deleteHibernate(Object obj)
     {
 
-        if (debug)
-            System.out.println("deleteHibernate::" + obj.toString());
+        log.debug("deleteHibernate::" + obj.toString());
 
         try
         {
             Session sess = getSession();
             Transaction tx = sess.beginTransaction();
 
-            //sess..update(obj);
             sess.delete(obj);
 
             tx.commit();
@@ -443,8 +466,8 @@ public class GGCDb
         }
         catch (Exception ex)
         {
-            System.out.println("Exception on deleteHibernate: " + ex);
-            ex.printStackTrace();
+            log.error("Exception on deleteHibernate: " + ex, ex);
+            //ex.printStackTrace();
             return false;
         }
 
@@ -460,25 +483,37 @@ public class GGCDb
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate)obj;
 
-            if (doh.isDebugMode())
-                System.out.println(doh.getObjectName()+"::DbGet");
+            log.debug(doh.getObjectName()+"::DbGet");
 
             try
             {
                 doh.DbGet(getSession());
                 return true;
             }
+            catch (SQLException ex)
+            {
+                setError(1, ex.getMessage(), doh.getObjectName());
+                log.error("SQLException on get: " + ex, ex);
+                Exception eee = ex.getNextException();
+
+                if (eee!=null)
+                {
+                    log.error("Nested Exception on get: " + eee.getMessage(), eee);
+                }
+                return false;
+            }
             catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
+                log.error("Exception on get: " + ex, ex);
                 return false;
             }
 
         }
         else
         {
-            setError(-2, "Object is not DatabaseObjectHibernate instance", "ZisDb");
-            System.out.println("Internal error on get: " + obj);
+            setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
+            log.error("Internal error on get: " + obj);
             return false;
         }
 
@@ -494,9 +529,7 @@ public class GGCDb
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate)obj;
 
-
-            if (doh.isDebugMode())
-                System.out.println(doh.getObjectName()+"::DbDelete");
+            log.debug(doh.getObjectName()+"::DbDelete");
 
             try
             {
@@ -504,6 +537,7 @@ public class GGCDb
                 if (doh.DbHasChildren(getSession()))
                 {
                     setError(-3, "Object has children object", doh.getObjectName());
+                    log.error(doh.getObjectName() + " had Children objects");
                     return false;
                 }
 
@@ -511,17 +545,30 @@ public class GGCDb
 
                 return true;
             }
+            catch (SQLException ex)
+            {
+                setError(1, ex.getMessage(), doh.getObjectName());
+                log.error("SQLException on delete: " + ex, ex);
+                Exception eee = ex.getNextException();
+
+                if (eee!=null)
+                {
+                    log.error("Nested Exception on delete: " + eee.getMessage(), eee);
+                }
+                return false;
+            }
             catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
+                log.error("Exception on delete: " + ex, ex);
                 return false;
             }
 
         }
         else
         {
-            setError(-2, "Object is not DatabaseObjectHibernate instance", "ZisDb");
-            System.out.println("Internal error on delete: " + obj);
+            setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
+            log.error("Internal error on delete: " + obj);
             return false;
         }
 
@@ -592,16 +639,11 @@ public class GGCDb
 
             }
 
-            //System.out.println(in);
-
-
-            //db_num = new Integer(props.getProperty("SELECTED_DB"));
-            //db_conn_name = props.getProperty("DB"+db_num+"_CONN_NAME");
 
 
             if (config_read)
             {
-                System.out.println("GGCDb: Loading Db Configuration #"+ db_num + ": " + db_conn_name);
+                log.info("GGCDb: Loading Db Configuration #"+ db_num + ": " + db_conn_name);
 
                 db_hib_dialect = props.getProperty("DB"+db_num+"_HIBERNATE_DIALECT");
 
@@ -618,8 +660,8 @@ public class GGCDb
                 db_num = 0;
                 db_conn_name = "Internal Database";
 
-                System.out.println("GGCDb: Database configuration not found. Using default database.");
-                System.out.println("GGCDb: Loading Db Configuration #"+ db_num + ": " + db_conn_name);
+                log.info("GGCDb: Database configuration not found. Using default database.");
+                log.info("GGCDb: Loading Db Configuration #"+ db_num + ": " + db_conn_name);
 
                 db_hib_dialect = "org.hibernate.dialect.HSQLDialect";
                 db_driver_class = "org.hsqldb.jdbcDriver";
@@ -655,7 +697,8 @@ public class GGCDb
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            log.error("Loading GGCConfiguration Exception: " + ex.getMessage(), ex);
+            //ex.printStackTrace();
         }
         return null;
     }
@@ -700,99 +743,6 @@ public class GGCDb
 	m_da.tree_roots.put("3", new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, this));
     }
     
-    /*
-    @SuppressWarnings("unchecked")
-    public void loadImplementedMeterData()
-    {
-
-        // loading implemented meters
-
-        Hashtable<String, ArrayList<MeterH>> table = new Hashtable<String, ArrayList<MeterH>>();
-
-        Query q = this.getSession().createQuery("select pst from ggc.core.db.hibernate.MeterH as pst where pst.implementation_id>0 order by pst.company_id, pst.name asc");
-
-        //org.hibernate.collections.Iterator ittt = null;
-        //org.hibernate.util.
-
-        
-        Iterator it = q.iterate();
-
-        System.out.println("Meter implementations: " + q.list().size());
-
-        String company_id = null;
-
-        ArrayList<MeterH> mtrs = null;
-
-        meters_full = new Hashtable<String,MeterH>();
-
-        while (it.hasNext())
-        {
-            MeterH mh = (MeterH)it.next();
-
-            if (company_id==null)
-            {
-                mtrs = new ArrayList<MeterH>();
-                company_id = "" + mh.getCompany_id();
-//		mtrs = new Hashtable<String,MeterH>();
-            }
-
-            if (!company_id.equals(""+mh.getCompany_id()))
-            {
-                table.put(company_id, mtrs);
-                mtrs = new ArrayList<MeterH>();
-                company_id = "" + mh.getCompany_id();
-            }
-
-            mtrs.add(mh);
-
-            if (!meters_full.contains(""+mh.getId()))
-            {
-                this.meters_full.put(""+mh.getId(), mh);
-            }
-        }
-
-        table.put(company_id, mtrs);
-        this.meters_by_cmp = table;
-
-
-        StringBuffer buf = new StringBuffer();
-        boolean first = true;
-
-        for (Enumeration<String> en=table.keys(); en.hasMoreElements(); )
-        {
-            String key = en.nextElement();
-
-            if (first)
-            {
-                first = false;
-            }
-            else
-                buf.append(" OR ");
-
-            buf.append("pst.id=");
-            buf.append(key);
-        }
-
-        System.out.println("Where : " + buf.toString());
-
-
-        // resolve meter names
-        Query q2 = this.getSession().createQuery("select pst from ggc.core.db.hibernate.MeterCompanyH as pst where " + buf.toString() + " order by pst.id asc");
-
-        Iterator it2 = q2.iterate();
-
-        ArrayList<MeterCompanyH> mtrs_cmp = new ArrayList<MeterCompanyH>();
-
-        while (it2.hasNext())
-        {
-            MeterCompanyH mc = (MeterCompanyH)it2.next();
-            mtrs_cmp.add(mc);
-        }
-
-        this.meter_companies = mtrs_cmp;
-
-    }
-*/
 
 
 
@@ -806,29 +756,30 @@ public class GGCDb
     public void loadConfigData()
     {
 
-        Session sess = getSession();
-        //SettingsMainH seti = (SettingsMainH)sess.get(SettingsMainH.class, new Long(1));
+	try
+	{
+	    Session sess = getSession();
 
-
-        // load schemes
-        loadColorSchemes(sess);
-
-        // sets settings
-        loadConfigDataEntries();
-
-        /*
-            // sets settings
-            m_da.getSettings().setSettings(seti);
+            // load schemes
+            loadColorSchemes(sess);
     
-            // sets active color scheme
-            m_da.getSettings().setColorSchemeObject(seti.getColor_scheme());
-        */
+            // sets settings
+            loadConfigDataEntries();
+
+	}
+	catch(Exception ex)
+	{
+	    //log.error("Exception on loadConfigData: " + ex.getMessage(), ex);
+	    logException("loadConfigData", ex);
+
+	}
     }
 
     @SuppressWarnings("unchecked")
     public void loadConfigDataEntries()
     {
-
+	try
+	{
         Session sess = getSession();
 
         Hashtable<String,Settings> table = new Hashtable<String,Settings>();
@@ -845,50 +796,17 @@ public class GGCDb
         }
 
         m_da.getConfigurationManager().checkConfiguration(table);
-
+    	}
+	catch(Exception ex)
+	{
+	    //log.error("Exception on loadConfigDataEntries: " + ex.getMessage(), ex);
+	    logException("loadConfigDataEntries", ex);
+	}
+        
+        
     }   
 
 
-    public void checkConfigDataEntries()
-    {
-        /*
-        <property name="name" type="string"  length="50"/>    
-        <property name="ins1_name" type="string" length="20" />
-        <property name="ins1_abbr" type="string" length="10" />
-        <property name="ins2_name" type="string" length="20" />
-        <property name="ins2_abbr" type="string" length="10" />
-        <property name="meter_type"  type="int" />
-        <property name="meter_port"  type="string" length="50" />
-        <property name="bg_unit"  type="int" />  <!-- 1= mmol/l, 2=mg/dl -->
-        <property name="bg1_low"  type="float"  />
-        <property name="bg1_high"  type="float"  />
-        <property name="bg1_target_low"  type="float"  />
-        <property name="bg1_target_high"  type="float"  />
-        <property name="bg2_low"  type="float"  />
-        <property name="bg2_high"  type="float"  />
-        <property name="bg2_target_low"  type="float"  />
-        <property name="bg2_target_high"  type="float"  />
-        <property name="laf_type" type="int"  /> <!-- 1= class specified, 2=skinlf -->   
-        <property name="laf_name" type="string" length="60"  /> <!-- 1= class, 2= file of skin -->   
-    
-        <property name="render_rendering"  type="int" />
-        <property name="render_dithering"  type="int" />
-        <property name="render_interpolation"  type="int" />
-        <property name="render_antialiasing"  type="int" />
-        <property name="render_textantialiasing"  type="int" />
-        <property name="render_colorrendering"  type="int" />
-        <property name="render_fractionalmetrics"  type="int" />
-    
-        <property name="print_pdf_viewer_path"  type="string" length="100" />
-        <property name="print_lunch_start_time"  type="int" />
-        <property name="print_dinner_start_time"  type="int" />
-        <property name="print_night_start_time"  type="int" />
-        <property name="print_empty_value"  type="string" length="10" />
-    
-        <property name="color_scheme"  type="string" length="50" />
-        */
-
-    }
 
 
 
@@ -898,14 +816,13 @@ public class GGCDb
     public void saveConfigData()
     {
         m_da.getConfigurationManager().saveConfig();
-        //editHibernate(m_da.getSettings().getSettings());
-        // save config
-        //DataAccess.notImplemented("GGCDb::saveConfigData()");
     }
 
     @SuppressWarnings("unchecked")
     private void loadColorSchemes(Session sess)
     {
+	try
+	{
         Hashtable<String, ColorSchemeH> table = new Hashtable<String, ColorSchemeH>();
 
         Query q = sess.createQuery("select pst from ggc.core.db.hibernate.ColorSchemeH as pst");
@@ -919,6 +836,12 @@ public class GGCDb
         }
 
         m_da.getSettings().setColorSchemes(table, false);
+    	}
+	catch(Exception ex)
+	{
+//	    log.error("Exception on loadColorSchemes: " + ex.getMessage(), ex);
+	    logException("loadColorSchemes", ex);
+	}
 
     }
 
@@ -930,34 +853,8 @@ public class GGCDb
     */
 
 
-    // *************************************************************
-    // ****                METERS                       ****
-    // *************************************************************
-
-    /*
-    public MeterH getMeterById(int id)
-    {
-        if (id<=0)
-            return null;
-        else
-            return this.meters_full.get(""+id);
-    }
-
-
-    public MeterCompanyH getMeterCompanyById(int id)
-    {
-        for (int i=0; i<this.meter_companies.size(); i++)
-        {
-            if (meter_companies.get(i).getId()==id)
-            {
-                return meter_companies.get(i);
-            }
-        }
-
-        return null;
-    }
-*/
-
+    
+    
 
     // *************************************************************
     // ****                NUTRITION DATA                       ****
@@ -969,6 +866,9 @@ public class GGCDb
 
         ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
 
+        try
+	{
+
         Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst");
 
         Iterator it = q.iterate();
@@ -979,15 +879,23 @@ public class GGCDb
             list.add(new FoodGroup(eh));
         }
 
-        return list;
+    	}
+	catch(Exception ex)
+	{
+	    logException("getUSDAFoodGroups()", ex);
+	}
+
+	return list;
 
     }
 
     @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUserFoodGroups()
     {
-
         ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
+
+        try
+	{
 
         Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst");
 
@@ -1000,7 +908,15 @@ public class GGCDb
         }
 
         return list;
+    	}
+	catch(Exception ex)
+	{
+	    logException("getUserFoodGroups()", ex);
+	    
+	    //log.error("Exception on getloadConfigData: " + ex.getMessage(), ex);
+	}
 
+	return list;
     }
     
     @SuppressWarnings("unchecked")
@@ -1008,6 +924,9 @@ public class GGCDb
     {
 
         ArrayList<MealGroup> list = new ArrayList<MealGroup>();
+
+        try
+	{
 
         Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst");
 
@@ -1019,16 +938,23 @@ public class GGCDb
             list.add(new MealGroup(eh));
         }
 
-        return list;
+    	}
+	catch(Exception ex)
+	{
+	    logException("getMealGroups()", ex);
+	}
 
+	return list;
     }
     
     
     @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUSDAFoodDescriptions()
     {
-
         ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+
+        try
+	{
 
         Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst");
 
@@ -1041,7 +967,13 @@ public class GGCDb
         }
 
         return list;
+    	}
+	catch(Exception ex)
+	{
+	    logException("getUSDAFoodDescriptions()", ex);
+	}
 
+	return list;
     }
 
 
@@ -1050,6 +982,9 @@ public class GGCDb
     {
 
         ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+
+        try
+	{
 
         Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
 
@@ -1061,10 +996,16 @@ public class GGCDb
             list.add(new FoodDescription(eh));
         }
 
-        System.out.println("Loaded Food Descriptions: " + list.size()); 
+        //System.out.println("Loaded Food Descriptions: " + list.size()); 
         
-        return list;
+    	}
+	catch(Exception ex)
+	{
+	    logException("getUserFoodDescriptions()", ex);
+	}
 
+        return list;
+	
     }
 
     
@@ -1072,10 +1013,10 @@ public class GGCDb
     //public Hashtable<String, Meal> getMeals()
     public ArrayList<Meal> getMeals()
     {
-
-	//Hashtable<String, Meal> list = new Hashtable<String, Meal>();
-        //ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
 	ArrayList<Meal> list = new ArrayList<Meal>();
+
+	try
+	{
 
         Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.MealH as pst order by pst.group_id, pst.name");
 
@@ -1089,7 +1030,14 @@ public class GGCDb
         }
 
         return list;
+    	}
+	catch(Exception ex)
+	{
+	    logException("getMeals()", ex);
+	}
 
+	return list;
+	
     }
     
     
@@ -1097,8 +1045,11 @@ public class GGCDb
     @SuppressWarnings("unchecked")
     public void loadNutritionDefinitions()
     {
-	
-	System.out.println("loadNutritionDefinitions() !!!!!!!!!!!!!!!!!!!!!");
+	try
+	{
+
+        int[] ids = { 4000, 4001, 4002, 4003, 4004, 4005 };
+        String[] tags = { "GI", "GL", "GI_MIN", "GI_MAX", "GL_MIN", "GL_MAX" };
 
         Hashtable<String,NutritionDefinition> nut_defs = new Hashtable<String,NutritionDefinition>();
         ArrayList<SelectableInterface> nut_defs_lst = new ArrayList<SelectableInterface>();
@@ -1118,17 +1069,19 @@ public class GGCDb
 
         
         // static nutrition - not in database yet
+        // needs to be added to init
         
 	// GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, 
         // GL_MIN = 4004, GL_MAX = 4005
         
-        int[] ids = { 4000, 4001, 4002, 4003, 4004, 4005 };
-        String[] tags = { "GI", "GL", "GI_MIN", "GI_MAX", "GL_MIN", "GL_MAX" };
         String[] units = { "gi", "gl", "gi", "gi", "gl", "gl" };
         String[] name = { "Glycemic Index", "Glycemic Load", "Glycemic Index (Min)", "Glycemic Index (Max)", "Glycemic Load (Min)", "Glycemic Load (Max)" }; 
 
         for(int i=0; i<ids.length; i++)
         {
+            if (nut_defs.containsKey("" + ids[i]))
+        	continue;
+            
             NutritionDefinitionH eh = new NutritionDefinitionH(units[i], tags[i], name[i], "0", 1);
             eh.setId(ids[i]);
             
@@ -1140,6 +1093,11 @@ public class GGCDb
         
         this.nutrition_defs = nut_defs;
         this.nutrition_defs_list = nut_defs_lst;
+    	}
+	catch(Exception ex)
+	{
+	    logException("loadNutritionDefinitions()", ex);
+	}
 
     }
 
@@ -1148,6 +1106,8 @@ public class GGCDb
     public void loadHomeWeights()
     {
 
+	try
+	{
         Hashtable<String,NutritionHomeWeightType> nut_hw = new Hashtable<String,NutritionHomeWeightType>();
         ArrayList<SelectableInterface> nut_hw_lst = new ArrayList<SelectableInterface>();
 
@@ -1164,37 +1124,40 @@ public class GGCDb
             nut_hw_lst.add(fnd);
         }
 
+
+        
+        int[] ids = { 4000, 4001, 4002, 4003 };
+        String[] names = { "PORTION", "PORTION,_BIG", "PORTION,_MEDIUM", "PORTION,_SMALL" };
+        
+        
+        // static (need to be done in init) 
+        
+        for(int i=0; i<ids.length; i++)
+        {
+            if (nut_hw.containsKey("" + ids[i]))
+        	continue;
+            
+            NutritionHomeWeightTypeH eh = new NutritionHomeWeightTypeH(names[i], 1);
+            eh.setId(ids[i]);
+
+            NutritionHomeWeightType fnd = new NutritionHomeWeightType(eh);
+            
+            nut_hw.put(""+fnd.getId(), fnd);
+            nut_hw_lst.add(fnd);
+        }
+
         this.homeweight_defs = nut_hw;
         this.homeweight_defs_list = nut_hw_lst;
-
+        
+    	}
+	catch(Exception ex)
+	{
+	    logException("loadHomeWeights()", ex);
+	}
+        
     }
 
-
     
-    
-    
-
-/*
-    public ArrayList<FoodHomeWeight> getFoodHomeWeight(long id)
-    {
-
-    ArrayList<FoodHomeWeight> list = new ArrayList<FoodHomeWeight>();
-
-    Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodHomeWeightH as pst where pst.food_number=" + id);
-
-    Iterator it = q.iterate();
-
-    while (it.hasNext())
-    {
-        FoodHomeWeightH eh = (FoodHomeWeightH)it.next();
-        list.add(new FoodHomeWeight(eh));
-    }
-
-    return list;
-
-    }
-*/
-
 
 
     // *************************************************************
@@ -1211,15 +1174,9 @@ public class GGCDb
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        if (db_debug)
-            System.out.println("Hibernate: getHbA1c()");
-
-
-        //System.out.println("Hibernate: getHbA1c()");
+        logDebug("getHbA1c()", "Start");
 
         HbA1cValues hbVal = new HbA1cValues();
-
-        //System.out.println("getHbA1c(): readings: " + hbVal.getDayCount() + " " + hbVal.getReadings());
 
         try
         {
@@ -1240,21 +1197,22 @@ public class GGCDb
 
             while (it.hasNext())
             {
-                System.out.println("Found");
                 DayValueH dv = (DayValueH)it.next();
                 hbVal.addDayValueRow(new DailyValuesRow(dv));
             }
 
             hbVal.processDayValues();
 
-            //System.out.println("getHbA1c(): readings: " +hbVal.getDayCount() + " " + hbVal.getReadings());
+            logDebug("getHbA1c()", "Readings: " +hbVal.getDayCount() + " " + hbVal.getReadings());
 
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            System.out.println(e);
+	    logException("getHbA1c()", ex);
         }
 
+        logDebug("getHbA1c()", "End");
+        
         return hbVal;
     }
 
@@ -1266,8 +1224,7 @@ public class GGCDb
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        if (db_debug)
-            System.out.println("Hibernate: getDayStats()");
+        logDebug("getDayStats()", "Start");
 
         DailyValues dV = new DailyValues();
 
@@ -1293,11 +1250,13 @@ public class GGCDb
             }
 
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            System.err.println(e);
+	    logException("getDayStats()", ex);
         }
 
+        logDebug("getDayStats()", "End");
+        
         return dV;
     }
 
@@ -1309,24 +1268,17 @@ public class GGCDb
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        if (db_debug)
-            System.out.println("Hibernate: getDayStatsRange()");
+        logDebug("getDayStatsRange()", "Start");
 
         WeeklyValues wv = new WeeklyValues();
 
         try
         {
-            //System.out.println("Start " + start);
-
-//x            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
-            //sdf.format(start.getTime());
             String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
-            //sdf.format(end.getTime());
 
-            if (db_debug)
-                System.out.println("getDatStatsRange: "  + sDay + " - " + eDay);
-
+            logDebug("getDayStatsRange()", sDay + " - " + eDay);
+            
             Query q = getSession().createQuery("SELECT dv from " + 
                                                "ggc.core.db.hibernate.DayValueH as dv " +
                                                "WHERE dv.dt_info >=  " + 
@@ -1344,10 +1296,12 @@ public class GGCDb
             }
 
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            System.err.println("getDayRange:" + e);
+	    logException("getDayStatsRange()", ex);
         }
+        
+        logDebug("getDayStatsRange()", "End");
 
         return wv;
     }
@@ -1360,8 +1314,7 @@ public class GGCDb
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        if (db_debug)
-            System.out.println("Hibernate: getMonthlyValues()");
+        logDebug("getMonthlyValues()", "Start");
 
         MonthlyValues mv = new MonthlyValues(year, month);
 
@@ -1383,16 +1336,15 @@ public class GGCDb
 
                 DailyValuesRow dVR = new DailyValuesRow(dv);
                 mv.addDayValueRow(dVR);
-
-                //dV.setNewRow(dVR);
             }
 
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            System.err.println("getMonthlyValues:" + e);
+	    logException("getMonthlyValues()", ex);
         }
 
+        logDebug("getMonthlyValues()", "End");
         return mv;
 
     }
@@ -1402,14 +1354,11 @@ public class GGCDb
     public void saveDayStats(DailyValues dV)
     {
 
-        if (db_debug)
-            System.out.println("Hibernate: saveDayStats()");
-
+        logDebug("saveDayStats()", "Start");
 
         if (dV.hasChanged())
         {
-            if (db_debug)
-                System.out.println("SDS: Has changed");
+            logDebug("saveDayStats()", "Data has changed");
 
             Session sess = getSession();
 
@@ -1420,9 +1369,8 @@ public class GGCDb
 
                 if (dV.hasDeletedItems())
                 {
-                    if (db_debug)
-                        System.out.println("SDS: Deleted");
-
+                    logDebug("saveDayStats()", "Removing deleted entry");
+                    
                     Transaction tx = sess.beginTransaction();
 
                     ArrayList<DayValueH> list = dV.getDeletedItems();
@@ -1443,8 +1391,7 @@ public class GGCDb
 
                     if (dwr.isNew())
                     {
-                        if (db_debug)
-                            System.out.println("  New");
+                        logDebug("saveDayStats()", "Adding new entry");
 
                         Transaction tx = sess.beginTransaction();
 
@@ -1458,8 +1405,7 @@ public class GGCDb
                     {
                         Transaction tx = sess.beginTransaction();
 
-                        if (db_debug)
-                            System.out.println("  Changed");
+                        logDebug("saveDayStats()", "Changing entry");
 
                         DayValueH dvh = dwr.getHibernateObject();
                         sess.update(dvh);
@@ -1473,15 +1419,17 @@ public class GGCDb
             catch (Exception ex)
             {
                 System.out.println("saveDayStats: " + ex);
+                logException("getHbA1c()", ex);
             }
 
         } // hasChanged
         else
         {
-            if (db_debug)
-                System.out.println("SDS: Has not changed");
+            logDebug("saveDayStats()", "No entries changed");
         }
 
+        logDebug("saveDayStats()", "End");
+        
     }
 
     public boolean dateTimeExists(long datetime)
@@ -1500,9 +1448,9 @@ public class GGCDb
 
             return(q.list().size()==1);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            System.err.println(e);
+    	    logException("dateTimeExists()", ex);
             return false;
         }
 
@@ -1516,7 +1464,6 @@ public class GGCDb
     
     public ArrayList<SelectableInterface> getNutritionHomeWeights()
     {
-	//System.out.println("hw list: " + this.homeweight_defs_list.size());
 	return this.homeweight_defs_list;
     }
 
@@ -1598,7 +1545,6 @@ public class GGCDb
 
         if (debug)
             ex.printStackTrace();
-
 
     }
 

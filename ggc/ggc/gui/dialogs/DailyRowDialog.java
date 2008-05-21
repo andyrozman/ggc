@@ -150,23 +150,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     DailyValues dV = null;
     DailyValuesRow m_dailyValuesRow = null;
 
-    //AbstractTableModel mod = null;
-
     NumberFormat bg_displayFormat, bg_editFormat;
     
-    
-    //GGCProperties props = GGCProperties.getInstance();
     JComponent components[] = new JComponent[9];
-/*
-    public AddRowFrame(AbstractTableModel m, DailyValues ndV, DailyStatsFrame dialog) 
-    {
-        super(dialog, "", true);
-        setTitle(m_ic.getMessage("ADD_NEW_ROW"));
-        dV = ndV;
-        mod = m;
-        init();
-    }
-    */
 
     Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
     Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
@@ -249,13 +235,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     public void initParameters(DailyValuesRow ndr)
     {
-        //if (add) 
-        //    setTitle(m_ic.getMessage("ADD_NEW_ROW"));
-        //else
-
-        //System.out.println(props.getBG_unit());
-
-
         setTitle(m_ic.getMessage("EDIT_ROW"));
         label_title.setText(m_ic.getMessage("EDIT_ROW"));
 
@@ -291,64 +270,15 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     {
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
 
-        System.out.println(props.getBG_unit());
-
-        // which format
-        //this.cob_bg_type.setSelectedIndex(props.getBG_unit()-1);
-        
         if (m_dailyValuesRow.getBG()>0)
         {
             this.ftf_bg1.setValue(new Integer((int)m_dailyValuesRow.getBGRaw()));
 	    this.ftf_bg2.setValue(new Float(m_da.getBGValueDifferent(DataAccess.BG_MGDL, m_dailyValuesRow.getBGRaw())));
-            
-/*            
-	    int val = m_da.getJFormatedTextValueInt(ftf_bg1);
-	    float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
-	    this.ftf_bg2.setValue(new Float(v_2));
-
-	    m_dailyValuesRow.get
-            
-            if (m_da.getBGMeasurmentType() == DataAccess.BG_MGDL)
-            {
-        	this.ftf_bg1.setValue(new Integer((int)m_dailyValuesRow.getBG()));
-        	this.ftf_bg2.setValue(new Float(m_da.getBGValueDifferent(DataAccess.BG_MGDL, m_dailyValuesRow.getBG())));
-                //ftf_bg.setValue(new Float(m_da.getBGValueDifferent(prev, v)));
-            }
-            else
-            {
-//        	this.ftf_bg.setValue(new Float(m_dailyValuesRow.getBG()));
-        	this.ftf_bg1.setValue(new Integer((int)m_da.getBGValueDifferent(DataAccess.BG_MGDL, m_dailyValuesRow.getBG())));
-        	this.ftf_bg2.setValue(new Float(m_dailyValuesRow.getBG()));
-            }
-  */          
         }
-        
-        
-        /*
-        if (m_dailyValuesRow.getBGAsString().equals("0"))
-        {
-            BGField.setText("");
-        }
-        else
-        {
-            this.BGField.setText(""+ this.m_dailyValuesRow.getBGAsString());
-        }
-
-        if (debug)
-        {
-            System.out.println("Db value (cuurent): " + this.m_dailyValuesRow.getBG());
-            System.out.println("Db value (mg/dL): " + this.m_dailyValuesRow.getBG(1));
-            System.out.println("Display value (" + props.getBG_unitString() + "): " + this.m_dailyValuesRow.getBG(props.getBG_unit()));
-        }
-*/
         
         this.ftf_ins1.setValue(new Integer((int)this.m_dailyValuesRow.getIns1()));
         this.ftf_ins2.setValue(new Integer((int)this.m_dailyValuesRow.getIns2()));
         this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
-
-//        Ins1Field.setText(""+this.m_dailyValuesRow.getIns1AsString());
-//        Ins2Field.setText(""+this.m_dailyValuesRow.getIns2AsString());
-//        BUField.setText(""+this.m_dailyValuesRow.getCHAsString());
 
         ActField.setText(this.m_dailyValuesRow.getActivity());
         UrineField.setText(this.m_dailyValuesRow.getUrine());
@@ -359,26 +289,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         CommentField.setText(this.m_dailyValuesRow.getComment());
 
-/*
-        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 110, 240, 200, panel);
-        addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
-        addComponent(ActField = new JTextField(), 110, 298, 220, panel);
-*/
-
-/*
-        this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5);
-        dtc.setBounds(160, 55, 100, 35);
-        panel.add(dtc);
-
-        addComponent(BGField = new JTextField(), 160, 118, 35, panel);
-        addComponent(Ins2Field = new JTextField(), 160, 148, 35, panel);
-        addComponent(Ins2Field = new JTextField(), 160, 178, 35, panel);
-        addComponent(BUField = new JTextField(), 160, 208, 35, panel);
-        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 110, 240, 200, panel);
-        addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
-        addComponent(ActField = new JTextField(), 110, 298, 220, panel);
-        addComponent(CommentField = new JTextField(), 110, 328, 220, panel);
-*/
     }
 
     /*
@@ -425,20 +335,14 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         addLabel(m_ic.getMessage("URINE") + ":", 318, panel);
         addLabel(m_ic.getMessage("ACTIVITY") + ":", 348, panel);
         addLabel(m_ic.getMessage("COMMENT") + ":", 378, panel);
-
         
         addLabel("mg/dL", 140, 138, panel);
-        addLabel("mmol/l", 140, 168, panel);
-
+        addLabel("mmol/L", 140, 168, panel);
         
         this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5);
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 
-        //addComponent(cob_bg_type = new JComboBox(this.m_da.bg_units), 220, 138, 80, panel);
-        //addComponent(BGField = new JTextField(), 140, 138, 55, panel);
-        
-//        setBGTextField();
         this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 55, 25, panel);
         this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25, panel);
         
@@ -449,8 +353,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         this.ftf_bg1.addFocusListener(this);
         this.ftf_bg2.addFocusListener(this);
         
-        this.ftf_bg1.addKeyListener(this);
-        this.ftf_bg2.addKeyListener(this);
+        //this.ftf_bg1.addKeyListener(this);
+        //this.ftf_bg2.addKeyListener(this);
 
 
         this.ftf_bg2.addKeyListener(new KeyListener()
@@ -477,12 +381,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             
         });
         
-        //addComponent(Ins1Field = new JTextField(), 140, 168, 55, panel);
-        //addComponent(Ins2Field = new JTextField(), 140, 198, 55, panel);
-
-        //public JFormattedTextField getTextField(int columns, int decimal_places, Object value,
-	//        int x, int y, int width, int height, Container cont)
-        //addComponent(BUField = new JTextField(), 140, 228, 55, panel);
 
         addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 120, 290, 200, panel);
         addComponent(UrineField = new JTextField(), 120, 318, 240, panel);
@@ -658,14 +556,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     {
 	
-//        addComponent(Ins1Field = new JTextField(), 140, 168, 55, panel);
-
-	
-	//JFormattedTextField
 	NumberFormat displayFormat, editFormat;    
 
-
-	
 	displayFormat = NumberFormat.getNumberInstance();
 	displayFormat.setMinimumFractionDigits(0);
 	displayFormat.setMaximumFractionDigits(decimal_places);
@@ -681,12 +573,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                         new NumberFormatter(editFormat)));
 		
         ftf.setValue(value);
-        //if (columns != 0)
-        //    ftf.setColumns(columns);
         ftf.setBounds(x,y,width,height);
-//        ftf.setBounds(140, 25, 100, 25);
         ftf.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
-        //panel3.add(amountField);
+        ftf.addKeyListener(this);
 	cont.add(ftf);
         
 	return ftf;

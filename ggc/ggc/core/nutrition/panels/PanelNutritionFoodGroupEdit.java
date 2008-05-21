@@ -1,11 +1,11 @@
 package ggc.core.nutrition.panels;
 
+import ggc.core.db.datalayer.FoodGroup;
+import ggc.core.db.datalayer.MealGroup;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.dialogs.NutritionGroupDialog;
 import ggc.core.util.DataAccess;
-import ggc.core.db.datalayer.FoodGroup;
-import ggc.core.db.datalayer.MealGroup;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -81,7 +81,8 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
     public void createPanel()
     {
 
-        this.setSize(420, 460);
+        this.setSize(520, 520);
+        //this.setBackground(Color.blue);
         this.setLayout(null);
 
         Font fnt_14_bold = new Font("Times New Roman", Font.BOLD, 14);
@@ -180,8 +181,10 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
        
         
         button = new JButton();
-        button.setBounds(200, 25, 25, 25);
-        button.setIcon(m_da.getImageIcon_22x22("disk_blue.png", this));
+        button.setBounds(470, 15, 32, 32);
+        button.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        button.setAlignmentY(JButton.CENTER_ALIGNMENT);
+        button.setIcon(m_da.getImageIcon("disk_blue.png", 26, 26, this));
         button.addActionListener(this);
         button.setActionCommand("save");
         this.add(button, null);
@@ -259,6 +262,8 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 	this.was_saved = false;
 	this.button_select.setEnabled(false);
 	
+	System.out.println("setParent: " + obj);
+	
 	if (group_type == GGCTreeRoot.TREE_USER_NUTRITION)
 	{
 	    setTypeOfAction(EditableAbstractPanel.ACTION_ADD);
@@ -284,6 +289,9 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
     {
 	this.was_saved = false;
 	this.button_select.setEnabled(false);
+
+	System.out.println("setParentRoot: " + obj);
+	
 	
 	if (group_type == GGCTreeRoot.TREE_USER_NUTRITION)
 	{
@@ -325,7 +333,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 	    tf_name.setText(this.food_group.getName());
 	    tf_name_i18n.setText(this.food_group.getName_i18n());
 	 
-	    if (this.meal_group.getParent_id()>0)
+	    if (this.food_group.getParentId()>0)
 	    {
 		this.parent_food_group = m_da.tree_roots.get("2").m_groups_ht.get("" + this.food_group.getParentId());
 		this.tf_parent.setText(this.parent_food_group.getName());
@@ -503,6 +511,12 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 	}
     }
 
+    
+    public void debug(String msg)
+    {
+	//System.out.println("PanelNutritionFoodGroupEdit: " + msg);
+	System.out.println(msg);
+    }
 
 
     /**
@@ -512,9 +526,10 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
      */
     public boolean saveData()
     {
+	debug("saveData");
 	if (this.isAddAction())
 	{
-	    
+	    debug("addAction");
 	    if (this.m_dialog.m_tree_type== GGCTreeRoot.TREE_USER_NUTRITION)
 	    {
 		FoodGroup fg = new FoodGroup(2);
@@ -548,6 +563,9 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 	}
 	else
 	{
+	    
+	    debug("EditAction");
+	    
 	    if (this.m_dialog.m_tree_type== GGCTreeRoot.TREE_USER_NUTRITION)
 	    {
 		long prev_parent_id =this.food_group.getParentId();
@@ -618,27 +636,42 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
     
     private void addFoodGroup2Tree(FoodGroup fg)
     {
+	m_da.tree_roots.get("2").addFoodGroup(fg);
+	m_dialog.refreshTree();
+	
+	/*
 	if (fg.getParentId()==0)
 	{
-	    m_da.tree_roots.get("2").m_groups_tree.add(fg);
+	    m_da.tree_roots.get("2").addFoodGroup(fg);
+	    m_dialog.refreshTree();
 	}
 	else
 	{
 	    m_da.tree_roots.get("2").m_groups_ht.get("" + fg.getParentId()).addChild(fg);
+	    //m_da.tree_roots.get("2").m_groups_ht.put("" + fg.getParentId(), fg);
+
+	    m_dialog.refreshTree();
 	}
+	*/
     }
 
     
     private void addMealGroup2Tree(MealGroup fg)
     {
+	m_da.tree_roots.get("3").addMealGroup(fg);
+	m_dialog.refreshTree();
+
+	/*
 	if (fg.getParent_id()==0)
 	{
-	    m_da.tree_roots.get("3").m_meal_groups_tree.add(fg);
+	    m_da.tree_roots.get("3").addMealGroup(fg);
+	    m_dialog.refreshTree();
 	}
 	else
 	{
 	    m_da.tree_roots.get("3").m_meal_groups_ht.get("" + fg.getParent_id()).addChild(fg);
-	}
+	    m_dialog.refreshTree();
+	} */
     }
     
     

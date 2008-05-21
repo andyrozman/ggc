@@ -196,6 +196,11 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 	    
     }
     
+    public void refreshTree()
+    {
+	setTreeModel(this.tree);
+    }
+    
     
     public void createPanels()
     {

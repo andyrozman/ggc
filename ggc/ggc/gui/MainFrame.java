@@ -31,6 +31,8 @@ package ggc.gui;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.plugins.MetersPlugIn;
+import ggc.core.plugins.PumpsPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
@@ -113,10 +115,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.9.12";
+    public  static String s_version = "0.2.13.1";
     public static String full_version = "v" + s_version;
 
-    public static String version_date = "29th April 2008";
+    public static String version_date = "15th May 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -168,6 +170,10 @@ public class MainFrame extends JFrame
     private DataAccess m_da = null;
 
 
+    MetersPlugIn plugin_meters = null;
+    PumpsPlugIn plugin_pumps = null;
+    
+    
     /**
      *   Static definitions (Look and Feel)
      */
@@ -247,6 +253,7 @@ public class MainFrame extends JFrame
 
         helpInit();
         
+        initPlugIns();
         
         
 
@@ -278,7 +285,6 @@ public class MainFrame extends JFrame
 */
 	//this.menu_help.add(GGCHelp.helpItem);
 
-        
 
         getContentPane().add(toolBar, BorderLayout.NORTH);
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
@@ -297,6 +303,13 @@ public class MainFrame extends JFrame
 
     }
 
+    
+    private void initPlugIns()
+    {
+	this.plugin_meters = new MetersPlugIn(this);
+	this.plugin_pumps = new PumpsPlugIn(this);
+    }
+    
     
     public void createMenus()
     {
@@ -920,7 +933,16 @@ public class MainFrame extends JFrame
 
             String command = e.getActionCommand();
 
-            if (command.equals("file_quit")) 
+
+            if (command.startsWith("meters_"))
+            {
+        	getMyParent().plugin_meters.actionPerformed(e);
+            }
+            else if (command.startsWith("pumps_"))
+            {
+        	getMyParent().plugin_pumps.actionPerformed(e);
+            }
+            else if (command.equals("file_quit")) 
             {
                 close();
             } 
@@ -1025,10 +1047,10 @@ public class MainFrame extends JFrame
 //                   (command.equals("food_nutrition_2")) || 
                      //(command.equals("tools_mlist")) ||
                      //(command.equals("tools_db_maint")) ||
-     		     (command.equals("tools_db_restore")) ||
-                     (command.equals("meters_read")) ||
-        	     (command.equals("meters_list")) ||
-        	     (command.equals("meters_config")))
+     		     (command.equals("tools_db_restore"))) //||
+                     //(command.equals("meters_read")) ||
+        	     //(command.equals("meters_list")) ||
+        	     //(command.equals("meters_config")))
             {
         	featureNotImplemented(command, "0.4");
             }
@@ -1043,7 +1065,7 @@ public class MainFrame extends JFrame
             {
         	featureNotImplemented(command, "0.6");
             }
-            else if ((command.equals("pumps_read")) ||
+            /*else if ((command.equals("pumps_read")) ||
         	    (command.equals("pumps_list")) ||
         	    (command.equals("pumps_profile")) ||
         	    (command.equals("pumps_manual_entry")) ||
@@ -1052,7 +1074,7 @@ public class MainFrame extends JFrame
         	    )
             {
         	featureNotImplemented(command, "0.5 " + m_ic.getMessage("OR") + " 0.6");
-            }
+            } */
             else if (command.equals("file_login"))
 	    {
             //ggc.gui.ReadMeterDialog rm = new ggc.gui.ReadMeterDialog(MainFrame.this);
@@ -1079,7 +1101,6 @@ public class MainFrame extends JFrame
 
     public void featureNotImplemented(String cmd, String version)
     {
-
     	String text = m_ic.getMessage("FEATURE");
     
     	text += " '" + this.actions.get(cmd).getName() +"' ";

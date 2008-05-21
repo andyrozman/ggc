@@ -29,10 +29,10 @@
 
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.core.util.NutriI18nControl;
 
+import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 

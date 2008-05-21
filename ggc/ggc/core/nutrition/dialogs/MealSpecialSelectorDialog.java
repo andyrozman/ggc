@@ -31,7 +31,6 @@ import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.FoodDescription;
 import ggc.core.db.datalayer.HomeWeightSpecial;
 import ggc.core.db.datalayer.Meal;
-import ggc.core.db.datalayer.MealPart;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.util.DataAccess;
 

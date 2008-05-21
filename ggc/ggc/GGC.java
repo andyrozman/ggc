@@ -37,8 +37,8 @@ package ggc;
 
 import ggc.gui.MainFrame;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 
 public class GGC

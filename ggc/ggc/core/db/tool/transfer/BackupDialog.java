@@ -3,7 +3,6 @@ package ggc.core.db.tool.transfer;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.db.hibernate.transfer.BackupRestoreDialog;
 import com.atech.utils.ATDataAccessAbstract;
 

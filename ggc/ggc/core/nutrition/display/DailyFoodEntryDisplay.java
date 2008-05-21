@@ -1,7 +1,6 @@
 package ggc.core.nutrition.display;
 
 import ggc.core.db.datalayer.DailyFoodEntry;
-import ggc.core.db.datalayer.MealPart;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;

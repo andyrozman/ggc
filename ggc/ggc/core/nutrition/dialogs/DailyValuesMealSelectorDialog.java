@@ -27,8 +27,6 @@
 
 package ggc.core.nutrition.dialogs;
  
-import ggc.core.nutrition.display.DailyFoodEntryDisplay;
-import ggc.core.nutrition.display.NutritionDataDisplay;
 import ggc.core.nutrition.panels.PanelMealSelector;
 import ggc.core.util.DataAccess;
 
@@ -39,7 +37,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.atech.i18n.I18nControlAbstract;

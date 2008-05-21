@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -368,12 +369,24 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
         this.button.setBounds(450, 395, 32, 32);
         this.add(button, null);
 	
+        button = new JButton();
+        button.setBounds(470, 5, 32, 32);
+        button.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        button.setAlignmentY(JButton.CENTER_ALIGNMENT);
+        button.setIcon(m_da.getImageIcon("disk_blue.png", 26, 26, this));
+        button.addActionListener(this);
+        button.setActionCommand("save");
+        this.add(button, null);
 	
+        
 
         return;
     }
 
 
+    
+    
+    
     public static final int MODEL_MEAL_PARTS = 1;
     public static final int MODEL_MEALS_NUTRITIONS = 2;
 
@@ -595,7 +608,14 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
         	this.createModel(this.list_hweight, this.table_2, this.hwd);
             }
         }
-        else
+	else if (action.equals("save"))
+	{
+	    if (this.hasDataChanged())
+	    {
+		this.saveData();
+	    }
+	}        
+	else
             System.out.println("PanelNutritionFoodEdit::Unknown command: " + action);
   
     }
@@ -667,20 +687,21 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 	this.tf_name_i18n.setText("");
 	this.jta_desc.setText("");
 	
-	//this.loadMealsParts();
-	
 	this.was_saved = false;
 	createKeyWord();
+	
+	this.list_nutritions.clear();
+	this.createModel(this.list_nutritions, this.table_1, this.ndd);
+
+	this.list_hweight.clear();
+	this.createModel(this.list_hweight, this.table_2, this.hwd);
+	
     }
 
     
     public void setData(Object obj)
     {
-	
 	this.food = (FoodDescription)obj;
-	
-	//fd.g
-	//this.meal = (Meal)obj;
 	
 	this.was_saved = false;
 
@@ -692,7 +713,6 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 	this.tf_name_i18n.setText(ic.getMessage(this.food.getName_i18n()));
 	
 	this.jta_desc.setText(this.food.getDescription());
-	
 	
 	if (this.food.getGroup_id()>0)
 	{
@@ -708,6 +728,39 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 	this.button_select.setEnabled(true);
 	createKeyWord();
 
+	
+	StringTokenizer strtok = new StringTokenizer(this.food.getNutritions(), ";");
+	this.list_nutritions.clear();
+
+	while(strtok.hasMoreTokens())
+	{
+	    NutritionDataDisplay ndd1 = new NutritionDataDisplay(ic, strtok.nextToken());
+	    
+	    ndd1.setNutritionDefinition(this.m_da.getDb().nutrition_defs.get(ndd1.getId()));
+	    list_nutritions.add(ndd1);
+	}
+
+	this.createModel(this.list_nutritions, this.table_1, this.ndd);
+
+
+	this.list_hweight.clear();
+	
+	
+	if ((this.food.getHome_weights()!=null) && (!this.food.getHome_weights().equals("")) && (!this.food.getHome_weights().equals("null")))
+	{
+	    strtok = new StringTokenizer(this.food.getHome_weights(), ";");
+       
+            while(strtok.hasMoreTokens())
+            {
+                HomeWeightDataDisplay hwd1 = new HomeWeightDataDisplay(ic, strtok.nextToken());
+                
+                hwd1.setHomeWeightDefinition(this.m_da.getDb().homeweight_defs.get(hwd1.getId()).getName());
+                this.list_hweight.add(hwd1);
+            }
+	}
+
+	this.createModel(this.list_hweight, this.table_2, this.hwd);
+	
     }
     
     
@@ -743,7 +796,6 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 
     private void processData()
     {
-    
 
 	Collections.sort(this.list_nutritions, new NutritionsComparator());
 	
@@ -785,14 +837,10 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
     public boolean hasDataChanged()
     {
 	
-	System.out.println("hasDataChanged");
-	
-	
 	if (this.was_saved)
 	    return false;
 	
 	processData();
-
 	
 	if (this.isAddAction())
 	{
@@ -815,14 +863,11 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 
     private boolean hasChangedEntry(String old_value, String new_value)
     {
-	//System.out.println("hasChangedEntry [old=" + old_value + ",new=" + new_value + "]");
-	
 	if ((m_da.isEmptyOrUnset(old_value)) ||
 	    (!old_value.equals(new_value)))
 	    return true;
 	else
 	    return false;
-	
     }
     
     
@@ -834,7 +879,6 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
      */
     public boolean saveData()
     {
-	
 
 	if (this.isAddAction())
 	{
@@ -881,11 +925,10 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements A
 	
     }
     
-    
     private void addFood2Tree(FoodDescription food)
     {
 	m_da.tree_roots.get("2").m_groups_ht.get("" + food.getGroup_id()).addChild(food);
-	//.m_meal_groups_ht.get("" + meal.getGroup_id()).addChild(meal);
+	this.m_dialog.refreshTree();
     }
     
     

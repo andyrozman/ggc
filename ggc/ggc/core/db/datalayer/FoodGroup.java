@@ -30,13 +30,13 @@
 
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.FoodGroupH;
 import ggc.core.db.hibernate.FoodUserGroupH;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
 
+import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
@@ -95,9 +95,15 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 	group_type = type;
 	
 	if (type==1)
+	{
 	    this.group_db1 = new FoodGroupH();
+	    //this.group_db1
+	}
 	else
+	{
 	    this.group_db2 = new FoodUserGroupH();
+	    this.group_db2.setParent_id(-1);
+	}
 	
     }
     

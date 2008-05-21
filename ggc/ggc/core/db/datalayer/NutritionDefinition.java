@@ -30,12 +30,12 @@
 
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.NutritionDefinitionH;
 import ggc.core.util.DataAccess;
 
 import java.util.Comparator;
 
+import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;

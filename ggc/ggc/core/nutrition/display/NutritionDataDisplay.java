@@ -30,6 +30,10 @@ public class NutritionDataDisplay extends ATTableData
 	    int index = full.indexOf("=");
 	    this.id = full.substring(0, index);
 	    this.value = full.substring(index+1);
+	    
+	    NutritionDefinition def = DataAccess.getInstance().getDb().nutrition_defs.get(id);
+	    setNutritionDefinition(def);
+	    
 	}
 
 
@@ -37,7 +41,6 @@ public class NutritionDataDisplay extends ATTableData
 	{
 	    super(ic);
 	    setNutritionDefinition(def);
-	    this.decimal_places = def.getDecimal_places();
 	    this.setAmount(value);
 	}
 	
@@ -53,6 +56,7 @@ public class NutritionDataDisplay extends ATTableData
 	    this.name = def.getName();
 	    //this.value = def.get.getTag();
 	    this.weight_unit = def.getWeight_unit();
+	    this.decimal_places = def.getDecimal_places();
 	}
 
 

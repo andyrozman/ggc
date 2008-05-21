@@ -30,12 +30,12 @@
 
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.DatabaseObjectHibernate;
 import ggc.core.db.hibernate.MealGroupH;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
 
+import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
@@ -82,7 +82,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.setName("");
         this.setDescription("");
         this.setName_i18n("");
-        this.setParent_id(0);
+        this.setParent_id(-1);
     }
 
 
