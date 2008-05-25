@@ -179,15 +179,8 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         
         createToolbar();
         createSystemTrayInstance();
+
         /*
-    	File f = new File("../data/ggc_db.lck");
-    
-    	if (f.exists())
-    	{
-    	    f.delete();
-    	}
-*/
-/*
         JMenuBar jmb = new JMenuBar();
         this.setJMenuBar(jmb);
 
@@ -212,10 +205,9 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         
         dailyStats = informationPanel.dailyStats;
         
-        
-        
         getContentPane().add(informationPanel, BorderLayout.CENTER);
         setSize(640,480);
+        this.setResizable(false);
         this.setVisible(true);
     }
 

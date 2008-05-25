@@ -48,6 +48,7 @@ public class MainLittlePanel extends JPanel
     public GeneralInfoPanelL   general = null;
     public DailyStatsPanelL    dailyStats = null;
     public ScheduleInfoPanelL  schedule = null;
+    public JTabbedPane tabbedPane = null;
 
 
     public MainLittlePanel(GGCLittle little)
@@ -62,10 +63,22 @@ public class MainLittlePanel extends JPanel
     	pane.add(general = new GeneralInfoPanelL());
         
         JPanel control_app_panel = new JPanel();
+        control_app_panel.setLayout(new GridLayout(1, 1));
+        control_app_panel.add(this.tabbedPane = new JTabbedPane());
+
+        this.tabbedPane.addTab("Actions", control = new DailyStatsControlsL(this));
+        this.tabbedPane.addTab("Schedule", schedule = new ScheduleInfoPanelL());
+        
+        
+        //	control = new DailyStatsControlsL(this));
+        
+        
+        
+        /*
         control_app_panel.setLayout(new GridLayout(2, 1));
         control_app_panel.add(control = new DailyStatsControlsL(this));
         control_app_panel.add(schedule = new ScheduleInfoPanelL()); //new DailyStatsControlsPanel(little));
-        
+        */
     	pane.add(control_app_panel);
 
         add(pane);
