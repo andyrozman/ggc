@@ -1,7 +1,6 @@
 Know Bugs:
 
     - [sf] german translation is somewhat behind schedule
-    - Slovene translation is also somewhat behind schedule
     - [sf] changes made to "medical data" don't get applied to "Colors & Fonts" until dialog is re-opened
       A: changes are saved on exit of dialog... I guess we have to change that.
     - GGC Little: meters button is unresponsive
@@ -10,6 +9,8 @@ Know Bugs:
       or whatever), the changes are still applied to GGC, but obviously can't be 
       loaded from the DB on startup; the behaviour in this case should be as if the 
       user had selected "Cancel"
+      A: When there is problem with database, program shouldn't even start... This will be fixed before 
+         public release of GGC (0.3)
     - this is a general problem whenever a static layout is used, but german strings 
       tend to be a bit longer that their english counterparts, resulting in a lot of 
       truncated strings
@@ -19,11 +20,13 @@ Know Bugs:
       unpredictable
       R: So, how's null layout not java's static layout? I know about their
       unpredictability (boy, do I!), but they at least adapt sizes to fit the contents
+      A: They are too unpredictable for my test, so we will stay with static for now. If string is too big it will be
+        cut off
     - The code relies on there being at least one entry per day; days without entries will be ignored in the date range selection code, resulting
       in the GlucoValues passed to CourseGraphView.setGlucoValues() containing only one day if there is only one value in the database, even  if
       a larger range was selected. (The problem lies in GlucoValues.getDayCount(), see FIXME-comment)
-    - Backup without anything selected will cause a ZipException
     - If e.g. the USDA DB is opened, GGC won't react to a "Close" command from the task bar (at least in KDE)
+      A: This must be internal problem with KDE. Dialogs are set to be modal, this works ok with windows
     - GGCLittle -> (no data in DB) New Entry -> the following message:
 0 year: 200 month: 85 day: 21  hour: 0 min: 0
 Exception in thread "AWT-EventQueue-0" java.lang.ArrayIndexOutOfBoundsException: 84
@@ -66,6 +69,11 @@ Not A Bug:
 
 
 Bugs fixed in version X:
+
+0.2.15
+    - Backup without anything selected will cause a ZipException
+    - Slovene translation is done
+
 
 0.2.12:
     - [sf] changing time in entry will not re-order cells

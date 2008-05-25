@@ -96,7 +96,7 @@ public class ExportNutritionDb extends ExportTool
     @SuppressWarnings("unchecked")
     public void export_UserFoodGroups()
     {
-	openFile(this.getRootPath() + "FoodUSerGroupH" + this.getFileLastPart() + ".txt");
+	openFile(this.getRootPath() + "FoodUserGroupH" + this.getFileLastPart() + ".txt");
 
 //	openFile("../data/export/food_user_group.txt");
 	writeHeader("ggc.core.db.hibernate.FoodUserGroupH", 

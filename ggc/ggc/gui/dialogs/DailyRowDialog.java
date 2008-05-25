@@ -532,7 +532,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         
         
-        help_button = m_da.createHelpButtonByBounds(260, 420, 100, 25, this);
+        help_button = m_da.createHelpButtonByBounds(260, 420, 110, 25, this);
 
         panel.add(help_button);
 

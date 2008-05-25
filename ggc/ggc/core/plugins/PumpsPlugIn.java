@@ -15,6 +15,7 @@ public class PumpsPlugIn implements ActionListener
 {
     
     private boolean installed = false;
+    
     I18nControl ic = I18nControl.getInstance();
     private String commands[] = { 
 		"MN_PUMPS_READ_DESC", 
@@ -36,6 +37,7 @@ public class PumpsPlugIn implements ActionListener
 
     private void checkIfInstalled()
     {
+	installed = false;
     }
     
     

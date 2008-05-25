@@ -89,7 +89,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 
-public class GGCDb implements DbCheckInterface
+public class GGCDb //implements DbCheckInterface
 {
     public static final int DB_CONFIG_LOADED = 1;
     public static final int DB_INITIALIZED = 2;
@@ -691,6 +691,7 @@ public class GGCDb implements DbCheckInterface
                             .setProperty("hibernate.c3p0.max_statements", "50"); */
 
 
+            
 //	    System.out.println("Config loaded.");
 
             return cfg;
@@ -1126,8 +1127,14 @@ public class GGCDb implements DbCheckInterface
 
 
         
-        int[] ids = { 4000, 4001, 4002, 4003 };
-        String[] names = { "PORTION", "PORTION,_BIG", "PORTION,_MEDIUM", "PORTION,_SMALL" };
+        int[] ids = { 4000, 4001, 4002, 4003, 4004, 
+        	      4005, 4006, 4007, 4008, 4009, 4010, 
+        	      4011, 4012, 4013, 4014, 4015,
+        	      4016, 4017, 4018, 4019 };
+        String[] names = { "PORTION", "PORTION,_BIG", "PORTION,_MEDIUM", "PORTION,_SMALL", "SPOON", 
+        	           "SPOON,_BIG", "STEAK,_SMALL", "STEAK,_SMALLER", "ITEMS", "SMALLER", "ITEM,_SMALLER",
+        	           "ITEM,_MEDIUM_SIZE", "ITEMS,_BIGGER", "SPOON,_SMALL", "ITEM,_SMALL", "CAN_(_100_G_)",
+        	           "HEADS", "ROOT,_MEDIUM", "SIZE", "FRUIT,_MEDIUM_SIZE" };
         
         
         // static (need to be done in init) 

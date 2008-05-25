@@ -98,6 +98,7 @@ public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
     
     	}
 
+    	// NOT IN I18n Db
     	if (!found)
     	    lab_file.setText(m_ic.getMessage("NO_LOCAL_DATA_AVAILABLE"));
 

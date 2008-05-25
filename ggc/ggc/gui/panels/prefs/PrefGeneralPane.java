@@ -178,8 +178,13 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
+		    File f = new File("./../data/skinlf_themes");
+		    
+		    System.out.println(f);
+		    System.out.println(f.getAbsolutePath());
+		    
 		    JFileChooser jfc = new JFileChooser();
-		    jfc.setCurrentDirectory(new File("../data/skinlf_themes"));
+		    jfc.setCurrentDirectory(f);
 		    jfc.setDialogTitle(m_ic.getMessage("SELECT_SKINLF_SKIN"));
 		    jfc.setDialogType(JFileChooser.CUSTOM_DIALOG);
 		    jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);

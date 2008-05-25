@@ -114,7 +114,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         this.m_da = da;
         this.m_db = m_da.getDb();
         
-    	setSize(640, 500);
+    	setSize(700, 470);
     	m_da.centerJDialog(this, m_da.getMainParent());
     	
         init();
@@ -283,7 +283,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         resultsPane = new JScrollPane(table);
 
 
-	Dimension dim = new Dimension(95, 25);
+	Dimension dim = new Dimension(110, 25);
         
 	JPanel gg = new JPanel();
 	gg.setLayout(new BorderLayout());
@@ -303,7 +303,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 	EntryBox1.add(tButton);
 
 	
-        help_button = m_da.createHelpButtonBySize(95, 25, this); 
+        help_button = m_da.createHelpButtonBySize(110, 25, this); 
 
         EntryBox1.add(help_button);
 	

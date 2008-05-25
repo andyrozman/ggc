@@ -508,15 +508,17 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      * @throws ClassCastException if the specified object's type prevents it
      *         from being compared to this object.
      */
-    public int compareTo(Object o)
+    public int compareTo(SelectableInterface o)
     {
-
+	/*
 	if (o instanceof SelectableInterface)
 	{
 	    return this.columnSorter.compareObjects(this, (SelectableInterface)o);
 	}
 	else
-	    throw new ClassCastException();
+	    throw new ClassCastException();*/
+
+	return this.columnSorter.compareObjects(this, o);
 
     }
     

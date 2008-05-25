@@ -1,4 +1,15 @@
-0.2.14
+2008-05-24 (0.2.15) Andy Rozman <andyrozman@users.sourceforge.net>
+    * changes to nutrition tables
+    * Changes to database xml files, new version of Internal Db (H2), now it also has some foods in user table
+    * Db Version Change: Stable: v5, Development: v6 
+    * README is now written and ready for deployment (translation of readme is needed, for each language)
+    * changes to english lang file
+    * Slovenian translation finished (for now)
+    * changed main theme
+    * some minor changed in code (some dialogs were readjusted)
+
+
+2008-05-20 (0.2.14) Andy Rozman <andyrozman@users.sourceforge.net>
     * adding log4j support to GGCDb and some other important classes
     * checking log4j configurations
 

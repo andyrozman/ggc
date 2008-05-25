@@ -78,7 +78,7 @@ public class DataAccess extends ATDataAccessAbstract
 {
 
     
-    public String currentDbVersion = "4";
+    public String currentDbVersion = "5";
     
     
     // LF
@@ -823,13 +823,7 @@ public class DataAccess extends ATDataAccessAbstract
     
     
     
-    public String makeI18nKeyword(String input)
-    {
-	String process = input.replaceAll(" ", "_");
-	process = process.toUpperCase();
-	
-	return process;
-    }
+
     
 
     
