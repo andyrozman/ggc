@@ -39,6 +39,8 @@ import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;
+import ggc.gui.little.panels.DailyStatsPanelL;
+import ggc.gui.little.panels.MainLittlePanel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -106,6 +108,8 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     
     boolean is_visible = true;
     
+    String ggc_little_version = "v0.2.3";
+    
     
     
 
@@ -171,7 +175,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
         String title = m_ic.getMessage("GGC_LITTLE_TITLE");
         
-        setTitle(title + " (" /*+ full_version*/ + ")");
+        setTitle(title + " (" + ggc_little_version + ")");
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(this);
@@ -235,16 +239,16 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 	
 	createToolbarAction("TB_SHOW_GRAPH", "TB_SHOW_GRAPH_DESC", "show_graph", "line-chart.png" );
 	
-	this.toolBar.add(getEmptyLabel(30,20));
+	//this.toolBar.add(getEmptyLabel(30,20));
 
-	createToolbarAction("MN_FROM_METER", "TB_READ_METER_LT_DESC", "read_meter", "readmeter.gif");
+	//createToolbarAction("MN_FROM_METER", "TB_READ_METER_LT_DESC", "read_meter", "readmeter.gif");
 
-	this.toolBar.add(getEmptyLabel(300,20));
+	this.toolBar.add(getEmptyLabel(360,20));
 
 	createToolbarAction("MN_ABOUT", "TB_ABOUT_DESC", "hlp_about", "about.png");
 	
 	
-	this.actions.get("read_meter").setEnabled(false);
+	//this.actions.get("read_meter").setEnabled(false);
 	
 	/*
         readMeterAction = new GGCAction("MN_FROM_METER", "MN_FROM_METER_DESC", "read_meter");

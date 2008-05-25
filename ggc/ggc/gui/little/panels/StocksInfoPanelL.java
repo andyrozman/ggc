@@ -37,11 +37,11 @@ import java.awt.*;
 import ggc.gui.panels.info.AbstractInfoPanel;
 
 
-public class ScheduleInfoPanelL extends AbstractInfoPanel
+public class StocksInfoPanelL extends AbstractInfoPanel
 {
-    public ScheduleInfoPanelL()
+    public StocksInfoPanelL()
     {
-        super(I18nControl.getInstance().getMessage("SCHEDULE"));
+        super(I18nControl.getInstance().getMessage("STOCKS"));
         setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();
@@ -50,8 +50,8 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
     private void init()
     {
 	add(new JLabel());
-        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
-        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
+        add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE")+":"));
+        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
 	add(new JLabel());
     }
 

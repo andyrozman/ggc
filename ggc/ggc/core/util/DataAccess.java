@@ -1173,29 +1173,6 @@ public class DataAccess extends ATDataAccessAbstract
         return getDateString(date) + " " + getTimeString(time);
     }
 
-    public String getLeadingZero(int number, int places)
-    {
-        String nn = "" + number;
-
-        while (nn.length() < places)
-        {
-            nn = "0" + nn;
-        }
-
-        return nn;
-    }
-
-    public String getLeadingZero(String number, int places)
-    {
-        number = number.trim();
-
-        while (number.length() < places)
-        {
-            number = "0" + number;
-        }
-
-        return number;
-    }
 
     public int getStartYear()
     {

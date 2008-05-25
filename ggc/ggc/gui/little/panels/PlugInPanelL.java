@@ -31,32 +31,28 @@ package ggc.gui.little.panels;
 import ggc.core.util.I18nControl;
 
 import javax.swing.*;
-
 import java.awt.*;
 
 import ggc.gui.panels.info.AbstractInfoPanel;
 
 
-public class ScheduleInfoPanelL extends AbstractInfoPanel
+public class PlugInPanelL extends JPanel
 {
-    public ScheduleInfoPanelL()
+    public PlugInPanelL()
     {
-        super(I18nControl.getInstance().getMessage("SCHEDULE"));
-        setLayout(new GridLayout(0, 1));
+        super(); //I18nControl.getInstance().getMessage("SCHEDULE"));
+        setLayout(new GridLayout(2, 1));
         init();
-        refreshInfo();
+        //new GridLayout()
+        //refreshInfo();
     }
 
     private void init()
     {
-	add(new JLabel());
-        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
-        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
-	add(new JLabel());
+        add(new PlugInMeterPanelL());
+//        	new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
+        add(new PlugInPumpPanelL());
+//        add(new JLabel(m_ic.getMessage("WILL_BE_FOUND_HERE")+" NOT YET"));
     }
 
-    @Override
-    public void refreshInfo()
-    {
-    }
 }

@@ -1,3 +1,5 @@
+package ggc.gui.little.panels;
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -28,13 +30,13 @@
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH
 // andyrozman
 
-package ggc.gui.little;
 
 
 import ggc.core.data.DailyValues;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;
+import ggc.gui.little.GGCLittle;
 import ggc.gui.panels.info.AbstractInfoPanel;
 
 import java.awt.Dimension;

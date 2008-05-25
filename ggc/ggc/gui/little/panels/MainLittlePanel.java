@@ -29,13 +29,18 @@
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH
 // andyrozman
 
-package ggc.gui.little;
+package ggc.gui.little.panels;
 
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Vector;
+import ggc.core.util.I18nControl;
+import ggc.gui.little.GGCLittle;
 import ggc.gui.panels.info.AbstractInfoPanel;
+
+import java.awt.GridLayout;
+import java.util.Vector;
+
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 
 public class MainLittlePanel extends JPanel
@@ -44,11 +49,19 @@ public class MainLittlePanel extends JPanel
 
     GGCLittle m_little = null;
 
-    public DailyStatsControlsL control = null;
     public GeneralInfoPanelL   general = null;
     public DailyStatsPanelL    dailyStats = null;
+
+    // tabs
+    public DailyStatsControlsL control = null;
+    public PlugInPanelL plug_in = null;
+    public StocksInfoPanelL stocks = null;
     public ScheduleInfoPanelL  schedule = null;
+    
+    
+    
     public JTabbedPane tabbedPane = null;
+    private I18nControl ic = I18nControl.getInstance();
 
 
     public MainLittlePanel(GGCLittle little)
@@ -66,9 +79,16 @@ public class MainLittlePanel extends JPanel
         control_app_panel.setLayout(new GridLayout(1, 1));
         control_app_panel.add(this.tabbedPane = new JTabbedPane());
 
-        this.tabbedPane.addTab("Actions", control = new DailyStatsControlsL(this));
-        this.tabbedPane.addTab("Schedule", schedule = new ScheduleInfoPanelL());
+        this.tabbedPane.addTab(ic.getMessage("TAB_CONTROL"), control = new DailyStatsControlsL(this));
+        this.tabbedPane.addTab(ic.getMessage("TAB_PLUGIN"), plug_in = new PlugInPanelL());
+        this.tabbedPane.addTab(ic.getMessage("TAB_SCHEDULE"), schedule = new ScheduleInfoPanelL());
+        this.tabbedPane.addTab(ic.getMessage("TAB_STOCKS"), stocks = new StocksInfoPanelL());
         
+
+        
+        //public PlugInPanelL plug_in = null;
+//        public StocksInfoPanelL stocks = null;
+//        public ScheduleInfoPanelL  schedule = null;
         
         //	control = new DailyStatsControlsL(this));
         

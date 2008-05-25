@@ -28,7 +28,7 @@
 // WORK IN PROGRESS, PLEASE DO NOT TOUCH
 // andyrozman
 
-package ggc.gui.little;
+package ggc.gui.little.panels;
 
 import ggc.core.data.DailyStatsTableModel;
 import ggc.core.data.DailyValues;

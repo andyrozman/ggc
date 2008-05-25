@@ -259,7 +259,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         String month = strtok.nextToken();
         String year = strtok.nextToken();
 
-        String dt = year + month + day + "0000";
+        String dt = year + m_da.getLeadingZero(month,2) + m_da.getLeadingZero(day,2) + "0000";
+        
+        System.out.println("sDate: " + sDate);
 
         this.dtc.setDateTime(Long.parseLong(dt));
 

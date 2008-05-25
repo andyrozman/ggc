@@ -1,0 +1,293 @@
+
+GNU Gluco Control (GGC)
+=======================
+
+Version 0.3, 4th June 2008
+---------------------------
+
+This readme file has now four section:
+--------------------------------------
+I.   GGC BASIC INFORMATION
+II.  USER INFORMATION
+III. TRANSLATORS INFORMATION
+IV.  DEVELOPERS INFORMATION
+
+End users only need to read the first section, translators first and second, and 
+developers all 3 of them.
+
+
+
+*******************************
+I.  USER INFORMATION
+*******************************
+
+1. About
+========
+GNU Gluco Control (GGC) is a pure Java application intended to help you to manage
+your diabetes.
+
+
+2. Status
+=========
+
+At this point we are at version 0.3, which is first public release. If you 
+installed any version prior to that, please deinstall. This version has
+ability to update it-self, when new version is available. 
+
+This first public release can use only internal database. If you have more that
+little computer knowledge, you can try to make it work with any database (see 
+section III) with just a little action. 
+
+New (major) versions are planned to occur in 6 month intervals.
+
+
+3. What functionalites are available:
+===================================== 
+
+- Adding Daily data about Insulin, BG entries, Activity, Urine, Comments
+- Display graphs for this daily data (still work in progress)
+- Food databases for "Carb Counting": USDA Nutrition Db, User Nutrition Db
+  and Meals database
+- Printing reports
+- Update mechanism (client side only), this means that until server side of 
+  update is done, you won't be able to update, but as soon as that works
+  you will have option to update.   
+
+
+4. Planned functionalities:
+===========================
+
+Version 0.4
+------------
+- Db Tool (for using other databases and install of initial data)
+- Multi person instance
+- Finalization of GGC Little, which is used as resident application for adding
+  new data through day
+- GGC PPC - Version of application to be used by Pocket PC (not all 
+  functionalities of full version will be available)
+- Update mechanism (server side)   
+- Integration of Meter Tool (Meter Tool is being developed as separate project)
+- Appointments (adding appointment, adding data from doctor's visit), Doctors 
+  management (adding)
+- Medical stock - Listing of everything that patient has, and what he needs to
+  get to handle diabetes (and also any other condition) 
+- Fully write Help files and add help through application (english version so far)
+
+
+Version 0.5
+------------
+- Export/Import Management
+- Export/Import data
+- GGC Network (running several instances of GGC on several computers)
+- Synchronization (for GGC network)
+- Links to data about diabetes on internet
+- Pump Tool integration
+
+
+
+5. Sub-projects
+===============
+
+
+
+
+
+
+  
+
+
+*******************************
+II.  USER INFORMATION
+*******************************
+
+If you are brave enough see section IV, A.), Step 1-3. If you are using windows platform
+take GGC*.exe file from sourceforge.net, which will install application for you. Only 
+prerequisite is that you have java 1.5 or higher installed.
+
+
+
+
+*******************************
+III.  TRANSLATORS INFORMATION
+*******************************
+
+I18nCheck - This utility helps translators to see if their language file has all 
+    keywords in language files (in development process we add keywords in default
+    language file (english), so translators only need to translate new keywords).
+
+Note: Langauge file must be ASCII file with unicode escape codes. Translator are 
+    not limited with this. They can use any UTF like editor, and type their characters
+    without problems. At end of translation they need to run JDK tool native2ascii,
+    which will change your characters into unicode escape sequences (be carefull, you
+    must save language file in utf).
+
+
+
+
+*******************************
+IV.  DEVELOPERS INFORMATION
+*******************************
+
+
+All information on how to start with development is stored in this file. 
+
+
+If you are Database Guru and prefer to use your own database (which must be supported 
+by Hibernate 3.x, which we use, see: www.hibernate.org for list), go to step B, if 
+you don't know anything about database, database administration, use step B. Read 
+step C as follow-up to both A and B steps.
+
+
+
+A.) Easy way (no database and/or hibernate knowledge needed)
+============================================================
+
+1.) Download latest GGC*.zip file from sourceforge.net
+2.) Unpack this file to directory of your choice, for this example we will use
+    c:\ggc (same goes for linux/unix/mac, you just need to use different directories
+	and chars for directory separation.
+3.) OK. Now you have latest released version of ggc running. You can now run GGC.
+
+---
+
+4.) Download your favorite SVN client (subversion)
+5.) Retrive latest svn snapshot
+6.) Create following directories under c:\gcc, /build/classes
+7.) Rename SVN_REP/trunk/ggc/build/GGCBuild.properties_default to 
+    SVN_REP/trunk/ggc/build/GGCBuild.properties (SVN_REP is root of where your SVN 
+	client puts files)
+8.) Edit GGCBuild.properties, you need to change only outdir.dir parameter to directory 
+    where you placed content of GGC*.zip file
+9.) Install ANT 1.6 or newer (ant.apache.org, if you can please install version 1.6.x).
+10.) Use 'ant copy' tyo copy all needed files for running
+11.) Use 'ant build_gcc' to build all
+12.) now go to d:\ggc\build\classes and try running new built version of GCC. If there 
+     is error on running, check run.cmd (or run.sh)
+
+
+
+
+1. How to install (SVN Version)
+===============================
+
+Installation is a little tricky. 
+
+If you value your time, please download GGC_*.zip from sf.net and then follow needed steps. If you use this 
+image you will have needed tree structure and internal database with all nutrition data, ready to test.
+
+
+1. Please get newest version from SVN. 
+
+2. Go to build directory. Rename GGCBuild.properties_default to GGCBuild.properties. Edit 
+    GGCBuild.properties to reflect your directories. 
+    
+3. Please follow instructions in "GGC ANT Build How-TO.txt" and build everything.
+
+4. Copy files from source directory to your build (classes) directory.
+	GGC_*.properties
+	log4j.properties
+	*.hbm.xml
+	run.cmd
+
+5. Install Database. For testing purposes there was built internal database placed into svn.
+    You must download ggc_db.zip (ggc_db_nutr.zip if you want whole nutrition database).
+    Put files into ../data directory. 
+    
+    If you wish to use your own external database see GGC_Config.properties and edit it
+    accordingly (don't forget to set SELECTED_DB). In SVN there is test_nutrition.zip 
+    where you can find special *.cmd file which must be edited and you can use it to create 
+    database and add nutrition entries (you must put nutrition database (found in ggc-support 
+    files on sf.net)) to directory ../data/nutrition.
+    
+6. Run ggc software: (first edit run.cmd) 
+    run.cmd
+
+
+
+
+Not yet done.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OLD README
+----------
+
+
+
+GNU Gluco Control (GGC) is a pure Java application helping you to manage your
+diabetes.
+
+Currently, we are in a very early stage of development.
+
+You need the commapi:
+ javacomm api <http://java.sun.com/products/javacomm>
+installed on your system, if you want to access your "GlucoCard" Meter. It is
+the only meter avaible to me, so there will be no support for additional
+meters in the near future. But, you are invited to write on, or give us the
+protocol specification for your meter ;-)
+
+If you want to store your data in a MySQL Database (recommended), you need this 
+driver:
+ mm.mysql.jdbc <http://www.mysql.com/downloads/api-jdbc.html>
+
+Install:
+========
+
+CVS:
+
+1. Get the sources from the sf cvs servers.
+2. Compile them.
+3. Run GGC:
+
+	#java ggc
+
+   Hint: I need to run the VM with the -noverify switch, to get the commapi
+   running:
+
+	#java -noverify ggc
+
+(Make sure you have all required classes in your classpath)
+
+Packaged Version:
+
+1. Download the package (from sourcforge).
+2. Extract it:
+
+        #gunzip ggc_<version>.tar.gz
+
+3. Untar it:
+	
+	#tar xf ggc_<version>.tar
+
+   This will create a new directory named 'ggc'. There you find all resources,
+   sources and a *.jar file.
+
+4. Run GGC:
+
+	#java -jar ggc.jar
+
+5. Have fun while testing.
+
+Future:
+=======
+
+The first version which is indented for _normal_ users (!= programmer) will
+be version 0.1! Until this release only developers should use the program.

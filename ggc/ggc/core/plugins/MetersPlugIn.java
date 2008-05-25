@@ -29,6 +29,12 @@ public class MetersPlugIn implements ActionListener
 	checkIfInstalled();
     }
 
+    public MetersPlugIn()
+    {
+	
+    }
+    
+    
     private void checkIfInstalled()
     {
     }

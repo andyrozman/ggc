@@ -30,7 +30,7 @@
 // andyrozman
 
 
-package ggc.gui.little;
+package ggc.gui.little.panels;
 
 import ggc.gui.panels.info.AbstractInfoPanel;
 import ggc.core.util.I18nControl;
@@ -70,8 +70,8 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
         add(lblIns1);
         add(new JLabel(m_ic.getMessage("BASAL_INSULIN")+":"));
         add(lblIns2);
-        add(new JLabel(m_ic.getMessage("GLUCOMETER")+":"));
-        add(lblMeter);
+        //add(new JLabel(m_ic.getMessage("GLUCOMETER")+":"));
+        //add(lblMeter);
         add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
         add(lblUnit);
         

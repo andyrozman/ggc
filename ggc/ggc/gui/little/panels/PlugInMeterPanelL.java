@@ -28,20 +28,24 @@
 
 package ggc.gui.little.panels;
 
+import ggc.core.plugins.MetersPlugIn;
 import ggc.core.util.I18nControl;
-
-import javax.swing.*;
-
-import java.awt.*;
-
 import ggc.gui.panels.info.AbstractInfoPanel;
 
+import java.awt.GridLayout;
 
-public class ScheduleInfoPanelL extends AbstractInfoPanel
+import javax.swing.JLabel;
+
+
+public class PlugInMeterPanelL extends AbstractInfoPanel
 {
-    public ScheduleInfoPanelL()
+    
+    private I18nControl ic = I18nControl.getInstance();
+    //MetersPlugIn plug_in = new MetersPlugIn();
+    
+    public PlugInMeterPanelL()
     {
-        super(I18nControl.getInstance().getMessage("SCHEDULE"));
+        super(I18nControl.getInstance().getMessage("METERS_PLUGIN"));
         setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();
@@ -49,10 +53,11 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
 
     private void init()
     {
-	add(new JLabel());
-        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
-        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
-	add(new JLabel());
+    	String text = "<html><body>"; 
+    	text += String.format(ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.4");
+    	text += "</body></html>";
+	
+        add(new JLabel(text));
     }
 
     @Override

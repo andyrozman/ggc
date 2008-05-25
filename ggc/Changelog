@@ -1,5 +1,9 @@
-0.2.14
-=======
+2008-05-25 (0.2.16) Andy Rozman <andyrozman@users.sourceforge.net>
+    * GGC Little was changed. Button for meter removed and upper left corner is now tabbed, so that it can contain 
+      several panels. 
+    * Added panels to GGC Little: plug-ins panel, stocks panel, and older ones were reformed a little.
+    * bug fixing all GGC Little stuff in bugs
+
 2008-05-24 (0.2.15) Andy Rozman <andyrozman@users.sourceforge.net>
     * changes to nutrition tables
     * Changes to database xml files, new version of Internal Db (H2), now it also has some foods in user table

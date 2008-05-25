@@ -32,9 +32,10 @@ At this point we are at version 0.3, which is the first public release. If you
 installed any version prior to that, please uninstall. This version has the
 ability to update itself when a new version is available.
 
-This first public release can only use the internal database. If you have above
-average computer knowledge, you can try to make it work with any database (see
-section III) with just a little work.
+This first public release can only use the internal database. If you have 
+little above average computer knowledge (read 'if you like to dabble'), you can 
+try to make it work with any database (see file 'How_I_Can_Help.txt') with just a 
+little work.
 
 New (major) releases are planned to occur in 6 month intervals. This means that
 you can expect release 0.4 by the end of this year (or start of the next one).

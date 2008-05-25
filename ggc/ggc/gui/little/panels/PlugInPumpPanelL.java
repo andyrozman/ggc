@@ -37,11 +37,14 @@ import java.awt.*;
 import ggc.gui.panels.info.AbstractInfoPanel;
 
 
-public class ScheduleInfoPanelL extends AbstractInfoPanel
+public class PlugInPumpPanelL extends AbstractInfoPanel
 {
-    public ScheduleInfoPanelL()
+    
+    private I18nControl ic = I18nControl.getInstance();
+    
+    public PlugInPumpPanelL()
     {
-        super(I18nControl.getInstance().getMessage("SCHEDULE"));
+        super(I18nControl.getInstance().getMessage("PUMPS_PLUGIN"));
         setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();
@@ -49,10 +52,11 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
 
     private void init()
     {
-	add(new JLabel());
-        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
-        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
-	add(new JLabel());
+    	String text = "<html><body>"; 
+    	text += String.format(ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
+    	text += "</body></html>";
+	
+        add(new JLabel(text));
     }
 
     @Override
