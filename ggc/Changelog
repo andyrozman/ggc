@@ -1,3 +1,5 @@
+0.2.14
+=======
 2008-05-24 (0.2.15) Andy Rozman <andyrozman@users.sourceforge.net>
     * changes to nutrition tables
     * Changes to database xml files, new version of Internal Db (H2), now it also has some foods in user table
@@ -8,6 +10,9 @@
     * changed main theme
     * some minor changed in code (some dialogs were readjusted)
 
+2008-05-23 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * README: spell & grammar check
+    * README.de: startet
 
 2008-05-20 (0.2.14) Andy Rozman <andyrozman@users.sourceforge.net>
     * adding log4j support to GGCDb and some other important classes
