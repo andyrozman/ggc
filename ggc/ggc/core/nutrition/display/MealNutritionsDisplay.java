@@ -51,7 +51,7 @@ public class MealNutritionsDisplay extends ATTableData implements
     {
 	super(ic);
 	this.id = "" + mn.getId();
-	this.value = "" + mn.getAmount();
+	this.value = "" + mn.getCalculatedAmount();
 	// this.calculated_value = mn.getAmount();
 
     }

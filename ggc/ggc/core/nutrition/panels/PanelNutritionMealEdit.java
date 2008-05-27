@@ -505,7 +505,8 @@ public class PanelNutritionMealEdit extends GGCTreePanel /*JPanel*/ implements A
 			nutres.put("" + mmn.getId(), mmn);
 		    }
 
-		    nutres.get("" + mn.getId()).addToAmount((mn.getAmount() * amount));
+		    //nutres.get("" + mn.getId()).addToAmount((mn.getAmount() * amount));
+		    nutres.get("" + mn.getId()).addToCalculatedAmount(((mn.getAmount()/100.0f) * amount));
 		    
 		}
 		

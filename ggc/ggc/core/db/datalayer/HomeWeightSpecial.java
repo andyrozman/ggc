@@ -64,6 +64,7 @@ public class HomeWeightSpecial implements SelectableInterface
     
     public HomeWeightSpecial(String hw_string)
     {
+	System.out.println("Hw: " + hw_string);
 	String t1[] = m_da.splitString(hw_string, "=");
 	
 	this.id = m_da.getLongValueFromString(t1[0]);
@@ -77,6 +78,7 @@ public class HomeWeightSpecial implements SelectableInterface
 	}
 	else
 	{
+	    this.amount = "1";
 	    this.weight = t1[1];
 	}
 	

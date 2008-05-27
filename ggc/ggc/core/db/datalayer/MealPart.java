@@ -59,7 +59,7 @@ public class MealPart
 	StringTokenizer strtok = new StringTokenizer(meal_str, "=");
 	
 	String meal_id_in = strtok.nextToken();
-	String amount_in = strtok.nextToken();
+	String amount_in = strtok.nextToken().replace(',', '.');
 	
 	StringTokenizer strtok2 = new StringTokenizer(meal_id_in, ":");
 	

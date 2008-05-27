@@ -48,15 +48,18 @@ public class DailyFoodEntry implements SelectableInterface
     public boolean debug = false;
     String text_idx;
     DataAccess m_da = DataAccess.getInstance();
+    GlycemicNutrients glyc_nutr = null;
+    
+    boolean root_entry = false;
 
     long id;
     String name;
     //String amount;
     String weight;
     
-    public static final int AMOUNT_WEIGHT = 1;
-    public static final int AMOUNT_HOME_WEIGHT = 2;
-    public static final int AMOUNT_AMOUNT = 3;
+    //public static final int AMOUNT_WEIGHT = 1;
+    //public static final int AMOUNT_HOME_WEIGHT = 2;
+    //public static final int AMOUNT_AMOUNT = 3;
     
     
     // 1=usda food, 2=user food, 3=meal
@@ -79,23 +82,28 @@ public class DailyFoodEntry implements SelectableInterface
     
     private float calculated_multiplier = 0.0f;
 
-    private ArrayList<MealNutrition> nutritions = null; 
+    private ArrayList<MealNutrition> nutrients = null; 
     
-    
+    public DailyFoodEntry()
+    {
+	this.nutrients = new ArrayList<MealNutrition>();
+	this.calculated_multiplier = 1.0f;
+	this.root_entry = true;
+    }
     
     // food + weight
     public DailyFoodEntry(/*int food_type,*/ FoodDescription fd, float weight)  
     {
 	
 	//this(food_type, food_id, weight_type, 0L, amount);
-	this(fd.getFoodType(), fd, null, DailyFoodEntry.AMOUNT_WEIGHT, null, weight);
+	this(fd.getFoodType(), fd, null, DailyFoodEntry.WEIGHT_TYPE_WEIGHT, null, weight);
     }
     
     // food + home weight
     public DailyFoodEntry(/*int food_type,*/ FoodDescription fd, HomeWeightSpecial hw, float amount)  
     {
 	//this(food_type, food_id, weight_type, 0L, amount);
-	this(fd.getFoodType(), fd, null, DailyFoodEntry.AMOUNT_HOME_WEIGHT, hw, amount);
+	this(fd.getFoodType(), fd, null, DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT, hw, amount);
     }
     
 
@@ -103,7 +111,7 @@ public class DailyFoodEntry implements SelectableInterface
     public DailyFoodEntry(/*int food_type,*/ Meal ml, float amount)  
     {
 	//this(food_type, food_id, weight_type, 0L, amount);
-	this(3, null, ml, DailyFoodEntry.AMOUNT_AMOUNT, null, amount);
+	this(3, null, ml, DailyFoodEntry.WEIGHT_TYPE_AMOUNT, null, amount);
     }
     
     /*
@@ -151,6 +159,7 @@ public class DailyFoodEntry implements SelectableInterface
 	this.amount_type = amount_type; 
 	this.amount = amount;
 	
+	loadObjects();
     }
 
     
@@ -187,7 +196,27 @@ public class DailyFoodEntry implements SelectableInterface
 	
     }
     
-
+    
+    public DailyFoodEntry(String val, boolean direct)
+    {
+	//2:103=30.0   ;2:215=100.0
+	
+	String v1[] = m_da.splitString(val, "=");
+	
+	String foods[] = m_da.splitString(v1[0], ":");
+	
+	this.nutrition_food_type = m_da.getIntValueFromString(foods[0]);
+	this.nutrition_food_id = m_da.getLongValueFromString(foods[1]);
+	
+	this.amount_type = DailyFoodEntry.WEIGHT_TYPE_WEIGHT; //   this.getAmountType(ids[0]);
+	this.amount = m_da.getFloatValueFromString(v1[1]);
+	this.home_weight_id = -1;
+	
+	loadObjects();
+	
+    }
+    
+    
     public void loadObjects()
     {
 	//new GGCTreeRoot(1);
@@ -201,7 +230,7 @@ public class DailyFoodEntry implements SelectableInterface
 	{
 	    this.m_food = m_da.tree_roots.get("" + this.nutrition_food_type).m_foods_ht.get("" + this.nutrition_food_id);
 
-	    if (this.amount_type==DailyFoodEntry.AMOUNT_HOME_WEIGHT)
+	    if (this.amount_type==DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
 	    {
 		loadHomeWeight();
 		
@@ -216,6 +245,7 @@ public class DailyFoodEntry implements SelectableInterface
 	this.amount = dfe.amount;
 	this.m_home_weight_special = dfe.m_home_weight_special;
 	this.home_weight_id = dfe.home_weight_id;
+	
 	
 	this.calculated_multiplier = 0.0f;
     }
@@ -256,6 +286,7 @@ public class DailyFoodEntry implements SelectableInterface
     {
 	return this.amount_type_str[this.amount_type];
     }
+
     
     public String getHomeWeightDescription()
     {
@@ -272,6 +303,7 @@ public class DailyFoodEntry implements SelectableInterface
     {
 	return DataAccess.Decimal2Format.format(this.amount);
     }
+    
     
     private void loadHomeWeight()
     {
@@ -293,19 +325,25 @@ public class DailyFoodEntry implements SelectableInterface
     
     private void calculateMultiplier()
     {
+	System.out.println("calculateMultiplier");
+	System.out.println("amount: " + this.amount);
+	
 	if (this.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
 	{
 	    this.calculated_multiplier = this.amount/100.0f;
 	}
 	else if (this.amount_type==DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
 	{
-	    this.calculated_multiplier = this.m_home_weight_special.getCalculatedWeight() /100.0f;
+	    this.calculated_multiplier = (this.m_home_weight_special.getCalculatedWeight() /100.0f) * amount;
 	}
 	else
 	{
 	    this.calculated_multiplier = this.amount;
+	    //XXX: This should be like that, probably... ??!!
+	    //this.calculated_multiplier = this.amount/100.0f;
 	}
     }
+    
     
     public float getMultiplier()
     {
@@ -333,6 +371,28 @@ public class DailyFoodEntry implements SelectableInterface
 	
 	return -1;
     }
+
+    
+    public void displayNutritions(ArrayList<MealNutrition> nuts)
+    {
+	for(int i=0; i<nuts.size(); i++)
+	{
+	    System.out.print(nuts.get(i));
+	}
+	
+    }
+    
+    
+    public void displayNutritions()
+    {
+	ArrayList<MealNutrition> nuts = this.getNutrientsCalculated();
+	
+	for(int i=0; i<nuts.size(); i++)
+	{
+	    System.out.print(nuts.get(i));
+	}
+	
+    }
     
 
     @Override
@@ -359,7 +419,7 @@ public class DailyFoodEntry implements SelectableInterface
 	sb.append(this.amount_type_str[this.amount_type]);
 	sb.append("%");
 	
-	if (this.amount_type==DailyFoodEntry.AMOUNT_HOME_WEIGHT)
+	if (this.amount_type==DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
 	{
 	    sb.append(this.home_weight_id);
 	    sb.append("%");
@@ -378,19 +438,21 @@ public class DailyFoodEntry implements SelectableInterface
     private void loadNutritions()
     {
 	String nutr;
+	this.nutrients = new ArrayList<MealNutrition>();
 	
 	if ((this.nutrition_food_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
             (this.nutrition_food_type == GGCTreeRoot.TREE_USER_NUTRITION))
 	{
 	    nutr = this.m_food.getNutritions();
+	    processNutrients(nutr, 1.0f);
 	}
 	else
 	{
 	    nutr = this.m_meal.getNutritions();
+	    processMeal(this.m_meal);
 	}
 	
-	this.nutritions = new ArrayList<MealNutrition>();
-	
+	/*
 	StringTokenizer strtok = new StringTokenizer(nutr, ";");
 	
 	while(strtok.hasMoreTokens())
@@ -398,16 +460,231 @@ public class DailyFoodEntry implements SelectableInterface
 	    MealNutrition mn = new MealNutrition(strtok.nextToken(), true);
 	    this.nutritions.add(mn);
 	}
+	*/
+    }
+    
+    
+    private void processMeal(Meal meal)
+    {
+	String ml_parts = meal.getParts();
+	
+	String parts[] = m_da.splitString(ml_parts, ";");
+	System.out.println("Meal Parts: " + ml_parts + this.getMultiplier());
+
+	
+	for(int i=0; i<parts.length; i++)
+	{
+	    DailyFoodEntry dfe = new DailyFoodEntry(parts[i], true);
+	    
+	    //ArrayList<MealNutrition> mn_list = dfe.getNutrients(); //Calculated();
+	    //System.out.println("Normal: " + i);
+	    //this.displayNutritions(mn_list);
+
+	    //System.out.println("Calculated: " + i);
+	    ArrayList<MealNutrition> mn_list2 = dfe.getNutrientsCalculated(this.getMultiplier()); //Calculated();
+	    this.displayNutritions(mn_list2);
+	    
+	    
+	    System.out.println("Merge: " + i);
+	    mergeNutrientsData(mn_list2);
+	    this.displayNutritions();
+	    
+	}
+    }
+    
+    
+    private void out(String text)
+    {
+	System.out.println(text);
+    }
+    
+    
+    
+    
+    
+    public void mergeNutrientsData(ArrayList<MealNutrition> mn_list)
+    {
+	//this.nutrients = new ArrayList<MealNutrition>();
+	
+	out("!!!!!!!!!!!!!!!!!!!!!!!  MERGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE !!!!!!!!!!!!");
+	
+	
+	float mul = getMultiplier();
+	
+	for(int i=0; i<mn_list.size(); i++)
+	{
+	    MealNutrition mn_target = mn_list.get(i);
+	    
+	    MealNutrition mn = findNutrient(mn_target.getId());
+	    
+	    if (mn==null)
+	    {
+		//mn_target.getAmount()
+		// XXX: calc was normal
+		/*if (this.root_entry)  // !
+		{
+		    System.out.println("Root traget[nw]: \n" + mn_target + " mult: " + mul);
+		    //mn_target.addToCalculatedAmount(mn_target.getCalculatedAmount() * mul);
+		    mn_target.setAmount(mn_target.getCalculatedAmount());
+		} */
+		
+		// XXX: outise root
+		mn_target.setAmount(mn_target.getCalculatedAmount());
+		
+		this.nutrients.add(mn_target);
+	    }
+	    else
+	    {
+		System.out.println("Root traget: \n" + mn_target + " mult: " + mul);
+		// XXX: calc was normal
+		mn.addToCalculatedAmount(mn_target.getCalculatedAmount() * mul);
+		//mn.addToCalculatedAmount(mn_target.getCalculatedAmount());
+		// XXX: test 1
+		mn.setAmount(mn.getCalculatedAmount());
+		//mn_target.setAmount(mn_target.getCalculatedAmount());
+
+	    }
+	}
+    }
+
+    
+    public void mergeGlycemicData(DailyFoodEntry dfe)
+    {
+	if (dfe.containsGlycemicNutrients())
+	{
+	    if (this.containsGlycemicNutrients())
+	    {
+		// process
+		// TODO: do it
+	    }
+	    else
+	    {
+		this.glyc_nutr = dfe.getGlycemicNutrients();
+	    }
+	}
 	
     }
     
     
-    public ArrayList<MealNutrition> getNutritions()
+    
+    private MealNutrition findNutrient(int id)
     {
-	if (this.nutritions == null)
+	for(int i=0; i<this.nutrients.size(); i++)
+	{
+	    if (this.nutrients.get(i).getId()==id)
+	    {
+		return this.nutrients.get(i);
+	    }
+	}
+	
+	return null;
+	
+    }
+    
+    
+
+    private void processNutrients(String nutr, float value)
+    {
+	StringTokenizer strtok = new StringTokenizer(nutr, ";");
+	
+	System.out.println("processNutrients::Value: " + value);
+	
+	while(strtok.hasMoreTokens())
+	{
+	    MealNutrition mn = new MealNutrition(strtok.nextToken(), true);
+	    
+	    if (mn.isGlycemicNutrient())
+	    {
+		this.addGlycemicNutrient(mn);
+	    }
+	    else
+	    {
+		//mn.addToCalculatedAmount(mn.getAmount() * this.getMultiplier());
+		mn.addToCalculatedAmount(mn.getAmount());
+		//System.out.println(mn);
+		this.nutrients.add(mn);
+	    }
+	}
+    }
+    
+    
+    
+    public ArrayList<MealNutrition> getNutrients()
+    {
+	if (this.nutrients == null)
 	    loadNutritions();
 	
-	return this.nutritions;
+	return this.nutrients;
+    }
+    
+
+    public ArrayList<MealNutrition> getNutrientsCalculated()
+    {
+	return getNutrientsCalculated(1.0f);
+    }
+    
+    
+    
+    public ArrayList<MealNutrition> getNutrientsCalculated(float calc)
+    {
+	if (this.nutrients == null)
+	    loadNutritions();
+	
+	float mult = this.getMultiplier() * calc;
+	
+	System.out.println("getCalculated: " + this.getMultiplier());
+	
+	for(int i=0; i<this.nutrients.size(); i++)
+	{
+	    MealNutrition mn = this.nutrients.get(i);
+	    mn.clearCalculated();
+	    //mn.setAmount(mn.getAmount() * mult);
+	    mn.addToCalculatedAmount(mn.getAmount() * mult);
+	}
+	
+	return this.nutrients;
+    }
+
+    
+    
+    public void calculateNutrition(MealNutrition mn, float mult)
+    {
+	
+	if ((mn.getId()>=4000) && (mn.getId()<=4005))
+	{
+	    addGlycemicNutrient(mn);
+	}
+	else
+	{
+	    MealNutrition mmn = new MealNutrition(mn);
+	    mn.setAmount(mn.getAmount() * mult);
+	}
+	
+    }
+    
+    
+    
+    private void addGlycemicNutrient(MealNutrition mn)
+    {
+	if (!containsGlycemicNutrients())
+	{
+	    this.glyc_nutr = new GlycemicNutrients(mn); 
+	}
+	else
+	{
+	    this.glyc_nutr.addNutrient(mn);
+	}
+    }
+    
+    
+    public boolean containsGlycemicNutrients()
+    {
+	return (this.glyc_nutr!=null);
+    }
+    
+    public GlycemicNutrients getGlycemicNutrients()
+    {
+	return this.glyc_nutr;
     }
     
     

@@ -367,6 +367,10 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 	}
         else if (action.equals("edit_food"))
         {
+            out("edit");
+            
+            // TODO: fix edit food
+            
             if (this.table_1.getSelectedRowCount()==0)
             {
                 JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
@@ -385,6 +389,9 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
         	
         	
         	dfed.resetWeightValues(mssd.getDailyFoodEntry());
+        	
+        	System.out.println(dfed);
+        	
         	this.refreshFoodParts();
             }
             else 
@@ -485,28 +492,61 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
   
     }
 
-
+    private void out(String text)
+    {
+	System.out.println(text);
+    }
+    
+    
     private void refreshNutritions()
     {
 	System.out.println("Refresh Nutritions");
 	
+	ArrayList<MealNutrition> nut_list = new ArrayList<MealNutrition>();
 	
-	Hashtable<String,MealNutrition> nutres = new Hashtable<String,MealNutrition>();
+	//Hashtable<String,MealNutrition> nutres = new Hashtable<String,MealNutrition>();
 	
-	loadGI_GL(nutres);
+	//loadGI_GL(nutres);
+	
+	
+	DailyFoodEntry dfe_main = new DailyFoodEntry();
 	
 	for(int i=0; i< this.list_food_entries.size(); i++)
 	{
-	    if (this.list_food_entries.get(i).getDailyFoodEntry() == null)
+	    
+	    DailyFoodEntry dfe = this.list_food_entries.get(i).getDailyFoodEntry();
+
+	    if (dfe == null)
 	    {
 	        // XXX: damage control: item does not contain a valid DailyFoodEntry, so delete it?
 	        // this.list_food_entries.remove(i);
+		DailyFoodEntryDisplay dfed = this.list_food_entries.get(i);
+		System.out.println("Item doesn't contain DailiyFoodEntry: " + dfed.getColumnValue(0));
 	        continue;
 	    }
 	    
-	    ArrayList<MealNutrition> lst = this.list_food_entries.get(i).getDailyFoodEntry().getNutritions();
+	    out("getNutritions for food: " + i );
 	    
+	    
+	    ArrayList<MealNutrition> lst = dfe.getNutrientsCalculated();
+	    //ArrayList<MealNutrition> lst = this.list_food_entries.get(i).getDailyFoodEntry().getNutrients();
+	    
+	    out("before merge: " + i );
+	    dfe_main.displayNutritions(lst);
+	    
+	    out("merge: " + i );
+	    dfe_main.mergeNutrientsData(lst);
+	    dfe_main.mergeGlycemicData(dfe);
+	    
+	    out("fter merge: " + i );
+	    dfe_main.displayNutritions();
+	    
+	    //dfe_main.displayNutritions();
+	    
+	    /*
 	    float amount = this.list_food_entries.get(i).getDailyFoodEntry().getMultiplier();
+	    
+	    System.out.println("Multiplier: " + amount);
 	    
 	    for(int j=0; j<lst.size(); j++)
 	    {
@@ -514,6 +554,8 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 		
 		if ((mn.getId()>=4000))
 		{
+		    // TODO: Fix this with usage of new GlycemicIndexLoad class
+		    
 		    // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004, GL_MAX = 4005
 		    
 		    if (mn.getId() == 4000)
@@ -550,21 +592,32 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 			MealNutrition mmn = new MealNutrition(mn);
 			nutres.put("" + mmn.getId(), mmn);
 		    }
-
-		    nutres.get("" + mn.getId()).addToAmount((mn.getAmount() * amount));
+			
+		    nutres.get("" + mn.getId()).addToCalculatedAmount((mn.getCalculatedAmount() * amount));
 		    
 		}
 		
 		
 	    } // for (j)
+	    */
 	} // for (i)
+	
+	
+	//nut_list.addAll(dfe_main.getNutrientsCalculated());
+	
+	//nut_list.addAll(dfe_main.getNutrientsCalculated());
+	
+	nut_list.addAll(dfe_main.getNutrients());
 	
 	this.list_nutritions.clear();
 	
-	for(Enumeration<String> en = nutres.keys(); en.hasMoreElements();  )
+	//for(Enumeration<String> en = nutres.keys(); en.hasMoreElements();  )
+	for(int i=0; i<nut_list.size(); i++ )
 	{
 	    
-	    MealNutrition meal_nut = nutres.get(en.nextElement());
+	    MealNutrition meal_nut = nut_list.get(i); //en.nextElement());
+	    
+	    System.out.println(meal_nut.getCalculatedAmount());
 	    
 	    if (meal_nut.getAmount() > 0)
 	    {

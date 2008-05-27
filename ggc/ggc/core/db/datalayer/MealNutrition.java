@@ -39,6 +39,7 @@ public class MealNutrition
     private int nutrition_type_id = 0;
     private String nutrition_desc;
     private float amount = 0.0f;
+    private float calculated_amount = 0.0f;
     
     //private boolean no_desc = false;
     
@@ -48,10 +49,13 @@ public class MealNutrition
 	int index = packed.indexOf("=");
 	
 	this.nutrition_type_id = Integer.parseInt(packed.substring(0, index));
-	this.amount = Float.parseFloat(packed.substring(index+1));
+	this.amount = Float.parseFloat(packed.substring(index+1).replace(',', '.'));
 	
 	if (load_description)
 	    this.nutrition_desc = DataAccess.getInstance().getDb().nutrition_defs.get("" + this.nutrition_type_id).getName();
+
+	//System.out.println("Meal Nutrition [id=" + this.nutrition_type_id + ",desc="+ this.nutrition_desc + ",amount=" + this.amount);
+	
     }
 
     
@@ -79,6 +83,7 @@ public class MealNutrition
 	return this.nutrition_type_id;
     }
 
+    
     public float getAmount()
     {
 	return this.amount;
@@ -90,11 +95,21 @@ public class MealNutrition
 	this.amount = val;
     }
     
-    public void addToAmount(float val)
+    public void addToCalculatedAmount(float val)
     {
-	this.amount += val;
+	this.calculated_amount += val;
+	//System.out.println("Curnt calculated amount: " + this.calculated_amount);
     }
     
+    public float getCalculatedAmount()
+    {
+	return this.calculated_amount;
+    }
+
+    public void clearCalculated()
+    {
+	this.calculated_amount = 0.0f;
+    }
     
     public String getDescription()
     {
@@ -108,11 +123,18 @@ public class MealNutrition
 	
     }
 
+    
+    public boolean isGlycemicNutrient()
+    {
+	return ((nutrition_type_id >= 4000) && (nutrition_type_id <= 4005));
+    }
+    
+    
 
     @Override
     public String toString()
     {
-        return "MealPart";
+        return "MealNutrient [id=" + this.nutrition_type_id + ",name=" + this.nutrition_desc + ",amount=" + this.amount + ",calc_amount=" + this.calculated_amount + "]\n";
     }
 
 

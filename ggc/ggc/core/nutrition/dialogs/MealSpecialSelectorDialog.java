@@ -179,7 +179,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 	{
 	    this.cb_weight_type.setSelectedIndex(this.daily_food_entry.amount_type-1);
 	    
-	    if (this.daily_food_entry.amount_type==DailyFoodEntry.AMOUNT_HOME_WEIGHT)
+	    if (this.daily_food_entry.amount_type==DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
 	    {
 		this.hws_selected = this.daily_food_entry.m_home_weight_special;
 		this.label_home_weight_item.setText(this.hws_selected.getName());
@@ -566,7 +566,9 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 	    
 	    if (ntd.wasAction())
 	    {
-		
+		/*
+		 //XXX: Removed because it's not needed, but I might be wrong, so it should stay here for a while
+		   
 		if (this.cb_type.getSelectedIndex()==2)
 		{
 		    Meal m = (Meal)ntd.getSelectedObject();
@@ -577,7 +579,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 			return;
 		    }
 		}
-		
+		*/
 		
 		this.label_item_type.setText("" + this.cb_type.getSelectedItem());
 		

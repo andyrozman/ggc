@@ -135,7 +135,7 @@ public class MainFrame extends JFrame
 
 
     private JMenu menu_file, menu_bgs, menu_food, menu_doctor, 
-    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps /*, menu_misc*/;
+    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_data_graphs /*, menu_misc*/;
 
     //public GGCHelp m_help;
 
@@ -321,11 +321,16 @@ public class MainFrame extends JFrame
 	this.createAction(this.menu_file, "MN_QUIT", "MN_QUIT_DESC", "file_quit", null);
 
 	// bgs menu
-	this.menu_bgs = this.createMenu("MN_BGS", null);
+	this.menu_bgs = this.createMenu("MN_DATA", null);
 	this.createAction(this.menu_bgs, "MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png"); //"daily.gif"); 
-	this.createAction(this.menu_bgs, "MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png"); //"course.gif");
-	this.createAction(this.menu_bgs, "MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png"); //"spread.gif");
-	this.createAction(this.menu_bgs, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png"); //"frequency.gif");
+	this.menu_bgs.addSeparator();
+	
+	this.menu_data_graphs = this.createMenu(this.menu_bgs, "MN_DATA_GRAPH", null);
+	
+	
+	this.createAction(this.menu_data_graphs, "MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png"); //"course.gif");
+	this.createAction(this.menu_data_graphs, "MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png"); //"spread.gif");
+	this.createAction(this.menu_data_graphs, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png"); //"frequency.gif");
 	this.menu_bgs.addSeparator();
 	this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png"); //null);
 	
