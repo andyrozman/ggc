@@ -1,4 +1,10 @@
-2008-05-25 (0.2.16) Andy Rozman <andyrozman@users.sourceforge.net>
+2008-05-25 (0.2.16.2) Andy Rozman <andyrozman@users.sourceforge.net>
+    * bug fixing foods stuff
+    * added glycemic processing as seperate entity (not finished yet), maels db is currently not working
+      with connection to adding to daily values
+    * menus changes
+
+2008-05-25 (0.2.16.1) Andy Rozman <andyrozman@users.sourceforge.net>
     * GGC Little was changed. Button for meter removed and upper left corner is now tabbed, so that it can contain 
       several panels. 
     * Added panels to GGC Little: plug-ins panel, stocks panel, and older ones were reformed a little.
