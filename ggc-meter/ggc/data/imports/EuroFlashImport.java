@@ -10,7 +10,7 @@ package ggc.data.imports;
 
 import ggc.data.event.ImportEvent;
 import ggc.meter.data.DailyValuesRow;
-import ggc.util.DataAccess;
+import ggc.meter.util.DataAccess;
 import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 

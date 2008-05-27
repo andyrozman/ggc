@@ -12,8 +12,8 @@ import ggc.data.imports.ImportException;
 import ggc.meter.data.DailyValuesRow;
 import ggc.meter.device.MeterException;
 import ggc.meter.device.MeterInterface;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.meter.util.DataAccess;
+import ggc.meter.util.I18nControl;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -30,6 +30,10 @@ import java.util.TooManyListenersException;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
+
+//import minimed.ddms.deviceportreader.MedicalDevice;
+//import minimed.ddms.deviceportreader.SerialIOHaltedException;
+//import minimed.util.Contract;
 
 
 /**
@@ -68,6 +72,9 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     int databits;
     int stopbits;
     int parity;
+    int flow_control;
+    //serialPort.getFlowControlMode();
+
 
     public SerialProtocol()
     {
@@ -86,7 +93,25 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 	this.databits = databits;
 	this.stopbits = stopbits;
 	this.parity = parity;
+	
+	
+//		open();
     }
+
+    
+    public void setCommunicationSettings(int baudrate, int databits,
+    									 int stopbits, int parity,
+    									 int flow_control)
+    {
+    	this.baudrate = baudrate;
+    	this.databits = databits;
+    	this.stopbits = stopbits;
+    	this.parity = parity;
+    	this.flow_control = flow_control;
+    }
+
+    
+    
 /*
     public void addImportEventListener(ImportEventListener listener)
     {
@@ -162,16 +187,19 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 
         try 
         {
-	    System.out.println("SerialProtocol: open() - Start");
-	    System.out.println("SerialProtocol: open() - open");
+        	System.out.println("SerialProtocol: open() - Start");
+        	System.out.println("SerialProtocol: open() - open");
             serialPort = (SerialPort)portIdentifier.open("ggc", (int)timeOut);
 
-	    System.out.println("SerialProtocol: open() - parameters");
+            
+            
+            
+            System.out.println("SerialProtocol: open() - parameters");
             setConnectionParameters();
 
             portOutputStream = serialPort.getOutputStream();
             portInputStream = serialPort.getInputStream();
-            serialPort.notifyOnDataAvailable(true);
+            //serialPort.notifyOnDataAvailable(true);
             serialPort.notifyOnBreakInterrupt(true);
 
             try 
@@ -184,34 +212,67 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 
             isPortOpen = true;
             System.out.println("open port : " + portIdentifier.getName());
-            serialPort.addEventListener(this);
+            //serialPort.addEventListener(this);
 
 
+            
 
         } 
         catch (PortInUseException exc) 
         {
-	    System.out.println("SerialProtocol: open():Exception - in use");
+        	System.out.println("SerialProtocol: open():Exception - in use");
             //throw new ImportException(exc);
         } 
         catch (IOException exc) 
         {
-	    System.out.println("SerialProtocol: open():Exception - io");
+        	System.out.println("SerialProtocol: open():Exception - io");
             //throw new ImportException(exc);
         } 
-        catch (TooManyListenersException exc) 
+/*        catch (TooManyListenersException exc) 
         {
-	    System.out.println("SerialProtocol: open():Exception - too many list");
-
+        	System.out.println("SerialProtocol: open():Exception - too many list");
             //throw new ImportException(exc);
-        }
+        } */ 
 
+        
         try 
         {
-            serialPort.enableReceiveTimeout(30);
+        	
+        	
+        	serialPort.enableReceiveTimeout(250); //.setTimeoutRx(250);
+        	//serialPort.
+            //m_serialPortLocal.setTimeoutTx(250);
+        	serialPort.setDTR(true);
+        	serialPort.setRTS(true);
+        	
+        	
+        	//serialPort.getBaudBase(9600);
+        	//serialPort.getBaudRate(9600);
+            //serialPort.enableReceiveTimeout(30);
+            //serialPort.enableReceiveTimeout(10000);
+            //serialPort.
+            //10000
+            //serialPort.setInputBufferSize(255);
+            //serialPort.setOutputBufferSize(255);
+            
+            
+            //int ss = serialPort.getInputBufferSize();
+            //System.out.println("input buffer:" + ss);
+/*
+        	int ss = serialPort.getReceiveThreshold();
+            System.out.println("receive treshold:" + ss);
+            
+            serialPort.setOutputBufferSize(1000000);
+             serialPort.setInputBufferSize(1000000);
+             serialPort.enableReceiveThreshold(10000);
+
+             ss = serialPort.getReceiveThreshold();
+            System.out.println("receive treshold:" + ss);
+  */          
         } 
-        catch (UnsupportedCommOperationException e) 
+        catch (Exception e) 
         {
+        	//UnsupportedCommOperationException 
 	    System.out.println("SerialProtocol: open():Exception - unsported");
 
         }
@@ -257,14 +318,24 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
             //					parameters.getFlowControlIn() |
             //					parameters.getFlowControlOut()
             //			);
-            serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+            //serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+        	//serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_XONXOFF_IN | SerialPort.FLOWCONTROL_XONXOFF_OUT);
+            
+            //SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT
         } 
-        catch (UnsupportedCommOperationException e) 
+        catch (Exception e) 
         {
+        	// UnsupportedCommOperationException 
             //throw new SerialConnectionException("Unsupported flow control");
         }
     }
 
+    
+    
+    
+    
+    
+    
     /**
      * @see data.imports.DataImport#close()
      */
@@ -294,6 +365,87 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         //thread.start();
     }
 
+    
+    
+    public int read() throws IOException
+    {
+    	return portInputStream.read();
+    }
+    
+    public int read(byte[] b) throws IOException
+    {
+    	return portInputStream.read(b);
+    }
+    
+    
+    public int read(byte[] b, int off, int len) throws IOException
+    {
+    	return portInputStream.read(b, off, len);
+    }
+    
+    
+    public String readLine() throws IOException //, SerialIOHaltedException
+    {
+	    char c = '\uFFFF';
+	    boolean flag = false;
+	    StringBuffer stringbuffer = new StringBuffer("");
+	    //Contract.pre(m_serialPortLocal != null, "m_serialPortLocal is null.");
+	    //Contract.pre(m_serialPortLocal.isOpen(), "m_serialPortLocal is not open.");
+	    //checkForSerialIOHalted();
+	    //MedicalDevice.Util.sleepMS(m_ioDelay);
+	    int j;
+	    do
+	    {
+	        int i = c;
+	        j = (byte)this.portInputStream.read();
+	        c = (char)j;
+	        if(j != -1)
+	            stringbuffer.append(c);
+	        if(i == 13 && c == '\n')
+	            flag = true;
+	    } while(j != -1 && !flag);
+	    //long l = System.currentTimeMillis() - m_startTimeMS;
+	    //MedicalDevice.logInfoHigh(this, "readLine(" + l + "MS): read <" + stringbuffer + ">");
+	    //m_startTimeMS = System.currentTimeMillis();
+	    return new String(stringbuffer);
+    }
+    
+  
+    
+    public void write(byte[] b) throws IOException
+    {
+    	portOutputStream.write(b);
+    }
+
+    
+    public void write(int i) throws IOException
+    {
+    	portOutputStream.write(i);
+    }
+    
+    
+    public void write(byte[] b, int off, int len) throws IOException
+    {
+    	portOutputStream.write(b, off, len);
+    }
+    
+    
+    public void test()
+    {
+    	//portOutputStream.write(b);
+    	//portOutputStream.
+    }
+    
+    
+    
+//    portInputStream.read()
+    
+    
+    
+    
+    
+    
+    
     /**
      * @see data.imports.DataImport#getImportedData()
      */

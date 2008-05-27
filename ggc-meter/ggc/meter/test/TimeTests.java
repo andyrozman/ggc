@@ -1,6 +1,6 @@
 package ggc.meter.test;
 
-import ggc.util.DataAccess;
+import ggc.meter.util.DataAccess;
 
 import java.util.GregorianCalendar;
 

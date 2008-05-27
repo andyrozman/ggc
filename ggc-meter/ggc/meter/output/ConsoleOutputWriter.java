@@ -14,7 +14,7 @@ public class ConsoleOutputWriter implements OutputWriter
 		
 	}
 	
-	public void writeRawData(String input)
+	public void writeRawData(String input, boolean is_bg_data)
 	{
 		System.out.println(input);
 		

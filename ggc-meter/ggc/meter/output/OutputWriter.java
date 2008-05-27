@@ -5,7 +5,7 @@ import ggc.meter.data.MeterValuesEntry;
 public interface OutputWriter
 {
 	
-	public abstract void writeRawData(String input);
+	public abstract void writeRawData(String input, boolean is_bg_data);
 	
 	//public abstract void writeBGData(String date, String bg_value, int bg_type);
 	

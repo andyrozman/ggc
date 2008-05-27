@@ -29,7 +29,7 @@ package ggc.meter.gui.config;
 
 
 //import java.awt.*;
-import ggc.util.I18nControl;
+import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

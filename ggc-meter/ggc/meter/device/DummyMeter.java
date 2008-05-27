@@ -17,15 +17,15 @@ package ggc.meter.device;
 
 
 import ggc.meter.data.MeterValuesEntry;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.meter.util.DataAccess;
+import ggc.meter.util.I18nControl;
 
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
 
-public class DummyMeter implements MeterInterface
+public class DummyMeter extends AbstractMeter //implements MeterInterface
 {
 
     DataAccess m_da = DataAccess.getInstance();
@@ -99,23 +99,26 @@ public class DummyMeter implements MeterInterface
 
     // Internal methods
 
-
+/*
     public String getName()
     {
         return "Dummy Meter";
     }
-
+*/
     public int getMeterIndex()
     {
         return m_meter_index;
     }
 
-    
+/*    
     public ImageIcon getIcon()
     {
         return m_da.getMeterManager().getMeterImage(1); //m_meter_index);
     }
-
+*/
+    /*
+     * 
+     * Dupkicate
     public ArrayList<MeterValuesEntry> getDataFull()
     {
         writeLog(LOG_DEBUG, "getDataFull() - Start");
@@ -131,7 +134,7 @@ public class DummyMeter implements MeterInterface
         writeLog(LOG_DEBUG, "getData() - End");
         return al;
     }
-
+*/
 
     public void loadInitialData()
     {
@@ -220,8 +223,168 @@ public class DummyMeter implements MeterInterface
 
 
 
+    //************************************************
+    //***      Meter Identification Methods        ***
+    //************************************************
 
 
+    /**
+     * getName - Get Name of meter. 
+     * 
+     * @return name of meter
+     */
+    public String getName()
+    {
+        return "name";
+    }
+
+
+    /**
+     * getIcon - Get Icon of meter
+     * Should be implemented by meter class.
+     * 
+     * @return ImageIcon
+     */
+    public ImageIcon getIcon()
+    {
+        return null;
+    }
+
+    
+    /**
+     * getIconName - Get Icon of meter
+     * 
+     * @return icon name
+     */
+    public String getIconName()
+    {
+        return null;
+    }
+    
+
+    /**
+     * getMeterId - Get Meter Id, within Meter Company class 
+     * 
+     * @return id of meter within company
+     */
+    public int getMeterId()
+    {
+        return 0;
+    }
+
+    
+    /**
+     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
+     * 
+     * @return global id of meter
+     */
+    public int getGlobalMeterId()
+    {
+        return 0;
+    }
+
+    
+    /**
+     * getCompanyId - Get Company Id 
+     * 
+     * @return id of company
+     */
+    public int getCompanyId()
+    {
+        return 0;
+    }
+    
+    
+    /**
+     * getInstructions - get instructions for device
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return null;
+    }
+    
+    /**
+     * getComment - Get Comment for device 
+     * 
+     * @return comment or null
+     */
+    public String getComment()
+    {
+        return null;
+    }
+    
+    
+    /**
+     * getImplementationStatus - Get Company Id 
+     * 
+     * @return implementation status as number
+     * @see ggc.meter.manager.MeterImplementationStatus
+     */
+    public int getImplementationStatus() 
+    {
+        return 0;
+    }
+
+
+    
+    //************************************************
+    //***       Device Implemented methods         ***
+    //************************************************
+    
+
+    /** 
+     * clearDeviceData - Clear data from device 
+     */
+    public void clearDeviceData() throws MeterException
+    {
+    }
+    
+    /**
+     * getDeviceInfo - get Device info (firmware and software revision)
+     */
+    public ArrayList<String> getDeviceInfo() throws MeterException
+    {
+        return null;
+    }
+    
+    
+    /**
+     * getDeviceConfiguration - return device configuration
+     * @return
+     */
+    public ArrayList<String> getDeviceConfiguration() throws MeterException
+    {
+        return null;
+    }
+    
+    
+    /**
+     * getDataFull - get all data from Meter
+     * This data should be read from meter, and is used in Meter GUI
+     */
+    public ArrayList<MeterValuesEntry> getDataFull() //throws MeterException
+    {
+        return null;
+    }
+
+
+    /**
+     * getData - get data for specified time
+     * This data should be read from meter and preprocessed, and is used in Meter GUI
+     */
+    public ArrayList<MeterValuesEntry> getData(int from, int to) //throws MeterException
+    {
+        return null;
+    }
+    
+    
+    
+    public String getPort()
+    {
+        return "No port";
+    }
 
 
 }

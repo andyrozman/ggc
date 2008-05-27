@@ -2,137 +2,163 @@ TO-DO LIST
 ==========
 
 Development of Meter Tools runs totally independent on GGC project
+------------------------------------------------------------------
 
 
-Tasks:
 
-Basic:
-- Configuration
-- Read data
-- Create data structures for Meter imports
-- Meter Manager (should contain ALL meters sold everywhere)
-- Meters List - Display of Meter Manager
-- Output classes for exporting/displaying data
+Tasks that need to be done:
+---------------------------
 
-GGC:
-- Plugin support for GGC
-- Read data from GGC
-
-
-Different meters implementations:
-* EuroFlash - rewrite for use with Meter Tool
-* FreeStyle - rewrite for use with Meter Tool
-* GlucoCard - rewrite for use with Meter Tool
-* Ascensia support
+    * Communication framework for meters (interface that all meters will use)
+    * List of meters (most of them, not all) (0.4)
+    * Configuration (0.4)
+    * Graphical interface for integration into GGC (0.4)
+    * Output types:
+          o GGC Output (GUI integration) (0.4) 
+    * Specific meter models (companies) implementations:
+         See list (under DONE) 
+    * Rewrite old meter imports: (0.5)
+                    * EuroFlash
+                    * FreeStyle
+                    * GlucoCard
+    
 
 
 Documentation:
-- How-To for Sniffing data for Meters
+---------------
+- How-To for Sniffing data for Meters (just add entry into forum)
 - JavaHelp for GUI
 
 
+===========================================================================
+DONE
 
-Level 1 (High Priority): 
-----------------------------
+    * Base framework for meters
+    * Output types:
+          o Console and file output
+          o GGC Db Output (for manual import) 
 
-
-Level 2 (Medium 1 Priority):
-----------------------------
-
-
-
-Level 3 (Medium 2 Priority):
-----------------------------
-
-* Meters List
-    o  Db (meter_company, meters, meters_interface)
-    o  Table
-    o  Change Meter Manager
+==========================================================================
 
 
 
-
-Level 4 (Medium 3 Priority):
-----------------------------
-
+Meter implementations
+====================== 
 
 
-Level 5 (Low Priority):
-----------------------------
+|               |                  |           |            |            |              |
+| Meter Company |    Meter         | Prot. av. | Planned St.| Planned En.| To implement |
+|---------------|                  |           |            |            |              |
+| Ascensia      | Dex              | Yes       | 01.01.2008 | 31.08.2008 | Y
+|               | Contour          | Yes       |            |            | Y
+|               | Breeze           | Yes       |            |            | Y
+|               | EliteXL          | Yes       |            |            | Y
+| LifeScan      | Mini             | Yes (No)  | 01.01.2008 | 31.08.2008 | N
+|               | Ultra            | Yes       |            |            |
+|               | Ultra II.        | Yes       |            |            |
+|               | Ultra Smart      | No        |            |            |
+|               | Basic            | No        |            |            |
+|               | Surestep         | No        |            |            |
+|               | Profile          | Yes       |            |            |
+|               | II.              | Yes       |            |            |
+|               | Fast Take        | No        |            |            |
+| Abott         |                  | No        |            |            |
+|    Freestyle  | ~                | No        |            |            |
+|               | Freedom          | No        |            |            |
+|               | Freedom Lite     | No        |            |            |
+|               | Mini/Flash       | No        |            |            |
+|    Medisense  | Precission Xtra  | No        |            |            |
+                | Precission Xceed | No        |            |            |
+| Accu-Chek     | Active           | No        |            |            |
+|               | Aviva            | No        |            |            |
+|               | Compact Plus     | No        |            |            |
+|               | Compact/Integral | No        |            |            |
+|               | Go               | No        |            |            |
+|               | Sensor/Advantage | No        |            |            |
+|               | Comfort          | No        |            |            |
+|               | Voicemate Plus   | No        |            |            |
 
-* Meter Manager OLD
-    o  Change to support rtxos Java COM API
-    o  Dummy meter
-* Meter Manager NEW
-    o  Create New Meter Manager
-    o  Dummy meter 
-    o  Ascensia Meter family (add/test)
-    o  Try to rewrite old meters to new Meter Interface
 
 
-METERS
+Not planned for implementation at this time
+============================================
+
+B|Braun Omnitest Plus
+
+Bionime Rightest GM300
+
+EPS EasyPlus
+
+GlucoTalk
+
+GlukiDoc
+
+IME:  - ~
+      - Fidelity
+      
+Menarini: - Glucocard PC
+
+Prestige IQ
+
+Sensocard:  - ~
+            - Plus
+            
+smartLABsprint
+
+Stada Glucose Control
+
+Terumo FineTouch
+
+Boso:  - medicus PC
+       - mediwatch PC
+       - medilife PC
+
+CareTec SweetHeart
+
+Sensolite: - Nova
+           - Nova Plus
+
+Wavesense: - Keynote
+
+Diabetic Supply of Suncoast:  - Advocate
+                              - Advocate Duo
+                              - Advocate RediCode
+
+Diagnostic Devices:  - Prodigy Advance
+                     - Prodigy Audio
+                     - Prodigy Autocode
+                     - Prodigy Duo
+                     - Prodigy Eject
+                     - Prodigy Voice
+
+Arkray USA (formerly Hypoguard): - Advance Microdraw
+                                 - Advance Intuition
+                                 - Assure II
+                                 - Assure 3
+                                 - Assure 4
+                                 - Assure Pro
+                                 - PocketChem EZ
+                                 - Quicktek
+                                 - Supreme Plus
+
+HealthPia America:  - GlucoPack
+
+Home Diagnostics:  - Prestige IQ
+                   - Sidekick
+                   - TRUEread
+                   - TrueTrack
+
+Nova Biomedical:  - Nova Max
+
+Sanvita (BD Diabetes):  - Logic
+                        - Link 
+
+U.S. Diagnostics:   - Control AST
+                    - EasyGluco
+                    - EasyGluco G2
+
+
 ------
-- New Meter Dialog
-- New Meter Interface
-- Dummy Old Meter
-- Dummy New Meter
-- Implement meter support: ...
-
-
----------
-
-
-
-
-
-
-------
-
-
-Version 0.3:
-- Meters list 
-- Old meters support only
-- Meters List -> MeterManager changes
-
-* Configuration: <moved to meter development tree> 
-    o  Fix setting com port
-
-
-
-Release on 25.4.
-
-
-
-Version 0.4:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   - Meter Manager NEW
-- New Meter Import framework (26.3.-1.4.)
-- Ascensia Meter Support (2.4.-8.4.)
-   - Meter Import Base
-   - Meter: Ascensia Contour support
-
-0.5:
-   - Ascensia Family support
 
 
 

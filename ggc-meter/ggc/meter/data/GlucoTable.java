@@ -8,7 +8,7 @@
 package ggc.meter.data;
 
 
-import ggc.util.I18nControl;
+import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

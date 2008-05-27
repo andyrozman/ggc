@@ -1,6 +1,6 @@
 package ggc.meter.output;
 
-import ggc.util.DataAccess;
+import ggc.meter.util.DataAccess;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -12,7 +12,7 @@ import com.atech.utils.TimerControlAbstract;
 public class OutputUtil extends TimerControlAbstract
 {
 
-	public String[] unitsName = { "", "mg/dL", "mmol/L" };
+	public static String[] unitsName = { "", "mg/dL", "mmol/L" };
 	
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
@@ -21,10 +21,13 @@ public class OutputUtil extends TimerControlAbstract
 	
     private OutputWriter writer;
     
+    
+    
+    
     public OutputUtil(OutputWriter writer)
     {
     	this.writer = writer;
-    	setAllowedChangeTime(10);
+    	setAllowedChangeTime(20);
     }
 	
 	
@@ -150,6 +153,12 @@ public class OutputUtil extends TimerControlAbstract
 		
 		System.exit(0);
 
+	}
+	
+
+	public static String getBGUnitName(int unit)
+	{
+	    return OutputUtil.unitsName[unit];
 	}
 	
 	

@@ -15,7 +15,7 @@ public class DummyOutputWriter implements OutputWriter
 	
 	
 	
-	public void writeRawData(String input)
+	public void writeRawData(String input, boolean is_bg_data)
 	{
 	}
 	

@@ -29,10 +29,12 @@
 
 package ggc.data.meter;
 
-import ggc.meter.device.ascensia.AscensiaContourMeter;
+import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.output.GGCFileOutputWriter;
+import ggc.meter.protocol.SerialProtocol;
 
 import java.awt.TextArea;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 
@@ -50,10 +52,10 @@ public class MeterTester extends JFrame
 
     public static TextArea messageArea;
 
-    private AscensiaContourMeter m_meter;
+    private AscensiaContour m_meter;
     //private SerialProtocol m_meter;
 
-    public MeterTester()
+    public MeterTester(String portName)
     {
     	
     	TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
@@ -72,12 +74,17 @@ public class MeterTester extends JFrame
     		
     		thread.addJob(gfo.getOutputUtil());
     		
+    		displaySerialPorts();
     		
-    		m_meter = new AscensiaContourMeter("COM9", gfo);
+    		m_meter = new AscensiaContour(portName, gfo);
     	    //new AscensiaContourMeter("COM9");
-    	    m_meter.setPort("COM9");
+    	    m_meter.setPort(portName);
     	    //m_meter.open();
     
+    	    //displaySerialPorts();
+    	    //  	    m_meter.
+    	    
+    	    
     	    m_meter.loadInitialData();
     	    
 //    	    m_meter.readDeviceData();
@@ -202,6 +209,19 @@ public class MeterTester extends JFrame
 	*/
     }
 
+    
+    public void displaySerialPorts()
+    {
+    	Vector<String> vct = SerialProtocol.getAvailableSerialPorts();
+    	
+		System.out.println(" --- List Serial Ports -----");
+    	
+    	for(int i=0; i<vct.size(); i++)
+    	{
+    		System.out.println(vct.get(i));
+    	}
+    }
+    
 
     public void readyToWrite(String str)
     {
@@ -220,7 +240,7 @@ public class MeterTester extends JFrame
     {
 	try
 	{
-	    new MeterTester();
+	    new MeterTester(args[0]);
 
 	    /*
 	    AscensiaMeter am = new AscensiaMeter();

@@ -1,6 +1,7 @@
 package ggc.meter.output;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.util.DataAccess;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,15 +15,19 @@ public class GGCFileOutputWriter implements OutputWriter
 	
 	BufferedWriter bw;
 	OutputUtil out_util; 
+	DataAccess m_da;
+	long time_created;
 	
 	public GGCFileOutputWriter()
 	{
 		out_util = new OutputUtil(this);
+		m_da = DataAccess.getInstance();
 		
 		try
 		{
 			System.out.println("OPEN FILE");
-			bw = new BufferedWriter(new FileWriter(new File("ggc.db.hibernate.DayValueH")));
+			bw = new BufferedWriter(new FileWriter(new File("DayValueH" + getCurrentDateForFile() + ".txt")));
+			this.time_created = System.currentTimeMillis();
 		}
 		catch(Exception ex)
 		{
@@ -30,16 +35,32 @@ public class GGCFileOutputWriter implements OutputWriter
 		}
 	}
 	
+	
+    public String getCurrentDateForFile()
+    {
+    	GregorianCalendar gc = new GregorianCalendar();
+    	gc.setTimeInMillis(System.currentTimeMillis());
+
+    	return gc.get(GregorianCalendar.YEAR) + "_" + 
+    	       m_da.getLeadingZero((gc.get(GregorianCalendar.MONTH) +1),2) + "_" + 
+    	       m_da.getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2);
+	    	
+    }
+	
+	
+	
 	private void setReadData()
 	{
 		this.out_util.setLastChangedTime();
 	}
 	
 	
-	public void writeRawData(String input)
+	public void writeRawData(String input, boolean bg_data)
 	{
 		writeToFile(input);
-		setReadData();
+		
+		if (bg_data)
+			setReadData();
 	}
 	
 /*	
@@ -125,9 +146,9 @@ public class GGCFileOutputWriter implements OutputWriter
 		else
 			System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
 		
-		writeToFile("0|" + mve.getDateTime().getATDateTimeAsLong() + "|" + val + "|0.0|0.0|0.0|null|null|" + parameters);
+		writeToFile("0|" + mve.getDateTime().getATDateTimeAsLong() + "|" + val + 
+				    "|0.0|0.0|0.0|null|null|1|" + parameters + "|" + this.time_created);
 		setReadData();
-		
 		
 		//writeToFile(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
 	}
@@ -147,7 +168,7 @@ public class GGCFileOutputWriter implements OutputWriter
 //				16/1/2008  18:12:3");
 		sb.append("; Exported by GGC Meter Tools - GGCHibernateOutputWriter\n");
 		sb.append(";\n");
-		sb.append("; Columns: id,dt_info,bg,ins1,ins2,ch,meals_ids,act,comment\n");
+		sb.append("; Columns: id, dt_info, bg, ins1, ins2, ch, meals_ids, extended, person_id, comment, changed\n");
 		sb.append(";\n");
 
 		writeToFile(sb.toString());
@@ -202,6 +223,9 @@ public class GGCFileOutputWriter implements OutputWriter
 		}
 	}
 
+	
+	
+	
 	public OutputUtil getOutputUtil()
 	{
 		return this.out_util;

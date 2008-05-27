@@ -28,7 +28,7 @@
 package ggc.meter.data;
 
 //import ggc.db.hibernate.DayValueH;
-import ggc.util.DataAccess;
+import ggc.meter.util.DataAccess;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -27,7 +27,7 @@
  *  Author:   andyrozman
  */
 
-package ggc.util;
+package ggc.meter.util;
 
 import ggc.data.cfg.ConfigurationManager;
 import ggc.data.meter.MeterManager;
@@ -37,7 +37,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +44,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -53,9 +53,12 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import com.atech.utils.ATDataAccessAbstract;
 
 
-public class DataAccess 
+public class DataAccess extends ATDataAccessAbstract
 {
 
     // LF
@@ -164,7 +167,13 @@ public class DataAccess
         public String[] options_yes_no = null;
 
 
-
+       JFrame m_main = null;        
+        
+        
+    public Hashtable<String,String> metersUrl;
+    public ArrayList<String> metersNames;
+        
+        
 
     // ********************************************************
     // ******      Constructors and Access methods        *****    
@@ -178,9 +187,12 @@ public class DataAccess
      *  method.<br><br>
      *
      */
-    private DataAccess()
+    private DataAccess(JFrame frame)
     {
+    	super(I18nControl.getInstance());
         this.loadFonts();
+        
+        this.m_main = frame;
 
         //m_i18n.createInstance(this);
         //        loadAvailableLFs();
@@ -200,7 +212,10 @@ public class DataAccess
 
         //this.verifyComConfig();
         this.loadTimeZones();
-
+        
+        loadMetersTable();
+        loadConfigIcons();
+        
         checkPrerequisites();
 
     } 
@@ -218,7 +233,7 @@ public class DataAccess
     public static DataAccess getInstance()
     {
         if (s_da == null)
-            s_da = new DataAccess();
+            s_da = new DataAccess(null);
         return s_da;
     }
 
@@ -227,7 +242,7 @@ public class DataAccess
         if (s_da == null)
         {
             //GGCDb db = new GGCDb();
-            s_da = new DataAccess();
+            s_da = new DataAccess(main);
 //x            s_da.setParent(main);
         }
 
@@ -237,18 +252,18 @@ public class DataAccess
  
     
     
-    
-
-    public void checkPrerequisites()
+    public void loadConfigIcons()
     {
-	// check that ../data/temp exists (needed for printing)
-
-	File f = new File("../data/temp/");
-	if (!f.exists())
-	{
-	    f.mkdir();
-	}
+        config_icons = new ImageIcon[5];
+        config_icons[0] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
+        config_icons[1] = new ImageIcon(getImage("/icons/cfg_medical.png", m_main));
+        config_icons[2] = new ImageIcon(getImage("/icons/cfg_print.png", m_main));
+        config_icons[3] = new ImageIcon(getImage("/icons/cfg_meter.png", m_main));
+        config_icons[4] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
+        
     }
+
+  
 
 
     /*
@@ -268,6 +283,44 @@ public class DataAccess
     }
 
  
+    public void loadMetersTable()
+    {
+
+    	metersUrl = new Hashtable<String,String>();
+        metersNames = new ArrayList<String>();
+    	
+    	
+    	
+        metersNames.add("Abbott Diabetes Care");
+        metersUrl.put("Abbott Diabetes Care", "abbott.html");
+        metersNames.add("Bayer Diagnostics");
+        metersUrl.put("Bayer Diagnostics", "bayer.html");
+        metersNames.add("Diabetic Supply of Suncoast");
+        metersUrl.put("Diabetic Supply of Suncoast", "suncoast.html");
+        metersNames.add("Diagnostic Devices");
+        metersUrl.put("Diagnostic Devices", "prodigy.html");
+        metersNames.add("Arkray USA (formerly Hypoguard)");
+        metersUrl.put("Arkray USA (formerly Hypoguard)", "arkray.html");
+        metersNames.add("HealthPia America");
+        metersUrl.put("HealthPia America", "healthpia.html");
+        metersNames.add("Home Diagnostics");
+        metersUrl.put("Home Diagnostics", "home_diganostics.html");
+        metersNames.add("Lifescan");
+        metersUrl.put("Lifescan", "lifescan.html");
+        metersNames.add("Nova Biomedical");
+        metersUrl.put("Nova Biomedical", "nova_biomedical.html");
+        metersNames.add("Roche Diagnostics");
+        metersUrl.put("Roche Diagnostics", "roche.html");
+        metersNames.add("Sanvita");
+        metersUrl.put("Sanvita", "sanvita.html");
+        metersNames.add("U.S. Diagnostics");
+        metersUrl.put("U.S. Diagnostics", "us_diagnostics.html");
+        metersNames.add("WaveSense");
+        metersUrl.put("WaveSense", "wavesense.html");
+
+    }
+    
+    
 
     /*
     public void startDb(StatusBarL bar2)
@@ -282,6 +335,41 @@ public class DataAccess
     }
 */
 
+    
+    
+    
+    
+    // ********************************************************
+    // ******         Abstract Methods                    *****    
+    // ********************************************************
+    
+
+
+    public String getApplicationName()
+    {
+    	return "GGC_MeterTool";
+    }
+    
+    
+    
+    public void checkPrerequisites()
+    {
+    }
+    
+    
+    public String getImagesRoot()
+    {
+    	return "/icons/";
+    }
+    
+    
+    public void loadBackupRestoreCollection()
+    {
+    }
+    
+    
+    
+    
     
     // ********************************************************
     // ******                   Fonts                     *****    
@@ -585,6 +673,10 @@ public class DataAccess
 
             //JDialog.getT
             //JFrame.getToolkit();
+            
+            if (cmp==null)
+            	cmp = new JLabel();
+            
             img = cmp.getToolkit().createImage(baos.toByteArray());
         }
         catch (IOException ex)

@@ -1,3 +1,5 @@
+package ggc.meter.data;
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -26,12 +28,11 @@
  *  Author:   schultd
  */
 
-package ggc.meter.data;
 
 
 import ggc.data.event.GlucoValueEvent;
 import ggc.data.event.GlucoValueEventListener;
-import ggc.util.I18nControl;
+import ggc.meter.util.I18nControl;
 
 import java.text.SimpleDateFormat;
 

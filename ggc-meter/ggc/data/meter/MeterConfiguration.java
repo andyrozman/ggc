@@ -29,10 +29,10 @@
 
 package ggc.data.meter;
 
-import ggc.meter.device.GenericMeter;
+import ggc.meter.device.DummyMeter;
 import ggc.meter.device.MeterInterface;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.meter.util.DataAccess;
+import ggc.meter.util.I18nControl;
 
 import javax.swing.ImageIcon;
 
@@ -75,7 +75,7 @@ public class MeterConfiguration
     public void initMeter()
     {
         //this.m_meter_device = new AscensiaDEXMeter("COM9");
-        this.m_meter_device = new GenericMeter();
+        this.m_meter_device = new DummyMeter();
     }
 
 

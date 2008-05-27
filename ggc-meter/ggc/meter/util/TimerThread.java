@@ -1,3 +1,11 @@
+package ggc.meter.util;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.swing.JLabel;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -35,13 +43,7 @@
 // andyrozman
 
 
-package ggc.meter.util;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import javax.swing.JLabel;
-
-import ggc.util.DataAccess;
 
 
 public class TimerThread extends Thread

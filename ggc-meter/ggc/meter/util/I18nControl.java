@@ -26,7 +26,7 @@
  */
 
 
-package ggc.util;
+package ggc.meter.util;
 
 
 import java.io.FileInputStream;

@@ -9,11 +9,11 @@ package ggc.meter.device.ascensia;
 
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.device.MeterException;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
-import ggc.meter.protocol.SerialProtocol;
-import ggc.util.I18nControl;
+import ggc.meter.util.I18nControl;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
@@ -26,7 +26,8 @@ import com.atech.utils.ATechDate;
 import com.atech.utils.TimeZoneUtil;
 
 
-public abstract class AscensiaMeter extends SerialProtocol
+public abstract class AscensiaMeter extends AbstractSerialMeter
+//extends /*SerialIOProtocol*/  SerialProtocol implements MeterInterface
 {
 
     protected int m_status = 0;
@@ -35,21 +36,46 @@ public abstract class AscensiaMeter extends SerialProtocol
     protected String m_info = "";
     protected int m_time_difference = 0;
     protected ArrayList<MeterValuesEntry> data = null;
-    protected OutputWriter m_output;
+    protected OutputWriter m_output_writer;
     public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
+    public AscensiaMeter()
+    {
+    }
+    
 
     public AscensiaMeter(int meter_type, String portName, OutputWriter writer)
     {
-		super(meter_type,
-		      9600, 
+		//super(portName, 9600, SerialConfig.LN_8BITS, SerialConfig.ST_1BITS, SerialConfig.PY_NONE);
+
+//    	int s= SerialConfig.LN_8BITS; 
+		
+    	
+		super(meter_type, /*portName, */ 
+		      9600,
+			  //19200,
 		      SerialPort.DATABITS_8, 
 		      SerialPort.STOPBITS_1, 
 		      SerialPort.PARITY_NONE);
 	
+		this.setCommunicationSettings( 
+			      9600,
+			      SerialPort.DATABITS_8, 
+			      SerialPort.STOPBITS_1, 
+			      SerialPort.PARITY_NONE,
+			      SerialPort.FLOWCONTROL_NONE);
+				
+		this.setSerialPort(portName);
+		
+		
+		//String portName, int baudrate, int databits, int stopbits, int parity
+		
+		//int buffer = this.serialPort.getInputBufferSize();
+		//System.out.println("Buffer: " + buffer);
+		
 		data = new ArrayList<MeterValuesEntry>();
 		
-		this.m_output = writer; 
+		this.m_output_writer = writer; 
 			//new ConsoleOutputWriter();
 	
 		try
@@ -72,10 +98,10 @@ public abstract class AscensiaMeter extends SerialProtocol
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    @Override
     public boolean open() throws MeterException
     {
-	return super.open();
+    	//return true;
+    	return super.open();
 	//return false;
     }
 
@@ -88,7 +114,6 @@ public abstract class AscensiaMeter extends SerialProtocol
     {
 	return;
     }
-
 
 
 
@@ -129,6 +154,40 @@ public abstract class AscensiaMeter extends SerialProtocol
     }
 
 
+    
+    //************************************************
+    //***       Device Implemented methods         ***
+    //************************************************
+    
+
+    /** 
+     * clearDeviceData - Clear data from device 
+     */
+    public void clearDeviceData()
+    {
+    	
+    }
+    
+    /**
+     * getDeviceInfo - get Device info (firmware and software revision)
+     */
+    public ArrayList<String> getDeviceInfo()
+    {
+    	return new ArrayList<String>();
+    }
+    
+    
+    /**
+     * getDeviceConfiguration - return device configuration
+     * @return
+     */
+    public ArrayList<String> getDeviceConfiguration()
+    {
+    	return new ArrayList<String>();
+    }
+    
+    
+    
 
     /**
      * getDataFull - get all data from Meter
@@ -353,7 +412,7 @@ public abstract class AscensiaMeter extends SerialProtocol
 	    	    //dv.setBG(DailyValuesRow.BG_MMOLL, value);
 	    	}
 	    	
-	    	this.m_output.writeBGData(mve);
+	    	this.m_output_writer.writeBGData(mve);
 	    	
     	}
     	catch(Exception ex)

@@ -29,10 +29,10 @@
 
 package ggc.data.meter;
 
-import ggc.meter.device.GenericMeter;
+import ggc.meter.device.DummyMeter;
 import ggc.meter.device.MeterInterface;
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.meter.util.DataAccess;
+import ggc.meter.util.I18nControl;
 
 import javax.swing.ImageIcon;
 
@@ -52,13 +52,13 @@ public class MeterImportManager
      */
     public MeterImportManager()
     {
-        int meter_id = m_da.getSettings().getMeterType();
+        /*int meter_id = m_da.getSettings().getMeterType();
 
         if (meter_id<=0)
         {
             System.out.println("MeterImportManager: No meter defined. Exiting.");
             this.m_error = -1;
-        }
+        }*/
 
         initMeter();
 
@@ -76,7 +76,7 @@ public class MeterImportManager
     public void initMeter()
     {
         //this.m_meter_device = new AscensiaDEXMeter("COM9");
-        this.m_meter_device = new GenericMeter();
+        this.m_meter_device = new DummyMeter();
     }
 
 

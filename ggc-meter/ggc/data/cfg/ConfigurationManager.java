@@ -7,7 +7,7 @@ package ggc.data.cfg;
 
 
 
-import ggc.util.DataAccess;
+import ggc.meter.util.DataAccess;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

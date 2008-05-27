@@ -28,7 +28,7 @@
  *
  */
 
-package ggc.util;
+package ggc.meter.util;
 
 
 public class GGCProperties //extends GGCPropertiesHelper 

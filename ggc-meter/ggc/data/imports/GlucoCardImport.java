@@ -29,7 +29,7 @@ package ggc.data.imports;
 
 
 import ggc.meter.data.DailyValuesRow;
-import ggc.util.DataAccess;
+import ggc.meter.util.DataAccess;
 import gnu.io.SerialPortEvent;
 
 import java.io.IOException;

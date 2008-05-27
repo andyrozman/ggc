@@ -34,7 +34,7 @@ public class FileOutputWriter implements OutputWriter
 		this.out_util.setLastChangedTime();
 	} */
 	
-	public void writeRawData(String input)
+	public void writeRawData(String input, boolean is_bg_data)
 	{
 		writeToFile(input);
 	}

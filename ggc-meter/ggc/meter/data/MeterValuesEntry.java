@@ -27,6 +27,8 @@
 
 package ggc.meter.data;
 
+import ggc.meter.output.OutputUtil;
+
 import java.util.Hashtable;
 
 import com.atech.utils.ATechDate;
@@ -114,6 +116,16 @@ public class MeterValuesEntry
 		return sb.substring(0, sb.length()-1);
 		
 	}
+	
+	
+	
+	
+	public String toString()
+	{
+	    //OutputUtil o= null;
+	    return "MeterValuesEntry [date/time=" + this.datetime.getDateTimeString() + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
+	}
+	
 	
 	
 	

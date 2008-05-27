@@ -7,7 +7,7 @@ package ggc.meter.data;
 
 
 //import ggc.db.hibernate.DayValueH;
-import ggc.util.I18nControl;
+import ggc.meter.util.I18nControl;
 
 //import java.io.Serializable;
 import java.text.SimpleDateFormat;

@@ -71,28 +71,95 @@ public interface MeterInterface
     //***      Meter Identification Methods        ***
     //************************************************
 
-    //void loadInitialData();
-    //void readCommData();
 
     /**
      * getName - Get Name of meter. 
-     * Should be implemented by protocol class.
+     * Should be implemented by meter class.
+     * 
+     * @return name of meter
      */
     String getName();
 
 
     /**
      * getIcon - Get Icon of meter
-     * Should be implemented by protocol class.
+     * Should be implemented by meter class.
+     * 
+     * @return ImageIcom
      */
     ImageIcon getIcon();
 
+    
+    /**
+     * getIconName - Get Icon of meter
+     * Should be implemented by meter class.
+     * 
+     * @return icon name
+     */
+    String getIconName();
+    
 
     /**
-     * getMeterIndex - Get Index of Meter 
-     * Should be implemented by protocol class.
+     * getMeterId - Get Meter Id, within Meter Company class 
+     * Should be implemented by meter class.
+     * 
+     * @return id of meter within company
      */
-    int getMeterIndex();
+    int getMeterId();
+
+    
+    /**
+     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
+     * Should be implemented by meter class.
+     * 
+     * @return global id of meter
+     */
+    int getGlobalMeterId();
+
+    
+    /**
+     * getCompanyId - Get Company Id 
+     * Should be implemented by meter class.
+     * 
+     * @return id of company
+     */
+    int getCompanyId();
+    
+    
+    /**
+     * getInstructions - get instructions for device
+     * Should be implemented by meter class.
+     * 
+     * @return instructions for reading data 
+     */
+    String getInstructions();
+    
+    /**
+     * getComment - Get Comment for device 
+     * Should be implemented by meter class.
+     * 
+     * @return comment or null
+     */
+    String getComment();
+    
+    
+    /**
+     * getCompanyId - Get Company Id 
+     * Should be implemented by meter class.
+     * 
+     * @return implementation status as number
+     * @see ggc.meter.manager.MeterImplementationStatus
+     */
+    int getImplementationStatus(); 
+    
+    
+    
+    
+    
+    
+    
+    
+    String getPort();
 
 
     //************************************************
@@ -128,17 +195,60 @@ public interface MeterInterface
     
     
     /**
+     * setDeviceAllowedActions - sets actions which are allowed by implementation
+     *   of MeterInterface (actually of GenericMeterXXXXX classes)
+     *   
+     * @param can_read_data
+     * @param can_read_partitial_data
+     * @param can_clear_data
+     * @param can_read_device_info
+     * @param can_read_device_configuration
+     */
+    public void setDeviceAllowedActions(boolean can_read_data, 
+    									boolean can_read_partitial_data,
+    									boolean can_clear_data,
+    									boolean can_read_device_info,
+    									boolean can_read_device_configuration);
+    
+    
+    
+    
+
+    //************************************************
+    //***       Device Implemented methods         ***
+    //************************************************
+    
+
+    /** 
+     * clearDeviceData - Clear data from device 
+     */
+    void clearDeviceData() throws MeterException;
+    
+    /**
+     * getDeviceInfo - get Device info (firmware and software revision)
+     */
+    ArrayList<String> getDeviceInfo() throws MeterException;
+    
+    
+    /**
+     * getDeviceConfiguration - return device configuration
+     * @return
+     */
+    ArrayList<String> getDeviceConfiguration() throws MeterException;
+    
+    
+    /**
      * getDataFull - get all data from Meter
      * This data should be read from meter, and is used in Meter GUI
      */
-    ArrayList<MeterValuesEntry> getDataFull();
+    ArrayList<MeterValuesEntry> getDataFull() throws MeterException;
 
 
     /**
      * getData - get data for specified time
      * This data should be read from meter and preprocessed, and is used in Meter GUI
      */
-    ArrayList<MeterValuesEntry> getData(int from, int to);
+    ArrayList<MeterValuesEntry> getData(int from, int to) throws MeterException;
 
 
     //************************************************
@@ -151,22 +261,22 @@ public interface MeterInterface
      * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
      * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
      */
-    void processMeterData(String data);
+    //void processMeterData(String data);
 
     /**
      * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
      */
-    void processMeterIdentification(String data);
+//    void processMeterIdentification(String data);
 
     /**
      * processMeterTime - this should be used to process time and date of meter
      */
-    void processMeterTime(String data);
+//    void processMeterTime(String data);
 
     /**
      * processMeterBGEntry - this should be used to process BG data from meter
      */
-    void processMeterBGEntry(String data);
+//    void processMeterBGEntry(String data);
 
 
 
@@ -177,19 +287,40 @@ public interface MeterInterface
 
     /**
      * canReadData - Can Meter Class read data from device
+     * 
+     * @return true if action is allowed
      */
     public boolean canReadData();
 
     /**
      * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
+     * 
+     * @return true if action is allowed
      */
     public boolean canReadPartitialData();
 
     /**
      * canClearData - Can Meter class clear data from meter.
+     * 
+     * @return true if action is allowed
      */
     public boolean canClearData();
 
+    
+    /**
+     * canReadDeviceInfo - tells if we can read info about device
+     * 
+     * @return true if action is allowed
+     */
+    public boolean canReadDeviceInfo();
+    
+    
+    /**
+     * canReadConfiguration - tells if we can read configuration from device
+     * 
+     * @return true if action is allowed
+     */
+    public boolean canReadConfiguration();
 
 
 
