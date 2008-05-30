@@ -10,8 +10,11 @@ package ggc.meter.device;
 
 import ggc.meter.data.DailyValuesRow;
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.manager.MeterDevice;
+import ggc.meter.manager.MeterManager;
 import ggc.meter.protocol.SerialProtocol;
-import ggc.util.I18nControl;
+import ggc.meter.util.I18nControl;
+import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ import java.util.StringTokenizer;
 import javax.swing.ImageIcon;
 
 
-public abstract class AbstractGenericMeter extends SerialProtocol implements MeterInterface 
+public abstract class AbstractSerialMeter extends SerialProtocol implements MeterInterface 
 {
 
     protected int m_status = 0;
@@ -31,13 +34,96 @@ public abstract class AbstractGenericMeter extends SerialProtocol implements Met
     protected ArrayList<DailyValuesRow> data = null;
 
 
-    public AbstractGenericMeter()
+    public AbstractSerialMeter()
     {
         super();
     }
 
-    public abstract void serialEvent(SerialPortEvent event);
+    
+    public AbstractSerialMeter(int i1, int i2, int i3, int i4, int i5)
+    {
+        super();
+    }
+    
+    
+    
+//	this.m_device_index = device_index;
+    
+    
+    public void serialEvent(SerialPortEvent event)
+    {
+    	
+    }
 
+    
+    
+    boolean can_read_data = false; 
+	boolean can_read_partitial_data = false;
+	boolean can_clear_data = false;
+	boolean can_read_device_info = false;
+	boolean can_read_device_configuration = false;
+    
+    
+	
+	
+	
+    public void setDeviceAllowedActions(boolean can_read_data, 
+    									boolean can_read_partitial_data,
+    									boolean can_clear_data,
+    									boolean can_read_device_info,
+    									boolean can_read_device_configuration)
+    {
+        this.can_read_data = can_read_data; 
+        this.can_read_partitial_data = can_read_partitial_data;
+        this.can_clear_data = can_clear_data;
+        this.can_read_device_info = can_read_device_info;
+        this.can_read_device_configuration = can_read_device_configuration;
+    }
+    
+
+    public void setCommunicationSettings(int baudrate, int databits,
+    									 int stopbits, int parity,
+    									 int flow_control)
+    {
+    	super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control);
+    }
+    
+    
+    String meter_group = null;
+    String meter_device = null;
+    
+    MeterDevice device_instance = null;
+    
+    
+    public void setMeterType(String group, String device)
+    {
+    	this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+    }
+    
+    
+    String serial_port = null;
+    
+    public void setSerialPort(String port)
+    {
+    	this.serial_port = port;
+    	
+    	try
+    	{
+    		this.setPort(port);
+    	}
+    	catch(NoSuchPortException ex)
+    	{
+    		System.out.println("No Such Port Ex: " + ex);
+    		
+    	}
+    	
+    }
+    
+    public String getSerialPort()
+    {
+    	return this.serial_port;
+    }
+    
     
     /*
     public GenericMeter(int meter_type, String portName)
@@ -74,9 +160,9 @@ public abstract class AbstractGenericMeter extends SerialProtocol implements Met
     //@Override
     public boolean open() throws MeterException
     {
-        //return super.open();
+        return super.open();
 	//return false;
-        return true;
+        //return true;
     }
 
 
@@ -90,20 +176,6 @@ public abstract class AbstractGenericMeter extends SerialProtocol implements Met
     }
 
 
-    public int getMeterIndex()
-    {
-        return 0;
-    }
-
-    public ImageIcon getIcon()
-    {
-        return null;
-    }
-
-    public String getName()
-    {
-        return "Generic device";
-    }
 
     /**
      * getTimeDifference - returns time difference between Meter and Computer
@@ -142,6 +214,40 @@ public abstract class AbstractGenericMeter extends SerialProtocol implements Met
     }
 
 
+    
+    
+    //************************************************
+    //***       Device Implemented methods         ***
+    //************************************************
+    
+
+    /** 
+     * clearDeviceData - Clear data from device 
+     */
+    public void clearDeviceData()
+    {
+    	
+    }
+    
+    /**
+     * getDeviceInfo - get Device info (firmware and software revision)
+     */
+    public ArrayList<String> getDeviceInfo()
+    {
+    	return new ArrayList<String>();
+    }
+    
+    
+    /**
+     * getDeviceConfiguration - return device configuration
+     * @return
+     */
+    public ArrayList<String> getDeviceConfiguration()
+    {
+    	return new ArrayList<String>();
+    }
+    
+    
 
     /**
      * getDataFull - get all data from Meter
@@ -739,37 +845,107 @@ public abstract class AbstractGenericMeter extends SerialProtocol implements Met
     }
 
 
-
-
+    
     //************************************************
     //***        Available Functionality           ***
     //************************************************
 
 
+    
     /**
      * canReadData - Can Meter Class read data from device
+     * 
+     * @return true if action is allowed
      */
     public boolean canReadData()
     {
-        return false;
+    	return this.can_read_data;
     }
 
     /**
      * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
+     * 
+     * @return true if action is allowed
      */
     public boolean canReadPartitialData()
     {
-        return false;
+    	return this.can_read_partitial_data;
     }
 
     /**
      * canClearData - Can Meter class clear data from meter.
+     * 
+     * @return true if action is allowed
      */
     public boolean canClearData()
     {
-        return false;
+    	return this.can_clear_data;
     }
 
+    
+    /**
+     * canReadDeviceInfo - tells if we can read info about device
+     * 
+     * @return true if action is allowed
+     */
+    public boolean canReadDeviceInfo()
+    {
+    	return this.can_read_device_info;
+    }
+    
+    
+    /**
+     * canReadConfiguration - tells if we can read configuration from device
+     * 
+     * @return true if action is allowed
+     */
+    public boolean canReadConfiguration()
+    {
+    	return this.can_read_device_configuration;
+    }
+    
+    
+
+    //************************************************
+    //***      Meter Identification Methods        ***
+    //************************************************
+
+    /**
+     * getName - Get Name of meter. 
+     * Should be implemented by protocol class.
+     */
+    public String getName()
+    {
+    	if (this.device_instance==null)
+    		return "Generic Serial Device";
+    	else
+    		return this.device_instance.name;
+    }
+
+
+    /**
+     * getIcon - Get Icon of meter
+     * Should be implemented by protocol class.
+     */
+    public ImageIcon getIcon()
+    {
+    	if (this.device_instance==null)
+    		return null;
+    	else
+    		return m_da.getImageIcon(this.device_instance.picture); 
+    	//this.device_instance.picture;
+    }
+    
+
+
+    /**
+     * getMeterIndex - Get Index of Meter 
+     * Should be implemented by protocol class.
+     */
+    public int getMeterIndex()
+    {
+        return 0;
+    }
 
 
 

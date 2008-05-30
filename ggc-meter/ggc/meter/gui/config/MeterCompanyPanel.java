@@ -30,8 +30,9 @@ package ggc.meter.gui.config;
 
 //import ggc.gui.dialogs.PortSelectionDialog;
 
-import ggc.util.DataAccess;
-import ggc.util.I18nControl;
+import ggc.meter.manager.MeterManager;
+import ggc.meter.util.DataAccess;
+import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -54,7 +55,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class PrefMeterConfPane extends JPanel implements ItemListener
+public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemListener
 {
 	static final long serialVersionUID = 0;
 	
@@ -89,8 +90,9 @@ public class PrefMeterConfPane extends JPanel implements ItemListener
     DataAccess m_da = DataAccess.getInstance();
     I18nControl m_ic = m_da.getI18nInstance();
     
-    public PrefMeterConfPane(JDialog parent)
+    public MeterCompanyPanel(ConfigurationDialog parent)
     {
+        super(parent);
         this.parent = parent;
         initData();
         init();
@@ -135,120 +137,36 @@ public class PrefMeterConfPane extends JPanel implements ItemListener
 
     public void init()
     {
-        setLayout(new BorderLayout());
+        //setLayout(new BorderLayout());
+        setLayout(null);
 
-        cb_meter_company = new JComboBox(/*meter_companies_array */);
+        cb_meter_company = new JComboBox(MeterManager.getInstance().getCompanies());
         cb_meter_company.addItemListener(this);
+        cb_meter_company.setBounds(20,30,120,25);
+        this.add(cb_meter_company, null);
 
 
-        this.cb_meter_type = new JComboBox(this.meters_array);
+        this.cb_meter_type = new JComboBox(/*this.meters_array*/);
 
 //cb_meter_type, cb_meter_company
 /*
-        //String[] choicesMeterType = {"GlucoCard"};
-        comboMeterType = new JComboBox(m_da.getMeterManager().getAvailableMeters());
-
-    System.out.println("Meter selected: " + m_da.getSettings().getMeterType());
-
-        comboMeterType.setSelectedIndex(m_da.getSettings().getMeterType());
-        comboMeterType.addItemListener(this);
-
-        //System.out.println(props.getMeterType());
-
-        try
-        {
-
-        Vector<String> vct = SerialMeterImport.getAvailableSerialPorts();
-
-        if (vct.size()==0)
-        {
-        vct.add(m_ic.getMessage("NO_COM_PORT_AVAILABLE"));
-        comboPortId = new JComboBox(vct);
-        }
-        else
-        {
-        comboPortId = new JComboBox(SerialMeterImport.getAvailableSerialPorts());
-        comboPortId.setSelectedItem(m_da.getSettings().getMeterPort());
-        }
-
-        comboPortId.addItemListener(this);
-
-        }
-        catch(java.lang.NoClassDefFoundError ex)
-        {
-            comboPortId = null;
-        }
-        catch(Exception ex)
-        {
-            comboPortId = null;
-            System.out.println("Problem loading COMM API: " + ex);
-        }
 */
+        /*
         JPanel a = new JPanel(new GridLayout(5, 3));
 
         a.add(new JLabel(m_ic.getMessage("METER_COMPANY")+":"));
         a.add(cb_meter_company);
         a.add(new JLabel(""));
+        */
 
-        a.add(new JLabel(m_ic.getMessage("GLUCOSE_METERS")+":"));
-        a.add(this.cb_meter_type);
-        a.add(new JLabel(""));
+        //a.add(new JLabel(m_ic.getMessage("GLUCOSE_METERS")+":"));
+        //a.add(this.cb_meter_type);
+        //a.add(new JLabel(""));
 
-        a.add(new JLabel(m_ic.getMessage("SERIAL_PORTS")+":"));
-        a.add(tb_port = new JTextField());
-        //tb_port.setText(
-        //tb_port.setEnabled(false);
-        tb_port.setEditable(false);
-        a.add(this.b_select = new JButton(m_ic.getMessage("CHANGE_PORT")));
-        this.b_select.addActionListener(new ActionListener(){
-                /**
-                 * Invoked when an action occurs.
-                 */
-                public void actionPerformed(ActionEvent e)
-                {
-                    /*PortSelectionDialog psd =*/
-                    //new PortSelectionDialog(parent);
 
-                }
-                });
+
 
 /*
-        if (comboPortId==null) 
-        {
-            a.add(new JLabel(""));
-            a.add(new JLabel(m_ic.getMessage("PROBLEM_READING_AVAILABLE_PORTS")));
-        }
-        else
-        {
-            a.add(new JLabel(m_ic.getMessage("PORT_TO_USE")+":"));
-            a.add(comboPortId);
-        }
-*/
-
-
-        this.cb_timezone = new JComboBox(getTimeZoneDescs());
-
-        // timezone fix
-        a.add(new JLabel(""));
-        a.add(this.chb_timezone_fix = new JCheckBox(m_ic.getMessage("DAYLIGHTSAVINGS_FIX")));
-        this.chb_timezone_fix.setToolTipText(m_ic.getMessage("DAYLIGHTSAVINGS_FIX_DESC"));
-        this.chb_timezone_fix.addActionListener(new ActionListener(){
-                /**
-                 * Invoked when an action occurs.
-                 */
-                public void actionPerformed(ActionEvent e)
-                {
-                    cb_timezone.setEnabled(chb_timezone_fix.isSelected());
-                }
-                });
-        a.add(new JLabel(""));
-        //a.addAncestorListener(
-        
-        a.add(new JLabel(m_ic.getMessage("TIMEZONE")));
-        a.add(this.cb_timezone);
-        a.add(new JLabel(""));
-
-
         // picture
         JPanel pa = new JPanel(new GridLayout(1, 1));
         meterPicture = new JLabel(); //new JLabel(m_da.getMeterManager().getMeterImage(comboMeterType.getSelectedIndex()));
@@ -259,7 +177,7 @@ public class PrefMeterConfPane extends JPanel implements ItemListener
         a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("METER_CONFIGURATION")));
         add(a, BorderLayout.NORTH);
         add(pa, BorderLayout.CENTER);
-
+*/
         loadProps();
     }
 
