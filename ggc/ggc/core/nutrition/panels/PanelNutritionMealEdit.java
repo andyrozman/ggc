@@ -458,7 +458,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /*JPanel*/ implements A
 	
 	for(int i=0; i< this.list_parts.size(); i++)
 	{
-	    ArrayList<MealNutrition> lst = this.list_parts.get(i).getMealPart().getNutritions();
+	    ArrayList<MealNutrition> lst = this.list_parts.get(i).getMealPart().getNutrients();
 	    
 	    float amount = this.list_parts.get(i).getMealPart().getAmount();
 	    

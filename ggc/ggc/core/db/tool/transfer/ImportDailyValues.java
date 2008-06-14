@@ -52,7 +52,14 @@ public class ImportDailyValues extends ImportTool
 
     DataAccess m_da = DataAccess.getInstance();
 
+    
     public ImportDailyValues(String file_name)
+    {
+	this(file_name, true);
+    }
+    
+    
+    public ImportDailyValues(String file_name, boolean identify)
     {
 	super(false);
 
@@ -60,7 +67,8 @@ public class ImportDailyValues extends ImportTool
     	m_db.initDb();
     	this.file_name = file_name;
 
-    	importDailyValues();
+    	if (identify)
+    	    importDailyValues();
     
     	System.out.println();
 	
@@ -88,7 +96,7 @@ public class ImportDailyValues extends ImportTool
 	{
 	    System.out.println("\nLoading DailiyValues (5/dot)");
 
-	    BufferedReader br = new BufferedReader(new FileReader(new File("./" + file_name)));
+	    BufferedReader br = new BufferedReader(new FileReader(new File(file_name)));
 	    
 	    int i=0;
 

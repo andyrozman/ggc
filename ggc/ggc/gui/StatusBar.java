@@ -27,6 +27,7 @@
 
 package ggc.gui;
 
+import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
@@ -48,6 +49,7 @@ public class StatusBar extends JPanel
 //    private JLabel lblDataSource = null;
     private JLabel lblLed = null;
     private JLabel lblName = null;
+    DataAccess da = DataAccess.getInstance();
 
     //private static StatusBar singleton = null;
 
@@ -60,7 +62,9 @@ public class StatusBar extends JPanel
 
         statusIcons[0] = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
         statusIcons[1] = new ImageIcon(getClass().getResource("/icons/led_yellow.gif"));
-        statusIcons[2] = new ImageIcon(getClass().getResource("/icons/led_blue.gif"));
+        statusIcons[2] = da.getImageIcon( "led_blue.gif", 14, 14, this);
+ 
+           // new ImageIcon(getClass().getResource("/icons/led_blue.gif"));
         statusIcons[3] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));
 
         lblMessage = new JLabel();

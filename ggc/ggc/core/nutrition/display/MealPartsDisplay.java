@@ -1,6 +1,7 @@
 
 package ggc.core.nutrition.display;
 
+import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.MealPart;
 
 import com.atech.graphics.components.ATTableData;
@@ -17,7 +18,7 @@ public class MealPartsDisplay extends ATTableData
 	public static String[] type_description = null;
 	
 	MealPart meal_part = null;
-
+	DailyFoodEntry daily_food_entry = null;
 
 	
 	
@@ -35,7 +36,6 @@ public class MealPartsDisplay extends ATTableData
 	public MealPartsDisplay(I18nControlAbstract ic, String full)
 	{
 	    super(ic);
-	//    System.out.println("Nutr: " + full);
 	    int index = full.indexOf("=");
 	    this.id = full.substring(0, index);
 //	    this.value = full.substring(index+1);
@@ -61,9 +61,33 @@ public class MealPartsDisplay extends ATTableData
 	}
 	
 	
+	public MealPartsDisplay(I18nControlAbstract ic, DailyFoodEntry part)
+	{
+	    super(ic);
+	    initStatic();
+
+	    this.type_desc = MealPartsDisplay.type_description[part.getFoodType()-1];
+	    this.id = "" + part.getItemId();
+	    this.description = part.getName();
+	    this.amount = "" + part.getAmountString();
+	    
+	    //this.meal_part = part;
+	    daily_food_entry = part;
+//	    String[] col = { "TYPE", "ID", "DESCRIPTION", "AMOUNT" };
+
+	    
+	}
+	
+	
+	
 	public MealPart getMealPart()
 	{
 	    return this.meal_part;
+	}
+	
+	public DailyFoodEntry getDailyFoodEntry()
+	{
+	    return this.daily_food_entry;
 	}
 	
 	

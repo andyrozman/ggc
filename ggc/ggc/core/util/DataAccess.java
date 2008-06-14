@@ -33,7 +33,6 @@ import ggc.core.data.DailyValues;
 import ggc.core.data.HbA1cValues;
 import ggc.core.data.WeeklyValues;
 import ggc.core.data.cfg.ConfigurationManager;
-import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
 import ggc.core.db.datalayer.DailyValue;
@@ -42,6 +41,7 @@ import ggc.core.db.datalayer.FoodGroup;
 import ggc.core.db.datalayer.Meal;
 import ggc.core.db.datalayer.MealGroup;
 import ggc.core.db.tool.DbToolApplicationGGC;
+import ggc.core.nutrition.GGCTreeRoot;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
@@ -72,13 +72,14 @@ import javax.swing.ImageIcon;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.RedirectScreen;
 
 
 public class DataAccess extends ATDataAccessAbstract
 {
 
     
-    public String currentDbVersion = "5";
+    public String currentDbVersion = "6";
     
     
     // LF
@@ -235,6 +236,13 @@ public class DataAccess extends ATDataAccessAbstract
 
         //checkPrerequisites();
         //this.loadBackupRestoreCollection();
+        
+        if (!(new File("../data/debug.txt").exists()))
+        {
+            new RedirectScreen();
+        }
+        
+        
 
     } 
 
@@ -923,6 +931,19 @@ public class DataAccess extends ATDataAccessAbstract
     }
 
 
+    // ********************************************************
+    // ******               Component Id                  *****    
+    // ********************************************************
+    
+    private long component_id_last;
+    
+    public String getNewComponentId()
+    {
+	component_id_last++;
+	
+	return "" + this.component_id_last; 
+	
+    }
 
 
     // ********************************************************
@@ -1197,7 +1218,7 @@ public class DataAccess extends ATDataAccessAbstract
         System.out.println("Reload daily settings (force:" + force + ")");
 
         m_date = day;
-        m_HbA1c = m_db.getHbA1c(day);
+        m_HbA1c = m_db.getHbA1c(day, force);
         m_dvalues = m_db.getDayStats(day);
 
         m_dateStart = (GregorianCalendar) day.clone();
@@ -1290,16 +1311,17 @@ public class DataAccess extends ATDataAccessAbstract
         if ((gc1 == null) || (gc2 == null))
         {
             return false;
-        } else
+        } 
+        else
         {
 
-            if ((gc1.get(Calendar.DAY_OF_MONTH) == gc2
-                    .get(Calendar.DAY_OF_MONTH))
-                    && (gc1.get(Calendar.MONTH) == gc2.get(Calendar.MONTH))
-                    && (gc1.get(Calendar.YEAR) == gc2.get(Calendar.YEAR)))
+            if ((gc1.get(Calendar.DAY_OF_MONTH) == gc2.get(Calendar.DAY_OF_MONTH)) && 
+        	(gc1.get(Calendar.MONTH) == gc2.get(Calendar.MONTH)) &&
+                (gc1.get(Calendar.YEAR) == gc2.get(Calendar.YEAR)))
             {
                 return true;
-            } else
+            } 
+            else
             {
                 return false;
             }
@@ -1320,116 +1342,9 @@ public class DataAccess extends ATDataAccessAbstract
         System.out.println("Not Implemented: " + source);
     }
 
-    /**
-     * For replacing strings.<br>
-     * 
-     * @param input   Input String
-     * @param replace What to seatch for.
-     * @param replacement  What to replace with.
-     * 
-     * @return Parsed string.
-     */
-    public String replaceExpression(String input, String replace,
-            String replacement)
-    {
 
-        int idx;
-        if ((idx = input.indexOf(replace)) == -1)
-        {
-            return input;
-        }
-
-        StringBuffer returning = new StringBuffer();
-
-        while (idx != -1)
-        {
-            returning.append(input.substring(0, idx));
-            returning.append(replacement);
-            input = input.substring(idx + replace.length());
-            idx = input.indexOf(replace);
-        }
-        returning.append(input);
-
-        return returning.toString();
-
-    }
-
-
-
-    public String parseExpression(String in, String expression, String replace)
-    {
-
-        StringBuffer buffer;
-
-        int idx=in.indexOf(expression);
-        
-        if (replace==null)
-            replace ="";
-        
-        if (idx==-1)
-            return in;
-
-        buffer = new StringBuffer();
-        
-        while (idx!=-1)
-        {
-            buffer.append(in.substring(0,idx));
-            buffer.append(replace);
-
-            in = in.substring(idx+expression.length());
-            
-            idx=in.indexOf(expression);
-        }
-
-        buffer.append(in);
-
-        return buffer.toString();
-
-    }
-
-
-
-    public String parseExpressionFull(String in, String expression, String replace)
-    {
-
-        String buffer;
-
-        int idx=in.indexOf(expression);
-        
-        if (replace==null)
-            replace ="";
-        
-        if (idx==-1)
-            return in;
-
-        buffer = "";
-        
-        if (idx!=-1)
-        {
-            
-            buffer = in.substring(0,idx) + replace + in.substring(idx+expression.length());
-            
-            idx=in.indexOf(expression);
-
-            if (idx!=-1) 
-                buffer = parseExpressionFull(buffer,expression,replace);
-
-        }
-
-        return buffer;
-
-    }
     
     
-    public boolean isEmptyOrUnset(String val)
-    {
-        if ((val == null) || (val.trim().length()==0))
-        {
-            return true;
-        }
-        else
-            return false;
-    }
     
     
     

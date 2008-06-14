@@ -82,12 +82,12 @@ public class DailyFoodEntryDisplay extends ATTableData
 	init(col, col_size);
     }
 
-    
+    /*
     public void resetWeightValues(DailyFoodEntry dfe)
     {
 	this.daily_food_entry.resetWeightValues(dfe);
     }
-    
+    */
     
     /*
     public String getId()

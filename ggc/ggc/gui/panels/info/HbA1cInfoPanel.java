@@ -103,7 +103,9 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
 	    if (hbVal.getReadings()==0)
 		lblHbA1c.setText(m_ic.getMessage("NO_READINGS"));
 	    else
-                lblHbA1c.setText(df.format(hbVal.getHbA1c_Method1()) + " %");
+		lblHbA1c.setText(df.format(hbVal.getHbA1c_Method3()) + " %");
+	    
+                //lblHbA1c.setText(df.format(hbVal.getHbA1c_Method1()) + " %");
 
             lblVal.setText(hbVal.getValuation());
             lblAvgBG.setText(df.format(hbVal.getAvgBG()));

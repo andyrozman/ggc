@@ -141,27 +141,12 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
 
         int year = gc.get(Calendar.YEAR);
         int month = gc.get(Calendar.MONTH)+1;
-            (new GregorianCalendar()).get(Calendar.YEAR);
-    /*
-        JSlider sl = new JSlider();
-        BoundedRangeModel model = new BoundedRangeModel();
-        model.setMinimum(1970);
-        model.setMaximum(year);
-        model.setValue(year);
-        sl.setModel(model);
-        sl.setBounds(120, 210, 30, 25);
-    */
+//            (new GregorianCalendar()).get(Calendar.YEAR);
     
         label = new JLabel(m_ic.getMessage("SELECT_YEAR_AND_MONTH") + ":");
         label.setFont(this.font_normal_bold);
         label.setBounds(40, 155, 180, 25);
         panel.add(label);
-    /*
-        tfName = new JTextField();
-        tfName.setBounds(120, 205, 160, 25);
-        tfName.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-        //panel.add(sl);
-*/
 
         sl_year = new JSpinner();
         SpinnerNumberModel model = new SpinnerNumberModel(year, 1970, year+1, 1);
@@ -185,7 +170,7 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
         button.setActionCommand("ok");
         button.addActionListener(this);
         button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
-        button.setBounds(90, 240, 100, 25);
+        button.setBounds(40, 240, 125, 25);
         panel.add(button);
     
         button = new JButton("   " + m_ic.getMessage("CANCEL"));
@@ -193,11 +178,11 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
         button.setActionCommand("cancel");
         button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         button.addActionListener(this);
-        button.setBounds(200, 240, 100, 25);
+        button.setBounds(175, 240, 125, 25);
         panel.add(button);
 
         
-        help_button = m_da.createHelpButtonByBounds(210, 210, 90, 25, this);
+        help_button = m_da.createHelpButtonByBounds(185, 210, 115, 25, this);
         panel.add(help_button);
             
         m_da.enableHelp(this);

@@ -31,6 +31,8 @@ package ggc.core.db.tool.transfer;
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.FoodUserDescriptionH;
 import ggc.core.db.hibernate.FoodUserGroupH;
+import ggc.core.db.hibernate.MealGroupH;
+import ggc.core.db.hibernate.MealH;
 import ggc.core.util.DataAccess;
 
 import java.io.BufferedReader;
@@ -56,15 +58,23 @@ public class ImportNutrition extends ImportTool
 
     public ImportNutrition(String file_name)
     {
+	this(file_name, true);
+    }
+
+    
+    public ImportNutrition(String file_name, boolean identify)
+    {
 	super(false);
 
     	m_db = new GGCDb();
     	m_db.initDb();
     	this.file_name = file_name;
 
-	this.identifyAndImport();
+    	if (identify)
+    	    this.identifyAndImport();
     }
-
+    
+    
     public ImportNutrition(Configuration cfg, String file_name)
     {
 	super(cfg);
@@ -99,6 +109,14 @@ public class ImportNutrition extends ImportTool
     	else if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserGroupH"))
     	{
     	    this.importUserGroups();
+    	}
+    	else if (this.selected_class.equals("ggc.core.db.hibernate.MealH"))
+    	{
+    	    this.importMeals();
+    	}
+    	else if (this.selected_class.equals("ggc.core.db.hibernate.MealGroupH"))
+    	{
+    	    this.importMealGroups();
     	}
     	
     	
@@ -277,6 +295,141 @@ public class ImportNutrition extends ImportTool
 	}
 	
     }
+    
+    
+
+    
+    public void importMeals()
+    {
+	
+	String line = null;
+
+	try 
+	{
+	    System.out.println("\nLoading MealsDescription (5/dot)");
+
+	    BufferedReader br = new BufferedReader(new FileReader(new File(file_name)));
+	    
+	    int i=0;
+
+	    
+	    while ((line=br.readLine())!=null) 
+	    {
+		if (line.startsWith(";"))
+		    continue;
+	
+		line = m_da.replaceExpression(line, "||","| |");
+		
+		StringTokenizer strtok = new StringTokenizer(line, "|");
+
+		MealH ml = new MealH();
+		
+		// ; Columns: id; name; name_i18n; group_id; description; parts;nutritions; extended; comment; changed 
+		long id = this.getLong(strtok.nextToken());
+		
+		if (id!=0)
+		    ml.setId(id);
+		   
+		ml.setName(getString(strtok.nextToken()));
+		ml.setName_i18n(getString(strtok.nextToken()));
+		
+		int group = getInt(strtok.nextToken());
+		
+		if (group==0)  // root can't have elements
+		    group=1;
+		
+		ml.setGroup_id(group);
+		
+		ml.setDescription(getString(strtok.nextToken()));
+		ml.setParts(getString(strtok.nextToken()));
+		ml.setNutritions(getString(strtok.nextToken()));
+		ml.setExtended(getString(strtok.nextToken()));
+		ml.setComment(getString(strtok.nextToken()));
+		ml.setChanged(getLong(strtok.nextToken()));
+
+		m_db.addHibernate(ml);
+		
+		i++;
+		
+		if (i%5==0)
+		    System.out.print(".");
+	    }
+
+	} 
+	catch (Exception ex) 
+	{
+	    log.error("Error on importMeal: \nData: " + line +"\nException: " + ex, ex);
+	    //ex.printStackTrace();
+	}
+	
+    }
+    
+    
+    
+    
+    public void importMealGroups()
+    {
+	
+	String line = null;
+
+	try 
+	{
+	    System.out.println("\nLoading MealGroups (2/dot)");
+
+	    BufferedReader br = new BufferedReader(new FileReader(new File(file_name)));
+	    
+	    int i=0;
+
+	    
+	    while ((line=br.readLine())!=null) 
+	    {
+		if (line.startsWith(";"))
+		    continue;
+	
+		line = m_da.replaceExpression(line, "||","| |");
+		
+		StringTokenizer strtok = new StringTokenizer(line, "|");
+
+		// ; Columns: id; name; name_i18n; description; parent_id; changed 
+		
+		MealGroupH mg = new MealGroupH(); 
+		
+		long id = this.getLong(strtok.nextToken());
+		
+		if (id!=0)
+		    mg.setId(id);
+		   
+		mg.setName(getString(strtok.nextToken()));
+		mg.setName_i18n(getString(strtok.nextToken()));
+		mg.setDescription(getString(strtok.nextToken()));
+
+		
+		int parent_id = getInt(strtok.nextToken());
+		
+		//if (group==0)  // root can't have elements
+		//    group=1;
+		
+		mg.setParent_id(parent_id);
+		mg.setChanged(getLong(strtok.nextToken()));
+
+		m_db.addHibernate(mg);
+		
+		i++;
+		
+		if (i%2==0)
+		    System.out.print(".");
+	    }
+
+	} 
+	catch (Exception ex) 
+	{
+	    log.error("Error on importMealGroup: \nData: " + line +"\nException: " + ex, ex);
+	    //ex.printStackTrace();
+	}
+	
+    }
+    
+    
     
     
     

@@ -82,6 +82,9 @@ public class HbA1cValues
     	    dv.addRow(dvr);
     	    m_dataTable.put(""+date, dv);
         }
+        
+        //this.readings++; 
+        
     }
 
 
@@ -92,14 +95,14 @@ public class HbA1cValues
     	    DailyValues dv = m_dataTable.get(en.nextElement());
     	    addDay(dv.getAvgBG(), dv.getBGCount());
     	}
-
+/*
     	int num = 7 - m_dataTable.size();
     
     	for (int i=0; i<num; i++)
     	{
     	    addDay(0.0f, 0);
     	}
-
+*/
     }
     
 
@@ -112,6 +115,16 @@ public class HbA1cValues
             return 0;
     }
 
+    
+    public float getAvgBGForMethod3()
+    {
+        if (dayCount != 0)
+            return sumBG / readings;
+        else
+            return 0;
+    }
+    
+    
     public int getDayCount()
     {
         return dayCount;
@@ -169,6 +182,20 @@ public class HbA1cValues
             return 0;
     }
 
+    public float getHbA1c_Method3()
+    {
+	// HbA1c =( mg/dl + 86) / 33.3
+	
+	if (readings==0)
+	    return 0;
+
+	if (dayCount > 0)
+            return (getAvgBGForMethod3() + 86.0f  / 33.3f);
+        else
+            return 0;
+    }
+    
+    
     public int getExp()
     {
         return exp;

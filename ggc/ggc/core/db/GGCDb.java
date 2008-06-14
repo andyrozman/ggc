@@ -1172,9 +1172,29 @@ public class GGCDb //implements DbCheckInterface
     // ****      Comment: Were implemnted in DataBaseHandler    ****  
     // *************************************************************
 
+
+    HbA1cValues hba1c_object = null;
     
     @SuppressWarnings("unchecked")
-    public HbA1cValues getHbA1c(GregorianCalendar day)
+    public HbA1cValues getHbA1c(GregorianCalendar day, boolean force)
+    {
+	if (this.hba1c_object==null)
+	{
+	    hba1c_object = loadHbA1c(day);
+	}
+	else
+	{
+	    if (force)
+		hba1c_object = loadHbA1c(day);
+	}
+	
+	return this.hba1c_object;
+	
+    }
+    
+    
+    @SuppressWarnings("unchecked")
+    public HbA1cValues loadHbA1c(GregorianCalendar day)
     {
         //System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
 
@@ -1188,7 +1208,7 @@ public class GGCDb //implements DbCheckInterface
         try
         {
             GregorianCalendar gc1 = (GregorianCalendar)day.clone();
-            gc1.add(Calendar.DAY_OF_MONTH, -6);
+            gc1.add(Calendar.MONTH, -3);
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String eDay = sdf.format(day.getTime()) + "2359";

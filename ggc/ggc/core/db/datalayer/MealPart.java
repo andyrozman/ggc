@@ -29,17 +29,23 @@
 
 package ggc.core.db.datalayer;
 
+import ggc.core.db.GGCDb;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 
 public class MealPart 
 {
 
+    private static Log log = LogFactory.getLog(MealPart.class); 
+    
     DataAccess m_da = DataAccess.getInstance();
     public boolean debug = false;
     private int meal_type = 0;
@@ -77,6 +83,7 @@ public class MealPart
 
     public MealPart()
     {
+	log.warn("MealPart was created with empty constructor");
     }
 
     
@@ -107,13 +114,32 @@ public class MealPart
 	    (type == GGCTreeRoot.TREE_USER_NUTRITION))
 	{
 	    this.meal_obj_food = m_da.tree_roots.get("" + type).m_foods_ht.get(id);
+	    System.out.println("MealPart [Food]: " + this.meal_obj_food + ",type=" + type + ",id=" + id);
 	}
 	else
 	{
 	    this.meal_obj_meal = m_da.tree_roots.get("3").m_meals_ht.get(id);
+	    System.out.println("MealPart [Meal]: " + this.meal_obj_food + ",id=" + id);
 	}
 	
     }
+    
+    /*
+    p    ublic void createDailiyFoodEntry()
+    {
+	if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+		    (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
+	{
+	    DailyFoodEntry dfe = new DailyFoodEntry()
+	    
+	}
+	else
+	{
+	}
+		
+		
+    }
+    */
     
     
     public long getId()
@@ -174,6 +200,25 @@ public class MealPart
 	return this.meal_obj_meal;
     }
     
+    /*
+    public DailyFoodEntry getDailyFoodEntry()
+    {
+	if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+	    (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
+	{
+	    return new DailyFoodEntry()
+	    return this.meal_obj_food.getId();
+		}
+		else
+		{
+		    return this.meal_obj_meal.getId();
+		}
+	
+	
+	
+	return null;
+    }
+    */
     
     
 
@@ -205,7 +250,7 @@ public class MealPart
     }
     
     
-    public ArrayList<MealNutrition> getNutritions()
+    public ArrayList<MealNutrition> getNutrients()
     {
 	if (this.nutritions == null)
 	    loadNutritions();

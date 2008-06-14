@@ -141,6 +141,16 @@ public class TestNutritionData
     }
 
 
+    public TestNutritionData(boolean i1, boolean i2) 
+    {
+	m_da = DataAccess.getInstance();
+	String inp = "396|Solata, glavnata|SOLATA,_GLAVNATA|7|0.0|||203=1,30;204=0,20;205=2,80;208=15;268=63|0"; 
+	String line = m_da.replaceExpression(inp, "||", "| |");
+	
+	System.out.println("Return: \n" + line);
+	
+    }
+    
     public void createTree()
     {
 	JFrame frame = new JFrame("CheckBox Tree");
@@ -437,8 +447,10 @@ public class TestNutritionData
     {
 	
 	//new TestNutritionData(GGCTreeRoot.TREE_USER_NUTRITION);
-	new TestNutritionData(GGCTreeRoot.TREE_MEALS);
+	//new TestNutritionData(GGCTreeRoot.TREE_MEALS);
 	//new TestNutritionData();
+	
+	new TestNutritionData(true, true);
 	
 	/*
 	System.out.println("in main");

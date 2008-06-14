@@ -1,6 +1,10 @@
 
-GNU Gluco Control (GGC)
-=======================
+HOW I CAN HELP WITH GNU Gluco Control
+=====================================
+
+As I said before... this is open source project, which means you can help anywhere you want/can.
+
+
 
 Version 0.3, 4th June 2008
 ---------------------------

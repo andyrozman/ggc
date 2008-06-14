@@ -1,6 +1,7 @@
 package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
+import ggc.core.db.datalayer.DailyFoodEntries;
 import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.MealNutrition;
 import ggc.core.db.datalayer.NutritionDefinition;
@@ -14,7 +15,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
@@ -388,7 +388,7 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
         	System.out.println(dfed_new);
         	
         	
-        	dfed.resetWeightValues(mssd.getDailyFoodEntry());
+//        	dfed.resetWeightValues(mssd.getDailyFoodEntry());
         	
         	System.out.println(dfed);
         	
@@ -497,7 +497,8 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 	System.out.println(text);
     }
     
-    
+
+    /* proc v1
     private void refreshNutritions()
     {
 	System.out.println("Refresh Nutritions");
@@ -600,7 +601,7 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 		
 	    } // for (j)
 	    */
-	} // for (i)
+/*	} // for (i)
 	
 	
 	//nut_list.addAll(dfe_main.getNutrientsCalculated());
@@ -634,6 +635,60 @@ public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements Action
 	this.createModel(this.list_nutritions, this.table_2, this.mnd);
 	
     }
+*/    
+    
+    
+
+    private void refreshNutritions()
+    {
+	//System.out.println("Refresh Nutritions");
+	
+	ArrayList<MealNutrition> nut_list = new ArrayList<MealNutrition>();
+	
+	
+	
+	DailyFoodEntries dfe_main = new DailyFoodEntries();
+	
+	for(int i=0; i< this.list_food_entries.size(); i++)
+	{
+	    DailyFoodEntry dfe = this.list_food_entries.get(i).getDailyFoodEntry();
+
+	    //System.out.println(dfe);
+	    
+	    dfe_main.addDailyFoodEntry(dfe);
+	} 
+	
+	
+	
+	//nut_list.addAll(dfe_main.getCalculatedNutrients());
+	nut_list.addAll(dfe_main.getCalculatedNutrients());
+	
+	this.list_nutritions.clear();
+	
+	//for(Enumeration<String> en = nutres.keys(); en.hasMoreElements();  )
+	for(int i=0; i<nut_list.size(); i++ )
+	{
+	    
+	    MealNutrition meal_nut = nut_list.get(i); //en.nextElement());
+	    
+	    // System.out.println(meal_nut.getCalculatedAmount());  // proc v1
+	    
+	    if (meal_nut.getAmount() > 0)
+	    {
+		MealNutritionsDisplay mnd = new MealNutritionsDisplay(ic, meal_nut);
+	    
+		NutritionDefinition nd = this.m_da.getDb().nutrition_defs.get(mnd.getId());
+		mnd.setNutritionDefinition(nd);
+	    
+		this.list_nutritions.add(mnd);
+	    }
+	}
+	
+	java.util.Collections.sort(this.list_nutritions, new MealNutritionsDisplay(ic));
+	this.createModel(this.list_nutritions, this.table_2, this.mnd);
+	
+    }
+    
     
     
     

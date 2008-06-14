@@ -1,0 +1,30 @@
+
+How To Upgrade
+===============
+
+
+At this point our application has no ability to make automatic upgrades. Because of this all updates need to be applied 
+manually.
+
+Problem with all database applications is that we need to make update to application and to database. Because of this 
+our updates have special tag in name (for example db_v5). You need to look into README file to determine which version 
+of database update needs. In our application there is option to backup database (Tools->Database Maintainance->Backup).
+At this point Restore option is not available, but it will be available in one of our first updates. We will change 
+this document accordingly.  
+
+According to database tag, you have now two options of update. (see A, B)
+
+
+HOW ARE UPDATE FILES PACKAGED
+=============================
+
+
+
+
+
+
+HOW TO UPGRADE IF DATABASE VERSION IS THE SAME
+==============================================
+
+
+

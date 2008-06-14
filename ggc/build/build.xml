@@ -25,9 +25,10 @@
         <echo message="     clean = clean build dir"/>
         <echo message="     build_ggc (make) = build GGC (recompile classes)"/>
         <echo message="     jar = create GGC jar"/>
-        <echo message="     jar_core = create GGC Core jar"/>
-        <echo message="     jar_l = create GGC Little jar"/>
-        <echo message="     full = clean, build_ggc, copy, jar, jar_l"/>
+        <echo message="     jar_'part' = create specified GGC jar"/>
+        <echo message="         available parts are: core, lang, little, main"/>
+        <echo message="     jars_full = all jars"/>
+        <echo message="     full = clean, build_ggc, copy, jars_full"/>
         <echo message="     dist = full, and create distribution zip file (contains needed libs, and data files)" />
         <echo message="     style (_devel, _deploy) = checkstyle against our rules" />
         <echo message=""/>

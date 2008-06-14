@@ -1,15 +1,18 @@
 package ggc.core.nutrition.panels;
 
 //import java.awt.Color;
-import ggc.core.nutrition.NutritionTreeDialog;
-import ggc.core.nutrition.display.MealNutritionsDisplay;
-import ggc.core.nutrition.display.MealPartsDisplay;
-import ggc.core.util.DataAccess;
+import ggc.core.db.datalayer.DailyFoodEntries;
+import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.Meal;
 import ggc.core.db.datalayer.MealGroup;
 import ggc.core.db.datalayer.MealNutrition;
 import ggc.core.db.datalayer.MealPart;
+import ggc.core.db.datalayer.MealParts;
 import ggc.core.db.datalayer.NutritionDefinition;
+import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.nutrition.display.MealNutritionsDisplay;
+import ggc.core.nutrition.display.MealPartsDisplay;
+import ggc.core.util.DataAccess;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -316,10 +319,29 @@ public class PanelNutritionMeal extends GGCTreePanel /*JPanel*/ implements Actio
 
     public void refreshNutritions()
     {
-	Hashtable<String,MealNutrition> nutres = new Hashtable<String,MealNutrition>();
 	
-	loadGI_GL(nutres);
 	
+	
+	
+	//Hashtable<String,MealNutrition> nutres = new Hashtable<String,MealNutrition>();
+	
+	//loadGI_GL(nutres);
+	
+	
+	//DailyFoodEntries dfes = new DailyFoodEntries();
+	/*
+	MealParts mpts = new MealParts();
+	
+	for(int i=0; i< this.list_parts.size(); i++)
+	{
+	    mpts.addMealPart(this.list_parts.get(i).getMealPart());
+	    //dfes.addDailyFoodEntry(new DailyFoodEntry(this.list_parts.get(i).getMealPart()));
+	    //ArrayList<MealNutrition> lst = this.list_parts.get(i).getMealPart().getNutritions();
+	}
+	*/
+	
+	
+	/*
 	for(int i=0; i< this.list_parts.size(); i++)
 	{
 	    ArrayList<MealNutrition> lst = this.list_parts.get(i).getMealPart().getNutritions();
@@ -370,20 +392,53 @@ public class PanelNutritionMeal extends GGCTreePanel /*JPanel*/ implements Actio
 		    }
 
 		    //nutres.get("" + mn.getId()).addToAmount((mn.getAmount() * amount));
-		    nutres.get("" + mn.getId()).addToCalculatedAmount(((mn.getAmount()/100.0f) * amount));
+		    //nutres.get("" + mn.getId()).addToCalculatedAmount(((mn.getAmount()/100.0f) * amount));
 		    
+		    nutres.get("" + mn.getId()).addAmountToSum(mn.getCalculatedAmount());
 		}
 		
 		
 	    } // for (j)
 	} // for (i)
+	*/
+	
+	
+	//System.out.println("Refresh Nutritions");
+	
+	ArrayList<MealNutrition> nut_list = new ArrayList<MealNutrition>();
+	
+	
+	
+	DailyFoodEntries dfe_main = new DailyFoodEntries();
+	dfe_main.addDailyFoodEntry(new DailyFoodEntry(this.meal, 1.0f));
+	
+	/*
+	for(int i=0; i< this.list_parts.size(); i++)
+	{
+	    DailyFoodEntry dfe = this.list_parts.get(i).getDailyFoodEntry();
+
+	    System.out.println("DFE: " + dfe);
+	    
+	    dfe_main.addDailyFoodEntry(dfe);
+	} 
+	*/
+	
+	
+	//nut_list.addAll(dfe_main.getCalculatedNutrients());
+	nut_list.addAll(dfe_main.getCalculatedNutrients());
 	
 	this.list_nutritions.clear();
 	
-	for(Enumeration<String> en = nutres.keys(); en.hasMoreElements();  )
+	
+	//ArrayList<MealNutrition> lst = mpts.getCalculatedNutrients();
+	
+	//this.list_nutritions.clear();
+	
+	//for(Enumeration<String> en = nutres.keys(); en.hasMoreElements();  )
+	for(int i=0; i<nut_list.size(); i++)
 	{
 	    
-	    MealNutrition meal_nut = nutres.get(en.nextElement());
+	    MealNutrition meal_nut = nut_list.get(i);
 	    
 	    if (meal_nut.getAmount() > 0)
 	    {
@@ -532,8 +587,9 @@ public class PanelNutritionMeal extends GGCTreePanel /*JPanel*/ implements Actio
 	
 	while (strtok.hasMoreTokens())
 	{
-	    MealPart mp = new MealPart(strtok.nextToken());
-	    this.list_parts.add(new MealPartsDisplay(ic, mp));
+	    //MealPart mp = new MealPart(strtok.nextToken());
+	    DailyFoodEntry dfe = new DailyFoodEntry(strtok.nextToken(), 1);
+	    this.list_parts.add(new MealPartsDisplay(ic, dfe));
 	}
 
 	this.createModel(this.list_parts, this.table_1, this.mpd);
@@ -684,20 +740,6 @@ public class PanelNutritionMeal extends GGCTreePanel /*JPanel*/ implements Actio
 	*/
     }
 
-/*
-    private boolean hasChangedEntry(String old_value, String new_value)
-    {
-	System.out.println("hasChangedEntry [old=" + old_value + ",new=" + new_value + "]");
-	
-	
-	if ((m_da.isEmptyOrUnset(old_value)) ||
-	    (!old_value.equals(new_value)))
-	    return true;
-	else
-	    return false;
-	
-    }
-*/    
     
 
     /**

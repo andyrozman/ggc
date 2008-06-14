@@ -44,6 +44,7 @@ import ggc.gui.dialogs.FrequencyGraphDialog;
 import ggc.gui.dialogs.HbA1cDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
+import ggc.gui.dialogs.RatioDialog;
 import ggc.gui.dialogs.SpreadGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
 
@@ -115,10 +116,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.16";
+    public  static String s_version = "0.2.17.2";
     public static String full_version = "v" + s_version;
 
-    public static String version_date = "25th May 2008";
+    public static String version_date = "9th June 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -333,6 +334,8 @@ public class MainFrame extends JFrame
 	this.createAction(this.menu_data_graphs, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png"); //"frequency.gif");
 	this.menu_bgs.addSeparator();
 	this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png"); //null);
+	this.menu_bgs.addSeparator();
+	this.createAction(this.menu_bgs, "MN_RATIO_CALC", "MN_RATIO_CALC_DESC", "view_ratio", null); //null);
 	
 	// food menu
 	this.menu_food = this.createMenu("MN_FOOD", null);
@@ -1025,6 +1028,10 @@ public class MainFrame extends JFrame
             else if (command.equals("report_pdf_extended"))
             {
         	new PrintingDialog(MainFrame.this, 2);
+            }
+            else if (command.equals("view_ratio"))
+            {
+        	new RatioDialog(getMyParent());
             }
 	    else if (command.equals("doc_docs"))
 	    {

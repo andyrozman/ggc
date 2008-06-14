@@ -26,7 +26,6 @@ public class MealFoodDisplay extends ATTableData
     public MealFoodDisplay(I18nControlAbstract ic, String full)
     {
 	super(ic);
-	// System.out.println("Nutr: " + full);
 	int index = full.indexOf("=");
 	this.id = full.substring(0, index);
 	// this.value = full.substring(index+1);

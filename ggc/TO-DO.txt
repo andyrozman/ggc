@@ -72,7 +72,7 @@ Version 0.3
 * Added functiuonality for Nutrition Db: 
 #    - Export data
     - Import data (full)
-    - Nutrition Definition [GI_GL] should be added on init
+#    - Nutrition Definition [GI_GL] should be added on init
 
 
 Version 0.4
@@ -99,6 +99,7 @@ Version 0.4
     - Create Home Weight
     - Column Sorting in meal
     - Column Sorting in Food
+    - Glycemic data change
 * Pump: 
     - Basic Pump support (for manual input of data)
     - Integration of Pump Tool
@@ -166,28 +167,15 @@ Level 3 (Medium 2 Priority):
     o  Nutrition data Init
     o  Basic Data Init
 
-* Printing: 
-    o  Data gather - Extended (MonthlyValues)
-    o  Detailed print sheet
 
 * Import/Export Tool (for real time):
     o  Backup
     o  Restore
 
-* Add new daily data: - Check all parameters for validity (internal java checker)
-                      - Enter is OK (Date component)
-                      //- Tab for switching fields
-                      - 0.0 not displayed in table
-                      - double click edit
 
 Level 4 (Medium 3 Priority):
 ----------------------------
 
-* USDB: - Main panel
-        - Group panel
-
-* User Nutrition:
-    o  Private nutrition database
 
 
 
@@ -207,11 +195,6 @@ Level 5 (Low Priority):
     o  Database entries
     o  Add/Edit/Delete
     o  View
-* Meals: 
-    o  Config
-    o  GUI Tree
-    o  Database
-    o  Add/Edit/Delete
 * GGC Little: 
     o  GUI
     o  about
@@ -250,6 +233,29 @@ DONE
 ===============================================================================
 ===============================================================================
 
+* Add new daily data: - Check all parameters for validity (internal java checker)
+                      - Enter is OK (Date component)
+                      //- Tab for switching fields
+                      - 0.0 not displayed in table
+                      - double click edit
+
+
+* USDA: - Main panel
+        - Group panel
+
+* User Nutrition:
+    o  Private nutrition database
+
+* Meals: 
+    o  Config
+    o  GUI Tree
+    o  Database
+    o  Add/Edit/Delete
+
+
+* Printing: 
+    o  Data gather - Extended (MonthlyValues)
+    o  Detailed print sheet
 
 
 * HypersonicSQL Test

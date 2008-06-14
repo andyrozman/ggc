@@ -1,3 +1,16 @@
+2008-06-10 (0.2.18)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Db Version Change: Stable: v6, Development: v7
+    * We are now officaially using USDA SR-20 (older DBs were filled with SR-18)
+    * There were several tables added for Pump Tool, it shouldn't be done before the end of year, but it 
+      might happen. Designing of tables is finished, and probably there will be at least import for 
+      some of pumps (for Roche's family which uses Smart Pix device, which will be supported soon) 
+
+2008-06-08 (0.2.17.1) Andy Rozman <andyrozman@users.sourceforge.net>
+    * data fix of HbA1c (new formula and we calculate values for last 3 months)
+    * also fixed dialog for HbA1c
+    * fixed calculations of foods (wrong display of values in MealView and calculation in DailyValues)
+    
+
 2008-05-25 (0.2.16.2) Andy Rozman <andyrozman@users.sourceforge.net>
     * bug fixing foods stuff
     * added glycemic processing as seperate entity (not finished yet), maels db is currently not working

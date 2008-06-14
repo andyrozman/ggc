@@ -73,7 +73,8 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         this.m_da = da;
         init();
 
-        hbValues = this.m_da.getHbA1c(new GregorianCalendar());
+        //hbValues = this.m_da.getHbA1c(new GregorianCalendar());
+        hbValues = this.m_da.getDb().getHbA1c(new GregorianCalendar(), false);
         updateLabels();
 
         hbView.setHbA1cValues(hbValues);
@@ -86,13 +87,11 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 
     public void updateLabels()
     {
-	
         lblExp.setText(hbValues.getValuation());
-        lblHbA1c.setText(hbValues.getHbA1c_Method1() + "");
-        lblBGAvg.setText(hbValues.getAvgBG() + "");
+        lblHbA1c.setText(DataAccess.Decimal2Format.format(hbValues.getHbA1c_Method3()) + " %");
+        lblBGAvg.setText(DataAccess.Decimal2Format.format(hbValues.getAvgBG()));
         lblReadings.setText(hbValues.getReadings() + "");
-        lblReadingsPerDay.setText(hbValues.getReadingsPerDay() + "");
-        
+        lblReadingsPerDay.setText(DataAccess.Decimal2Format.format(hbValues.getReadingsPerDay()));
     }
 
     private void init()
@@ -120,49 +119,52 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 
         // current hba1c
         label = new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C")+":");
-        label.setBounds(20, 90, 100, 25);
+        label.setBounds(0, 90, 250, 25);
+        label.setHorizontalAlignment(JLabel.CENTER);
         infoPanel.add(label);
         
         lblHbA1c = new JLabel();
         lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
-        lblHbA1c.setBounds(170, 85, 50, 30);
+        //lblHbA1c.setBounds(100, 130, 50, 30);
+        lblHbA1c.setBounds(0, 110, 250, 30);
+        lblHbA1c.setHorizontalAlignment(JLabel.CENTER);
         infoPanel.add(lblHbA1c);
         
         // valuation
         label = new JLabel(m_ic.getMessage("VALUATION")+":");
-        label.setBounds(20, 150, 100, 25);
+        label.setBounds(20, 180, 100, 25);
         infoPanel.add(label);
         
         lblExp = new JLabel();
-        lblExp.setBounds(100, 150, 150, 25);
+        lblExp.setBounds(100, 180, 150, 25);
         infoPanel.add(lblExp);
 
         
         // bg avg.
         label = new JLabel(m_ic.getMessage("BG")+" "+ m_ic.getMessage("AVG")+":");
-        label.setBounds(20, 200, 100, 25);
+        label.setBounds(20, 230, 100, 25);
         infoPanel.add(label);
 
         lblBGAvg = new JLabel();
-        lblBGAvg.setBounds(170, 200, 50, 25);
+        lblBGAvg.setBounds(170, 230, 50, 25);
         infoPanel.add(lblBGAvg);
 
         // readings
         label = new JLabel(m_ic.getMessage("READINGS")+":");
-        label.setBounds(20, 230, 100, 25);
+        label.setBounds(20, 260, 100, 25);
         infoPanel.add(label);
 
         lblReadings = new JLabel();
-        lblReadings.setBounds(170, 230, 50, 25);
+        lblReadings.setBounds(170, 260, 50, 25);
         infoPanel.add(lblReadings);
 
         // reading / day
         label = new JLabel(m_ic.getMessage("READINGS_SLASH_DAY")+":");
-        label.setBounds(20, 260, 100, 25);
+        label.setBounds(20, 290, 100, 25);
         infoPanel.add(label);
 
         lblReadingsPerDay = new JLabel();
-        lblReadingsPerDay.setBounds(170, 260, 50, 25);
+        lblReadingsPerDay.setBounds(170, 290, 50, 25);
         infoPanel.add(lblReadingsPerDay);
         
         JButton closeButton = new JButton("   " + m_ic.getMessage("CLOSE"));
@@ -173,134 +175,11 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 	closeButton.setActionCommand("close");
 	infoPanel.add(closeButton);
 	
-
-
-        //System.out.println("m_da: " + this.m_da);
         
         this.help_button = this.m_da.createHelpButtonByBounds(125, 395, 110, 25, this);
         infoPanel.add(this.help_button);
         //buttonPanel.add(help_button);
 
-        
-        
-        
-        /*
-        Box a = Box.createHorizontalBox();
-        a.add(new JLabel(m_ic.getMessage("VALUATION")+":"));
-        a.add(lblExp = new JLabel());
-
-        Box b = Box.createHorizontalBox();
-        b.add(new JLabel(m_ic.getMessage("BG")+" "+ m_ic.getMessage("AVG")+":"));
-        b.add(lblBGAvg = new JLabel());
-
-        Box c = Box.createHorizontalBox();
-        c.add(new JLabel(m_ic.getMessage("READINGS")+":"));
-        c.add(lblReadings = new JLabel());
-
-        Box d = Box.createHorizontalBox();
-        d.add(new JLabel(m_ic.getMessage("READINGS_SLASH_DAY")+":"));
-        d.add(lblReadingsPerDay = new JLabel());
-
-        Box f = Box.createHorizontalBox();
-        f.add(new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C")+":"));
-        lblHbA1c = new JLabel();
-        lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
-        f.add(lblHbA1c);
-        
-        Box e = Box.createVerticalBox();
-        //e.add(new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C")+":"));
-        //lblHbA1c = new JLabel();
-        //lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
-        //e.add(lblHbA1c);
-        e.add(f);
-        e.add(a);
-        e.add(Box.createVerticalStrut(20));
-        e.add(b);
-        e.add(c);
-        e.add(d);
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton closeButton = new JButton("   " + m_ic.getMessage("CLOSE"));
-        closeButton.setPreferredSize(new Dimension(100, 25));
-        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));        
-	closeButton.addActionListener(this);
-	closeButton.setActionCommand("close");
-
-        buttonPanel.add(closeButton);
-
-        //System.out.println("m_da: " + this.m_da);
-        
-        this.help_button = this.m_da.createHelpButtonBySize(100, 25, this);
-        buttonPanel.add(help_button);
-        
-        infoPanel.add(buttonPanel, BorderLayout.SOUTH);
-        infoPanel.add(e, BorderLayout.NORTH);
-*/
-        
-        
-	
-	/*  OLD
-        getContentPane().setLayout(new BorderLayout());
-        setBounds(100, 100, 500, 430);
-
-        JPanel infoPanel = new JPanel(new BorderLayout());
-
-        Box a = Box.createHorizontalBox();
-        a.add(new JLabel(m_ic.getMessage("VALUATION")+":"));
-        a.add(lblExp = new JLabel());
-
-        Box b = Box.createHorizontalBox();
-        b.add(new JLabel(m_ic.getMessage("BG")+" "+ m_ic.getMessage("AVG")+":"));
-        b.add(lblBGAvg = new JLabel());
-
-        Box c = Box.createHorizontalBox();
-        c.add(new JLabel(m_ic.getMessage("READINGS")+":"));
-        c.add(lblReadings = new JLabel());
-
-        Box d = Box.createHorizontalBox();
-        d.add(new JLabel(m_ic.getMessage("READINGS_SLASH_DAY")+":"));
-        d.add(lblReadingsPerDay = new JLabel());
-
-        Box f = Box.createHorizontalBox();
-        f.add(new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C")+":"));
-        lblHbA1c = new JLabel();
-        lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
-        f.add(lblHbA1c);
-        
-        Box e = Box.createVerticalBox();
-        //e.add(new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C")+":"));
-        //lblHbA1c = new JLabel();
-        //lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
-        //e.add(lblHbA1c);
-        e.add(f);
-        e.add(a);
-        e.add(Box.createVerticalStrut(20));
-        e.add(b);
-        e.add(c);
-        e.add(d);
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton closeButton = new JButton("   " + m_ic.getMessage("CLOSE"));
-        closeButton.setPreferredSize(new Dimension(100, 25));
-        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));        
-	closeButton.addActionListener(this);
-	closeButton.setActionCommand("close");
-
-        buttonPanel.add(closeButton);
-
-        //System.out.println("m_da: " + this.m_da);
-        
-        this.help_button = this.m_da.createHelpButtonBySize(100, 25, this);
-        buttonPanel.add(help_button);
-        
-        infoPanel.add(buttonPanel, BorderLayout.SOUTH);
-        infoPanel.add(e, BorderLayout.NORTH);
-
-        hbView = new HbA1cView();
-
-        getContentPane().add(hbView, BorderLayout.CENTER);
-        getContentPane().add(infoPanel, BorderLayout.EAST);
-        */
     }
 
     
