@@ -2,7 +2,6 @@ package ggc.meter.device.ascensia;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.MeterException;
-import ggc.meter.manager.MeterManager;
 import ggc.meter.output.OutputWriter;
 import gnu.io.SerialPortEvent;
 

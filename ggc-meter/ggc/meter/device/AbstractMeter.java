@@ -10,9 +10,7 @@ package ggc.meter.device;
 
 import ggc.meter.data.DailyValuesRow;
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.protocol.SerialProtocol;
 import ggc.meter.util.I18nControl;
-import gnu.io.SerialPortEvent;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;

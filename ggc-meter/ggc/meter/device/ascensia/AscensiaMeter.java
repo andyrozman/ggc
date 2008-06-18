@@ -248,6 +248,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     protected void readDeviceIdAndSettings(String input)
     {
     	//System.out.println("readDeviceIdAndSetting");
+        System.out.println("read: " + input);
     	
 		StringTokenizer strtok = new StringTokenizer(input, "|");
 	
@@ -281,6 +282,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     protected void readDeviceId(String input)
     {
+        System.out.println("readDeviceId: " + input);
     	StringTokenizer strtok = new StringTokenizer(input, "^");
     
     	String inf = "";

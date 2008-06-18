@@ -91,7 +91,7 @@ public class LifeScan extends AbstractMeterCompany
      */
     public int getImplementationStatus()
     {
-        return MeterImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return MeterImplementationStatus.IMPLEMENTATION_PLANNED;
     }
     
     

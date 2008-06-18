@@ -35,9 +35,6 @@ import ggc.meter.data.DailyValues;
 import ggc.meter.data.DailyValuesRow;
 import ggc.meter.util.DataAccess;
 
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.swing.event.EventListenerList;

@@ -31,41 +31,34 @@ package ggc.meter.gui.config;
 //import ggc.gui.dialogs.PortSelectionDialog;
 
 import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.company.MeterCompanyInterface;
 import ggc.meter.util.DataAccess;
 import ggc.meter.util.I18nControl;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Enumeration;
-import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 
 public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemListener
 {
-	static final long serialVersionUID = 0;
+
+
+
+    static final long serialVersionUID = 0;
 	
-    private JComboBox cb_meter_type, cb_meter_company, cb_timezone;
-    private JCheckBox chb_timezone_fix;
-    private JTextField tb_port;
-    private JButton b_select;
+    JComboBox cb_meter_company; 
+    
+    //private JComboBox cb_meter_type, cb_meter_company, cb_timezone;
+    //private JCheckBox chb_timezone_fix;
+    //private JTextField tb_port;
+    //private JButton b_select;
 
 //x	    private JComboBox comboPortId;
-    private JLabel    meterPicture;
+    private JLabel    label;
 
     //private JComboBox c
 
@@ -89,6 +82,7 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
 */
     DataAccess m_da = DataAccess.getInstance();
     I18nControl m_ic = m_da.getI18nInstance();
+    JLabel label_status;
     
     public MeterCompanyPanel(ConfigurationDialog parent)
     {
@@ -140,13 +134,39 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
         //setLayout(new BorderLayout());
         setLayout(null);
 
+        label = new JLabel(m_ic.getMessage("METER_COMPANIES"));
+        label.setBounds(0,30, 600, 40);
+        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setHorizontalAlignment(JLabel.CENTER);
+        this.add(label, null);
+
+        
+        label = new JLabel(m_ic.getMessage("SELECT_METER_COMPANY"));
+        label.setBounds(100,140, 300, 25);
+        this.add(label, null);
+
+        
         cb_meter_company = new JComboBox(MeterManager.getInstance().getCompanies());
         cb_meter_company.addItemListener(this);
-        cb_meter_company.setBounds(20,30,120,25);
+        cb_meter_company.setBounds(100,180,220,25);
         this.add(cb_meter_company, null);
 
 
-        this.cb_meter_type = new JComboBox(/*this.meters_array*/);
+        
+        label = new JLabel(m_ic.getMessage("STATUS") + ":");
+        label.setBounds(100,250, 300, 25);
+        label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
+        this.add(label, null);
+        
+        label_status = new JLabel("<html>" + m_ic.getMessage("ABBOTT_DESC") + "</html>");
+        label_status.setBounds(100,280, 400, 100);
+        label_status.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        label_status.setVerticalAlignment(JLabel.TOP);
+        this.add(label_status, null);
+        
+        
+        
+        //this.cb_meter_type = new JComboBox(/*this.meters_array*/);
 
 //cb_meter_type, cb_meter_company
 /*
@@ -182,103 +202,6 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
     }
 
 
-    public Vector<String> getTimeZoneDescs()
-    {
-        Vector<String> vec = new Vector<String>();
-
-        for(Enumeration<String> en = m_da.timeZones.keys(); en.hasMoreElements(); )
-        {
-            vec.add(en.nextElement());
-        }
-
-        Collections.sort(vec, new TimeZoneComparator());
-        
-
-        return vec;
-    }
-
-
-    public String getTimeZoneKeyFromValue(String value)
-    {
-        for(Enumeration<String> en = m_da.timeZones.keys(); en.hasMoreElements(); )
-        {
-            String key = en.nextElement();
-
-            System.out.println(m_da.timeZones.get(key) + " = " + value);
-
-            if (m_da.timeZones.get(key).contains(value))
-            {
-                return key;
-            }
-        }
-
-        return "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London";
-    }
-
-
-    private class TimeZoneComparator implements Comparator<String>
-    {
-     /**
-       * Compare two TimeZones. 
-       *
-       *  GMT- (12->1) < GMT < GMT+ (1->12)
-       *
-       * @return +1 if less, 0 if same, -1 if greater
-       */
-       public final int compare ( String pFirst, String pSecond )
-       {
-
-           //System.out.println(pFirst + " " + pSecond);
-
-           if (areSameType(pFirst, pSecond))
-           {
-               return ((pFirst.compareTo(pSecond)) * typeChanger(pFirst, pSecond));
-           }
-           else
-           {
-               if ((pFirst.startsWith("(GMT-"))) // && (second.contains("(GMT)")))
-               {
-                   return -1;
-               }
-               else if ((pFirst.startsWith("(GMT)"))) // && (second.contains("(GMT)")))
-               {
-                   if (pSecond.startsWith("(GMT-"))
-                       return 1;
-                   else
-                       return -1;
-               }
-               else
-               {
-                   return 1;
-               }
-
-           }
-       } // end compare
-
-       public int typeChanger(String first, String second)
-       {
-           if ((first.startsWith("(GMT-")) && (second.startsWith("(GMT-")))
-               return -1;
-           else
-               return 1;
-       }
-       
-
-       public boolean areSameType(String first, String second)
-       {
-           if (((first.startsWith("(GMT+")) && (second.startsWith("(GMT+"))) ||
-               ((first.startsWith("(GMT)")) && (second.startsWith("(GMT)"))) ||
-               ((first.startsWith("(GMT-")) && (second.startsWith("(GMT-"))))
-           {
-               return true;
-           }
-           else
-               return false;
-
-       }
-
-
-    }
 
 
 
@@ -365,6 +288,12 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
     	
     	System.out.println("Commented PrefMeterConfPane::itemState changed");
     	
+    	MeterCompanyInterface mc = (MeterCompanyInterface)this.cb_meter_company.getSelectedItem();
+    	//this.label_status.setText(m_ic.getMessage(mc.getDescription()));
+    	
+    	this.label_status.setText("<html>" + m_ic.getMessage(mc.getDescription()) + "</html>");
+    	
+    	
     	/*
         if (this.cb_meter_company.getSelectedIndex()!=0)
         {
@@ -413,55 +342,17 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
         */
     }
 
-
-    //@Override
+    
+    /* 
+     * saveProps
+     */
+    @Override
     public void saveProps()
     {
-
-    	System.out.println("Commented: saveProps");
-    	
-    	/*
-        settings.setMeterDaylightSavingsFix(this.chb_timezone_fix.isSelected());
-
-        if (this.chb_timezone_fix.isSelected())
-        {
-            settings.setTimeZone((String)cb_timezone.getSelectedItem());
-        }
-        else
-        {
-            settings.setTimeZone("");
-        }
-
-        // meter companies
-        // meters
-
-        if (this.cb_meter_type.getSelectedIndex()>0)
-        {
-            String name = (String)this.cb_meter_type.getSelectedItem();
-
-            MeterH met = this.meters.get(name);
-
-            settings.setMeterType((int)met.getId());
-        }
-        else
-            settings.setMeterType(0);
-
-*/
-    	
-    	
-    	
-        /*  ddd
-            settings.setMeterType(comboMeterType.getSelectedIndex());
-    
-        System.out.println("Meter index: " + comboMeterType.getSelectedIndex());
-    
-            if (comboPortId!=null)
-        {
-            if (comboPortId.getSelectedItem()==null)
-    
-            settings.setMeterPort(comboPortId.getSelectedItem().toString());
-        }
-        */
-
+        // TODO Auto-generated method stub
+        
     }
+    
+    
+
 }

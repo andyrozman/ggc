@@ -30,6 +30,8 @@
 package ggc.data.meter;
 
 import ggc.meter.device.ascensia.AscensiaContour;
+import ggc.meter.device.onetouch.OneTouchUltra;
+import ggc.meter.output.ConsoleOutputWriter;
 import ggc.meter.output.GGCFileOutputWriter;
 import ggc.meter.protocol.SerialProtocol;
 
@@ -52,9 +54,13 @@ public class MeterTester extends JFrame
 
     public static TextArea messageArea;
 
-    private AscensiaContour m_meter;
+    //private AscensiaContour m_meter;
+    //private AbstractSerialMeter m_meter;
+    private OneTouchUltra m_meter;
     //private SerialProtocol m_meter;
 
+    TimerThread thread;
+    
     public MeterTester(String portName)
     {
     	
@@ -65,34 +71,31 @@ public class MeterTester extends JFrame
 		tzu.setSummerTimeChange(+1);
     	
         
-		TimerThread thread = new TimerThread();
+		thread = new TimerThread();
 	    thread.start();
 	    
     	try
     	{
-    		GGCFileOutputWriter gfo = new GGCFileOutputWriter();
+    	    startAscensia(portName);
+    	    //this.startOneTouchUltra(portName);
+    	    
+    	    /*
+    		//GGCFileOutputWriter gfo = new GGCFileOutputWriter();
+    	    ConsoleOutputWriter cow = new ConsoleOutputWriter();
     		
-    		thread.addJob(gfo.getOutputUtil());
+//    		thread.addJob(gfo.getOutputUtil());
     		
     		displaySerialPorts();
     		
+/*    		
     		m_meter = new AscensiaContour(portName, gfo);
-    	    //new AscensiaContourMeter("COM9");
     	    m_meter.setPort(portName);
-    	    //m_meter.open();
-    
-    	    //displaySerialPorts();
-    	    //  	    m_meter.
-    	    
-    	    
     	    m_meter.loadInitialData();
-    	    
-//    	    m_meter.readDeviceData();
-    
-    //	    m_meter.readCommData();
-    	    //m_meter.getTimeDifference();
-    
-    	    //m_meter.test(); 
+  */
+    		
+    //		m_meter = new OneTouchUltra(portName, cow);
+    	//	m_meter.loadInitialData();
+    		
     	}
     	catch(Exception ex)
     	{
@@ -209,6 +212,41 @@ public class MeterTester extends JFrame
 	*/
     }
 
+
+    public void startAscensia(String portName) throws Exception
+    {
+        GGCFileOutputWriter ow = new GGCFileOutputWriter();
+        //ConsoleOutputWriter cow = new ConsoleOutputWriter();
+        
+        //thread.addJob(cow.getOutputUtil());
+        thread.addJob(ow.getOutputUtil());
+        
+        displaySerialPorts();
+        
+          
+        AscensiaContour asc_meter = new AscensiaContour(portName, ow);
+        asc_meter.setPort(portName);
+        asc_meter.loadInitialData();
+        
+    }
+
+    
+    public void startOneTouchUltra(String portName) throws Exception
+    {
+        
+        ConsoleOutputWriter cow = new ConsoleOutputWriter();
+        
+        thread.addJob(cow.getOutputUtil());
+        
+        displaySerialPorts();
+        
+        OneTouchUltra otu = new OneTouchUltra(portName, cow);
+        //m_meter = new OneTouchUltra(portName, cow);
+        otu.loadInitialData();
+
+    }
+    
+    
     
     public void displaySerialPorts()
     {

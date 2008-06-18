@@ -34,8 +34,6 @@ import ggc.meter.util.I18nControl;
 
 import java.util.Hashtable;
 
-import javax.swing.ImageIcon;
-
 public class MeterCompany
 {
 

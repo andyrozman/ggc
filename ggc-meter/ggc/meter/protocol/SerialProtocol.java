@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
-import java.util.TooManyListenersException;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;

@@ -32,8 +32,6 @@ package ggc.meter.manager;
 import ggc.meter.util.DataAccess;
 import ggc.meter.util.I18nControl;
 
-import java.util.Hashtable;
-
 import javax.swing.ImageIcon;
 
 public class MeterDevice

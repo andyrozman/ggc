@@ -76,8 +76,8 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
     public String config_types[] = { 
             m_ic.getMessage("METERS_COMPANY_LIST"),
             m_ic.getMessage("METERS_LIST"),
-            m_ic.getMessage("METERS_CONFIG"),
             m_ic.getMessage("METERS_LOCATION"),
+            m_ic.getMessage("METERS_CONFIG"),
             m_ic.getMessage("OTHER"),
     };
 
@@ -424,7 +424,7 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
         DataAccess da = DataAccess.createInstance(fr);
         da.setMainParent(fr);
         
-        ConfigurationDialog cd = new ConfigurationDialog(da);
+        new ConfigurationDialog(da);
         
         
     }

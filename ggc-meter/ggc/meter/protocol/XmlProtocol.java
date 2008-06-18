@@ -9,27 +9,16 @@ package ggc.meter.protocol;
 
 
 import ggc.data.imports.ImportException;
-import ggc.meter.data.DailyValuesRow;
 import ggc.meter.device.MeterException;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.util.DataAccess;
 import ggc.meter.util.I18nControl;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-import gnu.io.UnsupportedCommOperationException;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Enumeration;
-import java.util.TooManyListenersException;
-import java.util.Vector;
-
-import javax.swing.ImageIcon;
 
 //import minimed.ddms.deviceportreader.MedicalDevice;
 //import minimed.ddms.deviceportreader.SerialIOHaltedException;

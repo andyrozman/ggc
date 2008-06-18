@@ -1,12 +1,12 @@
+
+package ggc.data.event;
+
 /**
  * Created on 12.08.2002
  *
  * To change this generated comment edit the template variable "filecomment":
  * Window>Preferences>Java>Templates.
  */
-
-package ggc.data.event;
-
 
 import gnu.io.CommPortIdentifier;
 import java.util.EventObject;
