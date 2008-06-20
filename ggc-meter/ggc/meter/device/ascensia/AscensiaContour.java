@@ -904,7 +904,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
      */
     public String getName()
     {
-        return "name";
+        return "Contour";
     }
 
 
@@ -927,7 +927,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
      */
     public String getIconName()
     {
-        return null;
+        return "ascensia_contour.png";
     }
     
 

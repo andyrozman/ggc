@@ -33,6 +33,9 @@ import javax.swing.JPanel;
 public abstract class MeterListAbstractPanel extends JPanel
 {
 	
+    private static final long serialVersionUID = 6821785325637723402L;
+
+    
     public abstract void setData(Object obj);
     
 }

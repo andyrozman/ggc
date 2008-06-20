@@ -667,24 +667,24 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     }
 
 
-
+/*
     /**
      * getName - Get Name of meter
      */
-    public String getName()
+/*    public String getName()
     {
 	return m_da.getMeterManager().meter_names[this.m_device_index];
     }
-
+*/
 
     /**
      * getIcon - Get Icon of meter
      */
-    public ImageIcon getIcon()
+/*    public ImageIcon getIcon()
     {
 	return m_da.getMeterManager().meter_pictures[this.m_device_index];
     }
-
+*/
 
     /**
      * getMeterIndex - Get Index of Meter 
@@ -695,6 +695,11 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     }
 
 
+    public int getConnectionProtocol()
+    {
+        return ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE;
+    }
+    
 
 
 }

@@ -1,10 +1,3 @@
-/*
- * Created on 12.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.meter.gui;
 
 import ggc.data.imports.SerialMeterImport;
@@ -39,13 +32,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 
-/**
- * @author stephan
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- */
-public class ReadDataDialog extends JDialog implements ActionListener
+public class MeterDisplayDataDialog extends JDialog implements ActionListener
 {
 	static final long serialVersionUID = 0;
 
@@ -69,7 +56,6 @@ public class ReadDataDialog extends JDialog implements ActionListener
 //    private JButton saveButton;
 
     private JButton bt_get, bt_import, bt_break;
-
 
     
     private JTabbedPane tabPane;
@@ -98,7 +84,7 @@ public class ReadDataDialog extends JDialog implements ActionListener
      * @param owner
      * @throws HeadlessException
      */
-    public ReadDataDialog(JFrame owner, MeterInterface mi)
+    public MeterDisplayDataDialog(JFrame owner, MeterInterface mi)
     {
         super(owner);
         m_da.addComponent(this);
@@ -109,7 +95,7 @@ public class ReadDataDialog extends JDialog implements ActionListener
     }
 
 
-    public ReadDataDialog(MeterInterface mi)
+    public MeterDisplayDataDialog(MeterInterface mi)
     {
         super();
         m_da.addComponent(this);
@@ -288,7 +274,7 @@ public class ReadDataDialog extends JDialog implements ActionListener
         
         this.progress = new JProgressBar();
         this.progress.setBounds(300, 450, 300, 15);
-        this.progress.setIndeterminate(true);
+        //this.progress.setIndeterminate(true);
         panel.add(this.progress);
         
         
@@ -675,7 +661,7 @@ IMPORT_TO_DB=Import to Db
     public static void main(String[] args)
     {
         //MeterReadDialog mrd = 
-        new ReadDataDialog(new AscensiaContour("COM12", new ConsoleOutputWriter()));
+        new MeterDisplayDataDialog(new AscensiaContour("COM12", new ConsoleOutputWriter()));
     }
 
     

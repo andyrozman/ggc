@@ -520,7 +520,7 @@ public class AscensiaDEX extends AscensiaMeter
      */
     public String getName()
     {
-        return "name";
+        return "DEX";
     }
 
 
@@ -543,7 +543,7 @@ public class AscensiaDEX extends AscensiaMeter
      */
     public String getIconName()
     {
-        return null;
+        return "ascensia_dex2.png";
     }
     
 

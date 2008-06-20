@@ -41,6 +41,10 @@ import javax.swing.JList;
 public class ConfigCellRenderer extends DefaultListCellRenderer
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2448487269559085136L;
     DataAccess da = DataAccess.getInstance();
 
     //final static ImageIcon longIcon = new ImageIcon("long.gif");

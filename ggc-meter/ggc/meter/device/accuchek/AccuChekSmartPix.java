@@ -3,7 +3,9 @@ package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.MeterException;
+import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.meter.output.OutputUtil;
+import ggc.meter.protocol.ConnectionProtocols;
 import ggc.meter.protocol.XmlProtocol;
 import ggc.meter.util.DataAccess;
 
@@ -25,6 +27,10 @@ public class AccuChekSmartPix extends XmlProtocol
 {
     
     DataAccess m_da = DataAccess.getInstance();
+    
+    AbstractMeterCompany meter_company = null;
+
+    
     
     
     public AccuChekSmartPix()
@@ -429,6 +435,7 @@ public class AccuChekSmartPix extends XmlProtocol
 
     
     
+    @SuppressWarnings("unchecked")
     public List<Node> getNodes(String tag_path)
     {
         List<Node> nodes = document.selectNodes(tag_path);
@@ -453,6 +460,19 @@ public class AccuChekSmartPix extends XmlProtocol
         
     }
     
+
+    public void setMeterCompany(AbstractMeterCompany company)
+    {
+        this.meter_company = company;
+    }
+    
+    
+    public AbstractMeterCompany getMeterCompany()
+    {
+        return this.meter_company;
+    }
+
+    
     
     
     public static final void main(String[] args)
@@ -462,6 +482,13 @@ public class AccuChekSmartPix extends XmlProtocol
         acspd.testXml(new File("G0003006.XML"));
         
     }
+    
+    
+    public int getConnectionProtocol()
+    {
+        return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
+    }
+    
     
     
 }

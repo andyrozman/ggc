@@ -37,8 +37,9 @@ import ggc.meter.util.I18nControl;
 import java.util.Hashtable;
 import java.util.Vector;
 
-public abstract class AbstractMeterCompany implements MeterCompanyInterface
+public abstract class AbstractMeterCompany implements MeterCompanyInterface //, SelectableInterface
 {
+
 
     protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccess m_da = DataAccess.getInstance();
@@ -84,9 +85,21 @@ public abstract class AbstractMeterCompany implements MeterCompanyInterface
     
     public void addDevice(MeterInterface md)
     {
-    	this.devices.put(""+md.getMeterId(), md);
+        md.setMeterCompany(this);
+    	this.devices.put(""+md.getName(), md);
+    	this.devices_vector.add(md);
     }
 
+    
+    public MeterInterface getDevice(String name)
+    {
+        if (this.devices.containsKey(name))
+            return this.devices.get(name);
+        else
+            return null;
+    }
+    
+    
     public String toString()
     {
         return this.getName();
@@ -94,7 +107,17 @@ public abstract class AbstractMeterCompany implements MeterCompanyInterface
         //"Meter Company [name=" + this.getName() + ",id=" + this.getCompanyId() + "]";
     }
     
+
+    public String getConnectionSample()
+    {
+        return "";
+    }
     
+    
+    public String getConnectionSamples()
+    {
+        return "";
+    }
     
     
     

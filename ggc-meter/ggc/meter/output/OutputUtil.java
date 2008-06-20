@@ -46,12 +46,12 @@ public class OutputUtil extends TimerControlAbstract
 
     public String getBGMeasurmentTypeName()
     {
-        return this.unitsName[this.m_BG_unit];
+        return OutputUtil.unitsName[this.m_BG_unit];
     }
     
     public String getBGTypeName(int type)
     {
-        return this.unitsName[type];
+        return OutputUtil.unitsName[type];
     }
     
     

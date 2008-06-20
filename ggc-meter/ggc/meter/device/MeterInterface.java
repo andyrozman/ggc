@@ -1,6 +1,7 @@
 package ggc.meter.device;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.manager.company.AbstractMeterCompany;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ import javax.swing.ImageIcon;
  */
 
 
-public interface MeterInterface
+public interface MeterInterface //extends SelectableInterface
 {
 
 
@@ -330,5 +331,17 @@ public interface MeterInterface
 
     void test();
 
+    
+    
+    
+    
+    public void setMeterCompany(AbstractMeterCompany company);
+    
+    
+    public AbstractMeterCompany getMeterCompany();
+    
 
+    public int getConnectionProtocol();
+    
+    
 }

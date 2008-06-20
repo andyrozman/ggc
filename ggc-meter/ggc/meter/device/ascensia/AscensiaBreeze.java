@@ -556,7 +556,7 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
      */
     public String getName()
     {
-        return "name";
+        return "Breeze";
     }
 
 
@@ -579,7 +579,7 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
      */
     public String getIconName()
     {
-        return null;
+        return "ascensia_breeze.png";
     }
     
 

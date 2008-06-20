@@ -10,6 +10,7 @@ package ggc.meter.device;
 
 import ggc.meter.data.DailyValuesRow;
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.meter.util.I18nControl;
 
 import java.util.ArrayList;
@@ -17,9 +18,14 @@ import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
 
+import com.atech.graphics.dialogs.selector.ColumnSorter;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-public abstract class AbstractMeter implements MeterInterface 
+
+public abstract class AbstractMeter implements MeterInterface, SelectableInterface
 {
+
+    AbstractMeterCompany meter_company;
 
     protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
@@ -27,7 +33,7 @@ public abstract class AbstractMeter implements MeterInterface
     protected String m_info = "";
     protected int m_time_difference = 0;
     protected ArrayList<DailyValuesRow> data = null;
-
+    
 
     public AbstractMeter()
     {
@@ -813,7 +819,149 @@ public abstract class AbstractMeter implements MeterInterface
     }
 
 
+    /* 
+     * compareTo
+     */
+    public int compareTo(SelectableInterface o)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
 
+    /* 
+     * getColumnCount
+     */
+    public int getColumnCount()
+    {
+        return 3;
+    }
 
+
+    String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
+    
+    /* 
+     * getColumnName
+     */
+    public String getColumnName(int num)
+    {
+        return device_columns[num-1];
+    }
+
+
+    /* 
+     * getColumnValue
+     */
+    public String getColumnValue(int num)
+    {
+        switch(num)
+        {
+         
+            case 1:
+                return this.getName();
+                
+            case 2:
+                return this.getMeterCompany().getConnectionSamples();
+
+            case 0:
+            default:    
+                return this.getMeterCompany().getName();
+                
+                
+        }
+    }
+
+
+    /* 
+     * getColumnValueObject
+     */
+    public Object getColumnValueObject(int num)
+    {
+        return this.getColumnValue(num);
+    }
+
+
+    /* 
+     * getColumnWidth
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    /* 
+     * getItemId
+     */
+    public long getItemId()
+    {
+        return 0;
+    }
+
+
+    /* 
+     * getShortDescription
+     */
+    public String getShortDescription()
+    {
+        return this.getName();
+    }
+
+
+    /* 
+     * isFound
+     */
+    public boolean isFound(int from, int till, int state)
+    {
+        return true;
+    }
+
+
+    /* 
+     * isFound
+     */
+    public boolean isFound(int value)
+    {
+        return true;
+    }
+
+
+    /* 
+     * isFound
+     */
+    public boolean isFound(String text)
+    {
+        return true;
+    }
+
+
+    /* 
+     * setColumnSorter
+     */
+    public void setColumnSorter(ColumnSorter cs)
+    {
+    }
+
+
+    /* 
+     * setSearchContext
+     */
+    public void setSearchContext()
+    {
+    }
+
+
+    public void setMeterCompany(AbstractMeterCompany company)
+    {
+        this.meter_company = company;
+    }
+    
+    
+    public AbstractMeterCompany getMeterCompany()
+    {
+        return this.meter_company;
+    }
+
+    
 }

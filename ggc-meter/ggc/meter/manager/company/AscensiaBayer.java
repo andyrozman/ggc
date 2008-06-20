@@ -43,6 +43,8 @@ public class AscensiaBayer extends AbstractMeterCompany
         this.addDevice(new AscensiaDEX());
         this.addDevice(new AscensiaBreeze());
         this.addDevice(new AscensiaContour());
+        
+        //System.out.println(this.devices_vector);
     }    
     
     //********************************************************
@@ -95,6 +97,16 @@ public class AscensiaBayer extends AbstractMeterCompany
         return 0;
     }
     
+
+    public String getConnectionSample()
+    {
+        return "COM9";
+    }
     
+    
+    public String getConnectionSamples()
+    {
+        return m_ic.getMessage("SERIAL_PORTS");  //"Serial Ports: COM2,...";
+    }
     
 }

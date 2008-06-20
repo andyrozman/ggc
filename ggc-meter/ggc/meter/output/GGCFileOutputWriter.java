@@ -147,7 +147,7 @@ public class GGCFileOutputWriter implements OutputWriter
 			System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
 		
 		writeToFile("0|" + mve.getDateTime().getATDateTimeAsLong() + "|" + val + 
-				    "|0.0|0.0|0.0|null|null|1|" + parameters + "|" + this.time_created);
+				    "|0.0|0.0|0.0|null|null|1|MTI;" + parameters + "|" + this.time_created);
 		setReadData();
 		
 		//writeToFile(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));

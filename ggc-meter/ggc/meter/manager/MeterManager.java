@@ -29,6 +29,7 @@
 
 package ggc.meter.manager; 
 
+import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.company.Abbott;
 import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.meter.manager.company.AscensiaBayer;
@@ -55,7 +56,9 @@ public class MeterManager
     protected DataAccess m_da = DataAccess.getInstance();
     
 
+    private Hashtable<String,AbstractMeterCompany> companies_ht = new Hashtable<String,AbstractMeterCompany>(); 
     private Vector<AbstractMeterCompany> companies = new Vector<AbstractMeterCompany>(); 
+    private Vector<MeterInterface> supported_devices = new Vector<MeterInterface>(); 
 
 
 
@@ -74,6 +77,7 @@ public class MeterManager
     private MeterManager()
     {
     	this.loadMeterCompanies();
+    	this.loadSupportedDevices();
     }
 
     
@@ -89,18 +93,31 @@ public class MeterManager
     
     public void loadMeterCompanies()
     {
-        companies.add(new AscensiaBayer());
-        companies.add(new Roche());
-        companies.add(new LifeScan());
-        companies.add(new Abbott());
-        companies.add(new Menarini());
-        companies.add(new DiabeticSupplyOfSunCoast());
-        companies.add(new HipoGuard());
-        companies.add(new HomeDiagnostic());
-        companies.add(new Prodigy());
-        companies.add(new Sanvita());
-        companies.add(new USDiagnostic());
-        companies.add(new Wavesense());
+        addMeterCompany(new AscensiaBayer());
+        addMeterCompany(new Roche());
+        addMeterCompany(new LifeScan());
+        addMeterCompany(new Abbott());
+        addMeterCompany(new Menarini());
+        addMeterCompany(new DiabeticSupplyOfSunCoast());
+        addMeterCompany(new HipoGuard());
+        addMeterCompany(new HomeDiagnostic());
+        addMeterCompany(new Prodigy());
+        addMeterCompany(new Sanvita());
+        addMeterCompany(new USDiagnostic());
+        addMeterCompany(new Wavesense());
+    }
+    
+    
+    private void addMeterCompany(AbstractMeterCompany company)
+    {
+        this.companies.add(company);
+        this.companies_ht.put(company.getName(), company);
+    }
+    
+    
+    public void loadSupportedDevices()
+    {
+        this.supported_devices.addAll(new AscensiaBayer().getDevices());
     }
     
     
@@ -108,7 +125,12 @@ public class MeterManager
     {
         return this.companies;
     }
+   
     
+    public Vector<MeterInterface> getSupportedDevices()
+    {
+        return this.supported_devices;
+    }
 
     /**
      * Gets the image
@@ -193,20 +215,37 @@ public class MeterManager
     }
 */
     
-    public MeterDevice getMeterDevice(String group, String device)
+    public MeterInterface getMeterDevice(String group, String device)
     {
-    	return this.getMeterDevice(group + "_" + device);
+        AbstractMeterCompany cmp = getCompany(group);
+        
+        if (cmp==null)
+        {
+            System.out.println("Company not found !");
+            System.out.println("companies_nt: " + this.companies_ht);
+            return null;
+        }
+        
+        return cmp.getDevice(device);
     }
     
     
-    public MeterDevice getMeterDevice(String group_and_device)
+    public AbstractMeterCompany getCompany(String name)
     {
-    	return this.meters_list.get(group_and_device);
+        if (this.companies_ht.containsKey(name))
+        {
+            return this.companies_ht.get(name);
+        }
+        else
+            return null;
+        
     }
     
     
     
     
+    
+    /*
     public Hashtable<String,MeterCompany> groups = new Hashtable<String,MeterCompany>();
     public Hashtable<String,MeterDevice> meters_list = new Hashtable<String,MeterDevice>();
     
@@ -247,7 +286,7 @@ public class MeterManager
     	}
     	
     }
-
+*/
     
 
 

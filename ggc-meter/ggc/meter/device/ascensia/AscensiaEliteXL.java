@@ -560,7 +560,7 @@ public class AscensiaEliteXL extends AscensiaMeter
      */
     public String getName()
     {
-        return "name";
+        return "EliteXL";
     }
 
 
@@ -583,7 +583,7 @@ public class AscensiaEliteXL extends AscensiaMeter
      */
     public String getIconName()
     {
-        return null;
+        return "ascensia_elite_xl.png";
     }
     
 

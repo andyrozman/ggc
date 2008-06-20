@@ -17,6 +17,7 @@ package ggc.meter.device;
 
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.protocol.ConnectionProtocols;
 import ggc.meter.util.DataAccess;
 import ggc.meter.util.I18nControl;
 
@@ -387,4 +388,10 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
 
 
+    public int getConnectionProtocol()
+    {
+        return ConnectionProtocols.PROTOCOL_NONE;
+    }
+    
+    
 }
