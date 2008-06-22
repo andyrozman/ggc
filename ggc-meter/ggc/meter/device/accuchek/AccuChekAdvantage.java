@@ -2,10 +2,10 @@ package ggc.meter.device.accuchek;
 
 import javax.swing.ImageIcon;
 
-public class AccuChekAdvance extends AccuChekSmartPix
+public class AccuChekAdvantage extends AccuChekSmartPix
 {
     
-    public AccuChekAdvance()
+    public AccuChekAdvantage()
     {
         super();
     }
@@ -118,5 +118,16 @@ public class AccuChekAdvance extends AccuChekSmartPix
     {
         return 0;
     }
+    
+    
+    
+    public int getMemoryRecords()
+    {
+        return 480;
+    }
+    
+    
+    
+    
     
 }

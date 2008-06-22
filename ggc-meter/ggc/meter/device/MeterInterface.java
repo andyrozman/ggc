@@ -215,6 +215,8 @@ public interface MeterInterface //extends SelectableInterface
     /**
      * getData - get data for specified time
      * This data should be read from meter and preprocessed, and is used in Meter GUI
+     * 
+     * 
      */
     ArrayList<MeterValuesEntry> getData(int from, int to) throws MeterException;
 
@@ -269,6 +271,8 @@ public interface MeterInterface //extends SelectableInterface
     //***                    Test                  ***
     //************************************************
 
+  
+    public int getMemoryRecords();
     
     
     public void setMeterCompany(AbstractMeterCompany company);
@@ -278,6 +282,9 @@ public interface MeterInterface //extends SelectableInterface
     
 
     public int getConnectionProtocol();
+    
+    
+//    public String getConnectionPort();
     
     
 }

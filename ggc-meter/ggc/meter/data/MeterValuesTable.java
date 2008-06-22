@@ -216,7 +216,7 @@ public class MeterValuesTable extends JTable //implements TableModelListener
          */
         public void actionPerformed(ActionEvent e)
         {
-            ((GlucoTableModel)table.getModel()).getDayData().deleteRow(table.getSelectedRow());
+//            ((GlucoTableModel)table.getModel()).getDayData().deleteRow(table.getSelectedRow());
         }
 
     }

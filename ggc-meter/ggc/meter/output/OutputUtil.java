@@ -12,6 +12,8 @@ import com.atech.utils.TimerControlAbstract;
 public class OutputUtil extends TimerControlAbstract
 {
 
+    public int max_records = 1;
+    
 	public static String[] unitsName = { "", "mg/dL", "mmol/L" };
 	
     /**
@@ -156,7 +158,18 @@ public class OutputUtil extends TimerControlAbstract
 
 	}
 	
-
+	
+	public void setMaxMemoryRecords(int val)
+	{
+	    this.max_records = val;
+	}
+	
+	public int getMaxMemoryRecords()
+	{
+	    return this.max_records;
+	}
+	
+	
 	public static String getBGUnitName(int unit)
 	{
 	    return OutputUtil.unitsName[unit];

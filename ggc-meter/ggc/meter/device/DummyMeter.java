@@ -401,6 +401,10 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
     
     
+    public int getMemoryRecords()
+    {
+        return 1;
+    }
     
     
     

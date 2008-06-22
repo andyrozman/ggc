@@ -115,5 +115,12 @@ public class AccuChekGo extends AccuChekSmartPix
         return 0;
     }
     
+    
+    public int getMemoryRecords()
+    {
+        return 480;
+    }
+    
+    
 }
 

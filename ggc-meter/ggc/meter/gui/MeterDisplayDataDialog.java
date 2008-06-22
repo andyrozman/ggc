@@ -289,7 +289,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         label.setBounds(30, 415, 100, 25);
         panel.add(label);
         
-        lbl_status = new JLabel("Empty");
+        lbl_status = new JLabel(m_ic.getMessage("READY"));
         lbl_status.setBounds(130, 415, 150, 25);
         panel.add(lbl_status);
         
@@ -662,6 +662,59 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
      */
     public void writeRawData(String input, boolean is_bg_data)
     {
+    }
+    
+
+    boolean device_should_be_stopped = false;
+    
+    /**
+     * User can stop readings from his side (if supported)
+     */
+    public void setReadingStop()
+    {
+        this.device_should_be_stopped = true;
+    }
+    
+    /**
+     * This should be queried by device implementation, to see if it must stop reading
+     */
+    public boolean isReadingStopped()
+    {
+        return this.device_should_be_stopped;
+    }
+    
+    int reading_status = 1;
+    
+    /**
+     * This is status of device and also of GUI that is reading device (if we have one)
+     * This is to set that status to see where we are. Allowed statuses are: 1-Ready, 2-Downloading,
+     * 3-Stopped by device, 4-Stoped by user,5-Download finished,...
+     */
+    public void setStatus(int status)
+    {
+        this.reading_status = status;
+    }
+    
+    public int getStatus()
+    {
+        return this.reading_status;
+    }
+    
+    
+    public String statuses[] =  { 
+            m_ic.getMessage("STATUS_NONE"),
+            m_ic.getMessage("STATUS_READY"),
+            m_ic.getMessage("STATUS_DOWNLOADING"),
+            m_ic.getMessage("STATUS_STOPPED_DEVICE"),
+            m_ic.getMessage("STATUS_STOPPED_USER"),
+            m_ic.getMessage("STATUS_DOWNLOAD_FINISHED"),
+            }; 
+    
+    
+    public void setGUIStatus()
+    {
+//        lbl_status = new JLabel(m_ic.getMessage("READY"));
+        
     }
     
     

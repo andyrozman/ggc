@@ -115,6 +115,48 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
         
     }
 
+    
+    
+    
+    /**
+     * User can stop readings from his side (if supported)
+     */
+    public void setReadingStop()
+    {
+        this.dialog.setReadingStop();
+    }
+    
+    /**
+     * This should be queried by device implementation, to see if it must stop reading
+     */
+    public boolean isReadingStopped()
+    {
+        return this.dialog.isReadingStopped();
+    }
+    
+    
+    
+    /**
+     * This is status of device and also of GUI that is reading device (if we have one)
+     * This is to set that status to see where we are. Allowed statuses are: 1-Ready, 2-Downloading,
+     * 3-Stopped by device, 4-Stoped by user,5-Download finished,...
+     */
+    public void setStatus(int status)
+    {
+        this.dialog.setStatus(status);
+    }
+    
+    public int getStatus()
+    {
+        return this.dialog.getStatus();
+    }
+    
+    
+    
+    
+    
+    
+    
 
     /* 
      * writeDeviceIdentification

@@ -497,5 +497,11 @@ public class AccuChekSmartPix extends XmlProtocol
     }
     
     
+    public int getMemoryRecords()
+    {
+        return 1;
+    }
+    
+    
     
 }

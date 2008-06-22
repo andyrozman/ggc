@@ -36,6 +36,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public static final int METER_ASCENSIA_DEX        = 10002;
     public static final int METER_ASCENSIA_BREEZE     = 10003;
     public static final int METER_ASCENSIA_CONTOUR    = 10004;
+    public static final int METER_ASCENSIA_BREEZE2    = 10005;
     
     
     protected int m_status = 0;
@@ -74,6 +75,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		data = new ArrayList<MeterValuesEntry>();
 		
 		this.output_writer = writer; 
+		this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMemoryRecords());
 	
 		try
 		{

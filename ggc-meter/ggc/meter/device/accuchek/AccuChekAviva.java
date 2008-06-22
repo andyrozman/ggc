@@ -119,4 +119,11 @@ public class AccuChekAviva extends AccuChekSmartPix
         return 0;
     }
     
+    
+    public int getMemoryRecords()
+    {
+        return 500;
+    }
+    
+    
 }

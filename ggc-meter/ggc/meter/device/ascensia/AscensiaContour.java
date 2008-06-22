@@ -1105,6 +1105,10 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     }
 
     
+    public int getMemoryRecords()
+    {
+        return 480;
+    }
     
 
 }

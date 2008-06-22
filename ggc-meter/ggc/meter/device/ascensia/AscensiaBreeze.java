@@ -657,4 +657,12 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
         return 0;
     }
     
+    
+    public int getMemoryRecords()
+    {
+        return 100;
+    }
+
+    
+    
 }
