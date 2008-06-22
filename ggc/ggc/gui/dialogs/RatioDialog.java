@@ -30,10 +30,7 @@ package ggc.gui.dialogs;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
-import ggc.core.nutrition.dialogs.DailyValuesMealSelectorDialog;
-import ggc.core.nutrition.panels.PanelMealSelector;
 import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
 import ggc.core.util.I18nControl;
 
 import java.awt.Component;
@@ -59,10 +56,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
 
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.help.HelpCapable;
@@ -120,7 +113,7 @@ public class RatioDialog extends JDialog implements ActionListener, KeyListener,
 
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
-    private GGCProperties props = m_da.getSettings();
+    //private GGCProperties props = m_da.getSettings();
 
     private boolean m_actionDone = false;
 

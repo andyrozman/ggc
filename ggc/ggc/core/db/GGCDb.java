@@ -63,7 +63,9 @@ import ggc.core.db.hibernate.SettingsH;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
 
-import java.io.FileInputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,12 +73,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
 import java.util.StringTokenizer;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
-import com.atech.db.hibernate.check.DbCheckInterface;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 import org.apache.commons.logging.Log;
@@ -100,10 +99,16 @@ public class GGCDb //implements DbCheckInterface
     
     private static Log log = LogFactory.getLog(GGCDb.class); 
     private Session m_session = null;
+    private Session m_session_2 = null;
     private SessionFactory sessions = null;
     private int m_errorCode = 0;
     private String m_errorDesc = "";
     private String m_addId = "";
+    
+    
+    GGCDbConfig hib_config = null;
+
+
 
 
     private Configuration m_cfg = null;
@@ -130,14 +135,14 @@ public class GGCDb //implements DbCheckInterface
     // ---
     // ---  DB Settings
     // ---
-    protected int db_num = 0;
+/*    protected int db_num = 0;
     protected String db_hib_dialect = null; 
     protected String db_driver_class = null;
     protected String db_conn_name = null;
     protected String db_conn_url = null;
     protected String db_conn_username = null;
     protected String db_conn_password = null;
-
+*/
 
     public GGCDb(DataAccess da)
     {
@@ -200,7 +205,7 @@ public class GGCDb //implements DbCheckInterface
 
     public void closeDb()
     {
-        if (db_hib_dialect.equals("org.hibernate.dialect.HSQLDialect"))
+        if (this.hib_config.getHibernateDialect().equals("org.hibernate.dialect.HSQLDialect"))
         {
             try
             {
@@ -217,19 +222,29 @@ public class GGCDb //implements DbCheckInterface
     }
 
 
+    public GGCDbConfig getHibernateConfiguration()
+    {
+	return this.hib_config;
+    }
+    
+    
     public void openHibernateSimple()
     {
-	getStartStatus();
+	logInfo("openHibernateSimple", "Start");
+//	getStartStatus();
         sessions = m_cfg.buildSessionFactory();
-	getStartStatus();
+//	getStartStatus();
         
         
         
         m_session = sessions.openSession();
+        m_session_2 = sessions.openSession();
+        
         m_loadStatus = DB_INITIALIZED;
+	logInfo("openHibernateSimple", "End");
     }
 
-    
+/*    
     public void getStartStatus()
     {
 	Map mpp = m_cfg.getSqlResultSetMappings();
@@ -239,7 +254,7 @@ public class GGCDb //implements DbCheckInterface
 	//log.debug(arg0);
 	
     }
-    
+*/    
 
     public int getLoadStatus()
     {
@@ -271,24 +286,53 @@ public class GGCDb //implements DbCheckInterface
 	log.error(source + "::Exception: " + ex.getMessage(), ex);
     }
     
+    
     private void logDebug(String source, String action)
     {
 	log.debug(source + " - " + action);
     }
     
+    private void logInfo(String source, String action)
+    {
+	log.info(source + " - " + action);
+    }
+    
+    private void logInfo(String source)
+    {
+	log.info(source + " - Process");
+    }
 
     
     
     public Session getSession()
     {
-        m_session.clear();
-        return m_session;
+	return getSession(1);
     }
 
+    
+    public Session getSession(int session_nr)
+    {
+	if (session_nr==1)
+	{
+	    m_session.clear();
+	    return m_session;
+	}
+	else
+	{
+	    m_session_2.clear();
+	    return m_session_2;
+	}
+    }
+    
+    
 
     public void createDatabase()
     {
+	logInfo("createDatabase", "Start");
+
         new SchemaExport(m_cfg).create(true, true);
+	
+        logInfo("openHibernateSimple", "End");
     }
     
     
@@ -311,7 +355,7 @@ public class GGCDb //implements DbCheckInterface
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate)obj;
 
-            log.trace(doh.getObjectName()+"::DbAdd");
+            log.info(doh.getObjectName()+"::DbAdd");
 
             try
             {
@@ -355,7 +399,7 @@ public class GGCDb //implements DbCheckInterface
     public long addHibernate(Object obj)
     {
 
-        log.trace("addHibernate::" + obj.toString());
+        log.info("addHibernate::" + obj.toString());
 
         try
         {
@@ -384,7 +428,7 @@ public class GGCDb //implements DbCheckInterface
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate)obj;
 
-            log.debug(doh.getObjectName()+"::DbEdit");
+            log.info(doh.getObjectName()+"::DbEdit");
 
             try
             {
@@ -425,7 +469,7 @@ public class GGCDb //implements DbCheckInterface
     public boolean editHibernate(Object obj)
     {
 
-        log.debug("editHibernate::" + obj.toString());
+        log.info("editHibernate::" + obj.toString());
 
         try
         {
@@ -451,7 +495,7 @@ public class GGCDb //implements DbCheckInterface
     public boolean deleteHibernate(Object obj)
     {
 
-        log.debug("deleteHibernate::" + obj.toString());
+        log.info("deleteHibernate::" + obj.toString());
 
         try
         {
@@ -483,7 +527,7 @@ public class GGCDb //implements DbCheckInterface
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate)obj;
 
-            log.debug(doh.getObjectName()+"::DbGet");
+            log.info(doh.getObjectName()+"::DbGet");
 
             try
             {
@@ -529,7 +573,7 @@ public class GGCDb //implements DbCheckInterface
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate)obj;
 
-            log.debug(doh.getObjectName()+"::DbDelete");
+            log.info(doh.getObjectName()+"::DbDelete");
 
             try
             {
@@ -614,7 +658,14 @@ public class GGCDb //implements DbCheckInterface
 
     public Configuration createConfiguration()
     {
-
+	logInfo("createConfiguration()");
+	this.hib_config = new GGCDbConfig(true);
+	return this.hib_config.getConfiguration();
+    }
+    
+/*    
+    public Configuration createConfiguration()
+    {
 
         try
         {
@@ -676,6 +727,7 @@ public class GGCDb //implements DbCheckInterface
                                 .addResource("GGC_Nutrition.hbm.xml")
                                 .addResource("GGC_Main.hbm.xml")
                                 .addResource("GGC_Other.hbm.xml")
+                                .addResource("GGC_Pump.hbm.xml")
 
                                 .setProperty("hibernate.dialect", db_hib_dialect)
                                 .setProperty("hibernate.connection.driver_class", db_driver_class)
@@ -689,12 +741,13 @@ public class GGCDb //implements DbCheckInterface
                             .setProperty("hibernate.c3p0.max_size", "20")
                             .setProperty("hibernate.c3p0.timeout", "1800")
                             .setProperty("hibernate.c3p0.max_statements", "50"); */
-
+/*
 
             
 //	    System.out.println("Config loaded.");
-
-            return cfg;
+	
+		
+            return m_cfg;
         }
         catch (Exception ex)
         {
@@ -703,7 +756,7 @@ public class GGCDb //implements DbCheckInterface
         }
         return null;
     }
-
+*/
 
     // *************************************************************
     // ****               DATABASE INIT METHODS                 ****
@@ -756,6 +809,7 @@ public class GGCDb //implements DbCheckInterface
      */
     public void loadConfigData()
     {
+	logInfo("loadConfigData()");
 
 	try
 	{
@@ -771,7 +825,7 @@ public class GGCDb //implements DbCheckInterface
 	catch(Exception ex)
 	{
 	    //log.error("Exception on loadConfigData: " + ex.getMessage(), ex);
-	    logException("loadConfigData", ex);
+	    logException("loadConfigData()", ex);
 
 	}
     }
@@ -779,31 +833,33 @@ public class GGCDb //implements DbCheckInterface
     @SuppressWarnings("unchecked")
     public void loadConfigDataEntries()
     {
+	
+	logInfo("loadConfigDataEntries()");
+	
 	try
 	{
-        Session sess = getSession();
-
-        Hashtable<String,Settings> table = new Hashtable<String,Settings>();
-
-
-        Query q = sess.createQuery("select cfg from ggc.core.db.hibernate.SettingsH as cfg");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            SettingsH eh = (SettingsH)it.next();
-            table.put(eh.getKey(), new Settings(eh));
-        }
-
-        m_da.getConfigurationManager().checkConfiguration(table);
+            Session sess = getSession(2);
+    
+            Hashtable<String,Settings> table = new Hashtable<String,Settings>();
+    
+    
+            Query q = sess.createQuery("select cfg from ggc.core.db.hibernate.SettingsH as cfg");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                SettingsH eh = (SettingsH)it.next();
+                table.put(eh.getKey(), new Settings(eh));
+            }
+    
+            m_da.getConfigurationManager().checkConfiguration(table);
     	}
 	catch(Exception ex)
 	{
 	    //log.error("Exception on loadConfigDataEntries: " + ex.getMessage(), ex);
-	    logException("loadConfigDataEntries", ex);
+	    logException("loadConfigDataEntries()", ex);
 	}
-        
         
     }   
 
@@ -816,6 +872,7 @@ public class GGCDb //implements DbCheckInterface
      */
     public void saveConfigData()
     {
+	logInfo("saveConfigDataEntries()");
         m_da.getConfigurationManager().saveConfig();
     }
 
@@ -824,25 +881,28 @@ public class GGCDb //implements DbCheckInterface
     {
 	try
 	{
-        Hashtable<String, ColorSchemeH> table = new Hashtable<String, ColorSchemeH>();
-
-        Query q = sess.createQuery("select pst from ggc.core.db.hibernate.ColorSchemeH as pst");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            ColorSchemeH eh = (ColorSchemeH)it.next();
-            table.put(eh.getName(), eh);
-        }
-
-        m_da.getSettings().setColorSchemes(table, false);
-    	}
-	catch(Exception ex)
-	{
-//	    log.error("Exception on loadColorSchemes: " + ex.getMessage(), ex);
-	    logException("loadColorSchemes", ex);
+	    
+	    logInfo("loadColorSchemes()");
+	    
+            Hashtable<String, ColorSchemeH> table = new Hashtable<String, ColorSchemeH>();
+    
+            Query q = sess.createQuery("select pst from ggc.core.db.hibernate.ColorSchemeH as pst");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                ColorSchemeH eh = (ColorSchemeH)it.next();
+                table.put(eh.getName(), eh);
+            }
+    
+            m_da.getSettings().setColorSchemes(table, false);
 	}
+    	catch(Exception ex)
+    	{
+    //	    log.error("Exception on loadColorSchemes: " + ex.getMessage(), ex);
+    	    logException("loadColorSchemes()", ex);
+    	}
 
     }
 
@@ -865,12 +925,14 @@ public class GGCDb //implements DbCheckInterface
     public ArrayList<FoodGroup> getUSDAFoodGroups()
     {
 
+	logInfo("getUSDAFoodGroups()");
+	
         ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
 
         try
 	{
 
-        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst");
+        Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst");
 
         Iterator it = q.iterate();
 
@@ -893,22 +955,24 @@ public class GGCDb //implements DbCheckInterface
     @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUserFoodGroups()
     {
-        ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
+	logInfo("getUserFoodGroups()");
+
+	ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
 
         try
 	{
 
-        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            FoodUserGroupH eh = (FoodUserGroupH)it.next();
-            list.add(new FoodGroup(eh));
-        }
-
-        return list;
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                FoodUserGroupH eh = (FoodUserGroupH)it.next();
+                list.add(new FoodGroup(eh));
+            }
+    
+            return list;
     	}
 	catch(Exception ex)
 	{
@@ -924,20 +988,22 @@ public class GGCDb //implements DbCheckInterface
     public ArrayList<MealGroup> getMealGroups()
     {
 
+	logInfo("getMealGroups()");
+	
         ArrayList<MealGroup> list = new ArrayList<MealGroup>();
 
         try
 	{
 
-        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            MealGroupH eh = (MealGroupH)it.next();
-            list.add(new MealGroup(eh));
-        }
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                MealGroupH eh = (MealGroupH)it.next();
+                list.add(new MealGroup(eh));
+            }
 
     	}
 	catch(Exception ex)
@@ -952,22 +1018,24 @@ public class GGCDb //implements DbCheckInterface
     @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUSDAFoodDescriptions()
     {
-        ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+	logInfo("getUSDAFoodDescriptions()");
+
+	ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
 
         try
 	{
 
-        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            FoodDescriptionH eh = (FoodDescriptionH)it.next();
-            list.add(new FoodDescription(eh));
-        }
-
-        return list;
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                FoodDescriptionH eh = (FoodDescriptionH)it.next();
+                list.add(new FoodDescription(eh));
+            }
+    
+            return list;
     	}
 	catch(Exception ex)
 	{
@@ -982,22 +1050,23 @@ public class GGCDb //implements DbCheckInterface
     public ArrayList<FoodDescription> getUserFoodDescriptions()
     {
 
+	logInfo("getUserFoodDescriptions()");
         ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
 
         try
 	{
 
-        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            FoodUserDescriptionH eh = (FoodUserDescriptionH)it.next();
-            list.add(new FoodDescription(eh));
-        }
-
-        //System.out.println("Loaded Food Descriptions: " + list.size()); 
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                FoodUserDescriptionH eh = (FoodUserDescriptionH)it.next();
+                list.add(new FoodDescription(eh));
+            }
+    
+            //System.out.println("Loaded Food Descriptions: " + list.size()); 
         
     	}
 	catch(Exception ex)
@@ -1014,23 +1083,25 @@ public class GGCDb //implements DbCheckInterface
     //public Hashtable<String, Meal> getMeals()
     public ArrayList<Meal> getMeals()
     {
+	logInfo("getMeals()");
+
 	ArrayList<Meal> list = new ArrayList<Meal>();
 
 	try
 	{
 
-        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.MealH as pst order by pst.group_id, pst.name");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            MealH eh = (MealH)it.next();
-            //list.put("" + eh.getId(), new Meal(eh));
-            list.add(new Meal(eh));
-        }
-
-        return list;
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealH as pst order by pst.group_id, pst.name");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                MealH eh = (MealH)it.next();
+                //list.put("" + eh.getId(), new Meal(eh));
+                list.add(new Meal(eh));
+            }
+    
+            return list;
     	}
 	catch(Exception ex)
 	{
@@ -1046,59 +1117,64 @@ public class GGCDb //implements DbCheckInterface
     @SuppressWarnings("unchecked")
     public void loadNutritionDefinitions()
     {
+	
+	logInfo("loadNutritionDefinitions()");
+	
 	try
 	{
-
-        int[] ids = { 4000, 4001, 4002, 4003, 4004, 4005 };
-        String[] tags = { "GI", "GL", "GI_MIN", "GI_MAX", "GL_MIN", "GL_MAX" };
-
-        Hashtable<String,NutritionDefinition> nut_defs = new Hashtable<String,NutritionDefinition>();
-        ArrayList<SelectableInterface> nut_defs_lst = new ArrayList<SelectableInterface>();
-
-        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.NutritionDefinitionH as pst");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            NutritionDefinitionH eh = (NutritionDefinitionH)it.next();
-
-            NutritionDefinition fnd = new NutritionDefinition(eh);
-            nut_defs.put("" + fnd.getId(), fnd);
-            nut_defs_lst.add(fnd);
-        }
-
-        
-        // static nutrition - not in database yet
-        // needs to be added to init
-        
-	// GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, 
-        // GL_MIN = 4004, GL_MAX = 4005
-        
-        String[] units = { "gi", "gl", "gi", "gi", "gl", "gl" };
-        String[] name = { "Glycemic Index", "Glycemic Load", "Glycemic Index (Min)", "Glycemic Index (Max)", "Glycemic Load (Min)", "Glycemic Load (Max)" }; 
-
-        for(int i=0; i<ids.length; i++)
-        {
-            if (nut_defs.containsKey("" + ids[i]))
-        	continue;
+	    
+            int[] ids = { 4000, 4001, 4002, 4003, 4004, 4005 };
+            String[] tags = { "GI", "GL", "GI_MIN", "GI_MAX", "GL_MIN", "GL_MAX" };
+    
+            Hashtable<String,NutritionDefinition> nut_defs = new Hashtable<String,NutritionDefinition>();
+            ArrayList<SelectableInterface> nut_defs_lst = new ArrayList<SelectableInterface>();
+    
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.NutritionDefinitionH as pst");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                NutritionDefinitionH eh = (NutritionDefinitionH)it.next();
+    
+                NutritionDefinition fnd = new NutritionDefinition(eh);
+                nut_defs.put("" + fnd.getId(), fnd);
+                nut_defs_lst.add(fnd);
+                
+            }
+    
             
-            NutritionDefinitionH eh = new NutritionDefinitionH(units[i], tags[i], name[i], "0", 1);
-            eh.setId(ids[i]);
+            // static nutrition - not in database yet
+            // needs to be added to init
             
-            NutritionDefinition ndef = new NutritionDefinition(eh);
+    	// GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, 
+            // GL_MIN = 4004, GL_MAX = 4005
             
-            nut_defs.put("" + eh.getId(), ndef);
-            nut_defs_lst.add(ndef);
-        }
-        
-        this.nutrition_defs = nut_defs;
-        this.nutrition_defs_list = nut_defs_lst;
+            String[] units = { "gi", "gl", "gi", "gi", "gl", "gl" };
+            String[] name = { "Glycemic Index", "Glycemic Load", "Glycemic Index (Min)", "Glycemic Index (Max)", "Glycemic Load (Min)", "Glycemic Load (Max)" }; 
+    
+            for(int i=0; i<ids.length; i++)
+            {
+                if (nut_defs.containsKey("" + ids[i]))
+            	continue;
+                
+                NutritionDefinitionH eh = new NutritionDefinitionH(units[i], tags[i], name[i], "0", 1);
+                eh.setId(ids[i]);
+                
+                NutritionDefinition ndef = new NutritionDefinition(eh);
+                
+                nut_defs.put("" + eh.getId(), ndef);
+                nut_defs_lst.add(ndef);
+                
+            }
+
+            this.nutrition_defs = nut_defs;
+            this.nutrition_defs_list = nut_defs_lst;
+       	}
+    	catch(Exception ex)
+    	{
+    	    logException("loadNutritionDefinitions()", ex);
     	}
-	catch(Exception ex)
-	{
-	    logException("loadNutritionDefinitions()", ex);
-	}
 
     }
 
@@ -1107,54 +1183,56 @@ public class GGCDb //implements DbCheckInterface
     public void loadHomeWeights()
     {
 
+	logInfo("loadHomeWeights()");
+	
 	try
 	{
-        Hashtable<String,NutritionHomeWeightType> nut_hw = new Hashtable<String,NutritionHomeWeightType>();
-        ArrayList<SelectableInterface> nut_hw_lst = new ArrayList<SelectableInterface>();
-
-        Query q = getSession().createQuery("select pst from ggc.core.db.hibernate.NutritionHomeWeightTypeH as pst");
-
-        Iterator it = q.iterate();
-
-        while (it.hasNext())
-        {
-            NutritionHomeWeightTypeH eh = (NutritionHomeWeightTypeH)it.next();
-
-            NutritionHomeWeightType fnd = new NutritionHomeWeightType(eh);
-            nut_hw.put(""+fnd.getId(), fnd);
-            nut_hw_lst.add(fnd);
-        }
-
-
-        
-        int[] ids = { 4000, 4001, 4002, 4003, 4004, 
-        	      4005, 4006, 4007, 4008, 4009, 4010, 
-        	      4011, 4012, 4013, 4014, 4015,
-        	      4016, 4017, 4018, 4019 };
-        String[] names = { "PORTION", "PORTION,_BIG", "PORTION,_MEDIUM", "PORTION,_SMALL", "SPOON", 
-        	           "SPOON,_BIG", "STEAK,_SMALL", "STEAK,_SMALLER", "ITEMS", "SMALLER", "ITEM,_SMALLER",
-        	           "ITEM,_MEDIUM_SIZE", "ITEMS,_BIGGER", "SPOON,_SMALL", "ITEM,_SMALL", "CAN_(_100_G_)",
-        	           "HEADS", "ROOT,_MEDIUM", "SIZE", "FRUIT,_MEDIUM_SIZE" };
-        
-        
-        // static (need to be done in init) 
-        
-        for(int i=0; i<ids.length; i++)
-        {
-            if (nut_hw.containsKey("" + ids[i]))
-        	continue;
+            Hashtable<String,NutritionHomeWeightType> nut_hw = new Hashtable<String,NutritionHomeWeightType>();
+            ArrayList<SelectableInterface> nut_hw_lst = new ArrayList<SelectableInterface>();
+    
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.NutritionHomeWeightTypeH as pst");
+    
+            Iterator it = q.iterate();
+    
+            while (it.hasNext())
+            {
+                NutritionHomeWeightTypeH eh = (NutritionHomeWeightTypeH)it.next();
+    
+                NutritionHomeWeightType fnd = new NutritionHomeWeightType(eh);
+                nut_hw.put(""+fnd.getId(), fnd);
+                nut_hw_lst.add(fnd);
+            }
+    
+    
             
-            NutritionHomeWeightTypeH eh = new NutritionHomeWeightTypeH(names[i], 1);
-            eh.setId(ids[i]);
-
-            NutritionHomeWeightType fnd = new NutritionHomeWeightType(eh);
+            int[] ids = { 4000, 4001, 4002, 4003, 4004, 
+            	      4005, 4006, 4007, 4008, 4009, 4010, 
+            	      4011, 4012, 4013, 4014, 4015,
+            	      4016, 4017, 4018, 4019 };
+            String[] names = { "PORTION", "PORTION,_BIG", "PORTION,_MEDIUM", "PORTION,_SMALL", "SPOON", 
+            	           "SPOON,_BIG", "STEAK,_SMALL", "STEAK,_SMALLER", "ITEMS", "SMALLER", "ITEM,_SMALLER",
+            	           "ITEM,_MEDIUM_SIZE", "ITEMS,_BIGGER", "SPOON,_SMALL", "ITEM,_SMALL", "CAN_(_100_G_)",
+            	           "HEADS", "ROOT,_MEDIUM", "SIZE", "FRUIT,_MEDIUM_SIZE" };
             
-            nut_hw.put(""+fnd.getId(), fnd);
-            nut_hw_lst.add(fnd);
-        }
-
-        this.homeweight_defs = nut_hw;
-        this.homeweight_defs_list = nut_hw_lst;
+            
+            // static (need to be done in init) 
+            
+            for(int i=0; i<ids.length; i++)
+            {
+                if (nut_hw.containsKey("" + ids[i]))
+                    continue;
+                
+                NutritionHomeWeightTypeH eh = new NutritionHomeWeightTypeH(names[i], 1);
+                eh.setId(ids[i]);
+    
+                NutritionHomeWeightType fnd = new NutritionHomeWeightType(eh);
+                
+                nut_hw.put(""+fnd.getId(), fnd);
+                nut_hw_lst.add(fnd);
+            }
+    
+            this.homeweight_defs = nut_hw;
+            this.homeweight_defs_list = nut_hw_lst;
         
     	}
 	catch(Exception ex)
@@ -1201,7 +1279,7 @@ public class GGCDb //implements DbCheckInterface
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        logDebug("getHbA1c()", "Start");
+	logInfo("getHbA1c()");
 
         HbA1cValues hbVal = new HbA1cValues();
 
@@ -1238,8 +1316,6 @@ public class GGCDb //implements DbCheckInterface
 	    logException("getHbA1c()", ex);
         }
 
-        logDebug("getHbA1c()", "End");
-        
         return hbVal;
     }
 
@@ -1251,7 +1327,7 @@ public class GGCDb //implements DbCheckInterface
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        logDebug("getDayStats()", "Start");
+        logInfo("getDayStats()");
 
         DailyValues dV = new DailyValues();
 
@@ -1282,8 +1358,6 @@ public class GGCDb //implements DbCheckInterface
 	    logException("getDayStats()", ex);
         }
 
-        logDebug("getDayStats()", "End");
-        
         return dV;
     }
 
@@ -1295,7 +1369,7 @@ public class GGCDb //implements DbCheckInterface
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        logDebug("getDayStatsRange()", "Start");
+        logInfo("getDayStatsRange()");
 
         WeeklyValues wv = new WeeklyValues();
 
@@ -1328,8 +1402,6 @@ public class GGCDb //implements DbCheckInterface
 	    logException("getDayStatsRange()", ex);
         }
         
-        logDebug("getDayStatsRange()", "End");
-
         return wv;
     }
 
@@ -1341,7 +1413,7 @@ public class GGCDb //implements DbCheckInterface
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
-        logDebug("getMonthlyValues()", "Start");
+        logInfo("getMonthlyValues()");
 
         MonthlyValues mv = new MonthlyValues(year, month);
 
@@ -1371,7 +1443,6 @@ public class GGCDb //implements DbCheckInterface
 	    logException("getMonthlyValues()", ex);
         }
 
-        logDebug("getMonthlyValues()", "End");
         return mv;
 
     }
@@ -1381,10 +1452,11 @@ public class GGCDb //implements DbCheckInterface
     public void saveDayStats(DailyValues dV)
     {
 
-        logDebug("saveDayStats()", "Start");
 
         if (dV.hasChanged())
         {
+            logInfo("saveDayStats()");
+
             logDebug("saveDayStats()", "Data has changed");
 
             Session sess = getSession();
@@ -1445,8 +1517,7 @@ public class GGCDb //implements DbCheckInterface
             }
             catch (Exception ex)
             {
-                System.out.println("saveDayStats: " + ex);
-                logException("getHbA1c()", ex);
+                logException("saveDayStats()", ex);
             }
 
         } // hasChanged
@@ -1455,8 +1526,6 @@ public class GGCDb //implements DbCheckInterface
             logDebug("saveDayStats()", "No entries changed");
         }
 
-        logDebug("saveDayStats()", "End");
-        
     }
 
     public boolean dateTimeExists(long datetime)
@@ -1464,8 +1533,8 @@ public class GGCDb //implements DbCheckInterface
         if (m_loadStatus == DB_CONFIG_LOADED)
             return false;
 
-        if (db_debug)
-            System.out.println("Hibernate: dateTimeExists()");
+        //if (db_debug)
+        //    System.out.println("Hibernate: dateTimeExists()");
 
         try
         {

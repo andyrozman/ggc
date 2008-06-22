@@ -6,8 +6,6 @@ import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.Meal;
 import ggc.core.db.datalayer.MealGroup;
 import ggc.core.db.datalayer.MealNutrition;
-import ggc.core.db.datalayer.MealPart;
-import ggc.core.db.datalayer.MealParts;
 import ggc.core.db.datalayer.NutritionDefinition;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.display.MealNutritionsDisplay;
@@ -18,7 +16,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 

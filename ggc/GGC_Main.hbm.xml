@@ -27,6 +27,18 @@
     </class>
 
 
+    <!--  Day values -->
+    <class name="ggc.core.db.hibernate.GlucoValueH" table="data_dayvalues"  >
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>            
+        <property name="dt_info" type="long" not-null="true"/>    
+        <property name="bg"  type="int" />
+        <property name="person_id"  type="int" not-null="true" />
+        <property name="changed" type="long" not-null="false" />    
+    </class>
+
+
     <!-- ****************************************** -->
     <!-- ***                  Doctors              **** -->
     <!-- ****************************************** -->

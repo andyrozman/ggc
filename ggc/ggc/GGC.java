@@ -35,10 +35,15 @@
 package ggc;
 
 
+import ggc.core.db.GGCDbConfig;
+import ggc.core.util.DataAccess;
+import ggc.core.util.I18nControl;
 import ggc.gui.MainFrame;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
+import com.atech.db.hibernate.check.DbCheckReport;
 
 
 public class GGC
@@ -47,11 +52,36 @@ public class GGC
     private static GGC s_theApp;
     private static MainFrame s_mainWindow;
 
+    
+    public static boolean isDbOk()
+    {
+	GGCDbConfig conf = new GGCDbConfig(true);
+	
+	DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), I18nControl.getInstance());
+	
+	if (dcr.canApplicationStart())
+	{
+	    return true;
+	}
+	else
+	{
+	    dcr.showError();
+	    return false;
+	}
+	
+    }
+
+    
     // version information
     // is stored in MainFrame
 
     public static void main(String[] args)
     {
+	
+	if (!GGC.isDbOk())
+	    return;
+	
+	
 	/*
         try 
 	{
@@ -67,6 +97,8 @@ public class GGC
         if (args.length>0) 
             dev = true;
 
+        DataAccess.deleteInstance();
+        
         s_theApp = new GGC();
         s_theApp.init(dev);
     }

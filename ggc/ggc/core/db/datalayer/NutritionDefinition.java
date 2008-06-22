@@ -62,8 +62,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.setWeight_unit("");
 	this.setDecimal_places("");
 	
-	//ic = DataAccess
-	ic = DataAccess.getInstance().getI18nControlInstance();
+	ic = DataAccess.getInstance().getNutriI18nControl();
 	
 	this.setSearchContext();
     }
@@ -76,7 +75,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 	this.setName(ch.getName());
 	this.setWeight_unit(ch.getWeight_unit());
 	this.setDecimal_places(ch.getDecimal_places());
-	ic = DataAccess.getInstance().getI18nControlInstance();
+	ic = DataAccess.getInstance().getNutriI18nControl();
 	this.setSearchContext();
     }
 
@@ -321,7 +320,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 		return this.getWeight_unit();
 
 	    case 2:
-		return this.getName(); 
+		return this.getResolvedName(); 
 
 	    default:
 		return "" + this.getId();
@@ -345,7 +344,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 		return this.getWeight_unit();
 
 	    case 2:
-		return this.getName();
+		return this.getResolvedName();
 		
 	    default:
 		return this.getId();
@@ -354,6 +353,25 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     }
 
 
+    public String getResolvedName()
+    {
+	
+	if (this.getTag().trim().equals(""))
+	    return this.getName();
+	
+	String t = ic.getMessage(this.getTag());
+	
+	//return t;
+	
+	
+	if (t.equals(this.getTag()))
+	    return this.getName();
+	else
+	    return t;
+	
+    }
+    
+    
     /* (non-Javadoc)
      * @see com.atech.graphics.components.selector.SelectableInterface#getColumnWidth(int, int)
      */
@@ -420,7 +438,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      */
     public void setSearchContext()
     {
-        this.text_idx = this.getName().toUpperCase();
+        this.text_idx = this.getResolvedName().toUpperCase() + " " + this.getName().toUpperCase();
     }
     
     

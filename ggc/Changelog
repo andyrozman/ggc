@@ -1,4 +1,14 @@
-2008-06-10 (0.2.18)  Andy Rozman <andyrozman@users.sourceforge.net>
+0.2.19.1
+    * Changed plugin system and moved instances of plugins into DataAccess class
+    * Added CGMS context (Continous Glucose Monitoring System), see IDEAS file
+    * Created  runner for DbInit, DbApplication, DbImport
+    * Daily overview now displays date in title, and Sunday is now colored red (label)
+
+0.2.18.2
+    * Db Check was fully implemented and now Db Checking was added on start of application. If version of 
+      database is not the same as those specified in GGC_Update.properties software doesn't start
+
+2008-06-10 (0.2.18.1)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Db Version Change: Stable: v6, Development: v7
     * We are now officaially using USDA SR-20 (older DBs were filled with SR-18)
     * There were several tables added for Pump Tool, it shouldn't be done before the end of year, but it 

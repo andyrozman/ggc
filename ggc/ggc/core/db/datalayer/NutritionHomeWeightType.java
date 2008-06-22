@@ -306,7 +306,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 		return getYesNo(this.getStatic_entry());
 		
 	    case 2:
-		return this.getName();
+		return this.getResolvedName();
 
 	    default:
 		return "" + this.getItemId();
@@ -338,9 +338,9 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     private String getYesNo(int value)
     {
 	if (value == 1)
-	    return ic.getMessage("NO");
-	else
 	    return ic.getMessage("YES");
+	else
+	    return ic.getMessage("NO");
     }
     
 
@@ -359,7 +359,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 		return getYesNo(this.getStatic_entry());
 		
 	    case 2:
-		return this.getName();
+		return getResolvedName();
 
 	    default:
 		return new Long(this.getItemId());
@@ -367,6 +367,11 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 	}
     }
 
+    
+    private String getResolvedName()
+    {
+	return ic.getPartitialTranslation(this.getName(), "_");
+    }
 
     /* 
      * getColumnWidth
@@ -447,7 +452,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public void setSearchContext()
     {
-	text_idx = this.getName().toUpperCase();
+	text_idx = this.getResolvedName().toUpperCase() + " " + this.getName().toUpperCase();
     }
     
     

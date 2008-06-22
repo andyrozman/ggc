@@ -29,17 +29,12 @@
 
 package ggc.core.db.datalayer;
 
-import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
 import ggc.core.util.NutriI18nControl;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.StringTokenizer;
-
-import com.atech.graphics.dialogs.selector.ColumnSorter;
-import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 
 public class MealParts //implements SelectableInterface

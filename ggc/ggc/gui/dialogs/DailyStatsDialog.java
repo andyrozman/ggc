@@ -103,14 +103,14 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
     JButton help_button;
     DailyValues dayData;
 
-
     GGCDb m_db = null;
 
     public DailyStatsDialog(DataAccess da)
     {
         super(da.getMainParent(), "DailyStatsDialog", false);
-        setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
+//        setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
 
+        setTitle(new GregorianCalendar());
         this.m_da = da;
         this.m_db = m_da.getDb();
         
@@ -120,6 +120,15 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         init();
     }
 
+    
+    public void setTitle(GregorianCalendar gc)
+    {
+        setTitle(m_ic.getMessage("DAILYSTATSFRAME") + "  [" + 
+        	 gc.get(GregorianCalendar.DAY_OF_MONTH) + "." +
+        	 (gc.get(GregorianCalendar.MONTH)+1) + "." +
+        	 gc.get(GregorianCalendar.YEAR) + "]");
+    }
+    
 
     public DailyStatsTableModel getTableModel()
     {
@@ -212,12 +221,16 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             public void dateHasChanged(CalendarEvent e)
             {
                 //System.out.println("dateHasChanged");
-                dayData = m_da.getDb().getDayStats(e.getNewCalendar());
+        	
+        	GregorianCalendar gc = e.getNewCalendar(); 
+        	
+                dayData = m_da.getDb().getDayStats(gc);
                 
                 model.setDailyValues(dayData);
                 //setDailyValues(dayData);
                 //saveButton.setEnabled(false);
                 updateLabels();
+                setTitle(gc);
                 getTableModel().fireTableChanged(null);
 //x                dailyGraphWindow.setDailyValues(dayData);
 

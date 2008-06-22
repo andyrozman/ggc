@@ -39,14 +39,12 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -55,13 +53,14 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
-import com.atech.help.HelpCapable;
+import com.atech.graphics.dialogs.ActionExceptionCatchDialog;
 
 
 // fix this
 
-public class PrintingDialog extends JDialog implements ActionListener, HelpCapable
+public class PrintingDialog extends ActionExceptionCatchDialog //     extends JDialog implements ActionListener, HelpCapable
 {
+
 
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
@@ -85,9 +84,10 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
     Font font_normal, font_normal_bold;
 
 
-    public PrintingDialog(JFrame frame, int type) 
+    public PrintingDialog(JFrame frame, int type) //throws Exception
     {
-        super(frame, "", true);
+	super(DataAccess.getInstance(), "printing_dialog");
+        //super(frame, "", true);
 
         Rectangle rec = frame.getBounds();
         int x = rec.x + (rec.width/2);
@@ -111,9 +111,9 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
 
 
 
-    private void init() 
+    private void init() //throws Exception
     {
-
+	
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 350, 350);
         panel.setLayout(null);
@@ -172,7 +172,15 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
         button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
         button.setBounds(40, 240, 125, 25);
         panel.add(button);
-    
+
+        
+        
+        
+        
+        
+        
+        
+        
         button = new JButton("   " + m_ic.getMessage("CANCEL"));
         //button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
         button.setActionCommand("cancel");
@@ -195,6 +203,8 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
         button.setBounds(190, 240, 110, 25);
         panel.add(button);
         */
+
+
         
     }
 
@@ -202,7 +212,7 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(ActionEvent e)
+/*    public void actionPerformed(ActionEvent e)
     {
         String action = e.getActionCommand();
     
@@ -216,17 +226,6 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
             int yr = ((Integer)sl_year.getValue()).intValue();
             int mnth = ((Integer)sl_month.getValue()).intValue();
 
-            /*
-            System.out.println(sl_year.getValue());
-            if (sl_year.getValue() instanceof Integer)
-            {
-                System.out.println("int");
-            }
-
-            if (sl_year.getValue() instanceof String)
-            {
-                System.out.println("str");
-            }*/
             
             MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
             
@@ -250,14 +249,51 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
                 return;
             }
             m_actionDone = true; */
-            this.dispose();
+/*            this.dispose();
         }
         else
             System.out.println("PrintingDialog: Unknown command: " + action);
 
     }
+*/
+    
+    
+    /* 
+     * performAction
+     */
+    @Override
+    public void performAction(ActionEvent e) throws Exception
+    {
+	String action = e.getActionCommand();
+        if (action.equals("cancel"))
+        {
+            m_actionDone = false;
+            this.dispose();
+        }
+        else if (action.equals("ok"))
+        {
+            int yr = ((Integer)sl_year.getValue()).intValue();
+            int mnth = ((Integer)sl_month.getValue()).intValue();
 
-    public void displayPDF(String name)
+            
+            MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
+            
+            if (this.cb_template.getSelectedIndex()==0)
+            {
+                PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
+                displayPDF(psm.getName());
+        	
+            }
+            else
+            {
+                PrintExtendedMonthlyReport psm = new PrintExtendedMonthlyReport(mv);
+                displayPDF(psm.getName());
+            }
+        }	
+    }
+    
+    
+    public void displayPDF(String name) throws Exception
     {
 	File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
     
@@ -269,8 +305,9 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
 	
 	if (pdf_viewer.equals(""))
 	{
+	    throw new Exception(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
 	    // TODO: tell the user to configure the viewer executable setting
-	    return;
+	    //return;
 	}
 
 	// ySystem.out.println(pdf_viewer);
@@ -387,6 +424,19 @@ public class PrintingDialog extends JDialog implements ActionListener, HelpCapab
 	return "pages.GGC_Print_Selector";
     }
     
+    
+    /* 
+     * getObject
+     */
+    @Override
+    public Object getObject()
+    {
+	return this;
+    }
+
+
+
+
     
     
     

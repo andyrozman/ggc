@@ -28,7 +28,6 @@
 
 package ggc.gui.little.panels;
 
-import ggc.core.plugins.MetersPlugIn;
 import ggc.core.util.I18nControl;
 import ggc.gui.panels.info.AbstractInfoPanel;
 

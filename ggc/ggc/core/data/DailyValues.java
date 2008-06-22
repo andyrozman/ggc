@@ -36,12 +36,9 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Formatter;
-import java.util.logging.SimpleFormatter;
 
 
 public class DailyValues implements Serializable

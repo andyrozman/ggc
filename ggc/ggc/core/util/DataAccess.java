@@ -72,7 +72,7 @@ import javax.swing.ImageIcon;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.RedirectScreen;
+import com.atech.utils.logs.RedirectScreen;
 
 
 public class DataAccess extends ATDataAccessAbstract
@@ -159,6 +159,12 @@ public class DataAccess extends ATDataAccessAbstract
     public ArrayList<Container> parents_list;
 
     public ImageIcon config_icons[] = null;
+    
+    
+    public static final String PLUGIN_METERS = "MetersPlugIn";
+    public static final String PLUGIN_PUMPS = "PumpsPlugIn";
+    public static final String PLUGIN_CGMS = "CGMSPlugIn";
+    
 /*
     {
 	    new ImageIcon("/icons/cfg_general.png"), 
@@ -232,7 +238,7 @@ public class DataAccess extends ATDataAccessAbstract
         loadOptions();
 
         //this.verifyComConfig();
-        this.loadTimeZones();
+//        this.loadTimeZones();
 
         //checkPrerequisites();
         //this.loadBackupRestoreCollection();
@@ -265,12 +271,21 @@ public class DataAccess extends ATDataAccessAbstract
 
     public static DataAccess createInstance(MainFrame main)
     {
+	s_da = null;
+	
         if (s_da == null)
         {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  " + main);
             //GGCDb db = new GGCDb();
+            
+            System.out.println("New");
             s_da = new DataAccess();
+            System.out.println("setParent");
             s_da.setParent(main);
+            System.out.println("setMainParent");
             s_da.setMainParent(main);
+            System.out.println("addComponet");
+            s_da.addComponent(main);
         }
 
         return s_da;
@@ -303,9 +318,10 @@ public class DataAccess extends ATDataAccessAbstract
     /**
      *  This method sets handle to DataAccess to null and deletes the instance. <br><br>
      */
-    public void deleteInstance()
+    public static void deleteInstance()
     {
-        m_i18n = null;
+        //m_i18n = null;
+	DataAccess.s_da = null;
     }
 
     public void startDb(StatusBar bar)

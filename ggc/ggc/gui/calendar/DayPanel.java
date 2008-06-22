@@ -110,6 +110,10 @@ public class DayPanel extends JPanel implements CalendarListener
         for (int i=0; i<7; i++) 
         {
             JLabel label = new JLabel(this.m_days[i]);
+            
+            if (i==0)
+        	label.setForeground(Color.red);
+            
             label.setHorizontalTextPosition(SwingConstants.CENTER);
             label.setHorizontalAlignment(SwingConstants.CENTER);
             this.add(label);

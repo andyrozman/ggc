@@ -116,9 +116,9 @@ public class GGCDbLoader extends Thread
         if (!part_start)
         {
             if (m_bar!=null)
-                m_bar.setDatabaseName(db.db_conn_name);
+                m_bar.setDatabaseName(db.getHibernateConfiguration().getConnectionName());
             else
-                m_barL.setDatabaseName(db.db_conn_name);
+                m_barL.setDatabaseName(db.getHibernateConfiguration().getConnectionName());
         }
 
 
@@ -169,7 +169,7 @@ public class GGCDbLoader extends Thread
         
         // TODO: in version 0.4
 
-        
+/*        
         // 5 - load nutrition(1) root data
         db.loadNutritionDbBase();
         db.loadNutritionDb1();
@@ -184,7 +184,7 @@ public class GGCDbLoader extends Thread
         
         db.loadMealsDb();
 
-
+*/
         setDbStatus(StatusBar.DB_LOADED);
         
         

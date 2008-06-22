@@ -1,22 +1,16 @@
 
 package ggc.core.plugins;
 
-import ggc.core.util.I18nControl;
-import ggc.gui.MainFrame;
-
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.PlugInClient;
 
 
-public class PumpsPlugIn implements ActionListener
+public class PumpsPlugIn extends PlugInClient
 {
     
-    private boolean installed = false;
-    
-    I18nControl ic = I18nControl.getInstance();
     private String commands[] = { 
 		"MN_PUMPS_READ_DESC", 
 		"MN_PUMPS_LIST_DESC", 
@@ -25,19 +19,24 @@ public class PumpsPlugIn implements ActionListener
 		"MN_PUMPS_MANUAL_ENTRY_DESC", 
 		"MN_PUMPS_ADDITIONAL_DATA_DESC",
 	    			};
-    Container parent = null;
 
     
-    
-    public PumpsPlugIn(Container parent)
+
+    public PumpsPlugIn(Container parent, I18nControlAbstract ic)
     {
-	this.parent = parent;
-	checkIfInstalled();
+	super(parent, ic);
     }
+    
+    
 
-    private void checkIfInstalled()
+    public PumpsPlugIn()
     {
-	installed = false;
+	super();
+    }
+    
+    
+    public void checkIfInstalled()
+    {
     }
     
     
@@ -83,6 +82,25 @@ public class PumpsPlugIn implements ActionListener
 	
     }
     
+
+    public void initPlugin()
+    {
+	this.commands = new String[6];
+	this.commands[0] = "MN_PUMPS_READ_DESC";
+	this.commands[1] = "MN_PUMPS_LIST_DESC";
+	this.commands[2] = "MN_PUMPS_CONFIG_DESC";
+	this.commands[3] = "MN_PUMP_PROFILES_DESC";
+	this.commands[4] = "MN_PUMPS_MANUAL_ENTRY_DESC";
+	this.commands[5] = "MN_PUMPS_ADDITIONAL_DATA_DESC";
+
+	this.commands_implemented = new boolean[6];
+	this.commands_implemented[0] = false;
+	this.commands_implemented[1] = false;
+	this.commands_implemented[2] = false;
+	this.commands_implemented[3] = false;
+	this.commands_implemented[4] = false;
+	this.commands_implemented[5] = false;
+    }
     
     
     
@@ -159,20 +177,19 @@ public class PumpsPlugIn implements ActionListener
 	
     }
     
-    public void featureNotImplemented(String command_desc)
-    {
-    	String text = String.format(ic.getMessage("PLUGIN_NOT_INSTALLED_OR_AVAILABLE"), this.getName());
-    	    
-    	text += "\n\n'" + ic.getMessage(command_desc) +"' ";
-    	text += String.format(ic.getMessage("IMPLEMENTED_VERSION"), "0.5");
-    	text += "!\n\n";
-    
-    	JOptionPane.showMessageDialog(this.parent, text, ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
-
-    }
  
+    public String getWhenWillBeImplemented()
+    {
+	return "0.4";
+    }
     
     
+    
+    public String getShortStatus()
+    {
+	return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.4");
+    }
+
     
 }
 

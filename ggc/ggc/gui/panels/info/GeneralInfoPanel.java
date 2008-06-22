@@ -28,6 +28,7 @@
 
 package ggc.gui.panels.info;
 
+import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import javax.swing.*;
@@ -42,6 +43,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private JLabel lblUnit = new JLabel();
     private JLabel lblMeter = new JLabel();
     private JLabel lblPumps = new JLabel();
+    private JLabel lblCGMS = new JLabel();
 
 
     public GeneralInfoPanel()
@@ -67,6 +69,8 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         add(lblMeter);
         add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN")+":"));
         add(lblPumps);
+        add(new JLabel(m_ic.getMessage("CGMS_PLUGIN")+":"));
+        add(lblCGMS);
 
         add(new JLabel());
         add(new JLabel());
@@ -84,9 +88,10 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
         lblUnit.setText(m_da.getSettings().getBG_unitString());
         
-        lblMeter.setText(m_ic.getMessage("NOT_INSTALLED"));
-        lblPumps.setText(m_ic.getMessage("NOT_AVAILABLE"));
-        
+        m_da.getPlugIn(DataAccess.PLUGIN_METERS).getWhenWillBeImplemented();
+        lblMeter.setText(m_da.getPlugIn(DataAccess.PLUGIN_METERS).getShortStatus());
+        lblPumps.setText(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).getShortStatus());
+        lblCGMS.setText(m_da.getPlugIn(DataAccess.PLUGIN_CGMS).getShortStatus());
 
         /*
         int meter_type = m_da.getSettings().getMeterType();

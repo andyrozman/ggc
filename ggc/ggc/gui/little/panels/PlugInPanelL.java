@@ -28,12 +28,9 @@
 
 package ggc.gui.little.panels;
 
-import ggc.core.util.I18nControl;
+import java.awt.GridLayout;
 
-import javax.swing.*;
-import java.awt.*;
-
-import ggc.gui.panels.info.AbstractInfoPanel;
+import javax.swing.JPanel;
 
 
 public class PlugInPanelL extends JPanel

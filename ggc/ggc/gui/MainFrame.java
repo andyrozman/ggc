@@ -31,6 +31,7 @@ package ggc.gui;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
+import ggc.core.plugins.CGMSPlugIn;
 import ggc.core.plugins.MetersPlugIn;
 import ggc.core.plugins.PumpsPlugIn;
 import ggc.core.util.DataAccess;
@@ -116,10 +117,10 @@ public class MainFrame extends JFrame
 {
 
     // Version information
-    public  static String s_version = "0.2.17.2";
+    public  static String s_version = "0.2.19.1";
     public static String full_version = "v" + s_version;
 
-    public static String version_date = "9th June 2008";
+    public static String version_date = "19th June 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -136,7 +137,7 @@ public class MainFrame extends JFrame
 
 
     private JMenu menu_file, menu_bgs, menu_food, menu_doctor, 
-    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_data_graphs /*, menu_misc*/;
+    menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_data_graphs, menu_cgms /*, menu_misc*/;
 
     //public GGCHelp m_help;
 
@@ -170,10 +171,11 @@ public class MainFrame extends JFrame
 
     private DataAccess m_da = null;
 
-
+/*
     MetersPlugIn plugin_meters = null;
     PumpsPlugIn plugin_pumps = null;
-    
+    CGMSPlugIn plugin_cgms = null;
+*/
     
     /**
      *   Static definitions (Look and Feel)
@@ -236,6 +238,8 @@ public class MainFrame extends JFrame
         m_da = DataAccess.createInstance(this);
         m_ic = I18nControl.getInstance();
 
+        m_da.addComponent(this);
+        
         statusPanel = new StatusBar();
 
         this.actions = new Hashtable<String,GGCAction>();
@@ -307,8 +311,14 @@ public class MainFrame extends JFrame
     
     private void initPlugIns()
     {
-	this.plugin_meters = new MetersPlugIn(this);
-	this.plugin_pumps = new PumpsPlugIn(this);
+	m_da.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this, m_ic));
+	m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
+	
+	m_da.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this, m_ic));
+	m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
+
+	m_da.addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this, m_ic));
+	m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
     }
     
     
@@ -378,6 +388,15 @@ public class MainFrame extends JFrame
 	this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
 	this.menu_pumps.addSeparator();
 	this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
+
+	// meters
+	this.menu_cgms = this.createMenu("MN_CGMS", null);
+	this.createAction(menu_cgms, "MN_CGMS_READ", "MN_CGMS_READ_DESC", "cgms_read", null);
+	this.menu_cgms.addSeparator();
+	this.createAction(menu_cgms, "MN_CGMS_LIST", "MN_CGMS_LIST_DESC", "cgms_list", null);
+	this.menu_cgms.addSeparator();
+	this.createAction(menu_cgms, "MN_CGMS_CONFIG", "MN_CGMS_CONFIG_DESC", "cgms_config", null);
+	
 	
 	// tools menu
 	this.menu_tools = this.createMenu("MN_TOOLS", null);
@@ -944,11 +963,15 @@ public class MainFrame extends JFrame
 
             if (command.startsWith("meters_"))
             {
-        	getMyParent().plugin_meters.actionPerformed(e);
+        	m_da.getPlugIn(DataAccess.PLUGIN_METERS).actionPerformed(e);
             }
             else if (command.startsWith("pumps_"))
             {
-        	getMyParent().plugin_pumps.actionPerformed(e);
+        	m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).actionPerformed(e);
+            }
+            else if (command.startsWith("cgms_"))
+            {
+        	m_da.getPlugIn(DataAccess.PLUGIN_CGMS).actionPerformed(e);
             }
             else if (command.equals("file_quit")) 
             {
@@ -1132,4 +1155,11 @@ public class MainFrame extends JFrame
             close();
         }
     }
+    
+    public String toString()
+    {
+	return "MainFrame";
+    }
+    
+    
 }

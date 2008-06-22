@@ -42,6 +42,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Hashtable;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
@@ -56,7 +57,7 @@ public class InitDb
     Hashtable<String,NutritionHomeWeightType> home_weight_type_list = null;
     DataAccess m_da = DataAccess.getInstance();
 
-
+    public static String passWord = "I_Really_Want_To_Do_This";
 
     public InitDb()
     {
@@ -1038,11 +1039,57 @@ public class InitDb
 	
     }
     
+    public static void usage()
+    {
+	System.out.println("InitDb is very dangerous application. It will totally DESTROY your database.\n" + 
+		           "Please make a backup of your database and it's data, before you attempt to do\n" +
+		           " this. If you are sure you will need password to start this process. \n" +
+		           "This message is displayed because you didn'y supply password on command line.\n" +
+		           "Password is (without spaces): " + InitDb.passWord + "\n" +
+		           "now you can either type the password in after prompt, or you can start\n" +
+		           "again with right password as parameter. Press CTRL-C to abort.");
+    }
 
+    
+    public static String readPassWord()
+    {
+	String pass;
+	
+	Scanner in = new Scanner(System.in);
+
+	// Reads a single line from the console 
+	// and stores into name variable
+	pass = in.nextLine();
+
+	in.close();            
+
+	return pass;
+    }
 
     public static void main(String args[])
     {
-	new InitDb();
+	//I_Really_Want_To_Do_This
+	if (args.length==1)
+	{
+	    if (args[0].equals(InitDb.passWord))
+	    {
+		new InitDb();
+		return;
+	    }
+	}
+	
+	InitDb.usage();
+	
+	if (InitDb.passWord.equals(InitDb.readPassWord()))
+	{
+	    new InitDb();
+	    return;
+	}
+
+	
+	System.out.println("Since you failed to provide right password, operation is canceled.");
+	
+	
     }
 
 
