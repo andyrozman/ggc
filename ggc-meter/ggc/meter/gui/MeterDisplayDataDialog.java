@@ -1,19 +1,18 @@
 package ggc.meter.gui;
 
-import ggc.data.imports.SerialMeterImport;
-import ggc.data.meter.MeterImportManager;
-import ggc.meter.data.GlucoTable;
-import ggc.meter.data.GlucoTableModel;
-import ggc.meter.data.GlucoValues;
+import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.data.MeterValuesTable;
+import ggc.meter.data.MeterValuesTableModel;
+import ggc.meter.data.cfg.MeterConfigEntry;
+import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterInterface;
-import ggc.meter.device.ascensia.AscensiaContour;
-import ggc.meter.output.ConsoleOutputWriter;
-import ggc.meter.util.DataAccess;
+import ggc.meter.output.OutputUtil;
+import ggc.meter.output.OutputWriter;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.meter.util.TimerThread;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -29,10 +28,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 
 
-public class MeterDisplayDataDialog extends JDialog implements ActionListener
+public class MeterDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
 {
 	static final long serialVersionUID = 0;
 
@@ -41,15 +39,21 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener
 //x    private JLabel infoDescription = null;
 
     private I18nControl m_ic = I18nControl.getInstance();        
-    private DataAccess m_da = DataAccess.getInstance();
+
+
+
+    private DataAccessMeter m_da = DataAccessMeter.getInstance();
 
 //    private static ReadMeterDialog singleton = null;
 
     private JTextArea logText = null;
-    private JProgressBar progress = null;
+    public JProgressBar progress = null;
 
-    private GlucoValues glucoValues = null;
-    private GlucoTableModel model = null;
+    //private GlucoValues glucoValues = null;
+    private MeterValuesTableModel model = null;
+    private MeterValuesTable table = null;
+    
+    
 //    private GlucoTable resTable;
 
 //    private JButton startButton;
@@ -59,11 +63,11 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener
 
     
     private JTabbedPane tabPane;
-    private SerialMeterImport meterImport = null;
+    //private SerialMeterImport meterImport = null;
     //private StartImportAction startImportAction = new StartImportAction();
 
     //private MeterInterface meterDevice = null;
-    private MeterImportManager m_mim = null;
+   // private MeterImportManager m_mim = null;
 
     JLabel lbl_status;
 
@@ -105,14 +109,67 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener
     }
 
 
+    MeterReaderRunner mrr;
+    
+    Thread thr;
+    
+    public MeterDisplayDataDialog()
+    {
+        super();
+        
+        this.loadConfiguration();
+        
+        System.out.println(this.configured_meter);
+        
+        this.mrr = new MeterReaderRunner(this.configured_meter, this); 
+        
+        m_da.addComponent(this);
+        //meter_interface = mi;
+        
+        dialogPreInit();
+    }
+    
+    
+    MeterConfigEntry configured_meter = null;
+    
+    private void loadConfiguration()
+    {
+        // TODO: this should be read from config
+        
+        this.configured_meter = new MeterConfigEntry();
+        this.configured_meter.id =1;
+        this.configured_meter.communication_port = "COM9";
+        this.configured_meter.name = "My Countour";
+        this.configured_meter.meter_company = "Ascensia/Bayer";
+        this.configured_meter.meter_device = "Contour";
+        this.configured_meter.ds_area= "Europe/Prague";
+        this.configured_meter.ds_winter_change = 0;
+        this.configured_meter.ds_summer_change = 1;
+        this.configured_meter.ds_fix = true;
+        
+        /*
+        tzu.setTimeZone("Europe/Prague");
+        tzu.setWinterTimeChange(0);
+        tzu.setSummerTimeChange(+1);
+        */
+        
+//        MeterInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
+        
+//        this.meter_interface = mi;
+        
+    }
+    
+    
+    
     private void dialogPreInit()
     {
-        setTitle(m_ic.getMessage("READ_METER_DATA") + "  [" + this.meter_interface.getName() + " on " + this.meter_interface.getPort() + "]");
+//a        setTitle(m_ic.getMessage("READ_METER_DATA") + "  [" + this.meter_interface.getName() + " on " + this.meter_interface.getPort() + "]");
 
-        m_mim = new MeterImportManager();
+//        m_mim = new MeterImportManager();
 //        initMeter();
         init();
         postInit();
+        this.mrr.start();
 
         this.setVisible(true);
 
@@ -148,13 +205,16 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener
         logText.append(s + "\n");
     }
 
+    /*
     public GlucoValues getGlucoValues()
     {
         return glucoValues;
-    }
+    }*/
 
     protected void init()
     {
+        
+        model = new MeterValuesTableModel();
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -172,7 +232,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener
             ykor = rec.y + (rec.height/2);
         }
 
-        setBounds(xkor-250, ykor-250, 650, 600);
+        setBounds(xkor-250, ykor-250, 480, 580);
         //dWindowListener(new CloseListener());
 
         //setBounds(300, 300, 300, 300);
@@ -191,240 +251,76 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener
 
 //x        JScrollPane sp2 = new JScrollPane(resTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
+        
+        
+        this.table = new MeterValuesTable(model);
+
+        
+//        this.table = MeterValuesTable.createMeterValuesTable(model);
+        
         tabPane = new JTabbedPane();
         //tabPane.add("Values", sp2);
-        tabPane.add(m_ic.getMessage("DATA"), GlucoTable.createGlucoTable(model));
+        tabPane.add(m_ic.getMessage("DATA"), MeterValuesTable.createMeterValuesTable(this.table));
         tabPane.add(m_ic.getMessage("LOG"), sp);
-        tabPane.setBounds(300, 20, 300, 250);
+        tabPane.setBounds(30, 15, 400, 250);
         panel.add(tabPane);
 
         // Info
 
         label = new JLabel(m_ic.getMessage("METER_INFO") + ":");
-        label.setBounds(300, 310, 300, 25);
+        label.setBounds(30, 310, 300, 25);
         panel.add(label);
         
         ta_info = new JTextArea();
         JScrollPane sp3 = new JScrollPane(ta_info);
-        sp3.setBounds(300, 340, 300, 50);
+        sp3.setBounds(30, 340, 400, 50);
         panel.add(sp3);
 
-        ta_info.setText(this.m_mim.getInfo());
+        ta_info.setText(""); //this.meter_interface.getDeviceInfo().getInformation(""));
 
         
 
-        infoIcon = new JLabel(this.meter_interface.getIcon());
-        infoIcon.setBounds(10, 20, 250, 300);
-        infoIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        infoIcon.setVerticalAlignment(SwingConstants.CENTER);
-        infoIcon.setBackground(Color.blue);
-        panel.add(infoIcon);
-        
-        label = new JLabel(this.m_mim.getName());
-        label.setBounds(10, 230, 150, 25);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(label);
-
-/*
-        // time
-        label = new JLabel(m_ic.getMessage("COMPUTER_TIME") + ":");
-        label.setBounds(182, 360, 150, 25);
-        panel.add(label);
-        
-        label = new JLabel(m_ic.getMessage("METER_TIME") + ":");
-        label.setBounds(182, 380, 150, 25);
-        panel.add(label);
-
-        label = new JLabel("00:00:00");
-        label.setBounds(320, 360, 100, 25);
-        panel.add(label);
-
-        JLabel label_1 = new JLabel("00:00:00");
-        label_1.setBounds(320, 380, 100, 25);
-        panel.add(label_1);
-
-        m_timer = new TimerThread(m_da, label, label_1, this.m_mim.getTimeDifference());
-        m_timer.start();
-  */      
 
         
-        /*
-        // meter status
-        label = new JLabel(m_ic.getMessage("METER_STATUS") + ":");
-        label.setBounds(182, 410, 100, 25);
-        panel.add(label);
-        
-        lbl_status = new JLabel();
-        lbl_status.setBounds(320, 410, 150, 25);
-        panel.add(lbl_status);
-
-        setStatus();
-*/
 
         
         // meter status
         label = new JLabel(m_ic.getMessage("ACTION") + ":");
-        label.setBounds(300, 415, 100, 25);
+        label.setBounds(30, 415, 100, 25);
         panel.add(label);
         
         lbl_status = new JLabel("Empty");
-        lbl_status.setBounds(400, 415, 150, 25);
+        lbl_status.setBounds(130, 415, 150, 25);
         panel.add(lbl_status);
         
         
         this.progress = new JProgressBar();
-        this.progress.setBounds(300, 450, 300, 15);
+        this.progress.setBounds(30, 450, 400, 15);
         //this.progress.setIndeterminate(true);
         panel.add(this.progress);
         
         
         
-        // buttons
-        JButton button = new JButton(m_ic.getMessage("GET_INFO"));
-        button.setBounds(40, 340, 200, 30);
-        button.setActionCommand("get_info");
-        button.addActionListener(this);
-        panel.add(button);
-
-
-        bt_get = new JButton(m_ic.getMessage("GET_FULL_DATA"));
-        bt_get.setBounds(40, 380, 200, 30);
-        bt_get.setEnabled(this.m_mim.isStatusOK());
-        bt_get.setActionCommand("get_data_full");
-        bt_get.addActionListener(this);
-        panel.add(bt_get);
-        
-        bt_get = new JButton(m_ic.getMessage("GET_PART_DATA"));
-        bt_get.setBounds(40, 420, 200, 30);
-        bt_get.setEnabled(this.m_mim.isStatusOK());
-        bt_get.setActionCommand("get_data_partitial");
-        bt_get.addActionListener(this);
-        panel.add(bt_get);
-        
-
-        bt_get = new JButton(m_ic.getMessage("CLEAR_METER"));
-        bt_get.setBounds(40, 460, 200, 30);
-        bt_get.setEnabled(this.m_mim.isStatusOK());
-        bt_get.setActionCommand("clear_data");
-        bt_get.addActionListener(this);
-        panel.add(bt_get);
-
-        bt_break = new JButton(m_ic.getMessage("METER_INSTRUCTIONS"));
-        bt_break.setBounds(40, 510, 200, 30);
-        bt_break.setEnabled(this.m_mim.isStatusOK());
-        bt_break.setActionCommand("meter_instructions");
-        bt_break.addActionListener(this);
-        panel.add(bt_break);
-        
-        
         bt_break = new JButton(m_ic.getMessage("BREAK_COMMUNICATION"));
-        bt_break.setBounds(430, 490, 170, 25);
-        bt_break.setEnabled(this.m_mim.isStatusOK());
+        bt_break.setBounds(170, 490, 250, 25);
+//        bt_break.setEnabled(this.m_mim.isStatusOK());
         bt_break.setActionCommand("break_communication");
         bt_break.addActionListener(this);
         panel.add(bt_break);
         
-        JButton help_button = m_da.createHelpButtonByBounds(300, 490, 120, 25, this);
+        JButton help_button = m_da.createHelpButtonByBounds(30, 490, 120, 25, this);
         panel.add(help_button);
-        /*
-        button = new JButton(m_ic.getMessage("REFRESH_INFO"));
-        button.setBounds(30, 280, 150, 25);
-        panel.add(button);
-
-        button = new JButton(m_ic.getMessage("REFRESH_TIME"));
-        button.setBounds(30, 320, 150, 25);
-        panel.add(button);
-*/
-
-
-        
-        
-        
-        
+   
         
         
         bt_import = new JButton(m_ic.getMessage("IMPORT_TO_DB"));
-        bt_import.setBounds(430, 280, 170, 25);
+        bt_import.setBounds(260, 280, 170, 25);
         bt_import.setEnabled(false);
         
         //button.setEnabled(meterDevice.isStatusOK());
         
         panel.add(bt_import);
-/*        
-REFRESH_CONNECTION=Refresh Connection
-REFRESH_INFO=Refresh Info
-REFRESH_TIME=Refresh Time
-GET_DATA=Load Data
-IMPORT_TO_DB=Import to Db
-*/
-
         
-        
-        /*
-        
-        progress = new JProgressBar(0, 100);
-        progress.setPreferredSize(new Dimension(100, 8));
-
-        startButton = new JButton("Start"); // startImportAction
-        startButton.setActionCommand("start");
-        saveButton = new JButton("Save");  // new SaveAction()
-        saveButton.setActionCommand("save");
-        saveButton.setEnabled(false);
-
-        JPanel importButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        importButtonPanel.add(startButton);
-        importButtonPanel.add(saveButton);
-
-        JPanel dialogButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton closeButton = new JButton("Close");  // new CloseAction()
-        closeButton.setActionCommand("save");
-        dialogButtonPanel.add(closeButton);
-
-        JPanel buttonPanel = new JPanel(new BorderLayout(0, 0));
-        buttonPanel.add(importButtonPanel, "West");
-        buttonPanel.add(dialogButtonPanel, "East");
-
-        JPanel infoPanel = new JPanel(new BorderLayout());
-        //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/euroflash.png")));
-        //JLabel infoIcon = new JLabel(new ImageIcon(getClass().getResource("/icons/freestyle.png")));
-        infoIcon = new JLabel();
-        infoDescription = new JLabel();
-        infoDescription.setVerticalAlignment(JLabel.TOP);
-        infoPanel.add(infoIcon, "North");
-        infoPanel.add(infoDescription, "Center");
-        infoPanel.setBorder(new TitledBorder(meterImport.getName()));
-//        infoPanel.setBorder(new TitledBorder(""));
-        infoPanel.setPreferredSize(new Dimension(160, 250));
-
-        JPanel importContent = new JPanel(new BorderLayout(5, 10));
-        importContent.add(buttonPanel, "North");
-        importContent.add(tabPane, "Center");
-        importContent.add(progress, "South");
-
-        JPanel content = new JPanel(new BorderLayout(5, 15))
-        {
-            public Insets getInsets()
-            {
-                return new Insets(8, 8, 8, 8);
-            }
-
-            public Insets getInsets(Insets insets)
-            {
-                insets.top = 8;
-                insets.left = 8;
-                insets.bottom = 8;
-                insets.right = 8;
-                return insets;
-            }
-        };
-        setContentPane(content);
-
-        content.add(importContent, "Center");
-        content.add(infoPanel, "West");
-        content.add(buttonPanel, "South");
-
-        pack();
-        */
     }
 
 
@@ -486,11 +382,12 @@ IMPORT_TO_DB=Import to Db
 
     private void setStatus()
     {
+        /*
         if (this.m_mim.isStatusOK())
             lbl_status.setText("<html><font color=\"green\" >" + m_ic.getMessage("OK") + "</font></html>");
         else
             lbl_status.setText("<html><font color=\"red\" >" + m_ic.getMessage("ERROR") + "</font></html>");
-
+        */
 /*        
         if (meterDevice.isStatusOK())
             lbl_status.setText("<html>" + m_ic.getMessage("METER_STATUS") + ": " + "<font color=\"green\" >" + m_ic.getMessage("OK") + "</font></html>");
@@ -657,11 +554,122 @@ IMPORT_TO_DB=Import to Db
 
     }
 
+    
+    /* 
+     * endOutput
+     */
+    public void endOutput()
+    {
+        System.out.println("endOutput()");
+        // TODO Auto-generated method stub
+        
+    }
+
+    
+    DeviceIdentification device_ident;
+
+    /* 
+     * getDeviceIdentification
+     */
+    public DeviceIdentification getDeviceIdentification()
+    {
+        return device_ident;
+    }
+
+    OutputUtil output_util = new OutputUtil(this);
+    
+    
+    /* 
+     * getOutputUtil
+     */
+    public OutputUtil getOutputUtil()
+    {
+        return this.output_util;
+    }
+
+
+    /* 
+     * interruptCommunication
+     */
+    public void interruptCommunication()
+    {
+        System.out.println("interComm()");
+        
+    }
+
+
+    /* 
+     * setBGOutputType
+     */
+    public void setBGOutputType(int bg_type)
+    {
+        // TODO Auto-generated method stub
+        System.out.println("setBGOutput()");
+    }
+
+
+    /* 
+     * setDeviceIdentification
+     */
+    public void setDeviceIdentification(DeviceIdentification di)
+    {
+        this.device_ident = di;
+    }
+
+    int count =0;
+    
+    /* 
+     * writeBGData
+     */
+    public void writeBGData(MeterValuesEntry mve)
+    {
+        count++;
+        this.model.addEntry(mve);
+        
+        //this.progress.setValue((int)(count/500));
+        //this.progress.repaint();
+        
+        //this.table.invalidate();
+        //this.table.repaint();
+        //this.table.setModel(this.model);
+        //this.table.
+        // TODO Auto-generated method stub
+        System.out.println("writeBGData()");
+    }
+
+
+    /* 
+     * writeDeviceIdentification
+     */
+    public void writeDeviceIdentification()
+    {
+        // TODO Auto-generated method stub
+        System.out.println("writeDeviceIndentification()");
+        
+    }
+
+
+    /* 
+     * writeHeader
+     */
+    public void writeHeader()
+    {
+    }
+
+
+    /* 
+     * writeRawData
+     */
+    public void writeRawData(String input, boolean is_bg_data)
+    {
+    }
+    
+    
 
     public static void main(String[] args)
     {
         //MeterReadDialog mrd = 
-        new MeterDisplayDataDialog(new AscensiaContour("COM12", new ConsoleOutputWriter()));
+        new MeterDisplayDataDialog(); //new AscensiaContour("COM12", new ConsoleOutputWriter()));
     }
 
     

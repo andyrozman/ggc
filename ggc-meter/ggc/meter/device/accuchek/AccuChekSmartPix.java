@@ -2,12 +2,13 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterException;
 import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.protocol.ConnectionProtocols;
 import ggc.meter.protocol.XmlProtocol;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import com.atech.utils.ATechDate;
 public class AccuChekSmartPix extends XmlProtocol
 {
     
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccessMeter m_da = DataAccessMeter.getInstance();
     
     AbstractMeterCompany meter_company = null;
 
@@ -146,7 +147,13 @@ public class AccuChekSmartPix extends XmlProtocol
     
     
     
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.accuchek.AccuChekSmartPix";
+    }
     
+    
+
     
     
     
@@ -236,7 +243,7 @@ public class AccuChekSmartPix extends XmlProtocol
     /* 
      * getDeviceInfo
      */
-    public ArrayList<String> getDeviceInfo() throws MeterException
+    public DeviceIdentification getDeviceInfo()
     {
         // TODO Auto-generated method stub
         return null;

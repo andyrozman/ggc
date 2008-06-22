@@ -27,7 +27,7 @@
 
 package ggc.meter.list;
 
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 
 import java.util.ArrayList;
 
@@ -80,7 +80,7 @@ public class MeterListRoot
     @Override
     public String toString()
     {
-    	return DataAccess.getInstance().m_i18n.getMessage("METERS_LIST");
+    	return DataAccessMeter.getInstance().m_i18n.getMessage("METERS_LIST");
     }
 
 

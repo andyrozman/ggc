@@ -11,7 +11,7 @@ public class MeterConfigEntry
     public int id;
     public String name;
     public String meter_company;
-    public String meted_device;
+    public String meter_device;
     public String communication_port;
     public boolean ds_fix = false;
     public String ds_area = "";

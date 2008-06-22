@@ -252,7 +252,7 @@ public class DailyValues //implements Serializable
                 */
 
                 // problem on delete
-//x                DataAccess.getInstance().getDb().deleteHibernate(dVR.getHibernateObject());
+//x                DataAccessMeter.getInstance().getDb().deleteHibernate(dVR.getHibernateObject());
                 //DailyValueH dvh = dVR.getHibernateObject();
                 
 

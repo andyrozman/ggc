@@ -32,7 +32,7 @@ package ggc.meter.gui.config;
 
 import ggc.meter.manager.MeterManager;
 import ggc.meter.manager.company.MeterCompanyInterface;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.event.ItemEvent;
@@ -80,7 +80,7 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
         init();
     }
 */
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccessMeter m_da = DataAccessMeter.getInstance();
     I18nControl m_ic = m_da.getI18nInstance();
     JLabel label_status;
     
@@ -136,7 +136,7 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
 
         label = new JLabel(m_ic.getMessage("METER_COMPANIES"));
         label.setBounds(0,30, 600, 40);
-        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setFont(m_da.getFont(DataAccessMeter.FONT_BIG_BOLD));
         label.setHorizontalAlignment(JLabel.CENTER);
         this.add(label, null);
 
@@ -155,12 +155,12 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
         
         label = new JLabel(m_ic.getMessage("STATUS") + ":");
         label.setBounds(100,250, 300, 25);
-        label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
+        label.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL_BOLD));
         this.add(label, null);
         
         label_status = new JLabel("<html>" + m_ic.getMessage("ABBOTT_DESC") + "</html>");
         label_status.setBounds(100,280, 400, 100);
-        label_status.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        label_status.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         label_status.setVerticalAlignment(JLabel.TOP);
         this.add(label_status, null);
         

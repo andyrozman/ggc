@@ -27,7 +27,7 @@
 
 package ggc.meter.list;
 
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.Color;
@@ -50,7 +50,7 @@ public class MeterListCompanyPanel extends MeterListAbstractPanel
 	
 	
     I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
+    DataAccessMeter m_da = null;
     JEditorPane editor;
     
     Font font_big, font_normal, font_normal_b;
@@ -78,11 +78,11 @@ public class MeterListCompanyPanel extends MeterListAbstractPanel
         super();
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
+        m_da = DataAccessMeter.getInstance();
 
-        font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_big = m_da.getFont(DataAccessMeter.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(DataAccessMeter.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessMeter.FONT_NORMAL);
 
         //createPanel();
         //init();

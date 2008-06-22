@@ -29,10 +29,9 @@ package ggc.meter.device.ascensia;
  *
  */
 
-import ggc.data.meter.MeterManager;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.MeterException;
-import ggc.meter.output.OutputWriter;
+import ggc.meter.output.AbstractOutputWriter;
 import gnu.io.SerialPortEvent;
 
 import java.util.ArrayList;
@@ -55,9 +54,9 @@ public class AscensiaDEX extends AscensiaMeter
 	// private boolean stx = false;
 	// private ArrayList raw_data = new ArrayList();
 
-	public AscensiaDEX(String portName, OutputWriter writer) 
+	public AscensiaDEX(String portName, AbstractOutputWriter writer) 
 	{
-		super(MeterManager.METER_ASCENSIA_DEX, portName, writer);
+		super(AscensiaMeter.METER_ASCENSIA_DEX, portName, writer);
 
 		/*
 		 * super(MeterManager.METER_ASCENSIA_DEX, 9600, SerialPort.DATABITS_8,
@@ -587,7 +586,7 @@ public class AscensiaDEX extends AscensiaMeter
      */
     public String getInstructions()
     {
-        return null;
+        return "INSTRUCTIONS_ASCENSIA_DEX";
     }
     
     /**
@@ -613,5 +612,12 @@ public class AscensiaDEX extends AscensiaMeter
     }
 	
 	
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.ascensia.AscensiaDEX";
+    }
+
+    
+    
 	
 }

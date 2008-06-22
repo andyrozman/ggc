@@ -2,7 +2,7 @@ package ggc.meter.device.ascensia;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.MeterException;
-import ggc.meter.output.OutputWriter;
+import ggc.meter.output.AbstractOutputWriter;
 import gnu.io.SerialPortEvent;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
     }
     
     
-    public AscensiaBreeze(String portName, OutputWriter writer)
+    public AscensiaBreeze(String portName, AbstractOutputWriter writer)
     {
     	super(1, portName, writer);
 
@@ -616,6 +616,15 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
     }
     
     
+    
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.ascensia.AscensiaBreeze";
+    }
+
+    
+    
+    
     /**
      * getInstructions - get instructions for device
      * 
@@ -623,7 +632,7 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
      */
     public String getInstructions()
     {
-        return null;
+        return "INSTRUCTIONS_ASCENSIA_BREEZE";
     }
     
     /**

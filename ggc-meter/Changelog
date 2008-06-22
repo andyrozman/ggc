@@ -2,9 +2,12 @@
 Changes file for GGC Meter Tool
 ===============================
 
+0.1.7
+    * Bayer changes: fixed processing, added new tags for processing
+
 0.1.6
     * Started work on GUI for GGC integration, added two classes: MeterInstructionsDialog and MeterDisplayDataDialog
-      which will be used as meter tool and also for GGC integreation. At later time possibility of standalone
+      which will be used as meter tool and also for GGC integration. At later time possibility of standalone
       running.
     * major changes to master language file
 

@@ -1,3 +1,6 @@
+
+package ggc.data.imports;
+
 /*
  * Created on 10.08.2002
  *
@@ -5,13 +8,11 @@
  * Window>Preferences>Java>Templates.
  */
 
-package ggc.data.imports;
-
 
 import ggc.data.event.ImportEvent;
 import ggc.data.event.ImportEventListener;
 import ggc.meter.data.DailyValuesRow;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -42,7 +43,7 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
 {
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccess m_da = DataAccess.getInstance();
+    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
 
     private boolean isPortOpen = false;
     protected boolean dataFromMeter = false;
@@ -406,18 +407,18 @@ public abstract class SerialMeterImport implements DataImport, SerialPortEventLi
         this.name = name;
     }
 
-
+/*
     public static String[] getAvailableMeters()
     {
-        return DataAccess.getInstance().getMeterManager().getAvailableMeters();
+        return DataAccessMeter.getInstance().getMeterManager().getAvailableMeters();
     }
 
 
     public static String getMeterClassName(String meterName)
     {
-        return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
+        return DataAccessMeter.getInstance().getMeterManager().getMeterClassName(meterName);
     }
-
+*/
     @SuppressWarnings("unchecked")
     public static Vector<String> getAvailableSerialPorts()
     {

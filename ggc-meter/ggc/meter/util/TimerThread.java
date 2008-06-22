@@ -49,13 +49,13 @@ import javax.swing.JLabel;
 public class TimerThread extends Thread
 {
 
-    DataAccess m_da = null;
+    DataAccessMeter m_da = null;
     public int m_difference = 0;
     JLabel time_1, time_2;
     private boolean running = true;
     
 
-    public TimerThread(DataAccess da, JLabel time_1, JLabel time_2, int time_difference)
+    public TimerThread(DataAccessMeter da, JLabel time_1, JLabel time_2, int time_difference)
     {
         m_da = da;
         m_difference = time_difference;

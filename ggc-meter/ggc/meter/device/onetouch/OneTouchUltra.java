@@ -1,6 +1,5 @@
 package ggc.meter.device.onetouch;
 
-import ggc.data.meter.MeterManager;
 import ggc.meter.output.OutputWriter;
 import gnu.io.SerialPortEvent;
 
@@ -18,7 +17,7 @@ public class OneTouchUltra extends OneTouchMeter
 
     public OneTouchUltra(String portName, OutputWriter writer)
     {
-        super(MeterManager.METER_ASCENSIA_CONTOUR, portName, writer);
+        super(20001, portName, writer);
         
 //        end_string = (new Character((char)13)).toString();
         

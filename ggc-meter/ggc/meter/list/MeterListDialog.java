@@ -27,7 +27,7 @@
 
 package ggc.meter.list;
  
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.Dimension;
@@ -55,7 +55,7 @@ public class MeterListDialog extends JDialog implements TreeSelectionListener, A
     private JPanel mainPane;
     private JTree tree;
 
-    private DataAccess m_da = null;
+    private DataAccessMeter m_da = null;
 
 
 //    private static boolean playWithLineStyle = false;
@@ -74,7 +74,7 @@ public class MeterListDialog extends JDialog implements TreeSelectionListener, A
     MeterListRoot m_root = new MeterListRoot();
     
     
-    public MeterListDialog(DataAccess da) 
+    public MeterListDialog(DataAccessMeter da) 
     {
 
         super(new JFrame(), "", true);
@@ -380,7 +380,7 @@ public class MeterListDialog extends JDialog implements TreeSelectionListener, A
     
     public static void main(String args[])
     {
-    	DataAccess da = DataAccess.getInstance();
+    	DataAccessMeter da = DataAccessMeter.getInstance();
 	
 	
 

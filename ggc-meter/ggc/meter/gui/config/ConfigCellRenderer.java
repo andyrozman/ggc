@@ -29,7 +29,7 @@ package ggc.meter.gui.config;
  */
 
 
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 
 import java.awt.Component;
 
@@ -45,7 +45,7 @@ public class ConfigCellRenderer extends DefaultListCellRenderer
      * 
      */
     private static final long serialVersionUID = 2448487269559085136L;
-    DataAccess da = DataAccess.getInstance();
+    DataAccessMeter da = DataAccessMeter.getInstance();
 
     //final static ImageIcon longIcon = new ImageIcon("long.gif");
     //final static ImageIcon shortIcon = new ImageIcon("short.gif");
@@ -70,7 +70,7 @@ public class ConfigCellRenderer extends DefaultListCellRenderer
          */
         //String s = value.toString();
 
-        //DataAccess da = DataAccess.getInstance();
+        //DataAccessMeter da = DataAccessMeter.getInstance();
 
         //int idx = da.getSelectedConfigTypePart(s);
 

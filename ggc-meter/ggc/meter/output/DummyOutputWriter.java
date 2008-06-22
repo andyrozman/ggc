@@ -3,14 +3,13 @@ package ggc.meter.output;
 import ggc.meter.data.MeterValuesEntry;
 
 
-public class DummyOutputWriter implements OutputWriter
+public class DummyOutputWriter extends AbstractOutputWriter
 {
 	
-	OutputUtil out_util; 
 	
 	public DummyOutputWriter()
 	{
-		out_util = new OutputUtil(this);
+	    super();
 	}
 	
 	
@@ -49,19 +48,16 @@ public class DummyOutputWriter implements OutputWriter
 	{
 	}
 
-	public void setBGOutputType(int bg_type)
-	{
-		this.out_util.setOutputBGType(bg_type);
-	}
+	
+
+    public void writeDeviceIdentification()
+    {
+//        System.out.println(this.getDeviceIdentification().getInformation("* "));
+    }
 	
 	
 	public void endOutput()
 	{
-	}
-	
-	public OutputUtil getOutputUtil()
-	{
-		return this.out_util;
 	}
 	
 	

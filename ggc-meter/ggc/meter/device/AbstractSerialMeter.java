@@ -12,6 +12,7 @@ import ggc.meter.data.DailyValuesRow;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.manager.MeterDevice;
 import ggc.meter.manager.company.AbstractMeterCompany;
+import ggc.meter.output.OutputWriter;
 import ggc.meter.protocol.SerialProtocol;
 import ggc.meter.util.I18nControl;
 import gnu.io.NoSuchPortException;
@@ -36,7 +37,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     protected int m_time_difference = 0;
     protected ArrayList<DailyValuesRow> data = null;
     protected String device_name = "Undefined";
-
+    protected OutputWriter output_writer;
     
     AbstractMeterCompany meter_company = null;
     
@@ -105,6 +106,13 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     public void setMeterType(String group, String device)
     {
         this.device_name = device;
+        
+        DeviceIdentification di = new DeviceIdentification();
+        di.company = group;
+        di.device_selected = device;
+        
+        this.output_writer.setDeviceIdentification(di);
+        //this.output_writer.
     	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
     }
     
@@ -246,9 +254,9 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      */
-    public ArrayList<String> getDeviceInfo()
+    public DeviceIdentification getDeviceInfo()
     {
-    	return new ArrayList<String>();
+        return this.output_writer.getDeviceIdentification();
     }
     
     

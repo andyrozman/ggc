@@ -1,0 +1,51 @@
+ 	
+
+ 
+
+Frequently Asked Questions
+
+How do I set my Accu-Chek meter or insulin pump to ‘Connectivity Mode’?
+
+Accu-Chek Performa
+
+    * Place the meter approximately 10cm away from the infrared window on the Accu-Chek Smart Pix
+    * Switch the meter on by pressing the ‘right’ and ‘left’ buttons at the same time.  The window will show 2 arrows and data starts transferring automatically
+    * Once data transfer is complete, the report will show on your computer screen
+
+Accu-Chek Integra
+
+    * Place the meter approximately 10cm away from the infrared window on the Accu-Chek Smart Pix
+    * Switch the meter on by pressing the SET and MEMO buttons at the same time. The display will show 2 arrows and data starts transferring automatically
+    * Once data transfer is complete, the report will show on your computer screen
+
+Accu-Chek Go (Accu-Chek Active)
+
+    * Place the meter approximately 10cm away from the infrared window on the Accu-Chek Smart Pix
+    * To switch the meter on, hold the M button for 3 seconds or longer. The display shows PC and data starts transferring automatically
+    * Once data transfer is complete, the report will show on your computer screen
+
+Accu-Chek Advantage
+
+    * Leave the meter switched off
+    * Remove the code chip from the meter
+    * Insert the Accu-Chek IR key into the meter in place of the code chip
+    * Place the meter approximately 10cm away from the window of the Accu-Chek Smart Pix. Data transfers automatically
+    * Once data transfer is complete, the report will show on your computer screen
+
+Accu-Chek Spirit
+
+    * Place the Spirit approximately 10cm away from the window of the Accu-Chek Smart Pix
+    * Make sure your Spirit pump is in STOP mode
+    * Press the button to select the ‘Data Communication’ function
+    * Confirm your selection with the button. Data transfer starts automatically
+    * When data transfer is completed, press the  button to quit this mode
+    * Resume the insulin pump RUN mode so as not to interrupt the supply of insulin
+
+Accu-Chek D-TRONplus (and Disetronic D-TRONplus)
+
+    * Place the D-TRONplus (Disetronic D-TRONplus) approximately 10cm away from the window of the Accu-Chek Smart Pix.  Both infrared windows must be facing one another
+    * Make sure that the D-TRON pump is in STOP mode and that the keylock is unlocked
+    * Press the button 4 times to select the ‘Data Transfer’ function
+    * Confirm your selection with the  button. Data transfer starts automatically
+    * When data transfer is completed press the  button to quit data transfer mode
+    * Resume the insulin pump RUN mode so as not to interrupt the supply of insulin

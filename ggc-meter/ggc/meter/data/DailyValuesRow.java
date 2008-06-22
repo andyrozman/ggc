@@ -28,7 +28,7 @@
 package ggc.meter.data;
 
 //import ggc.db.hibernate.DayValueH;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,7 +68,7 @@ public class DailyValuesRow //implements Serializable
     private boolean changed = false;
 
 //x    DayValueH m_dv = null;
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccessMeter m_da = DataAccessMeter.getInstance();
  //x   GGCProperties props = m_da.getSettings();
 
     ArrayList<String> meals_ids;
@@ -438,7 +438,7 @@ public class DailyValuesRow //implements Serializable
 
     public String getDateTimeAsTime()
     {
-        long i = m_da.getDateTimeLong(datetime, DataAccess.DT_TIME);
+        long i = m_da.getDateTimeLong(datetime, DataAccessMeter.DT_TIME);
         //System.out.println("X: " + i);
         return "" + i;
     }
@@ -461,14 +461,14 @@ public class DailyValuesRow //implements Serializable
 
         if (props.getBG_unit()==2)
         {
-            float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            float v = m_da.getBGValueByType(DataAccessMeter.BG_MMOL, bg);
 
             if (debug)
                 System.out.println("getBg [typle=2,return=" + v + "]");
 
             return v;
 
-            //return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            //return m_da.getBGValueByType(DataAccessMeter.BG_MMOL, bg);
         }
         else
         {
@@ -493,16 +493,16 @@ public class DailyValuesRow //implements Serializable
 
         if (props.getBG_unit()==2)
         {
-            float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            float v = m_da.getBGValueByType(DataAccessMeter.BG_MMOL, bg);
 
             if (debug)
                 System.out.println("getBgAsString [type=2,return=" + v + "]");
 
-            String ss = DataAccess.MmolDecimalFormat.format(v);
+            String ss = DataAccessMeter.MmolDecimalFormat.format(v);
             ss = ss.replace(",", ".");
             return ss;
 
-            //return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            //return m_da.getBGValueByType(DataAccessMeter.BG_MMOL, bg);
         }
         else
         {
@@ -530,11 +530,11 @@ public class DailyValuesRow //implements Serializable
         if (debug)
             System.out.println("Intenal value: " + this.bg);
 
-        if (type==DataAccess.BG_MGDL)
+        if (type==DataAccessMeter.BG_MGDL)
             return bg;
         else
         {
-            return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            return m_da.getBGValueByType(DataAccessMeter.BG_MMOL, bg);
         }
 
     }
@@ -834,7 +834,7 @@ public class DailyValuesRow //implements Serializable
         }
         else
         {
-            return DataAccess.MmolDecimalFormat.format(fl);
+            return DataAccessMeter.MmolDecimalFormat.format(fl);
         }
     }
 

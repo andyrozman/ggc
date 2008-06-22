@@ -12,7 +12,7 @@ import ggc.data.imports.ImportException;
 import ggc.meter.data.DailyValuesRow;
 import ggc.meter.device.MeterException;
 import ggc.meter.device.MeterInterface;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -27,8 +27,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-
-import javax.swing.ImageIcon;
 
 //import minimed.ddms.deviceportreader.MedicalDevice;
 //import minimed.ddms.deviceportreader.SerialIOHaltedException;
@@ -48,7 +46,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccess m_da = DataAccess.getInstance();
+    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
 
 
 
@@ -626,18 +624,18 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
 
 
 
-
+/*
     public static String[] getAvailableMeters()
     {
-        return DataAccess.getInstance().getMeterManager().getAvailableMeters();
+        return DataAccessMeter.getInstance().getMeterManager().getAvailableMeters();
     }
 
 
     public static String getMeterClassName(String meterName)
     {
-        return DataAccess.getInstance().getMeterManager().getMeterClassName(meterName);
+        return DataAccessMeter.getInstance().getMeterManager().getMeterClassName(meterName);
     }
-
+*/
     
     @SuppressWarnings("unchecked")
     public static Vector<String> getAvailableSerialPorts()

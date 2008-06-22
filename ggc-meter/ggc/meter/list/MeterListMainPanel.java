@@ -3,7 +3,7 @@ package ggc.meter.list;
 //package ggc.gui.nutrition.panels;
 
 //import ggc.gui.nutrition.NutritionTreeDialog;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.Font;
@@ -23,7 +23,7 @@ public class MeterListMainPanel extends MeterListAbstractPanel //JPanel
 
 
     I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
+    DataAccessMeter m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label;
@@ -45,11 +45,11 @@ public class MeterListMainPanel extends MeterListAbstractPanel //JPanel
         super();
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
+        m_da = DataAccessMeter.getInstance();
 
-        font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_big = m_da.getFont(DataAccessMeter.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(DataAccessMeter.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessMeter.FONT_NORMAL);
 
         createPanel();
 

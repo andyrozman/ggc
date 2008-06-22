@@ -29,7 +29,6 @@ package ggc.meter.gui.config;
  
 import ggc.meter.device.DummyMeter;
 import ggc.meter.manager.MeterManager;
-import ggc.meter.util.DataAccess;
 
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
@@ -39,6 +38,7 @@ import javax.swing.JDialog;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
+import com.atech.utils.ATDataAccessAbstract;
 
 
 /**
@@ -50,7 +50,7 @@ import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 public class MeterDeviceSelectorDialog extends SelectorAbstractDialog
 {
 
-    //private DataAccess m_da = null;
+    //private DataAccessMeter m_da = null;
     
     
     
@@ -61,7 +61,7 @@ public class MeterDeviceSelectorDialog extends SelectorAbstractDialog
 
 
 
-    public MeterDeviceSelectorDialog(JDialog parent, DataAccess da) 
+    public MeterDeviceSelectorDialog(JDialog parent, ATDataAccessAbstract da) 
     {
         super(parent, da.getI18nControlInstance(), 0, null, true);
         this.showDialog();

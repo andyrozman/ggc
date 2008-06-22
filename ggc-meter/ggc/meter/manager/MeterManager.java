@@ -43,7 +43,7 @@ import ggc.meter.manager.company.Roche;
 import ggc.meter.manager.company.Sanvita;
 import ggc.meter.manager.company.USDiagnostic;
 import ggc.meter.manager.company.Wavesense;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.util.Hashtable;
@@ -53,7 +53,7 @@ public class MeterManager
 {
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccess m_da = DataAccess.getInstance();
+    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
     
 
     private Hashtable<String,AbstractMeterCompany> companies_ht = new Hashtable<String,AbstractMeterCompany>(); 
@@ -227,6 +227,13 @@ public class MeterManager
         }
         
         return cmp.getDevice(device);
+    }
+    
+    
+    public String getMeterDeviceClassName(String group, String device)
+    {
+        MeterInterface mi = getMeterDevice(group, device);
+        return mi.getDeviceClassName();
     }
     
     

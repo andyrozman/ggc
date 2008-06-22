@@ -249,8 +249,8 @@ public class DummyImport extends SerialMeterImport
                 //
                 //Value dataValue = new Value(date, bzValue);
 
-                //DataAccess.getInstance().getDateTimeFromDateObject(Date dt)
-                DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), 
+                //DataAccessMeter.getInstance().getDateTimeFromDateObject(Date dt)
+                DailyValuesRow dataValue = new DailyValuesRow(DataAccessMeter.getInstance().getDateTimeFromDateObject(date), 
 							      bzValue, 0, 0, 0.0f, null, null, "");
 
                 //new DailyValuesRow(

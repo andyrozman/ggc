@@ -7,7 +7,7 @@ package ggc.data.cfg;
 
 
 
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -77,10 +77,10 @@ public class ConfigurationManager
 */
 
 //    Hashtable<String,Settings> cfg_values = new Hashtable<String,Settings>();
-    DataAccess m_da = null;
+    DataAccessMeter m_da = null;
 
 
-    public ConfigurationManager(DataAccess da)
+    public ConfigurationManager(DataAccessMeter da)
     {
         this.m_da = da;
         this.log.debug("ConfigurationManager() ");

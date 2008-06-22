@@ -1,6 +1,6 @@
 package ggc.meter.output;
 
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -27,7 +27,7 @@ public class OutputUtil extends TimerControlAbstract
     public OutputUtil(OutputWriter writer)
     {
     	this.writer = writer;
-    	setAllowedChangeTime(20);
+//a    	setAllowedChangeTime(10);
     }
 	
 	
@@ -113,7 +113,7 @@ public class OutputUtil extends TimerControlAbstract
             return bg_value;
         else
         {
-            if (output_type==DataAccess.BG_MGDL)
+            if (output_type==DataAccessMeter.BG_MGDL)
             {
                 return bg_value * OutputUtil.MGDL_TO_MMOL_FACTOR;
             }
@@ -129,7 +129,7 @@ public class OutputUtil extends TimerControlAbstract
     public float getBGValueDifferent(int type, float bg_value)
     {
 
-            if (type==DataAccess.BG_MGDL)
+            if (type==DataAccessMeter.BG_MGDL)
             {
                 return bg_value * OutputUtil.MGDL_TO_MMOL_FACTOR;
             }
@@ -149,9 +149,10 @@ public class OutputUtil extends TimerControlAbstract
 	
 	public void stopAction()
 	{
+	    
 		this.writer.endOutput();
 		
-		System.exit(0);
+		//System.exit(0);
 
 	}
 	

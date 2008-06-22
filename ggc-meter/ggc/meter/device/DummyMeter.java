@@ -18,7 +18,7 @@ package ggc.meter.device;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.protocol.ConnectionProtocols;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import javax.swing.ImageIcon;
 public class DummyMeter extends AbstractMeter //implements MeterInterface
 {
 
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccessMeter m_da = DataAccessMeter.getInstance();
     I18nControl m_ic = m_da.getI18nInstance();
 
     public int m_meter_index = 0;
@@ -329,6 +329,13 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
 
 
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.DummyMeter";
+    }
+
+    
+    
     
     //************************************************
     //***       Device Implemented methods         ***
@@ -345,7 +352,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      */
-    public ArrayList<String> getDeviceInfo() throws MeterException
+    public DeviceIdentification getDeviceInfo() //throws MeterException
     {
         return null;
     }
@@ -392,6 +399,9 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return ConnectionProtocols.PROTOCOL_NONE;
     }
+    
+    
+    
     
     
 }

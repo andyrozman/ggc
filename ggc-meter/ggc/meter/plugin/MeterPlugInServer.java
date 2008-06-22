@@ -1,0 +1,108 @@
+package ggc.meter.plugin;
+
+import ggc.meter.gui.config.SimpleConfigurationDialog;
+import ggc.meter.util.I18nControl;
+
+import java.awt.Container;
+
+import com.atech.plugin.PlugInServer;
+import com.atech.utils.ATDataAccessAbstract;
+
+public class MeterPlugInServer extends PlugInServer
+{
+
+    public static final int COMMAND_READ_METER_DATA = 0;
+    public static final int COMMAND_METERS_LIST = 1;
+    public static final int COMMAND_CONFIGURATION = 2;
+    
+    private String commands[] = { 
+            "MN_METERS_READ_DESC",
+            "MN_METERS_LIST_DESC",  
+            "MN_METERS_CONFIG_DESC"
+            };
+    
+    
+    
+    public MeterPlugInServer()
+    {
+        super();
+    }
+    
+    public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
+    {
+        super(cont, selected_lang, da);
+    }
+    
+
+    /* 
+     * executeCommand
+     */
+    @Override
+    public void executeCommand(int command)
+    {
+        switch(command)
+        {
+            case MeterPlugInServer.COMMAND_READ_METER_DATA:
+            {
+                this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_READ_METER_DATA]);
+                return;
+            }
+
+            case MeterPlugInServer.COMMAND_METERS_LIST:
+            {
+                this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_METERS_LIST]);
+                return;
+            }
+
+            default:
+            case MeterPlugInServer.COMMAND_CONFIGURATION:
+            {
+                m_da.listComponents();
+                new SimpleConfigurationDialog(this.m_da);
+                //this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_CONFIGURATION]);
+                return;
+            }
+            
+        }
+        
+    }
+
+    /* 
+     * getName
+     */
+    @Override
+    public String getName()
+    {
+        return ic.getMessage("METERS_PLUGIN");
+    }
+
+    /* 
+     * getVersion
+     */
+    @Override
+    public String getVersion()
+    {
+        return "0.1.5";
+    }
+
+    /* 
+     * getWhenWillBeImplemented
+     */
+    @Override
+    public String getWhenWillBeImplemented()
+    {
+        return "0.3";
+    }
+
+    /* 
+     * initPlugIn
+     */
+    @Override
+    public void initPlugIn()
+    {
+        I18nControl.getInstance().setLanguage(this.selected_lang);
+    }
+    
+}
+
+

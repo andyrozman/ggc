@@ -10,6 +10,7 @@ package ggc.meter.device.ascensia;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
+import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterException;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
@@ -30,13 +31,20 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 //extends /*SerialIOProtocol*/  SerialProtocol implements MeterInterface
 {
 
+    
+    public static final int METER_ASCENSIA_ELITE_XL   = 10001;
+    public static final int METER_ASCENSIA_DEX        = 10002;
+    public static final int METER_ASCENSIA_BREEZE     = 10003;
+    public static final int METER_ASCENSIA_CONTOUR    = 10004;
+    
+    
     protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
 
     protected String m_info = "";
     protected int m_time_difference = 0;
     protected ArrayList<MeterValuesEntry> data = null;
-    protected OutputWriter m_output_writer;
+    //protected OutputWriter m_output_writer;
     public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
     public AscensiaMeter()
@@ -46,10 +54,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     public AscensiaMeter(int meter_type, String portName, OutputWriter writer)
     {
-		//super(portName, 9600, SerialConfig.LN_8BITS, SerialConfig.ST_1BITS, SerialConfig.PY_NONE);
-
-//    	int s= SerialConfig.LN_8BITS; 
-		
     	
 		super(meter_type, /*portName, */ 
 		      9600,
@@ -67,16 +71,9 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 				
 		this.setSerialPort(portName);
 		
-		
-		//String portName, int baudrate, int databits, int stopbits, int parity
-		
-		//int buffer = this.serialPort.getInputBufferSize();
-		//System.out.println("Buffer: " + buffer);
-		
 		data = new ArrayList<MeterValuesEntry>();
 		
-		this.m_output_writer = writer; 
-			//new ConsoleOutputWriter();
+		this.output_writer = writer; 
 	
 		try
 		{
@@ -100,9 +97,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      */
     public boolean open() throws MeterException
     {
-    	//return true;
     	return super.open();
-	//return false;
     }
 
 
@@ -112,7 +107,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     @Override
     public void close()
     {
-	return;
+        return;
     }
 
 
@@ -132,7 +127,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      */
     public String getInfo()
     {
-	return m_info;
+        return m_info;
     }
 
 
@@ -168,13 +163,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     	
     }
     
-    /**
-     * getDeviceInfo - get Device info (firmware and software revision)
-     */
-    public ArrayList<String> getDeviceInfo()
-    {
-    	return new ArrayList<String>();
-    }
     
     
     /**
@@ -198,6 +186,11 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	
     }
 
+    
+    
+    
+    
+    
 
     /**
      * getData - get data for specified time
@@ -230,9 +223,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     protected void processData(String input)
     {
-		input = input.replace("||", "|_|");
-		input = input.replace("||", "|_|");
-		input = input.replace("||", "|_|");
+		input = m_da.replaceExpression(input, "||", "|_|"); 
 	
 		if (input.contains("|^^^Glucose|"))
 		{
@@ -247,13 +238,9 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     protected void readDeviceIdAndSettings(String input)
     {
-    	//System.out.println("readDeviceIdAndSetting");
-        System.out.println("read: " + input);
+        input = input.substring(input.indexOf("Bayer"));
     	
 		StringTokenizer strtok = new StringTokenizer(input, "|");
-	
-		// -10751|Bayer7150^2.04\20.0^7150A1155328|_|_|_|_|_|_|P|1|200612272011
-		strtok.nextToken();
 	
 		String devId = strtok.nextToken();
 		strtok.nextToken();
@@ -273,6 +260,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		readDeviceId(devId);
 		readDateInformation(date);
 
+		this.output_writer.writeDeviceIdentification();
 	
     }
     
@@ -282,6 +270,9 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     protected void readDeviceId(String input)
     {
+        
+        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        
         System.out.println("readDeviceId: " + input);
     	StringTokenizer strtok = new StringTokenizer(input, "^");
     
@@ -292,35 +283,49 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     	String serial = strtok.nextToken();
     
     	inf += ic.getMessage("PRODUCT_CODE") + ": ";
+    	
+    	String tmp;
     
     	if ((id.equals("Bayer6115")) || (id.equals("Bayer6116")))
     	{
-    	    inf += "BREEZE� Meter Family (";
+    	    //inf += "BREEZE Meter Family (";
+    	    tmp = "Breeze Family (";
     	}
     	else if (id.equals("Bayer7150"))
     	{
-    	    inf += "CONTOUR� Meter Family (";
+    	    tmp = "CONTOUR Meter Family (";
     	}
     	else if (id.equals("Bayer3950"))
     	{
-    	    inf += "DEX� Meter Family (";
+    	    tmp = "DEX Meter Family (";
     	}
     	else if (id.equals("Bayer3883"))
     	{
-    	    inf += "ELITE� XL Meter Family (";
+    	    tmp = "ELITE XL Meter Family (";
     	}
     	else
     	{
-    	    inf += "Unknown Meter Family (";
+    	    tmp = "Unknown Meter Family (";
     	}
     
-    	inf += id;
-    	inf += ")\n";
+    	tmp+= id;
+    	tmp+= ")";
+    	
+    	di.device_identified = tmp;
+    	
+    	
+    	inf += tmp;
+    	inf += "\n";
     
     	StringTokenizer strtok2 = new StringTokenizer(versions, "\\");
     
-    	inf += ic.getMessage("SOFTWARE_VERSION") + ": " + strtok2.nextToken();
-    	inf += ic.getMessage("\nEEPROM_VERSION") + ": " + strtok2.nextToken();
+    	di.device_software_version = strtok2.nextToken();
+    	di.device_hardware_version = strtok2.nextToken();
+    	di.device_serial_number = serial; 
+    	
+    	
+    	inf += ic.getMessage("SOFTWARE_VERSION") + ": " + di.device_software_version;
+    	inf += ic.getMessage("\nEEPROM_VERSION") + ": " + di.device_hardware_version;
     
     	inf += ic.getMessage("\nSERIAL_NUMBER") + ": " + serial;
     
@@ -358,10 +363,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
     	try
     	{
-	    	//System.out.println("readData");
 	
 	    	StringTokenizer strtok = new StringTokenizer(input, "|");
-	    	//System.out.println("Data (" + strtok.countTokens() + "): " + input);
 	    
 	    	boolean found = false;
 	    	
@@ -379,19 +382,14 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	    	if (!found)
 	    		return;
 	    	
-	    	// 1R|2|^^^Glucose|2.83|mmol/L^P|_|_|_|_|_|_|200612190719
-	    	//strtok.nextToken();
-	    	//strtok.nextToken();
-	    	//strtok.nextToken();
-	    
 	    	MeterValuesEntry mve = new MeterValuesEntry();
 	    	
 	    	mve.setBgValue(strtok.nextToken());  // bg_value
 	    	String unit = strtok.nextToken();  // unit mmol/L^x, mg/dL^x
 	    
 	    	mve.addParameter("REF_RANGES", strtok.nextToken());  // Reference ranges (Dex Only) 
-	    	mve.addParameter("RES_ABNORMAL_FLAGS", strtok.nextToken());  // Result abnormal flags
-	    	strtok.nextToken();  // N/A
+	    	mve.addParameter("RES_ABNORMAL_FLAGS", strtok.nextToken());  // Result abnormal flags (7)
+            mve.addParameter("USER_MARKS", strtok.nextToken());  // User Marks (8)
 	    	mve.addParameter("RES_STATUS_MARKER", strtok.nextToken());  // Result status marker
 	    	strtok.nextToken();  // N/A
 	    	strtok.nextToken();  // OperatorId (N/A)
@@ -414,7 +412,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	    	    //dv.setBG(DailyValuesRow.BG_MMOLL, value);
 	    	}
 	    	
-	    	this.m_output_writer.writeBGData(mve);
+	    	this.output_writer.writeBGData(mve);
 	    	
     	}
     	catch(Exception ex)
@@ -448,181 +446,10 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public static final int METER_ENQ_WRITE = 2;
 
 
-    public void test2()
-    {
-        writeToMeter(1, "d", null);
-    }
-
 
     
 
-    public void writeToMeter(int type, String cmd1, String cmd2)
-    {
 
-	/*
-
-	// read everything
-	while(mode != MODE_ENQ)
-	    waitTime(100);
-
-	writePort(5);  // ENQ
-
-	waitTime(1000); 
-
-	if (mode == MODE_EOT)
-	{
-	    writePort(5);  // ENQ
-
-	    waitTime(1000); 
-	}
-
-	//writePort(6);  // ACK
-
-	
-	while (mode != MODE_EOT)
-	{
-	    writePort(6);  // ACK
-	    waitTime(500);
-	}
-	*/
-	
-
-	// commands
-
-	
-
-	writePort(21);  // NAK
-	waitTime(500);
-
-	writePort(5);  // ENQ
-	waitTime(1000);
-
-	//while(mode != MODE_ACK)
-	//    waitTime(100);
-
-	writePort("R|");
-
-	waitTime(500);
-
-	writePort("D|");
-
-	waitTime(500);
-
-	System.out.println("Received Text: " + this.receivedText);
-
-	//Enumeration en = new Enumerator(type);
-	//en.hasMoreElements()
-	//en.nextElement();
-/*
-	waitTime(1000); 
-
-	if (mode == MODE_EOT)
-	{
-	    writePort(5);  // ENQ
-
-	    waitTime(1000); 
-	}
-*/
-	/*
-	writePort("R|D|");
-	writePort(13);
-*/
-	
- /*       if (type==1)
-	{
-	    writePort("r");
-	    writePort(13);
-	}
-	else
-	    writePort("w");
-
-	waitTime(500);
-
-	System.out.println("Return after read/write " + getModeString());
-
-	System.out.println("Command 1: " + cmd1);
-
-	//this.portOutputStream.write(
-	writePort(cmd1 );
-
-	System.out.println("Return after cmd1 " + getModeString());
-   */ 
-	
-	/*
-	//writePort(6);  // ACK
-
-
-	while (mode != MODE_EOT)
-	{
-	    writePort(6);  // ACK
-	    waitTime(500);
-	}
-*/
-
-
-	/*
-	while(mode == AscensiaMeter.MODE_OUT)
-	{
-	    waitTime(100);
-	}
-	*/
-/*
-	if (mode == AscensiaMeter.MODE_ENQ)
-	{
-	    writePort((byte)6); // ACK
-	    waitTime(500);
-	}
-*/
-	/*
-	if (mode == AscensiaMeter.MODE_ENQ)
-	{
-	    writePort((byte)5); // ENQ
-	    waitTime(500);
-	}
-
-	System.out.println("Return after ENQ: " + getModeString());
-
-	System.out.println("Mode " );
-
-	if (type==1)
-	    writePort("R|");
-	else
-	    writePort("W|");
-
-	waitTime(500);
-
-	System.out.println("Return after read/write " + getModeString());
-
-	System.out.println("Command 1: " + cmd1);
-
-	//this.portOutputStream.write(
-	writePort(cmd1 + "|");
-
-	System.out.println("Return after cmd1 " + getModeString());
-
-
-	if (cmd2!=null)
-	{
-	    waitTime(500);
-	    System.out.println("Command 2: " + cmd1);
-
-	    //this.portOutputStream.write(
-	    writePort(cmd2 + "|");
-
-	}
-*/	
-
-
-    }
-
-    /*
-    private String getModeString()
-    {
-	String[] modes = { "None", "ENQuiry", "Out", "ACKnowledge", "Negative AcKnowledge", "End Of Transmition" );
-
-	return modes[mode];
-    }
-*/
 
     protected String getModeString()
     {
@@ -641,9 +468,9 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     private void writePort(int input)
     {
-	byte[] b = new byte[1];
-	b[0] = (byte)input;
-	writePort(b);
+    	byte[] b = new byte[1];
+    	b[0] = (byte)input;
+    	writePort(b);
     }
 
 
@@ -651,152 +478,37 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     protected void writePort(byte[] input)
     {
-	try
-	{
-	    this.portOutputStream.write(input);
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Error writing to Serial: "+ ex);
-	}
+    	try
+    	{
+    	    this.portOutputStream.write(input);
+    	}
+    	catch(Exception ex)
+    	{
+    	    System.out.println("Error writing to Serial: "+ ex);
+    	}
     }
 
     protected byte[] getBytes(String inp)
     {
-	
-	return inp.getBytes();
+        return inp.getBytes();
     }
 
 
     public void waitTime(long time)
     {
-	try
-	{
-	    Thread.sleep(time);
-
-	}
-	catch(Exception ex)
-	{
-	}
+    	try
+    	{
+    	    Thread.sleep(time);
+    
+    	}
+    	catch(Exception ex)
+    	{
+    	}
     }
 
 
     
     public abstract void serialEvent(SerialPortEvent event);
-
-    /*
-    {
-
-
-	//System.out.println();
-
-	// Determine type of event.
-	switch (event.getEventType()) 
-	{
-	    case SerialPortEvent.DATA_AVAILABLE:
-		{
-		    int newData = 0;
-		    receivedText = "";
-		    try
-		    {
-			while ((newData=portInputStream.read())!=-1)
-			{
-			    switch (newData)
-			    {
-				case 6:
-				    System.out.println("<ACK>");
-				    mode = AscensiaMeter.MODE_ACK;
-				    break;
-
-				case 13:
-				    System.out.println("<CR>");
-				    break;
-
-				case 5:
-				    System.out.println("<ENQ>");
-				    mode = AscensiaMeter.MODE_ENQ;
-				    //this.portOutputStream.write(6);
-				    break;
-				case 4:
-				    System.out.println("<EOT>");
-				    mode = AscensiaMeter.MODE_EOT;
-				    break;
-
-				case 23:
-				    System.out.println("<ETB>");
-				    break;
-
-				case 3:
-				    System.out.println("<ETX>");
-				    break;
-
-				case 10:
-				    System.out.println("<LF>");
-				    break;
-
-				case 21:
-				    System.out.println("<NAK>");
-				    mode = AscensiaMeter.MODE_NAK;
-				    break;
-
-				case 2:
-				    System.out.println("<STX>");
-				    break;
-
-				default:
-				    {
-					System.out.print((char)newData);
-					receivedText += (new Character((char)newData)).toString();
-				    }
-			    }
-			    //inputBuffer.append((char)newData);
-			    //System.out.print((char)newData);
-			}
-		    }
-		    catch(Exception ex)
-		    {
-			System.out.println("Exception:" + ex);
-		    }
-
-		    //System.out.print(newData + " ");
-/*
-		    dataFromMeter = true;
-
-		    System.out.println("Data");
-
-		    timeOut += 5000;
-*/
-  /*              } break;
-
-
-		// If break event append BREAK RECEIVED message.
-	    case SerialPortEvent.BI:
-		System.out.println("recievied break");
-		break;
-	    case SerialPortEvent.CD:
-		System.out.println("recievied cd");
-		break;
-	    case SerialPortEvent.CTS:
-		System.out.println("recievied cts");
-		break;
-	    case SerialPortEvent.DSR:
-		System.out.println("recievied dsr");
-		break;
-	    case SerialPortEvent.FE:
-		System.out.println("recievied fe");
-		break;
-	    case SerialPortEvent.OE:
-		System.out.println("recievied oe");
-		break;
-	    case SerialPortEvent.PE:
-		System.out.println("recievied pe");
-		break;
-	    case SerialPortEvent.RI:
-		System.out.println("recievied ri");
-		break;
-	}
-    } */
-
 
 
 

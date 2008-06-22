@@ -1,3 +1,6 @@
+
+package ggc.meter.data;
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -26,8 +29,6 @@
  *  Author:   schultd
  */
 
-package ggc.meter.data;
-
 
 import ggc.data.event.GlucoValueEvent;
 import ggc.data.event.GlucoValueEventListener;
@@ -48,7 +49,7 @@ public class GlucoValues extends DailyValues
         Vector<DailyValues> dayValues = null;
 
     private EventListenerList listenerList = new EventListenerList();
-    // xprivate DataAccess m_da = DataAccess.getInstance();
+    // xprivate DataAccessMeter m_da = DataAccessMeter.getInstance();
 
     //private int recordCount = 0;
 
@@ -62,10 +63,10 @@ public class GlucoValues extends DailyValues
     {
         this();
 
-        //dayValues.add(DataAccess.getInstance().getDayStatsRange(sDate, eDate));
+        //dayValues.add(DataAccessMeter.getInstance().getDayStatsRange(sDate, eDate));
 
         System.out.println("Constructor");
-//        WeeklyValues wv = DataAccess.getInstance().getDayStatsRange(sDate, eDate);
+//        WeeklyValues wv = DataAccessMeter.getInstance().getDayStatsRange(sDate, eDate);
         //Hashtable table = wv.getAllValues();
         
         Hashtable<String,DailyValues> table = new Hashtable<String,DailyValues>();

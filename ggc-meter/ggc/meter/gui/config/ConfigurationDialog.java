@@ -29,7 +29,7 @@
 package ggc.meter.gui.config;
 
 
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
@@ -57,7 +57,7 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
 {
 
     private I18nControl m_ic = I18nControl.getInstance();        
-    private DataAccess m_da; // = DataAccess.getInstance();
+    private DataAccessMeter m_da; // = DataAccessMeter.getInstance();
 
 //    private DefaultMutableTreeNode prefNode;
     //private JTree prefTree;
@@ -83,7 +83,7 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
 
 
 
-    public ConfigurationDialog(DataAccess da)
+    public ConfigurationDialog(DataAccessMeter da)
     {
         super(da.getMainParent(), "", true);
         
@@ -185,14 +185,14 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
         okButton.setPreferredSize(dim);
         okButton.setIcon(m_da.getImageIcon_22x22("ok.png", this));
         okButton.setActionCommand("ok");
-        okButton.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        okButton.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         okButton.addActionListener(this);
 
         JButton cancelButton = new JButton("  " +m_ic.getMessage("CANCEL"));
         cancelButton.setPreferredSize(dim);
         cancelButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         cancelButton.setActionCommand("cancel");
-        cancelButton.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        cancelButton.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         cancelButton.addActionListener(this);
 
         JButton applyButton = new JButton("  " +m_ic.getMessage("APPLY"));
@@ -367,7 +367,7 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
 
     public void reset()
     {
-        DataAccess.getInstance().getSettings().reload();
+        DataAccessMeter.getInstance().getSettings().reload();
     }
 
 
@@ -421,7 +421,7 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
         JFrame fr = new JFrame();
         fr.setBounds(0,0,800,600);
         
-        DataAccess da = DataAccess.createInstance(fr);
+        DataAccessMeter da = DataAccessMeter.createInstance(fr);
         da.setMainParent(fr);
         
         new ConfigurationDialog(da);

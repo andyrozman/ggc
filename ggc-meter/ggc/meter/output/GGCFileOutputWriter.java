@@ -1,7 +1,7 @@
 package ggc.meter.output;
 
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,18 +10,18 @@ import java.util.GregorianCalendar;
 
 import com.atech.utils.ATechDate;
 
-public class GGCFileOutputWriter implements OutputWriter
+public class GGCFileOutputWriter extends AbstractOutputWriter
 {
 	
 	BufferedWriter bw;
-	OutputUtil out_util; 
-	DataAccess m_da;
+	DataAccessMeter m_da;
 	long time_created;
 	
 	public GGCFileOutputWriter()
 	{
+	    super();
 		out_util = new OutputUtil(this);
-		m_da = DataAccess.getInstance();
+		m_da = DataAccessMeter.getInstance();
 		
 		try
 		{
@@ -51,7 +51,7 @@ public class GGCFileOutputWriter implements OutputWriter
 	
 	private void setReadData()
 	{
-		this.out_util.setLastChangedTime();
+//b		this.out_util.setLastChangedTime();
 	}
 	
 	
@@ -106,6 +106,13 @@ public class GGCFileOutputWriter implements OutputWriter
 		
 	}
 	*/
+	
+	
+	   public void writeDeviceIdentification()
+	    {
+	        writeToFile(this.getDeviceIdentification().getInformation("; "));
+	    }
+
 	
 	public void writeBGData(MeterValuesEntry mve)
 	{
@@ -188,10 +195,6 @@ public class GGCFileOutputWriter implements OutputWriter
 		writeToFile(dta); */
 	}
 
-	public void setBGOutputType(int bg_type)
-	{
-		this.out_util.setOutputBGType(bg_type);
-	}
 	
 	private void writeToFile(String values)
 	{
@@ -221,15 +224,11 @@ public class GGCFileOutputWriter implements OutputWriter
 		{
 			System.out.println("Closing file failed: " + ex);
 		}
+		this.interruptCommunication();
+		
 	}
 
 	
-	
-	
-	public OutputUtil getOutputUtil()
-	{
-		return this.out_util;
-	}
 
 	
 }

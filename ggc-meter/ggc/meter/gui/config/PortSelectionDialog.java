@@ -59,7 +59,7 @@ public class PortSelectionDialog extends JDialog implements ActionListener
     private JLabel lblReadings;
     private JLabel lblReadingsPerDay;
 
-//x    private DataAccess m_da = null;
+//x    private DataAccessMeter m_da = null;
 
 
     public PortSelectionDialog(JDialog parent)
@@ -67,7 +67,7 @@ public class PortSelectionDialog extends JDialog implements ActionListener
         super(parent, "", true);
         init();
 
-//x        m_da = DataAccess.getInstance();
+//x        m_da = DataAccessMeter.getInstance();
 
         //hbValues = m_da.getHbA1c(new GregorianCalendar());
         //updateLabels();

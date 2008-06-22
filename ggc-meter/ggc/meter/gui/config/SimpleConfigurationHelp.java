@@ -29,7 +29,7 @@
 package ggc.meter.gui.config;
 
 
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
@@ -44,7 +44,6 @@ import java.util.Hashtable;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -59,7 +58,7 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
      */
     private static final long serialVersionUID = 6811126019155116487L;
     private I18nControl m_ic = I18nControl.getInstance();        
-    private DataAccess m_da; // = DataAccess.getInstance();
+    private DataAccessMeter m_da; // = DataAccessMeter.getInstance();
 
     JTextArea editArea;
     
@@ -87,7 +86,7 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
 
 
 
-    public SimpleConfigurationHelp(DataAccess da)
+    public SimpleConfigurationHelp(DataAccessMeter da)
     {
         super(da.getMainParent(), "", true);
         
@@ -154,7 +153,7 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
         JLabel label = new JLabel("SIMPLE_PREFERENCES");
         label.setBounds(20,20, 480, 30);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setFont(m_da.getFont(DataAccessMeter.FONT_BIG_BOLD));
         
         prefPane.add(label);
         
@@ -172,14 +171,14 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
         okButton.setPreferredSize(dim);
         okButton.setIcon(m_da.getImageIcon_22x22("ok.png", this));
         okButton.setActionCommand("ok");
-        okButton.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        okButton.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         okButton.addActionListener(this);
 
         JButton cancelButton = new JButton("  " +m_ic.getMessage("CANCEL"));
         cancelButton.setPreferredSize(dim);
         cancelButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         cancelButton.setActionCommand("cancel");
-        cancelButton.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        cancelButton.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         cancelButton.addActionListener(this);
 
         JButton applyButton = new JButton("  " +m_ic.getMessage("APPLY"));
@@ -291,7 +290,7 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
 
     public void reset()
     {
-        DataAccess.getInstance().getSettings().reload();
+        DataAccessMeter.getInstance().getSettings().reload();
     }
 
 
@@ -326,19 +325,6 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
         return "";
     }
     
-    
-    public static void main(String[] args)
-    {
-        JFrame fr = new JFrame();
-        fr.setBounds(0,0,800,600);
-        
-        DataAccess da = DataAccess.createInstance(fr);
-        da.setMainParent(fr);
-        
-        new SimpleConfigurationDialog(da);
-        
-        
-    }
     
     
 }

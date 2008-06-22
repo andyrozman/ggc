@@ -19,7 +19,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: DataAccess
+ *  Filename: DataAccessMeter
  *  Purpose:  Used for utility works and static data handling (this is singelton
  *      class which holds all our definitions, so that we don't need to create them
  *      again for each class.      
@@ -30,7 +30,7 @@
 package ggc.meter.util;
 
 import ggc.data.cfg.ConfigurationManager;
-import ggc.data.meter.MeterManager;
+import ggc.meter.manager.MeterManager;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -58,7 +58,7 @@ import javax.swing.JLabel;
 import com.atech.utils.ATDataAccessAbstract;
 
 
-public class DataAccess extends ATDataAccessAbstract
+public class DataAccessMeter extends ATDataAccessAbstract
 {
 
     // LF
@@ -83,7 +83,7 @@ public class DataAccess extends ATDataAccessAbstract
 
     public I18nControl m_i18n = null;
 
-    private static DataAccess s_da = null; // This is handle to unique 
+    private static DataAccessMeter s_da = null; // This is handle to unique 
 
     // singelton instance
 
@@ -179,15 +179,15 @@ public class DataAccess extends ATDataAccessAbstract
     // ******      Constructors and Access methods        *****    
     // ********************************************************
 
-    //   Constructor:  DataAccess
+    //   Constructor:  DataAccessMeter
     /**
      *
-     *  This is DataAccess constructor; Since classes use Singleton Pattern,
+     *  This is DataAccessMeter constructor; Since classes use Singleton Pattern,
      *  constructor is protected and can be accessed only with getInstance() 
      *  method.<br><br>
      *
      */
-    private DataAccess(JFrame frame)
+    private DataAccessMeter(JFrame frame)
     {
     	super(I18nControl.getInstance());
         this.loadFonts();
@@ -230,19 +230,19 @@ public class DataAccess extends ATDataAccessAbstract
      *  @return Reference to OmniI18nControl object
      * 
      */
-    public static DataAccess getInstance()
+    public static DataAccessMeter getInstance()
     {
         if (s_da == null)
-            s_da = new DataAccess(null);
+            s_da = new DataAccessMeter(null);
         return s_da;
     }
 
-    public static DataAccess createInstance(JFrame main)
+    public static DataAccessMeter createInstance(JFrame main)
     {
         if (s_da == null)
         {
             //GGCDb db = new GGCDb();
-            s_da = new DataAccess(main);
+            s_da = new DataAccessMeter(main);
 //x            s_da.setParent(main);
         }
 
@@ -267,7 +267,7 @@ public class DataAccess extends ATDataAccessAbstract
 
 
     /*
-     static public DataAccess getInstance()
+     static public DataAccessMeter getInstance()
      {
      return m_da;
      }
@@ -275,7 +275,7 @@ public class DataAccess extends ATDataAccessAbstract
 
     //  Method:       deleteInstance
     /**
-     *  This method sets handle to DataAccess to null and deletes the instance. <br><br>
+     *  This method sets handle to DataAccessMeter to null and deletes the instance. <br><br>
      */
     public void deleteInstance()
     {
@@ -611,13 +611,13 @@ public class DataAccess extends ATDataAccessAbstract
             return bg_value;
         else
         {
-            if (output_type==DataAccess.BG_MGDL)
+            if (output_type==DataAccessMeter.BG_MGDL)
             {
-                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+                return bg_value * DataAccessMeter.MGDL_TO_MMOL_FACTOR;
             }
             else
             {
-                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+                return bg_value * DataAccessMeter.MMOL_TO_MGDL_FACTOR;
             }
         }
 
@@ -627,13 +627,13 @@ public class DataAccess extends ATDataAccessAbstract
     public float getBGValueDifferent(int type, float bg_value)
     {
 
-            if (type==DataAccess.BG_MGDL)
+            if (type==DataAccessMeter.BG_MGDL)
             {
-                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+                return bg_value * DataAccessMeter.MGDL_TO_MMOL_FACTOR;
             }
             else
             {
-                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+                return bg_value * DataAccessMeter.MMOL_TO_MGDL_FACTOR;
             }
     }
 
@@ -713,7 +713,7 @@ public class DataAccess extends ATDataAccessAbstract
         }
         catch(Exception ex)
         {
-            System.out.println("DataAccess::getLFData::Exception> " + ex);
+            System.out.println("DataAccessMeter::getLFData::Exception> " + ex);
             return null;
         }
     }
@@ -1102,39 +1102,6 @@ public class DataAccess extends ATDataAccessAbstract
         System.out.println("Not Implemented: " + source);
     }
 
-    /**
-     * For replacing strings.<br>
-     * 
-     * @param input   Input String
-     * @param replace What to seatch for.
-     * @param replacement  What to replace with.
-     * 
-     * @return Parsed string.
-     */
-    public String replaceExpression(String input, String replace,
-            String replacement)
-    {
-
-        int idx;
-        if ((idx = input.indexOf(replace)) == -1)
-        {
-            return input;
-        }
-
-        StringBuffer returning = new StringBuffer();
-
-        while (idx != -1)
-        {
-            returning.append(input.substring(0, idx));
-            returning.append(replacement);
-            input = input.substring(idx + replace.length());
-            idx = input.indexOf(replace);
-        }
-        returning.append(input);
-
-        return returning.toString();
-
-    }
 
 
 

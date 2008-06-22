@@ -31,7 +31,7 @@ package ggc.meter.gui.config;
 
 import ggc.meter.data.cfg.MeterConfiguration;
 import ggc.meter.device.MeterInterface;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
@@ -50,6 +50,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.atech.utils.ATDataAccessAbstract;
+
 
 public class SimpleConfigurationDialog extends JDialog implements ActionListener //, HelpCapable
 {
@@ -59,7 +61,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
      */
     private static final long serialVersionUID = -1218534990235155505L;
     private I18nControl m_ic = I18nControl.getInstance();        
-    private DataAccess m_da; // = DataAccess.getInstance();
+    private ATDataAccessAbstract m_da; // = DataAccessMeter.getInstance();
 
     JTextArea editArea;
     private JPanel prefPane;
@@ -69,7 +71,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
     
 
 
-    public SimpleConfigurationDialog(DataAccess da)
+    public SimpleConfigurationDialog(ATDataAccessAbstract da)
     {
         super(da.getMainParent(), "", true);
         
@@ -79,7 +81,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
 
         setSize(650,400);
         setTitle(m_ic.getMessage("SIMPLE_PREFERENCES"));
-        m_da.centerJDialog(this, da.getMainParent());
+        m_da.centerJDialog(this, m_da.getCurrentComponentParent());
 
         help_button = m_da.createHelpButtonBySize(120, 25, this);
         
@@ -103,7 +105,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         JLabel label = new JLabel(m_ic.getMessage("SIMPLE_PREFERENCES"));
         label.setBounds(0,20, 500, 30);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setFont(m_da.getFont(DataAccessMeter.FONT_BIG_BOLD));
         
         prefPane.add(label);
         
@@ -129,7 +131,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         //okButton.setPreferredSize(dim);
         button.setIcon(m_da.getImageIcon_22x22("disk_blue.png", this));
         button.setActionCommand("save");
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         button.setBounds(220, 320, 110, 25);
         button.addActionListener(this);
         prefPane.add(button);
@@ -138,7 +140,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         //cancelButton.setPreferredSize(dim);
         button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         button.setActionCommand("close");
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         button.setBounds(350, 320, 110, 25);
         button.addActionListener(this);
         prefPane.add(button);
@@ -148,7 +150,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         //cancelButton.setPreferredSize(dim);
         //button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         button.setActionCommand("select_meter");
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         button.setBounds(480, 180, 140, 25);
         button.addActionListener(this);
         prefPane.add(button);
@@ -156,14 +158,14 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
 /*
         button = new JButton(m_ic.getMessage("COPY"));
         button.setActionCommand("edit_copy");
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         button.setBounds(520, 60, 110, 25);
         button.addActionListener(this);
         prefPane.add(button);
         
         button = new JButton(m_ic.getMessage("CUT"));
         button.setActionCommand("edit_copy");
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         button.setBounds(520, 90, 110, 25);
         button.addActionListener(this);
         prefPane.add(button);
@@ -171,7 +173,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         
         button = new JButton(m_ic.getMessage("PASTE"));
         button.setActionCommand("edit_copy");
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         button.setBounds(520, 120, 110, 25);
         button.addActionListener(this);
         prefPane.add(button);
@@ -179,7 +181,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         
         button = new JButton(m_ic.getMessage("DELETE"));
         button.setActionCommand("edit_delete");
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         button.setBounds(520, 150, 110, 25);
         button.addActionListener(this);
         prefPane.add(button);
@@ -344,7 +346,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         JFrame fr = new JFrame();
         fr.setBounds(0,0,800,600);
         
-        DataAccess da = DataAccess.createInstance(fr);
+        DataAccessMeter da = DataAccessMeter.createInstance(fr);
         da.setMainParent(fr);
         
         new SimpleConfigurationDialog(da);

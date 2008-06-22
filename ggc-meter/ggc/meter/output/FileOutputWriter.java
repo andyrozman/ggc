@@ -8,15 +8,14 @@ import java.io.FileWriter;
 
 import com.atech.utils.ATechDate;
 
-public class FileOutputWriter implements OutputWriter
+public class FileOutputWriter extends AbstractOutputWriter
 {
 	
 	BufferedWriter bw;
-	OutputUtil out_util; 
 	
 	public FileOutputWriter(String fileName)
 	{
-		out_util = new OutputUtil(this);
+	    super();
 		
 		try
 		{
@@ -66,10 +65,12 @@ public class FileOutputWriter implements OutputWriter
 		writeToFile(dta);
 	}
 
-	public void setBGOutputType(int bg_type)
-	{
-		this.out_util.setOutputBGType(bg_type);
-	}
+	
+    public void writeDeviceIdentification()
+    {
+        writeToFile(this.getDeviceIdentification().getInformation("; "));
+    }
+
 	
 	private void writeToFile(String values)
 	{
@@ -98,12 +99,4 @@ public class FileOutputWriter implements OutputWriter
 		}
 	}
 	
-	
-	public OutputUtil getOutputUtil()
-	{
-		return this.out_util;
-	}
-	
-	
-	
-}
+}	

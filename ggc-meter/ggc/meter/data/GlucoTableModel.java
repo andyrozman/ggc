@@ -44,7 +44,7 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
 	static final long serialVersionUID = 0;
 
     private I18nControl m_ic = I18nControl.getInstance();
-//x    private DataAccess m_da = DataAccess.getInstance();
+//x    private DataAccessMeter m_da = DataAccessMeter.getInstance();
 
     GlucoValues dayData;
     //GGCProperties props = GGCProperties.getInstance();

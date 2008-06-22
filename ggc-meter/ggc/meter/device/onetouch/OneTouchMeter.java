@@ -147,6 +147,11 @@ public class OneTouchMeter extends AbstractSerialMeter
     }
    
 
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.onetouch.OneTouchMeter";
+    }
+
 
     
     

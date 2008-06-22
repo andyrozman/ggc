@@ -31,7 +31,7 @@ package ggc.meter.gui.config;
 //import ggc.gui.dialogs.PortSelectionDialog;
 
 import ggc.meter.manager.MeterManager;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
@@ -87,7 +87,7 @@ public class MeterStatusPanel extends AbstractPreferencesPanel implements ItemLi
         init();
     }
 */
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccessMeter m_da = DataAccessMeter.getInstance();
     I18nControl m_ic = m_da.getI18nInstance();
     
     public MeterStatusPanel(ConfigurationDialog parent)

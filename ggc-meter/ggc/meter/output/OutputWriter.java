@@ -1,6 +1,7 @@
 package ggc.meter.output;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.DeviceIdentification;
 
 public interface OutputWriter
 {
@@ -26,6 +27,14 @@ public interface OutputWriter
 	public abstract void endOutput();
 	
 	public abstract OutputUtil getOutputUtil();
-
 	
+	public abstract void interruptCommunication();
+
+	public abstract void writeDeviceIdentification();
+	
+    public abstract void setDeviceIdentification(DeviceIdentification di);
+
+    public abstract DeviceIdentification getDeviceIdentification();
+
+    
 }

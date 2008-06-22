@@ -27,24 +27,21 @@
  */
 
 
-package ggc.data.meter;
+package ggc.meter.test;
 
 import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.onetouch.OneTouchUltra;
 import ggc.meter.output.ConsoleOutputWriter;
-import ggc.meter.output.GGCFileOutputWriter;
 import ggc.meter.protocol.SerialProtocol;
 
 import java.awt.TextArea;
 import java.util.Vector;
 
-import javax.swing.JFrame;
-
 import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
 
 
-public class MeterTester extends JFrame
+public class MeterConsoleTester //extends JFrame
 {
 	static final long serialVersionUID = 0;
 
@@ -61,7 +58,7 @@ public class MeterTester extends JFrame
 
     TimerThread thread;
     
-    public MeterTester(String portName)
+    public MeterConsoleTester(String portName)
     {
     	
     	TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
@@ -71,8 +68,8 @@ public class MeterTester extends JFrame
 		tzu.setSummerTimeChange(+1);
     	
         
-		thread = new TimerThread();
-	    thread.start();
+		//thread = new TimerThread();
+	    //thread.start();
 	    
     	try
     	{
@@ -215,18 +212,25 @@ public class MeterTester extends JFrame
 
     public void startAscensia(String portName) throws Exception
     {
-        GGCFileOutputWriter ow = new GGCFileOutputWriter();
-        //ConsoleOutputWriter cow = new ConsoleOutputWriter();
+        //GGCFileOutputWriter ow = new GGCFileOutputWriter();
+        ConsoleOutputWriter ow = new ConsoleOutputWriter();
         
         //thread.addJob(cow.getOutputUtil());
-        thread.addJob(ow.getOutputUtil());
+        //thread.addJob(ow.getOutputUtil());
         
         displaySerialPorts();
         
           
         AscensiaContour asc_meter = new AscensiaContour(portName, ow);
         asc_meter.setPort(portName);
+        
+       
+        
         asc_meter.loadInitialData();
+        
+        System.out.println("We are back in tester !!!!");
+        
+        System.exit(0);
         
     }
 
@@ -236,7 +240,7 @@ public class MeterTester extends JFrame
         
         ConsoleOutputWriter cow = new ConsoleOutputWriter();
         
-        thread.addJob(cow.getOutputUtil());
+//a        thread.addJob(cow.getOutputUtil());
         
         displaySerialPorts();
         
@@ -278,7 +282,7 @@ public class MeterTester extends JFrame
     {
 	try
 	{
-	    new MeterTester(args[0]);
+	    new MeterConsoleTester(args[0]);
 
 	    /*
 	    AscensiaMeter am = new AscensiaMeter();

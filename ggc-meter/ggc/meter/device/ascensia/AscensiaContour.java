@@ -31,7 +31,6 @@ package ggc.meter.device.ascensia;
  *
  */
 
-import ggc.data.meter.MeterManager;
 import ggc.meter.device.MeterException;
 import ggc.meter.output.OutputWriter;
 import gnu.io.SerialPortEvent;
@@ -64,14 +63,14 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
 
     public AscensiaContour(String portName, OutputWriter writer)
     {
-    	super(MeterManager.METER_ASCENSIA_CONTOUR, portName, writer);
+    	super(AscensiaMeter.METER_ASCENSIA_CONTOUR, portName, writer);
         
     	end_string = (new Character((char)13)).toString();
     	
     	//this.writer = new GGCFileOutputWriter();
-		this.m_output_writer.writeHeader();
+		this.output_writer.writeHeader();
 
-		this.setMeterType("Ascensia", "Contour");
+		this.setMeterType("Ascensia/Bayer", "Contour");
 	
 		
 		//this.serialPort.
@@ -118,7 +117,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
     	System.out.println("loadInitionalData");
 
-    	waitTime(5000);
+    	waitTime(2000);
     	
     	try
     	{
@@ -130,9 +129,13 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     		this.device_running = true;
     		
     		
-    		write(5);  // ENQ
-    		waitTime(1000); 
-   		    writePort(6);  // ACK
+    		//write(5);  // ENQ
+            write(6);  // ENQ
+            //System.out.println("O: " + this.readLine());
+//    		waitTime(1000); 
+//   		    writePort(6);  // ACK
+    		//System.out.println("O: " + this.readLine());
+            //System.out.println("O: " + this.readLine());
     		
     		String line;
 
@@ -142,11 +145,17 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     		
     		while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
     		{
+    		    
+    		    System.out.println("Device stopped: " + isDeviceStopped(line));
+    		    
     			//System.out.println(line);
     			//processData(line.trim());
     			sendToProcess(line);
     			write(6);
     		}
+    		
+    		System.out.println("We are part the lopp!");
+    		
     	
     	}
     	catch(Exception ex)
@@ -191,6 +200,10 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     }
 
     
+    boolean multiline = false;
+    String multiline_body;
+    
+    
     private void sendToProcess(String text)
     {
         boolean stx = false;
@@ -200,25 +213,97 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
         boolean eol = false;
         int eol_idx = 0;
         
+        //System.out.println("Send: " + text);
         
         if ((stx_idx = text.indexOf(this.text_def[0])) > -1)
         {
-            //System.out.println("STX");
+        //    System.out.println("STX");
             stx = true;
         }
         
         if ((etx_idx = text.indexOf(this.text_def[1])) > -1)
         {
-            //System.out.println("ETX");
+        //    System.out.println("ETX");
             etx = true;
         }
     
         if ((eol_idx = text.indexOf(this.text_def[2])) > -1)
         {
-            //System.out.println("EOL");
+        //    System.out.println("EOL");
             eol = true;
         }
+
         
+        if (stx)
+        {
+         
+            if ((etx) || (eol))
+            {
+                String t;
+                stx_idx++;
+                
+                if (etx)
+                {
+                    t = text.substring(stx_idx, etx_idx);
+                    
+                }
+                else
+                {
+                    t = text.substring(stx_idx, eol_idx);
+                }
+                //System.out.println(t);
+                this.processData(t);
+            }
+            else
+            {
+                // only start, multiline
+                this.multiline = true;
+                this.multiline_body = text;
+            }
+        }
+        else //if ((stx) && (!etx) || (!eol))
+        {
+            if ((etx) || (eol))
+            {
+                if (this.multiline)
+                {
+                    this.multiline_body += text;
+                    
+                    String txt = this.multiline_body;
+                    
+                    stx_idx = txt.indexOf(this.text_def[0]);
+                    etx_idx = text.indexOf(this.text_def[1]);
+                    eol_idx = text.indexOf(this.text_def[2]);
+
+                    int end = 0;
+                    
+                    if (etx_idx!=-1)
+                        end = etx_idx;
+                    else
+                        end = eol_idx;
+                    
+                    
+                    String t = txt.substring(stx_idx, end);
+          //          System.out.println("Multi: " + t);
+                    this.processData(t);
+                    
+                    // reset
+                    this.multiline = false;
+                    this.multiline_body = "";
+                    
+                }
+            }
+            else
+            {
+                if (this.multiline)
+                {
+                    this.multiline_body += text;
+                }
+            }
+        }
+        
+        
+        /*
         if ((stx) && ((etx) || (eol)))
         {
             String t;
@@ -237,7 +322,13 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
             System.out.println(t);
             this.processData(t);
         }
-        
+        else if ((stx) && (!etx) || (!eol))
+        {
+            this.multiline = true;
+            this.multiline_body = text;
+        }
+        else if (etx) || (eol)
+        */
     }
     
 
@@ -256,14 +347,16 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
         {
             System.out.println("EOT");
             
-            System.out.println("writter: " + this.m_output_writer);
-            System.out.println("writter output util: " + this.m_output_writer.getOutputUtil());
+            //System.out.println("writter: " + this.output_writer);
+            //System.out.println("writter output util: " + this.output_writer.getOutputUtil());
             
-            if (this.m_output_writer.getOutputUtil().hasTimerStarted())
+            //a if (this.m_output_writer.getOutputUtil().hasTimerStarted())
             {
-                this.m_output_writer.endOutput();
+                this.output_writer.endOutput();
             }
             System.out.println("EOT");
+            
+            return true;
         }
         
         
@@ -285,7 +378,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     public void setDeviceStopped()
     {
         this.device_running = false;
-        this.m_output_writer.endOutput();
+        this.output_writer.endOutput();
     }
     
 
@@ -301,6 +394,14 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     }
 
 
+    public void readDeviceData() throws MeterException
+    {
+        loadInitialData();
+    }
+    
+    
+    
+    
     /**
      * Will be called, when the import is ended and freeing resources.
      */
@@ -971,7 +1072,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
      */
     public String getInstructions()
     {
-        return null;
+        return "INSTRUCTIONS_ASCENSIA_CONTOUR";
     }
     
     /**
@@ -997,5 +1098,13 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     }
 
 
+    
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.ascensia.AscensiaContour";
+    }
+
+    
+    
 
 }

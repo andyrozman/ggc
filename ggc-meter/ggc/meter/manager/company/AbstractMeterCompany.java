@@ -31,7 +31,7 @@ package ggc.meter.manager.company;
 
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.EmptyMeterDevices;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.util.Hashtable;
@@ -42,7 +42,7 @@ public abstract class AbstractMeterCompany implements MeterCompanyInterface //, 
 
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccess m_da = DataAccess.getInstance();
+    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
     
     public String id = "";
     public String name = "";

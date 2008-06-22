@@ -29,7 +29,7 @@ package ggc.data.imports;
 
 
 import ggc.meter.data.DailyValuesRow;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import gnu.io.SerialPortEvent;
 
 import java.io.IOException;
@@ -165,7 +165,7 @@ public class GlucoCardImport extends SerialMeterImport
 
                             if (date != null)
                             {
-                                DailyValuesRow dVR = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), 
+                                DailyValuesRow dVR = new DailyValuesRow(DataAccessMeter.getInstance().getDateTimeFromDateObject(date), 
 									bgvalue, 0, 0, 0.0f, null, null, "");
 
 				//public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String act, String extended, String comment)

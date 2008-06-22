@@ -1,3 +1,5 @@
+package ggc.meter.data;
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -26,69 +28,96 @@
  *  Author:   schultd
  */
 
-package ggc.data;
 
 
 import ggc.data.event.GlucoValueEvent;
-import ggc.data.event.GlucoValueEventListener;
-import ggc.meter.util.DataAccess;
 import ggc.meter.util.I18nControl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
 
-public class GlucoTableModel extends AbstractTableModel implements GlucoValueEventListener
+public class MeterValuesTableModel extends AbstractTableModel //implements GlucoValueEventListener
 {
+	static final long serialVersionUID = 0;
 
     private I18nControl m_ic = I18nControl.getInstance();
-    private DataAccess m_da = DataAccess.getInstance();
+//x    private DataAccessMeter m_da = DataAccessMeter.getInstance();
 
-    GlucoValues dayData;
+    //GlucoValues dayData;
+    
+    ArrayList<MeterValuesEntry> dayData;
+    
     //GGCProperties props = GGCProperties.getInstance();
 
     private String[] column_names = 
     {
 		m_ic.getMessage("DATETIME"), 
 		m_ic.getMessage("BG"), 
-		m_ic.getMessage("INS") + "#1", 
-		m_ic.getMessage("INS") + "#2", 
+		m_ic.getMessage("INS1"), 
+		m_ic.getMessage("INS2"), 
 		m_ic.getMessage("BE"), 
 		m_ic.getMessage("ACT"), 
 		m_ic.getMessage("COMMENT") 
 	};
 
 
-    public GlucoTableModel(GlucoValues dayData)
+    public MeterValuesTableModel()
     {
-        this.dayData = dayData;
-        //fireTableChanged(null);
-        dayData.addGlucoValueEventListener(this);
+        this.dayData = new ArrayList<MeterValuesEntry>();
+        //this.dayData = dayData;
+        fireTableChanged(null);
+        //dayData.addGlucoValueEventListener(this);
     }
 
     public int getColumnCount()
     {
-        return 7;
+        return 5;
     }
 
     public int getRowCount()
     {
-        return dayData.getRowCount();
+        return dayData.size();
     }
 
     public Object getValueAt(int row, int column)
     {
-        Object o = dayData.getValueAt(row, column);
-        if (o != null && column == 0) 
+        MeterValuesEntry mve = this.dayData.get(row);
+     
+        switch (column)
+        {
+            case 1: 
+                return mve.getDateTime().toString();
+                
+            case 2:
+                return mve.getBgValue();
+                
+                default:
+                    return "";
+        }
+        
+        
+        
+        //Object o = dayData.getValueAt(row, column);
+/*        if (o != null && column == 0) 
         {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             return sdf.format(o);
         }
 
-        return o;
+        return o; */
     }
 
+    public void addEntry(MeterValuesEntry mve)
+    {
+        this.dayData.add(mve);
+        System.out.println("Entries: " + this.dayData.size());
+        fireTableChanged(null);
+    }
+    
+    
     @Override
     public String getColumnName(int column)
     {
@@ -112,11 +141,12 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
         return true;
     }
 
+    
     @Override
     public void setValueAt(Object aValue, int row, int column)
     {
-        dayData.setValueAt(aValue, row, column);
-        fireTableChanged(null);
+        //dayData.setValueAt(aValue, row, column);
+        //fireTableChanged(null);
     }
 
     /**
@@ -138,13 +168,14 @@ public class GlucoTableModel extends AbstractTableModel implements GlucoValueEve
         }
     }
 
+    
     /**
      * Returns the dayData.
      * @return GlucoValues
      */
-    public GlucoValues getDayData()
+    /*public GlucoValues getDayData()
     {
         return dayData;
-    }
+    }*/
 
 }

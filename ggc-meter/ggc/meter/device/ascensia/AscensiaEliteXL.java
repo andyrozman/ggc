@@ -27,10 +27,9 @@ package ggc.meter.device.ascensia;
  */
 
 
-import ggc.data.meter.MeterManager;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.MeterException;
-import ggc.meter.output.OutputWriter;
+import ggc.meter.output.AbstractOutputWriter;
 import gnu.io.SerialPortEvent;
 
 import java.util.ArrayList;
@@ -51,9 +50,9 @@ public class AscensiaEliteXL extends AscensiaMeter
     
     private int m_status = 0;
 
-    public AscensiaEliteXL(String portName, OutputWriter writer)
+    public AscensiaEliteXL(String portName, AbstractOutputWriter writer)
     {
-    	super(MeterManager.METER_ASCENSIA_ELITE_XL, portName, writer);
+    	super(AscensiaMeter.METER_ASCENSIA_ELITE_XL, portName, writer);
 	/*
 	super(MeterManager.METER_ASCENSIA_ELITE_XL,
 	      9600, 
@@ -627,7 +626,7 @@ public class AscensiaEliteXL extends AscensiaMeter
      */
     public String getInstructions()
     {
-        return null;
+        return "INSTRUCTIONS_ASCENSIA_ELITE_XL";
     }
     
     /**
@@ -654,7 +653,12 @@ public class AscensiaEliteXL extends AscensiaMeter
     
     
     
-    
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.ascensia.AscensiaEliteXL";
+    }
+
+
     
     
 

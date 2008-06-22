@@ -1,6 +1,6 @@
 package ggc.meter.test;
 
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 
 import java.util.GregorianCalendar;
 
@@ -9,7 +9,7 @@ import com.atech.utils.TimeZoneUtil;
 public class TimeTests
 {
 	
-	DataAccess m_da = DataAccess.getInstance();
+	DataAccessMeter m_da = DataAccessMeter.getInstance();
 	//TimeZone tzi;
 	TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 	

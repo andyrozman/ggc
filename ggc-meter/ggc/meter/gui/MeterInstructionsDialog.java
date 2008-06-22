@@ -11,17 +11,17 @@ import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
 import ggc.meter.protocol.ConnectionProtocols;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,11 +45,12 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
      */
     private static final long serialVersionUID = 7159799607489791137L;
 
-    private JLabel infoIcon = null;
-//x    private JLabel infoDescription = null;
-
+    
     private I18nControl m_ic = I18nControl.getInstance();        
-    private DataAccess m_da = DataAccess.getInstance();
+    private DataAccessMeter m_da = DataAccessMeter.getInstance();
+    
+    JButton button_start;
+    
 
 
 
@@ -105,9 +106,19 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         this.configured_meter.communication_port = "COM9";
         this.configured_meter.name = "My Countour";
         this.configured_meter.meter_company = "Ascensia/Bayer";
-        this.configured_meter.meted_device = "Contour";
+        this.configured_meter.meter_device = "Contour";
+        this.configured_meter.ds_area= "Europe/Prague";
+        this.configured_meter.ds_winter_change = 0;
+        this.configured_meter.ds_summer_change = 1;
+        this.configured_meter.ds_fix = true;
         
-        MeterInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meted_device);
+        /*
+        tzu.setTimeZone("Europe/Prague");
+        tzu.setWinterTimeChange(0);
+        tzu.setSummerTimeChange(+1);
+        */
+        
+        MeterInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
         
         this.meter_interface = mi;
         
@@ -115,11 +126,6 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
     
     
     
-    private void dialogPreInit()
-    {
-        
-
-    }
 
 
 
@@ -145,7 +151,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
     }*/
 
 
-    public ImageIcon getMeterIcon()
+    private ImageIcon getMeterIcon()
     {
         if (this.meter_interface == null)
         {
@@ -217,8 +223,8 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
             ykor = rec.y + (rec.height/2);
         }
 
-        Font normal = m_da.getFont(DataAccess.FONT_NORMAL);
-        Font bold = m_da.getFont(DataAccess.FONT_NORMAL);
+        Font normal = m_da.getFont(DataAccessMeter.FONT_NORMAL);
+        Font bold = m_da.getFont(DataAccessMeter.FONT_NORMAL);
 
         
         setBounds(xkor-250, ykor-250, 650, 600);
@@ -237,12 +243,12 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         panel_icon.setBounds(10, 10, 280, 380);
         panel.add(panel_icon);
         
-        infoIcon = new JLabel(this.getMeterIcon());
-        infoIcon.setBounds(10, 20, 260, 350);
-        infoIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        infoIcon.setVerticalAlignment(SwingConstants.CENTER);
-        infoIcon.setBackground(Color.blue);
-        panel_icon.add(infoIcon);
+        label = new JLabel(this.getMeterIcon());
+        label.setBounds(10, 20, 260, 350);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setVerticalAlignment(SwingConstants.CENTER);
+        //infoIcon.setBackground(Color.blue);
+        panel_icon.add(label);
         
         
         
@@ -255,6 +261,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         
         label = new JLabel(m_ic.getMessage("MY_DEVICE_NAME") + ":" );
         label.setBounds(15, 20, 320, 25);
+        label.setFont(bold);
         panel_device.add(label);
         
         label = new JLabel(this.configured_meter.name);
@@ -264,6 +271,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         
         label = new JLabel(m_ic.getMessage("METER_COMPANY") + ":" );
         label.setBounds(15, 40, 320, 25);
+        label.setFont(bold);
         panel_device.add(label);
         
         label = new JLabel(this.configured_meter.meter_company);
@@ -273,15 +281,17 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
 
         label = new JLabel(m_ic.getMessage("METER_NAME") + ":" );
         label.setBounds(15, 60, 320, 25);
+        label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.meted_device);
+        label = new JLabel(this.configured_meter.meter_device);
         label.setBounds(130, 60, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
         
         label = new JLabel(m_ic.getMessage("CONNECTION_TYPE") + ":" );
         label.setBounds(15, 80, 320, 25);
+        label.setFont(bold);
         panel_device.add(label);
         
         label = new JLabel(this.getMeterInterfaceParameter(METER_INTERFACE_PARAM_CONNECTION_TYPE));
@@ -291,6 +301,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         
         label = new JLabel(m_ic.getMessage("CONNECTION_PARAMETER") + ":" );
         label.setBounds(15, 100, 320, 25);
+        label.setFont(bold);
         panel_device.add(label);
         
         label = new JLabel(this.configured_meter.communication_port);
@@ -300,6 +311,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
 
         label = new JLabel(m_ic.getMessage("DAYLIGHTSAVINGS_FIX") + ":" );
         label.setBounds(15, 120, 320, 25);
+        label.setFont(bold);
         panel_device.add(label);
         
         label = new JLabel();
@@ -321,6 +333,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
 
         label = new JLabel(m_ic.getMessage("STATUS") + ":" );
         label.setBounds(15, 140, 320, 25);
+        label.setFont(bold);
         panel_device.add(label);
         
         label = new JLabel(this.getMeterInterfaceParameter(METER_INTERFACE_PARAM_STATUS));
@@ -329,15 +342,15 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         panel_device.add(label);
         
         
-        
+        // meter instructions
         JPanel panel_instruct = new JPanel();
         panel_instruct.setBorder(new TitledBorder(m_ic.getMessage("INSTRUCTIONS")));
         panel_instruct.setBounds(300, 190, 330, 200);
         panel.add(panel_instruct);
-
+        
+        
         
         // bottom 
-        
         label = new JLabel(m_ic.getMessage("INSTRUCTIONS_DESC")); //this.m_mim.getName());
         label.setBounds(20, 400, 590, 120);
         label.setVerticalAlignment(JLabel.TOP);
@@ -347,65 +360,24 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         
 
         
+        JButton button = m_da.createHelpButtonByBounds(30, 520, 130, 25, this);
+        button.setFont(normal);
+        panel.add(button);
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-        
-        label = new JLabel("Name"); //this.m_mim.getName());
-        label.setBounds(10, 230, 150, 25);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-//        panel.add(label);
-
-/*
-        // time
-        label = new JLabel(m_ic.getMessage("COMPUTER_TIME") + ":");
-        label.setBounds(182, 360, 150, 25);
-        panel.add(label);
-        
-        label = new JLabel(m_ic.getMessage("METER_TIME") + ":");
-        label.setBounds(182, 380, 150, 25);
-        panel.add(label);
-
-        label = new JLabel("00:00:00");
-        label.setBounds(320, 360, 100, 25);
-        panel.add(label);
-
-        JLabel label_1 = new JLabel("00:00:00");
-        label_1.setBounds(320, 380, 100, 25);
-        panel.add(label_1);
-
-        m_timer = new TimerThread(m_da, label, label_1, this.m_mim.getTimeDifference());
-        m_timer.start();
-  */      
-
-        
-        /*
-        // meter status
-        label = new JLabel(m_ic.getMessage("METER_STATUS") + ":");
-        label.setBounds(182, 410, 100, 25);
-        panel.add(label);
-        
-        lbl_status = new JLabel();
-        lbl_status.setBounds(320, 410, 150, 25);
-        panel.add(lbl_status);
-
-        setStatus();
-*/
-
-
-        
-        
+        button = new JButton(m_ic.getMessage("CANCEL"));
+        button.setBounds(170, 520, 130, 25);
+        button.setFont(normal);
+        button.setActionCommand("cancel");
+        button.addActionListener(this); //.setFont(normal);
+        panel.add(button);
+        		
+        button_start = new JButton(m_ic.getMessage("START_DOWNLOAD"));
+        button_start.setBounds(370, 520, 240, 25);
+        button_start.setFont(normal);
+        button_start.setActionCommand("start_download");
+        button_start.addActionListener(this); //.setFont(normal);
+        panel.add(button_start);
         
         
         
@@ -427,10 +399,11 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
     {
         String action = e.getActionCommand();
 
-        //if (action.equals("")) 
-        //{
-        //}
-        //else
+        if (action.equals("cancel")) 
+        {
+            this.dispose();
+        }
+        else
             System.out.println("MeterInstructionsDialog::Unknown command: " + action);
 
     }

@@ -83,15 +83,6 @@ public interface MeterInterface //extends SelectableInterface
 
 
     /**
-     * getIcon - Get Icon of meter
-     * Should be implemented by meter class.
-     * 
-     * @return ImageIcom
-     */
-    ImageIcon getIcon();
-
-    
-    /**
      * getIconName - Get Icon of meter
      * Should be implemented by meter class.
      * 
@@ -107,15 +98,6 @@ public interface MeterInterface //extends SelectableInterface
      * @return id of meter within company
      */
     int getMeterId();
-
-    
-    /**
-     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
-     * 
-     * @return global id of meter
-     */
-    int getGlobalMeterId();
 
     
     /**
@@ -145,7 +127,7 @@ public interface MeterInterface //extends SelectableInterface
     
     
     /**
-     * getCompanyId - Get Company Id 
+     * getImplementationStatus - Get Company Id 
      * Should be implemented by meter class.
      * 
      * @return implementation status as number
@@ -154,8 +136,11 @@ public interface MeterInterface //extends SelectableInterface
     int getImplementationStatus(); 
     
     
+    String getDeviceClassName();
     
     
+    
+    //void readDeviceData();
     
     
     
@@ -167,19 +152,6 @@ public interface MeterInterface //extends SelectableInterface
     //***           Meter GUI Methods              ***
     //************************************************
 
-
-    /**
-     * getTimeDifference - returns time difference between Meter and Computer. 
-     * This data should be read from meter, and is used in Meter GUI
-     */
-    int getTimeDifference(); 
-
-
-    /**
-     * getInfo - returns Meter information. 
-     * This data should be read from meter, and is used in Meter GUI
-     */
-    String getInfo(); 
 
     
     /**
@@ -219,16 +191,11 @@ public interface MeterInterface //extends SelectableInterface
     //***       Device Implemented methods         ***
     //************************************************
     
-
-    /** 
-     * clearDeviceData - Clear data from device 
-     */
-    void clearDeviceData() throws MeterException;
     
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      */
-    ArrayList<String> getDeviceInfo() throws MeterException;
+    public DeviceIdentification getDeviceInfo();
     
     
     /**
@@ -251,33 +218,6 @@ public interface MeterInterface //extends SelectableInterface
      */
     ArrayList<MeterValuesEntry> getData(int from, int to) throws MeterException;
 
-
-    //************************************************
-    //***          Process Meter Data              ***
-    //************************************************
-
-
-    /**
-     * processMeterDataMain - this is main method for processing data. It should be called on all data received, and 
-     * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
-     * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
-     */
-    //void processMeterData(String data);
-
-    /**
-     * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
-     */
-//    void processMeterIdentification(String data);
-
-    /**
-     * processMeterTime - this should be used to process time and date of meter
-     */
-//    void processMeterTime(String data);
-
-    /**
-     * processMeterBGEntry - this should be used to process BG data from meter
-     */
-//    void processMeterBGEntry(String data);
 
 
 
@@ -329,10 +269,6 @@ public interface MeterInterface //extends SelectableInterface
     //***                    Test                  ***
     //************************************************
 
-    void test();
-
-    
-    
     
     
     public void setMeterCompany(AbstractMeterCompany company);

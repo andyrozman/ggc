@@ -10,7 +10,7 @@ package ggc.data.imports;
 
 import ggc.data.event.ImportEvent;
 import ggc.meter.data.DailyValuesRow;
-import ggc.meter.util.DataAccess;
+import ggc.meter.util.DataAccessMeter;
 import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 
@@ -220,10 +220,10 @@ public class EuroFlashImport extends SerialMeterImport
                 //
                 //Value dataValue = new Value(date, bzValue);
 
-                //DataAccess.getInstance().getDateTimeFromDateObject(Date dt)
+                //DataAccessMeter.getInstance().getDateTimeFromDateObject(Date dt)
                 //DailyValuesRow dataValue = new DailyValuesRow(, bzValue, 0, 0, 0, 0, "");
 
-		DailyValuesRow dataValue = new DailyValuesRow(DataAccess.getInstance().getDateTimeFromDateObject(date), 
+		DailyValuesRow dataValue = new DailyValuesRow(DataAccessMeter.getInstance().getDateTimeFromDateObject(date), 
 				   bzValue, 0, 0, 0.0f, null, null, null);
 		//new DailyValuesRow(
 

@@ -36,7 +36,7 @@ public class GGCProperties //extends GGCPropertiesHelper
     //private static GGCProperties singleton = null;
     //private SettingsMainH m_settings = null;
 //    private ColorSchemeH m_colors = null;
-    private DataAccess m_da = null;
+    private DataAccessMeter m_da = null;
 
 //    DbToolApplicationGGC m_config = null;
 
@@ -45,13 +45,13 @@ public class GGCProperties //extends GGCPropertiesHelper
     //private boolean changed_scheme = false;
 
 
-    public GGCProperties(DataAccess da)
+    public GGCProperties(DataAccessMeter da)
     {
     	
     }
     
     /*
-    public GGCProperties(DataAccess da, DbToolApplicationGGC config, ConfigurationManager cfg_mgr) 
+    public GGCProperties(DataAccessMeter da, DbToolApplicationGGC config, ConfigurationManager cfg_mgr) 
     {
         this.m_da = da;
         this.m_config = config;
@@ -263,7 +263,7 @@ public class GGCProperties //extends GGCPropertiesHelper
 	// fix
 	/* if (changed_scheme) 
 	{
-	    DataAccess.notImplemented("GGCProperties:save():: changed scheme");
+	    DataAccessMeter.notImplemented("GGCProperties:save():: changed scheme");
 	    System.out.println("save Scheme");
 	    //m_da.m_db.s
 	}*/
