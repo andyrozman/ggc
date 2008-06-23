@@ -32,6 +32,7 @@ package ggc.meter.device.ascensia;
  */
 
 import ggc.meter.device.MeterException;
+import ggc.meter.output.AbstractOutputWriter;
 import ggc.meter.output.OutputWriter;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
@@ -146,7 +147,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     		while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
     		{
     		    
-    		    System.out.println("Device stopped: " + isDeviceStopped(line));
+    		    //System.out.println("Device stopped: " + isDeviceStopped(line));
     		    
     			//System.out.println(line);
     			//processData(line.trim());
@@ -337,6 +338,10 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
         if (!this.device_running)
             return true;
         
+        if (this.output_writer.isReadingStopped())
+            return true;
+        
+        
         //if (vals.contains(this.end_string))
         //    System.out.println("EOL found");
         
@@ -355,6 +360,8 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
                 this.output_writer.endOutput();
             }
             System.out.println("EOT");
+            
+            //this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
             
             return true;
         }
@@ -1105,7 +1112,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     }
 
     
-    public int getMemoryRecords()
+    public int getMaxMemoryRecords()
     {
         return 480;
     }

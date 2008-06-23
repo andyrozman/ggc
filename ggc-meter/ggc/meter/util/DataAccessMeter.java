@@ -29,7 +29,6 @@
 
 package ggc.meter.util;
 
-import ggc.data.cfg.ConfigurationManager;
 import ggc.meter.manager.MeterManager;
 
 import java.awt.Color;
@@ -113,7 +112,7 @@ public class DataAccessMeter extends ATDataAccessAbstract
     private GGCProperties m_settings = null;
 
     //private DbToolApplicationGGC m_configFile = null;
-    private ConfigurationManager m_cfgMgr = null;
+//    private ConfigurationManager m_cfgMgr = null;
 
 
     public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
@@ -528,12 +527,12 @@ public class DataAccessMeter extends ATDataAccessAbstract
     {
         return new Color(color);
     }
-
+/*
     public ConfigurationManager getConfigurationManager()
     {
 	return this.m_cfgMgr;
     }
-
+*/
 
     // ********************************************************
     // ******             BG Measurement Type             *****    

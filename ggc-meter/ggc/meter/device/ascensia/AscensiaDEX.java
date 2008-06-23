@@ -618,10 +618,16 @@ public class AscensiaDEX extends AscensiaMeter
     }
 
     
-    public int getMemoryRecords()
+    public int getMaxMemoryRecords()
     {
         return 100;
     }
+    
+    
+    
+    
+    
+    
     
 	
 }

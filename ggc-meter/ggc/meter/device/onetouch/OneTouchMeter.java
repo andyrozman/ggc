@@ -1,17 +1,17 @@
 package ggc.meter.device.onetouch;
 
-import java.util.ArrayList;
-
-import com.atech.utils.TimeZoneUtil;
-
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.device.MeterException;
 import ggc.meter.output.OutputWriter;
 import gnu.io.SerialPort;
 
+import java.util.ArrayList;
 
-public class OneTouchMeter extends AbstractSerialMeter
+import com.atech.utils.TimeZoneUtil;
+
+
+public abstract class OneTouchMeter extends AbstractSerialMeter
 {
     
     
@@ -153,6 +153,38 @@ public class OneTouchMeter extends AbstractSerialMeter
     }
 
 
+    
+ 
+    /**
+     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
+    public void readDeviceDataPartitial() throws MeterException
+    {
+        
+    }
+
+
+    /** 
+     * This is method for reading configuration
+     * 
+     * @throws MeterExceptions
+     */
+    public void readConfiguration() throws MeterException
+    {
+    }
+    
+
+    /**
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do). 
+     * @throws MeterExceptions
+     */
+    public void readInfo() throws MeterException
+    {
+    }
+    
+    
     
     
     

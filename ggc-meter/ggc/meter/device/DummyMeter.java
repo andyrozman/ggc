@@ -36,6 +36,15 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     
 
     
+    /**
+     * This is method for reading data from device. All reading from actual device should be done from here.
+     * Reading can be done directly here, or event can be used to read data.
+     */
+    public void readDeviceDataFull() throws MeterException
+    {
+    }
+    
+    
 
     /**
      * Used for opening connection with device.
@@ -152,34 +161,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
 
 
-
-
-    //************************************************
-    //***          Process Meter Data              ***
-    //************************************************
-
-
-    /**
-     * processMeterDataMain - this is main method for processing data. It should be called on all data received, and 
-     * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
-     * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
-     */
-    public void processMeterData(String data) {}
-
-    /**
-     * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
-     */
-    public void processMeterIdentification(String data) {}
-
-    /**
-     * processMeterTime - this should be used to process time and date of meter
-     */
-    public void processMeterTime(String data) {}
-
-    /**
-     * processMeterBGEntry - this should be used to process BG data from meter
-     */
-    public void processMeterBGEntry(String data) {}
 
 
 
@@ -389,7 +370,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     
     
     
-    public String getPort()
+    public String getConnectionPort()
     {
         return "No port";
     }
@@ -401,11 +382,57 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
     
     
-    public int getMemoryRecords()
+    public int getMaxMemoryRecords()
     {
         return 1;
     }
     
+ 
+    /**
+     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
+    public void readDeviceDataPartitial() throws MeterException
+    {
+        
+    }
+
+
+    /** 
+     * This is method for reading configuration
+     * 
+     * @throws MeterExceptions
+     */
+    public void readConfiguration() throws MeterException
+    {
+    }
+    
+
+    /**
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do). 
+     * @throws MeterExceptions
+     */
+    public void readInfo() throws MeterException
+    {
+    }
+    
+    
+    /**
+     * setDeviceAllowedActions - sets actions which are allowed by implementation
+     *   of MeterInterface (actually of GenericMeterXXXXX classes)
+     *   
+     * @param can_read_data
+     * @param can_read_partitial_data
+     * @param can_read_device_info
+     * @param can_read_device_configuration
+     */
+    public void setDeviceAllowedActions(boolean can_read_data, 
+                                        boolean can_read_partitial_data,
+                                        boolean can_read_device_info,
+                                        boolean can_read_device_configuration)
+    {
+    }
     
     
 }

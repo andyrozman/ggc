@@ -8,8 +8,6 @@
 package ggc.meter.protocol;
 
 
-import ggc.data.imports.ImportException;
-import ggc.meter.data.DailyValuesRow;
 import ggc.meter.device.MeterException;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.util.DataAccessMeter;
@@ -352,7 +350,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     /**
      * @see data.imports.DataImport#importData()
      */
-    public void importData() throws ImportException
+/*    public void importData() throws ImportException
     {
         if (portIdentifier == null || serialPort == null || portOutputStream == null || portInputStream == null)
             throw new ImportException(m_ic.getMessage("COM_PORT_NOT_INIT_CORRECT"));
@@ -361,7 +359,7 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
         //Thread thread = new Thread(this);
         //thread.start();
     }
-
+*/
     
     
     public int read() throws IOException
@@ -446,11 +444,11 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     /**
      * @see data.imports.DataImport#getImportedData()
      */
-    public DailyValuesRow[] getImportedData()
+/*    public DailyValuesRow[] getImportedData()
     {
         return new DailyValuesRow[0];
     }
-
+*/
 
     /**
      * @see gnu.io.SerialPortEventListener#serialEvent(SerialPortEvent)

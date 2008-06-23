@@ -8,7 +8,6 @@
 package ggc.meter.protocol;
 
 
-import ggc.data.imports.ImportException;
 import ggc.meter.device.MeterException;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.util.DataAccessMeter;
@@ -205,7 +204,7 @@ public abstract class XmlProtocol implements MeterInterface //, SerialPortEventL
     /**
      * @see data.imports.DataImport#importData()
      */
-    public void importData() throws ImportException
+/*    public void importData() throws ImportException
     {
         if (portIdentifier == null || serialPort == null || portOutputStream == null || portInputStream == null)
             throw new ImportException(m_ic.getMessage("COM_PORT_NOT_INIT_CORRECT"));
@@ -214,7 +213,7 @@ public abstract class XmlProtocol implements MeterInterface //, SerialPortEventL
         //Thread thread = new Thread(this);
         //thread.start();
     }
-
+*/
     
     
     

@@ -39,18 +39,18 @@ import javax.swing.ImageIcon;
  *
  */
 
-public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
+public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
 {
 
     private int m_status = 0;
 
     
-    public AscensiaBreeze()
+    public AscensiaBreeze2()
     {
     }
     
     
-    public AscensiaBreeze(String portName, AbstractOutputWriter writer)
+    public AscensiaBreeze2(String portName, AbstractOutputWriter writer)
     {
     	super(1, portName, writer);
 
@@ -560,6 +560,16 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
     }
 
 
+    /**
+     * getIcon - Get Icon of meter
+     * Should be implemented by meter class.
+     * 
+     * @return ImageIcon
+     */
+    public ImageIcon getIcon()
+    {
+        return null;
+    }
 
     
     /**
@@ -647,12 +657,10 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
         return 0;
     }
     
-    
     public int getMaxMemoryRecords()
     {
-        return 100;
+        return 420;
     }
-
     
     
 }

@@ -6,6 +6,7 @@ import ggc.meter.data.MeterValuesTableModel;
 import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterInterface;
+import ggc.meter.output.AbstractOutputWriter;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
 import ggc.meter.util.DataAccessMeter;
@@ -59,7 +60,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 //    private JButton startButton;
 //    private JButton saveButton;
 
-    private JButton bt_get, bt_import, bt_break;
+    private JButton bt_close, bt_import, bt_break;
 
     
     private JTabbedPane tabPane;
@@ -546,11 +547,13 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     {
         String action = e.getActionCommand();
 
-        //if (action.equals("")) 
-        //{
-        //}
-        //else
-            System.out.println("ReadDataDialog::Unknown command: " + action);
+        if (action.equals("break_communication")) 
+        {
+            this.setStatus(AbstractOutputWriter.STATUS_STOPPED_USER);
+            this.setReadingStop();
+        }
+        else
+            System.out.println("MeterDisplayDataDialog::Unknown command: " + action);
 
     }
 
@@ -688,11 +691,15 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     /**
      * This is status of device and also of GUI that is reading device (if we have one)
      * This is to set that status to see where we are. Allowed statuses are: 1-Ready, 2-Downloading,
-     * 3-Stopped by device, 4-Stoped by user,5-Download finished,...
+     * 3-Stopped by device, 4-Stoped by user,5-Download finished,6-Reader error
      */
     public void setStatus(int status)
     {
+        if ((this.reading_status==3) || (this.reading_status==4))
+            return;
+        
         this.reading_status = status;
+        setGUIStatus(status);
     }
     
     public int getStatus()
@@ -708,12 +715,38 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
             m_ic.getMessage("STATUS_STOPPED_DEVICE"),
             m_ic.getMessage("STATUS_STOPPED_USER"),
             m_ic.getMessage("STATUS_DOWNLOAD_FINISHED"),
+            m_ic.getMessage("STATUS_READER_ERROR"),
             }; 
     
     
-    public void setGUIStatus()
+    public void setGUIStatus(int status)
     {
-//        lbl_status = new JLabel(m_ic.getMessage("READY"));
+        this.lbl_status.setText(statuses[status]);
+        
+        switch(status)
+        {
+            case 2:
+            case 3:
+            case 5:
+                {
+                    this.bt_break.setEnabled(false);
+                    this.bt_close.setEnabled(true);
+                } break;
+            
+                
+            case 4:
+                {
+                    this.bt_break.setEnabled(false);
+                    this.bt_close.setEnabled(true);
+                    this.bt_import.setEnabled(true);
+                } break;
+            
+            case 1:
+            case 0:
+            default:
+                break;
+        }
+        
         
     }
     

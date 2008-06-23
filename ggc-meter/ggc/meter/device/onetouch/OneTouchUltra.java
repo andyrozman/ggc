@@ -707,8 +707,14 @@ protected void writeCmd(String line)
     } 
 
 
+    public int getMaxMemoryRecords()
+    {
+        return 1;
+    }
+   
     
-    
-    
+    public void readDeviceDataFull()
+    {
+    }
 
 }

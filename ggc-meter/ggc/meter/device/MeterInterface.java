@@ -60,11 +60,6 @@ public interface MeterInterface //extends SelectableInterface
     void close() throws MeterException;
 
 
-    /**
-     * This is method for reading data from device. All reading from actual device should be done from here.
-     * Reading can be done directly here, or event can be used to read data.
-     */
-    void readDeviceData() throws MeterException;
 
 
 
@@ -135,36 +130,81 @@ public interface MeterInterface //extends SelectableInterface
      */
     int getImplementationStatus(); 
     
-    
+   
+
+    /**
+     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
+     * 
+     * @return class name as string
+     */
     String getDeviceClassName();
     
     
-    
-    //void readDeviceData();
-    
-    
-    
-    
-    String getPort();
-
-
-    //************************************************
-    //***           Meter GUI Methods              ***
-    //************************************************
-
+    /**
+     * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
+     * 
+     * @return number
+     */
+    public int getMaxMemoryRecords();
 
     
     /**
-     * getStatus - get Status of meter
-     * This data should be read from meter, and is used in Meter GUI
+     * getConnectionPort - connection port data
+     * 
+     * @return connection port as string
      */
-    int getStatus();
+    public String getConnectionPort();
+    
+    
+    
 
+    //************************************************
+    //***             Meter Methods                ***
+    //************************************************
+
+    
+    /**
+     * This is method for reading data from device. All reading from actual device should be done from here.
+     * Reading can be done directly here, or event can be used to read data.
+     */
+    void readDeviceDataFull() throws MeterException;
+    
+    
+    /**
+     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
+    void readDeviceDataPartitial() throws MeterException;
+
+
+    /** 
+     * This is method for reading configuration
+     * 
+     * @throws MeterExceptions
+     */
+    void readConfiguration() throws MeterException;
+    
 
     /**
-     * isStatusOK - has Meter OK status
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do). 
+     * @throws MeterExceptions
      */
-    boolean isStatusOK();
+    void readInfo() throws MeterException;
+    
+
+    //************************************************
+    //***        Should bne implemnetyed by Abstract Meter ter          ***
+    //************************************************
+
+
+    //************************************************
+    //***        Available Functionality for Meter          ***
+    //************************************************
+
+
+    
+    public int getConnectionProtocol();
     
     
     /**
@@ -173,23 +213,14 @@ public interface MeterInterface //extends SelectableInterface
      *   
      * @param can_read_data
      * @param can_read_partitial_data
-     * @param can_clear_data
      * @param can_read_device_info
      * @param can_read_device_configuration
      */
     public void setDeviceAllowedActions(boolean can_read_data, 
-    									boolean can_read_partitial_data,
-    									boolean can_clear_data,
-    									boolean can_read_device_info,
-    									boolean can_read_device_configuration);
-    
-    
-    
-    
-
-    //************************************************
-    //***       Device Implemented methods         ***
-    //************************************************
+                                        boolean can_read_partitial_data,
+//                                      boolean can_clear_data,
+                                        boolean can_read_device_info,
+                                        boolean can_read_device_configuration);
     
     
     /**
@@ -198,35 +229,7 @@ public interface MeterInterface //extends SelectableInterface
     public DeviceIdentification getDeviceInfo();
     
     
-    /**
-     * getDeviceConfiguration - return device configuration
-     * @return
-     */
-    ArrayList<String> getDeviceConfiguration() throws MeterException;
     
-    
-    /**
-     * getDataFull - get all data from Meter
-     * This data should be read from meter, and is used in Meter GUI
-     */
-    ArrayList<MeterValuesEntry> getDataFull() throws MeterException;
-
-
-    /**
-     * getData - get data for specified time
-     * This data should be read from meter and preprocessed, and is used in Meter GUI
-     * 
-     * 
-     */
-    ArrayList<MeterValuesEntry> getData(int from, int to) throws MeterException;
-
-
-
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
 
     /**
      * canReadData - Can Meter Class read data from device
@@ -242,12 +245,6 @@ public interface MeterInterface //extends SelectableInterface
      */
     public boolean canReadPartitialData();
 
-    /**
-     * canClearData - Can Meter class clear data from meter.
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canClearData();
 
     
     /**
@@ -268,11 +265,10 @@ public interface MeterInterface //extends SelectableInterface
 
 
     //************************************************
-    //***                    Test                  ***
+    //***          Company Specific Settings                ***
     //************************************************
 
   
-    public int getMemoryRecords();
     
     
     public void setMeterCompany(AbstractMeterCompany company);
@@ -281,10 +277,9 @@ public interface MeterInterface //extends SelectableInterface
     public AbstractMeterCompany getMeterCompany();
     
 
-    public int getConnectionProtocol();
     
     
-//    public String getConnectionPort();
+    
     
     
 }

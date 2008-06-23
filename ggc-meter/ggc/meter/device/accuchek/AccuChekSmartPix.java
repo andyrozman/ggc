@@ -14,8 +14,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -57,16 +55,6 @@ public class AccuChekSmartPix extends XmlProtocol
     }
 
 
-    /**
-     * getIcon - Get Icon of meter
-     * Should be implemented by meter class.
-     * 
-     * @return ImageIcon
-     */
-    public ImageIcon getIcon()
-    {
-        return null;
-    }
 
     
     /**
@@ -157,15 +145,11 @@ public class AccuChekSmartPix extends XmlProtocol
     
     
     
+    
+    
+    
+    
 
-    /* 
-     * canClearData
-     */
-    public boolean canClearData()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
     /* 
      * canReadConfiguration
@@ -203,42 +187,8 @@ public class AccuChekSmartPix extends XmlProtocol
         return false;
     }
 
-    /* 
-     * clearDeviceData
-     */
-    public void clearDeviceData() throws MeterException
-    {
-        // TODO Auto-generated method stub
-        
-    }
 
-    /* 
-     * getData
-     */
-    public ArrayList<MeterValuesEntry> getData(int from, int to)
-            throws MeterException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
-    /* 
-     * getDataFull
-     */
-    public ArrayList<MeterValuesEntry> getDataFull() throws MeterException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /* 
-     * getDeviceConfiguration
-     */
-    public ArrayList<String> getDeviceConfiguration() throws MeterException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /* 
      * getDeviceInfo
@@ -249,56 +199,27 @@ public class AccuChekSmartPix extends XmlProtocol
         return null;
     }
 
-    /* 
-     * getInfo
-     */
-    public String getInfo()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /* 
-     * getStatus
-     */
-    public int getStatus()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    /* 
-     * getTimeDifference
-     */
-    public int getTimeDifference()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    /* 
-     * isStatusOK
-     */
-    public boolean isStatusOK()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
     /* 
      * readDeviceData
      */
-    public void readDeviceData() throws MeterException
+    public void readDeviceDataFull() throws MeterException
     {
         // TODO Auto-generated method stub
         
     }
 
+    public String getConnectionPort()
+    {
+        return "XML";
+    }
+    
+    
     /* 
      * setDeviceAllowedActions
      */
     public void setDeviceAllowedActions(boolean can_read_data,
-            boolean can_read_partitial_data, boolean can_clear_data,
+            boolean can_read_partitial_data, 
             boolean can_read_device_info, boolean can_read_device_configuration)
     {
         // TODO Auto-generated method stub
@@ -313,6 +234,56 @@ public class AccuChekSmartPix extends XmlProtocol
         // TODO Auto-generated method stub
         
     }
+    
+    
+    
+    
+    /**
+     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
+    public void readDeviceDataPartitial() throws MeterException
+    {
+        
+    }
+
+
+    /** 
+     * This is method for reading configuration
+     * 
+     * @throws MeterExceptions
+     */
+    public void readConfiguration() throws MeterException
+    {
+    }
+    
+
+    /**
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do). 
+     * @throws MeterExceptions
+     */
+    public void readInfo() throws MeterException
+    {
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     Document document;
     
@@ -497,7 +468,7 @@ public class AccuChekSmartPix extends XmlProtocol
     }
     
     
-    public int getMemoryRecords()
+    public int getMaxMemoryRecords()
     {
         return 1;
     }

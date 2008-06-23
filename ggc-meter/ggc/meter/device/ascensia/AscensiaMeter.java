@@ -75,7 +75,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		data = new ArrayList<MeterValuesEntry>();
 		
 		this.output_writer = writer; 
-		this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMemoryRecords());
+		this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 	
 		try
 		{
@@ -115,13 +115,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
 
 
-    /**
-     * getTimeDifference - returns time difference between Meter and Computer
-     */
-    public int getTimeDifference()
-    {
-	return this.m_time_difference;
-    }
 
 
     /**
@@ -133,22 +126,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     }
 
 
-    /**
-     * getStatus - get Status of meter
-     */
-    public int getStatus()
-    {
-	return m_status;
-    }
 
 
-    /**
-     * isStatusOK - has Meter OK status
-     */
-    public boolean isStatusOK()
-    {
-	return (m_status == 0);
-    }
 
 
     
@@ -515,7 +494,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
 
 
-    public void readDeviceData() throws MeterException
+    public void readDeviceDataFull() throws MeterException
     {
     }
 
@@ -579,13 +558,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         return false;
     }
 
-    /**
-     * canClearData - Can Meter class clear data from meter.
-     */
-    public boolean canClearData()
-    {
-        return false;
-    }
 
 
 
@@ -601,6 +573,34 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
 
 
+    /**
+     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
+    public void readDeviceDataPartitial() throws MeterException
+    {
+        
+    }
+
+
+    /** 
+     * This is method for reading configuration
+     * 
+     * @throws MeterExceptions
+     */
+    public void readConfiguration() throws MeterException
+    {
+    }
+    
+
+    /**
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do). 
+     * @throws MeterExceptions
+     */
+    public void readInfo() throws MeterException
+    {
+    }
 
 
 

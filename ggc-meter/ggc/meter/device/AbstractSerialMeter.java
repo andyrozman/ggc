@@ -8,7 +8,6 @@
 package ggc.meter.device;
 
 
-import ggc.meter.data.DailyValuesRow;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.manager.MeterDevice;
 import ggc.meter.manager.company.AbstractMeterCompany;
@@ -35,7 +34,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
     protected String m_info = "";
     protected int m_time_difference = 0;
-    protected ArrayList<DailyValuesRow> data = null;
+    protected ArrayList<MeterValuesEntry> data = null;
     protected String device_name = "Undefined";
     protected OutputWriter output_writer;
     
@@ -67,7 +66,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     
     boolean can_read_data = false; 
 	boolean can_read_partitial_data = false;
-	boolean can_clear_data = false;
 	boolean can_read_device_info = false;
 	boolean can_read_device_configuration = false;
     
@@ -77,13 +75,11 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 	
     public void setDeviceAllowedActions(boolean can_read_data, 
     									boolean can_read_partitial_data,
-    									boolean can_clear_data,
     									boolean can_read_device_info,
     									boolean can_read_device_configuration)
     {
         this.can_read_data = can_read_data; 
         this.can_read_partitial_data = can_read_partitial_data;
-        this.can_clear_data = can_clear_data;
         this.can_read_device_info = can_read_device_info;
         this.can_read_device_configuration = can_read_device_configuration;
     }
@@ -140,6 +136,21 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     	}
     	
     }
+    
+    
+    
+    /**
+     * getConnectionPort - connection port data
+     * 
+     * @return connection port as string
+     */
+    public String getConnectionPort()
+    {
+        return this.serial_port;
+    }
+    
+    
+    
     
     public String getSerialPort()
     {
@@ -428,6 +439,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
     protected void readData(String input)
     {
+        /*
     	StringTokenizer strtok = new StringTokenizer(input, "|");
     	//System.out.println("Data (" + strtok.countTokens() + "): " + input);
     
@@ -467,7 +479,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     	}
     
     	this.data.add(dv);
-
+*/
     }
 
 
@@ -894,15 +906,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     	return this.can_read_partitial_data;
     }
 
-    /**
-     * canClearData - Can Meter class clear data from meter.
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canClearData()
-    {
-    	return this.can_clear_data;
-    }
 
     
     /**

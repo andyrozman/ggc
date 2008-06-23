@@ -85,6 +85,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public static final int STATUS_STOPPED_DEVICE = 3;
     public static final int STATUS_STOPPED_USER = 4;
     public static final int STATUS_DOWNLOAD_FINISHED = 5;
+    public static final int STATUS_READER_ERROR = 6;
     
     
     /**

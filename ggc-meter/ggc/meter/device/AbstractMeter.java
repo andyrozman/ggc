@@ -8,7 +8,6 @@
 package ggc.meter.device;
 
 
-import ggc.meter.data.DailyValuesRow;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.meter.util.I18nControl;
@@ -32,7 +31,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
 
     protected String m_info = "";
     protected int m_time_difference = 0;
-    protected ArrayList<DailyValuesRow> data = null;
+    protected ArrayList<MeterValuesEntry> data = null;
     
 
     public AbstractMeter()
@@ -305,6 +304,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
 
     protected void readData(String input)
     {
+        /*
     	StringTokenizer strtok = new StringTokenizer(input, "|");
     	//System.out.println("Data (" + strtok.countTokens() + "): " + input);
     
@@ -344,7 +344,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     	}
     
     	this.data.add(dv);
-
+*/
     }
 
 

@@ -658,7 +658,7 @@ public class AscensiaEliteXL extends AscensiaMeter
         return "ggc.meter.device.ascensia.AscensiaEliteXL";
     }
 
-    public int getMemoryRecords()
+    public int getMaxMemoryRecords()
     {
         return 120;
     }

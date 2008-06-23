@@ -29,7 +29,7 @@
 
 package ggc.meter.manager.company; 
 
-import ggc.meter.device.accuchek.AccuChekAdvance;
+import ggc.meter.device.accuchek.AccuChekAdvantage;
 import ggc.meter.device.accuchek.AccuChekGo;
 import ggc.meter.device.accuchek.AccuChekIntegra;
 import ggc.meter.device.accuchek.AccuChekPerforma;
@@ -42,7 +42,7 @@ public class Roche extends AbstractMeterCompany
     public Roche()
     {
         this.addDevice(new AccuChekSmartPix());
-        this.addDevice(new AccuChekAdvance());
+        this.addDevice(new AccuChekAdvantage());
         this.addDevice(new AccuChekGo());
         this.addDevice(new AccuChekIntegra());
         this.addDevice(new AccuChekPerforma());

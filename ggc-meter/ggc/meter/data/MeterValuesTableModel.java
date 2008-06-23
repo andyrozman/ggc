@@ -30,10 +30,8 @@ package ggc.meter.data;
 
 
 
-import ggc.data.event.GlucoValueEvent;
 import ggc.meter.util.I18nControl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
@@ -152,7 +150,7 @@ public class MeterValuesTableModel extends AbstractTableModel //implements Gluco
     /**
      * @see event.GlucoValueEventListener#glucoValuesChanged(GlucoValueEvent)
      */
-    public void glucoValuesChanged(GlucoValueEvent event)
+/*    public void glucoValuesChanged(GlucoValueEvent event)
     {
         switch (event.getType()) 
         {
@@ -167,7 +165,7 @@ public class MeterValuesTableModel extends AbstractTableModel //implements Gluco
                 break;
         }
     }
-
+*/
     
     /**
      * Returns the dayData.

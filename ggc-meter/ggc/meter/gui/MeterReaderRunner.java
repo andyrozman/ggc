@@ -12,6 +12,7 @@ import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
+import ggc.meter.output.AbstractOutputWriter;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
 import ggc.meter.util.DataAccessMeter;
@@ -23,12 +24,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 
-/**
- * @author stephan
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- */
 public class MeterReaderRunner extends Thread implements OutputWriter // extends JDialog implements ActionListener
 {
 
@@ -102,11 +97,11 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
         count++;
         // TODO Auto-generated method stub
         
-        float f = (count/500.0f) * 100f;
+        float f = ((count  * 1.0f)/this.dialog.output_util.getMaxMemoryRecords()) * 100.0f;
         
         //int i = (int)((count/500) * 100);
         
-        System.out.println("Progress: " + f + "  " + count);
+        System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
         
         dialog.progress.setValue((int)f);
         
@@ -277,8 +272,9 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
                 
                 Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class);
                 MeterInterface mi = (MeterInterface)cnst.newInstance(this.configured_meter.communication_port, this);
+                this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
                 
-                mi.readDeviceData();
+                mi.readDeviceDataFull();
                 
                 
                 System.out.println(cnst);
@@ -288,12 +284,14 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
             }
             catch(Exception ex)
             {
+                this.setStatus(AbstractOutputWriter.STATUS_READER_ERROR);
                 System.out.println("Exception: " + ex);
                 ex.printStackTrace();
                 
                 running = false;
             }
             
+            this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
             
             
         }  // while
