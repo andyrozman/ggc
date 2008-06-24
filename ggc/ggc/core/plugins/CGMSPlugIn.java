@@ -4,8 +4,6 @@ package ggc.core.plugins;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JOptionPane;
-
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 

@@ -111,7 +111,8 @@ public class ExportDailyValues extends ExportTool implements Runnable
 	openFile(this.getRootPath() + "DayValueH" + this.getFileLastPart() + ".txt");
 //		"../data/export/DayValueH_" + getCurrentDateForFile() + ".txt");
 	writeHeader("ggc.core.db.hibernate.DayValueH", 
-		    "id; dt_info; bg; ins1; ins2; ch; meals_ids; extended; person_id; comment; changed");
+		    "id; dt_info; bg; ins1; ins2; ch; meals_ids; extended; person_id; comment; changed", 
+		    DataAccess.getInstance().currentDbVersion);
 	
         Session sess = getSession();
 

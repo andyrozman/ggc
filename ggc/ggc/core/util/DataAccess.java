@@ -40,6 +40,7 @@ import ggc.core.db.datalayer.FoodDescription;
 import ggc.core.db.datalayer.FoodGroup;
 import ggc.core.db.datalayer.Meal;
 import ggc.core.db.datalayer.MealGroup;
+import ggc.core.db.datalayer.Settings;
 import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.gui.MainFrame;
@@ -410,6 +411,7 @@ public class DataAccess extends ATDataAccessAbstract
 	
 	BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
 	brc.addChild(new DailyValue(this.m_i18n));
+	brc.addChild(new Settings(this.m_i18n));
 	
 	BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
 	brc_nut.addChild(new FoodGroup(this.m_i18n));

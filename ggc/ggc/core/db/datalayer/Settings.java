@@ -31,14 +31,20 @@
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.SettingsH;
+import ggc.core.util.I18nControl;
+
+import java.util.ArrayList;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
-public class Settings extends SettingsH implements DatabaseObjectHibernate
+public class Settings extends SettingsH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
     public boolean debug = false;
@@ -49,11 +55,20 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate
     public boolean edited = false;
     public boolean added = false;
 
+    private I18nControlAbstract ic;
+    private boolean backup_object = false;
 
     public Settings()
     {
     }
 
+    
+    public Settings(I18nControlAbstract ic)
+    {
+	this.ic = (I18nControl)ic;
+	this.backup_object = true;
+    }
+    
 
     public Settings(SettingsH ch)
     {
@@ -75,8 +90,10 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate
     @Override
     public String toString()
     {
-	//return this.getDescription();
-        return this.getShortDescription();
+	if (backup_object)
+	    return this.getTargetName();
+	else
+	    return this.getShortDescription();
     }
 
 
@@ -265,6 +282,83 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate
         return 0;
     }
 
+    
+
+    //---
+    //---  BackupRestoreObject
+    //---
+    
+    
+    
+    private boolean selected = false;
+    
+    /* 
+     * getTargetName
+     */
+    public String getTargetName()
+    {
+	return ic.getMessage("SETTINGS");
+    }
+
+    /* 
+     * getName
+     */
+    public String getName()
+    {
+	return this.getTargetName();
+    }
+
+
+    
+    
+    
+    
+    //---
+    //---  BackupRestoreObject
+    //---
+    
+    
+    /* 
+     * getChildren
+     */
+    public ArrayList<CheckBoxTreeNodeInterface> getChildren()
+    {
+	return null;
+    }
+
+    /* 
+     * isSelected
+     */
+    public boolean isSelected()
+    {
+	return selected;
+    }
+
+    /* 
+     * setSelected
+     */
+    public void setSelected(boolean newValue)
+    {
+	this.selected = newValue;
+    }
+    
+    
+    public boolean isCollection()
+    {
+	return false;
+    }
+    
+    
+    public boolean hasChildren()
+    {
+	return false;
+    }
+    
+    
+
+    
+    
+    
 }
 
 

@@ -55,7 +55,7 @@ public class MetersPlugIn extends PlugInClient
     {
 	try
 	{
-            Class c = Class.forName("ggc.meter.plugin.MeterPlugInServer");
+            Class<?> c = Class.forName("ggc.meter.plugin.MeterPlugInServer");
 
             //PlugInServer obj = (PlugInServer)c.newInstance();
             this.m_server = (PlugInServer)c.newInstance();

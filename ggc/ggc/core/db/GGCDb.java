@@ -63,9 +63,6 @@ import ggc.core.db.hibernate.SettingsH;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,7 +92,7 @@ public class GGCDb //implements DbCheckInterface
     public static final int DB_STARTED = 3;
 
     private boolean debug = true;
-    private boolean db_debug = false;
+//x    private boolean db_debug = false;
     
     private static Log log = LogFactory.getLog(GGCDb.class); 
     private Session m_session = null;
@@ -1253,7 +1250,6 @@ public class GGCDb //implements DbCheckInterface
 
     HbA1cValues hba1c_object = null;
     
-    @SuppressWarnings("unchecked")
     public HbA1cValues getHbA1c(GregorianCalendar day, boolean force)
     {
 	if (this.hba1c_object==null)
