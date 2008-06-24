@@ -1,7 +1,7 @@
 package ggc.pump.output;
 
 import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,17 +10,18 @@ import java.util.GregorianCalendar;
 
 import com.atech.utils.ATechDate;
 
+
 public class GGCFileOutputWriter implements OutputWriter
 {
 	
 	BufferedWriter bw;
 	OutputUtil out_util; 
-	DataAccess m_da;
+	DataAccessPump m_da;
 	
 	public GGCFileOutputWriter()
 	{
 		out_util = new OutputUtil(this);
-		m_da = DataAccess.getInstance();
+		m_da = DataAccessPump.getInstance();
 		
 		try
 		{

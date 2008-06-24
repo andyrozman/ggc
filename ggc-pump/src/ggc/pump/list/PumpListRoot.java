@@ -27,7 +27,7 @@
 
 package ggc.pump.list;
 
-import ggc.pump.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
 
@@ -80,7 +80,7 @@ public class PumpListRoot
     @Override
     public String toString()
     {
-    	return DataAccess.getInstance().m_i18n.getMessage("METERS_LIST");
+    	return DataAccessPump.getInstance().m_i18n.getMessage("METERS_LIST");
     }
 
 

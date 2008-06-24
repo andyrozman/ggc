@@ -30,14 +30,8 @@
 package ggc.pump.manager.company; 
 
 
-public class Animas extends AbstractPumpCompany
+public interface PumpCompanyInterface
 {
-
-    
-    public Animas()
-    {
-    }
-
 
 
     
@@ -50,48 +44,43 @@ public class Animas extends AbstractPumpCompany
 
     /**
      * getName - Get Name of meter. 
+     * Should be implemented by company class.
      * 
      * @return name of meter
      */
-    public String getName()
-    {
-        return "Roche";
-    }
+    String getName();
 
-    
+
     /**
      * getCompanyId - Get Company Id 
+     * Should be implemented by company class.
      * 
      * @return id of company
      */
-    public int getCompanyId()
-    {
-        return 2;
-    }
+    int getCompanyId();
     
     
     /**
      * getInstructions - get instructions for device
+     * Should be implemented by company class.
      * 
      * @return instructions for reading data 
      */
-    public String getDescription()
-    {
-       return "ROCHE_DESC"; 
-    }
+    String getDescription();
     
     
     
     /**
      * getImplementationStatus - Get Implementation status 
+     * Should be implemented by company class.
      * 
      * @return implementation status as number
      * @see ggc.meter.manager.MeterImplementationStatus
      */
-    public int getImplementationStatus()
-    {
-        return 0;
-    }
+    int getImplementationStatus(); 
+    
+    
+    
     
     
     

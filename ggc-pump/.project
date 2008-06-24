@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>ggc-pump</name>
-			<type>2</type>
-			<location>D:/Projects_SVN/ggc/trunk/ggc-pump</location>
-		</link>
-	</linkedResources>
 </projectDescription>

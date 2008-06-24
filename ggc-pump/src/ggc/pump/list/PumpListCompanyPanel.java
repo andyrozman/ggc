@@ -27,7 +27,8 @@
 
 package ggc.pump.list;
 
-import ggc.pump.util.DataAccess;
+import ggc.core.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.awt.Color;
@@ -50,7 +51,7 @@ public class PumpListCompanyPanel extends PumpListAbstractPanel
 	
 	
     I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
+    DataAccessPump m_da = null;
     JEditorPane editor;
     
     Font font_big, font_normal, font_normal_b;
@@ -78,7 +79,7 @@ public class PumpListCompanyPanel extends PumpListAbstractPanel
         super();
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
+        m_da = DataAccessPump.getInstance();
 
         font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);

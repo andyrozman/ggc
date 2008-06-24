@@ -29,7 +29,7 @@
 
 package ggc.pump.manager; 
 
-import ggc.pump.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import javax.swing.ImageIcon;
@@ -38,7 +38,7 @@ public class PumpDevice
 {
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccess m_da = DataAccess.getInstance();
+    protected DataAccessPump m_da = DataAccessPump.getInstance();
     
 
 

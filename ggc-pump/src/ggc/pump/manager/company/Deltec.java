@@ -27,25 +27,15 @@
  */
 
 
-package ggc.meter.manager.company; 
+package ggc.pump.manager.company; 
 
-import ggc.meter.device.accuchek.AccuChekAdvantage;
-import ggc.meter.device.accuchek.AccuChekGo;
-import ggc.meter.device.accuchek.AccuChekIntegra;
-import ggc.meter.device.accuchek.AccuChekPerforma;
-import ggc.meter.device.accuchek.AccuChekSmartPix;
 
-public class Roche extends AbstractMeterCompany
+public class Deltec extends AbstractPumpCompany
 {
 
     
-    public Roche()
+    public Deltec()
     {
-        this.addDevice(new AccuChekSmartPix());
-        this.addDevice(new AccuChekAdvantage());
-        this.addDevice(new AccuChekGo());
-        this.addDevice(new AccuChekIntegra());
-        this.addDevice(new AccuChekPerforma());
     }
 
 

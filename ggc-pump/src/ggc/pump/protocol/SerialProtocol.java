@@ -11,7 +11,7 @@ package ggc.pump.protocol;
 import ggc.core.data.DailyValuesRow;
 import ggc.pump.device.PumpException;
 import ggc.pump.device.PumpInterface;
-import ggc.pump.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -47,7 +47,7 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
 
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccess m_da = DataAccess.getInstance();
+    protected DataAccessPump m_da = DataAccessPump.getInstance();
 
 
 
@@ -628,7 +628,7 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
 
     public static String[] getAvailablePumps()
     {
-        return DataAccess.getInstance().getPumpManager().getAvailablePumps();
+        return DataAccessPump.getInstance().getPumpManager().getAvailablePumps();
     }
 
 

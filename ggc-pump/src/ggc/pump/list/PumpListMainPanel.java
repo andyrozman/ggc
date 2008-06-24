@@ -3,7 +3,8 @@ package ggc.pump.list;
 //package ggc.gui.nutrition.panels;
 
 //import ggc.gui.nutrition.NutritionTreeDialog;
-import ggc.pump.util.DataAccess;
+import ggc.core.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.awt.Font;
@@ -23,7 +24,7 @@ public class PumpListMainPanel extends PumpListAbstractPanel //JPanel
 
 
     I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
+    DataAccessPump m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label;
@@ -45,7 +46,7 @@ public class PumpListMainPanel extends PumpListAbstractPanel //JPanel
         super();
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
+        m_da = DataAccessPump.getInstance();
 
         font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);

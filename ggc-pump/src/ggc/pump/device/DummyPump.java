@@ -17,7 +17,7 @@ package ggc.pump.device;
 
 
 import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import javax.swing.ImageIcon;
 public class DummyPump extends GenericPump //implements MeterInterface
 {
 
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccessPump m_da = DataAccessPump.getInstance();
     I18nControl m_ic = m_da.getI18nInstance();
 
     public int m_meter_index = 0;

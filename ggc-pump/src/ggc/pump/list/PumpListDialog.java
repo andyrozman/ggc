@@ -27,7 +27,7 @@
 
 package ggc.pump.list;
  
-import ggc.pump.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.awt.Dimension;
@@ -55,7 +55,7 @@ public class PumpListDialog extends JDialog implements TreeSelectionListener, Ac
     private JPanel mainPane;
     private JTree tree;
 
-    private DataAccess m_da = null;
+    private DataAccessPump m_da = null;
 
 
 //    private static boolean playWithLineStyle = false;
@@ -74,7 +74,7 @@ public class PumpListDialog extends JDialog implements TreeSelectionListener, Ac
     PumpListRoot m_root = new PumpListRoot();
     
     
-    public PumpListDialog(DataAccess da) 
+    public PumpListDialog(DataAccessPump da) 
     {
 
         super(new JFrame(), "", true);
@@ -380,7 +380,7 @@ public class PumpListDialog extends JDialog implements TreeSelectionListener, Ac
     
     public static void main(String args[])
     {
-    	DataAccess da = DataAccess.getInstance();
+        DataAccessPump da = DataAccessPump.getInstance();
 	
 	
 

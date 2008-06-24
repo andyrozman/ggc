@@ -33,6 +33,11 @@ import javax.swing.JPanel;
 public abstract class PumpListAbstractPanel extends JPanel
 {
 	
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -419549921018198285L;
+
     public abstract void setData(Object obj);
     
 }

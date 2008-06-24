@@ -29,6 +29,7 @@
 
 package ggc.pump.util;
 
+import ggc.core.util.DataAccess;
 import ggc.pump.manager.PumpManager;
 
 import java.awt.Color;
@@ -57,7 +58,7 @@ import javax.swing.JLabel;
 import com.atech.utils.ATDataAccessAbstract;
 
 
-public class DataAccess extends ATDataAccessAbstract
+public class DataAccessPump extends ATDataAccessAbstract
 {
 
     // LF
@@ -82,7 +83,7 @@ public class DataAccess extends ATDataAccessAbstract
 
     public I18nControl m_i18n = null;
 
-    private static DataAccess s_da = null; // This is handle to unique 
+    private static DataAccessPump s_da = null; // This is handle to unique 
 
     // singelton instance
 
@@ -109,7 +110,7 @@ public class DataAccess extends ATDataAccessAbstract
 
     private PumpManager m_meterManager = null;
 
-    private GGCProperties m_settings = null;
+    //private GGCProperties m_settings = null;
 
     //private DbToolApplicationGGC m_configFile = null;
 //    private ConfigurationManager m_cfgMgr = null;
@@ -183,7 +184,7 @@ public class DataAccess extends ATDataAccessAbstract
      *  method.<br><br>
      *
      */
-    private DataAccess()
+    private DataAccessPump()
     {
     	super(I18nControl.getInstance());
         this.loadFonts();
@@ -223,19 +224,19 @@ public class DataAccess extends ATDataAccessAbstract
      *  @return Reference to OmniI18nControl object
      * 
      */
-    public static DataAccess getInstance()
+    public static DataAccessPump getInstance()
     {
         if (s_da == null)
-            s_da = new DataAccess();
+            s_da = new DataAccessPump();
         return s_da;
     }
 
-    public static DataAccess createInstance(JFrame main)
+    public static DataAccessPump createInstance(JFrame main)
     {
         if (s_da == null)
         {
             //GGCDb db = new GGCDb();
-            s_da = new DataAccess();
+            s_da = new DataAccessPump();
 //x            s_da.setParent(main);
         }
 
@@ -467,16 +468,6 @@ public class DataAccess extends ATDataAccessAbstract
     // ******                  Settings                   *****    
     // ********************************************************
 
-    public GGCProperties getSettings()
-    {
-        return this.m_settings;
-    }
-
-    public void loadSettingsFromDb()
-    {
-        this.m_settings.load();
-    }
-
     public Color getColor(int color)
     {
         return new Color(color);
@@ -566,11 +557,11 @@ public class DataAccess extends ATDataAccessAbstract
         {
             if (output_type==DataAccess.BG_MGDL)
             {
-                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+                return bg_value * DataAccessPump.MGDL_TO_MMOL_FACTOR;
             }
             else
             {
-                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+                return bg_value * DataAccessPump.MMOL_TO_MGDL_FACTOR;
             }
         }
 
@@ -582,11 +573,11 @@ public class DataAccess extends ATDataAccessAbstract
 
             if (type==DataAccess.BG_MGDL)
             {
-                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+                return bg_value * DataAccessPump.MGDL_TO_MMOL_FACTOR;
             }
             else
             {
-                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+                return bg_value * DataAccessPump.MMOL_TO_MGDL_FACTOR;
             }
     }
 

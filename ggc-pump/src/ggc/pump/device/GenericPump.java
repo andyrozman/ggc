@@ -9,6 +9,7 @@ package ggc.pump.device;
 
 
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.manager.company.AbstractPumpCompany;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
@@ -882,7 +883,19 @@ public class GenericPump implements PumpInterface
     }
 
 
+    AbstractPumpCompany company;
 
+    public void setPumpCompany(AbstractPumpCompany company)
+    {
+        this.company = company;
+    }
+    
+    
+    public AbstractPumpCompany getPumpCompany()
+    {
+        return this.company;
+        
+    }
 
 
 

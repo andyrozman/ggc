@@ -1,6 +1,7 @@
 package ggc.pump.device;
 
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.manager.company.AbstractPumpCompany;
 
 import java.util.ArrayList;
 
@@ -266,5 +267,12 @@ public interface PumpInterface
 
     void test();
 
+    
+    public void setPumpCompany(AbstractPumpCompany company);
+    
+    
+    public AbstractPumpCompany getPumpCompany();
+    
+    
 
 }

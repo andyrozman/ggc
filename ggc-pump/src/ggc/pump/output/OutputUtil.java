@@ -1,6 +1,6 @@
 package ggc.pump.output;
 
-import ggc.pump.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -110,7 +110,7 @@ public class OutputUtil extends TimerControlAbstract
             return bg_value;
         else
         {
-            if (output_type==DataAccess.BG_MGDL)
+            if (output_type==DataAccessPump.BG_MGDL)
             {
                 return bg_value * OutputUtil.MGDL_TO_MMOL_FACTOR;
             }
@@ -126,7 +126,7 @@ public class OutputUtil extends TimerControlAbstract
     public float getBGValueDifferent(int type, float bg_value)
     {
 
-            if (type==DataAccess.BG_MGDL)
+            if (type==DataAccessPump.BG_MGDL)
             {
                 return bg_value * OutputUtil.MGDL_TO_MMOL_FACTOR;
             }
