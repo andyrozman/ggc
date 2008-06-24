@@ -72,51 +72,54 @@ Version 0.4
 = Daten wiederherstellen
 - Datenbankwerkzeug (andere Datenbanksysteme benutzen und Initialisierung der
   benutzten Datenbank)
-- [TODO] Multi person instance
+- Multiuser-Unterstützung
 - Fertigstellung von GGC Little, einer leichtgewichtigen Version für die
   Dateneingabe tagsüber
 - GGC PPC - eine Version der Anwendung für den Pocket PC (wird nicht die komplette
   Funktionalität der PC-Version enthalten)
 - Aktualisierungsmechanismus (Serverseite)
-
-- Integration of Meter Tool (Meter Tool is being developed as a separate project)
-- Appointments (adding appointment, adding data from doctor's visit), Doctors
-  management (adding)
-- Medical stock - Listing of everything that patient has, and what he needs to
-  get to handle diabetes (and also any other condition)
-- Fully write help files and add help through application (English version so far)
+- Integration des Messgerätewerkzeugs (als separates Projekt entwickelt)
+- Termine (Termine hinzufügen, Daten zum Arztbesuch eintragen), Ärzteverwaltung
+  (hinzufügen)
+- Medizinischer Bestand - Liste von allem, was der Patient hat und was er besorgen
+  muss, um seinen Diabetes (und andere gesundheitliche Probleme) zu behandeln
+- Hilfedateien vervollständigen und in der Applikation referenzieren (Englische
+  Version)
 
 
 Version 0.5
 ------------
-- Export/Import Management
-- Export/Import data
-- GGC Network (running several instances of GGC on several computers)
-- Synchronization (for GGC network)
-- Links to data about diabetes on internet
-- Pump Tool integration
+- Import/Export-Verwaltung
+- Daten importieren/exportieren
+- GGC Netzwerk (mehrere GGC-Instanzen auf mehreren Computern vernetzen)
+- Synchronisierung (für GGC Netzwerk)
+- Internet-Links zu Diabetes
+- Pumpenwerkzeug integrieren
 
 
 
-5. SUB-PROJECTS
-===============
+5. Unterprojekte
+================
 
-Currently there are two sub-projects running.
-
-
-METER-TOOL
------------
-
-This is a plug-in for getting data from glucose meters. Currently this project is in
-the development phase. Together with support for Ascensia meters, we are finishing
-up the whole plug-in framework and all needed graphical interface forms (classes).
-The first alpha version will be available around September 2008, together with the
-finished implementation for Ascensia meters. Next in line are Roche meters
-(December 2008) and after them LifeScan meters (January 2009).
+Im Augenblick existieren zwei Unterprojekte.
 
 
-PUMP-TOOL
-----------
+Messgeräte-Werkzeug
+-------------------
+
+Dies ist ein Plug-in für den Datenaustausch mit Blutzuckermessgeräten. Dieses Projekt
+befindet sich zur Zeit in der Entwicklungsphase. Zusammen mit der Unterstützung für
+Ascensia-Messgeräte, stellen wir das gesamte Plug-in-Framework und alle benötigten
+graphischen Masken (Klassen) fertig. Die erste Alpha-Version wird - zusammen mit der
+fertigen Implementierung für Ascensia-Messgeräte - ungefähr September 2008 verfügbar
+sein. Danach werden Roche- (Dezember 2008) und LifeScan-Messgeräte (Januar 2009) in
+Angriff genommen.
+
+
+Pumpen-Werkzeug
+---------------
+
+Dies ist ein Plug-in
 
 This is plug-in for entering and retrieving data from insulin pumps. This project
 is still in the planning phase. The project will move into the development phase
@@ -126,8 +129,8 @@ after them probably Minimed.
 
 
 
-6. HOW CAN I HELP AS REGULAR USER
-==================================
+6. Wie kann ich als regulärer Benutzer helfen?
+==============================================
 
 There are several ways you can help. The first and major way is to test software.
 Try to use it and find anything that doesn't work. Version 0.3 will be started from
@@ -182,11 +185,9 @@ this application.
 
 
 
-
-7. END
-=======
+7. Ende
+========
 
 
 Again, thank you for using our software, we hope it fulfills your needs... If not
 yet, maybe in the future.
-

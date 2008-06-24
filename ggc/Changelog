@@ -1,3 +1,6 @@
+2008-06-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * updated GGC_de & GGC_Nutrition_de to include all new keywords
+
 0.2.19.1
     * Changed plugin system and moved instances of plugins into DataAccess class
     * Added CGMS context (Continous Glucose Monitoring System), see IDEAS file
