@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="ggc-pump"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Atech-Tools"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GNU Gluco Control"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
