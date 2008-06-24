@@ -109,7 +109,7 @@ public class DataAccessMeter extends ATDataAccessAbstract
 
     private MeterManager m_meterManager = null;
 
-    private GGCProperties m_settings = null;
+//xa    private GGCProperties m_settings = null;
 
     //private DbToolApplicationGGC m_configFile = null;
 //    private ConfigurationManager m_cfgMgr = null;
@@ -512,7 +512,7 @@ public class DataAccessMeter extends ATDataAccessAbstract
     // ********************************************************
     // ******                  Settings                   *****    
     // ********************************************************
-
+/*
     public GGCProperties getSettings()
     {
         return this.m_settings;
@@ -522,7 +522,7 @@ public class DataAccessMeter extends ATDataAccessAbstract
     {
         this.m_settings.load();
     }
-
+*/
     public Color getColor(int color)
     {
         return new Color(color);

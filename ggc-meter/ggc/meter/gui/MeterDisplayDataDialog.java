@@ -3,6 +3,8 @@ package ggc.meter.gui;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.MeterValuesTable;
 import ggc.meter.data.MeterValuesTableModel;
+import ggc.meter.data.MeterValuesTable.AddRowAction;
+import ggc.meter.data.MeterValuesTable.DeleteRowAction;
 import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterInterface;
@@ -11,15 +13,16 @@ import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
-import ggc.meter.util.TimerThread;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,8 +30,13 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.table.TableColumn;
+
+import com.atech.utils.ATechDate;
 
 
 public class MeterDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
@@ -36,10 +44,11 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 	static final long serialVersionUID = 0;
 
 
-    private JLabel infoIcon = null;
+    //private JLabel infoIcon = null;
 //x    private JLabel infoDescription = null;
 
     private I18nControl m_ic = I18nControl.getInstance();        
+    MeterReaderRunner mrr;
 
 
 
@@ -74,7 +83,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     JTextArea ta_info = null;
     
-    TimerThread m_timer = null;
+    //TimerThread m_timer = null;
 
     int x,y;
 
@@ -110,17 +119,12 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     }
 
 
-    MeterReaderRunner mrr;
-    
-    Thread thr;
     
     public MeterDisplayDataDialog()
     {
         super();
         
         this.loadConfiguration();
-        
-        System.out.println(this.configured_meter);
         
         this.mrr = new MeterReaderRunner(this.configured_meter, this); 
         
@@ -164,19 +168,61 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     
     private void dialogPreInit()
     {
-//a        setTitle(m_ic.getMessage("READ_METER_DATA") + "  [" + this.meter_interface.getName() + " on " + this.meter_interface.getPort() + "]");
+        setTitle(m_ic.getMessage("READ_METER_DATA") + "  [" + this.configured_meter.meter_device + " on " + this.configured_meter.communication_port + "]");
 
-//        m_mim = new MeterImportManager();
-//        initMeter();
         init();
-        postInit();
-        this.mrr.start();
+        //postInit();
 
+        
+//        this.mrr.start();
+        guiTest();
+        
         this.setVisible(true);
 
     }
 
 
+    private void guiTest()
+    {
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setBgUnit(OutputUtil.BG_MMOL);
+        mve.setBgValue("8.7");
+        mve.setDateTime(new ATechDate(200806121233L));
+
+        this.model.addEntry(mve);
+        
+
+        mve = new MeterValuesEntry();
+        mve.setBgUnit(OutputUtil.BG_MMOL);
+        mve.setBgValue("10.1");
+        mve.setDateTime(new ATechDate(200806121456L));
+
+        this.model.addEntry(mve);
+        
+        mve = new MeterValuesEntry();
+        mve.setBgUnit(OutputUtil.BG_MMOL);
+        mve.setBgValue("10.1");
+        mve.setDateTime(new ATechDate(200806121456L));
+
+        this.model.addEntry(mve);
+
+        mve = new MeterValuesEntry();
+        mve.setBgUnit(OutputUtil.BG_MMOL);
+        mve.setBgValue("10.1");
+        mve.setDateTime(new ATechDate(200806121456L));
+
+        this.model.addEntry(mve);
+
+        mve = new MeterValuesEntry();
+        mve.setBgUnit(OutputUtil.BG_MMOL);
+        mve.setBgValue("10.1");
+        mve.setDateTime(new ATechDate(200806121456L));
+
+        this.model.addEntry(mve);
+        
+        
+    }
+    
 
     /**
      * Method getInstance.
@@ -261,7 +307,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         
         tabPane = new JTabbedPane();
         //tabPane.add("Values", sp2);
-        tabPane.add(m_ic.getMessage("DATA"), MeterValuesTable.createMeterValuesTable(this.table));
+        tabPane.add(m_ic.getMessage("DATA"), this.createTablePanel(this.table));
         tabPane.add(m_ic.getMessage("LOG"), sp);
         tabPane.setBounds(30, 15, 400, 250);
         panel.add(tabPane);
@@ -303,15 +349,21 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         
         
         bt_break = new JButton(m_ic.getMessage("BREAK_COMMUNICATION"));
-        bt_break.setBounds(170, 490, 250, 25);
+        bt_break.setBounds(160, 490, 170, 25);
 //        bt_break.setEnabled(this.m_mim.isStatusOK());
         bt_break.setActionCommand("break_communication");
         bt_break.addActionListener(this);
         panel.add(bt_break);
         
-        JButton help_button = m_da.createHelpButtonByBounds(30, 490, 120, 25, this);
+        JButton help_button = m_da.createHelpButtonByBounds(30, 490, 110, 25, this);
         panel.add(help_button);
    
+        bt_close = new JButton(m_ic.getMessage("CLOSE"));
+        bt_close.setBounds(380, 490, 110, 25);
+        bt_close.setEnabled(false);
+        bt_close.setActionCommand("close");
+        bt_close.addActionListener(this);
+        panel.add(bt_close);
         
         
         bt_import = new JButton(m_ic.getMessage("IMPORT_TO_DB"));
@@ -366,179 +418,85 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     }
 
-    public void postInit()
+    String[] filter_states = { 
+            m_ic.getMessage("FILTER_ALL"), 
+            m_ic.getMessage("FILTER_NEW"), 
+            m_ic.getMessage("FILTER_CHANGED"), 
+            m_ic.getMessage("FILTER_EXISTING"), 
+            m_ic.getMessage("FILTER_UNKNOWN"), 
+            m_ic.getMessage("FILTER_NEW_CHANGED"), 
+            m_ic.getMessage("FILTER_ALL_BUT_EXISTING") 
+    };
+    
+    
+    public JPanel createTablePanel(MeterValuesTable table)
     {
-        /*
-        resTable.setModel(model);
+        
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        table.setColumnSelectionAllowed(false);
+        table.setRowSelectionAllowed(false);
+        
+        JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
+        final AddRowAction addRowAction = new AddRowAction(table);
+        final DeleteRowAction deleteRowAction = new DeleteRowAction(table);
 
-        infoIcon.setIcon((meterImport.getImage() == null)
-                                     ? new ImageIcon(getClass().getResource("/icons/noMeter.gif"))
-                                     : meterImport.getImage());
+        JToolBar toolBar = new JToolBar();
+        toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
+        toolBar.setFloatable(false);
+        
+        toolBar.add(new JLabel(m_ic.getMessage("FILTER")+":   "));
+        toolBar.add(new JComboBox(this.filter_states));
+        toolBar.add(new JLabel("   "));
+        toolBar.add(this.createButton("select_all", m_ic.getMessage("SELECT_ALL"), "element_selection.png"));
+        toolBar.add(new JLabel(" "));
+        toolBar.add(this.createButton("deselect_all", m_ic.getMessage("DESELECT_ALL"), "element_selection_delete.png"));
+        
+        //toolBar.add(addRowAction);
+        //toolBar.add(deleteRowAction);
+        //UIUtilities.addToolBarButton(toolBar, addRowAction);
+        //UIUtilities.addToolBarButton(toolBar, deleteRowAction);
+        //toolBar.add(addRowAction);
+        //toolBar.add(deleteRowAction);
 
-        this.infoDescription.setText((meterImport.getUseInfoMessage() == null) ? m_ic.getMessage("NO_TO_USE_INFORMATION") : meterImport.getUseInfoMessage());
-        */
+        int[] cw = { 110, 80, 70, 90,20 };
+        
+        TableColumn column = null;
+        for (int i = 0; i < 5; i++) {
+            column = table.getColumnModel().getColumn(i);
+            column.setPreferredWidth(cw[i]);
+        }        
+        
+
+        JPanel container = new JPanel(new BorderLayout());
+        container.add(toolBar, "North");
+        container.add(scroller, "Center");
+
+        return container;
+        
+        
     }
-
-
-    private void setStatus()
+    
+    
+    public JButton createButton(String command_text, String tooltip, String image_d)
     {
-        /*
-        if (this.m_mim.isStatusOK())
-            lbl_status.setText("<html><font color=\"green\" >" + m_ic.getMessage("OK") + "</font></html>");
-        else
-            lbl_status.setText("<html><font color=\"red\" >" + m_ic.getMessage("ERROR") + "</font></html>");
-        */
-/*        
-        if (meterDevice.isStatusOK())
-            lbl_status.setText("<html>" + m_ic.getMessage("METER_STATUS") + ": " + "<font color=\"green\" >" + m_ic.getMessage("OK") + "</font></html>");
-        else
-            lbl_status.setText(m_ic.getMessage("METER_STATUS") + ": " + "<html><font color=\"red\" >" + m_ic.getMessage("ERROR") + "</font></html>");
-           */
+        JButton b = new JButton();
+        b.setIcon(m_da.getImageIcon(image_d, 15, 15, this));
+        b.addActionListener(this);
+        b.setActionCommand(command_text);
+        b.setToolTipText(tooltip);
+        return b;
     }
+    
+    
+    
+
 
     
 
 
     //////////////////////////////////////////////////////////////
     // Action classes
- /*   protected class SaveAction extends AbstractAction
-    {
-    	static final long serialVersionUID = 0;
-        public SaveAction()
-        {
-            super();
-
-            putValue(Action.NAME, m_ic.getMessageWithoutMnemonic("ME_SAVE"));
-            
-            char ch = m_ic.getMnemonic("ME_SAVE");
-
-            if (ch!='0') 
-                putValue(Action.MNEMONIC_KEY, ""+ch);
-
-            
-        }
-
-        public void actionPerformed(ActionEvent e)
-        {
-            glucoValues.saveValues();
-        }
-
-    }
-
-    protected class CloseAction extends AbstractAction
-    {
-    	
-    	static final long serialVersionUID = 0;
-    	
-        public CloseAction()
-        {
-            super();
-
-            putValue(Action.NAME, m_ic.getMessageWithoutMnemonic("ME_CLOSE"));
-            
-            char ch = m_ic.getMnemonic("ME_CLOSE");
-
-            if (ch!='0') 
-                putValue(Action.MNEMONIC_KEY, ""+ch);
-            
-
-        }
-
-        public void actionPerformed(ActionEvent e)
-        {
-            meterImport.stopImport();
-            meterImport.removeImportEventListener(startImportAction);
-            meterImport.close();
-        //    ReadMeterDialog.this.close();
-        }
-
-    }
-
-    protected class StartImportAction extends AbstractAction implements ImportEventListener
-    {
-    	static final long serialVersionUID = 0;
-
-        public StartImportAction()
-        {
-            super();
-            putValue(Action.NAME, m_ic.getMessageWithoutMnemonic("ME_IMPORT"));
-            
-            char ch = m_ic.getMnemonic("ME_IMPORT");
-
-            if (ch!='0') 
-                putValue(Action.MNEMONIC_KEY, ""+ch);
-        }
-
-        public void actionPerformed(ActionEvent e)
-        {
-
-            tabPane.setSelectedIndex(1);
-
-            try 
-            {
-                meterImport.setPort(m_da.getSettings().getMeterPort());
-
-                progress.setIndeterminate(true);
-                meterImport.open();
-
-                meterImport.importData();
-            } 
-            catch (NoSuchPortException exc) 
-            {
-                progress.setIndeterminate(false);
-                addLogText(m_ic.getMessage("NO_SUCH_COM_PORT_FOUND"));
-            } 
-            catch (ImportException exc) 
-            {
-                progress.setIndeterminate(false);
-                addLogText(m_ic.getMessage("EXCEPTION_ON_IMPORT")+":");
-                addLogText(exc.getMessage());
-            }
-
-        }
-
-        public void importChanged(ImportEvent event)
-        {
-            switch (event.getType()) 
-            {
-                case ImportEvent.PROGRESS:
-                    progress.setIndeterminate(false);
-                    progress.setValue(event.getProgress());
-                    break;
-
-                case ImportEvent.PORT_OPENED:
-                    addLogText(m_ic.getMessage("PORT_TO_METER_OPENED"));
-                    break;
-
-                case ImportEvent.PORT_CLOSED:
-                    addLogText(m_ic.getMessage("PORT_TO_METER_CLOSED"));
-                    break;
-
-                case ImportEvent.IMPORT_FINISHED:
-                    meterImport.close();
-                    DailyValuesRow[] data = meterImport.getImportedData();
-                    addLogText(m_ic.getMessage("HAD_READ_VALUES_FROM_METER")+": " + data.length);
-                    for (int i = 0; i < data.length; i++) 
-                    {
-                        DailyValuesRow dailyValuesRow = data[i];
-                        getGlucoValues().setNewRow(dailyValuesRow);
-                    }
-
-                    progress.setIndeterminate(false);
-                    tabPane.setSelectedIndex(0);
-                    break;
-
-                case ImportEvent.TIMEOUT:
-                    progress.setIndeterminate(false);
-                    meterImport.close();
-                    addLogText(m_ic.getMessage("TIMEOUT_NO_DATA_SENT_FROM_METER")+"\n" + m_ic.getMessage("PLEASE_CHECK_CABLE"));
-                    break;
-            }
-        }
-
-    }
-*/
 
     /**
      * Invoked when an action occurs.
@@ -551,6 +509,10 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         {
             this.setStatus(AbstractOutputWriter.STATUS_STOPPED_USER);
             this.setReadingStop();
+        }
+        else if (action.equals("close"))
+        {
+            this.dispose();
         }
         else
             System.out.println("MeterDisplayDataDialog::Unknown command: " + action);

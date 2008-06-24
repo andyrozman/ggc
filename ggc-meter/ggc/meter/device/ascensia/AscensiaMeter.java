@@ -1,10 +1,3 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.meter.device.ascensia;
 
 
@@ -12,6 +5,7 @@ import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterException;
+import ggc.meter.output.AbstractOutputWriter;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
 import ggc.meter.util.I18nControl;
@@ -31,6 +25,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 //extends /*SerialIOProtocol*/  SerialProtocol implements MeterInterface
 {
 
+    public static final int ASCENSIA_COMPANY          = 1;
     
     public static final int METER_ASCENSIA_ELITE_XL   = 10001;
     public static final int METER_ASCENSIA_DEX        = 10002;
@@ -48,15 +43,26 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     //protected OutputWriter m_output_writer;
     public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
+    public boolean device_running = false;
+
+    boolean multiline = false;
+    String multiline_body;
+    
+    
+    String end_string;
+    String end_strings[] = null;
+    String text_def[] = null;
+    
+    
     public AscensiaMeter()
     {
     }
     
 
-    public AscensiaMeter(int meter_type, String portName, OutputWriter writer)
+    public AscensiaMeter(String portName, OutputWriter writer)
     {
     	
-		super(meter_type, /*portName, */ 
+		super(/*portName, */ 
 		      9600,
 			  //19200,
 		      SerialPort.DATABITS_8, 
@@ -76,6 +82,9 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		
 		this.output_writer = writer; 
 		this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+		
+        this.setMeterType("Ascensia/Bayer", this.getName());
+
 	
 		try
 		{
@@ -91,6 +100,42 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		    System.out.println("AscensiaMeter -> Error adding listener: " + ex);
 		    ex.printStackTrace();
 		}
+		
+		
+        end_string = (new Character((char)13)).toString();
+        
+        //this.writer = new GGCFileOutputWriter();
+        this.output_writer.writeHeader();
+
+    
+        
+        //this.serialPort.
+        
+        this.serialPort.notifyOnOutputEmpty(true);
+        this.serialPort.notifyOnBreakInterrupt(true);
+        
+        
+        this.end_strings = new String[2];
+        end_strings[0] = (new Character((char)3)).toString(); // ETX - End of Text
+        end_strings[1] = (new Character((char)4)).toString(); // EOT - End of Transmission
+        //end_strings[2] = (new Character((char)23)).toString(); // ETB - End of Text
+        
+        this.text_def = new String[3];
+        this.text_def[0] = (new Character((char)2)).toString(); // STX - Start of Text
+        this.text_def[1] = (new Character((char)3)).toString(); // ETX - Start of Text
+        this.text_def[2] = (new Character((char)13)).toString(); // EOL - Start of Text
+        
+        
+        try
+        {
+            this.serialPort.addEventListener(this);
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+        }
+		
+		
     }
 
     /**
@@ -136,70 +181,230 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     //************************************************
     
 
-    /** 
-     * clearDeviceData - Clear data from device 
-     */
-    public void clearDeviceData()
+    
+    public void readDeviceDataFull() throws MeterException
     {
-    	
+        waitTime(2000);
+        
+        try
+        {
+
+            this.device_running = true;
+            
+            write(6);  // ENQ
+            
+            String line;
+
+            
+            while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
+            {
+                sendToProcess(line);
+                write(6);
+            }
+            
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception: " + ex);
+            ex.printStackTrace();
+            
+        }
+        
+        
     }
     
     
     
-    /**
-     * getDeviceConfiguration - return device configuration
-     * @return
-     */
-    public ArrayList<String> getDeviceConfiguration()
+    
+    private void sendToProcess(String text)
     {
-    	return new ArrayList<String>();
+        boolean stx = false;
+        int stx_idx = 0;
+        boolean etx = false;
+        int etx_idx = 0;
+        boolean eol = false;
+        int eol_idx = 0;
+        
+        //System.out.println("Send: " + text);
+        
+        if ((stx_idx = text.indexOf(this.text_def[0])) > -1)
+        {
+        //    System.out.println("STX");
+            stx = true;
+        }
+        
+        if ((etx_idx = text.indexOf(this.text_def[1])) > -1)
+        {
+        //    System.out.println("ETX");
+            etx = true;
+        }
+    
+        if ((eol_idx = text.indexOf(this.text_def[2])) > -1)
+        {
+        //    System.out.println("EOL");
+            eol = true;
+        }
+
+        
+        if (stx)
+        {
+         
+            if ((etx) || (eol))
+            {
+                String t;
+                stx_idx++;
+                
+                if (etx)
+                {
+                    t = text.substring(stx_idx, etx_idx);
+                    
+                }
+                else
+                {
+                    t = text.substring(stx_idx, eol_idx);
+                }
+                //System.out.println(t);
+                this.processData(t);
+            }
+            else
+            {
+                // only start, multiline
+                this.multiline = true;
+                this.multiline_body = text;
+            }
+        }
+        else //if ((stx) && (!etx) || (!eol))
+        {
+            if ((etx) || (eol))
+            {
+                if (this.multiline)
+                {
+                    this.multiline_body += text;
+                    
+                    String txt = this.multiline_body;
+                    
+                    stx_idx = txt.indexOf(this.text_def[0]);
+                    etx_idx = text.indexOf(this.text_def[1]);
+                    eol_idx = text.indexOf(this.text_def[2]);
+
+                    int end = 0;
+                    
+                    if (etx_idx!=-1)
+                        end = etx_idx;
+                    else
+                        end = eol_idx;
+                    
+                    
+                    String t = txt.substring(stx_idx, end);
+          //          System.out.println("Multi: " + t);
+                    this.processData(t);
+                    
+                    // reset
+                    this.multiline = false;
+                    this.multiline_body = "";
+                    
+                }
+            }
+            else
+            {
+                if (this.multiline)
+                {
+                    this.multiline_body += text;
+                }
+            }
+        }
+        
+        
+    }
+    
+
+    private boolean isDeviceStopped(String vals)
+    {
+        if (!this.device_running)
+            return true;
+        
+        if (this.output_writer.isReadingStopped())
+            return true;
+        
+        
+//        if (vals.contains(this.end_strings[0]))
+//            System.out.println("ETX");
+        
+        if (vals.contains(this.end_strings[1]))
+        {
+//            System.out.println("EOT");
+            this.output_writer.endOutput();
+//            System.out.println("EOT");
+            return true;
+        }
+        
+        
+        return false;
+        
+    }
+    
+    
+    public void setDeviceStopped()
+    {
+        this.device_running = false;
+        this.output_writer.endOutput();
     }
     
     
     
-
-    /**
-     * getDataFull - get all data from Meter
-     */
-    public ArrayList<MeterValuesEntry> getDataFull()
+    @Override
+    public void serialEvent(SerialPortEvent event)
     {
-	return this.data;
-	
-    }
 
+
+        // Determine type of event.
+        switch (event.getEventType()) 
+        {
+    
+            // If break event append BREAK RECEIVED message.
+            case SerialPortEvent.BI:
+                System.out.println("recievied break");
+                this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+                setDeviceStopped();
+                break;
+            case SerialPortEvent.CD:
+                System.out.println("recievied cd");
+                break;
+            case SerialPortEvent.CTS:
+                System.out.println("recievied cts");
+                break;
+            case SerialPortEvent.DSR:
+                System.out.println("recievied dsr");
+                break;
+            case SerialPortEvent.FE:
+                System.out.println("recievied fe");
+                break;
+            case SerialPortEvent.OE:
+                System.out.println("recievied oe");
+                System.out.println("Output Empty");
+                break;
+            case SerialPortEvent.PE:
+                System.out.println("recievied pe");
+                break;
+            case SerialPortEvent.RI:
+                System.out.println("recievied ri");
+                break;
+        }
+    } 
     
     
     
     
     
-
-    /**
-     * getData - get data for specified time
-     */
-    public ArrayList<MeterValuesEntry> getData(int from, int to)
-    {
-    	/*
-	ArrayList<MeterValuesEntry> out = new ArrayList<MeterValuesEntry>();
-
-	for (int i=0; i<this.data.size(); i++)
-	{
-		MeterValuesEntry dwr = this.data.get(i);
-
-	    if ((dwr.getDateTime() > from) && (dwr.getDateTime() < to))
-	    {
-	    	out.add(dwr);
-	    }
-	} 
-	
-	return out;
-	*
-	*
-	*/
-
-	return null;
-    }
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
     protected void processData(String input)
@@ -409,154 +614,11 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
 
 
-    protected boolean stx = false;
 
 
 
 
-    public static final int MODE_ENQ = 1;
-    public static final int MODE_OUT = 2;
-    public static final int MODE_ACK = 3;
-    public static final int MODE_NAK = 4;
-    public static final int MODE_EOT = 5;
 
-    public int mode = 0;
-
-
-    public static final int METER_ENQ_READ = 1;
-    public static final int METER_ENQ_WRITE = 2;
-
-
-
-    
-
-
-
-    protected String getModeString()
-    {
-    	String[] modes = { "None", "ENQuiry", "Out", "ACKnowledge", "Negative AcKnowledge", "End Of Transmition"
-    	};
-
-    	return modes[mode];
-    }
-
-    
-    
-    private void writePort(String input)
-    {
-    	writePort(getBytes(input));
-    }
-
-    private void writePort(int input)
-    {
-    	byte[] b = new byte[1];
-    	b[0] = (byte)input;
-    	writePort(b);
-    }
-
-
-    public String receivedText = "";
-
-    protected void writePort(byte[] input)
-    {
-    	try
-    	{
-    	    this.portOutputStream.write(input);
-    	}
-    	catch(Exception ex)
-    	{
-    	    System.out.println("Error writing to Serial: "+ ex);
-    	}
-    }
-
-    protected byte[] getBytes(String inp)
-    {
-        return inp.getBytes();
-    }
-
-
-    public void waitTime(long time)
-    {
-    	try
-    	{
-    	    Thread.sleep(time);
-    
-    	}
-    	catch(Exception ex)
-    	{
-    	}
-    }
-
-
-    
-    public abstract void serialEvent(SerialPortEvent event);
-
-
-
-
-    public void readDeviceDataFull() throws MeterException
-    {
-    }
-
-
-
-
-    //************************************************
-    //***          Process Meter Data              ***
-    //************************************************
-
-
-    /**
-     * processMeterDataMain - this is main method for processing data. It should be called on all data received, and 
-     * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
-     * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
-     */
-    public void processMeterData(String data)
-    {
-    }
-
-    /**
-     * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
-     */
-    public void processMeterIdentification(String data)
-    {
-    }
-
-    /**
-     * processMeterTime - this should be used to process time and date of meter
-     */
-    public void processMeterTime(String data)
-    {
-    }
-
-    /**
-     * processMeterBGEntry - this should be used to process BG data from meter
-     */
-    public void processMeterBGEntry(String data)
-    {
-    }
-
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-    /**
-     * canReadData - Can Meter Class read data from device
-     */
-    public boolean canReadData()
-    {
-        return true;
-    }
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     */
-    public boolean canReadPartitialData()
-    {
-        return false;
-    }
 
 
 
@@ -579,7 +641,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      */
     public void readDeviceDataPartitial() throws MeterException
     {
-        
     }
 
 
@@ -601,8 +662,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public void readInfo() throws MeterException
     {
     }
-
-
 
 
 

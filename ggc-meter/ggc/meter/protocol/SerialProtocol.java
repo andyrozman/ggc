@@ -79,11 +79,11 @@ public abstract class SerialProtocol implements MeterInterface, SerialPortEventL
     /**
      * Constructor for SerialMeterImport.
      */
-    public SerialProtocol(int device_index, int baudrate, int databits, int stopbits, int parity )
+    public SerialProtocol(int baudrate, int databits, int stopbits, int parity )
     {
         super();
 
-	this.m_device_index = device_index;
+	//this.m_device_index = device_index;
 	this.baudrate = baudrate;
 	this.databits = databits;
 	this.stopbits = stopbits;

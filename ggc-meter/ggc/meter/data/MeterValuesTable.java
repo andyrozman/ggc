@@ -27,6 +27,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 
 /**
@@ -45,14 +46,16 @@ public class MeterValuesTable extends JTable //implements TableModelListener
     public MeterValuesTable()
     {
         super();
-        setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        //setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
     public MeterValuesTable(MeterValuesTableModel model)
     {
         super(model);
+        this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
-        setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
     /**
@@ -114,7 +117,18 @@ public class MeterValuesTable extends JTable //implements TableModelListener
         //toolBar.add(addRowAction);
         //toolBar.add(deleteRowAction);
 
-        
+        TableColumn column = null;
+        for (int i = 0; i < 5; i++) {
+            column = table.getColumnModel().getColumn(i);
+            if (i == 0) 
+            {
+                column.setPreferredWidth(100); //third column is bigger
+            } 
+            else 
+            {
+                column.setPreferredWidth(50);
+            }
+        }        
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(toolBar, "North");
@@ -123,7 +137,7 @@ public class MeterValuesTable extends JTable //implements TableModelListener
         return container;
     }
 
-    
+    /*
     public static JComponent createMeterValuesTable(final MeterValuesTable table)
     {
         //MeterValuesTable table = new MeterValuesTable(model);
@@ -150,7 +164,7 @@ public class MeterValuesTable extends JTable //implements TableModelListener
 
         return container;
     }
-    
+    */
     
     
     public static class AddRowAction extends AbstractAction

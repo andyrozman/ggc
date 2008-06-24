@@ -272,14 +272,14 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
 
     public void save()
     {
-        for (int i=0; i<panels.size(); i++)
+/*        for (int i=0; i<panels.size(); i++)
         {
             AbstractPreferencesPanel pn = (AbstractPreferencesPanel)panels.get(i);
             pn.saveProps();
         }
 
         m_da.getSettings().save();
-
+*/
 	/*
 	if (m_da.getDbConfig().hasChanged())
 	{
@@ -288,10 +288,6 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
 	*/
     }
 
-    public void reset()
-    {
-        DataAccessMeter.getInstance().getSettings().reload();
-    }
 
 
 

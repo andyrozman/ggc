@@ -30,7 +30,6 @@ package ggc.meter.gui.config;
 
 
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.GGCProperties;
 import ggc.meter.util.I18nControl;
 
 import java.awt.event.ActionEvent;
@@ -53,7 +52,7 @@ public abstract class AbstractPreferencesPanel extends JPanel implements Documen
     private static final long serialVersionUID = 1L;
     protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccessMeter m_da = DataAccessMeter.getInstance();
-    protected GGCProperties settings = m_da.getSettings();
+//xa    protected GGCProperties settings = m_da.getSettings();
 
     //protected GGCProperties props = GGCProperties.getInstance();
     protected boolean changed = false;

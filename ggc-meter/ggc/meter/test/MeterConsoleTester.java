@@ -226,7 +226,7 @@ public class MeterConsoleTester //extends JFrame
         
        
         
-        asc_meter.loadInitialData();
+        asc_meter.readDeviceDataFull(); 
         
         System.out.println("We are back in tester !!!!");
         

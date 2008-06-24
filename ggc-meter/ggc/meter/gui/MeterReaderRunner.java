@@ -189,27 +189,10 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
     private static final long serialVersionUID = 7159799607489791137L;
 
     
-    private I18nControl m_ic = I18nControl.getInstance();        
-    private DataAccessMeter m_da = DataAccessMeter.getInstance();
-    
-    JButton button_start;
-    
-
-
-
-    int x,y;
-
-    JFrame parentMy;
-
-    
-    
-    //MeterInterface meter_interface;
-
-    
     MeterConfigEntry configured_meter;
-    //OutputWriter writer = null;
     MeterDisplayDataDialog dialog;
 
+    
     public MeterReaderRunner(MeterConfigEntry configured_meter, MeterDisplayDataDialog dialog)
     {
 //        this.writer = writer;
@@ -259,16 +242,9 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
             try
             {
             
-                System.out.println(this.configured_meter);
-                
                 String className = MeterManager.getInstance().getMeterDeviceClassName(this.configured_meter.meter_company, this.configured_meter.meter_device); 
                 
-                System.out.println(className);
-                
-                
                 Class<?> c = Class.forName(className);
-                
-                // String portName, AbstractOutputWriter writer
                 
                 Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class);
                 MeterInterface mi = (MeterInterface)cnst.newInstance(this.configured_meter.communication_port, this);
@@ -276,10 +252,9 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
                 
                 mi.readDeviceDataFull();
                 
-                
-                System.out.println(cnst);
-                
                 running = false;
+                
+                mi.close();
                 
             }
             catch(Exception ex)

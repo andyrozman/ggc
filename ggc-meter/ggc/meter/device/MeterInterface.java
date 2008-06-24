@@ -1,11 +1,6 @@
 package ggc.meter.device;
 
-import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.manager.company.AbstractMeterCompany;
-
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 
 
 /*

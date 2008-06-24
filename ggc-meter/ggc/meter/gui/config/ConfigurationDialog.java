@@ -349,14 +349,14 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
 
     public void save()
     {
-        for (int i=0; i<panels.size(); i++)
+/* xa       for (int i=0; i<panels.size(); i++)
         {
             AbstractPreferencesPanel pn = (AbstractPreferencesPanel)panels.get(i);
             pn.saveProps();
         }
 
         m_da.getSettings().save();
-
+*/
 	/*
 	if (m_da.getDbConfig().hasChanged())
 	{
@@ -367,7 +367,7 @@ public class ConfigurationDialog extends JDialog implements ListSelectionListene
 
     public void reset()
     {
-        DataAccessMeter.getInstance().getSettings().reload();
+//xa        DataAccessMeter.getInstance().getSettings().reload();
     }
 
 

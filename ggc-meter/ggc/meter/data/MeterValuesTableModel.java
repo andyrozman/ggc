@@ -46,25 +46,25 @@ public class MeterValuesTableModel extends AbstractTableModel //implements Gluco
 
     //GlucoValues dayData;
     
-    ArrayList<MeterValuesEntry> dayData;
+    ArrayList<MeterValuesEntry> dl_data;
+    ArrayList<MeterValuesEntry> displayed_dl_data;
     
     //GGCProperties props = GGCProperties.getInstance();
 
     private String[] column_names = 
     {
 		m_ic.getMessage("DATETIME"), 
-		m_ic.getMessage("BG"), 
-		m_ic.getMessage("INS1"), 
-		m_ic.getMessage("INS2"), 
-		m_ic.getMessage("BE"), 
-		m_ic.getMessage("ACT"), 
-		m_ic.getMessage("COMMENT") 
+		m_ic.getMessage("BG_MMOLL"), 
+		m_ic.getMessage("BG_MGDL"), 
+		m_ic.getMessage("STATUS"), 
+		m_ic.getMessage(""), 
 	};
 
 
     public MeterValuesTableModel()
     {
-        this.dayData = new ArrayList<MeterValuesEntry>();
+        this.displayed_dl_data = new ArrayList<MeterValuesEntry>();
+        this.dl_data = new ArrayList<MeterValuesEntry>();
         //this.dayData = dayData;
         fireTableChanged(null);
         //dayData.addGlucoValueEventListener(this);
@@ -77,23 +77,23 @@ public class MeterValuesTableModel extends AbstractTableModel //implements Gluco
 
     public int getRowCount()
     {
-        return dayData.size();
+        return this.displayed_dl_data.size();
     }
 
     public Object getValueAt(int row, int column)
     {
-        MeterValuesEntry mve = this.dayData.get(row);
+        MeterValuesEntry mve = this.displayed_dl_data.get(row);
      
         switch (column)
         {
-            case 1: 
-                return mve.getDateTime().toString();
+            case 0: 
+                return mve.getDateTime().getDateTimeString();
                 
-            case 2:
+            case 1:
                 return mve.getBgValue();
                 
-                default:
-                    return "";
+            default:
+                return "";
         }
         
         
@@ -110,9 +110,11 @@ public class MeterValuesTableModel extends AbstractTableModel //implements Gluco
 
     public void addEntry(MeterValuesEntry mve)
     {
-        this.dayData.add(mve);
-        System.out.println("Entries: " + this.dayData.size());
-        fireTableChanged(null);
+        this.displayed_dl_data.add(mve);
+        this.dl_data.add(mve);
+        //System.out.println("Entries: " + this.dayData.size());
+//        fireTableChanged(null);
+        this.fireTableDataChanged();
     }
     
     
@@ -136,7 +138,7 @@ public class MeterValuesTableModel extends AbstractTableModel //implements Gluco
     @Override
     public boolean isCellEditable(int row, int col)
     {
-        return true;
+        return false;
     }
 
     

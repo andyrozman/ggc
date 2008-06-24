@@ -27,7 +27,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 //      int s= SerialConfig.LN_8BITS; 
         
         
-        super(meter_type, /*portName, */ 
+        super( 
               9600,
               //19200,
               SerialPort.DATABITS_8, 
