@@ -27,24 +27,14 @@
  */
 
 
-package ggc.meter.manager.company; 
+package ggc.cgm.manager.company; 
 
-import ggc.meter.device.ascensia.AscensiaBreeze;
-import ggc.meter.device.ascensia.AscensiaContour;
-import ggc.meter.device.ascensia.AscensiaDEX;
-import ggc.meter.device.ascensia.AscensiaEliteXL;
 
-public class AscensiaBayer extends AbstractMeterCompany
+public class Dexcom extends AbstractCGMCompany
 {
 
-    public AscensiaBayer()
+    public Dexcom()
     {
-        this.addDevice(new AscensiaEliteXL());
-        this.addDevice(new AscensiaDEX());
-        this.addDevice(new AscensiaBreeze());
-        this.addDevice(new AscensiaContour());
-        
-        //System.out.println(this.devices_vector);
     }    
     
     //********************************************************

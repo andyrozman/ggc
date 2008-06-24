@@ -1,12 +1,12 @@
 TO-DO LIST
 ==========
 
-Development of Pump Tools runs totally independent on GGC project
+Development of CGM Tools runs totally independent on GGC project
 ==================================================================
 
-    * Base framework for pumps (0.4)
-    * Communication framework for pumps (interface that all pumps will use) (later)
-    * Manual adding of pump data (data that will in future be read from pump) (0.5)
+    * Base framework for CGM (0.4)
+    * Communication framework for CGM (interface that all CGMs will use) (later)
+    * Manual adding of CGM data (data that will in future be read from CGM) (0.5)
     * Adding of additional data (bg measurements, OH intake, Activity...) (0.5)
     * List of pumps (most of them not all) (0.4)
     * Configuration and graphical interface for integration into GGC (0.5)
@@ -15,13 +15,10 @@ Development of Pump Tools runs totally independent on GGC project
           o GGC Db Output (for manual import) (0.5)
           o GGC Output (GUI integration) (0.5) 
     * Graphs (0.6)
-    * Specific pump models implementations:
-          o MiniMed (2009 ?)  - protocol not public (use minimed's web tool)
-          o Sooil Dana (2010 ?) - waiting for reply from developers
-          o Roche/Disetronic (2010 ?) - no reply yet
-          o Animas (?)  - no reply yet
-          o Smith's Cosmo (?)  - no reply yet
-          o Omni Pod (?) - Couldn't send mail... Problem with web ??
+    * Specific CGM models implementations:
+          o MiniMed (2009)  - protocol not public (use Carelink export file)
+          o Abbott - no support at this time
+          o Dexcom - no reply yet
 
 
 

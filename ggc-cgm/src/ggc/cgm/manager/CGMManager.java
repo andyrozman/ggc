@@ -27,38 +27,26 @@
  */
 
 
-package ggc.meter.manager; 
+package ggc.cgm.manager; 
 
-import ggc.meter.device.MeterInterface;
-import ggc.meter.manager.company.Abbott;
-import ggc.meter.manager.company.AbstractMeterCompany;
-import ggc.meter.manager.company.AscensiaBayer;
-import ggc.meter.manager.company.DiabeticSupplyOfSunCoast;
-import ggc.meter.manager.company.HipoGuard;
-import ggc.meter.manager.company.HomeDiagnostic;
-import ggc.meter.manager.company.LifeScan;
-import ggc.meter.manager.company.Menarini;
-import ggc.meter.manager.company.Prodigy;
-import ggc.meter.manager.company.Roche;
-import ggc.meter.manager.company.Sanvita;
-import ggc.meter.manager.company.USDiagnostic;
-import ggc.meter.manager.company.Wavesense;
-import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
+import ggc.cgm.device.CGMInterface;
+import ggc.cgm.manager.company.AbstractCGMCompany;
+import ggc.cgm.util.DataAccessCGM;
+import ggc.cgm.util.I18nControl;
 
 import java.util.Hashtable;
 import java.util.Vector;
 
-public class MeterManager
+public class CGMManager
 {
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
+    protected DataAccessCGM m_da = DataAccessCGM.getInstance();
     
 
-    private Hashtable<String,AbstractMeterCompany> companies_ht = new Hashtable<String,AbstractMeterCompany>(); 
-    private Vector<AbstractMeterCompany> companies = new Vector<AbstractMeterCompany>(); 
-    private Vector<MeterInterface> supported_devices = new Vector<MeterInterface>(); 
+    private Hashtable<String,AbstractCGMCompany> companies_ht = new Hashtable<String,AbstractCGMCompany>(); 
+    private Vector<AbstractCGMCompany> companies = new Vector<AbstractCGMCompany>(); 
+    private Vector<CGMInterface> supported_devices = new Vector<CGMInterface>(); 
 
 
 
@@ -68,47 +56,35 @@ public class MeterManager
     
     
     
-    public static MeterManager s_manager = null;
+    public static CGMManager s_manager = null;
     
 
     /**
      * Constructor for SerialMeterImport.
      */
-    private MeterManager()
+    private CGMManager()
     {
-    	this.loadMeterCompanies();
+    	this.loadCGMCompanies();
     	this.loadSupportedDevices();
     }
 
     
-    public static MeterManager getInstance()
+    public static CGMManager getInstance()
     {
-    	if (MeterManager.s_manager==null)
-    		MeterManager.s_manager = new MeterManager();
+    	if (CGMManager.s_manager==null)
+    	    CGMManager.s_manager = new CGMManager();
     	
-    	return MeterManager.s_manager;
+    	return CGMManager.s_manager;
     }
 
 
     
-    public void loadMeterCompanies()
+    public void loadCGMCompanies()
     {
-        addMeterCompany(new AscensiaBayer());
-        addMeterCompany(new Roche());
-        addMeterCompany(new LifeScan());
-        addMeterCompany(new Abbott());
-        addMeterCompany(new Menarini());
-        addMeterCompany(new DiabeticSupplyOfSunCoast());
-        addMeterCompany(new HipoGuard());
-        addMeterCompany(new HomeDiagnostic());
-        addMeterCompany(new Prodigy());
-        addMeterCompany(new Sanvita());
-        addMeterCompany(new USDiagnostic());
-        addMeterCompany(new Wavesense());
     }
     
     
-    private void addMeterCompany(AbstractMeterCompany company)
+    private void addCGMCompany(AbstractCGMCompany company)
     {
         this.companies.add(company);
         this.companies_ht.put(company.getName(), company);
@@ -117,17 +93,17 @@ public class MeterManager
     
     public void loadSupportedDevices()
     {
-        this.supported_devices.addAll(new AscensiaBayer().getDevices());
+        //this.supported_devices.addAll(new AscensiaBayer().getDevices());
     }
     
     
-    public Vector<AbstractMeterCompany> getCompanies()
+    public Vector<AbstractCGMCompany> getCompanies()
     {
         return this.companies;
     }
    
     
-    public Vector<MeterInterface> getSupportedDevices()
+    public Vector<CGMInterface> getSupportedDevices()
     {
         return this.supported_devices;
     }
@@ -215,9 +191,9 @@ public class MeterManager
     }
 */
     
-    public MeterInterface getMeterDevice(String group, String device)
+    public CGMInterface getMeterDevice(String group, String device)
     {
-        AbstractMeterCompany cmp = getCompany(group);
+        AbstractCGMCompany cmp = getCompany(group);
         
         if (cmp==null)
         {
@@ -232,12 +208,13 @@ public class MeterManager
     
     public String getMeterDeviceClassName(String group, String device)
     {
-        MeterInterface mi = getMeterDevice(group, device);
-        return mi.getDeviceClassName();
+        //CGMInterface mi = getMeterDevice(group, device);
+        //return mi.getDeviceClassName();
+        return null;
     }
     
     
-    public AbstractMeterCompany getCompany(String name)
+    public AbstractCGMCompany getCompany(String name)
     {
         if (this.companies_ht.containsKey(name))
         {

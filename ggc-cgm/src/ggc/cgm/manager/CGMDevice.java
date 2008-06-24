@@ -27,18 +27,18 @@
  */
 
 
-package ggc.meter.manager; 
+package ggc.cgm.manager; 
 
-import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
+import ggc.cgm.util.DataAccessCGM;
+import ggc.cgm.util.I18nControl;
 
 import javax.swing.ImageIcon;
 
-public class MeterDevice
+public class CGMDevice
 {
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
+    protected DataAccessCGM m_da = DataAccessCGM.getInstance();
     
 
 
@@ -51,7 +51,7 @@ public class MeterDevice
     public String unpacked_status;
     
 
-    public MeterDevice(String id, String group, String name, String picture, String class_name, String status)
+    public CGMDevice(String id, String group, String name, String picture, String class_name, String status)
     {
     	this.id = id;
     	this.group = group;

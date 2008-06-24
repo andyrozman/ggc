@@ -1,6 +1,6 @@
-package ggc.meter.manager;
+package ggc.cgm.manager;
 
-import ggc.meter.device.DummyMeter;
+import ggc.cgm.device.DummyCGM;
 
 import javax.swing.ImageIcon;
 
@@ -35,7 +35,7 @@ import javax.swing.ImageIcon;
  */
 
 
-public class EmptyMeterDevices extends DummyMeter
+public class EmptyCGMDevices extends DummyCGM
 {
 
 

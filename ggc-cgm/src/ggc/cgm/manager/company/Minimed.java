@@ -27,15 +27,16 @@
  */
 
 
-package ggc.meter.manager.company; 
+package ggc.cgm.manager.company; 
 
-import ggc.meter.manager.MeterImplementationStatus;
+import ggc.cgm.manager.CGMImplementationStatus;
 
-public class HomeDiagnostic extends AbstractMeterCompany
+
+public class Minimed extends AbstractCGMCompany
 {
 
     
-    public HomeDiagnostic()
+    public Minimed()
     {
     }
 
@@ -91,7 +92,7 @@ public class HomeDiagnostic extends AbstractMeterCompany
      */
     public int getImplementationStatus()
     {
-        return MeterImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return CGMImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
     
     

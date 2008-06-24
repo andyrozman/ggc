@@ -27,11 +27,12 @@
  */
 
 
-package ggc.meter.manager.company; 
+package ggc.cgm.manager.company; 
 
-import ggc.meter.manager.MeterImplementationStatus;
+import ggc.cgm.manager.CGMImplementationStatus;
 
-public class Abbott extends AbstractMeterCompany
+
+public class Abbott extends AbstractCGMCompany
 {
 
     
@@ -91,7 +92,7 @@ public class Abbott extends AbstractMeterCompany
      */
     public int getImplementationStatus()
     {
-        return MeterImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return CGMImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
     
     

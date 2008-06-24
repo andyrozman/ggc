@@ -27,10 +27,10 @@
  */
 
 
-package ggc.meter.manager; 
+package ggc.cgm.manager; 
 
 
-public class MeterImplementationStatus
+public class CGMImplementationStatus
 {
 
 

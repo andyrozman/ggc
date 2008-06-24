@@ -27,10 +27,10 @@
  */
 
 
-package ggc.meter.manager.company; 
+package ggc.cgm.manager.company; 
 
 
-public interface MeterCompanyInterface
+public interface CGMCompanyInterface
 {
 
 

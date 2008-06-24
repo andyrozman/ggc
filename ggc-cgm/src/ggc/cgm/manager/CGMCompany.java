@@ -27,27 +27,27 @@
  */
 
 
-package ggc.meter.manager; 
+package ggc.cgm.manager; 
 
-import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
+import ggc.cgm.util.DataAccessCGM;
+import ggc.cgm.util.I18nControl;
 
 import java.util.Hashtable;
 
-public class MeterCompany
+public class CGMCompany
 {
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
+    protected DataAccessCGM m_da = DataAccessCGM.getInstance();
     
     public String id = "";
     public String name = "";
     public int index = 0;
     
-    Hashtable<String,MeterDevice> devices = new Hashtable<String,MeterDevice>();
+    Hashtable<String,CGMDevice> devices = new Hashtable<String,CGMDevice>();
 
 
-    public MeterCompany(int index, String id, String name)
+    public CGMCompany(int index, String id, String name)
     {
     	this.index = index;
     	this.id = id;
@@ -55,7 +55,7 @@ public class MeterCompany
     }
 
 
-    public void addDevice(MeterDevice md)
+    public void addDevice(CGMDevice md)
     {
     	this.devices.put(md.id, md);
     }

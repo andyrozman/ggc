@@ -27,29 +27,29 @@
  */
 
 
-package ggc.meter.manager.company; 
+package ggc.cgm.manager.company; 
 
-import ggc.meter.device.MeterInterface;
-import ggc.meter.manager.EmptyMeterDevices;
-import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
+import ggc.cgm.device.CGMInterface;
+import ggc.cgm.manager.EmptyCGMDevices;
+import ggc.cgm.util.DataAccessCGM;
+import ggc.cgm.util.I18nControl;
 
 import java.util.Hashtable;
 import java.util.Vector;
 
-public abstract class AbstractMeterCompany implements MeterCompanyInterface //, SelectableInterface
+public abstract class AbstractCGMCompany implements CGMCompanyInterface //, SelectableInterface
 {
 
 
     protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
+    protected DataAccessCGM m_da = DataAccessCGM.getInstance();
     
     public String id = "";
     public String name = "";
     public int index = 0;
     
-    Hashtable<String,MeterInterface> devices = new Hashtable<String,MeterInterface>();
-    Vector<MeterInterface> devices_vector = new Vector<MeterInterface>();
+    Hashtable<String,CGMInterface> devices = new Hashtable<String,CGMInterface>();
+    Vector<CGMInterface> devices_vector = new Vector<CGMInterface>();
     
 
 /*
@@ -62,36 +62,36 @@ public abstract class AbstractMeterCompany implements MeterCompanyInterface //, 
 */
 
     
-    public AbstractMeterCompany()
+    public AbstractCGMCompany()
     {
         
     }
     
 
-    public AbstractMeterCompany(boolean empty)
+    public AbstractCGMCompany(boolean empty)
     {
         if (empty==true)
         {
-            this.devices_vector.add(new EmptyMeterDevices());
+            this.devices_vector.add(new EmptyCGMDevices());
         }
     }
     
     
-    public Vector<MeterInterface> getDevices()
+    public Vector<CGMInterface> getDevices()
     {
         return this.devices_vector;
     }
     
     
-    public void addDevice(MeterInterface md)
+    public void addDevice(CGMInterface md)
     {
-        md.setMeterCompany(this);
+        md.setCGMCompany(this);
     	this.devices.put(""+md.getName(), md);
     	this.devices_vector.add(md);
     }
 
     
-    public MeterInterface getDevice(String name)
+    public CGMInterface getDevice(String name)
     {
         if (this.devices.containsKey(name))
             return this.devices.get(name);
