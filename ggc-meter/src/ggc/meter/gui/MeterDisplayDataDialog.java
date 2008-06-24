@@ -3,8 +3,6 @@ package ggc.meter.gui;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.MeterValuesTable;
 import ggc.meter.data.MeterValuesTableModel;
-import ggc.meter.data.MeterValuesTable.AddRowAction;
-import ggc.meter.data.MeterValuesTable.DeleteRowAction;
 import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterInterface;
@@ -438,8 +436,8 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        final AddRowAction addRowAction = new AddRowAction(table);
-        final DeleteRowAction deleteRowAction = new DeleteRowAction(table);
+//        final AddRowAction addRowAction = new AddRowAction(table);
+//        final DeleteRowAction deleteRowAction = new DeleteRowAction(table);
 
         JToolBar toolBar = new JToolBar();
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));

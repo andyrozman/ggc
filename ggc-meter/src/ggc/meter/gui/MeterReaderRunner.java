@@ -15,13 +15,8 @@ import ggc.meter.manager.MeterManager;
 import ggc.meter.output.AbstractOutputWriter;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
-import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 
 import java.lang.reflect.Constructor;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
 
 
 public class MeterReaderRunner extends Thread implements OutputWriter // extends JDialog implements ActionListener

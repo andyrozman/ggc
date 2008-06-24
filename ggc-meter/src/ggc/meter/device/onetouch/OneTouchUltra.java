@@ -429,14 +429,14 @@ D: P "SUN","05/04/08","23:45:08   ","  104 ", 00 0834
     
     */
     
-    
+    /*
     private int powerOn22() throws Exception
     {
         this.write(17);
         
         this.write("\rDM?".getBytes());
         
-        return 0;
+        return 0; */
         /*
         int x = 0;
 
@@ -449,16 +449,16 @@ D: P "SUN","05/04/08","23:45:08   ","  104 ", 00 0834
                 return 0;
         }
         return 1; */         
-    }
+//    }
     
-    
+  /*  
     public void powerOn() throws Exception
     {
         writeCmd(17);
         writeCmd("\rDMF");
 
     }
-    
+    */
     
     protected void writeCmd(short line[])
     throws IOException, InterruptedException
