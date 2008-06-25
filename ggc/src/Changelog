@@ -1,7 +1,15 @@
+0.2.20.2
+    * added JDecimalTextField to atech-tools, which needs to replace JFormattedTextField used for decimal numbers
+      replaced elements in Daily Values
+    * On new Daily Value, hour is set to current hour
+
+
 0.2.20.1
     * Changed CGM databases
+    * Db Version Change: Stable: v7, Development: v8
     * Addded backup of Settings
     * Total SVN directory structure redone
+    * fixed a lot of warnings
 
 2008-06-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * updated GGC_de & GGC_Nutrition_de to include all new keywords
