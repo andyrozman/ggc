@@ -50,6 +50,10 @@ import com.atech.help.HelpCapable;
 
 public class FrequencyGraphDialog extends JDialog implements ActionListener, HelpCapable
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7116976481780328914L;
     private I18nControl m_ic = I18nControl.getInstance();    
     private DataAccess m_da = null;
 

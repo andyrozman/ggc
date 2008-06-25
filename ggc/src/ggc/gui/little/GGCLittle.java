@@ -84,6 +84,10 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 {
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7744922647111948669L;
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccess m_da = null;
     private GGCDb m_db = null;
@@ -443,6 +447,11 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     class GGCAction extends AbstractAction
     {
         //private String command = null;
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 5381628629001707536L;
 
         GGCAction(String name, String command)
         {

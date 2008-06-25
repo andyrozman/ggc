@@ -36,6 +36,10 @@ import java.util.Hashtable;
 
 public class WeeklyValues implements Serializable
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7748966026356288165L;
     //private I18nControl m_ic = I18nControl.getInstance();
     private Hashtable<String, DailyValues> m_dataTable = null;
     public DataAccess m_da = DataAccess.getInstance();

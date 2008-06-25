@@ -47,6 +47,10 @@ import javax.swing.JPanel;
 public class HbA1cInfoPanel extends AbstractInfoPanel
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8750479135671337356L;
     private JLabel lblHbA1c;
     private JLabel lblVal;
     private JLabel lblAvgBG;

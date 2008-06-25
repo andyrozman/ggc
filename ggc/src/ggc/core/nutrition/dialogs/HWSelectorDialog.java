@@ -42,6 +42,11 @@ import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 public class HWSelectorDialog extends SelectorAbstractDialog
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3282479938902100574L;
+
     private DataAccess m_da = null;
     
     public static final int SELECTOR_HOME_WEIGHT = 1;

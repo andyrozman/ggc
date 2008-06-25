@@ -42,6 +42,11 @@ import com.atech.graphics.layout.ZeroLayout;
 public class PanelMealSelector extends /*GGCTreePanel*/ JPanel implements ActionListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 568309027874088901L;
+
     DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;

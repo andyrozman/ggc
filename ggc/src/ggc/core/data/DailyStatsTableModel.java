@@ -36,6 +36,10 @@ import javax.swing.table.AbstractTableModel;
 
 public class DailyStatsTableModel extends AbstractTableModel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8281136305573121781L;
     DailyValues dayData;
     DataAccess m_da = DataAccess.getInstance();
 

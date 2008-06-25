@@ -53,6 +53,11 @@ import com.atech.help.HelpCapable;
 
 public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCapable
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8611132057833510005L;
+
     private JButton help_button = null;
 
     private I18nControl m_ic = I18nControl.getInstance();

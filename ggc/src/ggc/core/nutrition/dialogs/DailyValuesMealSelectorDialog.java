@@ -50,6 +50,10 @@ import com.atech.i18n.I18nControlAbstract;
 public class DailyValuesMealSelectorDialog extends JDialog implements ActionListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 9105408177791270640L;
     JTextField tf_selected;
     JComboBox cb_type;
     Font font_normal, font_normal_b;

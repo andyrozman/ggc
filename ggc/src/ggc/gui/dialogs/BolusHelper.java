@@ -73,6 +73,11 @@ public class BolusHelper extends JDialog implements ActionListener, KeyListener,
 {
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5048286134436536838L;
+
     /* 
      * focusGained
      */

@@ -58,6 +58,11 @@ public class DateRangeSelectionPanel extends JPanel implements ChangeListener
     //private Date endDate;
     //private Date startDate;
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8709379438186554030L;
+
     private I18nControl m_ic = I18nControl.getInstance();    
 
     private JSpinner spinnerEnd;
@@ -268,6 +273,10 @@ public class DateRangeSelectionPanel extends JPanel implements ChangeListener
 
     private class RadioListener extends AbstractAction
     {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -2806660966659688717L;
         private int stat = 1;
 
         public RadioListener(int flag)

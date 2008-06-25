@@ -48,6 +48,10 @@ import org.hibernate.Transaction;
 public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3028931713064051809L;
     public boolean debug = false;
     ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();
     //ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();

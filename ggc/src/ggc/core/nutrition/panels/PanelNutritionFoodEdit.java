@@ -46,6 +46,11 @@ import com.atech.graphics.layout.ZeroLayout;
 public class PanelNutritionFoodEdit extends GGCTreePanel /*JPanel*/ implements ActionListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5701983225229844484L;
+
     //I18nControl ic = I18nControl.getInstance();
     DataAccess m_da = null;
 

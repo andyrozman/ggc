@@ -57,6 +57,10 @@ import javax.swing.table.AbstractTableModel;
 public class DoctorsDialog extends JDialog implements ActionListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5357938989788436466L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
 
@@ -143,7 +147,12 @@ public class DoctorsDialog extends JDialog implements ActionListener
         this.t_doctors = new JTable(new AbstractTableModel()
             {
 
-		public int getColumnCount()
+		/**
+                 * 
+                 */
+                private static final long serialVersionUID = 4097658548282097487L;
+
+        public int getColumnCount()
 		{
 		    // TODO Auto-generated method stub
 		    return 2;

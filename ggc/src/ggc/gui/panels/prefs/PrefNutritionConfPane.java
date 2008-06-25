@@ -40,6 +40,10 @@ import javax.swing.SwingConstants;
 
 public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1761704536490853850L;
     //private JComboBox comboMeterType;
     //private JComboBox comboPortId;
     private JLabel lab_db = null;

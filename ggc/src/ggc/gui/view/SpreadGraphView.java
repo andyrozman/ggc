@@ -46,6 +46,10 @@ import java.awt.geom.Rectangle2D;
 public class SpreadGraphView extends AbstractGraphView
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3699075079321211940L;
     GlucoValues gV = null;
     SpreadGraphDialog m_sGF = null;
 

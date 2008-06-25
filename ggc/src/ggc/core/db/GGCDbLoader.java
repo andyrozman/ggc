@@ -169,7 +169,7 @@ public class GGCDbLoader extends Thread
         
         // TODO: in version 0.4
 
-/*        
+       
         // 5 - load nutrition(1) root data
         db.loadNutritionDbBase();
         db.loadNutritionDb1();
@@ -184,7 +184,7 @@ public class GGCDbLoader extends Thread
         
         db.loadMealsDb();
 
-*/
+
         setDbStatus(StatusBar.DB_LOADED);
         
         

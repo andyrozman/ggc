@@ -44,66 +44,76 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     public void executeBackupRestore()
     {
 	
-	if (this.isBackupRestoreObjectSelected(ic.getMessage("DAILY_VALUES")))
-	{
-	    this.setTask(ic.getMessage("DAILY_VALUES"));
-	    ExportDailyValues edv = new ExportDailyValues(this);
-	    edv.run();
-	    this.setStatus(100);
-	    //this.done_backup_elements++;
-	}
-	
-	
-	if (isAnyNutritionObjectSelected())
-	{
-	    ExportNutritionDb end = new ExportNutritionDb(this);
-	    
-	    
-	    if (this.isBackupRestoreObjectSelected(ic.getMessage("USER_FOOD_GROUPS")))
-	    {
-		this.setStatus(0);
-		this.setTask(ic.getMessage("USER_FOOD_GROUPS"));
-		end.export_UserFoodGroups();
-		this.setStatus(100);
-		//this.done_backup_elements++;
-		//System.out.println("Food Groups YES");
-	    }
+    	if (this.isBackupRestoreObjectSelected(ic.getMessage("DAILY_VALUES")))
+    	{
+    	    this.setTask(ic.getMessage("DAILY_VALUES"));
+    	    ExportDailyValues edv = new ExportDailyValues(this);
+    	    edv.run();
+    	    this.setStatus(100);
+    	    //this.done_backup_elements++;
+    	}
+    	
 
-	    if (this.isBackupRestoreObjectSelected(ic.getMessage("FOODS")))
-	    {
-		this.setStatus(0);
-		this.setTask(ic.getMessage("FOODS"));
-		end.export_UserFoods();
-		this.setStatus(100);
-		//this.done_backup_elements++;
-//		System.out.println("Foods YES");
-	    }
-	
-	
-	    if (this.isBackupRestoreObjectSelected(ic.getMessage("MEAL_GROUPS")))
-	    {
-		this.setStatus(0);
-		this.setTask(ic.getMessage("MEAL_GROUPS"));
-		end.export_MealGroups();
-		this.setStatus(100);
-		//this.done_backup_elements++;
-		//System.out.println("Meal Groups YES");
-	    }
-	
-	
-	    if (this.isBackupRestoreObjectSelected(ic.getMessage("MEALS")))
-	    {
-		this.setStatus(0);
-		this.setTask(ic.getMessage("MEALS"));
-		end.export_Meals();
-		this.setStatus(100);
-		//this.done_backup_elements++;
-		//System.out.println("Meals YES");
-	    }
-	}
-	
-	
-	zipAndRemoveBackupFiles();
+        if (this.isBackupRestoreObjectSelected(ic.getMessage("SETTINGS")))
+        {
+            this.setTask(ic.getMessage("SETTINGS"));
+            ExportSettings edv = new ExportSettings(this);
+            edv.run();
+            this.setStatus(100);
+            //this.done_backup_elements++;
+        }
+    	
+    	
+    	if (isAnyNutritionObjectSelected())
+    	{
+    	    ExportNutritionDb end = new ExportNutritionDb(this);
+    	    
+    	    
+    	    if (this.isBackupRestoreObjectSelected(ic.getMessage("USER_FOOD_GROUPS")))
+    	    {
+    		this.setStatus(0);
+    		this.setTask(ic.getMessage("USER_FOOD_GROUPS"));
+    		end.export_UserFoodGroups();
+    		this.setStatus(100);
+    		//this.done_backup_elements++;
+    		//System.out.println("Food Groups YES");
+    	    }
+    
+    	    if (this.isBackupRestoreObjectSelected(ic.getMessage("FOODS")))
+    	    {
+    		this.setStatus(0);
+    		this.setTask(ic.getMessage("FOODS"));
+    		end.export_UserFoods();
+    		this.setStatus(100);
+    		//this.done_backup_elements++;
+    //		System.out.println("Foods YES");
+    	    }
+    	
+    	
+    	    if (this.isBackupRestoreObjectSelected(ic.getMessage("MEAL_GROUPS")))
+    	    {
+    		this.setStatus(0);
+    		this.setTask(ic.getMessage("MEAL_GROUPS"));
+    		end.export_MealGroups();
+    		this.setStatus(100);
+    		//this.done_backup_elements++;
+    		//System.out.println("Meal Groups YES");
+    	    }
+    	
+    	
+    	    if (this.isBackupRestoreObjectSelected(ic.getMessage("MEALS")))
+    	    {
+    		this.setStatus(0);
+    		this.setTask(ic.getMessage("MEALS"));
+    		end.export_Meals();
+    		this.setStatus(100);
+    		//this.done_backup_elements++;
+    		//System.out.println("Meals YES");
+    	    }
+    	}
+    	
+    	
+    	zipAndRemoveBackupFiles();
 	
     }
     

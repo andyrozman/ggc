@@ -48,6 +48,10 @@ import javax.swing.event.DocumentListener;
 public abstract class AbstractPrefOptionsPanel extends JPanel implements DocumentListener, ItemListener, ActionListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6154601886618634718L;
     protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccess m_da = DataAccess.getInstance();
     protected GGCProperties settings = m_da.getSettings();

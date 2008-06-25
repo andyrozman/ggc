@@ -42,6 +42,10 @@ import javax.swing.JFrame;
 
 public class DailyGraphDialog extends JDialog
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2490681813475803663L;
     private I18nControl m_ic = I18nControl.getInstance();    
     private DailyGraphView dGV = null;
 

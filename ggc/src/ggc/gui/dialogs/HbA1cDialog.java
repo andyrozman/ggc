@@ -50,6 +50,11 @@ import com.atech.help.HelpCapable;
 public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4596093593058190711L;
+
     JButton help_button;    
 
     private I18nControl m_ic = I18nControl.getInstance();        

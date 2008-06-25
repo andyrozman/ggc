@@ -54,6 +54,10 @@ import com.atech.help.HelpCapable;
 public class CourseGraphDialog extends JDialog implements ActionListener, HelpCapable //JFrame
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8111521124871307877L;
     private I18nControl m_ic = I18nControl.getInstance();    
     private DataAccess m_da = null;
 

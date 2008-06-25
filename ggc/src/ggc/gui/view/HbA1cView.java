@@ -42,6 +42,11 @@ import java.text.DecimalFormat;
 
 public class HbA1cView extends AbstractGraphView
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4029577798993120891L;
+
     private HbA1cValues hbValues = null;
 
     private I18nControl m_ic = I18nControl.getInstance();

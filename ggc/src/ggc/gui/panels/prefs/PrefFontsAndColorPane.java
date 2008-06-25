@@ -70,6 +70,10 @@ import com.atech.help.HelpCapable;
 
 public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements MouseListener, ActionListener, ListSelectionListener, ItemListener, HelpCapable
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4053935746376957308L;
     private JList itemList;
     private JLabel lblcolor;
     private Vector<String> items;

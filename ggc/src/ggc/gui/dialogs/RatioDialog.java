@@ -65,6 +65,10 @@ import com.atech.help.HelpCapable;
 public class RatioDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1240982985415603758L;
     JComboBox cb_time_range, cb_icarb_rule, cb_sens_rule;
     
 
@@ -439,7 +443,7 @@ public class RatioDialog extends JDialog implements ActionListener, KeyListener,
 */
         
 
-
+/*
         String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
                                     "edit_food", m_ic.getMessage("EDIT_FOOD"),
                                     "ok", m_ic.getMessage("OK"),
@@ -459,7 +463,7 @@ public class RatioDialog extends JDialog implements ActionListener, KeyListener,
                                30, 420, 110, 1,
                                145, 420, 110, 1,
 //                               250, 390, 80, 0
-        };
+        }; */
 /*
         JButton button;
         //int j=0;

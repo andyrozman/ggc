@@ -80,7 +80,7 @@ public class DataAccess extends ATDataAccessAbstract
 {
 
     
-    public String currentDbVersion = "6";
+    public String currentDbVersion = "7";
     
     
     // LF

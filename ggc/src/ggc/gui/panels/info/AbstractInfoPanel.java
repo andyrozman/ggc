@@ -38,6 +38,10 @@ import javax.swing.border.TitledBorder;
 
 public abstract class AbstractInfoPanel extends JPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1104646965456304940L;
     protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccess m_da = DataAccess.getInstance();
     protected boolean first_refresh = true;

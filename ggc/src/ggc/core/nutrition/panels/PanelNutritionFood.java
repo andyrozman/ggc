@@ -36,6 +36,11 @@ public class PanelNutritionFood extends GGCTreePanel /*JPanel*/ implements Actio
 
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4046645712360241891L;
+
     //I18nControl ic = I18nControl.getInstance();
     DataAccess m_da = null;
 

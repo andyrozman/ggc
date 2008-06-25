@@ -40,7 +40,12 @@ import java.util.Vector;
 
 public class GlucoValues extends DailyValues
 {
-//    ArrayList dayValues = null;
+/**
+     * 
+     */
+    private static final long serialVersionUID = 3904480643937213485L;
+
+        //    ArrayList dayValues = null;
         Vector<DailyValues> dayValues = null;
 
     //private EventListenerList listenerList = new EventListenerList();

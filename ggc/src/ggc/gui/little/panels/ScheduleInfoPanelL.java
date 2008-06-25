@@ -39,6 +39,11 @@ import ggc.gui.panels.info.AbstractInfoPanel;
 
 public class ScheduleInfoPanelL extends AbstractInfoPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4785287187015409811L;
+
     public ScheduleInfoPanelL()
     {
         super(I18nControl.getInstance().getMessage("SCHEDULE"));

@@ -47,6 +47,12 @@ import org.hibernate.Transaction;
 public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface, Comparator<NutritionDefinition>
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3655011406766918193L;
+
+
     public I18nControlAbstract ic = null;
 
 

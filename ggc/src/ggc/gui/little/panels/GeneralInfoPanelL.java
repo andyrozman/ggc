@@ -42,6 +42,10 @@ import javax.swing.JLabel;
 
 public class GeneralInfoPanelL extends AbstractInfoPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1872339281254813097L;
     private JLabel lblName = new JLabel();
     private JLabel lblIns1 = new JLabel();
     private JLabel lblIns2 = new JLabel();

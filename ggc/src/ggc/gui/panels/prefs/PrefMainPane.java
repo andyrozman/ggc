@@ -40,6 +40,10 @@ public class PrefMainPane extends AbstractPrefOptionsPanel
 {
 //x    private JTextField fieldUserName;
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7014183829896704623L;
     private I18nControl m_ic = I18nControl.getInstance();
 
 //x    private JComboBox langBox;

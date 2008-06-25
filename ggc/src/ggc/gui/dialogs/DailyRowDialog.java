@@ -73,6 +73,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 {
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6763016271693781911L;
+
     /* 
      * focusGained
      */

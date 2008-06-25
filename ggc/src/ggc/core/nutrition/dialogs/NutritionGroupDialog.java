@@ -52,6 +52,11 @@ import com.atech.i18n.I18nControlAbstract;
 public class NutritionGroupDialog extends JDialog implements TreeSelectionListener, ActionListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3610528674361903899L;
+
     //private JPanel mainPane;
     private JTree tree;
     

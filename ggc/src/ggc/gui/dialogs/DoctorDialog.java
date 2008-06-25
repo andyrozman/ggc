@@ -64,6 +64,10 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
 {
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8276157027834968535L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
     private GGCProperties props = m_da.getSettings();

@@ -45,6 +45,11 @@ import javax.swing.JTabbedPane;
 
 public class MainLittlePanel extends JPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8210688971878569493L;
+
     private Vector<JPanel> vInfoPanels = new Vector<JPanel>();
 
     GGCLittle m_little = null;

@@ -2,6 +2,21 @@
 <br>
 <h2 class="head">News</h2>
 
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2008-05-30 10:44</td>
+<td>Release postponed (for one month)</td>
+</tr>
+<tr>
+<td colspan="2">
+Release was planned for 4th of June 2008, but due to some problems we are forced to postpone it for a month. To repay you 
+for waiting another month, we decided to add two features, which were planned for next release (which ones is surprise). 
+</td></tr>
+</table>
+
+<br><br>
+
+
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
 <tr class="newsheader">

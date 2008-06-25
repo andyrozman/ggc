@@ -36,6 +36,10 @@ import java.util.ArrayList;
 
 public class InfoPanel extends JPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8288632669830259690L;
     private ArrayList<AbstractInfoPanel> vInfoPanels = new ArrayList<AbstractInfoPanel>();
 
     public InfoPanel()

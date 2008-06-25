@@ -47,6 +47,11 @@ import com.atech.help.HelpCapable;
 
 public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements HelpCapable
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4645565336749757311L;
+
     // insulins
     private JTextField fieldIns1Name, fieldIns2Name, fieldIns1Abbr, fieldIns2Abbr;
 

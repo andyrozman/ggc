@@ -57,6 +57,10 @@ import javax.swing.table.AbstractTableModel;
 public class AppointmentsDialog extends JDialog implements ActionListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1334563790179285007L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
 
@@ -143,7 +147,12 @@ public class AppointmentsDialog extends JDialog implements ActionListener
         this.t_doctors = new JTable(new AbstractTableModel()
             {
 
-		public int getColumnCount()
+		/**
+                 * 
+                 */
+                private static final long serialVersionUID = -7078981917311146976L;
+
+        public int getColumnCount()
 		{
 		    return 2;
 		}

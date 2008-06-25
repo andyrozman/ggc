@@ -39,6 +39,11 @@ import ggc.gui.panels.info.AbstractInfoPanel;
 
 public class StocksInfoPanelL extends AbstractInfoPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1947681641559281357L;
+
     public StocksInfoPanelL()
     {
         super(I18nControl.getInstance().getMessage("STOCKS"));

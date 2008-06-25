@@ -45,6 +45,11 @@ import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 public class FoodPartSelectorDialog extends SelectorAbstractDialog
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7262008735572008874L;
+
     private DataAccess m_da = null;
     
     public static final int SELECTOR_NUTRITION = 1;

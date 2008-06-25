@@ -44,6 +44,11 @@ import java.util.Date;
 public class DailyValues implements Serializable
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -375771912636631298L;
+
     private boolean debug = false;
 
     private I18nControl m_ic = I18nControl.getInstance();

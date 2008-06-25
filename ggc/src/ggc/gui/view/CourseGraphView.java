@@ -43,10 +43,12 @@ import java.awt.geom.Rectangle2D;
 
 public class CourseGraphView extends AbstractGraphView
 {
-    private GlucoValues gV = null;
 
+    private static final long serialVersionUID = -7960828650875426272L;
+    private GlucoValues gV = null;
     private CourseGraphDialog m_cGF = null;
 
+    
     public CourseGraphView(CourseGraphDialog parent)
     {
         super();

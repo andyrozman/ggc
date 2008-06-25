@@ -43,6 +43,10 @@ import javax.swing.JTextField;
 
 public class YearPanel extends JPanel implements CalendarListener
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2088319783321709765L;
     private JTextField yearField;
 
     public YearPanel(final CalendarModel cMod)

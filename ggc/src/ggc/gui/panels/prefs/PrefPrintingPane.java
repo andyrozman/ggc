@@ -67,6 +67,10 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
 //    private JTextField fieldHighBG2, fieldLowBG2, fieldTargetHighBG2, fieldTargetLowBG2;
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 50092067007913327L;
     private JTextField fieldEmpty, fieldPDFViewer, fieldLunchST, fieldDinnerST, fieldNightST;
     private JButton buttonBrowse;
 

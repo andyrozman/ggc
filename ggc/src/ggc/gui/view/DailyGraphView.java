@@ -44,6 +44,10 @@ import java.util.GregorianCalendar;
 
 public class DailyGraphView extends AbstractGraphView 
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8835081148503394720L;
     private DailyValues dayData;
     private ColorSchemeH scheme;
 

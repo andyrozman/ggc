@@ -17,6 +17,11 @@ import javax.swing.SwingConstants;
 public class PanelNutritionMain extends GGCTreePanel //JPanel
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8242508108941080163L;
+
     //I18nControl ic = I18nControl.getInstance();
     DataAccess m_da = null;
 

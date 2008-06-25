@@ -36,6 +36,11 @@ import java.awt.*;
 
 public class ScheduleInfoPanel extends AbstractInfoPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3297655715644239482L;
+
     public ScheduleInfoPanel()
     {
         super(I18nControl.getInstance().getMessage("SCHEDULE"));

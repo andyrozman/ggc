@@ -44,6 +44,11 @@ import org.apache.commons.logging.LogFactory;
 public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3047797993365876861L;
+
     private static Log log = LogFactory.getLog(DailyValuesRow.class); 
 
     //private I18nControl m_ic = I18nControl.getInstance();

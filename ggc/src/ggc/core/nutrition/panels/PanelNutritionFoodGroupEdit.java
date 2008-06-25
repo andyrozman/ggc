@@ -31,6 +31,11 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
 //    I18nControl ic = I18nControl.getInstance();
  
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -824948577643991763L;
+
     DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;

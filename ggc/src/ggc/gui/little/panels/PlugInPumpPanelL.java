@@ -40,6 +40,10 @@ import ggc.gui.panels.info.AbstractInfoPanel;
 public class PlugInPumpPanelL extends AbstractInfoPanel
 {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2496714983251707250L;
     private I18nControl ic = I18nControl.getInstance();
     
     public PlugInPumpPanelL()

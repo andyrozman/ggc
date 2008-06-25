@@ -45,6 +45,11 @@ import javax.swing.JComponent;
 
 public abstract class AbstractGraphView extends JComponent
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1215044753220287075L;
+
     Object oAA, oCR, oTAA, oR, oD, oFM, oI;
 
     DataAccess m_da = DataAccess.getInstance();

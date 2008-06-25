@@ -49,6 +49,11 @@ import org.hibernate.Transaction;
 public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1123099194144366632L;
+
     public boolean debug = false;
 
     public static final int MEAL_GROUP_MEALS = 1;

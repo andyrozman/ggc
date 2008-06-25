@@ -35,9 +35,14 @@ public abstract class GGCTreePanel extends EditableAbstractPanel //JPanel implem
 {
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1537683351864737939L;
+
     public GGCTreePanel(boolean is_editable, I18nControlAbstract ic)
     {
-	super(is_editable, ic);
+        super(is_editable, ic);
     }
     
     public void setParentRoot(Object obj)

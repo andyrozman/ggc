@@ -54,6 +54,10 @@ import javax.swing.JTable;
 public class DailyStatsControlsL extends AbstractInfoPanel implements ActionListener
 {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3682024667811580299L;
     GGCLittle m_little = null;
     JButton[] buttons = new JButton[4];
     MainLittlePanel m_mlp;

@@ -64,6 +64,10 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     //private JPanel mainPane;
     //private JTree tree;
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1193693566584753748L;
     JTextField tf_selected;
     JComboBox cb_type;
     JLabel label_item, label_item_type, label_item_desc;

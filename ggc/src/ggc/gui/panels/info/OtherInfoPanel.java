@@ -34,6 +34,11 @@ import java.awt.GridLayout;
 
 public class OtherInfoPanel extends AbstractInfoPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1695058871914412588L;
+
     public OtherInfoPanel()
     {
         super(I18nControl.getInstance().getMessage("OTHER_INFO"));

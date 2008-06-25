@@ -44,6 +44,10 @@ import javax.swing.SpringLayout;
 public class StatusBarL extends JPanel
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8864931592538137782L;
     I18nControl m_ic = I18nControl.getInstance();
     DataAccess da = DataAccess.getInstance();
     

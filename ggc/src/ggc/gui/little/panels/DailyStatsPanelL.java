@@ -45,6 +45,10 @@ import javax.swing.JTable;
 public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel implements ActionListener
 {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3519092324025060409L;
     public DailyStatsTableModel model = null;
     JScrollPane resultsPane;
     public JTable table;

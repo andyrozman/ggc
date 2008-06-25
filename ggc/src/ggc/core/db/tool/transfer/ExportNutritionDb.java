@@ -17,134 +17,133 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
-
 public class ExportNutritionDb extends ExportTool
 {
- 
-    
+
     public ExportNutritionDb(BackupRestoreWorkGiver giver)
     {
-	super(DataAccess.getInstance().getDb().getConfiguration());
-	
-	checkPrerequisitesForAutoBackup();
-	
-	this.setStatusReceiver(giver);
-	this.setTypeOfStatus(ExportTool.STATUS_SPECIAL);
-	
-	//exportAll();
+        super(DataAccess.getInstance().getDb().getConfiguration());
+
+        checkPrerequisitesForAutoBackup();
+
+        this.setStatusReceiver(giver);
+        this.setTypeOfStatus(ExportTool.STATUS_SPECIAL);
+
+        // exportAll();
     }
-   
-    
+
     public ExportNutritionDb(Configuration cfg)
     {
-	super(cfg);
-	
-	this.setTypeOfStatus(ExportNutritionDb.STATUS_DOT);
-	
-	checkPrerequisites();
-	exportAll();
+        super(cfg);
+
+        this.setTypeOfStatus(ExportNutritionDb.STATUS_DOT);
+
+        checkPrerequisites();
+        exportAll();
     }
 
-    
     private void checkPrerequisites()
     {
-	File f = new File("../data");
-	
-	if (!f.exists())
-	    f.mkdir();
-	
-	f = new File("../data/export");
+        File f = new File("../data");
 
-	if (!f.exists())
-	    f.mkdir();
-	
-	this.setRootPath("../data/export/");
-	this.setFileLastPart("_" + getCurrentDateForFile());
+        if (!f.exists())
+            f.mkdir();
+
+        f = new File("../data/export");
+
+        if (!f.exists())
+            f.mkdir();
+
+        this.setRootPath("../data/export/");
+        this.setFileLastPart("_" + getCurrentDateForFile());
     }
-    
+
     private void checkPrerequisitesForAutoBackup()
     {
-	File f = new File("../data");
-	
-	if (!f.exists())
-	    f.mkdir();
-	
-	f = new File("../data/export");
+        File f = new File("../data");
 
-	if (!f.exists())
-	    f.mkdir();
+        if (!f.exists())
+            f.mkdir();
 
-	f = new File("../data/export/tmp");
+        f = new File("../data/export");
 
-	if (!f.exists())
-	    f.mkdir();
-	
-	this.setRootPath("../data/export/tmp/");
-	this.setFileLastPart("");
+        if (!f.exists())
+            f.mkdir();
+
+        f = new File("../data/export/tmp");
+
+        if (!f.exists())
+            f.mkdir();
+
+        this.setRootPath("../data/export/tmp/");
+        this.setFileLastPart("");
     }
-    
+
     private void exportAll()
     {
-	export_UserFoodGroups();
-	export_UserFoods();
-	
-	export_MealGroups();
-	export_Meals();
+        export_UserFoodGroups();
+        export_UserFoods();
+
+        export_MealGroups();
+        export_Meals();
     }
 
-    
     @SuppressWarnings("unchecked")
     public void export_UserFoodGroups()
     {
-	openFile(this.getRootPath() + "FoodUserGroupH" + this.getFileLastPart() + ".txt");
+        openFile(this.getRootPath() + "FoodUserGroupH" + this.getFileLastPart()
+                + ".txt");
 
-//	openFile("../data/export/food_user_group.txt");
-	writeHeader("ggc.core.db.hibernate.FoodUserGroupH", 
-		    "id; name; name_i18n; description; parent_id; changed", 
-		    DataAccess.getInstance().currentDbVersion);
-	
+        // openFile("../data/export/food_user_group.txt");
+        writeHeader("ggc.core.db.hibernate.FoodUserGroupH",
+                "id; name; name_i18n; description; parent_id; changed",
+                DataAccess.getInstance().currentDbVersion);
+
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserGroupH as grp order by grp.id");
+        Query q = sess
+                .createQuery("select grp from ggc.core.db.hibernate.FoodUserGroupH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
-        
+
         Iterator it = q.iterate();
-        
+
         int dot_mark = 5;
         int count = 0;
 
         while (it.hasNext())
         {
-            FoodUserGroupH eh = (FoodUserGroupH)it.next();
-            
-            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + 
-        	             eh.getName_i18n() + "|" + eh.getDescription() + 
-        	             "|" + eh.getParent_id() + "|" + eh.getChanged() +"\n");
+            FoodUserGroupH eh = (FoodUserGroupH) it.next();
+
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|"
+                    + eh.getName_i18n() + "|" + eh.getDescription() + "|"
+                    + eh.getParent_id() + "|" + eh.getChanged() + "\n");
 
             count++;
             this.writeStatus(dot_mark, count);
         }
-        
+
         closeFile();
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     public void export_UserFoods()
     {
-	openFile(this.getRootPath() + "FoodUserDescriptionH" + this.getFileLastPart() + ".txt");
-//	openFile("../data/export/food_user_foods.txt");
-	writeHeader("ggc.core.db.hibernate.FoodUserDescriptionH", 
-		    "id; name; name_i18n; group_id; refuse; description; home_weights; nutritions; changed", 
-		    DataAccess.getInstance().currentDbVersion);
-	
+        openFile(this.getRootPath() + "FoodUserDescriptionH"
+                + this.getFileLastPart() + ".txt");
+        // openFile("../data/export/food_user_foods.txt");
+        writeHeader(
+                "ggc.core.db.hibernate.FoodUserDescriptionH",
+                "id; name; name_i18n; group_id; refuse; description; home_weights; nutritions; changed",
+                DataAccess.getInstance().currentDbVersion);
+
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserDescriptionH as grp order by grp.id");
+        Query q = sess
+                .createQuery("select grp from ggc.core.db.hibernate.FoodUserDescriptionH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
-        
+
         Iterator it = q.iterate();
 
         int dot_mark = 5;
@@ -152,107 +151,102 @@ public class ExportNutritionDb extends ExportTool
 
         while (it.hasNext())
         {
-            FoodUserDescriptionH eh = (FoodUserDescriptionH)it.next();
-            
-            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + 
-        	             eh.getName_i18n() + "|" + eh.getGroup_id() + "|" +
-        	             eh.getRefuse() + "|" + eh.getDescription() + "|" +
-        	             eh.getHome_weights() + "|" + eh.getNutritions() + "|" + eh.getChanged() +
-        	             "\n");
+            FoodUserDescriptionH eh = (FoodUserDescriptionH) it.next();
+
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|"
+                    + eh.getName_i18n() + "|" + eh.getGroup_id() + "|"
+                    + eh.getRefuse() + "|" + eh.getDescription() + "|"
+                    + eh.getHome_weights() + "|" + eh.getNutritions() + "|"
+                    + eh.getChanged() + "\n");
 
             count++;
             this.writeStatus(dot_mark, count);
         }
-        
+
         closeFile();
     }
-    
-    
-    
-    
+
     @SuppressWarnings("unchecked")
     public void export_MealGroups()
     {
-	openFile(this.getRootPath() + "MealGroupH" + this.getFileLastPart() + ".txt");
-//	openFile("../data/export/meal_groups.txt");
-	writeHeader("ggc.core.db.hibernate.MealGroupH", 
-		    "id; name; name_i18n; description; parent_id; changed", 
-		    DataAccess.getInstance().currentDbVersion);
-	
+        openFile(this.getRootPath() + "MealGroupH" + this.getFileLastPart()
+                + ".txt");
+        // openFile("../data/export/meal_groups.txt");
+        writeHeader("ggc.core.db.hibernate.MealGroupH",
+                "id; name; name_i18n; description; parent_id; changed",
+                DataAccess.getInstance().currentDbVersion);
+
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealGroupH as grp order by grp.id");
+        Query q = sess
+                .createQuery("select grp from ggc.core.db.hibernate.MealGroupH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
-        
+
         Iterator it = q.iterate();
 
         int dot_mark = 5;
         int count = 0;
 
-
         while (it.hasNext())
         {
-            MealGroupH eh = (MealGroupH)it.next();
-            
-            writeToFile(eh.getId() + "|" + eh.getName() + "|" + 
-        	        eh.getName_i18n() + "|" + eh.getDescription() + 
-        	        "|" + eh.getParent_id() + "|" + eh.getChanged() + "\n");
+            MealGroupH eh = (MealGroupH) it.next();
+
+            writeToFile(eh.getId() + "|" + eh.getName() + "|"
+                    + eh.getName_i18n() + "|" + eh.getDescription() + "|"
+                    + eh.getParent_id() + "|" + eh.getChanged() + "\n");
 
             count++;
             this.writeStatus(dot_mark, count);
         }
-        
+
         closeFile();
     }
-
 
     @SuppressWarnings("unchecked")
     public void export_Meals()
     {
-	openFile(this.getRootPath() + "MealH" + this.getFileLastPart() + ".txt");
-//	openFile("../data/export/meal_meals.txt");
-	writeHeader("ggc.core.db.hibernate.MealH", 
-		    "id; name; name_i18n; group_id; description; parts;" +
-		    "nutritions; extended; comment; changed", 
-		    DataAccess.getInstance().currentDbVersion);
-	
+        openFile(this.getRootPath() + "MealH" + this.getFileLastPart() + ".txt");
+        // openFile("../data/export/meal_meals.txt");
+        writeHeader("ggc.core.db.hibernate.MealH",
+                "id; name; name_i18n; group_id; description; parts;"
+                        + "nutritions; extended; comment; changed", DataAccess
+                        .getInstance().currentDbVersion);
+
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealH as grp order by grp.id");
+        Query q = sess
+                .createQuery("select grp from ggc.core.db.hibernate.MealH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
-        
+
         Iterator it = q.iterate();
 
         int dot_mark = 5;
         int count = 0;
 
-
         while (it.hasNext())
         {
-            MealH eh = (MealH)it.next();
-            
-            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + 
-        	             eh.getName_i18n() + "|" + eh.getGroup_id() + "|" +
-        	             eh.getDescription() + "|" + eh.getParts() + "|" + 
-        	             eh.getNutritions() + "|" + eh.getExtended() + "|" +
-        	             eh.getComment() + "|" + eh.getChanged() + "\n" );
+            MealH eh = (MealH) it.next();
+
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|"
+                    + eh.getName_i18n() + "|" + eh.getGroup_id() + "|"
+                    + eh.getDescription() + "|" + eh.getParts() + "|"
+                    + eh.getNutritions() + "|" + eh.getExtended() + "|"
+                    + eh.getComment() + "|" + eh.getChanged() + "\n");
 
             count++;
             this.writeStatus(dot_mark, count);
-        
+
         }
-        
+
         closeFile();
     }
-    
-    
+
     public static void main(String[] args)
     {
-	GGCDb db = new GGCDb();
-	new ExportNutritionDb(db.getConfiguration());
+        GGCDb db = new GGCDb();
+        new ExportNutritionDb(db.getConfiguration());
     }
-    
-    
+
 }

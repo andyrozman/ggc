@@ -1,3 +1,8 @@
+0.2.20.1
+    * Changed CGM databases
+    * Addded backup of Settings
+    * Total SVN directory structure redone
+
 2008-06-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * updated GGC_de & GGC_Nutrition_de to include all new keywords
 

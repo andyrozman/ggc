@@ -51,6 +51,10 @@ import javax.swing.SwingConstants;
 public class SchemeEDDialog extends JDialog implements ActionListener, ItemListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5602610719366564987L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
 

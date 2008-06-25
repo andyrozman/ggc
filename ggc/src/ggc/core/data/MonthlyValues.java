@@ -43,6 +43,10 @@ public class MonthlyValues extends WeeklyValues
 
     //DataAccess m_da = DataAccess.getInstance();
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4942933282046684731L;
     private int m_month = 0;
     private int m_year = 0;
     private int max_days = 0;

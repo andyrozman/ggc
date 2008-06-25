@@ -46,6 +46,10 @@ import javax.swing.border.TitledBorder;
 
 public class StatisticsInfoPanel extends AbstractInfoPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2075057980606217010L;
     GregorianCalendar endDate = null;
     GregorianCalendar startDate = null; //new Date(endDate.getTime() - (518400000L)); //now - 6 days in millisec
 

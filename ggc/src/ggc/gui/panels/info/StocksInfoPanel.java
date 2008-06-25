@@ -36,6 +36,11 @@ import java.awt.*;
 
 public class StocksInfoPanel extends AbstractInfoPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6551579241451753792L;
+
     public StocksInfoPanel()
     {
         super(I18nControl.getInstance().getMessage("STOCK"));

@@ -76,6 +76,12 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 {
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8762133987606084209L;
+
+
     private static Log log = LogFactory.getLog(DailyStatsDialog.class); 
     
 

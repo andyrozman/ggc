@@ -177,7 +177,7 @@ public class TestNutritionData
 	
 	//BackupRestoreDialog brd = new BackupRestoreDialog(frame, m_da, brc);
 	
-	BackupDialog brd = new BackupDialog(frame, m_da /*, brc*/);
+	/*BackupDialog brd =*/ new BackupDialog(frame, m_da /*, brc*/);
 	
 	/*
 	CheckBoxNode accessibilityOptions[] = {

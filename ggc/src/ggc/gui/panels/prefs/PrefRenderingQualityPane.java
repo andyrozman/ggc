@@ -49,6 +49,11 @@ import com.atech.help.HelpCapable;
 
 public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implements HelpCapable
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5354608555593397390L;
+
     private JComboBox comboAntiAliasing, comboColorRendering, comboDithering,
 		      comboFractionalMetrics, comboInterpolation, comboTextAntiAliasing,
 		      comboRendering;

@@ -62,6 +62,10 @@ import com.atech.help.HelpCapable;
 public class PropertiesDialog extends JDialog implements ListSelectionListener, ActionListener, HelpCapable
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5813992933782713913L;
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccess m_da; // = DataAccess.getInstance();
 

@@ -43,6 +43,11 @@ import javax.swing.JPanel;
 
 public class MonthPanel extends JPanel implements CalendarListener
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5531410682567267042L;
+
     //xprivate I18nControl m_ic = I18nControl.getInstance();    
     private DataAccess m_da = DataAccess.getInstance();
 

@@ -62,6 +62,10 @@ public class PrintingDialog extends ActionExceptionCatchDialog //     extends JD
 {
 
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2693207247071685559L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
 

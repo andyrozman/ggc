@@ -60,6 +60,10 @@ public class MealSelectorDialog extends JDialog implements ActionListener
     //private JPanel mainPane;
     //private JTree tree;
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3830583899901022717L;
     JTextField tf_selected;
     JComboBox cb_type;
     JLabel label_item, label_item_type;

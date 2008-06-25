@@ -50,6 +50,11 @@ import javax.swing.SwingConstants;
 public class DayPanel extends JPanel implements CalendarListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3657758404278842729L;
+
     private I18nControl m_ic = I18nControl.getInstance();    
 
     CalendarModel cMod;

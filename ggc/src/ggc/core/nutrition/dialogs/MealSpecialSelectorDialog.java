@@ -69,6 +69,11 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     //private JPanel mainPane;
     //private JTree tree;
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3869683885823162849L;
+
     HomeWeightSpecial hws_selected = null;
 
     JTextField tf_selected;

@@ -36,8 +36,8 @@ public class BackupDialog extends BackupRestoreDialog
     @Override
     public void performBackup()
     {
-	GGCBackupRestoreRunner gbrr = new GGCBackupRestoreRunner(this.ht_backup_objects, this);
-	gbrr.start();
+    	GGCBackupRestoreRunner gbrr = new GGCBackupRestoreRunner(this.ht_backup_objects, this);
+    	gbrr.start();
     }
 
 }

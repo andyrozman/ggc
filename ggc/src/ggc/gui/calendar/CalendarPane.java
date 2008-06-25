@@ -44,6 +44,10 @@ import javax.swing.JPanel;
 
 public class CalendarPane extends JPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4850264685726417445L;
     private MonthPanel mPanel;
     private YearPanel yPanel;
     private DayPanel dPanel;

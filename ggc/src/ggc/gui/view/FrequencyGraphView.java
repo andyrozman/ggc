@@ -41,6 +41,11 @@ import java.awt.RenderingHints;
 
 public class FrequencyGraphView extends AbstractGraphView
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8358248079574399547L;
+
     GlucoValues gV = null;
 
     int[] values = null;

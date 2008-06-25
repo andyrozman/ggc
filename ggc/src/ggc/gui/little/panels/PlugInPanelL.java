@@ -35,6 +35,11 @@ import javax.swing.JPanel;
 
 public class PlugInPanelL extends JPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6635563498789159187L;
+
     public PlugInPanelL()
     {
         super(); //I18nControl.getInstance().getMessage("SCHEDULE"));

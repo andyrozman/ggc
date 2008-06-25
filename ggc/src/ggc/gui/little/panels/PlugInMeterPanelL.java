@@ -39,6 +39,10 @@ import javax.swing.JLabel;
 public class PlugInMeterPanelL extends AbstractInfoPanel
 {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8602621885397419968L;
     private I18nControl ic = I18nControl.getInstance();
     //MetersPlugIn plug_in = new MetersPlugIn();
     

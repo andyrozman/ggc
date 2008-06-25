@@ -51,6 +51,11 @@ import com.atech.help.HelpCapable;
 
 public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCapable 
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5776476963040139761L;
+
     private JTextField fieldUserName;
 
     //private I18nControl m_ic = I18nControl.getInstance();

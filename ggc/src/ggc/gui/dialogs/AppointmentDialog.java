@@ -58,6 +58,10 @@ import javax.swing.SwingConstants;
 public class AppointmentDialog extends JDialog implements ActionListener
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1721590187912615702L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
 
