@@ -247,7 +247,7 @@ public class DailyRowDialog extends JDialog implements ActionListener,
         
         GregorianCalendar gc = new GregorianCalendar();
 
-        int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
+        //int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
         
         
         
@@ -930,32 +930,6 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             cmdOk();
         }
 
-        /*
-         * int change = 0;
-         * 
-         * if ((e.getKeyCode() == KeyEvent.VK_LEFT)) // || (e.getKeyCode() ==
-         * KeyEvent.VK_TAB) change = -1; else if ((e.getKeyCode() ==
-         * KeyEvent.VK_RIGHT) || (e.getKeyCode() == KeyEvent.VK_TAB)) change =
-         * 1; else if (e.getKeyCode() == KeyEvent.VK_DOWN) change = 2; else if
-         * (e.getKeyCode() == KeyEvent.VK_UP) change = -2;
-         * 
-         * 
-         * if (change==0) return;
-         * 
-         * JComponent cmp = (JComponent)e.getComponent();
-         * 
-         * int search = 0;
-         * 
-         * for (int i=0; i<9; i++) { if (components[i].equals(cmp)) { search =
-         * i; break; } }
-         * 
-         * int newres = search+change;
-         * 
-         * if (newres<0) { newres = 8+newres; } else if (newres>8) { newres =
-         * newres-8; }
-         * 
-         * components[newres].requestFocus();
-         */
     }
 
     /*

@@ -115,6 +115,11 @@ public class DailyFoodEntry // implements SelectableInterface
     public DailyFoodEntry(int food_type, FoodDescription fd, Meal ml,
             int amount_type, HomeWeightSpecial hws, float amount)
     {
+        
+        System.out.println("food_type=" + food_type + ",food=" + fd + ",meal=" + ml + 
+                            ",amount_type=" + amount_type + ",home weight sp: " + hws + ",amount:" + amount);
+        
+        
         this.nutrition_food_type = food_type;
 
         if (fd == null)
@@ -256,8 +261,7 @@ public class DailyFoodEntry // implements SelectableInterface
         }
         else
         {
-            this.m_food = m_da.tree_roots.get("" + this.nutrition_food_type).m_foods_ht
-                    .get("" + this.nutrition_food_id);
+            this.m_food = m_da.tree_roots.get("" + this.nutrition_food_type).m_foods_ht.get("" + this.nutrition_food_id);
 
             if (this.amount_type == DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
             {

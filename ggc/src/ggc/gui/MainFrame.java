@@ -119,10 +119,10 @@ public class MainFrame extends JFrame
      */
     private static final long serialVersionUID = -8971779470148201332L;
     // Version information
-    public static String s_version = "0.2.19.1";
+    public static String s_version = "0.2.20.2";
     public static String full_version = "v" + s_version;
 
-    public static String version_date = "19th June 2008";
+    public static String version_date = "25th June 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -199,8 +199,7 @@ public class MainFrame extends JFrame
             {
                 if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
                 {
-                    SkinLookAndFeel.setSkin(SkinLookAndFeel
-                            .loadThemePack(skinLFdir + data[1]));
+                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));
 
                     s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
                     UIManager.setLookAndFeel(s_skinlf);

@@ -38,7 +38,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-public class NutritionTreeModel implements TreeModel 
+public class NutritionTreeModel implements TreeModel //extends DefaultTreeModel         //implements TreeModel 
 {
 
     private boolean m_debug = false;
@@ -50,6 +50,7 @@ public class NutritionTreeModel implements TreeModel
 
     public NutritionTreeModel(GGCTreeRoot rt) 
     {
+        //'super(rt);
         //x isRoot = true;
         rootObj = rt;
     }

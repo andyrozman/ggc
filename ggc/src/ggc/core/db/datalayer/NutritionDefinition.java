@@ -27,7 +27,6 @@
  *  Author:   andyrozman  {andy@atech-software.com}
  */
 
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.NutritionDefinitionH;
@@ -43,8 +42,8 @@ import com.atech.i18n.I18nControlAbstract;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-
-public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface, Comparator<NutritionDefinition>
+public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface,
+        Comparator<NutritionDefinition>
 {
 
     /**
@@ -52,45 +51,39 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      */
     private static final long serialVersionUID = 3655011406766918193L;
 
-
     public I18nControlAbstract ic = null;
-
 
     public boolean debug = false;
     String text_idx = "";
 
-
     public NutritionDefinition()
     {
         this.setId(0);
-	this.setTag("");
-	this.setName("");
-	this.setWeight_unit("");
-	this.setDecimal_places("");
-	
-	ic = DataAccess.getInstance().getNutriI18nControl();
-	
-	this.setSearchContext();
-    }
+        this.setTag("");
+        this.setName("");
+        this.setWeight_unit("");
+        this.setDecimal_places("");
 
+        ic = DataAccess.getInstance().getNutriI18nControl();
+
+        this.setSearchContext();
+    }
 
     public NutritionDefinition(NutritionDefinitionH ch)
     {
-	this.setId(ch.getId());
-	this.setTag(ch.getTag());
-	this.setName(ch.getName());
-	this.setWeight_unit(ch.getWeight_unit());
-	this.setDecimal_places(ch.getDecimal_places());
-	ic = DataAccess.getInstance().getNutriI18nControl();
-	this.setSearchContext();
+        this.setId(ch.getId());
+        this.setTag(ch.getTag());
+        this.setName(ch.getName());
+        this.setWeight_unit(ch.getWeight_unit());
+        this.setDecimal_places(ch.getDecimal_places());
+        ic = DataAccess.getInstance().getNutriI18nControl();
+        this.setSearchContext();
     }
-
 
     public String getShortDescription()
     {
-        return this.getName() + " (" + this.getWeight_unit() + ")";
+        return this.getResolvedName() + " (" + this.getWeight_unit() + ")";
     }
-
 
     @Override
     public String toString()
@@ -98,47 +91,47 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return this.getShortDescription();
     }
 
-
-    //---
-    //---  DatabaseObjectHibernate
-    //---
-
+    // ---
+    // --- DatabaseObjectHibernate
+    // ---
 
     /**
      * DbAdd - Add this object to database
      * 
-     * @param sess Hibernate Session object
-     * @throws Exception (HibernateException) with error
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
     {
-        
+
         Transaction tx = sess.beginTransaction();
 
-	NutritionDefinitionH ch = new NutritionDefinitionH();
+        NutritionDefinitionH ch = new NutritionDefinitionH();
 
-	ch.setId(this.getId());
-	ch.setTag(this.getTag());
-	ch.setName(this.getName());
-	ch.setWeight_unit(this.getWeight_unit());
-	ch.setDecimal_places(this.getDecimal_places());
+        ch.setId(this.getId());
+        ch.setTag(this.getTag());
+        ch.setName(this.getName());
+        ch.setWeight_unit(this.getWeight_unit());
+        ch.setDecimal_places(this.getDecimal_places());
 
-        Long id = (Long)sess.save(ch);
+        Long id = (Long) sess.save(ch);
 
         tx.commit();
 
-        return ""+id.longValue();
-        
+        return "" + id.longValue();
+
     }
-
-
 
     /**
      * DbEdit - Edit this object in database
      * 
-     * @param sess Hibernate Session object
-     * @throws Exception (HibernateException) with error
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -146,13 +139,13 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
         Transaction tx = sess.beginTransaction();
 
-	NutritionDefinitionH ch = (NutritionDefinitionH)sess.get(NutritionDefinitionH.class, new Long(this.getId()));
+        NutritionDefinitionH ch = (NutritionDefinitionH) sess.get(NutritionDefinitionH.class, new Long(this.getId()));
 
-	ch.setId(this.getId());
-	ch.setTag(this.getTag());
-	ch.setName(this.getName());
-	ch.setWeight_unit(this.getWeight_unit());
-	ch.setDecimal_places(this.getDecimal_places());
+        ch.setId(this.getId());
+        ch.setTag(this.getTag());
+        ch.setName(this.getName());
+        ch.setWeight_unit(this.getWeight_unit());
+        ch.setDecimal_places(this.getDecimal_places());
 
         sess.update(ch);
         tx.commit();
@@ -161,13 +154,13 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
-
-
     /**
      * DbDelete - Delete this object in database
      * 
-     * @param sess Hibernate Session object
-     * @throws Exception (HibernateException) with error
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
@@ -175,7 +168,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
         Transaction tx = sess.beginTransaction();
 
-	NutritionDefinitionH ch = (NutritionDefinitionH)sess.get(NutritionDefinitionH.class, new Long(this.getId()));
+        NutritionDefinitionH ch = (NutritionDefinitionH) sess.get(NutritionDefinitionH.class, new Long(this.getId()));
 
         sess.delete(ch);
         tx.commit();
@@ -184,14 +177,15 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
-
-
     /**
-     * DbHasChildren - Shows if this entry has any children object, this is needed for delete
+     * DbHasChildren - Shows if this entry has any children object, this is
+     * needed for delete
      * 
      * 
-     * @param sess Hibernate Session object
-     * @throws Exception (HibernateException) with error
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbHasChildren(Session sess) throws Exception
@@ -200,33 +194,31 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return true;
     }
 
-
-
     /**
      * DbGet - Loads this object. Id must be set.
      * 
      * 
-     * @param sess Hibernate Session object
-     * @throws Exception (HibernateException) with error
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbGet(Session sess) throws Exception
     {
 
-	NutritionDefinitionH ch = (NutritionDefinitionH)sess.get(NutritionDefinitionH.class, new Long(this.getId()));
+        NutritionDefinitionH ch = (NutritionDefinitionH) sess.get(NutritionDefinitionH.class, new Long(this.getId()));
 
-	this.setId(ch.getId());
-	this.setTag(ch.getTag());
-	this.setName(ch.getName());
-	this.setWeight_unit(ch.getWeight_unit());
-	this.setDecimal_places(ch.getDecimal_places());
+        this.setId(ch.getId());
+        this.setTag(ch.getTag());
+        this.setName(ch.getName());
+        this.setWeight_unit(ch.getWeight_unit());
+        this.setDecimal_places(ch.getDecimal_places());
 
-	this.setSearchContext();
+        this.setSearchContext();
 
         return true;
     }
-
-
 
     /**
      * getObjectName - returns name of DatabaseObject
@@ -238,8 +230,6 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return "Food Nutrition Definition";
     }
 
-
-
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -250,16 +240,11 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return debug;
     }
 
-
-
     /**
-     * getAction - returns action that should be done on object
-     *    0 = no action
-     *    1 = add action
-     *    2 = edit action
-     *    3 = delete action
-     *    This is used mainly for objects, contained in lists and dialogs, used for 
-     *    processing by higher classes (classes calling selectors, wizards, etc...
+     * getAction - returns action that should be done on object 0 = no action 1
+     * = add action 2 = edit action 3 = delete action This is used mainly for
+     * objects, contained in lists and dialogs, used for processing by higher
+     * classes (classes calling selectors, wizards, etc...
      * 
      * @return number of action
      */
@@ -268,289 +253,319 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return 0;
     }
 
-    
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnCount()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#getColumnCount
+     * ()
      */
     public int getColumnCount()
     {
-	return 4;
+        return 4;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnName(int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#getColumnName
+     * (int)
      */
     public String getColumnName(int num)
     {
-	//this.getId();
-	/*this.getName();
-	this.getTag();
-	this.getWeight_unit(); */
-	switch(num)
-	{
-	    case 4:
-		return ic.getMessage("TAG");
-		
-	    case 3:
-		return ic.getMessage("WEIGHT_UNIT");
+        // this.getId();
+        /*
+         * this.getName(); this.getTag(); this.getWeight_unit();
+         */
+        switch (num)
+        {
+        case 4:
+            return ic.getMessage("TAG");
 
-	    case 2:
-		return ic.getMessage("NAME");
+        case 3:
+            return ic.getMessage("WEIGHT_UNIT");
 
-	    default:
-		return ic.getMessage("ID");
-		
-	}
-	
+        case 2:
+            return ic.getMessage("NAME");
+
+        default:
+            return ic.getMessage("ID");
+
+        }
+
     }
 
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnValue(int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#getColumnValue
+     * (int)
      */
     public String getColumnValue(int num)
     {
 
-	//this.getId();
-	/*this.getName();
-	this.getTag();
-	this.getWeight_unit(); */
-	switch(num)
-	{
-	    case 4:
-		return this.getTag();
-		
-	    case 3:
-		return this.getWeight_unit();
+        // this.getId();
+        /*
+         * this.getName(); this.getTag(); this.getWeight_unit();
+         */
+        switch (num)
+        {
+        case 4:
+            return this.getTag();
 
-	    case 2:
-		return this.getResolvedName(); 
+        case 3:
+            return this.getWeight_unit();
 
-	    default:
-		return "" + this.getId();
-		
-	}
-	
+        case 2:
+            return this.getResolvedName();
+
+        default:
+            return "" + this.getId();
+
+        }
+
     }
 
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnValueObject(int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @seecom.atech.graphics.components.selector.SelectableInterface#
+     * getColumnValueObject(int)
      */
     public Object getColumnValueObject(int num)
     {
-	switch(num)
-	{
-	    case 4:
-		return this.getTag();
-		
-	    case 3:
-		return this.getWeight_unit();
+        switch (num)
+        {
+        case 4:
+            return this.getTag();
 
-	    case 2:
-		return this.getResolvedName();
-		
-	    default:
-		return this.getId();
-		
-	}
+        case 3:
+            return this.getWeight_unit();
+
+        case 2:
+            return this.getResolvedName();
+
+        default:
+            return this.getId();
+
+        }
     }
-
 
     public String getResolvedName()
     {
-	
-	if (this.getTag().trim().equals(""))
-	    return this.getName();
-	
-	String t = ic.getMessage(this.getTag());
-	
-	//return t;
-	
-	
-	if (t.equals(this.getTag()))
-	    return this.getName();
-	else
-	    return t;
-	
+
+        if (this.getTag().trim().equals(""))
+            return this.getName();
+
+        String t = ic.getMessage(this.getTag());
+
+        // return t;
+
+        if (t.equals(this.getTag()))
+            return this.getName();
+        else
+            return t;
+
     }
-    
-    
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#getColumnWidth(int, int)
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#getColumnWidth
+     * (int, int)
      */
     public int getColumnWidth(int num, int width)
     {
-	switch(num)
-	{
-            case 4:
-                return(int)(width*20);
-            case 3:
-                return(int)(width*20);
-            case 2:
-                return(int)(width*40);
-            default:
-                return(int)(width*20);
-		
-	}
+        switch (num)
+        {
+        case 4:
+            return (int) (width * 20);
+        case 3:
+            return (int) (width * 20);
+        case 2:
+            return (int) (width * 40);
+        default:
+            return (int) (width * 20);
+
+        }
     }
 
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#getItemId()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#getItemId()
      */
     public long getItemId()
     {
-	return this.getId();
+        return this.getId();
     }
 
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#isFound(int, int, int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#isFound(int,
+     * int, int)
      */
     public boolean isFound(int from, int till, int state)
     {
-	return true;
+        return true;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#isFound(int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#isFound(int)
      */
     public boolean isFound(int value)
     {
-	return true;
+        return true;
     }
 
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#isFound(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#isFound(java
+     * .lang.String)
      */
     public boolean isFound(String text)
     {
-        if ((this.text_idx.indexOf(text.toUpperCase())!=-1) || (text.length()==0))
+        if ((this.text_idx.indexOf(text.toUpperCase()) != -1) || (text.length() == 0))
             return true;
         else
             return false;
     }
 
-
-
-
-    /* (non-Javadoc)
-     * @see com.atech.graphics.components.selector.SelectableInterface#setSearchContext()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.atech.graphics.components.selector.SelectableInterface#setSearchContext
+     * ()
      */
     public void setSearchContext()
     {
         this.text_idx = this.getResolvedName().toUpperCase() + " " + this.getName().toUpperCase();
     }
-    
-    
-    //---
-    //---  Column sorting 
-    //---
 
+    // ---
+    // --- Column sorting
+    // ---
 
     private ColumnSorter columnSorter = null;
-
 
     /**
      * setColumnSorter - sets class that will help with column sorting
      * 
-     * @param cs ColumnSorter instance
+     * @param cs
+     *            ColumnSorter instance
      */
     public void setColumnSorter(ColumnSorter cs)
     {
-	this.columnSorter = cs;
+        this.columnSorter = cs;
     }
 
-
     /**
-     * Compares this object with the specified object for order.  Returns a
+     * Compares this object with the specified object for order. Returns a
      * negative integer, zero, or a positive integer as this object is less
      * than, equal to, or greater than the specified object.
-     *
-     * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
-     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
+     * 
+     * <p>
+     * The implementor must ensure <tt>sgn(x.compareTo(y)) ==
+     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>. (This
      * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
      * <tt>y.compareTo(x)</tt> throws an exception.)
-     *
-     * <p>The implementor must also ensure that the relation is transitive:
+     * 
+     * <p>
+     * The implementor must also ensure that the relation is transitive:
      * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
      * <tt>x.compareTo(z)&gt;0</tt>.
-     *
-     * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
-     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
-     * all <tt>z</tt>.
-     *
-     * <p>It is strongly recommended, but <i>not</i> strictly required that
-     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
-     * class that implements the <tt>Comparable</tt> interface and violates
-     * this condition should clearly indicate this fact.  The recommended
-     * language is "Note: this class has a natural ordering that is
-     * inconsistent with equals."
-     *
-     * <p>In the foregoing description, the notation
-     * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
-     * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
-     * <tt>0</tt>, or <tt>1</tt> according to whether the value of
-     * <i>expression</i> is negative, zero or positive.
-     *
-     * @param   o the object to be compared.
-     * @return  a negative integer, zero, or a positive integer as this object
-     *		is less than, equal to, or greater than the specified object.
-     *
-     * @throws ClassCastException if the specified object's type prevents it
-     *         from being compared to this object.
+     * 
+     * <p>
+     * Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
+     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for all
+     * <tt>z</tt>.
+     * 
+     * <p>
+     * It is strongly recommended, but <i>not</i> strictly required that
+     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>. Generally speaking, any
+     * class that implements the <tt>Comparable</tt> interface and violates this
+     * condition should clearly indicate this fact. The recommended language is
+     * "Note: this class has a natural ordering that is inconsistent with
+     * equals."
+     * 
+     * <p>
+     * In the foregoing description, the notation <tt>sgn(</tt><i>expression</i>
+     * <tt>)</tt> designates the mathematical <i>signum</i> function, which is
+     * defined to return one of <tt>-1</tt>, <tt>0</tt>, or <tt>1</tt> according
+     * to whether the value of <i>expression</i> is negative, zero or positive.
+     * 
+     * @param o
+     *            the object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object is
+     *         less than, equal to, or greater than the specified object.
+     * 
+     * @throws ClassCastException
+     *             if the specified object's type prevents it from being
+     *             compared to this object.
      */
     public int compareTo(SelectableInterface o)
     {
 
-	/*
-	if (o instanceof SelectableInterface)
-	{
-	    return this.columnSorter.compareObjects(this, (SelectableInterface)o);
-	}
-	else
-	    throw new ClassCastException();
-*/
-	return this.columnSorter.compareObjects(this, o);
+        /*
+         * if (o instanceof SelectableInterface) { return
+         * this.columnSorter.compareObjects(this, (SelectableInterface)o); }
+         * else throw new ClassCastException();
+         */
+        return this.columnSorter.compareObjects(this, o);
 
     }
-    
-    
-    
+
     /**
      * compare (MealPartsDisplay, MealPartsDisplay)
      * 
-     * Compares its two arguments for order. Returns a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+     * Compares its two arguments for order. Returns a negative integer, zero,
+     * or a positive integer as the first argument is less than, equal to, or
+     * greater than the second.
      * 
-     * The implementor must ensure that sgn(compare(x, y)) == -sgn(compare(y, x)) for all x and y. (This implies that compare(x, y) must throw an exception if and only if compare(y, x) throws an exception.)
+     * The implementor must ensure that sgn(compare(x, y)) == -sgn(compare(y,
+     * x)) for all x and y. (This implies that compare(x, y) must throw an
+     * exception if and only if compare(y, x) throws an exception.)
      * 
-     * The implementor must also ensure that the relation is transitive: ((compare(x, y)>0) && (compare(y, z)>0)) implies compare(x, z)>0.
+     * The implementor must also ensure that the relation is transitive:
+     * ((compare(x, y)>0) && (compare(y, z)>0)) implies compare(x, z)>0.
      * 
-     * Finally, the implementer must ensure that compare(x, y)==0 implies that sgn(compare(x, z))==sgn(compare(y, z)) for all z.
+     * Finally, the implementer must ensure that compare(x, y)==0 implies that
+     * sgn(compare(x, z))==sgn(compare(y, z)) for all z.
      * 
-     * It is generally the case, but not strictly required that (compare(x, y)==0) == (x.equals(y)). Generally speaking, any comparator that violates this condition should clearly indicate this fact. The recommended language is "Note: this comparator imposes orderings that are inconsistent with equals."
+     * It is generally the case, but not strictly required that (compare(x,
+     * y)==0) == (x.equals(y)). Generally speaking, any comparator that violates
+     * this condition should clearly indicate this fact. The recommended
+     * language is
+     * "Note: this comparator imposes orderings that are inconsistent with equals."
      * 
-     * @param mpd1 - the first object to be compared.       
-     * @param mpd2 - the second object to be compared.       
-     *  
+     * @param mpd1
+     *            - the first object to be compared.
+     * @param mpd2
+     *            - the second object to be compared.
+     * 
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      * 
-     * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+     * @return a negative integer, zero, or a positive integer as the first
+     *         argument is less than, equal to, or greater than the second.
      */
     public int compare(NutritionDefinition mnd1, NutritionDefinition mnd2)
     {
-	long id1 = mnd1.getId();
-	long id2 = mnd2.getId();
-	    
-	return (int)(id1-id2);
+        long id1 = mnd1.getId();
+        long id2 = mnd2.getId();
+
+        return (int) (id1 - id2);
     }
-    
-    
+
 }
-
-

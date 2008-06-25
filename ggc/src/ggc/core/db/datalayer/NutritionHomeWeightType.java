@@ -71,7 +71,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     public String getShortDescription()
     {
         // return this.getDescription();
-        return ic.getMessage(this.getName());
+        return this.getResolvedName();
     }
 
     @Override

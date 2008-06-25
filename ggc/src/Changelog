@@ -1,3 +1,10 @@
+0.2.20.3
+    * fixed problem with adding new foods and meals
+    * fixed problem with meals tree (ids and refresh)
+    * tooltips are added with foods and meals, labels for name are usually long, so we also set tooltip so that 
+      whole name is visible
+
+
 0.2.20.2
     * added JDecimalTextField to atech-tools, which needs to replace JFormattedTextField used for decimal numbers
       replaced elements in Daily Values
