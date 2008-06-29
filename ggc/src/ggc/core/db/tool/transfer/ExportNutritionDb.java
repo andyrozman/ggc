@@ -92,12 +92,12 @@ public class ExportNutritionDb extends ExportTool
     public void export_UserFoodGroups()
     {
         openFile(this.getRootPath() + "FoodUserGroupH" + this.getFileLastPart()
-                + ".txt");
+                + ".dbe");
 
         // openFile("../data/export/food_user_group.txt");
         writeHeader("ggc.core.db.hibernate.FoodUserGroupH",
                 "id; name; name_i18n; description; parent_id; changed",
-                DataAccess.getInstance().currentDbVersion);
+                DataAccess.getInstance().current_db_version);
 
         Session sess = getSession();
 
@@ -130,12 +130,12 @@ public class ExportNutritionDb extends ExportTool
     public void export_UserFoods()
     {
         openFile(this.getRootPath() + "FoodUserDescriptionH"
-                + this.getFileLastPart() + ".txt");
+                + this.getFileLastPart() + ".dbe");
         // openFile("../data/export/food_user_foods.txt");
         writeHeader(
                 "ggc.core.db.hibernate.FoodUserDescriptionH",
                 "id; name; name_i18n; group_id; refuse; description; home_weights; nutritions; changed",
-                DataAccess.getInstance().currentDbVersion);
+                DataAccess.getInstance().current_db_version);
 
         Session sess = getSession();
 
@@ -170,11 +170,11 @@ public class ExportNutritionDb extends ExportTool
     public void export_MealGroups()
     {
         openFile(this.getRootPath() + "MealGroupH" + this.getFileLastPart()
-                + ".txt");
+                + ".dbe");
         // openFile("../data/export/meal_groups.txt");
         writeHeader("ggc.core.db.hibernate.MealGroupH",
                 "id; name; name_i18n; description; parent_id; changed",
-                DataAccess.getInstance().currentDbVersion);
+                DataAccess.getInstance().current_db_version);
 
         Session sess = getSession();
 
@@ -206,12 +206,12 @@ public class ExportNutritionDb extends ExportTool
     @SuppressWarnings("unchecked")
     public void export_Meals()
     {
-        openFile(this.getRootPath() + "MealH" + this.getFileLastPart() + ".txt");
+        openFile(this.getRootPath() + "MealH" + this.getFileLastPart() + ".dbe");
         // openFile("../data/export/meal_meals.txt");
         writeHeader("ggc.core.db.hibernate.MealH",
                 "id; name; name_i18n; group_id; description; parts;"
                         + "nutritions; extended; comment; changed", DataAccess
-                        .getInstance().currentDbVersion);
+                        .getInstance().current_db_version);
 
         Session sess = getSession();
 

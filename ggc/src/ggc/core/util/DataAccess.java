@@ -78,8 +78,15 @@ import com.atech.utils.logs.RedirectScreen;
 public class DataAccess extends ATDataAccessAbstract
 {
 
-    public String currentDbVersion = "7";
+    public String current_db_version = "7";
 
+    
+    /**
+     * At later time this will be determined by user management part
+     */
+    public long current_user_id = 1;
+    
+    
     // LF
     // Hashtable<String,String> availableLF_full = null;
     // Object[] availableLF = null;

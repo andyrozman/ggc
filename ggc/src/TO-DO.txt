@@ -50,39 +50,34 @@ GGC Pump Tool
 
 
 
-II. SORTED BY VERSION
+II. SORTED BY VERSION  (Updated 27.06.2008)
 =========================
 
 
 Version 0.3
 ------------
-* Add Daily Data support for Meals
-* Readme
-* Db Versioning
+* Documentation:
+    - Readme (in all langs.)
+    - How to help
+    - How to update
+    - How to USB
+
 * Error handling (and logger)
-* Daily Values – Check values, Double click edit
-* Update (client side): 
-    - Software updater framework
-    - Db Updater framework
 * Printing error display
-* Startup
-    - Run GGC
-    - Db Tool
-    - Db Check
-* Added functiuonality for Nutrition Db: 
-#    - Export data
-    - Import data (full)
-#    - Nutrition Definition [GI_GL] should be added on init
+* Meter Tool integration
+    - GUI
+* Restore data:
+    - GUI
+    - only full restore
+
 
 
 Version 0.4
 ------------
 
 * Db Tools Integration:  - InitDb
-* Atech Tools integration
 * GGC Little
 * Meter Tool integration
-    - GGC Output
     - Configuration
 * Update (client)
     - Update configuration in DA
@@ -90,7 +85,10 @@ Version 0.4
     - Software updater Server
     - Db Updater Server
 * Java Help – Write help pages
-* Graphs with new library 
+            - Load from language jar
+* Graphs with new library
+* Selector: 
+    - Double click on item = select and close 
 * Added functionality for Nutrition Db: 
     - Import data (selective)
     - Import Entry
@@ -100,18 +98,23 @@ Version 0.4
     - Column Sorting in meal
     - Column Sorting in Food
     - Glycemic data change
-* Pump: 
-    - Basic Pump support (for manual input of data)
-    - Integration of Pump Tool
-    This means only basic input of data, no reading from actual pump, no graphs,
-    pump list.
-* Add ratios 
-* Smart insulin usage rcommendations
+    
+* Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
 
+* CGM Tool: <Basic CGM support>
+    
+* Smart Insulin Recommendation (Bolus Helper):
+    - Helper 
+    - Calculate ratios
+    - Change ratios
+    
+* Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
 
 
 Version 0.5
 ------------
+
+* Activity Manager
 
 * Appoinmtments Mngr
     - AED doctor
@@ -120,23 +123,22 @@ Version 0.5
     - AED subtypes
     - AED stocks
 
-* Export/Import other data
 * Synchronization
-* Export/Import daily data
-* Export/Import manager
 * GGC Network
 * Internet data (links for pages, forums, blogs - informational)
     - AED Inet Group
     - AED Inet Type
     - AED Inet Links
-* GGC PPC
+* GGC PPC (??)
 * Support for multiple persons
-* Restore data (partitial/update)
 * GGC Network - Support for multiple instances of GGC and their communication
 * Import of data from SiDiary Desktop application. SiDiary has its sister 
     applications running on many small devices (PocketPC, Palms, SmartPhones, 
     Java Phones), and it has import for a lot of Meters and also some pumps...
-
+* External foods database
+* Restore: 
+   - partitial/update
+* Server Error Resolution (exceptions thrown by application, that help can be found on internet).
 
 
 
@@ -232,6 +234,29 @@ Level 6 (IN NEAR FUTURE):
 DONE
 ===============================================================================
 ===============================================================================
+
+* Meter Tool integration
+    - GGC Output
+    - Simple configuration
+
+
+* Startup
+    - Run GGC
+    - Db Tool
+    - Db Check
+* Added functiuonality for Nutrition Db: 
+    - Export data
+    - Import data (full)
+    - Nutrition Definition [GI_GL] should be added on init
+
+
+* Add Daily Data support for Meals
+* Db Versioning
+* Daily Values – Check values, Double click edit
+* Update (client side): 
+    - Software updater framework
+    - Db Updater framework
+
 
 * Add new daily data: - Check all parameters for validity (internal java checker)
                       - Enter is OK (Date component)

@@ -1,3 +1,8 @@
+0.2.20.4
+    * Error dialog finsihed and integrated into Printing Dialog (this is first dialog that uses extended 
+      error dialogs)
+
+
 0.2.20.3
     * fixed problem with adding new foods and meals
     * fixed problem with meals tree (ids and refresh)

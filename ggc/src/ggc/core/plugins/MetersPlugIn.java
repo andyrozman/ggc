@@ -52,13 +52,13 @@ public class MetersPlugIn extends PlugInClient
             installed = true;
             this.m_server.init(this.parent, DataAccess.getInstance()
                     .getI18nControlInstance().getSelectedLangauge(), DataAccess
-                    .getInstance());
+                    .getInstance(), this);
 
             // System.out.println("We have an instance !!! " + this.m_srv);
         }
         catch (Exception ex)
         {
-            System.out.println("Ex:" + ex);
+            //System.out.println("Ex:" + ex);
 
         }
 
@@ -73,7 +73,28 @@ public class MetersPlugIn extends PlugInClient
 
     public void readMeterData()
     {
-        this.featureNotImplemented(commands[MetersPlugIn.COMMAND_READ_METER_DATA]);
+        //this.featureNotImplemented(commands[MetersPlugIn.COMMAND_READ_METER_DATA]);
+        int command = MetersPlugIn.COMMAND_READ_METER_DATA;
+        
+        if (m_server==null)
+        {
+            if (this.isCommandImplemented(command))
+            {
+                this.showMessage(String.format(ic.getMessage("PLUGIN_NOT_INSTALLED"), this.getName()));
+            }
+            else
+            {
+                this.featureNotImplemented(commands[command]);
+            }
+        }
+        else
+        {
+            GGCDataReader greader = new GGCDataReader(DataAccess.getInstance().getDb(), GGCDataReader.DATA_METER);
+            greader.start();
+            
+            m_server.executeCommand(command, greader);
+        }
+        
     }
 
     public void metersList()
@@ -95,8 +116,7 @@ public class MetersPlugIn extends PlugInClient
 
         if (command.equals("meters_read"))
         {
-            this.executeCommand(MetersPlugIn.COMMAND_READ_METER_DATA);
-            // this.readMeterData();
+            this.readMeterData();
         }
         else if (command.equals("meters_list"))
         {
