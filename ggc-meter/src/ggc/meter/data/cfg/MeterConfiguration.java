@@ -1,16 +1,22 @@
 package ggc.meter.data.cfg;
 
+import ggc.meter.util.DataAccessMeter;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Hashtable;
 
 public class MeterConfiguration
 {
     
+    DataAccessMeter m_da = DataAccessMeter.getInstance();
     String config_text = "";
     File config_file = new File("../data/tools/MeterConfiguration.properties");
+    
+    MeterConfigEntry default_meter = null;
     
     public MeterConfiguration(boolean edit)
     {
@@ -20,11 +26,46 @@ public class MeterConfiguration
         }
         else
         {
-            //throw new Exception("");
-            System.out.println("Error processing data");
+            processData();
         }
         
-        
+    }
+    
+    
+    public void processData()
+    {
+        if (this.config_file.exists())
+        {
+            try
+            {
+                Hashtable<String,String> cfg = m_da.loadPropertyFile(this.config_file.getPath());
+                
+                if (cfg.containsKey("SELECTED_METER"))
+                {
+                    //System.out.println("selected meter");
+                    int sel = Integer.parseInt(cfg.get("SELECTED_METER"));
+                    
+                    MeterConfigEntry mce = new MeterConfigEntry();
+                    mce.readConfiguration(cfg, sel);
+                    
+                    
+                    if (mce.isValid())
+                        this.default_meter = mce;
+                    
+                }
+                //else
+                    //System.out.println("NO selected meter");
+                    
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+                this.default_meter = null;
+            }
+            
+            
+            
+        }
     }
     
     
@@ -36,6 +77,11 @@ public class MeterConfiguration
     public void setConfigText(String txt)
     {
         this.config_text = txt;
+    }
+    
+    public MeterConfigEntry getDefaultMeter()
+    {
+        return this.default_meter;
     }
     
     
@@ -127,6 +173,7 @@ public class MeterConfiguration
     
     public void checkDirectoryStructure()
     {
+        System.out.println("chekcDireStructure");
         File f = new File("../data");
         
         if (!f.exists())

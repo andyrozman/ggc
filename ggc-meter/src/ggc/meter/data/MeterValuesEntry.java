@@ -28,6 +28,8 @@
 package ggc.meter.data;
 
 import ggc.meter.output.OutputUtil;
+import ggc.meter.util.DataAccessMeter;
+import ggc.meter.util.I18nControl;
 
 import java.util.Hashtable;
 
@@ -38,12 +40,41 @@ import com.atech.utils.ATechDate;
 
 public class MeterValuesEntry 
 {
-	
+	DataAccessMeter da = DataAccessMeter.getInstance();
 	public ATechDate datetime;
 	public String bg_str;
 	public int bg_unit;
+	public boolean checked = false;
 	//public
 	public Hashtable<String,String> params;
+	public int status = 1; //MeterValuesEntry.
+	public static I18nControl ic = I18nControl.getInstance(); 
+	
+	public String bg_original = null;
+	public OutputUtil util = new OutputUtil();
+	
+	
+	public static final int STATUS_UNKNOWN = 0;
+    public static final int STATUS_NEW = 1;
+    public static final int STATUS_CHANGED = 2;
+    public static final int STATUS_OLD = 3;
+	
+	
+	public static String entry_statuses[] = 
+	{
+	     MeterValuesEntry.ic.getMessage("UNKNOWN"),
+         MeterValuesEntry.ic.getMessage("NEW"),
+         MeterValuesEntry.ic.getMessage("CHANGED"),
+         MeterValuesEntry.ic.getMessage("OLD")
+	};
+	
+    public static String entry_status_icons[] = 
+    {
+         "led_gray.gif",
+         "led_green.gif",
+         "led_yellow.gif",
+         "led_red.gif"
+    };
 	
 	
 	public MeterValuesEntry()
@@ -89,15 +120,63 @@ public class MeterValuesEntry
 	}
 	
 	
+	public boolean getCheched()
+	{
+	    return this.checked;
+	}
+
+	public int getStatus()
+	{
+	    return this.status;
+	}
+	
+	
 	public void setBgValue(String value)
 	{
 		this.bg_str = value;
+		
+		if (this.bg_original==null)
+		    this.setDisplayableBGValue(value);
 	}
 	
 	public String getBgValue()
 	{
 		return this.bg_str;
 	}
+	
+	public void setDisplayableBGValue(String value)
+	{
+	    bg_original = value; 
+	}
+	
+	public String getBGValue(int st)
+	{
+	    if (this.bg_unit == OutputUtil.BG_MMOL)
+	    {
+	        if (st == OutputUtil.BG_MMOL)
+	        {
+	            return this.bg_original;
+	        }
+	        else
+	        {
+	            return "" + (int)(this.util.getBGValueDifferent(OutputUtil.BG_MMOL, Float.parseFloat(this.bg_original)));
+	        }
+	    }
+	    else
+	    {
+            if (st == OutputUtil.BG_MGDL)
+            {
+                return this.bg_original;
+            }
+            else
+            {
+                return DataAccessMeter.MmolDecimalFormat.format((this.util.getBGValueDifferent(OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
+            }
+	        
+	    }
+	    
+	}
+	
 	
 	public String getParametersAsString()
 	{

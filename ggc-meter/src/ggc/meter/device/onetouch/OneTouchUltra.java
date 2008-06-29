@@ -660,6 +660,7 @@ protected void writeCmd(String line)
                 while ((newData=portInputStream.read(bt))>0)
                 {
                     System.out.println(bt);
+                    System.out.println(newData);
                 }
             }
             catch(Exception ex)

@@ -57,8 +57,6 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
      */
     public void interruptCommunication()
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
@@ -67,7 +65,6 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
      */
     public void setBGOutputType(int bg_type)
     {
-        // TODO Auto-generated method stub
         this.dialog.output_util.setOutputBGType(bg_type);
     }
 
@@ -96,7 +93,7 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
         
         //int i = (int)((count/500) * 100);
         
-        System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
+        //System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
         
         dialog.progress.setValue((int)f);
         
@@ -153,8 +150,7 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
      */
     public void writeDeviceIdentification()
     {
-        // TODO Auto-generated method stub
-        
+        this.dialog.writeDeviceIdentification();
     }
 
 
@@ -163,8 +159,6 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
      */
     public void writeHeader()
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
@@ -173,8 +167,6 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
      */
     public void writeRawData(String input, boolean is_bg_data)
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
@@ -195,7 +187,7 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
         this.dialog = dialog;
     }
     
-    
+/*    
     private void loadConfiguration()
     {
         // TODO: this should be read from config
@@ -220,19 +212,17 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
         //MeterInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
         
         //this.meter_interface = mi;
-        
+  /*      
     }
-
+*/
     
     boolean running = true;
     
     public void run()
     {
-        System.out.println("run");
 
         while(running)
         {
-            System.out.println("run.running");
 
             try
             {
@@ -263,21 +253,9 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
             
             this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
             
-            
         }  // while
 
-        System.out.println("Exited runner");
     }
     
-
-
-    
-
-
-
-    
-
-
-
 
 }

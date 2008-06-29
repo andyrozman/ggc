@@ -8,25 +8,28 @@
 package ggc.meter.data;
 
 
-import ggc.meter.util.I18nControl;
+import ggc.meter.util.DataAccessMeter;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 
@@ -42,12 +45,19 @@ public class MeterValuesTable extends JTable //implements TableModelListener
 
 //x    private I18nControl m_ic = I18nControl.getInstance();    
 	MeterValuesTableModel model = null;
+	DataAccessMeter m_da = DataAccessMeter.getInstance();
 
     public MeterValuesTable()
     {
         super();
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-        //setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
+        this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
+        this.setDefaultRenderer(Integer.class, new StatusCellRenderer());
+
+        this.setColumnSelectionAllowed(false);
+        this.setRowSelectionAllowed(false);
+        
     }
 
     public MeterValuesTable(MeterValuesTableModel model)
@@ -55,7 +65,8 @@ public class MeterValuesTable extends JTable //implements TableModelListener
         super(model);
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
-        //setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
+        this.setDefaultRenderer(Integer.class, new StatusCellRenderer());
     }
 
     /**
@@ -104,14 +115,9 @@ public class MeterValuesTable extends JTable //implements TableModelListener
         MeterValuesTable table = new MeterValuesTable(model);
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        final AddRowAction addRowAction = new AddRowAction(table);
-        final DeleteRowAction deleteRowAction = new DeleteRowAction(table);
-
         JToolBar toolBar = new JToolBar();
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
         toolBar.setFloatable(false);
-        toolBar.add(addRowAction);
-        toolBar.add(deleteRowAction);
         //UIUtilities.addToolBarButton(toolBar, addRowAction);
         //UIUtilities.addToolBarButton(toolBar, deleteRowAction);
         //toolBar.add(addRowAction);
@@ -167,72 +173,77 @@ public class MeterValuesTable extends JTable //implements TableModelListener
     */
     
     
-    public static class AddRowAction extends AbstractAction
+
+    
+    
+    class CheckCellRenderer extends JCheckBox implements TableCellRenderer
     {
-    	
-    	static final long serialVersionUID = 0;
-    	
-    	MeterValuesTable table = null;
+        protected Border m_noFocusBorder;
 
-        public AddRowAction(MeterValuesTable table)
+        public CheckCellRenderer()
         {
-            this.table = table;
-
-            //putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/RowInsertAfter16.gif")));
-            putValue(Action.SHORT_DESCRIPTION, I18nControl.getInstance().getMessage("ADD_NEW_ROW_TO_TABLE"));
-            //putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
-            putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_A));
+            super();
+            m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
+            setOpaque(true);
+            setBorder(m_noFocusBorder);
         }
 
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
-         */
-        public void actionPerformed(ActionEvent e)
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column)
         {
-/*
-  TO-DO
- 
-            Window window = (Window)table.getTopLevelAncestor();
-            if (window == null)
-                return;
+            if (value instanceof Boolean)
+            {
+                Boolean b = (Boolean) value;
+                setSelected(b.booleanValue());
+            }
 
-            DailyValuesRow valueRow = null;
-            if (window instanceof Dialog)
-                valueRow = DailyRowDialog.getNewDailyValuesRow((Dialog)window);
-            else if (window instanceof Frame)
-                valueRow = DailyRowDialog.getNewDailyValuesRow((Frame)window);
+            setBackground(isSelected && !hasFocus ? table.getSelectionBackground() : table.getBackground());
+            setForeground(isSelected && !hasFocus ? table.getSelectionForeground() : table.getForeground());
 
-            if (valueRow != null)
-                ((GlucoTableModel)table.getModel()).getDayData().setNewRow(valueRow);
-                */
+            setFont(table.getFont());
+            setBorder(hasFocus ? UIManager.getBorder("Table.focusCellHighlightBorder") : m_noFocusBorder);
+
+            return this;
         }
-
     }
 
-    public static class DeleteRowAction extends AbstractAction
+    class StatusCellRenderer extends JLabel implements TableCellRenderer
     {
-    	static final long serialVersionUID = 0;
-    	MeterValuesTable table = null;
+        protected Border m_noFocusBorder;
 
-        public DeleteRowAction(MeterValuesTable table)
+        public StatusCellRenderer()
         {
-            this.table = table;
-
-            //putValue(Action.SMALL_ICON, new ImageIcon(getClass().getResource("/icons/Remove16.gif")));
-            putValue(Action.SHORT_DESCRIPTION, I18nControl.getInstance().getMessage("DELETE_SELECTED_ROWS"));
-
-            if (table.getModel().getRowCount() == 0)
-                setEnabled(false);
+            super();
+            m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
+            setOpaque(true);
+            setBorder(m_noFocusBorder);
         }
 
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
-         */
-        public void actionPerformed(ActionEvent e)
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column)
         {
-//            ((GlucoTableModel)table.getModel()).getDayData().deleteRow(table.getSelectedRow());
-        }
 
+            int status;
+            if (value instanceof Integer)
+            {
+                Integer i = (Integer) value;
+                // setSelected(b.booleanValue());
+                status = i.intValue();
+                setText(MeterValuesEntry.entry_statuses[status]);
+                setIcon(m_da.getImageIcon(MeterValuesEntry.entry_status_icons[status], 8, 8, this));
+            }
+
+            setBackground(isSelected && !hasFocus ? table.getSelectionBackground() : table.getBackground());
+            setForeground(isSelected && !hasFocus ? table.getSelectionForeground() : table.getForeground());
+
+            setFont(table.getFont());
+            setBorder(hasFocus ? UIManager.getBorder("Table.focusCellHighlightBorder") : m_noFocusBorder);
+
+            return this;
+        }
     }
-
+    
+    
+    
+    
 }

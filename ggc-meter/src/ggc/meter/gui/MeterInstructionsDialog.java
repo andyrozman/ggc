@@ -7,9 +7,12 @@
 
 package ggc.meter.gui;
 
+import ggc.core.db.hibernate.GlucoValueH;
 import ggc.meter.data.cfg.MeterConfigEntry;
+import ggc.meter.data.cfg.MeterConfiguration;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
+import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.protocol.ConnectionProtocols;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
@@ -19,6 +22,7 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,15 +33,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import com.atech.db.DbDataReaderAbstract;
+import com.atech.db.DbDataReadingFinishedInterface;
+import com.atech.utils.TimeZoneUtil;
 
-/**
- * @author stephan
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- */
-public class MeterInstructionsDialog extends JDialog implements ActionListener
+
+public class MeterInstructionsDialog extends JDialog implements ActionListener, DbDataReadingFinishedInterface
 {
+
+
 
 
     /**
@@ -50,8 +54,9 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
     private DataAccessMeter m_da = DataAccessMeter.getInstance();
     
     JButton button_start;
+    JLabel label_waiting;
     
-
+    Hashtable<String,GlucoValueH> meter_data = null;
 
 
     int x,y;
@@ -62,8 +67,8 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
     
     MeterInterface meter_interface;
     MeterConfigEntry configured_meter;
-    
-    
+    DbDataReaderAbstract reader;
+    MeterPlugInServer server;
 /*
     public MeterInstructionsDialog(JFrame owner, MeterInterface mi)
     {
@@ -95,12 +100,32 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
 
         this.setVisible(true);
     }
+
+    
+    public MeterInstructionsDialog(DbDataReaderAbstract reader, MeterPlugInServer server)
+    {
+        super();
+        m_da.addComponent(this);
+        loadConfiguration();
+        
+        this.reader = reader;
+        this.server = server;
+        init();
+
+        this.setVisible(true);
+    }
+    
     
     
     private void loadConfiguration()
     {
         // TODO: this should be read from config
         
+        MeterConfiguration mc = new MeterConfiguration(false);
+        
+        this.configured_meter = mc.getDefaultMeter();
+        
+        /*
         this.configured_meter = new MeterConfigEntry();
         this.configured_meter.id =1;
         this.configured_meter.communication_port = "COM9";
@@ -111,7 +136,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         this.configured_meter.ds_winter_change = 0;
         this.configured_meter.ds_summer_change = 1;
         this.configured_meter.ds_fix = true;
-        
+        */
         /*
         tzu.setTimeZone("Europe/Prague");
         tzu.setWinterTimeChange(0);
@@ -349,6 +374,16 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         panel.add(panel_instruct);
         
         
+
+        label = new JLabel(m_ic.getMessage(this.meter_interface.getInstructions())); //this.m_mim.getName());
+        label.setBounds(40, 0, 280, 180);
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setFont(normal);
+        //label.setHorizontalAlignment(SwingConstants.CENTER);
+        panel_instruct.add(label);
+        
+        
+        
         
         // bottom 
         label = new JLabel(m_ic.getMessage("INSTRUCTIONS_DESC")); //this.m_mim.getName());
@@ -372,6 +407,16 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         button.addActionListener(this); //.setFont(normal);
         panel.add(button);
         		
+        
+        label_waiting = new JLabel(m_ic.getMessage("WAIT_UNTIL_OLD_DATA_IS_READ")); //this.m_mim.getName());
+        label_waiting.setBounds(310, 495, 300, 25);
+        label_waiting.setVerticalAlignment(JLabel.TOP);
+        label_waiting.setHorizontalAlignment(JLabel.RIGHT);
+        //label_waiting.setFont(bold);
+        //label.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(label_waiting);
+        
+        
         button_start = new JButton(m_ic.getMessage("START_DOWNLOAD"));
         button_start.setBounds(370, 520, 240, 25);
         button_start.setFont(normal);
@@ -380,9 +425,19 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
         panel.add(button_start);
         
         
-        
-        
-        
+        if (reader!=null)
+        {
+            if (reader.isFinished())
+            {
+                this.readingFinished();
+            }
+            else
+            {
+                this.reader.setReadingFinishedObject(this);
+            }
+        }
+        else
+            this.readingFinished();
         
     }
 
@@ -399,15 +454,64 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener
     {
         String action = e.getActionCommand();
 
+        
+        
         if (action.equals("cancel")) 
         {
             this.dispose();
+        }
+        else if (action.equals("start_download"))
+        {
+
+            if (this.configured_meter.ds_fix)
+            {
+                TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
+                
+                tzu.setTimeZone(this.configured_meter.ds_area);
+                tzu.setWinterTimeChange(this.configured_meter.ds_winter_change);
+                tzu.setSummerTimeChange(this.configured_meter.ds_summer_change);
+            }
+            
+            this.dispose();
+            
+            if (this.meter_data==null)
+            {
+                new MeterDisplayDataDialog(this.configured_meter);
+            }
+            else
+            {
+                new MeterDisplayDataDialog(this.configured_meter, this.meter_data, this.server);
+            }
+            
         }
         else
             System.out.println("MeterInstructionsDialog::Unknown command: " + action);
 
     }
 
+    
+    /* 
+     * readingFinished
+     */
+    @SuppressWarnings("unchecked")
+    public void readingFinished()
+    {
+        this.button_start.setEnabled(true);
+        this.label_waiting.setText("");
+        
+        if (this.reader==null)
+        {
+            this.meter_data = null;
+        }
+        else
+        {
+            this.meter_data = (Hashtable<String,GlucoValueH>)this.reader.getData();
+        }
+        
+        
+    }
+    
+    
 
     public static void main(String[] args)
     {

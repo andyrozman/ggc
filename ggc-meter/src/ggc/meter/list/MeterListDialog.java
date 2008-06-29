@@ -263,70 +263,8 @@ public class MeterListDialog extends JDialog implements TreeSelectionListener, A
 */
     }
 
-    public static int PANEL_VIEW = 0;
-    public static int PANEL_EDIT = 1;
-    public static int PANEL_ADD  = 2;
-    public static int PANEL_ADD_ITEM  = 3;
-    
     
 
-    private void displayPanel(int special_action)
-    {
-	
-    	/*
-	//System.out.println()
-	
-	if (this.selected_last_path instanceof GGCTreeRoot)
-	{
-	    makePanelVisible(NutritionTreeDialog.PANEL_MAIN);
-	}
-	else if (this.selected_last_path instanceof FoodGroup)
-	{
-	    if (special_action == NutritionTreeDialog.PANEL_VIEW)
-	    {
-                makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP);
-                this.panels[NutritionTreeDialog.PANEL_FOODGROUP].setData(this.selected_last_path);
-	    }
-	    else if (special_action == NutritionTreeDialog.PANEL_EDIT)
-	    {
-                makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP_EDIT);
-                this.panels[NutritionTreeDialog.PANEL_FOODGROUP_EDIT].setData(this.selected_last_path);
-		
-		//System.out.println("FoodGroup Edit failed");
-	    }
-	    else if (special_action == NutritionTreeDialog.PANEL_ADD)
-	    {
-		//System.out.println("FoodGroup Add Group failed");
-                makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP_EDIT);
-                this.panels[NutritionTreeDialog.PANEL_FOODGROUP_EDIT].setParent(this.selected_last_path);
-	    }
-	    else
-	    {
-		//System.out.println("FoodGroup Add Item failed");
-                makePanelVisible(NutritionTreeDialog.PANEL_FOOD_EDIT);
-                this.panels[NutritionTreeDialog.PANEL_FOOD_EDIT].setParent(this.selected_last_path);
-	    }
-	}
-	else if (this.selected_last_path instanceof FoodDescription)
-	{
-	    if (special_action == NutritionTreeDialog.PANEL_VIEW)
-	    {
-		makePanelVisible(NutritionTreeDialog.PANEL_FOOD);
-		this.panels[NutritionTreeDialog.PANEL_FOOD].setData(this.selected_last_path);
-	    }
-	    else if (special_action == NutritionTreeDialog.PANEL_EDIT)
-	    {
-		System.out.println("FoodDescription Edit failed");
-	    }
-	    else
-	    {
-		System.out.println("FoodDescription Add failed");
-	    }
-	    
-	}
-	*/
-    }
-    
     
     
     

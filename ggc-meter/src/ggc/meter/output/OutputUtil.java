@@ -32,7 +32,12 @@ public class OutputUtil extends TimerControlAbstract
 //a    	setAllowedChangeTime(10);
     }
 	
-	
+
+    public OutputUtil()
+    {
+    }
+    
+    
     public static final int BG_MGDL = 1;
     public static final int BG_MMOL = 2;
 

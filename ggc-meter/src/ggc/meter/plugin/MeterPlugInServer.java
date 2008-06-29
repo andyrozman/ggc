@@ -1,10 +1,12 @@
 package ggc.meter.plugin;
 
+import ggc.meter.gui.MeterInstructionsDialog;
 import ggc.meter.gui.config.SimpleConfigurationDialog;
 import ggc.meter.util.I18nControl;
 
 import java.awt.Container;
 
+import com.atech.db.DbDataReaderAbstract;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 
@@ -28,23 +30,28 @@ public class MeterPlugInServer extends PlugInServer
         super();
     }
     
+    
     public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
         super(cont, selected_lang, da);
     }
     
 
+    
+    
+    
     /* 
      * executeCommand
      */
     @Override
-    public void executeCommand(int command)
+    public void executeCommand(int command, Object obj_data)
     {
         switch(command)
         {
             case MeterPlugInServer.COMMAND_READ_METER_DATA:
             {
-                this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_READ_METER_DATA]);
+                DbDataReaderAbstract reader = (DbDataReaderAbstract)obj_data; 
+                new MeterInstructionsDialog(reader, this);
                 return;
             }
 
@@ -82,7 +89,7 @@ public class MeterPlugInServer extends PlugInServer
     @Override
     public String getVersion()
     {
-        return "0.1.5";
+        return "0.1.10";
     }
 
     /* 
@@ -91,7 +98,7 @@ public class MeterPlugInServer extends PlugInServer
     @Override
     public String getWhenWillBeImplemented()
     {
-        return "0.3";
+        return "0.4";
     }
 
     /* 
@@ -102,6 +109,9 @@ public class MeterPlugInServer extends PlugInServer
     {
         I18nControl.getInstance().setLanguage(this.selected_lang);
     }
+    
+    
+    
     
 }
 

@@ -33,30 +33,21 @@ import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 
-public class SimpleConfigurationHelp extends JDialog implements ActionListener //, HelpCapable
+public class SimpleConfigurationHelp extends JDialog implements ActionListener 
 {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 6811126019155116487L;
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccessMeter m_da; // = DataAccessMeter.getInstance();
 
@@ -76,29 +67,21 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
     boolean ok_action = false;
 
 
-    public String config_types[] = { 
-            m_ic.getMessage("METERS_COMPANY_LIST"),
-            m_ic.getMessage("METERS_LIST"),
-            m_ic.getMessage("METERS_LOCATION"),
-            m_ic.getMessage("METERS_CONFIG"),
-            m_ic.getMessage("OTHER"),
-    };
 
 
-
-    public SimpleConfigurationHelp(DataAccessMeter da)
+    public SimpleConfigurationHelp(JDialog parent)
     {
-        super(da.getMainParent(), "", true);
+        super(parent, "", true);
         
-        m_da = da;
+        m_da = DataAccessMeter.getInstance();
         
         m_da.addComponent(this);
 
-        setSize(500,400);
-        setTitle(m_ic.getMessage("SIMPLE_PREFERENCES"));
-        m_da.centerJDialog(this, da.getMainParent());
+        setSize(500,580);
+        setTitle(m_ic.getMessage("SIMPLE_PREFERENCES_HELP"));
+        m_da.centerJDialog(this, parent); //, da.getMainParent());
 
-        help_button = m_da.createHelpButtonBySize(120, 25, this);
+        //help_button = m_da.createHelpButtonBySize(120, 25, this);
 
         init();
         this.setResizable(false);
@@ -108,7 +91,6 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
 
     private void init()
     {
-        Dimension dim = new Dimension(120, 25);
 
         //createNodes();
 
@@ -149,58 +131,36 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
 //	prefPane = new JPanel(new BorderLayout());
 	
         prefPane = new JPanel(null);
+        prefPane.setBounds(0,0,500,520);
         
-        JLabel label = new JLabel("SIMPLE_PREFERENCES");
-        label.setBounds(20,20, 480, 30);
+        
+        
+        JLabel label = new JLabel(m_ic.getMessage("SIMPLE_PREFERENCES_HELP"));
+        label.setBounds(20,20, 500, 30);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setFont(m_da.getFont(DataAccessMeter.FONT_BIG_BOLD));
         
         prefPane.add(label);
         
         
-        JTextArea editArea = new JTextArea(15, 60);
-        editArea.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-        editArea.setFont(new Font("monospaced", Font.PLAIN, 14));
-        JScrollPane scrollingText = new JScrollPane(editArea);        
-        scrollingText.setBounds(20,40,420,250);
+        label = new JLabel(m_ic.getMessage("SIMPLE_PREFERENCES_HELP_CONTENT"));
+        label.setBounds(20,60, 460, 410);
+        //label.setHorizontalAlignment(JLabel.CENTER);
+        label.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
+        prefPane.add(label);
         
-        prefPane.add(scrollingText);
+        
 
         //set the buttons up...
-        JButton okButton = new JButton("  " + m_ic.getMessage("OK"));
-        okButton.setPreferredSize(dim);
-        okButton.setIcon(m_da.getImageIcon_22x22("ok.png", this));
-        okButton.setActionCommand("ok");
-        okButton.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
-        okButton.addActionListener(this);
 
-        JButton cancelButton = new JButton("  " +m_ic.getMessage("CANCEL"));
-        cancelButton.setPreferredSize(dim);
+        JButton cancelButton = new JButton("  " +m_ic.getMessage("CLOSE"));
         cancelButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
-        cancelButton.setActionCommand("cancel");
+        cancelButton.setActionCommand("close");
         cancelButton.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
         cancelButton.addActionListener(this);
+        cancelButton.setBounds(190, 495, 120, 25);
+        this.prefPane.add(cancelButton);
 
-        JButton applyButton = new JButton("  " +m_ic.getMessage("APPLY"));
-        applyButton.setPreferredSize(dim);
-        applyButton.setIcon(m_da.getImageIcon_22x22("flash.png", this));
-        applyButton.setActionCommand("apply");
-        applyButton.addActionListener(this);
-
-        //...and align them in a row at the buttom.
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        buttonPanel.add(okButton);
-        buttonPanel.add(cancelButton);
-        buttonPanel.add(applyButton);
-        
-        buttonPanel.add(help_button);
-
-        prefPane.add(buttonPanel, BorderLayout.SOUTH);
-        //prefPane.add(this.prefPane, BorderLayout.CENTER);
-
-        //getContentPane().add(prefTreePane, BorderLayout.WEST);
-	//getContentPane().add(list, BorderLayout.WEST);
         getContentPane().add(prefPane, BorderLayout.CENTER);
     }
 
@@ -227,7 +187,10 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
     // ---
 
 
-    
+    public String toString()
+    {
+        return "ggc.meter.gui.config.SimpleConfigurationHelp";
+    }
 
 
 
@@ -238,24 +201,10 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
     {
         String action = e.getActionCommand();
 
-        if (action.equals("ok")) 
+        if (action.equals("close")) 
         {
-            System.out.println("Ok Action not implemented");
-            
-//            save();
-//            ok_action = true;
-//            this.dispose();
-        }
-        else if (action.equals("cancel")) 
-        {
-            System.out.println("Cancel Action not implemented");
-            //reset();
+            m_da.removeComponent(this);
             this.dispose();
-        }
-        else if (action.equals("apply")) 
-        {
-            System.out.println("Apply Action not implemented");
-            //save();
         }
         else
             System.out.println("PropertiesFrame: Unknown command: " + action);
@@ -264,63 +213,6 @@ public class SimpleConfigurationHelp extends JDialog implements ActionListener /
 
     
 
-    public boolean wasOKAction()
-    {
-        return ok_action;
-    }
-
-
-    public void save()
-    {
-/*        for (int i=0; i<panels.size(); i++)
-        {
-            AbstractPreferencesPanel pn = (AbstractPreferencesPanel)panels.get(i);
-            pn.saveProps();
-        }
-
-        m_da.getSettings().save();
-*/
-	/*
-	if (m_da.getDbConfig().hasChanged())
-	{
-	    m_da.getDbConfig().saveConfig();
-	}
-	*/
-    }
-
-
-
-
-
-    // ****************************************************************
-    // ******              HelpCapable Implementation             *****
-    // ****************************************************************
-    
-    /* 
-     * getComponent - get component to which to attach help context
-     */
-    public Component getComponent()
-    {
-	return this.getRootPane();
-    }
-
-    /* 
-     * getHelpButton - get Help button
-     */
-    public JButton getHelpButton()
-    {
-	return this.help_button;
-    }
-
-    /* 
-     * getHelpId - get id for Help
-     */
-    public String getHelpId()
-    {
-        //return ((HelpCapable)this.selected_panel).getHelpId();
-        return "";
-    }
-    
     
     
 }

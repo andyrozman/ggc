@@ -8,6 +8,7 @@ import ggc.meter.device.MeterException;
 import ggc.meter.output.AbstractOutputWriter;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
@@ -568,9 +569,16 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	    	if (!found)
 	    		return;
 	    	
+	    	
+	    	//System.out.println(input);
+	    	
 	    	MeterValuesEntry mve = new MeterValuesEntry();
 	    	
-	    	mve.setBgValue(strtok.nextToken());  // bg_value
+	    	String val = strtok.nextToken();
+	    	
+	    	//System.out.println("val:" + val);
+	    	
+	    	//mve.setBgValue(val);  // bg_value
 	    	String unit = strtok.nextToken();  // unit mmol/L^x, mg/dL^x
 	    
 	    	mve.addParameter("REF_RANGES", strtok.nextToken());  // Reference ranges (Dex Only) 
@@ -587,13 +595,14 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	    	if (unit.startsWith("mg/dL"))
 	    	{
 	    		mve.setBgUnit(OutputUtil.BG_MGDL);
-	    		
+	    		mve.setBgValue(val);
 	    		//this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MGDL);
 	    	    //dv.setBG(DailyValuesRow.BG_MGDL, value);
 	    	}
 	    	else
 	    	{
 	    		mve.setBgUnit(OutputUtil.BG_MMOL);
+	    		mve.setBgValue(getCorrectDecimal(val));
 	    		//this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MMOL);
 	    	    //dv.setBG(DailyValuesRow.BG_MMOLL, value);
 	    	}
@@ -613,7 +622,11 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     }
 
 
-
+    public String getCorrectDecimal(String input)
+    {
+        float f = Float.parseFloat(input);
+        return DataAccessMeter.MmolDecimalFormat.format(f).replace(',', '.');
+    }
 
 
 

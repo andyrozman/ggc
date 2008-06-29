@@ -46,9 +46,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -130,6 +132,9 @@ public class DataAccessMeter extends ATDataAccessAbstract
 
     public Hashtable<String,String> timeZones;
 
+    public Vector<String> time_zones_vector;
+    
+//    public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
 
     public ImageIcon config_icons[] = null;
 /*
@@ -429,85 +434,101 @@ public class DataAccessMeter extends ATDataAccessAbstract
         // Posible needed enchancment. We should probably list all ID's as values. On windows default ID can be different 
         // as in this table. We should add this names, if we encounter problems.
 
-        this.timeZones.put("(GMT+13:00) Nuku'alofa", "Pacific/Tongatapu");
-        this.timeZones.put("(GMT+12:00) Fiji, Kamchatka, Marshall Is.", "Pacific/Fiji");
-        this.timeZones.put("(GMT+12:00) Auckland, Wellington", "Pacific/Auckland");
-        this.timeZones.put("(GMT+11:00) Magadan, Solomon Is., New Caledonia", "Asia/Magadan");
-        this.timeZones.put("(GMT+10:00) Vladivostok", "Asia/Vladivostok");
-        this.timeZones.put("(GMT+10:00) Hobart", "Australia/Hobart");
-        this.timeZones.put("(GMT+10:00) Guam, Port Moresby", "Pacific/Guam");
-        this.timeZones.put("(GMT+10:00) Canberra, Melbourne, Sydney", "Australia/Sydney");
-        this.timeZones.put("(GMT+10:00) Brisbane", "Australia/Brisbane");
-        this.timeZones.put("(GMT+09:30) Adelaide", "Australia/Adelaide");
-        this.timeZones.put("(GMT+09:00) Yakutsk", "Asia/Yakutsk");
-        this.timeZones.put("(GMT+09:00) Seoul", "Asia/Seoul");
-        this.timeZones.put("(GMT+09:00) Osaka, Sapporo, Tokyo", "Asia/Tokyo");
-        this.timeZones.put("(GMT+08:00) Taipei", "Asia/Taipei");
-        this.timeZones.put("(GMT+08:00) Perth", "Australia/Perth");
-        this.timeZones.put("(GMT+08:00) Kuala Lumpur, Singapore", "Asia/Kuala_Lumpur");
-        this.timeZones.put("(GMT+08:00) Irkutsk, Ulaan Bataar", "Asia/Irkutsk");
-        this.timeZones.put("(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi", "Asia/Hong_Kong");
-        this.timeZones.put("(GMT+07:00) Krasnoyarsk", "Asia/Krasnoyarsk");
-        this.timeZones.put("(GMT+07:00) Bangkok, Hanoi, Jakarta", "Asia/Bangkok");
-        this.timeZones.put("(GMT+06:30) Rangoon", "Asia/Rangoon");
-        this.timeZones.put("(GMT+06:00) Sri Jayawardenepura", "Asia/Colombo");
-        this.timeZones.put("(GMT+06:00) Astana, Dhaka", "Asia/Dhaka");
-        this.timeZones.put("(GMT+06:00) Almaty, Novosibirsk", "Asia/Almaty");
-        this.timeZones.put("(GMT+05:45) Kathmandu", "Asia/Katmandu");
-        this.timeZones.put("(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi", "Asia/Calcutta");
-        this.timeZones.put("(GMT+05:00) Islamabad, Karachi, Tashkent", "Asia/Karachi");
-        this.timeZones.put("(GMT+05:00) Ekaterinburg", "Asia/Yekaterinburg");
-        this.timeZones.put("(GMT+04:30) Kabul", "Asia/Kabul");
-        this.timeZones.put("(GMT+04:00) Baku, Tbilisi, Yerevan", "Asia/Baku");
-        this.timeZones.put("(GMT+04:00) Abu Dhabi, Muscat", "Asia/Dubai");
-        this.timeZones.put("(GMT+03:30) Tehran", "Asia/Tehran");
-        this.timeZones.put("(GMT+03:00) Nairobi", "Africa/Nairobi");
-        this.timeZones.put("(GMT+03:00) Moscow, St. Petersburg, Volgograd", "Europe/Moscow");
-        this.timeZones.put("(GMT+03:00) Kuwait, Riyadh", "Asia/Kuwait");
-        this.timeZones.put("(GMT+03:00) Baghdad", "Asia/Baghdad");
-        this.timeZones.put("(GMT+02:00) Jerusalem", "Asia/Jerusalem");
-        this.timeZones.put("(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Europe/Helsinki");
-        this.timeZones.put("(GMT+02:00) Harare, Pretoria", "Africa/Harare");
-        this.timeZones.put("(GMT+02:00) Cairo", "Africa/Cairo");
-        this.timeZones.put("(GMT+02:00) Bucharest", "Europe/Bucharest");
-        this.timeZones.put("(GMT+02:00) Athens, Istanbul, Minsk", "Europe/Athens");
-        this.timeZones.put("(GMT+01:00) West Central Africa", "Africa/Lagos");
-        this.timeZones.put("(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb", "Europe/Warsaw");
-        this.timeZones.put("(GMT+01:00) Brussels, Copenhagen, Madrid, Paris", "Europe/Brussels");
-        this.timeZones.put("(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague", "Europe/Prague,Europe/Belgrade");
-        this.timeZones.put("(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Europe/Amsterdam");
-        this.timeZones.put("(GMT) Casablanca, Monrovia", "Africa/Casablanca");
-        this.timeZones.put("(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London", "Europe/Dublin");
-        this.timeZones.put("(GMT-01:00) Azores", "Atlantic/Azores");
-        this.timeZones.put("(GMT-01:00) Cape Verde Is.", "Atlantic/Cape_Verde");
-        this.timeZones.put("(GMT-02:00) Mid-Atlantic", "Atlantic/South_Georgia");
-        this.timeZones.put("(GMT-03:00) Brasilia", "America/Sao_Paulo");
-        this.timeZones.put("(GMT-03:00) Buenos Aires, Georgetown", "America/Buenos_Aires");
-        this.timeZones.put("(GMT-03:00) Greenland", "America/Thule");
-        this.timeZones.put("(GMT-03:30) Newfoundland", "America/St_Johns");
-        this.timeZones.put("(GMT-04:00) Atlantic Time (Canada)", "America/Halifax");
-        this.timeZones.put("(GMT-04:00) Caracas, La Paz", "America/Caracas");
-        this.timeZones.put("(GMT-04:00) Santiago", "America/Santiago");
-        this.timeZones.put("(GMT-05:00) Bogota, Lima, Quito", "America/Bogota");
-       this.timeZones.put("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
-       this.timeZones.put("(GMT-05:00) Indiana (East)", "America/Indianapolis");
-       this.timeZones.put("(GMT-06:00) Central America", "America/Costa_Rica");
-       this.timeZones.put("(GMT-06:00) Central Time (US & Canada)", "America/Chicago");
-       this.timeZones.put("(GMT-06:00) Guadalajara, Mexico City, Monterrey", "America/Mexico_City");
-       this.timeZones.put("(GMT-06:00) Saskatchewan", "America/Winnipeg");
-       this.timeZones.put("(GMT-07:00) Arizona", "America/Phoenix");
-       this.timeZones.put("(GMT-07:00) Chihuahua, La Paz, Mazatlan", "America/Tegucigalpa");
-       this.timeZones.put("(GMT-07:00) Mountain Time (US & Canada)", "America/Denver");
-       this.timeZones.put("(GMT-08:00) Pacific Time (US & Canada); Tijuana", "America/Los_Angeles");
-       this.timeZones.put("(GMT-09:00) Alaska", "America/Anchorage");
-       this.timeZones.put("(GMT-10:00) Hawaii", "Pacific/Honolulu");
-       this.timeZones.put("(GMT-11:00) Midway Island, Samoa", "Pacific/Apia");
-       this.timeZones.put("(GMT-12:00) International Date Line West", "MIT");
+        addTimeZoneEntry("(GMT+13:00) Nuku'alofa", "Pacific/Tongatapu");
+        addTimeZoneEntry("(GMT+12:00) Fiji, Kamchatka, Marshall Is.", "Pacific/Fiji");
+        addTimeZoneEntry("(GMT+12:00) Auckland, Wellington", "Pacific/Auckland");
+        addTimeZoneEntry("(GMT+11:00) Magadan, Solomon Is., New Caledonia", "Asia/Magadan");
+        addTimeZoneEntry("(GMT+10:00) Vladivostok", "Asia/Vladivostok");
+        addTimeZoneEntry("(GMT+10:00) Hobart", "Australia/Hobart");
+        addTimeZoneEntry("(GMT+10:00) Guam, Port Moresby", "Pacific/Guam");
+        addTimeZoneEntry("(GMT+10:00) Canberra, Melbourne, Sydney", "Australia/Sydney");
+        addTimeZoneEntry("(GMT+10:00) Brisbane", "Australia/Brisbane");
+        addTimeZoneEntry("(GMT+09:30) Adelaide", "Australia/Adelaide");
+        addTimeZoneEntry("(GMT+09:00) Yakutsk", "Asia/Yakutsk");
+        addTimeZoneEntry("(GMT+09:00) Seoul", "Asia/Seoul");
+        addTimeZoneEntry("(GMT+09:00) Osaka, Sapporo, Tokyo", "Asia/Tokyo");
+        addTimeZoneEntry("(GMT+08:00) Taipei", "Asia/Taipei");
+        addTimeZoneEntry("(GMT+08:00) Perth", "Australia/Perth");
+        addTimeZoneEntry("(GMT+08:00) Kuala Lumpur, Singapore", "Asia/Kuala_Lumpur");
+        addTimeZoneEntry("(GMT+08:00) Irkutsk, Ulaan Bataar", "Asia/Irkutsk");
+        addTimeZoneEntry("(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi", "Asia/Hong_Kong");
+        addTimeZoneEntry("(GMT+07:00) Krasnoyarsk", "Asia/Krasnoyarsk");
+        addTimeZoneEntry("(GMT+07:00) Bangkok, Hanoi, Jakarta", "Asia/Bangkok");
+        addTimeZoneEntry("(GMT+06:30) Rangoon", "Asia/Rangoon");
+        addTimeZoneEntry("(GMT+06:00) Sri Jayawardenepura", "Asia/Colombo");
+        addTimeZoneEntry("(GMT+06:00) Astana, Dhaka", "Asia/Dhaka");
+        addTimeZoneEntry("(GMT+06:00) Almaty, Novosibirsk", "Asia/Almaty");
+        addTimeZoneEntry("(GMT+05:45) Kathmandu", "Asia/Katmandu");
+        addTimeZoneEntry("(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi", "Asia/Calcutta");
+        addTimeZoneEntry("(GMT+05:00) Islamabad, Karachi, Tashkent", "Asia/Karachi");
+        addTimeZoneEntry("(GMT+05:00) Ekaterinburg", "Asia/Yekaterinburg");
+        addTimeZoneEntry("(GMT+04:30) Kabul", "Asia/Kabul");
+        addTimeZoneEntry("(GMT+04:00) Baku, Tbilisi, Yerevan", "Asia/Baku");
+        addTimeZoneEntry("(GMT+04:00) Abu Dhabi, Muscat", "Asia/Dubai");
+        addTimeZoneEntry("(GMT+03:30) Tehran", "Asia/Tehran");
+        addTimeZoneEntry("(GMT+03:00) Nairobi", "Africa/Nairobi");
+        addTimeZoneEntry("(GMT+03:00) Moscow, St. Petersburg, Volgograd", "Europe/Moscow");
+        addTimeZoneEntry("(GMT+03:00) Kuwait, Riyadh", "Asia/Kuwait");
+        addTimeZoneEntry("(GMT+03:00) Baghdad", "Asia/Baghdad");
+        addTimeZoneEntry("(GMT+02:00) Jerusalem", "Asia/Jerusalem");
+        addTimeZoneEntry("(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Europe/Helsinki");
+        addTimeZoneEntry("(GMT+02:00) Harare, Pretoria", "Africa/Harare");
+        addTimeZoneEntry("(GMT+02:00) Cairo", "Africa/Cairo");
+        addTimeZoneEntry("(GMT+02:00) Bucharest", "Europe/Bucharest");
+        addTimeZoneEntry("(GMT+02:00) Athens, Istanbul, Minsk", "Europe/Athens");
+        addTimeZoneEntry("(GMT+01:00) West Central Africa", "Africa/Lagos");
+        addTimeZoneEntry("(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb", "Europe/Warsaw");
+        addTimeZoneEntry("(GMT+01:00) Brussels, Copenhagen, Madrid, Paris", "Europe/Brussels");
+        addTimeZoneEntry("(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague", "Europe/Prague,Europe/Belgrade");
+        addTimeZoneEntry("(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Europe/Amsterdam");
+        addTimeZoneEntry("(GMT) Casablanca, Monrovia", "Africa/Casablanca");
+        addTimeZoneEntry("(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London", "Europe/Dublin");
+        addTimeZoneEntry("(GMT-01:00) Azores", "Atlantic/Azores");
+        addTimeZoneEntry("(GMT-01:00) Cape Verde Is.", "Atlantic/Cape_Verde");
+        addTimeZoneEntry("(GMT-02:00) Mid-Atlantic", "Atlantic/South_Georgia");
+        addTimeZoneEntry("(GMT-03:00) Brasilia", "America/Sao_Paulo");
+        addTimeZoneEntry("(GMT-03:00) Buenos Aires, Georgetown", "America/Buenos_Aires");
+        addTimeZoneEntry("(GMT-03:00) Greenland", "America/Thule");
+        addTimeZoneEntry("(GMT-03:30) Newfoundland", "America/St_Johns");
+        addTimeZoneEntry("(GMT-04:00) Atlantic Time (Canada)", "America/Halifax");
+        addTimeZoneEntry("(GMT-04:00) Caracas, La Paz", "America/Caracas");
+        addTimeZoneEntry("(GMT-04:00) Santiago", "America/Santiago");
+        addTimeZoneEntry("(GMT-05:00) Bogota, Lima, Quito", "America/Bogota");
+       addTimeZoneEntry("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
+       addTimeZoneEntry("(GMT-05:00) Indiana (East)", "America/Indianapolis");
+       addTimeZoneEntry("(GMT-06:00) Central America", "America/Costa_Rica");
+       addTimeZoneEntry("(GMT-06:00) Central Time (US & Canada)", "America/Chicago");
+       addTimeZoneEntry("(GMT-06:00) Guadalajara, Mexico City, Monterrey", "America/Mexico_City");
+       addTimeZoneEntry("(GMT-06:00) Saskatchewan", "America/Winnipeg");
+       addTimeZoneEntry("(GMT-07:00) Arizona", "America/Phoenix");
+       addTimeZoneEntry("(GMT-07:00) Chihuahua, La Paz, Mazatlan", "America/Tegucigalpa");
+       addTimeZoneEntry("(GMT-07:00) Mountain Time (US & Canada)", "America/Denver");
+       addTimeZoneEntry("(GMT-08:00) Pacific Time (US & Canada); Tijuana", "America/Los_Angeles");
+       addTimeZoneEntry("(GMT-09:00) Alaska", "America/Anchorage");
+       addTimeZoneEntry("(GMT-10:00) Hawaii", "Pacific/Honolulu");
+       addTimeZoneEntry("(GMT-11:00) Midway Island, Samoa", "Pacific/Apia");
+       addTimeZoneEntry("(GMT-12:00) International Date Line West", "MIT");
 
+       
+       this.time_zones_vector = new Vector<String>();
+       
+       for(Enumeration<String> en= this.timeZones.keys(); en.hasMoreElements(); )
+       {
+           this.time_zones_vector.add(en.nextElement());
+       }
+       
+       
     }
 
 
-
+    public void addTimeZoneEntry(String long_desc, String keycode)
+    {
+        //SimpleConfigurationTZDialog.time_zones.put(long_desc, keycode);
+        //SimpleConfigurationTZDialog.time_zones_vector.add(long_desc);
+    }
+    
+    
+    
 
     // ********************************************************
     // ******                  Settings                   *****    

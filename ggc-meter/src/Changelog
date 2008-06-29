@@ -2,21 +2,38 @@
 Changes file for GGC Meter Tool
 ===============================
 
-0.1.7
+0.1.10 (28.6
+    * Started with work on reading and processing old data. ...
+    * Old data is read from GGC correctly and reading is done through separate thread, which must finish before
+      we start reading from device in instruction dialog
+    * Fixed Ascensia processing (we get data in two decimals, which produces error, so we need to round it to one 
+      decimal)
+    * Plugin code extended to allow input data, and to allow return data
+
+0.1.9 (26.6-27.6
+    * MeterDisplayDataDialog redone. Table is now changed and supports checking of elements as well as statuses of
+      following elements, with that GUI is almost finished
+
+0.1.8 (24.6)
+    * Data reading is done from another thread and another class which works together with MeterDisplayDataDialog 
+      called MeterReaderRunner
+    * Reader is now done, with all possibilities of breaks 
+
+0.1.7 (20.6)
     * Bayer changes: fixed processing, added new tags for processing
 
-0.1.6
+0.1.6 (19.6)
     * Started work on GUI for GGC integration, added two classes: MeterInstructionsDialog and MeterDisplayDataDialog
       which will be used as meter tool and also for GGC integration. At later time possibility of standalone
       running.
     * major changes to master language file
 
-0.1.5
+0.1.5 (15.6)
     * added MeterConfiguration class for configuration file management
     * added Simple Configuration for Meter plug-in (it will be used temporary, so that we can add plugin to
       next release of GGC (0.3)
 
-0.1.4
+0.1.4 (4.6)
     * start of support for One Touch meters, communication established ok
 
 0.1.3

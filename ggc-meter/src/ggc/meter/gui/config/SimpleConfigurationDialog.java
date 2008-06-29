@@ -36,7 +36,6 @@ import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -94,7 +93,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
 
     private void init()
     {
-        Dimension dim = new Dimension(120, 25);
+        //Dimension dim = new Dimension(120, 25);
 
 
 
@@ -103,10 +102,9 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         prefPane = new JPanel(null);
         
         JLabel label = new JLabel(m_ic.getMessage("SIMPLE_PREFERENCES"));
-        label.setBounds(0,20, 500, 30);
+        label.setBounds(0,20, 650, 30);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setFont(m_da.getFont(DataAccessMeter.FONT_BIG_BOLD));
-        
         prefPane.add(label);
         
         
@@ -154,6 +152,16 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         button.setBounds(480, 180, 140, 25);
         button.addActionListener(this);
         prefPane.add(button);
+
+        button = new JButton(m_ic.getMessage("INSERT_TZ"));
+        //cancelButton.setPreferredSize(dim);
+        //button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        button.setActionCommand("insert_tz");
+        button.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
+        button.setBounds(480, 220, 140, 25);
+        button.addActionListener(this);
+        prefPane.add(button);
+        
         
 /*
         button = new JButton(m_ic.getMessage("COPY"));
@@ -226,6 +234,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
 
     private void saveConfiguration()
     {
+        System.out.println("saveConfiguration");
         this.config.setConfigText(this.editArea.getText());
         this.config.saveConfig();
     }
@@ -264,6 +273,9 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         {
             MeterDeviceSelectorDialog mdsd = new MeterDeviceSelectorDialog(this, m_da);
             
+            if (mdsd.wasAction())
+            {
+            
             MeterInterface mi = (MeterInterface)mdsd.getSelectedObject();
             
             StringBuffer sb = new StringBuffer();
@@ -277,6 +289,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
             
             
             this.editArea.insert(sb.toString(), this.editArea.getCaretPosition());
+            }
         }
         else if (action.equals("close")) 
         {
@@ -284,6 +297,17 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
         }
         else if (action.equals("help")) 
         {
+            new SimpleConfigurationHelp(this);
+        }
+        else if (action.equals("insert_tz")) 
+        {
+            SimpleConfigurationTZDialog sc = new SimpleConfigurationTZDialog(this, m_da);
+            
+            if (sc.wasAction())
+            {
+                this.editArea.insert(sc.getData(), this.editArea.getCaretPosition());
+            }
+            
         }
         else if (action.equals("edit_cut"))
         {
