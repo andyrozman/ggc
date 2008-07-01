@@ -346,7 +346,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         }
     }
 
-    private String getResolvedName()
+    public String getResolvedName()
     {
         return ic.getPartitialTranslation(this.getName(), "_");
     }

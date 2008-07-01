@@ -9,8 +9,7 @@ import java.util.Comparator;
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
 
-public class MealNutritionsDisplay extends ATTableData implements
-	Comparator<MealNutritionsDisplay>
+public class MealNutritionsDisplay extends ATTableData implements Comparator<MealNutritionsDisplay>
 {
 
     private String id;
@@ -25,7 +24,7 @@ public class MealNutritionsDisplay extends ATTableData implements
 
     public MealNutritionsDisplay(I18nControlAbstract ic)
     {
-	super(ic);
+        super(ic);
     }
 
     /*
@@ -49,67 +48,66 @@ public class MealNutritionsDisplay extends ATTableData implements
 
     public MealNutritionsDisplay(I18nControlAbstract ic, MealNutrition mn)
     {
-	super(ic);
-	this.id = "" + mn.getId();
-	this.value = "" + mn.getAmountSum(); // proc v1  .getCalculatedAmount();
-	// this.calculated_value = mn.getAmount();
+        super(ic);
+        this.id = "" + mn.getId();
+        this.value = "" + mn.getAmountSum(); // proc v1 .getCalculatedAmount();
+        // this.calculated_value = mn.getAmount();
 
     }
 
     public void setNutritionDefinition(NutritionDefinition def)
     {
-	this.id = "" + def.getId();
-	this.name = def.getName();
-	// this.value = def.get.getTag();
-	this.weight_unit = def.getWeight_unit();
-	this.decimal_places = def.getDecimal_places();
+        this.id = "" + def.getId();
+        this.name = def.getResolvedName(); // .getName();
+        // this.value = def.get.getTag();
+        this.weight_unit = def.getWeight_unit();
+        this.decimal_places = def.getDecimal_places();
     }
 
     public void init()
     {
-	/*
-	 * String[] cols = { "ID", "NUTRITION", "AMOUNT", "UNITS" }; float[]
-	 * cols_size = { 0.1f, 0.5f, 0.2f, 0.2f };
-	 * 
-	 * init(cols, cols_size);
-	 */
+        /*
+         * String[] cols = { "ID", "NUTRITION", "AMOUNT", "UNITS" }; float[]
+         * cols_size = { 0.1f, 0.5f, 0.2f, 0.2f };
+         * 
+         * init(cols, cols_size);
+         */
 
-	String[] cols = { "NUTRITION", "AMOUNT_LBL", "UNITS" };
-	float[] cols_size = { 0.6f, 0.2f, 0.2f };
+        String[] cols = { "NUTRITION", "AMOUNT_LBL", "UNITS" };
+        float[] cols_size = { 0.6f, 0.2f, 0.2f };
 
-	init(cols, cols_size);
+        init(cols, cols_size);
 
     }
 
     public String getValue()
     {
-	float fl = Float.parseFloat(this.value);
-	return DataAccess.getFloatAsString(fl, this.decimal_places);
+        float fl = Float.parseFloat(this.value);
+        return DataAccess.getFloatAsString(fl, this.decimal_places);
     }
 
     public String getColumnValue(int column)
     {
 
-	switch (column)
-	{
-	    case 1:
-		return this.getValue();
-	    case 2:
-		return this.weight_unit;
+        switch (column)
+        {
+        case 1:
+            return this.getValue();
+        case 2:
+            return this.weight_unit;
 
-	    case 0:
-	    default:
-		return this.name;
+        case 0:
+        default:
+            return this.name;
 
-	}
+        }
 
-	/*
-	 * switch(column) { case 1: return this.name; case 2: return this.value;
-	 * case 3: return this.weight_unit;
-	 * 
-	 * case 0: default: return "" + this.id;
-	 *  }
-	 */
+        /*
+         * switch(column) { case 1: return this.name; case 2: return this.value;
+         * case 3: return this.weight_unit;
+         * 
+         * case 0: default: return "" + this.id; }
+         */
     }
 
     /*
@@ -119,23 +117,22 @@ public class MealNutritionsDisplay extends ATTableData implements
      */
     public int compare(MealNutritionsDisplay mnd1, MealNutritionsDisplay mnd2)
     {
-	return mnd1.name.compareTo(mnd2.name);
+        return mnd1.name.compareTo(mnd2.name);
     }
 
     public String getSaveData()
     {
-	return this.id + "=" + this.getValue();
+        return this.id + "=" + this.getValue();
     }
 
     public String getId()
     {
-	return this.id;
+        return this.id;
     }
-    
-    
+
     public String toString()
     {
-	return getSaveData();
+        return getSaveData();
     }
-    
+
 }

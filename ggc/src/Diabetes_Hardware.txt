@@ -1,0 +1,50 @@
+
+DIABETES HARDWARE
+==================
+
+
+A.) METERS
+B.) PUMPS
+C.) CGMS
+
+
+
+
+
+A.) METERS
+===========
+
+ Name of company      |               Plans                           | Supported devices                           | Developer
+---------------------------------------------------------------------------------------------------------------------------------
+Bayer/Ascensia        |   Done                                        | Dex2, Contour, Breeze, EliteXl              | Andy
+Roche                 |   Planned, -> 09.2008                         | All supported through Pix device            | Andy
+One Touch             |   Planned, 09.- 12.2008                       | ?                                           | Andy
+Abbott                |   ?                                           | ?
+
+
+
+
+B.) PUMPS
+===========
+
+ Name of company      |               Plans                           | Supported devices                           | Developer 
+---------------------------------------------------------------------------------------------------------------------------------
+Roche                 |   Planned, -> 12.2008                         | All supported through Pix device            | Andy
+Minimed               |   Planned, ?                                  | Support with import of CareLink export      | Andy
+Animas                |   Planned                                     | ?                                           | Nate 
+
+
+
+
+C.) CGMS
+==========
+
+ Name of company      |               Plans                           | Supported devices                           | Developer 
+---------------------------------------------------------------------------------------------------------------------------------
+Minimed               |   Planned, ?                                  | Support with import of CareLink export      | Andy
+
+
+
+
+
+

@@ -1,30 +1,29 @@
 /*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionHomeWeightType
- *  Purpose:  This is datalayer file (data file, with methods to work with database or in 
- *      this case Hibernate). 
- *      This one is used for Food's Home Weights.
- *
- *  Author:   andyrozman  {andy@atech-software.com}
+ * GGC - GNU Gluco Control
+ * 
+ * A pure java app to help you manage your diabetes.
+ * 
+ * See AUTHORS for copyright information.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ * Filename: NutritionHomeWeightType Purpose: This is datalayer file (data file,
+ * with methods to work with database or in this case Hibernate). This one is
+ * used for Food's Home Weights.
+ * 
+ * Author: andyrozman {andy@atech-software.com}
  */
 
 package ggc.core.db.datalayer;
@@ -94,16 +93,13 @@ public class DailyFoodEntry // implements SelectableInterface
     // food + weight
     public DailyFoodEntry(/* int food_type, */FoodDescription fd, float weight)
     {
-        this(fd.getFoodType(), fd, null, DailyFoodEntry.WEIGHT_TYPE_WEIGHT,
-                null, weight);
+        this(fd.getFoodType(), fd, null, DailyFoodEntry.WEIGHT_TYPE_WEIGHT, null, weight);
     }
 
     // food + home weight
-    public DailyFoodEntry(/* int food_type, */FoodDescription fd,
-            HomeWeightSpecial hw, float amount)
+    public DailyFoodEntry(/* int food_type, */FoodDescription fd, HomeWeightSpecial hw, float amount)
     {
-        this(fd.getFoodType(), fd, null,
-                DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT, hw, amount);
+        this(fd.getFoodType(), fd, null, DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT, hw, amount);
     }
 
     // meal + amount
@@ -112,14 +108,13 @@ public class DailyFoodEntry // implements SelectableInterface
         this(3, null, ml, DailyFoodEntry.WEIGHT_TYPE_AMOUNT, null, amount);
     }
 
-    public DailyFoodEntry(int food_type, FoodDescription fd, Meal ml,
-            int amount_type, HomeWeightSpecial hws, float amount)
+    public DailyFoodEntry(int food_type, FoodDescription fd, Meal ml, int amount_type, HomeWeightSpecial hws,
+            float amount)
     {
-        
-        System.out.println("food_type=" + food_type + ",food=" + fd + ",meal=" + ml + 
-                            ",amount_type=" + amount_type + ",home weight sp: " + hws + ",amount:" + amount);
-        
-        
+
+        System.out.println("food_type=" + food_type + ",food=" + fd + ",meal=" + ml + ",amount_type=" + amount_type
+                + ",home weight sp: " + hws + ",amount:" + amount);
+
         this.nutrition_food_type = food_type;
 
         if (fd == null)
@@ -191,8 +186,8 @@ public class DailyFoodEntry // implements SelectableInterface
         this.nutrition_food_id = m_da.getLongValueFromString(foods[1]);
 
         this.amount_type = DailyFoodEntry.WEIGHT_TYPE_WEIGHT; // this.
-                                                              // getAmountType
-                                                              // (ids[0]);
+        // getAmountType
+        // (ids[0]);
         this.amount = m_da.getFloatValueFromString(v1[1]);
         this.home_weight_id = -1;
 
@@ -212,8 +207,8 @@ public class DailyFoodEntry // implements SelectableInterface
         this.nutrition_food_id = m_da.getLongValueFromString(foods[1]);
 
         this.amount_type = DailyFoodEntry.WEIGHT_TYPE_AMOUNT; // this.
-                                                              // getAmountType
-                                                              // (ids[0]);
+        // getAmountType
+        // (ids[0]);
         this.amount = m_da.getFloatValueFromString(v1[1]);
         this.home_weight_id = -1;
 
@@ -255,13 +250,13 @@ public class DailyFoodEntry // implements SelectableInterface
 
         if (this.nutrition_food_type == GGCTreeRoot.TREE_MEALS)
         {
-            this.m_meal = m_da.tree_roots.get("3").m_meals_ht.get(""
-                    + this.nutrition_food_id);
+            this.m_meal = m_da.tree_roots.get("3").m_meals_ht.get("" + this.nutrition_food_id);
             processMeal(this.m_meal);
         }
         else
         {
-            this.m_food = m_da.tree_roots.get("" + this.nutrition_food_type).m_foods_ht.get("" + this.nutrition_food_id);
+            this.m_food = m_da.tree_roots.get("" + this.nutrition_food_type).m_foods_ht
+                    .get("" + this.nutrition_food_id);
 
             if (this.amount_type == DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
             {
@@ -374,12 +369,20 @@ public class DailyFoodEntry // implements SelectableInterface
 
     public String getHomeWeightDescription()
     {
+        
         if (this.amount_type == DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
         {
+            //System.out.println("Weight type HW");
+            //System.out.println("HW Special: " + this.m_home_weight_special);
+            //System.out.println("HW Special Name: " + this.m_home_weight_special.getName());
             return this.m_home_weight_special.getName();
         }
         else
+        {
+            System.out.println("Weight type NO HW");
+
             return "";
+        }
     }
 
     public String getAmountString()
@@ -389,8 +392,9 @@ public class DailyFoodEntry // implements SelectableInterface
 
     private void loadHomeWeight()
     {
-        StringTokenizer strtok = new StringTokenizer(this.m_food
-                .getHome_weights(), ";");
+        //System.out.println("HWs: " + this.m_food.getHome_weights());
+        //System.out.println("Looking for:  " + this.home_weight_id);
+        StringTokenizer strtok = new StringTokenizer(this.m_food.getHome_weights(), ";");
 
         while (strtok.hasMoreTokens())
         {
@@ -398,6 +402,7 @@ public class DailyFoodEntry // implements SelectableInterface
 
             if (tk.startsWith(this.home_weight_id + "="))
             {
+                //System.out.println("FOUND !!!!");
                 this.m_home_weight_special = new HomeWeightSpecial(tk);
             }
 
@@ -417,11 +422,8 @@ public class DailyFoodEntry // implements SelectableInterface
         }
         else if (this.amount_type == DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
         {
-            this.calculated_multiplier = (this.m_home_weight_special
-                    .getCalculatedWeight() / 100.0f)
-                    * amount;
-            this.addMultiplier(this.component_id, (this.m_home_weight_special
-                    .getCalculatedWeight() * 0.01f * amount));
+            this.calculated_multiplier = (this.m_home_weight_special.getCalculatedWeight() / 100.0f) * amount;
+            this.addMultiplier(this.component_id, (this.m_home_weight_special.getCalculatedWeight() * 0.01f * amount));
         }
         else
         {
@@ -469,8 +471,7 @@ public class DailyFoodEntry // implements SelectableInterface
     public String getShortDescription()
     {
         // return this.getDescription();
-        return this.getName() + " [" + this.getAmountString() + " x "
-                + this.weight + " g]";
+        return this.getName() + " [" + this.getAmountString() + " x " + this.weight + " g]";
     }
 
     private int getAmountType(String type)
@@ -601,7 +602,6 @@ public class DailyFoodEntry // implements SelectableInterface
 
         }
     }
-
 
     /*
      * public void mergeNutrientsData(ArrayList<MealNutrition> mn_list) {
@@ -739,8 +739,7 @@ public class DailyFoodEntry // implements SelectableInterface
         return this.nutrients;
     }
 
-    public ArrayList<MealNutrition> createList(
-            Hashtable<String, MealNutrition> table)
+    public ArrayList<MealNutrition> createList(Hashtable<String, MealNutrition> table)
     {
         ArrayList<MealNutrition> lst = new ArrayList<MealNutrition>();
 
@@ -818,7 +817,7 @@ public class DailyFoodEntry // implements SelectableInterface
         return this.glyc_nutr;
     }
 
-    /**
+    /*
      * getObjectName - returns name of DatabaseObject
      * 
      * @return name of object (not Hibernate object)
@@ -828,7 +827,7 @@ public class DailyFoodEntry // implements SelectableInterface
         return "Home Weight Type";
     }
 
-    /**
+    /*
      * isDebugMode - returns debug mode of object
      * 
      * @return true if object in debug mode
@@ -838,7 +837,7 @@ public class DailyFoodEntry // implements SelectableInterface
         return debug;
     }
 
-    /**
+    /*
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
      * objects, contained in lists and dialogs, used for processing by higher

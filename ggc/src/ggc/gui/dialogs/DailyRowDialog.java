@@ -92,21 +92,24 @@ public class DailyRowDialog extends JDialog implements ActionListener,
      */
     public void focusLost(FocusEvent ev)
     {
+        focusProcess(ev.getSource());
+    }
+
+    private void focusProcess(Object src)
+    {
+        
         if (in_action)
             return;
 
         in_action = true;
 
-        // JFormattedTextField targ = (JFormattedTextField)ev.
-
-        if (ev.getSource().equals(this.ftf_bg1))
+        if (src.equals(this.ftf_bg1))
         {
-            // System.out.println("focus lost: bg1");
             int val = m_da.getJFormatedTextValueInt(ftf_bg1);
             float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
             this.ftf_bg2.setValue(new Float(v_2));
         }
-        else if (ev.getSource().equals(this.ftf_bg2))
+        else if (src.equals(this.ftf_bg2))
         {
             // System.out.println("focus lost: bg2");
             float val = m_da.getJFormatedTextValueFloat(ftf_bg2);
@@ -117,8 +120,11 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             System.out.println("focus lost: unknown");
 
         in_action = false;
+        
+        
     }
-
+    
+    
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
     private GGCProperties props = m_da.getSettings();
@@ -275,10 +281,8 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
         
         
-        this.ftf_ins1.setValue(new Integer((int) this.m_dailyValuesRow
-                .getIns1()));
-        this.ftf_ins2.setValue(new Integer((int) this.m_dailyValuesRow
-                .getIns2()));
+        this.ftf_ins1.setValue(new Integer((int) this.m_dailyValuesRow.getIns1()));
+        this.ftf_ins2.setValue(new Integer((int) this.m_dailyValuesRow.getIns2()));
         this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
 
         ActField.setText(this.m_dailyValuesRow.getActivity());
@@ -363,7 +367,7 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
         // this.ftf_bg1.addKeyListener(this);
         // this.ftf_bg2.addKeyListener(this);
-
+/*
         this.ftf_bg2.addKeyListener(new KeyListener()
         {
 
@@ -375,9 +379,6 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             {
             }
 
-            /*
-             * keyReleased
-             */
             public void keyReleased(KeyEvent ke)
             {
                 if (ke.getKeyCode() == KeyEvent.VK_PERIOD)
@@ -391,7 +392,7 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             }
 
         });
-
+*/
         addComponent(cb_food_set = new JCheckBox(" "
                 + m_ic.getMessage("FOOD_SET")), 120, 290, 200, panel);
         addComponent(UrineField = new JTextField(), 120, 318, 240, panel);
@@ -533,6 +534,7 @@ public class DailyRowDialog extends JDialog implements ActionListener,
     {
         JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
         tf.setBounds(x, y, width, height);
+        tf.addKeyListener(this);
         
         cont.add(tf);
         
@@ -925,6 +927,11 @@ public class DailyRowDialog extends JDialog implements ActionListener,
     public void keyReleased(KeyEvent e)
     {
 
+        if ((e.getSource().equals(this.ftf_bg1)) || (e.getSource().equals(this.ftf_bg2)))
+        {
+            focusProcess(e.getSource());
+        }
+        
         if (e.getKeyCode() == KeyEvent.VK_ENTER)
         {
             cmdOk();
