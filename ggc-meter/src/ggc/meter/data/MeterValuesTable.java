@@ -41,7 +41,6 @@ import javax.swing.table.TableColumn;
  */
 public class MeterValuesTable extends JTable //implements TableModelListener
 {
-	static final long serialVersionUID = 0;
 
 //x    private I18nControl m_ic = I18nControl.getInstance();    
 	MeterValuesTableModel model = null;

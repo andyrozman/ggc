@@ -8,7 +8,7 @@
 package ggc.core.plugins;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.GlucoValueH;
+import ggc.core.db.hibernate.meter.GlucoValueH;
 
 import java.util.Hashtable;
 

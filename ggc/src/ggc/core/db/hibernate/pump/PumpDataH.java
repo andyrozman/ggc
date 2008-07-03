@@ -1,4 +1,4 @@
-package ggc.core.db.hibernate;
+package ggc.core.db.hibernate.pump;
 
 import java.io.Serializable;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -6,7 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class PumpDataExtendedH implements Serializable {
+public class PumpDataH implements Serializable {
 
     /** identifier field */
     private long id;
@@ -15,7 +15,10 @@ public class PumpDataExtendedH implements Serializable {
     private long dt_info;
 
     /** nullable persistent field */
-    private int type;
+    private int base_type;
+
+    /** nullable persistent field */
+    private int sub_type;
 
     /** nullable persistent field */
     private String value;
@@ -33,9 +36,10 @@ public class PumpDataExtendedH implements Serializable {
     private long changed;
 
     /** full constructor */
-    public PumpDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment, long changed) {
+    public PumpDataH(long dt_info, int base_type, int sub_type, String value, String extended, int person_id, String comment, long changed) {
         this.dt_info = dt_info;
-        this.type = type;
+        this.base_type = base_type;
+        this.sub_type = sub_type;
         this.value = value;
         this.extended = extended;
         this.person_id = person_id;
@@ -44,11 +48,11 @@ public class PumpDataExtendedH implements Serializable {
     }
 
     /** default constructor */
-    public PumpDataExtendedH() {
+    public PumpDataH() {
     }
 
     /** minimal constructor */
-    public PumpDataExtendedH(long dt_info, int person_id) {
+    public PumpDataH(long dt_info, int person_id) {
         this.dt_info = dt_info;
         this.person_id = person_id;
     }
@@ -69,12 +73,20 @@ public class PumpDataExtendedH implements Serializable {
         this.dt_info = dt_info;
     }
 
-    public int getType() {
-        return this.type;
+    public int getBase_type() {
+        return this.base_type;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setBase_type(int base_type) {
+        this.base_type = base_type;
+    }
+
+    public int getSub_type() {
+        return this.sub_type;
+    }
+
+    public void setSub_type(int sub_type) {
+        this.sub_type = sub_type;
     }
 
     public String getValue() {
@@ -124,8 +136,8 @@ public class PumpDataExtendedH implements Serializable {
     }
 
     public boolean equals(Object other) {
-        if ( !(other instanceof PumpDataExtendedH) ) return false;
-        PumpDataExtendedH castOther = (PumpDataExtendedH) other;
+        if ( !(other instanceof PumpDataH) ) return false;
+        PumpDataH castOther = (PumpDataH) other;
         return new EqualsBuilder()
             .append(this.getId(), castOther.getId())
             .isEquals();

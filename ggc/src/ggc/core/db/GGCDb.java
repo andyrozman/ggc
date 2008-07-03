@@ -55,12 +55,12 @@ import ggc.core.db.hibernate.FoodDescriptionH;
 import ggc.core.db.hibernate.FoodGroupH;
 import ggc.core.db.hibernate.FoodUserDescriptionH;
 import ggc.core.db.hibernate.FoodUserGroupH;
-import ggc.core.db.hibernate.GlucoValueH;
 import ggc.core.db.hibernate.MealGroupH;
 import ggc.core.db.hibernate.MealH;
 import ggc.core.db.hibernate.NutritionDefinitionH;
 import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.core.db.hibernate.SettingsH;
+import ggc.core.db.hibernate.meter.GlucoValueH;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
 

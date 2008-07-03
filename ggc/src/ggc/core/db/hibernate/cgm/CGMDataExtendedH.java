@@ -1,4 +1,4 @@
-package ggc.core.db.hibernate;
+package ggc.core.db.hibernate.cgm;
 
 import java.io.Serializable;
 import org.apache.commons.lang.builder.EqualsBuilder;

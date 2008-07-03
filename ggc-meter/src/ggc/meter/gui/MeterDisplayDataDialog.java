@@ -1,6 +1,6 @@
 package ggc.meter.gui;
 
-import ggc.core.db.hibernate.GlucoValueH;
+import ggc.core.db.hibernate.meter.GlucoValueH;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.MeterValuesTable;
 import ggc.meter.data.MeterValuesTableModel;
@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
@@ -535,6 +536,14 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         {
             this.model.deselectAll();
         }
+        else if (action.equals("export_data"))
+        {
+            ArrayList<MeterValuesEntry> lst = this.model.getCheckedEntries();
+            
+        }
+        
+        
+        
         else
             System.out.println("MeterDisplayDataDialog::Unknown command: " + action);
 

@@ -6,7 +6,7 @@
 
 
     <!--  Pump Data -->
-    <class name="ggc.core.db.hibernate.PumpDataH" table="pump_data" >
+    <class name="ggc.core.db.hibernate.pump.PumpDataH" table="pump_data" >
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -21,7 +21,7 @@
     </class>
 
     <!--  Pump Data Additional Info-->
-    <class name="ggc.core.db.hibernate.PumpDataExtendedH" table="pump_data_ext" >
+    <class name="ggc.core.db.hibernate.pump.PumpDataExtendedH" table="pump_data_ext" >
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -35,7 +35,7 @@
     </class>
 
     <!--  Pump Profile -->
-    <class name="ggc.core.db.hibernate.PumpProfileH" table="pump_profile" >
+    <class name="ggc.core.db.hibernate.pump.PumpProfileH" table="pump_profile" >
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            

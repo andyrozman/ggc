@@ -1,4 +1,4 @@
-package ggc.core.db.hibernate;
+package ggc.core.db.hibernate.cgm;
 
 import java.io.Serializable;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -6,25 +6,22 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class PumpProfileH implements Serializable {
+public class CGMDataH implements Serializable {
 
     /** identifier field */
     private long id;
 
-    /** nullable persistent field */
-    private String name;
+    /** persistent field */
+    private long dt_info;
 
     /** nullable persistent field */
-    private float basal_base;
+    private int base_type;
 
     /** nullable persistent field */
-    private String basal_diffs;
+    private int sub_type;
 
     /** nullable persistent field */
-    private long active_from;
-
-    /** nullable persistent field */
-    private long active_till;
+    private String value;
 
     /** nullable persistent field */
     private String extended;
@@ -39,12 +36,11 @@ public class PumpProfileH implements Serializable {
     private long changed;
 
     /** full constructor */
-    public PumpProfileH(String name, float basal_base, String basal_diffs, long active_from, long active_till, String extended, int person_id, String comment, long changed) {
-        this.name = name;
-        this.basal_base = basal_base;
-        this.basal_diffs = basal_diffs;
-        this.active_from = active_from;
-        this.active_till = active_till;
+    public CGMDataH(long dt_info, int base_type, int sub_type, String value, String extended, int person_id, String comment, long changed) {
+        this.dt_info = dt_info;
+        this.base_type = base_type;
+        this.sub_type = sub_type;
+        this.value = value;
         this.extended = extended;
         this.person_id = person_id;
         this.comment = comment;
@@ -52,11 +48,12 @@ public class PumpProfileH implements Serializable {
     }
 
     /** default constructor */
-    public PumpProfileH() {
+    public CGMDataH() {
     }
 
     /** minimal constructor */
-    public PumpProfileH(int person_id) {
+    public CGMDataH(long dt_info, int person_id) {
+        this.dt_info = dt_info;
         this.person_id = person_id;
     }
 
@@ -68,44 +65,36 @@ public class PumpProfileH implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public long getDt_info() {
+        return this.dt_info;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDt_info(long dt_info) {
+        this.dt_info = dt_info;
     }
 
-    public float getBasal_base() {
-        return this.basal_base;
+    public int getBase_type() {
+        return this.base_type;
     }
 
-    public void setBasal_base(float basal_base) {
-        this.basal_base = basal_base;
+    public void setBase_type(int base_type) {
+        this.base_type = base_type;
     }
 
-    public String getBasal_diffs() {
-        return this.basal_diffs;
+    public int getSub_type() {
+        return this.sub_type;
     }
 
-    public void setBasal_diffs(String basal_diffs) {
-        this.basal_diffs = basal_diffs;
+    public void setSub_type(int sub_type) {
+        this.sub_type = sub_type;
     }
 
-    public long getActive_from() {
-        return this.active_from;
+    public String getValue() {
+        return this.value;
     }
 
-    public void setActive_from(long active_from) {
-        this.active_from = active_from;
-    }
-
-    public long getActive_till() {
-        return this.active_till;
-    }
-
-    public void setActive_till(long active_till) {
-        this.active_till = active_till;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getExtended() {
@@ -147,8 +136,8 @@ public class PumpProfileH implements Serializable {
     }
 
     public boolean equals(Object other) {
-        if ( !(other instanceof PumpProfileH) ) return false;
-        PumpProfileH castOther = (PumpProfileH) other;
+        if ( !(other instanceof CGMDataH) ) return false;
+        CGMDataH castOther = (CGMDataH) other;
         return new EqualsBuilder()
             .append(this.getId(), castOther.getId())
             .isEquals();

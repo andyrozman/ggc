@@ -1,13 +1,7 @@
-/*
- * Created on 12.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
 
 package ggc.meter.gui;
 
-import ggc.core.db.hibernate.GlucoValueH;
+import ggc.core.db.hibernate.meter.GlucoValueH;
 import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.data.cfg.MeterConfiguration;
 import ggc.meter.device.MeterInterface;

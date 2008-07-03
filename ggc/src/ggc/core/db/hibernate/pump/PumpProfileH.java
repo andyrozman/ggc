@@ -1,4 +1,4 @@
-package ggc.core.db.hibernate;
+package ggc.core.db.hibernate.pump;
 
 import java.io.Serializable;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -6,22 +6,25 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class PumpDataH implements Serializable {
+public class PumpProfileH implements Serializable {
 
     /** identifier field */
     private long id;
 
-    /** persistent field */
-    private long dt_info;
+    /** nullable persistent field */
+    private String name;
 
     /** nullable persistent field */
-    private int base_type;
+    private float basal_base;
 
     /** nullable persistent field */
-    private int sub_type;
+    private String basal_diffs;
 
     /** nullable persistent field */
-    private String value;
+    private long active_from;
+
+    /** nullable persistent field */
+    private long active_till;
 
     /** nullable persistent field */
     private String extended;
@@ -36,11 +39,12 @@ public class PumpDataH implements Serializable {
     private long changed;
 
     /** full constructor */
-    public PumpDataH(long dt_info, int base_type, int sub_type, String value, String extended, int person_id, String comment, long changed) {
-        this.dt_info = dt_info;
-        this.base_type = base_type;
-        this.sub_type = sub_type;
-        this.value = value;
+    public PumpProfileH(String name, float basal_base, String basal_diffs, long active_from, long active_till, String extended, int person_id, String comment, long changed) {
+        this.name = name;
+        this.basal_base = basal_base;
+        this.basal_diffs = basal_diffs;
+        this.active_from = active_from;
+        this.active_till = active_till;
         this.extended = extended;
         this.person_id = person_id;
         this.comment = comment;
@@ -48,12 +52,11 @@ public class PumpDataH implements Serializable {
     }
 
     /** default constructor */
-    public PumpDataH() {
+    public PumpProfileH() {
     }
 
     /** minimal constructor */
-    public PumpDataH(long dt_info, int person_id) {
-        this.dt_info = dt_info;
+    public PumpProfileH(int person_id) {
         this.person_id = person_id;
     }
 
@@ -65,36 +68,44 @@ public class PumpDataH implements Serializable {
         this.id = id;
     }
 
-    public long getDt_info() {
-        return this.dt_info;
+    public String getName() {
+        return this.name;
     }
 
-    public void setDt_info(long dt_info) {
-        this.dt_info = dt_info;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getBase_type() {
-        return this.base_type;
+    public float getBasal_base() {
+        return this.basal_base;
     }
 
-    public void setBase_type(int base_type) {
-        this.base_type = base_type;
+    public void setBasal_base(float basal_base) {
+        this.basal_base = basal_base;
     }
 
-    public int getSub_type() {
-        return this.sub_type;
+    public String getBasal_diffs() {
+        return this.basal_diffs;
     }
 
-    public void setSub_type(int sub_type) {
-        this.sub_type = sub_type;
+    public void setBasal_diffs(String basal_diffs) {
+        this.basal_diffs = basal_diffs;
     }
 
-    public String getValue() {
-        return this.value;
+    public long getActive_from() {
+        return this.active_from;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setActive_from(long active_from) {
+        this.active_from = active_from;
+    }
+
+    public long getActive_till() {
+        return this.active_till;
+    }
+
+    public void setActive_till(long active_till) {
+        this.active_till = active_till;
     }
 
     public String getExtended() {
@@ -136,8 +147,8 @@ public class PumpDataH implements Serializable {
     }
 
     public boolean equals(Object other) {
-        if ( !(other instanceof PumpDataH) ) return false;
-        PumpDataH castOther = (PumpDataH) other;
+        if ( !(other instanceof PumpProfileH) ) return false;
+        PumpProfileH castOther = (PumpProfileH) other;
         return new EqualsBuilder()
             .append(this.getId(), castOther.getId())
             .isEquals();

@@ -27,7 +27,7 @@ package ggc.meter.data;
  * Author: schultd
  */
 
-import ggc.core.db.hibernate.GlucoValueH;
+import ggc.core.db.hibernate.meter.GlucoValueH;
 import ggc.meter.gui.MeterDisplayDataDialog;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.util.DataAccessMeter;
@@ -41,7 +41,6 @@ import javax.swing.table.AbstractTableModel;
 public class MeterValuesTableModel extends AbstractTableModel // implements
                                                               // GlucoValueEventListener
 {
-    static final long serialVersionUID = 0;
 
     private I18nControl m_ic = I18nControl.getInstance();
     // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
@@ -278,6 +277,13 @@ public class MeterValuesTableModel extends AbstractTableModel // implements
             mve.status = MeterValuesEntry.STATUS_NEW;
         }
     }
+    
+    
+    public ArrayList<MeterValuesEntry> getCheckedEntries()
+    {
+        return null;
+    }
+    
     
     @Override
     public String getColumnName(int column)

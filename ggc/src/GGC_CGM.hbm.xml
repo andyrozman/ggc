@@ -6,7 +6,7 @@
 
 
     <!--  CGM Data -->
-    <class name="ggc.core.db.hibernate.CGMDataH" table="cgm_data" >
+    <class name="ggc.core.db.hibernate.cgm.CGMDataH" table="cgm_data" >
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
@@ -22,7 +22,7 @@
 
 
     <!--  Pump Data Additional Info-->
-    <class name="ggc.core.db.hibernate.CGMDataExtendedH" table="cgm_data_ext" >
+    <class name="ggc.core.db.hibernate.cgm.CGMDataExtendedH" table="cgm_data_ext" >
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>            
