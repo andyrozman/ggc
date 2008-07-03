@@ -139,7 +139,7 @@
                 <include name="*.hbm.xml"/>
                 <exclude name="ggc/core/**"/>
             </fileset>
-            <fileset dir="${source.dir}/data">
+            <fileset dir="${source.dir}/../data">
                 <include name="help/**"/>
                 <exclude name="**_svn/**"/>
                 <exclude name="**/.svn/**"/>

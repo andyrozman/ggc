@@ -757,7 +757,14 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
             sb.append(this.list_parts.get(i).getSaveData());
         }
 
-        this.temp_parts = sb.toString().replaceAll(".", ",");
+        //System.out.println("Sb: " + sb.toString());
+        //System.out.println("Sb Replace all: " + sb.toString().replaceAll(".", ","));
+        
+        //System.out.println("Sb ReplaceExpr: " + m_da.replaceExpression(sb.toString(), ".", ","));
+        
+        
+        this.temp_parts = sb.toString();// m_da.replaceExpression(sb.toString(), ".", ","); 
+            //sb.toString().replaceAll(".", ",");
 
         Collections.sort(this.list_nutritions, new MealNutritionsComparator());
 
@@ -771,7 +778,8 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
             sb.append(this.list_nutritions.get(i).getSaveData());
         }
 
-        this.temp_nutritions = sb.toString().replaceAll(".", ",");
+        this.temp_nutritions = sb.toString(); // m_da.replaceExpression(sb.toString(), ".", ","); 
+            //sb.toString().replaceAll(".", ",");
 
     }
 
@@ -826,13 +834,13 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
      */
     public boolean saveData()
     {
-        System.out.println("in save");
+        //System.out.println("in save");
         
         if (this.isAddAction())
         {
-            System.out.println("in add");
+            //System.out.println("in add");
 
-            System.out.println(this.meal_group);
+            //System.out.println(this.meal_group);
             
             this.meal.setName(this.tf_name.getText());
             this.meal.setName_i18n(this.tf_name_i18n_key.getText());

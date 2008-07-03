@@ -709,7 +709,9 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
             sb.append(this.list_nutritions.get(i).getSaveData());
         }
 
-        this.temp_nutritions = sb.toString().replaceAll(".", ",");
+        this.temp_nutritions = sb.toString(); 
+            //m_da.replaceExpression(sb.toString(), ".", ","); 
+            //sb.toString().replaceAll(".", ",");
         
         Collections.sort(this.list_hweight, new HomeWeightComparator());
 
@@ -723,7 +725,9 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
             sb.append(this.list_hweight.get(i).getSaveData());
         }
 
-        this.temp_home_weight = sb.toString().replaceAll(".", ",");
+        this.temp_home_weight = sb.toString(); 
+            //m_da.replaceExpression(sb.toString(), ".", ","); 
+            //sb.toString().replaceAll(".", ",");
 
     }
 
