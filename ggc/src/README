@@ -91,7 +91,7 @@ Version 0.4
 - Fully write help files and add help through application (English version so far)
 - Change and add new graphs
 - Meter Tool: Configuration
-- Added some functionality to food databases
+- Add some functionality to food databases
 - Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
 - CGM Tool: <Basic CGM support>
 - Smart Insulin Recommendation (Bolus Helper)
