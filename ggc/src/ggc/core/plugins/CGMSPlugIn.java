@@ -4,6 +4,7 @@ package ggc.core.plugins;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
+import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 
@@ -104,6 +105,10 @@ public class CGMSPlugIn extends PlugInClient
 	return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.4");
     }
     
+    
+    public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
+    {
+    }    
     
     
 }

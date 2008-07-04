@@ -34,13 +34,18 @@ import ggc.core.util.I18nControl;
 
 import java.util.ArrayList;
 
+import org.hibernate.Session;
+
+import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 
 
-public class DailyValue implements BackupRestoreObject
+public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
 {
+
+
 
     private boolean selected = false;
     I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
@@ -121,6 +126,78 @@ public class DailyValue implements BackupRestoreObject
 	return false;
     }
     
+    
+
+    
+    
+    
+    /* 
+     * DbAdd
+     */
+    public String DbAdd(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* 
+     * DbDelete
+     */
+    public boolean DbDelete(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /* 
+     * DbEdit
+     */
+    public boolean DbEdit(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /* 
+     * DbGet
+     */
+    public boolean DbGet(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /* 
+     * DbHasChildren
+     */
+    public boolean DbHasChildren(Session sess) throws Exception
+    {
+        return false;
+    }
+
+    /* 
+     * getAction
+     */
+    public int getAction()
+    {
+        return 0;
+    }
+
+    /* 
+     * getObjectName
+     */
+    public String getObjectName()
+    {
+        return "DailyValue";
+    }
+
+    /* 
+     * isDebugMode
+     */
+    public boolean isDebugMode()
+    {
+        return false;
+    }
     
     
     

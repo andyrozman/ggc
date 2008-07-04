@@ -1,69 +1,110 @@
+/*
+ * Created on 12.08.2002
+ *
+ * To change this generated comment edit the template variable "filecomment":
+ * Window>Preferences>Java>Templates.
+ */
 
-package ggc.core.plugins;
+package ggc.core.plugins; //com.atech.db;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.meter.GlucoValueH;
+import ggc.core.db.datalayer.DailyValue;
+import ggc.core.db.hibernate.DayValueH;
+import ggc.core.util.DataAccess;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
-import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataWriterAbstract;
+import com.atech.graphics.components.StatusReporterInterface;
 
 
-public class GGCDataWriter extends DbDataWriterAbstract
+
+public class GGCDataWriter extends DbDataWriterAbstract 
 {
 
-    private boolean running = true;
-    private GGCDb db = null;
     public static final int DATA_NONE = 0;
     public static final int DATA_METER = 1;
     
-    int type = 0;
-    Hashtable<String,GlucoValueH> data_meter = null;
+    protected int current_status = 0;
+    protected StatusReporterInterface stat_rep_int = null;
+    protected Hashtable<String, ArrayList<DayValueH>> meter_data;
+    protected GGCDb db = null;
     
-    
-    public GGCDataWriter(GGCDb db, int type, Object data)
+    public GGCDataWriter(int type, Object data, StatusReporterInterface stat_rep_int)
     {
-        super(type, data);
-        this.db = db;
-        this.data_meter = new Hashtable<String,GlucoValueH>();
-        this.setStatus(DbDataWriterAbstract.STATUS_READY);
+        super(type, stat_rep_int);
+        this.selected_data_type = type;
+        
+        this.meter_data = (Hashtable<String, ArrayList<DayValueH>>)data;
+        //this.data = (ArrayList<MeterValuesEntry>)data;
+        this.stat_rep_int = stat_rep_int;
+        
+        this.db = DataAccess.getInstance().getDb();
+        
     }
     
+    
+    boolean running = true;
     
     public void run()
     {
-
-        while(running)
+        try
         {
-            System.out.println("run.running Writer");
-
-            try
-            {
-                this.setStatus(DbDataReaderAbstract.STATUS_READING);
-    
-                this.data_meter = this.db.getMeterValues();
-                
-                this.setStatus(DbDataReaderAbstract.STATUS_FINISHED_READING);
-                
-            }
-            catch(Exception ex)
-            {
-                this.setStatus(DbDataReaderAbstract.STATUS_FINISHED_READING_ERROR);
-                System.out.println("Exception: " + ex);
-                ex.printStackTrace();
-                running = false;
-            }
+            Thread.sleep(1000);
+        }
+        catch(Exception ex)
+        {
+        }
+        
+        while (running)
+        {
+            int full_count = 0;
+            int current = 0;
             
-            running = false;
+            full_count += this.meter_data.get("ADD").size();
+            full_count += this.meter_data.get("EDIT").size();
             
-        }  // while
+            for(Enumeration<String> en=this.meter_data.keys(); en.hasMoreElements(); )
+            {
+                String key = en.nextElement();
+                ArrayList<DayValueH> lst = this.meter_data.get(key);
+                
+                for(int i=0; i<lst.size(); i++)
+                {
+                    if (key.equals("ADD"))
+                    {
+                        DayValueH dv = lst.get(i);
+                        dv.setPerson_id(DataAccess.getInstance().getCurrentPersonId());
+                        db.addHibernate(dv);
+                    }
+                    else
+                    {
+                        db.editHibernate(lst.get(i));
+                    }
+                    
+                    current++;
+                    
+                    float f = (current/(full_count * 1.0f));
+                    
+                    int pr = (int)(100.0f * f);
+                    
+                    this.stat_rep_int.setStatus(pr);
+                    
+                } // for i
+            } // for enum
 
-        System.out.println("Exited runner");
+            
+            this.stat_rep_int.setStatus(100);
+            this.running = false;
+
+            
+        } // while running
+        
+        
     }
-
-
-
+  
 
 
 }

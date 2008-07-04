@@ -5,6 +5,7 @@ import ggc.core.util.DataAccess;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
+import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.plugin.PlugInServer;
@@ -50,6 +51,9 @@ public class MetersPlugIn extends PlugInClient
             // PlugInServer obj = (PlugInServer)c.newInstance();
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
+            
+            System.out.println("Parent MeterPlgin: " + this.parent);
+            
             this.m_server.init(this.parent, DataAccess.getInstance()
                     .getI18nControlInstance().getSelectedLangauge(), DataAccess
                     .getInstance(), this);
@@ -152,4 +156,14 @@ public class MetersPlugIn extends PlugInClient
             return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.3");
     }
 
+    
+    
+    public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
+    {
+        GGCDataWriter gdw = new GGCDataWriter(GGCDataWriter.DATA_METER, return_data, stat_rep_int);
+        gdw.start();
+    }
+
+    
+    
 }

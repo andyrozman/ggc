@@ -8,9 +8,12 @@
 package ggc.core.plugins;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.meter.GlucoValueH;
+import ggc.core.db.hibernate.DayValueH;
 
 import java.util.Hashtable;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.atech.db.DbDataReaderAbstract;
 
@@ -24,14 +27,15 @@ public class GGCDataReader extends DbDataReaderAbstract
     public static final int DATA_METER = 1;
     
     int type = 0;
-    Hashtable<String,GlucoValueH> data_meter = null;
-    
+    Hashtable<String,DayValueH> data_meter = null;
+    private static Log log = LogFactory.getLog(GGCDataReader.class);
+
     
     public GGCDataReader(GGCDb db, int type)
     {
         this.db = db;
         this.type = type;
-        this.data_meter = new Hashtable<String,GlucoValueH>();
+        this.data_meter = new Hashtable<String,DayValueH>();
         this.setStatus(DbDataReaderAbstract.STATUS_READY);
     }
     
@@ -41,8 +45,9 @@ public class GGCDataReader extends DbDataReaderAbstract
 
         while(running)
         {
-            System.out.println("run.running");
-
+            //System.out.println("run.running");
+            log.info("GGCDataReader - Started");
+            
             try
             {
                 this.setStatus(DbDataReaderAbstract.STATUS_READING);
@@ -55,8 +60,9 @@ public class GGCDataReader extends DbDataReaderAbstract
             catch(Exception ex)
             {
                 this.setStatus(DbDataReaderAbstract.STATUS_FINISHED_READING_ERROR);
-                System.out.println("Exception: " + ex);
-                ex.printStackTrace();
+                //System.out.println("Exception: " + ex);
+                log.error("GGCDataReader Exception: " + ex, ex);
+                //ex.printStackTrace();
                 running = false;
             }
             
@@ -64,7 +70,8 @@ public class GGCDataReader extends DbDataReaderAbstract
             
         }  // while
 
-        System.out.println("Exited runner");
+        log.info("GGCDataReader - Finished");
+        //System.out.println("Exited runner");
     }
 
     /* 

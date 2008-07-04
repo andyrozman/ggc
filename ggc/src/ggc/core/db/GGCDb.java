@@ -60,7 +60,6 @@ import ggc.core.db.hibernate.MealH;
 import ggc.core.db.hibernate.NutritionDefinitionH;
 import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.core.db.hibernate.SettingsH;
-import ggc.core.db.hibernate.meter.GlucoValueH;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
 
@@ -344,17 +343,24 @@ public class GGCDb // implements DbCheckInterface
 
     }
 
+    
+    public long addHibernate(Object obj)
+    {
+        return addHibernate(obj,1);
+    }
+    
+    
     // this method is used for direct use with hibernate objects (unlike use
     // with our
     // datalayer classes)
-    public long addHibernate(Object obj)
+    public long addHibernate(Object obj, int session_id)
     {
 
         log.info("addHibernate::" + obj.toString());
 
         try
         {
-            Session sess = getSession();
+            Session sess = getSession(session_id);
             Transaction tx = sess.beginTransaction();
 
             Long val = (Long) sess.save(obj);
@@ -412,17 +418,24 @@ public class GGCDb // implements DbCheckInterface
 
     }
 
+    
+    public boolean editHibernate(Object obj)
+    {
+        return editHibernate(obj,1);
+    }
+    
+    
     // this method is used for direct use with hibernate objects (unlike use
     // with our
     // datalayer classes)
-    public boolean editHibernate(Object obj)
+    public boolean editHibernate(Object obj, int session_id)
     {
 
         log.info("editHibernate::" + obj.toString());
 
         try
         {
-            Session sess = getSession();
+            Session sess = getSession(session_id);
             Transaction tx = sess.beginTransaction();
 
             sess.update(obj);
@@ -1461,10 +1474,10 @@ public class GGCDb // implements DbCheckInterface
 </class>
 */
     
-    public Hashtable<String,GlucoValueH> getMeterValues()
+    public Hashtable<String,DayValueH> getMeterValues()
     {
 
-        Hashtable<String,GlucoValueH> ht = new Hashtable<String,GlucoValueH>(); 
+        Hashtable<String,DayValueH> ht = new Hashtable<String,DayValueH>(); 
         
         logInfo("getMeterValues()");
 
@@ -1474,7 +1487,7 @@ public class GGCDb // implements DbCheckInterface
             logDebug("getMeterValues()", "Process");
 
             Query q = getSession(2).createQuery(
-                "SELECT dv from ggc.core.db.hibernate.GlucoValueH as dv " + 
+                "SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + 
                 "WHERE (dv.bg>0) and person_id=" + m_da.current_user_id + 
                 " ORDER BY dv.dt_info");
 
@@ -1484,10 +1497,8 @@ public class GGCDb // implements DbCheckInterface
 
             while (it.hasNext())
             {
-                GlucoValueH gv = (GlucoValueH)it.next();
+                DayValueH gv = (DayValueH)it.next();
                 ht.put("" + gv.getDt_info(), gv);
-                
-            //    System.out.println("Dt: " + gv.getDt_info());
             }
 
         }
