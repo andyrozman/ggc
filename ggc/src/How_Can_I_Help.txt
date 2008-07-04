@@ -218,7 +218,7 @@ If you are developer and would like to help, please follow this instructions to 
     - Option Serializable class without serialVersionUID, set to ignore (we have few generated classes which 
       don't have this parameter inside).
     
-          
+
 7.) If you wish to test GGC Meter Tool, GGC Pump tool you will also need to set binaries for rxtx library. If 
     your development OS is either windows, linux, macos, sparc you are in luck. 
     
