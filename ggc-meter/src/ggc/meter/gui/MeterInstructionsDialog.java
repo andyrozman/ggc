@@ -1,7 +1,7 @@
 
 package ggc.meter.gui;
 
-import ggc.core.db.hibernate.meter.GlucoValueH;
+import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.data.cfg.MeterConfiguration;
 import ggc.meter.device.MeterInterface;
@@ -13,7 +13,6 @@ import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
@@ -44,13 +43,13 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     private static final long serialVersionUID = 7159799607489791137L;
 
     
-    private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccessMeter m_da = DataAccessMeter.getInstance();
+    private I18nControl m_ic = m_da.getI18nInstance();        
     
     JButton button_start;
     JLabel label_waiting;
     
-    Hashtable<String,GlucoValueH> meter_data = null;
+    Hashtable<String,DayValueH> meter_data = null;
 
 
     int x,y;
@@ -88,7 +87,6 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     public MeterInstructionsDialog()
     {
         super();
-        m_da.addComponent(this);
         loadConfiguration();
         init();
 
@@ -99,7 +97,6 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     public MeterInstructionsDialog(DbDataReaderAbstract reader, MeterPlugInServer server)
     {
         super();
-        m_da.addComponent(this);
         loadConfiguration();
         
         this.reader = reader;
@@ -144,30 +141,6 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     }
     
     
-    
-
-
-
-    /**
-     * Method getInstance.
-     * @return ReadMeterDialog
-     */
-    /*public static ReadMeterDialog getInstance()
-    {
-        return singleton;
-    }*/
-
-    /**
-     * Method showMe.
-     * @param owner
-     */
-   /* public static void showMe(Frame owner)
-    {
-        if (singleton == null)
-            singleton = new ReadMeterDialog(owner);
-        singleton.setLocationRelativeTo(owner);
-        singleton.setVisible(true);
-    }*/
 
 
     private ImageIcon getMeterIcon()
@@ -224,6 +197,8 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
 
     protected void init()
     {
+        m_da.addComponent(this);
+
         setTitle(m_ic.getMessage("CONFIGURED_METER_INSTRUCTIONS"));
 
         JPanel panel = new JPanel();
@@ -232,6 +207,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
 
         JLabel label;
 
+        /*
         int xkor=300;
         int ykor=300;
 
@@ -241,12 +217,16 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
             xkor = rec.x + (rec.width/2);
             ykor = rec.y + (rec.height/2);
         }
-
+*/
         Font normal = m_da.getFont(DataAccessMeter.FONT_NORMAL);
         Font bold = m_da.getFont(DataAccessMeter.FONT_NORMAL);
 
         
-        setBounds(xkor-250, ykor-250, 650, 600);
+        //setBounds(xkor-250, ykor-250, 650, 600);
+        setBounds(0, 0, 650, 600);
+        
+        m_da.centerJDialog(this);
+        
         //dWindowListener(new CloseListener());
 
         //setBounds(300, 300, 300, 300);
@@ -499,7 +479,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         }
         else
         {
-            this.meter_data = (Hashtable<String,GlucoValueH>)this.reader.getData();
+            this.meter_data = (Hashtable<String,DayValueH>)this.reader.getData();
         }
         
         

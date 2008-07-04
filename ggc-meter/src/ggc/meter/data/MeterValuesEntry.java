@@ -27,6 +27,7 @@
 
 package ggc.meter.data;
 
+import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
@@ -60,6 +61,15 @@ public class MeterValuesEntry
     public static final int STATUS_OLD = 3;
 	
 	
+    public static final int OBJECT_STATUS_NEW = 1;
+    public static final int OBJECT_STATUS_EDIT = 2;
+    public static final int OBJECT_STATUS_OLD =3;
+    
+    
+    public int object_status = 0;
+    
+    public DayValueH entry_object = null;
+    
 	public static String entry_statuses[] = 
 	{
 	     MeterValuesEntry.ic.getMessage("UNKNOWN"),
@@ -197,6 +207,49 @@ public class MeterValuesEntry
 	}
 	
 	
+	public void prepareEntry()
+	{
+	    if (this.object_status == MeterValuesEntry.OBJECT_STATUS_OLD)
+	        return;
+	    else if (this.object_status == MeterValuesEntry.OBJECT_STATUS_EDIT)
+	    {
+	        this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+	        this.entry_object.setChanged(System.currentTimeMillis());
+	        this.entry_object.setComment(createComment());
+	    }
+	    else
+	    {
+	        this.entry_object = new DayValueH();
+	        this.entry_object.setIns1(0);
+            this.entry_object.setIns2(0);
+            this.entry_object.setCh(0.0f);
+            this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+	        this.entry_object.setDt_info(this.getDateTime().getATDateTimeAsLong());
+            this.entry_object.setChanged(System.currentTimeMillis());
+            this.entry_object.setComment(createComment());
+	    }
+	}
+	
+	
+	public DayValueH getDbObject()
+	{
+	    return this.entry_object;
+	}
+	
+	
+	public String createComment()
+	{
+	    String p = this.getParametersAsString();
+	    
+	    if ((p==null) || (p.trim().length()==0))
+	    {
+	        return "MTI";
+	    }
+	    else
+	        return "MTI;" + p;
+	    
+	    
+	}
 	
 	
 	public String toString()

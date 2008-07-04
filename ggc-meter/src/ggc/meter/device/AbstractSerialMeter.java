@@ -205,7 +205,11 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     //@Override
     public void close()
     {
-        return;
+        if (this.serialPort==null)
+            return;
+        
+        this.serialPort.removeEventListener();
+        this.serialPort.close();
     }
 
 

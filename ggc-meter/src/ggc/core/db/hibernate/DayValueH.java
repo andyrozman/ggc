@@ -1,4 +1,4 @@
-package ggc.core.db.hibernate.meter;
+package ggc.core.db.hibernate;
 
 import java.io.Serializable;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -6,7 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class GlucoValueH implements Serializable {
+public class DayValueH implements Serializable {
 
     /** identifier field */
     private long id;
@@ -17,26 +17,50 @@ public class GlucoValueH implements Serializable {
     /** nullable persistent field */
     private int bg;
 
+    /** nullable persistent field */
+    private int ins1;
+
+    /** nullable persistent field */
+    private int ins2;
+
+    /** nullable persistent field */
+    private float ch;
+
+    /** nullable persistent field */
+    private String meals_ids;
+
+    /** nullable persistent field */
+    private String extended;
+
     /** persistent field */
     private int person_id;
+
+    /** nullable persistent field */
+    private String comment;
 
     /** nullable persistent field */
     private long changed;
 
     /** full constructor */
-    public GlucoValueH(long dt_info, int bg, int person_id, long changed) {
+    public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String extended, int person_id, String comment, long changed) {
         this.dt_info = dt_info;
         this.bg = bg;
+        this.ins1 = ins1;
+        this.ins2 = ins2;
+        this.ch = ch;
+        this.meals_ids = meals_ids;
+        this.extended = extended;
         this.person_id = person_id;
+        this.comment = comment;
         this.changed = changed;
     }
 
     /** default constructor */
-    public GlucoValueH() {
+    public DayValueH() {
     }
 
     /** minimal constructor */
-    public GlucoValueH(long dt_info, int person_id) {
+    public DayValueH(long dt_info, int person_id) {
         this.dt_info = dt_info;
         this.person_id = person_id;
     }
@@ -65,12 +89,60 @@ public class GlucoValueH implements Serializable {
         this.bg = bg;
     }
 
+    public int getIns1() {
+        return this.ins1;
+    }
+
+    public void setIns1(int ins1) {
+        this.ins1 = ins1;
+    }
+
+    public int getIns2() {
+        return this.ins2;
+    }
+
+    public void setIns2(int ins2) {
+        this.ins2 = ins2;
+    }
+
+    public float getCh() {
+        return this.ch;
+    }
+
+    public void setCh(float ch) {
+        this.ch = ch;
+    }
+
+    public String getMeals_ids() {
+        return this.meals_ids;
+    }
+
+    public void setMeals_ids(String meals_ids) {
+        this.meals_ids = meals_ids;
+    }
+
+    public String getExtended() {
+        return this.extended;
+    }
+
+    public void setExtended(String extended) {
+        this.extended = extended;
+    }
+
     public int getPerson_id() {
         return this.person_id;
     }
 
     public void setPerson_id(int person_id) {
         this.person_id = person_id;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public long getChanged() {
@@ -88,8 +160,8 @@ public class GlucoValueH implements Serializable {
     }
 
     public boolean equals(Object other) {
-        if ( !(other instanceof GlucoValueH) ) return false;
-        GlucoValueH castOther = (GlucoValueH) other;
+        if ( !(other instanceof DayValueH) ) return false;
+        DayValueH castOther = (DayValueH) other;
         return new EqualsBuilder()
             .append(this.getId(), castOther.getId())
             .isEquals();

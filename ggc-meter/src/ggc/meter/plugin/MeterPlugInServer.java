@@ -2,6 +2,7 @@ package ggc.meter.plugin;
 
 import ggc.meter.gui.MeterInstructionsDialog;
 import ggc.meter.gui.config.SimpleConfigurationDialog;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 
 import java.awt.Container;
@@ -34,6 +35,8 @@ public class MeterPlugInServer extends PlugInServer
     public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
         super(cont, selected_lang, da);
+        System.out.println("Parent container: " + cont);
+        DataAccessMeter.getInstance().addComponent(cont);
     }
     
 
@@ -89,7 +92,7 @@ public class MeterPlugInServer extends PlugInServer
     @Override
     public String getVersion()
     {
-        return "0.1.10";
+        return "0.2.0";
     }
 
     /* 
@@ -108,6 +111,7 @@ public class MeterPlugInServer extends PlugInServer
     public void initPlugIn()
     {
         I18nControl.getInstance().setLanguage(this.selected_lang);
+        DataAccessMeter.getInstance().addComponent(this.parent);
     }
     
     

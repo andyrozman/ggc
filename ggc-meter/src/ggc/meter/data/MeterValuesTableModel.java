@@ -27,7 +27,7 @@ package ggc.meter.data;
  * Author: schultd
  */
 
-import ggc.core.db.hibernate.meter.GlucoValueH;
+import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.gui.MeterDisplayDataDialog;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.util.DataAccessMeter;
@@ -50,7 +50,7 @@ public class MeterValuesTableModel extends AbstractTableModel // implements
     ArrayList<MeterValuesEntry> dl_data;
     ArrayList<MeterValuesEntry> displayed_dl_data;
     
-    Hashtable<String,GlucoValueH> old_data = null;
+    Hashtable<String,DayValueH> old_data = null;
 
     // GGCProperties props = GGCProperties.getInstance();
 
@@ -251,21 +251,32 @@ public class MeterValuesTableModel extends AbstractTableModel // implements
             {
             //    System.out.println("not Contains");
                 mve.status = MeterValuesEntry.STATUS_NEW;
+                mve.object_status = MeterValuesEntry.OBJECT_STATUS_NEW;
             }
             else
             {
                 
              //   System.out.println("Found !!!");
                 
-                GlucoValueH gvh = old_data.get("" + dt);
+                DayValueH gvh = old_data.get("" + dt);
                   
                 int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
                 
                 //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
                 if (gvh.getBg()==vl)
+                {
                     mve.status = MeterValuesEntry.STATUS_OLD;
+                    mve.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;
+                }
                 else
+                {
                     mve.status = MeterValuesEntry.STATUS_CHANGED;
+                    mve.object_status = MeterValuesEntry.OBJECT_STATUS_EDIT;
+                    mve.entry_object = gvh;
+                    
+                    //System.out.println("Changed: " + gvh.getId());
+                    
+                }
                     
                 //gvh.getBg()
             }
@@ -279,9 +290,35 @@ public class MeterValuesTableModel extends AbstractTableModel // implements
     }
     
     
-    public ArrayList<MeterValuesEntry> getCheckedEntries()
+    public Hashtable<String,ArrayList<DayValueH>> getCheckedEntries()
     {
-        return null;
+        
+        Hashtable<String,ArrayList<DayValueH>> ht = new Hashtable<String,ArrayList<DayValueH>>();
+        
+        ht.put("ADD", new ArrayList<DayValueH>());
+        ht.put("EDIT", new ArrayList<DayValueH>());
+        
+        
+        for(int i=0; i<this.dl_data.size(); i++)
+        {
+            MeterValuesEntry mve = this.dl_data.get(i);
+            
+            if (!mve.checked)
+                continue;
+            
+            mve.prepareEntry();
+            
+            if (mve.object_status==MeterValuesEntry.OBJECT_STATUS_NEW)
+            {
+                ht.get("ADD").add(mve.getDbObject());
+            }
+            else if (mve.object_status==MeterValuesEntry.OBJECT_STATUS_EDIT)
+            {
+                ht.get("EDIT").add(mve.getDbObject());
+            }
+        }
+        
+        return ht;
     }
     
     
@@ -322,13 +359,11 @@ public class MeterValuesTableModel extends AbstractTableModel // implements
         // fireTableChanged(null);
     }
 
-    public void setOldValues(Hashtable<String,GlucoValueH> data)
+    public void setOldValues(Hashtable<String,DayValueH> data)
     {
         this.old_data = data;
-        
-        System.out.println(this.old_data);
-     
-        System.out.println(this.old_data.keys());
+        //System.out.println(this.old_data);
+        //System.out.println(this.old_data.keys());
     }
     
     

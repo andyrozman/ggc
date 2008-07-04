@@ -2,6 +2,23 @@
 Changes file for GGC Meter Tool
 ===============================
 
+0.2.0 
+    * Finialized Meter Tool
+    * All dialogs are now centered, everything works as it should...
+
+0.1.13
+    * Changed writing back to database through DayValueH (GlucoValueH has problem)
+    * MeterExportDialog created
+    * Modified MeterValuesTableModel, MeterValuesEntry
+    * Finished export to database    
+
+0.1.12
+    * Writing entries back to database via GlucoValueH
+
+0.1.11
+    * SerialProtocol fixed, close method implemented
+    * Ascensia closed also fixed
+
 0.1.10 (28.6
     * Started with work on reading and processing old data. ...
     * Old data is read from GGC correctly and reading is done through separate thread, which must finish before

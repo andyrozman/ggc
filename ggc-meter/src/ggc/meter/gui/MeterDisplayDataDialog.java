@@ -1,6 +1,6 @@
 package ggc.meter.gui;
 
-import ggc.core.db.hibernate.meter.GlucoValueH;
+import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.MeterValuesTable;
 import ggc.meter.data.MeterValuesTableModel;
@@ -15,7 +15,7 @@ import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Rectangle;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -43,10 +43,10 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     // private JLabel infoIcon = null;
     // x private JLabel infoDescription = null;
 
-    private I18nControl m_ic = I18nControl.getInstance();
     MeterReaderRunner mrr;
 
     private DataAccessMeter m_da = DataAccessMeter.getInstance();
+    private I18nControl m_ic = m_da.getI18nInstance();
 
     // private static ReadMeterDialog singleton = null;
 
@@ -58,7 +58,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     private MeterValuesTable table = null;
 
     
-    private Hashtable<String,GlucoValueH> meter_data = null;
+    private Hashtable<String,DayValueH> meter_data = null;
     MeterConfigEntry configured_meter;
     
     
@@ -86,7 +86,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     //MeterInterface meter_interface;
 
     
-    
+    MeterPlugInServer server;
     
     public String statuses[] =  
     { 
@@ -134,12 +134,9 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     {
         super();
 
-        this.loadConfiguration();
+        //this.loadConfiguration();
 
         this.mrr = new MeterReaderRunner(this.configured_meter, this);
-
-        m_da.addComponent(this);
-        // meter_interface = mi;
 
         dialogPreInit();
     }
@@ -153,14 +150,11 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
         this.mrr = new MeterReaderRunner(this.configured_meter, this);
 
-        m_da.addComponent(this);
-        // meter_interface = mi;
-
         dialogPreInit();
     }
     
 
-    public MeterDisplayDataDialog(MeterConfigEntry mce, Hashtable<String,GlucoValueH> meter_data, MeterPlugInServer server)
+    public MeterDisplayDataDialog(MeterConfigEntry mce, Hashtable<String,DayValueH> meter_data, MeterPlugInServer server)
     {
         super();
 
@@ -169,15 +163,13 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
         this.mrr = new MeterReaderRunner(this.configured_meter, this);
 
-        m_da.addComponent(this);
-        // meter_interface = mi;
-
+        this.server = server;
         dialogPreInit();
     }
     
     
     
-
+/*
     private void loadConfiguration()
     {
         // TODO: this should be read from config
@@ -202,18 +194,18 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         // MeterManager.getInstance().getMeterDevice(this.configured_meter
         // .meter_company, this.configured_meter.meter_device);
         // this.meter_interface = mi;
-    }
+  //  }
 
     private void dialogPreInit()
     {
-        setTitle(m_ic.getMessage("READ_METER_DATA") + "  [" + this.configured_meter.meter_device + " on "
-                + this.configured_meter.communication_port + "]");
+        setTitle(String.format(m_ic.getMessage("READ_METER_DATA_TITLE"), this.configured_meter.meter_device, 
+                this.configured_meter.communication_port));
 
+        m_da.addComponent(this);
+        
         init();
-        // postInit();
 
         this.mrr.start();
-        //guiTest();
 
         this.setVisible(true);
 
@@ -286,6 +278,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         panel.setSize(600, 600);
 
         JLabel label;
+        /*
 
         int xkor = 300;
         int ykor = 300;
@@ -296,8 +289,16 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
             xkor = rec.x + (rec.width / 2);
             ykor = rec.y + (rec.height / 2);
         }
-
-        setBounds(xkor - 250, ykor - 250, 480, 580);
+*/
+        Font normal = m_da.getFont(DataAccessMeter.FONT_NORMAL);
+        Font normal_b = m_da.getFont(DataAccessMeter.FONT_NORMAL_BOLD);
+        
+        
+//        setBounds(xkor - 250, ykor - 250, 480, 580);
+        
+        setBounds(0, 0, 480, 580);
+        m_da.centerJDialog(this);
+        
         // dWindowListener(new CloseListener());
 
         // setBounds(300, 300, 300, 300);
@@ -360,11 +361,12 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
         label = new JLabel(m_ic.getMessage("METER_INFO") + ":");
         label.setBounds(30, 310, 310, 25);
+        label.setFont(normal_b);
         panel.add(label);
 
         ta_info = new JTextArea();
         JScrollPane sp3 = new JScrollPane(ta_info);
-        sp3.setBounds(30, 340, 410, 50);
+        sp3.setBounds(30, 340, 410, 60);
         panel.add(sp3);
 
         ta_info.setText(""); // this.meter_interface.getDeviceInfo().
@@ -373,11 +375,12 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         // meter status
         label = new JLabel(m_ic.getMessage("ACTION") + ":");
         label.setBounds(30, 415, 100, 25);
+        label.setFont(normal_b);
         panel.add(label);
 
         lbl_status = new JLabel(m_ic.getMessage("READY"));
         lbl_status.setBounds(130, 415, 150, 25);
-        lbl_status.setFont(m_da.getFont(DataAccessMeter.FONT_NORMAL));
+        lbl_status.setFont(normal);
         panel.add(lbl_status);
 
         this.progress = new JProgressBar();
@@ -526,6 +529,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         }
         else if (action.equals("close"))
         {
+            m_da.removeComponent(this);
             this.dispose();
         }
         else if (action.equals("select_all"))
@@ -538,7 +542,14 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         }
         else if (action.equals("export_data"))
         {
-            ArrayList<MeterValuesEntry> lst = this.model.getCheckedEntries();
+            Hashtable<String,ArrayList<DayValueH>> ht = this.model.getCheckedEntries();
+            
+            MeterExportDialog med = new MeterExportDialog(this, ht, this.server);
+            
+            if (med.wasAction())
+            {
+                this.bt_import.setEnabled(false);
+            }
             
         }
         
@@ -622,7 +633,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
      */
     public void writeDeviceIdentification()
     {
-        this.ta_info.setText(this.device_ident.getInformation(""));
+        this.ta_info.setText(this.device_ident.getShortInformation());
     }
 
     /*
@@ -668,7 +679,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
      */
     public void setStatus(int status)
     {
-        if ((this.reading_status == 3) || (this.reading_status == 4))
+        if ((this.reading_status == 3) || (this.reading_status == 4) || (this.reading_status == 6))
             return;
 
         this.reading_status = status;
@@ -703,7 +714,19 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
                     unsel_all.setEnabled(true);
                 }
                 break;
-    
+
+            case 6: // error
+            {
+                this.bt_break.setEnabled(false);
+                this.bt_close.setEnabled(true);
+                this.bt_import.setEnabled(false);
+                filter_combo.setEnabled(false);
+                sel_all.setEnabled(false);
+                unsel_all.setEnabled(false);
+            }
+            break;
+                
+                
             case 3: // stopped - device 
             case 4: // stoped - user
                 {

@@ -89,6 +89,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	
 		try
 		{
+		    System.out.println("Set port: " + portName);
+		    
 		    this.setPort(portName);
 	
 		    if (!this.open())
@@ -155,7 +157,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     @Override
     public void close()
     {
-        return;
+        super.close();
     }
 
 
