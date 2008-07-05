@@ -1,3 +1,6 @@
+
+package ggc.cgm.manager; 
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -25,9 +28,6 @@
  *
  *  Author:   andyrozman
  */
-
-
-package ggc.cgm.manager; 
 
 
 public class CGMImplementationStatus

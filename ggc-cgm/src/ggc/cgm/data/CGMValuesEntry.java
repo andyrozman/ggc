@@ -31,7 +31,6 @@ import java.util.Hashtable;
 
 import com.atech.utils.ATechDate;
 
-//import ggc.db.hibernate.DayValueH;
 
 
 public class CGMValuesEntry 
@@ -40,7 +39,6 @@ public class CGMValuesEntry
 	public ATechDate datetime;
 	public String bg_str;
 	public int bg_unit;
-	//public
 	public Hashtable<String,String> params;
 	
 	

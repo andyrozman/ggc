@@ -1,3 +1,7 @@
+
+
+package ggc.cgm.manager.company; 
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -25,9 +29,6 @@
  *
  *  Author:   andyrozman
  */
-
-
-package ggc.cgm.manager.company; 
 
 
 public interface CGMCompanyInterface

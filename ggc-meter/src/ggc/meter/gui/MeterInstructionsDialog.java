@@ -437,6 +437,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         else if (action.equals("start_download"))
         {
 
+            System.out.println("Conf. meter: " + this.configured_meter);
             if (this.configured_meter.ds_fix)
             {
                 TimeZoneUtil  tzu = TimeZoneUtil.getInstance();

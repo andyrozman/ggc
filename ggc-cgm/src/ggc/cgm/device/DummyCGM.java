@@ -1,19 +1,5 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.cgm.device;
 
-
-
-/**
- * @author andyrozman
- *
- * 
- */
 
 
 import ggc.cgm.util.DataAccessCGM;

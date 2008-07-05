@@ -135,14 +135,37 @@ public class MeterConfigEntry
         
         try
         {
-            int s = Integer.parseInt(par);
+            String p = par.trim();
+            if (p.startsWith("+"))
+                p = p.substring(1);
+            
+            int s = Integer.parseInt(p);
             return s;
         }
         catch(Exception ex)
         {
+            ex.printStackTrace();
             return 0;
         }
     }
+
+    public String toString()
+    {
+/*        public int id;
+        public String name;
+        public String meter_company;
+        public String meter_device;
+        public String communication_port;
+        public boolean ds_fix = false;
+        public String ds_area = "";
+        public int ds_winter_change = 0;
+        public int ds_summer_change = 0;
+        boolean valid = true;
+*/
+        
+        return "ds_fix=" + this.ds_fix + ",area=" + this.ds_area + ",winter=" + this.ds_winter_change + ",summer=" + this.ds_summer_change;
+    }
+    
     
     
 }

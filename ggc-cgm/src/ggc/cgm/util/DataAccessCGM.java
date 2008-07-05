@@ -84,36 +84,9 @@ public class DataAccessCGM extends ATDataAccessAbstract
 
     private static DataAccessCGM s_da = null; // This is handle to unique 
 
-    // singelton instance
-
-    //public GGCDb m_db = null;
-
-    //public MainFrame m_main = null;
-
-    //public GGCLittle m_main_little = null;
-
     public Font fonts[] = null;
 
-    //public GGCTreeRoot m_nutrition_treeroot = null;
-
-    //public GGCTreeRoot m_meals_treeroot = null;
-
-    // daily and weekly data
-    //private GregorianCalendar m_date = null, m_dateStart = null;
-
-    //private HbA1cValues m_HbA1c = null;
-
-    //private DailyValues m_dvalues = null;
-
-    //private WeeklyValues m_dRangeValues = null;
-
     private CGMManager m_meterManager = null;
-
-    //private GGCProperties m_settings = null;
-
-    //private DbToolApplicationGGC m_configFile = null;
-//    private ConfigurationManager m_cfgMgr = null;
-
 
     public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
 

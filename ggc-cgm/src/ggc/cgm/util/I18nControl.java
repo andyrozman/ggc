@@ -75,7 +75,7 @@ public class I18nControl extends I18nControlAbstract
     public void init()
     {
     	def_language = "en";
-		lang_file_root = "GGCPumpTool";
+		lang_file_root = "GGCCGMTool";
     }
 
 

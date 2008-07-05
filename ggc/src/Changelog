@@ -1,3 +1,6 @@
+2008-07-04 (0.2.22)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Meter Tool implementation finished and tied into GGC (fully integrated)
+
 2008-07-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * GGCMeterTool_de.properties prepared for translation & brought keys up-to-date
     * cleaned up german language files' headers to make them look slightly more presentable
@@ -11,30 +14,31 @@
       ggc.GGC
     * Changelog: tabs -> spaces
 
-0.2.21
+
+2008-07-02 (0.2.21)  Andy Rozman <andyrozman@users.sourceforge.net>
     * added documentation
     * fixed food problem (we need to find out what is problem with decimals in java)
 
 
-0.2.20.4
+2008-06-30 (0.2.20.4)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Error dialog finsihed and integrated into Printing Dialog (this is first dialog that uses extended 
       error dialogs)
 
 
-0.2.20.3
+2008-06-29 (0.2.20.3)  Andy Rozman <andyrozman@users.sourceforge.net>
     * fixed problem with adding new foods and meals
     * fixed problem with meals tree (ids and refresh)
     * tooltips are added with foods and meals, labels for name are usually long, so we also set tooltip so that 
       whole name is visible
 
 
-0.2.20.2
+2008-06-28 (0.2.20.2)  Andy Rozman <andyrozman@users.sourceforge.net>
     * added JDecimalTextField to atech-tools, which needs to replace JFormattedTextField used for decimal numbers
       replaced elements in Daily Values
     * On new Daily Value, hour is set to current hour
 
 
-0.2.20.1
+2008-06-25 (0.2.20.1)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Changed CGM databases
     * Db Version Change: Stable: v7, Development: v8
     * Addded backup of Settings
@@ -44,13 +48,13 @@
 2008-06-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * updated GGC_de & GGC_Nutrition_de to include all new keywords
 
-0.2.19.1
+2008-06-20 (0.2.19.1)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Changed plugin system and moved instances of plugins into DataAccess class
     * Added CGMS context (Continous Glucose Monitoring System), see IDEAS file
     * Created  runner for DbInit, DbApplication, DbImport
     * Daily overview now displays date in title, and Sunday is now colored red (label)
 
-0.2.18.2
+2008-06-15 (0.2.18.2)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Db Check was fully implemented and now Db Checking was added on start of application. If version of 
       database is not the same as those specified in GGC_Update.properties software doesn't start
 

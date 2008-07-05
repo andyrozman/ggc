@@ -99,6 +99,8 @@ public abstract class AbstractCGMCompany implements CGMCompanyInterface //, Sele
             return null;
     }
     
+    public abstract String getName();
+    
     
     public String toString()
     {
