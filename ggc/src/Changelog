@@ -1,4 +1,9 @@
 2008-07-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * GGCMeterTool_de.properties prepared for translation & brought keys up-to-date
+    * cleaned up german language files' headers to make them look slightly more presentable
+
+
+2008-07-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * README.de translated, Keys in GGC_*de brought up-to-date
     * Added GGC_*de.native.properties, so that others can make changes that won't
       be overwritten.
