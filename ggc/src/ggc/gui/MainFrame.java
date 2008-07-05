@@ -28,6 +28,7 @@
 
 package ggc.gui;
 
+import ggc.GGC;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
@@ -118,11 +119,6 @@ public class MainFrame extends JFrame
      * 
      */
     private static final long serialVersionUID = -8971779470148201332L;
-    // Version information
-    public static String s_version = "0.2.20.2";
-    public static String full_version = "v" + s_version;
-
-    public static String version_date = "25th June 2008";
 
     private I18nControl m_ic = null;
     public static SkinLookAndFeel s_skinlf;
@@ -239,7 +235,7 @@ public class MainFrame extends JFrame
         this.actions = new Hashtable<String, GGCAction>();
         MainFrame.developer_version = developer_version;
 
-        String title_full = title + " (" + full_version + ")";
+        String title_full = title + " (" + GGC.full_version + ")";
 
         if (developer_version)
             title_full += " - Developer edition";

@@ -92,8 +92,8 @@ Version 0.4
 - Change and add new graphs
 - Meter Tool: Configuration
 - Add some functionality to food databases
-- Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
-- CGM Tool: <Basic CGM support>
+- Pump Tool: <Basic pump support> (manual input, integration, no graphs)
+- CGMS Tool: <Basic CGMS support>
 - Smart Insulin Recommendation (Bolus Helper)
 
 
@@ -146,8 +146,8 @@ after them probably Minimed.
 CGMS-TOOL
 ----------
 
-This is plug-in for retrieving data from CGMS device and viewing of this data. This project
-is still in the planning phase. The project will move into the development phase
+This is a plug-in for retrieving data from CGMS device and viewing of this data. This
+project is still in the planning phase. The project will move into the development phase
 in September 2008, so the next version (0.4) may already have part of the cgms-tool
 functionality. The first supported CGMS will be that of Minimed through export file from 
 CareLink.
@@ -160,10 +160,10 @@ CareLink.
 
 There are several ways you can help. Some ways require you to have some knowledge, 
 but most of them don't. Please take a look at document 'How_Can_I_Help.txt'. There 
-are several chapters and for each you can see for who it's intended.
+are several chapters and for each you can see for whom it's intended.
 
-First chapter will be displayed here (and translated) all other are in other document and
-in english.
+First chapter is displayed here (and translated) all other are in the other document
+and in english.
 
 
 ---------------------------------------------------
@@ -187,10 +187,11 @@ a.) Visit the bug reporting site for our project and enter the bug by yourself.
    not please, write your email address somewhere in the error report. Describe
    exactly what you were doing when the exception occurred and how the problem
    affected your application. Also please let us know the configuration of your
-   computer (for example: Celereon 2000 with 2 Gb Ram, running Ubuntu Linux,
-   kernel 2.4.1.34, with java 1.6_06)
+   computer (for example: Intel(R) Celeron(R) 2000 with 2GB RAM, running Ubuntu
+   Linux, kernel 2.6.1.34, with Java 1.6.0_06)
 
-b.) Send us an email (ggc@atech-software.com), with all the data described in A).
+b.) Send us an email (ggc@atech-software.com), containing all the data as
+    described in a.).
 
 ---
 
@@ -214,7 +215,7 @@ http://sourceforge.net/tracker/?group_id=49749&atid=457322
 
 We will try to fix problems as soon as possible, but since there are only two of us
 (three, but only two active) it might take some time... Major bugs will be fixed
-first, then the minor ones...
+first, then minor ones...
 New functionality proposals have the lowest priority (and planned functionality has
 priority).
 

@@ -28,7 +28,7 @@
 package ggc.core.util;
 
 // import ggc.GGC;
-import ggc.gui.MainFrame;
+import ggc.GGC;
 
 import javax.swing.*;
 
@@ -56,7 +56,7 @@ public class VersionChecker
     public boolean checkForUpdate()
     {
 
-        String installedVersion = MainFrame.s_version;
+        String installedVersion = GGC.s_version;
         String availableVersion = new String();
         HttpURLConnection conn = null;
 

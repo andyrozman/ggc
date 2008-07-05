@@ -34,7 +34,6 @@
 
 package ggc;
 
-
 import ggc.core.db.GGCDbConfig;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
@@ -45,60 +44,54 @@ import java.awt.Toolkit;
 
 import com.atech.db.hibernate.check.DbCheckReport;
 
-
 public class GGC
 {
-    //fields
+    // fields
     private static GGC s_theApp;
     private static MainFrame s_mainWindow;
 
-    
+    // Version information
+    public static String s_version = "0.2.20.2";
+    public static String full_version = "v" + s_version;
+    public static String version_date = "25th June 2008";
+
     public static boolean isDbOk()
     {
-	GGCDbConfig conf = new GGCDbConfig(true);
-	
-	DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), I18nControl.getInstance());
-	
-	if (dcr.canApplicationStart())
-	{
-	    return true;
-	}
-	else
-	{
-	    dcr.showError();
-	    return false;
-	}
-	
-    }
+        GGCDbConfig conf = new GGCDbConfig(true);
 
-    
-    // version information
-    // is stored in MainFrame
+        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), I18nControl.getInstance());
+
+        if (dcr.canApplicationStart())
+        {
+            return true;
+        }
+        else
+        {
+            dcr.showError();
+            return false;
+        }
+
+    }
 
     public static void main(String[] args)
     {
-	
-	if (!GGC.isDbOk())
-	    return;
-	
-	
-	/*
-        try 
-	{
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } 
-	catch (Exception ex) 
-	{
-	    System.out.println("Error loading L&F: " + ex);
-        }
-        */
+
+        if (!GGC.isDbOk())
+            return;
+
+        /*
+         * try {
+         * UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+         * } catch (Exception ex) { System.out.println("Error loading L&F: " +
+         * ex); }
+         */
         boolean dev = false;
 
-        if (args.length>0) 
+        if (args.length > 0)
             dev = true;
 
         DataAccess.deleteInstance();
-        
+
         s_theApp = new GGC();
         s_theApp.init(dev);
     }
@@ -109,11 +102,11 @@ public class GGC
         Toolkit theKit = s_mainWindow.getToolkit();
         Dimension wndSize = theKit.getScreenSize();
 
-	int x, y; 
-	x = wndSize.width/2 - 400;
-	y = wndSize.height/2 - 300;
+        int x, y;
+        x = wndSize.width / 2 - 400;
+        y = wndSize.height / 2 - 300;
 
-	s_mainWindow.setBounds(x, y, 800, 600);
+        s_mainWindow.setBounds(x, y, 800, 600);
         s_mainWindow.setVisible(true);
     }
 

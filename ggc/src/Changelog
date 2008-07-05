@@ -1,3 +1,11 @@
+2008-07-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * README.de translated, Keys in GGC_*de brought up-to-date
+    * Added GGC_*de.native.properties, so that others can make changes that won't
+      be overwritten.
+    * moved version info to ggc.GGC, where it belongs; used Source->Format on
+      ggc.GGC
+    * Changelog: tabs -> spaces
+
 0.2.21
     * added documentation
     * fixed food problem (we need to find out what is problem with decimals in java)
@@ -52,7 +60,6 @@
     * data fix of HbA1c (new formula and we calculate values for last 3 months)
     * also fixed dialog for HbA1c
     * fixed calculations of foods (wrong display of values in MealView and calculation in DailyValues)
-    
 
 2008-05-25 (0.2.16.2) Andy Rozman <andyrozman@users.sourceforge.net>
     * bug fixing foods stuff
@@ -156,7 +163,6 @@
       versioning of created jars)
     * export of nutrition db done (need to rework whole import/export stuff)  
     * work started on connecting nutrition databases to daily values entries
-    
 
 
 2008-03-22 (0.2.9.9) Andy Rozman <andyrozman@users.sourceforge.net>
@@ -272,9 +278,9 @@
 
 2006-04-02 (v0.2.5.3)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Bug fixes (from BUGS.txt):
-	- In Preferences->General: changing language also changes selected L&F name, but not class
-	- Changed preferences mostly apply only after restart (names, language)
-	- hba1c of 2.09% with ZERO readings...
+        - In Preferences->General: changing language also changes selected L&F name, but not class
+        - Changed preferences mostly apply only after restart (names, language)
+        - hba1c of 2.09% with ZERO readings...
 
 
 2006-04-01 (v0.2.5.2)  Andy Rozman <andyrozman@users.sourceforge.net>
@@ -282,9 +288,9 @@
     * Refresh of Info panels fixed
     * Extensive database changes, a lot of added files to ggc.db.hibernate (some of files also removed):
          - added: Doctors (doctor types, doctors, appointments), Stocks (stock type, srock subtype, stocks),
-	          Nutrition (added global data, changed nutrition from usdb, added user nutrition db, changed 
-		  meals definitions), Meter (meter companies, meters, meter interface (for import), meter 
-		  implementations), Inet stuff (inet group, inet links, ...)
+                  Nutrition (added global data, changed nutrition from usdb, added user nutrition db, changed 
+                  meals definitions), Meter (meter companies, meters, meter interface (for import), meter 
+                  implementations), Inet stuff (inet group, inet links, ...)
     * Some file rename in ggc.db.datalayer
     * Loading and init of Nutrition database changed
     * Added User Nutrition Database
@@ -293,9 +299,9 @@
         User Nutrition Database, Meter List (added are items, not functionality).
     * Meter Management will be done in Database. We will try to have database filled with all different 
         meters available arround, those that are supported by GGC will have some other entries, so 
-	that user has overview over most available meters. (so far list has 34 meters, only 3 are supported 
-	to be read by application, another 7 are in the works (Ascensia) and will be available in 0.4 version 
-	(End of 2007)
+        that user has overview over most available meters. (so far list has 34 meters, only 3 are supported 
+        to be read by application, another 7 are in the works (Ascensia) and will be available in 0.4 version 
+        (End of 2007)
 
 
 2006-03-21 (v0.2.4.2) Reinhold Rumberger <rumbi@users.sourceforge.net>
@@ -318,7 +324,7 @@
     * Configuration save fixed
     * General settings
         o Setting Db
-	o Setting Look and Feel (and saving info to configuration file)
+    o Setting Look and Feel (and saving info to configuration file)
 
 2006-01-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * made path to javax.comm.properties in DataAccess system-independant
@@ -326,7 +332,7 @@
 2006-01-23 (v0.2.2.7) Andy Rozman <andyrozman@users.sourceforge.net>
     * New configuration tables are now used (old databases won't work anymore)
     * Fixing of configuration stuff:
-    	o Meter Configuration fixed
+        o Meter Configuration fixed
 
 2006-01-21 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * build.xml: ggc_l might now work again
@@ -376,7 +382,6 @@
 
 2006-06-08 (v0.2.2.5) Andy Rozman <andyrozman@users.sourceforge.net>
     * Added saving of Rendering settings
-    
 
 2006-05-08 (v0.2.2.4) Andy Rozman <andyrozman@users.sourceforge.net>
     * Printing Dialog for selection of month and year which to print
@@ -543,7 +548,7 @@
     * added NUTRITION, ..., NO_LOCAL_DATA_AVAILABLE to GGC_de.properties, would
       appreciate their addition to GGC_en.properties
     * Added error message if host unavailable for update checking
-        (HOST_UNAVAILABLE_INFO, HOST_UNAVAILABLE_MSG)
+      (HOST_UNAVAILABLE_INFO, HOST_UNAVAILABLE_MSG)
     * ggc.util.VersionChecker.isNewVersion:
       - made variable names more intuitive assuming the code is correct ;-P
       - added javadoc comment for that method
@@ -579,19 +584,19 @@
     * ggc.db.TextFileHandler: see XXX comments
     * fixes: fixed some exceptions
     * GGC_en.properties:
-      - added TIME_MUST_BE_IN_FORMAT, DE, EN, SI, YOUR_LANGUAGE, INIT
-      - removed YOUR_CURRENT
+      added TIME_MUST_BE_IN_FORMAT, DE, EN, SI, YOUR_LANGUAGE, INIT
+      removed YOUR_CURRENT
     * GGC_de.properties: translation continues
     * corrected incorrect error message about date format being incorrect when really
       time format was meant and squashed an exception thrown when this occurred
     * ggc.util.GGCProperties: data.imports.* changed to ggc.data.imports.*
     * BUG: data import from meter throws a ClassCastException in
-        javax.swing.AbstractButton.configurePropertiesFromAction on line 1117 (attempted
-        cast to Integer, I'm too unfamiliar with the Actions used here to be able to
-        further debug anything)
+      javax.swing.AbstractButton.configurePropertiesFromAction on line 1117 (attempted
+      cast to Integer, I'm too unfamiliar with the Actions used here to be able to
+      further debug anything)
     * BUG: Daily stats -> add row -> change day -> add some values in the add row frame
-    	-> new entry -> NO error, exception or anything wrong looking -> change back to
-    	original day: no new entries, either here or anywhere else
+    ..-> new entry -> NO error, exception or anything wrong looking -> change back to
+    ..original day: no new entries, either here or anywhere else
     * added language selection to prefPane; implementation is rather hackish and a
       restart is required if this setting is changed; the main problem with this
       implementation is an endless loop because the constructor of GGCProperties
@@ -601,42 +606,42 @@
     * Moved ANT build files to build directory and removed all those in root
     * ARCHITECTURE CHANGE: I added Hibernate (v3.1) framework to ggc (download in support as 
         hibernate3.zip). For now hibernate is used just for nutrition part, but after I
-	finish nutrition and meals, I will change all other code, to use hibernate. With
-	this we will remove several files needed for talking to different database. 
-	Hibernate is object relational database framework, which can talk to almost any 
-	database without any change to our code.
+        finish nutrition and meals, I will change all other code, to use hibernate. With
+        this we will remove several files needed for talking to different database. 
+        Hibernate is object relational database framework, which can talk to almost any 
+        database without any change to our code.
     * Finished nutrition import
     * Added hibernate data classes, datalayer classes and main GGCDb class which handle 
         hibernate database. With this we have database support for nutrition module.
     * Added classes for working with nutrition. Tree dialog is finished, also TreeModel,
         but I still need to change panels that display info on selected tree item. This
-	code is now available, but is so far not added to ggc. For testing this you must 
-	set an external database, get jdbc driver for it, set user, password and empty 
-	database, then write this settings to GGC_Config.properties under database 1 (or
-	you can add one for yourself and set SELECTED_DB value). After you have all this
-	you can unpack test_nutrition.zip to your build directory (where all compiled
-	classes go), then you take USDA_Nutrient_Db_for_Standard_Reference_r18.zip from
-	ggc-support cvs tree and unpack it to ../data/nutrition (from your build directory).
-	First you run nut_init for initialization of database and it's filling and then
-	you can use nut_tree to see nutrition tree.
+        code is now available, but is so far not added to ggc. For testing this you must 
+        set an external database, get jdbc driver for it, set user, password and empty 
+        database, then write this settings to GGC_Config.properties under database 1 (or
+        you can add one for yourself and set SELECTED_DB value). After you have all this
+        you can unpack test_nutrition.zip to your build directory (where all compiled
+        classes go), then you take USDA_Nutrient_Db_for_Standard_Reference_r18.zip from
+        ggc-support cvs tree and unpack it to ../data/nutrition (from your build directory).
+        First you run nut_init for initialization of database and it's filling and then
+        you can use nut_tree to see nutrition tree.
      * Fixed comments in ggc.little package	
 
 2006-03-10 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * ggc.util.GGCPropertiesHelper: method read(): made error message in case of
-        IOException a bit more verbose
+      IOException a bit more verbose
     * GGC_DE.properties: more translation
 
 2006-03-05 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * OK, figured out problem with compiling ggc.little.DailyStatsPanel: this seems to
-        require java 1.5
+      require java 1.5
     * ggc.util.GGCPropertiesHelper: undid a change to the data dir path that was supposed
-        to be local but forgotten
+      to be local but forgotten
     * looks like eclipse committed my .classpath and .cvsignore, trying to fix
 
 2006-03-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * GGC_DE.properties: some more work on the translation
     * GGC_EN.properties: some spellchecking, no version or date changes since
-        this doesn't really imply that other translations need to be adopted
+      this doesn't really imply that other translations need to be adopted
     * ggc.util.I18nControl:
       - moved header to the top
       - made EN the fallback default locale, as english is the master language file
@@ -645,86 +650,86 @@
         in the code, to make this a tiny little bit more flexible
       - changed the path in accordance with cvs repository layout
     * ggc.util.GGCPropertiesHelper: pretty much same as above for data directory and
-        config file location
+      config file location
     * MANIFEST.MF: I think this meant ggc.GGC, not just ggc (in Main-Class)
     * ggc.little.LittleInfoPanel: had wrong package declaration
     * ggc.little.DailyStatsPanel: doesn't seem to compile here (see "// XXX:" comment)
     * PROBLEM: There suddenly are some mysterious "org.apache.commons" and "org.hibernate"
-        imports I can't seem to resolve
+      imports I can't seem to resolve
 
 2006-03-01 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * ggc.data.imports.*: a char -> int cast is unnecessary, deleted them.
     * ggc.view.CourseGraphView: same for int -> float casts
-        If those casts were there for a reason, please feel free to re-insert
-        them and tell me how stupid I am :-P
+      If those casts were there for a reason, please feel free to re-insert
+      them and tell me how stupid I am :-P
     * randomly scattered throughout the project, hopefully not creating too
       many conflicts:
         - optimized import section (<Shift> - <O> in eclipse)
         - added several questions (see TODO comments)
     * ggc.util.VersionChecker: added two questions, if I forget to start 
-        a discussion, could somebody else, please?
+      a discussion, could somebody else, please?
     * GGC_DE.properties: Added newest version of my German translation
 
 2005-06-13  Andy Rozman <andyrozman@users.sourceforge.net>   (Version 0.0.2)
-	* fixed some packages
-	* added also *.gif images, since png and xmp are not always displayed
-	* added HSQL database
-	* added internationalization through whole software
+    * fixed some packages
+    * added also *.gif images, since png and xmp are not always displayed
+    * added HSQL database
+    * added internationalization through whole software
 
 2002-08-29  Dieter Schultschik  <schultd@users.sourceforge.net>
 
-	* Checking for new version implemented.
-	* created package ggc. moved everything from src into ggc.
+    * Checking for new version implemented.
+    * created package ggc. moved everything from src into ggc.
 
 2002-08-28  Dieter Schultschik  <schultd@users.sourceforge.net>
 
-	* Stephan has re-written the whole Data-Import.
-	* Today I merged his changes, and now its in CVS.
-	* DataSelector now has Spinners.
-	
+    * Stephan has re-written the whole Data-Import.
+    * Today I merged his changes, and now its in CVS.
+    * DataSelector now has Spinners.
+
 2002-08-01  Dieter Schultschik  <schultd@users.sourceforge.net>
 
-	* Select Meter and SerialPort in preferences.
-	
+    * Select Meter and SerialPort in preferences.
+
 2002-07-31  Dieter Schultschik  <schultd@users.sourceforge.net>
 
-	* Textfile Handler completed.
-	* some bugfixes.
-	* Ability to test the MySQL connection from prefs.
-	
+    * Textfile Handler completed.
+    * some bugfixes.
+    * Ability to test the MySQL connection from prefs.
+
 2002-07-30  Dieter Schultschik  <schultd@users.sourceforge.net>
-	
-	* Added option to store data in a textfile.
-	* lots of small fixes and improvements.
-	* some stuff doesn't work very smooth at the moment.
-	  (will be fixed in the next days)
-	  
+
+    * Added option to store data in a textfile.
+    * lots of small fixes and improvements.
+    * some stuff doesn't work very smooth at the moment.
+      (will be fixed in the next days)
+
 2002-07-29  Dieter Schultschik  <schultd@users.sourceforge.net>
 
-	* Added a new SpreadView.
-	* Added a new FrequencyView.
-	* Added a new HbA1cView.
+    * Added a new SpreadView.
+    * Added a new FrequencyView.
+    * Added a new HbA1cView.
 
 2002-07-26  Dieter Schultschik  <schultd@users.sourceforge.net>
 
-	* Added a new CourseView. (will get more options in the future)
-	* Many small improvements.
-	* Added Options to customize colors in the Views.
-	
+    * Added a new CourseView. (will get more options in the future)
+    * Many small improvements.
+    * Added Options to customize colors in the Views.
+
 2002-07-18  Dieter Schultschik  <schultd@users.sourceforge.net>
 
-	* Added Icons to ToolBar.
+    * Added Icons to ToolBar.
 
 2002-07-17  Dieter Schultschik  <schultd@users.sourceforge.net>
 
-	* Better DB Handling (Ability to Connect and Disconnect)
-	* Added a StatusBar to the Mainframe
+    * Better DB Handling (Ability to Connect and Disconnect)
+    * Added a StatusBar to the Mainframe
 
 2002-07-16  Dieter Schultschik  <schultd@users.sourceforge.net>
-	
-	* Added sources to sourceforge cvs.
+
+    * Added sources to sourceforge cvs.
 
 2002-04-01  Dieter Schultschik  <schultd@users.sourceforge.net>
-	
-	* Starting to work on ggc.
+    
+    * Starting to work on ggc.
 

@@ -6,21 +6,21 @@ GNU Gluco Control (GGC)
 ===========
 
 Willkommen bei GNU Gluco Control (GGC). GGC ist eine quelloffene (Open Source)
-Java-Applikation, die Ihnen helfen soll, Ihren Diabetes zu verwalten. "Quelloffen"
-bedeutet, dass die Applikation und ihr Quellcode frei verfügbar sind, weshalb jeder
-Interessierte bei der Entwicklung helfen kann.
+Java-Applikation, die Ihnen helfen soll, Ihren Diabetes zu verwalten.
+"Quelloffen" bedeutet, dass die Applikation und ihr Quellcode frei verfügbar
+sind, weshalb jeder Interessierte bei der Entwicklung helfen kann.
 
-Da es sich hierbei um Open Source Software handelt, können Fehler (auch als "Bugs"
-bekannt) auftreten, während die Applikation läuft. Wir bitten hierfür um
-Entschuldigung. Da wir selbst Diabetiker sind, versuchen wir diese Software so gut
-wie möglich machen, aber Unfälle passieren leider. Dieses Dokument wurde geschrieben
-um Ihnen zu zeigen, wie Sie zur Verbesserung dieser Software beitragen können. Dafür
-müssen Sie kein Entwickler sein - jeder Problembericht hilft uns, GGC zu
-perfektionieren.
+Da es sich hierbei um Open Source Software handelt, können Fehler (auch als
+"Bugs" bekannt) auftreten, während die Applikation läuft. Wir bitten hierfür um
+Entschuldigung. Da wir selbst Diabetiker sind, versuchen wir diese Software so
+gut wie möglich machen, aber Unfälle passieren leider. Dieses Dokument wurde
+geschrieben um Ihnen zu zeigen, wie Sie zur Verbesserung dieser Software
+beitragen können. Dafür müssen Sie kein Entwickler sein - jeder Problembericht
+hilft uns, GGC zu perfektionieren.
 
-Wenn Sie bei der Entwicklung oder als offizieller Tester helfen wollen, lesen Sie
-bitte das Begleitdokument 'How_I_Can_Help.txt'. Dieses Dokument ist Pflichtlektüre
-für alle Entwickler.
+Wenn Sie bei der Entwicklung oder als offizieller Tester helfen wollen, lesen
+Sie bitte das Begleitdokument 'How_I_Can_Help.txt' (Englisch). Dieses Dokument
+ist Pflichtlektüre für alle Entwickler.
 
 
 2. Aktuelle Version und Entwicklungsstatus
@@ -32,30 +32,32 @@ Wir sind bei Version 0.3 angelangt, der ersten freigegebenen Version. Wenn Sie
 bereits eine ältere Version installiert haben, entfernen Sie sie bitte. Diese
 Version kann sich selbst aktualisieren sobald eine neue Version verfügbar ist.
 
-Diese erste öffentliche Version kann nur die interne Datenbank benutzen. Wenn Sie
-überdurchschnittliche Computerkenntnisse besitzen, können Sie mit ein wenig Arbeit
-jede andere Datenbank zu benutzen (siehe Sektion III). 
+Diese erste öffentliche Version kann nur die interne Datenbank benutzen. Wenn
+Sie überdurchschnittliche Computerkenntnisse besitzen, können Sie mit ein wenig
+Arbeit jede andere Datenbank zu benutzen (siehe Sektion III). 
 
-Neue (Haupt-) Versionen werden vorraussichtlich alle sechs Monate veröffentlicht. Das
-bedeutet, dass Sie Version 0.4 Ende dieses oder Anfang nächstes Jahr erwarten können.
+Neue (Haupt-) Versionen werden vorraussichtlich alle sechs Monate
+veröffentlicht. Das bedeutet, dass Sie Version 0.4 Ende dieses oder Anfang
+nächstes Jahr erwarten können.
 
-Neue Versionen mit kleineren Änderungen der Versionsnummer werden veröffentlicht,
-wenn größere Änderungen der Funktionalität oder die Beseitigung gravierender
-Programmierfehler eine neue Version sinnvoll erscheinen lassen.
+Neue Versionen mit kleineren Änderungen der Versionsnummer werden
+veröffentlicht, wenn größere Änderungen der Funktionalität oder die Beseitigung
+gravierender Programmierfehler eine neue Version sinnvoll erscheinen lassen.
 
-Bis auf weiteres muss GGC manuell aktualisert werden, weshalb die mitgelieferten
-Anweisungen genauestens befolgt werden müssen (jede Upgrade-Version wird eine Datei
-'How To Upgrade.txt' enthalten).
+Bis auf weiteres muss GGC manuell aktualisert werden, weshalb die
+mitgelieferten Anweisungen genauestens befolgt werden müssen (jede Upgrade-
+Version wird eine Datei 'How To Upgrade.txt' (Englisch) enthalten).
 
 
 
 3. Welche Funktionalität ist verfügbar?
 =======================================
 
-- Täglich Daten über Insulin, BZ-Einträge, Aktivität, Urin und Kommentare hinzufügen
+- Täglich Daten über Insulin, BZ-Einträge, Aktivität, Urin und Kommentare
+  hinzufügen
 - Diagramme für diese Daten anzeigen (noch nicht fertiggestellt)
-- Lebensmittel-Datenbanken zum Schätzen von Kohlehydraten: USDA Nährstoff-Datenbank,
-  Benutzer Nährstoff-Datenbank und Mahlzeiten-Datenbank
+- Lebensmittel-Datenbanken zum Schätzen von Kohlehydraten: USDA Nährstoff-
+  Datenbank, Benutzer Nährstoff-Datenbank und Mahlzeiten-Datenbank
 - Berichte ausdrucken
 - Aktualisierungsmechanismus (nur client): Bis der Server fertig ist, wird kein
   Update möglich sein.
@@ -81,12 +83,11 @@ Version 0.4
   Version)
 - Diagramme ändern und neue hinzufügen
 - Messgeräte-Werkzeug: Einrichtung
-- Funktionalität zu [TODO]
-
-- Add some functionality to food databases
-- Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
-- CGM Tool: <Basic CGM support>
-- Smart Insulin Recommendation (Bolus Helper)
+- neue Funktionalität für Ernährungsdatenbanken
+- Pumpen-Werkzeug: <Grundlegende Pumpenunterstützung> (manuelle Eingabe,
+  Integration, keine Diagramme)
+- CGMS-Werkzeug: <Grundlegende CGMS-Unterstützung>
+- Intelligente Insulinmengenempfehlung (Bolus-Helfer)
 
 
 
@@ -95,12 +96,13 @@ Version 0.5
 - GGC Netzwerk (mehrere GGC-Instanzen auf mehreren Computern vernetzen)
 - Synchronisierung (für GGC Netzwerk)
 - Internet-Links zu Diabetes
-- GGC PPC - eine Version der Anwendung für den Pocket PC (wird nicht die komplette
-  Funktionalität der PC-Version enthalten)
+- GGC PPC - eine Version der Anwendung für den Pocket PC (wird nicht die
+  komplette Funktionalität der PC-Version enthalten)
 - Termine (Termine hinzufügen, Daten zum Arztbesuch eintragen), Ärzteverwaltung
   (hinzufügen)
-- Medizinischer Bestand - Liste von allem, was der Patient hat und was er besorgen
-  muss, um seinen Diabetes (und andere gesundheitliche Probleme) zu behandeln
+- Medizinischer Bestand - Liste von allem, was der Patient hat und was er
+  besorgen muss, um seinen Diabetes (und andere gesundheitliche Probleme) zu
+  behandeln.
 
 
 
@@ -113,32 +115,34 @@ Im Augenblick existieren zwei Unterprojekte.
 Messgeräte-Werkzeug
 -------------------
 
-Dies ist ein Plug-in für den Datenaustausch mit Blutzuckermessgeräten. Dieses Projekt
-befindet sich zur Zeit in der Entwicklungsphase. Zusammen mit der Unterstützung für
-Ascensia-Messgeräte, stellen wir das gesamte Plug-in-Framework und alle benötigten
-graphischen Masken (Klassen) fertig. Die erste Alpha-Version wird - zusammen mit der
-fertigen Implementierung für Ascensia-Messgeräte - ungefähr September 2008 verfügbar
-sein. Danach werden Roche- (Dezember 2008) und LifeScan-Messgeräte (Januar 2009) in
-Angriff genommen.
+Dies ist ein Plug-in für den Datenaustausch mit Blutzuckermessgeräten. Dieses
+Projekt befindet sich zur Zeit in der Entwicklungsphase. Zusammen mit der
+Unterstützung für Ascensia-Messgeräte, stellen wir das gesamte Plug-in-
+Framework und alle benötigten graphischen Masken (Klassen) fertig. Die erste
+Alpha-Version wird - zusammen mit der fertigen Implementierung für Ascensia-
+Messgeräte - ungefähr September 2008 verfügbar sein. Danach werden Roche
+(Dezember 2008) und LifeScan-Messgeräte (Januar 2009) in Angriff genommen.
 
 
 Pumpen-Werkzeug
 ---------------
 
-Dies ist ein Plug-in zur Dateneingabe und -abruf von Insulinpumpen. Dieses Projekt
-befindet sich noch in der Planungsphase. Dieses Projekt wird im September 2008 in die
-Entwicklungsphase übergehen. Die nächste Version (0.4) könnte also schon teilweise
-die Funktionalität des Pumpen-Werkzeugs enthalten. Die ersten unterstützten Pumpen
-werden die von Roche sein (April 2009), danach wahrscheinlich die von Minimed.
+Dies ist ein Plug-in zur Dateneingabe und -abruf von Insulinpumpen. Dieses
+Projekt befindet sich noch in der Planungsphase. Es wird im September 2008 in
+die Entwicklungsphase übergehen. Die nächste Version (0.4) könnte also schon
+teilweise die Funktionalität des Pumpen-Werkzeugs enthalten. Die ersten
+unterstützten Pumpen werden die von Roche sein (April 2009), danach
+wahrscheinlich die von Minimed.
 
 CGMS-Werkzeug
 -------------
 
-This is plug-in for retrieving data from CGMS device and viewing of this data. This project
-is still in the planning phase. The project will move into the development phase
-in September 2008, so the next version (0.4) may already have part of the cgms-tool
-functionality. The first supported CGMS will be that of Minimed through export file from 
-CareLink.
+Dies ist ein Plug-in zum Abrufen und Anzeigen von Daten von CGMS-Geräten.
+Dieses Projekt befindet sich noch in der Planungsphase. Es wird im September
+2008 in die Entwicklungsphase übergehen. Die nächste Version (0.4) könnte also
+schon teilweise die Funktionalität des CGMS-Werkzeugs enthalten. Die ersten
+unterstützten CGMS werden die von Minimed sein (durch eine Exportdatei vom
+CareLink).
 
 
 
@@ -146,68 +150,74 @@ CareLink.
 6. Wie kann ich als regulärer Benutzer helfen?
 ==============================================
 
-There are several ways you can help. Some ways require you to have some knowledge, 
-but most of them don't. Please take a look at document 'How_Can_I_Help.txt'. There 
-are several chapters and for each you can see for who it's intended.
+Es gibt viele Möglichkeiten zu helfen. Einige davon benötigen etwas Fachwissen,
+die meisten jedoch nicht. Bitte lesen Sie die Datei 'How_Can_I_Help.txt'
+(Englisch). Es gibt mehrere Kapitel für verschiedene Benutzergruppen.
 
-First chapter will be displayed here (and translated) all other are in other document and
-in english.
+Das erste Kapitel ist hier enthalten (und übersetzt), alle anderen sind auf
+Englisch in dem anderen Dokument.
 
 
 ---------------------------------------------------
 
-A.) Testing software and give new ideas or propose changes (intended for ALL)
+A.) Software testen und neue Ideen bzw. Änderungsvorschläge (Zielgruppe: ALL)
 
-There are several ways you can help. The first and major way is to test software.
-Try to use it and find anything that doesn't work. Version 0.3 will be started from
-the command-line and all actions will also be displayed in the console. If you see
-an error text, exception or e.g. many cryptic lines of classes with numbers, this
-means something went wrong. The error is displayed on your screen, but it is also
-logged to a file (in <GGC_Root>\data\log). There you will find one or more files for
-each day. If an error happened today, there will be a file named 'GGC.log'. You need
-to open it and go to end and try to find the previously displayed errors.
-Zip this file and store it. And do the following (choose option A or B):
+Es gibt viele Möglichkeiten zu Helfen, vor allem das Testen der Software.
+Versuchen Sie sie zu benutzen und Fehler zu finden. Version 0.3 wird von der
+Kommandozeile gestartet, und alle Arbeitsschritte werden auf der Konsole
+protokolliert. Wenn Sie eine Fehlermeldung, eine "Exception" oder z.B.
+kryptische Zeilen voll Klassennamen und Zahlen sehen, ist ein Fehler
+aufgetreten. Dieser wurde nicht nur auf dem Bildschirm angezeigt, sondern auch
+in eine Protokolldatei in <GGC_Root>/data/log) geschrieben. Für jeden Tag
+existieren eine oder mehr Dateien. Ist der Fehler heute aufgetreten, existiert
+eine Datei namens "GGC.log". Öffnen Sie diese und suchen Sie die angezeigten
+Fehler. Packen Sie diese Datei in ein Zip-Archiv, und sichern Sie dieses. Dann
+führen Sie einen der folgenden Schritte aus:
 
-a.) Visit the bug reporting site for our project and enter the bug by yourself.
-   Please attach the zipped log. The site is (data should be entered in English):
-   http://sourceforge.net/tracker/?group_id=49749&atid=457319  
-   You don't need to be member at sourceforge to add this information, if you are
-   not please, write your email address somewhere in the error report. Describe
-   exactly what you were doing when the exception occurred and how the problem
-   affected your application. Also please let us know the configuration of your
-   computer (for example: Celereon 2000 with 2 Gb Ram, running Ubuntu Linux,
-   kernel 2.4.1.34, with java 1.6_06)
+a) Gehen Sie zur Fehlerberichtserstattungsseite für dieses Projekt und geben
+   Sie den Fehler selbst ein. Bitte fügen Sie das gepackte Protokoll bei. Die
+   Seite ist: http://sourceforge.net/tracker/?group_id=49749&atid=457319 (Bitte
+   geben Sie Fehlerberichte nur auf Englisch ein!)
+   Sie müssen kein Sourceforge-Mitglied sein, um Fehler zu berichten. Sofern
+   Sie kein Mitglied sind, vermerken Sie bitte Ihre E-Mail-Adresse im
+   Fehlerbericht.
+   Beschreiben Sie bitte genau, was Sie gemacht haben, als der Fehler auftrat
+   und wie das Problem die Anwendung beeinflusst hat. Bitte lassen Sie uns auch
+   Ihre Systemkonfiguration wissen (z.B. Intel(R) Celeron(R) 2000 mit 2GB RAM,
+   Ubuntu Linux, kernel 2.6.1.34 und Java 1.6.0_06).
 
-b.) Send us an email (ggc@atech-software.com), with all the data described in A).
-
----
-
-If everything works OK on your system, we still ask you to send us logs. Every month
-or so, please zip all log files (you can remove them from the log directory) and
-send them to ggc@atech-software.com.
-
-We will use some tool to look through all files and see if there was some error
-which has gone undiscovered by you and will try to fix it.
+b) Senden Sie uns eine Email (ggc-de@atech-software.com), die alle in a)
+   beschriebenen Daten enthält.
 
 ---
 
-So you have been using the software for some time, some things work fine, other not
-so well. If you find parts of GGC, which your think could work better, please let us
-know. If you find that some functionality is missing, again, let us know. You can
-use either email, or you can use the following form (data should be entered in
-English):
+Sollte auf Ihrem System kein Problem auftreten, bitten wir Sie trotzdem, und
+Protokolle zu senden. Sie könnten ungefähr jeden Monat alle Protokolldateien
+in ein Zip-Archiv verpacken (und sie danach aus dem Protokollordner löschen)
+und sie an ggc-de@atech-software.com senden.
+
+Wir werden ein Werkzeug benutzen um alle Dateien auf unbemerkte Fehler zu
+prüfen und diese dann zu korrigieren.
+
+---
+
+Sie haben GGC eine Zeit lang benutzt, einige Aufgaben Funktionieren, andere
+nicht? Bitte berichten Sie über Ihre Erfahrungen (vor allem negative). Sie
+können entweder E-Mail schreiben oder oder folgendes Formular (Englisch)
+ausfüllen: 
 http://sourceforge.net/tracker/?group_id=49749&atid=457322
 
 ---
 
-We will try to fix problems as soon as possible, but since there are only two of us
-(three, but only two active) it might take some time... Major bugs will be fixed
-first, then the minor ones...
-New functionality proposals have the lowest priority (and planned functionality has
-priority).
+Wir versuchen Probleme so schnell wie möglich zu beheben, aber da wir nur zu
+zweit sind (eigentlich zu dritt, aber nur zwei Projektmitglieder sind aktiv),
+kann dies seine Zeit dauern. Schlimme Fehler werden zuerst behoben, danach
+weniger schlimme.
+Neu vorgeschlagene Funktionalität hat die niedrigste Priorität, geplante die
+zweitniedrigste.
 
-Maybe some new developers will now join us and help us with further development of
-this application.
+Vielleicht schließen sich uns ja Entwickler an un helfen uns die Entwicklung
+dieser Applikation voranzutreiben.
 
 
 
@@ -215,5 +225,5 @@ this application.
 ========
 
 
-Again, thank you for using our software, we hope it fulfills your needs... If not
-yet, maybe in the future.
+Nochmals Danke für die Benutzung unserer Software - wir hoffen Sie erfüllt Ihre
+Erwartungen. Falls noch nicht jetzt, hoffentlich in Zukunft.
