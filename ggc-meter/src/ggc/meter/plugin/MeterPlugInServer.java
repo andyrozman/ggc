@@ -60,6 +60,7 @@ public class MeterPlugInServer extends PlugInServer
 
             case MeterPlugInServer.COMMAND_METERS_LIST:
             {
+                // FIXME: The called function is buggy as it doesn't make sure its ic field is initialised!
                 this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_METERS_LIST]);
                 return;
             }

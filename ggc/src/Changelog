@@ -1,10 +1,13 @@
-2008-07-04 (0.2.22)  Andy Rozman <andyrozman@users.sourceforge.net>
-    * Meter Tool implementation finished and tied into GGC (fully integrated)
+2008-07-06 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * Some translation
+    * noticed that README.de line delimiter was LF and converted to CRLF
 
-2008-07-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
+2008-07-05 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * GGCMeterTool_de.properties prepared for translation & brought keys up-to-date
     * cleaned up german language files' headers to make them look slightly more presentable
 
+2008-07-04 (0.2.22)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Meter Tool implementation finished and tied into GGC (fully integrated)
 
 2008-07-04 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * README.de translated, Keys in GGC_*de brought up-to-date

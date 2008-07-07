@@ -18,7 +18,7 @@ A.) METERS
 ---------------------------------------------------------------------------------------------------------------------------------
 Bayer/Ascensia        |   Done                                        | Dex2, Contour, Breeze, EliteXl              | Andy
 Roche                 |   Planned, -> 09.2008                         | All supported through Pix device            | Andy
-One Touch             |   Planned, 09.- 12.2008                       | ?                                           | Andy
+LifeScan              |   Planned, 09.- 12.2008                       | ?                                           | Andy
 Abbott                |   ?                                           | ?
 
 
