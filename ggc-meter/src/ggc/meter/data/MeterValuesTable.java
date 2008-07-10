@@ -1,10 +1,3 @@
-/*
- * Created on 15.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.meter.data;
 
 
