@@ -12,7 +12,9 @@ import com.atech.utils.TimerControlAbstract;
 public class OutputUtil extends TimerControlAbstract
 {
 
-	public String[] unitsName = { "", "mg/dL", "mmol/L" };
+    public int max_records = 1;
+    
+	public static String[] unitsName = { "", "mg/dL", "mmol/L" };
 	
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
@@ -21,13 +23,21 @@ public class OutputUtil extends TimerControlAbstract
 	
     private OutputWriter writer;
     
+    
+    
+    
     public OutputUtil(OutputWriter writer)
     {
     	this.writer = writer;
-    	setAllowedChangeTime(20);
+//a    	setAllowedChangeTime(10);
     }
 	
-	
+
+    public OutputUtil()
+    {
+    }
+    
+    
     public static final int BG_MGDL = 1;
     public static final int BG_MMOL = 2;
 
@@ -43,12 +53,12 @@ public class OutputUtil extends TimerControlAbstract
 
     public String getBGMeasurmentTypeName()
     {
-        return this.unitsName[this.m_BG_unit];
+        return OutputUtil.unitsName[this.m_BG_unit];
     }
     
     public String getBGTypeName(int type)
     {
-        return this.unitsName[type];
+        return OutputUtil.unitsName[type];
     }
     
     
@@ -146,10 +156,28 @@ public class OutputUtil extends TimerControlAbstract
 	
 	public void stopAction()
 	{
+	    
 		this.writer.endOutput();
 		
-		System.exit(0);
+		//System.exit(0);
 
+	}
+	
+	
+	public void setMaxMemoryRecords(int val)
+	{
+	    this.max_records = val;
+	}
+	
+	public int getMaxMemoryRecords()
+	{
+	    return this.max_records;
+	}
+	
+	
+	public static String getBGUnitName(int unit)
+	{
+	    return OutputUtil.unitsName[unit];
 	}
 	
 	

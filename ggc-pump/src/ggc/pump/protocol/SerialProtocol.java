@@ -1,14 +1,7 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
 
 package ggc.pump.protocol;
 
 
-import ggc.core.data.DailyValuesRow;
 import ggc.pump.device.PumpException;
 import ggc.pump.device.PumpInterface;
 import ggc.pump.util.DataAccessPump;
@@ -27,19 +20,11 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
-
 //import minimed.ddms.deviceportreader.MedicalDevice;
 //import minimed.ddms.deviceportreader.SerialIOHaltedException;
 //import minimed.util.Contract;
 
 
-/**
- * @author stephan
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- */
 public abstract class SerialProtocol implements PumpInterface, SerialPortEventListener //, Runnable
 {
 
@@ -52,7 +37,7 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
 
 
     private boolean isPortOpen = false;
-    public boolean dataFromPump = false;
+    public boolean dataFromMeter = false;
     public SerialPort serialPort = null;
     protected CommPortIdentifier portIdentifier = null;
     public OutputStream portOutputStream = null;
@@ -80,13 +65,13 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
     }
 
     /**
-     * Constructor for SerialPumpImport.
+     * Constructor for SerialMeterImport.
      */
-    public SerialProtocol(int device_index, int baudrate, int databits, int stopbits, int parity )
+    public SerialProtocol(int baudrate, int databits, int stopbits, int parity )
     {
         super();
 
-	this.m_device_index = device_index;
+	//this.m_device_index = device_index;
 	this.baudrate = baudrate;
 	this.databits = databits;
 	this.stopbits = stopbits;
@@ -172,7 +157,7 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
     }
 
     /**
-     * @throws PumpException 
+     * @throws MeterException 
      * @see data.imports.DataImport#open()
      */
     public boolean open() throws PumpException
@@ -345,7 +330,7 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
         serialPort.removeEventListener();
         serialPort.close();
         isPortOpen = false;
-        dataFromPump = false;
+        dataFromMeter = false;
         System.out.println("close port : " + portIdentifier.getName());
 //        fireImportChanged(new ImportEvent(this, ImportEvent.PORT_CLOSED, portIdentifier));
     }
@@ -353,7 +338,7 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
     /**
      * @see data.imports.DataImport#importData()
      */
- /*   public void importData() throws ImportException
+/*    public void importData() throws ImportException
     {
         if (portIdentifier == null || serialPort == null || portOutputStream == null || portInputStream == null)
             throw new ImportException(m_ic.getMessage("COM_PORT_NOT_INIT_CORRECT"));
@@ -447,11 +432,11 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
     /**
      * @see data.imports.DataImport#getImportedData()
      */
-    public DailyValuesRow[] getImportedData()
+/*    public DailyValuesRow[] getImportedData()
     {
         return new DailyValuesRow[0];
     }
-
+*/
 
     /**
      * @see gnu.io.SerialPortEventListener#serialEvent(SerialPortEvent)
@@ -526,7 +511,7 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
 
                     //System.out.print(newData + " ");
 /*
-		    dataFromPump = true;
+		    dataFromMeter = true;
 
 		    System.out.println("Data");
 
@@ -625,19 +610,18 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
 
 
 
-
-    public static String[] getAvailablePumps()
+/*
+    public static String[] getAvailableMeters()
     {
-        return DataAccessPump.getInstance().getPumpManager().getAvailablePumps();
+        return DataAccessMeter.getInstance().getMeterManager().getAvailableMeters();
     }
 
 
-    public static String getPumpClassName(String meterName)
+    public static String getMeterClassName(String meterName)
     {
-        //return DataAccess.getInstance().getPumpManager().getPumpClassName(meterName);
-        return null;
+        return DataAccessMeter.getInstance().getMeterManager().getMeterClassName(meterName);
     }
-
+*/
     
     @SuppressWarnings("unchecked")
     public static Vector<String> getAvailableSerialPorts()
@@ -667,35 +651,39 @@ public abstract class SerialProtocol implements PumpInterface, SerialPortEventLi
     }
 
 
-
+/*
     /**
      * getName - Get Name of meter
      */
-    public String getName()
+/*    public String getName()
     {
-	return m_da.getPumpManager().meter_names[this.m_device_index];
+	return m_da.getMeterManager().meter_names[this.m_device_index];
     }
-
+*/
 
     /**
      * getIcon - Get Icon of meter
      */
-    public ImageIcon getIcon()
+/*    public ImageIcon getIcon()
     {
-        //return m_da.getPumpManager().meter_pictures[this.m_device_index];
-        return null;
+	return m_da.getMeterManager().meter_pictures[this.m_device_index];
     }
-
+*/
 
     /**
-     * getPumpIndex - Get Index of Pump 
+     * getMeterIndex - Get Index of Meter 
      */
-    public int getPumpIndex()
+    public int getMeterIndex()
     {
 	return this.m_device_index;
     }
 
 
+    public int getConnectionProtocol()
+    {
+        return ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE;
+    }
+    
 
 
 }

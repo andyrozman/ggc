@@ -2,16 +2,14 @@ package ggc.pump.output;
 
 import ggc.pump.data.PumpValuesEntry;
 
-public class ConsoleOutputWriter implements OutputWriter
+
+public class ConsoleOutputWriter extends AbstractOutputWriter
 {
 
-	OutputUtil out_util; 
 	
 	public ConsoleOutputWriter()
 	{
-		out_util = new OutputUtil(this);
-		
-		
+	    super();
 	}
 	
 	public void writeRawData(String input, boolean is_bg_data)
@@ -44,28 +42,23 @@ public class ConsoleOutputWriter implements OutputWriter
 	{
 		// header
 		System.out.println("=======================================================");
-		System.out.println("==             Pump Tool Data Dump                  ==");
+		System.out.println("==             Meter Tool Data Dump                  ==");
 		System.out.println("=======================================================");
 	}
+
 	
-	
-	public void setBGOutputType(int bg_type)
+	public void writeDeviceIdentification()
 	{
-		this.out_util.setOutputBGType(bg_type);
-		
+	    System.out.println(this.getDeviceIdentification().getInformation("* "));
 	}
+	
+	
 
 	
 	public void endOutput()
 	{
 		System.out.println("=======================================================");
 	}
-	
-	public OutputUtil getOutputUtil()
-	{
-		return this.out_util;
-	}
-	
 	
 	
 }

@@ -1,0 +1,34 @@
+
+Changes file for GGC Meter Tool
+===============================
+
+2008-07-10 (v0.1.1) Andy Rozman <andyrozman@users.sourceforge.net>
+    * pump tool project started (implementation)
+    * basic framework created. All pump related files created from meter tool application
+    * new files created for different outputs, creation of basic structure:
+    
+     meter_tools
+       |       
+       |- ggc
+           |
+           |-- pump
+           |       data
+           |       device
+           |              roche
+           |       gui
+           |           config
+           |       list                 (list)
+           |       output               (outputing data)
+           |       protocol             (protocol for communication)
+           |       test                 (test stuff) 
+           |       util                 (util)
+           |-- web                      (for displaying different pump (list)
+    
+    
+    * most of base stuff is implemented (outputs for example, some base protocols, guis, configuration)
+    * everything was copied from meter tools 0.2, most of stuff will need to be enchanched and changed, but
+      base stuff is now here.
+    * created plug in class for connection to GGC
+
+
+

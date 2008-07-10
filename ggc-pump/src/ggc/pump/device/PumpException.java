@@ -1,22 +1,8 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.pump.device;
 
 
-/**
- * @author stephan
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- */
 public class PumpException extends Exception
 {
-	static final long serialVersionUID = 0;
 
 	
     /**

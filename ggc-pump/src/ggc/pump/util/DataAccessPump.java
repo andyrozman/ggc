@@ -29,7 +29,6 @@
 
 package ggc.pump.util;
 
-import ggc.core.util.DataAccess;
 import ggc.pump.manager.PumpManager;
 
 import java.awt.Color;
@@ -555,7 +554,7 @@ public class DataAccessPump extends ATDataAccessAbstract
             return bg_value;
         else
         {
-            if (output_type==DataAccess.BG_MGDL)
+            if (output_type==DataAccessPump.BG_MGDL)
             {
                 return bg_value * DataAccessPump.MGDL_TO_MMOL_FACTOR;
             }
@@ -571,7 +570,7 @@ public class DataAccessPump extends ATDataAccessAbstract
     public float getBGValueDifferent(int type, float bg_value)
     {
 
-            if (type==DataAccess.BG_MGDL)
+            if (type==DataAccessPump.BG_MGDL)
             {
                 return bg_value * DataAccessPump.MGDL_TO_MMOL_FACTOR;
             }

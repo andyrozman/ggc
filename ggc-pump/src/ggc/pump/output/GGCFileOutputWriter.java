@@ -10,16 +10,16 @@ import java.util.GregorianCalendar;
 
 import com.atech.utils.ATechDate;
 
-
-public class GGCFileOutputWriter implements OutputWriter
+public class GGCFileOutputWriter extends AbstractOutputWriter
 {
 	
 	BufferedWriter bw;
-	OutputUtil out_util; 
 	DataAccessPump m_da;
+	long time_created;
 	
 	public GGCFileOutputWriter()
 	{
+	    super();
 		out_util = new OutputUtil(this);
 		m_da = DataAccessPump.getInstance();
 		
@@ -27,6 +27,7 @@ public class GGCFileOutputWriter implements OutputWriter
 		{
 			System.out.println("OPEN FILE");
 			bw = new BufferedWriter(new FileWriter(new File("DayValueH" + getCurrentDateForFile() + ".txt")));
+			this.time_created = System.currentTimeMillis();
 		}
 		catch(Exception ex)
 		{
@@ -50,7 +51,7 @@ public class GGCFileOutputWriter implements OutputWriter
 	
 	private void setReadData()
 	{
-		this.out_util.setLastChangedTime();
+//b		this.out_util.setLastChangedTime();
 	}
 	
 	
@@ -106,6 +107,13 @@ public class GGCFileOutputWriter implements OutputWriter
 	}
 	*/
 	
+	
+	   public void writeDeviceIdentification()
+	    {
+	        writeToFile(this.getDeviceIdentification().getInformation("; "));
+	    }
+
+	
 	public void writeBGData(PumpValuesEntry mve)
 	{
 		
@@ -146,7 +154,7 @@ public class GGCFileOutputWriter implements OutputWriter
 			System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
 		
 		writeToFile("0|" + mve.getDateTime().getATDateTimeAsLong() + "|" + val + 
-				    "|0.0|0.0|0.0|null|null|1|" + parameters);
+				    "|0.0|0.0|0.0|null|null|1|MTI;" + parameters + "|" + this.time_created);
 		setReadData();
 		
 		//writeToFile(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
@@ -165,9 +173,9 @@ public class GGCFileOutputWriter implements OutputWriter
 				
 				
 //				16/1/2008  18:12:3");
-		sb.append("; Exported by GGC Pump Tools - GGCHibernateOutputWriter\n");
+		sb.append("; Exported by GGC Meter Tools - GGCHibernateOutputWriter\n");
 		sb.append(";\n");
-		sb.append("; Columns: id, dt_info, bg, ins1, ins2, ch, meals_ids, extended, person_id, comment\n");
+		sb.append("; Columns: id, dt_info, bg, ins1, ins2, ch, meals_ids, extended, person_id, comment, changed\n");
 		sb.append(";\n");
 
 		writeToFile(sb.toString());
@@ -181,16 +189,12 @@ public class GGCFileOutputWriter implements OutputWriter
 		
 		/*
 		String dta = "=======================================================\n";
-		dta += "==             Pump Tool Data Dump                  ==\n";
+		dta += "==             Meter Tool Data Dump                  ==\n";
 		dta += "=======================================================\n";
 		
 		writeToFile(dta); */
 	}
 
-	public void setBGOutputType(int bg_type)
-	{
-		this.out_util.setOutputBGType(bg_type);
-	}
 	
 	private void writeToFile(String values)
 	{
@@ -220,15 +224,11 @@ public class GGCFileOutputWriter implements OutputWriter
 		{
 			System.out.println("Closing file failed: " + ex);
 		}
+		this.interruptCommunication();
+		
 	}
 
 	
-	
-	
-	public OutputUtil getOutputUtil()
-	{
-		return this.out_util;
-	}
 
 	
 }

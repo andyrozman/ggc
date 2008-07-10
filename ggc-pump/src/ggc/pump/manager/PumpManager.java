@@ -29,6 +29,7 @@
 
 package ggc.pump.manager; 
 
+import ggc.pump.device.PumpInterface;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -238,9 +239,11 @@ public class PumpManager
     }
 */
     
-    public PumpDevice getPumpDevice(String group, String device)
+    public PumpInterface getPumpDevice(String group, String device)
     {
-    	return this.getPumpDevice(group + "_" + device);
+        // TODO
+        return null;
+    	//return this.getPumpDevice(group + "_" + device);
     }
     
     
@@ -249,7 +252,11 @@ public class PumpManager
     	return this.meters_list.get(group_and_device);
     }
     
-    
+    public String getPumpDeviceClassName(String group, String device)
+    {
+        // TODO
+        return null;
+    }
     
     
     public Hashtable<String,PumpCompany> groups = new Hashtable<String,PumpCompany>();
