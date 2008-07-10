@@ -1,15 +1,26 @@
 package ggc.core.plugins;
 
+import ggc.core.util.DataAccess;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
+import com.atech.plugin.PlugInServer;
 
 public class PumpsPlugIn extends PlugInClient
 {
 
+    public static final int COMMAND_READ_PUMP_DATA = 0;
+    public static final int COMMAND_PUMPS_LIST = 1;
+    public static final int COMMAND_CONFIGURATION = 2;
+    public static final int COMMAND_PROFILES = 3;
+    public static final int COMMAND_MANUAL_ENTRY = 4;
+    public static final int COMMAND_ADDITIONAL_DATA = 5;
+    
+    
     private String commands[] = { "MN_PUMPS_READ_DESC", "MN_PUMPS_LIST_DESC", "MN_PUMPS_CONFIG_DESC",
                                  "MN_PUMP_PROFILES_DESC", "MN_PUMPS_MANUAL_ENTRY_DESC",
                                  "MN_PUMPS_ADDITIONAL_DATA_DESC", };
@@ -26,6 +37,24 @@ public class PumpsPlugIn extends PlugInClient
 
     public void checkIfInstalled()
     {
+        try
+        {
+            Class<?> c = Class.forName("ggc.pump.plugin.PumpPlugInServer");
+
+            this.m_server = (PlugInServer) c.newInstance();
+            installed = true;
+            
+            this.m_server.init(this.parent, DataAccess.getInstance()
+                    .getI18nControlInstance().getSelectedLangauge(), DataAccess
+                    .getInstance(), this);
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Ex:" + ex);
+
+        }
+        
+        
     }
 
     public String getName()
@@ -79,7 +108,7 @@ public class PumpsPlugIn extends PlugInClient
         this.commands_implemented = new boolean[6];
         this.commands_implemented[0] = false;
         this.commands_implemented[1] = false;
-        this.commands_implemented[2] = false;
+        this.commands_implemented[2] = true;
         this.commands_implemented[3] = false;
         this.commands_implemented[4] = false;
         this.commands_implemented[5] = false;
@@ -122,24 +151,29 @@ public class PumpsPlugIn extends PlugInClient
         }
         else if (command.equals("pumps_list"))
         {
-            this.pumpsList();
+            //this.pumpsList();
+            this.executeCommand(PumpsPlugIn.COMMAND_PUMPS_LIST);
         }
         else if (command.equals("pumps_profile"))
         {
-            this.pumpsProfiles();
+            //this.pumpsProfiles();
+            this.executeCommand(PumpsPlugIn.COMMAND_PROFILES);
         }
         else if (command.equals("pumps_manual_entry"))
         {
-            this.pumpManualEntry();
+            //this.pumpManualEntry();
+            this.executeCommand(PumpsPlugIn.COMMAND_MANUAL_ENTRY);
 
         }
         else if (command.equals("pumps_additional_data"))
         {
-            this.pumpAddAdditionalData();
+            //this.pumpAddAdditionalData();
+            this.executeCommand(PumpsPlugIn.COMMAND_ADDITIONAL_DATA);
         }
         else if (command.equals("pumps_config"))
         {
-            this.pumpsConfiguration();
+            //this.pumpsConfiguration();
+            this.executeCommand(PumpsPlugIn.COMMAND_CONFIGURATION);
         }
         else
         {
@@ -155,7 +189,13 @@ public class PumpsPlugIn extends PlugInClient
 
     public String getShortStatus()
     {
-        return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.4");
+        if (this.m_server != null)
+        {
+            return String.format(ic.getMessage("STATUS_INSTALLED"),
+                    this.m_server.getVersion());
+        }
+        else
+            return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.4");
     }
 
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)

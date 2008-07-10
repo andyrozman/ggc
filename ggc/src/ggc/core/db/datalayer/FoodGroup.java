@@ -64,7 +64,8 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 
     boolean empty = false;
     I18nControlAbstract ic = null; // DataAccess.getInstance().
-                                   // getI18nControlInstance();
+
+    // getI18nControlInstance();
 
     /*
      * public FoodGroup() { this.setId(0); this.setDescription(""); }
@@ -288,14 +289,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             return this.getName();
     }
 
-    
     public String getLongDescription()
     {
         return "FoodGroup [id=" + this.getId() + ",name=" + this.getName() + ",parent_id=" + this.getParentId() + "]";
     }
-    
-    
-    
+
     // ---
     // --- DatabaseObjectHibernate
     // ---
@@ -485,6 +483,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     public String getTargetName()
     {
         return ic.getMessage("USER_FOOD_GROUPS");
+    }
+
+    public String getClassName()
+    {
+        return "ggc.core.db.hibernate.FoodUserGroupH";
     }
 
     /*

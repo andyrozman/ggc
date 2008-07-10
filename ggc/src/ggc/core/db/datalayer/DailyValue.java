@@ -67,6 +67,10 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     }
 
 
+    public String getClassName()
+    {
+        return "ggc.core.db.hibernate.DayValueH";
+    }
     
     
     public DailyValue(I18nControlAbstract ic)

@@ -36,6 +36,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.StringTokenizer;
 
+import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
+import com.atech.db.hibernate.transfer.ExportTool;
 import com.atech.db.hibernate.transfer.ImportTool;
 
 import org.apache.commons.logging.Log;
@@ -51,6 +53,18 @@ public class ImportDailyValues extends ImportTool
 
     DataAccess m_da = DataAccess.getInstance();
 
+    
+    public ImportDailyValues(BackupRestoreWorkGiver giver)
+    {
+        super(DataAccess.getInstance().getDb().getConfiguration());
+
+        // TODO
+//        this.setStatusReceiver(giver);
+//        this.setTypeOfStatus(ExportTool.STATUS_SPECIAL);
+    }
+    
+    
+    
     public ImportDailyValues(String file_name)
     {
         this(file_name, true);

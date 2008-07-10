@@ -86,38 +86,10 @@ import com.atech.update.client.UpdateDialog;
 import com.atech.update.config.UpdateConfiguration;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
-// 
-//   Short History 
-// 
-//   0.2.2  Configuration with pictures and in database 	
-// 
-// 
-// 
-// 
-//   0.2.3   Configuration
-//   0.2.4   Menus
-//   0.2.5   Nutrition-1
-//   0.2.6   Config COM
-// 
-//   0.2.7   New entry dialog
-//   0.2.8   About Dialog
-//   0.2.9   New entry finalization
-// 
-//   0.2.9.1   new entry done
-//   0.2.9.2   new windows added (stock, schedule)
-//   0.2.9.3   remove meters support
-//    Menus (all), About, Db (all)
-//   0.2.9.7   Help integration
-//   0.2.9.8   Menu's changes, added icons
-// 
-//Specialty Definitions - Types of Doctors
 
 public class MainFrame extends JFrame
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8971779470148201332L;
 
     private I18nControl m_ic = null;
@@ -136,8 +108,6 @@ public class MainFrame extends JFrame
     private JMenu menu_file, menu_bgs, menu_food, menu_doctor, menu_printing,
             menu_tools, menu_help, menu_meters, menu_pumps, menu_data_graphs,
             menu_cgms /* , menu_misc */;
-
-    // public GGCHelp m_help;
 
     private Hashtable<String, GGCAction> actions = null;
     private Hashtable<String, GGCAction> toolbar_items = null;
@@ -168,10 +138,6 @@ public class MainFrame extends JFrame
 
     private DataAccess m_da = null;
 
-    /*
-     * MetersPlugIn plugin_meters = null; PumpsPlugIn plugin_pumps = null;
-     * CGMSPlugIn plugin_cgms = null;
-     */
 
     /**
      * Static definitions (Look and Feel)
@@ -292,13 +258,13 @@ public class MainFrame extends JFrame
     private void initPlugIns()
     {
         m_da.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this, m_ic));
-        m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
+        //m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
 
         m_da.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this, m_ic));
-        m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
+        //m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
 
         m_da.addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this, m_ic));
-        m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
+        //m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
     }
 
     public void createMenus()
@@ -369,14 +335,11 @@ public class MainFrame extends JFrame
 
         // meters
         this.menu_meters = this.createMenu("MN_METERS", null);
-        this.createAction(menu_meters, "MN_METERS_READ", "MN_METERS_READ_DESC",
-                "meters_read", null);
+        this.createAction(menu_meters, "MN_METERS_READ", "MN_METERS_READ_DESC", "meters_read", null);
         this.menu_meters.addSeparator();
-        this.createAction(menu_meters, "MN_METERS_LIST", "MN_METERS_LIST_DESC",
-                "meters_list", null);
+        this.createAction(menu_meters, "MN_METERS_LIST", "MN_METERS_LIST_DESC", "meters_list", null);
         this.menu_meters.addSeparator();
-        this.createAction(menu_meters, "MN_METERS_CONFIG",
-                "MN_METERS_CONFIG_DESC", "meters_config", null);
+        this.createAction(menu_meters, "MN_METERS_CONFIG", "MN_METERS_CONFIG_DESC", "meters_config", null);
 
         // pumps
         this.menu_pumps = this.createMenu("MN_PUMPS", null);

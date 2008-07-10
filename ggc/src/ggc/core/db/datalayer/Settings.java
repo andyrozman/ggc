@@ -292,6 +292,14 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
         return ic.getMessage("SETTINGS");
     }
 
+    
+    public String getClassName()
+    {
+        return "ggc.core.db.hibernate.SettingsH";
+    }
+    
+    
+    
     /*
      * getName
      */

@@ -8,7 +8,6 @@
 package ggc.core.plugins; //com.atech.db;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.datalayer.DailyValue;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
 

@@ -60,7 +60,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     boolean selected = false;
     I18nControlAbstract ic = null; // DataAccess.getInstance().
-                                   // getI18nControlInstance();
+    // getI18nControlInstance();
     boolean meal_empty = false;
 
     public MealGroup(I18nControlAbstract ic)
@@ -166,9 +166,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return "MealGroup [id=" + this.getId() + ",name=" + this.getName() + ",parent_id=" + this.getParent_id() + "]";
     }
-    
-    
-    
+
     @Override
     public String toString()
     {
@@ -198,7 +196,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
         MealGroupH ch = new MealGroupH();
 
-        //ch.setId(this.getId());
+        // ch.setId(this.getId());
         ch.setName(this.getName());
         ch.setDescription(this.getDescription());
         ch.setParent_id(this.getParent_id());
@@ -207,7 +205,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         Long id = (Long) sess.save(ch);
 
         tx.commit();
-        
+
         this.setId(id);
 
         return "" + id.longValue();
@@ -362,6 +360,11 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     public String getTargetName()
     {
         return ic.getMessage("MEAL_GROUPS");
+    }
+
+    public String getClassName()
+    {
+        return "ggc.core.db.hibernate.MealGroupH";
     }
 
     /*

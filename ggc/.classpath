@@ -13,5 +13,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/H2-1.0.69"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GGC Meter Tool"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GGC Pump Tool"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
