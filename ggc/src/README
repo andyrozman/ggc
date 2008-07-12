@@ -69,7 +69,8 @@ instructions supplied with the release (there will be a file called
 - Update mechanism (client side only), this means that until the server side
   of update is done, you won't be able to update, but as soon as that works
   you will have the option to update.   
-- Backup mechanism (restore is still in the works)
+- Backup mechanism (and restore)
+- Meter Tool integrated (partitaly)
 
 
 
@@ -77,25 +78,23 @@ instructions supplied with the release (there will be a file called
 ========================
 
 !! CHANGE
-
+!! CHANGE
 Version 0.4
 ------------
 - Automatic DB Update
-- Restore data (previously backed-up)
 - DB Tool (for using other databases and install of initial data)
 - Multi person instance
 - Finalization of GGC Little, which is used as a resident application for adding
   new data throughout the day
 - Update mechanism (server side)   
-- Integration of Meter Tool (Meter Tool is being developed as a separate project)
 - Fully write help files and add help through application (English version so far)
 - Change and add new graphs
 - Meter Tool: Configuration
 - Add some functionality to food databases
 - Pump Tool: <Basic pump support> (manual input, integration, no graphs)
 - CGMS Tool: <Basic CGMS support>
-- Smart Insulin Recommendation (Bolus Helper)
-
+- Smart Insulin Recommendation (Bolus Helper), Ratio Helper
+- Remote Food database functionality
 
 
 !! CHANGE
@@ -224,11 +223,11 @@ this application.
 
 
 
-
+!! CHANGE
 7. END
 =======
 
 
 Again, thank you for using our software, we hope it fulfills your needs... If not
-yet, maybe in the future.
+yet, hopefully in future.
 
