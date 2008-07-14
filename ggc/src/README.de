@@ -29,12 +29,17 @@ ist Pflichtlektüre für alle Entwickler.
 Die aktuelle GGC-Version ist 0.3.
 
 Wir sind bei Version 0.3 angelangt, der ersten freigegebenen Version. Wenn Sie
-bereits eine ältere Version installiert haben, entfernen Sie sie bitte. Diese
-Version kann sich selbst aktualisieren sobald eine neue Version verfügbar ist.
+bereits eine ältere Version installiert haben, entfernen Sie sie bitte. Wir
+haben viele Änderungen an der Datenbank und der Anwendung selbst vorgenommen,
+weshalb die alte Version nicht aktualisiert werden kann. (Sollten Ihre alte
+Version wichtige Daten beinhalten, kontaktieren Sie uns bitte. Wir werden Ihnen
+dann helfen, diese zu der neuen Version zu migrieren.) Ab dieser Version wird
+das Aktualisieren viel einfacher. Die nächste Version kann sich selbst via
+Internet aktualisieren.
 
 Diese erste öffentliche Version kann nur die interne Datenbank benutzen. Wenn
-Sie überdurchschnittliche Computerkenntnisse besitzen, können Sie mit ein wenig
-Arbeit jede andere Datenbank zu benutzen (siehe Sektion III). 
+Sie überdurchschnittliche Computerkenntnisse besitzen (also gerne
+herumspielen), können Sie mit ein wenig Arbeit jedes andere DBMS benutzen.
 
 Neue (Haupt-) Versionen werden vorraussichtlich alle sechs Monate
 veröffentlicht. Das bedeutet, dass Sie Version 0.4 Ende dieses oder Anfang
@@ -61,7 +66,8 @@ Version wird eine Datei 'How To Upgrade.txt' (Englisch) enthalten).
 - Berichte ausdrucken
 - Aktualisierungsmechanismus (nur client): Bis der Server fertig ist, wird kein
   Update möglich sein.
-- Backup-Mechanismus (Wiederherstellen befindet sich noch in der Entwicklung)
+- Backup-Mechanismus (und Wiederherstellen)
+- Messgerätewerkzeug (teilweise) integriert
 
 
 
@@ -71,14 +77,12 @@ Version wird eine Datei 'How To Upgrade.txt' (Englisch) enthalten).
 Version 0.4
 ------------
 - Automatisches Datenbank-Update
-- Daten wiederherstellen
 - Datenbankwerkzeug (andere Datenbanksysteme benutzen und Initialisierung der
   benutzten Datenbank)
 - Multiuser-Unterstützung
 - Fertigstellung von GGC Little, einer leichtgewichtigen Version für die
   Dateneingabe tagsüber
 - Aktualisierungsmechanismus (Serverseite)
-- Integration des Messgerätewerkzeugs (als separates Projekt entwickelt)
 - Hilfedateien vervollständigen und in der Applikation referenzieren (Englische
   Version)
 - Diagramme ändern und neue hinzufügen
@@ -87,7 +91,8 @@ Version 0.4
 - Pumpen-Werkzeug: <Grundlegende Pumpenunterstützung> (manuelle Eingabe,
   Integration, keine Diagramme)
 - CGMS-Werkzeug: <Grundlegende CGMS-Unterstützung>
-- Intelligente Insulinmengenempfehlung (Bolus-Helfer)
+- Intelligente Insulinmengenempfehlung (Bolus-Helfer), Ratio-Helfer
+- Lebensmitteldatenbank-Fernzugriff-Funktionalität
 
 
 

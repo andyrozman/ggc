@@ -18,7 +18,6 @@ this software can become better, with a little help from your side (you don't ha
 to be developer to help, each reported problem can help us bring GGC closer to
 perfection).
 
-!! CHANGE
 If you want to help develop or officially test this software, please read the
 companion document 'How_I_Can_Help.txt'. The same document is required reading for
 developers.
@@ -29,7 +28,6 @@ developers.
 
 This is version 0.3 of GGC.
 
-!! CHANGE
 At this point we are at version 0.3, which is the first public release. If you
 installed any version prior to that, please uninstall. We made a lot of changes
 in database and application itself, so you can't update old version (if you 
@@ -38,7 +36,6 @@ to new version). From this version on, updating will be much easier. In next
 major version there will also be Update mechanism in application (for automatic 
 updates via internet).
 
-!! CHANGE
 This first public release can only use the internal database. If you have 
 little above average computer knowledge (read 'if you like to dabble'), you can 
 try to make it work with any database (see file 'How_Can_I_Help.txt') with just a 
@@ -68,17 +65,15 @@ instructions supplied with the release (there will be a file called
 - Printing reports
 - Update mechanism (client side only), this means that until the server side
   of update is done, you won't be able to update, but as soon as that works
-  you will have the option to update.   
+  you will have the option to update.
 - Backup mechanism (and restore)
-- Meter Tool integrated (partitaly)
+- Meter Tool integrated (partially)
 
 
 
 4. PLANNED FUNCTIONALITY
 ========================
 
-!! CHANGE
-!! CHANGE
 Version 0.4
 ------------
 - Automatic DB Update
@@ -97,7 +92,6 @@ Version 0.4
 - Remote Food database functionality
 
 
-!! CHANGE
 
 Version 0.5
 ------------
@@ -140,7 +134,6 @@ functionality. The first supported pumps will be those from Roche (April 2009),
 after them probably Minimed.
 
 
-!! CHANGE
 
 CGMS-TOOL
 ----------
@@ -223,7 +216,6 @@ this application.
 
 
 
-!! CHANGE
 7. END
 =======
 
