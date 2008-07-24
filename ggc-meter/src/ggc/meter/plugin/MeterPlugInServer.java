@@ -35,7 +35,6 @@ public class MeterPlugInServer extends PlugInServer
     public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
         super(cont, selected_lang, da);
-        System.out.println("Parent container: " + cont);
         DataAccessMeter.getInstance().addComponent(cont);
     }
     
@@ -60,7 +59,6 @@ public class MeterPlugInServer extends PlugInServer
 
             case MeterPlugInServer.COMMAND_METERS_LIST:
             {
-                // FIXME: The called function is buggy as it doesn't make sure its ic field is initialised!
                 this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_METERS_LIST]);
                 return;
             }
@@ -68,9 +66,8 @@ public class MeterPlugInServer extends PlugInServer
             default:
             case MeterPlugInServer.COMMAND_CONFIGURATION:
             {
-                m_da.listComponents();
+                //m_da.listComponents();
                 new SimpleConfigurationDialog(this.m_da);
-                //this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_CONFIGURATION]);
                 return;
             }
             
@@ -111,6 +108,7 @@ public class MeterPlugInServer extends PlugInServer
     @Override
     public void initPlugIn()
     {
+        ic = m_da.getI18nControlInstance();
         I18nControl.getInstance().setLanguage(this.selected_lang);
         DataAccessMeter.getInstance().addComponent(this.parent);
     }
