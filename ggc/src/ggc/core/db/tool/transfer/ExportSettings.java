@@ -9,8 +9,8 @@ import java.util.Iterator;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
 
+import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
 
@@ -19,7 +19,7 @@ public class ExportSettings extends ExportTool implements Runnable
 
     public ExportSettings(BackupRestoreWorkGiver giver)
     {
-        super(DataAccess.getInstance().getDb().getConfiguration());
+        super(DataAccess.getInstance().getDb().getHibernateConfiguration());
 
         checkPrerequisitesForAutoBackup();
 
@@ -29,7 +29,7 @@ public class ExportSettings extends ExportTool implements Runnable
         // exportAll();
     }
 
-    public ExportSettings(Configuration cfg)
+    public ExportSettings(HibernateConfiguration cfg)
     {
         super(cfg);
 
@@ -76,6 +76,14 @@ public class ExportSettings extends ExportTool implements Runnable
         this.setFileLastPart("");
     }
 
+    
+    public int getActiveSession()
+    {
+        return 2;
+    }
+    
+    
+    
     private void exportAll()
     {
         export_Settings();
@@ -131,7 +139,7 @@ public class ExportSettings extends ExportTool implements Runnable
     {
         GGCDb db = new GGCDb();
         db.initDb();
-        new ExportSettings(db.getConfiguration());
+        new ExportSettings(db.getHibernateConfiguration());
     }
 
 }

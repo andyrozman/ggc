@@ -9,12 +9,6 @@ import com.atech.db.hibernate.transfer.RestoreSelectorDialog;
 import com.atech.utils.ATDataAccessAbstract;
 
 /*
- * AddressDialog
- * 
- * This is dialog for adding PersonAddress or InternalAddress, to either Person
- * or InternalPerson.
- * 
- * This class is part of PIS (Parish Information System) package.
  * 
  * @author Andy (Aleksander) Rozman {andy@triera.net}
  * 
@@ -36,23 +30,12 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
     }
 
 
-    /*
-     * Displays title for dialog
-     */
-/*    public void showTitle(boolean backup)
-    {
-        {
-            this.setTitle(ic.getMessage("RESTORE_DB_TITLE"));
-            label_title.setText(ic.getMessage("RESTORE_DB_TITLE_SHORT"));
-        }
-    }
-*/
 
     
     public void cmdNextStep()
     {
-        
-        
+        RestoreGGCDialog rgd = new RestoreGGCDialog((JFrame)this.my_parent, this.m_da, this.m_da.getBackupRestoreCollection(), this.tf_file.getText());
+        rgd.showDialog();
     }
     
     

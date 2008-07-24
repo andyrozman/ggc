@@ -31,36 +31,43 @@ import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.StringTokenizer;
-
-import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
-import com.atech.db.hibernate.transfer.ExportTool;
-import com.atech.db.hibernate.transfer.ImportTool;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.cfg.Configuration;
 
-public class ImportDailyValues extends ImportTool
+import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
+import com.atech.db.hibernate.transfer.ImportTool;
+import com.atech.db.hibernate.transfer.RestoreFileInfo;
+
+public class ImportDailyValues extends ImportTool implements Runnable
 {
 
     GGCDb m_db = null;
-    public String file_name;
+    //public String file_name;
     private static Log log = LogFactory.getLog(ImportDailyValues.class);
 
     DataAccess m_da = DataAccess.getInstance();
+    boolean clean_db = false; 
 
     
     public ImportDailyValues(BackupRestoreWorkGiver giver)
     {
-        super(DataAccess.getInstance().getDb().getConfiguration());
+        super(DataAccess.getInstance().getDb().getHibernateConfiguration());
 
-        // TODO
-//        this.setStatusReceiver(giver);
-//        this.setTypeOfStatus(ExportTool.STATUS_SPECIAL);
+        this.setStatusReceiver(giver);
+        this.setTypeOfStatus(ImportTool.STATUS_SPECIAL);
+    }
+    
+
+    public ImportDailyValues(BackupRestoreWorkGiver giver, RestoreFileInfo res)
+    {
+        super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
+
+        this.setStatusReceiver(giver);
+        this.setTypeOfStatus(ImportTool.STATUS_SPECIAL);
     }
     
     
@@ -72,11 +79,12 @@ public class ImportDailyValues extends ImportTool
 
     public ImportDailyValues(String file_name, boolean identify)
     {
-        super(false);
+        super();
 
         m_db = new GGCDb();
         m_db.initDb();
-        this.file_name = file_name;
+        setHibernateConfiguration(m_db.getHibernateConfiguration());
+        this.restore_file = new File(file_name);
 
         if (identify)
             importDailyValues();
@@ -85,32 +93,60 @@ public class ImportDailyValues extends ImportTool
 
     }
 
-    public ImportDailyValues(Configuration cfg, String file_name)
+    public ImportDailyValues(HibernateConfiguration cfg, String file_name)
     {
         super(cfg);
         // m_db = new GGCDb();
         // m_db.initDb();
-        this.file_name = file_name;
+        this.restore_file = new File(file_name);
 
         importDailyValues();
 
         System.out.println();
     }
 
+    
+    public void setImportClean(boolean clean)
+    {
+        this.clean_db = clean;
+    }
+    
+    
+    public int getActiveSession()
+    {
+        return 2;
+    }
+    
+    
+    
     public void importDailyValues()
     {
 
         String line = null;
-
+        boolean append = false;
+        
         try
         {
+            
+            if (clean_db)
+                this.clearExistingData("ggc.core.db.hibernate.DayValueH");
+            else
+                append = true;
+            
             System.out.println("\nLoading DailiyValues (5/dot)");
+            
+            this.openFileForReading(this.restore_file);
 
-            BufferedReader br = new BufferedReader(new FileReader(new File(file_name)));
+            //BufferedReader br = new BufferedReader(new FileReader(this.restore_file)); //new File(file_name)));
 
-            int i = 0;
+           // int i = 0;
+            
+            int dot_mark = 5;
+            int count = 0;
+            
+            
 
-            while ((line = br.readLine()) != null)
+            while ((line = this.br_file.readLine()) != null)
             {
                 if (line.startsWith(";"))
                     continue;
@@ -128,11 +164,18 @@ public class ImportDailyValues extends ImportTool
                 // id; dt_info; bg; ins1; ins2; ch; meals_ids; extended;
                 // person_id; comment
 
-                long id = this.getLong(strtok.nextToken());
-
-                if (id != 0)
-                    dvh.setId(id);
-
+                if (!append)
+                {
+                    long id = this.getLong(strtok.nextToken());
+    
+                    if (id != 0)
+                        dvh.setId(id);
+                }
+                else
+                {
+                    strtok.nextToken();
+                }
+                
                 dvh.setDt_info(getLong(strtok.nextToken()));
                 dvh.setBg(getInt(strtok.nextToken()));
                 dvh.setIns1((int) getFloat(strtok.nextToken()));
@@ -167,13 +210,20 @@ public class ImportDailyValues extends ImportTool
                  * dvh.setComment(bef); }
                  */
 
-                m_db.addHibernate(dvh);
+                this.hibernate_util.addHibernate(dvh);
 
+                
+                count++;
+                this.writeStatus(dot_mark, count);
+                
+                /*
                 i++;
 
                 if (i % 5 == 0)
-                    System.out.print(".");
+                    System.out.print(".");*/
             }
+            
+            this.closeFile();
 
         }
         catch (Exception ex)
@@ -185,6 +235,13 @@ public class ImportDailyValues extends ImportTool
 
     }
 
+    
+    public void run()
+    {
+        this.importDailyValues();
+    }    
+    
+    
     public static void main(String args[])
     {
         if (args.length == 0)

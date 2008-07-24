@@ -1,3 +1,10 @@
+2008-07-24  (0.2.23) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Finished and integrated Restore functionality
+    * Application is ready for release. There are just few translations to finish and we are ready to go.
+
+2008-07-10    Andy Rozman <andyrozman@users.sourceforge.net>
+    * Integrated Pump Tool into GGC
+
 2008-07-06 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * Some translation
     * noticed that README.de line delimiter was LF and converted to CRLF
@@ -22,11 +29,9 @@
     * added documentation
     * fixed food problem (we need to find out what is problem with decimals in java)
 
-
 2008-06-30 (0.2.20.4)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Error dialog finsihed and integrated into Printing Dialog (this is first dialog that uses extended 
       error dialogs)
-
 
 2008-06-29 (0.2.20.3)  Andy Rozman <andyrozman@users.sourceforge.net>
     * fixed problem with adding new foods and meals
@@ -34,12 +39,10 @@
     * tooltips are added with foods and meals, labels for name are usually long, so we also set tooltip so that 
       whole name is visible
 
-
 2008-06-28 (0.2.20.2)  Andy Rozman <andyrozman@users.sourceforge.net>
     * added JDecimalTextField to atech-tools, which needs to replace JFormattedTextField used for decimal numbers
       replaced elements in Daily Values
     * On new Daily Value, hour is set to current hour
-
 
 2008-06-25 (0.2.20.1)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Changed CGM databases

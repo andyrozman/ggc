@@ -52,7 +52,7 @@ public class MetersPlugIn extends PlugInClient
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
             
-            System.out.println("Parent MeterPlgin: " + this.parent);
+            //System.out.println("Parent MeterPlgin: " + this.parent);
             
             this.m_server.init(this.parent, DataAccess.getInstance()
                     .getI18nControlInstance().getSelectedLangauge(), DataAccess

@@ -90,6 +90,7 @@ public class DailyValues implements Serializable
 
     public ArrayList<DayValueH> deleteList = null;
 
+    DataAccess m_da = DataAccess.getInstance();
 
     public void setStdDev(float stdDev)
     {
@@ -325,7 +326,7 @@ public class DailyValues implements Serializable
     
     	    DailyValuesRow dvr = getRow(i);
     
-    	    float dVR_BG = dvr.getBG();
+    	    float dVR_BG = dvr.getBGRaw();
     
     	    if (dVR_BG != 0) 
     	    {
@@ -603,7 +604,7 @@ public class DailyValues implements Serializable
         return column_names[column] == null ? m_ic.getMessage("NO_NAME") : column_names[column];
     }
 
-    public float getAvgBG()
+    public float getAvgBGRaw()
     {
         if (counterBG != 0)
             return sumBG / counterBG;
@@ -611,6 +612,21 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+    
+    public float getAvgBG()
+    {
+        if (counterBG != 0)
+        {
+            if (m_da.getBGMeasurmentType()==DataAccess.BG_MGDL)
+                return sumBG / counterBG;
+            else
+                return m_da.getBGValueDifferent(DataAccess.BG_MGDL, (sumBG / counterBG));
+        }
+        else
+            return 0;
+    }
+    
+    
     public float getAvgIns1()
     {
         if (counterIns1 != 0)

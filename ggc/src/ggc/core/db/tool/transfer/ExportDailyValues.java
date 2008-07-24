@@ -7,19 +7,19 @@ import ggc.core.util.DataAccess;
 import java.io.File;
 import java.util.Iterator;
 
-import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
-import com.atech.db.hibernate.transfer.ExportTool;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
+
+import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
+import com.atech.db.hibernate.transfer.ExportTool;
 
 public class ExportDailyValues extends ExportTool implements Runnable
 {
 
     public ExportDailyValues(BackupRestoreWorkGiver giver)
     {
-        super(DataAccess.getInstance().getDb().getConfiguration());
+        super(DataAccess.getInstance().getDb().getHibernateConfiguration());
 
         checkPrerequisitesForAutoBackup();
 
@@ -29,7 +29,7 @@ public class ExportDailyValues extends ExportTool implements Runnable
         // exportAll();
     }
 
-    public ExportDailyValues(Configuration cfg)
+    public ExportDailyValues(HibernateConfiguration cfg)
     {
         super(cfg);
 
@@ -88,6 +88,14 @@ public class ExportDailyValues extends ExportTool implements Runnable
      * } }
      */
 
+    
+    public int getActiveSession()
+    {
+        return 2;
+    }
+    
+    
+    
     @SuppressWarnings("unchecked")
     private void export_DailyValues()
     {
@@ -133,7 +141,7 @@ public class ExportDailyValues extends ExportTool implements Runnable
     {
         GGCDb db = new GGCDb();
         db.initDb();
-        new ExportDailyValues(db.getConfiguration());
+        new ExportDailyValues(db.getHibernateConfiguration());
     }
 
 }

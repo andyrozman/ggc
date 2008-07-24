@@ -5,49 +5,49 @@ GNU Gluco Control (GGC)
 1. O PROGRAMU
 =============
 
-Dobrodošli med uporabniki programa GNU Gluco Control (GGC). GGC je odprto-kodna
-java aplikacija, ki je namenjena samokontroli vašega diabetesa. Odprto-kodno
+DobrodoÅ¡li med uporabniki programa GNU Gluco Control (GGC). GGC je odprto-kodna
+java aplikacija, ki je namenjena samokontroli vaÅ¡ega diabetesa. Odprto-kodno
 pomeni, da je aplikacija prosto dostopna, skupaj s izvorno kodo, kar pomeni, da 
 lahko vsak pomaga pri razvoju.
 
-Ker je to odprto-kodna aplikacija, se lahko med delovanjem pojavijo napake (reèemo 
-jim hrošèi). Zato se vnaprej opravièujemo... Ker smo razvijalci sami diabetiki, 
-poskušamo narediti ta program najboljši kot je lahko, ampak kot veste, nsreèe se 
-dogajajo. Prosim natanèno preberite ta dokument, da vidite kako lahko ta program 
-postane boljši in kako lahko vi do tega pripomorete (ne rabite biti razvijalec,
-da pomagate, vsako poroèilo o napiaki, lahko priblia ta produkt k temu, kar elimo
+Ker je to odprto-kodna aplikacija, se lahko med delovanjem pojavijo napake (reÄemo 
+jim hroÅ¡Äi). Zato se vnaprej opraviÄujemo... Ker smo razvijalci sami diabetiki, 
+poskuÅ¡amo narediti ta program najboljÅ¡i kot je lahko, ampak kot veste, nesreÄe se 
+dogajajo. Prosim natanÄno preberite ta dokument, da vidite kako lahko ta program 
+postane boljÅ¡i in kako lahko vi do tega pripomorete (ne rabite biti razvijalec,
+da pomagate, vsako poroÄilo o napaki, lahko pribliÅ¾a ta produkt k temu, kar Å¾elimo
 da postane. 
 
-Èe elite malo veè pomagati pri razvoju (razvoj, testiranje, prevajanje, dodajanje
+ÄŒe Å¾elite malo veÄ pomagati pri razvoju (razvoj, testiranje, prevajanje, dodajanje
 novih naprav), prosim preberite dokument 'How_Can_I_Help.txt'. Vsak razvijalec
 mora nujno prebrati ta isti dokument.
 
 
-2. TRENUTNA RAZLIÈICA IN STATUS
+2. TRENUTNA RAZLIÄŒICA IN STATUS
 ===============================
 
-To je razlièica 0.3 od programa GGC.
+To je razliÄica 0.3 od programa GGC.
 
-V tej toèki smo pri razlièici 0.3, ki je prva javna izdaja tega programa. Èe ste 
-namestili kakšno verzijo pred to jo prosim odstranite. V èasu od zadnje (nejavne)
+V tej toÄki smo pri razliÅ¾ici 0.3, ki je prva javna izdaja tega programa. ÄŒe ste 
+namestili kakÅ¡no verzijo pred to jo prosim odstranite. V Äasu od zadnje (nejavne)
 izdaje je bilo dosti sprememb v podatkovni bazi in v programu samem, kar pomeni, da
-stare razlièice niso nadgradljive (èe e imate podatke v stari aplikaciji nas 
+stare razliÄice niso nadgradljive (Äe Å¡e imate podatke v stari aplikaciji nas 
 kontaktirajte in pomagali vam bomo pri prenosu podatku). Od te verzije dalje, bo 
-nadgradnja manj zapletena. V naslednji veèji razlièici bos odstopen tudi sistem
-za nadgradnjo (za avtomatièno nadgradnjo iz interneta)
+nadgradnja manj zapletena. V naslednji veÄji razliÄici bo dostopen tudi sistem
+za nadgradnjo (za avtomatiÄno nadgradnjo iz interneta)
 
-Ta prva javna razlièica ima podporo samo za interno bazo, èe pa imate nadpovpreèno 
-znanje o raèunalnik (beri: èe radi eksperimentirate), pa lahko uporabite tudi ostale
-baze (veè informacij v datoteki 'How_Can_I_Help.txt' s le malo truda.
+Ta prva javna razliÄica ima podporo samo za interno bazo, Äe pa imate nadpovpreÄno 
+znanje o raÄunalnikih (beri: Äe radi eksperimentirate), pa lahko uporabite tudi ostale
+baze (veÄ informacij v datoteki 'How_Can_I_Help.txt') s le malo truda.
 
-Nove glavne izdaje so naèrtovane v 6 meseènih intervalih, kar pomeni, da lahko 
-prièakujete razlièico 0.4 ob koncu leta ali zaèetku naslednjega.
+Nove glavne izdaje so naÄrtovane v 6 meseÄnih intervalih, kar pomeni, da lahko 
+priÄakujete razliÄico 0.4 ob koncu leta ali zaÄetku naslednjega.
 
-Manjše spremembe bodo objavljene, ko se je funkcionalnost spremenila v taki meri,
-da je nujno narediti nadgradnjo (veèje spremembe v funkcionalnosti in popravki 
-hrošèev).
+ManjÅ¡e spremembe bodo objavljene, ko se bodo funkcionalnosti spremenile v taki meri,
+da je nujno narediti nadgradnjo (veÄje spremembe v funkcionalnosti in popravki 
+hroÅ¡Äev).
 
-Zaenkrat bo treba vse nadgradnje narediti roèno, kar pomeni, natanèno izvedbo 
+Zaenkrat bo treba vse nadgradnje narediti roÄno, kar pomeni, natanÄno izvedbo 
 vseh korakov opisanih v datoteki 'How To Upgrade.txt', ki bo dodana vsem izdajam
 (tudi v vsaki nadgradnji). Poskrbeli bomo, da bo tudi ta datoteka prevedena.
 
@@ -58,17 +58,18 @@ vseh korakov opisanih v datoteki 'How To Upgrade.txt', ki bo dodana vsem izdajam
 
 - Dodajanje podatkov o dozah insulina, vrednosti KS, aktivnosti, vrednosti urina in 
   komentarji (tukaj gre za predvsem podatke za Pen terapijo)
-- Prikaz grafov (ta del je še treba temeljito predelati)
-- Baze podatkov za "Štetje OH": USDA baza (ameriška), Uporabniška baza ivil in obrokov 
+- Prikaz grafov (ta del je Å¡e treba temeljito predelati in dopolniti)
+- Baze podatkov za "Å¡tetje OH": USDA baza (ameriÅ¡ka), UporabniÅ¡ka baza Å¾ivil in obrokov 
   (to uporabnik sam sestavi)
-- Izpis poroèil (tiskanje)
-- Mehanizem za nadgradnjo (to zaenkrat še ne dela, ker je potrebno narediti še streniško 
-  stran)
+- Izpis poroÄil (tiskanje)
+- Mehanizem za nadgradnjo (to zaenkrat Å¡e ne dela, ker je potrebno narediti Å¡e streÅ¾niÅ¡ki 
+  del)
 - Ustvarjanje varnostne kopije baze (in obnovitev)
+- Integracija Orodja za merilce
 
 
 
-4. NAÈRTOVANE FUNKCIONALNOSTI
+4. NAÄŒRTOVANE FUNKCIONALNOSTI
 =============================
 
 
@@ -76,27 +77,28 @@ Version 0.4
 ------------
 - Nadgradnja podatkovne baze
 - Obnovitev podatkov
-- Db Orodje (za uporabo in namestitev podatkov za ostale baze=
-- Uporaba programa za veè oseb
-- Dokonèanje aplikacije GGC Little, ki je residentni program (se nahaja v spominu) 
+- Db Orodje (za uporabo in namestitev podatkov za ostale baze)
+- MoÅ¾nost, da veÄ oseb uporablja GGC
+- DokonÄanje aplikacije GGC Little, ki je residentni program (se nahaja v spominu) 
   za hitro dodajanje podatkov preko celega dneva
-- Sistem za nadgradnjo (streniški del)
+- Sistem za nadgradnjo (streÅ¾niÅ¡ki del)
 - Orodja za merilce - nastavitev
-- Pomoè za program (angleška)
-- Orodje za èrpalke: osnovno, roèni vnos, integracija, brez grafov)
+- PomoÄ za program (angleÅ¡ka)
+- Orodje za Ärpalke: osnovno, roÄni vnos, integracija, brez grafov)
 - CGMS orodje: osnovno, integracija
 - Spremeni in dodaj nove grafe
 - Dodana funkcionalnost za baze hrane
-- Pomoè za boluse
+- PomoÄ za boluse in razmerja
+- Oddaljena baza za jedi
 
 
 Version 0.5
 ------------
-- GGC Omreje (zagon veèih instanc aplikacije na razliènih raèunalnikih)
-- Synhronizacija (GGC omreje)
+- GGC OmreÅ¾je (zagon veÄih instanc aplikacije na razliÄnih raÄunalnikih)
+- Synhronizacija (GGC omreÅ¾je)
 - Povezave do stvari za Diabetike (spletne strani, forumi, ...)
-- GGC PPC - verzija, ki naj bi delovala na dlanènikih s OS Pocket PC
-- Naèrtovalec (dodajanje dogodkov, mišljeno predvsem za vodenje zdravniških pregledov,
+- GGC PPC - verzija, ki naj bi delovala na dlanÄnikih s OS Pocket PC
+- NaÄrtovalec (dodajanje dogodkov, miÅ¡ljeno predvsem za vodenje zdravniÅ¡kih pregledov,
   dodajanje zdravnikov, itd.
 - Medicinske zaloge - kontrola zdravil, ki jih imamo doma
 
@@ -108,57 +110,77 @@ Version 0.5
 V tem trenutku imamo tri dodatne (pod) projekte.
 
 
-METER-TOOL
------------
+DODATEK ZA MERILNIKE
+---------------------
 
-This is a plug-in for getting data from glucose meters. Currently this project is in
-the development phase. Together with support for Ascensia meters, we are finishing
-up the whole plug-in framework and all needed graphical interface forms (classes).
-The first alpha version will be available around September 2008, together with the
-finished implementation for Ascensia meters. Next in line are Roche meters
-(December 2008) and after them LifeScan meters (January 2009).
-
-
-PUMP-TOOL
-----------
-
-This is plug-in for entering and retrieving data from insulin pumps. This project
-is still in the planning phase. The project will move into the development phase
-in September 2008, so the next version (0.4) may already have part of the pump-tool
-functionality. The first supported pumps will be those from Roche (April 2009),
-after them probably Minimed.
+Naloga dodatka za merilnike je branje podatkov iz razliÄnih merilcev. Ta projekt je 
+trenutnu v fazi razvoja. DokonÄali smo podporo za Ascensia/Bayer merilce, ter osnovne
+razrede za ta dodatek (tudi uporabniÅ¡ki vmesnik). Dve veliki funkcionaosti sta Å¡e 
+ostali (seznam merilcev in nastavitve), toda prva verzija (0.2) je zunaj in dostopna
+(pakirana je skupaj s ggc programom). ManjkajoÄe funkcionalnosti bodo dodane do 
+naslednje ggc izdaje (0.4). Naslednji merilci, ki bodo dodani so od Roche-a (Oktober
+2008) in za njimi LifeScan merilci (December 2009).
 
 
+DODATEK ZA ÄŒRPALKE
+------------------
 
-6. HOW CAN I HELP
-==================
+To je dodatek za vpis, branje in upravljanje s podatki iz insulinskih Ärpalk. 
+Projekt poÄasi prehaja v fazo razvoja. V naÄrtu imamo da dodamo vsaj nekaj Ärpalkarskih
+funkcij v naslednjo verzijo ggc-ja (0.4). Prve bodo podprte Ärpalke od Roche-a (December 
+2008), zatem pa verjetno Minimed. Nekateri od naÅ¡ih razvijalcev pa paralelno delajo tudi
+na podpori za Animas. 
 
-There are several ways you can help. Some ways require you to have some knowledge, 
-but most of them don't
+
+DODATEK ZA CGMS-e
+-----------------
+
+To je dodatek branje podatkov iz CGMS naprav in gledanje teh podatkov. Projekt je Å¡e vedno
+v fazi naÄrtovanja. Predvidoma bo Å¡el iz naÄrtovanja v razvoj v zaÄetku naslednjega leta 
+(January 2009). Prvi podprti CGMS bo Minimedov preko export datotek iz programa CareLink.
 
 
 
-There are several ways you can help. The first and major way is to test software.
-Try to use it and find anything that doesn't work. Version 0.3 will be started from
-the command-line and all actions will also be displayed in the console. If you see
-an error text, exception or e.g. many cryptic lines of classes with numbers, this
-means something went wrong. The error is displayed on your screen, but it is also
-logged to a file (in <GGC_Root>\data\log). There you will find one or more files for
-each day. If an error happened today, there will be a file named 'GGC.log'. You need
-to open it and go to end and try to find the previously displayed errors.
-Zip this file and store it. And do the following (choose option A or B):
+6. KAKO LAHKO POMAGATE KOT 'NAVADNI' UPORABNIK
+===============================================
 
-A.) Visit the bug reporting site for our project and enter the bug by yourself.
+Obstaja veÄ naÄinov kako lahko pomagate. Nekateri zahtevajo, da imate doloÄeno znanje, 
+toda veÄina ne. Prosim poglejte si dokument 'How_Can_I_Help.txt'. Tam je veÄ
+poglavij in pri vsakem je napisano za koga je namenjeno.
+
+Prvo poglavje je prikazano tukaj (in prevedeno) vsa ostala pa so v dokumentu in v 
+angleÅ¡Äini.
+
+
+---------------------------------------------------
+
+A.) Preverjanje (testiranje) programa in predlogi za nove ideje ali spremembe (namenjeno VSEM) 
+
+
+Obstaja veÄ naÄinov, da lahko pomagate. Prvi in najveÄji naÄin je preverjanje programa.
+Probajte ga Äimbolj aktivno uporabljati in poskuÅ¡ajte razne stvari. RazliÄica 0.3
+se zaÅ¾ene s ukazne vrstice (in ima odprto okno), tako da bodo vse operacije vidne v
+konzoli. ÄŒe vidite sporoÄilo s napako, exception (veÄ vrstic s Äudnimi podatki), pomeni, 
+da je Å¡lo nekaj narobe. Napaka se prikazuje na ekranu, hkrati pa se tudi shranjuje
+v datoteke (v <GGC Koren>\data\log). Za vsak dan se ustvari nova datoteka. ÄŒe se je 
+napaka zgodila danes, bo tam datoteka 'GGC.log'. Odprite to datoteko in pojdite na
+konec in poiÅ¡Äite napako, ki se je prej zgodila. Uporabite Zip in shranite datoteko. 
+Zatem naredite naslednje (opcija A ali B):
+
+
+
+a.) Visit the bug reporting site for our project and enter the bug by yourself.
    Please attach the zipped log. The site is (data should be entered in English):
    http://sourceforge.net/tracker/?group_id=49749&atid=457319  
    You don't need to be member at sourceforge to add this information, if you are
    not please, write your email address somewhere in the error report. Describe
    exactly what you were doing when the exception occurred and how the problem
    affected your application. Also please let us know the configuration of your
-   computer (for example: Celereon 2000 with 2 Gb Ram, running Ubuntu Linux,
-   kernel 2.4.1.34, with java 1.6_06)
+   computer (for example: Intel(R) Celeron(R) 2000 with 2GB RAM, running Ubuntu
+   Linux, kernel 2.6.1.34, with Java 1.6.0_06)
 
-B.) Send us an email (ggc@atech-software.com), with all the data described in A).
+b.) PoÅ¡ljite nam e-poÅ¡to (ggc@atech-software.com), s vsemi podatki kot so opisani
+   v a.). Podatke lahko sem poÅ¡ljete v slovenÅ¡Äini, nemÅ¡Äini ali angleÅ¡Äini.
 
 ---
 
@@ -182,7 +204,7 @@ http://sourceforge.net/tracker/?group_id=49749&atid=457322
 
 We will try to fix problems as soon as possible, but since there are only two of us
 (three, but only two active) it might take some time... Major bugs will be fixed
-first, then the minor ones...
+first, then minor ones...
 New functionality proposals have the lowest priority (and planned functionality has
 priority).
 
@@ -192,10 +214,10 @@ this application.
 
 
 
-7. END
-=======
+7. ZAKLJUÄŒEK
+=============
 
+Å e enkrat se vam zahvaljujemo za uporabo naÅ¡ega programa in upamo, da izpolnjuje 
+vaÅ¡e Å¾elje in potrebe... Äe pa v tem trenutku Å¡e ne, pa mogoÄe enkrat v prihodnosti.
 
-Again, thank you for using our software, we hope it fulfills your needs... If not
-yet, maybe in the future.
 

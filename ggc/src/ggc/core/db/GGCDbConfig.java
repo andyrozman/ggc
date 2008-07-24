@@ -1,5 +1,36 @@
 package ggc.core.db;
 
+/*
+ * GGC - GNU Gluco Control
+ * 
+ * A pure Java application to help you manage your diabetes.
+ * 
+ * See AUTHORS for copyright information.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ * Filename: GGCDbConfig 
+ *
+ * Purpose: This is configuration file for GGC Database. This class is used for all external
+ *      and internal handling of database. It contains main methods for accessing Hibernate
+ *      Framework.
+ * 
+ * Author: andyrozman {andy@atech-software.com}
+ */
+
+
 import com.atech.db.hibernate.HibernateConfiguration;
 
 import org.apache.commons.logging.Log;
@@ -84,6 +115,12 @@ public class GGCDbConfig extends HibernateConfiguration
     public String getDbInfoReportFilename()
     {
         return "../data/db_info.txt";
+    }
+
+    @Override
+    public int getNumberOfSessions()
+    {
+        return 2;
     }
 
 }

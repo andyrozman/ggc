@@ -1,3 +1,6 @@
+package ggc.core.db;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -20,22 +23,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *  Filename: GGCDbLoader
+ *  
  *  Purpose:  This is GGCDb Loader. It help system to load all needed data for 
- *      GGC "Session".
+ *      GGC Database Session.
  *
  *  Author:   andyrozman  {andy@atech-software.com}
  */
 
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// 
-// Methods are added to this class, whenever we make changes to our existing database,
-// either add methods for handling data or adding new tables.
-// 
-// andyrozman
-
-
-package ggc.core.db;
 
 import ggc.core.util.DataAccess;
 import ggc.gui.MainFrame;

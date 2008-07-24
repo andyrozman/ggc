@@ -262,14 +262,14 @@ public class DataAccess extends ATDataAccessAbstract
 
         if (s_da == null)
         {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  " + main);
+            //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  " + main);
             // GGCDb db = new GGCDb();
 
-            System.out.println("New");
+            //System.out.println("New");
             s_da = new DataAccess();
-            System.out.println("setParent");
+            //System.out.println("setParent");
             s_da.setParent(main);
-            System.out.println("setMainParent");
+            //System.out.println("setMainParent");
             s_da.setMainParent(main);
             // System.out.println("addComponet");
             // s_da.addComponent(main);

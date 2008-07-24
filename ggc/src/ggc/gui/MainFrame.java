@@ -30,6 +30,7 @@ package ggc.gui;
 
 import ggc.GGC;
 import ggc.core.db.tool.transfer.BackupDialog;
+import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.plugins.CGMSPlugIn;
@@ -1012,6 +1013,11 @@ public class MainFrame extends JFrame
             {
                 new BackupDialog(MainFrame.this, m_da);
             }
+            else if (command.equals("tools_db_restore"))
+            {
+                RestoreGGCSelectorDialog rsd = new RestoreGGCSelectorDialog(MainFrame.this, m_da);
+                rsd.showDialog();
+            }
             else if (command.equals("report_pdf_simple"))
             {
                 new PrintingDialog(MainFrame.this, 1);
@@ -1044,17 +1050,6 @@ public class MainFrame extends JFrame
                     featureNotImplemented(command, "0.5");
 
             }
-            else if ( // (command.equals("read_meter")) ||
-            // (command.equals("food_nutrition_2")) ||
-            // (command.equals("tools_mlist")) ||
-            // (command.equals("tools_db_maint")) ||
-            (command.equals("tools_db_restore"))) // ||
-            // (command.equals("meters_read")) ||
-            // (command.equals("meters_list")) ||
-            // (command.equals("meters_config")))
-            {
-                featureNotImplemented(command, "0.4");
-            }
             else // if ((command.equals("report_pdf_extended")) ||
             if ((command.equals("doc_stocks"))
                     || (command.equals("file_loginx"))
@@ -1082,7 +1077,7 @@ public class MainFrame extends JFrame
                 // ggc.gui.ReadMeterDialog(MainFrame.this);
 
                 System.out.println("In login");
-
+/*
                 try
                 {
                     throw new Exception("Test Exception");
@@ -1093,7 +1088,7 @@ public class MainFrame extends JFrame
                     m_da.createErrorDialog("MainFrame", "", ex,
                             "Exception in mainframe.");
                 }
-
+*/
             }
             else
                 System.out.println("Unknown Command: " + command);

@@ -1,5 +1,6 @@
 package ggc.core.db.tool.transfer;
 
+import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 
 import javax.swing.JCheckBox;
@@ -46,18 +47,22 @@ public class RestoreGGCDialog extends RestoreDialog
     public void initSpecial()
     {
         this.cb_daily = new JCheckBox(ic.getMessage("DAILY_VALUES_APPEND"));
-        this.cb_daily.setBounds(25, 260, 380, 70);
+        this.cb_daily.setBounds(25, 390, 380, 70);
         this.cb_daily.setVerticalTextPosition(SwingConstants.TOP);
         this.cb_daily.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
         this.cb_daily.setEnabled(this.restore_files.containsKey("ggc.core.db.hibernate.DayValueH"));
         panel.add(this.cb_daily);
+        
+        this.setBounds(130, 50, 450, 520); 
+
     }
     
     
 
     public void performRestore()
     {
-        
+        GGCBackupRestoreRunner gbrr = new GGCBackupRestoreRunner(this.restore_files, this, "" + this.cb_daily.isSelected());
+        gbrr.start();
     }
 
     
@@ -79,8 +84,13 @@ public class RestoreGGCDialog extends RestoreDialog
         DataAccess da = DataAccess.getInstance();
         da.addComponent(fr);
         
+        GGCDb db = new GGCDb();
+        db.initDb();
         
-        RestoreGGCDialog rgd = new RestoreGGCDialog(fr, da, da.getBackupRestoreCollection(), "d:/backup 2.7.2008  00_50_52.zip");
+        da.setDb(db);
+        
+        
+        RestoreGGCDialog rgd = new RestoreGGCDialog(fr, da, da.getBackupRestoreCollection(), "d:/GGC backup 2008_07_23 14_02_25.zip");
         rgd.showDialog();
         
     }

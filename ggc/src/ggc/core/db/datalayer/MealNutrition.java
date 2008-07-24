@@ -19,7 +19,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: MealValue
+ *  Filename: MealNutrition
  *  Purpose:  This is datalayer file (data file). 
  *      This one is used for Meal (Nutrition) values.
  *

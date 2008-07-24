@@ -110,29 +110,31 @@ Version 0.5
 5. SUB-PROJECTS
 ===============
 
-Currently there are two sub-projects running.
+Currently there are three sub-projects running.
 
+
+!!! CHANGED - Start
 
 METER-TOOL
 -----------
 
 This is a plug-in for getting data from glucose meters. Currently this project is in
-the development phase. Together with support for Ascensia meters, we are finishing
-up the whole plug-in framework and all needed graphical interface forms (classes).
-The first alpha version will be available around September 2008, together with the
-finished implementation for Ascensia meters. Next in line are Roche meters
-(December 2008) and after them LifeScan meters (January 2009).
+the development phase. We finished support for Ascensia/Bayer meters and base 
+framework classes (also GUI classes). We have two functionalities left (meter lists 
+and configuration), but first version (0.2) is out and available (it's packed
+together into ggc package). Missing functionalities will be available by next
+ggc release. Next in line are Roche meters (October 2008) and after them 
+LifeScan meters (December 2009).
 
 
 PUMP-TOOL
 ----------
 
-This is plug-in for entering and retrieving data from insulin pumps. This project
-is still in the planning phase. The project will move into the development phase
-in September 2008, so the next version (0.4) may already have part of the pump-tool
-functionality. The first supported pumps will be those from Roche (April 2009),
-after them probably Minimed.
-
+This is plug-in for entering, retrieving and handling data from insulin pumps. This 
+project is slowly starting into development phase. We plan to have at least some
+pump functionality in next ggc version (0.4). The first supported pumps will be those 
+from Roche (December 2008), after them probably Minimed, and some developers are 
+working parallel to also add support for Animas.
 
 
 CGMS-TOOL
@@ -140,11 +142,11 @@ CGMS-TOOL
 
 This is a plug-in for retrieving data from CGMS device and viewing of this data. This
 project is still in the planning phase. The project will move into the development phase
-in September 2008, so the next version (0.4) may already have part of the cgms-tool
-functionality. The first supported CGMS will be that of Minimed through export file from 
+in January 2009. The first supported CGMS will be that of Minimed through export file from 
 CareLink.
 
 
+!!! CHANGED - End
 
 
 6. HOW CAN I HELP AS REGULAR USER

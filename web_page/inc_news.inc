@@ -2,6 +2,23 @@
 <br>
 <h2 class="head">News</h2>
 
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2008-07-06 18:44</td>
+<td>Release by end of month July 2008</td>
+</tr>
+<tr>
+<td colspan="2">
+We planned to have application ready by 4th of July, but we are still behind our release plan. This, vacations, RL (Real life)
+keep interfering with our release. We have just minimal stuff to do, so release WILL BE out by end of month. We wanted to 
+implement Restore Db function, so that updates will be possible in the future. We intend to implement special update service,
+but this might be months away. 
+</td></tr>
+</table> 
+
+<br><br>
+
 <table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
 <tr class="newsheader">
 <td width="150">2008-05-30 10:44</td>

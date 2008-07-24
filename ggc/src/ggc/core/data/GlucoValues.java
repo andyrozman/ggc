@@ -24,6 +24,9 @@
  *            form.
  *
  *  Author:   schultd
+ *  
+ *  @deprecated
+ *  
  */
 
 package ggc.core.data;

@@ -19,19 +19,18 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- * Filename: GGCDb Purpose: This is main datalayer file. It contains all methods
- * for initialization of Hibernate framework, for adding/updating/deleting data
- * from database (hibernate). It also contains all methods for mass readings of
- * data from hibernate.
+ * Filename: GGCDb 
+ *
+ * Purpose: This is main datalayer file. It contains all methods
+ *      for initialization of Hibernate framework, for adding/updating/deleting data
+ *      from database (hibernate). It also contains all methods for mass readings of
+ *      data from hibernate.
  * 
  * Author: andyrozman {andy@atech-software.com}
  */
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// 
 // Methods are added to this class, whenever we make changes to our existing
-// database,
-// either add methods for handling data or adding new tables.
+// database, either add methods for handling data or adding new tables.
 // 
 // andyrozman
 
@@ -76,7 +75,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -84,7 +82,7 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-public class GGCDb // implements DbCheckInterface
+public class GGCDb // implements DbCheckInterface HibernateDb
 {
     public static final int DB_CONFIG_LOADED = 1;
     public static final int DB_INITIALIZED = 2;
@@ -94,9 +92,9 @@ public class GGCDb // implements DbCheckInterface
     // x private boolean db_debug = false;
 
     private static Log log = LogFactory.getLog(GGCDb.class);
-    private Session m_session = null;
-    private Session m_session_2 = null;
-    private SessionFactory sessions = null;
+//    private Session m_session = null;
+//    private Session m_session_2 = null;
+//    private SessionFactory sessions = null;
     private int m_errorCode = 0;
     private String m_errorDesc = "";
     private String m_addId = "";
@@ -132,7 +130,7 @@ public class GGCDb // implements DbCheckInterface
 
     public GGCDb(DataAccess da)
     {
-        m_cfg = createConfiguration();
+        /*m_cfg =*/ createConfiguration();
         m_da = da;
         m_loadStatus = DB_CONFIG_LOADED;
         // debugConfig();
@@ -140,7 +138,7 @@ public class GGCDb // implements DbCheckInterface
 
     public GGCDb()
     {
-        m_cfg = createConfiguration();
+        /*m_cfg =*/ createConfiguration();
         m_loadStatus = DB_CONFIG_LOADED;
         // debugConfig();
     }
@@ -178,19 +176,7 @@ public class GGCDb // implements DbCheckInterface
 
     public void closeDb()
     {
-        if (this.hib_config.getHibernateDialect().equals("org.hibernate.dialect.HSQLDialect"))
-        {
-            try
-            {
-                getSession().connection().createStatement().execute("SHUTDOWN");
-            }
-            catch (Exception ex)
-            {
-                System.out.println("closeDb:Exception> " + ex);
-            }
-        }
-        getSession().close();
-        m_session = null;
+        this.hib_config.closeDb();
         m_loadStatus = DB_CONFIG_LOADED;
     }
 
@@ -201,6 +187,8 @@ public class GGCDb // implements DbCheckInterface
 
     public void openHibernateSimple()
     {
+        this.hib_config.createSessionFactory();
+/*        
         logInfo("openHibernateSimple", "Start");
         // getStartStatus();
         sessions = m_cfg.buildSessionFactory();
@@ -211,6 +199,8 @@ public class GGCDb // implements DbCheckInterface
 
         m_loadStatus = DB_INITIALIZED;
         logInfo("openHibernateSimple", "End");
+        */
+        m_loadStatus = DB_INITIALIZED;
     }
 
     /*
@@ -269,6 +259,8 @@ public class GGCDb // implements DbCheckInterface
 
     public Session getSession(int session_nr)
     {
+        return this.hib_config.getSession(session_nr);
+        /*
         if (session_nr == 1)
         {
             m_session.clear();
@@ -278,16 +270,16 @@ public class GGCDb // implements DbCheckInterface
         {
             m_session_2.clear();
             return m_session_2;
-        }
+        }*/
     }
 
     public void createDatabase()
     {
-        logInfo("createDatabase", "Start");
+        logInfo("createDatabase", "Process");
 
-        new SchemaExport(m_cfg).create(true, true);
+        new SchemaExport(this.getHibernateConfiguration().getConfiguration()).create(true, true);
 
-        logInfo("openHibernateSimple", "End");
+        //logInfo("openHibernateSimple", "End");
     }
 
     // *************************************************************
@@ -598,11 +590,11 @@ public class GGCDb // implements DbCheckInterface
     // **** SETTINGS ****
     // *************************************************************
 
-    public Configuration createConfiguration()
+    public void createConfiguration()
     {
         logInfo("createConfiguration()");
         this.hib_config = new GGCDbConfig(true);
-        return this.hib_config.getConfiguration();
+        this.hib_config.getConfiguration();
     }
 
     /*
@@ -1184,7 +1176,7 @@ public class GGCDb // implements DbCheckInterface
             String sDay = sdf.format(gc1.getTime()) + "0000";
 
             Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.bg <> 0 AND dv.dt_info >=  "
+                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.bg > 0 AND dv.dt_info >=  "
                         + sDay + " AND dv.dt_info <= " + eDay + " ORDER BY dv.dt_info");
 
             Iterator it = q.list().iterator();
@@ -1198,6 +1190,8 @@ public class GGCDb // implements DbCheckInterface
             hbVal.processDayValues();
 
             logDebug("getHbA1c()", "Readings: " + hbVal.getDayCount() + " " + hbVal.getReadings());
+            
+            System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
 
         }
         catch (Exception ex)

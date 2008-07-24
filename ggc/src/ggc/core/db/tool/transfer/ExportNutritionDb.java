@@ -10,19 +10,19 @@ import ggc.core.util.DataAccess;
 import java.io.File;
 import java.util.Iterator;
 
-import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
-import com.atech.db.hibernate.transfer.ExportTool;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
+
+import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
+import com.atech.db.hibernate.transfer.ExportTool;
 
 public class ExportNutritionDb extends ExportTool
 {
 
     public ExportNutritionDb(BackupRestoreWorkGiver giver)
     {
-        super(DataAccess.getInstance().getDb().getConfiguration());
+        super(DataAccess.getInstance().getDb().getHibernateConfiguration());
 
         checkPrerequisitesForAutoBackup();
 
@@ -32,7 +32,7 @@ public class ExportNutritionDb extends ExportTool
         // exportAll();
     }
 
-    public ExportNutritionDb(Configuration cfg)
+    public ExportNutritionDb(HibernateConfiguration cfg)
     {
         super(cfg);
 
@@ -79,6 +79,14 @@ public class ExportNutritionDb extends ExportTool
         this.setFileLastPart("");
     }
 
+    
+    public int getActiveSession()
+    {
+        return 2;
+    }
+    
+    
+    
     private void exportAll()
     {
         export_UserFoodGroups();
@@ -246,7 +254,8 @@ public class ExportNutritionDb extends ExportTool
     public static void main(String[] args)
     {
         GGCDb db = new GGCDb();
-        new ExportNutritionDb(db.getConfiguration());
+        db.initDb();
+        new ExportNutritionDb(db.getHibernateConfiguration());
     }
 
 }
