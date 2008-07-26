@@ -1,3 +1,8 @@
+2008-07-26 (0.3) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Version for release, minor changes to langauge file will be done for german language (probably), but 
+      officialy we are in code freeze.
+    * README.si translation finished
+
 2008-07-24  (0.2.23) Andy Rozman <andyrozman@users.sourceforge.net>
     * Finished and integrated Restore functionality
     * Application is ready for release. There are just few translations to finish and we are ready to go.
