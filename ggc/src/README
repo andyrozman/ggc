@@ -124,7 +124,7 @@ framework classes (also GUI classes). We have two functionalities left (meter li
 and configuration), but first version (0.2) is out and available (it's packed
 together into ggc package). Missing functionalities will be available by next
 ggc release. Next in line are Roche meters (October 2008) and after them 
-LifeScan meters (December 2009).
+LifeScan meters (December 2008).
 
 
 PUMP-TOOL
