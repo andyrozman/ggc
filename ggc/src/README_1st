@@ -1,0 +1,104 @@
+
+GGC - GNU Gluco Control
+=======================
+
+This are short instruction on how to start application. As prerequisite you need to have java 1.5  
+or higher installed (java 1.6 is preferred if available). If java is correctly installed (and in 
+your path) you shouldn't have any problems (you can check this by typing java in command 
+prompt - shell, if you get result it should work, if you get file not found, then there will be
+problems...)
+
+
+
+A) How to start software
+=========================
+
+1.) Windows
+
+After install program should run by itself (by clicking on icon), if it doesn't, you will need to 
+troubleshoot. Run cmd.exe (command line shell, search for icon Command Prompt) and run following
+command: run_win.cmd. Error should be written somewhere on screen. 
+In most cases problem is with java path ('java' is not recognized as an internal or external command,
+operable program or batch file). In this case follow instructions under C): 1.
+
+
+2.) Linux
+On linux platform you need to issue following command 'sh run_linux.sh'. If application doesn't start
+see on screen where the problem is. 
+Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
+resolve this)
+
+3.) Mac
+On Mac platform you need to issue following command 'bash run_mac.sh'. If application doesn't start
+see on screen where the problem is. 
+Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
+resolve this)
+
+4.) Other
+Unsupported, see section C.) 2.
+
+
+
+B) Support for Meters, Pumps and CGMs (serial and serial-usb bridge communication)
+==================================================================================
+
+We added support for Meters and we use special library called RxTX, for access to serial port (or USB
+bridge). 
+
+If you have special OS, which is not supported contact us on: ggc@atech-software.com. This library needs
+special binary part. You need to either find this binary part for RxTX library (someone else might have 
+already made it) or build it yourself (www.rxtx.org has source files, and library is open source).
+
+Binary library files need to be put into lib\native directory. Under that you have separate directories, 
+which are platform short names (linux, win, ...). All supported short names are listed under section D.  
+
+Supported OSes at this time are: Windows (x32, works with x64), Solaris (32/64), Mac OS X, Linux (x32, 
+ia64, x64).
+
+If you have USB device, you should configure USB so, that it will show virtual COM port.
+
+
+
+C) Troubleshooting
+===================
+
+1.) Java Path is not correct
+----------------------------
+
+a) Change path in StartupConfig
+
+Open StartupConfig.properties with your favorite editor. Change JAVA_EXE parameter to point to your java 
+executable (if you have Windows you should enclose path in " ", so that whole path is used. Also if you 
+use \, you should use doubles (\\), like "c:\\Program Files\\Java\\jre_1.5.0_06\\bin\\java.exe". When 
+this file is read single \ are removed.
+
+There is now also another way. You can create separate StartupConfig files for different platforms. Files
+then look like StartupConfig_<platform short name>.properties. This is helpful if you plan to use same 
+instalation under several OSes (for example on multi-os-startup machine or usb drive). USB How-to and 
+VMs will be available shortly.
+
+
+b) Change path in startup file (see section D)
+
+Open startup file and change path to java, similar to change in C.1.a, but here you must use single \ instead
+of double (like: "c:\Program Files\Java\jre_1.5.0_06\bin\java.exe")
+
+
+2.) Unsupported OS
+If you have reached this section then you have unsupported system. In this case you need to contact us at:
+ggc@atech-software.com. We will need your help to make your OS supported. Don't worry, it won't take long 
+time to make your OS supported. Usually there are just minor changes to do... Bigger problem might be 
+creation of binary file for RxTX (see section B.).
+
+
+
+D) Startup file
+================
+
+For each platform we have different batch startup file: 
+
+Platform    |    Batch file    |  Short name  |  Notes
+-------------------------------------------------------------------
+Windows     |  run_win.cmd     |  win         |
+Linux       |  run_linux.sh    |  linux       | need to have Sh installed (usually installed by default)
+Mac         |  run_mac.sh      |  mac         | need to have Bash installed (usually installed by default)
