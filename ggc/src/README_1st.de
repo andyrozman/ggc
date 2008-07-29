@@ -56,27 +56,32 @@ Wir haben die Messgeräte-Unterstützung hinzugefügt und benutzen eine speziell
 Bibliothek namens RxTX um serielle Schnittstellen (oder Serial-USB-Bridges)
 anzusprechen.
 
-If you have special OS, which is not supported contact us on: ggc@atech-software.com. This library needs
-special binary part. You need to either find this binary part for RxTX library (someone else might have 
-already made it) or build it yourself (www.rxtx.org has source files, and library is open source).
+Wenn Sie ein Betriebssystem haben, das nicht unterstützt wird, können Sie uns
+unter ggc-de@atech-software.com erreichen. Die RxTX-Bibliothek benötigt eine
+spezielle Binärdatei. Diese müssen Sie entweder suchen (da sie vielleicht schon
+von jemand anderem erstellt wurde), oder selbst erstellen (Quelldateien sind
+auf www.rxtx.org verfügbar).
 
-Binary library files need to be put into lib\native directory. Under that you have separate directories, 
-which are platform short names (linux, win, ...). All supported short names are listed under section D.  
+Die Binärdateien müssen in das lib/native-Verzeichnis kopiert werden. Darin
+sind mehrere Verzeichnisse enthalten, deren Namen aus Abkürzungen der
+Betriebssysteme bestehen (linux, win, ...). Die unterstützten Abkürzungen sind
+in Abschnitt D aufgelistet.
 
-Supported OSes at this time are: Windows (x32, works with x64), Solaris (32/64), Mac OS X, Linux (x32, 
-ia64, x64).
+Zur Zeit sind die unterstützten Betriebssysteme: Windows (x32, funktioniert mit
+x64), Solaris (32/64), Mac OS X, Linux (x32, ia64, x64).
 
-If you have USB device, you should configure USB so, that it will show virtual COM port.
+Wenn Sie ein USB-Gerät besitzen, sollten Sie es so konfigurieren, dass es unter
+einem virtuellen COM-Port erreichbar ist.
 
 
 
-C) Troubleshooting
+C) Fehlerbehandlung
 ===================
 
-1.) Java Path is not correct
-----------------------------
+1.) Java-Pfad ist inkorrekt
+---------------------------
 
-a) Change path in StartupConfig
+a) Pfad in StartupConfig ändern
 
 Open StartupConfig.properties with your favorite editor. Change JAVA_EXE parameter to point to your java 
 executable (if you have Windows you should enclose path in " ", so that whole path is used. Also if you 
@@ -95,21 +100,24 @@ Open startup file and change path to java, similar to change in C.1.a, but here 
 of double (like: "c:\Program Files\Java\jre_1.5.0_06\bin\java.exe")
 
 
-2.) Unsupported OS
-If you have reached this section then you have unsupported system. In this case you need to contact us at:
-ggc@atech-software.com. We will need your help to make your OS supported. Don't worry, it won't take long 
-time to make your OS supported. Usually there are just minor changes to do... Bigger problem might be 
-creation of binary file for RxTX (see section B.).
+2.) Nicht unterstütztes Betriebssystem
+Wenn Sie ein nicht unterstüztes Betriebssystem benutzen, sollten Sie uns unter
+ggc-de@atech-software.com kontaktieren. Soweit möglich, werden wir
+Unterstützung für Ihr Betriebssystem hinzufügen. Dies dauert normalerweise
+nicht lang. Meist müssen nur geringe Änderungen vorgenommen werden. Das größte
+Problem dürfte die Erstellung der Binärdatei für RxTX sein (siehe Abschnitt B).
 
 
 
-D) Startup file
-================
+D) Start-Skript
+===============
 
-For each platform we have different batch startup file: 
+Wir haben für jede Plattform ein eigenes Start-Skrip:
 
-Platform    |    Batch file    |  Short name  |  Notes
+Plattform   |      Skript      |  Abkürzung   | Anmerkungen
 -------------------------------------------------------------------
 Windows     |  run_win.cmd     |  win         |
-Linux       |  run_linux.sh    |  linux       | need to have sh installed (usually installed by default)
-Mac         |  run_mac.sh      |  mac         | need to have bash installed (usually installed by default)
+Linux       |  run_linux.sh    |  linux       | 'sh' muss installiert sein
+            |                  |              | (meist standardmäßig installiert)
+Mac         |  run_mac.sh      |  mac         | 'bash' muss installiert sein
+            |                  |              | (meist standardmäßig installiert)
