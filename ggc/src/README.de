@@ -120,36 +120,35 @@ Im Augenblick existieren zwei Unterprojekte.
 Messgeräte-Werkzeug
 -------------------
 
-Dies ist ein Plug-in für den Datenaustausch mit Blutzuckermessgeräten. Dieses
+Dies ist ein Plug-in für den Datenabruf von Blutzuckermessgeräten. Dieses
 Projekt befindet sich zur Zeit in der Entwicklungsphase. Zusammen mit der
-Unterstützung für Ascensia-Messgeräte, stellen wir das gesamte Plug-in-
-Framework und alle benötigten graphischen Masken (Klassen) fertig. Die erste
-Alpha-Version wird - zusammen mit der fertigen Implementierung für Ascensia-
-Messgeräte - ungefähr September 2008 verfügbar sein. Danach werden Roche
-(Dezember 2008) und LifeScan-Messgeräte (Januar 2009) in Angriff genommen.
+Unterstützung für Ascensia/Bayer-Messgeräte, ist das gesamte Plug-in-Framework
+und alle benötigten graphischen Masken fertig. Es müssen noch die
+Meßgeräteliste und Konfigurationsmaske fertiggestellt werden, aber die erste
+Version (0.2) ist verfügbar (und wird zusammen mit GGC herausgegeben). Die
+fehlende Funktionalität wird mit der nächsten Version von GGC verfügbar
+gemacht. Danach werden Roche-(Oktober 2008) und LifeScan-Messgeräte (Dezember
+2008) in Angriff genommen.
 
 
 Pumpen-Werkzeug
 ---------------
 
-Dies ist ein Plug-in zur Dateneingabe und -abruf von Insulinpumpen. Dieses
-Projekt befindet sich noch in der Planungsphase. Es wird im September 2008 in
-die Entwicklungsphase übergehen. Die nächste Version (0.4) könnte also schon
-teilweise die Funktionalität des Pumpen-Werkzeugs enthalten. Die ersten
-unterstützten Pumpen werden die von Roche sein (April 2009), danach
-wahrscheinlich die von Minimed.
+Dies ist ein Plug-in zur Eingabe und zum Abruf von Daten von Insulinpumpen.
+Dieses Projekt geht langsam in die Entwicklungsphase über. Wir planen in die
+nächste Version (0.4) schon teilweise die Funktionalität des Pumpen-Werkzeugs
+einzubauen. Die ersten unterstützten Pumpen werden die von Roche sein (Dezember
+2008), danach wahrscheinlich die von Minimed und einige Entwickler arbeiten
+gleichzeitig an der Unterstützung für Animas.
+
 
 CGMS-Werkzeug
 -------------
 
 Dies ist ein Plug-in zum Abrufen und Anzeigen von Daten von CGMS-Geräten.
-Dieses Projekt befindet sich noch in der Planungsphase. Es wird im September
-2008 in die Entwicklungsphase übergehen. Die nächste Version (0.4) könnte also
-schon teilweise die Funktionalität des CGMS-Werkzeugs enthalten. Die ersten
-unterstützten CGMS werden die von Minimed sein (durch eine Exportdatei vom
-CareLink).
-
-
+Dieses Projekt befindet sich noch in der Planungsphase. Es wird im Januar 2009
+in die Entwicklungsphase übergehen. Die ersten unterstützten CGMS werden die
+von Minimed sein (durch eine Exportdatei vom CareLink).
 
 
 6. Wie kann ich als regulärer Benutzer helfen?

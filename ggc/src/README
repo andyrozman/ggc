@@ -113,8 +113,6 @@ Version 0.5
 Currently there are three sub-projects running.
 
 
-!!! CHANGED - Start
-
 METER-TOOL
 -----------
 
@@ -144,9 +142,6 @@ This is a plug-in for retrieving data from CGMS device and viewing of this data.
 project is still in the planning phase. The project will move into the development phase
 in January 2009. The first supported CGMS will be that of Minimed through export file from 
 CareLink.
-
-
-!!! CHANGED - End
 
 
 6. HOW CAN I HELP AS REGULAR USER
