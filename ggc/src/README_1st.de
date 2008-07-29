@@ -2,49 +2,59 @@
 GGC - GNU Gluco Control
 =======================
 
-This are short instructions on how to start the application. As prerequisite you need to have java 5
-or higher installed (java 6 is preferred if available). If java is correctly installed (and in 
-your path) you shouldn't have any problems (you can check this by typing 'java -version' in command 
-prompt - shell, if you get result it should work, if you get file not found, then there will be
-problems...)
+
+Dies ist eine kurze Anleitung, wie die Application gestartet werden kann. Die
+Voraussetzung ist, dass Java 5 oder höher istalliert ist (vorzugsweise Java 6).
+Ist Java korrekt installiert, sollten keine Probleme auftreten. Dies kann
+überprüft werden indem man 'java -version' auf der Kommandozeile eingibt. Wird
+die korrekte Java-Version angezeigt, ist alles in Ordnung. Tritt ein Fehler
+auf, wird sich GGC nicht starten lassen.
 
 
 
-A) How to start software
-=========================
+A) Starten der Software
+=======================
 
 1.) Windows
-After install program should run by itself (by clicking on icon), if it doesn't, you will need to 
-troubleshoot. Run cmd.exe (command line shell, search for icon Command Prompt) and run following
-command: run_win.cmd. Error should be written somewhere on screen. 
-In most cases problem is with java path ('java' is not recognized as an internal or external command,
-operable program or batch file). In this case follow instructions under C): 1.
+Nach der Installation sollte das Programm durch einen Doppelklick auf das
+Symbol starten. Startet es nicht, müssen Sie cmd.exe starten und in das
+Verzeichnis wechseln, in das GGC installiert wurde. Dort müssen Sie
+'run_win.cmd' ausführen. Eine Fehlermeldung sollte irgendwo auf dem Bildschirm
+erscheinen. Meistens ist das Problem, dass java.exe nicht gefunden werden kann.
+In diesem Fall folgen Sie bitte den Anweisungen unter C.1).
 
 
 2.) Linux
-On linux platform you need to issue following command 'sh run_linux.sh'. If application doesn't start
-see on screen where the problem is. 
-Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
-resolve this)
+Unter Linux muss der Befehl 'sh run_linux.sh' im Installationsverzeichnis von
+GGC ausgeführt werden. Startet die Anwendung nicht, sollte eine Fehlermeldung
+auf dem Bildschirm ausgegeben werden.
+Wie im Windows-Abschnitt ist das Problem meistens, dass das java-Programm nicht
+gefunden werden kann. In diesem Fall folgen Sie bitte den Anweisungen unter
+C.1).
 
 
-3.) MacOS X
-On MacOS X platform you need to issue following command 'bash run_mac.sh'. If application doesn't
-start see on screen where the problem is. 
-Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
-resolve this)
+3.) Mac
+Unter MacOS X muss der Befehl 'sh run_mac.sh' im Installationsverzeichnis von
+GGC ausgeführt werden. Startet die Anwendung nicht, sollte eine Fehlermeldung
+auf dem Bildschirm ausgegeben werden.
+Wie im Windows-Abschnitt ist das Problem meistens, dass das java-Programm nicht
+gefunden werden kann. In diesem Fall folgen Sie bitte den Anweisungen unter
+C.1).
 
 
-4.) Other
-Unsupported, see section C.) 2.
+4.) Andere
+Andere Betriebssysteme werden nicht unterstützt, siehe C.2).
 
 
 
-B) Support for Meters, Pumps and CGMS (serial and serial-usb bridge communication)
-==================================================================================
+B) Unterstützung für Meßgeräte, Pumpen und CGMS (serielle und Serial-USB-Bridge
+===============================================================================
+Kommunikation
+=============
 
-We added support for Meters and we use special library called RxTX, for access to serial port (or USB
-bridge). 
+Wir haben die Messgeräte-Unterstützung hinzugefügt und benutzen eine spezielle
+Bibliothek namens RxTX um serielle Schnittstellen (oder Serial-USB-Bridges)
+anzusprechen.
 
 If you have special OS, which is not supported contact us on: ggc@atech-software.com. This library needs
 special binary part. You need to either find this binary part for RxTX library (someone else might have 
