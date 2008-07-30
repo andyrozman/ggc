@@ -69,12 +69,12 @@ public class AboutGGCDialog extends AboutDialog
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
 
         CreditsGroup cg = new CreditsGroup(m_ic.getMessage("CURRENT_DEVELOPERS"));
-        cg.addCreditsEntry(new CreditsEntry("Dieter Schultschik", "schultd@users.sourceforge.net", "Creator and Designer of this application"));
         cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andyrozman@users.sourceforge.net", "Current main developer"));
-        cg.addCreditsEntry(new CreditsEntry("Reinhold Rumberger", "rumbi@users.sourceforge.net", "Tester and developer"));
+        cg.addCreditsEntry(new CreditsEntry("Reinhold Rumberger", "rumbi@users.sourceforge.net", "Tester (linux) and developer"));
         lst_credits.add(cg);
 
         cg = new CreditsGroup(m_ic.getMessage("PREVIOUS_DEVELOPERS"));
+        cg.addCreditsEntry(new CreditsEntry("Dieter Schultschik", "schultd@users.sourceforge.net", "Creator and Designer of this application"));
         cg.addCreditsEntry(new CreditsEntry("Stephan Schrader", "sschrade@users.sourceforge.net", "First meters supported..."));
         lst_credits.add(cg);
 
@@ -87,11 +87,14 @@ public class AboutGGCDialog extends AboutDialog
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
         lst_libs.add(new LibraryInfoEntry("Hibernate", "3.1", "www.hibernate.org", "LGPL", "Library for object-oriented access to DBs"));
 
-        LibraryInfoEntry li = new LibraryInfoEntry("HSQLDB", "1.8.0", "hsqldb.org", "Hypersonic", "Internal Java DB", "Copyright (c) 1995-2000 by the Hypersonic SQL Group. All rights reserved.");
-        li.setCopyRightNotice2("Copyright (c) 2001-2005, The HSQL Development Group. All rights reserved.");
+        //LibraryInfoEntry li = new LibraryInfoEntry("HSQLDB", "1.8.0", "hsqldb.org", "Hypersonic", "Internal Java DB", "Copyright (c) 1995-2000 by the Hypersonic SQL Group. All rights reserved.");
+        //li.setCopyRightNotice2("Copyright (c) 2001-2005, The HSQL Development Group. All rights reserved.");
+        //lst_libs.add(li);
+        LibraryInfoEntry li = new LibraryInfoEntry("H2 Database", "1.0.69", "www.h2database.com", "MPL 1.1 & EPL 1.0", "Internal Java DB", "Copyright (c) 2004-2008 by the H2 Group. All rights reserved.");
         lst_libs.add(li);
 
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.1.6", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2007 Atech Software Ltd. All rights reserved."));
+        
+        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2007 Atech Software Ltd. All rights reserved."));
         lst_libs.add(new LibraryInfoEntry("SkinLF", "6.7", "www.l2fprod.com", "LGPL", "Skins Library", "Copyright (c) 2000-2006 L2FProd.com.  All rights reserved."));
         lst_libs.add(new LibraryInfoEntry("iText", "2.0.7", "www.lowagie.com/iText/", "MPL", "Library for PDF creation (printing)"));
         lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
