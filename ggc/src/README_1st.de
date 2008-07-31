@@ -49,8 +49,8 @@ Andere Betriebssysteme werden nicht unterstützt, siehe C.2).
 
 B) Unterstützung für Meßgeräte, Pumpen und CGMS (serielle und Serial-USB-Bridge
 ===============================================================================
-Kommunikation
-=============
+   Kommunikation
+   =============
 
 Wir haben die Messgeräte-Unterstützung hinzugefügt und benutzen eine spezielle
 Bibliothek namens RxTX um serielle Schnittstellen (oder Serial-USB-Bridges)
@@ -83,21 +83,25 @@ C) Fehlerbehandlung
 
 a) Pfad in StartupConfig ändern
 
-Open StartupConfig.properties with your favorite editor. Change JAVA_EXE parameter to point to your java 
-executable (if you have Windows you should enclose path in " ", so that whole path is used. Also if you 
-use \, you should use doubles (\\), like "c:\\Program Files\\Java\\jre_1.5.0_06\\bin\\java.exe". When 
-this file is read single \ are removed.
+Öffnen Sie StartupConfig.properties in einem Texteditor. Ändern sie die
+JAVA_EXE-Variable so, dass sie auf das Java-Programm zeigt. Unter Windows
+sollten Sie den ganzen Pfad mit Anführungszeichen umgeben und statt '\'-Zeichen
+'\\' benutzen (z.B. "C:\\Program Files\\Java\\jre_1.5.0_06\\bin\\java.exe").
+Beim Einlesen dieser Datei werden einzelne '\'-Zeichen entfernt.
 
-There is now also another way. You can create separate StartupConfig files for different platforms. Files
-then look like StartupConfig_<platform short name>.properties. This is helpful if you plan to use same 
-instalation under several OSes (for example on multi-os-startup machine or usb drive). USB How-to and 
-VMs will be available shortly.
+Eine andere Methode ist, mehrere StartupConfig-Dateien für unterschiedliche
+Plattformen zu erstellen. Diese heißen
+'StartupConfig_<Platformkürzel>.properties'. Das ist hilfreich, wenn Sie eine
+Installation unter verschiedenen Betriebssystemen nutzen möchten
+(z.B. Multi-Boot-System oder USB-Laufwerk). Ein USB-HowTo und [TODO: VMs]
+werden bald verfügbar sein.
 
 
-b) Change path in startup file (see section D)
+b) Pfad im Start-Skript ändern (siehe Abschnitt D)
 
-Open startup file and change path to java, similar to change in C.1.a, but here you must use single \ instead
-of double (like: "c:\Program Files\Java\jre_1.5.0_06\bin\java.exe")
+Öffnen Sie das Start-Skript wie in C.1.a beschrieben. Hier müssen Sie in
+Windows einfache '\'-Zeichen benutzen anstelle von doppelten
+(z.B. "C:\Program Files\Java\jre_1.5.0_06\bin\java.exe").
 
 
 2.) Nicht unterstütztes Betriebssystem
