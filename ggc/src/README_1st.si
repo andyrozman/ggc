@@ -2,135 +2,138 @@
 GGC - GNU Gluco Control
 =======================
 
-This are short instructions on how to start the application.
+To so kratka navodila za zagon aplikacije (v primeru, da imamo problem s delovanjem).
 
-All java programs need special environment to run, it's called Java Runtime Environment (JRE) or 
-Java Development Kit (JDK, it contains JRE). On some OSes we can have problems detecting if this 
-JRE or JDK is installed. Because of this most of software packages, also contain JRE in their 
-install package (we have one windows install package that also contains JRE).
+Vsi javanski programi potrebujejo okolje za zagon, ki ga imenujemo Javansko zagonsko okolje (v 
+nadaljnem besedilu JRE) ali Javanski razvijalski komplet (v nadaljnem besedilu JDK). Na nekaterih
+operacijskih sistemih (OS) imamo v včasih težave, zato večina instalacijskih programov vsebuje
+JRE v osnovnem paketu (tudi mi nudimo en takšen paket). 
 
-For GGC you need to have at least Java 1.5, but 1.6 is preferred. 
+Za GGC aplikacijo potrebujemo Java 1.5, vendar je 1.6 priporočena.
 
-Problem is that this JRE is different for each platform (also for each hardware version of platform),
-so we need to do some things, to make GGC to run.
-You can choose to do one of this things:
+Problem je, da je JRE drugačen za vsak OS (in tudi za različno strojno opremo), kar pomeni, da moramo
+narediti nekaj stvari, da lahko zaženemo GGC.
+Najprej moramo storiti eno od naslednjih stvari:
 
-1.) Modify system path to include path to your existing JRE installation. 
-    You can check if this is set if you run following command 'java -version'. If you get 
-    'file not found' error then this is not set. 
-    (if you installed from windows install package with _jre ending this option is not open 
-    to you, but you could run application without any changes)  
+1.) Sprememba sistemske poti, da vključuje obstoječo JRE namestitev
+    To lahko preverimo s zagonom naslednjega ukaza 'java -version'. Če dobite 'Datoteka ni 
+    najdena.' napako, potem to ni nastavljeno.
+    (Če ste namestili iz windows namestitvene datoteke s končnico _jre potem, vam ta opcija 
+    ni odprta, ampak tudi ni potrebna, saj lahko aplikacijo zaženete brez sprememb).
+    
+2.) Kopirajte JRE datoteke v jre mapo pod GGC namestitvijo
+    Tukaj imamo dve izbiri. Če že imate javo instalirano na sistemu (brkljalnik včasih avtomatsko
+    namesti za zagon java appletov) lahko kopirate datoteke iz te namestitve. Programi so ponavadi
+    pod Program Files\Java\jre<version> na windowskih in nekje pod /usr/local na linuxu. Kopirati
+    morate vse datoteke pod jre<nekaj> mapo v <GGC Namestitev>\jre mapo.
+    Druga izbora je da naložite pravilen VM iz sekcije 'USB Release'. To je datoteka, ki je 
+    namenjena za namestitev na USB diske (pride kmalu, VMji so že dostopni). Vsi preverjeni 
+    VMji so tukaj, tako da če najdete tukaj datoteko ne boste imeli s njo nobenih problemov. 
+    Vse kar morate narediti je naložiti pravilno datoteko in dearhivirajte določene datoteke.
+    V arhivu je ime VMja (v primeru windowsov je mapa Windows) pod to mapo pa je 
+    jre_<različica><OS tagi> mapa. Kopirajte vse datoteke pod to mapo v GGC\jre mapo. Če vaš
+    OS ni tukaj, boste morali uporabiti razližico na sistemu.
 
-2.) Copy JRE files into jre directory under GGC 
-    Now you have two options here. If you have java already installed on your system (your 
-    browser sometimes install this automatically to handle java applets) you can copy this 
-    files from there. Usually they are under Program Files\Java\jre<version> on windows
-    and somewhere under /usr/local/ on linux. You need to copy all files under jre<something>
-    diredctory to <GGC-Installed>\jre directory.
-    2nd option is to download correct VM from 'USB Release' section. This is file that is meant
-    for installation to USB disks (comming soon). All tested VMs are there, so if you find 
-    VM there you should not have any problems. You need to download VM zip file and extract 
-    certain files. In archive you will find directory with name of VM (in case of windows, 
-    directory is called Windows) under that directory there is jre_<version><OS-tags> directory. 
-    Copy all files under there into GGC\jre directory. If your OSes VM is not there, then you 
-    will have to use the one installed on system. 
-        
-3.) Modify config files  
-    How to modify config files is described in section C.), but please read also through 
-    sections A) and B)  
-
+3.) Spremeni konfiguracijske datoteke
+    Kako spremenimo konfiguracijsko datoteko je opisano v sekciji C.), toda prosim preberite
+    tudi sekcije A) in B)        
 
 
-A) How to start software
+A) Kako zaženemo program 
 =========================
 
 1.) Windows
-After install program should run by itself (by clicking on icon), if it doesn't, you will need to 
-troubleshoot. Run cmd.exe (command line shell, search for icon Command Prompt) and run following
-command: run_win.cmd. Error should be written somewhere on screen. 
-In most cases problem is with java path ('java' is not recognized as an internal or external command,
-operable program or batch file). In this case follow instructions under C): 1.
-
+Po namestitvi bi moral program teči sam od sebe (pri kliku na ikono), če ne dela boste morali
+situacijo raziskati. Zaženite cmd.exe (ukazna vrstica, Start->Run...-> cmd.exe) pojdite v mapo, kjer
+je GGC nameščen in zaženite naslednji ukaz: 'run_win.cmd'. Napaka bo prikazana na zaslonu.
+V največih primerih je problem s potjo do java programa ('java' is not recognized as an internal or 
+external command, operable program or batch file). V tem primeru sledite navodilom pod C): 1.
 
 2.) Linux
-On linux platform you need to issue following command 'sh run_linux.sh'. If application doesn't start
-see on screen where the problem is. 
-Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
-resolve this)
-
+Na linux platformi morate uporabiti naslednji ukaz 'sh run_linux.sh'. Če se aplikacija ne zažene
+bo na zaslonu pisalo kje je problem.
+Enako kot v Windows sekciji (A.1) je problem ve�inoma s potjo do jave (poglejte sekcijo C.1, da 
+vidite kako razrešiti problem)
 
 3.) MacOS X
-On MacOS X platform you need to issue following command 'bash run_mac.sh'. If application doesn't
-start see on screen where the problem is. 
-Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
-resolve this)
+Na MacOS X platformi morate uporabiti naslednji ukaz 'bash run_mac.sh'. Če se aplikacija ne zažene
+bo na zaslonu pisalo kje je problem.
+Enako kot v Windows sekciji (A.1) je problem večinoma s potjo do jave (poglejte sekcijo C.1, da 
+vidite kako razrežiti problem) 
+
+4.) Ostali
+Zaenkrat nepodprti, glej skecijo C.) 2.
 
 
-4.) Other
-Unsupported, see section C.) 2.
+B) Podpora ta Merilce, Pumpe in CGMSe (serijska in usb-serijska most komunikacija)
+===================================================================================
+
+Dodali smo podporo za Merilce s posebno knjižnico imenovano RxTX, ki dovoli dostop do serijskih
+vrat (ali USB serijskega mosta = naprave, ki so priključene na USB priključek, a so v resnici 
+serijske naprave).
+
+Če imate OS, ki ni podprt nas prosim kontaktirajte na: ggc@atech-software.com. Ta knjižnica
+potrebuje posebno binarno datoteko. Torej rešitev je da najdate ta binarni del (nekdo je verjetno
+že pred vami uporabljal to knjižnico na vašem OSu in ga je že naredil) ali pa ta binarni del 
+ustvarite sami (www.rxtx.org ima izvorne datoteke, in knjižnica je odprto-kodna). Za ta postopek boste 
+verjetno potrebovali pomoč, zato nas kontaktirajte.
+
+Binarno datoteko morate položiti v lib\native mapo. Pod to mapo so posamezne mape, ki so kratka imena 
+za platforme (linux, win,...). Vsa podprta kratka imena so v sekciji D.
+
+Podprti OSi (za knjižnico): Windows (x32, dela s x64), Solaris (32/64), Mac OS X, Linux (x32, 
+ia64, x64), FreeBSD (amd64).
+
+Če imate napravo, ki je USB naprava (in ni most), jo morate nastaviti tako, da bodo vidna virtualna
+vrata.
 
 
+C) Odkrivanje napak
+====================
 
-B) Support for Meters, Pumps and CGMS (serial and serial-usb bridge communication)
-==================================================================================
+1.) Java pot ni pravilna
+--------------------------
 
-We added support for Meters and we use special library called RxTX, for access to serial port (or USB
-bridge). 
+a) Spremeni pot v StartupConfig datoteki
 
-If you have special OS, which is not supported contact us on: ggc@atech-software.com. This library needs
-special binary part. You need to either find this binary part for RxTX library (someone else might have 
-already made it) or build it yourself (www.rxtx.org has source files, and library is open source).
+Odpri StartupConfig.properties s vašim najljubšim urejevalnikov. Spremeni JAVA_EXE parameter, da bo
+kazal do java programa (če imate Windows morate pot začeti in zaključit s ", tako da bo uporabljena 
+celotna pot. Če uporabljate \, morate uporabiti dvojne (\\), kot  
+"c:\\Program Files\\Java\\jre_1.5.0_06\\bin\\java.exe". Ko se podatki berejo, se dvojni pretvorijo v 
+enojne.
 
-Binary library files need to be put into lib\native directory. Under that you have separate directories, 
-which are platform short names (linux, win, ...). All supported short names are listed under section D.  
-
-Supported OSes at this time are: Windows (x32, works with x64), Solaris (32/64), Mac OS X, Linux (x32, 
-ia64, x64).
-
-If you have USB device, you should configure USB so, that it will show virtual COM port.
-
-
-
-C) Troubleshooting
-===================
-
-1.) Java Path is not correct
-----------------------------
-
-a) Change path in StartupConfig
-
-Open StartupConfig.properties with your favorite editor. Change JAVA_EXE parameter to point to your java 
-executable (if you have Windows you should enclose path in " ", so that whole path is used. Also if you 
-use \, you should use doubles (\\), like "c:\\Program Files\\Java\\jre_1.5.0_06\\bin\\java.exe". When 
-this file is read single \ are removed.
-
-There is now also another way. You can create separate StartupConfig files for different platforms. Files
-then look like StartupConfig_<platform short name>.properties. This is helpful if you plan to use same 
-instalation under several OSes (for example on multi-os-startup machine or usb drive). USB How-to and 
-VMs will be available shortly.
+Obstaja še druga pot. Ustvarite lahko posamične StartupConfig datoteke za različne OS. Datoteka bo
+zgledala kot StartupConfig_<kratko ime za platformo>.properties. To je v pomoč, če boste uporabljali
+isto namestitev pod različnimi OSi (v primeru Multi-Zagonske instalacije ali USB diska). USB-How-To in
+VMji (Java zagonsko okolje za določen OS in potrebne konfiguracijske datoteke) bodo kmalu dostopne.
 
 
-b) Change path in startup file (see section E)
+b) Spremeni pot v zagonski datoteki (glej sekcijo D)
 
-Open startup file and change path to java, similar to change in D.1.a, but here you must use single \ instead
-of double (like: "c:\Program Files\Java\jre_1.5.0_06\bin\java.exe")
-
-
-2.) Unsupported OS
-If you have reached this section then you have unsupported system. In this case you need to contact us at:
-ggc@atech-software.com. If possible, we will need your help to make your OS supported. Don't worry, it
-won't take long time to make your OS supported. Usually there are just minor changes to do... Bigger problem
-might be creation of binary file for RxTX (see section B.).
+Odprite zagonsko datoteko in spremenite pot do jave (JAVA_EXE spremenljivka), podobno kot sprememba v
+D.1.a, toda uporabiti morate enojne \ namesto dvojnih:  
+(kot: "c:\Program Files\Java\jre_1.5.0_06\bin\java.exe")
 
 
+2.) Nepodprti OSi
+-------------------
 
-D) Startup file
-================
+Če ste dosegli to sekcijo, potem imate zaenkrat nepodprt sistem. V tem primeru nas morate kontaktirati
+na: ggc@atech-software.com. Če bo možno, bomo potrebovali majhno pomoč iz vaše strani. Ne skrbite, vaš
+sistem bomo dodali zelo hitro, ponavadi gre samo za manjše spremembe... Večji problem bo ustvaritev
+binarne datoteke za RxTX knjižnico (glej sekcijo B).
 
-For each platform we have different batch startup file: 
 
-Platform    |    Batch file    |  Short name  |  Notes
+D) Podprte platforme (OS)
+==========================
+
+
+Platforma   |  Zagonska dat.   |  Kratko ime  |  Opombe
 -------------------------------------------------------------------
 Windows     |  run_win.cmd     |  win         |
-Linux       |  run_linux.sh    |  linux       | need to have sh installed (usually installed by default)
-Mac         |  run_mac.sh      |  mac         | need to have bash installed (usually installed by default)
+Linux       |  run_linux.sh    |  linux       | potrebujemo sh (nameščen privzeto)
+Mac         |  run_mac.sh      |  mac         | potrebujemo bash (nameščen privzeto)
+FreeBSD     |  run_freebsd.sh  |  freebsd     | potrebujemo sh (nameščen privzeto)
+
+Če vašega OSa ni tukaj, nas boste morali kontaktirati in bomo videli, kaj se da narediti.
+

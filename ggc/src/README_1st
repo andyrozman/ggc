@@ -126,16 +126,14 @@ might be creation of binary file for RxTX (see section B.).
 
 
 
-D) Startup file
-================
+D) Supported platforms
+=======================
 
-For each platform we have different batch startup file: 
-
-Platform    |    Batch file    |  Short name  |  Notes
+Platform    |   Startup file   |  Short name  |  Notes
 -------------------------------------------------------------------
 Windows     |  run_win.cmd     |  win         |
 Linux       |  run_linux.sh    |  linux       | need to have sh installed (usually installed by default)
 Mac         |  run_mac.sh      |  mac         | need to have bash installed (usually installed by default)
 FreeBSD     |  run_freebsd.sh  |  freebsd     | need to have sh installed (installed by default)
 
-If your OS name is not here, please contact us and we will se what we can do.
+If your OS name is not here, please contact us and we will see what we can do.
