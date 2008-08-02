@@ -26,27 +26,27 @@ Bitte befolgen Sie einen der folgenden Punkte:
     gesetzt.
 
 2.) Die JRE-Dateien in ein Unterverzeichnis von GGC kopieren.
-    [TODO]
+    Sie haben hier zwei Möglichkeiten. Falls Sie Java schon installiert haben
+    (manchmal installieren Browser automatisch ein JRE um Applets anzeigen zu
+    können), können Sie die Dateien von dort kopieren. Normalerweise sind sie
+    in Windows unter C:\Program Files\Java\jre<Version> und in Linux unter
+    /usr/local/java zu finden. Sie müssen den Inhalt des JRE-Verzeichnisses
+    unter das Installationsverzeichnis von GGC in ein Verzeichnis namens "jre"
+    kopieren.
+    Die zweite Möglichkeit ist die richtige JVM aus dem 'USB Release'-Abschnitt
+    zu kopieren. Diese Datei ist dazu gedacht, auf USB-Laufwerken installiert
+    zu werden. Alle getesteten VMs befinden sich dort, mit diesen sollten Sie
+    also keine Problem bekommen. Sie müssen die VM-Zipdatei herunterladen und
+    bestimmte Dateien extrahieren. In dem Archiv befindet sich ein Verzeichnis
+    mit dem Namen der VM (z.B. für Windows heißt es "Windows"). In diesem
+    Verzeichnis befindet sich ein Unterverzeichnis namens
+    "jre_<Version><OS-Tags>". Kopieren Sie die darin enthaltenen Dateien in das
+    GGC/jre-Verzeichnis. Existiert hier keine VM für Ihr Betriebssystem, müssen
+    Sie die benutzen, die auf Ihrem System installiert ist.
 
-
-
-2.) Copy JRE files into jre directory under GGC 
-    Now you have two options here. If you have java already installed on your system (your 
-    browser sometimes install this automatically to handle java applets) you can copy the
-    files from there. Usually they are under Program Files\Java\jre<version> on windows
-    and somewhere under /usr/local/ on linux. You need to copy all files under jre<something>
-    diredctory to <GGC-Installed>\jre directory.
-    2nd option is to download correct VM from 'USB Release' section. This is file that is meant
-    for installation to USB disks (comming soon). All tested VMs are there, so if you find 
-    VM there you should not have any problems. You need to download VM zip file and extract 
-    certain files. In archive you will find directory with name of VM (in case of windows, 
-    directory is called Windows) under that directory there is jre_<version><OS-tags> directory. 
-    Copy all files under there into GGC\jre directory. If your OSes VM is not there, then you 
-    will have to use the one installed on system. 
-        
-3.) Modify config files  
-    How to modify config files is described in section C.), but please read also through 
-    sections A) and B)  
+3.) Konfigurationsdateien anpassen
+    Wie die Konfigurationsdateien angepasst werden können wird in Abschnitt C
+    beschrieben. Bitte lesen Sie trotzdem auch die Abschnitte A und B.
 
 
 

@@ -22,13 +22,13 @@ You can choose to do one of these things:
 2.) Copy JRE files into jre directory under GGC 
     Now you have two options here. If you have java already installed on your system (your 
     browser sometimes install this automatically to handle java applets) you can copy the
-    files from there. Usually they are under Program Files\Java\jre<version> on windows
-    and somewhere under /usr/local/ on linux. You need to copy all files under jre<something>
-    diredctory to <GGC-Installed>\jre directory.
+    files from there. Usually they are under C:\Program Files\Java\jre<version> on windows
+    and somewhere under /usr/local/java on linux. You need to copy all files under jre<something>
+    directory to <GGC-Installed>\jre directory.
     2nd option is to download correct VM from 'USB Release' section. This is file that is meant
-    for installation to USB disks (comming soon). All tested VMs are there, so if you find 
+    for installation to USB disks (coming soon). All tested VMs are there, so if you find 
     VM there you should not have any problems. You need to download VM zip file and extract 
-    certain files. In archive you will find directory with name of VM (in case of windows, 
+    certain files. In the archive you will find a directory with the name of the VM (in case of windows,
     directory is called Windows) under that directory there is jre_<version><OS-tags> directory. 
     Copy all files under there into GGC\jre directory. If your OSes VM is not there, then you 
     will have to use the one installed on system. 
