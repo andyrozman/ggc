@@ -13,17 +13,15 @@ For GGC you need to have at least Java 1.5, but 1.6 is preferred.
 
 Problem is that this JRE is different for each platform (also for each hardware version of platform),
 so we need to do some things, to make GGC to run.
-You can choose to do one of this things:
+You can choose to do one of these things:
 
 1.) Modify system path to include path to your existing JRE installation. 
     You can check if this is set if you run following command 'java -version'. If you get 
-    'file not found' error then this is not set. 
-    (if you installed from windows install package with _jre ending this option is not open 
-    to you, but you could run application without any changes)  
+    'file not found' error then this is not set.
 
 2.) Copy JRE files into jre directory under GGC 
     Now you have two options here. If you have java already installed on your system (your 
-    browser sometimes install this automatically to handle java applets) you can copy this 
+    browser sometimes install this automatically to handle java applets) you can copy the
     files from there. Usually they are under Program Files\Java\jre<version> on windows
     and somewhere under /usr/local/ on linux. You need to copy all files under jre<something>
     diredctory to <GGC-Installed>\jre directory.
@@ -135,5 +133,6 @@ Windows     |  run_win.cmd     |  win         |
 Linux       |  run_linux.sh    |  linux       | need to have sh installed (usually installed by default)
 Mac         |  run_mac.sh      |  mac         | need to have bash installed (usually installed by default)
 FreeBSD     |  run_freebsd.sh  |  freebsd     | need to have sh installed (installed by default)
+
 
 If your OS name is not here, please contact us and we will see what we can do.

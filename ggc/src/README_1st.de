@@ -3,17 +3,55 @@ GGC - GNU Gluco Control
 =======================
 
 
-Dies ist eine kurze Anleitung, wie die Application gestartet werden kann. Die
-Voraussetzung ist, dass Java 5 oder höher istalliert ist (vorzugsweise Java 6).
-Ist Java korrekt installiert, sollten keine Probleme auftreten. Dies kann
-überprüft werden indem man 'java -version' auf der Kommandozeile eingibt. Wird
-die korrekte Java-Version angezeigt, ist alles in Ordnung. Tritt ein Fehler
-auf, wird sich GGC nicht starten lassen.
+Dies ist eine kurze Anleitung, wie die Application gestartet wird.
+
+Alle Java-Programme brauchen eine spezielle Umgebung um arbeiten zu können -
+das Java Runtime Environment (JRE) oder das Java Development Kit (JDK, enthält
+das JRE). Bei einigen Betriebssystemen kann es Probleme geben, diese Umgebung
+zu finden. Aus diesem Grund enthalten die meinsten Softwarepakete ein JRE in
+ihrem Installationspaket (bei uns enthält nur das Windows-Paket ein JRE).
+
+GGC benötigt wenigstens Java 5, 6 wird bevorzugt.
+
+Das Problem ist, dass es für jede Plattform ein anderes JRE-Paket gibt (auch
+hardwareabhängig). Deshalb muss die Umgebung manchmal individuell eingerichtet
+werden.
+Bitte befolgen Sie einen der folgenden Punkte:
+
+1.) Passen Sie den Systempfad (PATH) an, damit Ihre bestehende JRE-Installation
+    gefunden werden kann.
+    Sie können verifizieren, dass alles korrekt eingerichtet ist, indem Sie
+    'java -version' ausführen. Tritt ein Fehler auf der besagt, dass die Datei
+    "java" nicht gefunden werden kann, ist der Systempfad nicht korrekt
+    gesetzt.
+
+2.) Die JRE-Dateien in ein Unterverzeichnis von GGC kopieren.
+    [TODO]
+
+
+
+2.) Copy JRE files into jre directory under GGC 
+    Now you have two options here. If you have java already installed on your system (your 
+    browser sometimes install this automatically to handle java applets) you can copy the
+    files from there. Usually they are under Program Files\Java\jre<version> on windows
+    and somewhere under /usr/local/ on linux. You need to copy all files under jre<something>
+    diredctory to <GGC-Installed>\jre directory.
+    2nd option is to download correct VM from 'USB Release' section. This is file that is meant
+    for installation to USB disks (comming soon). All tested VMs are there, so if you find 
+    VM there you should not have any problems. You need to download VM zip file and extract 
+    certain files. In archive you will find directory with name of VM (in case of windows, 
+    directory is called Windows) under that directory there is jre_<version><OS-tags> directory. 
+    Copy all files under there into GGC\jre directory. If your OSes VM is not there, then you 
+    will have to use the one installed on system. 
+        
+3.) Modify config files  
+    How to modify config files is described in section C.), but please read also through 
+    sections A) and B)  
 
 
 
 A) Starten der Software
-=======================
+   ====================
 
 1.) Windows
 Nach der Installation sollte das Programm durch einen Doppelklick auf das
@@ -48,7 +86,7 @@ Andere Betriebssysteme werden nicht unterstützt, siehe C.2).
 
 
 B) Unterstützung für Meßgeräte, Pumpen und CGMS (serielle und Serial-USB-Bridge
-===============================================================================
+   ============================================================================
    Kommunikation
    =============
 
@@ -76,7 +114,7 @@ einem virtuellen COM-Port erreichbar ist.
 
 
 C) Fehlerbehandlung
-===================
+   ================
 
 1.) Java-Pfad ist inkorrekt
 ---------------------------
@@ -93,8 +131,9 @@ Eine andere Methode ist, mehrere StartupConfig-Dateien für unterschiedliche
 Plattformen zu erstellen. Diese heißen
 'StartupConfig_<Platformkürzel>.properties'. Das ist hilfreich, wenn Sie eine
 Installation unter verschiedenen Betriebssystemen nutzen möchten
-(z.B. Multi-Boot-System oder USB-Laufwerk). Ein USB-HowTo und [TODO: VMs]
-werden bald verfügbar sein.
+(z.B. Multi-Boot-System oder USB-Laufwerk). Ein USB-HowTo und VMs (JVMs für
+spezifische Betriebssysteme und die benötigten Konfigurationsdateien) werden
+bald verfügbar sein.
 
 
 b) Pfad im Start-Skript ändern (siehe Abschnitt D)
@@ -105,6 +144,8 @@ Windows einfache '\'-Zeichen benutzen anstelle von doppelten
 
 
 2.) Nicht unterstütztes Betriebssystem
+    ----------------------------------
+
 Wenn Sie ein nicht unterstüztes Betriebssystem benutzen, sollten Sie uns unter
 ggc-de@atech-software.com kontaktieren. Soweit möglich, werden wir
 Unterstützung für Ihr Betriebssystem hinzufügen. Dies dauert normalerweise
@@ -113,15 +154,17 @@ Problem dürfte die Erstellung der Binärdatei für RxTX sein (siehe Abschnitt B
 
 
 
-D) Start-Skript
-===============
+D) Unterstützte Betriebssysteme
+   ============================
 
 Wir haben für jede Plattform ein eigenes Start-Skrip:
 
-Plattform   |      Skript      |  Abkürzung   | Anmerkungen
+Plattform   |    Startdatei    |  Abkürzung   | Anmerkungen
 -------------------------------------------------------------------
 Windows     |  run_win.cmd     |  win         |
 Linux       |  run_linux.sh    |  linux       | 'sh' muss installiert sein
             |                  |              | (meist standardmäßig installiert)
 Mac         |  run_mac.sh      |  mac         | 'bash' muss installiert sein
+            |                  |              | (meist standardmäßig installiert)
+FreeBSD     |  run_freebsd.sh  |  freebsd     | 'sh' muss installiert sein
             |                  |              | (meist standardmäßig installiert)
