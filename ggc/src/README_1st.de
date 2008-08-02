@@ -168,3 +168,6 @@ Mac         |  run_mac.sh      |  mac         | 'bash' muss installiert sein
             |                  |              | (meist standardmäßig installiert)
 FreeBSD     |  run_freebsd.sh  |  freebsd     | 'sh' muss installiert sein
             |                  |              | (meist standardmäßig installiert)
+
+Falls Ihr Betriebssystem nicht gelistet ist, kontaktieren Sie uns bitte. Wir
+werden uns dann soweit wie möglich darum kümmern.
