@@ -1,6 +1,7 @@
 package ggc.meter.device.accuchek;
 
-import javax.swing.ImageIcon;
+import ggc.meter.manager.MeterImplementationStatus;
+import ggc.meter.output.OutputWriter;
 
 public class AccuChekComfort extends AccuChekSmartPix
 {
@@ -8,6 +9,12 @@ public class AccuChekComfort extends AccuChekSmartPix
     public AccuChekComfort()
     {
         super();
+    }
+    
+    
+    public AccuChekComfort(String drive_letter, OutputWriter writer)
+    {
+        super(drive_letter, writer);
     }
     
     
@@ -23,20 +30,9 @@ public class AccuChekComfort extends AccuChekSmartPix
      */
     public String getName()
     {
-        return "name";
+        return "Comfort";
     }
 
-
-    /**
-     * getIcon - Get Icon of meter
-     * Should be implemented by meter class.
-     * 
-     * @return ImageIcom
-     */
-    public ImageIcon getIcon()
-    {
-        return null;
-    }
 
     
     /**
@@ -46,7 +42,7 @@ public class AccuChekComfort extends AccuChekSmartPix
      */
     public String getIconName()
     {
-        return null;
+        return "ac_comfort.jpg";
     }
     
 
@@ -58,20 +54,10 @@ public class AccuChekComfort extends AccuChekSmartPix
      */
     public int getMeterId()
     {
-        return 2;
+        return AccuChekSmartPix.METER_ACCUCHEK_COMFORT;
     }
 
     
-    /**
-     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
-     * 
-     * @return global id of meter
-     */
-    public int getGlobalMeterId()
-    {
-        return 0;
-    }
 
     
     /**
@@ -82,7 +68,7 @@ public class AccuChekComfort extends AccuChekSmartPix
      */
     public int getCompanyId()
     {
-        return 0;
+        return AccuChekSmartPix.ROCHE_COMPANY;
     }
     
     
@@ -94,7 +80,7 @@ public class AccuChekComfort extends AccuChekSmartPix
      */
     public String getInstructions()
     {
-        return null;
+        return "INSTRUCTIONS_ACCUCHEK_COMFORT";
     }
     
     /**
@@ -109,25 +95,46 @@ public class AccuChekComfort extends AccuChekSmartPix
     
     
     /**
-     * getCompanyId - Get Company Id 
+     * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.meter.manager.MeterImplementationStatus
      */
     public int getImplementationStatus() 
     {
-        return 0;
+        return MeterImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
     
-    
-    public int getMemoryRecords()
+    /**
+     * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
+     * 
+     * @return number
+     */
+    public int getMaxMemoryRecords()
     {
         return 100;
     }
     
     
+    /**
+     * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
+     * @return number of elements
+     */
+    public int getNrOfElementsFor1s()
+    {
+        return 10;
+    }
     
     
+    /**
+     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
+     * 
+     * @return class name as string
+     */
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.accuchek.AccuChekComfort";
+    }
     
 }

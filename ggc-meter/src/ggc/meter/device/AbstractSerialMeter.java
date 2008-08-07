@@ -158,6 +158,18 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     }
     
     
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
+    public boolean hasSpecialProgressStatus()
+    {
+        return false;
+    }
+    
+    
+    
     /*
     public GenericMeter(int meter_type, String portName)
     {
@@ -251,6 +263,18 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     }
 
 
+    
+    
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
+     */
+    public String getDeviceSpecialComment()
+    {
+        return "";
+    }
+    
     
     
     //************************************************
@@ -852,42 +876,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     //************************************************
 
 
-    /**
-     * processMeterDataMain - this is main method for processing data. It should be called on all data received, and 
-     * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
-     * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
-     */
-    public void processMeterData(String data)
-    {
-    }
-
-    /**
-     * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
-     */
-    public void processMeterIdentification(String data)
-    {
-    }
-
-    /**
-     * processMeterTime - this should be used to process time and date of meter
-     */
-    public void processMeterTime(String data)
-    {
-    }
-
-    /**
-     * processMeterBGEntry - this should be used to process BG data from meter
-     */
-    public void processMeterBGEntry(String data)
-    {
-    }
-
-
     
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
 
     
     /**

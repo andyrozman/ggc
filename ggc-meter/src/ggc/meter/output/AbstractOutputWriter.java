@@ -8,6 +8,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
 
     OutputUtil out_util; 
     DeviceIdentification device_info = null;
+    String sub_status;
 
     
     public AbstractOutputWriter()
@@ -81,12 +82,13 @@ public abstract class AbstractOutputWriter implements OutputWriter
 
     
     public static final int STATUS_READY = 1;
+    
     public static final int STATUS_DOWNLOADING = 2;
     public static final int STATUS_STOPPED_DEVICE = 3;
     public static final int STATUS_STOPPED_USER = 4;
     public static final int STATUS_DOWNLOAD_FINISHED = 5;
     public static final int STATUS_READER_ERROR = 6;
-    
+    public static final int STATUS_DETECTING_DEVICE = 7;
     
     /**
      * This is status of device and also of GUI that is reading device (if we have one)
@@ -101,6 +103,29 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public int getStatus()
     {
         return this.reading_status;
+    }
+    
+    
+    public void setSubStatus(String sub_status)
+    {
+        this.sub_status = sub_status;
+    }
+    
+    
+    public String getSubStatus()
+    {
+        return this.sub_status;
+    }
+    
+    
+    /**
+     * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
+     * done with this method.
+     * @param value
+     */
+    public void setSpecialProgress(int value)
+    {
+        
     }
     
     

@@ -33,6 +33,7 @@ import ggc.meter.device.ascensia.AscensiaBreeze;
 import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.ascensia.AscensiaDEX;
 import ggc.meter.device.ascensia.AscensiaEliteXL;
+import ggc.meter.manager.MeterImplementationStatus;
 
 public class AscensiaBayer extends AbstractMeterCompany
 {
@@ -94,7 +95,7 @@ public class AscensiaBayer extends AbstractMeterCompany
      */
     public int getImplementationStatus()
     {
-        return 0;
+        return MeterImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
 

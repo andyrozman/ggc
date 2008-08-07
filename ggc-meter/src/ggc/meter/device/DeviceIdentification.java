@@ -50,7 +50,7 @@ public class DeviceIdentification
         StringBuffer sb = new StringBuffer();
         
         sb.append(this.company);
-        sb.append("  " + this.device_selected);
+        sb.append(" " + this.device_selected);
         sb.append("\n");
         
         //sb.append(prefix + " ");

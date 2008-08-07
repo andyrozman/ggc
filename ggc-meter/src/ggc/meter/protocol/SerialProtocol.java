@@ -31,12 +31,6 @@ import java.util.Vector;
 //import minimed.util.Contract;
 
 
-/**
- * @author stephan
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- */
 public abstract class SerialProtocol implements MeterInterface, SerialPortEventListener //, Runnable
 {
 

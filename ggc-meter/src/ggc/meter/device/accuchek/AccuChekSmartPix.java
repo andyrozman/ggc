@@ -2,15 +2,18 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.AbstractXmlMeter;
 import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterException;
-import ggc.meter.manager.company.AbstractMeterCompany;
+import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.output.OutputUtil;
+import ggc.meter.output.OutputWriter;
 import ggc.meter.protocol.ConnectionProtocols;
-import ggc.meter.protocol.XmlProtocol;
-import ggc.meter.util.DataAccessMeter;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,18 +25,44 @@ import org.dom4j.io.SAXReader;
 
 import com.atech.utils.ATechDate;
 
-public class AccuChekSmartPix extends XmlProtocol
+public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
 {
     
-    DataAccessMeter m_da = DataAccessMeter.getInstance();
+    //DataAccessMeter m_da = DataAccessMeter.getInstance();
     
-    AbstractMeterCompany meter_company = null;
-
+    //AbstractMeterCompany meter_company = null;
+    //String drive_letter;
+    //OutputWriter output_writer = null;
+    
+    
+    public static final int ROCHE_COMPANY             = 2;
+    
+    public static final int METER_ROCHE_SMARTPIX_DEVICE   = 20001;
+    public static final int METER_ACCUCHEK_ACTIVE         = 20002;
+    public static final int METER_ACCUCHEK_ADVANTAGE      = 20003;
+    public static final int METER_ACCUCHEK_AVIVA          = 20004;
+    public static final int METER_ACCUCHEK_COMFORT        = 20005;
+    public static final int METER_ACCUCHEK_COMPACT        = 20006;
+    public static final int METER_ACCUCHEK_COMPACT_PLUS   = 20007;
+    public static final int METER_ACCUCHEK_GO             = 20008;
+    public static final int METER_ACCUCHEK_INTEGRA        = 20009;
+    public static final int METER_ACCUCHEK_PERFORMA       = 20010;
+    public static final int METER_ACCUCHEK_SENSOR         = 20011;
     
     
     
     public AccuChekSmartPix()
     {
+    }
+
+    
+    public AccuChekSmartPix(String drive_letter, OutputWriter writer)
+    {
+        this.setConnectionPort(drive_letter);
+        this.output_writer = writer; 
+        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        
+        this.setMeterType("Roche", this.getName());
         
     }
     
@@ -51,7 +80,7 @@ public class AccuChekSmartPix extends XmlProtocol
      */
     public String getName()
     {
-        return "name";
+        return "SmartPix";
     }
 
 
@@ -75,19 +104,10 @@ public class AccuChekSmartPix extends XmlProtocol
      */
     public int getMeterId()
     {
-        return 1;
+        return AccuChekSmartPix.METER_ROCHE_SMARTPIX_DEVICE;
     }
 
     
-    /**
-     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
-     * 
-     * @return global id of meter
-     */
-    public int getGlobalMeterId()
-    {
-        return 0;
-    }
 
     
     /**
@@ -97,7 +117,7 @@ public class AccuChekSmartPix extends XmlProtocol
      */
     public int getCompanyId()
     {
-        return 0;
+        return AccuChekSmartPix.ROCHE_COMPANY;
     }
     
     
@@ -106,10 +126,12 @@ public class AccuChekSmartPix extends XmlProtocol
      * 
      * @return instructions for reading data 
      */
-    public String getInstructions()
+/*    public String getInstructions()
     {
-        return null;
+        return "INSTRUCTIONS_ACCUCHEK_SMART_PIX";
     }
+  */
+    
     
     /**
      * getComment - Get Comment for device 
@@ -123,108 +145,220 @@ public class AccuChekSmartPix extends XmlProtocol
     
     
     /**
-     * getImplementationStatus - Get Company Id 
+     * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.meter.manager.MeterImplementationStatus
      */
     public int getImplementationStatus() 
     {
-        return 0;
+        return MeterImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
     
-    
+    /**
+     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
+     * 
+     * @return class name as string
+     */
     public String getDeviceClassName()
     {
         return "ggc.meter.device.accuchek.AccuChekSmartPix";
     }
     
     
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    /* 
-     * canReadConfiguration
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
      */
-    public boolean canReadConfiguration()
+    public String getDeviceSpecialComment()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return "DEVICE_PIX_SPECIAL_COMMENT";
     }
+    
+    
+    
+    
+    
+    
 
-    /* 
-     * canReadData
-     */
-    public boolean canReadData()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
-    /* 
-     * canReadDeviceInfo
-     */
-    public boolean canReadDeviceInfo()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
-    /* 
-     * canReadPartitialData
-     */
-    public boolean canReadPartitialData()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
+
+
 
 
 
 
     /* 
-     * getDeviceInfo
-     */
-    public DeviceIdentification getDeviceInfo()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    /* 
-     * readDeviceData
+     * readDeviceDataFull
      */
     public void readDeviceDataFull() throws MeterException
     {
-        // TODO Auto-generated method stub
+        // write preliminary device identification, based on class
+        DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
-    }
+        di.company = "Accu-Chek";
+        di.device_selected = "SmartPix Device Reader";
+        
+        di.device_identified = "Accu-Chek " + this.getName() + " [not identified]";
 
+        this.output_writer.writeDeviceIdentification();
+        
+        // start working
+        String drv = this.getConnectionPort();
+        String cmd = drv + "\\TRG\\";
+
+        this.writeStatus("PIX_ABORT_AUTOSCAN");
+        
+        //System.out.println("Abort auto scan");
+        
+        this.output_writer.setSpecialProgress(5);
+        
+        // abort auto scan
+        File f = new File(cmd + "TRG09.PNG");
+        f.setLastModified(System.currentTimeMillis());
+        
+        f = new File(cmd + "TRG03.PNG");
+        f.setLastModified(System.currentTimeMillis());
+        
+
+        //this.writeStatus("PIX_READING");
+        this.output_writer.setSpecialProgress(10);
+        
+        // read device  
+        f = new File(cmd + "TRG09.PNG");
+        f.setLastModified(System.currentTimeMillis());
+        
+        f = new File(cmd + "TRG00.PNG");
+        f.setLastModified(System.currentTimeMillis());
+        
+        boolean found = false;
+        sleep(2000);
+        
+        int count_el = 0;
+        
+        
+        do
+        {
+
+            if (this.isDeviceStopped())
+            {
+                this.setDeviceStopped();
+                found = true;
+            }
+            
+            int st = readStatusFromConfig(drv);
+            
+            if (st==1)
+            {
+                this.writeStatus("PIX_UNRECOVERABLE_ERROR");
+                this.output_writer.setSpecialProgress(100);
+
+                //System.out.println("Unrecoverable error - Aborting");
+                return;
+            }
+            else if (st==2)
+            {
+                
+                this.writeStatus("PIX_FINISHED_READING");
+                this.output_writer.setSpecialProgress(90);
+
+                //System.out.println("Finished reading");
+                return;
+            }
+            else if (st==4)
+            {
+                count_el += this.getNrOfElementsFor1s();
+                //System.out.println("Reading elements: " + count_el);
+                
+                
+                float procs_x = (count_el*(1.0f))/this.getMaxMemoryRecords();
+                
+                //int procs = (int)(procs_x * 100.0f);
+                
+                //System.out.println("Procents full: " + procs);
+                //float procs_calc = 0.007f * procs;
+                
+                int pro_calc = (int)((0.2f + (0.007f * (procs_x * 100.0f)))*100.0f);
+                
+                //System.out.println("Procents: " + pro_calc);
+                
+                //this.writeStatus(String.format("PIX_READING_ELEMENT", pro_calc + " %"));
+                this.writeStatus("PIX_READING_ELEMENT"); //, pro_calc + " %"));
+                this.output_writer.setSpecialProgress(pro_calc);
+
+            }
+            else if (st==20)
+            {
+                this.writeStatus("PIX_DEVICE_NOT_FOUND");
+                this.output_writer.setSpecialProgress(100);
+
+                //System.out.println("Unrecoverable error - Aborting");
+                return;
+            }
+            else if (st>99)
+            {
+                if (st==101)
+                {
+                    this.writeStatus("PIX_FINISHED_REPORT_READY");
+                    //System.out.println("Finished reading. Report ready." );
+                    this.output_writer.setSpecialProgress(95);
+
+                    
+                    File f1 = new File(drv + "\\REPORT\\XML");
+                    
+                    File[] fls = f1.listFiles(new FileFilter()
+                    {
+
+                        public boolean accept(File file)
+                        {
+                            return ((file.getName().toUpperCase().contains(".XML")) &&
+                                    (file.getName().startsWith("G")));
+                        }}
+                    );
+                    
+                    
+                    processXml(fls[0]);
+
+                    this.output_writer.setSpecialProgress(100);
+                    this.output_writer.setSubStatus(null);
+                    
+                    return;
+                    
+                }
+                else
+                {
+                    this.writeStatus("PIX_FINISHED_REPORT_READY");
+                    this.output_writer.setSpecialProgress(95);
+
+                    return;
+                }
+            }
+                
+            
+            sleep(1000);
+            
+            
+        } while(found!=true);
+        
+        this.setDeviceStopped();
+        //this.output_writer.setSubStatus(null);
+        
+        //System.out.println("We got out !!!!");
+    }
+    
+    
+    
+    
+/*
     public String getConnectionPort()
     {
         return "XML";
     }
+  */  
     
-    
-    /* 
-     * setDeviceAllowedActions
-     */
-    public void setDeviceAllowedActions(boolean can_read_data,
-            boolean can_read_partitial_data, 
-            boolean can_read_device_info, boolean can_read_device_configuration)
-    {
-        // TODO Auto-generated method stub
-        
-    }
 
     /* 
      * test
@@ -244,7 +378,6 @@ public class AccuChekSmartPix extends XmlProtocol
      */
     public void readDeviceDataPartitial() throws MeterException
     {
-        
     }
 
 
@@ -271,6 +404,209 @@ public class AccuChekSmartPix extends XmlProtocol
     
     
     
+    private boolean isDeviceStopped()
+    {
+        if (this.output_writer.isReadingStopped())
+            return true;
+        
+        return false;
+        
+    }
+    
+    
+    private void setDeviceStopped()
+    {
+        this.output_writer.setSubStatus(null);
+        this.output_writer.setSpecialProgress(100);
+        this.output_writer.endOutput();
+    }
+    
+    
+    private void writeStatus(String text_i18n)
+    {
+        writeStatus(text_i18n, true);
+    }
+    
+    
+    private void writeStatus(String text_i18n, boolean process)
+    {
+        String tx = "";
+        
+        if (process)
+            tx = ic.getMessage(text_i18n);
+        else
+            tx = text_i18n;
+        
+        this.output_writer.setSubStatus(tx);
+//x        System.out.println(tx);
+        // write log
+        
+    }
+    
+
+    /**
+     * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
+     * @return number of elements
+     */
+    public abstract int getNrOfElementsFor1s();
+
+    
+    
+    
+    private void sleep(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(Exception ex)
+        {
+            
+        }
+        
+    }
+
+    private boolean device_found = false;
+    
+    
+    // 0 = no status
+    // 1 = error_found
+    // 2 = finished
+    private int readStatusFromConfig(String drive)
+    {
+        try
+        {
+            //boolean error_found = false;
+            //boolean image_found = false;
+            
+            
+            BufferedReader br = new BufferedReader(new FileReader(new File(drive + "\\REPORT\\SCAN.HTM")));
+            
+            String line = "";
+            
+            boolean reports[] = { false, false, false };
+            int rep_count = 0;
+            
+            
+            while ((line = br.readLine())!= null)
+            {
+                
+                if (line.contains("Error.htm"))
+                {
+                    return 1;
+                }
+                else if (line.contains("img/"))
+                {
+                    //System.out.println("Image: " + line);
+                    if (line.contains("Scanning.gif"))
+                    {
+                        this.writeStatus("PIX_SCANNING");
+                        this.output_writer.setSpecialProgress(15);
+                        //System.out.println("Scanning for device");
+                        return 0;
+                    }
+                    else if (line.contains("CrReport.png"))
+                    {
+                        this.writeStatus("PIX_CREATING_REPORT");
+                        this.output_writer.setSpecialProgress(90);
+
+                        //System.out.println("Finished reading - Creating report");
+                    }
+                    else if (line.contains("rd_"))
+                    {
+                        device_found = true;
+                        //System.out.println("Reading from meter.");
+                        return 4;
+                    }
+                    else
+                    {
+                        System.out.println("Unknown image: " + line);
+                    }
+                    
+                    
+                    return 0;
+                }
+                else if (line.contains("ReportPresent "))
+                {
+                    //System.out.println("L: " + line);
+                    
+                    if (line.contains("parent.BgReportPresent = "))
+                    {
+                        reports[0] = getBooleanStatus(line);
+                        rep_count++;
+                    }
+                    else if (line.contains("parent.IpReportPresent = "))
+                    {
+                        reports[1] = getBooleanStatus(line);
+                        rep_count++;
+                    }
+                    else if (line.contains("parent.MgReportPresent = "))
+                    {
+                        reports[2] = getBooleanStatus(line);
+                        rep_count++;
+                    }
+                    
+                    if (rep_count==3)
+                    {
+                        int rs = 0;
+                        
+                        if (reports[0])
+                            rs += 1;
+                        else if (reports[1])
+                            rs += 2;
+                        else if (reports[2])
+                            rs += 4;
+
+                        //System.out.println("Rs: " + rs);
+                        
+                        if (this.device_found)
+                        {
+                            return (100 + rs);
+                        }
+                        else
+                            return 20;
+                    }
+                    
+                }
+                
+            }
+            
+            //return 2;
+            
+            return 0;    
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception: " + ex);
+            return 1;
+        }
+       
+        
+        
+        
+    }
+    
+    
+    private boolean getBooleanStatus(String text)
+    {
+        String val = text.substring(text.indexOf("=")+2, text.indexOf(";"));
+        
+        try
+        {
+            //System.out.println("val: '" + val + "'");
+            boolean b = Boolean.parseBoolean(val);
+            //System.out.println("b: " + b);
+            return b;
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error with status.\n" + text);
+            return false;
+        }
+        
+        
+        
+    }
     
     
     
@@ -278,6 +614,27 @@ public class AccuChekSmartPix extends XmlProtocol
     
     
     
+    
+    
+/*    
+    public int getNrOfElementsFor1s()
+    {
+        return 0;
+    }
+  */  
+    
+    
+    
+    
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
+    public boolean hasSpecialProgressStatus()
+    {
+        return true;
+    }
     
     
     
@@ -300,7 +657,7 @@ public class AccuChekSmartPix extends XmlProtocol
     private int bg_unit = OutputUtil.BG_MGDL;
     
     
-    public void testXml(File file)
+    public void processXml(File file)
     {
         try
         {
@@ -311,6 +668,8 @@ public class AccuChekSmartPix extends XmlProtocol
 
             getMeterDeviceInfo();
             System.out.println();
+            
+            this.output_writer.writeDeviceIdentification();
             
             readData();
             
@@ -326,6 +685,8 @@ public class AccuChekSmartPix extends XmlProtocol
     
     public void getPixDeviceInfo()
     {
+        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        
         Node nd = getNode("IMPORT/ACSPIX");
         //System.out.println(nd);
         
@@ -333,19 +694,33 @@ public class AccuChekSmartPix extends XmlProtocol
         
         Element e = (Element)nd;
         
-        sb.append("Accu-Chek Smart Pix Device [" + e.attributeValue("Type") + "]\n");
+        String s = "Accu-Chek Smart Pix Device [" + e.attributeValue("Type") + "]";
+        sb.append(s + "\n");
+
+        di.company = s;
         
-        sb.append("Version v" + e.attributeValue("Ver"));
-        sb.append(" [S/N=" + e.attributeValue("SN") + "]");
+        StringBuilder sb2 = new StringBuilder();
         
-        System.out.println(sb.toString());
+        sb2.append("Version v" + e.attributeValue("Ver"));
+        sb2.append(" [S/N=" + e.attributeValue("SN") + "]");
+
+        
+        di.device_selected = sb2.toString();
+        
+        sb.append(di.device_selected);
+        
+        
+        //System.out.println(sb.toString());
         //List nodes = getNodes("ACSPIX");
         //System.out.println(nodes);
+        
     }
 
     
     public void getMeterDeviceInfo()
     {
+        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+
         Element el = getElement("IMPORT/DEVICE");
         //System.out.println(nd);
 
@@ -354,8 +729,10 @@ public class AccuChekSmartPix extends XmlProtocol
         sb.append("\nS/N=" + el.attributeValue("SN") + ", BG Unit: ");
         sb.append(el.attributeValue("BGUnit"));
         sb.append(", Time on device: " + el.attributeValue("Tm") + " " + el.attributeValue("Dt"));
+
+        di.device_identified = sb.toString();
         
-        System.out.println(sb.toString());
+        //System.out.println(sb.toString());
         
         if (el.attributeValue("BGUnit").equals("mmol/L"))
         {
@@ -371,6 +748,8 @@ public class AccuChekSmartPix extends XmlProtocol
     
     public void readData()
     {
+        //this.output_writer.
+        
         List<Node> nodes = getNodes("IMPORT/BGDATA/BG");
         ArrayList<MeterValuesEntry> lst = new ArrayList<MeterValuesEntry>();
         
@@ -394,7 +773,9 @@ public class AccuChekSmartPix extends XmlProtocol
         
         // <BG Val="5.1" Dt="2005-06-07" Tm="18:01" D="1"/>
 
-        System.out.println(mve);
+        //System.out.println(mve);
+        
+        this.output_writer.writeBGData(mve);
         
         return mve;
         
@@ -438,7 +819,7 @@ public class AccuChekSmartPix extends XmlProtocol
         
     }
     
-
+/*
     public void setMeterCompany(AbstractMeterCompany company)
     {
         this.meter_company = company;
@@ -449,10 +830,10 @@ public class AccuChekSmartPix extends XmlProtocol
     {
         return this.meter_company;
     }
-
+*/
     
     
-    
+    /*
     public static final void main(String[] args)
     {
         AccuChekSmartPix acspd = new AccuChekSmartPix();
@@ -460,19 +841,19 @@ public class AccuChekSmartPix extends XmlProtocol
         acspd.testXml(new File("G0003006.XML"));
         
     }
-    
+    */
     
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
     }
     
-    
+    /*
     public int getMaxMemoryRecords()
     {
         return 1;
     }
-    
+    */
     
     
 }

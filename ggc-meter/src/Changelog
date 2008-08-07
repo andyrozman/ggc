@@ -2,6 +2,14 @@
 Changes file for GGC Meter Tool
 ===============================
 
+0.2.2
+    * Proceeding work on integration of Roche
+
+0.2.1
+    * Started work on Roche
+    * Parsing and reading of data was finished
+    * Starting integration with OutputWriter and Meter Tool
+
 0.2.0 
     * Finialized Meter Tool
     * All dialogs are now centered, everything works as it should...

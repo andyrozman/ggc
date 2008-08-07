@@ -151,7 +151,10 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         }
         else
         {
-            return m_da.getImageIcon("/icons/meters/", this.meter_interface.getIconName());
+            if (this.meter_interface.getIconName()==null)
+                return m_da.getImageIcon("/icons/meters/", "no_meter.gif");
+            else
+                return m_da.getImageIcon("/icons/meters/", this.meter_interface.getIconName());
         }
     }
     

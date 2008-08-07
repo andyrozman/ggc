@@ -29,11 +29,18 @@
 
 package ggc.meter.manager.company; 
 
+import ggc.meter.device.accuchek.AccuChekActive;
 import ggc.meter.device.accuchek.AccuChekAdvantage;
+import ggc.meter.device.accuchek.AccuChekAviva;
+import ggc.meter.device.accuchek.AccuChekComfort;
+import ggc.meter.device.accuchek.AccuChekCompact;
+import ggc.meter.device.accuchek.AccuChekCompactPlus;
 import ggc.meter.device.accuchek.AccuChekGo;
 import ggc.meter.device.accuchek.AccuChekIntegra;
 import ggc.meter.device.accuchek.AccuChekPerforma;
+import ggc.meter.device.accuchek.AccuChekSensor;
 import ggc.meter.device.accuchek.AccuChekSmartPix;
+import ggc.meter.manager.MeterImplementationStatus;
 
 public class Roche extends AbstractMeterCompany
 {
@@ -41,11 +48,17 @@ public class Roche extends AbstractMeterCompany
     
     public Roche()
     {
-        this.addDevice(new AccuChekSmartPix());
+        //this.addDevice(new AccuChekSmartPix());
+        this.addDevice(new AccuChekActive());
         this.addDevice(new AccuChekAdvantage());
+        this.addDevice(new AccuChekAviva());
+        this.addDevice(new AccuChekComfort());
+        this.addDevice(new AccuChekCompact());
+        this.addDevice(new AccuChekCompactPlus());
         this.addDevice(new AccuChekGo());
         this.addDevice(new AccuChekIntegra());
         this.addDevice(new AccuChekPerforma());
+        this.addDevice(new AccuChekSensor());
     }
 
 
@@ -100,7 +113,19 @@ public class Roche extends AbstractMeterCompany
      */
     public int getImplementationStatus()
     {
-        return 0;
+        return MeterImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
+    }
+    
+  
+    public String getConnectionSample()
+    {
+        return "G:";
+    }
+    
+    
+    public String getConnectionSamples()
+    {
+        return m_ic.getMessage("MASS_STORAGE");  //"Serial Ports: COM2,...";
     }
     
     

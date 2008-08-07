@@ -29,6 +29,7 @@
 
 package ggc.meter.test;
 
+import ggc.meter.device.accuchek.AccuChekAviva;
 import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.onetouch.OneTouchUltra;
 import ggc.meter.output.ConsoleOutputWriter;
@@ -73,8 +74,11 @@ public class MeterConsoleTester //extends JFrame
 	    
     	try
     	{
-    	    startAscensia(portName);
+    	    //startAscensia(portName);
     	    //this.startOneTouchUltra(portName);
+    	    
+    	    startAccuChekAviva();
+    	    
     	    
     	    /*
     		//GGCFileOutputWriter gfo = new GGCFileOutputWriter();
@@ -235,6 +239,21 @@ public class MeterConsoleTester //extends JFrame
     }
 
     
+    public void startAccuChekAviva()
+    {
+        try
+        {
+            AccuChekAviva acv = new AccuChekAviva();
+            acv.readDeviceData();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception: " + ex);
+        }
+    }
+    
+    
+    
     public void startOneTouchUltra(String portName) throws Exception
     {
         
@@ -282,7 +301,11 @@ public class MeterConsoleTester //extends JFrame
     {
 	try
 	{
-	    new MeterConsoleTester(args[0]);
+	    
+	    if (args.length == 0)
+	        new MeterConsoleTester("");
+	    else
+	        new MeterConsoleTester(args[0]);
 
 	    /*
 	    AscensiaMeter am = new AscensiaMeter();

@@ -106,6 +106,18 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
 
 
+    
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
+    public boolean hasSpecialProgressStatus()
+    {
+        return false;
+    }
+    
+    
 
     // Internal methods
 
@@ -161,6 +173,15 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
 
 
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
+     */
+    public String getDeviceSpecialComment()
+    {
+        return "DEVICE_DUMMY_SPECIAL_COMMENT";
+    }
 
 
 

@@ -55,10 +55,17 @@ public interface OutputWriter
     public abstract void setDeviceIdentification(DeviceIdentification di);
 
     public abstract DeviceIdentification getDeviceIdentification();
-
     
+    public abstract void setSubStatus(String sub_status);
     
+    public abstract String getSubStatus();
     
+    /**
+     * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
+     * done with this method.
+     * @param value
+     */
+    public abstract void setSpecialProgress(int value);
     
     
 }

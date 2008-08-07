@@ -35,12 +35,12 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public static final int METER_ASCENSIA_BREEZE2    = 10005;
     
     
-    protected int m_status = 0;
+    //protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
 
-    protected String m_info = "";
-    protected int m_time_difference = 0;
-    protected ArrayList<MeterValuesEntry> data = null;
+    //protected String m_info = "";
+    //protected int m_time_difference = 0;
+    //protected ArrayList<MeterValuesEntry> data = null;
     //protected OutputWriter m_output_writer;
     public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
@@ -48,7 +48,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     boolean multiline = false;
     String multiline_body;
-    
     
     String end_string;
     String end_strings[] = null;
@@ -462,7 +461,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
-        System.out.println("readDeviceId: " + input);
+//        System.out.println("readDeviceId: " + input);
     	StringTokenizer strtok = new StringTokenizer(input, "^");
     
     	String inf = "";

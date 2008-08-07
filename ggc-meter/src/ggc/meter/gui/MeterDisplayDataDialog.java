@@ -71,7 +71,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     // private MeterInterface meterDevice = null;
     // private MeterImportManager m_mim = null;
 
-    JLabel lbl_status;
+    JLabel lbl_status, lbl_comment;
 
     JTextArea ta_info = null;
 
@@ -168,8 +168,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     }
     
     
-    
-/*
+    /*
     private void loadConfiguration()
     {
         // TODO: this should be read from config
@@ -194,10 +193,11 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         // MeterManager.getInstance().getMeterDevice(this.configured_meter
         // .meter_company, this.configured_meter.meter_device);
         // this.meter_interface = mi;
-  //  }
+    //}
 
     private void dialogPreInit()
     {
+  //      loadConfiguration();
         setTitle(String.format(m_ic.getMessage("READ_METER_DATA_TITLE"), this.configured_meter.meter_device, 
                 this.configured_meter.communication_port));
 
@@ -258,6 +258,18 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     }
 */
     
+    
+    /**
+     * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
+     * done with this method.
+     * @param value
+     */
+    public void setSpecialProgress(int value)
+    {
+        this.progress.setValue(value);
+    }
+    
+    
 
     public void addLogText(String s)
     {
@@ -278,32 +290,14 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         panel.setSize(600, 600);
 
         JLabel label;
-        /*
-
-        int xkor = 300;
-        int ykor = 300;
-
-        if (this.parentMy != null)
-        {
-            Rectangle rec = this.parentMy.getBounds();
-            xkor = rec.x + (rec.width / 2);
-            ykor = rec.y + (rec.height / 2);
-        }
-*/
+ 
         Font normal = m_da.getFont(DataAccessMeter.FONT_NORMAL);
         Font normal_b = m_da.getFont(DataAccessMeter.FONT_NORMAL_BOLD);
-        
-        
-//        setBounds(xkor - 250, ykor - 250, 480, 580);
         
         setBounds(0, 0, 480, 580);
         m_da.centerJDialog(this);
         
-        // dWindowListener(new CloseListener());
-
-        // setBounds(300, 300, 300, 300);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
         getContentPane().add(panel, BorderLayout.CENTER);
 
         // TabControl with two tabs: log and data
@@ -372,6 +366,17 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         ta_info.setText(""); // this.meter_interface.getDeviceInfo().
                              // getInformation(""));
 
+        
+        
+        
+        lbl_comment = new JLabel("");
+        lbl_comment.setBounds(30, 270, 410, 25);
+        //lbl_comment.setBorder(new LineBorder(Color.red));
+        lbl_comment.setFont(normal);
+        panel.add(lbl_comment);
+        
+        
+        
         // meter status
         label = new JLabel(m_ic.getMessage("ACTION") + ":");
         label.setBounds(30, 415, 100, 25);
@@ -379,7 +384,8 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         panel.add(label);
 
         lbl_status = new JLabel(m_ic.getMessage("READY"));
-        lbl_status.setBounds(130, 415, 150, 25);
+        lbl_status.setBounds(110, 415, 330, 25);
+        //lbl_status.setBorder(new LineBorder(Color.red));
         lbl_status.setFont(normal);
         panel.add(lbl_status);
 
@@ -407,7 +413,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         panel.add(bt_close);
 
         bt_import = new JButton(m_ic.getMessage("EXPORT_DATA"));
-        bt_import.setBounds(270, 270, 170, 25);
+        bt_import.setBounds(270, 300, 170, 25);  // 270
         bt_import.setActionCommand("export_data");
         bt_import.addActionListener(this);
         bt_import.setEnabled(false);
@@ -579,6 +585,23 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     {
         return device_ident;
     }
+    
+    String sub_status = null;
+    
+    
+    public void setSubStatus(String sub_status)
+    {
+        this.sub_status = sub_status;
+        refreshStatus();
+    }
+    
+    
+    public String getSubStatus()
+    {
+        return this.sub_status;
+    }
+    
+    
 
     OutputUtil output_util = new OutputUtil(this);
 
@@ -669,8 +692,11 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         return this.device_should_be_stopped;
     }
 
-    int reading_status = 1;
+    int reading_status = AbstractOutputWriter.STATUS_READY;
 
+    
+    
+    
     /*
      * This is status of device and also of GUI that is reading device (if we
      * have one) This is to set that status to see where we are. Allowed
@@ -679,7 +705,9 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
      */
     public void setStatus(int status)
     {
-        if ((this.reading_status == 3) || (this.reading_status == 4) || (this.reading_status == 6))
+        if ((this.reading_status == AbstractOutputWriter.STATUS_STOPPED_DEVICE) || 
+            (this.reading_status == AbstractOutputWriter.STATUS_STOPPED_USER) || 
+            (this.reading_status == AbstractOutputWriter.STATUS_READER_ERROR))
             return;
 
         this.reading_status = status;
@@ -691,20 +719,41 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         return this.reading_status;
     }
 
+    public void refreshStatus()
+    {
+        setGUIStatus(current_status);
+    }
+    
+    
+    private int current_status = 0;
+    
+    
     public void setGUIStatus(int status)
     {
-        this.lbl_status.setText(this.statuses[status]);
+        
+        current_status = status;
+        
+        if ((this.sub_status==null) || (this.sub_status.length()==0))
+        {
+            this.lbl_status.setText(this.statuses[status]);
+        }
+        else
+        {
+            this.lbl_status.setText(this.statuses[status] + " - " + m_ic.getMessage(this.sub_status));
+        }
 
         switch (status)
         {
-            case 2: // downloading
+
+        
+            case AbstractOutputWriter.STATUS_DOWNLOADING: // downloading
                 {
                     this.bt_break.setEnabled(true);
                     this.bt_close.setEnabled(false);
                     this.bt_import.setEnabled(false);
                 } break;
                 
-            case 5: // finished
+            case AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED: // finished
                 {
                     this.bt_break.setEnabled(false);
                     this.bt_close.setEnabled(true);
@@ -715,7 +764,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
                 }
                 break;
 
-            case 6: // error
+            case AbstractOutputWriter.STATUS_READER_ERROR: // error
             {
                 this.bt_break.setEnabled(false);
                 this.bt_close.setEnabled(true);
@@ -727,8 +776,8 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
             break;
                 
                 
-            case 3: // stopped - device 
-            case 4: // stoped - user
+            case AbstractOutputWriter.STATUS_STOPPED_DEVICE: // stopped - device 
+            case AbstractOutputWriter.STATUS_STOPPED_USER: // stoped - user
                 {
                     this.bt_break.setEnabled(false);
                     this.bt_close.setEnabled(true);
@@ -736,8 +785,8 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
                 }
                 break;
     
-            case 1:  // ready
-            case 0:  // none
+            case AbstractOutputWriter.STATUS_READY:  // ready
+            //case 0:  // none
             default:
                 {
                     this.bt_break.setEnabled(false);
@@ -748,10 +797,21 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     }
 
+
+    public void setDeviceComment(String text)
+    {
+        this.lbl_comment.setText(m_ic.getMessage(text));
+    }
+    
     
     
     public static void main(String[] args)
     {
+        JFrame f = new JFrame();
+        f.setSize(800,600);
+        
+        DataAccessMeter.getInstance().addComponent(f);
+        
         // MeterReadDialog mrd =
         new MeterDisplayDataDialog(); // new AscensiaContour("COM12", new
                                       // ConsoleOutputWriter()));

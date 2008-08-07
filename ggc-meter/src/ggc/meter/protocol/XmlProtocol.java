@@ -30,7 +30,7 @@ import java.io.OutputStream;
  * To change this generated comment edit the template variable "typecomment":
  * Window>Preferences>Java>Templates.
  */
-public abstract class XmlProtocol implements MeterInterface //, SerialPortEventListener //, Runnable
+public abstract class XmlProtocol implements MeterInterface //, SelectableInterface //, SerialPortEventListener //, Runnable
 {
 
     protected int m_device_index = 0;
@@ -86,7 +86,7 @@ public abstract class XmlProtocol implements MeterInterface //, SerialPortEventL
 //		open();
     }
 
-    
+/*    
     public void setCommunicationSettings(int baudrate, int databits,
     									 int stopbits, int parity,
     									 int flow_control)
@@ -97,7 +97,7 @@ public abstract class XmlProtocol implements MeterInterface //, SerialPortEventL
     	this.parity = parity;
     	this.flow_control = flow_control;
     }
-
+*/
     
     
 /*

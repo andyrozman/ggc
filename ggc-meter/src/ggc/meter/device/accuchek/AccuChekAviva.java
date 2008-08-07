@@ -1,6 +1,13 @@
 package ggc.meter.device.accuchek;
 
-import javax.swing.ImageIcon;
+import ggc.meter.device.MeterException;
+import ggc.meter.manager.MeterImplementationStatus;
+import ggc.meter.output.OutputWriter;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileReader;
 
 public class AccuChekAviva extends AccuChekSmartPix
 {
@@ -9,6 +16,12 @@ public class AccuChekAviva extends AccuChekSmartPix
     {
         super();
     }
+    
+    public AccuChekAviva(String drive_letter, OutputWriter writer)
+    {
+        super(drive_letter, writer);
+    }
+
     
     
     //************************************************
@@ -23,19 +36,7 @@ public class AccuChekAviva extends AccuChekSmartPix
      */
     public String getName()
     {
-        return "name";
-    }
-
-
-    /**
-     * getIcon - Get Icon of meter
-     * Should be implemented by meter class.
-     * 
-     * @return ImageIcom
-     */
-    public ImageIcon getIcon()
-    {
-        return null;
+        return "Aviva";
     }
 
     
@@ -46,7 +47,7 @@ public class AccuChekAviva extends AccuChekSmartPix
      */
     public String getIconName()
     {
-        return null;
+        return "ac_aviva.jpg";
     }
     
 
@@ -58,20 +59,10 @@ public class AccuChekAviva extends AccuChekSmartPix
      */
     public int getMeterId()
     {
-        return 2;
+        return AccuChekSmartPix.METER_ACCUCHEK_AVIVA;
     }
 
     
-    /**
-     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
-     * 
-     * @return global id of meter
-     */
-    public int getGlobalMeterId()
-    {
-        return 0;
-    }
 
     
     /**
@@ -82,7 +73,7 @@ public class AccuChekAviva extends AccuChekSmartPix
      */
     public int getCompanyId()
     {
-        return 0;
+        return AccuChekSmartPix.ROCHE_COMPANY;
     }
     
     
@@ -94,7 +85,7 @@ public class AccuChekAviva extends AccuChekSmartPix
      */
     public String getInstructions()
     {
-        return null;
+        return "INSTRUCTIONS_ACCUCHEK_AVIVA";
     }
     
     /**
@@ -109,18 +100,40 @@ public class AccuChekAviva extends AccuChekSmartPix
     
     
     /**
-     * getCompanyId - Get Company Id 
+     * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.meter.manager.MeterImplementationStatus
      */
     public int getImplementationStatus() 
     {
-        return 0;
+        return MeterImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
     
-    public int getMemoryRecords()
+    /**
+     * getDeviceClassName() - get name of this class
+     */
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.accuchek.AccuChekAviva";
+    }
+    
+    
+    /**
+     * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
+     * @return number of elements
+     */
+    public int getNrOfElementsFor1s()
+    {
+        return 12;
+    }
+
+    
+    /**
+     * Maximum of records that device can store
+     */
+    public int getMaxMemoryRecords()
     {
         return 500;
     }

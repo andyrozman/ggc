@@ -1,5 +1,6 @@
 package ggc.meter.device;
 
+import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.manager.company.AbstractMeterCompany;
 
 
@@ -117,8 +118,7 @@ public interface MeterInterface //extends SelectableInterface
     
     
     /**
-     * getImplementationStatus - Get Company Id 
-     * Should be implemented by meter class.
+     * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.meter.manager.MeterImplementationStatus
@@ -150,6 +150,22 @@ public interface MeterInterface //extends SelectableInterface
      */
     public String getConnectionPort();
     
+    
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
+     */
+    public String getDeviceSpecialComment();
+    
+    
+    
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
+    public boolean hasSpecialProgressStatus();
     
     
 

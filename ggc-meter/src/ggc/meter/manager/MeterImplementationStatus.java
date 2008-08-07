@@ -39,8 +39,9 @@ public class MeterImplementationStatus
     public static final int IMPLEMENTATION_PLANNED = 2;
     public static final int IMPLEMENTATION_PARTITIAL = 3;
     public static final int IMPLEMENTATION_FULL = 4;
-    public static final int IMPLEMENTATION_TESTED = 5;
-    public static final int IMPLEMENTATION_DONE = 6;
+    public static final int IMPLEMENTATION_IN_PROGRESS = 5;
+    public static final int IMPLEMENTATION_TESTING = 6;
+    public static final int IMPLEMENTATION_DONE = 7;
     
     
     

@@ -96,7 +96,7 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
      */
     public int getCompanyId()
     {
-        return AscensiaMeter.METER_ASCENSIA_CONTOUR;
+        return AscensiaMeter.ASCENSIA_COMPANY;
     }
     
     
@@ -141,7 +141,10 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
         return 0;
     }
     
-    
+
+    /**
+     * Maximum of records that device can store
+     */
     public int getMaxMemoryRecords()
     {
         return 100;

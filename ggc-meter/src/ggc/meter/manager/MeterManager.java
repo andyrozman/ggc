@@ -118,6 +118,7 @@ public class MeterManager
     public void loadSupportedDevices()
     {
         this.supported_devices.addAll(new AscensiaBayer().getDevices());
+        this.supported_devices.addAll(new Roche().getDevices());
     }
     
     
