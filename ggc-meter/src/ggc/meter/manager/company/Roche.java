@@ -57,7 +57,7 @@ public class Roche extends AbstractMeterCompany
         this.addDevice(new AccuChekCompactPlus());
         this.addDevice(new AccuChekGo());
         this.addDevice(new AccuChekIntegra());
-        this.addDevice(new AccuChekPerforma());
+        //this.addDevice(new AccuChekPerforma());
         this.addDevice(new AccuChekSensor());
     }
 
