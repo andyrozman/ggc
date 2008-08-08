@@ -13,7 +13,11 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class MeterPlugInServer extends PlugInServer
 {
-
+    /**
+     * Version of Meter Tool
+     */
+    private String meter_tool_version = "0.3.1";
+    
     public static final int COMMAND_READ_METER_DATA = 0;
     public static final int COMMAND_METERS_LIST = 1;
     public static final int COMMAND_CONFIGURATION = 2;
@@ -90,7 +94,7 @@ public class MeterPlugInServer extends PlugInServer
     @Override
     public String getVersion()
     {
-        return "0.3";
+        return this.meter_tool_version;
     }
 
     /* 
