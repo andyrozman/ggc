@@ -8,6 +8,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
 
     OutputUtil out_util; 
     DeviceIdentification device_info = null;
+    String sub_status;
 
     
     public AbstractOutputWriter()
@@ -103,6 +104,28 @@ public abstract class AbstractOutputWriter implements OutputWriter
         return this.reading_status;
     }
     
+    
+    public void setSubStatus(String sub_status)
+    {
+        this.sub_status = sub_status;
+    }
+    
+    
+    public String getSubStatus()
+    {
+        return this.sub_status;
+    }
+    
+    
+    /**
+     * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
+     * done with this method.
+     * @param value
+     */
+    public void setSpecialProgress(int value)
+    {
+        
+    }
     
 	
 }

@@ -16,7 +16,9 @@ import java.lang.reflect.Constructor;
 public class PumpReaderRunner extends Thread implements OutputWriter // extends JDialog implements ActionListener
 {
 
+    boolean special_status = false;
 
+    
     /* 
      * endOutput
      */
@@ -69,8 +71,6 @@ public class PumpReaderRunner extends Thread implements OutputWriter // extends 
     public void setDeviceIdentification(DeviceIdentification di)
     {
         this.dialog.setDeviceIdentification(di);
-        // TODO Auto-generated method stub
-        
     }
 
     int count = 0;
@@ -80,22 +80,48 @@ public class PumpReaderRunner extends Thread implements OutputWriter // extends 
      */
     public void writeBGData(PumpValuesEntry mve)
     {
-        count++;
-        // TODO Auto-generated method stub
         
-        float f = ((count  * 1.0f)/this.dialog.output_util.getMaxMemoryRecords()) * 100.0f;
-        
-        //int i = (int)((count/500) * 100);
-        
-        //System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
-        
-        dialog.progress.setValue((int)f);
+        if (!this.special_status)
+        {
+            count++;
+            
+            float f = ((count  * 1.0f)/this.dialog.output_util.getMaxMemoryRecords()) * 100.0f;
+            
+            //int i = (int)((count/500) * 100);
+            //System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
+            
+            dialog.progress.setValue((int)f);
+        }
         
         this.dialog.writeBGData(mve);
         
-        
     }
 
+   
+    /**
+     * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
+     * done with this method.
+     * @param value
+     */
+    public void setSpecialProgress(int value)
+    {
+        //System.out.println("Runner: Special progres: " + value);
+        this.dialog.setSpecialProgress(value);
+    }
+    
+    
+    
+    public void setSubStatus(String sub_status)
+    {
+        //System.out.println("Runner: Sub Status: " + sub_status);
+        this.dialog.setSubStatus(sub_status);
+    }
+    
+    
+    public String getSubStatus()
+    {
+        return this.dialog.getSubStatus();
+    }
     
     
     
@@ -114,7 +140,13 @@ public class PumpReaderRunner extends Thread implements OutputWriter // extends 
     {
         return this.dialog.isReadingStopped();
     }
+
     
+    public void setDeviceComment(String com)
+    {
+        // TODO
+        //this.dialog.setDeviceComment(com);
+    }
     
     
     /**

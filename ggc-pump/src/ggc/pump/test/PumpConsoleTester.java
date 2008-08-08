@@ -29,10 +29,12 @@
 
 package ggc.pump.test;
 
+import ggc.pump.device.accuchek.AccuChekSpirit;
 import ggc.pump.output.ConsoleOutputWriter;
 import ggc.pump.protocol.SerialProtocol;
 
 import java.awt.TextArea;
+import java.io.File;
 import java.util.Vector;
 
 import com.atech.utils.TimeZoneUtil;
@@ -71,7 +73,9 @@ public class PumpConsoleTester //extends JFrame
 	    
     	try
     	{
-    	    startAscensia(portName);
+    	    
+    	    startRoche(portName);
+    	    
     	    //this.startOneTouchUltra(portName);
     	    
     	    /*
@@ -232,6 +236,13 @@ public class PumpConsoleTester //extends JFrame
         
     }
 
+
+    public void startRoche(String portName) throws Exception
+    {
+        AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
+        acs.processXml(new File("I2034162.XML"));
+    }
+    
     
     public void startOneTouchUltra(String portName) throws Exception
     {

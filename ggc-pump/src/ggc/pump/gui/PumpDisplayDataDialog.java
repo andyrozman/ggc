@@ -40,6 +40,9 @@ import javax.swing.table.TableColumn;
 public class PumpDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
 {
 
+    // set special status - make changes for smartpix reading
+    // device comment
+    
     // private JLabel infoIcon = null;
     // x private JLabel infoDescription = null;
 
@@ -257,6 +260,18 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
         this.setStatus(5);
     }
 */
+    
+    
+    
+    /**
+     * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
+     * done with this method.
+     * @param value
+     */
+    public void setSpecialProgress(int value)
+    {
+        this.progress.setValue(value);
+    }
     
 
     public void addLogText(String s)
@@ -580,6 +595,23 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
         return device_ident;
     }
 
+    
+    String sub_status = null;
+    
+    
+    public void setSubStatus(String sub_status)
+    {
+        this.sub_status = sub_status;
+        refreshStatus();
+    }
+    
+    
+    public String getSubStatus()
+    {
+        return this.sub_status;
+    }
+    
+    
     OutputUtil output_util = new OutputUtil(this);
 
     /*
@@ -691,9 +723,27 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
         return this.reading_status;
     }
 
+    
+    public void refreshStatus()
+    {
+        setGUIStatus(current_status);
+    }
+
+    private int current_status = 0;
+    
+    
     public void setGUIStatus(int status)
     {
-        this.lbl_status.setText(this.statuses[status]);
+        current_status = status;
+        
+        if ((this.sub_status==null) || (this.sub_status.length()==0))
+        {
+            this.lbl_status.setText(this.statuses[status]);
+        }
+        else
+        {
+            this.lbl_status.setText(this.statuses[status] + " - " + m_ic.getMessage(this.sub_status));
+        }
 
         switch (status)
         {

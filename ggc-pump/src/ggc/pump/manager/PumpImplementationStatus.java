@@ -34,13 +34,14 @@ public class PumpImplementationStatus
 {
 
 
-    public static final int IMP_NOT_AVAILABLE = 0;
-    public static final int IMP_PLANNED = 1;
-    public static final int IMP_PARTITIAL = 2;
-    public static final int IMP_FULL = 3;
-    public static final int IMP_TESTED = 4;
-    public static final int IMP_DONE = 5;
-    
+    public static final int IMPLEMENTATION_NOT_AVAILABLE = 0;
+    public static final int IMPLEMENTATION_NOT_PLANNED = 1;
+    public static final int IMPLEMENTATION_PLANNED = 2;
+    public static final int IMPLEMENTATION_PARTITIAL = 3;
+    public static final int IMPLEMENTATION_FULL = 4;
+    public static final int IMPLEMENTATION_IN_PROGRESS = 5;
+    public static final int IMPLEMENTATION_TESTING = 6;
+    public static final int IMPLEMENTATION_DONE = 7;
     
     
     public static final int FUNCTIONALITY_READ_DATA_FULL = 1;

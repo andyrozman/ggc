@@ -42,7 +42,13 @@ import com.atech.utils.ATechDate;
 public class PumpValuesEntry 
 {
 	DataAccessPump da = DataAccessPump.getInstance();
+	
+	// pump 
 	public ATechDate datetime;
+	int entry_type;
+	
+	
+	// old
 	public String bg_str;
 	public int bg_unit;
 	public boolean checked = false;
@@ -92,6 +98,12 @@ public class PumpValuesEntry
 	}
 	
 	
+	public void setDateTime(long dt)
+	{
+	    this.datetime = new ATechDate(dt);
+	}
+	
+	
 	
 	public void setDateTime(ATechDate dt)
 	{
@@ -102,6 +114,13 @@ public class PumpValuesEntry
 	{
 		return this.datetime;
 	}
+	
+	
+	public void setEntryType(int entry_type)
+	{
+	    this.entry_type = entry_type;
+	}
+	
 	
 	
 	public void addParameter(String key, String value)

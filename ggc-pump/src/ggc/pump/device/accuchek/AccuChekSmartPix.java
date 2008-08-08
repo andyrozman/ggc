@@ -1,39 +1,47 @@
 
 package ggc.pump.device.accuchek;
 
-import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.device.AbstractXmlPump;
 import ggc.pump.device.DeviceIdentification;
 import ggc.pump.device.PumpException;
-import ggc.pump.manager.company.AbstractPumpCompany;
-import ggc.pump.output.OutputUtil;
+import ggc.pump.manager.PumpImplementationStatus;
+import ggc.pump.output.OutputWriter;
 import ggc.pump.protocol.ConnectionProtocols;
-import ggc.pump.protocol.XmlProtocol;
-import ggc.pump.util.DataAccessPump;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileFilter;
+import java.io.FileReader;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.Node;
-import org.dom4j.io.SAXReader;
-
-import com.atech.utils.ATechDate;
-
-public abstract class AccuChekSmartPix extends XmlProtocol
+public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //implements SelectableInterface
 {
     
-    DataAccessPump m_da = DataAccessPump.getInstance();
+    //DataAccessMeter m_da = DataAccessMeter.getInstance();
     
-    AbstractPumpCompany pump_company = null;
+    //AbstractMeterCompany meter_company = null;
+    //String drive_letter;
+    //OutputWriter output_writer = null;
+    
+    
+    
 
-    
-    
+    //AccuChekSmartPixProcessor xml_processor = null;
     
     public AccuChekSmartPix()
     {
+    }
+
+    
+    public AccuChekSmartPix(String drive_letter, OutputWriter writer)
+    {
+        this.setConnectionPort(drive_letter);
+        this.output_writer = writer; 
+        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        
+        
+//        this.xml_processor = new AccuChekSmartPixProcessor(this.output_writer);
+        
+        this.setMeterType("Roche", this.getName());
         
     }
     
@@ -51,7 +59,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public String getName()
     {
-        return "name";
+        return "SmartPix";
     }
 
 
@@ -68,48 +76,18 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     }
     
 
-    /**
-     * getMeterId - Get Meter Id, within Meter Company class 
-     * 
-     * @return id of meter within company
-     */
-    public int getMeterId()
-    {
-        return 1;
-    }
-
-    
-    /**
-     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
-     * 
-     * @return global id of meter
-     */
-    public int getGlobalMeterId()
-    {
-        return 0;
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 0;
-    }
-    
     
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
-    public String getInstructions()
+/*    public String getInstructions()
     {
-        return null;
+        return "INSTRUCTIONS_ACCUCHEK_SMART_PIX";
     }
+  */
+    
     
     /**
      * getComment - Get Comment for device 
@@ -123,108 +101,216 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     
     
     /**
-     * getImplementationStatus - Get Company Id 
+     * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.meter.manager.MeterImplementationStatus
      */
     public int getImplementationStatus() 
     {
-        return 0;
+        return PumpImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
     
-    
+    /**
+     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
+     * 
+     * @return class name as string
+     */
     public String getDeviceClassName()
     {
         return "ggc.meter.device.accuchek.AccuChekSmartPix";
     }
     
     
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    /* 
-     * canReadConfiguration
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
      */
-    public boolean canReadConfiguration()
+    public String getDeviceSpecialComment()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return "DEVICE_PIX_SPECIAL_COMMENT";
     }
-
-    /* 
-     * canReadData
-     */
-    public boolean canReadData()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /* 
-     * canReadDeviceInfo
-     */
-    public boolean canReadDeviceInfo()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /* 
-     * canReadPartitialData
-     */
-    public boolean canReadPartitialData()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    
+    
+    
+    
+    public abstract void processXml(File file);    
+    
 
 
 
 
     /* 
-     * getDeviceInfo
-     */
-    public DeviceIdentification getDeviceInfo()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    /* 
-     * readDeviceData
+     * readDeviceDataFull
      */
     public void readDeviceDataFull() throws PumpException
     {
-        // TODO Auto-generated method stub
+        // write preliminary device identification, based on class
+        DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
-    }
+        di.company = "Accu-Chek";
+        di.device_selected = "SmartPix Device Reader";
+        
+        di.device_identified = "Accu-Chek " + this.getName() + " [not identified]";
 
+        this.output_writer.writeDeviceIdentification();
+        
+        // start working
+        String drv = this.getConnectionPort();
+        String cmd = drv + "\\TRG\\";
+
+        this.writeStatus("PIX_ABORT_AUTOSCAN");
+        
+        //System.out.println("Abort auto scan");
+        
+        this.output_writer.setSpecialProgress(5);
+        
+        // abort auto scan
+        File f = new File(cmd + "TRG09.PNG");
+        f.setLastModified(System.currentTimeMillis());
+        
+        f = new File(cmd + "TRG03.PNG");
+        f.setLastModified(System.currentTimeMillis());
+        
+
+        //this.writeStatus("PIX_READING");
+        this.output_writer.setSpecialProgress(10);
+        
+        // read device  
+        f = new File(cmd + "TRG09.PNG");
+        f.setLastModified(System.currentTimeMillis());
+        
+        f = new File(cmd + "TRG00.PNG");
+        f.setLastModified(System.currentTimeMillis());
+        
+        boolean found = false;
+        sleep(2000);
+        
+        int count_el = 0;
+        
+        
+        do
+        {
+
+            if (this.isDeviceStopped())
+            {
+                this.setDeviceStopped();
+                found = true;
+            }
+            
+            int st = readStatusFromConfig(drv);
+            
+            if (st==1)
+            {
+                this.writeStatus("PIX_UNRECOVERABLE_ERROR");
+                this.output_writer.setSpecialProgress(100);
+
+                //System.out.println("Unrecoverable error - Aborting");
+                return;
+            }
+            else if (st==2)
+            {
+                
+                this.writeStatus("PIX_FINISHED_READING");
+                this.output_writer.setSpecialProgress(90);
+
+                //System.out.println("Finished reading");
+                return;
+            }
+            else if (st==4)
+            {
+                count_el += this.getNrOfElementsFor1s();
+                //System.out.println("Reading elements: " + count_el);
+                
+                
+                float procs_x = (count_el*(1.0f))/this.getMaxMemoryRecords();
+                
+                //int procs = (int)(procs_x * 100.0f);
+                
+                //System.out.println("Procents full: " + procs);
+                //float procs_calc = 0.007f * procs;
+                
+                int pro_calc = (int)((0.2f + (0.007f * (procs_x * 100.0f)))*100.0f);
+                
+                //System.out.println("Procents: " + pro_calc);
+                
+                //this.writeStatus(String.format("PIX_READING_ELEMENT", pro_calc + " %"));
+                this.writeStatus("PIX_READING_ELEMENT"); //, pro_calc + " %"));
+                this.output_writer.setSpecialProgress(pro_calc);
+
+            }
+            else if (st==20)
+            {
+                this.writeStatus("PIX_DEVICE_NOT_FOUND");
+                this.output_writer.setSpecialProgress(100);
+
+                //System.out.println("Unrecoverable error - Aborting");
+                return;
+            }
+            else if (st>99)
+            {
+                if (st==101)
+                {
+                    this.writeStatus("PIX_FINISHED_REPORT_READY");
+                    //System.out.println("Finished reading. Report ready." );
+                    this.output_writer.setSpecialProgress(95);
+
+                    
+                    File f1 = new File(drv + "\\REPORT\\XML");
+                    
+                    File[] fls = f1.listFiles(new FileFilter()
+                    {
+
+                        public boolean accept(File file)
+                        {
+                            return ((file.getName().toUpperCase().contains(".XML")) &&
+                                    (file.getName().startsWith("G")));
+                        }}
+                    );
+                    
+                    
+                    //processXml(fls[0]);
+                    processXml(fls[0]);
+
+                    this.output_writer.setSpecialProgress(100);
+                    this.output_writer.setSubStatus(null);
+                    
+                    return;
+                    
+                }
+                else
+                {
+                    this.writeStatus("PIX_FINISHED_REPORT_READY");
+                    this.output_writer.setSpecialProgress(95);
+
+                    return;
+                }
+            }
+                
+            
+            sleep(1000);
+            
+            
+        } while(found!=true);
+        
+        this.setDeviceStopped();
+        //this.output_writer.setSubStatus(null);
+        
+        //System.out.println("We got out !!!!");
+    }
+    
+    
+    
+    
+/*
     public String getConnectionPort()
     {
         return "XML";
     }
+  */  
     
-    
-    /* 
-     * setDeviceAllowedActions
-     */
-    public void setDeviceAllowedActions(boolean can_read_data,
-            boolean can_read_partitial_data, 
-            boolean can_read_device_info, boolean can_read_device_configuration)
-    {
-        // TODO Auto-generated method stub
-        
-    }
 
     /* 
      * test
@@ -244,7 +330,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public void readDeviceDataPartitial() throws PumpException
     {
-        
     }
 
 
@@ -271,208 +356,236 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    Document document;
-    
-    public Document parse(File file) throws DocumentException {
-        SAXReader reader = new SAXReader();
+    private boolean isDeviceStopped()
+    {
+        if (this.output_writer.isReadingStopped())
+            return true;
         
+        return false;
         
-        //Document 
-        document = reader.read(file);
-        return document;
     }
     
     
-    private int bg_unit = OutputUtil.BG_MGDL;
+    private void setDeviceStopped()
+    {
+        this.output_writer.setSubStatus(null);
+        this.output_writer.setSpecialProgress(100);
+        this.output_writer.endOutput();
+    }
     
     
-    public void testXml(File file)
+    private void writeStatus(String text_i18n)
+    {
+        writeStatus(text_i18n, true);
+    }
+    
+    
+    private void writeStatus(String text_i18n, boolean process)
+    {
+        String tx = "";
+        
+        if (process)
+            tx = ic.getMessage(text_i18n);
+        else
+            tx = text_i18n;
+        
+        this.output_writer.setSubStatus(tx);
+//x        System.out.println(tx);
+        // write log
+        
+    }
+    
+
+    /**
+     * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
+     * @return number of elements
+     */
+    public abstract int getNrOfElementsFor1s();
+
+    
+    
+    
+    private void sleep(int ms)
     {
         try
         {
-            /*Document doc =*/ parse(file);
-            
-            getPixDeviceInfo();
-            System.out.println();
-
-            getMeterDeviceInfo();
-            System.out.println();
-            
-            readData();
-            
+            Thread.sleep(ms);
         }
         catch(Exception ex)
         {
-            System.out.println("Exception on testXml: " + ex);
-            ex.printStackTrace();
             
         }
+        
     }
 
+    private boolean device_found = false;
     
-    public void getPixDeviceInfo()
-    {
-        Node nd = getNode("IMPORT/ACSPIX");
-        //System.out.println(nd);
-        
-        StringBuffer sb = new StringBuffer();
-        
-        Element e = (Element)nd;
-        
-        sb.append("Accu-Chek Smart Pix Device [" + e.attributeValue("Type") + "]\n");
-        
-        sb.append("Version v" + e.attributeValue("Ver"));
-        sb.append(" [S/N=" + e.attributeValue("SN") + "]");
-        
-        System.out.println(sb.toString());
-        //List nodes = getNodes("ACSPIX");
-        //System.out.println(nodes);
-    }
-
     
-    public void getMeterDeviceInfo()
+    // 0 = no status
+    // 1 = error_found
+    // 2 = finished
+    private int readStatusFromConfig(String drive)
     {
-        Element el = getElement("IMPORT/DEVICE");
-        //System.out.println(nd);
-
-        StringBuffer sb = new StringBuffer();
-        sb.append("Meter Device: Accu-Chek " + el.attributeValue("Name"));
-        sb.append("\nS/N=" + el.attributeValue("SN") + ", BG Unit: ");
-        sb.append(el.attributeValue("BGUnit"));
-        sb.append(", Time on device: " + el.attributeValue("Tm") + " " + el.attributeValue("Dt"));
-        
-        System.out.println(sb.toString());
-        
-        if (el.attributeValue("BGUnit").equals("mmol/L"))
+        try
         {
-            this.bg_unit = OutputUtil.BG_MMOL;
+            //boolean error_found = false;
+            //boolean image_found = false;
+            
+            
+            BufferedReader br = new BufferedReader(new FileReader(new File(drive + "\\REPORT\\SCAN.HTM")));
+            
+            String line = "";
+            
+            boolean reports[] = { false, false, false };
+            int rep_count = 0;
+            
+            
+            while ((line = br.readLine())!= null)
+            {
+                
+                if (line.contains("Error.htm"))
+                {
+                    return 1;
+                }
+                else if (line.contains("img/"))
+                {
+                    //System.out.println("Image: " + line);
+                    if (line.contains("Scanning.gif"))
+                    {
+                        this.writeStatus("PIX_SCANNING");
+                        this.output_writer.setSpecialProgress(15);
+                        //System.out.println("Scanning for device");
+                        return 0;
+                    }
+                    else if (line.contains("CrReport.png"))
+                    {
+                        this.writeStatus("PIX_CREATING_REPORT");
+                        this.output_writer.setSpecialProgress(90);
+
+                        //System.out.println("Finished reading - Creating report");
+                    }
+                    else if (line.contains("rd_"))
+                    {
+                        device_found = true;
+                        //System.out.println("Reading from meter.");
+                        return 4;
+                    }
+                    else
+                    {
+                        System.out.println("Unknown image: " + line);
+                    }
+                    
+                    
+                    return 0;
+                }
+                else if (line.contains("ReportPresent "))
+                {
+                    //System.out.println("L: " + line);
+                    
+                    if (line.contains("parent.BgReportPresent = "))
+                    {
+                        reports[0] = getBooleanStatus(line);
+                        rep_count++;
+                    }
+                    else if (line.contains("parent.IpReportPresent = "))
+                    {
+                        reports[1] = getBooleanStatus(line);
+                        rep_count++;
+                    }
+                    else if (line.contains("parent.MgReportPresent = "))
+                    {
+                        reports[2] = getBooleanStatus(line);
+                        rep_count++;
+                    }
+                    
+                    if (rep_count==3)
+                    {
+                        int rs = 0;
+                        
+                        if (reports[0])
+                            rs += 1;
+                        else if (reports[1])
+                            rs += 2;
+                        else if (reports[2])
+                            rs += 4;
+
+                        //System.out.println("Rs: " + rs);
+                        
+                        if (this.device_found)
+                        {
+                            return (100 + rs);
+                        }
+                        else
+                            return 20;
+                    }
+                    
+                }
+                
+            }
+            
+            //return 2;
+            
+            return 0;    
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception: " + ex);
+            return 1;
+        }
+       
+        
+        
+        
+    }
+    
+    
+    private boolean getBooleanStatus(String text)
+    {
+        String val = text.substring(text.indexOf("=")+2, text.indexOf(";"));
+        
+        try
+        {
+            //System.out.println("val: '" + val + "'");
+            boolean b = Boolean.parseBoolean(val);
+            //System.out.println("b: " + b);
+            return b;
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error with status.\n" + text);
+            return false;
         }
         
-//        <DEVICE  Name="Performa" SN="50003006" 
-        //Dt="2008-05-13" Tm="10:12" BGUnit="mmol/L"/>
-
-        
     }
     
     
-    public void readData()
+    
+    
+    
+    
+    
+    
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
+    public boolean hasSpecialProgressStatus()
     {
-        List<Node> nodes = getNodes("IMPORT/BGDATA/BG");
-        ArrayList<PumpValuesEntry> lst = new ArrayList<PumpValuesEntry>();
-        
-        for(int i=0; i<nodes.size(); i++)
-        {
-            lst.add(getDataEntry(nodes.get(i)));
-        }
-        
+        return true;
     }
     
     
-    public PumpValuesEntry getDataEntry(Node entry)
-    {
-        Element el = (Element)entry;
-        
-        PumpValuesEntry mve = new PumpValuesEntry();
-        //ATechDate at = null;
-        mve.setDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm"))));
-        mve.setBgUnit(this.bg_unit);
-        mve.setBgValue(el.attributeValue("Val"));
-        
-        // <BG Val="5.1" Dt="2005-06-07" Tm="18:01" D="1"/>
-
-        System.out.println(mve);
-        
-        return mve;
-        
-    }
     
     
-    public Node getNode(String tag_path)
-    {
-        return document.selectSingleNode(tag_path);
-    }
-    
-    public Element getElement(String tag_path)
-    {
-        return (Element)getNode(tag_path);
-    }
-
     
     
-    @SuppressWarnings("unchecked")
-    public List<Node> getNodes(String tag_path)
-    {
-        List<Node> nodes = document.selectNodes(tag_path);
-        return nodes;
-    }
-    
-    private long getDateTime(String date, String time)
-    {
-        String o = m_da.replaceExpression(date, "-", "");
-        
-        if (time==null)
-        {
-            o += "0000";
-        }
-        else
-        {
-            o += m_da.replaceExpression(time, ":", "");
-        }
-        
-        return Long.parseLong(o);
-        
-        
-    }
-    
-
-    public void setPumpCompany(AbstractPumpCompany company)
-    {
-        this.pump_company = company;
-    }
-    
-    
-    public AbstractPumpCompany getPumpCompany()
-    {
-        return this.pump_company;
-    }
-
-    
-    
-    /*
-    public static final void main(String[] args)
-    {
-        AccuChekSmartPix acspd = new AccuChekSmartPix();
-        
-        acspd.testXml(new File("G0003006.XML"));
-        
-    }*/
     
     
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
     }
-    
-    
-    public int getMaxMemoryRecords()
-    {
-        return 1;
-    }
-    
     
     
 }
