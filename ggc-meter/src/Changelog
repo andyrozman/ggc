@@ -2,6 +2,9 @@
 Changes file for GGC Meter Tool
 ===============================
 
+0.3.2
+    * AccuSmartChekPixProcessor changed to AccuSmartChekPixMeter and structure changed
+
 0.3.1
     * AccuSmartChekPix file was divided into two, first AccuSmartChekPix, contains methods for working with pix 
       device, second AccuSmartChekPixProcessor contains information for processing Xml data. This was required 

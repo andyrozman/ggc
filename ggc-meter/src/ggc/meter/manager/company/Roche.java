@@ -37,9 +37,7 @@ import ggc.meter.device.accuchek.AccuChekCompact;
 import ggc.meter.device.accuchek.AccuChekCompactPlus;
 import ggc.meter.device.accuchek.AccuChekGo;
 import ggc.meter.device.accuchek.AccuChekIntegra;
-import ggc.meter.device.accuchek.AccuChekPerforma;
 import ggc.meter.device.accuchek.AccuChekSensor;
-import ggc.meter.device.accuchek.AccuChekSmartPix;
 import ggc.meter.manager.MeterImplementationStatus;
 
 public class Roche extends AbstractMeterCompany

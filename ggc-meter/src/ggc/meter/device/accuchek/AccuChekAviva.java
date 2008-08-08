@@ -1,15 +1,9 @@
 package ggc.meter.device.accuchek;
 
-import ggc.meter.device.MeterException;
 import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.output.OutputWriter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileReader;
-
-public class AccuChekAviva extends AccuChekSmartPix
+public class AccuChekAviva extends AccuChekSmartPixMeter
 {
     
     public AccuChekAviva()
@@ -59,7 +53,7 @@ public class AccuChekAviva extends AccuChekSmartPix
      */
     public int getMeterId()
     {
-        return AccuChekSmartPix.METER_ACCUCHEK_AVIVA;
+        return AccuChekSmartPixMeter.METER_ACCUCHEK_AVIVA;
     }
 
     
@@ -73,7 +67,7 @@ public class AccuChekAviva extends AccuChekSmartPix
      */
     public int getCompanyId()
     {
-        return AccuChekSmartPix.ROCHE_COMPANY;
+        return AccuChekSmartPixMeter.ROCHE_COMPANY;
     }
     
     

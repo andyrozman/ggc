@@ -3,9 +3,7 @@ package ggc.meter.device.accuchek;
 import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.output.OutputWriter;
 
-import javax.swing.ImageIcon;
-
-public class AccuChekPerforma extends AccuChekSmartPix
+public class AccuChekPerforma extends AccuChekSmartPixMeter
 {
     
     public AccuChekPerforma()
@@ -58,7 +56,7 @@ public class AccuChekPerforma extends AccuChekSmartPix
      */
     public int getMeterId()
     {
-        return AccuChekSmartPix.METER_ACCUCHEK_PERFORMA;
+        return AccuChekSmartPixMeter.METER_ACCUCHEK_PERFORMA;
     }
 
     
@@ -72,7 +70,7 @@ public class AccuChekPerforma extends AccuChekSmartPix
      */
     public int getCompanyId()
     {
-        return AccuChekSmartPix.ROCHE_COMPANY;
+        return AccuChekSmartPixMeter.ROCHE_COMPANY;
     }
     
     

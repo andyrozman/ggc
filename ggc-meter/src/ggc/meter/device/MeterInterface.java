@@ -1,6 +1,5 @@
 package ggc.meter.device;
 
-import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.manager.company.AbstractMeterCompany;
 
 

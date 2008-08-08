@@ -6,7 +6,6 @@ import ggc.meter.device.DeviceIdentification;
 import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
 import ggc.meter.protocol.ConnectionProtocols;
-import ggc.meter.util.DataAccessMeter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,17 +19,68 @@ import org.dom4j.io.SAXReader;
 
 import com.atech.utils.ATechDate;
 
-public class AccuChekSmartPixProcessor //extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
+public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
 {
     
-    DataAccessMeter m_da = DataAccessMeter.getInstance();
-    OutputWriter output_writer = null;
+    //DataAccessMeter m_da = DataAccessMeter.getInstance();
+    //OutputWriter output_writer = null;
 
     
-    public AccuChekSmartPixProcessor(OutputWriter writer)
+    public static final int ROCHE_COMPANY             = 2;
+    
+    public static final int METER_ROCHE_SMARTPIX_DEVICE   = 20001;
+    public static final int METER_ACCUCHEK_ACTIVE         = 20002;
+    public static final int METER_ACCUCHEK_ADVANTAGE      = 20003;
+    public static final int METER_ACCUCHEK_AVIVA          = 20004;
+    public static final int METER_ACCUCHEK_COMFORT        = 20005;
+    public static final int METER_ACCUCHEK_COMPACT        = 20006;
+    public static final int METER_ACCUCHEK_COMPACT_PLUS   = 20007;
+    public static final int METER_ACCUCHEK_GO             = 20008;
+    public static final int METER_ACCUCHEK_INTEGRA        = 20009;
+    public static final int METER_ACCUCHEK_PERFORMA       = 20010;
+    public static final int METER_ACCUCHEK_SENSOR         = 20011;
+    
+    
+    private int bg_unit = OutputUtil.BG_MGDL;
+
+    
+    public AccuChekSmartPixMeter()
     {
-        this.output_writer = writer; 
+        super();
     }
+    
+    public AccuChekSmartPixMeter(String drive_letter, OutputWriter writer)
+    {
+        super(drive_letter, writer); 
+    }
+    
+    
+    
+    
+    /**
+     * getMeterId - Get Meter Id, within Meter Company class 
+     * 
+     * @return id of meter within company
+     */
+    public int getMeterId()
+    {
+        return AccuChekSmartPixMeter.METER_ROCHE_SMARTPIX_DEVICE;
+    }
+
+    
+
+    
+    /**
+     * getCompanyId - Get Company Id 
+     * 
+     * @return id of company
+     */
+    public int getCompanyId()
+    {
+        return AccuChekSmartPixMeter.ROCHE_COMPANY;
+    }
+    
+    
     
     
     
@@ -76,10 +126,6 @@ public class AccuChekSmartPixProcessor //extends AbstractXmlMeter //mlProtocol /
         document = reader.read(file);
         return document;
     }
-    
-    
-    private int bg_unit = OutputUtil.BG_MGDL;
-    
     
 
     

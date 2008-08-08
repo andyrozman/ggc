@@ -3,7 +3,7 @@ package ggc.meter.device.accuchek;
 import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.output.OutputWriter;
 
-public class AccuChekSensor extends AccuChekSmartPix
+public class AccuChekSensor extends AccuChekSmartPixMeter
 {
     
     public AccuChekSensor()
@@ -53,7 +53,7 @@ public class AccuChekSensor extends AccuChekSmartPix
      */
     public int getMeterId()
     {
-        return AccuChekSmartPix.METER_ACCUCHEK_SENSOR;
+        return AccuChekSmartPixMeter.METER_ACCUCHEK_SENSOR;
     }
 
     
@@ -67,7 +67,7 @@ public class AccuChekSensor extends AccuChekSmartPix
      */
     public int getCompanyId()
     {
-        return AccuChekSmartPix.ROCHE_COMPANY;
+        return AccuChekSmartPixMeter.ROCHE_COMPANY;
     }
     
     
