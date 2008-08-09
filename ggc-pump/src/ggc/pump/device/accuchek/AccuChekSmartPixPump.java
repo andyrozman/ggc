@@ -2,6 +2,7 @@
 package ggc.pump.device.accuchek;
 
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.defs.PumpDataType;
 import ggc.pump.device.DeviceIdentification;
 import ggc.pump.output.OutputUtil;
 import ggc.pump.output.OutputWriter;
@@ -9,6 +10,7 @@ import ggc.pump.protocol.ConnectionProtocols;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.dom4j.Document;
@@ -35,7 +37,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     public static final int PUMP_ACCUCHEK_SPIRIT         = 20004;
     
     
-    private int bg_unit = OutputUtil.BG_MGDL;
+    //private int bg_unit = OutputUtil.BG_MGDL;
+    
+    
+    
+    
+    
 
     
     public AccuChekSmartPixPump()
@@ -204,9 +211,11 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
         
-        list.addAll(getBasals());
-        list.addAll(getBoluses());
-        list.addAll(getEvents());
+//        list.addAll(getBasals());
+//        list.addAll(getBoluses());
+//        list.addAll(getEvents());
+        
+        getEvents();
     }
 
     
@@ -232,6 +241,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     private ArrayList<PumpValuesEntry> getEvents()
     {
         List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/EVENT");
+        ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
         
         for(int i=0; i<lst.size(); i++)
         {
@@ -239,10 +249,16 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             
             PumpValuesEntry pve = new PumpValuesEntry();
             
+            pve.setDateTime(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
+
+            // TODO: set event id, alarm id
+            //pve.setEntryType(PumpDataType.PUMP_DATA_EVENT);
+            this.resolveEvent(pve, el);
             
-            
+            lst_out.add(pve);
         }
         
+        return lst_out;
         
 /*        
         Dt          CDATA #REQUIRED
@@ -251,10 +267,47 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         description CDATA #IMPLIED
 */
         
-        return null;
         
     }
     
+    
+    private void resolveEvent(PumpValuesEntry pve, Element el)
+    {
+        String info = el.attributeValue("shortinfo");
+        String desc = el.attributeValue("description");
+        
+        if (isSet(info))
+        {
+            if (info.startsWith("A"))
+            {
+                System.out.println("info: " + info + ", desc=" + desc);
+            }
+            else if (info.startsWith("E"))
+            {
+                
+            }
+        }
+        else
+        {
+            
+        }
+        
+        pve.setEntryType(PumpDataType.PUMP_DATA_EVENT);
+        
+    }
+    
+
+    private boolean isSet(String str)
+    {
+        if ((str==null) || (str.trim().length()==0))
+        {
+            return false;
+        }
+        else
+            return true;
+        
+        
+    }
     
     
 
@@ -321,6 +374,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         return nodes;
     }
     
+    /**
+     * Pump tool, requires dates to be in seconds, so we need to return value is second, eventhough
+     * pix returns it in minutes.
+     * 
+     * @param date
+     * @param time
+     * @return
+     */
     private long getDateTime(String date, String time)
     {
         String o = m_da.replaceExpression(date, "-", "");
@@ -333,6 +394,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             o += m_da.replaceExpression(time, ":", "");
         }
+        
+        o += "00"; // seconds
         
         return Long.parseLong(o);
         
@@ -374,6 +437,40 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         return 1;
     }
     */
+    
+    
+    /**
+     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
+     *      create, AlarmMappings and EventMappings and any other pump constants.
+     */
+    public void loadPumpSpecificValues()
+    {
+        
+        
+        
+    }
+    
+    
+    /**
+     * Map pump specific alarms to PumpTool specific alarm codes
+     * @return
+     */
+    public Hashtable<String,String> getAlarmMappings()
+    {
+        return null;
+    }
+    
+    
+    /**
+     * Map pump specific events to PumpTool specific event codes
+     * @return
+     */
+    public Hashtable<String,String> getEventMappings()
+    {
+        return null;
+    }
+
+    
     
     
 }

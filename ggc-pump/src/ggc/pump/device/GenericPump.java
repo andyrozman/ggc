@@ -13,6 +13,7 @@ import ggc.pump.manager.company.AbstractPumpCompany;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
@@ -444,7 +445,36 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
+    /**
+     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
+     *      create, AlarmMappings and EventMappings and any other pump constants.
+     */
+    public void loadPumpSpecificValues()
+    {
+    }
+    
+    
+    /**
+     * Map pump specific alarms to PumpTool specific alarm codes
+     * @return
+     */
+    public Hashtable<String,String> getAlarmMappings()
+    {
+        return null;
+    }
+    
+    
+    /**
+     * Map pump specific events to PumpTool specific event codes
+     * @return
+     */
+    public Hashtable<String,String> getEventMappings()
+    {
+        return null;
+    }
 
+    
+    
 
 
 

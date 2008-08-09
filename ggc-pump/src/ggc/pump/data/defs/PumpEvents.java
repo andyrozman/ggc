@@ -1,4 +1,4 @@
-package ggc.pump.device;
+package ggc.pump.data.defs;
 
 import ggc.pump.manager.company.AbstractPumpCompany;
 

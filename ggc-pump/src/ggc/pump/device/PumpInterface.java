@@ -2,6 +2,8 @@ package ggc.pump.device;
 
 import ggc.pump.manager.company.AbstractPumpCompany;
 
+import java.util.Hashtable;
+
 
 /*
  *  GGC - GNU Gluco Control
@@ -185,9 +187,26 @@ public interface PumpInterface
     public String getConnectionPort();
     
 
+    /**
+     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
+     *      create, AlarmMappings and EventMappings and any other pump constants.
+     */
+    public void loadPumpSpecificValues(); 
     
     
-
+    /**
+     * Map pump specific alarms to PumpTool specific alarm codes
+     * @return
+     */
+    public Hashtable<String,String> getAlarmMappings();
+    
+    
+    /**
+     * Map pump specific events to PumpTool specific event codes
+     * @return
+     */
+    public Hashtable<String,String> getEventMappings();
+    
 
     //************************************************
     //***        Should bne implemnetyed by Abstract Meter ter          ***

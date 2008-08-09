@@ -1,4 +1,4 @@
-package ggc.pump.device;
+package ggc.pump.data.defs;
 
 import ggc.pump.manager.company.AbstractPumpCompany;
 
@@ -33,46 +33,14 @@ import ggc.pump.manager.company.AbstractPumpCompany;
  */
 
 
-public class PumpAlarms
+public class PumpDataType
 {
 
-    public static final int PUMP_ERROR_CARTRIDGE_EMPTY  = 1; //__________________________151
-    public static final int PUMP_ERROR_BATTERY_DEPLETED =2;//__________________________152
-    public static final int PUMP_ERROR_AUTOMATIC_OFF =3; //_____________________________152
-    public static final int PUMP_ERROR_OCCLUSION = 4;  // minimed 'No Delivery'=4, roche 'Occlusion'=4
-    public static final int PUMP_ERROR_END_OF_OPERATION = 5; //__________________________154
-    public static final int PUMP_ERROR_MECHANICAL_ERROR = 6; //_________________________155
-    public static final int PUMP_ERROR_ELECTRONIC_ERROR = 7; //_________________________156
-    public static final int PUMP_ERROR_POWER_INTERRUPT = 8; //__________________________157
-    public static final int PUMP_ERROR_CARTRIDGE_ERROR = 10; // _________________________158
-    public static final int PUMP_ERROR_SET_NOTz_PRIMED = 11; //___________________________158
-    public static final int PUMP_ERROR_DATA_INTERRUPTED = 12; //_________________________159
-    public static final int PUMP_ERROR_LANGUAGE_ERROR = 13; //__________________________160
-    public static final int PUMP_ERROR_INSULIN_CHANGED = 14; //__________________________    
-    
-    
-    
-/*  
- * 
- *   Minimed
-
- No Delivery (4)
-
- 
- 
-    Sensor Alert: High Glucose (101)
-    Sensor Alert: Low Glucose (102)
-    Sensor Alert: Meter BG Now (104)
-    Sensor Alarm (105)
-    Sensor Alert: Calibration Error (106)
-    Sensor Alert: Sensor End (107)
-    Sensor Alert: Change Sensor (108)
-    Sensor Alert: Sensor Error (109)
-    Sensor Alert: Weak Signal (112)
-    Sensor Alert: Lost Sensor (113)
-    Sensor Alert: High Glucose Predicted (114)
-    Sensor Alert: Low Glucose Predicted (115)
-*/
+    public static final int PUMP_DATA_BASAL    = 1; 
+    public static final int PUMP_DATA_BOLUS    = 2;
+    public static final int PUMP_DATA_EVENT    = 3; 
+    public static final int PUMP_DATA_ALARM    = 4;
+    public static final int PUMP_DATA_PROFILE  = 5;
     
 
 }
