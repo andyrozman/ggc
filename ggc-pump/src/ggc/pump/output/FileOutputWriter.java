@@ -51,7 +51,7 @@ public class FileOutputWriter extends AbstractOutputWriter
 	
 	public void writeBGData(PumpValuesEntry mve)
 	{
-		writeToFile(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
+		writeToFile(mve.getDateTimeObject().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
 	}
 	
 	

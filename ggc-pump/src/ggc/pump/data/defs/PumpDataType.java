@@ -1,6 +1,5 @@
 package ggc.pump.data.defs;
 
-import ggc.pump.manager.company.AbstractPumpCompany;
 
 
 /*
@@ -40,7 +39,8 @@ public class PumpDataType
     public static final int PUMP_DATA_BOLUS    = 2;
     public static final int PUMP_DATA_EVENT    = 3; 
     public static final int PUMP_DATA_ALARM    = 4;
-    public static final int PUMP_DATA_PROFILE  = 5;
+    public static final int PUMP_DATA_ERROR    = 5;
+    public static final int PUMP_DATA_PROFILE  = 6;
     
 
 }

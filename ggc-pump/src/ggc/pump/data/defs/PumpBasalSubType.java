@@ -1,6 +1,5 @@
 package ggc.pump.data.defs;
 
-import ggc.pump.manager.company.AbstractPumpCompany;
 
 
 /*
@@ -33,12 +32,12 @@ import ggc.pump.manager.company.AbstractPumpCompany;
  */
 
 
-public class PumpReport
+public class PumpBasalSubType
 {
 
-    public static final int PUMP_REPORT_BOLUS_TOTAL_DAY = 1;
-    public static final int PUMP_REPORT_BASAL_TOTAL_DAY = 2;
-    public static final int PUMP_REPORT_INSULIN_TOTAL_DAY = 3;
-    
+    public static final int PUMP_BASAL_VALUE = 1;
+    public static final int PUMP_BASAL_PROFILE = 2;
+    public static final int PUMP_BASAL_TEMPORARY_BASAL_DECREMENT = 3;
+    public static final int PUMP_BASAL_TEMPORARY_BASAL_INCREMENT = 4;
 
 }

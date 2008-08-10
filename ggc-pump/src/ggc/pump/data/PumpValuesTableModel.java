@@ -194,7 +194,7 @@ public class PumpValuesTableModel extends AbstractTableModel // implements
         switch (column)
         {
         case 0:
-            return mve.getDateTime().getDateTimeString();
+            return mve.getDateTimeObject().getDateTimeString();
 
         case 1:
             return mve.getBGValue(DataAccessPump.BG_MMOL);
@@ -240,7 +240,7 @@ public class PumpValuesTableModel extends AbstractTableModel // implements
         if (old_data!=null)
         {
             //System.out.println("oldData != null");
-            long dt = mve.getDateTime().getATDateTimeAsLong();
+            long dt = mve.getDateTime();
             
             //System.out.println("Dt='" + dt + "'");
             

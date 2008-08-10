@@ -14,11 +14,8 @@ import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
-
-import com.atech.utils.ATechDate;
 
 
 public class GenericPump extends AbstractPump //implements PumpInterface 
@@ -458,7 +455,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
      * Map pump specific alarms to PumpTool specific alarm codes
      * @return
      */
-    public Hashtable<String,String> getAlarmMappings()
+    public Hashtable<String,Integer> getAlarmMappings()
     {
         return null;
     }
@@ -468,7 +465,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
      * Map pump specific events to PumpTool specific event codes
      * @return
      */
-    public Hashtable<String,String> getEventMappings()
+    public Hashtable<String,Integer> getEventMappings()
     {
         return null;
     }

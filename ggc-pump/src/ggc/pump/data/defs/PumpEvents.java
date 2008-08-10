@@ -1,6 +1,5 @@
 package ggc.pump.data.defs;
 
-import ggc.pump.manager.company.AbstractPumpCompany;
 
 
 /*
@@ -36,15 +35,28 @@ import ggc.pump.manager.company.AbstractPumpCompany;
 public class PumpEvents
 {
 
-    public final static int PUMP_ALARM_CARTRIDGE_LOW = 1;
+    // infussion sets
+    public static final int PUMP_EVENT_PRIME_INFUSION_SET = 1;
+    public static final int PUMP_EVENT_CARTRIDGE_CHANGED = 2;
     
-    public final static int PUMP_ALARM_BATTERY_LOW = 2;
-    public final static int PUMP_ALARM_REVIEW_DATETIME = 3;
-    public final static int PUMP_ALARM_ALARM_CLOCK = 4;
-    public final static int PUMP_ALARM_PUMP_TIMER = 5;
-    public final static int PUMP_ALARM_TBR_CANCELED = 6;
-    public final static int PUMP_ALARM_TBR_OVER = 7;
-    public final static int PUMP_ALARM_BOLUS_CANCELED = 8;
+    // start / end
+    public static final int PUMP_EVENT_BASAL_RUN = 20;
+    public static final int PUMP_EVENT_BASAL_STOP = 21;
+    public static final int PUMP_EVENT_POWER_DOWN = 22;
+    public static final int PUMP_EVENT_POWER_UP = 23;
+    
+    
+    // date/time
+    public static final int PUMP_EVENT_DATETIME_SET = 40;
+    public static final int PUMP_EVENT_DATETIME_CORRECT = 41;
+    public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK = 42;
+    public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD = 43;
+    
+    
+    
+    
+
+    
     
     
     

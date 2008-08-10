@@ -149,11 +149,11 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 		//1|200603250730|0|10.0|0.0|0.0|null|null|
 		
 		if (parameters.equals(""))
-			System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
+			System.out.println(mve.getDateTimeObject().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
 		else
-			System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
+			System.out.println(mve.getDateTimeObject().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
 		
-		writeToFile("0|" + mve.getDateTime().getATDateTimeAsLong() + "|" + val + 
+		writeToFile("0|" + mve.getDateTimeObject().getATDateTimeAsLong() + "|" + val + 
 				    "|0.0|0.0|0.0|null|null|1|MTI;" + parameters + "|" + this.time_created);
 		setReadData();
 		

@@ -44,9 +44,11 @@ public class PumpValuesEntry
 	DataAccessPump da = DataAccessPump.getInstance();
 	
 	// pump 
-	public ATechDate datetime;
-	int entry_type;
-	
+	long datetime;
+	int base_type;
+	int sub_type;
+	String value;
+	String profile;
 	
 	// old
 	public String bg_str;
@@ -100,26 +102,47 @@ public class PumpValuesEntry
 	
 	public void setDateTime(long dt)
 	{
-	    this.datetime = new ATechDate(dt);
+	    this.datetime = dt;
 	}
 	
 	
 	
-	public void setDateTime(ATechDate dt)
-	{
-		this.datetime = dt;
-	}
-	
-	public ATechDate getDateTime()
+	public long getDateTime()
 	{
 		return this.datetime;
 	}
 	
 	
-	public void setEntryType(int entry_type)
+    public ATechDate getDateTimeObject()
+    {
+        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
+    }
+	
+	
+	
+	public void setBaseType(int base_type)
 	{
-	    this.entry_type = entry_type;
+	    this.base_type = base_type;
 	}
+	
+	
+    public void setSubType(int sub_type)
+    {
+        this.sub_type = sub_type;
+    }
+
+    
+    public void setValue(String val)
+    {
+        this.value = val;
+    }
+    
+	
+	public void setProfile(String profile)
+	{
+	    this.profile = profile;
+	}
+	
 	
 	
 	
@@ -243,7 +266,7 @@ public class PumpValuesEntry
             this.entry_object.setIns2(0);
             this.entry_object.setCh(0.0f);
             this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setDt_info(this.getDateTime().getATDateTimeAsLong());
+	        this.entry_object.setDt_info(this.datetime);
             this.entry_object.setChanged(System.currentTimeMillis());
             this.entry_object.setComment(createComment());
 	    }
@@ -274,7 +297,7 @@ public class PumpValuesEntry
 	public String toString()
 	{
 	    //OutputUtil o= null;
-	    return "MeterValuesEntry [date/time=" + this.datetime.getDateTimeString() + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
+	    return "MeterValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
 	}
 	
 	

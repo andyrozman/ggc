@@ -198,14 +198,14 @@ public interface PumpInterface
      * Map pump specific alarms to PumpTool specific alarm codes
      * @return
      */
-    public Hashtable<String,String> getAlarmMappings();
+    public Hashtable<String,Integer> getAlarmMappings();
     
     
     /**
      * Map pump specific events to PumpTool specific event codes
      * @return
      */
-    public Hashtable<String,String> getEventMappings();
+    public Hashtable<String,Integer> getEventMappings();
     
 
     //************************************************

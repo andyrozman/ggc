@@ -1,8 +1,3 @@
-package ggc.pump.data.defs;
-
-import ggc.pump.manager.company.AbstractPumpCompany;
-
-
 /*
  *  GGC - GNU Gluco Control
  *
@@ -24,21 +19,22 @@ import ggc.pump.manager.company.AbstractPumpCompany;
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: MeterInterface
- *  Purpose:  This is interface class, used for meters. It should be primary implemented by protocol class, and 
- *       protocol class should be used as super class for meter definitions. Each meter family "should" 
- *       have it's own super class and one class for each meter.
+ *  Filename: DailyValuesRow.java
+ *  Purpose:  One row in the DailyValues Data Model.
  *
- *  Author:   andyrozman {andyrozman@sourceforge.net}
+ *  Author:   schultd
  */
 
+package ggc.pump.data;
 
-public class PumpReport
+import ggc.pump.util.DataAccessPump;
+
+
+
+public class PumpValuesDay 
 {
-
-    public static final int PUMP_REPORT_BOLUS_TOTAL_DAY = 1;
-    public static final int PUMP_REPORT_BASAL_TOTAL_DAY = 2;
-    public static final int PUMP_REPORT_INSULIN_TOTAL_DAY = 3;
-    
-
-}
+	DataAccessPump da = DataAccessPump.getInstance();
+	
+	
+	
+}	

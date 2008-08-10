@@ -2,9 +2,14 @@
 package ggc.pump.device.accuchek;
 
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.defs.PumpAlarms;
+import ggc.pump.data.defs.PumpBasalSubType;
+import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpDataType;
+import ggc.pump.data.defs.PumpErrors;
+import ggc.pump.data.defs.PumpEvents;
+import ggc.pump.data.defs.PumpReport;
 import ggc.pump.device.DeviceIdentification;
-import ggc.pump.output.OutputUtil;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.protocol.ConnectionProtocols;
 
@@ -18,8 +23,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-
-import com.atech.utils.ATechDate;
 
 public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
 {
@@ -39,7 +42,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     
     //private int bg_unit = OutputUtil.BG_MGDL;
     
-    
+    private Hashtable<String,Integer> alarm_mappings = null;
+    private Hashtable<String,Integer> event_mappings = null;
+    private Hashtable<String,Integer> error_mappings = null;
+    private Hashtable<String,Integer> bolus_mappings = null;
+    private Hashtable<String,Integer> report_mappings = null;
+   
     
     
     
@@ -48,11 +56,13 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     public AccuChekSmartPixPump()
     {
         super();
+        loadPumpSpecificValues();
     }
     
     public AccuChekSmartPixPump(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer); 
+        loadPumpSpecificValues();
     }
     
     
@@ -105,6 +115,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             //readData();
             
             readPumpData();
+            
+            System.out.println("Reading done");
             
         }
         catch(Exception ex)
@@ -210,37 +222,49 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     public void readPumpData()
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
+
+        System.out.println(" -- Basals --");
+        list.addAll(getBasals());
+/*        System.out.println(" -- Boluses --");
+        list.addAll(getBoluses());
+        System.out.println(" -- Events --");
+        list.addAll(getEvents());
+*/  
         
-//        list.addAll(getBasals());
-//        list.addAll(getBoluses());
-//        list.addAll(getEvents());
+        // postprocess entries (profile), 
         
-        getEvents();
     }
 
     
     private ArrayList<PumpValuesEntry> getBoluses()
     {
-        getNodes("IMPORT/IPDATA/BASAL");   // /BOLUS        
-        
-        return null;
-        
+        return getSpecificElements("BOLUS", AccuChekSmartPixPump.TAG_BOLUS);
     }
     
 
     private ArrayList<PumpValuesEntry> getBasals()
     {
-        
-        
-        return null;
-        
+        return getSpecificElements("BASAL", AccuChekSmartPixPump.TAG_BASAL);
     }
     
     
     
     private ArrayList<PumpValuesEntry> getEvents()
     {
-        List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/EVENT");
+        return getSpecificElements("EVENT", AccuChekSmartPixPump.TAG_EVENT);
+    }
+
+    
+    
+    public static final int TAG_BASAL = 1;
+    public static final int TAG_BOLUS = 2;
+    public static final int TAG_EVENT = 3;
+    
+    
+    
+    private ArrayList<PumpValuesEntry> getSpecificElements(String element, int type)
+    {
+        List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/" + element);
         ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
         
         for(int i=0; i<lst.size(); i++)
@@ -248,27 +272,176 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             Element el = (Element)lst.get(i);
             
             PumpValuesEntry pve = new PumpValuesEntry();
-            
             pve.setDateTime(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
 
-            // TODO: set event id, alarm id
-            //pve.setEntryType(PumpDataType.PUMP_DATA_EVENT);
-            this.resolveEvent(pve, el);
+            
+            
+            if (type==AccuChekSmartPixPump.TAG_BASAL)
+            {
+                this.resolveBasal(pve, el);                
+            }
+            else if (type==AccuChekSmartPixPump.TAG_EVENT)
+            {
+                this.resolveEvent(pve, el);
+            }
+            else if (type==AccuChekSmartPixPump.TAG_BOLUS)
+            {
+                this.resolveBolus(pve, el);
+            }
             
             lst_out.add(pve);
         }
         
         return lst_out;
         
-/*        
-        Dt          CDATA #REQUIRED
-        Tm          CDATA #REQUIRED
-        shortinfo   CDATA #IMPLIED
-        description CDATA #IMPLIED
-*/
+    }
+    
+    
+    private void resolveBasal(PumpValuesEntry pve, Element el)
+    {
+        String remark = el.attributeValue("remark");
         
+        
+        
+        if (isSet(remark))
+        {
+            // all that are special should be removed, all other are checked over events
+            if (remark.contains("changed"))
+            {
+                
+            }
+            else
+            {
+                if (this.getEventMappings().containsKey(remark))
+                {
+                    
+                }
+                else
+                {
+                    System.out.println("Unknown Basal Event. [remark=" + remark + "]");
+                }
+            }
+            
+            //System.out.println("Remark:" + remark);
+        }
+        else
+        {
+            int type = 0;
+
+            if (isSet(el.attributeValue("TBRdec")))
+                type = 1;
+            else if (isSet(el.attributeValue("TBRinc")))
+                type = 2;
+            
+            pve.setProfile(el.attributeValue("profile"));
+
+            if (type==0)
+            {
+                pve.setSubType(PumpBasalSubType.PUMP_BASAL_VALUE);
+                pve.setValue(el.attributeValue("cbrf"));
+            }
+            else
+            {
+                String procs = "";
+                
+                if (type==1)
+                {
+                    pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_DECREMENT);
+                    procs = el.attributeValue("TBRdec"); 
+                }
+                else
+                {
+                    pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_INCREMENT);
+                    procs = el.attributeValue("TBRinc"); 
+                }
+            
+                // inc or dec is '110 %'
+                procs = procs.substring(0, procs.indexOf(" "));
+                procs = procs.trim();
+                
+                pve.setValue("VALUE=" + el.attributeValue("cbrf") + ";INC_DEC=" + procs);
+                
+            }
+            
+            
+            
+//            System.out.println("Undefined Basal [cbrf=" + cbrf + "]");
+/*
+            cbrf      CDATA #REQUIRED
+            TBRdec    CDATA #IMPLIED
+            TBRinc    CDATA #IMPLIED
+            profile   CDATA #IMPLIED
+  */          
+            
+        }
+        
+        
+        
+        /*
+        if (isSet(el.attributeValue("TBRdec")))
+            type = 1;
+        else if (isSet(el.attributeValue("TBRinc")))
+            type = 2;
+        */
+        
+        
+/*        
+        cbrf      CDATA #REQUIRED
+        TBRdec    CDATA #IMPLIED
+        TBRinc    CDATA #IMPLIED
+        profile   CDATA #IMPLIED
+        remark    CDATA #IMPLIED
+  */      
         
     }
+    
+    
+
+    private void resolveBolus(PumpValuesEntry pve, Element el)
+    {
+        String type = el.attributeValue("type");
+        String amount = el.attributeValue("amount");
+        String remark = el.attributeValue("remark");
+    
+
+        if (isSet(type))
+        {
+            if (this.getBolusMappings().containsKey(type))
+            {
+                pve.setBaseType(PumpDataType.PUMP_DATA_BOLUS);
+                pve.setSubType(this.getBolusMappings().get(type));
+                pve.setValue(amount);
+            }
+            else
+            {
+                System.out.println("Unknown Pump Bolus [info=" + type + ",desc=" + amount + ",remark=" + remark + "]");
+            }
+        }
+        else
+        {
+            if (this.getReportMappings().containsKey(remark))
+            {
+                pve.setBaseType(PumpDataType.PUMP_DATA_BOLUS);
+                pve.setSubType(this.getReportMappings().get(remark));
+                pve.setValue(amount);
+            }
+            else
+            {
+                System.out.println("Unknown Pump Bolus [desc=" + amount + ",remark=" + remark + "]");
+            }
+        }
+        
+        
+        
+/*        
+        type      CDATA #REQUIRED
+        amount    CDATA #REQUIRED
+        remark    CDATA #IMPLIED
+  */      
+        
+        
+    }    
+    
     
     
     private void resolveEvent(PumpValuesEntry pve, Element el)
@@ -280,31 +453,80 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             if (info.startsWith("A"))
             {
-                System.out.println("info: " + info + ", desc=" + desc);
+                if (this.getAlarmMappings().containsKey(info))
+                {
+                    pve.setBaseType(PumpDataType.PUMP_DATA_ALARM);
+                    pve.setSubType(this.getAlarmMappings().get(info).intValue());
+                    //System.out.println("info: " + info + ", desc=" + desc);
+                }
+                else
+                {
+                    System.out.println("Unknown Pump Alarm [info=" + info + ",desc=" + desc + "]");
+                }
             }
             else if (info.startsWith("E"))
             {
+                if (this.getErrorMappings().containsKey(info))
+                {
+                    pve.setBaseType(PumpDataType.PUMP_DATA_ERROR);
+                    pve.setSubType(this.getErrorMappings().get(info).intValue());
+                    //System.out.println("info: " + info + ", desc=" + desc);
+                }
+                else
+                {
+                    System.out.println("Unknown Pump Error [info=" + info + ",desc=" + desc + "]");
+                }
                 
             }
+            else
+            {
+
+                if (this.getEventMappings().containsKey(desc))
+                {
+                    pve.setBaseType(PumpDataType.PUMP_DATA_EVENT);
+                    pve.setSubType(this.getEventMappings().get(desc));
+                    pve.setValue(info);
+                }
+                else
+                {
+                    System.out.println("Unknown Pump Event [info=" + info + ",desc=" + desc + "]");
+                }
+                
+            }
+                
         }
         else
         {
-            
+            if (this.getEventMappings().containsKey(desc))
+            {
+                pve.setBaseType(PumpDataType.PUMP_DATA_EVENT);
+                pve.setSubType(this.getEventMappings().get(desc));
+            }
+            else
+            {
+                System.out.println("Unknown Pump Event [info=" + info + ",desc=" + desc + "]");
+            }
         }
         
-        pve.setEntryType(PumpDataType.PUMP_DATA_EVENT);
+        //pve.setEntryType(PumpDataType.PUMP_DATA_EVENT);
         
     }
     
 
     private boolean isSet(String str)
     {
+       // System.out.println("isSet: " + str);
+        
         if ((str==null) || (str.trim().length()==0))
         {
+        //    System.out.println("false");
             return false;
         }
         else
+        {
+          //  System.out.println("true");
             return true;
+        }
         
         
     }
@@ -445,9 +667,57 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      */
     public void loadPumpSpecificValues()
     {
+        // alarm mappings
+        this.alarm_mappings = new Hashtable<String,Integer>();
+        this.alarm_mappings.put("A1", new Integer(PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW));
+        this.alarm_mappings.put("A2", new Integer(PumpAlarms.PUMP_ALARM_BATTERY_LOW));
+        this.alarm_mappings.put("A3", new Integer(PumpAlarms.PUMP_ALARM_REVIEW_DATETIME));
+        this.alarm_mappings.put("A4", new Integer(PumpAlarms.PUMP_ALARM_ALARM_CLOCK));
+        this.alarm_mappings.put("A5", new Integer(PumpAlarms.PUMP_ALARM_PUMP_TIMER));
+        this.alarm_mappings.put("A6", new Integer(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_CANCELED));
+        this.alarm_mappings.put("A7", new Integer(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER));
+        this.alarm_mappings.put("A8", new Integer(PumpAlarms.PUMP_ALARM_BOLUS_CANCELED));
+        
+        this.event_mappings = new Hashtable<String,Integer>();
+        this.event_mappings.put("prime infusion set", new Integer(PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET));
+        this.event_mappings.put("cartridge changed", new Integer(PumpEvents.PUMP_EVENT_CARTRIDGE_CHANGED));
+        this.event_mappings.put("Run", new Integer(PumpEvents.PUMP_EVENT_BASAL_RUN));
+        this.event_mappings.put("Stop", new Integer(PumpEvents.PUMP_EVENT_BASAL_STOP));
+        this.event_mappings.put("power down", new Integer(PumpEvents.PUMP_EVENT_POWER_DOWN));
+        this.event_mappings.put("power up", new Integer(PumpEvents.PUMP_EVENT_POWER_UP));
+        this.event_mappings.put("time / date set", new Integer(PumpEvents.PUMP_EVENT_DATETIME_SET));
+        this.event_mappings.put("time / date corrected", new Integer(PumpEvents.PUMP_EVENT_DATETIME_CORRECT));
+        this.event_mappings.put("time / date set (time shift back)", new Integer(PumpEvents.PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK));
         
         
+        this.error_mappings = new Hashtable<String,Integer>();
+        this.error_mappings.put("E1", new Integer(PumpErrors.PUMP_ERROR_CARTRIDGE_EMPTY));
+        this.error_mappings.put("E2", new Integer(PumpErrors.PUMP_ERROR_BATTERY_DEPLETED));
+        this.error_mappings.put("E3", new Integer(PumpErrors.PUMP_ERROR_AUTOMATIC_OFF));
+        this.error_mappings.put("E4", new Integer(PumpErrors.PUMP_ERROR_OCCLUSION));
+        this.error_mappings.put("E5", new Integer(PumpErrors.PUMP_ERROR_END_OF_OPERATION));
+        this.error_mappings.put("E6", new Integer(PumpErrors.PUMP_ERROR_MECHANICAL_ERROR));
+        this.error_mappings.put("E7", new Integer(PumpErrors.PUMP_ERROR_ELECTRONIC_ERROR));
+        this.error_mappings.put("E8", new Integer(PumpErrors.PUMP_ERROR_POWER_INTERRUPT));
+        this.error_mappings.put("E10", new Integer(PumpErrors.PUMP_ERROR_CARTRIDGE_ERROR));
+        this.error_mappings.put("E11", new Integer(PumpErrors.PUMP_ERROR_SET_NOT_PRIMED));
+        this.error_mappings.put("E12", new Integer(PumpErrors.PUMP_ERROR_DATA_INTERRUPTED));
+        this.error_mappings.put("E13", new Integer(PumpErrors.PUMP_ERROR_LANGUAGE_ERROR));
+        this.error_mappings.put("E14", new Integer(PumpErrors.PUMP_ERROR_INSULIN_CHANGED));
         
+        
+        this.bolus_mappings = new Hashtable<String,Integer>();
+        this.bolus_mappings.put("Std", new Integer(PumpBolusType.PUMP_BOLUS_STANDARD));
+        this.bolus_mappings.put("Scr", new Integer(PumpBolusType.PUMP_BOLUS_SCROLL));
+        
+        // TODO: Support for other boluses
+//        this.bolus_mappings.put("Ext", new Integer(PumpBolusType.PUMP_BOLUS_EXTENDED));
+//        this.bolus_mappings.put("Mul", new Integer(PumpBolusType.PUMP_BOLUS_MULTIWAVE));
+        
+        // report
+        this.report_mappings = new Hashtable<String,Integer>();
+        this.report_mappings.put("Bolus Total", new Integer(PumpReport.PUMP_REPORT_BOLUS_TOTAL_DAY));
+        this.report_mappings.put("Bolus+Basal Total", new Integer(PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY));
     }
     
     
@@ -455,9 +725,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      * Map pump specific alarms to PumpTool specific alarm codes
      * @return
      */
-    public Hashtable<String,String> getAlarmMappings()
+    public Hashtable<String,Integer> getAlarmMappings()
     {
-        return null;
+        return this.alarm_mappings;
     }
     
     
@@ -465,12 +735,28 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      * Map pump specific events to PumpTool specific event codes
      * @return
      */
-    public Hashtable<String,String> getEventMappings()
+    public Hashtable<String,Integer> getEventMappings()
     {
-        return null;
+        return this.event_mappings;
     }
 
     
+    public Hashtable<String,Integer> getErrorMappings()
+    {
+        return this.error_mappings;
+    }
+    
+
+    public Hashtable<String,Integer> getBolusMappings()
+    {
+        return this.bolus_mappings;
+    }
+    
+
+    public Hashtable<String,Integer> getReportMappings()
+    {
+        return this.report_mappings;
+    }
     
     
 }

@@ -9,9 +9,6 @@ import ggc.pump.util.I18nControl;
 import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
 import javax.swing.ImageIcon;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;

@@ -32,20 +32,23 @@ package ggc.pump.data.defs;
  */
 
 
-public class PumpAlarms
+public class PumpErrors
 {
+    public static final int PUMP_ERROR_UNKNOWN_ERROR  = -1; //__________________________151
 
-    public final static int PUMP_ALARM_CARTRIDGE_LOW = 1;
-    public final static int PUMP_ALARM_BATTERY_LOW = 2;
-    public final static int PUMP_ALARM_REVIEW_DATETIME = 3;
-    public final static int PUMP_ALARM_ALARM_CLOCK = 4;
-    public final static int PUMP_ALARM_PUMP_TIMER = 5;
-    public final static int PUMP_ALARM_TEMPORARY_BASAL_RATE_CANCELED = 6;
-    public final static int PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER = 7;
-    public final static int PUMP_ALARM_BOLUS_CANCELED = 8;
-    
-    
-    
+    public static final int PUMP_ERROR_CARTRIDGE_EMPTY  = 1; //__________________________151
+    public static final int PUMP_ERROR_BATTERY_DEPLETED =2;//__________________________152
+    public static final int PUMP_ERROR_AUTOMATIC_OFF =3; //_____________________________152
+    public static final int PUMP_ERROR_OCCLUSION = 4;  // minimed 'No Delivery'=4, roche 'Occlusion'=4
+    public static final int PUMP_ERROR_END_OF_OPERATION = 5; //__________________________154
+    public static final int PUMP_ERROR_MECHANICAL_ERROR = 6; //_________________________155
+    public static final int PUMP_ERROR_ELECTRONIC_ERROR = 7; //_________________________156
+    public static final int PUMP_ERROR_POWER_INTERRUPT = 8; //__________________________157
+    public static final int PUMP_ERROR_CARTRIDGE_ERROR = 10; // _________________________158
+    public static final int PUMP_ERROR_SET_NOT_PRIMED = 11; //___________________________158
+    public static final int PUMP_ERROR_DATA_INTERRUPTED = 12; //_________________________159
+    public static final int PUMP_ERROR_LANGUAGE_ERROR = 13; //__________________________160
+    public static final int PUMP_ERROR_INSULIN_CHANGED = 14; //__________________________    
     
     
     

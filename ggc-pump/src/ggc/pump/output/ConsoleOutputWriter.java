@@ -32,7 +32,7 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
 	
 	public void writeBGData(PumpValuesEntry mve)
 	{
-		System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
+		System.out.println(mve.getDateTimeObject().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
 	}
 	
 	
