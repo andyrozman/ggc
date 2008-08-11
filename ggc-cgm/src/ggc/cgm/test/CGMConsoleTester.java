@@ -29,10 +29,10 @@
 
 package ggc.cgm.test;
 
-import ggc.cgm.output.ConsoleOutputWriter;
+import ggc.cgm.device.minimed.MinimedCareLink;
 
 import java.awt.TextArea;
-import java.util.Vector;
+import java.io.File;
 
 import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
@@ -69,6 +69,7 @@ public class CGMConsoleTester //extends JFrame
 	    
     	try
     	{
+    	    this.startMiniMed("");
     	    //startAscensia(portName);
     	    //this.startOneTouchUltra(portName);
     	    
@@ -104,8 +105,14 @@ public class CGMConsoleTester //extends JFrame
     
     
     
-    public void startXX(String portName) throws Exception
+    public void startMiniMed(String portName) throws Exception
     {
+        
+        MinimedCareLink mcl = new MinimedCareLink();
+        
+        mcl.parseExportFile(new File("./data/CareLink-Export-2008-05-18--06-01.csv"));
+        
+        
 /*        
         ConsoleOutputWriter cow = new ConsoleOutputWriter();
         

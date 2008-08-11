@@ -1018,39 +1018,6 @@ public class DataAccessCGM extends ATDataAccessAbstract
         System.out.println("Not Implemented: " + source);
     }
 
-    /**
-     * For replacing strings.<br>
-     * 
-     * @param input   Input String
-     * @param replace What to seatch for.
-     * @param replacement  What to replace with.
-     * 
-     * @return Parsed string.
-     */
-    public String replaceExpression(String input, String replace,
-            String replacement)
-    {
-
-        int idx;
-        if ((idx = input.indexOf(replace)) == -1)
-        {
-            return input;
-        }
-
-        StringBuffer returning = new StringBuffer();
-
-        while (idx != -1)
-        {
-            returning.append(input.substring(0, idx));
-            returning.append(replacement);
-            input = input.substring(idx + replace.length());
-            idx = input.indexOf(replace);
-        }
-        returning.append(input);
-
-        return returning.toString();
-
-    }
 
 
 

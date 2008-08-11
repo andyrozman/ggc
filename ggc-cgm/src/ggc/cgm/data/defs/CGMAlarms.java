@@ -1,4 +1,4 @@
-package ggc.cgm.device;
+package ggc.cgm.data.defs;
 
 
 
