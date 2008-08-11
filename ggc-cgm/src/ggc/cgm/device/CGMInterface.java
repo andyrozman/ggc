@@ -127,14 +127,57 @@ public interface CGMInterface
 
     
     
+
+
+    
     /**
-     * getDataFull - get all data from Meter
-     * This data should be read from meter, and is used in Meter GUI
+     * This is method for reading data from device. All reading from actual device should be done from here.
+     * Reading can be done directly here, or event can be used to read data.
      */
-    void readDataFull() throws CGMException;
+    void readDeviceDataFull() throws CGMException;
+    
+    
+    /**
+     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
+    void readDeviceDataPartitial() throws CGMException;
 
 
+    /** 
+     * This is method for reading configuration
+     * 
+     * @throws MeterExceptions
+     */
+    void readConfiguration() throws CGMException;
+    
 
+    /**
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do). 
+     * @throws MeterExceptions
+     */
+    void readInfo() throws CGMException;
+    
+
+    
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
+     */
+    public String getDeviceSpecialComment();
+    
+    
+    
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
+    public boolean hasSpecialProgressStatus();
+    
+    
 
     //************************************************
     //***        Available Functionality           ***
@@ -178,6 +221,17 @@ public interface CGMInterface
     
     
     public AbstractCGMCompany getCGMCompany();
+    
+    public int getConnectionProtocol();
+
+    
+    /**
+     * getInstructions - get instructions for device
+     * Should be implemented by meter class.
+     * 
+     * @return instructions for reading data 
+     */
+    String getInstructions();
     
     
 

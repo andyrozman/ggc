@@ -700,7 +700,89 @@ public class GenericCGM implements CGMInterface
     }
 
 
+    /**
+     * getInstructions - get instructions for device
+     * Should be implemented by meter class.
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return null;
+    }
 
 
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
+     */
+    public String getDeviceSpecialComment()
+    {
+        return null;
+    }
+    
+    
+    
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
+    public boolean hasSpecialProgressStatus()
+    {
+        return false;
+    }
+    
+    
+    
+    /**
+     * This is method for reading data from device. All reading from actual device should be done from here.
+     * Reading can be done directly here, or event can be used to read data.
+     */
+    public void readDeviceDataFull() throws CGMException
+    {
+        return;
+    }
+    
+    
+    /**
+     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
+    public void readDeviceDataPartitial() throws CGMException
+    {
+        return;
+    }
+
+
+    /** 
+     * This is method for reading configuration
+     * 
+     * @throws MeterExceptions
+     */
+    public void readConfiguration() throws CGMException
+    {
+        return;
+    }
+    
+
+    /**
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do). 
+     * @throws MeterExceptions
+     */
+    public void readInfo() throws CGMException
+    {
+        return;
+    }
+    
+    public int getConnectionProtocol()
+    {
+        return 0;
+    }
+
+    
+    
 
 }
