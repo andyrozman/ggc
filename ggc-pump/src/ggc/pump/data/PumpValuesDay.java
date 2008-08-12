@@ -22,7 +22,7 @@
  *  Filename: DailyValuesRow.java
  *  Purpose:  One row in the DailyValues Data Model.
  *
- *  Author:   schultd
+ *  Author:   Andy Rozman {andy@atech-software.com}
  */
 
 package ggc.pump.data;
@@ -35,6 +35,7 @@ public class PumpValuesDay
 {
 	DataAccessPump da = DataAccessPump.getInstance();
 	
+    // TODO: Make whole class
 	
 	
 }	

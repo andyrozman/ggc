@@ -186,33 +186,17 @@ public class DataAccessPump extends ATDataAccessAbstract
     private DataAccessPump()
     {
     	super(I18nControl.getInstance());
-        this.loadFonts();
-
-        //m_i18n.createInstance(this);
-        //        loadAvailableLFs();
-        //        loadLanguageInfo();
-//x        m_meterManager = new PumpManager();
-
-//        this.m_configFile = new DbToolApplicationGGC();
-//        this.m_configFile.loadConfig();
-
-//        m_cfgMgr = new ConfigurationManager(this);
-
-//        this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
-
-        m_i18n = I18nControl.getInstance();
-
-        //loadOptions();
-
-        //this.verifyComConfig();
-        this.loadTimeZones();
-        
-        loadPumpsTable();
-
-        checkPrerequisites();
-
     } 
 
+    
+    public void initSpecial()
+    {
+        this.loadTimeZones();
+        loadPumpsTable();
+        checkPrerequisites();
+    }
+    
+    
     //  Method:       getInstance
     //  Author:       Andy
     /**

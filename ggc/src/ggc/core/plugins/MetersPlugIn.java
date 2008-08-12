@@ -59,11 +59,14 @@ public class MetersPlugIn extends PlugInClient
                     .getInstance(), this);
 
             // System.out.println("We have an instance !!! " + this.m_srv);
+            
+            this.installed = true;
+            
         }
         catch (Exception ex)
         {
             //System.out.println("Ex:" + ex);
-
+            this.installed = false;
         }
 
         // System.out.println("We have an instance !!! " + this.m_srv);
@@ -148,12 +151,9 @@ public class MetersPlugIn extends PlugInClient
     public String getShortStatus()
     {
         if (this.m_server != null)
-        {
-            return String.format(ic.getMessage("STATUS_INSTALLED"),
-                    this.m_server.getVersion());
-        }
+            return String.format(ic.getMessage("STATUS_INSTALLED"), this.m_server.getVersion());
         else
-            return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.3");
+            return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
     

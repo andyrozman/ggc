@@ -66,7 +66,9 @@ public class GGCDbLoader extends Thread
     public boolean run_once = false;
 
     
-    public boolean part_start = false;
+    public boolean part_start = true;
+    
+    //public boolean debug = false;
     
     
     public GGCDbLoader(DataAccess da)
@@ -108,7 +110,7 @@ public class GGCDbLoader extends Thread
         
         GGCDb db = new GGCDb(m_da);
 
-        if (!part_start)
+        //if (!part_start)
         {
             if (m_bar!=null)
                 m_bar.setDatabaseName(db.getHibernateConfiguration().getConnectionName());
@@ -159,28 +161,32 @@ public class GGCDbLoader extends Thread
 
         setDbStatus(StatusBar.DB_BASE_DONE); 
         
+   
+        if (!part_start)
+        {
         
-        // 4 - load doctors data
-        
-        // TODO: in version 0.4
+            // 4 - load doctors data
+            // TODO: in version 0.4
+           
+            // 5 - load nutrition(1) root data
+            db.loadNutritionDbBase();
+            db.loadNutritionDb1();
+            
+            // 6 - load nutrition(2) root data
+            db.loadNutritionDb2();
+            
+            
+            // 7 - load meals root data
+            db.loadMealsDb();
 
-       
-        // 5 - load nutrition(1) root data
-        db.loadNutritionDbBase();
-        db.loadNutritionDb1();
+            setDbStatus(StatusBar.DB_LOADED);
 
-        
-        // 6 - load nutrition(2) root data
-        
-        db.loadNutritionDb2();
-        
-        
-        // 7 - load meals root data
-        
-        db.loadMealsDb();
-
-
-        setDbStatus(StatusBar.DB_LOADED);
+        }
+        else
+        {
+            db.loadNutritionDbBase();
+            setDbStatus(StatusBar.DB_LOADED);
+        }
         
         
         
@@ -209,8 +215,8 @@ public class GGCDbLoader extends Thread
 
     public void setDbStatus(int status)
     {
-        if (part_start)
-            return;
+        //if (part_start)
+        //    return;
 	
         if (m_bar!=null)
         {

@@ -19,18 +19,19 @@ package ggc.meter.device;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.protocol.ConnectionProtocols;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+
+import com.atech.i18n.I18nControlAbstract;
 
 
 public class DummyMeter extends AbstractMeter //implements MeterInterface
 {
 
     DataAccessMeter m_da = DataAccessMeter.getInstance();
-    I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     public int m_meter_index = 0;
     

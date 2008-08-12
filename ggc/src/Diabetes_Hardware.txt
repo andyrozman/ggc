@@ -8,43 +8,36 @@ B.) PUMPS
 C.) CGMS
 
 
-
-
-
 A.) METERS
 ===========
 
- Name of company      |               Plans                           | Supported devices                           | Developer
+ Name of company  |               Plans                    | Supported devices                         | Developer
 ---------------------------------------------------------------------------------------------------------------------------------
-Bayer/Ascensia        |   Done                                        | Dex2, Contour, Breeze, EliteXl              | Andy
-Roche                 |   Planned, -> 09.2008                         | All supported through Pix device            | Andy
-LifeScan              |   Planned, 09.- 12.2008                       | ?                                           | Andy
-Abbott                |   ?                                           | ?
-
+Bayer/Ascensia    | Done                                   | Dex2, Contour, Breeze, EliteXl            | Andy
+Roche             | Planned, -> 09.2008                    | All supported through Pix device          | Andy
+LifeScan          | Planned, 09.- 12.2008                  | ?                                         | Andy
+Abbott            | ?                                      | ?                                         | ?
+Precission Xtra   | ?                                      | ?                                         | ?
+Optimum Xceed     | ?                                      | ?                                         | ?
 
 
 
 B.) PUMPS
 ===========
 
- Name of company      |               Plans                           | Supported devices                           | Developer 
----------------------------------------------------------------------------------------------------------------------------------
-Roche                 |   Planned, -> 12.2008                         | All supported through Pix device            | Andy
-Minimed               |   Planned, ?                                  | Support with import of CareLink export      | Andy
-Animas                |   Planned                                     | ?                                           | Nate 
-
+ Name of company  |               Plans                    | Supported devices                         | Developer 
+----------------------------------------------------------------------------------------------------------------------
+Roche             | Planned, -> 12.2008                    | All supported through Pix device          | Andy
+Minimed           | Planned, ?                             | Support with import of CareLink export    | Andy
+Animas            | Planned                                | Through EZM db                            | Nate 
 
 
 
 C.) CGMS
 ==========
 
- Name of company      |               Plans                           | Supported devices                           | Developer 
----------------------------------------------------------------------------------------------------------------------------------
-Minimed               |   Planned, ?                                  | Support with import of CareLink export      | Andy
-
-
-
-
+ Name of company  |               Plans                    | Supported devices                         | Developer 
+----------------------------------------------------------------------------------------------------------------------
+Minimed           | Planned, ?                             | Support with import of CareLink export    | Andy
 
 

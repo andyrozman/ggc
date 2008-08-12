@@ -11,7 +11,6 @@ import ggc.meter.output.OutputUtil;
 import ggc.meter.output.OutputWriter;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -37,6 +36,8 @@ import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumn;
 
+import com.atech.i18n.I18nControlAbstract;
+
 public class MeterDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
 {
 
@@ -46,7 +47,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     MeterReaderRunner mrr;
 
     private DataAccessMeter m_da = DataAccessMeter.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     // private static ReadMeterDialog singleton = null;
 

@@ -3,6 +3,25 @@
 <h2 class="head">News</h2>
 
 
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2008-08-04 22:44</td>
+<td>Release 0.3 out</td>
+</tr>
+<tr>
+<td colspan="2">
+And its finally here... Our first public release. As promissed, we added two more features to all previously planned ones. 
+Meter Tool is now released (supported are currently just Ascensia/Bayer) and full Backup and Restore is possible. More about
+all current and planned features on page 'Features'.
+</td></tr>
+</table> 
+
+<br><br>
+
+
+
 <table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
 <tr class="newsheader">
 <td width="150">2008-07-06 18:44</td>

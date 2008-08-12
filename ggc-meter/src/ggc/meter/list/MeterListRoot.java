@@ -80,7 +80,7 @@ public class MeterListRoot
     @Override
     public String toString()
     {
-    	return DataAccessMeter.getInstance().m_i18n.getMessage("METERS_LIST");
+    	return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("METERS_LIST");
     }
 
 

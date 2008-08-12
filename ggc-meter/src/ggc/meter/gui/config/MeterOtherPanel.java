@@ -31,7 +31,6 @@ package ggc.meter.gui.config;
 //import ggc.gui.dialogs.PortSelectionDialog;
 
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -52,6 +51,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.atech.i18n.I18nControlAbstract;
 
 
 public class MeterOtherPanel extends AbstractPreferencesPanel implements ItemListener
@@ -87,7 +88,7 @@ public class MeterOtherPanel extends AbstractPreferencesPanel implements ItemLis
     }
 */
     DataAccessMeter m_da = DataAccessMeter.getInstance();
-    I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     
     public MeterOtherPanel(ConfigurationDialog parent)
     {

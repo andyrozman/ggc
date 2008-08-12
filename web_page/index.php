@@ -35,7 +35,7 @@
 	<?
 	if ($show == "") 
 	{
-		$show = "screenshots";        //default to news
+		$show = "news";        //default to news
 	}
 	
 	$incfile = sprintf("inc_%s.inc",$show);

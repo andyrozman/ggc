@@ -9,7 +9,6 @@ import ggc.meter.manager.MeterManager;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.protocol.ConnectionProtocols;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -28,6 +27,7 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataReadingFinishedInterface;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.TimeZoneUtil;
 
 
@@ -44,7 +44,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
 
     
     private DataAccessMeter m_da = DataAccessMeter.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();        
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     
     JButton button_start;
     JLabel label_waiting;

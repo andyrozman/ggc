@@ -8,5 +8,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/dom4j-1.6.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Atech-Tools"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GGC Plugin Base"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -203,13 +203,14 @@ public class DataAccess extends ATDataAccessAbstract
     private DataAccess()
     {
         super(I18nControl.getInstance());
-        // this.loadFonts();
 
-        // m_i18n.createInstance(this);
-        // loadAvailableLFs();
-        // loadLanguageInfo();
-        // x m_meterManager = new MeterManager();
 
+
+    }
+
+    
+    public void initSpecial()
+    {
         this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
         this.m_configFile = new DbToolApplicationGGC();
@@ -219,25 +220,15 @@ public class DataAccess extends ATDataAccessAbstract
 
         this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
 
-        // m_i18n = I18nControl.getInstance();
-
-        // this.setI18nControlInstance(I18nControl.getInstance());
-
         loadOptions();
-
-        // this.verifyComConfig();
-        // this.loadTimeZones();
-
-        // checkPrerequisites();
-        // this.loadBackupRestoreCollection();
 
         if (!(new File("../data/debug.txt").exists()))
         {
             new RedirectScreen();
         }
-
-    }
-
+        
+    }    
+    
     // Method: getInstance
     // Author: Andy
     /**

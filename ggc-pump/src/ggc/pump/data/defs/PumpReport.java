@@ -1,6 +1,5 @@
 package ggc.pump.data.defs;
 
-import ggc.pump.manager.company.AbstractPumpCompany;
 
 
 /*
@@ -29,7 +28,7 @@ import ggc.pump.manager.company.AbstractPumpCompany;
  *       protocol class should be used as super class for meter definitions. Each meter family "should" 
  *       have it's own super class and one class for each meter.
  *
- *  Author:   andyrozman {andyrozman@sourceforge.net}
+ *  Author:   Andy Rozman {andy@atech-software.com}
  */
 
 

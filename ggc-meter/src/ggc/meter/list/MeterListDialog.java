@@ -28,7 +28,6 @@
 package ggc.meter.list;
  
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -44,6 +43,8 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
+
+import com.atech.i18n.I18nControlAbstract;
 
 
 
@@ -64,7 +65,7 @@ public class MeterListDialog extends JDialog implements TreeSelectionListener, A
 //    private static boolean useSystemLookAndFeel = false;
 
 
-    private I18nControl ic = null;
+    private I18nControlAbstract ic = null;
     public MeterListAbstractPanel  panels[] = null;
 // x   private int selectedPanel = 0;
 
@@ -81,7 +82,7 @@ public class MeterListDialog extends JDialog implements TreeSelectionListener, A
 	//super((JDialog)null, "", true);
 
         m_da = da;
-        ic = m_da.m_i18n;
+        ic = m_da.getI18nControlInstance();
 
         //this.setResizable(false);
         this.setBounds(80, 50, 800, 600);

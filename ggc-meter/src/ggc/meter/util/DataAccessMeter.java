@@ -30,19 +30,15 @@
 package ggc.meter.util;
 
 import ggc.meter.manager.MeterManager;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,122 +52,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import com.atech.utils.ATDataAccessAbstract;
 
-
-public class DataAccessMeter extends ATDataAccessAbstract
+public class DataAccessMeter extends DataAccessPlugInBase
 {
-
-    // LF
-    //    Hashtable<String,String> availableLF_full = null;
-    //    Object[]  availableLF = null;
-    //    Object[]  availableLang = null;
-    //    private LanguageInfo m_lang_info = null;
-
-    //    String selectedLF = null;
-    //    String subSelectedLF = null;
-
-    // Config file
-    //    Hashtable<String,String> config_db_values = null;
-    //    public int selected_db = -1;
-    //    public int selected_lang = 1;
-    //    public String selected_LF_Class = null; // class
-    //  public String selected_LF_Name = null; // name
-    //    public String skinLFSelected = null;
-    //    String allDbs[] = null;
-
-    public static final String pathPrefix = ".";
-
-    public I18nControl m_i18n = null;
 
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
-    // singelton instance
-
-    //public GGCDb m_db = null;
-
-    //public MainFrame m_main = null;
-
-    //public GGCLittle m_main_little = null;
-
-    public Font fonts[] = null;
-
-    //public GGCTreeRoot m_nutrition_treeroot = null;
-
-    //public GGCTreeRoot m_meals_treeroot = null;
-
-    // daily and weekly data
-    //private GregorianCalendar m_date = null, m_dateStart = null;
-
-    //private HbA1cValues m_HbA1c = null;
-
-    //private DailyValues m_dvalues = null;
-
-    //private WeeklyValues m_dRangeValues = null;
-
     private MeterManager m_meterManager = null;
 
-//xa    private GGCProperties m_settings = null;
-
-    //private DbToolApplicationGGC m_configFile = null;
-//    private ConfigurationManager m_cfgMgr = null;
-
-
-    public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
-
-    /**
-     * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
-     */
-    public int m_BG_unit = BG_MGDL;
-
-    public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
-
-    public String[] avLangPostfix = { "en", "de", "si", };
-
-    public String[] bg_units = { "mg/dl", "mmol/l" };
-
     public Hashtable<String,String> timeZones;
-
     public Vector<String> time_zones_vector;
     
-//    public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
 
     public ImageIcon config_icons[] = null;
-/*
-    {
-	    new ImageIcon("/icons/cfg_general.png"), 
-	    new ImageIcon("/icons/cfg_medical.png"), 
-	    new ImageIcon("icons/cfg_colors.png"), 
-	    new ImageIcon("icons/cfg_render.png"), 
-	    new ImageIcon("icons/cfg_meter.png"), 
-	    new ImageIcon("icons/cfg_print.png")
-	};
-*/
-/*	public ImageIcon config_icons[] = {
-	    new ImageIcon("images/cfg_db.gif"), 
-	    new ImageIcon("images/cfg_look.gif"), 
-	    new ImageIcon("images/cfg_myparish.gif"), 
-	    new ImageIcon("images/cfg_masses.gif"), 
-	    new ImageIcon("images/cfg_users.gif"), 
-	    new ImageIcon("images/cfg_lang.gif"), 
-	    new ImageIcon("images/cfg_web.gif"), 
-	    null
-	};
+    public String[] options_yes_no = null;
 
-    public String config_types[] = { 
-	m_ic.getMessage("GENERAL"),
-	m_ic.getMessage("MEDICAL_DATA"),
-	m_ic.getMessage("COLORS_AND_FONTS"),
-	m_ic.getMessage("RENDERING_QUALITY"),
-	m_ic.getMessage("METER_CONFIGURATION"),
-	m_ic.getMessage("PRINTING")
-    };
-
-*/
-        public String[] options_yes_no = null;
-
-
-       JFrame m_main = null;        
+    JFrame m_main = null;        
         
         
     public Hashtable<String,String> metersUrl;
@@ -194,36 +90,21 @@ public class DataAccessMeter extends ATDataAccessAbstract
     private DataAccessMeter(JFrame frame)
     {
     	super(I18nControl.getInstance());
-        this.loadFonts();
-        
         this.m_main = frame;
-
-        //m_i18n.createInstance(this);
-        //        loadAvailableLFs();
-        //        loadLanguageInfo();
-//x        m_meterManager = new MeterManager();
-
-//        this.m_configFile = new DbToolApplicationGGC();
-//        this.m_configFile.loadConfig();
-
-//        m_cfgMgr = new ConfigurationManager(this);
-
-//        this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
-
-        m_i18n = I18nControl.getInstance();
-
-        //loadOptions();
-
-        //this.verifyComConfig();
-        this.loadTimeZones();
-        
-        loadMetersTable();
-        loadConfigIcons();
-        
-        checkPrerequisites();
-
     } 
 
+    
+    public void initSpecial()
+    {
+        this.loadFonts();
+
+        this.loadTimeZones();
+        loadMetersTable();
+        checkPrerequisites();
+    }
+    
+    
+    
     //  Method:       getInstance
     //  Author:       Andy
     /**
@@ -283,7 +164,7 @@ public class DataAccessMeter extends ATDataAccessAbstract
      */
     public void deleteInstance()
     {
-        m_i18n = null;
+        super.m_i18n = null;
     }
 
  
@@ -375,42 +256,6 @@ public class DataAccessMeter extends ATDataAccessAbstract
     
     
     
-    // ********************************************************
-    // ******                   Fonts                     *****    
-    // ********************************************************
-
-    public static final int FONT_BIG_BOLD = 0;
-
-    public static final int FONT_NORMAL = 1;
-
-    public static final int FONT_NORMAL_BOLD = 2;
-
-    public void loadFonts()
-    {
-        fonts = new Font[3];
-        fonts[0] = new Font("SansSerif", Font.BOLD, 22);
-        fonts[1] = new Font("SansSerif", Font.PLAIN, 12);
-        fonts[2] = new Font("SansSerif", Font.BOLD, 12);
-    }
-
-    public Font getFont(int font_id)
-    {
-        return fonts[font_id];
-    }
-    
-    
-    
-    // ********************************************************
-    // ******                 Icons                       *****    
-    // ********************************************************
-
-
-
-
-    // ********************************************************
-    // ******                    Db                       *****    
-    // ********************************************************
-
 
 
     // ********************************************************
@@ -555,108 +400,6 @@ public class DataAccessMeter extends ATDataAccessAbstract
     }
 */
 
-    // ********************************************************
-    // ******             BG Measurement Type             *****    
-    // ********************************************************
-
-    public static final int BG_MGDL = 1;
-
-    public static final int BG_MMOL = 2;
-
-    public int getBGMeasurmentType()
-    {
-        return this.m_BG_unit;
-    }
-
-    public void setBGMeasurmentType(int type)
-    {
-        this.m_BG_unit = type;
-    }
-
-    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
-
-    private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
-
-    /**
-     * Depending on the return value of <code>getBGMeasurmentType()</code>, either
-     * return the mg/dl or the mmol/l value of the database's value. Default is mg/dl.
-     * @param dbValue - The database's value (in float)
-     * @return the BG in either mg/dl or mmol/l
-     */
-    public float getDisplayedBG(float dbValue)
-    {
-        switch (this.m_BG_unit)
-        {
-        case BG_MMOL:
-            // this POS should return a float rounded to 3 decimal places,
-            // if I understand the docu correctly
-            return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR,
-                    new MathContext(3, RoundingMode.HALF_UP)).floatValue());
-        case BG_MGDL:
-        default:
-            return dbValue;
-        }
-    }
-
-    public float getBGValue(float bg_value)
-    {
-        switch (this.m_BG_unit)
-        {
-        case BG_MMOL:
-            return (bg_value * MGDL_TO_MMOL_FACTOR);
-        case BG_MGDL:
-        default:
-            return bg_value;
-        }
-    }
-
-
-    public float getBGValueByType(int type, float bg_value)
-    {
-        switch (type)
-        {
-        case BG_MMOL:
-            return (bg_value * MGDL_TO_MMOL_FACTOR);
-        case BG_MGDL:
-        default:
-            return bg_value;
-        }
-    }
-
-
-    public float getBGValueByType(int input_type, int output_type, float bg_value)
-    {
-        
-        if (input_type==output_type)
-            return bg_value;
-        else
-        {
-            if (output_type==DataAccessMeter.BG_MGDL)
-            {
-                return bg_value * DataAccessMeter.MGDL_TO_MMOL_FACTOR;
-            }
-            else
-            {
-                return bg_value * DataAccessMeter.MMOL_TO_MGDL_FACTOR;
-            }
-        }
-
-    }
-
-
-    public float getBGValueDifferent(int type, float bg_value)
-    {
-
-            if (type==DataAccessMeter.BG_MGDL)
-            {
-                return bg_value * DataAccessMeter.MGDL_TO_MMOL_FACTOR;
-            }
-            else
-            {
-                return bg_value * DataAccessMeter.MMOL_TO_MGDL_FACTOR;
-            }
-    }
-
 
 
     // ********************************************************
@@ -664,10 +407,6 @@ public class DataAccessMeter extends ATDataAccessAbstract
     // ********************************************************
 
 
-    public I18nControl getI18nInstance()
-    {
-        return m_i18n;
-    }
 
     /**
      *  Utils
@@ -1120,6 +859,16 @@ public class DataAccessMeter extends ATDataAccessAbstract
     public static void notImplemented(String source)
     {
         System.out.println("Not Implemented: " + source);
+    }
+
+
+    
+    
+    @Override
+    public void createWebListerItems()
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 

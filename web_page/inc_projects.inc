@@ -13,6 +13,10 @@ installed. If you don't wish to use them, you can disable them, but they will st
 this two projects were created is, that there are quite a lot of different devices (meters and pumps) available 
 and when they are added to code, version of main application stays the same, you just get a new version of
 tool. <br><br>
+We decided to add another sub-project: CGMS Tool. In some cases we get CGMS data together with pump data, but in 
+most cases we have different device that receives this data.
+
+<br><br>
 Here is where you come in. Adding support for device is tricky thing, since most of companies that make this 
 devices are not willing to disclose their protocols for communication (there are some exceptions to the rule, 
 those two beeing Ascensia and Lifescan). We can either implement device, by having protocol, or we can get
@@ -62,7 +66,7 @@ Meter tool will be used in version 0.4 of GGC (by end of year) or maybe even bef
 
 <h3 class="header">Pump Tool</h3>
 
-Pump tool is still in planning phase. So all things are still on TO-DO list. In brackets there is version of GGC
+Pump tool is now out of planning phase and started with implementation. All things are still on TO-DO list. In brackets there is version of GGC
 in which functionality will be available (it may become available sooner, but it's not likely).
 <br><br>
 <b><i>Tasks that need to be done:</i></b>
@@ -82,14 +86,44 @@ in which functionality will be available (it may become available sooner, but it
     <li>Graphs (0.6)</li>
     <li>Specific pump models implementations:</li>
     <ul>
-        <li>MiniMed (2009)
-        <li>Sooil Dana (2010)
-        <li>Roche/Disetronic (2010)
-        <li>Animas (?)
+        <li>Roche/Disetronic (2008)
+        <li>MiniMed (2008/09)
+        <li>Sooil Dana (?) [at this time this pump has no PC communication]
+        <li>Animas (unknown) [we have one developer working just on this]
         <li>Smith's Cosmo (?)
         <li>Omni Pod (?)
     </ul>
 </ul>
+
+
+<br>
+
+<h3 class="header">CGMS Tool</h3>
+
+CGMS tool is still in planning phase. So all things are still on TO-DO list. In brackets there is version of GGC
+in which functionality will be available (it may become available sooner, but it's not likely).
+<br><br>
+<b><i>Tasks that need to be done:</i></b>
+<ul>
+    <li>Base framework for CGMS (0.5)</li>
+    <li>Communication framework for CGMS (interface that all CGMS will use)</li>
+    <li>List of CGMS (0.6)</li>
+    <li>Configuration and graphical interface for integration into GGC (0.6)</li>
+    <li>Output types:</li>
+    <ul>
+        <li>Console and file output (0.6)
+        <li>GGC Db Output (for manual import) (0.6)
+        <li>GGC Output (GUI integration) (0.6)
+    </ul>
+    <li>Graphs (0.6)</li>
+    <li>Specific CGMS models implementations:</li>
+    <ul>
+        <li>MiniMed (2009)
+        <li>Dexcom (?)
+        <li>Abbott (?)
+    </ul>
+</ul>
+
 
 
 </blockquote>

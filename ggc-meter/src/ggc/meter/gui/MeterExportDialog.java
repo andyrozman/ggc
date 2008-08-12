@@ -6,7 +6,6 @@ import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.output.OutputWriter;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,6 +24,7 @@ import javax.swing.JProgressBar;
 import javax.swing.border.LineBorder;
 
 import com.atech.graphics.components.StatusReporterInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 public class MeterExportDialog extends JDialog implements ActionListener, StatusReporterInterface
 {
@@ -51,7 +51,7 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
 
 
     private DataAccessMeter m_da = DataAccessMeter.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     public JProgressBar progress = null;
 

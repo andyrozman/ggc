@@ -22,7 +22,7 @@
  *  Filename: DailyValuesRow.java
  *  Purpose:  One row in the DailyValues Data Model.
  *
- *  Author:   schultd
+ *  Author:   Andy Rozman {andy@atech-software.com}
  */
 
 package ggc.pump.data;

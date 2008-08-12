@@ -190,12 +190,9 @@ public class PumpsPlugIn extends PlugInClient
     public String getShortStatus()
     {
         if (this.m_server != null)
-        {
-            return String.format(ic.getMessage("STATUS_INSTALLED"),
-                    this.m_server.getVersion());
-        }
+            return String.format(ic.getMessage("STATUS_INSTALLED"), this.m_server.getVersion());
         else
-            return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.4");
+            return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)

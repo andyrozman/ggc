@@ -33,7 +33,6 @@ package ggc.meter.gui.config;
 import ggc.meter.manager.MeterManager;
 import ggc.meter.manager.company.MeterCompanyInterface;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -41,6 +40,8 @@ import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+
+import com.atech.i18n.I18nControlAbstract;
 
 
 public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemListener
@@ -81,7 +82,7 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
     }
 */
     DataAccessMeter m_da = DataAccessMeter.getInstance();
-    I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     JLabel label_status;
     
     public MeterCompanyPanel(ConfigurationDialog parent)

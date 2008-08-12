@@ -82,7 +82,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 	//super((JDialog)null, "", true);
 
         m_da = da;
-        ic = m_da.m_i18n;
+        ic = m_da.getI18nControlInstance();
         
         m_root = new BaseListRoot(m_da);
 
