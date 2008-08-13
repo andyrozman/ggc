@@ -36,8 +36,8 @@ public abstract class EZManagerDb extends AbstractPump
     
     public static final int ANIMAS_COMPANY                = 4;
     
-    public static final int PUMP_ANIMAS_X1               = 20001;
-    public static final int PUMP_ANIMAS_TEST             = 20099;
+    public static final int PUMP_ANIMAS_X1               = 40001;
+    public static final int PUMP_ANIMAS_TEST             = 40099;
     
     
     
