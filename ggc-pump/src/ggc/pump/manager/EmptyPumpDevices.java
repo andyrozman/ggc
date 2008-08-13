@@ -1,6 +1,7 @@
 package ggc.pump.manager;
 
 import ggc.pump.device.DummyPump;
+import ggc.pump.output.DummyOutputWriter;
 
 import javax.swing.ImageIcon;
 
@@ -38,7 +39,10 @@ import javax.swing.ImageIcon;
 public class EmptyPumpDevices extends DummyPump
 {
 
-
+    public EmptyPumpDevices()
+    {
+        super(new DummyOutputWriter());
+    }
 
 
     //************************************************
@@ -153,11 +157,5 @@ public class EmptyPumpDevices extends DummyPump
     {
         return 0;
     }
-    
-    
-    
-    
-    
-
 
 }

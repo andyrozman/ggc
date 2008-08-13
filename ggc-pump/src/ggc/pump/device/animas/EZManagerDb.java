@@ -1,55 +1,63 @@
 /**
  * 
  */
-package ggc.meter.device.pseudo;
+package ggc.pump.device.animas;
+
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.device.AbstractPump;
+import ggc.pump.device.DeviceIdentification;
+import ggc.pump.device.PumpException;
+import ggc.pump.manager.PumpImplementationStatus;
+import ggc.pump.output.OutputWriter;
+import ggc.pump.protocol.ConnectionProtocols;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import java.util.Hashtable;
 
 import com.atech.utils.ATechDate;
-
-import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.device.AbstractMeter;
-import ggc.meter.device.DeviceIdentification;
-import ggc.meter.device.MeterException;
-import ggc.meter.output.OutputWriter;
-import ggc.meter.protocol.ConnectionProtocols;
 
 
 /**
  * @author innominate
  *
  */
-public class EZManagerDBMeter extends AbstractMeter
+public abstract class EZManagerDb extends AbstractPump
 {
     
-    private OutputWriter m_writer;
+    //private OutputWriter m_writer;
     
     private String m_fileName;
     
-    public EZManagerDBMeter()
+    
+    public static final int ANIMAS_COMPANY                = 4;
+    
+    public static final int PUMP_ANIMAS_X1               = 20001;
+    public static final int PUMP_ANIMAS_TEST             = 20099;
+    
+    
+    
+    
+    public EZManagerDb()
     {
         super();
     }
     
     
-    public EZManagerDBMeter(String portName, OutputWriter writer)
+    public EZManagerDb(String db_path, OutputWriter writer)
     {        
-        super();
-        m_writer = writer;
+        super(writer);
+        this.m_fileName = db_path;
     }
 
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    public void close() throws MeterException
+    public void close() throws PumpException
     {
         //dont need to do anything here
         return;
@@ -98,7 +106,7 @@ public class EZManagerDBMeter extends AbstractMeter
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.pseudo.EZManagerDBMeter";
+        return "ggc.pump.device.animas.EZManagerDb";
     }
 
     /**
@@ -133,8 +141,7 @@ public class EZManagerDBMeter extends AbstractMeter
      */
     public int getImplementationStatus()
     {
-        // TODO: ???? -Nate
-        return 0;
+        return PumpImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
 
     /**
@@ -156,21 +163,15 @@ public class EZManagerDBMeter extends AbstractMeter
         return Integer.MAX_VALUE;
     }
 
-    /**
-     * 
-     */
-    public int getMeterId()
-    {
-        // TODO: ????? -Nate
-        return 0;
-    }
 
     /**
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    public boolean open() throws MeterException
+    public boolean open() throws PumpException
     {
+        return true;
+        /*
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
             "MDB Files", "mdb");
@@ -184,7 +185,7 @@ public class EZManagerDBMeter extends AbstractMeter
         else
         {
             return false;        
-        }
+        }*/
     }
 
     /** 
@@ -192,17 +193,19 @@ public class EZManagerDBMeter extends AbstractMeter
      * 
      * @throws MeterExceptions
      */
-    public void readConfiguration() throws MeterException
+    public void readConfiguration() throws PumpException
     {
     }
 
+    
     /**
      * This is method for reading data from device. All reading from actual device should be done from here.
      * Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataFull() throws MeterException
+    public void readDeviceDataFull() throws PumpException
     {
-        ArrayList<MeterValuesEntry> data = getDataFull();
+        /*
+        ArrayList<PumpValuesEntry> data = getDataFull();
         
         if (data == null)
         {
@@ -211,18 +214,22 @@ public class EZManagerDBMeter extends AbstractMeter
         else
         {
         
+            
             for (MeterValuesEntry entry : data)
             {
                 m_writer.writeBGData(entry);
             }
         }
+        */
+        
+        // Nate: Writing should be done as soon as it happens, not 
     }
 
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataPartitial() throws MeterException
+    public void readDeviceDataPartitial() throws PumpException
     {
         // TODO Auto-generated method stub
 
@@ -233,36 +240,27 @@ public class EZManagerDBMeter extends AbstractMeter
      * information (most dumps do). 
      * @throws MeterExceptions
      */
-    public void readInfo() throws MeterException
+    public void readInfo() throws PumpException
     {
         // TODO Auto-generated method stub
 
     }
     
     
-    /**
-     * setDeviceAllowedActions - sets actions which are allowed by implementation
-     *   of MeterInterface (actually of GenericMeterXXXXX classes)
-     *   
-     * @param can_read_data
-     * @param can_read_partitial_data
-     * @param can_read_device_info
-     * @param can_read_device_configuration
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-                                        boolean can_read_partitial_data,
-                                        boolean can_read_device_info,
-                                        boolean can_read_device_configuration)
-    {
-    }
     
     
     /**
      * getDataFull - get all data from Meter
      * This data should be read from meter, and is used in Meter GUI
      */
-    public ArrayList<MeterValuesEntry> getDataFull() //throws MeterException
+    
+    // FIXME Not used
+    public ArrayList<PumpValuesEntryExt> getDataFull() //throws MeterException
     {
+        
+        return null;
+        
+        /*
         if (m_fileName == null)
         {
             try 
@@ -323,18 +321,35 @@ public class EZManagerDBMeter extends AbstractMeter
             return null;
         }
         
-        return toRet;
+        return toRet; */
+        
+        
     }
 
 
-    /**
-     * getData - get data for specified time
-     * This data should be read from meter and preprocessed, and is used in Meter GUI
-     */
-    public ArrayList<MeterValuesEntry> getData(int from, int to) //throws MeterException
+    public Hashtable<String, Integer> getAlarmMappings()
     {
+        // TODO Auto-generated method stub
         return null;
     }
+
+
+    public Hashtable<String, Integer> getEventMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public void loadPumpSpecificValues()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+
+
 
     
 

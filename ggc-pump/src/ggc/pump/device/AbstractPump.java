@@ -4,6 +4,8 @@ package ggc.pump.device;
 
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.manager.company.AbstractPumpCompany;
+import ggc.pump.output.AbstractOutputWriter;
+import ggc.pump.output.OutputWriter;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
@@ -26,13 +28,24 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     protected int m_time_difference = 0;
     protected ArrayList<PumpValuesEntry> data = null;
     
+    protected OutputWriter m_output_writer = null;
+    
 
     public AbstractPump()
     {
         super();
     }
+    
+    
+    public AbstractPump(OutputWriter ow)
+    {
+        super();
+        this.m_output_writer = ow;
+    }
 
 
+    
+    
     boolean can_read_data = false; 
     boolean can_read_partitial_data = false;
     boolean can_clear_data = false;
@@ -45,16 +58,17 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     
     public void setDeviceAllowedActions(boolean can_read_data, 
                                         boolean can_read_partitial_data,
-                                        boolean can_clear_data,
                                         boolean can_read_device_info,
                                         boolean can_read_device_configuration)
     {
         this.can_read_data = can_read_data; 
         this.can_read_partitial_data = can_read_partitial_data;
-        this.can_clear_data = can_clear_data;
         this.can_read_device_info = can_read_device_info;
         this.can_read_device_configuration = can_read_device_configuration;
     }
+    
+    
+    
     
     
     /*

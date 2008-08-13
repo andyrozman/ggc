@@ -17,6 +17,7 @@ package ggc.pump.device;
 
 
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.output.OutputWriter;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -33,7 +34,10 @@ public class DummyPump extends GenericPump //implements MeterInterface
 
     public int m_meter_index = 0;
     
-
+    public DummyPump(OutputWriter ow)
+    {
+        super(ow);
+    }
     
 
     /**
