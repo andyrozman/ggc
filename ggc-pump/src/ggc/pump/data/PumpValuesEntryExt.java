@@ -39,7 +39,7 @@ import com.atech.utils.ATechDate;
 //import ggc.db.hibernate.DayValueH;
 
 
-public class PumpValuesEntry extends PumpValuesEntryAbstract
+public class PumpValuesEntryExt extends PumpValuesEntryAbstract 
 {
 	DataAccessPump da = DataAccessPump.getInstance();
 	
@@ -95,7 +95,7 @@ public class PumpValuesEntry extends PumpValuesEntryAbstract
     };
 	
 	
-	public PumpValuesEntry()
+	public PumpValuesEntryExt()
 	{
 	}
 	
