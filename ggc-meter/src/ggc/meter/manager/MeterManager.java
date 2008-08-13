@@ -39,6 +39,7 @@ import ggc.meter.manager.company.HomeDiagnostic;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.manager.company.Menarini;
 import ggc.meter.manager.company.Prodigy;
+import ggc.meter.manager.company.PseudoMeters;
 import ggc.meter.manager.company.Roche;
 import ggc.meter.manager.company.Sanvita;
 import ggc.meter.manager.company.USDiagnostic;
@@ -105,6 +106,7 @@ public class MeterManager
         addMeterCompany(new Sanvita());
         addMeterCompany(new USDiagnostic());
         addMeterCompany(new Wavesense());
+        addMeterCompany(new PseudoMeters());
     }
     
     
@@ -118,6 +120,7 @@ public class MeterManager
     public void loadSupportedDevices()
     {
         this.supported_devices.addAll(new AscensiaBayer().getDevices());
+        this.supported_devices.addAll(new PseudoMeters().getDevices());
         this.supported_devices.addAll(new Roche().getDevices());
     }
     
