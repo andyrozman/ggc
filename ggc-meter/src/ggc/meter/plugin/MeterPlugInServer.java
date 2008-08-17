@@ -4,6 +4,8 @@ import ggc.meter.gui.MeterInstructionsDialog;
 import ggc.meter.gui.config.SimpleConfigurationDialog;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.list.BaseListDialog;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Container;
 
@@ -16,7 +18,7 @@ public class MeterPlugInServer extends PlugInServer
     /**
      * Version of Meter Tool
      */
-    private String meter_tool_version = "0.3.2";
+    private String meter_tool_version = "0.3.3";
     
     public static final int COMMAND_READ_METER_DATA = 0;
     public static final int COMMAND_METERS_LIST = 1;
@@ -63,7 +65,8 @@ public class MeterPlugInServer extends PlugInServer
 
             case MeterPlugInServer.COMMAND_METERS_LIST:
             {
-                this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_METERS_LIST]);
+                //this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_METERS_LIST]);
+                new BaseListDialog(DataAccessMeter.getInstance());
                 return;
             }
 

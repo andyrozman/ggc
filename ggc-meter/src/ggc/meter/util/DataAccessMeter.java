@@ -30,6 +30,7 @@
 package ggc.meter.util;
 
 import ggc.meter.manager.MeterManager;
+import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Color;
@@ -96,11 +97,14 @@ public class DataAccessMeter extends DataAccessPlugInBase
     
     public void initSpecial()
     {
+        System.out.println("initSpecial - Meter");
         this.loadFonts();
 
         this.loadTimeZones();
         loadMetersTable();
         checkPrerequisites();
+        
+        this.createWebListerContext();
     }
     
     
@@ -865,10 +869,55 @@ public class DataAccessMeter extends DataAccessPlugInBase
     
     
     @Override
-    public void createWebListerItems()
+    public void createWebListerContext()
     {
-        // TODO Auto-generated method stub
         
+        this.weblister_items = new ArrayList<BaseListEntry>();
+        
+        this.weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 0));
+        this.weblister_items.add(new BaseListEntry("Bayer Diagnostics", "/meters/bayer.html", 0));
+        this.weblister_items.add(new BaseListEntry("Diabetic Supply of Suncoast", "/meters/suncoast.html", 0));
+        
+        
+        this.weblister_title = "Meters List";
+        this.weblister_desc = "No Description";
+        
+        
+//        public BaseListEntry(String name, String page, int status)
+        
+        /*
+        metersUrl = new Hashtable<String,String>();
+        metersNames = new ArrayList<String>();
+        
+        
+        
+        metersNames.add("Abbott Diabetes Care");
+        metersUrl.put("Abbott Diabetes Care", "abbott.html");
+        metersNames.add("Bayer Diagnostics");
+        metersUrl.put("Bayer Diagnostics", "bayer.html");
+        metersNames.add("Diabetic Supply of Suncoast");
+        metersUrl.put("Diabetic Supply of Suncoast", "suncoast.html");
+        metersNames.add("Diagnostic Devices");
+        metersUrl.put("Diagnostic Devices", "prodigy.html");
+        metersNames.add("Arkray USA (formerly Hypoguard)");
+        metersUrl.put("Arkray USA (formerly Hypoguard)", "arkray.html");
+        metersNames.add("HealthPia America");
+        metersUrl.put("HealthPia America", "healthpia.html");
+        metersNames.add("Home Diagnostics");
+        metersUrl.put("Home Diagnostics", "home_diganostics.html");
+        metersNames.add("Lifescan");
+        metersUrl.put("Lifescan", "lifescan.html");
+        metersNames.add("Nova Biomedical");
+        metersUrl.put("Nova Biomedical", "nova_biomedical.html");
+        metersNames.add("Roche Diagnostics");
+        metersUrl.put("Roche Diagnostics", "roche.html");
+        metersNames.add("Sanvita");
+        metersUrl.put("Sanvita", "sanvita.html");
+        metersNames.add("U.S. Diagnostics");
+        metersUrl.put("U.S. Diagnostics", "us_diagnostics.html");
+        metersNames.add("WaveSense");
+        metersUrl.put("WaveSense", "wavesense.html");
+        */
     }
 
 
