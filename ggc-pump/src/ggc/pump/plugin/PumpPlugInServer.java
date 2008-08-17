@@ -12,6 +12,8 @@ import com.atech.utils.ATDataAccessAbstract;
 public class PumpPlugInServer extends PlugInServer
 {
 
+    String plugin_version = "0.1.3";
+    
     public static final int COMMAND_READ_PUMP_DATA = 0;
     public static final int COMMAND_PUMPS_LIST = 1;
     public static final int COMMAND_CONFIGURATION = 2;
@@ -77,7 +79,7 @@ public class PumpPlugInServer extends PlugInServer
     @Override
     public String getName()
     {
-        return ic.getMessage("METERS_PLUGIN");
+        return ic.getMessage("PUMP_PLUGIN");
     }
 
     /* 
@@ -86,7 +88,7 @@ public class PumpPlugInServer extends PlugInServer
     @Override
     public String getVersion()
     {
-        return "0.1.1";
+        return this.plugin_version;
     }
 
     /* 
