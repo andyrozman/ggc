@@ -57,5 +57,9 @@ public class BaseListEntry
     }
     
     
+    public String toString()
+    {
+        return this.name;
+    }
     
 }

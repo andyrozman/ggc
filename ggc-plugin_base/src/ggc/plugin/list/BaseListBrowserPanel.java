@@ -31,6 +31,9 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -109,30 +112,13 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     
     public void initBrowser()
     {
-    	
-    	this.setBounds(0,0,582,565);
+    	this.setBounds(0,0,640,565);
         this.setLayout(null);
 
-        //MiniBrowserPanel mbp;
-        
         this.mbp = new MiniBrowserPanel();
-        this.mbp.setBounds(0,0,582,565);
+        this.mbp.setBounds(0,0,640,565);
 
-/*
-        JScrollPane jScrollPane1 = new JScrollPane(this.editor);
-        //jScrollPane1.setPreferredSize(new java.awt.Dimension(13, 1200));
-
-        this.editor.setEditable(false);
-        this.editor.setContentType("text/html");
-        jScrollPane1.setViewportView(this.editor);
-        this.editor.setText("<html><body><font color=\"#CCCCCC\"><h1>Test</h1></font></body></html>");
-
-        this.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        this.editor.select(0,0);
-*/
         this.add(this.mbp, null); //, java.awt.BorderLayout.CENTER);
-        
     }
     
     
@@ -223,6 +209,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
 
     public void loadFile(String name)
     {
+        System.out.println("loadFile: " + name);
     	String res = m_da.metersUrl.get(name);
     	
     	String web = "http://localhost:88/meters/" + res;
@@ -259,6 +246,37 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         }
     	*/
     }
+
+    
+    public void loadPage(String url_src)
+    {
+        try
+        {
+            URL url = new URL("http://localhost:444" + url_src);          //this.getClass().getResource("/html/abbott_diabetes_care.html");
+            InputStreamReader ins = new InputStreamReader(url.openStream());
+            BufferedReader br = new BufferedReader( ins );
+            String line;
+            StringBuffer sb = new StringBuffer();
+
+            while ((line = br.readLine())!=null)
+            {
+                sb.append(line);
+            }
+
+            //System.out.println("Sb: " + sb);
+
+            this.mbp.setPage("http://localhost:444" + url_src);
+            
+            //this.editor.setText(sb.toString());
+            //this.jEditorPane1.setText(sb.toString());
+        }
+        catch(Exception ex)
+        {
+            System.out.println("PumpListCompanyPanel::error reading. Ex: " + ex);
+            ex.printStackTrace();
+        }
+
+    }
     
     
     public void setData(Object obj)
@@ -268,7 +286,12 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     	//editor.setText("<html><body><font color=\"#CCCCCC\"><h1>" + (String)obj + "</h1></font></body></html>");
     	//editor.setText("<html><body><h1>" + (String)obj + "</h1></body></html>");
     	
-    	loadFile((String)obj);
+    	//loadFile((String)obj);
+        
+        BaseListEntry ble = (BaseListEntry)obj; 
+        
+        loadPage(ble.page);
+        
     }
 	
 	

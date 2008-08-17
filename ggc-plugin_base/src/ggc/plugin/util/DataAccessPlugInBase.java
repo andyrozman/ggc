@@ -29,6 +29,8 @@
 
 package ggc.plugin.util;
 
+import ggc.plugin.list.BaseListEntry;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -61,14 +63,9 @@ import com.atech.utils.ATDataAccessAbstract;
 public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 {
 
+    public String web_server_port = "444";
 
     public static final String pathPrefix = ".";
-
-    //public I18nControl m_i18n = null;
-
-//    private static DataAccessMeter s_da = null; // This is handle to unique 
-
-
     public Font fonts[] = null;
 
 
@@ -157,19 +154,21 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     {
     	super(i18n); //I18nControl.getInstance());
 
-    	this.loadTimeZones();
-        
-        loadMetersTable();
-        loadConfigIcons();
-        
-        checkPrerequisites();
-
+        initSpecial();
     } 
 
     // FIXME should be abstract
-    public void initSpecial()
+/*    public void initSpecial()
     {
-    }
+        System.out.println("initSpecial - Base");
+
+        this.loadTimeZones();
+        
+        loadConfigIcons();
+        
+        checkPrerequisites();
+        this.createWebListerContext();
+    }*/
     
     
     //  Method:       getInstance
@@ -289,9 +288,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 
     
     public String weblister_title;
+    public String weblister_desc;
+    public ArrayList<BaseListEntry> weblister_items;
     
     
-    public abstract void createWebListerItems();
+    public abstract void createWebListerContext();
     
     
     public String getWebListerTitle()
@@ -302,8 +303,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
     public String getWebListerDescription()
     {
-     //   return this.weblister_title;
-        return null;
+        return this.weblister_desc;
+    }
+    
+
+    public ArrayList<BaseListEntry> getWebListerItems()
+    {
+        return weblister_items;
     }
     
     

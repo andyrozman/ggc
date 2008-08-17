@@ -196,8 +196,9 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
     	{
     		makePanelVisible(BaseListDialog.PANEL_MAIN);
     	}
-    	else if (this.selected_last_path instanceof String)
+    	else if (this.selected_last_path instanceof BaseListEntry)
     	{
+            //else if (this.selected_last_path instanceof String)
     	    makePanelVisible(BaseListDialog.PANEL_BROWSER);
     	    this.panels[BaseListDialog.PANEL_BROWSER].setData(this.selected_last_path);
     	}

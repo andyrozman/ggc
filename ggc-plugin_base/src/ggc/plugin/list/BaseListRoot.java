@@ -34,14 +34,17 @@ import java.util.ArrayList;
 public class BaseListRoot 
 {
 
-    public ArrayList<String> children = null;
+    public ArrayList<BaseListEntry> children = null;
     DataAccessPlugInBase m_da;
     
 
     public BaseListRoot(DataAccessPlugInBase da) 
     {
         m_da = da;
-        this.children = m_da.getWebListerItemsTitles();
+        this.children = m_da.getWebListerItems();
+        
+        System.out.println("Children: " + this.children);
+        
     }
     
     
