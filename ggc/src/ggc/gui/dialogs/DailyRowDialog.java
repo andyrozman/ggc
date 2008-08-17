@@ -469,17 +469,21 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             }
         });
 
-        String button_command[] = { "update_ch",
-                m_ic.getMessage("UPDATE_FROM_FOOD"), "edit_food",
-                m_ic.getMessage("EDIT_FOOD"), "ok", m_ic.getMessage("OK"),
-                "cancel", m_ic.getMessage("CANCEL"),
+        String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"),
+                                    "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), 
+                                    "edit_food", m_ic.getMessage("EDIT_FOOD"), 
+                                    "ok", m_ic.getMessage("OK"),
+                                    "cancel", m_ic.getMessage("CANCEL"),
         // "help", m_ic.getMessage("HELP")
         };
 
-        String button_icon[] = { null, null, "ok.png", "cancel.png" };
+        String button_icon[] = { null, null, null, "ok.png", "cancel.png" };
 
-        int button_coord[] = { 210, 228, 140, 1, 210, 258, 140, 1, 30, 420,
-                110, 1, 145, 420, 110, 1,
+        int button_coord[] = { 210, 198, 140, 1,
+                               210, 228, 140, 1, 
+                               210, 258, 140, 1, 
+                               30, 420, 110, 1, 
+                               145, 420, 110, 1,
         // 250, 390, 80, 0
         };
 
@@ -781,6 +785,15 @@ public class DailyRowDialog extends JDialog implements ActionListener,
                     this.m_dailyValuesRow.getMealsIds());
             this.ftf_ch.setValue(new Float(pms.getCHSumString().replace(',',
                     '.')));
+        }
+        else if (action.equals("bolus_helper"))
+        {
+            BolusHelper bh = new BolusHelper(this, m_da.getJFormatedTextValueFloat(ftf_bg2), m_da.getJFormatedTextValueFloat(this.ftf_ch), this.dtc.getDateTime());
+            
+            if (bh.hasResult())
+            {
+                this.ftf_ins1.setValue(bh.getResult());
+            }
         }
         else
             System.out.println("DailyRowDialog::unknown command: " + action);

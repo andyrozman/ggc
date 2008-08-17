@@ -132,13 +132,21 @@ public class GGCDb // implements DbCheckInterface HibernateDb
     {
         /*m_cfg =*/ createConfiguration();
         m_da = da;
+        
+        System.out.println("GGCDb");
+        System.out.println("m_da: " + m_da);
+        System.out.println("m_da.getSettings(): " + m_da.getSettings());
+        
+        
         m_loadStatus = DB_CONFIG_LOADED;
         // debugConfig();
     }
 
+    
     public GGCDb()
     {
-        /*m_cfg =*/ createConfiguration();
+        /*m_cfg =*/ 
+        createConfiguration();
         m_loadStatus = DB_CONFIG_LOADED;
         // debugConfig();
     }
@@ -798,6 +806,10 @@ public class GGCDb // implements DbCheckInterface HibernateDb
                 table.put(eh.getName(), eh);
             }
 
+            System.out.println("m_da: " + m_da);
+            System.out.println("m_da.getSettings(): " + m_da.getSettings());
+            
+            
             m_da.getSettings().setColorSchemes(table, false);
         }
         catch (Exception ex)

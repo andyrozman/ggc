@@ -66,7 +66,8 @@ public class GGCDbLoader extends Thread
     public boolean run_once = false;
 
     
-    public boolean part_start = true;
+    //public boolean part_start = true;
+    public boolean part_start = false;
     
     //public boolean debug = false;
     
@@ -75,7 +76,7 @@ public class GGCDbLoader extends Thread
     {
         m_da = da;
         System.out.println("GGCDbLoader in development mode");
-        part_start = true;
+//        part_start = true;
     }
     
     

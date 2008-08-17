@@ -71,6 +71,9 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 
+import pygmy.core.Server;
+import sun.rmi.transport.Endpoint;
+
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.logs.RedirectScreen;
@@ -203,29 +206,35 @@ public class DataAccess extends ATDataAccessAbstract
     private DataAccess()
     {
         super(I18nControl.getInstance());
-
-
-
+        initSpecial();
     }
 
     
     public void initSpecial()
     {
+        //System.out.println("init Special");
         this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
+        //System.out.println("config File");
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
 
+        //System.out.println("configuratioon manager");
         m_cfgMgr = new ConfigurationManager(this);
 
+        //System.out.println("m_settings");
         this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
-
+        
+        //System.out.println("m_set: " + this.m_settings);
+        
         loadOptions();
 
         if (!(new File("../data/debug.txt").exists()))
         {
             new RedirectScreen();
         }
+        
+        startWebServer();
         
     }    
     
@@ -256,7 +265,9 @@ public class DataAccess extends ATDataAccessAbstract
             //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  " + main);
             // GGCDb db = new GGCDb();
 
-            //System.out.println("New");
+            
+            
+            System.out.println("create new Instance");
             s_da = new DataAccess();
             //System.out.println("setParent");
             s_da.setParent(main);
@@ -1224,6 +1235,54 @@ public class DataAccess extends ATDataAccessAbstract
         }
     }
 
+    
+    public void startWebServer()
+    {
+        try
+        {
+            
+/*            Properties p = new Properties();
+            
+            p.put("http.port", "444");
+            p.put("handler", "chain");
+    
+            p.put("chain.chain", "root plug_pump plug_cgm"); 
+            p.put("chain.class", "pygmy.handlers.DefaultChainHandler");
+    
+            p.put("root.class", "pygmy.handlers.ResourceHandler");
+            p.put("root.url-prefix", "/meters/");
+            p.put("root.resourceMount", "/html/meters");
+    
+            p.put("plug_pump.class", "pygmy.handlers.ResourceHandler");
+            p.put("plug_pump.url-prefix", "/pumps/");
+            p.put("plug_pump.resourceMount", "/html/pumps");
+    
+            p.put("plug_cgm.class", "pygmy.handlers.ResourceHandler");
+            p.put("plug_cgm.url-prefix", "/cgms/");
+            p.put("plug_cgm.resourceMount", "/html/cgms");
+    
+            p.put("mime.html", "text/html");
+            p.put("mime.zip", "application/x-zip-compressed");
+            p.put("mime.gif", "image/gif");
+            p.put("mime.jpeg", "image/jpeg");
+            p.put("mime.jpg", "image/jpeg"); */
+            
+            System.out.println("Start internal web server");
+            String[] cnf = { "-config", "../data/tools/WebLister.properties" };
+            
+            Server web_server = new Server(cnf);
+            web_server.start();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error starting WebServer on 444. Ex: " + ex);
+        }
+        
+        
+        
+    }
+    
+    
     public GregorianCalendar getGregorianCalendar(Date date)
     {
         GregorianCalendar gc = new GregorianCalendar();

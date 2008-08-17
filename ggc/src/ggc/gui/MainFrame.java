@@ -40,6 +40,7 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.AppointmentsDialog;
+import ggc.gui.dialogs.BolusHelper;
 import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.DoctorsDialog;
@@ -192,7 +193,11 @@ public class MainFrame extends JFrame
         // GGCProperties has been created
         // m_ic.setLanguage();
 
+        //System.out.println("MainFrame before creation");
         m_da = DataAccess.createInstance(this);
+
+        //System.out.println("m_da: " + m_da);
+        
         m_ic = I18nControl.getInstance();
 
         m_da.addComponent(this);
@@ -397,8 +402,13 @@ public class MainFrame extends JFrame
         this.createAction(this.menu_help, "MN_CHECK_FOR_UPDATE",
                 "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
         this.menu_help.addSeparator();
-        this.createAction(this.menu_help, "MN_ABOUT", "MN_ABOUT_DESC",
-                "hlp_about", null);
+        this.createAction(this.menu_help, "MN_ABOUT", "MN_ABOUT_DESC", "hlp_about", null);
+        
+        if (MainFrame.developer_version)
+        {
+            this.menu_help.addSeparator();
+            this.createAction(this.menu_help, "MN_TEST", "MN_TEST_DESC", "test", null);
+        }
 
     }
 
@@ -1060,6 +1070,11 @@ public class MainFrame extends JFrame
             else if ((command.equals("misc_synchronize")))
             {
                 featureNotImplemented(command, "0.6");
+            }
+            else if ((command.equals("test")))
+            {
+                BolusHelper bh = new BolusHelper(MainFrame.this);
+                //featureNotImplemented(command, "0.6");
             }
             /*
              * else if ((command.equals("pumps_read")) ||
