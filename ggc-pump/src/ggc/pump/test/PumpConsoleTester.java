@@ -30,6 +30,7 @@
 package ggc.pump.test;
 
 import ggc.pump.device.accuchek.AccuChekSpirit;
+import ggc.pump.device.minimed.MinimedCareLink;
 import ggc.pump.output.ConsoleOutputWriter;
 import ggc.pump.protocol.SerialProtocol;
 
@@ -65,13 +66,13 @@ public class PumpConsoleTester //extends JFrame
     	
 		tzu.setTimeZone("Europe/Prague");
 		tzu.setWinterTimeChange(0);
-		tzu.setSummerTimeChange(+1);
+		tzu.setSummerTimeChange(0);
     	
         
     	try
     	{
-    	    
-    	    startRoche(portName);
+    	    //startRoche(portName);
+    	    startMinimed("./dta/CareLink-Export-1213803114904.csv");
     	}
     	catch(Exception ex)
     	{
@@ -89,6 +90,13 @@ public class PumpConsoleTester //extends JFrame
         acs.processXml(new File("I2034162.XML"));
     }
     
+    
+    public void startMinimed(String file) throws Exception
+    {
+        MinimedCareLink mcl = new MinimedCareLink();
+        mcl.parseExportFile(new File(file));
+        
+    }
     
     
     public void displaySerialPorts()
