@@ -1,6 +1,5 @@
 package ggc.cgm.output;
 
-import ggc.cgm.data.CGMValuesEntry;
 import ggc.cgm.device.DeviceIdentification;
 
 

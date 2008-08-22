@@ -11,7 +11,8 @@ import java.util.StringTokenizer;
 public class MinimedCareLink
 {
     DataAccessCGM m_da = DataAccessCGM.getInstance();
-    
+    int count_unk = 0; 
+
     public MinimedCareLink()
     {
         
@@ -37,7 +38,7 @@ public class MinimedCareLink
                 }
             }
             
-            
+            System.out.println("How many entries unknown: " + count_unk);
             
         }
         catch(Exception ex)
@@ -53,8 +54,14 @@ public class MinimedCareLink
         String[] ld = buildLineData(line);
         
         MinimedCareLinkData mcld = new MinimedCareLinkData(ld);
+
+        if (!mcld.isIdentified())
+        {
+            System.out.println(mcld);
+            //System.out.println(mcld.getRawType());
+            count_unk++;
+        }
         
-        System.out.println(mcld);
         
         //if (count==5105)
         //    showCollection(ld);

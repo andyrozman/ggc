@@ -29,7 +29,8 @@ import javax.swing.table.TableColumn;
 public class CGMValuesTable extends JTable //implements TableModelListener
 {
 
-//x    private I18nControl m_ic = I18nControl.getInstance();    
+    private static final long serialVersionUID = -5696025538143421634L;
+    //x    private I18nControl m_ic = I18nControl.getInstance();    
     CGMValuesTableModel model = null;
 	DataAccessCGM m_da = DataAccessCGM.getInstance();
 
@@ -164,6 +165,7 @@ public class CGMValuesTable extends JTable //implements TableModelListener
     
     class CheckCellRenderer extends JCheckBox implements TableCellRenderer
     {
+        private static final long serialVersionUID = 85335249214288876L;
         protected Border m_noFocusBorder;
 
         public CheckCellRenderer()

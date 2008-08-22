@@ -2,12 +2,6 @@ package ggc.cgm.device.minimed;
 
 import ggc.cgm.util.DataAccessCGM;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
 public class MinimedCareLinkData
 {
     DataAccessCGM m_da = DataAccessCGM.getInstance();
@@ -46,7 +40,88 @@ public class MinimedCareLinkData
     }
     
     
+    public boolean isIdentified()
+    {
+        if (this.raw_type.equals("GlucoseSensorData") ||           // data
+            this.raw_type.equals("GlucoseSensorDataLow") ||        // data low
+            this.raw_type.equals("SensorWeakSignal") ||     // warning - sensor weak signal
+            this.raw_type.equals("AlarmSensor") ||          // alarm
+             
+             this.raw_type.equals("CalBGForGH") ||          // unknown
+             this.raw_type.equals("CalBGForPH") ||          // unknown
+             this.raw_type.equals("ChangeBatteryEnable") || // unknown
+             this.raw_type.equals("ChangeBatteryEnableGH") ||  // unknown
+
+             this.raw_type.equals("SensorSync") ||             // unknown
+             this.raw_type.equals("SensorCalFactor") ||     // unknown
+             this.raw_type.equals("SensorCal") ||           // unknown
+             this.raw_type.equals("SensorStatus") ||        // status - unknown
+             this.raw_type.equals("SensorTimestamp") ||     // unknown
+             this.raw_type.equals("SensorPacket") ||        // unknown 
+             this.raw_type.equals("SensorError") ||         // unknown
+             
+             // config
+             this.raw_type.equals("ChangeSensorGlucoseLimitProfile") ||  // config
+             this.raw_type.equals("ChangeSensorAlarmSilenceConfig") ||
+             this.raw_type.equals("ChangeSensorGlucoseLimitPattern") ||
+             this.raw_type.equals("ChangeSensorGlucoseLimitPatternSetup") ||
+             this.raw_type.equals("ChangeSensorSetup2") ||
+             this.raw_type.equals("ChangeSensorSetupConfig2") ||
+             
+             // current ?
+             this.raw_type.equals("CurrentSensorGlucoseLimitProfile") || 
+             this.raw_type.equals("CurrentSensorHighGlucoseSnoozeTime") ||
+             this.raw_type.equals("CurrentSensorPredictiveAlertProfile") ||
+             this.raw_type.equals("CurrentSensorGlucoseLimitPattern") ||
+             this.raw_type.equals("CurrentSensorPredictiveAlertPattern") ||
+             this.raw_type.equals("CurrentTimeDisplayFormat") ||
+             this.raw_type.equals("CurrentBeepVolume") ||
+             this.raw_type.equals("CurrentChildBlockEnable") ||
+             this.raw_type.equals("CurrentKeypadLockedEnable") ||
+             this.raw_type.equals("CurrentAlarmClockEnable") ||
+             this.raw_type.equals("CurrentAlarmNotifyMode") ||
+             this.raw_type.equals("CurrentBatteryStatus") ||
+             this.raw_type.equals("CurrentErrorStatus") ||
+             this.raw_type.equals("CurrentPumpStatus") ||
+             this.raw_type.equals("CurrentPumpModelNumber") ||
+             this.raw_type.equals("CurrentDisplayLanguage") ||
+             this.raw_type.equals("CurrentParadigmLinkEnable") ||
+             this.raw_type.equals("CurrentSavedSettingsTime") ||
+             this.raw_type.equals("CurrentHistoryPageNumber") ||
+             this.raw_type.equals("CurrentCarbUnits") ||
+             this.raw_type.equals("CurrentGlucoseHistoryPageNumber") ||
+             this.raw_type.equals("CurrentSensorCalFactor") ||
+             this.raw_type.equals("CurrentSensorCalReminderEnable") ||
+             this.raw_type.equals("CurrentSensorEnable") ||
+             this.raw_type.equals("CurrentSensorCalReminderTime") ||
+             this.raw_type.equals("CurrentSensorAlarmSnoozeTime") ||
+             this.raw_type.equals("CurrentSensorLowGlucoseSnoozeTime") ||
+             this.raw_type.equals("CurrentSensorMissedDataTime") ||
+             this.raw_type.equals("CurrentSensorTransmitterID") ||
+             this.raw_type.equals("CurrentSensorBGUnits") ||
+             this.raw_type.equals("CurrentSensorAlarmSilenceConfig") ||
+             this.raw_type.equals("CurrentSensorGraphConfig") ||
+             this.raw_type.equals("CurrentSensorRateOfChangeAlertConfig") ||
+             this.raw_type.equals("CurrentSensorAreaUnderCurveConfig") ||
+
+             //JournalEntryPumpLowBattery             
+             
+             
+             // ignore
+             this.raw_type.equals("CurrentParadigmLinkID") ||  // ignore
+             
+             this.raw_type.equals("BGTherasense")           // meter entry
+            )
+            return true;
+            else
+                return false;
+        
+    }
     
+    public String getRawType()
+    {
+        return this.raw_type;
+    }
     
 //    System.out.println(count + ": [size=" + ld.length + ",id=" + ld[0] + ",el33=" + ld[33] + "]");
 
