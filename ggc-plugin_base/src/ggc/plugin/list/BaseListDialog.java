@@ -75,23 +75,28 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
     BaseListRoot m_root = null;
     
     
-    public BaseListDialog(DataAccessPlugInBase da) 
+    public BaseListDialog(JFrame parent, DataAccessPlugInBase da) 
     {
 
-        super(new JFrame(), "", true);
+        super(parent, "", true);
 	//super((JDialog)null, "", true);
 
         m_da = da;
         ic = m_da.getI18nControlInstance();
+
+        //m_da.addComponent(parent);
+        m_da.addComponent(this);
         
         m_root = new BaseListRoot(m_da);
 
         //this.setResizable(false);
-        this.setBounds(80, 50, 800, 600);
+        this.setBounds(80, 50, 700, 500);
         setTitle();
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1,0));
+        
+        m_da.centerJDialog(this);
         
         //this.pop.s
         //add(pop);
@@ -103,6 +108,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
         this.setTreeModel(tree);
         //tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
         tree.addTreeSelectionListener(this);
+        tree.setCellRenderer(new BaseListRenderer());
         //tree.addMouseListener(this);
 
 
@@ -128,6 +134,8 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
         createPanels();
         this.add(panel);
         makePanelVisible(0);
+        
+        
  
         this.setVisible(true);
         
@@ -152,6 +160,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 
         panels[0] = new BaseListMainPanel(this);
         panels[1] = new BaseListBrowserPanel(this);
+        panels[1].setSize(500,500);
 
         for(int i = 0; i < panels.length ; i++)
         {
@@ -164,7 +173,6 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 
     public static final int PANEL_MAIN = 0;
     public static final int PANEL_BROWSER = 1;
-
 
 
     /** 
@@ -332,6 +340,13 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
     }
     
     
+    
+    
+    public void dispose()
+    {
+        this.m_da.removeComponent(this);
+        super.dispose();
+    }
     
     
     

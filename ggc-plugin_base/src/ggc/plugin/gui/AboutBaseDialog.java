@@ -35,7 +35,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -46,9 +45,6 @@ import javax.swing.JPanel;
 
 import com.atech.graphics.components.about.AboutCustomPanel;
 import com.atech.graphics.components.about.AboutDialog;
-import com.atech.graphics.components.about.CreditsEntry;
-import com.atech.graphics.components.about.CreditsGroup;
-import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.graphics.components.about.LicenceInfo;
 
 
@@ -69,46 +65,19 @@ public class AboutBaseDialog extends AboutDialog
         this.setLicenceType(LicenceInfo.LICENCE_GPL_v2_0);
 
         // credits
-        ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
-
-        CreditsGroup cg = new CreditsGroup(m_ic.getMessage("CURRENT_DEVELOPERS"));
-        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andyrozman@users.sourceforge.net", "Current main developer"));
-        cg.addCreditsEntry(new CreditsEntry("Reinhold Rumberger", "rumbi@users.sourceforge.net", "Tester (linux) and developer"));
-        lst_credits.add(cg);
-
-        cg = new CreditsGroup(m_ic.getMessage("PREVIOUS_DEVELOPERS"));
-        cg.addCreditsEntry(new CreditsEntry("Dieter Schultschik", "schultd@users.sourceforge.net", "Creator and Designer of this application"));
-        cg.addCreditsEntry(new CreditsEntry("Stephan Schrader", "sschrade@users.sourceforge.net", "First meters supported..."));
-        lst_credits.add(cg);
-
-        this.setCredits(lst_credits);
+        this.setCredits(m_da.getPlugInDevelopers());
 
         // set display system properties
         this.setDisplayProperties(true);
 
         // libraries
-        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
-        lst_libs.add(new LibraryInfoEntry("Hibernate", "3.1", "www.hibernate.org", "LGPL", "Library for object-oriented access to DBs"));
-
-        //LibraryInfoEntry li = new LibraryInfoEntry("HSQLDB", "1.8.0", "hsqldb.org", "Hypersonic", "Internal Java DB", "Copyright (c) 1995-2000 by the Hypersonic SQL Group. All rights reserved.");
-        //li.setCopyRightNotice2("Copyright (c) 2001-2005, The HSQL Development Group. All rights reserved.");
-        //lst_libs.add(li);
-        LibraryInfoEntry li = new LibraryInfoEntry("H2 Database", "1.0.69", "www.h2database.com", "MPL 1.1 & EPL 1.0", "Internal Java DB", "Copyright (c) 2004-2008 by the H2 Group. All rights reserved.");
-        lst_libs.add(li);
-
-        
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2007 Atech Software Ltd. All rights reserved."));
-        lst_libs.add(new LibraryInfoEntry("SkinLF", "6.7", "www.l2fprod.com", "LGPL", "Skins Library", "Copyright (c) 2000-2006 L2FProd.com.  All rights reserved."));
-        lst_libs.add(new LibraryInfoEntry("iText", "2.0.7", "www.lowagie.com/iText/", "MPL", "Library for PDF creation (printing)"));
-        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
-
-        this.setLibraries(lst_libs);
+        this.setLibraries(m_da.getPlugInLibraries());
 
         // custom page
         createCustomTab();
 
         // title
-        this.setTitle(m_ic.getMessage("ABOUT_GGC"));
+        this.setTitle(m_da.getAboutTitle());
 
         // finalize
         this.createAbout();
@@ -134,7 +103,7 @@ public class AboutBaseDialog extends AboutDialog
         JPanel p1 = new JPanel();
         p1.setLayout(new BorderLayout());
 
-        JLabel l = new JLabel(new ImageIcon(m_da.getImage("/icons/about_logo.gif", this).getScaledInstance(500,125,java.awt.Image.SCALE_SMOOTH)));
+        JLabel l = new JLabel(new ImageIcon(m_da.getImage(m_da.getAboutImageName(), this).getScaledInstance(500,125,java.awt.Image.SCALE_SMOOTH)));
         p1.add(l, BorderLayout.CENTER);
 
         JLabel l2 = new JLabel();
@@ -153,7 +122,7 @@ public class AboutBaseDialog extends AboutDialog
 
         jEditorPaneAbout.setContentType("text/html");
         jEditorPaneAbout.setText("<HTML><body><font face=\"SansSerif\" size=\"3\"><center><b>" + 
-                                 m_ic.getMessage("GGC_TITLE") +"</b><br>&nbsp;&nbsp;(c) 2002-2008  " +
+                                 m_da.getAboutPlugInName() +"</b><br>&nbsp;&nbsp;(c) " + m_da.getAboutPluginCopyright() + "  " +
                                  m_ic.getMessage("GGC_DEVELOPMENT_TEAM")+ "<br>" +
                                  m_ic.getMessage("SEE_CREDITS") + 
                                  "<br><A HREF=\"http://ggc.sourceforge.net/\">http://ggc.sourceforge.net/</A><br>" + 

@@ -32,30 +32,22 @@ package ggc.plugin.util;
 import ggc.plugin.list.BaseListEntry;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.Image;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
+import com.atech.graphics.components.about.CreditsGroup;
+import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 
@@ -233,59 +225,96 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         m_i18n = null;
     }
 
- 
-    public void loadMetersTable()
+    
+    
+    // ********************************************************
+    // ******             Init Methods                    *****    
+    // ********************************************************
+    
+
+
+    public abstract String getApplicationName();
+    
+    
+    
+    public void checkPrerequisites()
     {
-
-    	metersUrl = new Hashtable<String,String>();
-        metersNames = new ArrayList<String>();
-    	
-    	
-    	
-        metersNames.add("Abbott Diabetes Care");
-        metersUrl.put("Abbott Diabetes Care", "abbott.html");
-        metersNames.add("Bayer Diagnostics");
-        metersUrl.put("Bayer Diagnostics", "bayer.html");
-        metersNames.add("Diabetic Supply of Suncoast");
-        metersUrl.put("Diabetic Supply of Suncoast", "suncoast.html");
-        metersNames.add("Diagnostic Devices");
-        metersUrl.put("Diagnostic Devices", "prodigy.html");
-        metersNames.add("Arkray USA (formerly Hypoguard)");
-        metersUrl.put("Arkray USA (formerly Hypoguard)", "arkray.html");
-        metersNames.add("HealthPia America");
-        metersUrl.put("HealthPia America", "healthpia.html");
-        metersNames.add("Home Diagnostics");
-        metersUrl.put("Home Diagnostics", "home_diganostics.html");
-        metersNames.add("Lifescan");
-        metersUrl.put("Lifescan", "lifescan.html");
-        metersNames.add("Nova Biomedical");
-        metersUrl.put("Nova Biomedical", "nova_biomedical.html");
-        metersNames.add("Roche Diagnostics");
-        metersUrl.put("Roche Diagnostics", "roche.html");
-        metersNames.add("Sanvita");
-        metersUrl.put("Sanvita", "sanvita.html");
-        metersNames.add("U.S. Diagnostics");
-        metersUrl.put("U.S. Diagnostics", "us_diagnostics.html");
-        metersNames.add("WaveSense");
-        metersUrl.put("WaveSense", "wavesense.html");
-
+    }
+    
+    
+    public String getImagesRoot()
+    {
+    	return "/icons/";
+    }
+    
+    
+    public void loadBackupRestoreCollection()
+    {
+    }
+    
+    
+    // ********************************************************
+    // ******            About Methods                    *****    
+    // ********************************************************
+    
+    
+    public abstract void createPlugInAboutContext();
+    
+    protected String about_title;
+    protected String about_image_name;
+    protected String about_plugin_name;
+    protected int about_plugin_copyright_from;
+    protected ArrayList<LibraryInfoEntry> plugin_libraries;
+    protected ArrayList<CreditsGroup> plugin_developers;
+    
+    public String getAboutTitle()
+    {
+        return this.about_title;
+    }
+    
+    public String getAboutImageName()
+    {
+        return this.about_image_name;
+    }
+    
+    public String getAboutPluginCopyright()
+    {
+        int till = new GregorianCalendar().get(GregorianCalendar.YEAR);
+        
+        if (this.about_plugin_copyright_from==till)
+        {
+            return "" + till; 
+        }
+        else
+        {
+            return this.about_plugin_copyright_from + "-" + till;
+        }
+        
+    }
+    
+    public String getAboutPlugInName()
+    {
+        return this.about_plugin_name;
+    }
+    
+    public ArrayList<LibraryInfoEntry> getPlugInLibraries()
+    {
+        return this.plugin_libraries;
+    }
+    
+    public ArrayList<CreditsGroup> getPlugInDevelopers()
+    {
+        return this.plugin_developers;
     }
     
     
 
-    /*
-    public void startDb(StatusBarL bar2)
-    {
-        GGCDbLoader loader = new GGCDbLoader(this, bar2);
-        loader.start();
-    } */
-/*
-    public GGCDb getDb()
-    {
-        return m_db;
-    }
-*/
+    
+    // ********************************************************
+    // ******         Web Lister Methods                  *****    
+    // ********************************************************
 
+    
     
     public String weblister_title;
     public String weblister_desc;
@@ -324,214 +353,16 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
     
     
-    
-    
-    // ********************************************************
-    // ******         Abstract Methods                    *****    
-    // ********************************************************
-    
-
-
-    public String getApplicationName()
-    {
-    	return "GGC_MeterTool";
-    }
-    
-    
-    
-    public void checkPrerequisites()
-    {
-    }
-    
-    
-    public String getImagesRoot()
-    {
-    	return "/icons/";
-    }
-    
-    
-    public void loadBackupRestoreCollection()
-    {
-    }
-    
-    
-    
-    
-    
-    // ********************************************************
-    // ******                   Fonts                     *****    
-    // ********************************************************
-
-    public static final int FONT_BIG_BOLD = 0;
-
-    public static final int FONT_NORMAL = 1;
-
-    public static final int FONT_NORMAL_BOLD = 2;
-
-    public void loadFonts()
-    {
-        fonts = new Font[3];
-        fonts[0] = new Font("SansSerif", Font.BOLD, 22);
-        fonts[1] = new Font("SansSerif", Font.PLAIN, 12);
-        fonts[2] = new Font("SansSerif", Font.BOLD, 12);
-    }
-
-    public Font getFont(int font_id)
-    {
-        return fonts[font_id];
-    }
-    
-    
-    
-    // ********************************************************
-    // ******                 Icons                       *****    
-    // ********************************************************
-
-
-
-
-    // ********************************************************
-    // ******                    Db                       *****    
-    // ********************************************************
-
-
-
-    // ********************************************************
-    // ******                   Meters                    *****    
-    // ********************************************************
-
-
-    // ********************************************************
-    // ******                   Meters                    *****    
-    // ********************************************************
-
-    public void loadTimeZones()
-    {
-        this.timeZones = new Hashtable<String,String>();
-
-        // Posible needed enchancment. We should probably list all ID's as values. On windows default ID can be different 
-        // as in this table. We should add this names, if we encounter problems.
-
-        addTimeZoneEntry("(GMT+13:00) Nuku'alofa", "Pacific/Tongatapu");
-        addTimeZoneEntry("(GMT+12:00) Fiji, Kamchatka, Marshall Is.", "Pacific/Fiji");
-        addTimeZoneEntry("(GMT+12:00) Auckland, Wellington", "Pacific/Auckland");
-        addTimeZoneEntry("(GMT+11:00) Magadan, Solomon Is., New Caledonia", "Asia/Magadan");
-        addTimeZoneEntry("(GMT+10:00) Vladivostok", "Asia/Vladivostok");
-        addTimeZoneEntry("(GMT+10:00) Hobart", "Australia/Hobart");
-        addTimeZoneEntry("(GMT+10:00) Guam, Port Moresby", "Pacific/Guam");
-        addTimeZoneEntry("(GMT+10:00) Canberra, Melbourne, Sydney", "Australia/Sydney");
-        addTimeZoneEntry("(GMT+10:00) Brisbane", "Australia/Brisbane");
-        addTimeZoneEntry("(GMT+09:30) Adelaide", "Australia/Adelaide");
-        addTimeZoneEntry("(GMT+09:00) Yakutsk", "Asia/Yakutsk");
-        addTimeZoneEntry("(GMT+09:00) Seoul", "Asia/Seoul");
-        addTimeZoneEntry("(GMT+09:00) Osaka, Sapporo, Tokyo", "Asia/Tokyo");
-        addTimeZoneEntry("(GMT+08:00) Taipei", "Asia/Taipei");
-        addTimeZoneEntry("(GMT+08:00) Perth", "Australia/Perth");
-        addTimeZoneEntry("(GMT+08:00) Kuala Lumpur, Singapore", "Asia/Kuala_Lumpur");
-        addTimeZoneEntry("(GMT+08:00) Irkutsk, Ulaan Bataar", "Asia/Irkutsk");
-        addTimeZoneEntry("(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi", "Asia/Hong_Kong");
-        addTimeZoneEntry("(GMT+07:00) Krasnoyarsk", "Asia/Krasnoyarsk");
-        addTimeZoneEntry("(GMT+07:00) Bangkok, Hanoi, Jakarta", "Asia/Bangkok");
-        addTimeZoneEntry("(GMT+06:30) Rangoon", "Asia/Rangoon");
-        addTimeZoneEntry("(GMT+06:00) Sri Jayawardenepura", "Asia/Colombo");
-        addTimeZoneEntry("(GMT+06:00) Astana, Dhaka", "Asia/Dhaka");
-        addTimeZoneEntry("(GMT+06:00) Almaty, Novosibirsk", "Asia/Almaty");
-        addTimeZoneEntry("(GMT+05:45) Kathmandu", "Asia/Katmandu");
-        addTimeZoneEntry("(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi", "Asia/Calcutta");
-        addTimeZoneEntry("(GMT+05:00) Islamabad, Karachi, Tashkent", "Asia/Karachi");
-        addTimeZoneEntry("(GMT+05:00) Ekaterinburg", "Asia/Yekaterinburg");
-        addTimeZoneEntry("(GMT+04:30) Kabul", "Asia/Kabul");
-        addTimeZoneEntry("(GMT+04:00) Baku, Tbilisi, Yerevan", "Asia/Baku");
-        addTimeZoneEntry("(GMT+04:00) Abu Dhabi, Muscat", "Asia/Dubai");
-        addTimeZoneEntry("(GMT+03:30) Tehran", "Asia/Tehran");
-        addTimeZoneEntry("(GMT+03:00) Nairobi", "Africa/Nairobi");
-        addTimeZoneEntry("(GMT+03:00) Moscow, St. Petersburg, Volgograd", "Europe/Moscow");
-        addTimeZoneEntry("(GMT+03:00) Kuwait, Riyadh", "Asia/Kuwait");
-        addTimeZoneEntry("(GMT+03:00) Baghdad", "Asia/Baghdad");
-        addTimeZoneEntry("(GMT+02:00) Jerusalem", "Asia/Jerusalem");
-        addTimeZoneEntry("(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Europe/Helsinki");
-        addTimeZoneEntry("(GMT+02:00) Harare, Pretoria", "Africa/Harare");
-        addTimeZoneEntry("(GMT+02:00) Cairo", "Africa/Cairo");
-        addTimeZoneEntry("(GMT+02:00) Bucharest", "Europe/Bucharest");
-        addTimeZoneEntry("(GMT+02:00) Athens, Istanbul, Minsk", "Europe/Athens");
-        addTimeZoneEntry("(GMT+01:00) West Central Africa", "Africa/Lagos");
-        addTimeZoneEntry("(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb", "Europe/Warsaw");
-        addTimeZoneEntry("(GMT+01:00) Brussels, Copenhagen, Madrid, Paris", "Europe/Brussels");
-        addTimeZoneEntry("(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague", "Europe/Prague,Europe/Belgrade");
-        addTimeZoneEntry("(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Europe/Amsterdam");
-        addTimeZoneEntry("(GMT) Casablanca, Monrovia", "Africa/Casablanca");
-        addTimeZoneEntry("(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London", "Europe/Dublin");
-        addTimeZoneEntry("(GMT-01:00) Azores", "Atlantic/Azores");
-        addTimeZoneEntry("(GMT-01:00) Cape Verde Is.", "Atlantic/Cape_Verde");
-        addTimeZoneEntry("(GMT-02:00) Mid-Atlantic", "Atlantic/South_Georgia");
-        addTimeZoneEntry("(GMT-03:00) Brasilia", "America/Sao_Paulo");
-        addTimeZoneEntry("(GMT-03:00) Buenos Aires, Georgetown", "America/Buenos_Aires");
-        addTimeZoneEntry("(GMT-03:00) Greenland", "America/Thule");
-        addTimeZoneEntry("(GMT-03:30) Newfoundland", "America/St_Johns");
-        addTimeZoneEntry("(GMT-04:00) Atlantic Time (Canada)", "America/Halifax");
-        addTimeZoneEntry("(GMT-04:00) Caracas, La Paz", "America/Caracas");
-        addTimeZoneEntry("(GMT-04:00) Santiago", "America/Santiago");
-        addTimeZoneEntry("(GMT-05:00) Bogota, Lima, Quito", "America/Bogota");
-       addTimeZoneEntry("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
-       addTimeZoneEntry("(GMT-05:00) Indiana (East)", "America/Indianapolis");
-       addTimeZoneEntry("(GMT-06:00) Central America", "America/Costa_Rica");
-       addTimeZoneEntry("(GMT-06:00) Central Time (US & Canada)", "America/Chicago");
-       addTimeZoneEntry("(GMT-06:00) Guadalajara, Mexico City, Monterrey", "America/Mexico_City");
-       addTimeZoneEntry("(GMT-06:00) Saskatchewan", "America/Winnipeg");
-       addTimeZoneEntry("(GMT-07:00) Arizona", "America/Phoenix");
-       addTimeZoneEntry("(GMT-07:00) Chihuahua, La Paz, Mazatlan", "America/Tegucigalpa");
-       addTimeZoneEntry("(GMT-07:00) Mountain Time (US & Canada)", "America/Denver");
-       addTimeZoneEntry("(GMT-08:00) Pacific Time (US & Canada); Tijuana", "America/Los_Angeles");
-       addTimeZoneEntry("(GMT-09:00) Alaska", "America/Anchorage");
-       addTimeZoneEntry("(GMT-10:00) Hawaii", "Pacific/Honolulu");
-       addTimeZoneEntry("(GMT-11:00) Midway Island, Samoa", "Pacific/Apia");
-       addTimeZoneEntry("(GMT-12:00) International Date Line West", "MIT");
-
-       
-       this.time_zones_vector = new Vector<String>();
-       
-       for(Enumeration<String> en= this.timeZones.keys(); en.hasMoreElements(); )
-       {
-           this.time_zones_vector.add(en.nextElement());
-       }
-       
-       
-    }
-
-
-    public void addTimeZoneEntry(String long_desc, String keycode)
-    {
-        //SimpleConfigurationTZDialog.time_zones.put(long_desc, keycode);
-        //SimpleConfigurationTZDialog.time_zones_vector.add(long_desc);
-    }
-    
-    
-    
 
     // ********************************************************
     // ******                  Settings                   *****    
     // ********************************************************
-/*
-    public GGCProperties getSettings()
-    {
-        return this.m_settings;
-    }
 
-    public void loadSettingsFromDb()
-    {
-        this.m_settings.load();
-    }
-*/
+    
     public Color getColor(int color)
     {
         return new Color(color);
     }
-/*
-    public ConfigurationManager getConfigurationManager()
-    {
-	return this.m_cfgMgr;
-    }
-*/
 
     // ********************************************************
     // ******             BG Measurement Type             *****    
@@ -633,84 +464,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
             {
                 return bg_value * DataAccessPlugInBase.MMOL_TO_MGDL_FACTOR;
             }
-    }
-
-
-
-    // ********************************************************
-    // ******          Parent handling (for UIs)          *****    
-    // ********************************************************
-
-
-
-    /**
-     *  Utils
-     */
-
-
-    public Image getImage(String filename, Component cmp)
-    {
-        Image img;
-
-        InputStream is = this.getClass().getResourceAsStream(filename);
-
-        if (is==null)
-            System.out.println("Error reading image: "+filename);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try
-        {
-            int c;
-            while ((c = is.read()) >=0)
-            baos.write(c);
-
-
-            //JDialog.getT
-            //JFrame.getToolkit();
             
-            if (cmp==null)
-            	cmp = new JLabel();
-            
-            img = cmp.getToolkit().createImage(baos.toByteArray());
-        }
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-            return null;
-        }
-        return img;
     }
 
-
-
-    // ********************************************************
-    // ******               Look and Feel                 *****    
-    // ********************************************************
-
-
-    public static String[] getLFData()
-    {
-        String out[] = new String[2];
-
-        try
-        {
-            Properties props = new Properties();
-
-            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
-            props.load(in);
-
-            out[0] = (String)props.get("LF_CLASS");
-            out[1] = (String)props.get("SKINLF_SELECTED");
-
-            return out;
-
-        }
-        catch(Exception ex)
-        {
-            System.out.println("DataAccessMeter::getLFData::Exception> " + ex);
-            return null;
-        }
-    }
 
 
 
@@ -726,27 +482,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
                 + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
     }
 
-    public String[] getMonthsArray()
-    {
-        String arr[] = new String[12];
 
-        arr[0] = m_i18n.getMessage("JANUARY");
-        arr[1] = m_i18n.getMessage("FEBRUARY");
-        arr[2] = m_i18n.getMessage("MARCH");
-        arr[3] = m_i18n.getMessage("APRIL");
-        arr[4] = m_i18n.getMessage("MAY");
-        arr[5] = m_i18n.getMessage("JUNE");
-        arr[6] = m_i18n.getMessage("JULY");
-        arr[7] = m_i18n.getMessage("AUGUST");
-        arr[8] = m_i18n.getMessage("SEPTEMBER");
-        arr[9] = m_i18n.getMessage("OCTOBER");
-        arr[10] = m_i18n.getMessage("NOVEMBER");
-        arr[11] = m_i18n.getMessage("DECEMBER");
-
-        return arr;
-
-    }
-
+    /*
     public String getDateString(int date)
     {
         // 20051012
@@ -862,7 +599,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 
          return dt_obj;
          */
-
+/* xa
         return gc.getTime();
 
     }
@@ -962,134 +699,18 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 
         return nn;
     }
-
-    public String getLeadingZero(String number, int places)
-    {
-        number = number.trim();
-
-        while (number.length() < places)
-        {
-            number = "0" + number;
-        }
-
-        return number;
-    }
+*/
 
     public int getStartYear()
     {
-        return 1800;
-    }
-
-    public float getFloatValue(Object aValue)
-    {
-        float out = 0.0f;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Float)
-        {
-            try
-            {
-                Float f = (Float) aValue;
-                out = f.floatValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Float.parseFloat(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
-    }
-
-    public int getIntValue(Object aValue)
-    {
-        int out = 0;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Integer)
-        {
-            try
-            {
-                Integer i = (Integer) aValue;
-                out = i.intValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Integer.parseInt(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
-    }
-
-    public long getLongValue(Object aValue)
-    {
-        long out = 0L;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Long)
-        {
-            try
-            {
-                Long i = (Long) aValue;
-                out = i.longValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Long.parseLong(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
+        return 1980;
     }
 
 
 
 
 
-    public GregorianCalendar getGregorianCalendar(Date date)
-    {
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(date);
 
-        return gc;
-    }
 
     public static void notImplemented(String source)
     {

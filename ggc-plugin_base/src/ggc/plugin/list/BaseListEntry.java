@@ -33,10 +33,12 @@ package ggc.plugin.list;
 public class BaseListEntry  
 {
     
-    public static final int STATUS_NONE = 0;
-    public static final int STATUS_DONE = 1;
-    public static final int STATUS_PLANNED = 2;
-    public static final int STATUS_NOTPLANNED = 3;
+    public static final int STATUS_NONE = 0;            // black
+    public static final int STATUS_DONE = 1;            // green
+    public static final int STATUS_TESTING = 2;         // light green
+    public static final int STATUS_IMPLEMENTING = 3;    // blue
+    public static final int STATUS_PLANNED = 4;         // orange
+    public static final int STATUS_NOTPLANNED = 5;      // red
     
     
     public String name;
