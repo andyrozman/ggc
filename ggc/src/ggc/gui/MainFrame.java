@@ -347,6 +347,9 @@ public class MainFrame extends JFrame
         this.menu_meters.addSeparator();
         this.createAction(menu_meters, "MN_METERS_CONFIG", "MN_METERS_CONFIG_DESC", "meters_config", null);
 
+        this.menu_meters.addSeparator();
+        this.createAction(menu_meters, "MN_METERS_ABOUT", "MN_METERS_ABOUT_DESC", "meters_about", null);
+        
         // pumps
         this.menu_pumps = this.createMenu("MN_PUMPS", null);
         this.createAction(menu_pumps, "MN_PUMP_PROFILES",

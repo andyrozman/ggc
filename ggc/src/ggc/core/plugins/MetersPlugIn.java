@@ -18,6 +18,7 @@ public class MetersPlugIn extends PlugInClient
     public static final int COMMAND_READ_METER_DATA = 0;
     public static final int COMMAND_METERS_LIST = 1;
     public static final int COMMAND_CONFIGURATION = 2;
+    public static final int COMMAND_ABOUT = 3;
 
     public MetersPlugIn(Container parent, I18nControlAbstract ic)
     {
@@ -31,15 +32,20 @@ public class MetersPlugIn extends PlugInClient
 
     public void initPlugin()
     {
-        this.commands = new String[3];
+        this.commands = new String[4];
         this.commands[0] = "MN_METERS_READ_DESC";
         this.commands[1] = "MN_METERS_LIST_DESC";
         this.commands[2] = "MN_METERS_CONFIG_DESC";
+        this.commands[3] = "MN_METERS_ABOUT_DESC";
+        
 
-        this.commands_implemented = new boolean[3];
+        this.commands_implemented = new boolean[4];
         this.commands_implemented[0] = false;
-        this.commands_implemented[1] = false;
+        this.commands_implemented[1] = true;
         this.commands_implemented[2] = true;
+        this.commands_implemented[3] = true;
+        
+        // TODO
     }
 
     public void checkIfInstalled()
@@ -134,6 +140,10 @@ public class MetersPlugIn extends PlugInClient
         {
             this.executeCommand(MetersPlugIn.COMMAND_CONFIGURATION);
             // this.meterConfiguration();
+        }
+        else if (command.equals("meters_about"))
+        {
+            this.executeCommand(MetersPlugIn.COMMAND_ABOUT);
         }
         else
         {

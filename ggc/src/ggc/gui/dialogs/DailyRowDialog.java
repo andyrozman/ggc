@@ -105,13 +105,24 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
         if (src.equals(this.ftf_bg1))
         {
+            //System.out.println("text1: " + this.ftf_bg1.getText());
+            if (this.ftf_bg1.getText().trim().length()==0)
+                return;
+            
+            //System.out.println("focus lost: bg2");
             int val = m_da.getJFormatedTextValueInt(ftf_bg1);
             float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
             this.ftf_bg2.setValue(new Float(v_2));
         }
         else if (src.equals(this.ftf_bg2))
         {
-            // System.out.println("focus lost: bg2");
+            //System.out.println("text2: " + this.ftf_bg2.getText());
+
+            if (this.ftf_bg2.getText().trim().length()==0)
+                return;
+
+            
+            //System.out.println("focus lost: bg2");
             float val = m_da.getJFormatedTextValueFloat(ftf_bg2);
             int v_2 = (int) m_da.getBGValueDifferent(DataAccess.BG_MMOL, val);
             this.ftf_bg1.setValue(new Integer(v_2));
@@ -967,13 +978,13 @@ public class DailyRowDialog extends JDialog implements ActionListener,
      * this.BGField.setText(ss); } catch(Exception ex) {
      * System.out.println("fixDecimals: " + ex); } } //MmolDecimalFormat }
      */
-
+/*
     public String checkDecimalFields(String field)
     {
         field = field.replace(',', '.');
         return field;
     }
-
+*/
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************

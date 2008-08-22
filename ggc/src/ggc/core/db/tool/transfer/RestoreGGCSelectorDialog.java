@@ -18,6 +18,9 @@ import com.atech.utils.ATDataAccessAbstract;
 public class RestoreGGCSelectorDialog extends RestoreSelectorDialog 
 {
     
+    private static final long serialVersionUID = 3536165659702725457L;
+
+
 
     public RestoreGGCSelectorDialog(JDialog parent, ATDataAccessAbstract da)
     {

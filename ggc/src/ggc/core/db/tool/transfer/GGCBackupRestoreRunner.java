@@ -29,7 +29,6 @@ import com.atech.utils.file.PackFiles;
 public class GGCBackupRestoreRunner extends BackupRestoreRunner
 {
 
-    private static final long serialVersionUID = 1L;
 
     DataAccess da = DataAccess.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
