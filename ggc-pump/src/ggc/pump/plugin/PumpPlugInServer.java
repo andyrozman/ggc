@@ -1,10 +1,14 @@
 package ggc.pump.plugin;
 
+import ggc.plugin.gui.AboutBaseDialog;
+import ggc.plugin.list.BaseListDialog;
 import ggc.pump.gui.config.SimpleConfigurationDialog;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.awt.Container;
+
+import javax.swing.JFrame;
 
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
@@ -20,6 +24,7 @@ public class PumpPlugInServer extends PlugInServer
     public static final int COMMAND_PROFILES = 3;
     public static final int COMMAND_MANUAL_ENTRY = 4;
     public static final int COMMAND_ADDITIONAL_DATA = 5;
+    public static final int COMMAND_ABOUT = 6;
     
     private String commands[] = { 
                                   "MN_PUMPS_READ_DESC", 
@@ -28,7 +33,9 @@ public class PumpPlugInServer extends PlugInServer
                                                                
                                   "MN_PUMP_PROFILES_DESC", 
                                   "MN_PUMPS_MANUAL_ENTRY_DESC",
-                                  "MN_PUMPS_ADDITIONAL_DATA_DESC", };
+                                  "MN_PUMPS_ADDITIONAL_DATA_DESC", 
+                                  
+                                  "MN_PUMPS_ABOUT" };
     
     
     
@@ -62,6 +69,19 @@ public class PumpPlugInServer extends PlugInServer
                 new SimpleConfigurationDialog(this.m_da);
                 return;
             }
+            
+            case PumpPlugInServer.COMMAND_PUMPS_LIST:
+            {
+                new BaseListDialog((JFrame)this.parent, DataAccessPump.getInstance());
+                return;
+            }
+
+            case PumpPlugInServer.COMMAND_ABOUT:
+            {
+                new AboutBaseDialog((JFrame)this.parent, DataAccessPump.getInstance());
+                return;
+            }
+
             
             
             default:

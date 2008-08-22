@@ -1,10 +1,3 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.pump.device;
 
 
@@ -19,18 +12,19 @@ package ggc.pump.device;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+
+import com.atech.i18n.I18nControlAbstract;
 
 
 public class DummyPump extends GenericPump //implements MeterInterface
 {
 
     DataAccessPump m_da = DataAccessPump.getInstance();
-    I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     public int m_meter_index = 0;
     

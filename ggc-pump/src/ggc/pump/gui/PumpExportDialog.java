@@ -6,7 +6,6 @@ import ggc.pump.data.cfg.PumpConfigEntry;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.plugin.PumpPlugInServer;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,10 +24,12 @@ import javax.swing.JProgressBar;
 import javax.swing.border.LineBorder;
 
 import com.atech.graphics.components.StatusReporterInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 public class PumpExportDialog extends JDialog implements ActionListener, StatusReporterInterface
 {
 
+    private static final long serialVersionUID = 3742517721328690327L;
     PumpPlugInServer server;
     
     
@@ -51,7 +52,7 @@ public class PumpExportDialog extends JDialog implements ActionListener, StatusR
 
 
     private DataAccessPump m_da = DataAccessPump.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     public JProgressBar progress = null;
 

@@ -27,14 +27,6 @@
 
 package ggc.pump.data;
 
-import ggc.core.db.hibernate.DayValueH;
-import ggc.pump.output.OutputUtil;
-import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
-
-import java.util.Hashtable;
-
-import com.atech.utils.ATechDate;
 
 //import ggc.db.hibernate.DayValueH;
 

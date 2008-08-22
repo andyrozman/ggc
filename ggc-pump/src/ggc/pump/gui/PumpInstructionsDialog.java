@@ -9,7 +9,6 @@ import ggc.pump.manager.PumpManager;
 import ggc.pump.plugin.PumpPlugInServer;
 import ggc.pump.protocol.ConnectionProtocols;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -28,6 +27,7 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataReadingFinishedInterface;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.TimeZoneUtil;
 
 
@@ -44,7 +44,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
 
     
     private DataAccessPump m_da = DataAccessPump.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();        
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     
     JButton button_start;
     JLabel label_waiting;

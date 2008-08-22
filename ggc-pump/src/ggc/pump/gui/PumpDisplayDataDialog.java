@@ -11,7 +11,6 @@ import ggc.pump.output.OutputUtil;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.plugin.PumpPlugInServer;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -37,6 +36,8 @@ import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumn;
 
+import com.atech.i18n.I18nControlAbstract;
+
 public class PumpDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
 {
 
@@ -49,7 +50,7 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
     PumpReaderRunner mrr;
 
     private DataAccessPump m_da = DataAccessPump.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     // private static ReadMeterDialog singleton = null;
 

@@ -3,7 +3,6 @@
  */
 package ggc.pump.device.animas;
 
-import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.device.AbstractPump;
 import ggc.pump.device.DeviceIdentification;
@@ -12,14 +11,8 @@ import ggc.pump.manager.PumpImplementationStatus;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.protocol.ConnectionProtocols;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Hashtable;
-
-import com.atech.utils.ATechDate;
 
 
 /**

@@ -4,7 +4,6 @@ package ggc.pump.device;
 
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.manager.company.AbstractPumpCompany;
-import ggc.pump.output.AbstractOutputWriter;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.util.I18nControl;
 

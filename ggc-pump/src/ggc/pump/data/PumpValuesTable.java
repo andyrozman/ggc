@@ -30,7 +30,9 @@ import javax.swing.table.TableColumn;
 public class PumpValuesTable extends JTable //implements TableModelListener
 {
 
-//x    private I18nControl m_ic = I18nControl.getInstance();    
+    private static final long serialVersionUID = 3177202099887453694L;
+    
+    //x    private I18nControl m_ic = I18nControl.getInstance();    
     PumpValuesTableModel model = null;
 	DataAccessPump m_da = DataAccessPump.getInstance();
 
@@ -165,6 +167,8 @@ public class PumpValuesTable extends JTable //implements TableModelListener
     
     class CheckCellRenderer extends JCheckBox implements TableCellRenderer
     {
+        private static final long serialVersionUID = -6981992743537432101L;
+
         protected Border m_noFocusBorder;
 
         public CheckCellRenderer()
@@ -196,6 +200,7 @@ public class PumpValuesTable extends JTable //implements TableModelListener
 
     class StatusCellRenderer extends JLabel implements TableCellRenderer
     {
+        private static final long serialVersionUID = -9175226894695248974L;
         protected Border m_noFocusBorder;
 
         public StatusCellRenderer()
