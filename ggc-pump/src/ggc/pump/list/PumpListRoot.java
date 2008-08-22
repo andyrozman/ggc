@@ -80,7 +80,7 @@ public class PumpListRoot
     @Override
     public String toString()
     {
-    	return DataAccessPump.getInstance().m_i18n.getMessage("METERS_LIST");
+    	return DataAccessPump.getInstance().getI18nControlInstance().getMessage("METERS_LIST");
     }
 
 
