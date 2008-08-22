@@ -32,8 +32,8 @@ package ggc.meter.test;
 import ggc.meter.device.accuchek.AccuChekAviva;
 import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.onetouch.OneTouchUltra;
-import ggc.meter.output.ConsoleOutputWriter;
-import ggc.meter.protocol.SerialProtocol;
+import ggc.plugin.output.ConsoleOutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
 
 import java.awt.TextArea;
 import java.util.Vector;

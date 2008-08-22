@@ -3,9 +3,9 @@ package ggc.meter.gui;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.cfg.MeterConfigEntry;
-import ggc.meter.output.OutputWriter;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.output.OutputWriter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -1,7 +1,7 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.manager.MeterImplementationStatus;
-import ggc.meter.output.OutputWriter;
+import ggc.plugin.output.OutputWriter;
 
 public class AccuChekIntegra extends AccuChekSmartPixMeter
 {

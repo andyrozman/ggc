@@ -1,6 +1,6 @@
 package ggc.meter.device.onetouch;
 
-import ggc.meter.output.OutputWriter;
+import ggc.plugin.output.OutputWriter;
 import gnu.io.SerialPortEvent;
 
 import java.io.IOException;

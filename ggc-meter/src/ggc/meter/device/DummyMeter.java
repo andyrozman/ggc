@@ -1,9 +1,3 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
 
 package ggc.meter.device;
 
@@ -17,8 +11,9 @@ package ggc.meter.device;
 
 
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.protocol.ConnectionProtocols;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.protocol.ConnectionProtocols;
 
 import java.util.ArrayList;
 

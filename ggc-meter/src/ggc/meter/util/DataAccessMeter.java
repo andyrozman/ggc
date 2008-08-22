@@ -53,6 +53,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import com.atech.graphics.components.about.CreditsEntry;
+import com.atech.graphics.components.about.CreditsGroup;
+import com.atech.graphics.components.about.LibraryInfoEntry;
+import com.atech.i18n.I18nControlAbstract;
+
 
 public class DataAccessMeter extends DataAccessPlugInBase
 {
@@ -97,14 +102,10 @@ public class DataAccessMeter extends DataAccessPlugInBase
     
     public void initSpecial()
     {
-        System.out.println("initSpecial - Meter");
-        this.loadFonts();
-
-        this.loadTimeZones();
-        loadMetersTable();
+        loadTimeZones();
         checkPrerequisites();
-        
-        this.createWebListerContext();
+        createWebListerContext();
+        createPlugInAboutContext();
     }
     
     
@@ -155,12 +156,6 @@ public class DataAccessMeter extends DataAccessPlugInBase
   
 
 
-    /*
-     static public DataAccessMeter getInstance()
-     {
-     return m_da;
-     }
-     */
 
     //  Method:       deleteInstance
     /**
@@ -172,77 +167,64 @@ public class DataAccessMeter extends DataAccessPlugInBase
     }
 
  
-    public void loadMetersTable()
+
+    
+    public void createPlugInAboutContext()
     {
+        I18nControlAbstract ic = getI18nControlInstance();
+        
+        about_title = ic.getMessage("METER_PLUGIN_ABOUT");
+        about_image_name = "/icons/about_logo.gif";
+        about_plugin_copyright_from = 2006;
+        about_plugin_name = ic.getMessage("METER_PLUGIN");
+        
+        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
+        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
+        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache", "Helper methods for java.lang library"));
+        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache", "Logger and all around wrapper for logging utilities"));
+        lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD", "Framework for Xml manipulation"));
+        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
+        lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document", "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
+        plugin_libraries = lst_libs;
 
-    	metersUrl = new Hashtable<String,String>();
-        metersNames = new ArrayList<String>();
-    	
-    	
-    	
-        metersNames.add("Abbott Diabetes Care");
-        metersUrl.put("Abbott Diabetes Care", "abbott.html");
-        metersNames.add("Bayer Diagnostics");
-        metersUrl.put("Bayer Diagnostics", "bayer.html");
-        metersNames.add("Diabetic Supply of Suncoast");
-        metersUrl.put("Diabetic Supply of Suncoast", "suncoast.html");
-        metersNames.add("Diagnostic Devices");
-        metersUrl.put("Diagnostic Devices", "prodigy.html");
-        metersNames.add("Arkray USA (formerly Hypoguard)");
-        metersUrl.put("Arkray USA (formerly Hypoguard)", "arkray.html");
-        metersNames.add("HealthPia America");
-        metersUrl.put("HealthPia America", "healthpia.html");
-        metersNames.add("Home Diagnostics");
-        metersUrl.put("Home Diagnostics", "home_diganostics.html");
-        metersNames.add("Lifescan");
-        metersUrl.put("Lifescan", "lifescan.html");
-        metersNames.add("Nova Biomedical");
-        metersUrl.put("Nova Biomedical", "nova_biomedical.html");
-        metersNames.add("Roche Diagnostics");
-        metersUrl.put("Roche Diagnostics", "roche.html");
-        metersNames.add("Sanvita");
-        metersUrl.put("Sanvita", "sanvita.html");
-        metersNames.add("U.S. Diagnostics");
-        metersUrl.put("U.S. Diagnostics", "us_diagnostics.html");
-        metersNames.add("WaveSense");
-        metersUrl.put("WaveSense", "wavesense.html");
-
+        ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
+        CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
+        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework and support for Ascensia & Roche devices"));
+        lst_credits.add(cg);
+        cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
+        cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
+        lst_credits.add(cg);
+        
+        plugin_developers = lst_credits;
     }
-    
-    
 
-    /*
-    public void startDb(StatusBarL bar2)
+    public void createWebListerContext()
     {
-        GGCDbLoader loader = new GGCDbLoader(this, bar2);
-        loader.start();
-    } */
-/*
-    public GGCDb getDb()
-    {
-        return m_db;
+        I18nControlAbstract ic = getI18nControlInstance();
+        
+        weblister_items = new ArrayList<BaseListEntry>();
+        weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 4));
+        weblister_items.add(new BaseListEntry("Arkray USA (formerly Hypoguard)", "/meters/arkray.html", 5));
+        weblister_items.add(new BaseListEntry("Bayer Diagnostics", "/meters/bayer.html", 1));
+        weblister_items.add(new BaseListEntry("Diabetic Supply of Suncoast", "/meters/dsos.html", 5));
+        weblister_items.add(new BaseListEntry("Diagnostic Devices", "/meters/prodigy.html", 5));
+        weblister_items.add(new BaseListEntry("HealthPia America", "/meters/healthpia.html", 5));
+        weblister_items.add(new BaseListEntry("Home Diagnostics", "/meters/home_diagnostics.html", 5));
+        weblister_items.add(new BaseListEntry("Lifescan", "/meters/lifescan.html", 4));
+        weblister_items.add(new BaseListEntry("Nova Biomedical", "/meters/nova_biomedical.html", 5));
+        weblister_items.add(new BaseListEntry("Roche Diagnostics", "/meters/roche.html", 2));
+        weblister_items.add(new BaseListEntry("Sanvita", "/meters/sanvita.html", 5));
+        weblister_items.add(new BaseListEntry("U.S. Diagnostics", "/meters/us_diagnostics.html", 5));
+        weblister_items.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
+        
+        weblister_title = ic.getMessage("METERS_LIST_WEB");
+        weblister_desc = ic.getMessage("METERS_LIST_WEB_DESC");
     }
-*/
-
+        
     
-    
-    
-    
-    // ********************************************************
-    // ******         Abstract Methods                    *****    
-    // ********************************************************
-    
-
-
     public String getApplicationName()
     {
     	return "GGC_MeterTool";
-    }
-    
-    
-    
-    public void checkPrerequisites()
-    {
     }
     
     
@@ -252,15 +234,6 @@ public class DataAccessMeter extends DataAccessPlugInBase
     }
     
     
-    public void loadBackupRestoreCollection()
-    {
-    }
-    
-    
-    
-    
-    
-
 
     // ********************************************************
     // ******                   Meters                    *****    
@@ -271,10 +244,6 @@ public class DataAccessMeter extends DataAccessPlugInBase
         return this.m_meterManager;
     }
 
-
-    // ********************************************************
-    // ******                   Meters                    *****    
-    // ********************************************************
 
     public void loadTimeZones()
     {
@@ -379,546 +348,10 @@ public class DataAccessMeter extends DataAccessPlugInBase
     
     
 
-    // ********************************************************
-    // ******                  Settings                   *****    
-    // ********************************************************
-/*
-    public GGCProperties getSettings()
-    {
-        return this.m_settings;
-    }
-
-    public void loadSettingsFromDb()
-    {
-        this.m_settings.load();
-    }
-*/
-    public Color getColor(int color)
-    {
-        return new Color(color);
-    }
-/*
-    public ConfigurationManager getConfigurationManager()
-    {
-	return this.m_cfgMgr;
-    }
-*/
-
-
-
-    // ********************************************************
-    // ******          Parent handling (for UIs)          *****    
-    // ********************************************************
-
-
-
-    /**
-     *  Utils
-     */
-
-
-    public Image getImage(String filename, Component cmp)
-    {
-        Image img;
-
-        InputStream is = this.getClass().getResourceAsStream(filename);
-
-        if (is==null)
-            System.out.println("Error reading image: "+filename);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try
-        {
-            int c;
-            while ((c = is.read()) >=0)
-            baos.write(c);
-
-
-            //JDialog.getT
-            //JFrame.getToolkit();
-            
-            if (cmp==null)
-            	cmp = new JLabel();
-            
-            img = cmp.getToolkit().createImage(baos.toByteArray());
-        }
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-            return null;
-        }
-        return img;
-    }
-
-
-
-    // ********************************************************
-    // ******               Look and Feel                 *****    
-    // ********************************************************
-
-
-    public static String[] getLFData()
-    {
-        String out[] = new String[2];
-
-        try
-        {
-            Properties props = new Properties();
-
-            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
-            props.load(in);
-
-            out[0] = (String)props.get("LF_CLASS");
-            out[1] = (String)props.get("SKINLF_SELECTED");
-
-            return out;
-
-        }
-        catch(Exception ex)
-        {
-            System.out.println("DataAccessMeter::getLFData::Exception> " + ex);
-            return null;
-        }
-    }
-
-
-
-
-    // ********************************************************
-    // ******          Dates and Times Handling           *****    
-    // ********************************************************
-
-    public String getCurrentDateString()
-    {
-        GregorianCalendar gc = new GregorianCalendar();
-        return gc.get(Calendar.DAY_OF_MONTH) + "."
-                + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
-    }
-
-    public String[] getMonthsArray()
-    {
-        String arr[] = new String[12];
-
-        arr[0] = m_i18n.getMessage("JANUARY");
-        arr[1] = m_i18n.getMessage("FEBRUARY");
-        arr[2] = m_i18n.getMessage("MARCH");
-        arr[3] = m_i18n.getMessage("APRIL");
-        arr[4] = m_i18n.getMessage("MAY");
-        arr[5] = m_i18n.getMessage("JUNE");
-        arr[6] = m_i18n.getMessage("JULY");
-        arr[7] = m_i18n.getMessage("AUGUST");
-        arr[8] = m_i18n.getMessage("SEPTEMBER");
-        arr[9] = m_i18n.getMessage("OCTOBER");
-        arr[10] = m_i18n.getMessage("NOVEMBER");
-        arr[11] = m_i18n.getMessage("DECEMBER");
-
-        return arr;
-
-    }
-
-    public String getDateString(int date)
-    {
-        // 20051012
-
-        int year = date / 10000;
-        int months = date - (year * 10000);
-
-        months = months / 100;
-
-        int days = date - (year * 10000) - (months * 100);
-
-        if (year == 0)
-            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2);
-        else
-            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2)
-                    + "/" + year;
-    }
-
-    public String getTimeString(int time)
-    {
-        int hours = time / 100;
-        int min = time - hours * 100;
-
-        return getLeadingZero(hours, 2) + ":" + getLeadingZero(min, 2);
-    }
-
-    public String getDateTimeString(long date)
-    {
-        return getDateTimeString(date, 1);
-    }
-
-    public String getDateTimeAsDateString(long date)
-    {
-        return getDateTimeString(date, 2);
-    }
-
-    public String getDateTimeAsTimeString(long date)
-    {
-        return getDateTimeString(date, 3);
-    }
-
-    // ret_type = 1 (Date and time)
-    // ret_type = 2 (Date)
-    // ret_type = 3 (Time)
-
-    public static final int DT_DATETIME = 1;
-
-    public static final int DT_DATE = 2;
-
-    public static final int DT_TIME = 3;
-
-    public String getDateTimeString(long dt, int ret_type)
-    {
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        if (ret_type == DT_DATETIME)
-            return getLeadingZero(d, 2) + "." + getLeadingZero(m, 2) + "." + y
-                    + "  " + getLeadingZero(h, 2) + ":"
-                    + getLeadingZero(min, 2);
-        else if (ret_type == DT_DATE)
-            return getLeadingZero(d, 2) + "." + getLeadingZero(m, 2) + "." + y;
-        else
-            return getLeadingZero(h, 2) + ":" + getLeadingZero(min, 2);
-
-    }
-
-    public Date getDateTimeAsDateObject(long dt)
-    {
-
-        //Date dt_obj = new Date();
-        GregorianCalendar gc = new GregorianCalendar();
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        gc.set(Calendar.DATE, d);
-        gc.set(Calendar.MONTH, m - 1);
-        gc.set(Calendar.YEAR, y);
-        gc.set(Calendar.HOUR_OF_DAY, h);
-        gc.set(Calendar.MINUTE, min);
-
-        /*
-         dt_obj.setHours(h);
-         dt_obj.setMinutes(min);
-
-         dt_obj.setDate(d);
-         dt_obj.setMonth(m);
-         dt_obj.setYear(y);
-
-         return dt_obj;
-         */
-
-        return gc.getTime();
-
-    }
-
-    public long getDateTimeLong(long dt, int ret_type)
-    {
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        if (ret_type == DT_DATETIME)
-        {
-            return Integer.parseInt(y + getLeadingZero(m, 2)
-                    + getLeadingZero(d, 2) + getLeadingZero(h, 2)
-                    + getLeadingZero(min, 2));
-        } else if (ret_type == DT_DATE)
-        {
-            return Integer.parseInt(getLeadingZero(d, 2) + getLeadingZero(m, 2)
-                    + y);
-        } else
-            return Integer.parseInt(getLeadingZero(h, 2)
-                    + getLeadingZero(min, 2));
-
-    }
-
-    public long getDateTimeFromDateObject(Date dt)
-    {
-
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(dt);
-
-        String dx = "";
-
-        dx += "" + gc.get(Calendar.YEAR);
-        dx += "" + getLeadingZero(gc.get(Calendar.MONTH + 1), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.MINUTE), 2);
-
-        return Long.parseLong(dx);
-
-    }
-
-    // 1 = Db Date: yyyyMMdd
-    // 2 = Db Full: yyyyMMddHHMM (24h format)
-    public String getDateTimeStringFromGregorianCalendar(GregorianCalendar gc,
-            int type)
-    {
-        String st = "";
-
-        if (gc.get(Calendar.YEAR) < 1000)
-        {
-            st += gc.get(Calendar.YEAR) + 1900;
-        } else
-        {
-            st += gc.get(Calendar.YEAR);
-        }
-
-        st += getLeadingZero(gc.get(Calendar.MONTH) + 1, 2);
-        st += getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
-
-        if (type == 2)
-        {
-            st += getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
-            st += getLeadingZero(gc.get(Calendar.MINUTE), 2);
-        }
-
-        //System.out.println(st);
-
-        return st;
-    }
-
-    public String getDateTimeString(int date, int time)
-    {
-        return getDateString(date) + " " + getTimeString(time);
-    }
-
-    public String getLeadingZero(int number, int places)
-    {
-        String nn = "" + number;
-
-        while (nn.length() < places)
-        {
-            nn = "0" + nn;
-        }
-
-        return nn;
-    }
-
-    public String getLeadingZero(String number, int places)
-    {
-        number = number.trim();
-
-        while (number.length() < places)
-        {
-            number = "0" + number;
-        }
-
-        return number;
-    }
-
-    public int getStartYear()
-    {
-        return 1800;
-    }
-
-    public float getFloatValue(Object aValue)
-    {
-        float out = 0.0f;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Float)
-        {
-            try
-            {
-                Float f = (Float) aValue;
-                out = f.floatValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Float.parseFloat(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
-    }
-
-    public int getIntValue(Object aValue)
-    {
-        int out = 0;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Integer)
-        {
-            try
-            {
-                Integer i = (Integer) aValue;
-                out = i.intValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Integer.parseInt(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
-    }
-
-    public long getLongValue(Object aValue)
-    {
-        long out = 0L;
-
-        if (aValue == null)
-            return out;
-
-        if (aValue instanceof Long)
-        {
-            try
-            {
-                Long i = (Long) aValue;
-                out = i.longValue();
-            } catch (Exception ex)
-            {
-            }
-        } else if (aValue instanceof String)
-        {
-            String s = (String) aValue;
-            if (s.length() > 0)
-            {
-                try
-                {
-                    out = Long.parseLong(s);
-                } catch (Exception ex)
-                {
-                }
-            }
-        }
-
-        return out;
-    }
-
-
-
-
-
-    public GregorianCalendar getGregorianCalendar(Date date)
-    {
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(date);
-
-        return gc;
-    }
-
-    public static void notImplemented(String source)
-    {
-        System.out.println("Not Implemented: " + source);
-    }
 
 
     
     
-    @Override
-    public void createWebListerContext()
-    {
-        
-        this.weblister_items = new ArrayList<BaseListEntry>();
-        
-        this.weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 0));
-        this.weblister_items.add(new BaseListEntry("Bayer Diagnostics", "/meters/bayer.html", 0));
-        this.weblister_items.add(new BaseListEntry("Diabetic Supply of Suncoast", "/meters/suncoast.html", 0));
-        
-        
-        this.weblister_title = "Meters List";
-        this.weblister_desc = "No Description";
-        
-        
-//        public BaseListEntry(String name, String page, int status)
-        
-        /*
-        metersUrl = new Hashtable<String,String>();
-        metersNames = new ArrayList<String>();
-        
-        
-        
-        metersNames.add("Abbott Diabetes Care");
-        metersUrl.put("Abbott Diabetes Care", "abbott.html");
-        metersNames.add("Bayer Diagnostics");
-        metersUrl.put("Bayer Diagnostics", "bayer.html");
-        metersNames.add("Diabetic Supply of Suncoast");
-        metersUrl.put("Diabetic Supply of Suncoast", "suncoast.html");
-        metersNames.add("Diagnostic Devices");
-        metersUrl.put("Diagnostic Devices", "prodigy.html");
-        metersNames.add("Arkray USA (formerly Hypoguard)");
-        metersUrl.put("Arkray USA (formerly Hypoguard)", "arkray.html");
-        metersNames.add("HealthPia America");
-        metersUrl.put("HealthPia America", "healthpia.html");
-        metersNames.add("Home Diagnostics");
-        metersUrl.put("Home Diagnostics", "home_diganostics.html");
-        metersNames.add("Lifescan");
-        metersUrl.put("Lifescan", "lifescan.html");
-        metersNames.add("Nova Biomedical");
-        metersUrl.put("Nova Biomedical", "nova_biomedical.html");
-        metersNames.add("Roche Diagnostics");
-        metersUrl.put("Roche Diagnostics", "roche.html");
-        metersNames.add("Sanvita");
-        metersUrl.put("Sanvita", "sanvita.html");
-        metersNames.add("U.S. Diagnostics");
-        metersUrl.put("U.S. Diagnostics", "us_diagnostics.html");
-        metersNames.add("WaveSense");
-        metersUrl.put("WaveSense", "wavesense.html");
-        */
-    }
 
 
 

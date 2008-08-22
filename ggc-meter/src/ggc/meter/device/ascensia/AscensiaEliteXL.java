@@ -1,7 +1,7 @@
 package ggc.meter.device.ascensia;
 
 
-import ggc.meter.output.AbstractOutputWriter;
+import ggc.plugin.output.AbstractOutputWriter;
 
 
 

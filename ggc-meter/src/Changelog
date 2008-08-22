@@ -2,6 +2,15 @@
 Changes file for GGC Meter Tool
 ===============================
 
+0.3.4
+    * Added About Dialog to tool.
+
+0.3.3
+    * Extending tools to use GGC Plugin Base project:
+        * changed to DataAccessMeter
+        * Added Web List of elements
+    
+
 0.3.2
     * AccuSmartChekPixProcessor changed to AccuSmartChekPixMeter and structure changed
 

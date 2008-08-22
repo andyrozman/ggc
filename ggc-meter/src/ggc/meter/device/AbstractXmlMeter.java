@@ -1,18 +1,14 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
 
 package ggc.meter.device;
 
 
 import ggc.meter.manager.MeterDevice;
 import ggc.meter.manager.company.AbstractMeterCompany;
-import ggc.meter.output.OutputWriter;
-import ggc.meter.protocol.XmlProtocol;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.XmlProtocol;
 
 import java.util.ArrayList;
 
@@ -46,7 +42,9 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
 	boolean can_read_device_configuration = false;
     
     
-	
+    public void close() throws MeterException
+    {
+    }
 	
 	
     public void setDeviceAllowedActions(boolean can_read_data, 
@@ -72,7 +70,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(DataAccessMeter.getInstance().getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
         

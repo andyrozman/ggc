@@ -3,7 +3,10 @@ package ggc.meter.device.onetouch;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.device.MeterException;
-import ggc.meter.output.OutputWriter;
+import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
 
 import java.util.ArrayList;
@@ -25,21 +28,25 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         //super(portName, 9600, SerialConfig.LN_8BITS, SerialConfig.ST_1BITS, SerialConfig.PY_NONE);
 
 //      int s= SerialConfig.LN_8BITS; 
+      
+        super(DataAccessMeter.getInstance());
         
-        
+        /*
         super( 
               9600,
               //19200,
               SerialPort.DATABITS_8, 
               SerialPort.STOPBITS_1, 
-              SerialPort.PARITY_NONE);
-    
+              SerialPort.PARITY_NONE,
+              SerialProtocol.SERIAL_EVENT_NONE);
+    */
         this.setCommunicationSettings( 
                   9600,
                   SerialPort.DATABITS_8, 
                   SerialPort.STOPBITS_1, 
                   SerialPort.PARITY_NONE,
-                  SerialPort.FLOWCONTROL_NONE);
+                  SerialPort.FLOWCONTROL_NONE, 
+                  SerialProtocol.SERIAL_EVENT_NONE);
                 
         this.setSerialPort(portName);
         
@@ -74,7 +81,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    public boolean open() throws MeterException
+    public boolean open() throws PlugInBaseException
     {
         //return true;
         return super.open();

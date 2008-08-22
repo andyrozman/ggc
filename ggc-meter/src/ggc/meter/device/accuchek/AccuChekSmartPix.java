@@ -2,11 +2,11 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.device.AbstractXmlMeter;
-import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterException;
 import ggc.meter.manager.MeterImplementationStatus;
-import ggc.meter.output.OutputWriter;
-import ggc.meter.protocol.ConnectionProtocols;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.ConnectionProtocols;
 
 import java.io.BufferedReader;
 import java.io.File;

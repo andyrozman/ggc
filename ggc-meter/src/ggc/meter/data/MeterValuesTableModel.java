@@ -29,9 +29,9 @@ package ggc.meter.data;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.gui.MeterDisplayDataDialog;
-import ggc.meter.output.OutputUtil;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.output.OutputUtil;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

@@ -28,9 +28,11 @@
 package ggc.meter.data;
 
 import ggc.core.db.hibernate.DayValueH;
-import ggc.meter.output.OutputUtil;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.output.OutputUtil;
+import ggc.plugin.output.OutputWriterData;
+import ggc.plugin.output.OutputWriterType;
 
 import java.util.Hashtable;
 
@@ -39,7 +41,7 @@ import com.atech.utils.ATechDate;
 //import ggc.db.hibernate.DayValueH;
 
 
-public class MeterValuesEntry 
+public class MeterValuesEntry extends OutputWriterData
 {
 	DataAccessMeter da = DataAccessMeter.getInstance();
 	public ATechDate datetime;
@@ -52,7 +54,7 @@ public class MeterValuesEntry
 	public static I18nControl ic = I18nControl.getInstance(); 
 	
 	public String bg_original = null;
-	public OutputUtil util = new OutputUtil();
+	public OutputUtil util = OutputUtil.getInstance();
 	
 	
 	public static final int STATUS_UNKNOWN = 0;
@@ -257,8 +259,79 @@ public class MeterValuesEntry
 	    //OutputUtil o= null;
 	    return "MeterValuesEntry [date/time=" + this.datetime.getDateTimeString() + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
 	}
+
+
+
+    @Override
+    public String getDataAsString()
+    {
+        switch(output_type)
+        {
+            case OutputWriterType.DUMMY:
+                return "";
+                
+            case OutputWriterType.CONSOLE:
+            case OutputWriterType.FILE:
+                return this.getDateTime().getDateTimeString() + " = " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
+                
+            case OutputWriterType.GGC_FILE_EXPORT:
+            {
+                int val = 0;
+                
+                if (this.getBgUnit() == OutputUtil.BG_MMOL)
+                {
+                    float fl = Float.parseFloat(this.getBgValue());
+                    val = (int)OutputUtil.getInstance().getBGValueDifferent(this.getBgUnit(), fl);
+                    
+                }
+                else
+                {
+                    try
+                    {
+                        val = Integer.parseInt(this.getBgValue());
+                    }
+                    catch(Exception ex)
+                    {
+                        val = 0;
+                    }
+                }
+
+                String parameters = this.getParametersAsString();
+                
+                /*
+                if (parameters.equals(""))
+                    System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
+                else
+                    System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
+                */
+                return "0|" + this.getDateTime().getATDateTimeAsLong() + "|" + val + 
+                            "|0.0|0.0|0.0|null|null|1|MTI;" + parameters + "|" + System.currentTimeMillis();
+                
+            }
+                
+        
+            default:
+                return "Value is undefined";
+        
+        }
+    }
+
+
+
+    @Override
+    public boolean isDataBG()
+    {
+        return true;
+    }
 	
 	
+    private int output_type = 0;
+    
+    public void setOutputType(int type)
+    {
+        this.output_type = type;
+    }
+    
 	
 	
 /*

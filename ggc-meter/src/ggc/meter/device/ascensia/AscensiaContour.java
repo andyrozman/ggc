@@ -31,7 +31,7 @@ package ggc.meter.device.ascensia;
  *
  */
 
-import ggc.meter.output.OutputWriter;
+import ggc.plugin.output.OutputWriter;
 import gnu.io.SerialPortEventListener;
 
 

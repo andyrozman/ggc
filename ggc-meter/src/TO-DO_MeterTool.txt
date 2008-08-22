@@ -9,19 +9,14 @@ Development of Meter Tools runs totally independent on GGC project
 Tasks that need to be done:
 ---------------------------
 
-    * Communication framework for meters (interface that all meters will use)
     * List of meters (most of them, not all) (0.4)
     * Configuration (0.4)
-    * Graphical interface for integration into GGC (0.4)
-    * Output types:
-          o GGC Output (GUI integration) (0.4) 
     * Specific meter models (companies) implementations:
          See list (under DONE) 
     * Rewrite old meter imports: (0.5)
                     * EuroFlash
                     * FreeStyle
                     * GlucoCard
-    
 
 
 Documentation:
@@ -33,10 +28,13 @@ Documentation:
 ===========================================================================
 DONE
 
+    * Graphical interface for integration into GGC (0.4)
+    * Communication framework for meters (interface that all meters will use)
     * Base framework for meters
     * Output types:
           o Console and file output
           o GGC Db Output (for manual import) 
+          o GGC Output (GUI integration) (0.4) 
 
 ==========================================================================
 
@@ -47,36 +45,36 @@ Meter implementations
 
 
 |               |                  |           |            |            |              |
-| Meter Company |    Meter         | Prot. av. | Planned St.| Planned En.| To implement |
-|---------------|                  |           |            |            |              |
-| Ascensia      | Dex              | Yes       | 01.01.2008 | 31.08.2008 | Y
-|               | Contour          | Yes       |            |            | Y
-|               | Breeze           | Yes       |            |            | Y
-|               | EliteXL          | Yes       |            |            | Y
-| LifeScan      | Mini             | Yes (No)  | 01.01.2008 | 31.08.2008 | N
-|               | Ultra            | Yes       |            |            |
-|               | Ultra II.        | Yes       |            |            |
-|               | Ultra Smart      | No        |            |            |
-|               | Basic            | No        |            |            |
-|               | Surestep         | No        |            |            |
-|               | Profile          | Yes       |            |            |
-|               | II.              | Yes       |            |            |
-|               | Fast Take        | No        |            |            |
-| Abott         |                  | No        |            |            |
-|    Freestyle  | ~                | No        |            |            |
-|               | Freedom          | No        |            |            |
-|               | Freedom Lite     | No        |            |            |
-|               | Mini/Flash       | No        |            |            |
-|    Medisense  | Precission Xtra  | No        |            |            |
-                | Precission Xceed | No        |            |            |
-| Accu-Chek     | Active           | No        |            |            |
-|               | Aviva            | No        |            |            |
-|               | Compact Plus     | No        |            |            |
-|               | Compact/Integral | No        |            |            |
-|               | Go               | No        |            |            |
-|               | Sensor/Advantage | No        |            |            |
-|               | Comfort          | No        |            |            |
-|               | Voicemate Plus   | No        |            |            |
+| Meter Company |    Meter         | Prot. av. | Planned St.| Planned En.| To implement | Done
+|---------------|------------------|-----------|------------|------------|--------------|--------
+| Ascensia      | Dex              | Yes       | 01.01.2008 | 31.08.2008 | Y            |  Done
+|               | Contour          | Yes       |            |            | Y            |  Done
+|               | Breeze           | Yes       |            |            | Y            |  Done
+|               | EliteXL          | Yes       |            |            | Y            |  Done
+| LifeScan      | Mini             | Yes (No)  | 01.01.2008 | 31.08.2008 | N            |
+|               | Ultra            | Yes       |            |            |              |
+|               | Ultra II.        | Yes       |            |            |              |
+|               | Ultra Smart      | No        |            |            |              |
+|               | Basic            | No        |            |            |              |
+|               | Surestep         | No        |            |            |              |
+|               | Profile          | Yes       |            |            |              |
+|               | II.              | Yes       |            |            |              |
+|               | Fast Take        | No        |            |            |              |
+| Abott         |                  | No        |            |            |              |
+|    Freestyle  | ~                | No        |            |            |              |
+|               | Freedom          | No        |            |            |              |
+|               | Freedom Lite     | No        |            |            |              |
+|               | Mini/Flash       | No        |            |            |              |
+|    Medisense  | Precission Xtra  | No        |            |            |              |
+                | Precission Xceed | No        |            |            |              |
+| Accu-Chek     | Active           | Yes       |            |            |  Y           |  Done
+|               | Aviva            | Yes       |            |            |  Y           |  Done
+|               | Compact Plus     | Yes       |            |            |  Y           |  Done
+|               | Compact/Integral | Yes       |            |            |  Y           |  Done
+|               | Go               | Yes       |            |            |  Y           |  Done
+|               | Sensor/Advantage | Yes       |            |            |  Y           |  Done
+|               | Comfort          | Yes       |            |            |  Y           |  Done
+|               | Voicemate Plus   | Yes       |            |            |  Y           |  Done
 
 
 

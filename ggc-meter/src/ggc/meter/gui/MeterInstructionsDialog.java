@@ -7,8 +7,8 @@ import ggc.meter.data.cfg.MeterConfiguration;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
 import ggc.meter.plugin.MeterPlugInServer;
-import ggc.meter.protocol.ConnectionProtocols;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.protocol.ConnectionProtocols;
 
 import java.awt.BorderLayout;
 import java.awt.Font;

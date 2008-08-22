@@ -1,6 +1,7 @@
 package ggc.meter.device;
 
 import ggc.meter.manager.company.AbstractMeterCompany;
+import ggc.plugin.device.DeviceIdentification;
 
 
 /*
@@ -42,11 +43,6 @@ public interface MeterInterface //extends SelectableInterface
     //************************************************
 
 
-    /**
-     * Used for opening connection with device.
-     * @return boolean - if connection established
-     */
-    boolean open() throws MeterException;
 
 
     /**

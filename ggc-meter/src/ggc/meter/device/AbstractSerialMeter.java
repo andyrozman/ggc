@@ -11,9 +11,12 @@ package ggc.meter.device;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.manager.MeterDevice;
 import ggc.meter.manager.company.AbstractMeterCompany;
-import ggc.meter.output.OutputWriter;
-import ggc.meter.protocol.SerialProtocol;
+import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 
@@ -46,12 +49,19 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         super();
     }
 
-    
+    /*
     public AbstractSerialMeter(int i2, int i3, int i4, int i5)
     {
         super();
     }
+    */
+
     
+    
+    public AbstractSerialMeter(DataAccessMeter da)
+    {
+        super(da);
+    }
     
     
 //	this.m_device_index = device_index;
@@ -87,9 +97,10 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
     public void setCommunicationSettings(int baudrate, int databits,
     									 int stopbits, int parity,
-    									 int flow_control)
+    									 int flow_control,
+    									 int event_type)
     {
-    	super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control);
+    	super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
     }
     
     
@@ -103,7 +114,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(DataAccessMeter.getInstance().getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
         
@@ -203,7 +214,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
      * @return boolean - if connection established
      */
     //@Override
-    public boolean open() throws MeterException
+    public boolean open() throws PlugInBaseException
     {
         return super.open();
 	//return false;

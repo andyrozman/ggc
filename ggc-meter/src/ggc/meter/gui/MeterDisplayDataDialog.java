@@ -5,12 +5,13 @@ import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.MeterValuesTable;
 import ggc.meter.data.MeterValuesTableModel;
 import ggc.meter.data.cfg.MeterConfigEntry;
-import ggc.meter.device.DeviceIdentification;
-import ggc.meter.output.AbstractOutputWriter;
-import ggc.meter.output.OutputUtil;
-import ggc.meter.output.OutputWriter;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputUtil;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.output.OutputWriterData;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -41,8 +42,7 @@ import com.atech.i18n.I18nControlAbstract;
 public class MeterDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
 {
 
-    // private JLabel infoIcon = null;
-    // x private JLabel infoDescription = null;
+    private static final long serialVersionUID = 3365114423740706212L;
 
     MeterReaderRunner mrr;
 
@@ -604,7 +604,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     
     
 
-    OutputUtil output_util = new OutputUtil(this);
+    OutputUtil output_util = OutputUtil.getInstance(this);
 
     /*
      * getOutputUtil
@@ -643,14 +643,6 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     int count = 0;
 
-    /*
-     * writeBGData
-     */
-    public void writeBGData(MeterValuesEntry mve)
-    {
-        count++;
-        this.model.addEntry(mve);
-    }
 
     /*
      * writeDeviceIdentification
@@ -816,6 +808,28 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         // MeterReadDialog mrd =
         new MeterDisplayDataDialog(); // new AscensiaContour("COM12", new
                                       // ConsoleOutputWriter()));
+    }
+
+
+    public void writeData(OutputWriterData data)
+    {
+        count++;
+        this.model.addEntry((MeterValuesEntry)data);
+    }
+
+    
+
+    public void writeLog(int entry_type, String message)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void writeLog(int entry_type, String message, Exception ex)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 

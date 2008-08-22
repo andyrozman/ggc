@@ -3,13 +3,15 @@ package ggc.meter.device.ascensia;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterException;
-import ggc.meter.output.AbstractOutputWriter;
-import ggc.meter.output.OutputUtil;
-import ggc.meter.output.OutputWriter;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputUtil;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
@@ -62,19 +64,20 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public AscensiaMeter(String portName, OutputWriter writer)
     {
     	
-		super(/*portName, */ 
-		      9600,
+		super(DataAccessMeter.getInstance()); /*portName, */ 
+/*		      9600,
 			  //19200,
 		      SerialPort.DATABITS_8, 
 		      SerialPort.STOPBITS_1, 
 		      SerialPort.PARITY_NONE);
-	
+*/	
 		this.setCommunicationSettings( 
 			      9600,
 			      SerialPort.DATABITS_8, 
 			      SerialPort.STOPBITS_1, 
 			      SerialPort.PARITY_NONE,
-			      SerialPort.FLOWCONTROL_NONE);
+			      SerialPort.FLOWCONTROL_NONE,
+			      SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT);
 				
 		this.setSerialPort(portName);
 		
@@ -144,7 +147,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    public boolean open() throws MeterException
+    public boolean open() throws PlugInBaseException
     {
     	return super.open();
     }
@@ -525,7 +528,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
 
     	GregorianCalendar gc_meter = new GregorianCalendar();
-    	gc_meter.setTime(m_da.getDateTimeAsDateObject(Long.parseLong(dt)));
+    	gc_meter.setTimeInMillis(Long.parseLong(dt));
     
     	GregorianCalendar gc_curr = new GregorianCalendar();
     	gc_curr.setTimeInMillis(System.currentTimeMillis());
@@ -608,7 +611,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	    	    //dv.setBG(DailyValuesRow.BG_MMOLL, value);
 	    	}
 	    	
-	    	this.output_writer.writeBGData(mve);
+	    	this.output_writer.writeData(mve);
 	    	
     	}
     	catch(Exception ex)

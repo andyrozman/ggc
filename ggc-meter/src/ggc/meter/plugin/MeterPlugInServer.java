@@ -4,10 +4,12 @@ import ggc.meter.gui.MeterInstructionsDialog;
 import ggc.meter.gui.config.SimpleConfigurationDialog;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.list.BaseListDialog;
-import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Container;
+
+import javax.swing.JFrame;
 
 import com.atech.db.DbDataReaderAbstract;
 import com.atech.plugin.PlugInServer;
@@ -18,17 +20,21 @@ public class MeterPlugInServer extends PlugInServer
     /**
      * Version of Meter Tool
      */
-    private String meter_tool_version = "0.3.3";
+    private String meter_tool_version = "0.3.4";
     
     public static final int COMMAND_READ_METER_DATA = 0;
     public static final int COMMAND_METERS_LIST = 1;
     public static final int COMMAND_CONFIGURATION = 2;
+    public static final int COMMAND_ABOUT = 3;
     
+    /*
     private String commands[] = { 
             "MN_METERS_READ_DESC",
             "MN_METERS_LIST_DESC",  
-            "MN_METERS_CONFIG_DESC"
+            "MN_METERS_CONFIG_DESC",
+            "MN_METERS_ABOUT_DESC"
             };
+    */
     
     
     
@@ -65,11 +71,18 @@ public class MeterPlugInServer extends PlugInServer
 
             case MeterPlugInServer.COMMAND_METERS_LIST:
             {
-                //this.featureNotImplemented(commands[MeterPlugInServer.COMMAND_METERS_LIST]);
-                new BaseListDialog(DataAccessMeter.getInstance());
+                new BaseListDialog((JFrame)parent, DataAccessMeter.getInstance());
                 return;
             }
 
+            
+            case MeterPlugInServer.COMMAND_ABOUT:
+            {
+                new AboutBaseDialog((JFrame)parent, DataAccessMeter.getInstance());
+                return;
+            }
+            
+            
             default:
             case MeterPlugInServer.COMMAND_CONFIGURATION:
             {

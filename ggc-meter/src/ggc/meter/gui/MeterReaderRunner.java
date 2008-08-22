@@ -9,12 +9,13 @@ package ggc.meter.gui;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.cfg.MeterConfigEntry;
-import ggc.meter.device.DeviceIdentification;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
-import ggc.meter.output.AbstractOutputWriter;
-import ggc.meter.output.OutputUtil;
-import ggc.meter.output.OutputWriter;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputUtil;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.output.OutputWriterData;
 
 import java.lang.reflect.Constructor;
 
@@ -51,7 +52,6 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
     public OutputUtil getOutputUtil()
     {
         return this.dialog.output_util;
-        //return null;
     }
 
 
@@ -89,26 +89,6 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
     
     int count = 0;
     
-    /* 
-     * writeBGData
-     */
-    public void writeBGData(MeterValuesEntry mve)
-    {
-        if (!this.special_status)
-        {
-            count++;
-            
-            float f = ((count  * 1.0f)/this.dialog.output_util.getMaxMemoryRecords()) * 100.0f;
-            
-            //int i = (int)((count/500) * 100);
-            //System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
-            
-            dialog.progress.setValue((int)f);
-        }
-        
-        this.dialog.writeBGData(mve);
-        
-    }
 
    
     
@@ -293,6 +273,36 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
             
         }  // while
 
+    }
+
+
+    public void writeData(OutputWriterData data)
+    {
+        if (!this.special_status)
+        {
+            count++;
+            
+            float f = ((count  * 1.0f)/this.dialog.output_util.getMaxMemoryRecords()) * 100.0f;
+            
+            //int i = (int)((count/500) * 100);
+            //System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
+            
+            dialog.progress.setValue((int)f);
+        }
+        
+        this.dialog.writeData(data);
+    }
+
+
+    public void writeLog(int entry_type, String message)
+    {
+        this.dialog.writeLog(entry_type, message);
+    }
+
+
+    public void writeLog(int entry_type, String message, Exception ex)
+    {
+        this.dialog.writeLog(entry_type, message, ex);
     }
     
 

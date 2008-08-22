@@ -1,26 +1,15 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.meter.device;
 
+import ggc.plugin.device.PlugInBaseException;
 
-/**
- * @author stephan
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- */
-public class MeterException extends Exception
+
+public class MeterException extends PlugInBaseException
 {
-	static final long serialVersionUID = 0;
 
-	
+    private static final long serialVersionUID = 5981328555320689970L;
+
     /**
-     * Constructor for ImportException.
+     * Constructor for MeterException.
      */
     public MeterException()
     {
@@ -28,7 +17,7 @@ public class MeterException extends Exception
     }
 
     /**
-     * Constructor for ImportException.
+     * Constructor for MeterException.
      * @param message
      */
     public MeterException(String message)
@@ -37,7 +26,7 @@ public class MeterException extends Exception
     }
 
     /**
-     * Constructor for ImportException.
+     * Constructor for MeterException.
      * @param message
      * @param cause
      */
@@ -47,7 +36,7 @@ public class MeterException extends Exception
     }
 
     /**
-     * Constructor for ImportException.
+     * Constructor for MeterException.
      * @param cause
      */
     public MeterException(Throwable cause)

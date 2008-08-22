@@ -2,10 +2,10 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.device.DeviceIdentification;
-import ggc.meter.output.OutputUtil;
-import ggc.meter.output.OutputWriter;
-import ggc.meter.protocol.ConnectionProtocols;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.OutputUtil;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.ConnectionProtocols;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -221,7 +221,8 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
 
         //System.out.println(mve);
         
-        this.output_writer.writeBGData(mve);
+        this.output_writer.writeData(mve);
+        //.writeBGData(mve);
         
         return mve;
         
