@@ -32,6 +32,8 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public abstract class AbstractSerialMeter extends SerialProtocol implements MeterInterface, SelectableInterface
 {
 
+    
+    
     protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
 
@@ -217,8 +219,8 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     public boolean open() throws PlugInBaseException
     {
         return super.open();
-	//return false;
-        //return true;
+        
+            
     }
 
 

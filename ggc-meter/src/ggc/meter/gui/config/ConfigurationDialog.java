@@ -56,6 +56,7 @@ import com.atech.help.HelpCapable;
 public class ConfigurationDialog extends JDialog implements ListSelectionListener, ActionListener, HelpCapable
 {
 
+    private static final long serialVersionUID = -293909330225800995L;
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccessMeter m_da; // = DataAccessMeter.getInstance();
 

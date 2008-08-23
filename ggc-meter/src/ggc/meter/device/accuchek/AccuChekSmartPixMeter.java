@@ -12,10 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.dom4j.io.SAXReader;
 
 import com.atech.utils.ATechDate;
 
@@ -91,7 +89,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     {
         try
         {
-            /*Document doc =*/ parse(file);
+            /*Document doc =*/ openXmlFile(file);
             
             getPixDeviceInfo();
             System.out.println();
@@ -117,8 +115,8 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     
     
     
-    
-    private Document parse(File file) throws DocumentException {
+/*    
+    private Document openXmlFile(File file) throws DocumentException {
         SAXReader reader = new SAXReader();
         
         
@@ -126,7 +124,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
         document = reader.read(file);
         return document;
     }
-    
+*/    
 
     
     public void getPixDeviceInfo()
@@ -229,24 +227,6 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     }
     
     
-    public Node getNode(String tag_path)
-    {
-        return document.selectSingleNode(tag_path);
-    }
-    
-    public Element getElement(String tag_path)
-    {
-        return (Element)getNode(tag_path);
-    }
-
-    
-    
-    @SuppressWarnings("unchecked")
-    public List<Node> getNodes(String tag_path)
-    {
-        List<Node> nodes = document.selectNodes(tag_path);
-        return nodes;
-    }
     
     private long getDateTime(String date, String time)
     {

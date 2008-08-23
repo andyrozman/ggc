@@ -201,6 +201,7 @@ public class MeterValuesTable extends JTable //implements TableModelListener
 
     class StatusCellRenderer extends JLabel implements TableCellRenderer
     {
+        private static final long serialVersionUID = -3848642009093946959L;
         protected Border m_noFocusBorder;
 
         public StatusCellRenderer()

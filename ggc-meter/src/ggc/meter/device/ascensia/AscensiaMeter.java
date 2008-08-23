@@ -130,7 +130,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         this.text_def[1] = (new Character((char)3)).toString(); // ETX - Start of Text
         this.text_def[2] = (new Character((char)13)).toString(); // EOL - Start of Text
         
-        
+        /*
         try
         {
             this.serialPort.addEventListener(this);
@@ -138,7 +138,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         catch(Exception ex)
         {
             System.out.println(ex);
-        }
+        }*/
 		
 		
     }
@@ -147,11 +147,11 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    public boolean open() throws PlugInBaseException
+/*    public boolean open() throws PlugInBaseException
     {
     	return super.open();
     }
-
+*/
 
     /**
      * Will be called, when the import is ended and freeing resources.

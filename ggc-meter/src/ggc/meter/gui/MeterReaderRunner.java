@@ -1,13 +1,5 @@
-/*
- * Created on 12.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.meter.gui;
 
-import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
