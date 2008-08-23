@@ -51,8 +51,8 @@ import com.atech.graphics.components.about.LicenceInfo;
 public class AboutBaseDialog extends AboutDialog 
 {
 
-	static final long serialVersionUID = 0L;
-	DataAccessPlugInBase m_da;
+    private static final long serialVersionUID = 586495485605943204L;
+    DataAccessPlugInBase m_da;
 
 	
     public AboutBaseDialog(JFrame parent, DataAccessPlugInBase da)

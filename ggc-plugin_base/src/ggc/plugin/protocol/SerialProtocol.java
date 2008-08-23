@@ -16,7 +16,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
+import java.util.TooManyListenersException;
 import java.util.Vector;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -25,11 +29,14 @@ import com.atech.i18n.I18nControlAbstract;
 public abstract class SerialProtocol implements SerialPortEventListener //implements MeterInterface, SerialPortEventListener //, Runnable
 {
 
+    private static Log log = LogFactory.getLog("ProtocolLog");
+
+    
     protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
     protected DataAccessPlugInBase m_da = null; //DataAccessMeter.getInstance();
 
 
-    private boolean isPortOpen = false;
+    protected boolean isPortOpen = false;
     public boolean dataFromMeter = false;
     public SerialPort serialPort = null;
     protected CommPortIdentifier portIdentifier = null;
@@ -56,7 +63,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     int stopbits;
     int parity;
     int flow_control;
-    int event_type;
+    protected int event_type;
     //serialPort.getFlowControlMode();
 
 
@@ -116,8 +123,10 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
      * @throws MeterException 
      * @see data.imports.DataImport#open()
      */
-    public boolean open() throws PlugInBaseException
-    {
+    
+    // open was moved to abstract
+    //public boolean open() throws PlugInBaseException
+/*    {
         if (isPortOpen)
             return isPortOpen;
 
@@ -157,49 +166,49 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
             else
                 serialPort.notifyOnDataAvailable(false);
 
-            try 
-            {
+            
+            if (this.event_type!=SerialProtocol.SERIAL_EVENT_NONE)
                 serialPort.addEventListener(this);
-                //Thread.sleep(10000);
-            } 
-            catch (Exception exc) 
-            {
-            }
-
+            
+            
             isPortOpen = true;
             System.out.println("open port : " + portIdentifier.getName());
             //serialPort.addEventListener(this);
 
+            serialPort.enableReceiveTimeout(250); //.setTimeoutRx(250);
+            serialPort.setDTR(true);
+            serialPort.setRTS(true);
 
             
 
         } 
+        catch (UnsupportedCommOperationException ex)
+        {
+            
+        }
         catch (PortInUseException exc) 
         {
         	System.out.println("SerialProtocol: open():Exception - in use");
             //throw new ImportException(exc);
         } 
+        catch (TooManyListenersException exc) 
+        {
+            System.out.println("SerialProtocol: open():Exception - too many list");
+            //throw new ImportException(exc);
+        }  
         catch (IOException exc) 
         {
         	System.out.println("SerialProtocol: open():Exception - io");
             //throw new ImportException(exc);
         } 
-/*        catch (TooManyListenersException exc) 
+        
+        catch(NoSuchPortException ex)
         {
-        	System.out.println("SerialProtocol: open():Exception - too many list");
-            //throw new ImportException(exc);
-        } */ 
+            
+        }
 
         
-        try 
-        {
         	
-        	
-        	serialPort.enableReceiveTimeout(250); //.setTimeoutRx(250);
-        	//serialPort.
-            //m_serialPortLocal.setTimeoutTx(250);
-        	serialPort.setDTR(true);
-        	serialPort.setRTS(true);
         	
         	
         	//serialPort.getBaudBase(9600);
@@ -225,20 +234,150 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
              ss = serialPort.getReceiveThreshold();
             System.out.println("receive treshold:" + ss);
   */          
-        } 
-        catch (Exception e) 
-        {
-        	//UnsupportedCommOperationException 
-	    System.out.println("SerialProtocol: open():Exception - unsported");
-
-        }
-
+/*
         //if (isPortOpen)
         //    fireImportChanged(new ImportEvent(this, ImportEvent.PORT_OPENED, portIdentifier));
 
         return isPortOpen;
     }
+*/
+    
+    
+    
+    public boolean open() throws PlugInBaseException
+    {
+        if (isPortOpen)
+            return isPortOpen;
+        
+        //if (portIdentifier == null) 
+        //    throw new ImportException(m_ic.getMessage("NO_COM_PORT_SPECIFIED"));
+        
+        try 
+        {
+            //this.output_writer.writeLog(LogEntryType.INFO, "AbstractSerialMeter::open()");
+            System.out.println("SerialProtocol: open() - open");
+            serialPort = (SerialPort)portIdentifier.open("ggc", (int)timeOut);
+        
+            
+            //this.output_writer.writeLog(LogEntryType.INFO, "AbstractSerialMeter::open() - setting parameters");
+            
+            
+            System.out.println("SerialProtocol: open() - parameters");
+            setConnectionParameters();
+        
+            portOutputStream = serialPort.getOutputStream();
+            portInputStream = serialPort.getInputStream();
+            
+            // break interrupt event
+            if ((this.event_type==SerialProtocol.SERIAL_EVENT_ALL) || 
+                (this.event_type==SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT))
+            {
+                serialPort.notifyOnBreakInterrupt(true);
+            }
+            else
+                serialPort.notifyOnBreakInterrupt(false);
+                
+            // data available
+            if ((this.event_type==SerialProtocol.SERIAL_EVENT_ALL) || 
+                (this.event_type==SerialProtocol.SERIAL_EVENT_DATA_AVAILABLE))
+            {
+                serialPort.notifyOnDataAvailable(true);
+            }
+            else
+                serialPort.notifyOnDataAvailable(false);
+        
+            
+            if (this.event_type!=SerialProtocol.SERIAL_EVENT_NONE)
+                serialPort.addEventListener(this);
+            
+            
+            isPortOpen = true;
+            //System.out.println("open port : " + portIdentifier.getName());
+            //serialPort.addEventListener(this);
+        
+            serialPort.enableReceiveTimeout(250); //.setTimeoutRx(250);
+            serialPort.setDTR(true);
+            serialPort.setRTS(true);
+        
+            
+        
+        } 
+        catch (UnsupportedCommOperationException ex)
+        {
+            System.out.println("SerialProtocol::open(). Unsupported comm operation: " + ex);
+            log.error("Unsupported comm operation: " + ex.getMessage(), ex);
+            throw new PlugInBaseException(ex);
+        }
+        catch (PortInUseException ex) 
+        {
+            System.out.println("SerialProtocol::open(). Port in use: " + ex);
+            log.error("Port in use: " + ex.getMessage(), ex);
+            throw new PlugInBaseException(ex);
+        } 
+        catch (TooManyListenersException ex) 
+        {
+            System.out.println("SerialProtocol::open(). Too many listeners: " + ex);
+            log.error("Too many listeners: " + ex.getMessage(), ex);
+            throw new PlugInBaseException(ex);
+        }  
+        catch (IOException ex) 
+        {
+            System.out.println("SerialProtocol::open(). IO exception: " + ex);
+            log.error("IO Exception: " + ex.getMessage(), ex);
+            throw new PlugInBaseException(ex);
+        } 
+        catch(Exception ex)
+        {
+            if (ex instanceof NoSuchPortException)
+            {
+                System.out.println("SerialProtocol::open(). No such port: " + ex);
+                log.error("No such port: " + ex.getMessage(), ex);
 
+                printAllAvailableSerialPorts();
+
+                throw new PlugInBaseException(ex);
+            }
+            else
+            {
+                System.out.println("SerialProtocol::open(). Exception: " + ex);
+                log.error("Exception: " + ex.getMessage(), ex);
+                throw new PlugInBaseException(ex);
+            }
+        }
+        
+        
+            
+            
+            
+            //serialPort.getBaudBase(9600);
+            //serialPort.getBaudRate(9600);
+            //serialPort.enableReceiveTimeout(30);
+            //serialPort.enableReceiveTimeout(10000);
+            //serialPort.
+            //10000
+            //serialPort.setInputBufferSize(255);
+            //serialPort.setOutputBufferSize(255);
+            
+            
+            //int ss = serialPort.getInputBufferSize();
+            //System.out.println("input buffer:" + ss);
+        /*
+                    int ss = serialPort.getReceiveThreshold();
+                    System.out.println("receive treshold:" + ss);
+                    
+                    serialPort.setOutputBufferSize(1000000);
+                     serialPort.setInputBufferSize(1000000);
+                     serialPort.enableReceiveThreshold(10000);
+        
+                     ss = serialPort.getReceiveThreshold();
+                    System.out.println("receive treshold:" + ss);
+          */          
+        
+        //if (isPortOpen)
+        //    fireImportChanged(new ImportEvent(this, ImportEvent.PORT_OPENED, portIdentifier));
+        
+        return isPortOpen;
+    }
     
     
     
@@ -246,8 +385,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     
     
-    
-    private void setConnectionParameters()
+    protected void setConnectionParameters()
     {
 
         if (serialPort == null)
@@ -445,7 +583,18 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 
 
 
-
+    public void printAllAvailableSerialPorts()
+    {
+        Vector<CommPortIdentifier> lst = this.getAllAvailablePorts();
+        
+        System.out.println("Displaying all available ports");
+        System.out.println("-------------------------------");
+        for(int i=0;i<lst.size(); i++)
+        {
+            System.out.println(lst.get(i));
+        }
+        
+    }
 
 
 
@@ -453,10 +602,11 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 
     
     @SuppressWarnings("unchecked")
-    public static Vector<String> getAvailableSerialPorts()
+    public static Vector<CommPortIdentifier> getAvailableSerialPorts()
     {
-        Vector<String> retVal = new Vector<String>();
-
+        //Vector<String> retVal = new Vector<String>();
+        Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
+        
         try
         {
             Enumeration enume = CommPortIdentifier.getPortIdentifiers();
@@ -464,7 +614,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
             {
                 CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
                 if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
-                    retVal.add(portID.getName());
+                    retVal.add(portID);
             }
         }
         catch(Exception ex)
@@ -477,21 +627,24 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 
 
     @SuppressWarnings("unchecked")
-    public static Vector<String> getAllAvailablePorts()
+    public static Vector<CommPortIdentifier> getAllAvailablePorts()
     {
-        Vector<String> retVal = new Vector<String>();
+//        Vector<String> retVal = new Vector<String>();
+        Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
 
         try
         {
             //Vector retVal = new Vector();
 //            int counter = 0;
             
+            //CommPortIdentifier.
+            
             Enumeration enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 
             {
                 CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
                 //if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
-                    retVal.add(portID.getName());
+                    retVal.add(portID);
             }
         }
         catch(Exception ex)

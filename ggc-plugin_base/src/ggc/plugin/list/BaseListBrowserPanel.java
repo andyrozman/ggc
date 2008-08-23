@@ -48,8 +48,7 @@ import com.atech.i18n.I18nControlAbstract;
 public class BaseListBrowserPanel extends BaseListAbstractPanel 
 {
 	
-	static final long serialVersionUID = 0L;
-	
+    private static final long serialVersionUID = -3840758557586889169L;
     I18nControlAbstract ic = null;
     DataAccessPlugInBase m_da = null;
     JEditorPane editor;

@@ -50,9 +50,8 @@ import com.atech.i18n.I18nControlAbstract;
 
 public class BaseListDialog extends JDialog implements TreeSelectionListener, ActionListener
 {
-	static final long serialVersionUID = 0L;
 
-
+    private static final long serialVersionUID = -331463474036415168L;
     private JPanel mainPane;
     private JTree tree;
 

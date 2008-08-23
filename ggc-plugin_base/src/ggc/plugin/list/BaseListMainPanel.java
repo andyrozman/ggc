@@ -1,8 +1,5 @@
 package ggc.plugin.list;
 
-//package ggc.gui.nutrition.panels;
-
-//import ggc.gui.nutrition.NutritionTreeDialog;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Font;
@@ -14,15 +11,10 @@ import javax.swing.SwingConstants;
 import com.atech.i18n.I18nControlAbstract;
 
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
-
 
 public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
 {
-	static final long serialVersionUID = 0L;
-
-
+    private static final long serialVersionUID = -740039184514067065L;
     I18nControlAbstract m_ic = null;
     DataAccessPlugInBase m_da = null;
 
