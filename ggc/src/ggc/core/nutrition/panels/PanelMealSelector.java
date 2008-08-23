@@ -35,8 +35,6 @@ import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.layout.ZeroLayout;
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
 
 public class PanelMealSelector extends /* GGCTreePanel */JPanel implements ActionListener
 {
@@ -619,6 +617,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+    // TODO: fix GI/GL handling 
+    @SuppressWarnings("unused")
     private void loadGI_GL(Hashtable<String, MealNutrition> nutres)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
@@ -629,6 +629,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         nutres.put("4005", new MealNutrition(4005, 0.0f, "GL Max"));
     }
 
+    // TODO: fix GI/GL handling 
+    @SuppressWarnings("unused")
     private void checkGI_GL(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
@@ -674,6 +676,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+    // TODO: fix GI/GL handling 
+    @SuppressWarnings("unused")
     private void checkGI_GL_Max(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
@@ -700,6 +704,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+    // TODO: fix GI/GL handling 
+    @SuppressWarnings("unused")
     private void checkGI_GL_Min(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,

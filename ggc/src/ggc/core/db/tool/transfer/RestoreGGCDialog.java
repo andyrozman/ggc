@@ -28,6 +28,7 @@ import com.atech.utils.ATDataAccessAbstract;
 public class RestoreGGCDialog extends RestoreDialog
 {
 
+    private static final long serialVersionUID = 2514267810070964604L;
     JCheckBox cb_daily;
     
     

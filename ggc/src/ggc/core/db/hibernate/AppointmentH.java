@@ -8,6 +8,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class AppointmentH implements Serializable {
 
+    private static final long serialVersionUID = 5137365456725058472L;
+
     /** identifier field */
     private long id;
 

@@ -55,9 +55,8 @@ import ggc.core.util.DataAccess;
 public class AboutGGCDialog extends AboutDialog 
 {
 
-	static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = -5655078691807335660L;
 
-	
     public AboutGGCDialog(JFrame parent)
     {
         super(parent, true, DataAccess.getInstance().getI18nControlInstance());

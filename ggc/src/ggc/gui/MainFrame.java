@@ -40,7 +40,6 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.AppointmentsDialog;
-import ggc.gui.dialogs.BolusHelper;
 import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.DoctorsDialog;
@@ -1076,7 +1075,7 @@ public class MainFrame extends JFrame
             }
             else if ((command.equals("test")))
             {
-                BolusHelper bh = new BolusHelper(MainFrame.this);
+                //BolusHelper bh = new BolusHelper(MainFrame.this);
                 //featureNotImplemented(command, "0.6");
             }
             /*

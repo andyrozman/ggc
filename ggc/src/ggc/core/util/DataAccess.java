@@ -72,7 +72,6 @@ import java.util.Properties;
 import javax.swing.ImageIcon;
 
 import pygmy.core.Server;
-import sun.rmi.transport.Endpoint;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;

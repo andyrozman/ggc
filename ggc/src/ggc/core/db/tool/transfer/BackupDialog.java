@@ -13,6 +13,9 @@ import com.atech.utils.ATDataAccessAbstract;
 public class BackupDialog extends BackupRestoreDialog 
 {
 
+    private static final long serialVersionUID = -9066907986768713200L;
+
+
     public BackupDialog(JDialog parent, ATDataAccessAbstract da /*, BackupRestoreCollection br_coll*/)
     {
     	super(parent, da, da.getBackupRestoreCollection());

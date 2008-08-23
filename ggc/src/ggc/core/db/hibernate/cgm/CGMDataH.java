@@ -8,6 +8,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class CGMDataH implements Serializable {
 
+    private static final long serialVersionUID = 1926001888869758766L;
+
     /** identifier field */
     private long id;
 

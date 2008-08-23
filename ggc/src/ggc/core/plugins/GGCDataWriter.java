@@ -31,6 +31,7 @@ public class GGCDataWriter extends DbDataWriterAbstract
     protected Hashtable<String, ArrayList<DayValueH>> meter_data;
     protected GGCDb db = null;
     
+    @SuppressWarnings("unchecked")
     public GGCDataWriter(int type, Object data, StatusReporterInterface stat_rep_int)
     {
         super(type, stat_rep_int);

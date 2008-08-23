@@ -30,7 +30,6 @@ package ggc.gui.dialogs;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
 import ggc.core.util.I18nControl;
 
 import java.awt.Component;
@@ -126,7 +125,7 @@ public class BolusHelper extends JDialog implements ActionListener, KeyListener,
 
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
-    private GGCProperties props = m_da.getSettings();
+    //x private GGCProperties props = m_da.getSettings();
 
     private boolean m_actionDone = false;
 
@@ -166,13 +165,13 @@ public class BolusHelper extends JDialog implements ActionListener, KeyListener,
     JButton help_button = null;
     JPanel main_panel = null;
 
-    private Container m_parent = null;
+    //private Container m_parent = null;
 
     
     public BolusHelper(JDialog dialog, float bg, float ch, long time)
     {
         super(dialog, "", true);
-        m_parent = dialog;
+        //m_parent = dialog;
         
         this.curr_bg = bg;
         this.curr_ch = ch;
@@ -265,6 +264,8 @@ public class BolusHelper extends JDialog implements ActionListener, KeyListener,
 
         int width = 400;
         int height = 430;
+        
+        m_da.addComponent(this);
         
         this.setResizable(false);
         this.setBounds(0, 0, width, height);

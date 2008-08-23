@@ -136,6 +136,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             return false;
     }
 
+    /*
     private boolean isAnyNutritionRestoreObjectSelected()
     {
         if ((this.isRestoreObjectSelected(ic.getMessage("USER_FOOD_GROUPS"))) ||
@@ -145,7 +146,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             return true;
         else
             return false;
-    }
+    }*/
     
     
     private void zipAndRemoveBackupFiles()

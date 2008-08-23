@@ -8,6 +8,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class PumpDataExtendedH implements Serializable {
 
+    private static final long serialVersionUID = -5755359170220045869L;
+
     /** identifier field */
     private long id;
 

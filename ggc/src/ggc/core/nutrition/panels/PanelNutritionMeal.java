@@ -388,6 +388,8 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
+    // TODO: fix GI/GL handling 
+    @SuppressWarnings("unused")
     private void loadGI_GL(Hashtable<String, MealNutrition> nutres)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
@@ -398,6 +400,8 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
         nutres.put("4005", new MealNutrition(4005, 0.0f, "GL Max"));
     }
 
+    // TODO: fix GI/GL handling 
+    @SuppressWarnings("unused")
     private void checkGI_GL(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
@@ -443,6 +447,8 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
+    // TODO: fix GI/GL handling 
+    @SuppressWarnings("unused")
     private void checkGI_GL_Max(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
@@ -469,6 +475,8 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
+    // TODO: fix GI/GL handling 
+    @SuppressWarnings("unused")
     private void checkGI_GL_Min(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
