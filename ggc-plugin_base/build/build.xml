@@ -5,14 +5,15 @@
     </description>
 
     <!-- Environment properties read from a file ...-->
-    <property file="../../ggc-plugin_base/GGCPlugInBaseBuild.properties"/>
-    <property file="./GGCMeterToolVersion.properties"/>
-	
+    <property file="./GGCPlugInBaseBuild.properties"/>
+    <property file="./GGCPlugInBaseVersion.properties"/>
+    
+
     <!-- These should *not* be modified on the command line! -->
     <property name="build.dir" value="${outdir.dir}/classes"/>
     <property name="deploy.dir" value="${outdir.dir}/deploy"/>
     
-	<property name="jar_file_name" value="ggc-meter_tool" />
+	<property name="jar_file_name" value="ggc-plugin_base" />
 	<property name="jar_file_version" value="${ggc-plugin-base.version}" />
 	
 	
@@ -42,14 +43,14 @@
 
 
     <target name="copy" description="Copy all needed files">
-    	<mkdir dir="${binary.dir}" />
-        <copy todir="${binary.dir}/" overwrite="true">
+    	<mkdir dir="${build.dir}" />
+        <copy todir="${build.dir}/" overwrite="true">
             <fileset dir="${source.dir}" casesensitive="no">
                 <include name="*.properties"/>
             </fileset>
         </copy>
-        <mkdir dir="${binary.dir}/icons" />
-        <copy todir="${binary.dir}/icons" overwrite="true">
+        <mkdir dir="../bin/icons" />
+        <copy todir="../bin/icons" overwrite="true">
             <fileset dir="../src/icons" casesensitive="no">
                 <include name="**/*.gif"/>
                 <include name="**/*.jpg"/>
@@ -60,7 +61,7 @@
 
 
 
-    <target name="compile"  depends="copy" description="Build GGC">
+    <target name="compile"  description="Build GGC">
         <mkdir dir="${deploy.dir}" />
         <javac srcdir="${source.dir}"
             destdir="${binary.dir}"
@@ -110,3 +111,4 @@ jar_file_version
 
 
 </project>
+

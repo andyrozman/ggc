@@ -29,6 +29,7 @@
         <echo message="         available parts are: core, lang, little, main"/>
         <echo message="     jars_full = all jars"/>
         <echo message="     full = clean, build_ggc, copy, jars_full"/>
+        <echo message="     deploy = full, copy files to main directory"/>
         <echo message="     dist = full, and create distribution zip file (contains needed libs, and data files)" />
         <echo message="     style (_devel, _deploy) = checkstyle against our rules" />
         <echo message=""/>
@@ -177,6 +178,14 @@
     <target name="full" depends="clean, copy, jars_full">    
     </target>
 
+    <target name="deploy" depends="full">
+    	<copy file="${binary.dir}/ggc-core-${ggc-core.version}.jar" todir="../../build/deploy_files/"/>
+    	<copy file="${binary.dir}/ggc-main-${ggc-main.version}.jar" todir="../../build/deploy_files/"/>
+    	<copy file="${binary.dir}/ggc-lang-${ggc-lang.version}.jar" todir="../../build/deploy_files/"/>
+    	<copy file="${binary.dir}/ggc-little-${ggc-little.version}.jar" todir="../../build/deploy_files/"/>
+    </target>
+	
+	
     <target name="dist">    
         <echo message="This option is not available yet." />
     </target>

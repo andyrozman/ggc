@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<project name="GNU Gluco Control" default="build" basedir=".">
+    <description>
+        Main Build file for GGC
+    </description>
+
+    <!-- Environment properties read from a file ...-->
+    <property file="./GGCBuild.properties"/>
+    <property file="./GGCVersion.properties"/>
+    
+
+    <!-- These should *not* be modified on the command line! -->
+    <property name="build.dir" value="${outdir.dir}/classes"/>
+    <property name="deploy.dir" value="${outdir.dir}/deploy"/>
+    
+    
+    <!-- Build GGC  -->
+    
+    <target name="build">
+        <echo message="   ************************************************* "/>
+        <echo message="   ****                GGC Full Build           **** "/>
+        <echo message="   ************************************************* "/>
+        <echo message=""/>
+        <echo message="     all = whole GGC"/>
+        <echo message="     all_noclean = whole GGC (no clean)"/>
+        <echo message="     ggc = GNU Gluco Control application build (full)"/>
+        <echo message="     plugins = create all plugins"/>
+        <echo message="     plugin_base = create GGC Base Plugin"/>
+        <echo message="     plugin_meter = create GGC Meter Tool (needs Base)"/>
+        <echo message="     plugin_pump = create GGC Pump Tool"/>
+        <echo message="     plugin_cgms = create GGC CGMS Plugin"/>
+        <echo message="     clean = clean directory"/>
+        <echo message=""/>
+    </target>
+
+
+    <!-- Public targets -->
+
+    <target name="clean" description="clean">
+    	<delete>
+			<fileset dir="./deploy_files">
+		    	<include name="**"/>
+			</fileset>
+		</delete>
+    </target>
+	
+    <target name="all" depends="clean, all_noclean" description="whole GGC">
+    </target>
+
+    <target name="all_noclean" depends="ggc, plugins" description="whole GGC">
+    </target>
+	
+	
+    <target name="ggc" description="GNU Gluco Control application build (full)">
+    	<echo message=""/>
+    	<echo message="  Start GGC build"/>
+      	<echo message=""/>
+    	<subant target="deploy">
+    		<fileset dir="../ggc" includes="*/build.xml" />
+    	</subant>
+    </target>
+
+    <target name="plugins" depends="plugin_base, plugin_meter, plugin_pump, plugin_cgms" description="create all plugins">
+    </target>
+
+    <target name="plugin_base" description="create PlugIn Base">
+    	<echo message=""/>
+    	<echo message="  Start GGC Base Plugin build"/>
+      	<echo message=""/>
+    	<subant target="deploy">
+    		<fileset dir="../ggc-plugin_base" includes="*/build.xml" />
+    	</subant>
+    </target>
+	
+    <target name="plugin_meter" depends="plugin_base" description="create GGC Meter Tool (needs Base)">
+    	<echo message=""/>
+    	<echo message="  Start GGC Base Plugin build"/>
+      	<echo message=""/>
+    </target>
+
+    <target name="plugin_pump" description="create GGC Pump Tool">
+    	<echo message=""/>
+    	<echo message="  Start GGC Base Plugin build"/>
+      	<echo message=""/>
+    </target>
+    	
+    <target name="plugin_cgms" description="create GGC CGMS Plugin">
+    	<echo message=""/>
+    	<echo message="  Start GGC Base Plugin build"/>
+      	<echo message=""/>
+    </target>
+
+
+</project>
+

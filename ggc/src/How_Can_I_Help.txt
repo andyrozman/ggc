@@ -172,7 +172,7 @@ If you are developer and would like to help, please follow this instructions to 
     Install subclipse: (you need to do this step before you go to 3.
     
     Go to Help -> Software Updates. Tab Available software, click on add site.
-    Add following site url: http://subclipse.tigris.org/update_1.0.x
+    Add following site url: http://subclipse.tigris.org/update_1.4.x
     Wait few seconds that entry is added and file list downloaded. Select Subclipse plugin.
     
 3.) Create new workspace. Add Libraries. Libraries are stored under ggc-support/eclipse. You need to
@@ -182,11 +182,11 @@ If you are developer and would like to help, please follow this instructions to 
     Open Windows->Preferences. Go to group Java->Code style->Formatter. Use Import option and add xml
     file stored under ggc-support/eclipse.
     
-4.) Import all projects (atech-tools, ggc, ggc-meter, ggc-pump, ggc-cgm)
+4.) Import all projects (atech-tools, ggc, ggc-meter, ggc-pump, ggc-cgm, ggc-plugin_base)
 
     Use File->Import..., select General->Existing project into workspace and find all upper directories
     
-    You should have 5 projects. 
+    You should have 6 projects. 
     
 
 5.) Run GGC
