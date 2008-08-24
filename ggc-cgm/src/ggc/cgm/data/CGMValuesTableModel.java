@@ -41,6 +41,8 @@ public class CGMValuesTableModel extends AbstractTableModel // implements
                                                               // GlucoValueEventListener
 {
 
+    private static final long serialVersionUID = 2881771615052748327L;
+
     private I18nControl m_ic = I18nControl.getInstance();
     // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
 

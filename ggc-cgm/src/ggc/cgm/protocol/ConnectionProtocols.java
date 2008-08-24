@@ -2,6 +2,7 @@ package ggc.cgm.protocol;
 
 public class ConnectionProtocols
 {
+
     
     public static final int PROTOCOL_NONE = 0;
     public static final int PROTOCOL_SERIAL_USBBRIDGE = 1;

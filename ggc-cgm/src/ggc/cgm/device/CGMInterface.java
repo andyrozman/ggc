@@ -2,6 +2,8 @@ package ggc.cgm.device;
 
 import ggc.cgm.manager.company.AbstractCGMCompany;
 
+import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 
 /*
  *  GGC - GNU Gluco Control
@@ -33,7 +35,7 @@ import ggc.cgm.manager.company.AbstractCGMCompany;
  */
 
 
-public interface CGMInterface
+public interface CGMInterface extends SelectableInterface
 {
 
 

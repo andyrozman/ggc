@@ -48,6 +48,7 @@ import javax.swing.JTextArea;
 public class SimpleConfigurationHelp extends JDialog implements ActionListener 
 {
 
+    private static final long serialVersionUID = 4389763114702253791L;
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccessCGM m_da; // = DataAccessMeter.getInstance();
 

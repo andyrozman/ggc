@@ -8,6 +8,9 @@ import ggc.cgm.util.I18nControl;
 
 import java.util.ArrayList;
 
+import com.atech.graphics.dialogs.selector.ColumnSorter;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 
 public class GenericCGM implements CGMInterface 
 {
@@ -780,6 +783,136 @@ public class GenericCGM implements CGMInterface
     public int getConnectionProtocol()
     {
         return 0;
+    }
+
+
+
+
+
+    public int compareTo(SelectableInterface o)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+
+
+
+    public int getColumnCount()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+
+
+
+    public String getColumnName(int num)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+
+    public String getColumnValue(int num)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+
+    public Object getColumnValueObject(int num)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+
+    public int getColumnWidth(int num, int width)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+
+
+
+    public long getItemId()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+
+
+
+    public String getShortDescription()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+
+    public boolean isFound(String text)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+
+
+
+    public boolean isFound(int value)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+
+
+
+    public boolean isFound(int from, int till, int state)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+
+
+
+    public void setColumnSorter(ColumnSorter cs)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+
+
+
+    public void setSearchContext()
+    {
+        // TODO Auto-generated method stub
+        
     }
 
     

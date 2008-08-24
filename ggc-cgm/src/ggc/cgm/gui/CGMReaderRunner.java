@@ -17,6 +17,7 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
 {
 
     
+    
     CGMInterface m_mi = null;
     boolean special_status = false;
 

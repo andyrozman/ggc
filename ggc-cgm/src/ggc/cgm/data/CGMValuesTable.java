@@ -197,6 +197,7 @@ public class CGMValuesTable extends JTable //implements TableModelListener
 
     class StatusCellRenderer extends JLabel implements TableCellRenderer
     {
+        private static final long serialVersionUID = 829555164320310454L;
         protected Border m_noFocusBorder;
 
         public StatusCellRenderer()

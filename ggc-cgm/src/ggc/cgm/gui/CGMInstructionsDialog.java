@@ -178,7 +178,7 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
                     return m_ic.getMessage(ConnectionProtocols.connectionProtocolDescription[this.meter_interface.getConnectionProtocol()]);
                 }
             } 
-
+            
             case CGMInstructionsDialog.METER_INTERFACE_PARAM_STATUS:
             {
                 if (this.meter_interface==null)
