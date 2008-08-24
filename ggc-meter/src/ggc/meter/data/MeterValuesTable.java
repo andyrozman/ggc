@@ -26,16 +26,11 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 
-/**
- * @author stephan
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- */
 public class MeterValuesTable extends JTable //implements TableModelListener
 {
 
-//x    private I18nControl m_ic = I18nControl.getInstance();    
+    private static final long serialVersionUID = -599856528799069838L;
+    //x    private I18nControl m_ic = I18nControl.getInstance();    
 	MeterValuesTableModel model = null;
 	DataAccessMeter m_da = DataAccessMeter.getInstance();
 
@@ -170,6 +165,7 @@ public class MeterValuesTable extends JTable //implements TableModelListener
     
     class CheckCellRenderer extends JCheckBox implements TableCellRenderer
     {
+        private static final long serialVersionUID = 8295003650375627769L;
         protected Border m_noFocusBorder;
 
         public CheckCellRenderer()

@@ -236,6 +236,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
+    @SuppressWarnings("unused")
     private ArrayList<PumpValuesEntry> getBoluses()
     {
         return getSpecificElements("BOLUS", AccuChekSmartPixPump.TAG_BOLUS);
@@ -249,6 +250,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     
     
     
+    @SuppressWarnings("unused")
     private ArrayList<PumpValuesEntry> getEvents()
     {
         return getSpecificElements("EVENT", AccuChekSmartPixPump.TAG_EVENT);

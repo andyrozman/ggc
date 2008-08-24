@@ -373,9 +373,9 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.timeZones.put("(GMT-04:00) Caracas, La Paz", "America/Caracas");
         this.timeZones.put("(GMT-04:00) Santiago", "America/Santiago");
         this.timeZones.put("(GMT-05:00) Bogota, Lima, Quito", "America/Bogota");
-       this.timeZones.put("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
-       this.timeZones.put("(GMT-05:00) Indiana (East)", "America/Indianapolis");
-       this.timeZones.put("(GMT-06:00) Central America", "America/Costa_Rica");
+        this.timeZones.put("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
+        this.timeZones.put("(GMT-05:00) Indiana (East)", "America/Indianapolis");
+        this.timeZones.put("(GMT-06:00) Central America", "America/Costa_Rica");
        this.timeZones.put("(GMT-06:00) Central Time (US & Canada)", "America/Chicago");
        this.timeZones.put("(GMT-06:00) Guadalajara, Mexico City, Monterrey", "America/Mexico_City");
        this.timeZones.put("(GMT-06:00) Saskatchewan", "America/Winnipeg");

@@ -48,7 +48,6 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                   SerialPort.FLOWCONTROL_NONE, 
                   SerialProtocol.SERIAL_EVENT_NONE);
                 
-        this.setSerialPort(portName);
         
         
         //String portName, int baudrate, int databits, int stopbits, int parity
@@ -63,7 +62,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     
         try
         {
-            this.setPort(portName);
+            this.setSerialPort(portName);
+//            this.setPort(portName);
     
             if (!this.open())
             {
@@ -72,7 +72,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         }
         catch(Exception ex)
         {
-            System.out.println("AscensiaMeter -> Error adding listener: " + ex);
+            System.out.println("OneTouchMeter -> Error adding listener: " + ex);
             ex.printStackTrace();
         }
     }

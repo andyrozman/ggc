@@ -24,6 +24,7 @@ public abstract class EZManagerDb extends AbstractPump
     
     //private OutputWriter m_writer;
     
+    @SuppressWarnings("unused")
     private String m_fileName;
     
     

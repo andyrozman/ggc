@@ -57,6 +57,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
@@ -386,26 +387,31 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     public void mouseReleased(MouseEvent me)
     {
 
-        // System.out.println("Mouse released");
+        //System.out.println("Mouse released");
+        
+        //System.out.println("MouseEvent trigger: " + me.isPopupTrigger());
+        //System.out.println("MouseEvent Right Mouse: " + SwingUtilities.isRightMouseButton(me));
+        
 
-        if (me.isPopupTrigger()) // right click, show popup menu
+        if ((me.isPopupTrigger()) || // right click, show popup menu
+            (SwingUtilities.isRightMouseButton(me)))
         {
+            //System.out.println("In pop trigger");
 
             mouse_selected_object = tree.getClosestPathForLocation(me.getX(), me.getY()).getLastPathComponent();
             tree.setSelectionPath(tree.getClosestPathForLocation(me.getX(), me.getY()));
 
-            // System.out.println("MouseSelected: " + mouse_selected_object);
-            // System.out.println(me.getSource());
-            // mouse_selected_object = me.getSource();
+            //System.out.println("MouseSelected: " + mouse_selected_object);
+            //System.out.println(me.getSource());
             createMenu();
-            // System.out.println("Mouse: popUp trigger");
+            //System.out.println("Mouse: popUp trigger");
             // pop.add(new MenuItem("Test"));
             pop.show(me.getComponent(), me.getX(), me.getY());
         }
         else
         {
-            // System.out.println("Mouse: popUp NO trigger");
-            // put the image stuff here
+            //System.out.println("Mouse: popUp NO trigger");
+            //put the image stuff here
         }
     }
 

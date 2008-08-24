@@ -43,6 +43,8 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     // private JLabel infoIcon = null;
     // x private JLabel infoDescription = null;
 
+    private static final long serialVersionUID = 5334805788018378266L;
+
     CGMReaderRunner mrr;
 
     private DataAccessCGM m_da = DataAccessCGM.getInstance();

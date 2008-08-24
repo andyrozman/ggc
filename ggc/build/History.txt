@@ -22,6 +22,9 @@
 0.2.2   -> 0.2.13.1 (added keywords)
 0.2.3   -> 0.2.13.1 (added keywords)
 0.2.4   ->  0.2.15  (more translation for de added)
+0.2.5   -> 0.2.19
+0.2.6   -> 0.3
+0.2.7   -> 0.3.3
 
 
 

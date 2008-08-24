@@ -11,8 +11,11 @@ public class MinimedCareLinkData
     private String time;            // 2 
     private String raw_type;        // 33
     private String raw_values;      // 34
+    @SuppressWarnings("unused")
     private String raw_id;          // 35
+    @SuppressWarnings("unused")
     private String raw_upload_id;   // 36
+    @SuppressWarnings("unused")
     private String raw_seq_num;     // 37
     private String raw_device_type; // 38
     

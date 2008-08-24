@@ -29,6 +29,7 @@ import com.atech.graphics.components.StatusReporterInterface;
 public class CGMExportDialog extends JDialog implements ActionListener, StatusReporterInterface
 {
 
+    private static final long serialVersionUID = -507664311820738400L;
     CGMPlugInServer server;
     
     

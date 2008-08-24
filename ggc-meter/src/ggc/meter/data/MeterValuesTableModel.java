@@ -38,10 +38,10 @@ import java.util.Hashtable;
 
 import javax.swing.table.AbstractTableModel;
 
-public class MeterValuesTableModel extends AbstractTableModel // implements
-                                                              // GlucoValueEventListener
+public class MeterValuesTableModel extends AbstractTableModel 
 {
 
+    private static final long serialVersionUID = 7198690314603156531L;
     private I18nControl m_ic = I18nControl.getInstance();
     // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
 

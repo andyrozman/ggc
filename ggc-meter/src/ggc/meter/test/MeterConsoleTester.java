@@ -34,7 +34,6 @@ import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.onetouch.OneTouchUltra;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import gnu.io.CommPortIdentifier;
 
 import java.awt.TextArea;
 import java.util.Vector;
@@ -273,13 +272,13 @@ public class MeterConsoleTester //extends JFrame
     
     public void displaySerialPorts()
     {
-    	Vector<CommPortIdentifier> vct = SerialProtocol.getAllAvailablePorts();
+    	Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
     	
 		System.out.println(" --- List Serial Ports -----");
     	
     	for(int i=0; i<vct.size(); i++)
     	{
-    		System.out.println(vct.get(i).getName());
+    		System.out.println(vct.get(i));
     	}
     }
     

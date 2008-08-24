@@ -114,9 +114,18 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
      * Set the COM-Port from wich will be read.
      * @param String port
      */
-    public void setPort(String port) throws NoSuchPortException
+    public void setPort(String port) throws PlugInBaseException
     {
-        portIdentifier = CommPortIdentifier.getPortIdentifier(port);
+        try
+        {
+            portIdentifier = CommPortIdentifier.getPortIdentifier(port);
+        }
+        catch(NoSuchPortException ex)
+        {
+            System.out.println("SerialProtocol::setPort:: No such port: " + ex);
+            log.error("No such port exception: " + ex.getMessage(), ex);
+            throw new PlugInBaseException(ex);
+        }
     }
 
     /**
@@ -626,6 +635,37 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     }
 
 
+    
+    public static Vector<String> getAllAvailablePortsString()
+    {
+        Vector<String> retVal = new Vector<String>();
+//        Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
+
+        try
+        {
+            //Vector retVal = new Vector();
+//            int counter = 0;
+            
+            //CommPortIdentifier.
+            
+            Enumeration<?> enume = CommPortIdentifier.getPortIdentifiers();
+            while (enume.hasMoreElements()) 
+            {
+                CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
+                //if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
+                    retVal.add(portID.getName());
+            }
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception: getAvailableSerialPorts: " + ex);
+
+        }
+        return retVal;
+
+    }
+    
+    
     @SuppressWarnings("unchecked")
     public static Vector<CommPortIdentifier> getAllAvailablePorts()
     {

@@ -47,6 +47,8 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
     // private JLabel infoIcon = null;
     // x private JLabel infoDescription = null;
 
+    private static final long serialVersionUID = 8849188103070838842L;
+
     PumpReaderRunner mrr;
 
     private DataAccessPump m_da = DataAccessPump.getInstance();

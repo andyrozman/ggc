@@ -5,6 +5,8 @@ public class PumpException extends Exception
 {
 
 	
+    private static final long serialVersionUID = -2859706316077380716L;
+
     /**
      * Constructor for ImportException.
      */

@@ -134,19 +134,11 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     
     String serial_port = null;
     
-    public void setSerialPort(String port)
+    public void setSerialPort(String port) throws PlugInBaseException
     {
     	this.serial_port = port;
     	
-    	try
-    	{
-    		this.setPort(port);
-    	}
-    	catch(NoSuchPortException ex)
-    	{
-    		System.out.println("No Such Port Ex: " + ex);
-    		
-    	}
+    	this.setPort(port);
     	
     }
     

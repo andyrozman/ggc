@@ -7,7 +7,6 @@ import ggc.meter.device.MeterException;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -79,7 +78,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 			      SerialPort.FLOWCONTROL_NONE,
 			      SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT);
 				
-		this.setSerialPort(portName);
+//		this.setSerialPort(portName);
 		
 		data = new ArrayList<MeterValuesEntry>();
 		
@@ -93,12 +92,38 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		{
 		    System.out.println("Set port: " + portName);
 		    
-		    this.setPort(portName);
+	        this.setSerialPort(portName);
+//		    this.setPort(portName);
 	
 		    if (!this.open())
 		    {
 		    	this.m_status = 1;
 		    }
+		    
+		    
+	        end_string = (new Character((char)13)).toString();
+	        
+	        //this.writer = new GGCFileOutputWriter();
+	        this.output_writer.writeHeader();
+
+	    
+	        
+	        //this.serialPort.
+	        
+	        this.serialPort.notifyOnOutputEmpty(true);
+	        this.serialPort.notifyOnBreakInterrupt(true);
+	        
+	        
+	        this.end_strings = new String[2];
+	        end_strings[0] = (new Character((char)3)).toString(); // ETX - End of Text
+	        end_strings[1] = (new Character((char)4)).toString(); // EOT - End of Transmission
+	        //end_strings[2] = (new Character((char)23)).toString(); // ETB - End of Text
+	        
+	        this.text_def = new String[3];
+	        this.text_def[0] = (new Character((char)2)).toString(); // STX - Start of Text
+	        this.text_def[1] = (new Character((char)3)).toString(); // ETX - Start of Text
+	        this.text_def[2] = (new Character((char)13)).toString(); // EOL - Start of Text
+	        
 		}
 		catch(Exception ex)
 		{
@@ -107,38 +132,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		}
 		
 		
-        end_string = (new Character((char)13)).toString();
-        
-        //this.writer = new GGCFileOutputWriter();
-        this.output_writer.writeHeader();
-
-    
-        
-        //this.serialPort.
-        
-        this.serialPort.notifyOnOutputEmpty(true);
-        this.serialPort.notifyOnBreakInterrupt(true);
-        
-        
-        this.end_strings = new String[2];
-        end_strings[0] = (new Character((char)3)).toString(); // ETX - End of Text
-        end_strings[1] = (new Character((char)4)).toString(); // EOT - End of Transmission
-        //end_strings[2] = (new Character((char)23)).toString(); // ETB - End of Text
-        
-        this.text_def = new String[3];
-        this.text_def[0] = (new Character((char)2)).toString(); // STX - Start of Text
-        this.text_def[1] = (new Character((char)3)).toString(); // ETX - Start of Text
-        this.text_def[2] = (new Character((char)13)).toString(); // EOL - Start of Text
-        
-        /*
-        try
-        {
-            this.serialPort.addEventListener(this);
-        }
-        catch(Exception ex)
-        {
-            System.out.println(ex);
-        }*/
 		
 		
     }
