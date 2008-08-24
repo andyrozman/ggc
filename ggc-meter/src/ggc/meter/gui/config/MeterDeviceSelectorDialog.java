@@ -89,7 +89,6 @@ public class MeterDeviceSelectorDialog extends SelectorAbstractDialog
     /* (non-Javadoc)
      * @see com.atech.graphics.components.selector.SelectorAbstractDialog#getFullData()
      */
-    @SuppressWarnings("unchecked")
     public void getFullData()
     {
         this.full = new ArrayList<SelectableInterface>();

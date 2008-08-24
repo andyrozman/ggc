@@ -29,6 +29,7 @@ import com.atech.i18n.I18nControlAbstract;
 public class MeterExportDialog extends JDialog implements ActionListener, StatusReporterInterface
 {
 
+    private static final long serialVersionUID = -5673838593827489827L;
     MeterPlugInServer server;
     
     
