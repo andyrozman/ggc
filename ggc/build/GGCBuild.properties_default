@@ -35,17 +35,18 @@ additional.jdbc.driver=${jdbc_path}/some.jdbc.driver.jar
 
 #
 # STATIC (this is required lib tree) 
-# DO NOT CHANGE !!!
+# DO NOT CHANGE - Start
 #
 jdbc_path=${library.dir}/jdbc/
 hibernate_path=${library.dir}/hibernate3
 utils_path=${library.dir}/utils
+#
+# DO NOT CHANGE - End
+#
 
-#
-# Path to your communication api. Here you must set path to jar contating your communication 
-# api
-#
-comunication.api=${comunication.api_ibm}
+
+
+
 
 
 
