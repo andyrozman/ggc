@@ -1,9 +1,3 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
 
 package ggc.meter.device;
 
@@ -17,7 +11,6 @@ import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 
 import java.util.ArrayList;

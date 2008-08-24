@@ -1,5 +1,4 @@
 /*
- *  GGC - GNU Gluco Control
  *
  *  A pure java app to help you manage your diabetes.
  *

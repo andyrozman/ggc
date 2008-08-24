@@ -53,6 +53,7 @@ import com.atech.utils.ATDataAccessAbstract;
 public class SimpleConfigurationTZDialog extends JDialog implements ActionListener, ChangeListener //, HelpCapable
 {
 
+    private static final long serialVersionUID = 1L;
     private I18nControl m_ic = I18nControl.getInstance();        
     private ATDataAccessAbstract m_da; // = DataAccessMeter.getInstance();
 

@@ -3,6 +3,8 @@ package ggc.meter.device;
 import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.plugin.device.DeviceIdentification;
 
+import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 
 /*
  *  GGC - GNU Gluco Control
@@ -34,7 +36,7 @@ import ggc.plugin.device.DeviceIdentification;
  */
 
 
-public interface MeterInterface //extends SelectableInterface
+public interface MeterInterface extends SelectableInterface
 {
 
 
