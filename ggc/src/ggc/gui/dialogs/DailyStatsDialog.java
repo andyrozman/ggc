@@ -39,6 +39,7 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.MainFrame;
 import ggc.gui.calendar.CalendarPane;
+import ggc.gui.dialogs.graphs.DailyGraphDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -275,7 +276,8 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         
         table.addMouseListener(new MouseAdapter()
            {
-            	public void mouseClicked(MouseEvent e)
+            	@Override
+                public void mouseClicked(MouseEvent e)
             	{
             	    if ((SwingUtilities.isLeftMouseButton(e)) &&
             		(e.getClickCount()==2))
@@ -503,7 +505,6 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
     	else if (command.equals("show_daily_graph"))
     	{
     	    DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
-            System.out.println(dayData.getDate());
     	    dgd.setDailyValues(this.dayData);
     	}
         else

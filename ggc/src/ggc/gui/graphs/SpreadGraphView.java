@@ -27,12 +27,12 @@
  *  
  */
 
-package ggc.gui.view;
-
+package ggc.gui.graphs;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.GlucoValues;
-import ggc.gui.dialogs.SpreadGraphDialog;
+import ggc.core.data.PlotData;
+import ggc.core.data.ReadablePlotData;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,7 +42,6 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
-
 public class SpreadGraphView extends AbstractGraphView
 {
 
@@ -51,24 +50,30 @@ public class SpreadGraphView extends AbstractGraphView
      */
     private static final long serialVersionUID = 3699075079321211940L;
     GlucoValues gV = null;
-    SpreadGraphDialog m_sGF = null;
+    private ReadablePlotData data = null;
+    boolean connect = true;
 
+    public SpreadGraphView()
+    {
+        this(null, true);
+    }
 
-    public SpreadGraphView(SpreadGraphDialog spread)
+    public SpreadGraphView(PlotData data, boolean connect)
+    {
+        this(null, data, connect);
+    }
+
+    public SpreadGraphView(GlucoValues gV, PlotData data, boolean connect)
     {
         super();
-	m_sGF = spread;
-        dayCount = 0;
-    }
-
-
-    public SpreadGraphView(GlucoValues gV, SpreadGraphDialog spread)
-    {
-        this(spread);
         this.gV = gV;
-        dayCount = gV.getDayCount();
+        this.data = data;
+        this.connect = connect;
+        if (gV != null)
+        {
+            dayCount = gV.getDayCount();
+        }
     }
-
 
     public void setGlucoValues(GlucoValues gV)
     {
@@ -76,11 +81,28 @@ public class SpreadGraphView extends AbstractGraphView
         dayCount = gV.getDayCount();
     }
 
+    /**
+     * @param data
+     *            the data to set
+     */
+    public void setData(ReadablePlotData data)
+    {
+        this.data = data;
+    }
+
+    /**
+     * @param connect
+     *            the connect to set
+     */
+    public void setConnect(boolean connect)
+    {
+        this.connect = connect;
+    }
 
     @Override
     public void paint(Graphics g)
     {
-        Graphics2D g2D = (Graphics2D)g;
+        Graphics2D g2D = (Graphics2D) g;
 
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oAA);
         g2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, oCR);
@@ -95,7 +117,6 @@ public class SpreadGraphView extends AbstractGraphView
         drawFramework(g2D);
         drawValues(g2D);
     }
-
 
     @Override
     protected void drawFramework(Graphics2D g2D)
@@ -117,38 +138,39 @@ public class SpreadGraphView extends AbstractGraphView
         g2D.setPaint(Color.black);
         g2D.drawLine(leftSpace, upperSpace, leftSpace, h - lowerSpace);
 
-        for (int i = 0; i <= counter; i++) 
-	{
+        for (int i = 0; i <= counter; i++)
+        {
             markPos = upperSpace + i * (diffH) / counter;
             g2D.drawString(Math.round(maxBG - labelDeltaV * i) + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }
         g2D.drawLine(leftSpace, h - lowerSpace, w - rightSpace, h - lowerSpace);
 
-        for (int i = 0; i <= 6; i++) 
-	{
+        for (int i = 0; i <= 6; i++)
+        {
             markPos = leftSpace + i * (diffW) / 6;
             g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace + 5);
             g2D.drawString(4 * i + ":00", markPos - 10, h - lowerSpace + 20);
         }
 
-        //Target Zone
-        Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxGoodBG), drawableWidth, BGtoCoord(minGoodBG) - BGtoCoord(maxGoodBG));
-        g2D.setPaint(m_da.getSettings().getColorTargetBG());
+        // Target Zone
+        Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxGoodBG), drawableWidth,
+                BGtoCoord(minGoodBG) - BGtoCoord(maxGoodBG));
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_target()));
         g2D.fill(rect1);
         g2D.draw(rect1);
 
-        //High Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG),
-                drawableWidth, BGtoCoord(maxGoodBG) - BGtoCoord(maxBG) - 1);
-        g2D.setPaint(m_da.getSettings().getColorHighBG());
+        // High Zone
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(maxGoodBG)
+                - BGtoCoord(maxBG) - 1);
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_high()));
         g2D.fill(rect1);
         g2D.draw(rect1);
 
-        //Low Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(minGoodBG),
-                drawableWidth, BGtoCoord(0) - BGtoCoord(minGoodBG) - 1);
-        g2D.setPaint(m_da.getSettings().getColorLowBG());
+        // Low Zone
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(minGoodBG), drawableWidth, BGtoCoord(0)
+                - BGtoCoord(minGoodBG) - 1);
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_low()));
         g2D.fill(rect1);
         g2D.draw(rect1);
 
@@ -157,7 +179,7 @@ public class SpreadGraphView extends AbstractGraphView
     @Override
     protected void drawValues(Graphics2D g2D)
     {
-        //SpreadGraphFrame sGF = SpreadGraphFrame.getInstance();
+        // SpreadGraphFrame sGF = SpreadGraphFrame.getInstance();
 
         GeneralPath plBG = new GeneralPath();
         GeneralPath plBU = new GeneralPath();
@@ -171,124 +193,122 @@ public class SpreadGraphView extends AbstractGraphView
 
         DailyValues dV;
 
-        Color colorBG = m_da.getSettings().getColorBG();
-        Color colorBU = m_da.getSettings().getColorBU();
-        Color colorIns1 = m_da.getSettings().getColorIns1();
-        Color colorIns2 = m_da.getSettings().getColorIns2();
+        Color colorBG = m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg());
+        Color colorBU = m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ch());
+        Color colorIns1 = m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins1());
+        Color colorIns2 = m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins2());
 
-        boolean drawBG = m_sGF.getDrawBG();
-        boolean drawBU = m_sGF.getDrawBU();
-        boolean drawIns1 = m_sGF.getDrawIns1();
-        boolean drawIns2 = m_sGF.getDrawIns2();
+        boolean drawBG = data.isPlotBG();
+        boolean drawCH = data.isPlotCH();
+        boolean drawIns1 = data.isPlotIns1();
+        boolean drawIns2 = data.isPlotIns2();
 
-        boolean connect = m_sGF.getConnectDays();
-
-        for (int i = 0; i < dayCount; i++) 
-	{
+        for (int i = 0; i < dayCount; i++)
+        {
             dV = gV.getDailyValuesForDay(i);
 
-            for (int j = 0; j < dV.getRowCount(); j++) 
-	    {
+            for (int j = 0; j < dV.getRowCount(); j++)
+            {
                 int offset = TimetoCoord(dV.getDateTimeAt(j));
 
-                //draw BG
+                // draw BG
                 float tmpBG = dV.getBGAt(j);
-                if (drawBG && tmpBG != 0) 
-		{
+                if (drawBG && (tmpBG != 0))
+                {
                     g2D.setPaint(colorBG);
                     g2D.fillRect(offset - 1, BGtoCoord(tmpBG) - 1, 3, 3);
 
-                    if (connect) 
-		    {
-                        if (firstBG) 
-			{
+                    if (connect)
+                    {
+                        if (firstBG)
+                        {
                             plBG.moveTo(offset, BGtoCoord(tmpBG));
                             firstBG = false;
-                        } 
-			else
+                        }
+                        else
                             plBG.lineTo(offset, BGtoCoord(tmpBG));
                     }
                 }
 
-                //draw BU
+                // draw BU
                 float tmpBU = dV.getCHAt(j);
-                if (drawBU && tmpBU != 0) 
-		{
+                if (drawCH && (tmpBU != 0))
+                {
                     g2D.setPaint(colorBU);
                     g2D.fillRect(offset - 1, BUtoCoord(tmpBU) - 1, 3, 3);
 
-                    if (connect) 
-		    {
-                        if (firstBU) 
-			{
+                    if (connect)
+                    {
+                        if (firstBU)
+                        {
                             plBU.moveTo(offset, BUtoCoord(tmpBU));
                             firstBU = false;
-                        } 
-			else
+                        }
+                        else
                             plBU.lineTo(offset, BUtoCoord(tmpBU));
                     }
                 }
 
-                //draw Ins1
+                // draw Ins1
                 float tmpIns1 = dV.getIns1At(j);
-                if (drawIns1 && tmpIns1 != 0) 
-		{
+                if (drawIns1 && (tmpIns1 != 0))
+                {
                     g2D.setPaint(colorIns1);
                     g2D.fillRect(offset - 1, InstoCoord(tmpIns1) - 1, 3, 3);
 
-                    if (connect) 
-		    {
-                        if (firstIns1) 
-			{
+                    if (connect)
+                    {
+                        if (firstIns1)
+                        {
                             plIns1.moveTo(offset, InstoCoord(tmpIns1));
                             firstIns1 = false;
-                        } 
-			else
+                        }
+                        else
                             plIns1.lineTo(offset, InstoCoord(tmpIns1));
                     }
                 }
 
-                //draw Ins2
+                // draw Ins2
                 float tmpIns2 = dV.getIns2At(j);
-                if (drawIns2 && tmpIns2 != 0) 
-		{
+                if (drawIns2 && (tmpIns2 != 0))
+                {
                     g2D.setPaint(colorIns2);
                     g2D.fillRect(offset - 1, InstoCoord(tmpIns2) - 1, 3, 3);
 
-                    if (connect) 
-		    {
-                        if (firstIns2) 
-			{
+                    if (connect)
+                    {
+                        if (firstIns2)
+                        {
                             plIns2.moveTo(offset, InstoCoord(tmpIns2));
                             firstIns2 = false;
-                        } 
-			else
+                        }
+                        else
                             plIns2.lineTo(offset, InstoCoord(tmpIns2));
                     }
                 }
             }
 
-            if (drawBG) 
-	    {
-                g2D.setPaint(m_da.getSettings().getColorBG());
+            if (drawBG)
+            {
+                g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg()));
                 g2D.draw(plBG);
             }
 
-	    if (drawBU) 
-	    {
-                g2D.setPaint(m_da.getSettings().getColorBU());
+            if (drawCH)
+            {
+                g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ch()));
                 g2D.draw(plBU);
             }
 
-	    if (drawIns1) 
-	    {
-                g2D.setPaint(m_da.getSettings().getColorIns1());
+            if (drawIns1)
+            {
+                g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins1()));
                 g2D.draw(plIns1);
             }
 
-	    if (drawIns2) 
-	    {
-                g2D.setPaint(m_da.getSettings().getColorIns2());
+            if (drawIns2)
+            {
+                g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins2()));
                 g2D.draw(plIns2);
             }
 

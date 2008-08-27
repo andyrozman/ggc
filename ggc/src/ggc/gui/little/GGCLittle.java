@@ -37,8 +37,8 @@ import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
-import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;
+import ggc.gui.dialogs.graphs.DailyGraphDialog;
 import ggc.gui.little.panels.DailyStatsPanelL;
 import ggc.gui.little.panels.MainLittlePanel;
 

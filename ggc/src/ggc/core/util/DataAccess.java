@@ -209,6 +209,7 @@ public class DataAccess extends ATDataAccessAbstract
     }
 
     
+    @Override
     public void initSpecial()
     {
         //System.out.println("init Special");
@@ -360,11 +361,13 @@ public class DataAccess extends ATDataAccessAbstract
     // ****** Abstract Methods *****
     // ********************************************************
 
+    @Override
     public String getApplicationName()
     {
         return "GGC";
     }
 
+    @Override
     public void checkPrerequisites()
     {
         // check that ../data/temp exists (needed for printing)
@@ -376,11 +379,13 @@ public class DataAccess extends ATDataAccessAbstract
         }
     }
 
+    @Override
     public String getImagesRoot()
     {
         return "/icons/";
     }
 
+    @Override
     public void loadBackupRestoreCollection()
     {
 
@@ -595,9 +600,9 @@ public class DataAccess extends ATDataAccessAbstract
         this.m_BG_unit = type;
     }
 
-    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
+    public static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
 
-    private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
+    public static final float MMOL_TO_MGDL_FACTOR = 18.016f;
 
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>,
@@ -711,6 +716,7 @@ public class DataAccess extends ATDataAccessAbstract
         m_main_little = main;
     }
 
+    @Override
     public MainFrame getParent()
     {
         return m_main;
@@ -729,6 +735,7 @@ public class DataAccess extends ATDataAccessAbstract
      * Utils
      */
 
+    @Override
     public Image getImage(String filename, Component cmp)
     {
         Image img;
@@ -886,6 +893,7 @@ public class DataAccess extends ATDataAccessAbstract
         return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
     }
 
+    @Override
     public String[] getMonthsArray()
     {
         String arr[] = new String[12];
@@ -907,6 +915,7 @@ public class DataAccess extends ATDataAccessAbstract
 
     }
 
+    @Override
     public String getDateString(int date)
     {
         // 20051012
@@ -924,6 +933,7 @@ public class DataAccess extends ATDataAccessAbstract
             return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2) + "/" + year;
     }
 
+    @Override
     public String getTimeString(int time)
     {
         int hours = time / 100;
@@ -932,16 +942,19 @@ public class DataAccess extends ATDataAccessAbstract
         return getLeadingZero(hours, 2) + ":" + getLeadingZero(min, 2);
     }
 
+    @Override
     public String getDateTimeString(long date)
     {
         return getDateTimeString(date, 1);
     }
 
+    @Override
     public String getDateTimeAsDateString(long date)
     {
         return getDateTimeString(date, 2);
     }
 
+    @Override
     public String getDateTimeAsTimeString(long date)
     {
         return getDateTimeString(date, 3);
@@ -957,6 +970,7 @@ public class DataAccess extends ATDataAccessAbstract
 
     public static final int DT_TIME = 3;
 
+    @Override
     public String getDateTimeString(long dt, int ret_type)
     {
 
@@ -1100,11 +1114,13 @@ public class DataAccess extends ATDataAccessAbstract
         return st;
     }
 
+    @Override
     public String getDateTimeString(int date, int time)
     {
         return getDateString(date) + " " + getTimeString(time);
     }
 
+    @Override
     public int getStartYear()
     {
         return 1800;

@@ -40,15 +40,15 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.AppointmentsDialog;
-import ggc.gui.dialogs.CourseGraphDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.DoctorsDialog;
-import ggc.gui.dialogs.FrequencyGraphDialog;
-import ggc.gui.dialogs.HbA1cDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.RatioDialog;
-import ggc.gui.dialogs.SpreadGraphDialog;
+import ggc.gui.dialogs.graphs.CourseGraphDialog;
+import ggc.gui.dialogs.graphs.FrequencyGraphDialog;
+import ggc.gui.dialogs.graphs.HbA1cDialog;
+import ggc.gui.dialogs.graphs.SpreadGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
 
 import java.awt.BorderLayout;
@@ -1135,6 +1135,7 @@ public class MainFrame extends JFrame
         }
     }
 
+    @Override
     public String toString()
     {
         return "MainFrame";

@@ -1224,6 +1224,7 @@ public class GGCDb // implements DbCheckInterface HibernateDb
         logInfo("getDayStats()");
 
         DailyValues dV = new DailyValues();
+        dV.setDateTime(m_da.getDateTimeFromDateObject(day.getTime()) / 10000);
 
         try
         {

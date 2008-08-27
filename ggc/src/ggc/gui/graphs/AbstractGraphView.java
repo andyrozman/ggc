@@ -31,7 +31,7 @@
  *                       there are meters around that display less
  */
 
-package ggc.gui.view;
+package ggc.gui.graphs;
 
 
 import ggc.core.util.DataAccess;

@@ -25,20 +25,24 @@
  *  Author:   schultd
  */
 
-package ggc.gui.dialogs;
-
+package ggc.gui.dialogs.graphs;
 
 import ggc.core.data.HbA1cValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.gui.view.HbA1cView;
+import ggc.gui.graphs.HbA1cView;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -46,20 +50,19 @@ import javax.swing.JPanel;
 
 import com.atech.help.HelpCapable;
 
-
 public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 {
-    
+
     /**
      * 
      */
     private static final long serialVersionUID = 4596093593058190711L;
 
-    JButton help_button;    
+    JButton help_button;
 
-    private I18nControl m_ic = I18nControl.getInstance();        
+    private I18nControl m_ic = I18nControl.getInstance();
 
-    //private static HbA1cFrame singleton = null;
+    // private static HbA1cFrame singleton = null;
     private HbA1cView hbView;
     private HbA1cValues hbValues;
 
@@ -71,23 +74,22 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 
     private DataAccess m_da = null;
 
-
     public HbA1cDialog(DataAccess da)
     {
         super(da.getMainParent(), "HbA1c", true);
         this.m_da = da;
         init();
 
-        //hbValues = this.m_da.getHbA1c(new GregorianCalendar());
+        // hbValues = this.m_da.getHbA1c(new GregorianCalendar());
         hbValues = this.m_da.getDb().getHbA1c(new GregorianCalendar(), false);
         updateLabels();
 
         hbView.setHbA1cValues(hbValues);
-        
+
         this.m_da.enableHelp(this);
         this.setTitle(m_ic.getMessage("CALCULATED_HBA1C"));
-        
-	this.setVisible(true);
+
+        this.setVisible(true);
     }
 
     public void updateLabels()
@@ -101,52 +103,62 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 
     private void init()
     {
-	
-        getContentPane().setLayout(null);
-        setBounds(100, 100, 550, 460);
+
+        getContentPane().setLayout(new BorderLayout());
+        setSize(700, 460);
 
         // left panel;
         hbView = new HbA1cView();
-        hbView.setBounds(0, 0, 300, 460);
-        getContentPane().add(hbView, null);
-        
+        hbView.setMinimumSize(new Dimension(450, 460));
+        hbView.setPreferredSize(hbView.getMinimumSize());
+        getContentPane().add(hbView, BorderLayout.CENTER);
+
         // right panel
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(null);
-        infoPanel.setBounds(300, 0, 250, 460);
-        getContentPane().add(infoPanel, null);
+        JPanel rightPanel = new JPanel(new BorderLayout());
+        rightPanel.setMinimumSize(new Dimension(250, 460));
+        rightPanel.setPreferredSize(rightPanel.getMinimumSize());
+
+        JPanel bottomRightPanel = new JPanel(new GridLayout(1, 2, 15, 2));
+        bottomRightPanel.setMinimumSize(new Dimension(250, 30));
+        bottomRightPanel.setPreferredSize(bottomRightPanel.getMinimumSize());
+        bottomRightPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
+
+        JPanel infoPanel = new JPanel((LayoutManager) null);
+        infoPanel.setMinimumSize(new Dimension(250, 430));
+        infoPanel.setPreferredSize(infoPanel.getMinimumSize());
+
+        getContentPane().add(rightPanel, BorderLayout.EAST);
 
         JLabel label = new JLabel(m_ic.getMessage("CALCULATED_HBA1C"));
         label.setFont(new Font("SansSerif", Font.BOLD, 20));
         label.setBounds(0, 20, 250, 35);
         label.setHorizontalAlignment(JLabel.CENTER);
-        infoPanel.add(label); //, what)
+        infoPanel.add(label); // , what)
 
         // current hba1c
-        label = new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C")+":");
+        label = new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C") + ":");
         label.setBounds(0, 90, 250, 25);
         label.setHorizontalAlignment(JLabel.CENTER);
         infoPanel.add(label);
-        
+
         lblHbA1c = new JLabel();
         lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
-        //lblHbA1c.setBounds(100, 130, 50, 30);
+        // lblHbA1c.setBounds(100, 130, 50, 30);
         lblHbA1c.setBounds(0, 110, 250, 30);
         lblHbA1c.setHorizontalAlignment(JLabel.CENTER);
         infoPanel.add(lblHbA1c);
-        
+
         // valuation
-        label = new JLabel(m_ic.getMessage("VALUATION")+":");
+        label = new JLabel(m_ic.getMessage("VALUATION") + ":");
         label.setBounds(20, 180, 100, 25);
         infoPanel.add(label);
-        
+
         lblExp = new JLabel();
         lblExp.setBounds(100, 180, 150, 25);
         infoPanel.add(lblExp);
 
-        
         // bg avg.
-        label = new JLabel(m_ic.getMessage("BG")+" "+ m_ic.getMessage("AVG")+":");
+        label = new JLabel(m_ic.getMessage("BG") + " " + m_ic.getMessage("AVG") + ":");
         label.setBounds(20, 230, 100, 25);
         infoPanel.add(label);
 
@@ -155,7 +167,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         infoPanel.add(lblBGAvg);
 
         // readings
-        label = new JLabel(m_ic.getMessage("READINGS")+":");
+        label = new JLabel(m_ic.getMessage("READINGS") + ":");
         label.setBounds(20, 260, 100, 25);
         infoPanel.add(label);
 
@@ -164,32 +176,31 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         infoPanel.add(lblReadings);
 
         // reading / day
-        label = new JLabel(m_ic.getMessage("READINGS_SLASH_DAY")+":");
+        label = new JLabel(m_ic.getMessage("READINGS_SLASH_DAY") + ":");
         label.setBounds(20, 290, 100, 25);
         infoPanel.add(label);
 
         lblReadingsPerDay = new JLabel();
         lblReadingsPerDay.setBounds(170, 290, 50, 25);
         infoPanel.add(lblReadingsPerDay);
-        
+
         JButton closeButton = new JButton("   " + m_ic.getMessage("CLOSE"));
-        //closeButton.setPreferredSize(new Dimension(100, 25));
+        // closeButton.setPreferredSize(new Dimension(100, 25));
         closeButton.setBounds(5, 395, 110, 25);
-        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));        
-	closeButton.addActionListener(this);
-	closeButton.setActionCommand("close");
-	infoPanel.add(closeButton);
-	
-        
+        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        closeButton.addActionListener(this);
+        closeButton.setActionCommand("close");
+        bottomRightPanel.add(closeButton);
+
         this.help_button = this.m_da.createHelpButtonByBounds(125, 395, 110, 25, this);
-        infoPanel.add(this.help_button);
-        //buttonPanel.add(help_button);
+        bottomRightPanel.add(this.help_button);
+        // buttonPanel.add(help_button);
+
+        rightPanel.add(infoPanel, BorderLayout.CENTER);
+        rightPanel.add(bottomRightPanel, BorderLayout.SOUTH);
 
     }
 
-    
-    
-    
     public void setHbA1cText(String s)
     {
         lblHbA1c.setText(s);
@@ -215,58 +226,53 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         lblExp.setText(s);
     }
 
-
     private void closeDialog()
     {
         hbView = null;
         this.dispose();
     }
 
-
-
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(ActionEvent e) 
+    public void actionPerformed(ActionEvent e)
     {
         String action = e.getActionCommand();
 
-        if (action.equals("close")) 
+        if (action.equals("close"))
         {
             this.closeDialog();
         }
         else
             System.out.println("HbA1cDialog:Unknown command: " + action);
     }
-    
-    
+
     // ****************************************************************
-    // ******              HelpCapable Implementation             *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
-    
-    /* 
+
+    /*
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
     {
-	return this.getRootPane();
+        return this.getRootPane();
     }
 
-    /* 
+    /*
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
     {
-	return this.help_button;
+        return this.help_button;
     }
 
-    /* 
+    /*
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-	return "pages.GGC_BG_HbA1c";
+        return "pages.GGC_BG_HbA1c";
     }
 
-    
 }

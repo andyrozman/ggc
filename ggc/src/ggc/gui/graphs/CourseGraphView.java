@@ -27,11 +27,12 @@
  *  
  */
 
-package ggc.gui.view;
+package ggc.gui.graphs;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.GlucoValues;
-import ggc.gui.dialogs.CourseGraphDialog;
+import ggc.core.data.PlotData;
+import ggc.core.data.ReadablePlotData;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -43,31 +44,44 @@ import java.awt.geom.Rectangle2D;
 
 public class CourseGraphView extends AbstractGraphView
 {
-
     private static final long serialVersionUID = -7960828650875426272L;
     private GlucoValues gV = null;
-    private CourseGraphDialog m_cGF = null;
+    private ReadablePlotData data = null;
 
-    
-    public CourseGraphView(CourseGraphDialog parent)
+    public CourseGraphView()
     {
-        super();
-        this.m_cGF = parent;
-        dayCount = 0;
+        this(null, new PlotData());
     }
 
-    public CourseGraphView(GlucoValues gV, CourseGraphDialog parent)
+    public CourseGraphView(PlotData data)
     {
-        this(parent);
+        this(null, data);
+    }
+
+    public CourseGraphView(GlucoValues gV, PlotData data)
+    {
+        super();
         this.gV = gV;
-        //this.m_cGF = parent;
-        dayCount = gV.getDayCount();
+        this.data = data;
+        if (gV != null)
+        {
+            dayCount = gV.getDayCount();
+        }
     }
 
     public void setGlucoValues(GlucoValues gV)
     {
         this.gV = gV;
         dayCount = gV.getDayCount();
+    }
+
+    /**
+     * @param data
+     *            the data to set
+     */
+    public void setData(ReadablePlotData data)
+    {
+        this.data = data;
     }
 
     @Override
@@ -112,8 +126,7 @@ public class CourseGraphView extends AbstractGraphView
         for (int i = 0; i <= counter; i++)
         {
             markPos = upperSpace + i * diffH / counter;
-            g2D.drawString(Math.round(maxBG - labelDeltaV * i) + "", 5,
-                    markPos + 5);
+            g2D.drawString(Math.round(maxBG - labelDeltaV * i) + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }
         g2D.drawLine(leftSpace, h - lowerSpace, w - rightSpace, h - lowerSpace);
@@ -125,45 +138,43 @@ public class CourseGraphView extends AbstractGraphView
             {
                 days = (int) dayCount;
             }
-            
+
             float scale = (float) (dayCount - 1) / (days - 1);
             String dayDate;
             for (int i = 0; i < days; i++)
             {
                 dayDate = gV.getDateForDayAt(Math.round(i * scale));
-                
+
                 // handle small data sets
                 if (m_da.isEmptyOrUnset(dayDate))
                 {
                     break;
                 }
-                
+
                 markPos = leftSpace + i * (diffW) / (days - 1);
-                g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace
-                        + 5);
+                g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace + 5);
                 g2D.drawString(dayDate, markPos - 10, h - lowerSpace + 20);
             }
         }
 
-        //Target Zone
-        Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1,
-                BGtoCoord(maxGoodBG), drawableWidth, BGtoCoord(minGoodBG)
-                        - BGtoCoord(maxGoodBG));
-        g2D.setPaint(m_da.getSettings().getColorTargetBG());
+        // Target Zone
+        Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxGoodBG), drawableWidth,
+                BGtoCoord(minGoodBG) - BGtoCoord(maxGoodBG));
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_target()));
         g2D.fill(rect1);
         g2D.draw(rect1);
 
-        //High Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG),
-                drawableWidth, BGtoCoord(maxGoodBG) - BGtoCoord(maxBG) - 1);
-        g2D.setPaint(m_da.getSettings().getColorHighBG());
+        // High Zone
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(maxGoodBG)
+                - BGtoCoord(maxBG) - 1);
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_high()));
         g2D.fill(rect1);
         g2D.draw(rect1);
 
-        //Low Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(minGoodBG),
-                drawableWidth, BGtoCoord(0) - BGtoCoord(minGoodBG) - 1);
-        g2D.setPaint(m_da.getSettings().getColorLowBG());
+        // Low Zone
+        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(minGoodBG), drawableWidth, BGtoCoord(0)
+                - BGtoCoord(minGoodBG) - 1);
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_low()));
         g2D.fill(rect1);
         g2D.draw(rect1);
 
@@ -172,10 +183,10 @@ public class CourseGraphView extends AbstractGraphView
     @Override
     protected void drawValues(Graphics2D g2D)
     {
-        //CourseGraphFrame cGF = CourseGraphFrame.getInstance();
+        // CourseGraphFrame cGF = CourseGraphFrame.getInstance();
 
         GeneralPath plBG = new GeneralPath();
-        //GeneralPath plAvgBGDay = new GeneralPath();
+        // GeneralPath plAvgBGDay = new GeneralPath();
         GeneralPath plSumBU = new GeneralPath();
         GeneralPath plMeals = new GeneralPath();
         GeneralPath plSumIns1 = new GeneralPath();
@@ -184,7 +195,7 @@ public class CourseGraphView extends AbstractGraphView
         GeneralPath plInsPerBU = new GeneralPath();
 
         boolean firstBG = true;
-        //boolean firstAvgBGDay = true;
+        // boolean firstAvgBGDay = true;
         boolean firstMeals = true;
         boolean firstSumBU = true;
         boolean firstSumIns1 = true;
@@ -194,7 +205,7 @@ public class CourseGraphView extends AbstractGraphView
 
         DailyValues dV;
 
-        g2D.setPaint(m_da.getSettings().getColorAvgBG());
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_avg()));
 
         for (int i = 0; i < dayCount; i++)
         {
@@ -202,131 +213,134 @@ public class CourseGraphView extends AbstractGraphView
             float multiWidth = dayWidthC * i;
             float offset = multiWidth + leftSpace + dayWidthC / 2;
 
-            //draw BG
+            // draw BG
             for (int j = 0; j < dV.getRowCount(); j++)
             {
                 float tmpBG = dV.getBGAt(j);
 
                 if (tmpBG != 0)
                 {
-                    int X = (int) (multiWidth + DateTimetoCoord(dV
-                            .getDateTimeAt(j)));
+                    int X = (int) (multiWidth + DateTimetoCoord(dV.getDateTimeAt(j)));
                     int Y = BGtoCoord(tmpBG);
                     if (firstBG)
                     {
                         plBG.moveTo(X, Y);
                         firstBG = false;
-                    } else
+                    }
+                    else
                         plBG.lineTo(X, Y);
                 }
             }
 
-            //draw avgBGDay
-            //            if (firstAvgBGDay) {
-            //                plAvgBGDay.moveTo(offset, BGtoCoord(dV.getAvgBG()));
-            //                firstAvgBGDay = false;
-            //            } else
-            //                plAvgBGDay.lineTo(offset, BGtoCoord(dV.getAvgBG()));
-            if (m_cGF.getDrawAvgBGDay())
+            // draw avgBGDay
+            // if (firstAvgBGDay) {
+            // plAvgBGDay.moveTo(offset, BGtoCoord(dV.getAvgBG()));
+            // firstAvgBGDay = false;
+            // } else
+            // plAvgBGDay.lineTo(offset, BGtoCoord(dV.getAvgBG()));
+            if (data.isPlotBGDayAvg())
             {
                 int tmp = BGtoCoord(dV.getAvgBG());
-                g2D.drawLine((int) multiWidth + leftSpace, tmp,
-                        (int) (multiWidth + dayWidthC + leftSpace), tmp);
+                g2D.drawLine((int) multiWidth + leftSpace, tmp, (int) (multiWidth + dayWidthC + leftSpace), tmp);
             }
 
-            //draw sumBU
+            // draw sumBU
             if (firstSumBU)
             {
                 plSumBU.moveTo(offset, BUtoCoord(dV.getSumCH()));
                 firstSumBU = false;
-            } else
+            }
+            else
                 plSumBU.lineTo(offset, BUtoCoord(dV.getSumCH()));
 
-            //draw sumMeals
+            // draw sumMeals
             if (firstMeals)
             {
                 plMeals.moveTo(offset, BUtoCoord(dV.getCHCount()));
                 firstMeals = false;
-            } else
+            }
+            else
                 plMeals.lineTo(offset, BUtoCoord(dV.getCHCount()));
 
-            //draw Ins1
+            // draw Ins1
             if (firstSumIns1)
             {
                 plSumIns1.moveTo(offset, InstoCoord(dV.getSumIns1()));
                 firstSumIns1 = false;
-            } else
+            }
+            else
                 plSumIns1.lineTo(offset, InstoCoord(dV.getSumIns1()));
 
-            //draw Ins2
+            // draw Ins2
             if (firstSumIns2)
             {
                 plSumIns2.moveTo(offset, InstoCoord(dV.getSumIns2()));
                 firstSumIns2 = false;
-            } else
+            }
+            else
                 plSumIns2.lineTo(offset, InstoCoord(dV.getSumIns2()));
 
-            //draw Ins
+            // draw Ins
             if (firstSumIns)
             {
                 plSumIns.moveTo(offset, InstoCoord(dV.getSumIns()));
                 firstSumIns = false;
-            } else
+            }
+            else
                 plSumIns.lineTo(offset, InstoCoord(dV.getSumIns()));
 
-            //draw Ins / BU
+            // draw Ins / BU
             if (firstInsPerBU)
             {
-                plInsPerBU.moveTo(offset, InsPerBUtoCoord(dV.getIns2Count()
-                        / dV.getSumCH()));
+                plInsPerBU.moveTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumCH()));
                 firstInsPerBU = false;
-            } else
-                plInsPerBU.lineTo(offset, InsPerBUtoCoord(dV.getIns2Count()
-                        / dV.getSumCH()));
+            }
+            else
+                plInsPerBU.lineTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumCH()));
         }
 
-        if (m_cGF.getDrawBG())
+        if (data.isPlotBG())
         {
-            g2D.setPaint(m_da.getSettings().getColorBG());
+            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg()));
             g2D.draw(plBG);
         }
 
-        //        if (cGF.getDrawAvgBGDay()) {
-        //            g2D.setPaint(props.getColorAvgBG());
-        //            g2D.draw(plAvgBGDay);
-        //        }
+        // if (cGF.getDrawAvgBGDay()) {
+        // g2D.setPaint(props.getColorAvgBG());
+        // g2D.draw(plAvgBGDay);
+        // }
 
-        if (m_cGF.getDrawSumBU())
+        if (data.isPlotCHSum())
         {
-            g2D.setPaint(m_da.getSettings().getColorBU());
+            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ch()));
             g2D.draw(plSumBU);
         }
-        if (m_cGF.getDrawMeals())
+        if (data.isPlotMeals())
         {
-            g2D.setPaint(m_da.getSettings().getColorBU());
+            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ch()));
             g2D.draw(plMeals);
         }
-        if (m_cGF.getDrawSumIns1())
+        if (data.isPlotIns1Sum())
         {
-            g2D.setPaint(m_da.getSettings().getColorIns1());
+            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins1()));
             g2D.draw(plSumIns1);
         }
 
-        if (m_cGF.getDrawSumIns2())
+        if (data.isPlotIns2Sum())
         {
-            g2D.setPaint(m_da.getSettings().getColorIns2());
+            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins2()));
             g2D.draw(plSumIns2);
         }
 
-        if (m_cGF.getDrawSumIns())
+        if (data.isPlotInsTotal())
         {
-            g2D.setPaint(m_da.getSettings().getColorIns());
+            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins()));
             g2D.draw(plSumIns);
         }
 
-        if (m_cGF.getDrawInsPerBU())
+        if (data.isPlotInsPerCH())
         {
-            g2D.setPaint(m_da.getSettings().getColorInsPerBU());
+            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins_perbu()));
             g2D.draw(plInsPerBU);
         }
     }

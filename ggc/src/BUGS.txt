@@ -25,6 +25,12 @@ Know Bugs:
       a larger range was selected. (The problem lies in GlucoValues.getDayCount(), see FIXME-comment)
     - If e.g. the USDA DB is opened, GGC won't react to a "Close" command from the task bar (at least in KDE)
       A: This must be internal problem with KDE. Dialogs are set to be modal, this works ok with windows
+    - When entering BG, CH, insulin data, negative values can be entered. Negative BG gets set to 0 without warning. BTW: they don't get drawn,
+      but that doesn't excuse them being accepted!
+      (We're great! We make it possible for people to puke, squeeze insulin from their fat tissue and even live with no sugar at all in their bloodstream!)
+    - After data was entered (DailyStatsDialog, etc.), it will be appended to the table instead of being inserted where it belongs.
+    - Setting a colour for one "color scheme" will change it for the rest, too.
+    
 
 
 Not A Bug:

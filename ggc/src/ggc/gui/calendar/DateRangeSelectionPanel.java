@@ -50,27 +50,25 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
 public class DateRangeSelectionPanel extends JPanel implements ChangeListener
 {
-    //private JTextField fieldStartDate;
-    //private JTextField fieldEndDate;
-    //private Date endDate;
-    //private Date startDate;
+    // private JTextField fieldStartDate;
+    // private JTextField fieldEndDate;
+    // private Date endDate;
+    // private Date startDate;
 
     /**
      * 
      */
     private static final long serialVersionUID = 8709379438186554030L;
 
-    private I18nControl m_ic = I18nControl.getInstance();    
+    private I18nControl m_ic = I18nControl.getInstance();
 
     private JSpinner spinnerEnd;
     private JSpinner spinnerStart;
 
     private GregorianCalendar gc_end = null;
     private GregorianCalendar gc_start = null;
-
 
     private SpinnerDateModel endSpinnerDateModel = null;
     private SpinnerDateModel startSpinnerDateModel = null;
@@ -82,132 +80,123 @@ public class DateRangeSelectionPanel extends JPanel implements ChangeListener
     public static final int THREE_MONTHS = 2;
     public static final int CUSTOM = 3;
 
-    //private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+    // private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
     public DateRangeSelectionPanel()
     {
-        this(new GregorianCalendar(), null);
-        iRadioGroupState = ONE_MONTH;
-        calcStartDate();
-        init();
+        this(new GregorianCalendar());
     }
 
     public DateRangeSelectionPanel(int flag)
     {
-        this(new GregorianCalendar(), null);
-        iRadioGroupState = flag;
-        calcStartDate();
-        init();
+        this(new GregorianCalendar(), flag);
     }
 
     public DateRangeSelectionPanel(GregorianCalendar endDate)
     {
-        this(new GregorianCalendar(), null);
-        iRadioGroupState = ONE_MONTH;
-        calcStartDate();
-        init();
+        this(endDate, null, ONE_MONTH);
     }
 
     public DateRangeSelectionPanel(GregorianCalendar endDate, int flag)
     {
-        this(endDate, null);
-        //endSpinnerDateModel.setValue(endDate);
-        iRadioGroupState = flag;
-        calcStartDate();
-        init();
+        this(endDate, null, flag);
     }
 
-/*
-    public DateRangeSelectionPanel(Date endDate, Date startDate)
-    {
-        endSpinnerDateModel.setValue(endDate);
-        startSpinnerDateModel.setValue(startDate);
-        iRadioGroupState = CUSTOM;
-    }
-    */
-
+    /*
+     * public DateRangeSelectionPanel(Date endDate, Date startDate) {
+     * endSpinnerDateModel.setValue(endDate);
+     * startSpinnerDateModel.setValue(startDate); iRadioGroupState = CUSTOM; }
+     */
 
     public DateRangeSelectionPanel(GregorianCalendar endDate, GregorianCalendar startDate)
     {
-
-	endSpinnerDateModel = new SpinnerDateModel();
-	startSpinnerDateModel = new SpinnerDateModel();
-
-        if (endDate!=null) 
-        {
-            endSpinnerDateModel.setValue(endDate.getTime());
-            this.gc_end = endDate;
-        }
-
-        if (startDate!=null) 
-        {
-            startSpinnerDateModel.setValue(startDate.getTime());
-            this.gc_start = startDate;
-        }
-        iRadioGroupState = CUSTOM;
+        this(endDate, startDate, CUSTOM);
     }
 
+    private DateRangeSelectionPanel(GregorianCalendar endDate, GregorianCalendar startDate, int flag)
+    {
 
+        endSpinnerDateModel = new SpinnerDateModel();
+        startSpinnerDateModel = new SpinnerDateModel();
+
+        endSpinnerDateModel.setCalendarField(Calendar.DAY_OF_WEEK);
+        startSpinnerDateModel.setCalendarField(Calendar.DAY_OF_WEEK);
+
+        if (endDate != null)
+        {
+            this.gc_end = (GregorianCalendar) endDate.clone();
+            this.gc_end.set(Calendar.HOUR_OF_DAY, 0);
+            this.gc_end.set(Calendar.MINUTE, 0);
+            this.gc_end.set(Calendar.SECOND, 0);
+            endSpinnerDateModel.setValue(this.gc_end.getTime());
+        }
+
+        if (startDate != null)
+        {
+            this.gc_start = (GregorianCalendar) startDate.clone();
+            this.gc_start.set(Calendar.HOUR_OF_DAY, 0);
+            this.gc_start.set(Calendar.MINUTE, 0);
+            this.gc_start.set(Calendar.SECOND, 0);
+            startSpinnerDateModel.setValue(this.gc_start.getTime());
+        }
+
+        iRadioGroupState = flag;
+        init();
+        calcStartDate();
+    }
 
     private void init()
     {
-	JPanel a = new JPanel();
-	a.setLayout(new GridLayout(0,1));
+        JPanel a = new JPanel();
+        a.setLayout(new GridLayout(0, 1));
 
-	//Box a = Box.createVerticalBox();
-	a.add(new JLabel(m_ic.getMessage("ENDING_DATE")+":"));
-	a.add(spinnerEnd = new JSpinner(endSpinnerDateModel));
-	((JSpinner.DateEditor)spinnerEnd.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
-
-	a.add(new JLabel(m_ic.getMessage("STARTING_DATE")+":"));
-	a.add(spinnerStart = new JSpinner(startSpinnerDateModel));
-	((JSpinner.DateEditor)spinnerStart.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
-
-	spinnerEnd.addChangeListener(this);
-	spinnerStart.addChangeListener(this); 
-
-
-	/*
-        Box a = Box.createVerticalBox();
-        a.add(new JLabel(m_ic.getMessage("ENDING_DATE")+":"));
+        // Box a = Box.createVerticalBox();
+        a.add(new JLabel(m_ic.getMessage("ENDING_DATE") + ":"));
         a.add(spinnerEnd = new JSpinner(endSpinnerDateModel));
-        ((JSpinner.DateEditor)spinnerEnd.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
+        ((JSpinner.DateEditor) spinnerEnd.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
 
-        a.add(new JLabel(m_ic.getMessage("STARTING_DATE")+":"));
+        a.add(new JLabel(m_ic.getMessage("STARTING_DATE") + ":"));
         a.add(spinnerStart = new JSpinner(startSpinnerDateModel));
-        ((JSpinner.DateEditor)spinnerStart.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
+        ((JSpinner.DateEditor) spinnerStart.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
 
         spinnerEnd.addChangeListener(this);
-	spinnerStart.addChangeListener(this); 
-	*/
+        spinnerStart.addChangeListener(this);
 
-	/*new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent e)
-            {
-                calcDateAndUpdateFields();
-            }
-        }); */
+        /*
+         * Box a = Box.createVerticalBox(); a.add(new
+         * JLabel(m_ic.getMessage("ENDING_DATE")+":")); a.add(spinnerEnd = new
+         * JSpinner(endSpinnerDateModel));
+         * ((JSpinner.DateEditor)spinnerEnd.getEditor
+         * ()).getFormat().applyPattern("dd.MM.yyyy");
+         * 
+         * a.add(new JLabel(m_ic.getMessage("STARTING_DATE")+":"));
+         * a.add(spinnerStart = new JSpinner(startSpinnerDateModel));
+         * ((JSpinner.
+         * DateEditor)spinnerStart.getEditor()).getFormat().applyPattern
+         * ("dd.MM.yyyy");
+         * 
+         * spinnerEnd.addChangeListener(this);
+         * spinnerStart.addChangeListener(this);
+         */
 
-	/*new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent e)
-            {
-                calcDateAndUpdateFields();
-            }
-        }); */
+        /*
+         * new ChangeListener() { public void stateChanged(ChangeEvent e) {
+         * calcDateAndUpdateFields(); } });
+         */
 
+        /*
+         * new ChangeListener() { public void stateChanged(ChangeEvent e) {
+         * calcDateAndUpdateFields(); } });
+         */
 
         JRadioButton rbOneWeek = new JRadioButton("  " + m_ic.getMessage("1_WEEK"), iRadioGroupState == ONE_WEEK);
-	rbOneWeek.setIconTextGap(8);
-	//rbOneWeek.se
+        rbOneWeek.setIconTextGap(8);
+        // rbOneWeek.se
 
         JRadioButton rbOneMonth = new JRadioButton("  " + m_ic.getMessage("1_MONTH"), iRadioGroupState == ONE_MONTH);
-        JRadioButton rbThreeMonths = new JRadioButton("  " + m_ic.getMessage("3_MONTHS"), iRadioGroupState == THREE_MONTHS);
+        JRadioButton rbThreeMonths = new JRadioButton("  " + m_ic.getMessage("3_MONTHS"),
+                iRadioGroupState == THREE_MONTHS);
         JRadioButton rbCustom = new JRadioButton("  " + m_ic.getMessage("CUSTOM"), iRadioGroupState == CUSTOM);
-
-        if (iRadioGroupState != CUSTOM)
-            spinnerStart.setEnabled(false);
 
         ButtonGroup group = new ButtonGroup();
         group.add(rbOneWeek);
@@ -229,13 +218,16 @@ public class DateRangeSelectionPanel extends JPanel implements ChangeListener
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("DATE_RANGE_SELECTOR")));
 
-	JPanel c = new JPanel();
-	c.setLayout(new GridLayout());
-	c.add(new JLabel("  "));
+        JPanel c = new JPanel();
+        c.setLayout(new GridLayout());
+        c.add(new JLabel("  "));
 
         add(a, BorderLayout.WEST);
-	add(c, BorderLayout.CENTER);
+        add(c, BorderLayout.CENTER);
         add(b, BorderLayout.EAST);
+
+        if (iRadioGroupState != CUSTOM)
+            spinnerStart.setEnabled(false);
     }
 
     private void calcDateAndUpdateFields()
@@ -245,29 +237,28 @@ public class DateRangeSelectionPanel extends JPanel implements ChangeListener
 
     private void calcStartDate()
     {
-        if (iRadioGroupState == 3)
+        if (iRadioGroupState == CUSTOM)
             return;
 
-        //if (gc_start==null) 
-	gc_start = null;
-        gc_start = (GregorianCalendar)gc_end.clone();
+        // if (gc_start==null)
+        gc_start = (GregorianCalendar) gc_end.clone();
 
-        switch (iRadioGroupState) 
-	{
-            case ONE_WEEK:
-                gc_start.add(Calendar.WEEK_OF_YEAR, -1);
-                break;
-            case THREE_MONTHS:
-                gc_start.add(Calendar.MONTH, -3);
-		break;
-	    default:
-	    case ONE_MONTH:
-		gc_start.add(Calendar.MONTH, -1);
-		break;
+        switch (iRadioGroupState)
+        {
+        case ONE_WEEK:
+            gc_start.add(Calendar.WEEK_OF_YEAR, -1);
+            break;
+        case THREE_MONTHS:
+            gc_start.add(Calendar.MONTH, -3);
+            break;
+        case ONE_MONTH:
+        default:
+            gc_start.add(Calendar.MONTH, -1);
+            break;
 
-	}
+        }
 
-	//System.out.println(gc_start);
+        // System.out.println(gc_start);
         startSpinnerDateModel.setValue(gc_start.getTime());
     }
 
@@ -289,7 +280,9 @@ public class DateRangeSelectionPanel extends JPanel implements ChangeListener
             iRadioGroupState = stat;
 
             if (stat == CUSTOM)
+            {
                 spinnerStart.setEnabled(true);
+            }
             else
                 spinnerStart.setEnabled(false);
 
@@ -317,12 +310,10 @@ public class DateRangeSelectionPanel extends JPanel implements ChangeListener
         return DataAccess.getInstance().getGregorianCalendar(startSpinnerDateModel.getDate());
     }
 
-
     // ChangeListener
     public void stateChanged(ChangeEvent e)
     {
-	calcDateAndUpdateFields();
+        calcDateAndUpdateFields();
     }
-
 
 }

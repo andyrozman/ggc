@@ -27,11 +27,12 @@
  *  
  */
 
-package ggc.gui.view;
+package ggc.gui.graphs;
 
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.GlucoValues;
+import ggc.core.data.ReadablePlotData;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -47,6 +48,7 @@ public class FrequencyGraphView extends AbstractGraphView
     private static final long serialVersionUID = 8358248079574399547L;
 
     GlucoValues gV = null;
+    ReadablePlotData data = null;
 
     int[] values = null;
     int minvalue;
@@ -111,6 +113,15 @@ public class FrequencyGraphView extends AbstractGraphView
         }
     }
 
+    /**
+     * @param data
+     *            the data to set
+     */
+    public void setData(ReadablePlotData data)
+    {
+        this.data = data;
+    }
+
     @Override
     public void paint(Graphics g)
     {
@@ -171,13 +182,13 @@ public class FrequencyGraphView extends AbstractGraphView
 //        int upper = (int)m_da.getSettings().getBG_High();
 
         // XXX: these need something similar to BGtoCoord, but that's too much effort
-        g2D.setPaint(m_da.getSettings().getColorLowBG());
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_low()));
         g2D.fillRect(leftSpace + 1, upperSpace, (int) minGoodBG, (int)drawableHeight);
 
-        g2D.setPaint(m_da.getSettings().getColorTargetBG());
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_target()));
         g2D.fillRect((int)(leftSpace + minGoodBG), upperSpace, (int)(maxGoodBG - minGoodBG), (int)drawableHeight);
 
-        g2D.setPaint(m_da.getSettings().getColorHighBG());
+        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_high()));
         g2D.fillRect((int)(leftSpace + maxGoodBG), upperSpace, (int)(drawableWidth - maxGoodBG), (int)drawableHeight);
 
     }
@@ -195,7 +206,7 @@ public class FrequencyGraphView extends AbstractGraphView
                 g2D.drawLine(leftSpace + i + 1, viewHeight - lowerSpace, leftSpace + i + 1, (int)(viewHeight - lowerSpace - values[i] * unitHeight));
             }
 
-            g2D.setPaint(m_da.getSettings().getColorAvgBG());
+            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_avg()));
             g2D.drawLine(leftSpace + 1 + avgBG, viewHeight - lowerSpace, leftSpace + 1 + avgBG, upperSpace);
         }
     }

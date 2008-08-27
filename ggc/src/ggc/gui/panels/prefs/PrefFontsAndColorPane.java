@@ -28,13 +28,14 @@
 
 package ggc.gui.panels.prefs;
 
-
 import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
 import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.DataAccess;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.SchemeDialog;
 import ggc.gui.dialogs.SchemeEDDialog;
-import ggc.gui.view.DailyGraphView;
+import ggc.gui.graphs.DailyGraphView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -67,8 +68,8 @@ import javax.swing.event.ListSelectionListener;
 
 import com.atech.help.HelpCapable;
 
-
-public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements MouseListener, ActionListener, ListSelectionListener, ItemListener, HelpCapable
+public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements MouseListener, ActionListener,
+        ListSelectionListener, ItemListener, HelpCapable
 {
     /**
      * 
@@ -88,94 +89,86 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     private ArrayList<ColorSchemeH> deleted_schemes = null;
     private boolean item_changed_status = false;
 
-
     private DailyGraphView dgv = null;
 
-//    JDialog parent = null;
+    // JDialog parent = null;
 
     long selected_id = 0;
 
     public PrefFontsAndColorPane(PropertiesDialog dia)
     {
-	super(dia);
-	//this.parent = dialog;
+        super(dia);
+        // this.parent = dialog;
 
-	color_schemes = settings.getColorSchemes();
-	selected_sheme = settings.getSelectedColorScheme();
+        color_schemes = settings.getColorSchemes();
+        selected_sheme = settings.getSelectedColorScheme();
 
-	refreshColorSchemeList(false, false);
+        refreshColorSchemeList(false, false);
 
-	this.deleted_schemes = new ArrayList<ColorSchemeH>();
+        this.deleted_schemes = new ArrayList<ColorSchemeH>();
 
-/*
-	for (int i=1; i<=color_schemes.size(); i++)
-	{
-	    ColorSchemeH cs = (ColorSchemeH)color_schemes.get(""+i);
-	    av_schemes_names[i-1] = cs.getName();
-
-	    if (cs.equals(selected_sheme))
-	    {
-		selected_id = i-1;
-	    }
-	}
-	*/
+        /*
+         * for (int i=1; i<=color_schemes.size(); i++) { ColorSchemeH cs =
+         * (ColorSchemeH)color_schemes.get(""+i); av_schemes_names[i-1] =
+         * cs.getName();
+         * 
+         * if (cs.equals(selected_sheme)) { selected_id = i-1; } }
+         */
 
         items = new Vector<String>();
 
-	items.add(m_ic.getMessage("BG_HIGH_ZONE")); 
-	items.add(m_ic.getMessage("BG_TARGET_ZONE")); 
-	items.add(m_ic.getMessage("BG_LOW_ZONE")); 
-	items.add(m_ic.getMessage("BG")); 
-	items.add(m_ic.getMessage("BG_AVERAGE")); 
-	items.add(m_ic.getMessage("BREAD_UNITS")); 
-	items.add(m_ic.getMessage("INSULIN")+" " + settings.getIns1Abbr()); 
-	items.add(m_ic.getMessage("INSULIN")+" " + settings.getIns2Abbr()); 
-	items.add(m_ic.getMessage("INSULIN")); 
-	items.add(m_ic.getMessage("INS_SLASH_BU_QUOTIENT")); 
+        items.add(m_ic.getMessage("BG_HIGH_ZONE"));
+        items.add(m_ic.getMessage("BG_TARGET_ZONE"));
+        items.add(m_ic.getMessage("BG_LOW_ZONE"));
+        items.add(m_ic.getMessage("BG"));
+        items.add(m_ic.getMessage("BG_AVERAGE"));
+        items.add(m_ic.getMessage("BREAD_UNITS"));
+        items.add(m_ic.getMessage("INSULIN") + " " + settings.getIns1Abbr());
+        items.add(m_ic.getMessage("INSULIN") + " " + settings.getIns2Abbr());
+        items.add(m_ic.getMessage("INSULIN"));
+        items.add(m_ic.getMessage("INS_SLASH_BU_QUOTIENT"));
 
         init();
-        //m_da.enableHelp(this);
+        // m_da.enableHelp(this);
     }
 
     private void init()
     {
         setLayout(new BorderLayout());
-    
-    	JPanel schemePanel = new JPanel(new GridLayout(1, 3));
-    	schemePanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_SCHEME_SELECT")));
-    
-    	schemePanel.add(new JLabel(m_ic.getMessage("SELECTED_COLOR_SCHEME")+":"));
-    	schemePanel.add(cb_scheme = new JComboBox(av_schemes_names));
 
-//x        JPanel butPanel = new JPanel(new GridLayout(1, 3));
+        JPanel schemePanel = new JPanel(new GridLayout(1, 3));
+        schemePanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_SCHEME_SELECT")));
 
-        schemePanel.add(bt_new_scheme =new JButton(m_ic.getMessage("ADD")));
+        schemePanel.add(new JLabel(m_ic.getMessage("SELECTED_COLOR_SCHEME") + ":"));
+        schemePanel.add(cb_scheme = new JComboBox(av_schemes_names));
+
+        // x JPanel butPanel = new JPanel(new GridLayout(1, 3));
+
+        schemePanel.add(bt_new_scheme = new JButton(m_ic.getMessage("ADD")));
         schemePanel.add(bt_edit_scheme = new JButton(m_ic.getMessage("EDIT_DEL_SHORT")));
-        //butPanel.add(bt_new_scheme = new JButton(m_ic.getMessage("ADD")));
+        // butPanel.add(bt_new_scheme = new JButton(m_ic.getMessage("ADD")));
 
-        //butPanel.add(new JButton(m_ic.getMessage("EDIT_DEL")));
-        //butPanel.add(new JButton(m_ic.getMessage("-")));
+        // butPanel.add(new JButton(m_ic.getMessage("EDIT_DEL")));
+        // butPanel.add(new JButton(m_ic.getMessage("-")));
 
-    	//schemePanel.add(bt_new_scheme = new JButton(m_ic.getMessage("NEW")));
-        //schemePanel.add(butPanel);
-    	bt_new_scheme.addActionListener(this);
-	bt_new_scheme.setActionCommand("add");
+        // schemePanel.add(bt_new_scheme = new JButton(m_ic.getMessage("NEW")));
+        // schemePanel.add(butPanel);
+        bt_new_scheme.addActionListener(this);
+        bt_new_scheme.setActionCommand("add");
 
-	bt_edit_scheme.addActionListener(this);
-	bt_edit_scheme.setActionCommand("edit");
+        bt_edit_scheme.addActionListener(this);
+        bt_edit_scheme.setActionCommand("edit");
 
+        // bt_new_scheme.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
 
+        // System.out.println("SS: " + this.selected_sheme.getName());
 
-        //bt_new_scheme.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-
-    	//System.out.println("SS: " + this.selected_sheme.getName());
-    
-    	cb_scheme.setSelectedItem(this.selected_sheme.getName());
-    	cb_scheme.addItemListener(this);
+        cb_scheme.setSelectedItem(this.selected_sheme.getName());
+        cb_scheme.addItemListener(this);
 
         itemList = new JList(items);
         itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        itemList.addListSelectionListener(this); 
+        itemList.addListSelectionListener(this);
 
         JPanel colorPanel = new JPanel(new BorderLayout());
         colorPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLORS")));
@@ -186,372 +179,363 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         lblcolor.setOpaque(true);
         lblcolor.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        lblcolor.addMouseListener(this); 
+        lblcolor.addMouseListener(this);
 
         colorPanel.add(itemList, BorderLayout.WEST);
         colorPanel.add(a, BorderLayout.CENTER);
 
+        JPanel testingPanel = new JPanel(new BorderLayout());
+        testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
+        dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
+        testingPanel.setPreferredSize(new Dimension(150, 170));
+        testingPanel.add(dgv, BorderLayout.CENTER);
 
-    	JPanel testingPanel = new JPanel(new BorderLayout());
-	testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
-	dgv = new DailyGraphView(this.selected_sheme, createDailyGraphValues());
-    	testingPanel.setPreferredSize(new Dimension(150, 170));
-    	testingPanel.add(dgv, BorderLayout.CENTER);
-    
-    
-    	Box box = Box.createVerticalBox();
-    	box.add(schemePanel);
-    	box.add(colorPanel);
-    	box.add(testingPanel);
+        Box box = Box.createVerticalBox();
+        box.add(schemePanel);
+        box.add(colorPanel);
+        box.add(testingPanel);
 
         add(box);
 
         itemList.setSelectedIndex(0);
     }
 
-    public DailyValues createDailyGraphValues()
+    /**
+     * Creates a sample piece of <code>{@link DailyValues data}</code> for the
+     * sample <code>{@link DailyGraphView graph}</code>.
+     * 
+     * @return The <code>{@link DailyValues sample data}</code>.
+     */
+    public static DailyValues createDailyGraphValues()
     {
-        // TO-DO
-    	DailyValues dv = new DailyValues(); 
-/*
-        long datetime, int bg, int ins1, int ins2, float ch, String extended, String comment
-    	dv.addRow(new DailyValuesRow(200604040730, 4.3, 6, 0, 0.0d "6", "", "8", "", ""));
-    	dv.addRow(new DailyValuesRow(200604040730, "5.9", "", "", "", "", ""));
-    	dv.addRow(new DailyValuesRow(200604040730, "8.1", "10", "", "12", "", ""));
-    	dv.addRow(new DailyValuesRow(200604040730, "6.7", "", "", "", "", ""));
-    	dv.addRow(new DailyValuesRow(200604040730, "7.8", "12", "", "14", "", ""));
-    	dv.addRow(new DailyValuesRow(200604040730, "5.9", "", "", "", "", ""));
-    	dv.addRow(new DailyValuesRow(200604040730, "", "", "36", "", "", ""));
-  */  
-    	return dv;
+        DailyValues dv = new DailyValues();
+        DataAccess da = DataAccess.getInstance();
+
+        dv.addRow(new DailyValuesRow(200604040600L, 100, 0, 20, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604040700L, 40, 0, 0, 2f, "", ""));
+        dv.addRow(new DailyValuesRow(200604040800L, 200, 3, 0, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604040900L, (int) da.getSettings().getBG1_High(), 4, 0, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604041000L, (int) da.getSettings().getBG1_Low(), 0, 0, 2f, "", ""));
+        dv.addRow(new DailyValuesRow(200604041100L, 90, 0, 0, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604041200L, 120, 11, 0, 5f, "", ""));
+        dv.addRow(new DailyValuesRow(200604041300L, 150, 1, 10, 0f, "", ""));
+
+        return dv;
     }
 
-
-
     /**
-     * Invoked when the mouse button has been clicked (pressed
-     * and released) on a component.
+     * Invoked when the mouse button has been clicked (pressed and released) on
+     * a component.
      */
     public void mouseClicked(MouseEvent e)
     {
-	if (this.selected_sheme.getCustom_type()==0)
-	{
-	    JOptionPane.showMessageDialog(this, m_ic.getMessage("COLOR_SCHEME_PREDEFINED"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
-	    return;
-	}
+        if (this.selected_sheme.getCustom_type() == 0)
+        {
+            JOptionPane.showMessageDialog(this, m_ic.getMessage("COLOR_SCHEME_PREDEFINED"), m_ic.getMessage("ERROR"),
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-	Color col = JColorChooser.showDialog(null, m_ic.getMessage("CHOOSE_A_COLOR"), Color.black);
-	if (col != null) 
-	{
-	    setColor(itemList.getSelectedValue().toString(), col);
-	    lblcolor.setBackground(col);
-	    changed = true;
-	    dgv.redraw();
-	}
+        Color col = JColorChooser.showDialog(null, m_ic.getMessage("CHOOSE_A_COLOR"), Color.black);
+        if (col != null)
+        {
+            setColor(itemList.getSelectedValue().toString(), col);
+            lblcolor.setBackground(col);
+            changed = true;
+            dgv.applyColorScheme(this.selected_sheme);
+        }
     }
 
-    public void mousePressed(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e) {}
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
+    public void mousePressed(MouseEvent e)
+    {
+    }
 
+    public void mouseReleased(MouseEvent e)
+    {
+    }
+
+    public void mouseEntered(MouseEvent e)
+    {
+    }
+
+    public void mouseExited(MouseEvent e)
+    {
+    }
 
     public Color getColor(String name)
     {
-	int color = 0;
+        int color = 0;
 
-	if (name.equals(m_ic.getMessage("BG_HIGH_ZONE")))
-	    color = this.selected_sheme.getColor_bg_high();
-	else if (name.equals(m_ic.getMessage("BG_TARGET_ZONE")))
-	    color = this.selected_sheme.getColor_bg_target();
-	else if (name.equals(m_ic.getMessage("BG_LOW_ZONE")))
-	    color = this.selected_sheme.getColor_bg_low(); 
-	else if (name.equals(m_ic.getMessage("BG")))
-	    color = this.selected_sheme.getColor_bg(); 
-	else if (name.equals(m_ic.getMessage("BG_AVERAGE")))
-	    color = this.selected_sheme.getColor_bg_avg(); 
-	else if (name.equals(m_ic.getMessage("BREAD_UNITS")))
-	    color = this.selected_sheme.getColor_ch();
-	else if (name.equals(m_ic.getMessage("INSULIN")+" " + settings.getIns1Abbr()))
-	    color = this.selected_sheme.getColor_ins1();
-	else if (name.equals(m_ic.getMessage("INSULIN")+" " + settings.getIns2Abbr()))
-	    color = this.selected_sheme.getColor_ins2(); 
-	else if (name.equals(m_ic.getMessage("INSULIN")))
-	    color = this.selected_sheme.getColor_ins();
-	else if (name.equals(m_ic.getMessage("INS_SLASH_BU_QUOTIENT")))
-	    color = this.selected_sheme.getColor_ins_perbu();
+        if (name.equals(m_ic.getMessage("BG_HIGH_ZONE")))
+            color = this.selected_sheme.getColor_bg_high();
+        else if (name.equals(m_ic.getMessage("BG_TARGET_ZONE")))
+            color = this.selected_sheme.getColor_bg_target();
+        else if (name.equals(m_ic.getMessage("BG_LOW_ZONE")))
+            color = this.selected_sheme.getColor_bg_low();
+        else if (name.equals(m_ic.getMessage("BG")))
+            color = this.selected_sheme.getColor_bg();
+        else if (name.equals(m_ic.getMessage("BG_AVERAGE")))
+            color = this.selected_sheme.getColor_bg_avg();
+        else if (name.equals(m_ic.getMessage("BREAD_UNITS")))
+            color = this.selected_sheme.getColor_ch();
+        else if (name.equals(m_ic.getMessage("INSULIN") + " " + settings.getIns1Abbr()))
+            color = this.selected_sheme.getColor_ins1();
+        else if (name.equals(m_ic.getMessage("INSULIN") + " " + settings.getIns2Abbr()))
+            color = this.selected_sheme.getColor_ins2();
+        else if (name.equals(m_ic.getMessage("INSULIN")))
+            color = this.selected_sheme.getColor_ins();
+        else if (name.equals(m_ic.getMessage("INS_SLASH_BU_QUOTIENT")))
+            color = this.selected_sheme.getColor_ins_perbu();
 
-	return m_da.getColor(color);
+        return m_da.getColor(color);
 
     }
-
 
     public void setColor(String name, Color clr)
     {
-    	int color = clr.getRGB();
-    
-    	if (name.equals(m_ic.getMessage("BG_HIGH_ZONE")))
-    	    this.selected_sheme.setColor_bg_high(color);
-    	else if (name.equals(m_ic.getMessage("BG_TARGET_ZONE")))
-    	    this.selected_sheme.setColor_bg_target(color);
-    	else if (name.equals(m_ic.getMessage("BG_LOW_ZONE")))
-    	    this.selected_sheme.setColor_bg_low(color); 
-    	else if (name.equals(m_ic.getMessage("BG")))
-    	    this.selected_sheme.setColor_bg(color); 
-    	else if (name.equals(m_ic.getMessage("BG_AVERAGE")))
-    	    this.selected_sheme.setColor_bg_avg(color); 
-    	else if (name.equals(m_ic.getMessage("BREAD_UNITS")))
-    	    this.selected_sheme.setColor_ch(color);
-    	else if (name.equals(m_ic.getMessage("INSULIN")+" " + settings.getIns1Abbr()))
-    	    this.selected_sheme.setColor_ins1(color);
-    	else if (name.equals(m_ic.getMessage("INSULIN")+" " + settings.getIns2Abbr()))
-    	    this.selected_sheme.setColor_ins2(color); 
-    	else if (name.equals(m_ic.getMessage("INSULIN")))
-    	    this.selected_sheme.setColor_ins(color);
-    	else if (name.equals(m_ic.getMessage("INS_SLASH_BU_QUOTIENT")))
-    	    this.selected_sheme.setColor_ins_perbu(color);
+        int color = clr.getRGB();
 
+        if (name.equals(m_ic.getMessage("BG_HIGH_ZONE")))
+            this.selected_sheme.setColor_bg_high(color);
+        else if (name.equals(m_ic.getMessage("BG_TARGET_ZONE")))
+            this.selected_sheme.setColor_bg_target(color);
+        else if (name.equals(m_ic.getMessage("BG_LOW_ZONE")))
+            this.selected_sheme.setColor_bg_low(color);
+        else if (name.equals(m_ic.getMessage("BG")))
+            this.selected_sheme.setColor_bg(color);
+        else if (name.equals(m_ic.getMessage("BG_AVERAGE")))
+            this.selected_sheme.setColor_bg_avg(color);
+        else if (name.equals(m_ic.getMessage("BREAD_UNITS")))
+            this.selected_sheme.setColor_ch(color);
+        else if (name.equals(m_ic.getMessage("INSULIN") + " " + settings.getIns1Abbr()))
+            this.selected_sheme.setColor_ins1(color);
+        else if (name.equals(m_ic.getMessage("INSULIN") + " " + settings.getIns2Abbr()))
+            this.selected_sheme.setColor_ins2(color);
+        else if (name.equals(m_ic.getMessage("INSULIN")))
+            this.selected_sheme.setColor_ins(color);
+        else if (name.equals(m_ic.getMessage("INS_SLASH_BU_QUOTIENT")))
+            this.selected_sheme.setColor_ins_perbu(color);
     }
 
-/* x
-    private int findIndex(String col)
-    {
-    	for (int i=0; i<this.av_schemes_names.length; i++)
-    	{
-    	    if (this.av_schemes_names[i].equals(col))
-    	    {
-                return i;
-    	    }
-    	}
-    
-    	return -1;
-    }
-*/
+    /*
+     * x private int findIndex(String col) { for (int i=0;
+     * i<this.av_schemes_names.length; i++) { if
+     * (this.av_schemes_names[i].equals(col)) { return i; } }
+     * 
+     * return -1; }
+     */
 
     /**
-     * Invoked when an item has been selected or deselected by the user.
-     * The code written for this method performs the operations
-     * that need to occur when an item is selected (or deselected).
+     * Invoked when an item has been selected or deselected by the user. The
+     * code written for this method performs the operations that need to occur
+     * when an item is selected (or deselected).
      */
     @Override
     public void itemStateChanged(ItemEvent e)
     {
-	if (this.item_changed_status)
-	    return;
+        if (this.item_changed_status)
+            return;
 
         this.selected_sheme = this.color_schemes.get(this.cb_scheme.getSelectedItem().toString());
-        dgv.setScheme(this.selected_sheme);
-	lblcolor.setBackground(getColor(itemList.getSelectedValue().toString()));
+        dgv.applyColorScheme(this.selected_sheme);
+        lblcolor.setBackground(getColor(itemList.getSelectedValue().toString()));
     }
-
 
     public void valueChanged(ListSelectionEvent e)
     {
         lblcolor.setBackground(getColor(itemList.getSelectedValue().toString()));
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e)
     {
 
-	if (e.getActionCommand().equals("add"))
-	{
-	    SchemeDialog sd = new SchemeDialog(this.parent, this.av_schemes_names);
+        if (e.getActionCommand().equals("add"))
+        {
+            SchemeDialog sd = new SchemeDialog(this.parent, this.av_schemes_names);
 
-	    if (sd.actionSuccesful())
-	    {
-		String[] str = sd.getActionResult();
+            if (sd.actionSuccesful())
+            {
+                String[] str = sd.getActionResult();
 
-		ColorSchemeH cs = this.color_schemes.get(str[2]);
+                ColorSchemeH cs = this.color_schemes.get(str[2]);
 
-		//System.out.println("As Template: " + str[2]);
+                // System.out.println("As Template: " + str[2]);
 
-		selected_sheme = new ColorSchemeH(str[1], 1, cs.getColor_bg(),
-				    cs.getColor_bg_avg(), cs.getColor_bg_low(), cs.getColor_bg_high(),
-				    cs.getColor_bg_target(), cs.getColor_ins(), cs.getColor_ins1(),
-				    cs.getColor_ins2(), cs.getColor_ins_perbu(), cs.getColor_ch());
+                selected_sheme = new ColorSchemeH(str[1], 1, cs.getColor_bg(), cs.getColor_bg_avg(), cs
+                        .getColor_bg_low(), cs.getColor_bg_high(), cs.getColor_bg_target(), cs.getColor_ins(), cs
+                        .getColor_ins1(), cs.getColor_ins2(), cs.getColor_ins_perbu(), cs.getColor_ch());
 
-		this.color_schemes.put(selected_sheme.getName(), selected_sheme);
+                this.color_schemes.put(selected_sheme.getName(), selected_sheme);
 
-		String[] strs = new String[(this.av_schemes_names.length +1)];
+                String[] strs = new String[(this.av_schemes_names.length + 1)];
 
-		int i=0;
+                int i = 0;
 
-		for ( ; i<this.av_schemes_names.length; i++)
-		{
-		    strs[i] = this.av_schemes_names[i];
-		}
+                for (; i < this.av_schemes_names.length; i++)
+                {
+                    strs[i] = this.av_schemes_names[i];
+                }
 
-		strs[i] = str[1];
+                strs[i] = str[1];
 
-		this.av_schemes_names = strs;
+                this.av_schemes_names = strs;
 
-		this.cb_scheme.addItem(str[1]);
-		this.cb_scheme.setSelectedIndex(av_schemes_names.length-1);
-		// sel
-		dgv.setScheme(this.selected_sheme);
+                this.cb_scheme.addItem(str[1]);
+                this.cb_scheme.setSelectedIndex(av_schemes_names.length - 1);
+                // sel
+                dgv.applyColorScheme(selected_sheme);
 
-	    }
-	}
-	else
-	{
+            }
+        }
+        else
+        {
 
-	    ColorSchemeH cs = this.color_schemes.get(this.cb_scheme.getSelectedItem());
+            ColorSchemeH cs = this.color_schemes.get(this.cb_scheme.getSelectedItem());
 
-	    if (cs.getCustom_type()==0)
-	    {
-		JOptionPane.showMessageDialog(this, m_ic.getMessage("PREDEFINED_SCHEME_CANT_BE_CHANGED"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
-		return;
-	    }
-	    else
-	    {
-//		DataAccess.notImplemented("PrefFonts...:actionPerformed.edit Non Custom");
-		SchemeEDDialog sed = new SchemeEDDialog(this.parent, av_schemes_names, (String)this.cb_scheme.getSelectedItem());
+            if (cs.getCustom_type() == 0)
+            {
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("PREDEFINED_SCHEME_CANT_BE_CHANGED"), m_ic
+                        .getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            else
+            {
+                // DataAccess.notImplemented(
+                // "PrefFonts...:actionPerformed.edit Non Custom");
+                SchemeEDDialog sed = new SchemeEDDialog(this.parent, av_schemes_names, (String) this.cb_scheme
+                        .getSelectedItem());
 
-		if (sed.actionSuccesful())
-		{
-		    String[] res = sed.getActionResult();
+                if (sed.actionSuccesful())
+                {
+                    String[] res = sed.getActionResult();
 
-		    System.out.println("Action: " + res[0] + " " + res[1]);
+                    System.out.println("Action: " + res[0] + " " + res[1]);
 
-		    if (res[0].equals("1"))
-		    {
-			this.color_schemes.remove(cs.getName());
-			cs.setName(res[1]);
-			this.color_schemes.put(res[1], cs);
+                    if (res[0].equals("1"))
+                    {
+                        this.color_schemes.remove(cs.getName());
+                        cs.setName(res[1]);
+                        this.color_schemes.put(res[1], cs);
 
-			refreshColorSchemeList(true, false);
-		    }
-		    else if (res[0].equals("2"))
-		    {
-			// add scheme to deleted
-			this.deleted_schemes.add(cs);
+                        refreshColorSchemeList(true, false);
+                    }
+                    else if (res[0].equals("2"))
+                    {
+                        // add scheme to deleted
+                        this.deleted_schemes.add(cs);
 
-			// remove scheme from active color schemes
-			this.color_schemes.remove(this.cb_scheme.getSelectedItem());
+                        // remove scheme from active color schemes
+                        this.color_schemes.remove(this.cb_scheme.getSelectedItem());
 
-			refreshColorSchemeList(true, true);
-		    }
+                        refreshColorSchemeList(true, true);
+                    }
 
-		}
-	    }
+                }
+            }
 
-	}
+        }
 
     }
-
-
 
     private void refreshColorSchemeList(boolean force_update_to_combo, boolean action_delete)
     {
 
-	item_changed_status = true;
+        item_changed_status = true;
 
-	av_schemes_names = new String[color_schemes.size()];
+        av_schemes_names = new String[color_schemes.size()];
 
-	int i=0;
-	for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements(); ) 
-	{
-	    ColorSchemeH cs = color_schemes.get(en.nextElement());
-	    av_schemes_names[i] = cs.getName();
-	    i++;
-	}
+        int i = 0;
+        for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements();)
+        {
+            ColorSchemeH cs = color_schemes.get(en.nextElement());
+            av_schemes_names[i] = cs.getName();
+            i++;
+        }
 
+        if (force_update_to_combo)
+        {
+            int sel_item = this.cb_scheme.getSelectedIndex();
 
-	if (force_update_to_combo)
-	{
-	    int sel_item = this.cb_scheme.getSelectedIndex();
+            this.cb_scheme.removeAllItems();
 
-	    this.cb_scheme.removeAllItems();
+            for (int j = 0; j < this.av_schemes_names.length; j++)
+            {
+                this.cb_scheme.addItem(this.av_schemes_names[j]);
+            }
 
-	    for(int j=0; j<this.av_schemes_names.length; j++)
-	    {
-		this.cb_scheme.addItem(this.av_schemes_names[j]);
-	    }
+            item_changed_status = true;
 
-	    item_changed_status = true;
-
-	    if (action_delete)
-		this.cb_scheme.setSelectedIndex(0);
-	    else
-		this.cb_scheme.setSelectedIndex(sel_item);
-	}
-
-
+            if (action_delete)
+                this.cb_scheme.setSelectedIndex(0);
+            else
+                this.cb_scheme.setSelectedIndex(sel_item);
+        }
 
     }
-
-
-
 
     @Override
     public void saveProps()
     {
 
-    	for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements(); ) 
-    	{
-    	    String key = (String)en.nextElement();
-    	    ColorSchemeH cs = this.color_schemes.get(key);
-    
-    	    if (cs.getCustom_type()==1)
-    	    {
-		if (cs.getId()==0)
-		{
-		    cs.setId(m_da.getDb().addHibernate(cs));
-		}
-		else
-		{
-		    m_da.getDb().editHibernate(cs);
-		}
-    	    }
-    	}
-    
-    	settings.setColorSchemes(this.color_schemes, false);
+        for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements();)
+        {
+            String key = (String) en.nextElement();
+            ColorSchemeH cs = this.color_schemes.get(key);
 
-        //System.out.println("Selected color: " + cb_scheme.getSelectedItem().toString());
-    	settings.setColorSchemeObject(cb_scheme.getSelectedItem().toString());
+            if (cs.getCustom_type() == 1)
+            {
+                if (cs.getId() == 0)
+                {
+                    cs.setId(m_da.getDb().addHibernate(cs));
+                }
+                else
+                {
+                    m_da.getDb().editHibernate(cs);
+                }
+            }
+        }
 
+        settings.setColorSchemes(this.color_schemes, false);
 
-	// remove deleted schemes
-	for(int i=0; i<this.deleted_schemes.size(); i++)
-	{
-	    m_da.getDb().deleteHibernate(this.deleted_schemes.get(i));
-	}
+        // System.out.println("Selected color: " +
+        // cb_scheme.getSelectedItem().toString());
+        settings.setColorSchemeObject(cb_scheme.getSelectedItem().toString());
+
+        // remove deleted schemes
+        for (int i = 0; i < this.deleted_schemes.size(); i++)
+        {
+            m_da.getDb().deleteHibernate(this.deleted_schemes.get(i));
+        }
 
     }
-    
-    
-    
+
     // ****************************************************************
-    // ******              HelpCapable Implementation             *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
-    
-    /* 
+
+    /*
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
     {
-	return this.getRootPane();
+        return this.getRootPane();
     }
 
-    /* 
+    /*
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
     {
-	return this.parent.getHelpButton();
+        return this.parent.getHelpButton();
     }
 
-    /* 
+    /*
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-	return "pages.GGC_Prefs_Colors_Fonts";
+        return "pages.GGC_Prefs_Colors_Fonts";
     }
-    
-    
-    
-    
+
 }

@@ -27,9 +27,8 @@
 
 package ggc.gui.panels.prefs;
 
-
 import ggc.gui.dialogs.PropertiesDialog;
-import ggc.gui.view.DailyGraphView;
+import ggc.gui.graphs.DailyGraphView;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -46,7 +45,6 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.help.HelpCapable;
 
-
 public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implements HelpCapable
 {
     /**
@@ -54,9 +52,8 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
      */
     private static final long serialVersionUID = 5354608555593397390L;
 
-    private JComboBox comboAntiAliasing, comboColorRendering, comboDithering,
-		      comboFractionalMetrics, comboInterpolation, comboTextAntiAliasing,
-		      comboRendering;
+    private JComboBox comboAntiAliasing, comboColorRendering, comboDithering, comboFractionalMetrics,
+            comboInterpolation, comboTextAntiAliasing, comboRendering;
 
     private DailyGraphView dgv;
 
@@ -64,47 +61,53 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
 
     public PrefRenderingQualityPane(PropertiesDialog dia)
     {
-	super(dia);
+        super(dia);
         init();
-        //m_da.enableHelp(this);
+        // m_da.enableHelp(this);
     }
 
     private void init()
     {
 
-	this.setBorder(new TitledBorder(m_ic.getMessage("RENDERING_QUALITY")));
-
+        this.setBorder(new TitledBorder(m_ic.getMessage("RENDERING_QUALITY")));
 
         JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel(m_ic.getMessage("ANTIALIASING")+":"));
-        a.add(new JLabel(m_ic.getMessage("COLOR_RENDERING")+":"));
-        a.add(new JLabel(m_ic.getMessage("DITHERING")+":"));
-        a.add(new JLabel(m_ic.getMessage("FRACTIONAL_METRICS")+":"));
-        a.add(new JLabel(m_ic.getMessage("INTERPOLATION")+":"));
-        a.add(new JLabel(m_ic.getMessage("TEXT_ANTIALIASING")+":"));
-        a.add(new JLabel(m_ic.getMessage("RENDERING")+":"));
+        a.add(new JLabel(m_ic.getMessage("ANTIALIASING") + ":"));
+        a.add(new JLabel(m_ic.getMessage("COLOR_RENDERING") + ":"));
+        a.add(new JLabel(m_ic.getMessage("DITHERING") + ":"));
+        a.add(new JLabel(m_ic.getMessage("FRACTIONAL_METRICS") + ":"));
+        a.add(new JLabel(m_ic.getMessage("INTERPOLATION") + ":"));
+        a.add(new JLabel(m_ic.getMessage("TEXT_ANTIALIASING") + ":"));
+        a.add(new JLabel(m_ic.getMessage("RENDERING") + ":"));
 
         JPanel b = new JPanel(new GridLayout(0, 1));
 
-        Object[] o1 = {RenderingHints.VALUE_ANTIALIAS_DEFAULT, RenderingHints.VALUE_ANTIALIAS_OFF, RenderingHints.VALUE_ANTIALIAS_ON};
+        Object[] o1 = { RenderingHints.VALUE_ANTIALIAS_DEFAULT, RenderingHints.VALUE_ANTIALIAS_OFF,
+                       RenderingHints.VALUE_ANTIALIAS_ON };
         b.add(comboAntiAliasing = new JComboBox(o1));
 
-        Object[] o2 = {RenderingHints.VALUE_COLOR_RENDER_DEFAULT, RenderingHints.VALUE_COLOR_RENDER_QUALITY, RenderingHints.VALUE_COLOR_RENDER_SPEED};
+        Object[] o2 = { RenderingHints.VALUE_COLOR_RENDER_DEFAULT, RenderingHints.VALUE_COLOR_RENDER_QUALITY,
+                       RenderingHints.VALUE_COLOR_RENDER_SPEED };
         b.add(comboColorRendering = new JComboBox(o2));
 
-        Object[] o3 = {RenderingHints.VALUE_DITHER_DEFAULT, RenderingHints.VALUE_DITHER_DISABLE, RenderingHints.VALUE_DITHER_ENABLE};
+        Object[] o3 = { RenderingHints.VALUE_DITHER_DEFAULT, RenderingHints.VALUE_DITHER_DISABLE,
+                       RenderingHints.VALUE_DITHER_ENABLE };
         b.add(comboDithering = new JComboBox(o3));
 
-        Object[] o4 = {RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT, RenderingHints.VALUE_FRACTIONALMETRICS_OFF, RenderingHints.VALUE_FRACTIONALMETRICS_ON};
+        Object[] o4 = { RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT, RenderingHints.VALUE_FRACTIONALMETRICS_OFF,
+                       RenderingHints.VALUE_FRACTIONALMETRICS_ON };
         b.add(comboFractionalMetrics = new JComboBox(o4));
 
-        Object[] o5 = {RenderingHints.VALUE_INTERPOLATION_BICUBIC, RenderingHints.VALUE_INTERPOLATION_BILINEAR, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR};
+        Object[] o5 = { RenderingHints.VALUE_INTERPOLATION_BICUBIC, RenderingHints.VALUE_INTERPOLATION_BILINEAR,
+                       RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR };
         b.add(comboInterpolation = new JComboBox(o5));
 
-        Object[] o6 = {RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF, RenderingHints.VALUE_TEXT_ANTIALIAS_ON};
+        Object[] o6 = { RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF,
+                       RenderingHints.VALUE_TEXT_ANTIALIAS_ON };
         b.add(comboTextAntiAliasing = new JComboBox(o6));
 
-        Object[] o7 = {RenderingHints.VALUE_RENDER_DEFAULT, RenderingHints.VALUE_RENDER_QUALITY, RenderingHints.VALUE_RENDER_SPEED};
+        Object[] o7 = { RenderingHints.VALUE_RENDER_DEFAULT, RenderingHints.VALUE_RENDER_QUALITY,
+                       RenderingHints.VALUE_RENDER_SPEED };
         b.add(comboRendering = new JComboBox(o7));
 
         Box myBox = Box.createHorizontalBox();
@@ -132,9 +135,9 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
         add(myBox, BorderLayout.NORTH);
 
         testingPanel = new JPanel();
-        //testingPanel.setBackground(Color.white);
+        // testingPanel.setBackground(Color.white);
 
-        dgv = new DailyGraphView();
+        dgv = new DailyGraphView(PrefFontsAndColorPane.createDailyGraphValues());
 
         testingPanel.add(dgv, BorderLayout.CENTER);
         add(dgv, BorderLayout.CENTER);
@@ -155,43 +158,37 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
     @Override
     public void itemStateChanged(ItemEvent e)
     {
-        //saveProps();
+        // saveProps();
         changed = true;
-        dgv.setNewRenderingQuality();
-        dgv.repaint();
+        dgv.settingsChanged();
     }
 
-    
-    
-    
+    // ****************************************************************
+    // ****** HelpCapable Implementation *****
+    // ****************************************************************
 
-    // ****************************************************************
-    // ******              HelpCapable Implementation             *****
-    // ****************************************************************
-    
-    /* 
+    /*
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
     {
-	return this.getRootPane();
+        return this.getRootPane();
     }
 
-    /* 
+    /*
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
     {
-	return this.parent.getHelpButton();
+        return this.parent.getHelpButton();
     }
 
-    /* 
+    /*
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-	return "pages.GGC_Prefs_Rendering";
+        return "pages.GGC_Prefs_Rendering";
     }
-    
-    
+
 }

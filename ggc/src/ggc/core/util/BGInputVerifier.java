@@ -65,19 +65,22 @@ public class BGInputVerifier extends InputVerifier
 
             if (!nonNull) 
             {
-                if (bgStr == null || bgStr.equals(""))
+                if ((bgStr == null) || bgStr.equals(""))
                     return true;
             }
 
             //float bg = 
-            Float.parseFloat(bgStr);
+            if (Float.parseFloat(bgStr) < 0)
+            {
+                return false;
+            }
         } 
         catch (NumberFormatException e) 
         {
             input.setBorder(new LineBorder(Color.red));
             return false;
         }
-
+        
         input.setBorder(border);
         return true;
     }

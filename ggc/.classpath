@@ -19,7 +19,17 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/H2-1.0.69"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/pygmy-0.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PostgreSQL-8.2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ggc-web"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
+	<classpathentry kind="lib" path="/ggc-support/lib/jfreechart/jcommon-1.0.13.jar" sourcepath="/ggc-support/lib/jfreechart/jcommon-1.0.13-src.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/ggc-support/lib/jfreechart/jcommon-1.0.13-javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/ggc-support/lib/jfreechart/jfreechart-1.0.10.jar" sourcepath="/ggc-support/lib/jfreechart/jfreechart-1.0.10-src.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/ggc-support/lib/jfreechart/jfreechart-1.0.10-javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -25,14 +25,15 @@
  *  Author:   schultd
  */
 
-package ggc.gui.dialogs;
+package ggc.gui.dialogs.graphs;
 
 
 import ggc.core.data.GlucoValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.calendar.DateRangeSelectionPanel;
-import ggc.gui.view.FrequencyGraphView;
+import ggc.gui.graphs.DataPlotSelectorPanel;
+import ggc.gui.graphs.FrequencyGraphView;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -98,6 +99,9 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
 
         dRS = new DateRangeSelectionPanel();
 
+        DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel();
+        fGV.setData(selectionPanel.getPlotData());
+
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Dimension dim = new Dimension(120, 25);
 
@@ -121,6 +125,7 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
         buttonPanel.add(closeButton);
 
         cPanel.add(dRS, BorderLayout.WEST);
+        cPanel.add(selectionPanel, BorderLayout.CENTER);
         cPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         return cPanel;

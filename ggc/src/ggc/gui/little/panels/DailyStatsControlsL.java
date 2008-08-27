@@ -34,8 +34,8 @@ package ggc.gui.little.panels;
 
 import ggc.core.data.DailyValues;
 import ggc.core.util.I18nControl;
-import ggc.gui.dialogs.DailyGraphDialog;
 import ggc.gui.dialogs.DailyRowDialog;
+import ggc.gui.dialogs.graphs.DailyGraphDialog;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.panels.info.AbstractInfoPanel;
 
