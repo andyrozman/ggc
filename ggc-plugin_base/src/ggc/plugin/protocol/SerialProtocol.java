@@ -32,6 +32,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     private static Log log = LogFactory.getLog("ProtocolLog");
 
     
+    
     protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
     protected DataAccessPlugInBase m_da = null; //DataAccessMeter.getInstance();
 

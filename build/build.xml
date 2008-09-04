@@ -72,22 +72,31 @@
     	</subant>
     </target>
 	
-    <target name="plugin_meter" depends="plugin_base" description="create GGC Meter Tool (needs Base)">
+    <target name="plugin_meter" description="create GGC Meter Tool (needs Base)">
     	<echo message=""/>
-    	<echo message="  Start GGC Base Plugin build"/>
+    	<echo message="  Start GGC Meter Plugin build"/>
       	<echo message=""/>
+    	<subant target="deploy">
+    		<fileset dir="../ggc-meter" includes="*/build.xml" />
+    	</subant>
     </target>
 
     <target name="plugin_pump" description="create GGC Pump Tool">
     	<echo message=""/>
-    	<echo message="  Start GGC Base Plugin build"/>
+    	<echo message="  Start GGC Pump Plugin build"/>
       	<echo message=""/>
+    	<subant target="deploy">
+    		<fileset dir="../ggc-pump" includes="*/build.xml" />
+    	</subant>
     </target>
     	
     <target name="plugin_cgms" description="create GGC CGMS Plugin">
     	<echo message=""/>
     	<echo message="  Start GGC Base Plugin build"/>
       	<echo message=""/>
+    	<subant target="deploy">
+    		<fileset dir="../ggc-cgm" includes="*/build.xml" />
+    	</subant>
     </target>
 
 
