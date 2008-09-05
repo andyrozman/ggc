@@ -1,0 +1,167 @@
+TO-DO LIST
+==========
+
+Development of Meter Tools runs totally independent on GGC project
+------------------------------------------------------------------
+
+
+
+Tasks that need to be done:
+---------------------------
+
+    * List of meters (most of them, not all) (0.4)
+    * Configuration (0.4)
+    * Specific meter models (companies) implementations:
+         See list (under DONE) 
+    * Rewrite old meter imports: (0.5)
+                    * EuroFlash
+                    * FreeStyle
+                    * GlucoCard
+
+
+Documentation:
+---------------
+- How-To for Sniffing data for Meters (just add entry into forum)
+- JavaHelp for GUI
+
+
+===========================================================================
+DONE
+
+    * Graphical interface for integration into GGC (0.4)
+    * Communication framework for meters (interface that all meters will use)
+    * Base framework for meters
+    * Output types:
+          o Console and file output
+          o GGC Db Output (for manual import) 
+          o GGC Output (GUI integration) (0.4) 
+
+==========================================================================
+
+
+
+Meter implementations
+====================== 
+
+
+|               |                  |           |            |            |              |
+| Meter Company |    Meter         | Prot. av. | Planned St.| Planned En.| To implement | Done
+|---------------|------------------|-----------|------------|------------|--------------|--------
+| Ascensia      | Dex              | Yes       | 01.01.2008 | 31.08.2008 | Y            |  Done
+|               | Contour          | Yes       |            |            | Y            |  Done
+|               | Breeze           | Yes       |            |            | Y            |  Done
+|               | EliteXL          | Yes       |            |            | Y            |  Done
+| LifeScan      | Mini             | Yes (No)  | 01.01.2008 | 31.08.2008 | N            |
+|               | Ultra            | Yes       |            |            |              |
+|               | Ultra II.        | Yes       |            |            |              |
+|               | Ultra Smart      | No        |            |            |              |
+|               | Basic            | No        |            |            |              |
+|               | Surestep         | No        |            |            |              |
+|               | Profile          | Yes       |            |            |              |
+|               | II.              | Yes       |            |            |              |
+|               | Fast Take        | No        |            |            |              |
+| Abott         |                  | No        |            |            |              |
+|    Freestyle  | ~                | No        |            |            |              |
+|               | Freedom          | No        |            |            |              |
+|               | Freedom Lite     | No        |            |            |              |
+|               | Mini/Flash       | No        |            |            |              |
+|    Medisense  | Precission Xtra  | No        |            |            |              |
+                | Precission Xceed | No        |            |            |              |
+| Accu-Chek     | Active           | Yes       |            |            |  Y           |  Done
+|               | Aviva            | Yes       |            |            |  Y           |  Done
+|               | Compact Plus     | Yes       |            |            |  Y           |  Done
+|               | Compact/Integral | Yes       |            |            |  Y           |  Done
+|               | Go               | Yes       |            |            |  Y           |  Done
+|               | Sensor/Advantage | Yes       |            |            |  Y           |  Done
+|               | Comfort          | Yes       |            |            |  Y           |  Done
+|               | Voicemate Plus   | Yes       |            |            |  Y           |  Done
+
+
+
+Not planned for implementation at this time
+============================================
+
+B|Braun Omnitest Plus
+
+Bionime Rightest GM300
+
+EPS EasyPlus
+
+GlucoTalk
+
+GlukiDoc
+
+IME:  - ~
+      - Fidelity
+      
+Menarini: - Glucocard PC
+
+Prestige IQ
+
+Sensocard:  - ~
+            - Plus
+            
+smartLABsprint
+
+Stada Glucose Control
+
+Terumo FineTouch
+
+Boso:  - medicus PC
+       - mediwatch PC
+       - medilife PC
+
+CareTec SweetHeart
+
+Sensolite: - Nova
+           - Nova Plus
+
+Wavesense: - Keynote
+
+Diabetic Supply of Suncoast:  - Advocate
+                              - Advocate Duo
+                              - Advocate RediCode
+
+Diagnostic Devices:  - Prodigy Advance
+                     - Prodigy Audio
+                     - Prodigy Autocode
+                     - Prodigy Duo
+                     - Prodigy Eject
+                     - Prodigy Voice
+
+Arkray USA (formerly Hypoguard): - Advance Microdraw
+                                 - Advance Intuition
+                                 - Assure II
+                                 - Assure 3
+                                 - Assure 4
+                                 - Assure Pro
+                                 - PocketChem EZ
+                                 - Quicktek
+                                 - Supreme Plus
+
+HealthPia America:  - GlucoPack
+
+Home Diagnostics:  - Prestige IQ
+                   - Sidekick
+                   - TRUEread
+                   - TrueTrack
+
+Nova Biomedical:  - Nova Max
+
+Sanvita (BD Diabetes):  - Logic
+                        - Link 
+
+U.S. Diagnostics:   - Control AST
+                    - EasyGluco
+                    - EasyGluco G2
+
+
+------
+
+
+
+
+===============================================================================
+DONE
+===============================================================================
+
