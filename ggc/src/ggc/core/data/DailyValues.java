@@ -115,7 +115,7 @@ public class DailyValues implements Serializable
         changed = false;    
     }
 
-    public void setDateTime(long date)
+    public void setDate(long date)
     {
         //this.date = new Date(date);
         this.date = date;

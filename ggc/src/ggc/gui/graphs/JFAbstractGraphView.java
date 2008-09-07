@@ -43,6 +43,9 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.IntervalMarker;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.ui.Layer;
 
 /**
  * This is a replacement for AbstractGraphView using JFreeChart. It contains
@@ -264,5 +267,46 @@ public abstract class JFAbstractGraphView extends JPanel
     {
         colorScheme = newScheme;
         redraw();
+    }
+
+    /**
+     * Adds <code>{@link IntervalMarker IntervalMarkers}</code> to the passed
+     * <code>{@link XYPlot}</code> to highlight the low, target and high BG
+     * zones.
+     * 
+     * @param plot
+     *            The <code>{@link XYPlot}</code> to apply the markers to.
+     */
+    void applyMarkers(XYPlot plot)
+    {
+        if (plot == null)
+        {
+            return;
+        }
+
+        IntervalMarker lowBGMarker;
+        IntervalMarker targetBGMarker;
+
+        switch (BGUnit)
+        {
+        case DataAccess.BG_MMOL:
+            lowBGMarker = new IntervalMarker(0, settings.getBG2_TargetLow(), dataAccessInst.getColor(colorScheme
+                    .getColor_bg_low()));
+            targetBGMarker = new IntervalMarker(settings.getBG2_TargetLow(), settings.getBG2_TargetHigh(),
+                    dataAccessInst.getColor(colorScheme.getColor_bg_target()));
+            break;
+        case DataAccess.BG_MGDL:
+        default:
+            lowBGMarker = new IntervalMarker(0, settings.getBG1_TargetLow(), dataAccessInst.getColor(colorScheme
+                    .getColor_bg_low()));
+            targetBGMarker = new IntervalMarker(settings.getBG1_TargetLow(), settings.getBG1_TargetHigh(),
+                    dataAccessInst.getColor(colorScheme.getColor_bg_target()));
+            break;
+        }
+
+        plot.clearRangeMarkers();
+        plot.addRangeMarker(lowBGMarker, Layer.BACKGROUND);
+        plot.addRangeMarker(targetBGMarker, Layer.BACKGROUND);
+        plot.setBackgroundPaint(dataAccessInst.getColor(colorScheme.getColor_bg_high()));
     }
 }

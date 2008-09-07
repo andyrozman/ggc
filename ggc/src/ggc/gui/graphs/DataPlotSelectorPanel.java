@@ -49,7 +49,6 @@ import javax.swing.event.ChangeListener;
  */
 public class DataPlotSelectorPanel extends JPanel implements ChangeListener
 {
-    // TODO: add methods to manually set components
     PlotData data = new PlotData();
     DataAccess dataAccessInstance = DataAccess.getInstance();
     I18nControl translator = I18nControl.getInstance();
@@ -111,7 +110,13 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
 
     /**
      * Initialises the <code>{@link JPanel panel}</code> with the specified
-     * checkboxes selected.
+     * checkboxes selected.<br>
+     * <br>
+     * Use the <code>*_MASK</code> constants to select the
+     * <code>{@link JCheckBox checkboxes}</code>.
+     * <code>{@link #INS2_MASK} & {@link #CH_MASK}</code> will apply the action
+     * to <code>{@link #ins2Box}</code> and <code>{@link #CHBox}</code>, for
+     * example.
      * 
      * @param initialSelection
      *            A bitmask specifying the checkboxes to be preselected.
@@ -122,7 +127,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         setBorder(BorderFactory.createTitledBorder(translator.getMessage("TO_BE_DRAWN") + ":"));
         initBoxes();
         addBoxes();
-        preSelectBoxes(initialSelection);
+        selectBoxes(initialSelection, true);
     }
 
     private void initBoxes()
@@ -195,7 +200,21 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         add(mealsBox);
     }
 
-    private void preSelectBoxes(int initialSelection)
+    /**
+     * Use the <code>*_MASK</code> constants to select the
+     * <code>{@link JCheckBox checkboxes}</code>.
+     * <code>{@link #INS2_MASK} & {@link #CH_MASK}</code> will apply the action
+     * to <code>{@link #ins2Box}</code> and <code>{@link #CHBox}</code>, for
+     * example.
+     * 
+     * @param initialSelection
+     *            Specifies which <code>{@link JCheckBox checkboxes}</code> to
+     *            de-/select.
+     * @param enable
+     *            Whether to set or unset the specified
+     *            <code>{@link JCheckBox checkboxes}</code>.
+     */
+    public void selectBoxes(int initialSelection, boolean enable)
     {
         if (initialSelection == 0)
         {
@@ -204,76 +223,76 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
 
         if ((initialSelection & BG_MASK) == BG_MASK)
         {
-            BGBox.setSelected(true);
+            BGBox.setSelected(enable);
         }
         if ((initialSelection & BG_AVG_MASK) == BG_AVG_MASK)
         {
-            BGDayAvgBox.setSelected(true);
+            BGDayAvgBox.setSelected(enable);
         }
         if ((initialSelection & BG_READINGS_MASK) == BG_READINGS_MASK)
         {
-            BGReadingsBox.setSelected(true);
+            BGReadingsBox.setSelected(enable);
         }
 
         if ((initialSelection & CH_MASK) == CH_MASK)
         {
-            CHBox.setSelected(true);
+            CHBox.setSelected(enable);
         }
         if ((initialSelection & CH_AVG_MASK) == CH_AVG_MASK)
         {
-            CHDayAvgBox.setSelected(true);
+            CHDayAvgBox.setSelected(enable);
         }
         if ((initialSelection & CH_SUM_MASK) == CH_SUM_MASK)
         {
-            CHSumBox.setSelected(true);
+            CHSumBox.setSelected(enable);
         }
 
         if ((initialSelection & INS1_MASK) == INS1_MASK)
         {
-            ins1Box.setSelected(true);
+            ins1Box.setSelected(enable);
         }
         if ((initialSelection & INS1_AVG_MASK) == INS1_AVG_MASK)
         {
-            ins1DayAvgBox.setSelected(true);
+            ins1DayAvgBox.setSelected(enable);
         }
         if ((initialSelection & INS1_SUM_MASK) == INS1_SUM_MASK)
         {
-            ins1SumBox.setSelected(true);
+            ins1SumBox.setSelected(enable);
         }
 
         if ((initialSelection & INS2_MASK) == INS2_MASK)
         {
-            ins2Box.setSelected(true);
+            ins2Box.setSelected(enable);
         }
         if ((initialSelection & INS2_AVG_MASK) == INS2_AVG_MASK)
         {
-            ins2DayAvgBox.setSelected(true);
+            ins2DayAvgBox.setSelected(enable);
         }
         if ((initialSelection & INS2_SUM_MASK) == INS2_SUM_MASK)
         {
-            ins2SumBox.setSelected(true);
+            ins2SumBox.setSelected(enable);
         }
 
         if ((initialSelection & INS_TOTAL_MASK) == INS_TOTAL_MASK)
         {
-            insTotalBox.setSelected(true);
+            insTotalBox.setSelected(enable);
         }
         if ((initialSelection & INS_TOTAL_AVG_MASK) == INS_TOTAL_AVG_MASK)
         {
-            insTotalDayAvgBox.setSelected(true);
+            insTotalDayAvgBox.setSelected(enable);
         }
         if ((initialSelection & INS_TOTAL_SUM_MASK) == INS_TOTAL_SUM_MASK)
         {
-            insTotalSumBox.setSelected(true);
+            insTotalSumBox.setSelected(enable);
         }
 
         if ((initialSelection & INS_PER_CH_MASK) == INS_PER_CH_MASK)
         {
-            insPerCHBox.setSelected(true);
+            insPerCHBox.setSelected(enable);
         }
         if ((initialSelection & MEALS_MASK) == MEALS_MASK)
         {
-            mealsBox.setSelected(true);
+            mealsBox.setSelected(enable);
         }
     }
 

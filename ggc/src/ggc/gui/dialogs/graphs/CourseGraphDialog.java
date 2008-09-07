@@ -89,7 +89,10 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
 
         dRS = new DateRangeSelectionPanel();
 
-        DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel(DataPlotSelectorPanel.BG_MASK);
+        DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel(DataPlotSelectorPanel.BG_AVG_MASK);
+        selectionPanel.disableChoice(DataPlotSelectorPanel.BG_MASK | DataPlotSelectorPanel.CH_MASK
+                | DataPlotSelectorPanel.INS1_MASK | DataPlotSelectorPanel.INS2_MASK
+                | DataPlotSelectorPanel.INS_TOTAL_MASK);
         cGV.setData(selectionPanel.getPlotData());
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));

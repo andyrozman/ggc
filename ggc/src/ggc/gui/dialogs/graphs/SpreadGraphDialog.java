@@ -94,7 +94,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
 
         dRS = new DateRangeSelectionPanel();
 
-        DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel();
+        DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel(DataPlotSelectorPanel.BG_MASK);
         sGV.setData(selectionPanel.getPlotData());
 
         JPanel optionsPanel = new JPanel();
@@ -164,7 +164,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
     }
 
     // ****************************************************************
-    // ******             HelpCapable Implementation              *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
 
     /*

@@ -29,50 +29,101 @@
 
 package ggc.gui.graphs;
 
-import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.PlotData;
 import ggc.core.data.ReadablePlotData;
+import ggc.core.util.MathUtils;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Rectangle2D;
+import java.awt.BorderLayout;
+import java.text.SimpleDateFormat;
 
-public class CourseGraphView extends AbstractGraphView
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+
+public class CourseGraphView extends JFAbstractGraphView
 {
     private static final long serialVersionUID = -7960828650875426272L;
-    private GlucoValues gV = null;
-    private ReadablePlotData data = null;
+    private GlucoValues data = new GlucoValues();
+    private ReadablePlotData plotData = null;
+    private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
+    private TimeSeriesCollection readingsDataset = new TimeSeriesCollection();
+    private TimeSeriesCollection sumDataset = new TimeSeriesCollection();
+    private TimeSeriesCollection averageDataset = new TimeSeriesCollection();
 
+    /**
+     * Draws an empty graph.
+     */
     public CourseGraphView()
     {
-        this(null, new PlotData());
+        this(new GlucoValues(), new PlotData());
     }
 
+    /**
+     * Initialize and draw an empty graph with the passed
+     * <code>{@link PlotData data}</code>.<br>
+     * <code>{@link #setGlucoValues(GlucoValues)}</code> should be used to add
+     * data to the graph.
+     * 
+     * @param data
+     *            The <code>{@link PlotData}</code> specifying what data to
+     *            plot.
+     */
     public CourseGraphView(PlotData data)
     {
-        this(null, data);
+        this(new GlucoValues(), data);
     }
 
+    /**
+     * Initialize and draw this graph with the passed
+     * <code>{@link GlucoValues}</code>, plotting the data specified by the
+     * passed <code>{@link PlotData}</code>.
+     * 
+     * @param gV
+     *            The <code>{@link GlucoValues}</code> containing the plotted
+     *            data.
+     * @param data
+     *            The <code>{@link PlotData}</code> specifying what data to
+     *            plot.
+     */
     public CourseGraphView(GlucoValues gV, PlotData data)
     {
         super();
-        this.gV = gV;
-        this.data = data;
-        if (gV != null)
-        {
-            dayCount = gV.getDayCount();
-        }
+        this.data = gV;
+        this.plotData = data;
+        setBackground(backgroundColor);
+
+        chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"), String.format(
+            translator.getMessage("AXIS_VALUE_LABEL"), unitLabel), BGDataset, true, true, false);
+        chartPanel = new ChartPanel(chart, false, true, true, false, true);
+        chartPanel.setDomainZoomable(true);
+        chartPanel.setRangeZoomable(true);
+        setLayout(new BorderLayout());
+        add(chartPanel, BorderLayout.CENTER);
+        redraw();
     }
 
+    /**
+     * Set the <code>{@link GlucoValues data}</code> to be used for drawing this
+     * graph and trigger a redraw.
+     * 
+     * @param gV
+     *            The <code>{@link GlucoValues}</code> to use for drawing this
+     *            graph.
+     */
     public void setGlucoValues(GlucoValues gV)
     {
-        this.gV = gV;
-        dayCount = gV.getDayCount();
+        this.data = gV;
+        redraw();
     }
 
     /**
@@ -81,267 +132,333 @@ public class CourseGraphView extends AbstractGraphView
      */
     public void setData(ReadablePlotData data)
     {
-        this.data = data;
+        this.plotData = data;
+        redraw();
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * ggc.gui.graphs.JFAbstractGraphView#drawFramework(org.jfree.chart.JFreeChart
+     * )
+     */
     @Override
-    public void paint(Graphics g)
+    protected void drawFramework(JFreeChart chart)
     {
-        Graphics2D g2D = (Graphics2D) g;
-
-        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oAA);
-        g2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, oCR);
-        g2D.setRenderingHint(RenderingHints.KEY_DITHERING, oD);
-        g2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, oFM);
-        g2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, oI);
-        g2D.setRenderingHint(RenderingHints.KEY_RENDERING, oR);
-        g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, oTAA);
-
-        calculateSizes();
-
-        drawFramework(g2D);
-        drawValues(g2D);
-    }
-
-    @Override
-    protected void drawFramework(Graphics2D g2D)
-    {
-        Dimension dim = getSize();
-        int h = dim.height, w = dim.width;
-
-        int markPos = 0;
-        int diffH = h - lowerSpace - upperSpace;
-        int diffW = w - rightSpace - leftSpace;
-        // distance between lables on the vertical scale
-        float labelDeltaV = ((float) BGDiff) / counter;
-
-        Rectangle2D.Float rect0 = new Rectangle2D.Float(0, 0, w, h);
-        g2D.setPaint(Color.white);
-        g2D.fill(rect0);
-        g2D.draw(rect0);
-
-        g2D.setPaint(Color.black);
-        g2D.drawLine(leftSpace, upperSpace, leftSpace, h - lowerSpace);
-
-        for (int i = 0; i <= counter; i++)
+        if (chart == null)
         {
-            markPos = upperSpace + i * diffH / counter;
-            g2D.drawString(Math.round(maxBG - labelDeltaV * i) + "", 5, markPos + 5);
-            g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
-        }
-        g2D.drawLine(leftSpace, h - lowerSpace, w - rightSpace, h - lowerSpace);
-
-        if (gV != null)
-        {
-            int days = 10;
-            if (dayCount < days)
-            {
-                days = (int) dayCount;
-            }
-
-            float scale = (float) (dayCount - 1) / (days - 1);
-            String dayDate;
-            for (int i = 0; i < days; i++)
-            {
-                dayDate = gV.getDateForDayAt(Math.round(i * scale));
-
-                // handle small data sets
-                if (m_da.isEmptyOrUnset(dayDate))
-                {
-                    break;
-                }
-
-                markPos = leftSpace + i * (diffW) / (days - 1);
-                g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace + 5);
-                g2D.drawString(dayDate, markPos - 10, h - lowerSpace + 20);
-            }
+            return;
         }
 
-        // Target Zone
-        Rectangle2D.Float rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxGoodBG), drawableWidth,
-                BGtoCoord(minGoodBG) - BGtoCoord(maxGoodBG));
-        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_target()));
-        g2D.fill(rect1);
-        g2D.draw(rect1);
+        XYPlot plot = chart.getXYPlot();
+        XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
+        XYLineAndShapeRenderer averageRenderer = new XYLineAndShapeRenderer();
+        XYLineAndShapeRenderer sumRenderer = new XYLineAndShapeRenderer();
+        XYLineAndShapeRenderer readingsRenderer = new XYLineAndShapeRenderer();
+        NumberAxis BGAxis = (NumberAxis) plot.getRangeAxis();
+        NumberAxis averageAxis = new NumberAxis();
+        NumberAxis sumAxis = new NumberAxis();
+        NumberAxis readingsAxis = new NumberAxis();
+        DateAxis dateAxis = (DateAxis) plot.getDomainAxis();
 
-        // High Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(maxBG), drawableWidth, BGtoCoord(maxGoodBG)
-                - BGtoCoord(maxBG) - 1);
-        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_high()));
-        g2D.fill(rect1);
-        g2D.draw(rect1);
+        if (plotData.isPlotCHDayAvg() || plotData.isPlotIns1DayAvg() || plotData.isPlotIns2DayAvg()
+                || plotData.isPlotInsTotalDayAvg() || plotData.isPlotInsPerCH())
+        {
+            plot.setRangeAxis(1, averageAxis);
+            plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
+            plot.setDataset(1, averageDataset);
+            plot.mapDatasetToRangeAxis(1, 1);
+            plot.setRenderer(1, averageRenderer);
+        }
 
-        // Low Zone
-        rect1 = new Rectangle2D.Float(leftSpace + 1, BGtoCoord(minGoodBG), drawableWidth, BGtoCoord(0)
-                - BGtoCoord(minGoodBG) - 1);
-        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_low()));
-        g2D.fill(rect1);
-        g2D.draw(rect1);
+        if (plotData.isPlotCHSum() || plotData.isPlotIns1Sum() || plotData.isPlotIns2Sum()
+                || plotData.isPlotInsTotalSum())
+        {
+            plot.setRangeAxis(2, sumAxis);
+            plot.setRangeAxisLocation(2, AxisLocation.BOTTOM_OR_RIGHT);
+            plot.setDataset(2, sumDataset);
+            plot.mapDatasetToRangeAxis(2, 2);
+            plot.setRenderer(2, sumRenderer);
+        }
 
+        if (plotData.isPlotMeals() || plotData.isPlotBGReadings())
+        {
+            plot.setRangeAxis(3, readingsAxis);
+            plot.setRangeAxisLocation(3, AxisLocation.BOTTOM_OR_LEFT);
+            plot.setDataset(3, readingsDataset);
+            plot.mapDatasetToRangeAxis(3, 3);
+            plot.setRenderer(3, readingsRenderer);
+        }
+
+        applyMarkers(plot);
+        plot.setRangeGridlinesVisible(false);
+        plot.setDomainGridlinesVisible(false);
+
+        dateAxis.setDateFormatOverride(new SimpleDateFormat(translator.getMessage("FORMAT_DATE_DAYS")));
+
+        defaultRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_bg_avg()));
+
+        averageRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ch())
+                .darker());
+        averageRenderer.setSeriesPaint(1, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins1())
+                .darker());
+        averageRenderer.setSeriesPaint(2, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins2())
+                .darker());
+        averageRenderer.setSeriesPaint(3, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins())
+                .darker());
+        averageRenderer.setSeriesPaint(4, dataAccessInst.getColor(settings.getSelectedColorScheme()
+                .getColor_ins_perbu()));
+
+        sumRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ch()));
+        sumRenderer.setSeriesPaint(1, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins1()));
+        sumRenderer.setSeriesPaint(2, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins2()));
+        sumRenderer.setSeriesPaint(3, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins()));
+
+        readingsRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_bg()));
+        readingsRenderer.setSeriesPaint(1, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ch())
+                .brighter());
+
+        chart.setBackgroundPaint(backgroundColor);
+        chart.setRenderingHints(renderingHints);
+        chart.setBorderVisible(false);
+
+        BGAxis.setAutoRangeIncludesZero(true);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * ggc.gui.graphs.JFAbstractGraphView#drawValues(org.jfree.chart.JFreeChart)
+     */
     @Override
-    protected void drawValues(Graphics2D g2D)
+    protected void drawValues(JFreeChart chart)
     {
-        // CourseGraphFrame cGF = CourseGraphFrame.getInstance();
+        DailyValuesRow row;
+        Day time;
 
-        GeneralPath plBG = new GeneralPath();
-        // GeneralPath plAvgBGDay = new GeneralPath();
-        GeneralPath plSumBU = new GeneralPath();
-        GeneralPath plMeals = new GeneralPath();
-        GeneralPath plSumIns1 = new GeneralPath();
-        GeneralPath plSumIns2 = new GeneralPath();
-        GeneralPath plSumIns = new GeneralPath();
-        GeneralPath plInsPerBU = new GeneralPath();
-
-        boolean firstBG = true;
-        // boolean firstAvgBGDay = true;
-        boolean firstMeals = true;
-        boolean firstSumBU = true;
-        boolean firstSumIns1 = true;
-        boolean firstSumIns2 = true;
-        boolean firstSumIns = true;
-        boolean firstInsPerBU = true;
-
-        DailyValues dV;
-
-        g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_avg()));
-
-        for (int i = 0; i < dayCount; i++)
+        if (BGDataset == null)
         {
-            dV = gV.getDailyValuesForDay(i);
-            float multiWidth = dayWidthC * i;
-            float offset = multiWidth + leftSpace + dayWidthC / 2;
+            return;
+        }
 
-            // draw BG
-            for (int j = 0; j < dV.getRowCount(); j++)
+        BGDataset.removeAllSeries();
+        averageDataset.removeAllSeries();
+        sumDataset.removeAllSeries();
+        readingsDataset.removeAllSeries();
+
+        if (data == null)
+        {
+            return;
+        }
+
+        TimeSeries BGAvgSeries = new TimeSeries(translator.getMessage("AVG_BG_PER_DAY"), Day.class);
+        TimeSeries BGReadingsSeries = new TimeSeries(translator.getMessage("READINGS"), Day.class);
+        TimeSeries CHAvgSeries = new TimeSeries(translator.getMessage("AVG_MEAL_SIZE"), Day.class);
+        TimeSeries CHSumSeries = new TimeSeries(translator.getMessage("SUM_BU"), Day.class);
+        TimeSeries ins1AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns1Name(),
+                Day.class);
+        TimeSeries ins1SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns1Name(),
+                Day.class);
+        TimeSeries ins2AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns2Name(),
+                Day.class);
+        TimeSeries ins2SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns2Name(),
+                Day.class);
+        TimeSeries insAvgSeries = new TimeSeries(translator.getMessage("AVG_INS"), Day.class);
+        TimeSeries insSumSeries = new TimeSeries(translator.getMessage("SUM_INSULIN"), Day.class);
+        TimeSeries insPerCHSeries = new TimeSeries(translator.getMessage("INS_SLASH_BU"), Day.class);
+        TimeSeries mealsSeries = new TimeSeries(translator.getMessage("MEALS"), Day.class);
+
+        int days = data.getDayCount();
+        for (int i = 0; i < days; i++)
+        {
+            for (int j = 0; j < data.getDailyValuesForDay(i).getRowCount(); j++)
             {
-                float tmpBG = dV.getBGAt(j);
+                row = data.getDailyValuesForDay(i).getRow(j);
+                time = new Day(row.getDateTimeAsDate());
 
-                if (tmpBG != 0)
+                if (row.getBG(BGUnit) > 0)
                 {
-                    int X = (int) (multiWidth + DateTimetoCoord(dV.getDateTimeAt(j)));
-                    int Y = BGtoCoord(tmpBG);
-                    if (firstBG)
+                    if (BGAvgSeries.getDataItem(time) == null)
                     {
-                        plBG.moveTo(X, Y);
-                        firstBG = false;
+                        BGAvgSeries.add(time, row.getBG(BGUnit));
                     }
                     else
-                        plBG.lineTo(X, Y);
+                    {
+                        BGAvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getBG(BGUnit), BGAvgSeries.getDataItem(
+                            time).getValue()));
+                    }
+                }
+                if (row.getBG(BGUnit) > 0)
+                {
+                    if (BGReadingsSeries.getDataItem(time) == null)
+                    {
+                        BGReadingsSeries.add(time, 1);
+                    }
+                    else
+                    {
+                        BGReadingsSeries.addOrUpdate(time, MathUtils.add(1, BGReadingsSeries.getDataItem(time)
+                                .getValue()));
+                    }
+                }
+
+                if (row.getCH() > 0)
+                {
+                    if (CHAvgSeries.getDataItem(time) == null)
+                    {
+                        CHAvgSeries.add(time, row.getCH());
+                    }
+                    else
+                    {
+                        CHAvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getCH(), CHAvgSeries.getDataItem(time)
+                                .getValue()));
+                    }
+                }
+                if (row.getCH() > 0)
+                {
+                    if (CHSumSeries.getDataItem(time) == null)
+                    {
+                        CHSumSeries.add(time, row.getCH());
+                    }
+                    else
+                    {
+                        CHSumSeries.addOrUpdate(time, MathUtils.add(row.getCH(), CHSumSeries.getDataItem(time)
+                                .getValue()));
+                    }
+                }
+
+                if (row.getIns1() > 0)
+                {
+                    if (ins1AvgSeries.getDataItem(time) == null)
+                    {
+                        ins1AvgSeries.add(time, row.getIns1());
+                    }
+                    else
+                    {
+                        ins1AvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns1(), ins1AvgSeries.getDataItem(
+                            time).getValue()));
+                    }
+                }
+                if (row.getIns1() > 0)
+                {
+                    if (ins1SumSeries.getDataItem(time) == null)
+                    {
+                        ins1SumSeries.add(time, row.getIns1());
+                    }
+                    else
+                    {
+                        ins1SumSeries.addOrUpdate(time, MathUtils.add(row.getIns1(), ins1SumSeries.getDataItem(time)
+                                .getValue()));
+                    }
+                }
+
+                if (row.getIns2() > 0)
+                {
+                    if (ins2AvgSeries.getDataItem(time) == null)
+                    {
+                        ins2AvgSeries.add(time, row.getIns2());
+                    }
+                    else
+                    {
+                        ins2AvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns2(), ins2AvgSeries.getDataItem(
+                            time).getValue()));
+                    }
+                }
+                if (row.getIns2() > 0)
+                {
+                    if (ins2SumSeries.getDataItem(time) == null)
+                    {
+                        ins2SumSeries.add(time, row.getIns2());
+                    }
+                    else
+                    {
+                        ins2SumSeries.addOrUpdate(time, MathUtils.add(row.getIns2(), ins2SumSeries.getDataItem(time)
+                                .getValue()));
+                    }
+                }
+
+                if ((row.getIns1() > 0) || (row.getIns2() > 0))
+                {
+                    if (insAvgSeries.getDataItem(time) == null)
+                    {
+                        insAvgSeries.add(time, row.getIns1() + row.getIns2());
+                    }
+                    else
+                    {
+                        insAvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns1() + row.getIns2(), insAvgSeries
+                                .getDataItem(time).getValue()));
+                    }
+                }
+                if ((row.getIns1() > 0) || (row.getIns2() > 0))
+                {
+                    if (insSumSeries.getDataItem(time) == null)
+                    {
+                        insSumSeries.add(time, row.getIns1() + row.getIns2());
+                    }
+                    else
+                    {
+                        insSumSeries.addOrUpdate(time, MathUtils.add(row.getIns1() + row.getIns2(), insSumSeries
+                                .getDataItem(time).getValue()));
+                    }
+                }
+
+                if ((CHSumSeries.getDataItem(time) != null)
+                        && (CHSumSeries.getDataItem(time).getValue().doubleValue() > 0))
+                {
+                    insPerCHSeries.addOrUpdate(time, insSumSeries.getDataItem(time).getValue().doubleValue()
+                            / CHSumSeries.getDataItem(time).getValue().doubleValue());
+                }
+                if (row.getCH() > 0)
+                {
+                    if (mealsSeries.getDataItem(time) == null)
+                    {
+                        mealsSeries.add(time, 1);
+                    }
+                    else
+                    {
+                        mealsSeries.addOrUpdate(time, MathUtils.add(1, mealsSeries.getDataItem(time).getValue()));
+                    }
                 }
             }
-
-            // draw avgBGDay
-            // if (firstAvgBGDay) {
-            // plAvgBGDay.moveTo(offset, BGtoCoord(dV.getAvgBG()));
-            // firstAvgBGDay = false;
-            // } else
-            // plAvgBGDay.lineTo(offset, BGtoCoord(dV.getAvgBG()));
-            if (data.isPlotBGDayAvg())
-            {
-                int tmp = BGtoCoord(dV.getAvgBG());
-                g2D.drawLine((int) multiWidth + leftSpace, tmp, (int) (multiWidth + dayWidthC + leftSpace), tmp);
-            }
-
-            // draw sumBU
-            if (firstSumBU)
-            {
-                plSumBU.moveTo(offset, BUtoCoord(dV.getSumCH()));
-                firstSumBU = false;
-            }
-            else
-                plSumBU.lineTo(offset, BUtoCoord(dV.getSumCH()));
-
-            // draw sumMeals
-            if (firstMeals)
-            {
-                plMeals.moveTo(offset, BUtoCoord(dV.getCHCount()));
-                firstMeals = false;
-            }
-            else
-                plMeals.lineTo(offset, BUtoCoord(dV.getCHCount()));
-
-            // draw Ins1
-            if (firstSumIns1)
-            {
-                plSumIns1.moveTo(offset, InstoCoord(dV.getSumIns1()));
-                firstSumIns1 = false;
-            }
-            else
-                plSumIns1.lineTo(offset, InstoCoord(dV.getSumIns1()));
-
-            // draw Ins2
-            if (firstSumIns2)
-            {
-                plSumIns2.moveTo(offset, InstoCoord(dV.getSumIns2()));
-                firstSumIns2 = false;
-            }
-            else
-                plSumIns2.lineTo(offset, InstoCoord(dV.getSumIns2()));
-
-            // draw Ins
-            if (firstSumIns)
-            {
-                plSumIns.moveTo(offset, InstoCoord(dV.getSumIns()));
-                firstSumIns = false;
-            }
-            else
-                plSumIns.lineTo(offset, InstoCoord(dV.getSumIns()));
-
-            // draw Ins / BU
-            if (firstInsPerBU)
-            {
-                plInsPerBU.moveTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumCH()));
-                firstInsPerBU = false;
-            }
-            else
-                plInsPerBU.lineTo(offset, InsPerBUtoCoord(dV.getIns2Count() / dV.getSumCH()));
         }
 
-        if (data.isPlotBG())
-        {
-            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg()));
-            g2D.draw(plBG);
-        }
+        if (!plotData.isPlotBGDayAvg())
+            BGAvgSeries = new TimeSeries(translator.getMessage("AVG_BG_PER_DAY"), Day.class);
+        if (!plotData.isPlotBGReadings())
+            BGReadingsSeries = new TimeSeries(translator.getMessage("READINGS"), Day.class);
+        if (!plotData.isPlotCHDayAvg())
+            CHAvgSeries = new TimeSeries(translator.getMessage("AVG_MEAL_SIZE"), Day.class);
+        if (!plotData.isPlotCHSum())
+            CHSumSeries = new TimeSeries(translator.getMessage("SUM_BU"), Day.class);
+        if (!plotData.isPlotIns1DayAvg())
+            ins1AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns1Name(), Day.class);
+        if (!plotData.isPlotIns1Sum())
+            ins1SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns1Name(), Day.class);
+        if (!plotData.isPlotIns2DayAvg())
+            ins2AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns2Name(), Day.class);
+        if (!plotData.isPlotIns2Sum())
+            ins2SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns2Name(), Day.class);
+        if (!plotData.isPlotInsTotalDayAvg())
+            insAvgSeries = new TimeSeries(translator.getMessage("AVG_INS"), Day.class);
+        if (!plotData.isPlotInsTotalSum())
+            insSumSeries = new TimeSeries(translator.getMessage("SUM_INSULIN"), Day.class);
+        if (!plotData.isPlotInsPerCH())
+            insPerCHSeries = new TimeSeries(translator.getMessage("INS_SLASH_BU"), Day.class);
+        if (!plotData.isPlotMeals())
+            mealsSeries = new TimeSeries(translator.getMessage("MEALS"), Day.class);
 
-        // if (cGF.getDrawAvgBGDay()) {
-        // g2D.setPaint(props.getColorAvgBG());
-        // g2D.draw(plAvgBGDay);
-        // }
-
-        if (data.isPlotCHSum())
-        {
-            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ch()));
-            g2D.draw(plSumBU);
-        }
-        if (data.isPlotMeals())
-        {
-            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ch()));
-            g2D.draw(plMeals);
-        }
-        if (data.isPlotIns1Sum())
-        {
-            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins1()));
-            g2D.draw(plSumIns1);
-        }
-
-        if (data.isPlotIns2Sum())
-        {
-            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins2()));
-            g2D.draw(plSumIns2);
-        }
-
-        if (data.isPlotInsTotal())
-        {
-            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins()));
-            g2D.draw(plSumIns);
-        }
-
-        if (data.isPlotInsPerCH())
-        {
-            g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_ins_perbu()));
-            g2D.draw(plInsPerBU);
-        }
+        BGDataset.addSeries(BGAvgSeries);
+        sumDataset.addSeries(CHSumSeries);
+        sumDataset.addSeries(ins1SumSeries);
+        sumDataset.addSeries(ins2SumSeries);
+        sumDataset.addSeries(insSumSeries);
+        averageDataset.addSeries(CHAvgSeries);
+        averageDataset.addSeries(ins1AvgSeries);
+        averageDataset.addSeries(ins2AvgSeries);
+        averageDataset.addSeries(insAvgSeries);
+        averageDataset.addSeries(insPerCHSeries);
+        readingsDataset.addSeries(BGReadingsSeries);
+        readingsDataset.addSeries(mealsSeries);
     }
 }

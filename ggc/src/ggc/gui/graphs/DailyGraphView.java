@@ -44,14 +44,12 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.DateRange;
 import org.jfree.data.time.Hour;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.ui.Layer;
 
 /**
  * This is a replacement for DailyGraphView using JFreeChart.
@@ -113,9 +111,9 @@ public class DailyGraphView extends JFAbstractGraphView
         chartPanel = new ChartPanel(chart, false, true, true, false, true);
         chartPanel.setDomainZoomable(false);
         chartPanel.setRangeZoomable(true);
-        redraw();
         setLayout(new BorderLayout());
         add(chartPanel, BorderLayout.CENTER);
+        redraw();
     }
 
     /*
@@ -139,29 +137,7 @@ public class DailyGraphView extends JFAbstractGraphView
         dateAxis = (DateAxis) plot.getDomainAxis();
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
-        IntervalMarker lowBGMarker;
-        IntervalMarker targetBGMarker;
 
-        switch (BGUnit)
-        {
-        case DataAccess.BG_MMOL:
-            lowBGMarker = new IntervalMarker(0, settings.getBG2_TargetLow(), dataAccessInst.getColor(colorScheme
-                    .getColor_bg_low()));
-            targetBGMarker = new IntervalMarker(settings.getBG2_TargetLow(), settings.getBG2_TargetHigh(),
-                    dataAccessInst.getColor(colorScheme.getColor_bg_target()));
-            break;
-        case DataAccess.BG_MGDL:
-        default:
-            lowBGMarker = new IntervalMarker(0, settings.getBG1_TargetLow(), dataAccessInst.getColor(colorScheme
-                    .getColor_bg_low()));
-            targetBGMarker = new IntervalMarker(settings.getBG1_TargetLow(), settings.getBG1_TargetHigh(),
-                    dataAccessInst.getColor(colorScheme.getColor_bg_target()));
-            break;
-        }
-
-        plot.addRangeMarker(lowBGMarker, Layer.BACKGROUND);
-        plot.addRangeMarker(targetBGMarker, Layer.BACKGROUND);
-        plot.setDomainGridlinesVisible(false);
 
         chart.setBackgroundPaint(backgroundColor);
         chart.setRenderingHints(renderingHints);
@@ -172,8 +148,9 @@ public class DailyGraphView extends JFAbstractGraphView
         plot.setDataset(1, insBUDataset);
         plot.mapDatasetToRangeAxis(1, 1);
         plot.setRenderer(1, insBURenderer);
+        applyMarkers(plot);
         plot.setRangeGridlinesVisible(false);
-        plot.setBackgroundPaint(dataAccessInst.getColor(colorScheme.getColor_bg_high()));
+        plot.setDomainGridlinesVisible(false);
 
         defaultRenderer.setSeriesPaint(0, dataAccessInst.getColor(colorScheme.getColor_bg()));
         insBURenderer.setSeriesPaint(0, dataAccessInst.getColor(colorScheme.getColor_ch()));
@@ -284,6 +261,7 @@ public class DailyGraphView extends JFAbstractGraphView
                 }
             }
         }
+
         BGDataset.addSeries(BGSeries);
         insBUDataset.addSeries(CHSeries);
         insBUDataset.addSeries(ins1Series);

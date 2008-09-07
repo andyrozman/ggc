@@ -27,7 +27,6 @@
 
 package ggc.gui.dialogs.graphs;
 
-
 import ggc.core.data.GlucoValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
@@ -48,22 +47,20 @@ import javax.swing.JPanel;
 
 import com.atech.help.HelpCapable;
 
-
 public class FrequencyGraphDialog extends JDialog implements ActionListener, HelpCapable
 {
     /**
      * 
      */
     private static final long serialVersionUID = 7116976481780328914L;
-    private I18nControl m_ic = I18nControl.getInstance();    
+    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = null;
 
     private FrequencyGraphView fGV;
     JButton help_button = null;
 
-    //ivate GGCProperties props = GGCProperties.getInstance();
+    // ivate GGCProperties props = GGCProperties.getInstance();
     private DateRangeSelectionPanel dRS;
-
 
     public FrequencyGraphDialog(DataAccess da)
     {
@@ -72,13 +69,12 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
 
         this.m_da = da;
         /*
-	Rectangle rec = parent.getBounds();
-	int x = rec.x + (rec.width/2);
-	int y = rec.y + (rec.height/2);
-
-	setBounds(x-350, y-250, 700, 500);
-        addWindowListener(new CloseListener());
-        */
+         * Rectangle rec = parent.getBounds(); int x = rec.x + (rec.width/2);
+         * int y = rec.y + (rec.height/2);
+         * 
+         * setBounds(x-350, y-250, 700, 500); addWindowListener(new
+         * CloseListener());
+         */
         setSize(700, 520);
 
         fGV = new FrequencyGraphView();
@@ -88,10 +84,9 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
         getContentPane().add(controlPanel, BorderLayout.SOUTH);
 
         m_da.enableHelp(this);
-        
+
         setVisible(true);
     }
-
 
     private JPanel initControlPanel()
     {
@@ -99,29 +94,35 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
 
         dRS = new DateRangeSelectionPanel();
 
-        DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel();
+        DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel(DataPlotSelectorPanel.BG_READINGS_MASK);
         fGV.setData(selectionPanel.getPlotData());
+        selectionPanel.disableChoice(DataPlotSelectorPanel.BG_AVG_MASK | DataPlotSelectorPanel.BG_MASK
+                | DataPlotSelectorPanel.CH_AVG_MASK | DataPlotSelectorPanel.CH_SUM_MASK
+                | DataPlotSelectorPanel.INS1_AVG_MASK | DataPlotSelectorPanel.INS1_SUM_MASK
+                | DataPlotSelectorPanel.INS2_AVG_MASK | DataPlotSelectorPanel.INS2_SUM_MASK
+                | DataPlotSelectorPanel.INS_TOTAL_AVG_MASK | DataPlotSelectorPanel.INS_TOTAL_MASK
+                | DataPlotSelectorPanel.INS_TOTAL_SUM_MASK | DataPlotSelectorPanel.INS_PER_CH_MASK
+                | DataPlotSelectorPanel.CH_MASK);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Dimension dim = new Dimension(120, 25);
 
         help_button = m_da.createHelpButtonBySize(120, 25, this);
         buttonPanel.add(help_button);
-        
-        
+
         JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
-	drawButton.setActionCommand("draw");
+        drawButton.setActionCommand("draw");
         drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", this));
-	drawButton.addActionListener(this);
+        drawButton.addActionListener(this);
 
         JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
-	closeButton.setActionCommand("close");
+        closeButton.setActionCommand("close");
         closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
-	closeButton.addActionListener(this);
+        closeButton.addActionListener(this);
 
-	buttonPanel.add(drawButton);
+        buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);
 
         cPanel.add(dRS, BorderLayout.WEST);
@@ -136,68 +137,61 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
         fGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(), dRS.getEndCalendar()));
     }
 
-
     private void closeDialog()
     {
-	fGV = null;
-	this.dispose();
+        fGV = null;
+        this.dispose();
     }
-
-
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(ActionEvent e) 
+    public void actionPerformed(ActionEvent e)
     {
-	String action = e.getActionCommand();
+        String action = e.getActionCommand();
 
-	if (action.equals("draw")) 
-	{
-	    setNewDateRange();
-	    fGV.invalidate();
-	    fGV.validate();
-	    fGV.repaint();
-	    //fGV.repaint(this.getBounds());
-	}
-	else if (action.equals("close")) 
-	{
-	    closeDialog();
-	}
-	else
-	    System.out.println("FrequencyGraphFrame: Unknown command: " + action);
+        if (action.equals("draw"))
+        {
+            setNewDateRange();
+            fGV.invalidate();
+            fGV.validate();
+            fGV.repaint();
+            // fGV.repaint(this.getBounds());
+        }
+        else if (action.equals("close"))
+        {
+            closeDialog();
+        }
+        else
+            System.out.println("FrequencyGraphFrame: Unknown command: " + action);
     }
 
-    
     // ****************************************************************
-    // ******              HelpCapable Implementation             *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
-    
-    /* 
+
+    /*
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
     {
-	return this.getRootPane();
+        return this.getRootPane();
     }
 
-    /* 
+    /*
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
     {
-	return this.help_button;
+        return this.help_button;
     }
 
-    /* 
+    /*
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-	return "pages.GGC_BG_Graph_Frequency";
+        return "pages.GGC_BG_Graph_Frequency";
     }
-    
-    
-    
-}
 
+}

@@ -1,3 +1,8 @@
+2008-08-31 Reinhold Rumberger <rumbi@users.sourceforge.net>
+    * re-implemented the course graph using JFreeChart; code is extremely redundant
+      and should be rather slow.
+    * finished DataPlotSelectorPanel
+
 2008-08-24 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * finished commenting new classes
     * brought GGC_de up-to-date
