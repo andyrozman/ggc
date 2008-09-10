@@ -151,9 +151,9 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public int m_BG_unit = BG_MGDL;
 
-    public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
+    public String[] availableLanguages = { "English", "Deutsch", "Slovenski", "French" };
 
-    public String[] avLangPostfix = { "en", "de", "si", };
+    public String[] avLangPostfix = { "en", "de", "si", "fr" };
 
     public String[] bg_units = { "mg/dl", "mmol/l" };
 

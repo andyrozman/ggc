@@ -4,6 +4,7 @@
     * Printing context will be extended. PrintAbstract class was created and all old Printing classes will use it
       in the future, for now it will be used by PrintFoodMenu* classes
     * Adding and moving entries in BUGS.txt
+    * Statistiocs for BG fixed in main application panel and in Daily Stats panel
 
 
 2008-08-24 (0.3.4) Reinhold Rumberger <rumbi@users.sourceforge.net>

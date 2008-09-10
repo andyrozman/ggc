@@ -22,12 +22,9 @@ Know Bugs:
       (We're great! We make it possible for people to puke, squeeze insulin from their fat tissue and even live with no sugar at all in their bloodstream!)
     - Setting a colour for one "color scheme" will change it for the rest, too.
     - Restore: Browse dialog should open in ../data/export
-    - Restore: Description on first windows is little "off" on FreeBSD
-    - I18n TAGS missing: EDIT_FOOD_GROUP
+    - Restore: Description on first window is little "off" on FreeBSD
     - GI/GL not implemented
     - Daily Food Selector has problem when selecting meals... not all nutrients are displayed
-    - Statistics for Main Screen invalid for BG
-    - Statistics for Daily Value Stats invalid for BG  
 
 
 Not A Bug:
@@ -37,10 +34,17 @@ Not A Bug:
         * It was a bug before the other field was updated when one lost focus
     - If e.g. the USDA DB is opened, GGC won't react to a "Close" command from the task bar (at least in KDE)
       A: This must be internal problem with KDE. Dialogs are set to be modal, this works ok with windows
-      A: This is confirmed as KDE problem. Problem is solved with KDE 5 at least I think it is.
+      A: This is confirmed as KDE problem. Problem is solved with KDE 5 at least I think it is. I couldn't reproduce 
+         it there (on FreeBSD)
 
 
 Bugs fixed in version X:
+
+
+0.3.5
+    - I18n TAGS missing: EDIT_FOOD_GROUP
+    - Statistics for Main Screen invalid for BG
+    - Statistics for Daily Value Stats invalid for BG  
 
 0.3.x
     - when a settings change could not be propagated to the database (sql exception 
