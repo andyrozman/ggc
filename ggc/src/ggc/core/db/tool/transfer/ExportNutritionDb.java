@@ -164,7 +164,7 @@ public class ExportNutritionDb extends ExportTool
             this.writeToFile(eh.getId() + "|" + eh.getName() + "|"
                     + eh.getName_i18n() + "|" + eh.getGroup_id() + "|"
                     + eh.getRefuse() + "|" + eh.getDescription() + "|"
-                    + eh.getHome_weights() + "|" + eh.getNutritions() + "|"
+                    + eh.getHome_weights() + "|" + eh.getNutritions().replace(",", ".") + "|"
                     + eh.getChanged() + "\n");
 
             count++;

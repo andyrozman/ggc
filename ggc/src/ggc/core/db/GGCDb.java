@@ -38,6 +38,7 @@ package ggc.core.db;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
+import ggc.core.data.DayValuesData;
 import ggc.core.data.HbA1cValues;
 import ggc.core.data.MonthlyValues;
 import ggc.core.data.WeeklyValues;
@@ -1334,6 +1335,46 @@ public class GGCDb // implements DbCheckInterface HibernateDb
 
     }
 
+    
+    @SuppressWarnings("unchecked")
+    public DayValuesData getDayValuesData(long from, long till)
+    {
+
+        if (m_loadStatus == DB_CONFIG_LOADED)
+            return null;
+
+        logInfo("getDayValuesData()");
+
+        DayValuesData dvd = new DayValuesData(from, till);
+        
+        try
+        {
+            Query q = getSession().createQuery(
+                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + from
+                        + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
+
+            Iterator it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                DayValueH dv = (DayValueH) it.next();
+
+                DailyValuesRow dVR = new DailyValuesRow(dv);
+                dvd.addDayValueRow(dVR);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            logException("getDayValuesData()", ex);
+        }
+
+        return dvd;
+
+    }
+    
+    
+    
     public void saveDayStats(DailyValues dV)
     {
 

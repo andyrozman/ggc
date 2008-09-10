@@ -1,4 +1,12 @@
-2008-08-31 Reinhold Rumberger <rumbi@users.sourceforge.net>
+2008-09-9 (0.3.5)
+    * Added DayValuesData, which is used to contain DailiValues instances. It will either replace or super_class
+      WeeklyValues and MonthlyValues and all such collection classes
+    * Printing context will be extended. PrintAbstract class was created and all old Printing classes will use it
+      in the future, for now it will be used by PrintFoodMenu* classes
+    * Adding and moving entries in BUGS.txt
+
+
+2008-08-24 (0.3.4) Reinhold Rumberger <rumbi@users.sourceforge.net>
     * re-implemented the course graph using JFreeChart; code is extremely redundant
       and should be rather slow.
     * finished DataPlotSelectorPanel

@@ -29,6 +29,7 @@
 package ggc.gui;
 
 import ggc.GGC;
+import ggc.core.data.DayValuesData;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.nutrition.GGCTreeRoot;
@@ -36,6 +37,7 @@ import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.plugins.CGMSPlugIn;
 import ggc.core.plugins.MetersPlugIn;
 import ggc.core.plugins.PumpsPlugIn;
+import ggc.core.print.PrintFoodMenuBase;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
@@ -1075,6 +1077,11 @@ public class MainFrame extends JFrame
             }
             else if ((command.equals("test")))
             {
+                DayValuesData dvd = m_da.getDb().getDayValuesData(20080701, 20080714); //.getMonthlyValues(yr, mnth);
+
+                PrintFoodMenuBase psm = new PrintFoodMenuBase(dvd);
+                
+                
                 //BolusHelper bh = new BolusHelper(MainFrame.this);
                 //featureNotImplemented(command, "0.6");
             }

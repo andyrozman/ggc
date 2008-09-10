@@ -564,6 +564,7 @@ public class DataAccess extends ATDataAccessAbstract
         {
             if (this.avLangPostfix[i].equals(postfix))
                 return i;
+            
         }
 
         return 0;
@@ -1298,6 +1299,7 @@ public class DataAccess extends ATDataAccessAbstract
     }
     
     
+    @Override
     public GregorianCalendar getGregorianCalendar(Date date)
     {
         GregorianCalendar gc = new GregorianCalendar();

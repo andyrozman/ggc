@@ -228,6 +228,8 @@ public class DailyValues implements Serializable
     	else 
     	{
     
+    	    // TODO: sorting
+    	    
     	    int i = 0;
     	    boolean added = false;
     
@@ -327,7 +329,8 @@ public class DailyValues implements Serializable
     	    DailyValuesRow dvr = getRow(i);
     
     	    float dVR_BG = dvr.getBGRaw();
-    
+    	    //float dVR_BG = dvr.getBG();
+    	    
     	    if (dVR_BG != 0) 
     	    {
     		sumBG += dVR_BG;
@@ -711,15 +714,30 @@ public class DailyValues implements Serializable
 
     public float getHighestBG()
     {
-        return highestBG;
+        if (m_da.getBGMeasurmentType()==DataAccess.BG_MGDL)
+            return highestBG;
+        else
+            return m_da.getBGValueDifferent(DataAccess.BG_MGDL, highestBG);
     }
 
     public float getLowestBG()
     {
+
+        if (lowestBG != Float.MAX_VALUE)
+        {
+            if (m_da.getBGMeasurmentType()==DataAccess.BG_MGDL)
+                return lowestBG;
+            else
+                return m_da.getBGValueDifferent(DataAccess.BG_MGDL, lowestBG);
+        }
+        else
+            return 0;
+        
+        /*
         if (lowestBG != Float.MAX_VALUE)
             return lowestBG;
         else
-            return 0;
+            return 0; */
     }
 
     public float getStdDev()

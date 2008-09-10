@@ -36,6 +36,7 @@ import java.util.Hashtable;
 public class StatisticValues
 {
 //    DataBaseHandler dbH = null;
+    DataAccess m_da = DataAccess.getInstance();
 
     float dayCounter = 0;
 
@@ -121,10 +122,23 @@ public class StatisticValues
 
     public float getAvgBG()
     {
+        
+        if (countBG != 0)
+        {
+            if (m_da.getBGMeasurmentType()==DataAccess.BG_MGDL)
+                return sumBG / countBG;
+            else
+                return m_da.getBGValueDifferent(DataAccess.BG_MGDL, (sumBG / countBG));
+        }
+        else
+            return 0;
+        
+        
+        /*
         if(countBG > 0)
             return sumBG / countBG;
         else
-            return 0;
+            return 0;*/
     }
 
     public float getSumBU()
