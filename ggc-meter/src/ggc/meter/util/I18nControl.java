@@ -40,6 +40,7 @@ import com.atech.i18n.I18nControlAbstract;
 public class I18nControl extends I18nControlAbstract
 {
 
+    
     private static Log s_logger = LogFactory.getLog(I18nControl.class); 
     
     

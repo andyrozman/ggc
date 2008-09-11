@@ -4,7 +4,7 @@ package ggc.plugin.device;
 
 public class PlugInBaseException extends Exception
 {
-
+    
 	
     private static final long serialVersionUID = -3252275317251539876L;
 

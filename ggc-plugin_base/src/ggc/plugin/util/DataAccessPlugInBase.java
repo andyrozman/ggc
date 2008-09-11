@@ -67,6 +67,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     //private DbToolApplicationGGC m_configFile = null;
 //    private ConfigurationManager m_cfgMgr = null;
 
+    
 
     public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
 

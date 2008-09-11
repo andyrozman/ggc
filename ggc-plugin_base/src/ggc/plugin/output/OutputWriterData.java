@@ -3,6 +3,7 @@ package ggc.plugin.output;
 
 public abstract class OutputWriterData 
 {
+    
 	
     public abstract String getDataAsString();
 

@@ -32,7 +32,7 @@ import javax.swing.JPanel;
 
 public abstract class BaseListAbstractPanel extends JPanel
 {
-	
+    
     /**
      * 
      */

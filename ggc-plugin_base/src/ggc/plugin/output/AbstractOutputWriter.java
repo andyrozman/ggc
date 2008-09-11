@@ -9,7 +9,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     OutputUtil out_util; 
     DeviceIdentification device_info = null;
     String sub_status;
-
+    
     
     public AbstractOutputWriter()
     {

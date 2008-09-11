@@ -39,7 +39,7 @@ import java.util.Vector;
 
 public abstract class AbstractMeterCompany implements MeterCompanyInterface //, SelectableInterface
 {
-
+    
 
     protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccessMeter m_da = DataAccessMeter.getInstance();

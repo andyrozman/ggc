@@ -46,6 +46,7 @@ public class BaseListEntry
     public int status;
     
 
+    
     public BaseListEntry()
     {
     }

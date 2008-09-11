@@ -33,9 +33,6 @@ package ggc.meter.manager.company;
 public interface MeterCompanyInterface
 {
 
-
-    
-    
     
     //********************************************************
     //***      Meter Company Identification Methods        ***

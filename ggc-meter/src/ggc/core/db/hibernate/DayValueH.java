@@ -6,7 +6,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class DayValueH implements Serializable {
+public class DayValueH implements Serializable 
+{
 
     private static final long serialVersionUID = -1661031856854546844L;
 
