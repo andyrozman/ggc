@@ -8,6 +8,7 @@ import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.protocol.ConnectionProtocols;
 
 import java.awt.BorderLayout;
@@ -34,12 +35,6 @@ import com.atech.utils.TimeZoneUtil;
 public class MeterInstructionsDialog extends JDialog implements ActionListener, DbDataReadingFinishedInterface
 {
 
-
-
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = 7159799607489791137L;
 
     
@@ -134,9 +129,9 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         tzu.setSummerTimeChange(+1);
         */
         
-        MeterInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
+        DeviceInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
         
-        this.meter_interface = mi;
+        this.meter_interface = (MeterInterface)mi;
         
     }
     

@@ -450,6 +450,22 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
                                         boolean can_read_device_configuration)
     {
     }
+
+
+
+    public int getDeviceId()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+
+    public String getPort()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
     
 }

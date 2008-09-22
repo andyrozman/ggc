@@ -88,11 +88,12 @@ public class AscensiaDEX extends AscensiaMeter
     
 
     /**
-     * getMeterId - Get Meter Id, within Meter Company class 
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
      * 
-     * @return id of meter within company
+     * @return id of device within company
      */
-    public int getMeterId()
+    public int getDeviceId()
     {
         return AscensiaMeter.METER_ASCENSIA_DEX;
     }

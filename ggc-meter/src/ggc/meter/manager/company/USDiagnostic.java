@@ -30,13 +30,16 @@
 package ggc.meter.manager.company; 
 
 import ggc.meter.manager.MeterImplementationStatus;
+import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
-public class USDiagnostic extends AbstractMeterCompany
+public class USDiagnostic extends AbstractDeviceCompany
 {
 
     
     public USDiagnostic()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 

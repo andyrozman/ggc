@@ -34,12 +34,16 @@ import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.ascensia.AscensiaDEX;
 import ggc.meter.device.ascensia.AscensiaEliteXL;
 import ggc.meter.manager.MeterImplementationStatus;
+import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
-public class AscensiaBayer extends AbstractMeterCompany
+public class AscensiaBayer extends AbstractDeviceCompany
 {
 
     public AscensiaBayer()
     {
+        super(I18nControl.getInstance());
+        
         this.addDevice(new AscensiaEliteXL());
         this.addDevice(new AscensiaDEX());
         this.addDevice(new AscensiaBreeze());

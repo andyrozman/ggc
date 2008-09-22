@@ -30,13 +30,16 @@
 package ggc.meter.manager.company; 
 
 import ggc.meter.manager.MeterImplementationStatus;
+import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
-public class Prodigy extends AbstractMeterCompany
+public class Prodigy extends AbstractDeviceCompany
 {
 
     
     public Prodigy()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 

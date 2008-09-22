@@ -9,10 +9,10 @@ package ggc.meter.device;
 
 
 import ggc.meter.manager.MeterDevice;
-import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     protected String device_name = "Undefined";
     protected OutputWriter output_writer;
     
-    AbstractMeterCompany meter_company = null;
+    AbstractDeviceCompany meter_company = null;
     
     String connection_port = "";
     
@@ -363,11 +363,11 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
                 return this.getName();
                 
             case 3:
-                return this.getMeterCompany().getConnectionSamples();
+                return this.getDeviceCompany().getConnectionSamples();
 
             case 1:
             default:    
-                return this.getMeterCompany().getName();
+                return this.getDeviceCompany().getName();
                 
                 
         }
@@ -456,18 +456,26 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     
     
     
-
-    public void setMeterCompany(AbstractMeterCompany company)
+    /**
+     * setDeviceCompany - set Company for device
+     * 
+     * @param company
+     */
+    public void setDeviceCompany(AbstractDeviceCompany company)
     {
         this.meter_company = company;
     }
     
     
-    public AbstractMeterCompany getMeterCompany()
+    /**
+     * getDeviceCompany - get Company for device
+     * 
+     * @param company
+     */
+    public AbstractDeviceCompany getDeviceCompany()
     {
         return this.meter_company;
     }
-
 
 
 

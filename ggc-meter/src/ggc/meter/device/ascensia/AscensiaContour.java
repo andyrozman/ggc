@@ -77,11 +77,12 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     
 
     /**
-     * getMeterId - Get Meter Id, within Meter Company class 
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
      * 
-     * @return id of meter within company
+     * @return id of device within company
      */
-    public int getMeterId()
+    public int getDeviceId()
     {
         return AscensiaMeter.METER_ASCENSIA_CONTOUR;
     }

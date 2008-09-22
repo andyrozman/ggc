@@ -39,13 +39,17 @@ import ggc.meter.device.accuchek.AccuChekGo;
 import ggc.meter.device.accuchek.AccuChekIntegra;
 import ggc.meter.device.accuchek.AccuChekSensor;
 import ggc.meter.manager.MeterImplementationStatus;
+import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
-public class Roche extends AbstractMeterCompany
+public class Roche extends AbstractDeviceCompany
 {
 
     
     public Roche()
     {
+        super(I18nControl.getInstance());
+        
         //this.addDevice(new AccuChekSmartPix());
         this.addDevice(new AccuChekActive());
         this.addDevice(new AccuChekAdvantage());

@@ -1,7 +1,8 @@
 package ggc.meter.device;
 
-import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
@@ -36,7 +37,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  */
 
 
-public interface MeterInterface extends SelectableInterface
+public interface MeterInterface extends SelectableInterface, DeviceInterface
 {
 
 
@@ -60,33 +61,6 @@ public interface MeterInterface extends SelectableInterface
     //***      Meter Identification Methods        ***
     //************************************************
 
-
-    /**
-     * getName - Get Name of meter. 
-     * Should be implemented by meter class.
-     * 
-     * @return name of meter
-     */
-    String getName();
-
-
-    /**
-     * getIconName - Get Icon of meter
-     * Should be implemented by meter class.
-     * 
-     * @return icon name
-     */
-    String getIconName();
-    
-
-    /**
-     * getMeterId - Get Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
-     * 
-     * @return id of meter within company
-     */
-    int getMeterId();
-
     
     /**
      * getCompanyId - Get Company Id 
@@ -96,40 +70,6 @@ public interface MeterInterface extends SelectableInterface
      */
     int getCompanyId();
     
-    
-    /**
-     * getInstructions - get instructions for device
-     * Should be implemented by meter class.
-     * 
-     * @return instructions for reading data 
-     */
-    String getInstructions();
-    
-    /**
-     * getComment - Get Comment for device 
-     * Should be implemented by meter class.
-     * 
-     * @return comment or null
-     */
-    String getComment();
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
-     * @return implementation status as number
-     * @see ggc.meter.manager.MeterImplementationStatus
-     */
-    int getImplementationStatus(); 
-    
-   
-
-    /**
-     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
-     * 
-     * @return class name as string
-     */
-    String getDeviceClassName();
     
     
     /**
@@ -166,45 +106,6 @@ public interface MeterInterface extends SelectableInterface
     
     
 
-    //************************************************
-    //***             Meter Methods                ***
-    //************************************************
-
-    
-    /**
-     * This is method for reading data from device. All reading from actual device should be done from here.
-     * Reading can be done directly here, or event can be used to read data.
-     */
-    void readDeviceDataFull() throws MeterException;
-    
-    
-    /**
-     * This is method for reading partitial data from device. All reading from actual device should be done from 
-     * here. Reading can be done directly here, or event can be used to read data.
-     */
-    void readDeviceDataPartitial() throws MeterException;
-
-
-    /** 
-     * This is method for reading configuration
-     * 
-     * @throws MeterExceptions
-     */
-    void readConfiguration() throws MeterException;
-    
-
-    /**
-     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
-     * information (most dumps do). 
-     * @throws MeterExceptions
-     */
-    void readInfo() throws MeterException;
-    
-
-    //************************************************
-    //***        Should bne implemnetyed by Abstract Meter ter          ***
-    //************************************************
-
 
     //************************************************
     //***        Available Functionality for Meter          ***
@@ -215,20 +116,6 @@ public interface MeterInterface extends SelectableInterface
     public int getConnectionProtocol();
     
     
-    /**
-     * setDeviceAllowedActions - sets actions which are allowed by implementation
-     *   of MeterInterface (actually of GenericMeterXXXXX classes)
-     *   
-     * @param can_read_data
-     * @param can_read_partitial_data
-     * @param can_read_device_info
-     * @param can_read_device_configuration
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-                                        boolean can_read_partitial_data,
-//                                      boolean can_clear_data,
-                                        boolean can_read_device_info,
-                                        boolean can_read_device_configuration);
     
     
     /**
@@ -279,10 +166,10 @@ public interface MeterInterface extends SelectableInterface
   
     
     
-    public void setMeterCompany(AbstractMeterCompany company);
+    public void setDeviceCompany(AbstractDeviceCompany company);
     
     
-    public AbstractMeterCompany getMeterCompany();
+    public AbstractDeviceCompany getDeviceCompany();
     
 
     

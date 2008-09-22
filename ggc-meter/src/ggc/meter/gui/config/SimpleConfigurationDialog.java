@@ -283,7 +283,7 @@ public class SimpleConfigurationDialog extends JDialog implements ActionListener
             sb.append("#  Meter Device #X\n");
             sb.append("#\n");
             sb.append("METER_X_NAME=My meter\n");
-            sb.append("METER_X_COMPANY=" + mi.getMeterCompany().getName() + "\n");
+            sb.append("METER_X_COMPANY=" + mi.getDeviceCompany().getName() + "\n");
             sb.append("METER_X_DEVICE=" + mi.getName() + "\n");
             sb.append("METER_X_CONNECTION_PARAMETER=COM9\n");
             

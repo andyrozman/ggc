@@ -31,8 +31,8 @@ package ggc.meter.gui.config;
 //import ggc.gui.dialogs.PortSelectionDialog;
 
 import ggc.meter.manager.MeterManager;
-import ggc.meter.manager.company.MeterCompanyInterface;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.manager.company.DeviceCompanyInterface;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -49,7 +49,6 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
 
 
 
-    static final long serialVersionUID = 0;
 	
     JComboBox cb_meter_company; 
     
@@ -289,7 +288,7 @@ public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemL
     	
     	System.out.println("Commented PrefMeterConfPane::itemState changed");
     	
-    	MeterCompanyInterface mc = (MeterCompanyInterface)this.cb_meter_company.getSelectedItem();
+    	DeviceCompanyInterface mc = (DeviceCompanyInterface)this.cb_meter_company.getSelectedItem();
     	//this.label_status.setText(m_ic.getMessage(mc.getDescription()));
     	
     	this.label_status.setText("<html>" + m_ic.getMessage(mc.getDescription()) + "</html>");

@@ -46,12 +46,12 @@ public class AccuChekAviva extends AccuChekSmartPixMeter
     
 
     /**
-     * getMeterId - Get Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
      * 
-     * @return id of meter within company
+     * @return id of device within company
      */
-    public int getMeterId()
+    public int getDeviceId()
     {
         return AccuChekSmartPixMeter.METER_ACCUCHEK_AVIVA;
     }

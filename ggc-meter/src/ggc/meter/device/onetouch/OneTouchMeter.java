@@ -21,7 +21,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     protected ArrayList<MeterValuesEntry> data = null;
     protected OutputWriter m_output_writer;
     public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
-    
+    public int meter_type = 20000;
 
     public OneTouchMeter(int meter_type, String portName, OutputWriter writer)
     {
@@ -30,6 +30,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 //      int s= SerialConfig.LN_8BITS; 
       
         super(DataAccessMeter.getInstance());
+        
+        this.meter_type = meter_type;
         
         /*
         super( 
@@ -108,12 +110,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         return 0;
     }
 
-    /* 
-     * getGlobalMeterId
+    /**
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
+     * 
+     * @return id of device within company
      */
-    public int getGlobalMeterId()
+    public int getDeviceId()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 

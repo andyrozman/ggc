@@ -9,8 +9,8 @@ package ggc.meter.device;
 
 
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.manager.company.AbstractMeterCompany;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public abstract class AbstractMeter implements MeterInterface, SelectableInterface
 {
 
-    AbstractMeterCompany meter_company;
+    AbstractDeviceCompany meter_company;
 
     protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
@@ -344,11 +344,11 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
                 return this.getName();
                 
             case 2:
-                return this.getMeterCompany().getConnectionSamples();
+                return this.getDeviceCompany().getConnectionSamples();
 
             case 0:
             default:    
-                return this.getMeterCompany().getName();
+                return this.getDeviceCompany().getName();
                 
                 
         }
@@ -435,13 +435,23 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     }
 
 
-    public void setMeterCompany(AbstractMeterCompany company)
+    /**
+     * setDeviceCompany - set Company for device
+     * 
+     * @param company
+     */
+    public void setDeviceCompany(AbstractDeviceCompany company)
     {
         this.meter_company = company;
     }
     
     
-    public AbstractMeterCompany getMeterCompany()
+    /**
+     * getDeviceCompany - get Company for device
+     * 
+     * @param company
+     */
+    public AbstractDeviceCompany getDeviceCompany()
     {
         return this.meter_company;
     }

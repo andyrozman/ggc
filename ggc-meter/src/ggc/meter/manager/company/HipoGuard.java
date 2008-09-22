@@ -30,13 +30,16 @@
 package ggc.meter.manager.company; 
 
 import ggc.meter.manager.MeterImplementationStatus;
+import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
-public class HipoGuard extends AbstractMeterCompany
+public class HipoGuard extends AbstractDeviceCompany
 {
 
     
     public HipoGuard()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 
