@@ -2,8 +2,6 @@ package ggc.plugin.device;
 
 
 
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import javax.swing.ImageIcon;
 
 

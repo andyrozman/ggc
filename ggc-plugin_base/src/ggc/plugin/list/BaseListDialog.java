@@ -82,6 +82,8 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 
         m_da = da;
         ic = m_da.getI18nControlInstance();
+        
+        this.setTitle(ic.getMessage("LIST_DIALOG_TITLE"));
 
         //m_da.addComponent(parent);
         m_da.addComponent(this);
@@ -124,8 +126,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
         Dimension minimumSize = new Dimension(100, 50);
         mainPane.setMinimumSize(minimumSize);
         treeView.setMinimumSize(minimumSize);
-        splitPane.setDividerLocation(200); //XXX: ignored in some releases
-                                           //of Swing. bug 4101306
+        splitPane.setDividerLocation(200); // ignored in some releases of Swing. bug 4101306
         splitPane.setPreferredSize(new Dimension(500, 300));
 
         panel.add(splitPane);
@@ -274,6 +275,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 */
     }
 
+    /*
     public static int PANEL_VIEW = 0;
     public static int PANEL_EDIT = 1;
     public static int PANEL_ADD  = 2;
@@ -284,7 +286,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
     private void displayPanel(int special_action)
     {
 	
-    	/*
+    	
 	//System.out.println()
 	
 	if (this.selected_last_path instanceof GGCTreeRoot)
@@ -335,9 +337,9 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 	    }
 	    
 	}
-	*/
+	
     }
-    
+    */
     
     
     

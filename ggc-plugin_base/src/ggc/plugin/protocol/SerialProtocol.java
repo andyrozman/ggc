@@ -595,7 +595,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 
     public void printAllAvailableSerialPorts()
     {
-        Vector<CommPortIdentifier> lst = this.getAllAvailablePorts();
+        Vector<CommPortIdentifier> lst = SerialProtocol.getAllAvailablePorts();
         
         System.out.println("Displaying all available ports");
         System.out.println("-------------------------------");

@@ -2,6 +2,12 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.1.6. (22.9.)
+    - minor changes to BaseListDialog
+    - added manager and company stuff
+    - added DeviceInterface, which will be super class for many Interfaces
+
+
 0.1.5 (21.8)
     - adding output files to this plugin
     - adding protocol files to this plugin
