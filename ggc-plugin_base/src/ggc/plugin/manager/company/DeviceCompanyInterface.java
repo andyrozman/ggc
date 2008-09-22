@@ -1,5 +1,6 @@
 
-package ggc.plugin.manager; 
+
+package ggc.plugin.manager.company; 
 
 /*
  *  GGC - GNU Gluco Control
@@ -30,29 +31,58 @@ package ggc.plugin.manager;
  */
 
 
-public class MgrImplementationStatus
+public interface DeviceCompanyInterface
 {
 
-    public static final int IMPLEMENTATION_NOT_AVAILABLE = 0;
-    public static final int IMPLEMENTATION_NOT_PLANNED = 1;
-    public static final int IMPLEMENTATION_PLANNED = 2;
-    public static final int IMPLEMENTATION_PARTITIAL = 3;
-    public static final int IMPLEMENTATION_FULL = 4;
-    public static final int IMPLEMENTATION_TESTED = 5;
-    public static final int IMPLEMENTATION_DONE = 6;
+
     
     
     
-    public static final int FUNCTIONALITY_READ_DATA_FULL = 1;
-    public static final int FUNCTIONALITY_READ_DATA_PARTITIAL = 2;
-    public static final int FUNCTIONALITY_CLEAR_DATA = 4;
-    public static final int FUNCTIONALITY_READ_INFO = 8;
-    public static final int FUNCTIONALITY_READ_CONFIG = 16;
-    
-    
-    
+    //********************************************************
+    //***      Meter Company Identification Methods        ***
+    //********************************************************
 
 
+    /**
+     * getName - Get Name of meter. 
+     * Should be implemented by company class.
+     * 
+     * @return name of meter
+     */
+    String getName();
 
 
+    /**
+     * getCompanyId - Get Company Id 
+     * Should be implemented by company class.
+     * 
+     * @return id of company
+     */
+    int getCompanyId();
+    
+    
+    /**
+     * getInstructions - get instructions for device
+     * Should be implemented by company class.
+     * 
+     * @return instructions for reading data 
+     */
+    String getDescription();
+    
+    
+    
+    /**
+     * getImplementationStatus - Get Implementation status 
+     * Should be implemented by company class.
+     * 
+     * @return implementation status as number
+     * @see ggc.meter.manager.MeterImplementationStatus
+     */
+    int getImplementationStatus(); 
+    
+    
+    
+    
+    
+    
 }

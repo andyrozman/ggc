@@ -368,6 +368,13 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
         // TODO Auto-generated method stub
         
     }
+
+
+    public String getDeviceClassName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
     
     

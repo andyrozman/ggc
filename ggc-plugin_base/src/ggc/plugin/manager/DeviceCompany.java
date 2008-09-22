@@ -27,99 +27,49 @@
  */
 
 
-package ggc.plugin.manager.company; 
+package ggc.plugin.manager; 
 
 import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.manager.EmptyMgrDevices;
 
 import java.util.Hashtable;
-import java.util.Vector;
 
-public abstract class AbstractMgrCompany implements MgrCompanyInterface //, SelectableInterface
+public abstract class DeviceCompany
 {
 
-
     //protected I18nControl m_ic = I18nControl.getInstance();
-    //protected DataAccessPlugInBase m_da = DataAccessCGM.getInstance();
+    //protected DataAccessCGM m_da = DataAccessCGM.getInstance();
     
     public String id = "";
     public String name = "";
     public int index = 0;
     
     Hashtable<String,DeviceInterface> devices = new Hashtable<String,DeviceInterface>();
-    Vector<DeviceInterface> devices_vector = new Vector<DeviceInterface>();
-    
 
-/*
-    public AbstractMeterCompany(int index, String id, String name)
+
+    public DeviceCompany(int index, String id, String name)
     {
     	this.index = index;
     	this.id = id;
     	this.name = name;
     }
-*/
 
-    
-    public AbstractMgrCompany()
-    {
-        
-    }
-    
 
-    public AbstractMgrCompany(boolean empty)
-    {
-        if (empty==true)
-        {
-            this.devices_vector.add(new EmptyMgrDevices());
-        }
-    }
-    
-    
-    public Vector<DeviceInterface> getDevices()
-    {
-        return this.devices_vector;
-    }
-    
-    
     public void addDevice(DeviceInterface md)
     {
-        // TODO
-//        md.setCGMCompany(this);
-    	this.devices.put(""+md.getName(), md);
-    	this.devices_vector.add(md);
+    	this.devices.put(""+md.getDeviceId(), md);
     }
 
-    
-    public DeviceInterface getDevice(String name)
-    {
-        if (this.devices.containsKey(name))
-            return this.devices.get(name);
-        else
-            return null;
-    }
-    
-    public abstract String getName();
+    /**
+     * getCompanyTypeDescription - this tells us for which plugin this company is valid.  
+     * @return
+     */
+    public abstract String getCompanyTypeDescription();
     
     
     public String toString()
     {
-        return this.getName();
-        
-        //"Meter Company [name=" + this.getName() + ",id=" + this.getCompanyId() + "]";
+    	return getCompanyTypeDescription() + " Company [index=" + index + ",id=" + id + ",name=" + name + "]";
     }
-    
-
-    public String getConnectionSample()
-    {
-        return "";
-    }
-    
-    
-    public String getConnectionSamples()
-    {
-        return "";
-    }
-    
     
     
 }

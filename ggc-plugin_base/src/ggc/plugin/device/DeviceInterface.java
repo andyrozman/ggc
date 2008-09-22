@@ -46,13 +46,13 @@ public interface DeviceInterface extends SelectableInterface
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    boolean open() throws PlugInBaseException;
+    //boolean open() throws PlugInBaseException;
 
 
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    void close() throws PlugInBaseException;
+    //void close() throws PlugInBaseException;
 
 
     /**
@@ -71,14 +71,14 @@ public interface DeviceInterface extends SelectableInterface
     //void readCommData();
 
     /**
-     * getName - Get Name of meter. 
+     * getName - Get Name of device. 
      * Should be implemented by protocol class.
      */
     String getName();
 
 
     /**
-     * getIcon - Get Icon of meter
+     * getIcon - Get Icon of device
      * Should be implemented by protocol class.
      */
     String getIconName();
@@ -92,7 +92,34 @@ public interface DeviceInterface extends SelectableInterface
     int getDeviceId();
 
     
-    String getPort();
+    /**
+     * getComment - Get Comment for device 
+     * Should be implemented by meter class.
+     * 
+     * @return comment or null
+     */
+    String getComment();
+    
+
+    
+    /**
+     * getImplementationStatus - Get Implementation Status 
+     * 
+     * @return implementation status as number
+     * @see ggc.meter.manager.MeterImplementationStatus
+     */
+    int getImplementationStatus(); 
+    
+   
+
+    /**
+     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
+     * 
+     * @return class name as string
+     */
+    String getDeviceClassName();
+    
+    //String getPort();
     
 
     //************************************************

@@ -43,6 +43,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     protected CommPortIdentifier portIdentifier = null;
     public OutputStream portOutputStream = null;
     public InputStream portInputStream = null;
+    public String port_name = null;
 
     public long startTime = System.currentTimeMillis();
     protected long timeOut = 50000;
@@ -120,6 +121,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
         try
         {
             portIdentifier = CommPortIdentifier.getPortIdentifier(port);
+            port_name = port;
         }
         catch(NoSuchPortException ex)
         {
@@ -129,6 +131,13 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
         }
     }
 
+    /*
+    public String getPort()
+    {
+        return port_name;
+    }*/
+    
+    
     /**
      * @throws MeterException 
      * @see data.imports.DataImport#open()
