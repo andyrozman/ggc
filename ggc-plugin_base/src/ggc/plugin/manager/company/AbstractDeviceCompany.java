@@ -35,11 +35,13 @@ import ggc.plugin.manager.EmptyMgrDevices;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import com.atech.i18n.I18nControlAbstract;
+
 public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //, SelectableInterface
 {
 
 
-    //protected I18nControl m_ic = I18nControl.getInstance();
+    protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
     //protected DataAccessPlugInBase m_da = DataAccessCGM.getInstance();
     
     public String id = "";
@@ -60,14 +62,16 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
 */
 
     
-    public AbstractDeviceCompany()
+    public AbstractDeviceCompany(I18nControlAbstract ic)
     {
-        
+        this.m_ic = ic;
     }
     
 
-    public AbstractDeviceCompany(boolean empty)
+    public AbstractDeviceCompany(I18nControlAbstract ic, boolean empty)
     {
+        this(ic);
+        
         if (empty==true)
         {
             this.devices_vector.add(new EmptyMgrDevices());
