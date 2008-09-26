@@ -164,13 +164,20 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
     //************************************************
 
   
-    
-    
+    /**
+     * setDeviceCompany - set Company for device
+     * 
+     * @param company
+     */
     public void setDeviceCompany(AbstractDeviceCompany company);
     
     
+    /**
+     * getDeviceCompany - get Company for device
+     * 
+     * @param company
+     */
     public AbstractDeviceCompany getDeviceCompany();
-    
 
     
     

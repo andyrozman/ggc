@@ -29,8 +29,8 @@
 
 package ggc.meter.manager.company; 
 
-import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 public class LifeScan extends AbstractDeviceCompany
@@ -94,7 +94,7 @@ public class LifeScan extends AbstractDeviceCompany
      */
     public int getImplementationStatus()
     {
-        return MeterImplementationStatus.IMPLEMENTATION_PLANNED;
+        return DeviceImplementationStatus.IMPLEMENTATION_PLANNED;
     }
     
     

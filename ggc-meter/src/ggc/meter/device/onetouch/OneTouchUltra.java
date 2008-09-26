@@ -718,4 +718,11 @@ protected void writeCmd(String line)
     {
     }
 
+
+
+    public String getName()
+    {
+        return "One Touch Ultra";
+    }
+
 }

@@ -38,8 +38,8 @@ import ggc.meter.device.accuchek.AccuChekCompactPlus;
 import ggc.meter.device.accuchek.AccuChekGo;
 import ggc.meter.device.accuchek.AccuChekIntegra;
 import ggc.meter.device.accuchek.AccuChekSensor;
-import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 public class Roche extends AbstractDeviceCompany
@@ -115,7 +115,7 @@ public class Roche extends AbstractDeviceCompany
      */
     public int getImplementationStatus()
     {
-        return MeterImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
+        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
     
   

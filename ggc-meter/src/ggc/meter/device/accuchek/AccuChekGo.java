@@ -1,6 +1,6 @@
 package ggc.meter.device.accuchek;
 
-import ggc.meter.manager.MeterImplementationStatus;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 
 public class AccuChekGo extends AccuChekSmartPixMeter
@@ -100,7 +100,7 @@ public class AccuChekGo extends AccuChekSmartPixMeter
      */
     public int getImplementationStatus() 
     {
-        return MeterImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
 
     

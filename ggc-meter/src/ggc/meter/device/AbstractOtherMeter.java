@@ -8,7 +8,6 @@
 package ggc.meter.device;
 
 
-import ggc.meter.manager.MeterDevice;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
@@ -16,8 +15,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -69,7 +66,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     String meter_group = null;
     String meter_device = null;
     
-    MeterDevice device_instance = null;
+    //MeterDevice device_instance = null;
     
     
     public void setMeterType(String group, String device)
@@ -265,47 +262,6 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
     
     
-
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
-    /**
-     * getName - Get Name of meter. 
-     * Should be implemented by protocol class.
-     */
-    public String getName()
-    {
-    	if (this.device_instance==null)
-    		return "Generic Serial Device";
-    	else
-    		return this.device_instance.name;
-    }
-
-
-    /**
-     * getIcon - Get Icon of meter
-     * Should be implemented by protocol class.
-     */
-    public ImageIcon getIcon()
-    {
-    	if (this.device_instance==null)
-    		return null;
-    	else
-    		return m_da.getImageIcon(this.device_instance.picture); 
-    	//this.device_instance.picture;
-    }
-    
-
-
-    /**
-     * getMeterIndex - Get Index of Meter 
-     * Should be implemented by protocol class.
-     */
-    public int getMeterIndex()
-    {
-        return 0;
-    }
 
 
 

@@ -3,8 +3,8 @@ package ggc.meter.device.accuchek;
 
 import ggc.meter.device.AbstractXmlMeter;
 import ggc.meter.device.MeterException;
-import ggc.meter.manager.MeterImplementationStatus;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
 
@@ -108,7 +108,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
      */
     public int getImplementationStatus() 
     {
-        return MeterImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
     

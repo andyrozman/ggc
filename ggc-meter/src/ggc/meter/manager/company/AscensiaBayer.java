@@ -33,8 +33,8 @@ import ggc.meter.device.ascensia.AscensiaBreeze;
 import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.ascensia.AscensiaDEX;
 import ggc.meter.device.ascensia.AscensiaEliteXL;
-import ggc.meter.manager.MeterImplementationStatus;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 public class AscensiaBayer extends AbstractDeviceCompany
@@ -99,7 +99,7 @@ public class AscensiaBayer extends AbstractDeviceCompany
      */
     public int getImplementationStatus()
     {
-        return MeterImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
 
