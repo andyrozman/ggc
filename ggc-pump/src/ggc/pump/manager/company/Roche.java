@@ -29,13 +29,17 @@
 
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.util.I18nControl;
 
-public class Roche extends AbstractPumpCompany
+
+public class Roche extends AbstractDeviceCompany
 {
 
     
     public Roche()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 

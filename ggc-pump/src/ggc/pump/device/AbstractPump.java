@@ -2,8 +2,8 @@
 package ggc.pump.device;
 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.manager.company.AbstractPumpCompany;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.util.I18nControl;
 
@@ -18,7 +18,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public abstract class AbstractPump implements PumpInterface, SelectableInterface
 {
 
-    AbstractPumpCompany pump_company;
+    AbstractDeviceCompany pump_company;
 
     protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
@@ -286,11 +286,11 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
                 return this.getName();
                 
             case 2:
-                return this.getPumpCompany().getConnectionSamples();
+                return this.getDeviceCompany().getConnectionSamples();
 
             case 0:
             default:    
-                return this.getPumpCompany().getName();
+                return this.getDeviceCompany().getName();
                 
                 
         }
@@ -377,13 +377,23 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    public void setPumpCompany(AbstractPumpCompany company)
+    /**
+     * setDeviceCompany - set Company for device
+     * 
+     * @param company
+     */
+    public void setDeviceCompany(AbstractDeviceCompany company)
     {
         this.pump_company = company;
     }
     
     
-    public AbstractPumpCompany getPumpCompany()
+    /**
+     * getDeviceCompany - get Company for device
+     * 
+     * @param company
+     */
+    public AbstractDeviceCompany getDeviceCompany()
     {
         return this.pump_company;
     }

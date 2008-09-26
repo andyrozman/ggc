@@ -3,11 +3,11 @@
  */
 package ggc.pump.device.animas;
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.device.AbstractPump;
 import ggc.pump.device.DeviceIdentification;
 import ggc.pump.device.PumpException;
-import ggc.pump.manager.PumpImplementationStatus;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.protocol.ConnectionProtocols;
 
@@ -135,7 +135,7 @@ public abstract class EZManagerDb extends AbstractPump
      */
     public int getImplementationStatus()
     {
-        return PumpImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
+        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
 
     /**

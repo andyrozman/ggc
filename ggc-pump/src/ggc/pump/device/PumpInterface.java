@@ -1,6 +1,7 @@
 package ggc.pump.device;
 
-import ggc.pump.manager.company.AbstractPumpCompany;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import java.util.Hashtable;
 
@@ -35,7 +36,7 @@ import java.util.Hashtable;
  */
 
 
-public interface PumpInterface
+public interface PumpInterface extends DeviceInterface
 {
 
 
@@ -118,12 +119,12 @@ public interface PumpInterface
     
 
     /**
-     * getMeterId - Get Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
      * 
-     * @return id of meter within company
+     * @return id of device within company
      */
-    int getPumpId();
+    int getDeviceId();
 
     
     /**
@@ -288,12 +289,22 @@ public interface PumpInterface
     //************************************************
     //***          Company Specific Settings                ***
     //************************************************
+
     
-    public void setPumpCompany(AbstractPumpCompany company);
+    /**
+     * setDeviceCompany - set Company for device
+     * 
+     * @param company
+     */
+    public void setDeviceCompany(AbstractDeviceCompany company);
     
     
-    public AbstractPumpCompany getPumpCompany();
-    
+    /**
+     * getDeviceCompany - get Company for device
+     * 
+     * @param company
+     */
+    public AbstractDeviceCompany getDeviceCompany();
     
 
 }

@@ -8,8 +8,8 @@
 package ggc.pump.device;
 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.manager.company.AbstractPumpCompany;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.util.I18nControl;
 
@@ -364,7 +364,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
-    public AbstractPumpCompany getPumpCompany()
+    public AbstractDeviceCompany getDeviceCompany()
     {
         // TODO Auto-generated method stub
         return null;
@@ -373,8 +373,13 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
-
-    public int getPumpId()
+    /**
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
+     * 
+     * @return id of device within company
+     */
+    public int getDeviceId()
     {
         // TODO Auto-generated method stub
         return 0;
@@ -435,7 +440,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
-    public void setPumpCompany(AbstractPumpCompany company)
+    public void setDeviceCompany(AbstractDeviceCompany company)
     {
         // TODO Auto-generated method stub
         
@@ -469,6 +474,31 @@ public class GenericPump extends AbstractPump //implements PumpInterface
     public Hashtable<String,Integer> getEventMappings()
     {
         return null;
+    }
+
+
+
+
+
+
+
+
+
+
+    public String getDeviceSpecialComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+
+    public boolean hasSpecialProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
     }
 
     

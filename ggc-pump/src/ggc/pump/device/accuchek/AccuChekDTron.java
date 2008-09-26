@@ -1,6 +1,6 @@
 package ggc.pump.device.accuchek;
 
-import ggc.pump.manager.PumpImplementationStatus;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.output.OutputWriter;
 
 public class AccuChekDTron extends AccuChekSmartPixPump
@@ -47,12 +47,12 @@ public class AccuChekDTron extends AccuChekSmartPixPump
     
 
     /**
-     * getMeterId - Get Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
      * 
-     * @return id of meter within company
+     * @return id of device within company
      */
-    public int getPumpId()
+    public int getDeviceId()
     {
         return AccuChekSmartPixPump.PUMP_ACCUCHEK_D_TRON;
     }
@@ -89,7 +89,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
      */
     public int getImplementationStatus() 
     {
-        return PumpImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
+        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
     
     

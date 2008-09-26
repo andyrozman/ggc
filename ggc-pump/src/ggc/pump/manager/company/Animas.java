@@ -29,13 +29,17 @@
 
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.util.I18nControl;
 
-public class Animas extends AbstractPumpCompany
+
+public class Animas extends AbstractDeviceCompany
 {
 
     
     public Animas()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 

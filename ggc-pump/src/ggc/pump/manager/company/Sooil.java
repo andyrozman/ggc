@@ -29,13 +29,17 @@
 
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.util.I18nControl;
 
-public class Sooil extends AbstractPumpCompany
+
+public class Sooil extends AbstractDeviceCompany
 {
 
     
     public Sooil()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 

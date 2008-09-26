@@ -1,10 +1,10 @@
 
 package ggc.pump.device.accuchek;
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.AbstractXmlPump;
 import ggc.pump.device.DeviceIdentification;
 import ggc.pump.device.PumpException;
-import ggc.pump.manager.PumpImplementationStatus;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.protocol.ConnectionProtocols;
 
@@ -108,7 +108,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
      */
     public int getImplementationStatus() 
     {
-        return PumpImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
     

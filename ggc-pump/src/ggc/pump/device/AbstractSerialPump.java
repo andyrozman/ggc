@@ -1,8 +1,7 @@
 package ggc.pump.device;
 
 
-import ggc.pump.manager.PumpDevice;
-import ggc.pump.manager.company.AbstractPumpCompany;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.pump.output.OutputWriter;
 import ggc.pump.protocol.SerialProtocol;
 import ggc.pump.util.I18nControl;
@@ -26,7 +25,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     protected String device_name = "Undefined";
     protected OutputWriter output_writer;
     
-    AbstractPumpCompany pump_company = null;
+    AbstractDeviceCompany pump_company = null;
     
 
     public AbstractSerialPump()
@@ -84,7 +83,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     String meter_group = null;
     String meter_device = null;
     
-    PumpDevice device_instance = null;
+    PumpInterface device_instance = null;
     
     
     public void setMeterType(String group, String device)
@@ -306,33 +305,11 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     	if (this.device_instance==null)
     		return "Generic Serial Device";
     	else
-    		return this.device_instance.name;
+    		return this.device_instance.getName();
     }
 
 
-    /**
-     * getIcon - Get Icon of meter
-     * Should be implemented by protocol class.
-     */
-    public ImageIcon getIcon()
-    {
-    	if (this.device_instance==null)
-    		return null;
-    	else
-    		return m_da.getImageIcon(this.device_instance.picture); 
-    	//this.device_instance.picture;
-    }
     
-
-
-    /**
-     * getMeterIndex - Get Index of Meter 
-     * Should be implemented by protocol class.
-     */
-    public int getMeterIndex()
-    {
-        return 0;
-    }
 
 
 
@@ -390,11 +367,11 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
                 return this.getName();
                 
             case 3:
-                return this.getPumpCompany().getConnectionSamples();
+                return this.getDeviceCompany().getConnectionSamples();
 
             case 1:
             default:    
-                return this.getPumpCompany().getName();
+                return this.getDeviceCompany().getName();
                 
                 
         }
@@ -483,18 +460,26 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     
     
     
-
-    public void setPumpCompany(AbstractPumpCompany company)
+    /**
+     * setDeviceCompany - set Company for device
+     * 
+     * @param company
+     */
+    public void setDeviceCompany(AbstractDeviceCompany company)
     {
         this.pump_company = company;
     }
     
     
-    public AbstractPumpCompany getMeterCompany()
+    /**
+     * getDeviceCompany - get Company for device
+     * 
+     * @param company
+     */
+    public AbstractDeviceCompany getDeviceCompany()
     {
         return this.pump_company;
     }
-
 
 
 

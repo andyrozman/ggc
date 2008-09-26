@@ -1,7 +1,9 @@
 package ggc.pump.device;
 
+import ggc.plugin.device.PlugInBaseException;
 
-public class PumpException extends Exception
+
+public class PumpException extends PlugInBaseException
 {
 
 	

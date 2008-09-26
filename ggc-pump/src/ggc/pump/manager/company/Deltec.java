@@ -29,13 +29,17 @@
 
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.util.I18nControl;
 
-public class Deltec extends AbstractPumpCompany
+
+public class Deltec extends AbstractDeviceCompany
 {
 
     
     public Deltec()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 

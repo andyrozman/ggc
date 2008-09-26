@@ -29,13 +29,17 @@
 
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.util.I18nControl;
 
-public class Minimed extends AbstractPumpCompany
+
+public class Minimed extends AbstractDeviceCompany
 {
 
     
     public Minimed()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 

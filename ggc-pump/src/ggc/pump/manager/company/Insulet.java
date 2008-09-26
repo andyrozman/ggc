@@ -29,13 +29,17 @@
 
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.util.I18nControl;
 
-public class Insulet extends AbstractPumpCompany
+
+public class Insulet extends AbstractDeviceCompany
 {
 
     
     public Insulet()
     {
+        super(I18nControl.getInstance(), true);
     }
 
 

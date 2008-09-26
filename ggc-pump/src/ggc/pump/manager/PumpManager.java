@@ -42,32 +42,8 @@ public class PumpManager
     protected DataAccessPump m_da = DataAccessPump.getInstance();
     
 
-    public static final int METER_NONE = 0;
+    protected Hashtable<String,PumpInterface> pump_devices;
 
-    // old meters support
-    public static final int METER_GLUCO_CARD = 1;
-    public static final int METER_EURO_FLASH = 2;
-    public static final int METER_FREESTYLE = 3;
-    public static final int METER_ASCENSIA_CONTOUR = 4;
-    public static final int METER_ASCENSIA_DEX = 5;
-    public static final int METER_ASCENSIA_BREEZE = 6;
-    public static final int METER_ASCENSIA_ELITE_XL = 7;
-
-
-    public static final int METER_COMPANY_NO = 0;
-    public static final int METER_COMPANY_UNKNOWN = 1;
-    public static final int METER_COMPANY_ASCENSIA_BAYER = 2;
-
-    public int[] meter_company = {
-	METER_COMPANY_NO, // 0
-	METER_COMPANY_UNKNOWN, // 1
-	METER_COMPANY_UNKNOWN, // 2
-	METER_COMPANY_UNKNOWN, // 3
-	METER_COMPANY_ASCENSIA_BAYER, // 4
-	METER_COMPANY_ASCENSIA_BAYER, // 5
-	METER_COMPANY_ASCENSIA_BAYER, // 6
-	METER_COMPANY_ASCENSIA_BAYER, // 7
-    };
 
 
 
@@ -76,62 +52,6 @@ public class PumpManager
 
 
 
-    public String[] meter_names = {
-        m_ic.getMessage("NONE"),
-        "GlucoCard", 
-        "EuroFlash",
-        "FreeStyle",
-	"Ascensia Contour",
-	"Ascensia DEX",
-	"Ascensia Breeze",
-	"Ascensia Elite XL"
-    };
-
-
-
-
-
-    public String[] meter_classes = {
-        "ggc.data.imports.DummyImport",
-        "ggc.data.imports.GlucoCardImport",
-        "ggc.data.imports.EuroFlashImport",
-        "ggc.data.imports.FreeStyleImport",
-    };
-
-    public String[] meter_device_classes = {
-        "ggc.data.meter.device.DummyPump",
-        "ggc.data.meter.device.DummyPump",
-        "ggc.data.meter.device.DummyPump",
-        "ggc.data.meter.device.DummyPump",
-	"ggc.data.meter.device.AscensiaContourPump",
-	"ggc.data.meter.device.AscensiaDEXPump",
-	"ggc.data.meter.device.AscensiaBreezePump",
-	"ggc.data.meter.device.AscensiaEliteXLPump",
-    };
-
-    // false =old interface, true = new interface
-    public boolean[] meter_interface_type = {
-	false,
-	false,
-	false,
-	false,
-	true,
-	true,
-	true,
-	true
-    };
-/*
-    public ImageIcon[] meter_pictures = {
-        new ImageIcon(getClass().getResource("/icons/m_noPump.gif")),
-        new ImageIcon(getClass().getResource("/icons/m_glucocard.gif")),
-        new ImageIcon(getClass().getResource("/icons/m_euroflash.gif")),
-        new ImageIcon(getClass().getResource("/icons/m_freestyle.gif")),
-	new ImageIcon(getClass().getResource("/icons/m_asc_contour.gif")),
-	new ImageIcon(getClass().getResource("/icons/m_asc_dex.gif")),
-	new ImageIcon(getClass().getResource("/icons/m_asc_breeze.gif")),
-	new ImageIcon(getClass().getResource("/icons/m_asc_elite.gif")),
-    };
-*/
 
     public static PumpManager s_manager = null;
     
@@ -141,7 +61,7 @@ public class PumpManager
      */
     private PumpManager()
     {
-    	this.loadPumpsDefinitions();
+    	this.pump_devices = new Hashtable<String,PumpInterface>();
     }
 
     
@@ -171,20 +91,20 @@ public class PumpManager
      */
     public String getPumpName(int index)
     {
-        //return this.meter_names[index];
-        return null;
+        return this.pump_devices.get(index).getName();
     } 
 
 
     public String[] getAvailablePumps()
     {
-        return this.meter_names;
+        //return this.pump_devices.values().toArray(new String[]);
+        return null;
     }
 
 
     public String getPumpClassName(int index)
     {
-        return this.meter_classes[index];
+        return this.pump_devices.get(index).getDeviceClassName();
     }
 /*
     public String getPumpDeviceClassName(int index)
@@ -243,13 +163,16 @@ public class PumpManager
     {
         // TODO
         return null;
+        //return this.pump_devices.get(index).getName();
+
     	//return this.getPumpDevice(group + "_" + device);
     }
     
     
-    public PumpDevice getPumpDevice(String group_and_device)
+    public PumpInterface getPumpDevice(String group_and_device)
     {
-    	return this.meters_list.get(group_and_device);
+//    	return this.meters_list.get(group_and_device);
+    	return null;
     }
     
     public String getPumpDeviceClassName(String group, String device)
@@ -259,10 +182,10 @@ public class PumpManager
     }
     
     
-    public Hashtable<String,PumpCompany> groups = new Hashtable<String,PumpCompany>();
-    public Hashtable<String,PumpDevice> meters_list = new Hashtable<String,PumpDevice>();
+//    public Hashtable<String,PumpCompany> groups = new Hashtable<String,PumpCompany>();
+//    public Hashtable<String,PumpDevice> meters_list = new Hashtable<String,PumpDevice>();
     
-    
+/*    
     public void loadPumpsDefinitions()
     {
     	Hashtable<String,String> defs = m_da.loadPropertyFile("PumpDefinition.properties");
@@ -299,7 +222,7 @@ public class PumpManager
     	}
     	
     }
-
+*/
     
 
 

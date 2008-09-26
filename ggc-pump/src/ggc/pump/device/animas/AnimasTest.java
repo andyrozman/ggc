@@ -1,6 +1,6 @@
 package ggc.pump.device.animas;
 
-import ggc.pump.manager.PumpImplementationStatus;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.output.OutputWriter;
 
 public class AnimasTest extends EZManagerDb
@@ -47,12 +47,12 @@ public class AnimasTest extends EZManagerDb
     
 
     /**
-     * getMeterId - Get Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
      * 
-     * @return id of meter within company
+     * @return id of device within company
      */
-    public int getPumpId()
+    public int getDeviceId()
     {
         return EZManagerDb.PUMP_ANIMAS_TEST;
     }
@@ -89,7 +89,7 @@ public class AnimasTest extends EZManagerDb
      */
     public int getImplementationStatus() 
     {
-        return PumpImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
+        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
     
     
@@ -114,6 +114,22 @@ public class AnimasTest extends EZManagerDb
     public String getDeviceClassName()
     {
         return "ggc.pump.device.animas.AnimasTest";
+    }
+
+
+
+
+    public String getDeviceSpecialComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean hasSpecialProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
     }
     
 }
