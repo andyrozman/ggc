@@ -8,8 +8,6 @@ import ggc.pump.util.I18nControl;
 import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 
-import javax.swing.ImageIcon;
-
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
