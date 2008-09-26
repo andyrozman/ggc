@@ -34,7 +34,6 @@ package ggc.cgm.manager.company;
 public interface CGMCompanyInterface
 {
 
-
     
     
     

@@ -36,7 +36,6 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
 
 
 
-
     /**
      * 
      */

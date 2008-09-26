@@ -33,7 +33,6 @@ package ggc.cgm.manager;
 public class CGMImplementationStatus
 {
 
-
     public static final int IMPLEMENTATION_NOT_AVAILABLE = 0;
     public static final int IMPLEMENTATION_NOT_PLANNED = 1;
     public static final int IMPLEMENTATION_PLANNED = 2;

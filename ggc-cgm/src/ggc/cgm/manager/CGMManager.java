@@ -83,12 +83,12 @@ public class CGMManager
     {
     }
     
-    
+    /*
     private void addCGMCompany(AbstractCGMCompany company)
     {
         this.companies.add(company);
         this.companies_ht.put(company.getName(), company);
-    }
+    }*/
     
     
     public void loadSupportedDevices()
