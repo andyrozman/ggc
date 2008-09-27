@@ -47,9 +47,9 @@ import com.atech.i18n.I18nControlAbstract;
 public class MeterCompanyPanel extends AbstractPreferencesPanel implements ItemListener
 {
 
-
-
 	
+    private static final long serialVersionUID = 8678954814833881995L;
+
     JComboBox cb_meter_company; 
     
     //private JComboBox cb_meter_type, cb_meter_company, cb_timezone;
