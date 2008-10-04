@@ -13,6 +13,7 @@ package ggc.meter.device;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.protocol.ConnectionProtocols;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
      * This is method for reading data from device. All reading from actual device should be done from here.
      * Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataFull() throws MeterException
+    public void readDeviceDataFull() throws PlugInBaseException
     {
     }
     
@@ -343,7 +344,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     /** 
      * clearDeviceData - Clear data from device 
      */
-    public void clearDeviceData() throws MeterException
+    public void clearDeviceData() throws PlugInBaseException
     {
     }
     
@@ -360,7 +361,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
      * getDeviceConfiguration - return device configuration
      * @return
      */
-    public ArrayList<String> getDeviceConfiguration() throws MeterException
+    public ArrayList<String> getDeviceConfiguration() throws PlugInBaseException
     {
         return null;
     }
@@ -409,7 +410,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataPartitial() throws MeterException
+    public void readDeviceDataPartitial() throws PlugInBaseException
     {
         
     }
@@ -420,7 +421,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
      * 
      * @throws MeterExceptions
      */
-    public void readConfiguration() throws MeterException
+    public void readConfiguration() throws PlugInBaseException
     {
     }
     
@@ -430,7 +431,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
      * information (most dumps do). 
      * @throws MeterExceptions
      */
-    public void readInfo() throws MeterException
+    public void readInfo() throws PlugInBaseException
     {
     }
     

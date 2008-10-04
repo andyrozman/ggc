@@ -11,6 +11,7 @@ package ggc.meter.device;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
@@ -203,7 +204,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
 
 
 
-    public void readDeviceData() throws MeterException
+    public void readDeviceData() throws PlugInBaseException
     {
     }
 

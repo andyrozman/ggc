@@ -859,7 +859,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
 
 
-    public void readDeviceData() throws MeterException
+    public void readDeviceData() throws PlugInBaseException
     {
     }
 

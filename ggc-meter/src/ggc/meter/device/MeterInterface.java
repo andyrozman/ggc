@@ -2,6 +2,7 @@ package ggc.meter.device;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -51,7 +52,7 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    void close() throws MeterException;
+    void close() throws PlugInBaseException;
 
 
 

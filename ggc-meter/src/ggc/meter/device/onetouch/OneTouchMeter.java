@@ -2,7 +2,6 @@ package ggc.meter.device.onetouch;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.device.MeterException;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
@@ -170,7 +169,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataPartitial() throws MeterException
+    public void readDeviceDataPartitial() throws PlugInBaseException
     {
         
     }
@@ -181,7 +180,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      * 
      * @throws MeterExceptions
      */
-    public void readConfiguration() throws MeterException
+    public void readConfiguration() throws PlugInBaseException
     {
     }
     
@@ -191,7 +190,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      * information (most dumps do). 
      * @throws MeterExceptions
      */
-    public void readInfo() throws MeterException
+    public void readInfo() throws PlugInBaseException
     {
     }
     

@@ -5,6 +5,7 @@ package ggc.meter.device;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
@@ -39,7 +40,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
 	boolean can_read_device_configuration = false;
     
     
-    public void close() throws MeterException
+    public void close() throws PlugInBaseException
     {
     }
 	
@@ -198,7 +199,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
 
 
 
-    public void readDeviceData() throws MeterException
+    public void readDeviceData() throws PlugInBaseException
     {
     }
 

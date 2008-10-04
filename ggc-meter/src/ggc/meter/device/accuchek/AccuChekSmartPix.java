@@ -2,8 +2,8 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.device.AbstractXmlMeter;
-import ggc.meter.device.MeterException;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
@@ -145,7 +145,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     /* 
      * readDeviceDataFull
      */
-    public void readDeviceDataFull() throws MeterException
+    public void readDeviceDataFull() throws PlugInBaseException
     {
         // write preliminary device identification, based on class
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
@@ -328,7 +328,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataPartitial() throws MeterException
+    public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
 
@@ -338,7 +338,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
      * 
      * @throws MeterExceptions
      */
-    public void readConfiguration() throws MeterException
+    public void readConfiguration() throws PlugInBaseException
     {
     }
     
@@ -348,7 +348,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
      * information (most dumps do). 
      * @throws MeterExceptions
      */
-    public void readInfo() throws MeterException
+    public void readInfo() throws PlugInBaseException
     {
     }
     

@@ -10,6 +10,7 @@ package ggc.meter.device;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import java.util.ArrayList;
@@ -184,7 +185,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
 
 
 
-    public void readDeviceData() throws MeterException
+    public void readDeviceData() throws PlugInBaseException
     {
     }
 

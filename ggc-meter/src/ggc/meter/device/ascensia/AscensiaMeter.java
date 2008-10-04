@@ -3,10 +3,10 @@ package ggc.meter.device.ascensia;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.device.MeterException;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -180,7 +180,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     
 
     
-    public void readDeviceDataFull() throws MeterException
+    public void readDeviceDataFull() throws PlugInBaseException
     {
         waitTime(2000);
         
@@ -649,7 +649,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataPartitial() throws MeterException
+    public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
 
@@ -659,7 +659,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      * 
      * @throws MeterExceptions
      */
-    public void readConfiguration() throws MeterException
+    public void readConfiguration() throws PlugInBaseException
     {
     }
     
@@ -669,7 +669,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      * information (most dumps do). 
      * @throws MeterExceptions
      */
-    public void readInfo() throws MeterException
+    public void readInfo() throws PlugInBaseException
     {
     }
 
