@@ -8,6 +8,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class NutritionHomeWeightTypeH implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2481733598356516091L;
+
     /** identifier field */
     private long id;
 

@@ -42,6 +42,7 @@ import ggc.core.nutrition.panels.PanelNutritionMeal;
 import ggc.core.nutrition.panels.PanelNutritionMealEdit;
 import ggc.core.util.DataAccess;
 
+import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.MenuItem;
@@ -50,6 +51,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
 import java.util.Hashtable;
 
 import javax.swing.JDialog;
@@ -109,8 +111,22 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
         this.m_tree_type = type;
 
         init();
+        
+        enableEvents(AWTEvent.WINDOW_EVENT_MASK);
+        
     }
 
+    
+    public void processWindowEvent(WindowEvent ev)
+    {
+        if (ev.getID() == WindowEvent.WINDOW_CLOSING)
+            this.dispose();
+        
+        //System.out.println(ev);
+        
+    }
+    
+    
     public void init()
     {
 

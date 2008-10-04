@@ -8,6 +8,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class InetGroupH implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2162686900534669008L;
+
     /** identifier field */
     private long id;
 

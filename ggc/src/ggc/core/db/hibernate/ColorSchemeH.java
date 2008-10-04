@@ -8,6 +8,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class ColorSchemeH implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -80774589554863692L;
+
     /** identifier field */
     private long id;
 

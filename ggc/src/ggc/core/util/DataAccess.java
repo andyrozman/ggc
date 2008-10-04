@@ -120,7 +120,6 @@ public class DataAccess extends ATDataAccessAbstract
     public MainFrame m_main = null;
     public GGCLittle m_main_little = null;
 
-    public Font fonts[] = null;
 
     // public GGCTreeRoot m_nutrition_treeroot = null;
     // public GGCTreeRoot m_meals_treeroot = null;

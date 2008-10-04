@@ -8,6 +8,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class StockTypeH implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8347436608566276984L;
+
     /** identifier field */
     private long id;
 

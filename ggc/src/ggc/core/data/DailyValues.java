@@ -723,6 +723,7 @@ public class DailyValues implements Serializable
     public float getLowestBG()
     {
 
+        
         if (lowestBG != Float.MAX_VALUE)
         {
             if (m_da.getBGMeasurmentType()==DataAccess.BG_MGDL)

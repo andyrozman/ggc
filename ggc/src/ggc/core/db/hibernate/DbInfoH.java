@@ -8,6 +8,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class DbInfoH implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6483987777425549082L;
+
     /** identifier field */
     private long id;
 

@@ -35,6 +35,7 @@ import ggc.core.util.NutriI18nControl;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 public class DailyFoodEntries // implements SelectableInterface
 {
@@ -55,6 +56,20 @@ public class DailyFoodEntries // implements SelectableInterface
         entries = new ArrayList<DailyFoodEntry>();
     }
 
+    
+    public DailyFoodEntries(String meals_ids)
+    {
+        entries = new ArrayList<DailyFoodEntry>();
+        StringTokenizer strtok = new StringTokenizer(meals_ids, ";");
+        
+        while (strtok.hasMoreTokens())
+        {
+            addDailyFoodEntry(new DailyFoodEntry(strtok.nextToken()));
+        }
+    }
+    
+    
+    
     public void addDailyFoodEntry(DailyFoodEntry dfe)
     {
         if (dfe.hasChildren())
@@ -114,6 +129,21 @@ public class DailyFoodEntries // implements SelectableInterface
         return out_lst;
     }
 
+    
+    public int getElementsCount()
+    {
+        return this.entries.size();
+    }
+    
+    
+    public DailyFoodEntry getElement(int index)
+    {
+        return this.entries.get(index);
+    }
+    
+    
+    
+    
     @Override
     public String toString()
     {

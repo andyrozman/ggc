@@ -32,12 +32,12 @@ package ggc.core.print;
 
 import ggc.core.data.DayValuesData;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
@@ -57,7 +57,7 @@ public abstract class PrintAbstract extends PdfPageEventHelper
 {
     public DayValuesData m_data = null;
     protected DataAccess m_da = DataAccess.getInstance();
-    protected I18nControl ic = I18nControl.getInstance();
+    protected I18nControlAbstract ic = null;
     String name = "";
 
     BaseFont base_helvetica = null;
@@ -65,9 +65,10 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     Font normal_text = null; 
     
     
-    public PrintAbstract(DayValuesData data)
+    public PrintAbstract(DayValuesData data, I18nControlAbstract ic)
     {
         this.m_data = data;
+        this.ic = ic;
         //name = System.currentTimeMillis();
         createName();
 
@@ -88,18 +89,19 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     
     public String getName()
     {
+        // TODO: 
         return name + ".pdf";
     }
 
     
     public void createName()
     {
-        // TODO: implement this
+        this.name = this.getFileNameBase(); // + "_" + this.getFileNameRange();
     }
     
     public abstract Paragraph getTitle();
     
-    public abstract void fillDocumentBody(Document document);
+    public abstract void fillDocumentBody(Document document) throws Exception;
     
     public abstract String getFileNameBase();
     

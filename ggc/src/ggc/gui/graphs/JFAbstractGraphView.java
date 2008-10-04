@@ -55,6 +55,10 @@ import org.jfree.ui.Layer;
  */
 public abstract class JFAbstractGraphView extends JPanel
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1579716091265096686L;
     Color backgroundColor = Color.WHITE;
     int BGUnit = DataAccess.BG_MGDL;
     JFreeChart chart;

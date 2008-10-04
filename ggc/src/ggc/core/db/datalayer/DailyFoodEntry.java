@@ -339,10 +339,12 @@ public class DailyFoodEntry // implements SelectableInterface
         {
             return this.m_food.getName();
         }
-        else
+        else if (this.m_meal!=null)
         {
             return this.m_meal.getName();
         }
+        else
+            return "";
     }
 
     public int getFoodType()
@@ -379,7 +381,7 @@ public class DailyFoodEntry // implements SelectableInterface
         }
         else
         {
-            System.out.println("Weight type NO HW");
+            //System.out.println("Weight type NO HW");
 
             return "";
         }
@@ -394,6 +396,11 @@ public class DailyFoodEntry // implements SelectableInterface
     {
         //System.out.println("HWs: " + this.m_food.getHome_weights());
         //System.out.println("Looking for:  " + this.home_weight_id);
+        
+        
+        if ((this.m_food.getHome_weights()==null) && (this.m_food.getHome_weights().length()==0))
+            return;
+        
         StringTokenizer strtok = new StringTokenizer(this.m_food.getHome_weights(), ";");
 
         while (strtok.hasMoreTokens())
@@ -572,6 +579,9 @@ public class DailyFoodEntry // implements SelectableInterface
 
     private void processMeal(Meal meal)
     {
+        if (meal==null)
+            return;
+        
         String ml_parts = meal.getParts();
 
         String parts[] = m_da.splitString(ml_parts, ";");
@@ -739,6 +749,23 @@ public class DailyFoodEntry // implements SelectableInterface
         return this.nutrients;
     }
 
+    
+    public float getNutrientValue(int id)
+    {
+        ArrayList<MealNutrition> lst = this.getNutrients();
+        
+        for(int i=0; i<lst.size(); i++)
+        {
+            if (lst.get(i).getId()==id)
+                return lst.get(i).getAmount();
+                //return DataAccess.Decimal2Format.format(lst.get(i).getAmount());
+        }
+        
+        return 0.0f; 
+    }
+    
+    
+    
     public ArrayList<MealNutrition> createList(Hashtable<String, MealNutrition> table)
     {
         ArrayList<MealNutrition> lst = new ArrayList<MealNutrition>();
@@ -756,6 +783,43 @@ public class DailyFoodEntry // implements SelectableInterface
         return lst;
     }
 
+    
+    public float getHomeWeightMultiplier()
+    {
+        float f = 1.0f;
+        
+        if (this.m_home_weight_special!=null)
+        {
+        
+            if (this.m_food!=null)
+            {   
+                String hw = this.m_food.getHome_weights();
+                String vv = hw.substring(hw.indexOf(this.m_home_weight_special.getItemId() + "="));
+                
+                if (vv.contains(";"))
+                    vv = vv.substring(vv.indexOf("=")+1, vv.indexOf(";"));
+                else
+                    vv = vv.substring(vv.indexOf("=")+1);
+                    
+                
+                try
+                {
+                    f = Float.parseFloat(vv)/100.0f;
+                }
+                catch(Exception ex)
+                {
+                    System.out.println("Exception: " + ex);
+                }
+                
+                
+            }
+        }
+        
+        return f;
+        
+    }
+    
+    
     /*
      * processing v1 public ArrayList<MealNutrition> getNutrients() { if
      * (this.nutrients == null) loadNutrients();

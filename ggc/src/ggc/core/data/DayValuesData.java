@@ -33,6 +33,7 @@ package ggc.core.data;
 
 import ggc.core.util.DataAccess;
 
+import java.text.DateFormat;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -47,7 +48,9 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     public DataAccess m_da = DataAccess.getInstance();
     
     private long range_from = 0L;
+    private GregorianCalendar range_from_gc = null;
     private long range_to = 0L;
+    private GregorianCalendar range_to_gc = null;
     
     public static final int RANGE_NONE = 0;
     public static final int RANGE_DAY = 1;
@@ -65,8 +68,11 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     {
         m_dataTable = new Hashtable<String, DailyValues>();
         this.type = DayValuesData.RANGE_CUSTOM;
-        this.range_from = from;
-        this.range_to = till;
+        
+        
+        
+        this.setRangeFrom(from);
+        this.setRangeTo(till);
     }
 
     // TODO: more constructors
@@ -110,6 +116,48 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
         }
     }
 
+    
+    public void setRangeFrom(long from)
+    {
+        // TODO extend to several input formats
+        this.range_from = from;
+        range_from_gc = new ATechDate(ATechDate.FORMAT_DATE_ONLY, from).getGregorianCalendar();
+    }
+    
+
+    public void setRangeTo(long to)
+    {
+        // TODO extend to several input formats
+        this.range_to = to;
+        range_to_gc = new ATechDate(ATechDate.FORMAT_DATE_ONLY, to).getGregorianCalendar();
+    }
+    
+    
+    public String getFromAsLocalizedDate()
+    {
+//        return "xx";
+        return getAsLocalizedString(this.range_from_gc);
+    }
+
+    public String getToAsLocalizedDate()
+    {
+//        return "xx";
+        return getAsLocalizedString(this.range_to_gc);
+    }
+    
+    
+    public static final int DATE_MONTH = 0;
+    public static final int DATE_YEAR = 0;
+    
+    
+    private String getAsLocalizedString(GregorianCalendar gc_value)
+    {
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, this.m_da.getI18nControlInstance().getSelectedLanguageLocale());
+        
+        return df.format(gc_value.getTime());
+    }
+    
+    
     
     public Hashtable<String, DailyValues> getAllValues()
     {

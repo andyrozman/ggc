@@ -49,6 +49,10 @@ import javax.swing.event.ChangeListener;
  */
 public class DataPlotSelectorPanel extends JPanel implements ChangeListener
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6420234465982434157L;
     PlotData data = new PlotData();
     DataAccess dataAccessInstance = DataAccess.getInstance();
     I18nControl translator = I18nControl.getInstance();

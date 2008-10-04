@@ -58,6 +58,10 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public class DailyGraphView extends JFAbstractGraphView
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8136217038535558623L;
     NumberAxis BGAxis;
     private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
     private DailyValues data = new DailyValues();

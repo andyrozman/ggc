@@ -333,13 +333,15 @@ public class MainFrame extends JFrame
 
         // reports menu
         this.menu_printing = this.createMenu("MN_PRINTING", null);
-        JMenu menu_reports = this.createMenu(this.menu_printing, "MN_REPORTS",
-                "MN_REPORTS_DESC");
-        this.createAction(menu_reports, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC",
-                "report_pdf_simple", "print.png");
-        this.createAction(menu_reports, "MN_PDF_EXT", "MN_PDF_EXT_DESC",
-                "report_pdf_extended", "print.png");
+        JMenu menu_reports = this.createMenu(this.menu_printing, "MN_REPORTS", "MN_REPORTS_DESC");
+        this.createAction(menu_reports, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png");
+        this.createAction(menu_reports, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", "print.png");
 
+        JMenu menu_reports_foodmenu = this.createMenu(this.menu_printing, "MN_FOODMENU", "MN_FOODMENU_DESC");
+        this.createAction(menu_reports_foodmenu, "MN_FOODMENU_SIMPLE", "MN_FOODMENU_SIMPLE_DESC", "report_foodmenu_simple", "print.png");
+        
+        
+        
         // meters
         this.menu_meters = this.createMenu("MN_METERS", null);
         this.createAction(menu_meters, "MN_METERS_READ", "MN_METERS_READ_DESC", "meters_read", null);
@@ -1004,8 +1006,7 @@ public class MainFrame extends JFrame
             }
             else if (command.equals("hlp_help"))
             {
-                m_da.getHelpContext().getDisplayHelpFromSourceInstance()
-                        .actionPerformed(e);
+                m_da.getHelpContext().getDisplayHelpFromSourceInstance().actionPerformed(e);
             }
             /*
              * else if (command.equals("hlp_check")) { new
@@ -1034,11 +1035,15 @@ public class MainFrame extends JFrame
             }
             else if (command.equals("report_pdf_simple"))
             {
-                new PrintingDialog(MainFrame.this, 1);
+                new PrintingDialog(MainFrame.this, 1, PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION);
             }
             else if (command.equals("report_pdf_extended"))
             {
-                new PrintingDialog(MainFrame.this, 2);
+                new PrintingDialog(MainFrame.this, 2, PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION);
+            }
+            else if (command.equals("report_foodmenu_simple"))
+            {
+                new PrintingDialog(MainFrame.this, 1, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
             }
             else if (command.equals("view_ratio"))
             {
@@ -1077,24 +1082,20 @@ public class MainFrame extends JFrame
             }
             else if ((command.equals("test")))
             {
-                DayValuesData dvd = m_da.getDb().getDayValuesData(20080701, 20080714); //.getMonthlyValues(yr, mnth);
+                //ImportDacioDb idb = new ImportDacioDb("../data/temp/zivila.csv", true); //args[
+                //idb.convertFoods();
+              
 
-                PrintFoodMenuBase psm = new PrintFoodMenuBase(dvd);
+/*                
+                DayValuesData dvd = m_da.getDb().getDayValuesData(20080908, 20090928); //.getMonthlyValues(yr, mnth);
+                PrintFoodMenuBase psm = new PrintFoodMenuBase(dvd);                
                 
                 
+                PrintingDialog.displayPDFExternal(psm.getName());
+  */              
                 //BolusHelper bh = new BolusHelper(MainFrame.this);
                 //featureNotImplemented(command, "0.6");
             }
-            /*
-             * else if ((command.equals("pumps_read")) ||
-             * (command.equals("pumps_list")) ||
-             * (command.equals("pumps_profile")) ||
-             * (command.equals("pumps_manual_entry")) ||
-             * (command.equals("pumps_additional_data")) ||
-             * (command.equals("pumps_config")) ) {
-             * featureNotImplemented(command, "0.5 " + m_ic.getMessage("OR") +
-             * " 0.6"); }
-             */
             else if (command.equals("file_login"))
             {
                 // ggc.gui.ReadMeterDialog rm = new

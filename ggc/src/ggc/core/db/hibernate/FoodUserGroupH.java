@@ -8,6 +8,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class FoodUserGroupH implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5449437325501355497L;
+
     /** identifier field */
     private long id;
 

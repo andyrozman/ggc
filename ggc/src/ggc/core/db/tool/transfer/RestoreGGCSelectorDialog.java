@@ -33,7 +33,12 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
     }
 
 
+    public String getBrowseStartupDirectory()
+    {
+        return "../data/export/";
+    }
 
+    
     
     public void cmdNextStep()
     {

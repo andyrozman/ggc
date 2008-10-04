@@ -28,15 +28,16 @@
  */
 package ggc.gui.dialogs;
 
+import ggc.core.data.DayValuesData;
 import ggc.core.data.MonthlyValues;
 import ggc.core.print.PrintExtendedMonthlyReport;
+import ggc.core.print.PrintFoodMenuBase;
 import ggc.core.print.PrintSimpleMonthlyReport;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Calendar;
@@ -52,20 +53,20 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
+import com.atech.graphics.components.DateComponent;
 import com.atech.graphics.dialogs.ActionExceptionCatchDialog;
 
 // fix this
 
 public class PrintingDialog extends ActionExceptionCatchDialog // extends
-                                                               // JDialog
-                                                               // implements
-                                                               // ActionListener
-                                                               // , HelpCapable
+// JDialog
+// implements
+// ActionListener
+// , HelpCapable
 {
 
-    /**
-     * 
-     */
+    
+    
     private static final long serialVersionUID = 2693207247071685559L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
@@ -76,25 +77,33 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     private JComboBox cb_template = null;
     // x private String[] schemes_names = null;
 
+    DateComponent dc_to, dc_from;
+    
     GregorianCalendar gc = null;
     JSpinner sl_year = null, sl_month = null;
     JButton help_button;
 
-    public String[] report_types = { m_ic.getMessage("SIMPLE_MONTHLY_REPORT"),
-                                    m_ic.getMessage("EXTENDED_MONTHLY_REPORT") };
+    public String[] report_types_1 = { m_ic.getMessage("SIMPLE_MONTHLY_REPORT"),
+                                      m_ic.getMessage("EXTENDED_MONTHLY_REPORT") };
+
+    public String[] report_types_2 = { m_ic.getMessage("FOOD_MENU_BASE") };
 
     Font font_normal, font_normal_bold;
 
-    public PrintingDialog(JFrame frame, int type) // throws Exception
+    public static final int PRINT_DIALOG_YEAR_MONTH_OPTION = 1;
+    public static final int PRINT_DIALOG_RANGE_DAY_OPTION = 2;
+
+    public int master_type = 1;
+
+    public PrintingDialog(JFrame frame, int type, int master_type) // throws
+                                                                   // Exception
     {
         super(DataAccess.getInstance(), "printing_dialog");
         // super(frame, "", true);
-
-        Rectangle rec = frame.getBounds();
-        int x = rec.x + (rec.width / 2);
-        int y = rec.y + (rec.height / 2);
-
-        setBounds(x - 175, y - 150, 350, 320);
+        /*
+         * Rectangle rec = frame.getBounds(); int x = rec.x + (rec.width / 2);
+         * int y = rec.y + (rec.height / 2);
+         */
         this.setLayout(null);
 
         font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
@@ -103,7 +112,12 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         gc = new GregorianCalendar();
         setTitle(m_ic.getMessage("PRINTING"));
 
-        init();
+        this.master_type = master_type;
+
+        if (master_type == PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION)
+            init();
+        else
+            initRange();
 
         this.cb_template.setSelectedIndex(type - 1);
 
@@ -112,6 +126,11 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
     private void init() // throws Exception
     {
+
+        setSize(350, 320);
+        // setBounds(x - 175, y - 150, 350, 320);
+
+        this.m_da.centerJDialog(this);
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 350, 350);
@@ -130,7 +149,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         label.setBounds(40, 75, 280, 25);
         panel.add(label);
 
-        cb_template = new JComboBox(report_types);
+        cb_template = new JComboBox(report_types_1);
         cb_template.setFont(this.font_normal);
         cb_template.setBounds(40, 105, 230, 25);
         panel.add(cb_template);
@@ -192,6 +211,102 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
     }
 
+    private void initRange() // throws Exception
+    {
+
+        setSize(350, 420);
+        this.m_da.centerJDialog(this);
+
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, 350, 400);
+        panel.setLayout(null);
+
+        this.getContentPane().add(panel);
+
+        JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
+        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setBounds(0, 20, 350, 35);
+        panel.add(label);
+
+        label = new JLabel(m_ic.getMessage("TYPE_OF_REPORT") + ":");
+        label.setFont(this.font_normal_bold);
+        label.setBounds(40, 75, 280, 25);
+        panel.add(label);
+
+        cb_template = new JComboBox(report_types_2);
+        cb_template.setFont(this.font_normal);
+        cb_template.setBounds(40, 105, 230, 25);
+        panel.add(cb_template);
+
+        // int year = m_da.getC
+
+//        int year = gc.get(Calendar.YEAR);
+//        int month = gc.get(Calendar.MONTH) + 1;
+        // (new GregorianCalendar()).get(Calendar.YEAR);
+
+        /*
+         * sl_year = new JSpinner(); SpinnerNumberModel model = new
+         * SpinnerNumberModel(year, 1970, year + 1, 1); sl_year.setModel(model);
+         * sl_year.setEditor(new JSpinner.NumberEditor(sl_year, "#"));
+         * sl_year.setFont(this.font_normal); sl_year.setBounds(40, 185, 60,
+         * 25); panel.add(sl_year);
+         * 
+         * sl_month = new JSpinner(); SpinnerNumberModel model_m = new
+         * SpinnerNumberModel(month, 1, 12, 1); sl_month.setModel(model_m); //
+         * sl_month.setEditor(new JSpinner.NumberEditor(sl_month, "#"));
+         * sl_month.setFont(this.font_normal); sl_month.setBounds(120, 185, 40,
+         * 25); panel.add(sl_month);
+         */
+
+        label = new JLabel(m_ic.getMessage("SELECT_STARTING_RANGE") + ":");
+        label.setFont(this.font_normal_bold);
+        label.setBounds(40, 155, 180, 25);
+        panel.add(label);
+
+        dc_from = new DateComponent(m_ic);
+        dc_from.setBounds(40, 180, 120, 25);
+        panel.add(dc_from);
+
+        label = new JLabel(m_ic.getMessage("SELECT_ENDING_RANGE") + ":");
+        label.setFont(this.font_normal_bold);
+        label.setBounds(40, 225, 180, 25);
+        panel.add(label);
+
+        dc_to = new DateComponent(m_ic);
+        dc_to.setBounds(40, 250, 120, 25);
+        panel.add(dc_to);
+
+        JButton button = new JButton("   " + m_ic.getMessage("OK"));
+        // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setActionCommand("ok");
+        button.addActionListener(this);
+        button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
+        button.setBounds(40, 340, 125, 25);
+        panel.add(button);
+
+        button = new JButton("   " + m_ic.getMessage("CANCEL"));
+        // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setActionCommand("cancel");
+        button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        button.addActionListener(this);
+        button.setBounds(175, 340, 125, 25);
+        panel.add(button);
+
+        help_button = m_da.createHelpButtonByBounds(185, 310, 115, 25, this);
+        panel.add(help_button);
+
+        m_da.enableHelp(this);
+
+        /*
+         * new JButton(m_ic.getMessage("CANCEL"));
+         * button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+         * button.setActionCommand("cancel"); button.addActionListener(this);
+         * button.setBounds(190, 240, 110, 25); panel.add(button);
+         */
+
+    }
+
     /*
      * Invoked when an action occurs.
      */
@@ -240,22 +355,36 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         }
         else if (action.equals("ok"))
         {
-            int yr = ((Integer) sl_year.getValue()).intValue();
-            int mnth = ((Integer) sl_month.getValue()).intValue();
 
-            MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
-
-            this.dispose();
-            
-            if (this.cb_template.getSelectedIndex() == 0)
+            if (this.master_type == PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION)
             {
-                PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
-                displayPDF(psm.getName());
+                int yr = ((Integer) sl_year.getValue()).intValue();
+                int mnth = ((Integer) sl_month.getValue()).intValue();
 
+                MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
+
+                this.dispose();
+
+                if (this.cb_template.getSelectedIndex() == 0)
+                {
+                    PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
+                    displayPDF(psm.getName());
+
+                }
+                else
+                {
+                    PrintExtendedMonthlyReport psm = new PrintExtendedMonthlyReport(mv);
+                    displayPDF(psm.getName());
+                }
             }
             else
             {
-                PrintExtendedMonthlyReport psm = new PrintExtendedMonthlyReport(mv);
+
+                System.out.println(this.dc_from.getDate() + " " + this.dc_to.getDate());
+                
+                DayValuesData dvd = m_da.getDb().getDayValuesData(this.dc_from.getDate(), this.dc_to.getDate()); //.getMonthlyValues(yr, mnth);
+                PrintFoodMenuBase psm = new PrintFoodMenuBase(dvd);                
+                
                 displayPDF(psm.getName());
             }
         }
@@ -271,9 +400,9 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         String pdf_viewer = m_da.getSettings().getPdfVieverPath().replace('\\', '/');
         String file_path = fl.getAbsolutePath().replace('\\', '/');
 
-        this.setErrorMessages(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"), m_ic.getMessage("PRINTING_SETTINGS_NOT_SET_SOL"));
+        this.setErrorMessages(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"), m_ic
+                .getMessage("PRINTING_SETTINGS_NOT_SET_SOL"));
 
-        
         if (pdf_viewer.equals(""))
         {
             throw new Exception(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
@@ -283,7 +412,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         // y System.out.println(file_path);
 
         File acr = new File(pdf_viewer);
-        
+
         if (!acr.exists())
         {
             throw new Exception(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
@@ -325,7 +454,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
             this.setErrorMessages(m_ic.getMessage("PDF_VIEVER_RUN_ERROR"), null);
             System.out.println("Error running AcrobatReader: " + ex);
             throw ex;
-            
+
         }
         /*
          * System.out.println(acr.getAbsoluteFile());
@@ -343,6 +472,58 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
          * 
          * }
          */
+    }
+
+    public static void displayPDFExternal(String name)
+    {
+        I18nControl ic = I18nControl.getInstance();
+
+        File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
+
+        // y System.out.println(fl.getAbsolutePath());
+        // System.out.println(File.separator);
+
+        String pdf_viewer = DataAccess.getInstance().getSettings().getPdfVieverPath().replace('\\', '/');
+        String file_path = fl.getAbsolutePath().replace('\\', '/');
+
+        if (pdf_viewer.equals(""))
+        {
+            System.out.println(ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
+            return;
+        }
+
+        // ySystem.out.println(pdf_viewer);
+        // y System.out.println(file_path);
+
+        File acr = new File(pdf_viewer);
+
+        if (!acr.exists())
+        {
+            System.out.println(ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
+            return;
+        }
+
+        try
+        {
+            Runtime.getRuntime().exec(
+                acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\"");
+            System.out.println(pdf_viewer + " " + file_path + File.separator + name);
+        }
+        catch (RuntimeException ex)
+        {
+            // this.setErrorMessages(m_ic.getMessage("PDF_VIEVER_RUN_ERROR"),
+            // null);
+            System.out.println("RE running AcrobatReader: " + ex);
+            // throw ex;
+        }
+        catch (Exception ex)
+        {
+            // this.setErrorMessages(m_ic.getMessage("PDF_VIEVER_RUN_ERROR"),
+            // null);
+            System.out.println("Error running AcrobatReader: " + ex);
+            // throw ex;
+
+        }
     }
 
     public boolean actionSuccesful()

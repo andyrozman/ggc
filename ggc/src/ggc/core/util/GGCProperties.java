@@ -101,6 +101,7 @@ public class GGCProperties // extends GGCPropertiesHelper
      * @param settings
      *            The <code>{@link GGCProperties}</code> to be copied.
      */
+    @SuppressWarnings("unchecked")
     public void copySettings(GGCProperties settings)
     {
         setAntiAliasing(settings.getAntiAliasing());

@@ -51,9 +51,9 @@ public class GGC
     private static MainFrame s_mainWindow;
 
     // Version information
-    public static String s_version = "0.3.5";
+    public static String s_version = "0.3.6";
     public static String full_version = "v" + s_version;
-    public static String version_date = "9th September 2008";
+    public static String version_date = "28th September 2008";
 
     public static boolean isDbOk()
     {
