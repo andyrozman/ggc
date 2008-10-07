@@ -81,9 +81,11 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-public class GGCDb // implements DbCheckInterface HibernateDb
+public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateDb
 {
     public static final int DB_CONFIG_LOADED = 1;
     public static final int DB_INITIALIZED = 2;
@@ -599,11 +601,13 @@ public class GGCDb // implements DbCheckInterface HibernateDb
     // **** SETTINGS ****
     // *************************************************************
 
-    public void createConfiguration()
+    public HibernateConfiguration createConfiguration()
     {
         logInfo("createConfiguration()");
         this.hib_config = new GGCDbConfig(true);
         this.hib_config.getConfiguration();
+        
+        return this.hib_config;
     }
 
     /*
@@ -1622,6 +1626,13 @@ public class GGCDb // implements DbCheckInterface HibernateDb
         if (debug)
             ex.printStackTrace();
 
+    }
+
+
+    @Override
+    public String getApplicationDbName()
+    {
+        return "ggc";
     }
 
 }

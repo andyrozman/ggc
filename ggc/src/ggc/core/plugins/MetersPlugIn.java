@@ -60,10 +60,18 @@ public class MetersPlugIn extends PlugInClient
             
             //System.out.println("Parent MeterPlgin: " + this.parent);
             
+            /*
             this.m_server.init(this.parent, DataAccess.getInstance()
                     .getI18nControlInstance().getSelectedLangauge(), DataAccess
                     .getInstance(), this);
-
+ */
+            
+            this.m_server.init(this.parent, 
+                DataAccess.getInstance().getI18nControlInstance().getSelectedLangauge(), 
+                DataAccess.getInstance(), 
+                this, 
+                DataAccess.getInstance().getDb() );
+            
             // System.out.println("We have an instance !!! " + this.m_srv);
             
             this.installed = true;

@@ -1,8 +1,13 @@
 
-THIS DOCUMENT WILL BE CHANGED WHEN IT'S NEEDED !!!!ON FIRST UPDATE. 
+PRE-INSTALLATION NOTE
+======================
 
-WE WILL ALSO TRANSLATE IT INTO ALL SUPPORTED LANGUAGES
+This document applies to all updates after version 0.3.1. 
 
+In our release version 0.3, we had small problem in backup methods (present in atech-tools). Because of this 
+you need to apply update 0.3.1 on original 0.3 installation, before proceeding with any further update (you 
+don't need to apply each update that was released, you only need to apply update 0.3.1 and after that latest 
+update there is). How to apply update 0.3.1 is described in zip file for this update.
 
 
 
@@ -68,9 +73,9 @@ go to step 3A if not step 3B.
 STEP 3.A: Update with same version
 -----------------------------------
 
-Use File manager (I advise to use some that has integrated Zip archiver) and open archive file, you need to 
-copy everything into your instalation directory. You will be asked to overwrite some files, you need to 
-overwrite all files there.  
+Use File manager (I advise to use some that has integrated Zip archiver, like Total commander) and open archive 
+file, you need to copy everything into your instalation directory. You will be asked to overwrite some files, 
+you need to overwrite all files there.  
  
 
 STEP 3.B: Update with different version
@@ -113,4 +118,8 @@ STEP 5: Finished
 Update is finished.
 
 
-If you had any problems with update please contact us, and we will help you. (ggc@atech-software.com)
+If you had any problems with update please contact us, and we will help you. (ggc@atech-software.com). You 
+can write to us in following languages: English, Slovene or German.
+
+
+GGC Development Team

@@ -1,17 +1,20 @@
+2008-10-02 (0.3.7) Andy Rozman <andyrozman@users.sourceforge.net>
+    * Added dialog for starting printing for food menu
+    * Printing of base food menu has errors: meals are displayed as their sub-items not as meal as whole, and some
+         months throw exception. Work on this is suspended for time being.
+    * Added/finished 'How_To_Update.txt' and 'Update_0.3.1.txt' documents.
 
-2008-09-24 (0.3.6)
+2008-09-24 (0.3.6) Andy Rozman <andyrozman@users.sourceforge.net>
     * Changing PrintFoodMenuBase class
     * Extending DayValuesData to include date strings (localized)
 
-
-2008-09-9 (0.3.5)
+2008-09-9 (0.3.5) Andy Rozman <andyrozman@users.sourceforge.net>
     * Added DayValuesData, which is used to contain DailiValues instances. It will either replace or super_class
       WeeklyValues and MonthlyValues and all such collection classes
     * Printing context will be extended. PrintAbstract class was created and all old Printing classes will use it
       in the future, for now it will be used by PrintFoodMenu* classes
     * Adding and moving entries in BUGS.txt
     * Statistics for BG fixed in main application panel and in Daily Stats panel
-
 
 2008-08-24 (0.3.4) Reinhold Rumberger <rumbi@users.sourceforge.net>
     * re-implemented the course graph using JFreeChart; code is extremely redundant
@@ -42,16 +45,16 @@
 2008-08-21 Reinhold Rumberger <rumbi@users.sourceforge.net>
     * started using JFreeChart, using DailyGraphView to get to know it.
 
-2008-08-20 (0.3.3)
+2008-08-20 (0.3.3) Andy Rozman <andyrozman@users.sourceforge.net>
     * Nutrition Tree is fixed (bug on FreeBSD system, maybe even on linux)
     * Added How_To_Update.txt
     * fixed statup creation for non-windows systems
 
-2008-08-20 (0.3.2)
+2008-08-20 (0.3.2) Andy Rozman <andyrozman@users.sourceforge.net>
     * Bolus Helper fixes
     * Source code changes to remove java warnings 
 
-2008-08-13 (0.3.1) Andy
+2008-08-13 (0.3.1) Andy Rozman <andyrozman@users.sourceforge.net>
     * Bolus Helper first implementation (needed some fixes and also extended and basic ratios done)
 
 

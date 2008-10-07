@@ -51,9 +51,9 @@ public class GGC
     private static MainFrame s_mainWindow;
 
     // Version information
-    public static String s_version = "0.3.6";
+    public static String s_version = "0.3.7";
     public static String full_version = "v" + s_version;
-    public static String version_date = "28th September 2008";
+    public static String version_date = "2nd October 2008";
 
     public static boolean isDbOk()
     {
@@ -79,12 +79,6 @@ public class GGC
         if (!GGC.isDbOk())
             return;
 
-        /*
-         * try {
-         * UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-         * } catch (Exception ex) { System.out.println("Error loading L&F: " +
-         * ex); }
-         */
         boolean dev = false;
 
         if (args.length > 0)

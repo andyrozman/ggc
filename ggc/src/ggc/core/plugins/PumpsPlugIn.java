@@ -13,17 +13,23 @@ import com.atech.plugin.PlugInServer;
 public class PumpsPlugIn extends PlugInClient
 {
 
+    
     public static final int COMMAND_READ_PUMP_DATA = 0;
     public static final int COMMAND_PUMPS_LIST = 1;
     public static final int COMMAND_CONFIGURATION = 2;
     public static final int COMMAND_PROFILES = 3;
     public static final int COMMAND_MANUAL_ENTRY = 4;
     public static final int COMMAND_ADDITIONAL_DATA = 5;
+    public static final int COMMAND_ABOUT = 6;
     
     
-    private String commands[] = { "MN_PUMPS_READ_DESC", "MN_PUMPS_LIST_DESC", "MN_PUMPS_CONFIG_DESC",
-                                 "MN_PUMP_PROFILES_DESC", "MN_PUMPS_MANUAL_ENTRY_DESC",
-                                 "MN_PUMPS_ADDITIONAL_DATA_DESC", };
+    
+    private String commands[] = { "MN_PUMPS_READ_DESC", 
+                                  "MN_PUMPS_LIST_DESC", 
+                                  "MN_PUMPS_CONFIG_DESC",
+                                  "MN_PUMP_PROFILES_DESC", 
+                                  "MN_PUMPS_MANUAL_ENTRY_DESC",
+                                  "MN_PUMPS_ADDITIONAL_DATA_DESC", };
 
     public PumpsPlugIn(Container parent, I18nControlAbstract ic)
     {
@@ -44,9 +50,11 @@ public class PumpsPlugIn extends PlugInClient
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
             
-            this.m_server.init(this.parent, DataAccess.getInstance()
-                    .getI18nControlInstance().getSelectedLangauge(), DataAccess
-                    .getInstance(), this);
+            this.m_server.init(this.parent, 
+                DataAccess.getInstance().getI18nControlInstance().getSelectedLangauge(), 
+                DataAccess.getInstance(), 
+                this, 
+                DataAccess.getInstance().getDb() );
         }
         catch (Exception ex)
         {
@@ -110,8 +118,8 @@ public class PumpsPlugIn extends PlugInClient
         this.commands_implemented[1] = false;
         this.commands_implemented[2] = true;
         this.commands_implemented[3] = false;
-        this.commands_implemented[4] = false;
-        this.commands_implemented[5] = false;
+        this.commands_implemented[4] = true;
+        this.commands_implemented[5] = true;
     }
 
     /*
