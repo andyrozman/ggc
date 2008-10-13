@@ -31,6 +31,7 @@ package ggc.pump.util;
 
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.manager.PumpManager;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import java.util.Hashtable;
 
 import javax.swing.JFrame;
 
+import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsEntry;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
@@ -408,6 +410,25 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
+    
+    // ********************************************************
+    // ******                   Db                        *****    
+    // ********************************************************
+    
+    GGCPumpDb m_db;
+    
+    
+    public void createDb(HibernateDb db)
+    {
+        this.m_db = new GGCPumpDb(db);
+        
+    }
+    
+
+    public GGCPumpDb getDb()
+    {
+        return this.m_db;
+    }
 
 
 }

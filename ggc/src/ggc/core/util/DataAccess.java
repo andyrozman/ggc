@@ -141,6 +141,7 @@ public class DataAccess extends ATDataAccessAbstract
 
     public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
     public static DecimalFormat Decimal0Format = new DecimalFormat("#0");
+    public static DecimalFormat Decimal1Format = new DecimalFormat("#0.0");
     public static DecimalFormat Decimal2Format = new DecimalFormat("#0.00");
     public static DecimalFormat Decimal3Format = new DecimalFormat("#0.000");
 

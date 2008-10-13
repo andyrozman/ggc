@@ -29,6 +29,8 @@ package ggc.pump.data;
 
 import ggc.pump.util.DataAccessPump;
 
+import java.util.ArrayList;
+
 
 
 public class PumpValuesDay 
@@ -36,6 +38,37 @@ public class PumpValuesDay
 	DataAccessPump da = DataAccessPump.getInstance();
 	
     // TODO: Make whole class
+	
+	
+	private ArrayList<PumpValuesEntry> list = null;
+	
+	
+	public PumpValuesDay()
+	{
+	    list = new ArrayList<PumpValuesEntry>();
+	}
+	
+	
+	public int getColumnCount()
+	{
+	    return 8;
+	}
+	
+	public int getRowCount()
+	{
+	    return this.list.size();
+	}
+	
+	public String getColumnName(int column)
+	{
+	    return null;
+	}
+	
+	public Object getValueAt(int column, int row)
+	{
+	    return null;
+	}
+	
 	
 	
 }	

@@ -1,3 +1,8 @@
+2008-10-10 (0.3.8)
+    * Most of printing of food menus done (missing just ext 3 type, which will be added later, if req.)
+    * Continuning to work on pump plugin base functionality (see Changes.txt in pump tool project)
+
+
 2008-10-02 (0.3.7) Andy Rozman <andyrozman@users.sourceforge.net>
     * Added dialog for starting printing for food menu
     * Printing of base food menu has errors: meals are displayed as their sub-items not as meal as whole, and some

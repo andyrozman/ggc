@@ -30,8 +30,12 @@ package ggc.gui.dialogs;
 
 import ggc.core.data.DayValuesData;
 import ggc.core.data.MonthlyValues;
+import ggc.core.print.PrintAbstract;
 import ggc.core.print.PrintExtendedMonthlyReport;
 import ggc.core.print.PrintFoodMenuBase;
+import ggc.core.print.PrintFoodMenuExt1;
+import ggc.core.print.PrintFoodMenuExt2;
+import ggc.core.print.PrintFoodMenuExt3;
 import ggc.core.print.PrintSimpleMonthlyReport;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
@@ -86,7 +90,11 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     public String[] report_types_1 = { m_ic.getMessage("SIMPLE_MONTHLY_REPORT"),
                                       m_ic.getMessage("EXTENDED_MONTHLY_REPORT") };
 
-    public String[] report_types_2 = { m_ic.getMessage("FOOD_MENU_BASE") };
+    public String[] report_types_2 = { m_ic.getMessage("FOOD_MENU_BASE"),
+                                       m_ic.getMessage("FOOD_MENU_EXT_I"),
+                                       m_ic.getMessage("FOOD_MENU_EXT_II"),
+//                                       m_ic.getMessage("FOOD_MENU_EXT_III")
+                                       };
 
     Font font_normal, font_normal_bold;
 
@@ -383,9 +391,30 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
                 System.out.println(this.dc_from.getDate() + " " + this.dc_to.getDate());
                 
                 DayValuesData dvd = m_da.getDb().getDayValuesData(this.dc_from.getDate(), this.dc_to.getDate()); //.getMonthlyValues(yr, mnth);
-                PrintFoodMenuBase psm = new PrintFoodMenuBase(dvd);                
                 
-                displayPDF(psm.getName());
+                
+                PrintAbstract pa = null;
+                
+                if (this.cb_template.getSelectedIndex() == 0)
+                {
+                    pa = new PrintFoodMenuBase(dvd);
+                }
+                else if (this.cb_template.getSelectedIndex() == 1)
+                {
+                    pa = new PrintFoodMenuExt1(dvd);
+                }
+                else if (this.cb_template.getSelectedIndex() == 2)
+                {
+                    pa = new PrintFoodMenuExt2(dvd);
+                }
+                else if (this.cb_template.getSelectedIndex() == 3)
+                {
+                    pa = new PrintFoodMenuExt3(dvd);
+                }
+                
+                
+                
+                displayPDF(pa.getName());
             }
         }
     }

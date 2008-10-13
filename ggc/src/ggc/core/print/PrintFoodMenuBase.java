@@ -42,27 +42,23 @@ import java.util.Iterator;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
-import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPTable;
 
-public class PrintFoodMenuBase extends PrintAbstract
+public class PrintFoodMenuBase extends PrintFoodMenuAbstract
 {
 
     
     
     public PrintFoodMenuBase(DayValuesData mv)
     {
-        super(mv, DataAccess.getInstance().getNutriI18nControl());
-        
-       // System.out.println("getNutriControl");
-        
-        //this.ic = m_da.getNutriI18nControl();
+        super(mv);
+        //super(mv, DataAccess.getInstance().getNutriI18nControl());
     }
 
     
     
-    
+    /*
     public Paragraph getTitle()
     {
         Paragraph p = new Paragraph();
@@ -80,20 +76,19 @@ public class PrintFoodMenuBase extends PrintAbstract
 
         return p;
     }
+    */
+    
+    
+
+    
     
     
     
 
     
-    
-    
-    
-
-    
 
 
-
-    @Override
+/*
     public void fillDocumentBody(Document document) throws Exception
     {
         // TODO Auto-generated method stub
@@ -104,11 +99,155 @@ public class PrintFoodMenuBase extends PrintAbstract
         
         int count = 0;
         
-        Font f = new Font(this.base_helvetica , 12, Font.NORMAL); // this.base_times
+        Font f =  this.text_normal;  //new Font(this.base_helvetica , 12, Font.NORMAL); // this.base_times
         
         PdfPTable datatable = new PdfPTable(6);
-        int headerwidths[] = { 17, 8,
-                               35, 20, 10, 10 
+        int headerwidths[] = { 13, 7,
+                               40, 20, 10, 10 
+                                }; // percentage
+        datatable.setWidths(headerwidths);
+        datatable.setWidthPercentage(100); // percentage
+        
+        datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+        datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); //ALIGN_CENTER);
+        datatable.getDefaultCell().setBorderWidth(1);
+        
+        datatable.addCell(new Phrase(ic.getMessage("DATE"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("TIME"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_TYPE"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+        
+//        document.add(datatable);
+        
+        while (it.hasNext())
+        {
+            DailyValues dv = it.next();
+            dv.sort();
+            
+
+            datatable.addCell(new Phrase(dv.getDateAsString(), f));
+            
+            System.out.println("Row count: " + dv.getRowCount());
+            System.out.println(dv.getDateAsString());
+            
+            int active_day_entry = 0;
+            
+            for(int i=0; i<dv.getRowCount(); i++)
+            {
+                
+                DailyValuesRow rw = (DailyValuesRow)dv.getRow(i);
+                
+                if ((rw.getMealsIds()==null) || (rw.getMealsIds().length()==0))
+                    continue;
+
+                
+                if (active_day_entry>0)
+                {
+                    datatable.addCell(new Phrase("", f));
+                }
+
+                active_day_entry++;
+                
+                datatable.addCell(new Phrase(rw.getTimeAsString(), f));
+                
+                DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true); 
+
+                
+                datatable.addCell(new Phrase(ic.getMessage("TOGETHER"), this.text_italic));
+                datatable.addCell(new Phrase("", f));
+                datatable.addCell(new Phrase("", f));
+                datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
+                
+                
+                
+                
+                for(int j=0; j<mpts.getElementsCount(); j++)
+                {
+                    DailyFoodEntry mp = mpts.getElement(j);
+                    
+//                    if (j>0)
+                    {
+                        datatable.addCell(new Phrase("", f));
+                        datatable.addCell(new Phrase("", f));
+                    }
+                    
+                    
+                    datatable.addCell(new Phrase(mp.getName(), f));
+                    
+                    
+                    float value = 0.0f;
+                    
+                    if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
+                    {
+                        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
+                        //value = mp.getNutrientValue(205);
+                        value = mp.getMealCH();
+                        
+                    }
+                    else if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
+                    {
+                        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), f));
+                        //value = mp.getNutrientValue(205);
+                        value = mp.getNutrientValue(205) * (mp.amount / 100.0f);
+                    }
+                    else
+                    {
+                        datatable.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", f));
+                        value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
+                    }
+                    
+                   
+                    
+                    datatable.addCell(new Phrase(mp.getAmountSingleDecimalString(), f));
+                    datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(value), f));  // ch
+                    
+                    System.out.println("     " + rw.getTimeAsString() + " " + mp);
+                }
+                
+            }
+
+            
+            if (active_day_entry==0)
+            {
+                datatable.addCell(new Phrase("", f));
+                datatable.addCell(new Phrase("", f));
+                datatable.addCell(new Phrase("", f));
+                datatable.addCell(new Phrase("", f));
+                datatable.addCell(new Phrase("", f));
+            } 
+            
+            
+            
+            count++;
+        }
+
+        
+        document.add(datatable);
+        
+        
+        System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
+    }
+*/
+
+    
+    
+    public void fillDocumentBodyX1(Document document) throws Exception
+    {
+        // TODO Auto-generated method stub
+        
+        System.out.println("Jedilnik");
+        
+        Iterator<DailyValues> it = this.m_data.iterator();
+        
+        int count = 0;
+        
+        Font f =  this.text_normal;  //new Font(this.base_helvetica , 12, Font.NORMAL); // this.base_times
+        
+        PdfPTable datatable = new PdfPTable(6);
+        int headerwidths[] = { 13, 7,
+                               40, 20, 10, 10 
                                 }; // percentage
         datatable.setWidths(headerwidths);
         datatable.setWidthPercentage(100); // percentage
@@ -119,12 +258,12 @@ public class PrintFoodMenuBase extends PrintAbstract
         datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); //ALIGN_CENTER);
         datatable.getDefaultCell().setBorderWidth(1);
         
-        datatable.addCell(new Phrase(ic.getMessage("DATE"), f));
-        datatable.addCell(new Phrase(ic.getMessage("TIME"), f));
-        datatable.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), f));
-        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_TYPE"), f));
-        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
-        datatable.addCell(new Phrase(ic.getMessage("CH"), f));
+        datatable.addCell(new Phrase(ic.getMessage("DATE"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("TIME"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_TYPE"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
         
 //        document.add(datatable);
         
@@ -225,7 +364,7 @@ public class PrintFoodMenuBase extends PrintAbstract
                 
                 datatable.addCell(new Phrase(rw.getTimeAsString(), f));
                 
-                DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds()); 
+                DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true); 
                 //MealParts mpts = new MealParts(rw.getMealsIds());
                 
 /* v2                
@@ -275,22 +414,30 @@ public class PrintFoodMenuBase extends PrintAbstract
                     if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
                     {
                         datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
-                        value = mp.getNutrientValue(205);
+                        //value = mp.getNutrientValue(205);
+                        /*
+                        System.out.println("nutr val 205" + mp.getNutrientValue(205) + 
+                            "\namount: " + mp.amount + 
+                            "\nhw multiplier: " + mp.getHomeWeightMultiplier() 
+                            ); */
+                        value = mp.getMealCH();
+                        
                     }
                     else if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
                     {
                         datatable.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), f));
-                        value = mp.getNutrientValue(205);
+                        //value = mp.getNutrientValue(205);
+                        value = mp.getNutrientValue(205) * (mp.amount / 100.0f);
                     }
                     else
                     {
-                        datatable.addCell(new Phrase(mp.getHomeWeightDescription(), f));
+                        datatable.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", f));
                         value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
                     }
                     
                    
                     
-                    datatable.addCell(new Phrase(mp.getAmountString(), f));
+                    datatable.addCell(new Phrase(mp.getAmountSingleDecimalString(), f));
                     //datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(mp.getNutrientValue(205) * mp.getHomeWeightMultiplier()), f));  // ch
                     
                     datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(value), f));  // ch
@@ -338,8 +485,7 @@ public class PrintFoodMenuBase extends PrintAbstract
         
         
     }
-
-
+    
 
 
     @Override
@@ -356,6 +502,103 @@ public class PrintFoodMenuBase extends PrintAbstract
     public String getFileNameRange()
     {
         return this.m_data.getRangeBeginObject().getDateString() + "-" + this.m_data.getRangeEndObject().getDateString(); 
+    }
+
+
+
+
+    @Override
+    public int[] getTableColumnWidths()
+    {
+        int headerwidths[] = { 13, 7,
+                               40, 20, 10, 10 
+                                }; // percentage
+        return headerwidths;
+    }
+
+
+    @Override
+    public int getTableColumnsCount()
+    {
+        return 6;
+    }
+
+
+
+
+    @Override
+    public String getTitleText()
+    {
+        return "FOOD_MENU_BASE";
+    }
+
+
+
+
+    @Override
+    public void writeAdditionalHeader(PdfPTable table) throws Exception
+    {
+        table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+    }
+
+
+    @Override
+    public void writeEmptyColumnData(PdfPTable table) throws Exception
+    {
+        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(new Phrase("", this.text_normal));
+    }
+
+
+    @Override
+    public void writeColumnData(PdfPTable table, DailyFoodEntry mp) throws Exception
+    {
+        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(new Phrase("", this.text_normal));
+        
+        table.addCell(new Phrase(mp.getName(), this.text_normal));
+        
+        
+        float value = 0.0f;
+        
+        if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
+        {
+            table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_normal));
+            //value = mp.getNutrientValue(205);
+            value = mp.getMealCH();
+            
+        }
+        else if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
+        {
+            table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), this.text_normal));
+            //value = mp.getNutrientValue(205);
+            value = mp.getNutrientValue(205) * (mp.amount / 100.0f);
+        }
+        else
+        {
+            table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", this.text_normal));
+            value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
+        }
+        
+        table.addCell(new Phrase(mp.getAmountSingleDecimalString(), this.text_normal));
+        table.addCell(new Phrase(DataAccess.Decimal2Format.format(value), this.text_normal));  // ch
+
+    }
+
+
+
+
+    @Override
+    public void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception
+    {
+        table.addCell(new Phrase(ic.getMessage("TOGETHER"), this.text_italic));
+        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(new Phrase("", this.text_normal));
+
+        table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
     }
 
 }

@@ -29,6 +29,7 @@
 package ggc.gui;
 
 import ggc.GGC;
+import ggc.core.data.DayValuesData;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.nutrition.GGCTreeRoot;
@@ -36,6 +37,7 @@ import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.plugins.CGMSPlugIn;
 import ggc.core.plugins.MetersPlugIn;
 import ggc.core.plugins.PumpsPlugIn;
+import ggc.core.print.PrintFoodMenuExt2;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
@@ -337,6 +339,9 @@ public class MainFrame extends JFrame
 
         JMenu menu_reports_foodmenu = this.createMenu(this.menu_printing, "MN_FOODMENU", "MN_FOODMENU_DESC");
         this.createAction(menu_reports_foodmenu, "MN_FOODMENU_SIMPLE", "MN_FOODMENU_SIMPLE_DESC", "report_foodmenu_simple", "print.png");
+        this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT1", "MN_FOODMENU_EXT1_DESC", "report_foodmenu_ext1", "print.png");
+        this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT2", "MN_FOODMENU_EXT2_DESC", "report_foodmenu_ext2", "print.png");
+//        this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT3", "MN_FOODMENU_EXT3_DESC", "report_foodmenu_ext3", "print.png");
         
         
         
@@ -1043,6 +1048,19 @@ public class MainFrame extends JFrame
             {
                 new PrintingDialog(MainFrame.this, 1, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
             }
+            else if (command.equals("report_foodmenu_ext1"))
+            {
+                new PrintingDialog(MainFrame.this, 2, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            }
+            else if (command.equals("report_foodmenu_ext2"))
+            {
+                new PrintingDialog(MainFrame.this, 3, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            }
+            /*else if (command.equals("report_foodmenu_ext3"))
+            {
+                // disabled for now, until it's implement to fully function
+                new PrintingDialog(MainFrame.this, 4, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            } */
             else if (command.equals("view_ratio"))
             {
                 new RatioDialog(getMyParent());
@@ -1084,13 +1102,13 @@ public class MainFrame extends JFrame
                 //idb.convertFoods();
               
 
-/*                
-                DayValuesData dvd = m_da.getDb().getDayValuesData(20080908, 20090928); //.getMonthlyValues(yr, mnth);
-                PrintFoodMenuBase psm = new PrintFoodMenuBase(dvd);                
+                
+                DayValuesData dvd = m_da.getDb().getDayValuesData(20081001, 20091007); //.getMonthlyValues(yr, mnth);
+                PrintFoodMenuExt2 psm = new PrintFoodMenuExt2(dvd);                
                 
                 
                 PrintingDialog.displayPDFExternal(psm.getName());
-  */              
+                
                 //BolusHelper bh = new BolusHelper(MainFrame.this);
                 //featureNotImplemented(command, "0.6");
             }

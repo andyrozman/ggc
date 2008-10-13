@@ -4,21 +4,23 @@ TO-DO LIST
 Development of Pump Tools runs totally independent on GGC project
 ==================================================================
 
-    * Base framework for pumps (0.4)
-    * Communication framework for pumps (interface that all pumps will use) (later)
     * Manual adding of pump data (data that will in future be read from pump) (0.5)
     * Adding of additional data (bg measurements, OH intake, Activity...) (0.5)
+    
     * List of pumps (most of them not all) (0.4)
     * Configuration and graphical interface for integration into GGC (0.5)
+    
+    * Graphs (0.6)
+    
+    * Communication framework for pumps (interface that all pumps will use) (later)
     * Output types:
           o Console and file output (0.5)
           o GGC Db Output (for manual import) (0.5)
           o GGC Output (GUI integration) (0.5) 
-    * Graphs (0.6)
-    * Specific pump models implementations:
+    * Specific pump models import implementations:
           o MiniMed (2009 ?)  - protocol not public (use minimed's web tool)
-          o Sooil Dana (2010 ?) - waiting for reply from developers
-          o Roche/Disetronic (2010 ?) - no reply yet
+          o Sooil Dana (2010 ?) - current pumps don't have PC support
+          o Roche/Disetronic (2009) - got all info
           o Animas (?)  - no reply yet
           o Smith's Cosmo (?)  - no reply yet
           o Omni Pod (?) - Couldn't send mail... Problem with web ??
@@ -33,6 +35,7 @@ Development of Pump Tools runs totally independent on GGC project
 ===============================================================================
 DONE
 
+    * Base framework for pumps (0.3)
 
 
 
@@ -44,23 +47,22 @@ Pumps to implement
 ===================
 
 Animas       - IR 2020
-
 Deltec:      - Cozmo
-
 Disetronic:   - Spirit
               - D-Tron
-
-
 Minimed :  - Minimed
-
 Insulet:  - Omni pod
-
 Dana:  - DiabetcareIIS              
 
 
 
 --------------------------------------------
 
+
+Help
+----
+
+pages.GGC_Pump_Add_Parameter_Wizard1
 
 
 

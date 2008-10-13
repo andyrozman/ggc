@@ -433,6 +433,19 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         }
     }
 
+    public float getBGValueInSelectedFormat(int bg_value)
+    {
+        switch (this.m_BG_unit)
+        {
+        case BG_MMOL:
+            return (bg_value * MGDL_TO_MMOL_FACTOR);
+        case BG_MGDL:
+        default:
+            return bg_value;
+        }
+    }
+    
+    
 
     public float getBGValueByType(int input_type, int output_type, float bg_value)
     {

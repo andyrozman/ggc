@@ -54,6 +54,12 @@ public class PumpValuesEntry extends PumpValuesEntryAbstract
 	public String bg_str;
 	public int bg_unit;
 	public boolean checked = false;
+	
+	
+	private int bg;
+	private float ch;
+	public String meals;
+	
 	//public
 	public Hashtable<String,String> params;
 	public int status = 1; //MeterValuesEntry.
@@ -144,7 +150,51 @@ public class PumpValuesEntry extends PumpValuesEntryAbstract
 	}
 	
 	
+	// added
 	
+	public float getBG()
+	{
+	    return da.getBGValueInSelectedFormat(this.bg);
+	}
+	
+	
+    public float getBGRaw()
+    {
+        return this.bg;
+    }
+	
+    public float getCH()
+    {
+        return this.ch;
+    }
+    
+    public String getActivity()
+    {
+        // TODO: 
+        return "";
+    }
+    
+    public String getUrine()
+    {
+        // TODO: 
+        return "";
+    }
+    
+    
+    public String getComment()
+    {
+        // TODO: 
+        return "";
+    }
+    
+    public boolean areMealsSet()
+    {
+        return false;
+    }
+    
+    
+    // added - End
+    
 	
 	public void addParameter(String key, String value)
 	{

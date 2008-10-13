@@ -84,6 +84,8 @@ public class DailyFoodEntry // implements SelectableInterface
 
     ArrayList<DailyFoodEntry> children = null;
 
+    //private boolean is_printing_mode = false;
+    
     /*
      * public DailyFoodEntry() { this.nutrients = new
      * ArrayList<MealNutrition>(); this.calculated_multiplier = 1.0f;
@@ -392,6 +394,12 @@ public class DailyFoodEntry // implements SelectableInterface
         return DataAccess.Decimal2Format.format(this.amount);
     }
 
+    public String getAmountSingleDecimalString()
+    {
+        return DataAccess.MmolDecimalFormat.format(this.amount);
+    }
+    
+    
     private void loadHomeWeight()
     {
         //System.out.println("HWs: " + this.m_food.getHome_weights());
@@ -417,6 +425,33 @@ public class DailyFoodEntry // implements SelectableInterface
 
     }
 
+    
+    public float getMealCH()
+    {
+        float sum = 0.0f;
+        //float mult = this
+        
+        
+        if (!hasChildren())
+            return sum;
+        
+        //System.out.println("Meal: " + this.m_meal.getName()+ " children: " + this.children.size());
+        
+        for(int i=0; i< this.children.size(); i++)
+        {
+            DailyFoodEntry dfe = this.children.get(i);
+            sum += dfe.getNutrientValue(205) * dfe.getMultiplier();
+            
+            //System.out.println("dfe:" + dfe.amount + ", mult: " + dfe.getMultiplier() + "nut val: " + dfe.getNutrientValue(205));
+        }
+        //String val = this.m_meal.getNutritions();
+        
+        //System.out.println(sum);
+        
+        return sum;
+    }
+    
+    
     private void calculateMultiplier()
     {
         // System.out.println("calculateMultiplier");
@@ -563,12 +598,17 @@ public class DailyFoodEntry // implements SelectableInterface
             nutr = this.m_food.getNutritions();
             processNutrients(nutr, 1.0f);
         }
-        else
+        else if (this.m_meal!=null)
+        {
+            nutr = this.m_meal.getNutritions();
+//            processMeal(this.m_meal);
+        }
+/*        else
         {
             nutr = this.m_meal.getNutritions();
             processMeal(this.m_meal);
         }
-
+*/
         /*
          * StringTokenizer strtok = new StringTokenizer(nutr, ";");
          * 

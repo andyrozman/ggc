@@ -3,6 +3,7 @@ package ggc.pump.plugin;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.list.BaseListDialog;
 import ggc.pump.gui.config.SimpleConfigurationDialog;
+import ggc.pump.gui.manual.PumpDataDialog;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -16,7 +17,7 @@ import com.atech.utils.ATDataAccessAbstract;
 public class PumpPlugInServer extends PlugInServer
 {
 
-    String plugin_version = "0.1.3";
+    String plugin_version = "0.1.5";
     
     public static final int COMMAND_READ_PUMP_DATA = 0;
     public static final int COMMAND_PUMPS_LIST = 1;
@@ -82,7 +83,12 @@ public class PumpPlugInServer extends PlugInServer
                 return;
             }
 
-            
+            case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
+            case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
+            {
+                new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
+                return;
+            } 
             
             default:
             {
@@ -133,6 +139,7 @@ public class PumpPlugInServer extends PlugInServer
         //ic.setLanguage(this.selected_lang);
         I18nControl.getInstance().setLanguage(this.selected_lang);
         DataAccessPump.getInstance().addComponent(this.parent);
+        DataAccessPump.getInstance().setHelpContext(this.m_da.getHelpContext());
     }
     
     

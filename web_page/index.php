@@ -33,12 +33,22 @@
 	<td>
 	<!-- content goes here -->
 	<?
-	if ($show == "") 
+
+        $sh = "news";  // default to news
+        
+	if (isset($_GET['show']) && $_GET['show']!="")
+	{
+	   $sh = $_GET['show'];
+	}
+	
+
+/*	if ($show == "") 
 	{
 		$show = "news";        //default to news
 	}
-	
-	$incfile = sprintf("inc_%s.inc",$show);
+*/
+ 	
+	$incfile = sprintf("./inc_%s.inc",$sh);
 	include $incfile;
 	
 	?>

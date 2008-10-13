@@ -33,7 +33,6 @@ package ggc.core.data;
 
 import ggc.core.util.DataAccess;
 
-import java.text.DateFormat;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -136,26 +135,26 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     public String getFromAsLocalizedDate()
     {
 //        return "xx";
-        return getAsLocalizedString(this.range_from_gc);
+        return m_da.getAsLocalizedDateString(this.range_from_gc, 2);
     }
 
     public String getToAsLocalizedDate()
     {
 //        return "xx";
-        return getAsLocalizedString(this.range_to_gc);
+        return m_da.getAsLocalizedDateString(this.range_to_gc, 2);
     }
     
     
     public static final int DATE_MONTH = 0;
     public static final int DATE_YEAR = 0;
     
-    
+    /*
     private String getAsLocalizedString(GregorianCalendar gc_value)
     {
         DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, this.m_da.getI18nControlInstance().getSelectedLanguageLocale());
         
         return df.format(gc_value.getTime());
-    }
+    }*/
     
     
     

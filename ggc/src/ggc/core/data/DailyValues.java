@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import com.atech.utils.ATechDate;
+
 
 public class DailyValues implements Serializable
 {
@@ -509,6 +511,15 @@ public class DailyValues implements Serializable
         return date;
     }
 
+    
+
+    public String getDateAsLocalizedString()
+    {
+        return m_da.getAsLocalizedDateString((new ATechDate(ATechDate.FORMAT_DATE_ONLY, this.date)).getGregorianCalendar(), 4);
+    }
+    
+    
+    
     public String getDateAsString()
     {
         int day, month, year;

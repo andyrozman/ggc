@@ -55,6 +55,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public abstract class PrintAbstract extends PdfPageEventHelper
 {
+    
     public DayValuesData m_data = null;
     protected DataAccess m_da = DataAccess.getInstance();
     protected I18nControlAbstract ic = null;
@@ -62,7 +63,10 @@ public abstract class PrintAbstract extends PdfPageEventHelper
 
     BaseFont base_helvetica = null;
     BaseFont base_times = null;
-    Font normal_text = null; 
+    Font text_normal = null;
+    Font text_bold = null;
+    Font text_italic = null;
+    
     
     
     public PrintAbstract(DayValuesData data, I18nControlAbstract ic)
@@ -76,7 +80,9 @@ public abstract class PrintAbstract extends PdfPageEventHelper
         {
             base_helvetica = BaseFont.createFont("Helvetica", BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
             base_times = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
-            normal_text = new Font(this.base_helvetica , 12, Font.NORMAL);
+            text_normal = new Font(this.base_helvetica , 12, Font.NORMAL);
+            text_bold = new Font(this.base_helvetica , 12, Font.BOLD);
+            text_italic = new Font(this.base_helvetica , 12, Font.ITALIC);
         }
         catch(Exception ex)
         {
@@ -101,11 +107,6 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     
     public abstract Paragraph getTitle();
     
-    public abstract void fillDocumentBody(Document document) throws Exception;
-    
-    public abstract String getFileNameBase();
-    
-    public abstract String getFileNameRange();
 
     
     
@@ -250,10 +251,25 @@ public abstract class PrintAbstract extends PdfPageEventHelper
             throw new ExceptionConverter(e);
         }
     }
+
+    
+    /**
+     * Create document body.
+     * 
+     * @param document
+     * @throws Exception
+     */
+    public abstract void fillDocumentBody(Document document) throws Exception;
+    
+    /**
+     * Returns base filename for printing job, this is just part of end filename (starting part)
+     */
+    public abstract String getFileNameBase();
+    
+    /**
+     * Returns data part of filename for printing job, showing which data is being printed
+     */
+    public abstract String getFileNameRange();
     
 
 }
-
-
-
-

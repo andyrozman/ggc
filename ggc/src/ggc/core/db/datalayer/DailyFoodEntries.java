@@ -48,9 +48,13 @@ public class DailyFoodEntries // implements SelectableInterface
     GlycemicNutrients glyc_nutr = null;
 
     boolean root_entry = false;
+    boolean print_mode = false;
 
     ArrayList<DailyFoodEntry> entries = null;
 
+    /**
+     * Default constructor
+     */
     public DailyFoodEntries()
     {
         entries = new ArrayList<DailyFoodEntry>();
@@ -68,13 +72,30 @@ public class DailyFoodEntries // implements SelectableInterface
         }
     }
     
+
+    public DailyFoodEntries(String meals_ids, boolean print_mode)
+    {
+        this.print_mode = print_mode;
+        
+        entries = new ArrayList<DailyFoodEntry>();
+        StringTokenizer strtok = new StringTokenizer(meals_ids, ";");
+        
+        while (strtok.hasMoreTokens())
+        {
+            addDailyFoodEntry(new DailyFoodEntry(strtok.nextToken() /*, print_mode */));
+        }
+    }
+    
     
     
     public void addDailyFoodEntry(DailyFoodEntry dfe)
     {
         if (dfe.hasChildren())
         {
-            this.entries.addAll(dfe.getChildren());
+            if (this.print_mode)
+                this.entries.add(dfe);
+            else
+                this.entries.addAll(dfe.getChildren());
         }
         else
         {
