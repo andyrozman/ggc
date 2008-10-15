@@ -45,7 +45,7 @@ STEP 1: Create backup copy of your data
 Start GNU Gluco Control and wait for it to load, then go to Tools -> Database Maintainance -> Database backup.
 
 In next window select all object and click on backup. New backup file will be created in data\export
-directory (GGC backup <year>_<month>_<day> <hour>_<minute>_<second>. Copy it to same safe location.
+directory (GGC backup <year>_<month>_<day> <hour>_<minute>_<second>). Copy it to same safe location.
 
 Close GNU Gluco Control.
 
