@@ -1,0 +1,140 @@
+
+Einführende Bemerkung
+=====================
+
+Dieses Dokument ist für alle Updates ab Version 0.3.1 gültig.
+
+In Version 0.3 gabe es ein kleines Problem mit der Backup-Funktionalität (in
+atech-tools). Deshalb muss das Update 0.3.1 auf die Version 0.3 angewendet
+werden, bevor weitere Updates angewendet werden (es muss nicht jedes Update
+angewendet werden, nur 0.3.1 und danach das aktuellste). Wie 0.3.1 anzuwenden
+ist, wird in der ZIP-Datei dieses Updates beschrieben.
+
+
+
+Aktualisierung
+==============
+
+
+Zu diesem Zeitpunkt hat unsere Anwendung keine Möglichkeit, automatisch Updates
+durchzuführen. Deshalb müssen alle Updates manuell angewendet werden.
+
+Ein Problem aller Anwendungen, die von Datenbanken gebrauch machen, besteht
+darin, dass sowohl die Anwendung als auch die Datenbank aktualisiert werden
+müssen. In jedem Update-Paket wird sich eine Datei befinden, die alle Versionen
+der Anwendung mit der zugehörigen Datenbank-Version auflistet. Abhängig von
+dieser Information muss der Update-Pfad gewählt werden (siehe Schritte 3 und 4
+unten).
+
+
+Wie Updates verpackt werden
+===========================
+
+Update-Pakete enthalten dieses Dokument (zukünftig in allen unterstützten
+Sprachen), die Datei "database_info.txt" mit Informationen zur benutzten
+Datenbank und Changes_<Version>.txt (eine Zusammenfassung des Changelog-
+Dokuments im SVN). Hinzu kommen die Verzeichnisse die aktualisiert werden
+müssen. Hier werden sich mindestens zwei Verzeichnisse befinden, manchmal drei:
+   - data: enthält die Update-Datei, die die aktuelle Version spezifiziert
+           (wird benutzt um die Startdateien zu generieren)
+   - libs: enthält alle Bibliotheken und unsere Software
+   - bin: enthält das Skript
+   - docs: enthält diese Dokumentation
+   
+How to apply this update will be shown in few steps. Please follow them to the letter.
+
+
+
+Schritt 1: Backup der Daten erstellen
+-------------------------------------
+
+GNU Gluco Control starten und dann "Werkzeuge" -> "Datenbank-Wartung" ->
+"Datenbank sichern" aufrufen.
+
+Im nächsten Fenster alle Objekte auswählen und "Sicherung" anwählen. Eine neue
+Sicherungsdatei wird im "data/export"-Verzeichnis erstellt.
+
+GNU Gluco Control schließen.
+
+
+
+Schritt 2: Backup der Anwendung erstellen
+-----------------------------------------
+
+Kopieren Sie Ihre GGC-Installation in ein neues Verzeichnis (beispielsweise
+GGC_Backup_<Datum>).
+
+Diese Kopie dient der Sicherung, falls einer der nächsten Schritte fehlschlägt.
+
+
+
+Schritt 3: Das Update
+---------------------
+
+Sehen Sie sich die Datei "database_info.txt" an. Der letzte Eintrag (die
+aktuelle Version) und die installierte Version (in der Titelleiste der
+Anwendung angezeigt) müssen verglichen werden. Sind die Versionen identisch,
+müssen die A-Schritte ausgeführt werden, ansonsten die B-Schritte.
+
+
+Schritt 3.A: Update ohne Versionsänderung
+-----------------------------------------
+
+Benutzen Sie einen Dateimanager (am Besten einen mit einer integrierten
+Zip-Verwaltung) um die Archiv-Datei zu öffnen. Der gesamte Inhalt muss ins
+Installationsverzeichnis kopiert werden. Bereits existierende Dateien müssen
+überschrieben werden.
+ 
+
+Schritt 3.B: Update mit Versionsänderung
+----------------------------------------
+
+1. Alle in 3.A beschriebenen Aktionen befolgen.
+2. Die Datei run_<BS_Name>.<BS_Erweiterung>. Die Anwendung wird einige Fehler
+   anzeigen. Das ist so beabsichtigt. Dieses Skript musste nur ausgeführt
+   werden, um die Startdatei neu zu erstellen. Schließen Sie die Anwendung so
+   möglichst bald.
+3. Da jetzt die Skripte aktualisiert wurden, muss init_db.<BS_Erweiterung> um
+   die Datenbank neu zu erstellen.
+
+
+
+Schritt 4: Die neue Version der Anwendung starten
+-------------------------------------------------
+
+Die Anwendung sollte jetzt gestartet werden, wobei keine Probleme auftreten
+sollten.
+
+
+Schritt 4.A: Mit der alten Version starten
+------------------------------------------
+
+Wenn die Anwendung geladen hat, sollten die Daten komplett vorhanden sein, da
+sich die Datenbank nicht geändert hat.
+
+
+Schritt 4.B: Mit einer neuen Version starten
+--------------------------------------------
+
+Jetzt sollten keine Daten mehr vorhanden sein. Die Datenbank wurde komplett neu
+erstellt, sodass sie sich jetzt in einem "sauberen" Zustand befindet. Die
+folgenden Schritte werden Ihnen helfen, Ihre Daten zurückzubekommen:
+ - Werkzeuge -> Datenbank-Wartung -> Datenbank wiederherstellen
+ - Die in Schritt 1 erstellte Datei auswählen
+ - Alle Elemente auswählen
+ - "Wiederherstellen" klicken
+Nun sollten alle Daten wieder vorhanden sein.
+
+
+Schritt 5: Fertig
+-----------------
+
+Das Update ist beendet.
+
+
+Sollte ein Problem aufgetreten sein, kontaktieren Sie uns bitte über
+ggc@atech-software.com - wir werden versuchen zu helfen. Sie können Englisch,
+Slowenisch oder Deutsch benutzen um mit uns zu kommunizieren.
+
+
+GGC Development Team

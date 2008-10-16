@@ -1,0 +1,62 @@
+
+Update 0.3.1
+=============
+
+Dies ist ein kleines, aber erforderliches Update. Es muss auf die Version 0.3
+angewendet werden (wenn es auf eine andere Version angewendet wird, wird diese
+beschädigt).
+
+
+Im Update-Paket befinden sich drei Verzeichnisse, die in das vorhandene
+Installationsverzeichnis kopiert werden müssen (um dort einige Dateien zu
+ersetzen). Diese Dateien sind enthalten:
+
+docs\*                              - Einige Dokumente über Updates im
+                                      Allgemeinen und dieses Update im
+                                      Speziellen 
+data\update\GGC_Update.properties   - Update-Datei (um neue Start-Dateien zu
+                                      erstellen)
+lib\utils\atech-tools-0.2.5.jar     - Die neue Bibliothek
+
+
+
+Aktualisierung
+==============
+
+1. Die ZIP-Datei öffnen und alle Dateien in ein temporäres Verzeichnis
+   extrahieren.
+2. Alle Verzeichnisse selektieren und mittels Rechtsklick "Kopieren" oder
+   "Ausschneiden".
+3. Zur GGC-Installation navigieren (z.B. C:\Programme\GGC)
+4. Nun sollte das Installationsverzeichnis geöffnet sein, das einige
+   Unterverzeichnisse (bin, docs, lib, ...) enthält. Hier muss über das
+   Kontextmenü "Einfügen" ausgeführt werden. Wenn gefragt wird ob alte Dateien
+   ersetzt werden sollen, lautet die Antwort immer "Ja".
+5. Nachdem dies erfolgreich ausgeführt wurde, ist das Update installiert.
+6. GGC starten.
+7. In dem Fenster, das über "Hilfe"->"Auf Updates prüfen" aufgerufen wird,
+   sollte der "Atech Tools"-Eintrag jetzt die Version 0.2.5 haben. Sollte das
+   nicht der Fall sein, ist ein Fehler aufgetreten und das Update sollte noch
+   einmal installiert werden.
+   
+Sollte ein Problem auftreten, kontaktieren Sie uns bitte über
+ggc@atech-software.com - wir werden versuchen zu helfen. Sie können Englisch,
+Slowenisch oder Deutsch benutzen um mit uns zu kommunizieren.
+
+
+Behobenes Problem
+=================
+
+Dieses Update wird die Version der Anwendung nicht erhöhen.
+
+Dieses Update behebt einen kleinen Bug in der Backup/Restore-Funktionalität. In
+älteren Versionen wurden die Backups im Standartd-Zeichensatz des
+Betriebssystems geschrieben. Das verursacht manchmal ein Problem beim
+Wiederhestellen, da die Datenbank alle Einträge im UTF-8-Format benötigt.
+Dieses Update zwingt das Backup im UTF-8-Format zu schreiben, was es möglich
+macht, die Datenbank zu Sichern und Wiederherzustellen, was eine Vorraussetzung
+für jedes Update ist.
+
+
+GGC Development Team
+  

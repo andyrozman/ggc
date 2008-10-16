@@ -21,7 +21,7 @@ How to apply this update
 1. Open zip file and extract all files in some temporary directory
 2. Select all extracted directories and right click on them and select option Copy or Cut
 3. Browse to your installation of GGC (usually this is something like c:\Program Files\GGC)
-4. You should be in original install directory contains several sub-directories (bin, docs, lib, ...),
+4. You should be in the original install directory which contains several sub-directories (bin, docs, lib, ...),
    right click here and issue command Paste. Copying will start and you will be asked to overwrite
    files, on every question answer "Yes overwrite".
 5. When this is finished you have applied update successfully.
@@ -39,10 +39,11 @@ What does this update fix
 
 This update will not increase application version, you will still see application as version 0.3. 
 
-This update fixes minor bug in backup/restore function. In previous version, backup was made in codepage
-supported by operating system. This sometimes creates problem on restore, because database requires all
-entries to be in UTF-8 format. This fix forces backup to write files in utf-8 format, which gives us 
-possibilty to make backup/restore of database, which is requirement for applying any update. 
+This update fixes minor bug in backup/restore function. In previous version, backup was made in the
+character set supported by operating system. This sometimes creates problem on restore, because
+database requires all entries to be in UTF-8 format. This fix forces backup to write files in UTF-8
+format, which gives us possibilty to make backup/restore of database, which is requirement for applying
+any update. 
 
 
 

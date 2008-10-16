@@ -20,14 +20,14 @@ to be applied manually.
 
 Problem with all database applications is that we need to make update to application and to database. In each
 update package there will be file, with all releases listed and version of database they use. Depending on
-information found there you will select which upgrade way to go. (difference is in step 2)
+information found there you will select which upgrade way to go. (difference is in steps 3 and 4)
 
 
 HOW ARE UPDATE FILES PACKAGED
 =============================
 
 Update files contain this document (in future in all supported languages), file database_info.txt, with database
-information and Changes_<version>.txt (this is condensed version of Changes.txt document in SVN). Next there are 
+information and Changes_<version>.txt (this is condensed version of the Changelog document in SVN). Next there are 
 directories that you need to update. There will be at least two directories there, sometimes three. 
    - data: contains update file, which tells us which versions we are currently using (this is used to 
        generate startup files, when you run run_<os_name>.<os_ext> batch script). 
@@ -42,7 +42,7 @@ How to apply this update will be shown in few steps. Please follow them to the l
 STEP 1: Create backup copy of your data
 ----------------------------------------
 
-Start GNU Gluco Control and wait for it to load, then go to Tools -> Database Maintainance -> Database backup.
+Start GNU Gluco Control and wait for it to load, then go to Tools -> Database Maintenance -> Database backup.
 
 In next window select all object and click on backup. New backup file will be created in data\export
 directory (GGC backup <year>_<month>_<day> <hour>_<minute>_<second>). Copy it to same safe location.
@@ -55,7 +55,7 @@ STEP 2: Create backup copy of application
 ------------------------------------------
 
 Open your favorite File manager and create directory somewhere (probably something like
-GGC_Backup_<current_date>). Copy whole GGC instalation there (it should have at least bin, lib and data
+GGC_Backup_<current_date>). Copy whole GGC installation there (it should have at least bin, lib and data
 subdirectories, sometime also jre). Copy all of them. 
 
 This copy will be used in case that something goes wrong in next steps.
@@ -74,7 +74,7 @@ STEP 3.A: Update with same version
 -----------------------------------
 
 Use File manager (I advise to use some that has integrated Zip archiver, like Total commander) and open archive 
-file, you need to copy everything into your instalation directory. You will be asked to overwrite some files, 
+file, you need to copy everything into your installation directory. You will be asked to overwrite some files, 
 you need to overwrite all files there.  
  
 
@@ -108,7 +108,7 @@ STEP 4.B: Starting with different version
 
 Now when application is started there will be no data available anymore. Database was totally recreated 
 (and also deleted), so it's "clean" now. You will have to do following to get your data back. Click on
-Tools -> Database Maintainance -> Backup Restore. Select file you created in step 1 and in next window
+Tools -> Database Maintenance -> Backup Restore. Select file you created in step 1 and in next window
 select all objects and click on Restore. After restart all your data should be there. 
 
 
