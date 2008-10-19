@@ -15,15 +15,18 @@ public class CGMPlugInServer extends PlugInServer
      */
     private String cgm_tool_version = "0.0.1";
     
-    public static final int COMMAND_READ_METER_DATA = 0;
-    public static final int COMMAND_METERS_LIST = 1;
-    public static final int COMMAND_CONFIGURATION = 2;
+    public static final int COMMAND_READ_CGMS_DATA = 0;
+    public static final int COMMAND_CGMS_LIST = 1;
+    public static final int COMMAND_CGMS_CONFIGURATION = 2;
+    public static final int COMMAND_CGMS_ABOUT = 3;
     
-    private String commands[] = { 
-            "MN_METERS_READ_DESC",
-            "MN_METERS_LIST_DESC",  
-            "MN_METERS_CONFIG_DESC"
-            };
+    
+    public String commands[] = {
+                                "MN_CGMS_READ_DESC",
+                                "MN_CGMS_LIST_DESC",
+                                "MN_CGMS_CONFIG_DESC",
+                                "MN_CGMS_ABOUT_DESC"
+    };
     
     
     
@@ -51,26 +54,32 @@ public class CGMPlugInServer extends PlugInServer
     {
         switch(command)
         {
-            case CGMPlugInServer.COMMAND_READ_METER_DATA:
+            case CGMPlugInServer.COMMAND_READ_CGMS_DATA:
             {
-                this.featureNotImplemented(commands[CGMPlugInServer.COMMAND_READ_METER_DATA]);
+                this.featureNotImplemented(commands[CGMPlugInServer.COMMAND_READ_CGMS_DATA]);
 //                DbDataReaderAbstract reader = (DbDataReaderAbstract)obj_data; 
                 //new MeterInstructionsDialog(reader, this);
                 return;
             }
 
-            case CGMPlugInServer.COMMAND_METERS_LIST:
+            case CGMPlugInServer.COMMAND_CGMS_LIST:
             {
-                this.featureNotImplemented(commands[CGMPlugInServer.COMMAND_METERS_LIST]);
+                this.featureNotImplemented(commands[CGMPlugInServer.COMMAND_CGMS_LIST]);
                 return;
             }
 
-            default:
-            case CGMPlugInServer.COMMAND_CONFIGURATION:
+            case CGMPlugInServer.COMMAND_CGMS_ABOUT:
             {
-                this.featureNotImplemented(commands[CGMPlugInServer.COMMAND_CONFIGURATION]);
-                //m_da.listComponents();
-                //new SimpleConfigurationDialog(this.m_da);
+                this.featureNotImplemented(commands[CGMPlugInServer.COMMAND_CGMS_ABOUT]);
+                return;
+            }
+            
+            
+            
+            default:
+            case CGMPlugInServer.COMMAND_CGMS_CONFIGURATION:
+            {
+                this.featureNotImplemented(commands[CGMPlugInServer.COMMAND_CGMS_CONFIGURATION]);
                 return;
             }
             
@@ -84,7 +93,7 @@ public class CGMPlugInServer extends PlugInServer
     @Override
     public String getName()
     {
-        return ic.getMessage("METERS_PLUGIN");
+        return ic.getMessage("CGMS_PLUGIN");
     }
 
     /* 
