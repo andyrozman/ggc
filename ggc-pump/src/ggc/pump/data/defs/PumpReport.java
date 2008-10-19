@@ -1,5 +1,9 @@
 package ggc.pump.data.defs;
 
+import ggc.pump.util.DataAccessPump;
+
+import com.atech.i18n.I18nControlAbstract;
+
 
 
 /*
@@ -34,10 +38,28 @@ package ggc.pump.data.defs;
 
 public class PumpReport
 {
+    DataAccessPump da = DataAccessPump.getInstance();
+    I18nControlAbstract ic = da.getI18nControlInstance();
 
-    public static final int PUMP_REPORT_BOLUS_TOTAL_DAY = 1;
-    public static final int PUMP_REPORT_BASAL_TOTAL_DAY = 2;
-    public static final int PUMP_REPORT_INSULIN_TOTAL_DAY = 3;
+    public String[] report_desc = { 
+                       ic.getMessage("SELECT_SUBTYPE"),
+                       ic.getMessage("REPORT_MISC"),             
+                       ic.getMessage("REPORT_BOLUS_TOTAL_DAY"),             
+                       ic.getMessage("REPORT_BASAL_TOTAL_DAY"),             
+                       ic.getMessage("REPORT_INSULIN_TOTAL_DAY"),             
+    };
+    
+    
+    public static final int PUMP_REPORT_MISC = 1;
+    public static final int PUMP_REPORT_BOLUS_TOTAL_DAY = 2;
+    public static final int PUMP_REPORT_BASAL_TOTAL_DAY = 3;
+    public static final int PUMP_REPORT_INSULIN_TOTAL_DAY = 4;
+    
+    
+    public String[] getDescriptions()
+    {
+        return this.report_desc;
+    }
     
 
 }

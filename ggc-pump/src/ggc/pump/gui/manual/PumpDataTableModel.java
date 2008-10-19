@@ -37,8 +37,9 @@ import javax.swing.table.AbstractTableModel;
 
 public class PumpDataTableModel extends AbstractTableModel
 {
-    //PumpDataDailyValues dayData;
     
+    private static final long serialVersionUID = 412835707138372687L;
+
     PumpValuesDay dayData;
     
     DataAccessPump m_da = DataAccessPump.getInstance();

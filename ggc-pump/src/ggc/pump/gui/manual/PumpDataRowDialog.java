@@ -1,3 +1,5 @@
+package ggc.pump.gui.manual;
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -26,7 +28,6 @@
  *  Author:   andyrozman {andy@atech-software.com}
  *
  */
-package ggc.pump.gui.manual;
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.pump.data.PumpValuesDay;
@@ -37,7 +38,6 @@ import ggc.pump.util.I18nControl;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -121,6 +121,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     JPanel main_panel = null;
     private JList m_list = null;
 
+    @SuppressWarnings("unused")
     private boolean m_add_action = true;
     private Container m_parent = null;
     
@@ -320,7 +321,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         
         addLabel(m_ic.getMessage("ENTRY_TYPE") + ":", 150, panel);
         
-        pdtc = new PumpDataTypeComponent(175);
+        pdtc = new PumpDataTypeComponent(this, 175);
         pdtc.setType(PumpDataTypeComponent.TYPE_NONE);
         panel.add(pdtc);
         
@@ -400,6 +401,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
             }
         });
 */
+        /*
         String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"),
                                     "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), 
                                     "edit_food", m_ic.getMessage("EDIT_FOOD"), 
@@ -426,7 +428,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
 
         JButton button;
         // int j=0;
-/*        for (int i = 0, j = 0, k = 0; i < button_coord.length; i += 4, j += 2, k++)
+        for (int i = 0, j = 0, k = 0; i < button_coord.length; i += 4, j += 2, k++)
         {
             button = new JButton("   " + button_command[j + 1]);
             button.setActionCommand(button_command[j]);

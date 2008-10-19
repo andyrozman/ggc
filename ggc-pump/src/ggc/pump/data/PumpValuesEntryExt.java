@@ -28,20 +28,26 @@
 package ggc.pump.data;
 
 import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.pump.output.OutputUtil;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.util.Hashtable;
 
+import org.hibernate.Session;
+
+import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.utils.ATechDate;
 
 //import ggc.db.hibernate.DayValueH;
 
 
-public class PumpValuesEntryExt extends PumpValuesEntryAbstract 
+public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryAbstract, DatabaseObjectHibernate 
 {
-	DataAccessPump da = DataAccessPump.getInstance();
+    private static final long serialVersionUID = 2300422547257308019L;
+
+    DataAccessPump da = DataAccessPump.getInstance();
 	
 	// pump 
 	long datetime;
@@ -299,6 +305,62 @@ public class PumpValuesEntryExt extends PumpValuesEntryAbstract
 	    //OutputUtil o= null;
 	    return "MeterValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
 	}
+
+
+    public String DbAdd(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean DbDelete(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean DbEdit(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean DbGet(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean DbHasChildren(Session sess) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public int getAction()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public String getObjectName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean isDebugMode()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 	
 	
 }	

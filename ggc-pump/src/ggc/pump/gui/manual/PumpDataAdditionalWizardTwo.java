@@ -38,6 +38,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -54,7 +55,7 @@ import com.atech.help.HelpCapable;
 
 // fix this
 
-public class PumpDataAdditionalWizardOne extends JDialog implements ActionListener, HelpCapable
+public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListener, HelpCapable
 {
 
     private static final long serialVersionUID = -5592188365225021329L;
@@ -76,7 +77,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     private Hashtable<String,PumpDataExtendedH> old_data = null;
     
 
-    public PumpDataAdditionalWizardOne(Hashtable<String,PumpDataExtendedH> data, JDialog parent)
+    public PumpDataAdditionalWizardTwo(Hashtable<String,PumpDataExtendedH> data, JDialog parent)
     {
         super(parent, "", true);
 

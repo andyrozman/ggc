@@ -1,5 +1,11 @@
 package ggc.pump.data.defs;
 
+import ggc.pump.util.DataAccessPump;
+
+import java.util.Hashtable;
+
+import com.atech.i18n.I18nControlAbstract;
+
 
 
 /*
@@ -35,10 +41,53 @@ package ggc.pump.data.defs;
 public class PumpBolusType
 {
 
+    DataAccessPump da = DataAccessPump.getInstance();
+    I18nControlAbstract ic = da.getI18nControlInstance();
+
+    public String[] alarms_desc = { ic.getMessage("SELECT_BOLUS_TYPE"),
+                       ic.getMessage("BOLUS_STANDARD"),             
+                       ic.getMessage("BOLUS_SCROLL"),             
+                       ic.getMessage("BOLUS_EXTENDED"),             
+                       ic.getMessage("BOLUS_MULTIWAVE"),             
+    };
+    
+    
+    Hashtable<String,String> bolus_mapping = new Hashtable<String,String>(); 
+    
+    
+    public static final int PUMP_BOLUS_NONE = 0;
     public static final int PUMP_BOLUS_STANDARD = 1;
     public static final int PUMP_BOLUS_SCROLL = 2;
     public static final int PUMP_BOLUS_EXTENDED = 3;
     public static final int PUMP_BOLUS_MULTIWAVE = 4;
+    
+    
+    public PumpBolusType()
+    {
+        this.bolus_mapping.put(ic.getMessage("BOLUS_STANDARD"), "1");             
+        this.bolus_mapping.put(ic.getMessage("BOLUS_SCROLL"), "2");             
+        this.bolus_mapping.put(ic.getMessage("BOLUS_EXTENDED"), "3");             
+        this.bolus_mapping.put(ic.getMessage("BOLUS_MULTIWAVE"), "4");             
+    }
+    
+    
+    public int getTypeFromDescription(String str)
+    {
+        String s = "0";
+        
+        if (this.bolus_mapping.containsKey(str))
+            s = this.bolus_mapping.get(str);
+        
+        return Integer.parseInt(s);
+    }
+    
+    public String[] getDescriptions()
+    {
+        return this.alarms_desc;
+    }
+    
+    
+    
     
 
 }

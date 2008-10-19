@@ -1,9 +1,19 @@
-GGC Meter Tool AUTHORS file
+GGC Pump Tool AUTHORS file
 ===========================
 
 Current developers:
-    Aleksander Rozman    <andyrozman@users.sourceforge.net>  (PumpCore, Roche support, ...)
+    Aleksander Rozman    <andyrozman@users.sourceforge.net>  
+       Pump Framework Core, 
+       Devices: 
+          - Roche support (reading from device SmartPix done, not imported)
+          - Minimed support (reading from export file)
 
-    Nate Barish <>  (Animas support, PumpCore)
+    Nate Barish <innominate227@users.sourceforge.net>    [Retired]
+       Devices: 
+          - Animas support (reading from EzManager db started)
+          
+          
+          
+           
 
  

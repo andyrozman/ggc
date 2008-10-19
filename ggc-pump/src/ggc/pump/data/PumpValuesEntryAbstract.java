@@ -31,7 +31,7 @@ package ggc.pump.data;
 //import ggc.db.hibernate.DayValueH;
 
 
-public abstract class PumpValuesEntryAbstract 
+public interface PumpValuesEntryAbstract 
 {
 	
 }	

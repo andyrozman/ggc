@@ -1,5 +1,11 @@
 package ggc.pump.data.defs;
 
+import ggc.pump.util.DataAccessPump;
+
+import java.util.Hashtable;
+
+import com.atech.i18n.I18nControlAbstract;
+
 
 
 /*
@@ -35,6 +41,25 @@ package ggc.pump.data.defs;
 public class PumpAlarms
 {
 
+    DataAccessPump da = DataAccessPump.getInstance();
+    I18nControlAbstract ic = da.getI18nControlInstance();
+
+    public String[] alarms_desc = { ic.getMessage("SELECT_SUBTYPE"),
+                       ic.getMessage("ALARM_CARTRIDGE_LOW"),             
+                       ic.getMessage("ALARM_BATTERY_LOW"),             
+                       ic.getMessage("ALARM_REVIEW_DATETIME"),             
+                       ic.getMessage("ALARM_ALARM_CLOCK"),             
+                       ic.getMessage("ALARM_PUMP_TIMER"),             
+                       ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),             
+                       ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),             
+                       ic.getMessage("ALARM_BOLUS_CANCELED"),             
+    };
+    
+    
+    Hashtable<String,String> alarms_mapping = new Hashtable<String,String>(); 
+    
+    
+    
     public final static int PUMP_ALARM_CARTRIDGE_LOW = 1;
     public final static int PUMP_ALARM_BATTERY_LOW = 2;
     public final static int PUMP_ALARM_REVIEW_DATETIME = 3;
@@ -44,6 +69,35 @@ public class PumpAlarms
     public final static int PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER = 7;
     public final static int PUMP_ALARM_BOLUS_CANCELED = 8;
     
+
+    
+    public PumpAlarms()
+    {
+        alarms_mapping.put(ic.getMessage("ALARM_CARTRIDGE_LOW"), "1");             
+        alarms_mapping.put(ic.getMessage("ALARM_BATTERY_LOW"), "2");             
+        alarms_mapping.put(ic.getMessage("ALARM_REVIEW_DATETIME"), "3");             
+        alarms_mapping.put(ic.getMessage("ALARM_ALARM_CLOCK"), "4");             
+        alarms_mapping.put(ic.getMessage("ALARM_PUMP_TIMER"), "5");             
+        alarms_mapping.put(ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"), "6");             
+        alarms_mapping.put(ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"), "7");             
+        alarms_mapping.put(ic.getMessage("ALARM_BOLUS_CANCELED"), "8");             
+    }
+    
+    
+    public int getTypeFromDescription(String str)
+    {
+        String s = "0";
+        
+        if (this.alarms_mapping.containsKey(str))
+            s = this.alarms_mapping.get(str);
+        
+        return Integer.parseInt(s);
+    }
+    
+    public String[] getDescriptions()
+    {
+        return this.alarms_desc;
+    }
     
     
     

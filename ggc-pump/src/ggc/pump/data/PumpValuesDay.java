@@ -30,6 +30,9 @@ package ggc.pump.data;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+
+import com.atech.utils.ATechDate;
 
 
 
@@ -41,12 +44,34 @@ public class PumpValuesDay
 	
 	
 	private ArrayList<PumpValuesEntry> list = null;
+	private Hashtable<String,PumpValuesEntry> table = null;
 	
 	
 	public PumpValuesDay()
 	{
 	    list = new ArrayList<PumpValuesEntry>();
+	    table = new Hashtable<String,PumpValuesEntry>();
 	}
+	
+	
+	public void addEntry(PumpValuesEntry pve)
+	{
+	    this.list.add(pve);
+	    
+	    ATechDate atd = new ATechDate(ATechDate.DT_DATETIME, pve.getDt_info());
+	    
+	    if (!this.table.containsKey(atd.getDateString()))
+	    {
+	        this.table.put(atd.getDateString(), pve);
+	    }
+	    
+	}
+	
+	public void addExtendedEntries(ArrayList<PumpValuesEntryExt> lst)
+	{
+	    // TODO
+	}
+	
 	
 	
 	public int getColumnCount()

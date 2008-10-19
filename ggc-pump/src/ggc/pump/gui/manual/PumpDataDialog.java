@@ -56,9 +56,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
 import com.atech.graphics.calendar.CalendarPane;
@@ -67,7 +64,12 @@ import com.atech.help.HelpCapable;
 public class PumpDataDialog extends JDialog implements ActionListener, HelpCapable
 {
 
-    private static Log log = LogFactory.getLog(PumpDataDialog.class);
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5805410528909879792L;
+
+//    private static Log log = LogFactory.getLog(PumpDataDialog.class);
 
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccessPump m_da = null; // DataAccess.getInstance();
@@ -112,7 +114,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     public void setTitle(GregorianCalendar gc)
     {
-        setTitle(m_ic.getMessage("DAILYSTATSFRAME") + "  [" + gc.get(GregorianCalendar.DAY_OF_MONTH) + "."
+        setTitle(m_ic.getMessage("PUMP_DAILY_OVERVIEW") + "  [" + gc.get(GregorianCalendar.DAY_OF_MONTH) + "."
                 + (gc.get(GregorianCalendar.MONTH) + 1) + "." + gc.get(GregorianCalendar.YEAR) + "]");
     }
 
@@ -205,7 +207,9 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                       {
                          System.out.println("dateHasChanged");
                   
-                         GregorianCalendar gc = e.getNewCalendar();
+                         // TODO date changed
+                         @SuppressWarnings("unused")
+                        GregorianCalendar gc = e.getNewCalendar();
                   
 //                         dayData = m_da.getDb().getDayStats(gc);
 //                         model.setDailyValues(dayData); //setDailyValues(dayData);
@@ -403,7 +407,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         {
             SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
             
-            PumpDataRowDialog pdrd = new PumpDataRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
+            /*PumpDataRowDialog pdrd =*/ new PumpDataRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
             /*
             SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -521,7 +525,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
     public static void main(String[] args)
     {
         JFrame frame = new JFrame();
-        frame.setBounds(150, 150, 800, 600);
+        frame.setBounds(150, 100, 800, 400);
         
         DataAccessPump dap = DataAccessPump.getInstance(); 
         
