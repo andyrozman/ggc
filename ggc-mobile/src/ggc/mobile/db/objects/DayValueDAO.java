@@ -22,37 +22,37 @@ public class DayValueDAO extends DatabaseAccessObject
     
     
     /*  identifier field */
-    protected long id;
+    public long id;
 
     /*  persistent field */
-    protected long dt_info;
+    public long dt_info;
 
     /*  nullable persistent field */
-    protected int bg;
+    public int bg;
 
     /*  nullable persistent field */
-    protected int ins1;
+    public int ins1;
 
     /*  nullable persistent field */
-    protected int ins2;
+    public int ins2;
 
     /*  nullable persistent field */
-    protected float ch;
+    public float ch;
 
     /*  nullable persistent field */
-    protected String meals_ids;
+    public String meals_ids;
 
     /*  nullable persistent field */
-    protected String extended;
+    public String extended;
 
     /*  persistent field */
-    protected int person_id;
+    public int person_id;
 
     /*  nullable persistent field */
-    protected String comment;
+    public String comment;
 
     /*  nullable persistent field */
-    protected long changed;
+    public long changed;
 
     /*  full constructor */
     public DayValueDAO(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String extended,
@@ -205,7 +205,8 @@ public class DayValueDAO extends DatabaseAccessObject
                               "meals_ids longvarchar, " +
                               "extended longvarchar, " +
                               "person_id int NOT NULL, " +
-                              "\"comment\" varchar(2000), " +
+                              //"\"comment\" varchar(2000), " +
+                              "comment varchar(2000), " +
                               "changed bigint)");
     }
 

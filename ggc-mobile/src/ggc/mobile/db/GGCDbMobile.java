@@ -38,10 +38,10 @@ package ggc.mobile.db;
 
 import ggc.mobile.data.DailyValues;
 import ggc.mobile.data.DailyValuesRow;
+import ggc.mobile.db.objects.DayValueDAO;
 import ggc.mobile.util.DataAccessMobile;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,6 +51,11 @@ import java.util.StringTokenizer;
 
 import com.atech.mobile.db.objects.DatabaseAccessObject;
 import com.atech.mobile.utils.log.SimpleLogger;
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import com.db4o.query.Constraint;
+import com.db4o.query.Query;
 
 
 public class GGCDbMobile // implements DbCheckInterface HibernateDb
@@ -217,6 +222,9 @@ public class GGCDbMobile // implements DbCheckInterface HibernateDb
         }*/
   //  }
 
+    ObjectContainer db;
+    
+    
     public void createDatabase()
     {
 //        logInfo("createDatabase", "Process");
@@ -256,27 +264,31 @@ public class GGCDbMobile // implements DbCheckInterface HibernateDb
         try 
         {
             /*
-            // Load the database driver
+            // H2 (To many files, Too slow to even work)
             Class.forName("org.h2.Driver");
-
-            // Get a connection to the database
             this.m_connection = DriverManager.getConnection("jdbc:h2:../data/db/ggc_db", "sa", "");
             */
             
             /*
-            // Load the database driver
+            // Tiny SQL (no init possible, ex, no functions)
             Class.forName("com.sqlmagic.tinysql.dbfFileDriver");
-
-            // Get a connection to the database
             this.m_connection = DriverManager.getConnection("jdbc:dbfFile:../data/db2/", "", "");
             */
             
-            // Load the database driver
+            /*
+            // Small SQL (Works. Very slow)
             Class.forName("smallsql.database.SSDriver");
-
-            // Get a connection to the database
             this.m_connection = DriverManager.getConnection("jdbc:smallsql:../data/db3", "", "");
+            */
+
+            /*
+            // HSQL Db  (Works ok, startup and shutdown too slow, memory req. very big) 
+            Class.forName("org.hsqldb.jdbcDriver" );
+            this.m_connection = DriverManager.getConnection("jdbc:hsqldb:file:../data/db4/ggcdb", "sa", "");
+            */
             
+            // db4o
+            //this.db=Db4o.openFile("../data/db5/ggcdb");
             
         } 
         catch (Exception ex) 
@@ -293,6 +305,13 @@ public class GGCDbMobile // implements DbCheckInterface HibernateDb
 
     
     
+    public ObjectContainer getDb()
+    {
+        ObjectContainer db = Db4o.openFile("../data/db5/ggc.db");  // ggcdb
+        return db;
+    }
+    
+    
     // ---
     // --- BASIC METHODS (Hibernate and DataLayer processing)
     // ---
@@ -304,29 +323,31 @@ public class GGCDbMobile // implements DbCheckInterface HibernateDb
 
             try
             {
-                doh.dbAdd(this.getConnection()); // getSession());
+                getDb().store(doh);
+                // fff
+                // doh.dbAdd(this.getConnection()); // getSession());
                 //this.m_addId = doh.getObjectUniqueId();
                 return true;
             }
-            catch (SQLException ex)
+            catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
                 log.error("SQLException on add: " + ex, ex);
-                Exception eee = ex.getNextException();
+/*                Exception eee = ex.getNextException();
 
                 if (eee != null)
                 {
                     log.error("Nested Exception on add: " + eee.getMessage(), eee);
-                }
+                } */
                 return false;
             }
-            catch (Exception ex)
+/*            catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
                 log.error("Exception on add: " + ex, ex);
                 return false;
             }
-
+*/
 
     }
 
@@ -1092,7 +1113,7 @@ public class GGCDbMobile // implements DbCheckInterface HibernateDb
     }
 */
 
-    public DailyValues getDayStats(GregorianCalendar day)
+    public DailyValues getDayStatsXa(GregorianCalendar day)
     {
 
         
@@ -1171,6 +1192,118 @@ public class GGCDbMobile // implements DbCheckInterface HibernateDb
         return dV;
 
     }
+    
+    
+    
+    public DailyValues getDayStats(GregorianCalendar day)
+    {
+
+        
+        DailyValues dV = new DailyValues();
+        dV.setDate(m_da.getDateTimeFromDateObject(day.getTime()) / 10000);
+
+        ObjectContainer db = getDb();
+
+        try
+        {
+            // TODO: dd
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String sDay = sdf.format(day.getTime());
+
+            int count = 0;
+            
+            
+            
+            
+            
+            
+            long t_s = Long.parseLong(sDay + "0000");
+            long t_e = Long.parseLong(sDay + "2359");
+            
+            
+
+            
+            
+            
+            Query query=db.query();
+
+            
+            Constraint c1 = query.descend("dt_info").constrain(new Long(t_s)).greater()
+            .or(query.constrain(new Long(t_s)).equal());
+            
+            Constraint c2 = query.descend("dt_info").constrain(new Long(t_e)).smaller()
+            .or(query.constrain(new Long(t_e)).equal());
+            
+            
+            query.constrain(DayValueDAO.class).and(c1).and(c2);
+            
+            
+//            Constraint c1 = query.descend("dt_info").constrain(new Long(t_s)).greater();
+            
+            
+            
+            
+/*            query.descend("dt_info");
+            query.constrain(new Long(t_s)).greater()
+            .and(query.constrain(new Long(t_s)).equal())
+            .and(query.constrain(new Long(t_e)).smaller())
+            .and(query.constrain(new Long(t_e)).equal());
+  */          
+            ObjectSet result=query.execute();            
+  
+            while (result.hasNext())
+            {
+                DayValueDAO dvd = (DayValueDAO)result.next();
+                //DailyValuesRow dVR = (DailyValuesRow)dvd;
+                DailyValuesRow dVR = new DailyValuesRow(dvd);
+                
+                //dVR.dbGet(rs);
+                dV.setNewRow(dVR);
+                count++;
+            }
+            
+            
+            
+            /*
+            String sql = "SELECT * from data_dayvalues " + "WHERE dt_info >=  " + sDay
+                        + "0000 AND dt_info <= " + sDay + "2359 "; //ORDER BY dt_info";
+            
+            //System.out.println("sql: " + sql);
+            
+            Statement stmt = this.m_connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) 
+            {
+                DailyValuesRow dVR = new DailyValuesRow();
+                
+                dVR.dbGet(rs);
+                dV.setNewRow(dVR);
+                count++;
+            }
+            */
+
+            System.out.println("Entries: " + dV.elementCount() + ", real_count=" + count);
+
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Exception: " + ex);
+            ex.printStackTrace();
+        }
+        finally
+        {
+            db.close();
+        }
+
+        return dV;
+
+    }
+    
+    
+    
+    
 /*
     @SuppressWarnings("unchecked")
     public WeeklyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)

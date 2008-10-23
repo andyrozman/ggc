@@ -44,7 +44,7 @@ public class PumpBolusType
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
-    public String[] alarms_desc = { ic.getMessage("SELECT_BOLUS_TYPE"),
+    public String[] bolus_desc = { ic.getMessage("SELECT_BOLUS_TYPE"),
                        ic.getMessage("BOLUS_STANDARD"),             
                        ic.getMessage("BOLUS_SCROLL"),             
                        ic.getMessage("BOLUS_EXTENDED"),             
@@ -83,11 +83,8 @@ public class PumpBolusType
     
     public String[] getDescriptions()
     {
-        return this.alarms_desc;
+        return this.bolus_desc;
     }
-    
-    
-    
     
 
 }

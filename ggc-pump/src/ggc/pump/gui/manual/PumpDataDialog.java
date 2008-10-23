@@ -390,12 +390,13 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     public String getIns1Abbr()
     {
-        return "Bolus Insulin";
+        return m_ic.getMessage("BOLUS"); //"Bolus Insulin";
     }
 
     public String getIns2Abbr()
     {
-        return "Basal Insulin";
+        return m_ic.getMessage("BASAL");
+        //return "Basal Insulin";
     }
 
     public void actionPerformed(ActionEvent e)

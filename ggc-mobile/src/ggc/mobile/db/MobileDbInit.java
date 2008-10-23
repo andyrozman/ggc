@@ -78,15 +78,19 @@ public class MobileDbInit // implements DbCheckInterface HibernateDb
         try
         {
 //x            this.executeDb(this.m_conn, "CREATE DATABASE '../data/db3'");
-
+            System.out.println("Create database tables");
+            
             for(int i=0; i<this.db_objects.size(); i++)
             {
                 this.db_objects.get(i).dbCreate(m_conn);
             }
+            
+            this.executeDb(m_conn, "SHUTDOWN COMPACT");
         }
         catch(Exception ex)
         {
             System.out.println("Exception on init: " + ex);
+            ex.printStackTrace();
         }
         
     }

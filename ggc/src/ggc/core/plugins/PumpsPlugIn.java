@@ -23,14 +23,15 @@ public class PumpsPlugIn extends PlugInClient
     public static final int COMMAND_ABOUT = 6;
     
     
-    
+    /*
     private String commands[] = { "MN_PUMPS_READ_DESC", 
                                   "MN_PUMPS_LIST_DESC", 
                                   "MN_PUMPS_CONFIG_DESC",
                                   "MN_PUMP_PROFILES_DESC", 
                                   "MN_PUMPS_MANUAL_ENTRY_DESC",
                                   "MN_PUMPS_ADDITIONAL_DATA_DESC", };
-
+*/
+    
     public PumpsPlugIn(Container parent, I18nControlAbstract ic)
     {
         super(parent, ic);
@@ -75,51 +76,36 @@ public class PumpsPlugIn extends PlugInClient
         this.featureNotImplemented(commands[0]);
     }
 
-    public void pumpsList()
-    {
-        this.featureNotImplemented(commands[1]);
-    }
-
-    public void pumpsConfiguration()
-    {
-        this.featureNotImplemented(commands[2]);
-    }
-
-    public void pumpsProfiles()
-    {
-        this.featureNotImplemented(commands[3]);
-
-    }
-
-    public void pumpManualEntry()
-    {
-        this.featureNotImplemented(commands[4]);
-
-    }
-
-    public void pumpAddAdditionalData()
-    {
-        this.featureNotImplemented(commands[5]);
-
-    }
-
+    
     public void initPlugin()
     {
-        this.commands = new String[6];
+        this.commands = new String[7];
         this.commands[0] = "MN_PUMPS_READ_DESC";
         this.commands[1] = "MN_PUMPS_LIST_DESC";
         this.commands[2] = "MN_PUMPS_CONFIG_DESC";
         this.commands[3] = "MN_PUMP_PROFILES_DESC";
         this.commands[4] = "MN_PUMPS_MANUAL_ENTRY_DESC";
         this.commands[5] = "MN_PUMPS_ADDITIONAL_DATA_DESC";
+        this.commands[6] = "MN_PUMPS_ABOUT_DESC";
 
-        this.commands_implemented = new boolean[6];
+        this.commands_implemented = new boolean[7];
         this.commands_implemented[0] = false;
         this.commands_implemented[1] = false;
         this.commands_implemented[2] = true;
         this.commands_implemented[3] = false;
         this.commands_implemented[4] = true;
         this.commands_implemented[5] = true;
+        this.commands_implemented[6] = true;
+        
+        this.commands_will_be_done = new String[7];
+        this.commands_will_be_done[0] = "0.5";
+        this.commands_will_be_done[1] = "0.4";
+        this.commands_will_be_done[2] = null;
+        this.commands_will_be_done[3] = "0.5";
+        this.commands_will_be_done[4] = null;
+        this.commands_will_be_done[5] = null;
+        this.commands_will_be_done[6] = null;
+        
     }
 
     /*
@@ -159,29 +145,27 @@ public class PumpsPlugIn extends PlugInClient
         }
         else if (command.equals("pumps_list"))
         {
-            //this.pumpsList();
             this.executeCommand(PumpsPlugIn.COMMAND_PUMPS_LIST);
         }
         else if (command.equals("pumps_profile"))
         {
-            //this.pumpsProfiles();
             this.executeCommand(PumpsPlugIn.COMMAND_PROFILES);
         }
         else if (command.equals("pumps_manual_entry"))
         {
-            //this.pumpManualEntry();
             this.executeCommand(PumpsPlugIn.COMMAND_MANUAL_ENTRY);
-
         }
         else if (command.equals("pumps_additional_data"))
         {
-            //this.pumpAddAdditionalData();
             this.executeCommand(PumpsPlugIn.COMMAND_ADDITIONAL_DATA);
         }
         else if (command.equals("pumps_config"))
         {
-            //this.pumpsConfiguration();
             this.executeCommand(PumpsPlugIn.COMMAND_CONFIGURATION);
+        }
+        else if (command.equals("pumps_about"))
+        {
+            this.executeCommand(PumpsPlugIn.COMMAND_ABOUT);
         }
         else
         {

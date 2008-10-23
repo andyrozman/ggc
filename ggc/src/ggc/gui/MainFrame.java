@@ -363,18 +363,17 @@ public class MainFrame extends JFrame
         this.menu_pumps.addSeparator();
         this.createAction(menu_pumps, "MN_PUMPS_MANUAL_ENTRY",
                 "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry", null);
-        this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC",
-                "pumps_read", null);
-        this.createAction(menu_pumps, "MN_PUMPS_ADDITIONAL_DATA",
-                "MN_PUMPS_ADDITIONAL_DATA_DESC", "pumps_additional_data", null);
+        this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
+        this.createAction(menu_pumps, "MN_PUMPS_ADDITIONAL_DATA", "MN_PUMPS_ADDITIONAL_DATA_DESC", "pumps_additional_data", null);
         this.menu_pumps.addSeparator();
-        this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC",
-                "pumps_list", null);
+        this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
         this.menu_pumps.addSeparator();
-        this.createAction(menu_pumps, "MN_PUMPS_CONFIG",
-                "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
-
-        // meters
+        this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
+        this.menu_pumps.addSeparator();
+        this.createAction(menu_pumps, "MN_PUMPS_ABOUT", "MN_PUMPS_ABOUT_DESC", "pumps_about", null);
+        
+        
+        // cgms
         this.menu_cgms = this.createMenu("MN_CGMS", null);
         this.createAction(menu_cgms, "MN_CGMS_READ", "MN_CGMS_READ_DESC",
                 "cgms_read", null);

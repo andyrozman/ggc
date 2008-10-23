@@ -1,6 +1,7 @@
 package ggc.pump.gui.manual;
 
 import ggc.pump.data.defs.PumpAlarms;
+import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
@@ -10,10 +11,14 @@ import ggc.pump.util.I18nControl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import com.atech.graphics.components.JDecimalTextField;
 
@@ -38,6 +43,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     JTextField text_1, text_2;
     JComboBox combo_1, combo_2;
     JDecimalTextField num_tf_1_d2, num_tf_2_d2;
+    JRadioButton rb_1, rb_2, rb_3;
+    ButtonGroup bg;
+    
+    
     int type = 0;
     int height = 0;
     int width = 400;
@@ -47,6 +56,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     PumpAlarms m_p_alarm = new PumpAlarms();
     PumpErrors m_p_error = new PumpErrors();
     PumpBolusType m_p_bolus = new PumpBolusType();
+    PumpBasalSubType m_p_basal = new PumpBasalSubType();
     
     PumpDataRowDialog m_parent = null;
     
@@ -107,7 +117,16 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         combo_1.addActionListener(this);
         combo_2.addActionListener(this);
         
+        //JRadioButton rb_1, rb_2;
         
+        this.rb_1 = new JRadioButton();
+        this.add(rb_1);
+        this.rb_2 = new JRadioButton();
+        this.add(rb_2);
+        this.rb_3 = new JRadioButton();
+        this.add(rb_3);
+        
+        this.bg = new ButtonGroup();
         
     }
     
@@ -183,7 +202,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         num_tf_1_d2.setVisible(false);
         num_tf_2_d2.setVisible(false);
         combo_1.setActionCommand(""); 
-        combo_2.setActionCommand(""); 
+        combo_2.setActionCommand("");
+        rb_1.setVisible(false);
+        rb_2.setVisible(false);
+        rb_3.setVisible(false);
     }
     
     private void setEmpty()
@@ -278,16 +300,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
     }
     
+    
     // type: report
     private void setReport()
     {
-
-        
-        
-        // TODO
-//        this.setUnsupported();
-
-        
         this.hideAll();
 
         this.label_1.setBounds(0, 20, 150, 25);
@@ -325,9 +341,31 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     // types: basal
     private void setBasal()
     {
+        this.hideAll();
+        this.sub_type = 0;
+        
+        this.label_1.setBounds(0, 20, 150, 25);
+        this.label_1.setVisible(true);
+        this.label_1.setText(ic.getMessage("BASAL_TYPE") + ":");
+        
+        this.combo_1.setBounds(150, 20, 180, 25);
+        this.combo_1.setVisible(true);
+        this.combo_1.setActionCommand("basal");
+        addAllItems(this.combo_1, this.m_p_basal.getDescriptions());
+        
+        this.label_2.setBounds(0, 55, 150, 25);
+        this.label_2.setVisible(true);
+        this.label_2.setText(ic.getMessage("COMMENT") + ":");
+        
+        this.text_1.setBounds(150, 55, 180, 25);
+        this.text_1.setVisible(true);
+        
+        this.setHeight(85);
+        
+        
         
         // TODO
-        this.setUnsupported();
+//        this.setUnsupported();
     }
 
     
@@ -335,6 +373,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     private void setBolus()
     {
         this.hideAll();
+        this.sub_type = 0;
         
         this.label_1.setBounds(0, 20, 150, 25);
         this.label_1.setVisible(true);
@@ -356,6 +395,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     }
 
+    
+    
     public void setBolusSubType(int stype)
     {
         // 20 55 
@@ -434,7 +475,110 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     }
     
     
-    
+    public void setBasalSubType(int stype)
+    {
+        // 20 55 
+        if (this.sub_type==stype)
+            return;
+        else
+            this.sub_type = stype;
+
+        
+        this.num_tf_1_d2.setVisible(false);
+        this.num_tf_2_d2.setVisible(false);
+        this.label_3.setVisible(false);
+        this.label_4.setVisible(false);
+        this.tbr_cmp.setVisible(false);
+
+        this.rb_1.setVisible(false);
+        this.rb_2.setVisible(false);
+        this.rb_3.setVisible(false);
+        
+        
+        this.bg.remove(rb_1);
+        this.bg.remove(rb_2);
+        this.bg.remove(rb_3);
+        
+        switch(this.sub_type)
+        {
+            case PumpBasalSubType.PUMP_BASAL_VALUE:
+            {
+                this.label_2.setBounds(0, 90, 150, 25);
+                this.text_1.setBounds(150, 90, 180, 25);
+                
+                this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                this.num_tf_1_d2.setVisible(true);
+                this.label_3.setBounds(0, 55, 150, 25);
+                this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                this.label_3.setVisible(true);
+                
+                this.setHeight(115);
+                
+            } break;
+
+
+            case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
+            {
+                this.label_2.setBounds(0, 90, 150, 25);
+                this.text_1.setBounds(150, 90, 180, 25);
+                
+                this.tbr_cmp.setBounds(0, 55, 180, 25);
+                this.tbr_cmp.setVisible(true);
+
+                //this.num_tf_1_d2.setVisible(true);
+                //this.label_3.setBounds(0, 55, 150, 25);
+                //this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                //this.label_3.setVisible(true);
+                
+                this.setHeight(115);
+                
+            } break;
+            
+            
+            case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
+            {
+                this.label_2.setBounds(0, 140, 150, 25);
+                this.text_1.setBounds(150, 140, 180, 25);
+                
+                this.rb_1.setText(ic.getMessage("ON"));
+                this.rb_1.setBounds(150, 55, 200, 25);
+                this.rb_1.setVisible(true);
+                this.rb_1.setSelected(true);
+                this.rb_2.setText(ic.getMessage("OFF"));
+                this.rb_2.setBounds(150, 80, 200, 25);
+                this.rb_2.setVisible(true);
+                this.rb_3.setText(ic.getMessage("SUSPENDED"));
+                this.rb_3.setBounds(150, 105, 200, 25);
+                this.rb_3.setVisible(true);
+                
+                this.bg.add(rb_1);
+                this.bg.add(rb_2);
+                this.bg.add(rb_3);
+                
+                //this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                //this.num_tf_1_d2.setVisible(true);
+                
+                
+                
+                this.label_3.setBounds(0, 55, 150, 25);
+                this.label_3.setText(ic.getMessage("PUMP_STATUS") + ":");
+                this.label_3.setVisible(true);
+                
+                this.setHeight(165);
+                
+            }
+            
+            
+            default:
+            {
+                
+                
+            } break;
+        }
+
+        this.m_parent.realignComponents();
+        
+    }
     
     
     
@@ -471,6 +615,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             System.out.println("Bolus event: " + this.combo_1.getSelectedIndex());
             setBolusSubType(this.combo_1.getSelectedIndex());
         }
+        else if (cmd.equals("basal"))
+        {
+            System.out.println("Basal event: " + this.combo_1.getSelectedIndex());
+            setBasalSubType(this.combo_1.getSelectedIndex());
+        }
         
         
         // TODO Auto-generated method stub
@@ -485,9 +634,48 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     private class TemporaryBasalRateComponent extends JPanel
     {
 
-        private static final long serialVersionUID = -1192269467658397557L;
-
         
+        private static final long serialVersionUID = -1192269467658397557L;
+        String[] vals = { "-", "+" };
+        
+        JSpinner spinner = null;
+        JComboBox cb_sign = null;
+        JLabel label_1, label_2;
+        
+        public TemporaryBasalRateComponent()
+        {
+            super();
+            this.setLayout(null);
+            this.init();
+        }
+
+        private void init()
+        {
+            label_1 = new JLabel(ic.getMessage("TEMPORARY_BASAL_RATE") + ":");
+            label_1.setBounds(0, 0, 140, 25);
+            this.add(label_1);
+            
+            
+            cb_sign = new JComboBox(vals);
+            cb_sign.setBounds(220, 0, 40, 25);
+            this.add(cb_sign);
+            
+            spinner = new JSpinner();
+            spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+            spinner.setBounds(270, 0, 40, 25);
+            this.add(spinner);
+            
+            label_2 = new JLabel("%");
+            label_2.setBounds(320, 0, 40, 25);
+            this.add(label_2);
+            
+        }
+        
+        
+        public void setBounds(int x, int y, int width, int height)
+        {
+            super.setBounds(x, y, 350, 30);
+        }
         
 
 

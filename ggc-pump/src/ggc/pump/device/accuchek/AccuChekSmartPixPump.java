@@ -348,12 +348,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
                 
                 if (type==1)
                 {
-                    pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_DECREMENT);
+                    // TODO Fix
+                    //pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_DECREMENT);
                     procs = el.attributeValue("TBRdec"); 
                 }
                 else
                 {
-                    pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_INCREMENT);
+                    // TODO Fix
+                    //pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_INCREMENT);
                     procs = el.attributeValue("TBRinc"); 
                 }
             

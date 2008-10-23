@@ -45,6 +45,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private JLabel lblIns1 = new JLabel();
     private JLabel lblIns2 = new JLabel();
     private JLabel lblUnit = new JLabel();
+    private JLabel lblNutri = new JLabel();
     private JLabel lblMeter = new JLabel();
     private JLabel lblPumps = new JLabel();
     private JLabel lblCGMS = new JLabel();
@@ -69,6 +70,8 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         add(lblIns2);
         add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
         add(lblUnit);
+        add(new JLabel(m_ic.getMessage("NUTRITION_PLUGIN")+":"));
+        add(lblNutri);
         add(new JLabel(m_ic.getMessage("METERS_PLUGIN")+":"));
         add(lblMeter);
         add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN")+":"));
@@ -93,6 +96,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         lblUnit.setText(m_da.getSettings().getBG_unitString());
         
         m_da.getPlugIn(DataAccess.PLUGIN_METERS).getWhenWillBeImplemented();
+        lblNutri.setText("N/A"); //m_da.getPlugIn(DataAccess.PLUGIN_METERS).getShortStatus());
         lblMeter.setText(m_da.getPlugIn(DataAccess.PLUGIN_METERS).getShortStatus());
         lblPumps.setText(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).getShortStatus());
         lblCGMS.setText(m_da.getPlugIn(DataAccess.PLUGIN_CGMS).getShortStatus());
