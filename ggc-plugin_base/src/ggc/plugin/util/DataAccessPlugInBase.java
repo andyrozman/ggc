@@ -70,11 +70,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
 
     public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
+    public static DecimalFormat Decimal0Format = new DecimalFormat("#0");
+    public static DecimalFormat Decimal1Format = new DecimalFormat("#0.0");
+    public static DecimalFormat Decimal2Format = new DecimalFormat("#0.00");
+    public static DecimalFormat Decimal3Format = new DecimalFormat("#0.000");
 
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
      */
-    public int m_BG_unit = BG_MGDL;
+    public int m_BG_unit = BG_MMOL;
 
     public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
 
@@ -408,6 +412,33 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         }
     }
 
+    public String getDisplayedBGString(String bgValue)
+    {
+        float val = 0.0f;
+        
+        if ((bgValue!=null) && (bgValue.length()!=0))
+        {
+            try
+            {
+                val = Float.parseFloat(bgValue);
+                val = getDisplayedBG(val);
+            }
+            catch(Exception ex)
+            {}
+        }
+
+        if (this.m_BG_unit==BG_MGDL)
+            return DataAccessPlugInBase.Decimal0Format.format(val);
+        else
+            return DataAccessPlugInBase.Decimal1Format.format(val);
+            
+
+        
+        
+    }
+    
+    
+    
     public float getBGValue(float bg_value)
     {
         switch (this.m_BG_unit)

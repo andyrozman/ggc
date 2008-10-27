@@ -3,6 +3,7 @@ package ggc.plugin.protocol;
 
 
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;

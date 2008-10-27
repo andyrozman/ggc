@@ -24,10 +24,16 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: MeterInterface
- *  Purpose:  This is interface class, used for meters. It should be primary implemented by protocol class, and 
+ *  Filename: DeviceInterface
+ *  Purpose:  This is interface class, used for devices. It should be primary implemented by protocol class, and 
  *       protocol class should be used as super class for meter definitions. Each meter family "should" 
  *       have it's own super class and one class for each meter.
+ *
+ *  Example:  for AscnesiaContour meter (--> means extends) 
+ *      DeviceInterface 
+ *         |------>   AbstractSerialMeter (implements SerialProtocol)
+ *                        |------>  AscensiaMeter (company meter driver)                
+ *                                       |---> AscensiaContour (meter driver)
  *
  *  Author:   andyrozman {andyrozman@sourceforge.net}
  */
@@ -38,48 +44,20 @@ public interface DeviceInterface extends SelectableInterface
 
 
     //************************************************
-    //***          Working with device             ***
+    //***      Device Identification Methods       ***
     //************************************************
 
-
-    /**
-     * Used for opening connection with device.
-     * @return boolean - if connection established
-     */
-    //boolean open() throws PlugInBaseException;
-
-
-    /**
-     * Will be called, when the import is ended and freeing resources.
-     */
-    //void close() throws PlugInBaseException;
-
-
-    /**
-     * This is method for reading data from device. All reading from actual device should be done from here.
-     * Reading can be done directly here, or event can be used to read data.
-     */
-    void readDeviceData() throws PlugInBaseException;
-
-
-
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
-    //void loadInitialData();
-    //void readCommData();
 
     /**
      * getName - Get Name of device. 
-     * Should be implemented by protocol class.
+     * Should be implemented by device class.
      */
     String getName();
 
 
     /**
      * getIcon - Get Icon of device
-     * Should be implemented by protocol class.
+     * Should be implemented by device class.
      */
     String getIconName();
 
@@ -119,19 +97,15 @@ public interface DeviceInterface extends SelectableInterface
      */
     String getDeviceClassName();
     
-    //String getPort();
-    
 
     //************************************************
-    //***           Meter GUI Methods              ***
+    //***          Device GUI Methods              ***
     //************************************************
 
 
-
-    
     /**
      * setDeviceAllowedActions - sets actions which are allowed by implementation
-     *   of MeterInterface (actually of GenericMeterXXXXX classes)
+     *   of DeviceInterface (should be done by device class)
      *   
      * @param can_read_data
      * @param can_read_partitial_data
@@ -153,27 +127,23 @@ public interface DeviceInterface extends SelectableInterface
     //************************************************
     
 
-    
-    
-
-
-    
     /**
-     * This is method for reading data from device. All reading from actual device should be done from here.
-     * Reading can be done directly here, or event can be used to read data.
+     * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
+     * be done from here. Reading can be done directly here, or event can be used to read data. Usage of events 
+     * is discouraged because reading takes 3-4x more time.
      */
     void readDeviceDataFull() throws PlugInBaseException;
     
     
     /**
-     * This is method for reading partitial data from device. All reading from actual device should be done from 
-     * here. Reading can be done directly here, or event can be used to read data.
+     * This is method for reading partial data from device. This can be used if your device can be read partialy 
+     * (from some date to another)
      */
     void readDeviceDataPartitial() throws PlugInBaseException;
 
 
     /** 
-     * This is method for reading configuration
+     * This is method for reading configuration, in case that dump doesn't give this information.
      * 
      * @throws MeterExceptions
      */
@@ -244,19 +214,18 @@ public interface DeviceInterface extends SelectableInterface
 
     void test();
 
-    /*
-    public void setCGMCompany(AbstractCGMCompany company);
-    
-    
-    public AbstractCGMCompany getCGMCompany();
-    */
-    
+
+    /**
+     * getConnectionProtocol - returns id of connection protocol
+     * 
+     * @return
+     */
     public int getConnectionProtocol();
 
     
     /**
      * getInstructions - get instructions for device
-     * Should be implemented by meter class.
+     * Should be implemented by device class.
      * 
      * @return instructions for reading data 
      */
