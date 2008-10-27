@@ -1,6 +1,7 @@
 package ggc.meter.device.accuchek;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 public class AccuChekAdvantage extends AccuChekSmartPixMeter
@@ -11,6 +12,12 @@ public class AccuChekAdvantage extends AccuChekSmartPixMeter
         super();
     }
 
+    public AccuChekAdvantage(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
+    
+    
     public AccuChekAdvantage(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);

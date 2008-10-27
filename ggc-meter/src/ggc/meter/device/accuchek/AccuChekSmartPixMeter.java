@@ -3,6 +3,7 @@ package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
@@ -46,6 +47,13 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     {
         super();
     }
+    
+    
+    public AccuChekSmartPixMeter(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
+    
     
     public AccuChekSmartPixMeter(String drive_letter, OutputWriter writer)
     {

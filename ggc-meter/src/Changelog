@@ -2,6 +2,14 @@
 Changes file for GGC Meter Tool
 ===============================
 
+0.3.6
+    * Fix of configuration which was introduced with PlugInBase usage
+    * Added comments to AscensiaMeter, for usage as tutorial
+
+0.3.5
+    * Removed some files, which are now in PlugInBase
+
+
 0.3.4
     * Added About Dialog to tool.
 

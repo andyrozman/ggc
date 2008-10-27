@@ -31,6 +31,7 @@ package ggc.meter.device.ascensia;
  *
  */
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import gnu.io.SerialPortEventListener;
 
@@ -43,6 +44,13 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
     }
 
+    
+    public AscensiaContour(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
+    }
+    
+    
     public AscensiaContour(String portName, OutputWriter writer)
     {
     	super(portName, writer);

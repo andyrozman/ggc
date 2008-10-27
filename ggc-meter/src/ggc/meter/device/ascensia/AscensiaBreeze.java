@@ -1,5 +1,6 @@
 package ggc.meter.device.ascensia;
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 
@@ -38,6 +39,12 @@ public class AscensiaBreeze extends AscensiaMeter //SerialProtocol
     
     public AscensiaBreeze()
     {
+    }
+    
+
+    public AscensiaBreeze(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
     }
     
     

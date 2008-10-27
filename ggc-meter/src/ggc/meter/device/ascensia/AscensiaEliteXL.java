@@ -1,6 +1,7 @@
 package ggc.meter.device.ascensia;
 
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 
 
@@ -10,6 +11,12 @@ public class AscensiaEliteXL extends AscensiaMeter
     
     public AscensiaEliteXL()
     {
+    }
+    
+
+    public AscensiaEliteXL(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
     }
     
     

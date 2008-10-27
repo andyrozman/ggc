@@ -1,6 +1,7 @@
 package ggc.meter.device.accuchek;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 public class AccuChekComfort extends AccuChekSmartPixMeter
@@ -9,6 +10,12 @@ public class AccuChekComfort extends AccuChekSmartPixMeter
     public AccuChekComfort()
     {
         super();
+    }
+    
+    
+    public AccuChekComfort(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
     }
     
     

@@ -3,10 +3,12 @@ package ggc.meter.device.ascensia;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
+import ggc.meter.manager.company.AscensiaBayer;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -14,7 +16,6 @@ import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
@@ -23,8 +24,14 @@ import com.atech.utils.ATechDate;
 import com.atech.utils.TimeZoneUtil;
 
 
+/**
+ * This class can be used as example on how to implement Serial meter driver
+ * 
+ * @author Andy
+ *
+ */
+
 public abstract class AscensiaMeter extends AbstractSerialMeter
-//extends /*SerialIOProtocol*/  SerialProtocol implements MeterInterface
 {
 
     public static final int ASCENSIA_COMPANY          = 1;
@@ -36,13 +43,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public static final int METER_ASCENSIA_BREEZE2    = 10005;
     
     
-    //protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
 
-    //protected String m_info = "";
-    //protected int m_time_difference = 0;
-    //protected ArrayList<MeterValuesEntry> data = null;
-    //protected OutputWriter m_output_writer;
     public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
     public boolean device_running = false;
@@ -50,7 +52,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     boolean multiline = false;
     String multiline_body;
     
-    String end_string;
+//    String end_string;
     String end_strings[] = null;
     String text_def[] = null;
     
@@ -59,17 +61,18 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
     }
     
-
+    public AscensiaMeter(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
+    }
+    
+    
     public AscensiaMeter(String portName, OutputWriter writer)
     {
     	
-		super(DataAccessMeter.getInstance()); /*portName, */ 
-/*		      9600,
-			  //19200,
-		      SerialPort.DATABITS_8, 
-		      SerialPort.STOPBITS_1, 
-		      SerialPort.PARITY_NONE);
-*/	
+		super(DataAccessMeter.getInstance()); 
+
+		// communcation settings for this meter(s)
 		this.setCommunicationSettings( 
 			      9600,
 			      SerialPort.DATABITS_8, 
@@ -78,42 +81,33 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 			      SerialPort.FLOWCONTROL_NONE,
 			      SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT);
 				
-//		this.setSerialPort(portName);
-		
-		data = new ArrayList<MeterValuesEntry>();
-		
+		// output writer, this is how data is returned (for testing new devices, we can use Consol
 		this.output_writer = writer; 
 		this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
-		
+
+		// set meter type (this will be deprecated in future, but it's needed for now
         this.setMeterType("Ascensia/Bayer", this.getName());
 
-	
+        // set device company (needed for now, will also be deprecated)
+        this.setDeviceCompany(new AscensiaBayer());
+        
+
+        // settting serial port in com library
 		try
 		{
-		    System.out.println("Set port: " + portName);
-		    
 	        this.setSerialPort(portName);
-//		    this.setPort(portName);
 	
 		    if (!this.open())
 		    {
 		    	this.m_status = 1;
 		    }
 		    
-		    
-	        end_string = (new Character((char)13)).toString();
-	        
-	        //this.writer = new GGCFileOutputWriter();
 	        this.output_writer.writeHeader();
 
-	    
+	        this.serialPort.notifyOnOutputEmpty(true);  // notify on empty for stopping
+	        this.serialPort.notifyOnBreakInterrupt(true); // notify on break interrupt for stopping
 	        
-	        //this.serialPort.
-	        
-	        this.serialPort.notifyOnOutputEmpty(true);
-	        this.serialPort.notifyOnBreakInterrupt(true);
-	        
-	        
+            // setting specific for this driver 
 	        this.end_strings = new String[2];
 	        end_strings[0] = (new Character((char)3)).toString(); // ETX - End of Text
 	        end_strings[1] = (new Character((char)4)).toString(); // EOT - End of Transmission
@@ -131,32 +125,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		    ex.printStackTrace();
 		}
 		
-		
-		
-		
     }
-
-    /**
-     * Used for opening connection with device.
-     * @return boolean - if connection established
-     */
-/*    public boolean open() throws PlugInBaseException
-    {
-    	return super.open();
-    }
-*/
-
-    /**
-     * Will be called, when the import is ended and freeing resources.
-     */
-    @Override
-    public void close()
-    {
-        super.close();
-    }
-
-
-
 
 
 
@@ -170,16 +139,17 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
 
 
-
-
-
     
     //************************************************
     //***       Device Implemented methods         ***
     //************************************************
     
 
-    
+    /**
+     * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
+     * be done from here. Reading can be done directly here, or event can be used to read data. Usage of events 
+     * is discouraged because reading takes 3-4x more time.
+     */
     public void readDeviceDataFull() throws PlugInBaseException
     {
         waitTime(2000);
@@ -349,7 +319,10 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     }
     
     
-    
+    /**
+     * We don't use serial event for reading data, because process takes too long, we use serial event just 
+     * to determine if device is stopped (interrupted) 
+     */
     @Override
     public void serialEvent(SerialPortEvent event)
     {
@@ -542,6 +515,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
 
     boolean header_set = false;
+
     
     protected void readData(String input)
     {

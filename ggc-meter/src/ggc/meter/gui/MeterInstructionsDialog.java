@@ -94,6 +94,10 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         super();
         loadConfiguration();
         
+        //m_da.addContainer(server.)
+        
+       
+        
         this.reader = reader;
         this.server = server;
         init();
@@ -129,6 +133,9 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         tzu.setSummerTimeChange(+1);
         */
         
+        System.out.println(this.configured_meter.meter_company + " " + this.configured_meter.meter_device);
+        
+        
         DeviceInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
         
         this.meter_interface = (MeterInterface)mi;
@@ -140,16 +147,20 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
 
     private ImageIcon getMeterIcon()
     {
+        
+        String root = "/icons/meters/";
+        
+        
         if (this.meter_interface == null)
         {
-            return m_da.getImageIcon("/icons/meters/", "no_meter.gif");
+            return m_da.getImageIcon(root, "no_meter.gif");
         }
         else
         {
             if (this.meter_interface.getIconName()==null)
-                return m_da.getImageIcon("/icons/meters/", "no_meter.gif");
+                return m_da.getImageIcon(root, "no_meter.gif");
             else
-                return m_da.getImageIcon("/icons/meters/", this.meter_interface.getIconName());
+                return m_da.getImageIcon(root, this.meter_interface.getIconName());
         }
     }
     

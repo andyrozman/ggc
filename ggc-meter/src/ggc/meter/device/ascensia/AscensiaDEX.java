@@ -29,6 +29,7 @@ package ggc.meter.device.ascensia;
  *
  */
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 import javax.swing.ImageIcon;
@@ -40,6 +41,12 @@ public class AscensiaDEX extends AscensiaMeter
     {
     }
 
+    
+    public AscensiaDEX(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
+    }
+    
     
 	public AscensiaDEX(String portName, OutputWriter writer) 
 	{

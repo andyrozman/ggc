@@ -33,6 +33,12 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
         super();
     }
 
+
+    public AbstractXmlMeter(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
+    
     
     boolean can_read_data = false; 
 	boolean can_read_partitial_data = false;
@@ -322,8 +328,11 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
                 return this.getDeviceCompany().getConnectionSamples();
 
             case 1:
-            default:    
+            default: 
+            {
+                //System.out.println("name: " + this.getName());
                 return this.getDeviceCompany().getName();
+            }
                 
                 
         }

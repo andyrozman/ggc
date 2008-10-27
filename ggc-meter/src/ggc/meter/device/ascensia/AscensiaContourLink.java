@@ -1,7 +1,5 @@
 package ggc.meter.device.ascensia;
 
-import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.OutputWriter;
 
 
 /*
@@ -25,35 +23,40 @@ import ggc.plugin.output.OutputWriter;
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: AscensiaBreezeMeter.java
- *  Purpose:  This class is used for data retrival from Ascensia Breeze Meter and
+ *  Filename: AscensiaContourMeter.java
+ *  Purpose:  This class is used for data retrival from Ascensia Contour Meter and
  *            implements SerialProtocol.
  *
  *  Author:   andyrozman {andyrozman@sourceforge.net}
  *
  */
 
-public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.OutputWriter;
+import gnu.io.SerialPortEventListener;
+
+
+public class AscensiaContourLink extends AscensiaMeter implements SerialPortEventListener
 {
 
-    public AscensiaBreeze2()
+	
+    public AscensiaContourLink()
     {
     }
+
     
-    
-    public AscensiaBreeze2(AbstractDeviceCompany cmp)
+    public AscensiaContourLink(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
     
     
-    public AscensiaBreeze2(String portName, OutputWriter writer)
+    public AscensiaContourLink(String portName, OutputWriter writer)
     {
     	super(portName, writer);
     }
 
-
-
+    
     //************************************************
     //***      Meter Identification Methods        ***
     //************************************************
@@ -66,10 +69,10 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
      */
     public String getName()
     {
-        return "Breeze2";
+        return "ContourLink";
     }
 
-
+    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -77,7 +80,7 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
      */
     public String getIconName()
     {
-        return "ascensia_breeze.png";
+        return "ascensia_contour.png";
     }
     
 
@@ -89,10 +92,8 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
      */
     public int getDeviceId()
     {
-        return AscensiaMeter.METER_ASCENSIA_BREEZE2;
+        return AscensiaMeter.METER_ASCENSIA_CONTOUR;
     }
-
-    
 
     
     /**
@@ -106,15 +107,6 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
     }
     
     
-    
-    public String getDeviceClassName()
-    {
-        return "ggc.meter.device.ascensia.AscensiaBreeze2";
-    }
-
-    
-    
-    
     /**
      * getInstructions - get instructions for device
      * 
@@ -122,7 +114,7 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ASCENSIA_BREEZE";
+        return "INSTRUCTIONS_ASCENSIA_CONTOUR";
     }
     
     /**
@@ -137,7 +129,7 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
     
     
     /**
-     * getImplementationStatus - Get Company Id 
+     * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.meter.manager.MeterImplementationStatus
@@ -146,11 +138,19 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
     {
         return 0;
     }
+
+
+    
+    public String getDeviceClassName()
+    {
+        return "ggc.meter.device.ascensia.AscensiaContourLink";
+    }
+
     
     public int getMaxMemoryRecords()
     {
-        return 420;
+        return 480;
     }
     
-    
+
 }

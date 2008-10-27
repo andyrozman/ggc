@@ -30,7 +30,9 @@
 package ggc.meter.manager.company; 
 
 import ggc.meter.device.ascensia.AscensiaBreeze;
+import ggc.meter.device.ascensia.AscensiaBreeze2;
 import ggc.meter.device.ascensia.AscensiaContour;
+import ggc.meter.device.ascensia.AscensiaContourLink;
 import ggc.meter.device.ascensia.AscensiaDEX;
 import ggc.meter.device.ascensia.AscensiaEliteXL;
 import ggc.meter.util.I18nControl;
@@ -44,10 +46,12 @@ public class AscensiaBayer extends AbstractDeviceCompany
     {
         super(I18nControl.getInstance());
         
-        this.addDevice(new AscensiaEliteXL());
-        this.addDevice(new AscensiaDEX());
-        this.addDevice(new AscensiaBreeze());
-        this.addDevice(new AscensiaContour());
+        this.addDevice(new AscensiaEliteXL(this));
+        this.addDevice(new AscensiaDEX(this));
+        this.addDevice(new AscensiaBreeze(this));
+        this.addDevice(new AscensiaBreeze2(this));
+        this.addDevice(new AscensiaContour(this));
+        this.addDevice(new AscensiaContourLink(this));
         
         //System.out.println(this.devices_vector);
     }    
