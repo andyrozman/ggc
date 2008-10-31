@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,7 +46,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     JDecimalTextField num_tf_1_d2, num_tf_2_d2;
     JRadioButton rb_1, rb_2, rb_3;
     ButtonGroup bg;
-    
+    ProfileComponent profile_comp;
     
     int type = 0;
     int height = 0;
@@ -127,6 +128,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.add(rb_3);
         
         this.bg = new ButtonGroup();
+
+        
+        profile_comp = new ProfileComponent();
+        this.add(profile_comp);
+        
         
     }
     
@@ -206,6 +212,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         rb_1.setVisible(false);
         rb_2.setVisible(false);
         rb_3.setVisible(false);
+        profile_comp.setVisible(false);
     }
     
     private void setEmpty()
@@ -214,6 +221,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         setHeight(0);
     }
     
+    /*
     private void setUnsupported()
     {
         this.hideAll();
@@ -221,7 +229,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         label_1.setText("Component doesn't support this type: " + this.type_items[type]);
         label_1.setVisible(true);
         this.setHeight(40);
-    }
+    }*/
 
     // type: event, alarm, error
     private void setComboAndText()
@@ -362,12 +370,153 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         this.setHeight(85);
         
-        
-        
-        // TODO
-//        this.setUnsupported();
     }
 
+    
+    public void setBasalSubType(int stype)
+    {
+        // 20 55 
+        if (this.sub_type==stype)
+            return;
+        else
+            this.sub_type = stype;
+
+        
+        this.num_tf_1_d2.setVisible(false);
+        this.num_tf_2_d2.setVisible(false);
+        this.label_3.setVisible(false);
+        this.label_4.setVisible(false);
+        this.tbr_cmp.setVisible(false);
+
+        this.rb_1.setVisible(false);
+        this.rb_2.setVisible(false);
+        this.rb_3.setVisible(false);
+        
+        
+        this.bg.remove(rb_1);
+        this.bg.remove(rb_2);
+        this.bg.remove(rb_3);
+        
+        profile_comp.setVisible(false);
+
+        // comment
+        this.label_2.setVisible(true);
+        this.text_1.setVisible(true);
+        
+        
+        switch(this.sub_type)
+        {
+            case PumpBasalSubType.PUMP_BASAL_VALUE:
+            {
+                this.label_2.setBounds(0, 90, 150, 25);
+                this.text_1.setBounds(150, 90, 180, 25);
+                
+                this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                this.num_tf_1_d2.setVisible(true);
+                this.label_3.setBounds(0, 55, 150, 25);
+                this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                this.label_3.setVisible(true);
+                
+                this.setHeight(115);
+                
+            } break;
+
+
+            case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
+            {
+                this.label_2.setBounds(0, 90, 150, 25);
+                this.text_1.setBounds(150, 90, 180, 25);
+                
+                this.tbr_cmp.setBounds(0, 55, 180, 25);
+                this.tbr_cmp.setVisible(true);
+
+                //this.num_tf_1_d2.setVisible(true);
+                //this.label_3.setBounds(0, 55, 150, 25);
+                //this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                //this.label_3.setVisible(true);
+                
+                this.setHeight(115);
+                
+            } break;
+
+            
+            case PumpBasalSubType.PUMP_BASAL_PROFILE:
+            {
+                this.label_2.setBounds(0, 90, 150, 25);
+                this.text_1.setBounds(150, 90, 180, 25);
+                
+                this.profile_comp.setBounds(0, 55, 180, 25);
+                this.profile_comp.setVisible(true);
+
+                this.setHeight(115);
+
+            } break;
+            
+            case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
+            {
+                this.label_2.setBounds(0, 125, 150, 25);
+                this.text_1.setBounds(150, 125, 180, 25);
+
+                
+                this.profile_comp.setBounds(0, 55, 180, 25);
+                this.profile_comp.setVisible(true);
+                
+                this.tbr_cmp.setBounds(0, 90, 180, 25);
+                this.tbr_cmp.setVisible(true);
+
+                this.setHeight(150);
+                
+            } break;
+            
+            case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
+            {
+                this.label_2.setBounds(0, 140, 150, 25);
+                this.text_1.setBounds(150, 140, 180, 25);
+                
+                this.rb_1.setText(ic.getMessage("ON"));
+                this.rb_1.setBounds(150, 55, 200, 25);
+                this.rb_1.setVisible(true);
+                this.rb_1.setSelected(true);
+                this.rb_2.setText(ic.getMessage("OFF"));
+                this.rb_2.setBounds(150, 80, 200, 25);
+                this.rb_2.setVisible(true);
+                this.rb_3.setText(ic.getMessage("SUSPENDED"));
+                this.rb_3.setBounds(150, 105, 200, 25);
+                this.rb_3.setVisible(true);
+                
+                this.bg.add(rb_1);
+                this.bg.add(rb_2);
+                this.bg.add(rb_3);
+                
+                //this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                //this.num_tf_1_d2.setVisible(true);
+                
+                
+                
+                this.label_3.setBounds(0, 55, 150, 25);
+                this.label_3.setText(ic.getMessage("PUMP_STATUS") + ":");
+                this.label_3.setVisible(true);
+                
+                this.setHeight(165);
+                
+            } break;
+            
+            
+            default:
+            {
+                this.label_2.setVisible(false);
+                this.text_1.setVisible(false);
+                
+                this.setHeight(55);
+                
+            } break;
+        }
+
+        this.m_parent.realignComponents();
+        
+    }
+    
+    
     
     // types: bolus
     private void setBolus()
@@ -475,110 +624,6 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     }
     
     
-    public void setBasalSubType(int stype)
-    {
-        // 20 55 
-        if (this.sub_type==stype)
-            return;
-        else
-            this.sub_type = stype;
-
-        
-        this.num_tf_1_d2.setVisible(false);
-        this.num_tf_2_d2.setVisible(false);
-        this.label_3.setVisible(false);
-        this.label_4.setVisible(false);
-        this.tbr_cmp.setVisible(false);
-
-        this.rb_1.setVisible(false);
-        this.rb_2.setVisible(false);
-        this.rb_3.setVisible(false);
-        
-        
-        this.bg.remove(rb_1);
-        this.bg.remove(rb_2);
-        this.bg.remove(rb_3);
-        
-        switch(this.sub_type)
-        {
-            case PumpBasalSubType.PUMP_BASAL_VALUE:
-            {
-                this.label_2.setBounds(0, 90, 150, 25);
-                this.text_1.setBounds(150, 90, 180, 25);
-                
-                this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                this.num_tf_1_d2.setVisible(true);
-                this.label_3.setBounds(0, 55, 150, 25);
-                this.label_3.setText(ic.getMessage("AMOUNT") + ":");
-                this.label_3.setVisible(true);
-                
-                this.setHeight(115);
-                
-            } break;
-
-
-            case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
-            {
-                this.label_2.setBounds(0, 90, 150, 25);
-                this.text_1.setBounds(150, 90, 180, 25);
-                
-                this.tbr_cmp.setBounds(0, 55, 180, 25);
-                this.tbr_cmp.setVisible(true);
-
-                //this.num_tf_1_d2.setVisible(true);
-                //this.label_3.setBounds(0, 55, 150, 25);
-                //this.label_3.setText(ic.getMessage("AMOUNT") + ":");
-                //this.label_3.setVisible(true);
-                
-                this.setHeight(115);
-                
-            } break;
-            
-            
-            case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
-            {
-                this.label_2.setBounds(0, 140, 150, 25);
-                this.text_1.setBounds(150, 140, 180, 25);
-                
-                this.rb_1.setText(ic.getMessage("ON"));
-                this.rb_1.setBounds(150, 55, 200, 25);
-                this.rb_1.setVisible(true);
-                this.rb_1.setSelected(true);
-                this.rb_2.setText(ic.getMessage("OFF"));
-                this.rb_2.setBounds(150, 80, 200, 25);
-                this.rb_2.setVisible(true);
-                this.rb_3.setText(ic.getMessage("SUSPENDED"));
-                this.rb_3.setBounds(150, 105, 200, 25);
-                this.rb_3.setVisible(true);
-                
-                this.bg.add(rb_1);
-                this.bg.add(rb_2);
-                this.bg.add(rb_3);
-                
-                //this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                //this.num_tf_1_d2.setVisible(true);
-                
-                
-                
-                this.label_3.setBounds(0, 55, 150, 25);
-                this.label_3.setText(ic.getMessage("PUMP_STATUS") + ":");
-                this.label_3.setVisible(true);
-                
-                this.setHeight(165);
-                
-            }
-            
-            
-            default:
-            {
-                
-                
-            } break;
-        }
-
-        this.m_parent.realignComponents();
-        
-    }
     
     
     
@@ -612,23 +657,64 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         if (cmd.equals("bolus"))
         {
-            System.out.println("Bolus event: " + this.combo_1.getSelectedIndex());
+//            System.out.println("Bolus event: " + this.combo_1.getSelectedIndex());
             setBolusSubType(this.combo_1.getSelectedIndex());
         }
         else if (cmd.equals("basal"))
         {
-            System.out.println("Basal event: " + this.combo_1.getSelectedIndex());
+//            System.out.println("Basal event: " + this.combo_1.getSelectedIndex());
             setBasalSubType(this.combo_1.getSelectedIndex());
         }
-        
-        
-        // TODO Auto-generated method stub
-        
     }
     
     
     
-    
+    private class ProfileComponent extends JPanel implements ActionListener
+    {
+        
+        private static final long serialVersionUID = 1195430308386555236L;
+        JLabel label_1, label_2;
+        JButton button_1;
+
+        public ProfileComponent()
+        {
+            super();
+            this.setLayout(null);
+            this.init();
+        }
+
+        private void init()
+        {
+            label_1 = new JLabel(ic.getMessage("PROFILE") + ":");
+            label_1.setBounds(0, 0, 140, 25);
+            this.add(label_1);
+            
+            label_2 = new JLabel(ic.getMessage("NOT_SELECTED"));
+            label_2.setBounds(150, 0, 140, 25);
+            this.add(label_2);
+            
+            button_1 = new JButton("...");
+            button_1.setBounds(300, 0, 25, 25 );
+            button_1.addActionListener(this);
+            this.add(button_1);
+            
+        }
+        
+        
+        public void setBounds(int x, int y, int width, int height)
+        {
+            super.setBounds(x, y, 350, 30);
+        }
+
+        public void actionPerformed(ActionEvent arg0)
+        {
+            // TODO Profile selector
+            System.out.println("Profile selector called");
+        }
+        
+        
+        
+    }
     
     
     private class TemporaryBasalRateComponent extends JPanel

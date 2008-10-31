@@ -28,7 +28,8 @@
  */
 package ggc.pump.gui.manual;
 
-import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -38,7 +39,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
@@ -73,14 +73,24 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     JPanel main_panel = null;
     private Container m_parent = null;
     
-    private Hashtable<String,PumpDataExtendedH> old_data = null;
+    private Hashtable<String,PumpValuesEntryExt> old_data = null;
     
+    PumpAdditionalDataType add_data;
+    JComboBox cb_type;
 
-    public PumpDataAdditionalWizardOne(Hashtable<String,PumpDataExtendedH> data, JDialog parent)
+    
+    protected boolean was_action = false;
+    protected PumpValuesEntryExt[] pump_objects_ext;
+    
+    
+    
+    
+    public PumpDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent, PumpAdditionalDataType pump_data)
     {
         super(parent, "", true);
 
-        this.old_data = data;
+        add_data = pump_data;
+        this.old_data = hashtable;
         m_parent = parent;
         init();
     }
@@ -123,7 +133,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         
         
         
-        JComboBox cb_type = new JComboBox(createItems());
+        cb_type = new JComboBox(add_data.createItems(this.old_data));
         cb_type.setBounds(30, 135, 240, 25);
         panel.add(cb_type);
         
@@ -185,44 +195,6 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     }
 
-    public Object[] createItems()
-    {
-        ArrayList<String> items = new ArrayList<String>();
-        
-        if (!this.old_data.containsKey("ACTIVITY"))
-        {
-            items.add(m_ic.getMessage("ACTIVITY"));
-        }
-
-        if (!this.old_data.containsKey("COMMENT"))
-        {
-            items.add(m_ic.getMessage("COMMENT"));
-        }
-        
-        if (!this.old_data.containsKey("BLOOD_GLUCOSE"))
-        {
-            items.add(m_ic.getMessage("BLOOD_GLUCOSE"));
-        }
-        
-        if (!this.old_data.containsKey("URINE"))
-        {
-            items.add(m_ic.getMessage("URINE"));
-        }
-        
-        if (!this.old_data.containsKey("CH"))
-        {
-            items.add(m_ic.getMessage("CH"));
-        }
-        
-        if (!this.old_data.containsKey("FOOD"))
-        {
-            items.add(m_ic.getMessage("FOOD"));
-        }
-        
-        
-        return items.toArray();
-        
-    }
     
     
     public boolean isMealSet()
@@ -320,9 +292,11 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
         if (action.equals("cancel"))
         {
+            System.out.println("wizard_1 [cancel]");
+            this.was_action = false;
             this.dispose();
         }
-        else if (action.equals("ok"))
+        else if (action.equals("next"))
         {
             cmdOk();
         }
@@ -364,10 +338,39 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     }
 
+    
+    
+    
+    public boolean wasAction()
+    {
+        return this.was_action;
+    }
 
+    
+    
+    public PumpValuesEntryExt[] getObjects()
+    {
+        return pump_objects_ext;
+        
+    }
+    
+    
     private void cmdOk()
     {
         // TODO: 
+        System.out.println("wizard_1 [ok]");
+
+        this.dispose();
+        
+        PumpDataAdditionalWizardTwo padw2 = new PumpDataAdditionalWizardTwo(this, (String)this.cb_type.getSelectedItem(), this.add_data); 
+        padw2.setVisible(true);
+        
+        if (padw2.wasAction())
+        {
+            this.was_action = true;
+            this.pump_objects_ext = padw2.getObjects();
+        }
+        
         
 /*        
         if (this.m_add_action)

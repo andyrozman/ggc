@@ -29,11 +29,20 @@
 
 package ggc.pump.manager; 
 
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.pump.device.PumpInterface;
+import ggc.pump.manager.company.Animas;
+import ggc.pump.manager.company.Deltec;
+import ggc.pump.manager.company.Insulet;
+import ggc.pump.manager.company.Minimed;
+import ggc.pump.manager.company.Roche;
+import ggc.pump.manager.company.Sooil;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.util.Hashtable;
+import java.util.Vector;
 
 public class PumpManager
 {
@@ -46,6 +55,9 @@ public class PumpManager
 
 
 
+    private Hashtable<String,AbstractDeviceCompany> companies_ht = new Hashtable<String,AbstractDeviceCompany>(); 
+    private Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>(); 
+    private Vector<DeviceInterface> supported_devices = new Vector<DeviceInterface>(); 
 
     
 
@@ -61,6 +73,8 @@ public class PumpManager
      */
     private PumpManager()
     {
+        loadPumpCompanies();
+        loadSupportedDevices();
     	this.pump_devices = new Hashtable<String,PumpInterface>();
     }
 
@@ -106,6 +120,57 @@ public class PumpManager
     {
         return this.pump_devices.get(index).getDeviceClassName();
     }
+    
+    
+    
+    
+    public void loadPumpCompanies()
+    {
+        addPumpCompany(new Animas());
+        addPumpCompany(new Deltec());
+        addPumpCompany(new Insulet());
+        addPumpCompany(new Minimed());
+        addPumpCompany(new Roche());
+        addPumpCompany(new Sooil());
+        //addMeterCompany(new PseudoMeters());
+    }
+    
+    
+    private void addPumpCompany(AbstractDeviceCompany company)
+    {
+        this.companies.add(company);
+        this.companies_ht.put(company.getName(), company);
+    }
+    
+    
+    
+    public void loadSupportedDevices()
+    {
+        // TODO add supported devices
+        //this.supported_devices.addAll(new AscensiaBayer().getDevices());
+        //this.supported_devices.addAll(new PseudoMeters().getDevices());
+    }
+    
+    
+    public Vector<AbstractDeviceCompany> getCompanies()
+    {
+        return this.companies;
+    }
+   
+    
+    public Vector<DeviceInterface> getSupportedDevices()
+    {
+        return this.supported_devices;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 /*
     public String getPumpDeviceClassName(int index)
     {

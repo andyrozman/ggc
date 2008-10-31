@@ -32,6 +32,8 @@ package ggc.pump.gui.manual;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.pump.data.PumpValuesDay;
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -42,10 +44,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -128,7 +132,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     int width = 400;
     int height = 490;
     
-    
+    ArrayList<PumpValuesEntryExt> list_data = new ArrayList<PumpValuesEntryExt>();
+    Hashtable<String,PumpValuesEntryExt> ht_data = new Hashtable<String,PumpValuesEntryExt>();
+    PumpAdditionalDataType m_pump_add = new PumpAdditionalDataType();
     
 
     public PumpDataRowDialog(PumpValuesDay ndV, String nDate, JDialog dialog)
@@ -230,6 +236,27 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
 
     }
 
+    
+    
+    
+    /**
+     *  Populates JList component
+     */
+    public void populateJListExtended(ArrayList<?> input)
+    {
+        DefaultListModel newListModel = new DefaultListModel();
+
+        for (int i =0;i<input.size();i++)
+        {
+            newListModel.addElement(input.get(i));
+        }
+
+        this.m_list.setModel(newListModel);
+    }
+    
+    
+    
+    
     public void load()
     {
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
@@ -709,8 +736,24 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         }
         else if (action.equals("item_add"))
         {
-            PumpDataAdditionalWizardOne pdawo = new PumpDataAdditionalWizardOne(this.add_data, this); 
+            PumpDataAdditionalWizardOne pdawo = new PumpDataAdditionalWizardOne(this.ht_data, this, this.m_pump_add); 
             pdawo.setVisible(true);
+            
+            if (pdawo.wasAction())
+            {
+                
+                PumpValuesEntryExt[] objs = pdawo.getObjects();
+                
+                for(int i=0; i<objs.length; i++)
+                {
+                    // TODO if exists
+                    this.list_data.add(objs[i]);
+                    this.ht_data.put(this.m_pump_add.getTypeDescription(objs[i].getType()), objs[i]);
+                }
+                
+                populateJListExtended(this.list_data);
+            }
+            
         }
         else if (action.equals("event_type"))
         {

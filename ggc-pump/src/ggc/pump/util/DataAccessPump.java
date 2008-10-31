@@ -42,6 +42,8 @@ import javax.swing.JFrame;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsEntry;
 import com.atech.graphics.components.about.CreditsGroup;
+import com.atech.graphics.components.about.FeaturesEntry;
+import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 
@@ -229,8 +231,19 @@ public class DataAccessPump extends DataAccessPlugInBase
         //cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
         lst_credits.add(cg);
                 
-        
         this.plugin_developers = lst_credits;
+
+        
+        // features
+        ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
+
+        
+        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("not implemented"));
+        fg.addFeaturesEntry(new FeaturesEntry("test"));
+        
+        lst_features.add(fg);
+        
+        this.plugin_features = lst_features;
         
     }
     
