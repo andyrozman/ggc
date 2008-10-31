@@ -72,6 +72,9 @@ public class AboutBaseDialog extends AboutDialog
 
         // libraries
         this.setLibraries(m_da.getPlugInLibraries());
+        
+        // features
+        this.setFeatures(m_da.getPlugInFeatures());
 
         // custom page
         createCustomTab();

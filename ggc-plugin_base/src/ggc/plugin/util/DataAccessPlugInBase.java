@@ -47,6 +47,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.atech.graphics.components.about.CreditsGroup;
+import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
@@ -271,6 +272,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     protected int about_plugin_copyright_from;
     protected ArrayList<LibraryInfoEntry> plugin_libraries;
     protected ArrayList<CreditsGroup> plugin_developers;
+    protected ArrayList<FeaturesGroup> plugin_features; 
     
     public String getAboutTitle()
     {
@@ -312,6 +314,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return this.plugin_developers;
     }
     
+    public ArrayList<FeaturesGroup> getPlugInFeatures()
+    {
+        return this.plugin_features;
+    }
     
 
     

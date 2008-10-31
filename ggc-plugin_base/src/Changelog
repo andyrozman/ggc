@@ -2,6 +2,9 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.1.8 
+    - added features to about dialog
+
 0.1.7 (22.10)
     - minor cosmetic changes to DeviceInterface and SerialProtocol
 
