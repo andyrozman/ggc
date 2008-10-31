@@ -1,14 +1,24 @@
 package ggc.meter.device.onetouch;
 
+import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.output.OutputWriter;
 import gnu.io.SerialPortEvent;
 
 import java.io.IOException;
+import java.util.StringTokenizer;
+
+import com.atech.utils.ATechDate;
+import com.atech.utils.TimeZoneUtil;
 
 
 public class OneTouchUltra extends OneTouchMeter
 {
-   
+
+    public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+    
+    
+    
     /*
     public OneTouchUltra()
     {
@@ -64,6 +74,9 @@ public class OneTouchUltra extends OneTouchMeter
         System.out.println("loadInitionalData");
 
         //waitTime(5000);
+        
+        //this.output_writer.
+        
         
         try
         {
@@ -166,7 +179,8 @@ public class OneTouchUltra extends OneTouchMeter
             
             while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
             {
-                System.out.println("D: " + line);
+                processEntry(line);
+                //System.out.println("D: " + line);
                 //processData(line.trim());
                 //sendToProcess(line);
                 //write(6);
@@ -213,6 +227,166 @@ public class OneTouchUltra extends OneTouchMeter
         }
 */
     }
+    
+    private void processEntry(String entry)
+    {
+        StringTokenizer strtok = new StringTokenizer(entry, ",");
+        
+        if (strtok.countTokens()==3)
+        {
+            this.readInfo(strtok);
+        }
+        else
+        {
+            this.readBGEntry(strtok, entry);
+        }
+        
+        
+        
+    }
+    
+    
+    public void readInfo(StringTokenizer strtok)
+    {
+/*        P nnn,“ MeterSN ”,“MG/DL ”
+        (1) (2) (3)
+        (1) Number of datalog records to follow (0 – 150)
+        (2) Meter serial number (9 characters)
+        (3) Unit of measure for glucose values */
+        
+        //strtok 
+        
+        strtok.nextToken();
+        String dev = strtok.nextToken();
+        
+        this.output_writer.getDeviceIdentification().device_serial_number = dev;
+        
+        this.output_writer.writeDeviceIdentification();
+        
+    }
+    
+
+    public void readBGEntry(StringTokenizer strtok, String entry)
+    {
+        try
+        {
+            System.out.println("BG: ");
+            /*
+            P “dow”,“mm/dd/yy”,“hh:mm:30 ”,“xxxxx ”, n cksm<CR><LF>
+            (4) (5) (6) (7)
+            (4) Day of week (SUN, MON, TUE, WED, THU, FRI, SAT)
+            (5) Date of reading
+            (6) Time of reading (If two or more readings were taken within the same minute, they will be
+            separated by 8 second intervals)
+            (7) Result format:
+            “ nnn ” - blood test result (mg/dL)
+            “ HIGH ” - blood test result >600 mg/dL
+            “C nnn ” - control solution test result (mg/dL)
+            “CHIGH ” - control solution test result >600 mg/dL
+            */
+            
+            strtok.nextToken();
+            String date = strtok.nextToken();
+            String time = strtok.nextToken();
+            
+            String res = strtok.nextToken();
+            
+            if ((res.contains("CHIGH")) || (res.contains("C ")))
+            {
+                // control solutions
+            }
+            else
+            {
+                MeterValuesEntry mve = new MeterValuesEntry();
+                
+                mve.setBgUnit(DataAccessMeter.BG_MGDL);
+                
+                mve.setDateTime(getDateTime(date, time));
+                
+                
+                if (res.contains("HIGH"))
+                {
+                    mve.setBgValue("600");
+                    mve.addParameter("HIGH", "HIGH");
+                }
+                else
+                {
+                    String d = res.substring(1, res.length()-1);
+                    d = d.trim();
+                    
+                    mve.setBgValue(d);
+                }
+                
+               
+                
+                this.output_writer.writeData(mve);
+                
+                
+            }
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception: " + ex);
+            System.out.println("Entry: " + entry);
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    
+    private ATechDate getDateTime(String date, String time)
+    {
+        // “mm/dd/yy”,“hh:mm:30 ”
+        
+        date = date.substring(1, date.length()-1);
+        
+        time = date.substring(1, time.length()-1);
+        time = time.trim();
+        
+        
+        String dt = "";
+        
+        StringTokenizer st = new StringTokenizer(date, "/");
+        
+        String m = st.nextToken();
+        String d = st.nextToken();
+        String y = st.nextToken();
+        
+        try
+        {
+            int year = Integer.parseInt(y);
+            
+            if (year<100)
+            {
+                if (year<70)
+                    dt += "19" + year;
+                else
+                    dt += "20" + year;
+            }
+            else
+                dt += year;
+            
+        }
+        catch(Exception ex)
+        {
+            
+        }
+        
+        dt += m;
+        dt += d;
+        
+        st = new StringTokenizer(time, ":");
+        
+        dt += st.nextToken();
+        dt += st.nextToken();
+        
+        return tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(dt)));
+        
+    }
+    
+    
+    
+    
     
     /* x
     private int powerOn2()

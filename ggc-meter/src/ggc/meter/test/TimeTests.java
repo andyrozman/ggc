@@ -37,13 +37,13 @@ public class TimeTests
 		
 		
 		System.out.println("1.1 DST: "); // + tzi.inDaylightTime(gc1.getTime()));
-		System.out.println("  Winter time:" + tzu.IsWinterTime(gc1));
-		System.out.println("  Summer time:" + tzu.IsSummerTime(gc1));
+		System.out.println("  Winter time:" + tzu.isWinterTime(gc1));
+		System.out.println("  Summer time:" + tzu.isSummerTime(gc1));
 		
 		
 		System.out.println("1.8 DST: "); // + tzi.inDaylightTime(gc2.getTime()));
-		System.out.println("  Winter time:" + tzu.IsWinterTime(gc2));
-		System.out.println("  Summer time:" + tzu.IsSummerTime(gc2));
+		System.out.println("  Winter time:" + tzu.isWinterTime(gc2));
+		System.out.println("  Summer time:" + tzu.isSummerTime(gc2));
 		
 		
 		//tzi.

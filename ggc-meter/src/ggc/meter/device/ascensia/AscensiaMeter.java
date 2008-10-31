@@ -561,7 +561,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	    
 	    	String time = strtok.nextToken();  // datetime
 	    
-	    	mve.setDateTime(tzu.GetCorrectedDateTime(new ATechDate(Long.parseLong(time))));
+	    	mve.setDateTime(tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(time))));
 	    	
 	    	if (unit.startsWith("mg/dL"))
 	    	{
