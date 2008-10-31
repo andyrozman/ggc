@@ -73,8 +73,8 @@ public class MeterConsoleTester //extends JFrame
 	    
     	try
     	{
-    	    startAscensia(portName);
-    	    //this.startOneTouchUltra(portName);
+    	    //startAscensia(portName);
+    	    this.startOneTouchUltra(portName);
     	    
     	    //startAccuChekAviva();
     	    
@@ -260,9 +260,14 @@ public class MeterConsoleTester //extends JFrame
         
 //a        thread.addJob(cow.getOutputUtil());
         
+        
+        
         displaySerialPorts();
         
         OneTouchUltra otu = new OneTouchUltra(portName, cow);
+        
+        
+        
         //m_meter = new OneTouchUltra(portName, cow);
         otu.loadInitialData();
 
@@ -302,7 +307,7 @@ public class MeterConsoleTester //extends JFrame
 	{
 	    
 	    if (args.length == 0)
-	        new MeterConsoleTester("");
+	        new MeterConsoleTester("COM5");
 	    else
 	        new MeterConsoleTester(args[0]);
 

@@ -24,7 +24,7 @@ public class OneTouchUltra extends OneTouchMeter
         //this.writer = new GGCFileOutputWriter();
         this.m_output_writer.writeHeader();
 
-        this.setMeterType("Ascensia", "Contour");
+        //this.setMeterType("Ascensia", "Contour");
     
         
         //this.serialPort.
