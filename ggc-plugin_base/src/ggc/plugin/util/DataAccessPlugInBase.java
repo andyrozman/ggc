@@ -504,6 +504,41 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
 
 
+    public float getBGValueByType(int input_type, int output_type, String bg_value_s)
+    {
+        
+        float bg_value = 0.0f;
+        
+        try
+        {
+            bg_value = Float.parseFloat(bg_value_s.replace(',', '.'));
+        }
+        catch(Exception ex)
+        {
+        }
+
+        
+        
+        
+        if (input_type==output_type)
+            return bg_value;
+        else
+        {
+            if (output_type==DataAccessPlugInBase.BG_MGDL)
+            {
+                return bg_value * DataAccessPlugInBase.MGDL_TO_MMOL_FACTOR;
+            }
+            else
+            {
+                return bg_value * DataAccessPlugInBase.MMOL_TO_MGDL_FACTOR;
+            }
+        }
+
+    }
+    
+    
+    
+    
     public float getBGValueDifferent(int type, float bg_value)
     {
 

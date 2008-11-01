@@ -56,7 +56,9 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     public static final int SERIAL_EVENT_NONE = 0;
     public static final int SERIAL_EVENT_DATA_AVAILABLE = 1;
     public static final int SERIAL_EVENT_BREAK_INTERRUPT = 2;
-    public static final int SERIAL_EVENT_ALL = 3;
+    public static final int SERIAL_EVENT_OUTPUT_EMPTY = 4;
+    
+    public static final int SERIAL_EVENT_ALL = 7;
     
     
     
@@ -304,7 +306,17 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
             }
             else
                 serialPort.notifyOnDataAvailable(false);
-        
+
+            
+            if ((this.event_type==SerialProtocol.SERIAL_EVENT_ALL) || 
+                (this.event_type==SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY))
+            {
+                serialPort.notifyOnOutputEmpty(true);
+            }
+            else
+                serialPort.notifyOnOutputEmpty(false);
+            
+            
             
             if (this.event_type!=SerialProtocol.SERIAL_EVENT_NONE)
                 serialPort.addEventListener(this);
