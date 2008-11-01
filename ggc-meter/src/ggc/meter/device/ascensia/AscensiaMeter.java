@@ -79,7 +79,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 			      SerialPort.STOPBITS_1, 
 			      SerialPort.PARITY_NONE,
 			      SerialPort.FLOWCONTROL_NONE,
-			      SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT);
+			      SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT|SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 				
 		// output writer, this is how data is returned (for testing new devices, we can use Consol
 		this.output_writer = writer; 
@@ -104,8 +104,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		    
 	        this.output_writer.writeHeader();
 
-	        this.serialPort.notifyOnOutputEmpty(true);  // notify on empty for stopping
-	        this.serialPort.notifyOnBreakInterrupt(true); // notify on break interrupt for stopping
+	        //this.serialPort.notifyOnOutputEmpty(true);  // notify on empty for stopping
+	        //this.serialPort.notifyOnBreakInterrupt(true); // notify on break interrupt for stopping
 	        
             // setting specific for this driver 
 	        this.end_strings = new String[2];

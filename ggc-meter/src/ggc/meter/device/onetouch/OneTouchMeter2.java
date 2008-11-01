@@ -21,31 +21,15 @@ import com.atech.utils.ATechDate;
 import com.atech.utils.TimeZoneUtil;
 
 
-public abstract class OneTouchMeter extends AbstractSerialMeter
+public abstract class OneTouchMeter2 extends AbstractSerialMeter
 {
     
     
-    public static final int LIFESCAN_COMPANY          = 2;
-    
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA      = 20001;
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_2    = 20002;
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRASMART = 20003;
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRALINK  = 20004;
-    public static final int METER_LIFESCAN_ONE_TOUCH_SELECT     = 20005;
-    public static final int METER_LIFESCAN_INDUO                = 20006;
-    public static final int METER_LIFESCAN_ONE_TOUCH_BASIC      = 20007;
-    public static final int METER_LIFESCAN_ONE_TOUCH_SURESTEP   = 20008;
-    public static final int METER_LIFESCAN_ONE_TOUCH_FASTTAKE   = 20009;
-    public static final int METER_LIFESCAN_ONE_TOUCH_PROFILE    = 20010;
-    
-    // these have different protocol and are extended from OneTouchMeter2
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_MINI = 20050;
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY = 20050;
     
     
     
     protected boolean device_running = true;
-    //protected ArrayList<MeterValuesEntry> data = null;
+    protected ArrayList<MeterValuesEntry> data = null;
 //    protected OutputWriter m_output_writer;
     public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     //public int meter_type = 20000;
@@ -61,7 +45,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     /**
      * Constructor
      */
-    public OneTouchMeter()
+    public OneTouchMeter2()
     {
     }
     
@@ -70,14 +54,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      * 
      * @param cmp
      */
-    public OneTouchMeter(AbstractDeviceCompany cmp)
+    public OneTouchMeter2(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
     
     
     
-    public OneTouchMeter(String portName, OutputWriter writer)
+    public OneTouchMeter2(String portName, OutputWriter writer)
     {
         super(DataAccessMeter.getInstance());
         
@@ -637,6 +621,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             }
             
             dt += min;
+            
         }
         else
         {

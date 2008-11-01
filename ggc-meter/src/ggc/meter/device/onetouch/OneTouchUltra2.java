@@ -25,8 +25,8 @@ import ggc.plugin.output.OutputWriter;
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: OneTouchUltra.java
- *  Purpose:  This class is used for data retrieval from OneTouch Ultra Meter and
+ *  Filename: OneTouchUltra2.java
+ *  Purpose:  This class is used for data retrieval from OneTouch Ultra2 Meter and
  *            extends OneTouchMeter (actually this one has all retrieval and this class
  *            has only identification methods).
  *
@@ -36,7 +36,7 @@ import ggc.plugin.output.OutputWriter;
 
 
 // in works
-public class OneTouchUltra extends OneTouchMeter
+public class OneTouchUltra2 extends OneTouchMeter
 {
 
     /**
@@ -45,7 +45,7 @@ public class OneTouchUltra extends OneTouchMeter
      * @param portName
      * @param writer
      */
-    public OneTouchUltra(String portName, OutputWriter writer)
+    public OneTouchUltra2(String portName, OutputWriter writer)
     {
         super(portName, writer);
     }
@@ -54,7 +54,7 @@ public class OneTouchUltra extends OneTouchMeter
     /**
      * Constructor
      */
-    public OneTouchUltra()
+    public OneTouchUltra2()
     {
         super();
     }
@@ -64,7 +64,7 @@ public class OneTouchUltra extends OneTouchMeter
      * 
      * @param cmp
      */
-    public OneTouchUltra(AbstractDeviceCompany cmp)
+    public OneTouchUltra2(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
@@ -77,7 +77,7 @@ public class OneTouchUltra extends OneTouchMeter
      */
     public String getName()
     {
-        return "One Touch Ultra";
+        return "One Touch Ultra 2";
     }
 
     
@@ -97,7 +97,7 @@ public class OneTouchUltra extends OneTouchMeter
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.onetouch.OneTouchUltra";
+        return "ggc.meter.device.onetouch.OneTouchUltra2";
     }
 
     
@@ -109,7 +109,7 @@ public class OneTouchUltra extends OneTouchMeter
      */
     public int getDeviceId()
     {
-        return OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA;
+        return OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA_2;
     }
 
     
@@ -130,7 +130,7 @@ public class OneTouchUltra extends OneTouchMeter
      */
     public int getMaxMemoryRecords()
     {
-        return 150;
+        return 500;
     }
 
     /**
@@ -140,7 +140,7 @@ public class OneTouchUltra extends OneTouchMeter
      */
     public String getShortName()
     {
-        return "Ultra";
+        return "Ultra 2";
     }
 
 }

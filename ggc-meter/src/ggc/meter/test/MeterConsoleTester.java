@@ -269,7 +269,7 @@ public class MeterConsoleTester //extends JFrame
         
         
         //m_meter = new OneTouchUltra(portName, cow);
-        otu.loadInitialData();
+        otu.readDeviceDataFull(); 
 
     }
     
