@@ -14,7 +14,6 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import com.atech.utils.ATechDate;
