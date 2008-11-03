@@ -46,6 +46,7 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
@@ -553,6 +554,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
             
     }
 
+    public HibernateDb getHibernateDb()
+    {
+        return null;
+    }
 
 
 
