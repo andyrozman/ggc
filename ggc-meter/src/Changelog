@@ -2,6 +2,11 @@
 Changes file for GGC Meter Tool
 ===============================
 
+0.3.7 
+    * OneTouch Ultra download is working, there are some minor problems with GUI 
+      display, but download itself works.
+    * Lifescan added to configuration
+
 0.3.6
     * Fix of configuration which was introduced with PlugInBase usage
     * Added comments to AscensiaMeter, for usage as tutorial

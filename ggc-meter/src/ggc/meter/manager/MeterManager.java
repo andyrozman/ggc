@@ -121,6 +121,7 @@ public class MeterManager
         this.supported_devices.addAll(new AscensiaBayer().getDevices());
         //this.supported_devices.addAll(new PseudoMeters().getDevices());
         this.supported_devices.addAll(new Roche().getDevices());
+        this.supported_devices.addAll(new LifeScan().getDevices());
     }
     
     

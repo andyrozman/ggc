@@ -20,7 +20,7 @@ public class MeterPlugInServer extends PlugInServer
     /**
      * Version of Meter Tool
      */
-    private String meter_tool_version = "0.3.6";
+    private String meter_tool_version = "0.3.7";
     
     public static final int COMMAND_READ_METER_DATA = 0;
     public static final int COMMAND_METERS_LIST = 1;

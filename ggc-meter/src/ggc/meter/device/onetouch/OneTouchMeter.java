@@ -273,7 +273,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         	this.output_writer.endOutput();
         }
         
-        
+        //this.output_writer.setStatus(100);
         
         System.out.println("Reading finsihed");
 

@@ -42,7 +42,7 @@ public class LifeScan extends AbstractDeviceCompany
     
     public LifeScan()
     {
-        super(I18nControl.getInstance(), true);
+        super(I18nControl.getInstance());
         
         this.addDevice(new OneTouchUltra(this));
         this.addDevice(new OneTouchUltra2(this));
@@ -102,6 +102,18 @@ public class LifeScan extends AbstractDeviceCompany
     public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_PLANNED;
+    }
+    
+
+    public String getConnectionSample()
+    {
+        return "COM9";
+    }
+    
+    
+    public String getConnectionSamples()
+    {
+        return m_ic.getMessage("SERIAL_PORTS");  //"Serial Ports: COM2,...";
     }
     
     
