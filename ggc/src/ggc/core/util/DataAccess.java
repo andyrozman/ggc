@@ -43,6 +43,9 @@ import ggc.core.db.datalayer.MealGroup;
 import ggc.core.db.datalayer.Settings;
 import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.core.nutrition.GGCTreeRoot;
+import ggc.core.plugins.CGMSPlugIn;
+import ggc.core.plugins.MetersPlugIn;
+import ggc.core.plugins.PumpsPlugIn;
 import ggc.gui.MainFrame;
 import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
@@ -72,6 +75,7 @@ import javax.swing.ImageIcon;
 
 import pygmy.core.Server;
 
+import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.logs.RedirectScreen;
@@ -390,8 +394,14 @@ public class DataAccess extends ATDataAccessAbstract
 
         BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
         brc.addChild(new DailyValue(this.m_i18n));
-        brc.addChild(new Settings(this.m_i18n));
 
+
+        BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
+        brc1.addChild(new Settings(this.m_i18n));
+        
+        brc.addChild(brc1);
+        
+        
         BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
         brc_nut.addChild(new FoodGroup(this.m_i18n));
         brc_nut.addChild(new FoodDescription(this.m_i18n));
@@ -541,6 +551,35 @@ public class DataAccess extends ATDataAccessAbstract
         return this.m_cfgMgr;
     }
 
+    
+    
+    
+    
+    
+    public void initPlugIns()
+    {
+        addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
+        // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
+
+        addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this.m_i18n));
+        // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
+
+        addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
+        // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
+    }
+    
+    
+    
+    public HibernateDb getHibernateDb()
+    {
+        return this.m_db;
+    }
+    
+    
+    
+    
+    
+    
     // ********************************************************
     // ****** Language *****
     // ********************************************************

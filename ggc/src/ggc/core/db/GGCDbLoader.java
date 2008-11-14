@@ -67,6 +67,9 @@ public class GGCDbLoader extends Thread
 
     
     //public boolean part_start = true;
+    /**
+     * Part start. When this is enables, we don't load Food, Doctor's data
+     */
     public boolean part_start = false;
     
     //public boolean debug = false;
@@ -131,6 +134,8 @@ public class GGCDbLoader extends Thread
         db.loadStaticData();
         m_da.m_db = db;
         
+        // 3 - init plugins
+        m_da.initPlugIns();
         
         // 3 - load daily data for display, appointments
         

@@ -568,4 +568,15 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return (int) (id1 - id2);
     }
 
+    
+    /**
+     * getObjectUniqueId - get id of object
+     * @return unique object id
+     */
+    public String getObjectUniqueId()
+    {
+        return "" + this.getId();
+    }
+    
+    
 }

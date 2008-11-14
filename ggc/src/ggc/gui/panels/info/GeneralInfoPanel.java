@@ -70,8 +70,8 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         add(lblIns2);
         add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
         add(lblUnit);
-        add(new JLabel(m_ic.getMessage("NUTRITION_PLUGIN")+":"));
-        add(lblNutri);
+        //add(new JLabel(m_ic.getMessage("NUTRITION_PLUGIN")+":"));
+        //add(lblNutri);
         add(new JLabel(m_ic.getMessage("METERS_PLUGIN")+":"));
         add(lblMeter);
         add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN")+":"));

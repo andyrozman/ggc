@@ -19,166 +19,138 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- * Filename: Meal Purpose: This is datalayer file (data file, with methods to
- * work with database or in this case Hibernate). This one is used for
- * description of meal.
+ * Filename: Settings Purpose: This is datalayer file (data file, with methods
+ * to work with database or in this case Hibernate). This one is used for
+ * Settings.
  * 
  * Author: andyrozman {andy@atech-software.com}
  */
 
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.MealH;
-import ggc.core.util.DataAccess;
+import ggc.core.db.hibernate.SettingsH;
+import ggc.core.util.I18nControl;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestoreObject
+public class SettingsColorScheme extends SettingsH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 3028931713064051809L;
+    private static final long serialVersionUID = 3245362572378355284L;
+
     public boolean debug = false;
-    ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();
-    // ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();
 
-    boolean selected = false;
-    I18nControlAbstract ic = null; // DataAccess.getInstance().
-                                   // getI18nControlInstance();
-    boolean meal_empty = false;
+    public boolean edited = false;
+    public boolean added = false;
 
-    public Meal(I18nControlAbstract ic)
+    private I18nControlAbstract ic;
+    private boolean backup_object = false;
+
+    public SettingsColorScheme()
     {
-        this.ic = ic;
-        this.meal_empty = true;
     }
 
-    public Meal(boolean meal_empty)
+    public SettingsColorScheme(I18nControlAbstract ic)
     {
-        this.meal_empty = meal_empty;
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        this.ic = (I18nControl) ic;
+        this.backup_object = true;
     }
 
-    public Meal()
+    public SettingsColorScheme(SettingsH ch)
     {
-        this.setId(0L);
-        this.setName("");
-        this.setName_i18n("");
-        this.setGroup_id(0);
-        this.setDescription("");
-        this.setParts("");
-        this.setNutritions("");
-        this.setExtended("");
-        this.setComment("");
-
-        ic = DataAccess.getInstance().getI18nControlInstance();
-
-        loadParts();
-        loadValues();
-    }
-
-    public Meal(MealH ch)
-    {
-        ic = DataAccess.getInstance().getI18nControlInstance();
-
         this.setId(ch.getId());
-        this.setName(ch.getName());
-        this.setName_i18n(ch.getName_i18n());
-        this.setGroup_id(ch.getGroup_id());
+        this.setKey(ch.getKey());
+        this.setValue(ch.getValue());
+        this.setType(ch.getType());
         this.setDescription(ch.getDescription());
-        this.setParts(ch.getParts());
-        this.setNutritions(ch.getNutritions());
-        this.setExtended(ch.getExtended());
-        this.setComment(ch.getComment());
-
-        // loadParts();
-        // loadValues();
-    }
-
-    private void loadParts()
-    {
-        StringTokenizer strtok = new StringTokenizer(this.getParts(), ";");
-
-        while (strtok.hasMoreTokens())
-        {
-
-        }
-
-    }
-
-    private void loadValues()
-    {
-
     }
 
     public String getShortDescription()
     {
-        return this.getName();
+        // return this.getDescription();
+        return "ColorScheme [Key=" + this.getKey() + ";Value=" + this.getValue() + "]";
     }
 
     @Override
     public String toString()
     {
-        if (this.meal_empty)
+        if (backup_object)
             return this.getTargetName();
         else
             return this.getShortDescription();
+    }
+
+    public void setElementEdited()
+    {
+        this.edited = true;
+    }
+
+    public void setElementAdded()
+    {
+        this.added = true;
+    }
+
+    public boolean isElementEdited()
+    {
+        return this.edited;
+    }
+
+    public boolean isElementAdded()
+    {
+        return this.added;
     }
 
     // ---
     // --- DatabaseObjectHibernate
     // ---
 
-    /*
+    /**
      * DbAdd - Add this object to database
      * 
-     * @param sess Hibernate Session object
-     * 
-     * @throws Exception (HibernateException) with error
-     * 
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
     {
-        Transaction tx = sess.beginTransaction();
 
-        MealH ch = new MealH();
+//        Transaction tx = sess.beginTransaction();
 
-        ch.setId(this.getId());
-        ch.setName(this.getName());
-        ch.setName_i18n(this.getName_i18n());
-        ch.setGroup_id(this.getGroup_id());
+//        ColorSchemeH ch = new ColorSchemeH();
+
+        //ch.s
+/*        ch.setKey(this.getKey());
+        ch.setValue(this.getValue());
+        ch.setType(this.getType());
         ch.setDescription(this.getDescription());
-        ch.setParts(this.getParts());
-        ch.setNutritions(this.getNutritions());
-        ch.setExtended(this.getExtended());
-        ch.setComment(this.getComment());
 
         Long id = (Long) sess.save(ch);
 
         tx.commit();
 
         return "" + id.longValue();
+*/
+        
+        return "0";
     }
 
-    /*
+    /**
      * DbEdit - Edit this object in database
      * 
-     * @param sess Hibernate Session object
-     * 
-     * @throws Exception (HibernateException) with error
-     * 
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -186,106 +158,95 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
         Transaction tx = sess.beginTransaction();
 
-        MealH ch = (MealH) sess.get(MealH.class, new Long(this.getId()));
+        SettingsH ch = (SettingsH) sess.get(SettingsH.class, new Long(this.getId()));
 
         ch.setId(this.getId());
-        ch.setName(this.getName());
-        ch.setName_i18n(this.getName_i18n());
-        ch.setGroup_id(this.getGroup_id());
+        ch.setKey(this.getKey());
+        ch.setValue(this.getValue());
+        ch.setType(this.getType());
         ch.setDescription(this.getDescription());
-        ch.setParts(this.getParts());
-        ch.setNutritions(this.getNutritions());
-        ch.setExtended(this.getExtended());
-        ch.setComment(this.getComment());
 
         sess.update(ch);
         tx.commit();
 
         return true;
+
     }
 
-    /*
+    /**
      * DbDelete - Delete this object in database
      * 
-     * @param sess Hibernate Session object
-     * 
-     * @throws Exception (HibernateException) with error
-     * 
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
     {
-        /*
-         * Transaction tx = sess.beginTransaction();
-         * 
-         * MealFoodDescriptionH ch =
-         * (MealFoodDescriptionH)sess.get(MealFoodDescriptionH.class, new
-         * Long(this.getId()));
-         * 
-         * sess.delete(ch); tx.commit();
-         * 
-         * return true;
-         */
-        return false;
+
+        Transaction tx = sess.beginTransaction();
+
+        SettingsH ch = (SettingsH) sess.get(SettingsH.class, new Long(this.getId()));
+
+        sess.delete(ch);
+        tx.commit();
+
+        return true;
 
     }
 
-    /*
+    /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
      * 
      * 
-     * @param sess Hibernate Session object
-     * 
-     * @throws Exception (HibernateException) with error
-     * 
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        //System.out.println("Not implemented: FoodDescription::DbHasChildren");
-        return true;
+        return false;
     }
 
-    /*
+    /**
      * DbGet - Loads this object. Id must be set.
      * 
      * 
-     * @param sess Hibernate Session object
-     * 
-     * @throws Exception (HibernateException) with error
-     * 
+     * @param sess
+     *            Hibernate Session object
+     * @throws Exception
+     *             (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbGet(Session sess) throws Exception
     {
 
-        MealH ch = (MealH) sess.get(MealH.class, new Long(this.getId()));
+        SettingsH ch = (SettingsH) sess.get(SettingsH.class, new Long(this.getId()));
 
         this.setId(ch.getId());
-        this.setName(ch.getName());
-        this.setName_i18n(ch.getName_i18n());
-        this.setGroup_id(ch.getGroup_id());
+        this.setKey(ch.getKey());
+        this.setValue(ch.getValue());
+        this.setType(ch.getType());
         this.setDescription(ch.getDescription());
-        this.setParts(ch.getParts());
-        this.setNutritions(ch.getNutritions());
-        this.setExtended(ch.getExtended());
-        this.setComment(ch.getComment());
 
         return true;
     }
 
-    /*
+    /**
      * getObjectName - returns name of DatabaseObject
      * 
      * @return name of object (not Hibernate object)
      */
     public String getObjectName()
     {
-        return "Meal";
+        return "ColorSchemes";
     }
 
-    /*
+    /**
      * isDebugMode - returns debug mode of object
      * 
      * @return true if object in debug mode
@@ -295,7 +256,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return debug;
     }
 
-    /*
+    /**
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
      * objects, contained in lists and dialogs, used for processing by higher
@@ -312,18 +273,32 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     // --- BackupRestoreObject
     // ---
 
+    private boolean selected = false;
+
     /*
      * getTargetName
      */
     public String getTargetName()
     {
-        return ic.getMessage("MEALS");
+        return ic.getMessage("COLOR_SCHEMES");
     }
 
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.MealH";
+        return "ggc.core.db.hibernate.ColorSchemeH";
     }
+
+    /*
+     * getName
+     */
+    public String getName()
+    {
+        return this.getTargetName();
+    }
+
+    // ---
+    // --- BackupRestoreObject
+    // ---
 
     /*
      * getChildren
@@ -331,14 +306,6 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
         return null;
-    }
-
-    /*
-     * hasChildren
-     */
-    public boolean hasChildren()
-    {
-        return false;
     }
 
     /*
@@ -362,7 +329,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return false;
     }
 
-    
+    public boolean hasChildren()
+    {
+        return false;
+    }
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -372,6 +343,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return "" + this.getId();
     }
 
+    
     public int TABLE_VERSION = 1;
     
     

@@ -110,13 +110,13 @@ public class DailyFoodEntries // implements SelectableInterface
 
         Hashtable<String, MealNutrition> ht = new Hashtable<String, MealNutrition>();
 
-        // System.out.println("Entries: \n" + this.entries);
+        //System.out.println("Entries: \n" + this.entries);
 
         for (int i = 0; i < this.entries.size(); i++)
         {
             ArrayList<MealNutrition> lst = this.entries.get(i).getNutrients();
 
-            // System.out.println("Lst: " + lst);
+            //System.out.println("Lst: " + lst);
 
             for (int j = 0; j < lst.size(); j++)
             {

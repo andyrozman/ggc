@@ -1,30 +1,29 @@
 /*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DailyRowDialog
- *
- *  Purpose:  Dialog for adding entry for day and time
- *
- *  Author:   andyrozman {andy@atech-software.com}
- *
+ * GGC - GNU Gluco Control
+ * 
+ * A pure java app to help you manage your diabetes.
+ * 
+ * See AUTHORS for copyright information.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ * Filename: DailyRowDialog
+ * 
+ * Purpose: Dialog for adding entry for day and time
+ * 
+ * Author: andyrozman {andy@atech-software.com}
  */
 package ggc.gui.dialogs;
 
@@ -69,8 +68,7 @@ import com.atech.help.HelpCapable;
 
 // fix this
 
-public class DailyRowDialog extends JDialog implements ActionListener,
-        KeyListener, HelpCapable, FocusListener
+public class DailyRowDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
 {
 
     /**
@@ -97,7 +95,7 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
     private void focusProcess(Object src)
     {
-        
+
         if (in_action)
             return;
 
@@ -105,24 +103,23 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
         if (src.equals(this.ftf_bg1))
         {
-            //System.out.println("text1: " + this.ftf_bg1.getText());
-            if (this.ftf_bg1.getText().trim().length()==0)
+            // System.out.println("text1: " + this.ftf_bg1.getText());
+            if (this.ftf_bg1.getText().trim().length() == 0)
                 return;
-            
-            //System.out.println("focus lost: bg2");
+
+            // System.out.println("focus lost: bg2");
             int val = m_da.getJFormatedTextValueInt(ftf_bg1);
             float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
             this.ftf_bg2.setValue(new Float(v_2));
         }
         else if (src.equals(this.ftf_bg2))
         {
-            //System.out.println("text2: " + this.ftf_bg2.getText());
+            // System.out.println("text2: " + this.ftf_bg2.getText());
 
-            if (this.ftf_bg2.getText().trim().length()==0)
+            if (this.ftf_bg2.getText().trim().length() == 0)
                 return;
 
-            
-            //System.out.println("focus lost: bg2");
+            // System.out.println("focus lost: bg2");
             float val = m_da.getJFormatedTextValueFloat(ftf_bg2);
             int v_2 = (int) m_da.getBGValueDifferent(DataAccess.BG_MMOL, val);
             this.ftf_bg1.setValue(new Integer(v_2));
@@ -131,11 +128,9 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             System.out.println("focus lost: unknown");
 
         in_action = false;
-        
-        
+
     }
-    
-    
+
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
     private GGCProperties props = m_da.getSettings();
@@ -261,20 +256,14 @@ public class DailyRowDialog extends JDialog implements ActionListener,
         String day = strtok.nextToken();
         String month = strtok.nextToken();
         String year = strtok.nextToken();
-        
+
         GregorianCalendar gc = new GregorianCalendar();
 
-        //int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
-        
-        
-        
-        String dt = year + m_da.getLeadingZero(month, 2)
-                + m_da.getLeadingZero(day, 2) 
-                + m_da.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2)  
-                + m_da.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2)
-                ;
+        // int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
 
-        //System.out.println("sDate: " + sDate);
+        String dt = year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2) + m_da.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2) + m_da.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
+
+        // System.out.println("sDate: " + sDate);
 
         this.dtc.setDateTime(Long.parseLong(dt));
 
@@ -290,8 +279,6 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             this.ftf_bg2.setValue(new Float(m_da.getBGValueDifferent(DataAccess.BG_MGDL, m_dailyValuesRow.getBGRaw())));
         }
 
-        
-        
         this.ftf_ins1.setValue(new Integer((int) this.m_dailyValuesRow.getIns1()));
         this.ftf_ins2.setValue(new Integer((int) this.m_dailyValuesRow.getIns2()));
         this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
@@ -315,6 +302,8 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
     private void init()
     {
+        m_da.addComponent(this);
+        
         int x = 0;
         int y = 0;
         int width = 400;
@@ -343,10 +332,8 @@ public class DailyRowDialog extends JDialog implements ActionListener,
         addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
         addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
         addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
-        addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 198,
-                panel);
-        addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 228,
-                panel);
+        addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 198, panel);
+        addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 228, panel);
         addLabel(m_ic.getMessage("CH_LONG") + ":", 258, panel);
         addLabel(m_ic.getMessage("FOOD") + ":", 288, panel);
         addLabel(m_ic.getMessage("URINE") + ":", 318, panel);
@@ -356,56 +343,49 @@ public class DailyRowDialog extends JDialog implements ActionListener,
         addLabel("mg/dL", 140, 138, panel);
         addLabel("mmol/L", 140, 168, panel);
 
-        this.dtc = new DateTimeComponent(this.m_ic,
-                DateTimeComponent.ALIGN_VERTICAL, 5);
+        this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5);
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 
-        this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 55, 25,
-                panel);
-        this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25,
-                panel);
+        this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 55, 25, panel);
+        this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25, panel);
 
-        this.ftf_ins1 = getTextField(2, 0, new Integer(0), 140, 198, 55, 25,
-                panel);
-        this.ftf_ins2 = getTextField(2, 0, new Integer(0), 140, 228, 55, 25,
-                panel);
-        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, 258, 55, 25,
-                panel);
+        this.ftf_ins1 = getTextField(2, 0, new Integer(0), 140, 198, 55, 25, panel);
+        this.ftf_ins2 = getTextField(2, 0, new Integer(0), 140, 228, 55, 25, panel);
+        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, 258, 55, 25, panel);
 
         this.ftf_bg1.addFocusListener(this);
         this.ftf_bg2.addFocusListener(this);
 
         // this.ftf_bg1.addKeyListener(this);
         // this.ftf_bg2.addKeyListener(this);
-/*
-        this.ftf_bg2.addKeyListener(new KeyListener()
-        {
-
-            public void keyPressed(KeyEvent arg0)
-            {
-            }
-
-            public void keyTyped(KeyEvent arg0)
-            {
-            }
-
-            public void keyReleased(KeyEvent ke)
-            {
-                if (ke.getKeyCode() == KeyEvent.VK_PERIOD)
+        /*
+                this.ftf_bg2.addKeyListener(new KeyListener()
                 {
-                    JFormattedTextField tf = (JFormattedTextField) ke
-                            .getSource();
-                    String s = tf.getText();
-                    s = s.replace('.', ',');
-                    tf.setText(s);
-                }
-            }
 
-        });
-*/
-        addComponent(cb_food_set = new JCheckBox(" "
-                + m_ic.getMessage("FOOD_SET")), 120, 290, 200, panel);
+                    public void keyPressed(KeyEvent arg0)
+                    {
+                    }
+
+                    public void keyTyped(KeyEvent arg0)
+                    {
+                    }
+
+                    public void keyReleased(KeyEvent ke)
+                    {
+                        if (ke.getKeyCode() == KeyEvent.VK_PERIOD)
+                        {
+                            JFormattedTextField tf = (JFormattedTextField) ke
+                                    .getSource();
+                            String s = tf.getText();
+                            s = s.replace('.', ',');
+                            tf.setText(s);
+                        }
+                    }
+
+                });
+        */
+        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 120, 290, 200, panel);
         addComponent(UrineField = new JTextField(), 120, 318, 240, panel);
         addComponent(ActField = new JTextField(), 120, 348, 240, panel);
         addComponent(CommentField = new JTextField(), 120, 378, 240, panel);
@@ -480,21 +460,13 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             }
         });
 
-        String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"),
-                                    "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), 
-                                    "edit_food", m_ic.getMessage("EDIT_FOOD"), 
-                                    "ok", m_ic.getMessage("OK"),
-                                    "cancel", m_ic.getMessage("CANCEL"),
+        String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"), "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), "edit_food", m_ic.getMessage("EDIT_FOOD"), "ok", m_ic.getMessage("OK"), "cancel", m_ic.getMessage("CANCEL"),
         // "help", m_ic.getMessage("HELP")
         };
 
         String button_icon[] = { null, null, null, "ok.png", "cancel.png" };
 
-        int button_coord[] = { 210, 198, 140, 1,
-                               210, 228, 140, 1, 
-                               210, 258, 140, 1, 
-                               30, 420, 110, 1, 
-                               145, 420, 110, 1,
+        int button_coord[] = { 210, 198, 140, 1, 210, 228, 140, 1, 210, 258, 140, 1, 30, 420, 110, 1, 145, 420, 110, 1,
         // 250, 390, 80, 0
         };
 
@@ -518,11 +490,9 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             }
 
             if (k <= 1)
-                addComponent(button, button_coord[i], button_coord[i + 1],
-                        button_coord[i + 2], panel);
+                addComponent(button, button_coord[i], button_coord[i + 1], button_coord[i + 2], panel);
             else
-                addComponent(button, button_coord[i], button_coord[i + 1],
-                        button_coord[i + 2], 25, false, panel);
+                addComponent(button, button_coord[i], button_coord[i + 1], button_coord[i + 2], 25, false, panel);
 
         }
 
@@ -536,25 +506,23 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
     public boolean isMealSet()
     {
-        if ((this.m_dailyValuesRow.meals == null)
-                || (this.m_dailyValuesRow.meals.trim().length() == 0))
+        if ((this.m_dailyValuesRow.meals == null) || (this.m_dailyValuesRow.meals.trim().length() == 0))
             return false;
         else
             return true;
     }
 
-    public JFormattedTextField getTextField(int columns, int decimal_places,
-            Object value, int x, int y, int width, int height, Container cont)
+    public JFormattedTextField getTextField(int columns, int decimal_places, Object value, int x, int y, int width, int height, Container cont)
 
     {
         JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
         tf.setBounds(x, y, width, height);
         tf.addKeyListener(this);
-        
+
         cont.add(tf);
-        
+
         return tf;
-        
+
         /*
         NumberFormat displayFormat, editFormat;
 
@@ -578,7 +546,7 @@ public class DailyRowDialog extends JDialog implements ActionListener,
         cont.add(ftf);
 
         return ftf;
-*/
+        */
     }
 
     /*
@@ -668,14 +636,12 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
     }
 
-    public void addComponent(JComponent comp, int posX, int posY, int width,
-            JPanel parent)
+    public void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
     {
         addComponent(comp, posX, posY, width, 23, true, parent);
     }
 
-    public void addComponent(JComponent comp, int posX, int posY, int width,
-            int height, boolean change_font, JPanel parent)
+    public void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
     {
         comp.setBounds(posX, posY, width, height);
         comp.addKeyListener(this);
@@ -775,14 +741,12 @@ public class DailyRowDialog extends JDialog implements ActionListener,
         }
         else if (action.equals("edit_food"))
         {
-            DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(
-                    m_da, this.m_dailyValuesRow.getMealsIds());
+            DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(m_da, this.m_dailyValuesRow.getMealsIds());
 
             if (dvms.wasAction())
             {
                 this.m_dailyValuesRow.setMealsIds(dvms.getStringForDb());
-                this.ftf_ch.setValue(new Float(dvms.getCHSum()
-                        .replace(',', '.')));
+                this.ftf_ch.setValue(new Float(dvms.getCHSum().replace(',', '.')));
 
                 if (!dvms.getStringForDb().equals(""))
                 {
@@ -792,15 +756,13 @@ public class DailyRowDialog extends JDialog implements ActionListener,
         }
         else if (action.equals("update_ch"))
         {
-            PanelMealSelector pms = new PanelMealSelector(this, null,
-                    this.m_dailyValuesRow.getMealsIds());
-            this.ftf_ch.setValue(new Float(pms.getCHSumString().replace(',',
-                    '.')));
+            PanelMealSelector pms = new PanelMealSelector(this, null, this.m_dailyValuesRow.getMealsIds());
+            this.ftf_ch.setValue(new Float(pms.getCHSumString().replace(',', '.')));
         }
         else if (action.equals("bolus_helper"))
         {
             BolusHelper bh = new BolusHelper(this, m_da.getJFormatedTextValueFloat(ftf_bg2), m_da.getJFormatedTextValueFloat(this.ftf_ch), this.dtc.getDateTime());
-            
+
             if (bh.hasResult())
             {
                 this.ftf_ins1.setValue(bh.getResult());
@@ -838,22 +800,19 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
             if (f > 0.0)
             {
-                //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
+                // this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
                 // )+1, f);
                 this.m_dailyValuesRow.setBG(1, f);
             }
 
-            this.m_dailyValuesRow.setIns1(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins1));
-            this.m_dailyValuesRow.setIns2(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins2));
+            this.m_dailyValuesRow.setIns1(m_da.getJFormatedTextValueInt(this.ftf_ins1));
+            this.m_dailyValuesRow.setIns2(m_da.getJFormatedTextValueInt(this.ftf_ins2));
             // checkDecimalFields(Ins1Field.getText()));
-            //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
+            // this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
             // ()));
-            //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
+            // this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
             // ;
-            this.m_dailyValuesRow.setCH(m_da
-                    .getJFormatedTextValueFloat(this.ftf_ch));
+            this.m_dailyValuesRow.setCH(m_da.getJFormatedTextValueFloat(this.ftf_ch));
             this.m_dailyValuesRow.setActivity(ActField.getText());
             this.m_dailyValuesRow.setUrine(UrineField.getText());
             this.m_dailyValuesRow.setComment(CommentField.getText());
@@ -870,7 +829,6 @@ public class DailyRowDialog extends JDialog implements ActionListener,
              * ids //mod.fireTableChanged(null); //clearFields();
              */
             this.m_actionDone = true;
-            this.dispose();
         }
         else
         {
@@ -882,7 +840,7 @@ public class DailyRowDialog extends JDialog implements ActionListener,
 
             if (f > 0.0)
             {
-                //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
+                // this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
                 // )+1, f);
                 this.m_dailyValuesRow.setBG(1, f);
             }
@@ -895,20 +853,17 @@ public class DailyRowDialog extends JDialog implements ActionListener,
              * ()+1, f);
              */
             // if (isFieldSet(BGField.getText()))
-            //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1,
+            // this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1,
             // checkDecimalFields(BGField.getText()));
-            this.m_dailyValuesRow.setIns1(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins1));
-            this.m_dailyValuesRow.setIns2(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins2));
+            this.m_dailyValuesRow.setIns1(m_da.getJFormatedTextValueInt(this.ftf_ins1));
+            this.m_dailyValuesRow.setIns2(m_da.getJFormatedTextValueInt(this.ftf_ins2));
 
-            //this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText
+            // this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText
             // ()));
-            //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
+            // this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
             // ()));
-            this.m_dailyValuesRow.setCH(m_da
-                    .getJFormatedTextValueFloat(this.ftf_ch));
-            //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
+            this.m_dailyValuesRow.setCH(m_da.getJFormatedTextValueFloat(this.ftf_ch));
+            // this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
             // ;
             this.m_dailyValuesRow.setActivity(ActField.getText());
             this.m_dailyValuesRow.setUrine(UrineField.getText());
@@ -918,9 +873,11 @@ public class DailyRowDialog extends JDialog implements ActionListener,
             // mod.fireTableChanged(null);
             // clearFields();
             this.m_actionDone = true;
-            this.dispose();
         }
 
+        m_da.removeComponent(this);
+        this.dispose();
+        
     }
 
     public boolean isFieldSet(String text)
@@ -955,7 +912,7 @@ public class DailyRowDialog extends JDialog implements ActionListener,
         {
             focusProcess(e.getSource());
         }
-        
+
         if (e.getKeyCode() == KeyEvent.VK_ENTER)
         {
             cmdOk();
@@ -978,17 +935,16 @@ public class DailyRowDialog extends JDialog implements ActionListener,
      * this.BGField.setText(ss); } catch(Exception ex) {
      * System.out.println("fixDecimals: " + ex); } } //MmolDecimalFormat }
      */
-/*
-    public String checkDecimalFields(String field)
-    {
-        field = field.replace(',', '.');
-        return field;
-    }
-*/
+    /*
+        public String checkDecimalFields(String field)
+        {
+            field = field.replace(',', '.');
+            return field;
+        }
+    */
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
-
     /*
      * getComponent - get component to which to attach help context
      */

@@ -573,7 +573,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     private void refreshNutritions()
     {
-        // System.out.println("Refresh Nutritions");
+//        System.out.println("Refresh Nutritions. Entries: " + this.list_food_entries.size() );
 
         ArrayList<MealNutrition> nut_list = new ArrayList<MealNutrition>();
 
@@ -583,7 +583,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         {
             DailyFoodEntry dfe = this.list_food_entries.get(i).getDailyFoodEntry();
 
-            // System.out.println(dfe);
+            //System.out.println(dfe);
 
             dfe_main.addDailyFoodEntry(dfe);
         }
@@ -592,6 +592,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         nut_list.addAll(dfe_main.getCalculatedNutrients());
 
         this.list_nutritions.clear();
+        
+        //System.out.println("Nutrients: " + nut_list.size());        
 
         // for(Enumeration<String> en = nutres.keys(); en.hasMoreElements(); )
         for (int i = 0; i < nut_list.size(); i++)
@@ -601,7 +603,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
             // System.out.println(meal_nut.getCalculatedAmount()); // proc v1
 
-            if (meal_nut.getAmount() > 0)
+            //System.out.println("Meal Nut: " + meal_nut);
+            
+            
+            //if (meal_nut.getAmount() > 0)
+            if (meal_nut.getAmountSum() > 0)
             {
                 MealNutritionsDisplay mnd = new MealNutritionsDisplay(ic, meal_nut);
 

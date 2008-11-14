@@ -1,29 +1,28 @@
 /*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: MainFrame.java
- *  Purpose:  The MainFrame of the app. Contains MenuBars, ToolBars, 
- *            StatusBars, ...
- *
- *  Author:   schultd, andyrozman
+ * GGC - GNU Gluco Control
+ * 
+ * A pure java app to help you manage your diabetes.
+ * 
+ * See AUTHORS for copyright information.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ * Filename: MainFrame.java Purpose: The MainFrame of the app. Contains
+ * MenuBars, ToolBars, StatusBars, ...
+ * 
+ * Author: schultd, andyrozman
  */
 
 package ggc.gui;
@@ -34,9 +33,6 @@ import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.nutrition.NutritionTreeDialog;
-import ggc.core.plugins.CGMSPlugIn;
-import ggc.core.plugins.MetersPlugIn;
-import ggc.core.plugins.PumpsPlugIn;
 import ggc.core.print.PrintFoodMenuExt2;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
@@ -86,9 +82,7 @@ import javax.swing.UIManager;
 
 import com.atech.help.HelpContext;
 import com.atech.update.client.UpdateDialog;
-import com.atech.update.config.UpdateConfiguration;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
-
 
 public class MainFrame extends JFrame
 {
@@ -108,9 +102,7 @@ public class MainFrame extends JFrame
 
     // private JLabel lblTest = new JLabel();
 
-    private JMenu menu_file, menu_bgs, menu_food, menu_doctor, menu_printing,
-            menu_tools, menu_help, menu_meters, menu_pumps, menu_data_graphs,
-            menu_cgms /* , menu_misc */;
+    private JMenu menu_file, menu_bgs, menu_food, menu_doctor, menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_data_graphs, menu_cgms /* , menu_misc */;
 
     private Hashtable<String, GGCAction> actions = null;
     private Hashtable<String, GGCAction> toolbar_items = null;
@@ -140,7 +132,6 @@ public class MainFrame extends JFrame
     public InfoPanel informationPanel;
 
     private DataAccess m_da = null;
-
 
     /**
      * Static definitions (Look and Feel)
@@ -194,11 +185,11 @@ public class MainFrame extends JFrame
         // GGCProperties has been created
         // m_ic.setLanguage();
 
-        //System.out.println("MainFrame before creation");
+        // System.out.println("MainFrame before creation");
         m_da = DataAccess.createInstance(this);
 
-        //System.out.println("m_da: " + m_da);
-        
+        // System.out.println("m_da: " + m_da);
+
         m_ic = I18nControl.getInstance();
 
         m_da.addComponent(this);
@@ -220,7 +211,7 @@ public class MainFrame extends JFrame
 
         helpInit();
 
-        initPlugIns();
+//        initPlugIns();
 
         // menu_file, menu_bgs, menu_food, menu_doctor, menu_reports,
         // menu_tools, menu_help;
@@ -244,7 +235,6 @@ public class MainFrame extends JFrame
          * addToolBarSpacer(); addToolBarButtonWithName("hlp_help");
          */
         // this.menu_help.add(GGCHelp.helpItem);
-
         getContentPane().add(toolBar, BorderLayout.NORTH);
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
@@ -258,78 +248,68 @@ public class MainFrame extends JFrame
 
         // setDbActions(false);
         setMenusByDbLoad(StatusBar.DB_STOPPED);
+        
+        
+//        initPlugIns();
+        
+        
         this.setVisible(true);
 
     }
-
+/*
     private void initPlugIns()
     {
+        // TODO: deprecated
         m_da.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this, m_ic));
-        //m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
+        // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
 
         m_da.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this, m_ic));
-        //m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
+        // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
 
         m_da.addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this, m_ic));
-        //m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
+        // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
     }
-
+*/
     public void createMenus()
     {
         // file menu
         this.menu_file = this.createMenu("MN_FILE", null);
-        this.createAction(this.menu_file, "MN_LOGIN", "MN_LOGIN_DESC",
-                "file_login", "logon.png");
-        this.createAction(this.menu_file, "MN_LOGOUT", "MN_LOGOUT_DESC",
-                "file_logout", "logout.png");
+        this.createAction(this.menu_file, "MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png");
+        this.createAction(this.menu_file, "MN_LOGOUT", "MN_LOGOUT_DESC", "file_logout", "logout.png");
         this.menu_file.addSeparator();
-        this.createAction(this.menu_file, "MN_QUIT", "MN_QUIT_DESC",
-                "file_quit", null);
+        this.createAction(this.menu_file, "MN_QUIT", "MN_QUIT_DESC", "file_quit", null);
 
         // bgs menu
         this.menu_bgs = this.createMenu("MN_DATA", null);
-        this.createAction(this.menu_bgs, "MN_DAILY", "MN_DAILY_DESC",
-                "view_daily", "calendar.png"); // "daily.gif");
+        this.createAction(this.menu_bgs, "MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png"); // "daily.gif");
         this.menu_bgs.addSeparator();
 
-        this.menu_data_graphs = this.createMenu(this.menu_bgs, "MN_DATA_GRAPH",
-                null);
+        this.menu_data_graphs = this.createMenu(this.menu_bgs, "MN_DATA_GRAPH", null);
 
-        this.createAction(this.menu_data_graphs, "MN_COURSE", "MN_COURSE_DESC",
-                "view_course", "line-chart.png"); // "course.gif");
-        this.createAction(this.menu_data_graphs, "MN_SPREAD", "MN_SPREAD_DESC",
-                "view_spread", "dot-chart.png"); // "spread.gif");
-        this.createAction(this.menu_data_graphs, "MN_FREQUENCY",
-                "MN_FREQUENCY_DESC", "view_freq", "column-chart.png"); // "frequency.gif"
-                                                                       // );
+        this.createAction(this.menu_data_graphs, "MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png"); // "course.gif");
+        this.createAction(this.menu_data_graphs, "MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png"); // "spread.gif");
+        this.createAction(this.menu_data_graphs, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png"); // "frequency.gif"
+        // );
         this.menu_bgs.addSeparator();
-        this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC",
-                "view_hba1c", "pie-chart.png"); // null);
+        this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png"); // null);
         this.menu_bgs.addSeparator();
-        this.createAction(this.menu_bgs, "MN_RATIO_CALC", "MN_RATIO_CALC_DESC",
-                "view_ratio", null); // null);
+        this.createAction(this.menu_bgs, "MN_RATIO_CALC", "MN_RATIO_CALC_DESC", "view_ratio", null); // null);
 
         // food menu
         this.menu_food = this.createMenu("MN_FOOD", null);
-        this.createAction(this.menu_food, "MN_NUTRDB_USDB",
-                "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
+        this.createAction(this.menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
         this.menu_food.addSeparator();
-        this.createAction(this.menu_food, "MN_NUTRDB_USER",
-                "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
+        this.createAction(this.menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
         this.menu_food.addSeparator();
-        this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC",
-                "food_meals", null);
+        this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
 
         // doctors menu
         this.menu_doctor = this.createMenu("MN_DOCTOR", null);
-        this.createAction(this.menu_doctor, "MN_DOCS", "MN_DOCS_DESC",
-                "doc_docs", null);
+        this.createAction(this.menu_doctor, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
         this.menu_doctor.addSeparator();
-        this.createAction(this.menu_doctor, "MN_APPOINT", "MN_APPOINT_DESC",
-                "doc_appoint", null);
+        this.createAction(this.menu_doctor, "MN_APPOINT", "MN_APPOINT_DESC", "doc_appoint", null);
         this.menu_doctor.addSeparator();
-        this.createAction(this.menu_doctor, "MN_STOCKS", "MN_STOCKS_DESC",
-                "doc_stocks", null);
+        this.createAction(this.menu_doctor, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
 
         // reports menu
         this.menu_printing = this.createMenu("MN_PRINTING", null);
@@ -341,10 +321,9 @@ public class MainFrame extends JFrame
         this.createAction(menu_reports_foodmenu, "MN_FOODMENU_SIMPLE", "MN_FOODMENU_SIMPLE_DESC", "report_foodmenu_simple", "print.png");
         this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT1", "MN_FOODMENU_EXT1_DESC", "report_foodmenu_ext1", "print.png");
         this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT2", "MN_FOODMENU_EXT2_DESC", "report_foodmenu_ext2", "print.png");
-//        this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT3", "MN_FOODMENU_EXT3_DESC", "report_foodmenu_ext3", "print.png");
-        
-        
-        
+        // this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT3",
+        // "MN_FOODMENU_EXT3_DESC", "report_foodmenu_ext3", "print.png");
+
         // meters
         this.menu_meters = this.createMenu("MN_METERS", null);
         this.createAction(menu_meters, "MN_METERS_READ", "MN_METERS_READ_DESC", "meters_read", null);
@@ -355,14 +334,12 @@ public class MainFrame extends JFrame
 
         this.menu_meters.addSeparator();
         this.createAction(menu_meters, "MN_METERS_ABOUT", "MN_METERS_ABOUT_DESC", "meters_about", null);
-        
+
         // pumps
         this.menu_pumps = this.createMenu("MN_PUMPS", null);
-        this.createAction(menu_pumps, "MN_PUMP_PROFILES",
-                "MN_PUMP_PROFILES_DESC", "pumps_profile", null);
+        this.createAction(menu_pumps, "MN_PUMP_PROFILES", "MN_PUMP_PROFILES_DESC", "pumps_profile", null);
         this.menu_pumps.addSeparator();
-        this.createAction(menu_pumps, "MN_PUMPS_MANUAL_ENTRY",
-                "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry", null);
+        this.createAction(menu_pumps, "MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry", null);
         this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
         this.createAction(menu_pumps, "MN_PUMPS_ADDITIONAL_DATA", "MN_PUMPS_ADDITIONAL_DATA_DESC", "pumps_additional_data", null);
         this.menu_pumps.addSeparator();
@@ -371,47 +348,37 @@ public class MainFrame extends JFrame
         this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
         this.menu_pumps.addSeparator();
         this.createAction(menu_pumps, "MN_PUMPS_ABOUT", "MN_PUMPS_ABOUT_DESC", "pumps_about", null);
-        
-        
+
         // cgms
         this.menu_cgms = this.createMenu("MN_CGMS", null);
-        this.createAction(menu_cgms, "MN_CGMS_READ", "MN_CGMS_READ_DESC",
-                "cgms_read", null);
+        this.createAction(menu_cgms, "MN_CGMS_READ", "MN_CGMS_READ_DESC", "cgms_read", null);
         this.menu_cgms.addSeparator();
-        this.createAction(menu_cgms, "MN_CGMS_LIST", "MN_CGMS_LIST_DESC",
-                "cgms_list", null);
+        this.createAction(menu_cgms, "MN_CGMS_LIST", "MN_CGMS_LIST_DESC", "cgms_list", null);
         this.menu_cgms.addSeparator();
-        this.createAction(menu_cgms, "MN_CGMS_CONFIG", "MN_CGMS_CONFIG_DESC",
-                "cgms_config", null);
+        this.createAction(menu_cgms, "MN_CGMS_CONFIG", "MN_CGMS_CONFIG_DESC", "cgms_config", null);
 
         // tools menu
         this.menu_tools = this.createMenu("MN_TOOLS", null);
-        this.createAction(this.menu_tools, "MN_PREFERENCES",
-                "MN_PREFERENCES_DESC", "tools_pref", "preferences.png");
+        this.createAction(this.menu_tools, "MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png");
         this.menu_tools.addSeparator();
 
-        JMenu menu_db_maint = this.createMenu(this.menu_tools, "MN_DB_MAINT",
-                "MN_DB_MAINT_DESC");
-        this.createAction(menu_db_maint, "MN_DB_BACKUP", "MN_DB_BACKUP_DESC",
-                "tools_db_backup", "export1.png");
-        this.createAction(menu_db_maint, "MN_DB_RESTORE", "MN_DB_RESTORE_DESC",
-                "tools_db_restore", "import1.png");
+        JMenu menu_db_maint = this.createMenu(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC");
+        this.createAction(menu_db_maint, "MN_DB_BACKUP", "MN_DB_BACKUP_DESC", "tools_db_backup", "export1.png");
+        this.createAction(menu_db_maint, "MN_DB_RESTORE", "MN_DB_RESTORE_DESC", "tools_db_restore", "import1.png");
 
         // this.createAction(this.menu_tools, "MN_DB_MAINT", "MN_DB_MAINT_DESC",
         // "tools_db_maint", null);
         this.menu_tools.addSeparator();
-        this.createAction(this.menu_tools, "MN_MISC_SYNCHRONIZE",
-                "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
+        this.createAction(this.menu_tools, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
 
         // help menu
         this.menu_help = this.createMenu("MN_HELP", null);
         this.menu_help.add(m_da.getHelpContext().getHelpItem());
         this.menu_help.addSeparator();
-        this.createAction(this.menu_help, "MN_CHECK_FOR_UPDATE",
-                "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
+        this.createAction(this.menu_help, "MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
         this.menu_help.addSeparator();
         this.createAction(this.menu_help, "MN_ABOUT", "MN_ABOUT_DESC", "hlp_about", null);
-        
+
         if (MainFrame.developer_version)
         {
             this.menu_help.addSeparator();
@@ -431,38 +398,28 @@ public class MainFrame extends JFrame
         Dimension d = new Dimension(25, 25);
 
         toolBar.addSeparator(d);
-        this.createToolbarAction("MN_LOGIN", "MN_LOGIN_DESC", "file_login",
-                "logon.png");
+        this.createToolbarAction("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png");
         toolBar.addSeparator(d);
 
-        this.createToolbarAction("MN_DAILY", "MN_DAILY_DESC", "view_daily",
-                "calendar.png");
-        this.createToolbarAction("MN_COURSE", "MN_COURSE_DESC", "view_course",
-                "line-chart.png");
-        this.createToolbarAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread",
-                "dot-chart.png");
-        this.createToolbarAction("MN_FREQUENCY", "MN_FREQUENCY_DESC",
-                "view_freq", "column-chart.png");
-        this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c",
-                "pie-chart.png");
+        this.createToolbarAction("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png");
+        this.createToolbarAction("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png");
+        this.createToolbarAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png");
+        this.createToolbarAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png");
+        this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png");
         toolBar.addSeparator(d);
 
-        this.createToolbarAction("MN_MEALS", "MN_MEALS_DESC", "food_meals",
-                "food.png");
+        this.createToolbarAction("MN_MEALS", "MN_MEALS_DESC", "food_meals", "food.png");
         toolBar.addSeparator(d);
 
-        this.createToolbarAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC",
-                "report_pdf_simple", "print.png");
+        this.createToolbarAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png");
         toolBar.addSeparator(d);
 
-        this.createToolbarAction("MN_PREFERENCES", "MN_PREFERENCES_DESC",
-                "tools_pref", "preferences.png");
+        this.createToolbarAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png");
         toolBar.addSeparator(d);
         toolBar.addSeparator(d);
         toolBar.addSeparator(d);
 
-        this.createToolbarAction("MN_HELP", "MN_HELP_DESC", "hlp_help",
-                "help.png");
+        this.createToolbarAction("MN_HELP", "MN_HELP_DESC", "hlp_help", "help.png");
 
     }
 
@@ -473,8 +430,7 @@ public class MainFrame extends JFrame
         m_da.setHelpContext(hc);
 
         JMenuItem helpItem = new JMenuItem(m_ic.getMessage("HELP") + "...");
-        helpItem.setIcon(new ImageIcon(getClass()
-                .getResource("/icons/help.gif")));
+        helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
 
         hc.setHelpItem(helpItem);
 
@@ -502,23 +458,20 @@ public class MainFrame extends JFrame
                 URL hsURL = new URL(help_url);
 
                 if (hsURL == null)
-                    System.out
-                            .println("HelpSet " + help_url /*
-                                                            * PISMain.mainHelpSetName
-                                                            */+ " not found.");
+                    System.out.println("HelpSet " + help_url /*
+                                                                               * PISMain.mainHelpSetName
+                                                                               */+ " not found.");
                 else
                     main_help_set = new HelpSet(null, hsURL);
             }
             catch (HelpSetException ee)
             {
-                System.out.println("HelpSet " + help_url
-                        + " could not be opened.");
+                System.out.println("HelpSet " + help_url + " could not be opened.");
                 System.out.println(ee.getMessage());
             }
             catch (MalformedURLException ee)
             {
-                System.out.println("Problem with HelpSet path: " + help_url
-                        + "\n" + ee);
+                System.out.println("Problem with HelpSet path: " + help_url + "\n" + ee);
             }
 
             HelpBroker main_help_broker = null;
@@ -605,15 +558,13 @@ public class MainFrame extends JFrame
         return item;
     }
 
-    private void createToolbarAction(String name, String tip,
-            String action_command, String icon_small)
+    private void createToolbarAction(String name, String tip, String action_command, String icon_small)
     {
         GGCAction action = new GGCAction(name, tip, action_command);
 
         if (icon_small != null)
         {
-            action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small,
-                    24, 24, this));
+            action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small, 24, 24, this));
         }
 
         // this.toolBar.add(action);
@@ -623,15 +574,13 @@ public class MainFrame extends JFrame
 
     }
 
-    private void createAction(JMenu menu, String name, String tip,
-            String action_command, String icon_small)
+    private void createAction(JMenu menu, String name, String tip, String action_command, String icon_small)
     {
         GGCAction action = new GGCAction(name, tip, action_command);
 
         if (icon_small != null)
         {
-            action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small,
-                    15, 15, this));
+            action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small, 15, 15, this));
             // new ImageIcon(getClass().getResource("/icons/" + icon_small)));
             // action.putValue(Action.LARGE_ICON_KEY, new
             // ImageIcon(getClass().getResource("/icons/" + icon_small)));
@@ -889,8 +838,7 @@ public class MainFrame extends JFrame
             if (m_ic.hasMnemonic(name))
             {
                 char ch = m_ic.getMnemonic(name);
-                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch,
-                        Event.CTRL_MASK));
+                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
             }
             else
             {
@@ -919,8 +867,7 @@ public class MainFrame extends JFrame
             {
                 char ch = m_ic.getMnemonic(name);
 
-                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch,
-                        Event.CTRL_MASK));
+                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
                 // System.out.println("Found");
             }
             else
@@ -998,11 +945,7 @@ public class MainFrame extends JFrame
             }
             else if (command.equals("hlp_check_update"))
             {
-                // TODO: Should be in DataAccess
-                UpdateConfiguration uconf = new UpdateConfiguration();
-
-                UpdateDialog ud = new UpdateDialog((JFrame) MainFrame.this,
-                        uconf, m_da);
+                UpdateDialog ud = new UpdateDialog((JFrame) MainFrame.this, m_da);
                 ud.enableHelp("pages.GGC_Tools_Update");
                 ud.showDialog();
             }
@@ -1085,9 +1028,7 @@ public class MainFrame extends JFrame
 
             }
             else // if ((command.equals("report_pdf_extended")) ||
-            if ((command.equals("doc_stocks"))
-                    || (command.equals("file_loginx"))
-                    || (command.equals("file_logout")))
+            if ((command.equals("doc_stocks")) || (command.equals("file_loginx")) || (command.equals("file_logout")))
             {
                 featureNotImplemented(command, "0.5");
             }
@@ -1097,19 +1038,18 @@ public class MainFrame extends JFrame
             }
             else if ((command.equals("test")))
             {
-                //ImportDacioDb idb = new ImportDacioDb("../data/temp/zivila.csv", true); //args[
-                //idb.convertFoods();
-              
+                // ImportDacioDb idb = new
+                // ImportDacioDb("../data/temp/zivila.csv", true); //args[
+                // idb.convertFoods();
 
-                
-                DayValuesData dvd = m_da.getDb().getDayValuesData(20081001, 20091007); //.getMonthlyValues(yr, mnth);
-                PrintFoodMenuExt2 psm = new PrintFoodMenuExt2(dvd);                
-                
-                
+                DayValuesData dvd = m_da.getDb().getDayValuesData(20081001, 20091007); // .getMonthlyValues(yr,
+                                                                                       // mnth);
+                PrintFoodMenuExt2 psm = new PrintFoodMenuExt2(dvd);
+
                 PrintingDialog.displayPDFExternal(psm.getName());
-                
-                //BolusHelper bh = new BolusHelper(MainFrame.this);
-                //featureNotImplemented(command, "0.6");
+
+                // BolusHelper bh = new BolusHelper(MainFrame.this);
+                // featureNotImplemented(command, "0.6");
             }
             else if (command.equals("file_login"))
             {
@@ -1117,18 +1057,18 @@ public class MainFrame extends JFrame
                 // ggc.gui.ReadMeterDialog(MainFrame.this);
 
                 System.out.println("In login");
-/*
-                try
-                {
-                    throw new Exception("Test Exception");
-                }
-                catch (Exception ex)
-                {
-                    System.out.println("we falled into exception");
-                    m_da.createErrorDialog("MainFrame", "", ex,
-                            "Exception in mainframe.");
-                }
-*/
+                /*
+                                try
+                                {
+                                    throw new Exception("Test Exception");
+                                }
+                                catch (Exception ex)
+                                {
+                                    System.out.println("we falled into exception");
+                                    m_da.createErrorDialog("MainFrame", "", ex,
+                                            "Exception in mainframe.");
+                                }
+                */
             }
             else
                 System.out.println("Unknown Command: " + command);
@@ -1144,8 +1084,7 @@ public class MainFrame extends JFrame
         text += String.format(m_ic.getMessage("IMPLEMENTED_VERSION"), version);
         text += "!";
 
-        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic
-                .getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
 
     }
 

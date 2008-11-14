@@ -51,6 +51,9 @@ public class PumpsPlugIn extends PlugInClient
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
             
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!! Db: " + DataAccess.getInstance().getDb());
+            
+            
             this.m_server.init(this.parent, 
                 DataAccess.getInstance().getI18nControlInstance().getSelectedLangauge(), 
                 DataAccess.getInstance(), 

@@ -346,4 +346,115 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
         return false;
     }
 
+    /**
+     * getObjectUniqueId - get id of object
+     * @return unique object id
+     */
+    public String getObjectUniqueId()
+    {
+        return "" + this.getId();
+    }
+    
+
+    public int TABLE_VERSION = 1;
+    
+    
+    /**
+     * getTableVersion - returns version of table
+     * 
+     * @return version information
+     */
+    public int getTableVersion()
+    {
+        return this.TABLE_VERSION;
+    }
+    
+    
+    /**
+     * dbExport - returns export String, for current version 
+     *
+     * @return line that will be exported
+     * @throws Exception if export for table is not supported
+     */
+    public String dbExport(int table_version) throws Exception
+    {
+        // TODO
+        return null;
+    }
+
+    
+    /**
+     * dbExport - returns export String, for current version 
+     *
+     * @return line that will be exported
+     * @throws Exception if export for table is not supported
+     */
+    public String dbExport() throws Exception
+    {
+        return dbExport(this.TABLE_VERSION);
+    }
+    
+    
+    /**
+     * dbExportHeader - header for export file
+     * 
+     * @param table_version
+     * @return
+     */
+    public String dbExportHeader(int table_version)
+    {
+        // TODO
+        return null;
+    }
+    
+
+    /**
+     * dbExportHeader - header for export file
+     * 
+     * @param table_version
+     * @return
+     */
+    public String dbExportHeader()
+    {
+        return this.dbExportHeader(this.TABLE_VERSION);
+    }
+    
+    
+    /**
+     * dbImport - processes input entry to right fields
+     * 
+     * @param table_version version of table
+     * @param value_entry whole import line
+     * @throws Exception if import for selected table version is not supported or it fails
+     */
+    public void dbImport(int table_version, String value_entry) throws Exception
+    {
+        // TODO
+    }
+    
+    
+    
+    /**
+     * getBackupFile - name of backup file (base part)
+     * 
+     * @return
+     */
+    public String getBackupFile()
+    {
+        // TODO
+        return "DayValueH";
+    }
+    
+    /**
+     * getBackupClassName - name of class which will be updated/restored
+     * 
+     * @return
+     */
+    public String getBackupClassName()
+    {
+        // TODO
+        return "";
+    }
+    
+    
 }

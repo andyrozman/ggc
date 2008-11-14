@@ -173,6 +173,7 @@ public class MealNutrition
 
     public void addAmountToSum(float amount)
     {
+        //System.out.println("addAmountToSum: nutr=" + this.nutrition_desc + "old=" + amount_sum + ",add=" + amount);
         this.amount_sum += amount;
     }
 
