@@ -107,7 +107,7 @@ public class PumpDataTableModel extends AbstractTableModel
     {
         Object o = dayData.getValueAt(row, column);
 
-	
+	/*
         if (o != null && column == 0) 
         {
             return m_da.getDateTimeAsTimeString(((Long)o).longValue());
@@ -115,7 +115,7 @@ public class PumpDataTableModel extends AbstractTableModel
             //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             //return sdf.format(o);
         } 
-        
+      */  
         return o;
     }
 
@@ -145,6 +145,61 @@ public class PumpDataTableModel extends AbstractTableModel
         //return getValueAt(0,c).getClass();
     }
 
+/*    
+    protected JTableHeader createDefaultTableHeader() {
+        return new JTableHeader(columnModel) {
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int index = columnModel.getColumnIndexAtX(p.x);
+                int realIndex = 
+                        columnModel.getColumn(index).getModelIndex();
+                return columnToolTips[realIndex];
+            }
+        };
+    }
+  */  
+    
+    /*
+    public String getToolTipText(MouseEvent e) 
+    {
+        String tip = null;
+        java.awt.Point p = e.getPoint();
+        int rowIndex = rowAtPoint(p);
+        int colIndex = columnAtPoint(p);
+        int realColumnIndex = convertColumnIndexToModel(colIndex);
+
+        if (realColumnIndex == 2) { //Sport column
+            tip = "This person's favorite sport to "
+                   + "participate in is: "
+                   + getValueAt(rowIndex, colIndex);
+
+        } 
+        else if (realColumnIndex == 4) { //Veggie column
+            TableModel model = getModel();
+            String firstName = (String)model.getValueAt(rowIndex,0);
+            String lastName = (String)model.getValueAt(rowIndex,1);
+            Boolean veggie = (Boolean)model.getValueAt(rowIndex,4);
+            if (Boolean.TRUE.equals(veggie)) {
+                tip = firstName + " " + lastName
+                      + " is a vegetarian";
+            } else {
+                tip = firstName + " " + lastName
+                      + " is not a vegetarian";
+            }
+
+        } else { //another column
+            //You can omit this part if you know you don't 
+            //have any renderers that supply their own tool 
+            //tips.
+            tip = super.getToolTipText(e);
+        }
+        return tip;
+    }
+    */
+    
+    
+    
     @Override
     public boolean isCellEditable(int row, int col)
     {

@@ -27,7 +27,9 @@
 
 package ggc.pump.data;
 
+import ggc.pump.gui.manual.PumpDataTypeComponent;
 import ggc.pump.util.DataAccessPump;
+import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -47,6 +49,18 @@ public class PumpValuesDay
 	private Hashtable<String,PumpValuesEntry> table = null;
 	
 	
+    private I18nControl m_ic = I18nControl.getInstance();
+
+    private String[] column_names = { 
+                        m_ic.getMessage("TIME"),
+                        m_ic.getMessage("BASE_TYPE"),
+                        m_ic.getMessage("SUB_TYPE"),
+                        m_ic.getMessage("VALUE"),
+                        m_ic.getMessage("ADDITIONAL"),
+                        m_ic.getMessage("COMMENT") };
+	
+	
+	
 	public PumpValuesDay()
 	{
 	    list = new ArrayList<PumpValuesEntry>();
@@ -58,42 +72,111 @@ public class PumpValuesDay
 	{
 	    this.list.add(pve);
 	    
-	    ATechDate atd = new ATechDate(ATechDate.DT_DATETIME, pve.getDt_info());
+	    ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pve.getDt_info());
 	    
-	    if (!this.table.containsKey(atd.getDateString()))
+	    if (!this.table.containsKey(atd.getTimeString()))
 	    {
-	        this.table.put(atd.getDateString(), pve);
+	        this.table.put(atd.getTimeString(), pve);
 	    }
 	    
 	}
 	
+	public boolean isEntryAvailable(long datetime)
+	{
+	    ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, datetime);
+	    return this.table.containsKey(atd.getTimeString());
+	}
+	
+	public PumpValuesEntry getEntry(long dt)
+	{
+        ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, dt);
+        return this.table.get(atd.getTimeString());
+	}
+	
+	
+	
 	public void addExtendedEntries(ArrayList<PumpValuesEntryExt> lst)
 	{
 	    // TODO
+	    for(int i=0; i<lst.size(); i++)
+	    {
+	        PumpValuesEntryExt ext = lst.get(i);
+	        
+	        if (isEntryAvailable(ext.getDt_info()))
+	        {
+	            PumpValuesEntry pve = getEntry(ext.getDt_info());
+	            pve.addAdditionalData(ext);
+	        }
+	        else
+	        {
+	            PumpValuesEntry pve = new PumpValuesEntry();
+	            pve.setDt_info(ext.getDt_info());
+	            pve.setBase_type(PumpDataTypeComponent.TYPE_ADDITIONAL_DATA);
+	            
+	            pve.addAdditionalData(ext);
+	            this.addEntry(pve);
+	        }
+	    } // for
 	}
+	
+	
+    public int getColumnWidth(int column, int width)
+    {
+        float mult;
+        switch(column)
+        {
+            case 0:
+                mult=0.1f;
+                
+                
+                    
+            default:
+                mult=0.2f;
+        }
+
+        return (int)(mult*width);
+    }
 	
 	
 	
 	public int getColumnCount()
 	{
-	    return 8;
+	    return this.column_names.length;
 	}
 	
 	public int getRowCount()
 	{
+	    //System.out.println("row_count(valDay)=" + this.list);
 	    return this.list.size();
 	}
 	
+    public PumpValuesEntry getRowAt(int index)
+    {
+        return this.list.get(index);
+    }
+	
+	
 	public String getColumnName(int column)
 	{
-	    return null;
+	    return this.column_names[column];
+	    //return null;
 	}
 	
-	public Object getValueAt(int column, int row)
+	public Object getValueAt(int row, int column)
 	{
-	    return null;
+	    //System.out.println("column: " + column + ",row=" + row);
+	    return this.list.get(row).getColumnValue(column);
+	    //return "";
 	}
-	
-	
+/*	
+    m_ic.getMessage("DATE_TIME"),
+    m_ic.getMessage("BG"),
+    m_ic.getMessage("INS_1"),
+    m_ic.getMessage("INS_2"),
+    m_ic.getMessage("BU"),
+    m_ic.getMessage("ACTIVITY"),
+    m_ic.getMessage("URINE"),
+    m_ic.getMessage("COMMENT") };
+*/	
 	
 }	

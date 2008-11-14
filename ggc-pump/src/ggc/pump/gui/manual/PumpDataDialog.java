@@ -27,6 +27,7 @@
 package ggc.pump.gui.manual;
 
 import ggc.pump.data.PumpValuesDay;
+import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
@@ -49,6 +50,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -64,13 +66,13 @@ import com.atech.help.HelpCapable;
 public class PumpDataDialog extends JDialog implements ActionListener, HelpCapable
 {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -5805410528909879792L;
 
 //    private static Log log = LogFactory.getLog(PumpDataDialog.class);
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4403053763073221824L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccessPump m_da = null; // DataAccess.getInstance();
 
@@ -208,11 +210,10 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                          System.out.println("dateHasChanged");
                   
                          // TODO date changed
-                         @SuppressWarnings("unused")
-                        GregorianCalendar gc = e.getNewCalendar();
+                         GregorianCalendar gc = e.getNewCalendar();
                   
-//                         dayData = m_da.getDb().getDayStats(gc);
-//                         model.setDailyValues(dayData); //setDailyValues(dayData);
+                         dayData = m_da.getDb().getDailyPumpValues(gc);
+                         model.setDailyValues(dayData); //setDailyValues(dayData);
                       }
                   });
                  
@@ -230,12 +231,15 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                   dayHeader.add(dayStats, BorderLayout.CENTER);
                  
         // TODO
-        // dayData = DataAccess.getInstance().getDayStats(new
-        // GregorianCalendar());
+        dayData = m_da.getDb().getDailyPumpValues(new GregorianCalendar());
         // dbH.getDayStats(new Grenew Date(System.currentTimeMillis()));
         // dailyGraphWindow.setDailyValues(dayData);
         // DailyGraphFrame.setDailyValues(dayData);
+        
+        
+        
         model = new PumpDataTableModel(dayData);
+        
         model.addTableModelListener(new TableModelListener()
         {
             public void tableChanged(TableModelEvent e)
@@ -246,7 +250,31 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                 // saveButton.setEnabled(true);
             }
         });
-        table = new JTable(model);
+        //table = new JTable(model = new model);
+        
+        
+        table = new JTable(model)
+        {
+
+            private static final long serialVersionUID = 1613807277320213251L;
+
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+                int realColumnIndex = convertColumnIndexToModel(colIndex);
+
+                tip = (String)getValueAt(rowIndex, realColumnIndex);
+
+                if ((tip!=null) && (tip.length()==0))
+                    tip = null;
+                
+                return tip;
+            }
+            
+        };
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
         // MouseAdapter ma = new MouseAdapter();
@@ -282,8 +310,22 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         });
         // MouseListener ml = new MouseListener();
 
+        
+        
         resultsPane = new JScrollPane(table);
 
+        
+        PumpValuesDay pvd = new PumpValuesDay();
+        
+        for (int i = 0; i < 5; i++) 
+        {
+            table.getColumnModel().getColumn(i).setWidth(pvd.getColumnWidth(i, 460)); 
+        }           
+
+        
+        
+        
+        
         Dimension dim = new Dimension(110, 25);
 
         JPanel gg = new JPanel();
@@ -421,7 +463,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                 this.model.fireTableChanged(null);
             }*/
         }
-        /*else if (command.equals("edit_row"))
+        else if (command.equals("edit_row"))
         {
             // SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
             // EditRowFrame eRF = EditRowFrame.getInstance(model, dayData,
@@ -430,24 +472,25 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
             if (table.getSelectedRow() == -1)
             {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"),
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            DailyValuesRow dvr = dayData.getRowAt(table.getSelectedRow());
+            PumpValuesEntry dvr = dayData.getRowAt(table.getSelectedRow());
 
-            DailyRowDialog aRF = new DailyRowDialog(dvr, this);
-
+            //DailyRowDialog aRF = new DailyRowDialog(dvr, this);
+            new PumpDataRowDialog(dvr, this);
+            
+            /*
             if (aRF.actionSuccesful())
             {
                 m_db.saveDayStats(dayData);
                 dayData.sort();
                 this.model.fireTableChanged(null);
-            }
+            }*/
 
         }
-        else if (command.equals("delete_row"))
+        /*else if (command.equals("delete_row"))
         {
             if (table.getSelectedRow() == -1)
             {
@@ -518,7 +561,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Daily_View";
+        return "pages.GGC_PumpTool_Daily_View";
     }
 
     

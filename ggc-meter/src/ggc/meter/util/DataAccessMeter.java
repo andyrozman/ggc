@@ -43,6 +43,8 @@ import javax.swing.JFrame;
 
 import com.atech.graphics.components.about.CreditsEntry;
 import com.atech.graphics.components.about.CreditsGroup;
+import com.atech.graphics.components.about.FeaturesEntry;
+import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 
@@ -184,6 +186,49 @@ public class DataAccessMeter extends DataAccessPlugInBase
         lst_credits.add(cg);
         
         plugin_developers = lst_credits;
+        
+        
+        // features
+        ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
+
+        
+        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Base Meter Tools Framework"));
+        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
+        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+        fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration)"));
+        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+        fg.addFeaturesEntry(new FeaturesEntry("List of meters (work in progress)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Simple configuration"));
+        
+        lst_features.add(fg);
+        
+        
+        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer"));
+        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
+        fg.addFeaturesEntry(new FeaturesEntry("LifeScan (work in progress)"));
+        
+        lst_features.add(fg);
+        
+        
+        fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+        
+        lst_features.add(fg);
+
+        
+        fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
+        fg.addFeaturesEntry(new FeaturesEntry("LifeScan (end of 2008)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Abbott (in 2009)"));
+        fg.addFeaturesEntry(new FeaturesEntry("???"));
+        
+        lst_features.add(fg);
+        
+        
+        this.plugin_features = lst_features;
+        
+        
     }
 
     public void createWebListerContext()

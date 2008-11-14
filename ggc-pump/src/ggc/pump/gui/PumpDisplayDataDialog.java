@@ -375,6 +375,9 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
         tabPane.setBounds(30, 15, 410, 250);
         panel.add(tabPane);
 
+        //this.table.
+        
+        
         // Info
 
         label = new JLabel(m_ic.getMessage("METER_INFO") + ":");

@@ -116,6 +116,8 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 	
 	public void writeBGData(PumpValuesEntry mve)
 	{
+        // TODO: not implemented
+        System.out.println("writeBGData in GGCFileOutputWriter from PumpTools not implemented !");
 		
 		
 		/*
@@ -124,7 +126,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 		3|200603290730|163|10.0|0.0|0.0|null|null|
 		4|200604030730|0|6.0|0.0|0.0|null|null|
 		*/
-		int val = 0;
+/*		int val = 0;
 		
 		if (mve.getBgUnit() == OutputUtil.BG_MMOL)
 		{
@@ -158,6 +160,10 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 		setReadData();
 		
 		//writeToFile(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
+		 */
+	
+	
+	
 	}
 	
 	

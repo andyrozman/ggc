@@ -31,7 +31,7 @@ package ggc.pump.data.defs;
  *  Author:   andyrozman {andyrozman@sourceforge.net}
  */
 
-
+// unknown usage of this file...
 public class PumpDataType
 {
 
@@ -41,6 +41,7 @@ public class PumpDataType
     public static final int PUMP_DATA_ALARM    = 4;
     public static final int PUMP_DATA_ERROR    = 5;
     public static final int PUMP_DATA_PROFILE  = 6;
+    
     
 
 }

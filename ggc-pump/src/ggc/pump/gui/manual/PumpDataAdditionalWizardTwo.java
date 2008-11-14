@@ -44,6 +44,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -76,11 +77,14 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     JLabel label_1, label_2;
     JTextField text_1;
     JDecimalTextField num_1, num_2;
+    JCheckBox cb_1;
 
     PumpAdditionalDataType m_pump_add; // = new PumpAdditionalDataType();
 
     boolean was_action = false;
     PumpValuesEntryExt pump_objects_ext[];
+    
+    PumpValuesEntryExt data_object;
 
     // new data
     public PumpDataAdditionalWizardTwo(PumpDataAdditionalWizardOne wiz_one, String type, PumpAdditionalDataType pump_add)
@@ -98,6 +102,51 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         init();
     }
 
+    public PumpDataAdditionalWizardTwo(JDialog dialog, PumpValuesEntryExt pc)
+    {
+        super(dialog, "", true);
+
+        this.m_pump_add = m_da.getAdditionalType();
+
+        // this.old_data = data;
+        m_parent = dialog;
+        this.m_type = pc.getType();
+
+        ATSwingUtils.initLibrary();
+
+        init();
+        
+        data_object = pc;
+        
+        loadObject();
+    }
+    
+    
+    private void loadObject()
+    {
+        if ((this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) || 
+            (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT) || 
+            (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_URINE))
+        {
+            this.text_1.setText(this.data_object.getValue());
+            //po.setValue(this.text_1.getText());
+        }
+        else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
+        {
+            this.num_1.setValue(new Float(this.data_object.getValue()));
+            this.focusProcess(num_1);
+            //po.setValue(this.num_1.getValue().toString());
+        }
+        else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
+        {
+            this.num_1.setValue(new Float(this.data_object.getValue()));
+//            po.setValue(this.num_1.getValue().toString());
+        }
+        else
+            System.out.println("Load for this type is not implemented !!!");
+        
+    }
+    
     
     private void init()
     {
@@ -207,7 +256,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
         case PumpAdditionalDataType.PUMP_ADD_DATA_FOOD:
             {
-                areaUnsupported();
+                areaFood();
             }
             break;
 
@@ -273,6 +322,13 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", 50, 108, 100, 25, main_panel);
         
         this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), 210, 108, 55, 25, this.main_panel);
+    
+        this.cb_1 =  new JCheckBox();
+        this.cb_1.setBounds(50, 150, 100, 25);
+        this.cb_1.addActionListener(this);
+        this.cb_1.setActionCommand("check");
+        this.main_panel.add(this.cb_1);
+        
         
     }
     
@@ -313,6 +369,10 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         else if (action.equals("ok"))
         {
             cmdOk();
+        }
+        else if (action.equals("check"))
+        {
+            System.out.println("check 1");
         }
         /*        else if (action.equals("edit_food"))
                 {
@@ -388,8 +448,11 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         }
         else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
         {
+            System.out.println("val: " + this.num_1.getValue());
             po.setValue(this.num_1.getValue().toString());
         }
+        else
+            System.out.println("Command for this type is not implemented !!!");
 
         this.pump_objects_ext[0] = po;
 

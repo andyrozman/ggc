@@ -274,7 +274,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             Element el = (Element)lst.get(i);
             
             PumpValuesEntry pve = new PumpValuesEntry();
-            pve.setDateTime(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
+            pve.setDt_info(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
 
             
             
@@ -339,7 +339,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
 
             if (type==0)
             {
-                pve.setSubType(PumpBasalSubType.PUMP_BASAL_VALUE);
+                pve.setSub_type(PumpBasalSubType.PUMP_BASAL_VALUE);
                 pve.setValue(el.attributeValue("cbrf"));
             }
             else
@@ -412,8 +412,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             if (this.getBolusMappings().containsKey(type))
             {
-                pve.setBaseType(PumpDataType.PUMP_DATA_BOLUS);
-                pve.setSubType(this.getBolusMappings().get(type));
+                pve.setBase_type(PumpDataType.PUMP_DATA_BOLUS);
+                pve.setSub_type(this.getBolusMappings().get(type));
                 pve.setValue(amount);
             }
             else
@@ -425,8 +425,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             if (this.getReportMappings().containsKey(remark))
             {
-                pve.setBaseType(PumpDataType.PUMP_DATA_BOLUS);
-                pve.setSubType(this.getReportMappings().get(remark));
+                pve.setBase_type(PumpDataType.PUMP_DATA_BOLUS);
+                pve.setSub_type(this.getReportMappings().get(remark));
                 pve.setValue(amount);
             }
             else
@@ -459,8 +459,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             {
                 if (this.getAlarmMappings().containsKey(info))
                 {
-                    pve.setBaseType(PumpDataType.PUMP_DATA_ALARM);
-                    pve.setSubType(this.getAlarmMappings().get(info).intValue());
+                    pve.setBase_type(PumpDataType.PUMP_DATA_ALARM);
+                    pve.setSub_type(this.getAlarmMappings().get(info).intValue());
                     //System.out.println("info: " + info + ", desc=" + desc);
                 }
                 else
@@ -472,8 +472,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             {
                 if (this.getErrorMappings().containsKey(info))
                 {
-                    pve.setBaseType(PumpDataType.PUMP_DATA_ERROR);
-                    pve.setSubType(this.getErrorMappings().get(info).intValue());
+                    pve.setBase_type(PumpDataType.PUMP_DATA_ERROR);
+                    pve.setSub_type(this.getErrorMappings().get(info).intValue());
                     //System.out.println("info: " + info + ", desc=" + desc);
                 }
                 else
@@ -487,8 +487,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
 
                 if (this.getEventMappings().containsKey(desc))
                 {
-                    pve.setBaseType(PumpDataType.PUMP_DATA_EVENT);
-                    pve.setSubType(this.getEventMappings().get(desc));
+                    pve.setBase_type(PumpDataType.PUMP_DATA_EVENT);
+                    pve.setSub_type(this.getEventMappings().get(desc));
                     pve.setValue(info);
                 }
                 else
@@ -503,8 +503,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             if (this.getEventMappings().containsKey(desc))
             {
-                pve.setBaseType(PumpDataType.PUMP_DATA_EVENT);
-                pve.setSubType(this.getEventMappings().get(desc));
+                pve.setBase_type(PumpDataType.PUMP_DATA_EVENT);
+                pve.setSub_type(this.getEventMappings().get(desc));
             }
             else
             {

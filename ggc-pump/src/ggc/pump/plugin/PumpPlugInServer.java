@@ -17,7 +17,7 @@ import com.atech.utils.ATDataAccessAbstract;
 public class PumpPlugInServer extends PlugInServer
 {
 
-    String plugin_version = "0.1.5";
+    String plugin_version = "0.1.7.1";
     
     public static final int COMMAND_READ_PUMP_DATA = 0;
     public static final int COMMAND_PUMPS_LIST = 1;
@@ -50,6 +50,7 @@ public class PumpPlugInServer extends PlugInServer
     {
         super(cont, selected_lang, da);
         DataAccessPump.getInstance().addComponent(cont);
+        //DataAccessPump.getInstance().m
     }
     
 
@@ -138,8 +139,14 @@ public class PumpPlugInServer extends PlugInServer
         //ic = I18nControl.getInstance();
         //ic.setLanguage(this.selected_lang);
         I18nControl.getInstance().setLanguage(this.selected_lang);
-        DataAccessPump.getInstance().addComponent(this.parent);
-        DataAccessPump.getInstance().setHelpContext(this.m_da.getHelpContext());
+        
+        DataAccessPump da = DataAccessPump.getInstance();
+        
+        da.addComponent(this.parent);
+        da.setHelpContext(this.m_da.getHelpContext());
+        da.createDb(m_da.getHibernateDb());
+        
+        da.initAllObjects();
     }
     
     

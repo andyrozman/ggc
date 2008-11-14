@@ -32,6 +32,11 @@ package ggc.pump.util;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.db.GGCPumpDb;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBasalSubType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.data.defs.PumpReport;
 import ggc.pump.manager.PumpManager;
 
 import java.util.ArrayList;
@@ -56,7 +61,12 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     private PumpManager m_pumpManager = null;
 
-
+    PumpBaseType m_pump_base_type = null;
+    PumpBolusType m_pump_bolus_type = null;
+    PumpBasalSubType m_pump_basal_type = null;
+    PumpReport m_pump_report = null;
+    PumpAdditionalDataType m_pump_add_type = null;
+//    GGCPumpDb m_db = null;
         
 
     // ********************************************************
@@ -121,11 +131,33 @@ public class DataAccessPump extends DataAccessPlugInBase
 
  
     
+    public PumpBaseType getPumpBaseType()
+    {
+        return this.m_pump_base_type;
+    }
+    
+    public PumpBolusType getBolusSubType()
+    { 
+        return m_pump_bolus_type;
+    }
+    
+    public PumpBasalSubType getBasalSubType()
+    {
+        return m_pump_basal_type;
+    }
+
+    public PumpReport getPumpReportTypes()
+    { 
+        return this.m_pump_report;
+    }
+    
+    public PumpAdditionalDataType getAdditionalType()
+    {
+        return this.m_pump_add_type;
+    }
     
     
-
-  
-
+    
 
     /*
      static public DataAccess getInstance()
@@ -190,6 +222,18 @@ public class DataAccessPump extends DataAccessPlugInBase
     // ********************************************************
     
 
+
+    public void initAllObjects()
+    {
+        this.m_pump_base_type = new PumpBaseType();
+        this.m_pump_bolus_type = new PumpBolusType(); 
+        this.m_pump_basal_type = new PumpBasalSubType(); 
+        this.m_pump_report = new PumpReport();
+        this.m_pump_add_type = new PumpAdditionalDataType();
+    }
+
+    
+    
 
     public String getApplicationName()
     {
@@ -444,4 +488,11 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
+    
+    public HibernateDb getHibernateDb()
+    {
+        return null;
+    }
+
+    
 }

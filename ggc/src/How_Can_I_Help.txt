@@ -161,6 +161,18 @@ run them):
 D.) Development
 ==================
 
+NOTE: For development we use Eclipse environment. We have several ant build files through all of the projects,
+    but this are intended for deployment only, and NOT for development. Deployment is done by one person which 
+    is called Deployment manager (at this time - Andy). In old times, our developers could choose whatever 
+    environment they wanted (so ant was official build environment), but this created huge configuration problems,
+    which needed to be fixed for each new developer. When all of developers (2 at that time) started to use 
+    Eclipse, and when we added sub-projects, problems became even bigger. At that point we decided to go with 
+    official build environment, which is now Eclipse (so ant became little deprecated - we still use it for
+    deployment (when new version is released)). This document was created to help all new developers and so far,
+    we had almost no complaints from new users (when they arise, we usually just extend this document, with 
+    additional data). 
+
+
 If you are developer and would like to help, please follow this instructions to create build environment.
 
 1.) Download full SVN sources from sourceforge.net then download SVN for atech-tools project

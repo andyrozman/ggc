@@ -51,7 +51,10 @@ public class FileOutputWriter extends AbstractOutputWriter
 	
 	public void writeBGData(PumpValuesEntry mve)
 	{
-		writeToFile(mve.getDateTimeObject().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
+        // TODO: not implemented
+        System.out.println("writeBGData in FileOutputWriter from PumpTools not implemented !");
+	    
+//		writeToFile(mve.getDateTimeObject().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
 	}
 	
 	

@@ -54,6 +54,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.ATDataAccessAbstract;
 
 
@@ -1002,6 +1003,14 @@ public class DataAccessCGM extends ATDataAccessAbstract
     public static void notImplemented(String source)
     {
         System.out.println("Not Implemented: " + source);
+    }
+
+
+    @Override
+    public HibernateDb getHibernateDb()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 

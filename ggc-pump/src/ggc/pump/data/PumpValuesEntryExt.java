@@ -33,6 +33,7 @@ import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.i18n.I18nControlAbstract;
@@ -119,7 +120,25 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         m_pump_add = new PumpAdditionalDataType();
     }
-	
+
+    
+    public PumpValuesEntryExt(PumpDataExtendedH pd)
+    {
+        m_pump_add = new PumpAdditionalDataType();
+        
+        this.setId(pd.getId());
+        this.setDt_info(pd.getDt_info());
+        this.setType(pd.getType());
+        this.setValue(pd.getValue());
+        this.setExtended(pd.getExtended());
+        this.setPerson_id(pd.getPerson_id());
+        this.setComment(pd.getComment());
+        this.setChanged(pd.getChanged());
+        
+        
+    }
+    
+    
 	
 /*	
 	public void setDateTime(long dt)
@@ -202,6 +221,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	
 	public void prepareEntry()
 	{
+	    
 	    if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
 	        return;
 	    else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
@@ -309,22 +329,55 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
     public String DbAdd(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return null;
+        Transaction tx = sess.beginTransaction();
+
+        PumpDataExtendedH ch = new PumpDataExtendedH();
+
+        //ch.setId(id);
+        ch.setDt_info(this.getDt_info());
+        ch.setType(this.getType());
+        ch.setValue(this.getValue());
+        ch.setExtended(this.getExtended());
+        ch.setPerson_id(this.getPerson_id());
+        ch.setComment(this.getComment());
+        ch.setChanged(System.currentTimeMillis());
+
+        Long id = (Long)sess.save(ch);
+        tx.commit();
+
+        ch.setId(id.longValue());
+        
+        return ""+id.longValue();
     }
 
 
     public boolean DbDelete(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return false;
+        Transaction tx = sess.beginTransaction();
+
+        PumpDataExtendedH ch = (PumpDataExtendedH)sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+        sess.delete(ch);
+        tx.commit();
+
+        return true;
     }
 
 
     public boolean DbEdit(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return false;
+        PumpDataExtendedH ch = (PumpDataExtendedH)sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+
+        // TODO: changed check
+        //ch.setId(id);
+        ch.setDt_info(this.getDt_info());
+        ch.setType(this.getType());
+        ch.setValue(this.getValue());
+        ch.setExtended(this.getExtended());
+        ch.setPerson_id(this.getPerson_id());
+        ch.setComment(this.getComment());
+        ch.setChanged(System.currentTimeMillis());
+
+        return true;
     }
 
 
@@ -337,7 +390,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -351,8 +403,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
     public String getObjectName()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "PumpDataExtendedH";
     }
 
 
@@ -361,6 +412,15 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         // TODO Auto-generated method stub
         return false;
     }
-	
+
+    /**
+     * getObjectUniqueId - get id of object
+     * @return unique object id
+     */
+    public String getObjectUniqueId()
+    {
+        return "" + this.getId();
+    }
+    
 	
 }	

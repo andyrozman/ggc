@@ -31,10 +31,13 @@ package ggc.pump.data;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.pump.PumpDataH;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.output.OutputUtil;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.hibernate.Session;
@@ -50,7 +53,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 
     private static final long serialVersionUID = -2047203215269156938L;
 
-    DataAccessPump da = DataAccessPump.getInstance();
+    DataAccessPump m_da = DataAccessPump.getInstance();
 	
 	// pump 
 	long datetime;
@@ -65,16 +68,16 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	public boolean checked = false;
 	
 	
-	private int bg;
-	private float ch;
-	public String meals;
+	//private int bg;
+	//private float ch;
+	//public String meals;
 	
 	//public
 	public Hashtable<String,String> params;
 	public int status = 1; //MeterValuesEntry.
 	public static I18nControl ic = I18nControl.getInstance(); 
 	
-	public String bg_original = null;
+	//public String bg_original = null;
 	public OutputUtil util = new OutputUtil();
 	
 	
@@ -118,6 +121,12 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	}
 	
 	
+	public void addAdditionalData(PumpValuesEntryExt adv)
+	{
+	    this.additional_data.put(new PumpAdditionalDataType().getTypeDescription(adv.getType()), adv);
+	}
+	
+	/*
 	public void setDateTime(long dt)
 	{
 	    this.datetime = dt;
@@ -128,7 +137,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	public long getDateTime()
 	{
 		return this.datetime;
-	}
+	}*/
 	
 	
     public ATechDate getDateTimeObject()
@@ -137,7 +146,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
     }
 	
 	
-	
+	/*
 	public void setBaseType(int base_type)
 	{
 	    this.base_type = base_type;
@@ -147,7 +156,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
     public void setSubType(int sub_type)
     {
         this.sub_type = sub_type;
-    }
+    }*/
 
     
     public void setValue(String val)
@@ -163,10 +172,10 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	
 	
 	// added
-	
+	/*
 	public float getBG()
 	{
-	    return da.getBGValueInSelectedFormat(this.bg);
+	    return m_da.getBGValueInSelectedFormat(this.bg);
 	}
 	
 	
@@ -190,7 +199,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
     {
         // TODO: 
         return "";
-    }
+    }*/
     
     
     public String getComment()
@@ -222,7 +231,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 		
 	}
 
-	
+	/*
 	public void setBgUnit(int bg_type)
 	{
 		this.bg_unit = bg_type;
@@ -231,7 +240,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	public int getBgUnit()
 	{
 		return this.bg_unit;
-	}
+	}*/
 	
 	
 	public boolean getCheched()
@@ -244,7 +253,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	    return this.status;
 	}
 	
-	
+	/*
 	public void setBgValue(String value)
 	{
 		this.bg_str = value;
@@ -290,6 +299,38 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	    }
 	    
 	}
+	*/
+	public Object getColumnValue(int column)
+	{
+	    switch(column)
+	    {
+    	    case 0: // time
+    	    {
+    	        return ATechDate.getTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getDt_info());
+    	    }
+    	    case 1: // type
+    	    {
+    	        return this.m_da.getPumpBaseType().basetype_desc[this.getBase_type()];
+    	    }
+    	    case 2: // subtype
+    	    {
+    	        return getSubType();
+    	    }
+    	    case 3: // value
+    	    {
+    	        return this.getValue();
+    	    }
+    	    case 4: // additional
+    	    {
+    	        return this.getAdditionalDisplay();
+    	    }
+    	    case 5: // comment
+    	    {
+    	        return this.getComment();
+    	    }
+	    }
+	    return "";
+	}
 	
 	
 	public String getParametersAsString()
@@ -310,9 +351,61 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 		
 	}
 	
+	public String getSubType()
+	{
+	    if (this.getSub_type()==0)
+	        return "";
+	    
+	    if (this.getBase_type()==PumpBaseType.PUMP_DATA_BASAL)
+	    {
+	        return m_da.getBasalSubType().basal_desc[this.getSub_type()];
+	    }
+	    else if (this.getBase_type()==PumpBaseType.PUMP_DATA_BOLUS)
+	    {
+            return m_da.getBolusSubType().bolus_desc[this.getSub_type()];
+	    }
+	    else if (this.getBase_type()==PumpBaseType.PUMP_DATA_REPORT)
+	    {
+            return m_da.getPumpReportTypes().report_desc[this.getSub_type()];
+	    }
+	    else 
+	    {
+	        return "";
+	    }
+	}
+	
+	
+	public String getAdditionalDisplay()
+	{
+	    if (this.additional_data.size()==0)
+	        return "";
+	    else
+	    {
+	        StringBuffer sb = new StringBuffer();
+	        int i=0;
+	        
+	        for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
+	        {
+	            String key = en.nextElement();
+	            
+	            if (i>0)
+	                sb.append(";");
+	            
+	            //sb.append(key + "=" + this.additional_data.get(key).toString());
+	            sb.append(this.additional_data.get(key).toString());
+	            
+	        }
+	        
+	        return sb.toString();
+	    }
+	}
+	
 	
 	public void prepareEntry()
 	{
+	    System.out.println("prepareEntry not implemented!");
+	    
+	    /*
 	    if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
 	        return;
 	    else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
@@ -331,7 +424,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	        this.entry_object.setDt_info(this.datetime);
             this.entry_object.setChanged(System.currentTimeMillis());
             this.entry_object.setComment(createComment());
-	    }
+	    }*/
 	}
 	
 	
@@ -347,10 +440,10 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	    
 	    if ((p==null) || (p.trim().length()==0))
 	    {
-	        return "MTI";
+	        return "";
 	    }
 	    else
-	        return "MTI;" + p;
+	        return p;
 	    
 	    
 	}
@@ -359,7 +452,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	public String toString()
 	{
 	    //OutputUtil o= null;
-	    return "MeterValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
+	    return "PumpValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
 	}
 
 
@@ -416,6 +509,16 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
     {
         // TODO Auto-generated method stub
         return false;
+    }
+
+
+    /**
+     * getObjectUniqueId - get id of object
+     * @return unique object id
+     */
+    public String getObjectUniqueId()
+    {
+        return "" + this.getId();
     }
 	
 	

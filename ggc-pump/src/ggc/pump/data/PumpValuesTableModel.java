@@ -29,8 +29,6 @@ package ggc.pump.data;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.pump.gui.PumpDisplayDataDialog;
-import ggc.pump.output.OutputUtil;
-import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
@@ -87,9 +85,9 @@ public class PumpValuesTableModel extends AbstractTableModel // implements
 
     public boolean isEditableColumn(int column)
     {
-        if (column == 4)
-            return true;
-        else
+        //if (column == 4)
+        //    return true;
+        //else
             return false;
 
     }
@@ -191,6 +189,7 @@ public class PumpValuesTableModel extends AbstractTableModel // implements
 
     public Object getValueAt(int row, int column)
     {
+        // TODO: Fix this
         PumpValuesEntry mve = this.displayed_dl_data.get(row);
 
         switch (column)
@@ -199,10 +198,10 @@ public class PumpValuesTableModel extends AbstractTableModel // implements
             return mve.getDateTimeObject().getDateTimeString();
 
         case 1:
-            return mve.getBGValue(DataAccessPump.BG_MMOL);
+            //return mve.getBGValue(DataAccessPump.BG_MMOL);
 
         case 2:
-            return mve.getBGValue(DataAccessPump.BG_MGDL);
+            //return mve.getBGValue(DataAccessPump.BG_MGDL);
 
         case 3:
             return new Integer(mve.getStatus());
@@ -242,7 +241,7 @@ public class PumpValuesTableModel extends AbstractTableModel // implements
         if (old_data!=null)
         {
             //System.out.println("oldData != null");
-            long dt = mve.getDateTime();
+            long dt = mve.getDt_info(); //.getDateTime();
             
             //System.out.println("Dt='" + dt + "'");
             
@@ -262,8 +261,8 @@ public class PumpValuesTableModel extends AbstractTableModel // implements
                 
                 DayValueH gvh = old_data.get("" + dt);
                   
-                int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
-                
+//                int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
+                int vl = 1;
                 //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
                 if (gvh.getBg()==vl)
                 {
