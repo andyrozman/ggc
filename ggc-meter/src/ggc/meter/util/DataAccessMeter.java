@@ -29,7 +29,9 @@
 
 package ggc.meter.util;
 
+import ggc.meter.data.cfg.MeterConfigurationDefinition;
 import ggc.meter.manager.MeterManager;
+import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -96,6 +98,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         checkPrerequisites();
         createWebListerContext();
         createPlugInAboutContext();
+        createConfigurationContext();
     }
     
     
@@ -376,6 +379,26 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         //SimpleConfigurationTZDialog.time_zones.put(long_desc, keycode);
         //SimpleConfigurationTZDialog.time_zones_vector.add(long_desc);
+    }
+
+    
+    // ********************************************************
+    // ******              Configuration                  *****    
+    // ********************************************************
+    
+    
+
+    @Override
+    public void createConfigurationContext()
+    {
+        this.device_config_def = new MeterConfigurationDefinition();
+    }
+
+
+    @Override
+    public void createDeviceConfiguration()
+    {
+        this.device_config = new DeviceConfiguration(this);
     }
     
     

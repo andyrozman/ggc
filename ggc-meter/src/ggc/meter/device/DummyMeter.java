@@ -84,12 +84,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
 
     
 
-    public int getTimeDifference() // throws MeterException
-    {
-        writeLog(LOG_DEBUG, "getTimeDifference() - Start");
-        writeLog(LOG_DEBUG, "getTimeDifference() - End");
-        return 0;
-    }
+    
 
 
     public int getStatus()
