@@ -17,7 +17,7 @@ import com.atech.utils.ATDataAccessAbstract;
 public class PumpPlugInServer extends PlugInServer
 {
 
-    String plugin_version = "0.1.7.1";
+    //String plugin_version = "0.1.7.1";
     
     public static final int COMMAND_READ_PUMP_DATA = 0;
     public static final int COMMAND_PUMPS_LIST = 1;
@@ -115,7 +115,7 @@ public class PumpPlugInServer extends PlugInServer
     @Override
     public String getVersion()
     {
-        return this.plugin_version;
+        return DataAccessPump.PLUGIN_VERSION;
     }
 
     /* 
