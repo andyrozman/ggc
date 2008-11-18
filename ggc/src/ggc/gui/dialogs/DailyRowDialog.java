@@ -105,7 +105,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         {
             // System.out.println("text1: " + this.ftf_bg1.getText());
             if (this.ftf_bg1.getText().trim().length() == 0)
+            {
+                in_action = false;
+                this.ftf_bg2.setValue(new Float(0.0f));
                 return;
+            }
 
             // System.out.println("focus lost: bg2");
             int val = m_da.getJFormatedTextValueInt(ftf_bg1);
@@ -117,7 +121,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             // System.out.println("text2: " + this.ftf_bg2.getText());
 
             if (this.ftf_bg2.getText().trim().length() == 0)
+            {
+                in_action = false;
+                this.ftf_bg1.setValue(new Integer(0));
                 return;
+            }
 
             // System.out.println("focus lost: bg2");
             float val = m_da.getJFormatedTextValueFloat(ftf_bg2);
