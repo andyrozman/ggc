@@ -47,6 +47,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -89,8 +90,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     DeviceConfigEntry current_entry;
     int current_index = 0;
     String current_index_object = "";
+    String first_selected = "";
 
-    public DeviceConfigurationDialog(JDialog parent, ATDataAccessAbstract da)
+    public DeviceConfigurationDialog(JFrame parent, ATDataAccessAbstract da)
     {
         super(parent, "", true);
         
@@ -119,10 +121,14 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         this.setVisible(true);
     }
 
+    
     private void loadData()
     {
         this.data = this.m_da.getDeviceConfiguration().getConfigDataCopy();
         this.current_entry = this.data.get(this.m_da.getDeviceConfiguration().getSelectedDeviceIndex());
+        
+        
+        first_selected = this.m_da.getDeviceConfiguration().getSelectedDeviceIndex() + " - " + this.current_entry.name;
     }
     
     
@@ -227,14 +233,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         pan_sel.setBounds(20, 75, 410, 60);
         prefPane.add(pan_sel);
         
-        label = new JLabel(m_ic.getMessage("SELECTED_X_DEVICE") + ":");
-        label.setBounds(25,25, 200, 25);
-        pan_sel.add(label);
-        //label.setBounds(40,75, 450, 25);
-        //prefPane.add(label);
+
+        ATSwingUtils.getLabel(m_ic.getMessage("SELECTED_X_DEVICE") + ":", 25,25, 200, 25, pan_sel, ATSwingUtils.FONT_NORMAL_BOLD);
 
         
         cb_entry = new JComboBox(getComboEntriesFromConfiguration());
+        cb_entry.setSelectedItem(this.first_selected);
         cb_entry.setBounds(205, 25, 190, 25);
         cb_entry.addItemListener(this);
         cb_entry.setFont(normal);
@@ -248,44 +252,15 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         pan_meter.setBounds(20, 140, 410, 150);
         prefPane.add(pan_meter);
         
-        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_CUSTOM_NAME") + ":", 25, 25, 150, 25, pan_meter);
+        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_CUSTOM_NAME") + ":", 25, 25, 150, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
         this.tf_name = ATSwingUtils.getTextField("", 170, 25, 225, 25, pan_meter);
         
-        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_COMPANY") + ":", 25, 55, 150, 25, pan_meter);
+        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_COMPANY") + ":", 25, 55, 150, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
         this.lbl_company = ATSwingUtils.getLabel(m_ic.getMessage("NO_COMPANY_SELECTED"), 110, 55, 250, 25, pan_meter, ATSwingUtils.FONT_NORMAL);
         
-        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_DEVICE") + ":", 25,85, 450, 25, pan_meter);
+        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_DEVICE") + ":", 25,85, 450, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
         this.lbl_device = ATSwingUtils.getLabel(m_ic.getMessage("NO_DEVICE_SELECTED"), 110, 85, 250, 25, pan_meter, ATSwingUtils.FONT_NORMAL);
 
-        
-        /*
-        label = new JLabel(m_ic.getMessage("DEVICE_CUSTOM_NAME") + ":");
-        label.setBounds(25,25, 150, 25);
-        pan_meter.add(label);
-        
-        //pan_meter.add(ATSwingUtils.getLabel(text, x, y, width, height, cont));
-        
-        JTextField tf_name = new JTextField();
-        tf_name.setBounds(190, 25, 150, 25);
-        pan_meter.add(tf_name);
-        
-        label = new JLabel(m_ic.getMessage("DEVICE_COMPANY") + ":");
-        label.setBounds(25,55, 450, 25);
-        pan_meter.add(label);
-
-        JLabel lbl_company = new JLabel("xxx");
-        lbl_company.setBounds(125, 55, 250, 25);
-        pan_meter.add(lbl_company);
-
-        
-        label = new JLabel(m_ic.getMessage("DEVICE_DEVICE") + ":");
-        label.setBounds(25,85, 450, 25);
-        pan_meter.add(label);
-
-        JLabel lbl_device = new JLabel("xxx");
-        lbl_device.setBounds(125, 85, 250, 25);
-        pan_meter.add(lbl_device);
-        */
         
         JButton bt_device = new JButton(m_ic.getMessage("SELECT"));
         bt_device.setBounds(295, 55, 100, 55);
@@ -305,32 +280,26 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         prefPane.add(pan_tzfix);
         
         
+        ATSwingUtils.getLabel(m_ic.getMessage("SELECT_TIMEZONE_LIST") + ":", 25,25, 450, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        label = new JLabel(m_ic.getMessage("SELECT_TIMEZONE_LIST") + ":");
-        label.setBounds(25,25, 450, 25);
-        //prefPane.add(label);  275
-        pan_tzfix.add(label);
-        
-        
-        cb_timezone = new JComboBox(DeviceConfigurationDialog.time_zones_vector);
+        cb_timezone = ATSwingUtils.getComboBox(DeviceConfigurationDialog.time_zones_vector, 25, 50, 370, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
+/*
+        new JComboBox(DeviceConfigurationDialog.time_zones_vector);
         cb_timezone.setBounds(25, 50, 370, 25);
         cb_timezone.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL));
-        //prefPane.add(cb_timezone); 300
-        pan_tzfix.add(cb_timezone);
+        pan_tzfix.add(cb_timezone); */
         
-        chb_fix = new JCheckBox(m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"));
+        chb_fix = new JCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"));
         chb_fix.setBounds(25, 90, 350, 25); // 340
         chb_fix.addChangeListener(this);
         chb_fix.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD));
         chb_fix.setSelected(false);
-//        prefPane.add(chb_fix);
         pan_tzfix.add(chb_fix);
         
         
         label = new JLabel(m_ic.getMessage("WINTERTIME_FIX") + ":");
         label.setBounds(40,120, 200, 25);
         label.setFont(normal);
-//        prefPane.add(label);
         pan_tzfix.add(label);
 
         String[] changes = { "-1", "0", "+1" }; 
@@ -359,29 +328,30 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
         //set the buttons up...
         JButton button = new JButton("  " + m_ic.getMessage("OK"));
-        //okButton.setPreferredSize(dim);
         button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
         button.setActionCommand("ok");
-        button.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD));
+        button.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL));
         button.setBounds(50, 510, 110, 25);
         button.addActionListener(this);
         prefPane.add(button);
 
         button = new JButton("  " +m_ic.getMessage("CANCEL"));
-        //cancelButton.setPreferredSize(dim);
         button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         button.setActionCommand("cancel");
-        button.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD));
+        button.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL));
         button.setBounds(170, 510, 110, 25);
         button.addActionListener(this);
         prefPane.add(button);
 
         
-        help_button = m_da.createHelpButtonByBounds(290, 510, 110, 25, this); 
+        help_button = m_da.createHelpButtonByBounds(290, 510, 110, 25, this, DataAccessPlugInBase.FONT_NORMAL); 
         prefPane.add(help_button);
 
         
         enableDisableFix(false);
+        
+        this.cb_entry.setSelectedItem(this.first_selected);
+        
         this.comm_port_comp.setProtocol(0);
         current_index = this.cb_entry.getSelectedIndex();
         this.current_index_object = (String)this.cb_entry.getSelectedItem();

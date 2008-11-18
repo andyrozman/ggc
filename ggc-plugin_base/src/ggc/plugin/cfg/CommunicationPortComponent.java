@@ -53,7 +53,7 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
         
         //125, 85
         
-        label = ATSwingUtils.getLabel(m_ic.getMessage("COMMUNICATION_PORT") + ":", 0, 0, 150, 25, this);
+        label = ATSwingUtils.getLabel(m_ic.getMessage("COMMUNICATION_PORT") + ":", 0, 0, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
         
         tf_port = ATSwingUtils.getTextField("", 145, 0, 110, 25, this);
         tf_port.setEditable(false);

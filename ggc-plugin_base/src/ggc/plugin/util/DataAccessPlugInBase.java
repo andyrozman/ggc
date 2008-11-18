@@ -40,7 +40,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -64,7 +63,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     public static final String pathPrefix = ".";
     public Font fonts[] = null;
 
-
+    public String plugin_version = "0.2.1";
 
 //xa    private GGCProperties m_settings = null;
 
@@ -404,6 +403,19 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 
     public abstract void createDeviceConfiguration();
 
+    
+    // ********************************************************
+    // ******                  Version                    *****    
+    // ********************************************************
+    
+    public String getPlugInVersion()
+    {
+        return this.plugin_version;
+    }
+    
+    public abstract void createPlugInVersion();
+    
+    
     // ********************************************************
     // ******                  Settings                   *****    
     // ********************************************************
@@ -604,12 +616,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ******          Dates and Times Handling           *****    
     // ********************************************************
 
-    public String getCurrentDateString()
-    {
-        GregorianCalendar gc = new GregorianCalendar();
-        return gc.get(Calendar.DAY_OF_MONTH) + "."
-                + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
-    }
 
 
     /*
