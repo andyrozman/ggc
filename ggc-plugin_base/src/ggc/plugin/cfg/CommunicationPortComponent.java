@@ -51,32 +51,12 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
         this.setLayout(null);
         this.setBounds(25, 115, 370, 25);
         
-        //125, 85
-        
         label = ATSwingUtils.getLabel(m_ic.getMessage("COMMUNICATION_PORT") + ":", 0, 0, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
         
         tf_port = ATSwingUtils.getTextField("", 145, 0, 110, 25, this);
         tf_port.setEditable(false);
 
-        
-        
-        /*
-        label = new JLabel(m_ic.getMessage("COMMUNICATION_PORT") + ":");
-        label.setBounds(0, 0, 150, 25);
-        this.add(label);
-        
-        tf_port = new JTextField();
-        tf_port.setBounds(160, 0, 80, 25);
-        tf_port.setEditable(false);
-        this.add(tf_port);
-        */
-       
-        bt_select = new JButton(m_ic.getMessage("SELECT"));
-        bt_select.setBounds(270, 0, 100, 25);
-        bt_select.addActionListener(this);
-        this.add(bt_select);
-        
-        
+        this.bt_select = ATSwingUtils.getButton(m_ic.getMessage("SELECT"), 270, 0, 100, 25, this, ATSwingUtils.FONT_NORMAL, null, "", this, m_da);
         
     }
 

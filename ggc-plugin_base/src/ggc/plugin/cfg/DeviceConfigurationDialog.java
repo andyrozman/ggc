@@ -34,7 +34,6 @@ import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -70,7 +69,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     private I18nControlAbstract m_ic = null; //I18nControl.getInstance();        
     private DataAccessPlugInBase m_da; // = DataAccessMeter.getInstance();
 
-    private JPanel prefPane;
+    //private JPanel prefPane;
     
     public static Vector<String> time_zones_vector = null;
     public static Hashtable<String,String> time_zones = null;
@@ -127,8 +126,10 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         this.data = this.m_da.getDeviceConfiguration().getConfigDataCopy();
         this.current_entry = this.data.get(this.m_da.getDeviceConfiguration().getSelectedDeviceIndex());
         
-        
-        first_selected = this.m_da.getDeviceConfiguration().getSelectedDeviceIndex() + " - " + this.current_entry.name;
+        if (current_entry!=null)
+            first_selected = this.m_da.getDeviceConfiguration().getSelectedDeviceIndex() + " - " + this.current_entry.name;
+        else 
+            first_selected = null;
     }
     
     
@@ -215,42 +216,26 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     {
         this.setLayout(null);
 
-        prefPane = new JPanel(null);
-        prefPane.setBounds(0,0,450,600);
-        
-        Font normal = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL);
-        
-        JLabel label = new JLabel(m_ic.getMessage("DEVICE_CONFIGURATION"));
-        label.setBounds(0,20, 450, 30);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setFont(m_da.getFont(DataAccessPlugInBase.FONT_BIG_BOLD));
-        prefPane.add(label);
+        JPanel main_panel = ATSwingUtils.getPanel(0,0,450,600, null, null, null); 
 
-        
-        JPanel pan_sel = new JPanel();
-        pan_sel.setLayout(null);
-        pan_sel.setBorder(new TitledBorder(m_ic.getMessage("SELECT_X_DEVICE")));
-        pan_sel.setBounds(20, 75, 410, 60);
-        prefPane.add(pan_sel);
-        
+        ATSwingUtils.getTitleLabel(m_ic.getMessage("DEVICE_CONFIGURATION"), 0,20, 450, 30, main_panel, ATSwingUtils.FONT_BIG_BOLD); 
+
+        // select 
+        JPanel pan_sel = ATSwingUtils.getPanel(20, 75, 410, 60, null, new TitledBorder(m_ic.getMessage("SELECT_X_DEVICE")), main_panel); 
 
         ATSwingUtils.getLabel(m_ic.getMessage("SELECTED_X_DEVICE") + ":", 25,25, 200, 25, pan_sel, ATSwingUtils.FONT_NORMAL_BOLD);
 
+        cb_entry = ATSwingUtils.getComboBox(getComboEntriesFromConfiguration(), 205, 25, 190, 25, pan_sel, ATSwingUtils.FONT_NORMAL);
         
-        cb_entry = new JComboBox(getComboEntriesFromConfiguration());
-        cb_entry.setSelectedItem(this.first_selected);
-        cb_entry.setBounds(205, 25, 190, 25);
+        if (first_selected!=null)
+            cb_entry.setSelectedItem(this.first_selected);
+        //else
+        //    cb_entry.setSelectedIndex(0);
+        
         cb_entry.addItemListener(this);
-        cb_entry.setFont(normal);
-        //cb_entry.
-        pan_sel.add(cb_entry);
-        
-        
-        JPanel pan_meter = new JPanel();
-        pan_meter.setLayout(null);
-        pan_meter.setBorder(new TitledBorder(m_ic.getMessage("DEVICE_CONFIGURATION")));
-        pan_meter.setBounds(20, 140, 410, 150);
-        prefPane.add(pan_meter);
+
+        // device configuration
+        JPanel pan_meter = ATSwingUtils.getPanel(20, 140, 410, 150, null, new TitledBorder(m_ic.getMessage("DEVICE_CONFIGURATION")), main_panel);
         
         ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_CUSTOM_NAME") + ":", 25, 25, 150, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
         this.tf_name = ATSwingUtils.getTextField("", 170, 25, 225, 25, pan_meter);
@@ -260,104 +245,61 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
         ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_DEVICE") + ":", 25,85, 450, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
         this.lbl_device = ATSwingUtils.getLabel(m_ic.getMessage("NO_DEVICE_SELECTED"), 110, 85, 250, 25, pan_meter, ATSwingUtils.FONT_NORMAL);
-
         
-        JButton bt_device = new JButton(m_ic.getMessage("SELECT"));
-        bt_device.setBounds(295, 55, 100, 55);
-        bt_device.setActionCommand("device_selector");
-        bt_device.addActionListener(this);
-        pan_meter.add(bt_device);
+        ATSwingUtils.getButton(m_ic.getMessage("SELECT"), 295, 55, 100, 55, 
+            pan_meter, ATSwingUtils.FONT_NORMAL, null, "device_selector", this, m_da);
         
         this.comm_port_comp = new CommunicationPortComponent(m_da, this);
         pan_meter.add(this.comm_port_comp);
         
 
-        // tz fix panel
-        JPanel pan_tzfix = new JPanel();
-        pan_tzfix.setLayout(null);
-        pan_tzfix.setBorder(new TitledBorder(m_ic.getMessage("TIMEZONE_CONFIGURATION")));
-        pan_tzfix.setBounds(20, 295, 410, 200);
-        prefPane.add(pan_tzfix);
-        
+        // timezone fix panel
+        JPanel pan_tzfix = ATSwingUtils.getPanel(20, 295, 410, 200, null, new TitledBorder(m_ic.getMessage("TIMEZONE_CONFIGURATION")), main_panel); 
         
         ATSwingUtils.getLabel(m_ic.getMessage("SELECT_TIMEZONE_LIST") + ":", 25,25, 450, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
         
         cb_timezone = ATSwingUtils.getComboBox(DeviceConfigurationDialog.time_zones_vector, 25, 50, 370, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
-/*
-        new JComboBox(DeviceConfigurationDialog.time_zones_vector);
-        cb_timezone.setBounds(25, 50, 370, 25);
-        cb_timezone.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL));
-        pan_tzfix.add(cb_timezone); */
-        
-        chb_fix = new JCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"));
-        chb_fix.setBounds(25, 90, 350, 25); // 340
+
+        chb_fix = ATSwingUtils.getCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"), 25, 90, 350, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
         chb_fix.addChangeListener(this);
-        chb_fix.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD));
         chb_fix.setSelected(false);
-        pan_tzfix.add(chb_fix);
-        
-        
-        label = new JLabel(m_ic.getMessage("WINTERTIME_FIX") + ":");
-        label.setBounds(40,120, 200, 25);
-        label.setFont(normal);
-        pan_tzfix.add(label);
 
         String[] changes = { "-1", "0", "+1" }; 
         
-        this.cb_winter_fix = new JComboBox(changes);
+        ATSwingUtils.getLabel(m_ic.getMessage("WINTERTIME_FIX") + ":", 40,120, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL);
+        
+        this.cb_winter_fix = ATSwingUtils.getComboBox(changes, 240, 120, 60, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
         this.cb_winter_fix.setSelectedIndex(1);
-        this.cb_winter_fix.setBounds(240, 120, 60, 25);
-        this.cb_winter_fix.setFont(normal);
-//        prefPane.add(this.cb_winter_fix);
-        pan_tzfix.add(this.cb_winter_fix);
-        
-        
-        label = new JLabel(m_ic.getMessage("SUMMERTIME_FIX") + ":");
-        label.setBounds(40,155, 200, 25);
-        label.setFont(normal);
-//        prefPane.add(label);
-        pan_tzfix.add(label);
-        
-        this.cb_summer_fix = new JComboBox(changes);
+
+        ATSwingUtils.getLabel(m_ic.getMessage("SUMMERTIME_FIX") + ":", 40, 155, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL);
+
+        this.cb_summer_fix = ATSwingUtils.getComboBox(changes, 240, 155, 60, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
         this.cb_summer_fix.setSelectedIndex(1);
-        this.cb_summer_fix.setBounds(240, 155, 60, 25);
-        this.cb_summer_fix.setFont(normal);
-//        prefPane.add(this.cb_summer_fix);
-        pan_tzfix.add(this.cb_summer_fix);
         
-        
-        //set the buttons up...
-        JButton button = new JButton("  " + m_ic.getMessage("OK"));
-        button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
-        button.setActionCommand("ok");
-        button.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL));
-        button.setBounds(50, 510, 110, 25);
-        button.addActionListener(this);
-        prefPane.add(button);
+        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 50, 510, 110, 25, 
+                                main_panel, ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
 
-        button = new JButton("  " +m_ic.getMessage("CANCEL"));
-        button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
-        button.setActionCommand("cancel");
-        button.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL));
-        button.setBounds(170, 510, 110, 25);
-        button.addActionListener(this);
-        prefPane.add(button);
-
+        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, 510, 110, 25, 
+            main_panel, ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
         
-        help_button = m_da.createHelpButtonByBounds(290, 510, 110, 25, this, DataAccessPlugInBase.FONT_NORMAL); 
-        prefPane.add(help_button);
+        help_button = m_da.createHelpButtonByBounds(290, 510, 110, 25, this, ATSwingUtils.FONT_NORMAL); //ATDataAccessAbstract.FONT_NORMAL); 
+        main_panel.add(help_button);
 
-        
         enableDisableFix(false);
         
-        this.cb_entry.setSelectedItem(this.first_selected);
+        //this.cb_entry.setSelectedItem(this.first_selected);
         
         this.comm_port_comp.setProtocol(0);
         current_index = this.cb_entry.getSelectedIndex();
         this.current_index_object = (String)this.cb_entry.getSelectedItem();
         this.loadItemData();
         
-        getContentPane().add(prefPane, null);
+        if (this.current_entry==null)
+        {
+            this.tf_name.setText("My " + m_ic.getMessage("DEVICE_NAME") + " #1");
+        }
+        
+        getContentPane().add(main_panel, null);
     }
 
 
@@ -575,6 +517,10 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     private void loadItemData()
     {
+        if (this.current_entry == null)
+            return;
+        
+        
         this.current_device = findDevice();
 //        this.current_entry = this.data.get(en);
 //        loadItemData();
@@ -660,6 +606,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     @SuppressWarnings("unchecked")
     private DeviceInterface findDevice()
     {
+        if (this.current_entry==null)
+            return null;
+        
         Vector<SelectableInterface> vct = (Vector<SelectableInterface>)this.m_da.getDeviceConfigurationDefinition().getSupportedDevices();
         
         for(int i=0; i<vct.size(); i++)
@@ -695,7 +644,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (en.startsWith(m_ic.getMessage("NEW__")))
         {
             String en_num = en.substring(en.indexOf("[")+1, en.indexOf("]"));
-            System.out.println("NEW Entry");
+            //System.out.println("NEW Entry");
             this.tf_name.setText("My meter" + " #" + en_num);
             resetEntry();
         }
