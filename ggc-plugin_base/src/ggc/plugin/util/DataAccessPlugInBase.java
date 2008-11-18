@@ -29,6 +29,8 @@
 
 package ggc.plugin.util;
 
+import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.list.BaseListEntry;
 
 import java.awt.Color;
@@ -56,7 +58,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 {
-
+    
     public String web_server_port = "444";
 
     public static final String pathPrefix = ".";
@@ -132,10 +134,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
        JFrame m_main = null;        
         
         
-    public Hashtable<String,String> metersUrl;
-    public ArrayList<String> metersNames;
+    //public Hashtable<String,String> metersUrl;
+    //public ArrayList<String> metersNames;
         
-        
+    
 
     // ********************************************************
     // ******      Constructors and Access methods        *****    
@@ -284,6 +286,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     {
         return this.about_image_name;
     }
+
+    public int[] getAboutImageSize()
+    {
+        int[] sz = new int[2];
+        sz[0] = 500;
+        sz[1] = 125;
+        
+        return sz;
+    }
     
     public String getAboutPluginCopyright()
     {
@@ -364,7 +375,34 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return null;
     }
     
+
+    // ********************************************************
+    // ******                Configuration                *****    
+    // ********************************************************
     
+    public abstract void createConfigurationContext();
+    
+    
+    protected DeviceConfigurationDefinition device_config_def;
+    
+    public DeviceConfigurationDefinition getDeviceConfigurationDefinition()
+    {
+        return device_config_def;
+    }
+    
+    
+    protected DeviceConfiguration device_config;
+    
+    public DeviceConfiguration getDeviceConfiguration()
+    {
+        if (this.device_config==null)
+            createDeviceConfiguration();
+        
+        return this.device_config;
+    }
+    
+
+    public abstract void createDeviceConfiguration();
 
     // ********************************************************
     // ******                  Settings                   *****    

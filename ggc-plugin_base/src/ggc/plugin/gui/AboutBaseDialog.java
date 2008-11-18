@@ -106,7 +106,9 @@ public class AboutBaseDialog extends AboutDialog
         JPanel p1 = new JPanel();
         p1.setLayout(new BorderLayout());
 
-        JLabel l = new JLabel(new ImageIcon(m_da.getImage(m_da.getAboutImageName(), this).getScaledInstance(500,125,java.awt.Image.SCALE_SMOOTH)));
+        int[] sz = m_da.getAboutImageSize();
+        
+        JLabel l = new JLabel(new ImageIcon(m_da.getImage(m_da.getAboutImageName(), this).getScaledInstance(sz[0], sz[1] /*500,125*/,java.awt.Image.SCALE_SMOOTH)));
         p1.add(l, BorderLayout.CENTER);
 
         JLabel l2 = new JLabel();

@@ -2,6 +2,10 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.2.1
+    - changed about dialog - resizing of about picture now possible
+    - added configuration for devices (ggc.plugin.cfg). Configuration is now done globally.
+
 0.1.9
     - added web stuff
 

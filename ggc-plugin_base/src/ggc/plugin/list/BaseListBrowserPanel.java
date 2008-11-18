@@ -205,7 +205,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         return;
     }
 
-
+/* xa
     public void loadFile(String name)
     {
         System.out.println("loadFile: " + name);
@@ -244,7 +244,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
             ex.printStackTrace();
         }
     	*/
-    }
+  //  }
 
     
     public void loadPage(String url_src)
