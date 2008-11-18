@@ -494,5 +494,21 @@ public class DataAccessPump extends DataAccessPlugInBase
         return null;
     }
 
+
+    @Override
+    public void createConfigurationContext()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void createDeviceConfiguration()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
     
 }
