@@ -167,7 +167,8 @@ public class DataAccessMeter extends DataAccessPlugInBase
         I18nControlAbstract ic = getI18nControlInstance();
         
         about_title = ic.getMessage("METER_PLUGIN_ABOUT");
-        about_image_name = "/icons/about_logo.gif";
+        about_image_name = "/icons/about_meter.jpg";
+//        about_image_name = "/icons/about_logo.gif";
         about_plugin_copyright_from = 2006;
         about_plugin_name = ic.getMessage("METER_PLUGIN");
         
@@ -267,6 +268,15 @@ public class DataAccessMeter extends DataAccessPlugInBase
     public String getImagesRoot()
     {
     	return "/icons/";
+    }
+    
+    public int[] getAboutImageSize()
+    {
+        int[] sz = new int[2];
+        sz[0] = 200;
+        sz[1] = 125;
+        
+        return sz;
     }
     
     

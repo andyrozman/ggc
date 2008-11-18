@@ -25,8 +25,8 @@ import ggc.plugin.output.OutputWriter;
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: OneTouchUltra2.java
- *  Purpose:  This class is used for data retrieval from OneTouch Ultra2 Meter and
+ *  Filename: OneTouchProfile.java
+ *  Purpose:  This class is used for data retrieval from OneTouch Profile Meter and
  *            extends OneTouchMeter (actually this one has all retrieval and this class
  *            has only identification methods).
  *
@@ -36,9 +36,8 @@ import ggc.plugin.output.OutputWriter;
 
 
 // in works
-public class OneTouchUltra2 extends OneTouchMeter
+public class OneTouchInDuo extends OneTouchMeter
 {
-    // No picture
 
     /**
      * Constructor used by most classes
@@ -46,7 +45,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      * @param portName
      * @param writer
      */
-    public OneTouchUltra2(String portName, OutputWriter writer)
+    public OneTouchInDuo(String portName, OutputWriter writer)
     {
         super(portName, writer);
     }
@@ -55,7 +54,7 @@ public class OneTouchUltra2 extends OneTouchMeter
     /**
      * Constructor
      */
-    public OneTouchUltra2()
+    public OneTouchInDuo()
     {
         super();
     }
@@ -65,7 +64,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      * 
      * @param cmp
      */
-    public OneTouchUltra2(AbstractDeviceCompany cmp)
+    public OneTouchInDuo(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
@@ -78,7 +77,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public String getName()
     {
-        return "One Touch Ultra 2";
+        return "InDuo";
     }
 
     
@@ -98,7 +97,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.onetouch.OneTouchUltra2";
+        return "ggc.meter.device.onetouch.OneTouchInDuo";
     }
 
     
@@ -110,7 +109,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public int getDeviceId()
     {
-        return OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA_2;
+        return OneTouchMeter.METER_LIFESCAN_INDUO;
     }
 
     
@@ -121,8 +120,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public String getIconName()
     {
-        // TODO fill in
-        return null;
+        return "ls_induo.jpg";
     }
 
 
@@ -131,7 +129,8 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public int getMaxMemoryRecords()
     {
-        return 500;
+        // TODO: 
+        return 150;
     }
 
     /**
@@ -141,7 +140,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public String getShortName()
     {
-        return "Ultra 2";
+        return "InDuo";
     }
 
 }

@@ -120,8 +120,7 @@ public class OneTouchProfile extends OneTouchMeter
      */
     public String getIconName()
     {
-        // TODO fill in
-        return null;
+        return "ls_ot_profile.jpg";
     }
 
 

@@ -120,8 +120,7 @@ public class OneTouchUltra extends OneTouchMeter
      */
     public String getIconName()
     {
-        // TODO fill in
-        return null;
+        return "ls_ot_ultra.jpg";
     }
 
 

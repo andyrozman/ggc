@@ -36,9 +36,8 @@ import ggc.plugin.output.OutputWriter;
 
 
 // in works
-public class OneTouchUltra2 extends OneTouchMeter
+public class OneTouchUltraLink extends OneTouchMeter
 {
-    // No picture
 
     /**
      * Constructor used by most classes
@@ -46,7 +45,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      * @param portName
      * @param writer
      */
-    public OneTouchUltra2(String portName, OutputWriter writer)
+    public OneTouchUltraLink(String portName, OutputWriter writer)
     {
         super(portName, writer);
     }
@@ -55,7 +54,7 @@ public class OneTouchUltra2 extends OneTouchMeter
     /**
      * Constructor
      */
-    public OneTouchUltra2()
+    public OneTouchUltraLink()
     {
         super();
     }
@@ -65,7 +64,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      * 
      * @param cmp
      */
-    public OneTouchUltra2(AbstractDeviceCompany cmp)
+    public OneTouchUltraLink(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
@@ -78,7 +77,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public String getName()
     {
-        return "One Touch Ultra 2";
+        return "One Touch UltraLink";
     }
 
     
@@ -98,7 +97,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.onetouch.OneTouchUltra2";
+        return "ggc.meter.device.onetouch.OneTouchUltraLink";
     }
 
     
@@ -110,7 +109,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public int getDeviceId()
     {
-        return OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA_2;
+        return OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRALINK;
     }
 
     
@@ -141,7 +140,7 @@ public class OneTouchUltra2 extends OneTouchMeter
      */
     public String getShortName()
     {
-        return "Ultra 2";
+        return "UltraLink";
     }
 
 }

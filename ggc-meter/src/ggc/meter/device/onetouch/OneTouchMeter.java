@@ -24,22 +24,23 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 {
     
     
-    public static final int LIFESCAN_COMPANY          = 2;
+    public static final int LIFESCAN_COMPANY          = 3;
     
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA      = 20001;
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_2    = 20002;
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRASMART = 20003;
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRALINK  = 20004;
-    public static final int METER_LIFESCAN_ONE_TOUCH_SELECT     = 20005;
-    public static final int METER_LIFESCAN_INDUO                = 20006;
-    public static final int METER_LIFESCAN_ONE_TOUCH_BASIC      = 20007;
-    public static final int METER_LIFESCAN_ONE_TOUCH_SURESTEP   = 20008;
-    public static final int METER_LIFESCAN_ONE_TOUCH_FASTTAKE   = 20009;
-    public static final int METER_LIFESCAN_ONE_TOUCH_PROFILE    = 20010;
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA      = 30001;
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_2    = 30002;  // NP
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRASMART = 30003;  // NI
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRALINK  = 30004;  // NI  NP
+    public static final int METER_LIFESCAN_ONE_TOUCH_SELECT     = 30005;  // NI  NP
+    public static final int METER_LIFESCAN_INDUO                = 30006;  // NI
+    public static final int METER_LIFESCAN_ONE_TOUCH_BASIC      = 30007;  // NI
+    public static final int METER_LIFESCAN_ONE_TOUCH_SURESTEP   = 30008;  // NI
+    public static final int METER_LIFESCAN_ONE_TOUCH_FASTTAKE   = 30009;  // NI
+    public static final int METER_LIFESCAN_ONE_TOUCH_PROFILE    = 30010;  
+    public static final int METER_LIFESCAN_ONE_TOUCH_II         = 30011;  // NI
     
     // these have different protocol and are extended from OneTouchMeter2
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_MINI = 20050;
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY = 20050;
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_MINI = 30050;  // NI NP
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY = 30050;  // NI NP
     
     
     
