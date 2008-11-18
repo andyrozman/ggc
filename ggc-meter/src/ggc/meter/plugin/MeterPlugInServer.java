@@ -1,9 +1,9 @@
 package ggc.meter.plugin;
 
 import ggc.meter.gui.MeterInstructionsDialog;
-import ggc.meter.gui.config.SimpleConfigurationDialog;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.list.BaseListDialog;
 
@@ -20,7 +20,7 @@ public class MeterPlugInServer extends PlugInServer
     /**
      * Version of Meter Tool
      */
-    private String meter_tool_version = "0.3.7";
+    //private String meter_tool_version = "0.3.7";
     
     public static final int COMMAND_READ_METER_DATA = 0;
     public static final int COMMAND_METERS_LIST = 1;
@@ -63,33 +63,36 @@ public class MeterPlugInServer extends PlugInServer
         switch(command)
         {
             case MeterPlugInServer.COMMAND_READ_METER_DATA:
-            {
-                DbDataReaderAbstract reader = (DbDataReaderAbstract)obj_data; 
-                new MeterInstructionsDialog(reader, this);
-                return;
-            }
+                {
+                    DbDataReaderAbstract reader = (DbDataReaderAbstract)obj_data; 
+                    new MeterInstructionsDialog(reader, this);
+                    return;
+                }
 
             case MeterPlugInServer.COMMAND_METERS_LIST:
-            {
-                new BaseListDialog((JFrame)parent, DataAccessMeter.getInstance());
-                return;
-            }
-
+                {
+                    new BaseListDialog((JFrame)parent, DataAccessMeter.getInstance());
+                    return;
+                }
             
             case MeterPlugInServer.COMMAND_ABOUT:
-            {
-                new AboutBaseDialog((JFrame)parent, DataAccessMeter.getInstance());
-                return;
-            }
+                {
+                    new AboutBaseDialog((JFrame)parent, DataAccessMeter.getInstance());
+                    return;
+                }
             
+            case MeterPlugInServer.COMMAND_CONFIGURATION:
+                {
+                    //m_da.listComponents();
+                    //new SimpleConfigurationDialog(this.m_da);
+                    new DeviceConfigurationDialog((JFrame)parent, DataAccessMeter.getInstance());
+                    return;
+                }
             
             default:
-            case MeterPlugInServer.COMMAND_CONFIGURATION:
-            {
-                //m_da.listComponents();
-                new SimpleConfigurationDialog(this.m_da);
-                return;
-            }
+                {
+                    System.out.println("Internal error with MeterPlugInServer.");
+                }
             
         }
         
@@ -110,7 +113,9 @@ public class MeterPlugInServer extends PlugInServer
     @Override
     public String getVersion()
     {
-        return this.meter_tool_version;
+        return DataAccessMeter.PLUGIN_VERSION;
+        //return DataAccessMeter.getInstance().getPlugInVersion();
+        //return this.meter_tool_version;
     }
 
     /* 

@@ -32,7 +32,7 @@ package ggc.meter.gui.config;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 
 public class SimpleConfiguration_v2_Dialog //extends JDialog implements ActionListener, ChangeListener, ItemListener //, HelpCapable
@@ -44,7 +44,7 @@ public class SimpleConfiguration_v2_Dialog //extends JDialog implements ActionLi
     {
         DataAccessMeter da = DataAccessMeter.getInstance();
         
-        JDialog d1 = new JDialog();
+        JFrame d1 = new JFrame();
         da.addComponent(d1);
         
         new DeviceConfigurationDialog(d1, da);

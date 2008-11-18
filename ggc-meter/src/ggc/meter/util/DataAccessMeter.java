@@ -54,6 +54,8 @@ import com.atech.i18n.I18nControlAbstract;
 public class DataAccessMeter extends DataAccessPlugInBase
 {
 
+    public static final String PLUGIN_VERSION = "0.3.8";
+    
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
     private MeterManager m_meterManager = null;
@@ -99,6 +101,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         createWebListerContext();
         createPlugInAboutContext();
         createConfigurationContext();
+        createPlugInVersion();
     }
     
     
@@ -277,6 +280,18 @@ public class DataAccessMeter extends DataAccessPlugInBase
         sz[1] = 125;
         
         return sz;
+    }
+    
+    
+    
+    // ********************************************************
+    // ******                  Version                    *****    
+    // ********************************************************
+    
+    
+    public void createPlugInVersion()
+    {
+        this.plugin_version = DataAccessMeter.PLUGIN_VERSION;
     }
     
     

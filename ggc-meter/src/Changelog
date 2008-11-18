@@ -2,6 +2,11 @@
 Changes file for GGC Meter Tool
 ===============================
 
+0.3.8
+    * Added some new classes for OneTouch (now all classes are present, but they are not added to manager, since
+      they are not supported at this time)
+    * Added some pictures for OneTouch
+
 0.3.7 
     * OneTouch Ultra download is working, there are some minor problems with GUI 
       display, but download itself works.
