@@ -104,6 +104,20 @@ public class DeviceConfiguration
         }
     }
     
+    public DeviceConfigEntry getSelectedDeviceInstance()
+    {
+        if ((this.default_device == null) || (this.default_device.length()==0))
+            return null;
+        else
+        {
+            if (this.device_entries.contains(this.default_device))
+                return this.device_entries.get(this.default_device);
+            else
+                return null;
+        }
+        
+    }
+    
     
     public String getSelectedDeviceIndex()
     {
