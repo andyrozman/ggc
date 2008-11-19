@@ -3,12 +3,12 @@
  */
 package ggc.pump.device.animas;
 
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.device.AbstractPump;
-import ggc.pump.device.DeviceIdentification;
 import ggc.pump.device.PumpException;
-import ggc.pump.output.OutputWriter;
 import ggc.pump.protocol.ConnectionProtocols;
 
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ public abstract class EZManagerDb extends AbstractPump
      */
     public DeviceIdentification getDeviceInfo()
     {
-        DeviceIdentification toRet = new DeviceIdentification();  
+        DeviceIdentification toRet = new DeviceIdentification(ic);  
         toRet.company = "Animas";
         toRet.device_family = "n/a";
         toRet.device_hardware_version = "n/a";

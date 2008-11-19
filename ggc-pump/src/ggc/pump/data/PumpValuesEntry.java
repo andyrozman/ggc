@@ -31,9 +31,9 @@ package ggc.pump.data;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.pump.PumpDataH;
+import ggc.plugin.output.OutputUtil;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.output.OutputUtil;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -78,7 +78,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 	public static I18nControl ic = I18nControl.getInstance(); 
 	
 	//public String bg_original = null;
-	public OutputUtil util = new OutputUtil();
+	public OutputUtil util = OutputUtil.getInstance();
 	
 	
 	public static final int STATUS_UNKNOWN = 0;

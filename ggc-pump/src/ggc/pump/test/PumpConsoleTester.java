@@ -29,9 +29,9 @@
 
 package ggc.pump.test;
 
+import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.pump.device.accuchek.AccuChekSpirit;
 import ggc.pump.device.minimed.MinimedCareLink;
-import ggc.pump.output.ConsoleOutputWriter;
 import ggc.pump.protocol.SerialProtocol;
 
 import java.awt.TextArea;

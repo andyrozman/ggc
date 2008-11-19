@@ -1,8 +1,9 @@
 package ggc.pump.device;
 
 
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.pump.output.OutputWriter;
+import ggc.plugin.output.OutputWriter;
 import ggc.pump.protocol.SerialProtocol;
 import ggc.pump.util.I18nControl;
 import gnu.io.NoSuchPortException;
@@ -88,7 +89,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(ic);
         di.company = group;
         di.device_selected = device;
         

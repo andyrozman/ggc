@@ -1,5 +1,6 @@
 package ggc.pump.device;
 
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 

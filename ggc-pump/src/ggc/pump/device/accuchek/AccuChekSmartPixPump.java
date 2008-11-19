@@ -1,6 +1,8 @@
 
 package ggc.pump.device.accuchek;
 
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.defs.PumpAlarms;
 import ggc.pump.data.defs.PumpBasalSubType;
@@ -9,8 +11,6 @@ import ggc.pump.data.defs.PumpDataType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
-import ggc.pump.device.DeviceIdentification;
-import ggc.pump.output.OutputWriter;
 import ggc.pump.protocol.ConnectionProtocols;
 
 import java.io.File;

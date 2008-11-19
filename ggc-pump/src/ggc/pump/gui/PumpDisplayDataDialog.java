@@ -1,14 +1,15 @@
 package ggc.pump.gui;
 
 import ggc.core.db.hibernate.DayValueH;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputUtil;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.output.OutputWriterData;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesTable;
 import ggc.pump.data.PumpValuesTableModel;
 import ggc.pump.data.cfg.PumpConfigEntry;
-import ggc.pump.device.DeviceIdentification;
-import ggc.pump.output.AbstractOutputWriter;
-import ggc.pump.output.OutputUtil;
-import ggc.pump.output.OutputWriter;
 import ggc.pump.plugin.PumpPlugInServer;
 import ggc.pump.util.DataAccessPump;
 
@@ -618,7 +619,7 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
     }
     
     
-    OutputUtil output_util = new OutputUtil(this);
+    OutputUtil output_util = OutputUtil.getInstance(this);
 
     /*
      * getOutputUtil
@@ -811,6 +812,27 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
         // MeterReadDialog mrd =
         new PumpDisplayDataDialog(); // new AscensiaContour("COM12", new
                                       // ConsoleOutputWriter()));
+    }
+
+
+    public void writeData(OutputWriterData data)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void writeLog(int entry_type, String message)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void writeLog(int entry_type, String message, Exception ex)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 

@@ -3,8 +3,8 @@ package ggc.pump.device;
 
 
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.output.OutputWriter;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;

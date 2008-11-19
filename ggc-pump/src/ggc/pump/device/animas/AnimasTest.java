@@ -1,7 +1,7 @@
 package ggc.pump.device.animas;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
-import ggc.pump.output.OutputWriter;
+import ggc.plugin.output.OutputWriter;
 
 public class AnimasTest extends EZManagerDb
 {

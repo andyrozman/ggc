@@ -8,9 +8,10 @@
 package ggc.pump.device;
 
 
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.output.OutputWriter;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
@@ -27,6 +28,12 @@ public class GenericPump extends AbstractPump //implements PumpInterface
     protected ArrayList<PumpValuesEntry> data = null;
 
 
+    public GenericPump()
+    {
+        super();
+    }
+    
+    
     public GenericPump(OutputWriter ow)
     {
         super(ow);

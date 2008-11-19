@@ -9,8 +9,8 @@ package ggc.pump.device;
  */
 
 
+import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.output.OutputWriter;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
@@ -27,6 +27,12 @@ public class DummyPump extends GenericPump //implements MeterInterface
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     public int m_meter_index = 0;
+    
+    
+    public DummyPump()
+    {
+        super();
+    }
     
     public DummyPump(OutputWriter ow)
     {

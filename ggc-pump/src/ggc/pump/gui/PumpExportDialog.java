@@ -1,9 +1,9 @@
 package ggc.pump.gui;
 
 import ggc.core.db.hibernate.DayValueH;
+import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.cfg.PumpConfigEntry;
-import ggc.pump.output.OutputWriter;
 import ggc.pump.plugin.PumpPlugInServer;
 import ggc.pump.util.DataAccessPump;
 
