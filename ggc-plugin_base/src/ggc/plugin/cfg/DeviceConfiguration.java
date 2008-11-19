@@ -110,7 +110,7 @@ public class DeviceConfiguration
             return null;
         else
         {
-            if (this.device_entries.contains(this.default_device))
+            if (this.device_entries.containsKey(this.default_device))
                 return this.device_entries.get(this.default_device);
             else
                 return null;
