@@ -1,20 +1,25 @@
 package ggc.meter.gui;
 
-import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.output.OutputWriterData;
+import ggc.plugin.util.LogEntryType;
 
 import java.lang.reflect.Constructor;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class MeterReaderRunner extends Thread implements OutputWriter // extends JDialog implements ActionListener
 {
 
+    private static Log log = LogFactory.getLog(MeterReaderRunner.class);
     
     MeterInterface m_mi = null;
     boolean special_status = false;
@@ -183,11 +188,11 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
     private static final long serialVersionUID = 7159799607489791137L;
 
     
-    MeterConfigEntry configured_meter;
+    DeviceConfigEntry configured_meter;
     MeterDisplayDataDialog dialog;
 
     
-    public MeterReaderRunner(MeterConfigEntry configured_meter, MeterDisplayDataDialog dialog)
+    public MeterReaderRunner(DeviceConfigEntry configured_meter, MeterDisplayDataDialog dialog)
     {
 //        this.writer = writer;
         this.configured_meter = configured_meter;
@@ -230,11 +235,14 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
 
         while(running)
         {
-
+            String lg = "";
             try
             {
-            
-                String className = MeterManager.getInstance().getMeterDeviceClassName(this.configured_meter.meter_company, this.configured_meter.meter_device); 
+                lg = "Creating instance [name=" + this.configured_meter.name + ",company=" + this.configured_meter.device_company + ",device=" + this.configured_meter.device_device + ",comm_port=" + this.configured_meter.communication_port + "]";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
+                
+                String className = MeterManager.getInstance().getMeterDeviceClassName(this.configured_meter.device_company, this.configured_meter.device_device); 
                 
                 Class<?> c = Class.forName(className);
                 
@@ -242,11 +250,19 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
                 this.m_mi = (MeterInterface)cnst.newInstance(this.configured_meter.communication_port, this);
                 this.setDeviceComment(this.m_mi.getDeviceSpecialComment());
                 this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
+                
+                lg = "Meter device instance created and initied";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
             
                 this.special_status = this.m_mi.hasSpecialProgressStatus();
                 
-                this.m_mi.readDeviceDataFull();
+                lg = "Start reading of data";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
                 
+                this.m_mi.readDeviceDataFull();
+
                 running = false;
                 
                 this.m_mi.close();
@@ -255,13 +271,21 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
             catch(Exception ex)
             {
                 this.setStatus(AbstractOutputWriter.STATUS_READER_ERROR);
-                System.out.println("Exception: " + ex);
-                ex.printStackTrace();
-                
+                //System.out.println("Exception: " + ex);
+                //ex.printStackTrace();
+                //log.error("MeterReaderRunner:Exception:" + ex, ex);
+                lg = "MeterReaderRunner:Exception:" + ex;
+                log.error(lg, ex);
+                writeLog(LogEntryType.ERROR, lg, ex);
                 running = false;
             }
             
             this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
+
+            lg = "Reading finished";
+            log.debug(lg);
+            writeLog(LogEntryType.DEBUG, lg);
+            
             
         }  // while
 

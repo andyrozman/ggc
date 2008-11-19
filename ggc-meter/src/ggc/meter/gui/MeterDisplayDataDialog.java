@@ -4,9 +4,9 @@ import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.MeterValuesTable;
 import ggc.meter.data.MeterValuesTableModel;
-import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
@@ -60,7 +60,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     
     private Hashtable<String,DayValueH> meter_data = null;
-    MeterConfigEntry configured_meter;
+    DeviceConfigEntry configured_meter;
     
     
     private JButton bt_close, bt_import, bt_break;
@@ -143,7 +143,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     }
 
     
-    public MeterDisplayDataDialog(MeterConfigEntry mce)
+    public MeterDisplayDataDialog(DeviceConfigEntry mce)
     {
         super();
 
@@ -155,7 +155,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     }
     
 
-    public MeterDisplayDataDialog(MeterConfigEntry mce, Hashtable<String,DayValueH> meter_data, MeterPlugInServer server)
+    public MeterDisplayDataDialog(DeviceConfigEntry mce, Hashtable<String,DayValueH> meter_data, MeterPlugInServer server)
     {
         super();
 
@@ -199,7 +199,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     private void dialogPreInit()
     {
   //      loadConfiguration();
-        setTitle(String.format(m_ic.getMessage("READ_METER_DATA_TITLE"), this.configured_meter.meter_device, 
+        setTitle(String.format(m_ic.getMessage("READ_METER_DATA_TITLE"), this.configured_meter.device_device, 
                 this.configured_meter.communication_port));
 
         m_da.addComponent(this);

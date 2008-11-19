@@ -2,12 +2,11 @@
 package ggc.meter.gui;
 
 import ggc.core.db.hibernate.DayValueH;
-import ggc.meter.data.cfg.MeterConfigEntry;
-import ggc.meter.data.cfg.MeterConfiguration;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.protocol.ConnectionProtocols;
 
@@ -22,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
@@ -54,7 +54,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     
     
     MeterInterface meter_interface;
-    MeterConfigEntry configured_meter;
+    DeviceConfigEntry configured_meter;
     DbDataReaderAbstract reader;
     MeterPlugInServer server;
 /*
@@ -92,7 +92,14 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     public MeterInstructionsDialog(DbDataReaderAbstract reader, MeterPlugInServer server)
     {
         super();
-        loadConfiguration();
+        
+        if (!loadConfiguration())
+        {
+            JOptionPane.showMessageDialog(this, m_ic.getMessage("OOPS_DEVICE_NOT_CONFIGURED"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+            
+            
+            return;
+        }
         
         //m_da.addContainer(server.)
         
@@ -107,13 +114,14 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     
     
     
-    private void loadConfiguration()
+    private boolean loadConfiguration()
     {
-        // TODO: this should be read from config
+        //MeterConfiguration mc = new MeterConfiguration(false);
         
-        MeterConfiguration mc = new MeterConfiguration(false);
+        this.configured_meter = this.m_da.getDeviceConfiguration().getSelectedDeviceInstance(); //mc.getDefaultMeter();
         
-        this.configured_meter = mc.getDefaultMeter();
+        if (this.configured_meter==null)
+            return false;
         
         /*
         this.configured_meter = new MeterConfigEntry();
@@ -133,12 +141,14 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         tzu.setSummerTimeChange(+1);
         */
         
-        System.out.println(this.configured_meter.meter_company + " " + this.configured_meter.meter_device);
+        //System.out.println(this.configured_meter.meter_company + " " + this.configured_meter.meter_device);
         
         
-        DeviceInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
+        DeviceInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.device_company, this.configured_meter.device_device);
         
         this.meter_interface = (MeterInterface)mi;
+        
+        return true;
         
     }
     
@@ -282,7 +292,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.meter_company);
+        label = new JLabel(this.configured_meter.device_company);
         label.setBounds(130, 40, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -292,7 +302,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.meter_device);
+        label = new JLabel(this.configured_meter.device_device);
         label.setBounds(130, 60, 320, 25);
         label.setFont(normal);
         panel_device.add(label);

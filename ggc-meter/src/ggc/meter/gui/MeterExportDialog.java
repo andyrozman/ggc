@@ -2,9 +2,9 @@ package ggc.meter.gui;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.data.cfg.MeterConfigEntry;
 import ggc.meter.plugin.MeterPlugInServer;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.output.OutputWriter;
 
 import java.awt.BorderLayout;
@@ -59,7 +59,7 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
 
     
     private Hashtable<String,ArrayList<DayValueH>> meter_data = null;
-    MeterConfigEntry configured_meter;
+    DeviceConfigEntry configured_meter;
     
     
     private JButton bt_close, bt_start;
@@ -114,7 +114,7 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
     
 
     
-    public MeterExportDialog(MeterConfigEntry mce)
+    public MeterExportDialog(DeviceConfigEntry mce)
     {
         super();
 
