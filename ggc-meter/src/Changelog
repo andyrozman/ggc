@@ -2,6 +2,11 @@
 Changes file for GGC Meter Tool
 ===============================
 
+1.0.1 
+    * Meter Tool is now complete, at least all functionalities that were planned, which is reason why we progressed
+      version to 1.x. There is a lot of stuff done, but some stuff still needs to be done (configured and some
+      stuff changed).
+
 0.3.8
     * Added some new classes for OneTouch (now all classes are present, but they are not added to manager, since
       they are not supported at this time)

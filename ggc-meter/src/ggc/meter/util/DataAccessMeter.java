@@ -54,7 +54,7 @@ import com.atech.i18n.I18nControlAbstract;
 public class DataAccessMeter extends DataAccessPlugInBase
 {
 
-    public static final String PLUGIN_VERSION = "0.3.8";
+    public static final String PLUGIN_VERSION = "1.0.1";
     
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
