@@ -32,6 +32,7 @@ package ggc.meter.test;
 import ggc.meter.device.accuchek.AccuChekAviva;
 import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.onetouch.OneTouchUltra;
+import ggc.meter.device.onetouch.OneTouchUltraEasy;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 
@@ -74,7 +75,9 @@ public class MeterConsoleTester //extends JFrame
     	try
     	{
     	    //startAscensia(portName);
-    	    this.startOneTouchUltra(portName);
+    	    //this.startOneTouchUltra(portName);
+    	    
+    	    this.startOneTouchEasy(portName);
     	    
     	    //startAccuChekAviva();
     	    
@@ -273,7 +276,20 @@ public class MeterConsoleTester //extends JFrame
 
     }
     
+    public void startOneTouchEasy(String portName) throws Exception
+    {
+        
+        ConsoleOutputWriter cow = new ConsoleOutputWriter();
+        
+        displaySerialPorts();
+        
+        OneTouchUltraEasy otu = new OneTouchUltraEasy(portName, cow);
+        otu.readDeviceDataFull();
+        otu.test_crc();
+
+    }
     
+
     
     public void displaySerialPorts()
     {

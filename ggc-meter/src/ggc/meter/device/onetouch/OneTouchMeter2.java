@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import com.atech.utils.ATechDate;
+import com.atech.utils.HexUtils;
 import com.atech.utils.TimeZoneUtil;
 
 
@@ -147,7 +148,14 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         return null;
     }
 
-   
+
+    HexUtils hex_utils = new HexUtils();
+    
+    
+    String rec_bef = "02" + "0A" + "00" + "05" + "1F";
+    String rec_af = "03" + "38" + "AA";
+    
+    String ack_pc = "02" + "06" + "07" + "03" + "FC" + "72";
 
 
     public void readDeviceDataFull()
@@ -162,89 +170,98 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         
         try
         {
-            
-            write("D".getBytes());
-            waitTime(100);
-            write("M".getBytes());
-            waitTime(100);
-            write("?".getBytes());
-            waitTime(500);
-            
-            String line;
+            HexUtils hu = new HexUtils();
 
-            System.out.println("Serial Number: " + this.readLine());
-            System.out.println("Serial Number: " + this.readLine());
+            String ret;
+            byte[] reta;
             
             
-            while((line=this.readLine())==null)
-            {
-                
-            }
+            cmdDisconnectAcknowledge();
             
-            System.out.println("Serial Number: " + line);
-            //System.out.println("Serial Number: " + this.readLine());
-            //System.out.println("Serial Number: " + this.readLine());
-            
-            
-            write("D".getBytes());
-            waitTime(100);
-            write("M".getBytes());
-            waitTime(100);
-            write("P".getBytes());
-            waitTime(100);
-            
-            //write("DM?".getBytes());
-            
-            //write("DMP".getBytes());
-            
-/*
-            this.device_running = true;
-            
-            */
-            /*
-            write(5);  // ENQ
-            waitTime(1000); 
-            write(6);  // ACK
-  */
-            //String line;
 
-            System.out.println("loadInitialData()::");
-         
-            //powerOn();
-            /* Z
-            int ch;
-            boolean running = true;
-            while(running)
-            {
-                ch = this.read();
-                System.out.print((char)ch + " int: " + ch);
-            }
-            /*
-            while ((ch = this.read()) != -1) && (!isDeviceStopped(line)))
-            {
-                System.out.print((char)ch);
-            }*/
-//            String line="";
             
-            System.out.println("Out");
-            //String line;    
             
-            //while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
-            while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
-            {
-                processEntry(line);
-                //System.out.println("D: " + line);
-                //processData(line.trim());
-                //sendToProcess(line);
-                //write(6);
-                
-                System.out.println(this.entries_current + "/" + this.entries_max  );
-                
-                if (line==null)
-                    break;
-                
-            }
-        
+            // read sw version and sw creation date
+            System.out.println("PC-> read sw version and sw creation date");
+            String read_sw_ver_create = "02" + "09" + "00" + 
+                                        "05" + "0D" + "02" +
+                                        "03" + "DA" + "71";
+            
+            write(hu.reconvert(read_sw_ver_create));
+            
+            //reta = this.readLineBytes();
+            
+            
+            //System.out.println("Acknowledge Meter: " + this.readLine());
+            String sw_dd = tryToConvert(this.readLineBytes(), 6+6, 3, false);
+
+            int idx = sw_dd.indexOf("/") -2;
+            
+            
+            //System.out.println("Sw Ver: " + sw_dd.substring(0, idx ) + " date: " + sw_dd.substring(idx));
+            
+            
+            //System.out.println("Value Meter: " + this.readLine());
+
+
+            System.out.println("PC-> Acknowledge");
+            
+            write(hu.reconvert(ack_pc));
+
+            
+            // read serial number
+            System.out.println("PC-> read serial nr");
+
+            String read_serial_nr = "02" + "12" + "00" + "05" + // STX Len Link
+            "0B" + "02" + "00" + "00" + "00" + "00" + "84" + "6A" + "E8" + "73" + "00" +  // CM1-CM12
+            "03" + "9B" + "EA"; // ETX CRC-L CRC-H
+            
+            write(hu.reconvert(read_serial_nr));
+            
+            String sn = tryToConvert(this.readLineBytes(), 6+5, 3, false);
+            
+            System.out.println("S/N: " + sn);
+            
+            System.out.println("PC-> Acknowledge");
+            write(hu.reconvert(ack_pc));
+            
+            
+            // read entry 501 to return count
+            
+            
+            System.out.println("PC-> read record 501 to receive nr");
+            
+            write(hu.reconvert(rec_bef + "F5" + "01" + rec_af));
+            
+            //ret = this.readLine();
+            
+            reta = this.readLineBytes();
+            
+            String els = tryToConvert(reta, 6+5, 3, true);
+            
+            reta = getByteSubArray(reta, 6+5, 3, 2);
+            
+            this.showByteArray(reta);
+            
+//            System.out.println("10: " + Integer.parseInt("10", 16));
+//            System.out.println("Val: " + Integer.toString(10, 16));
+            
+            int nr = (reta[1] * 255) + reta[0];
+            
+            System.out.println("Entries: " + nr);
+            
+            System.out.println("PC-> Acknowledge");
+            write(hu.reconvert(ack_pc));
+          
+            
+            //readEntry(260);
+            cmdDisconnectAcknowledge();
+            
+            readEntry(1);
+
+            readEntry(2);
+            
+
         }
         catch(Exception ex)
         {
@@ -266,9 +283,278 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         
     }
 
+    
+    private void cmdDisconnectAcknowledge() throws IOException
+    {
+        System.out.println("PC-> Disconnect");
+        String disconect = "02" + "06" + "08" + "03" + "C2" + "62";
+        
+        write(hex_utils.reconvert(disconect));
+        
+        System.out.println("Disconected and acknowledged: " + this.readLine());
+    }
+    
+    
+    
+    private void readEntry(int number) throws IOException
+    {
+        int num_nr = number-1;
+        
+        String nr1= "";
+        String nr2= "00";
+
+        //System.out.println("10: " + Integer.parseInt("10", 16));
+        //System.out.println("Val: " + Integer.toString(10, 16));
+        
+        
+        if (num_nr>255)
+        {
+            nr2 = "01";
+            num_nr = num_nr - 255;
+        }
+
+        nr1 = Integer.toHexString(num_nr);
+        
+        if (nr1.length()==1)
+            nr1 = "0" + nr1;
+        
+        System.out.println(nr1 + " " + nr2);
+        
+        
+        //nr1 = Integer.to
+//        String rec_bef = "02" + "0A" + "03" + "05" + "1F";
+//        String rec_af = "03" + "38" + "AA";
+        
+        
+        System.out.println("PC-> read record #" + number);
+        
+//        write(hex_utils.reconvert(rec_bef + nr1 + nr2 + "03" + "4B5F"));   //rec_af));
+  
+        if (number==1)
+            write(hex_utils.reconvert("02" + "0A" + "03" + "05" + "1F" + "0000" + "03" + "4B5F"));   //rec_af));
+        else if (number==2)
+            write(hex_utils.reconvert("02" + "0A" + "00" + "05" + "1F" + "0100" + "03" + "9BA6"));   //rec_af));
+        
+        
+        //ret = this.readLine();
+        
+        byte[] reta = this.readLineBytes();
+        
+        //String els = tryToConvert(reta, 6+5, 3, true);
+        
+        //reta = getByteSubArray(reta, 6+5, 3, 2);
+        
+        this.showByteArray(reta);
+        
+        //System.out.println("10: " + Integer.parseInt("10", 16));
+        
+        //System.out.println("Val: " + Integer.toString(10, 16));
+        
+  //      int nr = (reta[1] * 255) + reta[0];
+        
+        
+        
+        
+        System.out.println("PC-> Acknowledge");
+        
+        write(hex_utils.reconvert(ack_pc));
+        
+        
+    }
+    
+    
+    private short crc_calculate_crc (short initial_crc, int[] buffer, int length)
+    {
+        //short index = 0;
+        short crc = initial_crc;
+        if (buffer != null)
+        {
+            for (int index = 0; index < length; index++)
+            {
+                crc = (short)((char)(crc >> 8) | (short)(crc << 8));
+                crc ^= buffer [index];
+                crc ^= (char)(crc & 0xff) >> 4;
+                //crc ^= (short)((short)(crc << 8) << 4);
+                crc ^= (short)((crc << 8) << 4);
+                crc ^= (short)(((crc & 0xff) << 4) << 1);
+//                crc ^= (short)((short)((crc & 0xff) << 4) << 1);
+            }
+        }
+        return crc;
+    }    
+
+    
+    private short crc_calculate_crc (short initial_crc, String buffer, int length)
+    {
+        //short index = 0;
+        short crc = initial_crc;
+        if (buffer != null)
+        {
+            for (int index = 0; index < length; index+=2)
+            {
+                crc = (short)((char)(crc >> 8) | (short)(crc << 8));
+                crc ^= buffer.charAt(index) + buffer.charAt(index+1); // [index];
+                crc ^= (char)(crc & 0xff) >> 4;
+                //crc ^= (short)((short)(crc << 8) << 4);
+                crc ^= (short)((crc << 8) << 4);
+                crc ^= (short)(((crc & 0xff) << 4) << 1);
+//                crc ^= (short)((short)((crc & 0xff) << 4) << 1);
+            }
+        }
+        return crc;
+    }    
+    
+    public int crc_calc(int initial_crc, int[] buffer, int length)
+    {
+        int crc = 0; // = initial_crc;
+        
+        // char ser_data;
+        
+        for (int index = 0; index < length; index++)
+        {
+            crc  = (char)(crc >> 8) | (crc << 8);
+            crc ^= (char)buffer [index]; //ser_data;
+            crc ^= (char)(crc & 0xff) >> 4;
+            crc ^= (crc << 8) << 4;
+            crc ^= ((crc & 0xff) << 4) << 1;
+        }
+        return crc;
+        
+    }
+    
+    
+    
+    public void test_crc()
+    {
+        int test_crc[] = {0x02,0x06,0x06,0x03 };
+        
+        System.out.println("Correct decoding is 0x41CD: " + Integer.parseInt("41CD", 16));
+        
+        
+        int crc = crc_calculate_crc( (short)0xffff, test_crc, 4 );  
+        
+        int crc2 = crc_calculate_crc( (short)0xffff, "02060603", 8 );
+        
+        System.out.println("Crc: " + crc + " " + Integer.toHexString(crc));
+
+        System.out.println("Crc2: " + crc2 + " " + Integer.toHexString(crc2));
+     
+        int crc3 = this.crc_calc(0xffff, test_crc, 4);
+        
+        System.out.println("Crc3: " + crc3 + " " + Integer.toHexString(crc3));
+        
+        Crc16 cr = new Crc16();
+        
+        cr.reset();
+        
+        cr.update(0x02);
+        cr.update(0x06);
+        cr.update(0x06);
+        cr.update(0x03);
+        
+        System.out.println("Crc16: " + cr.getValueInt() + " " + Integer.toHexString((int)cr.getValue()));
+        
+        FCS16 f1 = new FCS16();
+        
+        f1.reset();
+        
+        f1.update(0x02);
+        f1.update(0x06);
+        f1.update(0x06);
+        f1.update(0x03);
+        
+        System.out.println("FCS16: " + f1.getValue() + " " + Integer.toHexString((int)f1.getValue()));
+        
+    }
+    
+    
+
+    
+    /*
+
+    unsigned short crc_calculate_crc (unsigned short initial_crc, const unsigned char *buffer, unsigned short length)
+    {
+    unsigned short index = 0;
+    unsigned short crc = initial_crc;
+    if (buffer != NULL)
+    {
+    for (index = 0; index < length; index++)
+    {
+    crc = (unsigned short)((unsigned char)(crc >> 8) | (unsigned short)(crc << 8));
+    crc ^= buffer [index];
+    crc ^= (unsigned char)(crc & 0xff) >> 4;
+    crc ^= (unsigned short)((unsigned short)(crc << 8) << 4);
+    crc ^= (unsigned short)((unsigned short)((crc & 0xff) << 4) << 1);
+    }
+    }
+    return (crc);
+    }    
+
+
+
+     */
+    
+    
     private boolean isDeviceFinished()
     {
     	return (this.entries_current==this.entries_max);
+    }
+    
+    
+    private void showByteArray(byte[] arr)
+    {
+        System.out.println("Byte array: ");
+        
+        for(int i=0; i<arr.length; i++)
+        {
+            System.out.print(arr[i] + " ");
+        }
+        
+    }
+    
+
+    private String tryToConvert(byte[] arr, int start, int end, boolean display)
+    {
+        //System.out.println();
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i=start; i<(arr.length-end); i++)
+        {
+            //System.out.print(arr[i] + " ");
+            sb.append((char)arr[i]);
+        }
+        
+        String ret = sb.toString();
+        
+        if (display)
+            System.out.println(ret);
+        
+        return ret;
+    }
+    
+
+    
+    private byte[] getByteSubArray(byte[] arr, int start, int end, int length)
+    {
+        //System.out.println();
+        //StringBuilder sb = new StringBuilder();
+        byte[] arr_out = new byte[length];
+        int j=0;
+        
+        for(int i=start; i<(arr.length-end); i++)
+        {
+            arr_out[j] = arr[i];
+            //System.out.print(arr[i] + " ");
+            //sb.append((char)arr[i]);
+            j++;
+        }
+        
+        //String ret = sb.toString();
+        
+        //if (display)
+        //    System.out.println(ret);
+        
+        return arr_out;
     }
     
     

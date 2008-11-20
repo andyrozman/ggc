@@ -120,6 +120,8 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         
         this.configured_meter = this.m_da.getDeviceConfiguration().getSelectedDeviceInstance(); //mc.getDefaultMeter();
         
+        System.out.println("configured meter: " + this.configured_meter);
+        
         if (this.configured_meter==null)
             return false;
         

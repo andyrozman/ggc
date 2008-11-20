@@ -36,7 +36,7 @@ import ggc.plugin.output.OutputWriter;
 
 
 // in works
-public class OneTouchUltraEasy extends OneTouchMeter
+public class OneTouchUltraEasy extends OneTouchMeter2
 {
 
     /**
