@@ -2,12 +2,12 @@
 package ggc.pump.gui;
 
 import ggc.core.db.hibernate.DayValueH;
-import ggc.pump.data.cfg.PumpConfigEntry;
-import ggc.pump.data.cfg.PumpConfiguration;
+import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.device.PumpInterface;
 import ggc.pump.manager.PumpManager;
 import ggc.pump.plugin.PumpPlugInServer;
-import ggc.pump.protocol.ConnectionProtocols;
 import ggc.pump.util.DataAccessPump;
 
 import java.awt.BorderLayout;
@@ -28,7 +28,32 @@ import javax.swing.border.TitledBorder;
 import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataReadingFinishedInterface;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.TimeZoneUtil;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 
 public class PumpInstructionsDialog extends JDialog implements ActionListener, DbDataReadingFinishedInterface
@@ -59,7 +84,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
     
     
     PumpInterface meter_interface;
-    PumpConfigEntry configured_meter;
+    DeviceConfigEntry configured_device;
     DbDataReaderAbstract reader;
     PumpPlugInServer server;
 /*
@@ -112,9 +137,10 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
     {
         // TODO: this should be read from config
         
-        PumpConfiguration mc = new PumpConfiguration(false);
+        DeviceConfiguration mc = m_da.getDeviceConfiguration(); 
+            //new PumpConfiguration(false);
         
-        this.configured_meter = mc.getDefaultMeter();
+        this.configured_device = mc.getSelectedDeviceInstance();
         
         /*
         this.configured_meter = new MeterConfigEntry();
@@ -134,7 +160,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
         tzu.setSummerTimeChange(+1);
         */
         
-        PumpInterface mi = PumpManager.getInstance().getPumpDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
+        PumpInterface mi = PumpManager.getInstance().getPumpDevice(this.configured_device.device_company, this.configured_device.device_device);
         
         this.meter_interface = mi;
         
@@ -263,7 +289,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.name);
+        label = new JLabel(this.configured_device.name);
         label.setBounds(130, 20, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -273,7 +299,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.meter_company);
+        label = new JLabel(this.configured_device.device_company);
         label.setBounds(130, 40, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -283,7 +309,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.meter_device);
+        label = new JLabel(this.configured_device.device_device);
         label.setBounds(130, 60, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -303,7 +329,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.communication_port);
+        label = new JLabel(this.configured_device.communication_port);
         label.setBounds(130, 100, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -318,6 +344,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
         label.setFont(normal);
         panel_device.add(label);
         
+        /*
         if (this.configured_meter.ds_fix)
         {
             label.setText(this.configured_meter.getDayLightFix());
@@ -327,7 +354,7 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
         {
             label.setText(this.configured_meter.getDayLightFix());
         }
-        
+        */
         
 
         label = new JLabel(m_ic.getMessage("STATUS") + ":" );
@@ -437,8 +464,8 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
         else if (action.equals("start_download"))
         {
 
-            System.out.println("Conf. meter: " + this.configured_meter);
-            if (this.configured_meter.ds_fix)
+            System.out.println("Conf. meter: " + this.configured_device);
+/*            if (this.configured_meter.ds_fix)
             {
                 TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
                 
@@ -446,16 +473,16 @@ public class PumpInstructionsDialog extends JDialog implements ActionListener, D
                 tzu.setWinterTimeChange(this.configured_meter.ds_winter_change);
                 tzu.setSummerTimeChange(this.configured_meter.ds_summer_change);
             }
-            
+  */          
             this.dispose();
             
             if (this.meter_data==null)
             {
-                new PumpDisplayDataDialog(this.configured_meter);
+                new PumpDisplayDataDialog(this.configured_device);
             }
             else
             {
-                new PumpDisplayDataDialog(this.configured_meter, this.meter_data, this.server);
+                new PumpDisplayDataDialog(this.configured_device, this.meter_data, this.server);
             }
             
         }

@@ -1,17 +1,43 @@
-
 package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.device.AbstractXmlPump;
-import ggc.pump.device.PumpException;
-import ggc.pump.protocol.ConnectionProtocols;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
 
 public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //implements SelectableInterface
 {
@@ -104,7 +130,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
-     * @see ggc.meter.manager.MeterImplementationStatus
+     * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     public int getImplementationStatus() 
     {
@@ -145,7 +171,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     /* 
      * readDeviceDataFull
      */
-    public void readDeviceDataFull() throws PumpException
+    public void readDeviceDataFull() throws PlugInBaseException
     {
         // write preliminary device identification, based on class
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
@@ -328,7 +354,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataPartitial() throws PumpException
+    public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
 
@@ -338,7 +364,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
      * 
      * @throws MeterExceptions
      */
-    public void readConfiguration() throws PumpException
+    public void readConfiguration() throws PlugInBaseException
     {
     }
     
@@ -348,7 +374,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
      * information (most dumps do). 
      * @throws MeterExceptions
      */
-    public void readInfo() throws PumpException
+    public void readInfo() throws PlugInBaseException
     {
     }
     

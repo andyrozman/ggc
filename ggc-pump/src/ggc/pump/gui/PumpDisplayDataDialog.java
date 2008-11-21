@@ -1,6 +1,7 @@
 package ggc.pump.gui;
 
 import ggc.core.db.hibernate.DayValueH;
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
@@ -9,7 +10,6 @@ import ggc.plugin.output.OutputWriterData;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesTable;
 import ggc.pump.data.PumpValuesTableModel;
-import ggc.pump.data.cfg.PumpConfigEntry;
 import ggc.pump.plugin.PumpPlugInServer;
 import ggc.pump.util.DataAccessPump;
 
@@ -39,6 +39,33 @@ import javax.swing.table.TableColumn;
 
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+
 public class PumpDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
 {
 
@@ -66,7 +93,7 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
 
     
     private Hashtable<String,DayValueH> meter_data = null;
-    PumpConfigEntry configured_meter;
+    DeviceConfigEntry configured_device;
     
     
     private JButton bt_close, bt_import, bt_break;
@@ -143,32 +170,32 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
 
         //this.loadConfiguration();
 
-        this.mrr = new PumpReaderRunner(this.configured_meter, this);
+        this.mrr = new PumpReaderRunner(this.configured_device, this);
 
         dialogPreInit();
     }
 
     
-    public PumpDisplayDataDialog(PumpConfigEntry mce)
+    public PumpDisplayDataDialog(DeviceConfigEntry mce)
     {
         super();
 
-        this.configured_meter = mce;
+        this.configured_device = mce;
 
-        this.mrr = new PumpReaderRunner(this.configured_meter, this);
+        this.mrr = new PumpReaderRunner(this.configured_device, this);
 
         dialogPreInit();
     }
     
 
-    public PumpDisplayDataDialog(PumpConfigEntry mce, Hashtable<String,DayValueH> meter_data, PumpPlugInServer server)
+    public PumpDisplayDataDialog(DeviceConfigEntry mce, Hashtable<String,DayValueH> meter_data, PumpPlugInServer server)
     {
         super();
 
-        this.configured_meter = mce;
+        this.configured_device = mce;
         this.meter_data = meter_data;
 
-        this.mrr = new PumpReaderRunner(this.configured_meter, this);
+        this.mrr = new PumpReaderRunner(this.configured_device, this);
 
         this.server = server;
         dialogPreInit();
@@ -205,8 +232,8 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
 
     private void dialogPreInit()
     {
-        setTitle(String.format(m_ic.getMessage("READ_METER_DATA_TITLE"), this.configured_meter.meter_device, 
-                this.configured_meter.communication_port));
+        setTitle(String.format(m_ic.getMessage("READ_METER_DATA_TITLE"), this.configured_device.device_device, 
+                this.configured_device.communication_port));
 
         m_da.addComponent(this);
         

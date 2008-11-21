@@ -1,17 +1,43 @@
 
 package ggc.pump.gui;
 
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.output.OutputWriterData;
 import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.data.cfg.PumpConfigEntry;
 import ggc.pump.device.PumpInterface;
 import ggc.pump.manager.PumpManager;
 
 import java.lang.reflect.Constructor;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 
 public class PumpReaderRunner extends Thread implements OutputWriter // extends JDialog implements ActionListener
@@ -203,14 +229,14 @@ public class PumpReaderRunner extends Thread implements OutputWriter // extends 
     private static final long serialVersionUID = 7159799607489791137L;
 
     
-    PumpConfigEntry configured_meter;
+    DeviceConfigEntry configured_device;
     PumpDisplayDataDialog dialog;
 
     
-    public PumpReaderRunner(PumpConfigEntry configured_meter, PumpDisplayDataDialog dialog)
+    public PumpReaderRunner(DeviceConfigEntry configured_device_in, PumpDisplayDataDialog dialog)
     {
 //        this.writer = writer;
-        this.configured_meter = configured_meter;
+        this.configured_device = configured_device_in;
         this.dialog = dialog;
     }
     
@@ -254,12 +280,12 @@ public class PumpReaderRunner extends Thread implements OutputWriter // extends 
             try
             {
             
-                String className = PumpManager.getInstance().getPumpDeviceClassName(this.configured_meter.meter_company, this.configured_meter.meter_device); 
+                String className = PumpManager.getInstance().getPumpDeviceClassName(this.configured_device.device_company, this.configured_device.device_device); 
                 
                 Class<?> c = Class.forName(className);
                 
                 Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class);
-                PumpInterface mi = (PumpInterface)cnst.newInstance(this.configured_meter.communication_port, this);
+                PumpInterface mi = (PumpInterface)cnst.newInstance(this.configured_device.communication_port, this);
                 this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
                 
                 mi.readDeviceDataFull();

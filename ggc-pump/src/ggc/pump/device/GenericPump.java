@@ -1,14 +1,7 @@
-/*
- * Created on 10.08.2002
- *
- * To change this generated comment edit the template variable "filecomment":
- * Window>Preferences>Java>Templates.
- */
-
 package ggc.pump.device;
 
-
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
@@ -18,6 +11,32 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 
 public class GenericPump extends AbstractPump //implements PumpInterface 
@@ -211,10 +230,6 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
-    public void readDeviceData() throws PumpException
-    {
-    }
-
 
 
 
@@ -396,7 +411,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
-    public void readConfiguration() throws PumpException
+    public void readConfiguration() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
         
@@ -406,7 +421,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
-    public void readDeviceDataFull() throws PumpException
+    public void readDeviceDataFull() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
         
@@ -416,7 +431,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
-    public void readDeviceDataPartitial() throws PumpException
+    public void readDeviceDataPartitial() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
         
@@ -426,7 +441,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
 
 
 
-    public void readInfo() throws PumpException
+    public void readInfo() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
         

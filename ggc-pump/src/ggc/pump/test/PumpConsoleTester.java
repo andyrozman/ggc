@@ -1,38 +1,9 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: MeterManager.java
- *  Purpose:  This class contains all definitions for Meters. This includes:
- *        meter names, classes that handle meter and all other relevant data.
- *
- *  Author:   andyrozman
- */
-
-
 package ggc.pump.test;
 
 import ggc.plugin.output.ConsoleOutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
 import ggc.pump.device.minimed.MinimedCareLink;
-import ggc.pump.protocol.SerialProtocol;
 
 import java.awt.TextArea;
 import java.io.File;
@@ -41,10 +12,35 @@ import java.util.Vector;
 import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
 
 public class PumpConsoleTester //extends JFrame
 {
-	static final long serialVersionUID = 0;
 
 	
 //    private JButton openButton, sendButton, enterButton, clearButton;
@@ -101,7 +97,7 @@ public class PumpConsoleTester //extends JFrame
     
     public void displaySerialPorts()
     {
-    	Vector<String> vct = SerialProtocol.getAvailableSerialPorts();
+    	Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
     	
 		System.out.println(" --- List Serial Ports -----");
     	
