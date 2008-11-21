@@ -21,6 +21,32 @@ import com.atech.utils.ATechDate;
 import com.atech.utils.HexUtils;
 import com.atech.utils.TimeZoneUtil;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Meter Tool (support for Meter devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
 
 public abstract class OneTouchMeter2 extends AbstractSerialMeter
 {
@@ -428,8 +454,14 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     {
         int test_crc[] = {0x02,0x06,0x06,0x03 };
         
-        System.out.println("Correct decoding is 0x41CD: " + Integer.parseInt("41CD", 16));
+        int test_crc2[] = {0x02, 0x0A, 0x03, 0x05, 0x1F, 0x00, 0x00, 0x03};
+        //"02" + "0A" + "03" + "05" + "1F" + "0000" + "03"; // 4B5F
         
+        System.out.println("Correct decoding is 0x41CD: " + Integer.parseInt("41CD", 16));
+
+        int c_1 = crc_calculate_crc( (short)0xffff, test_crc2, 4);
+        
+        System.out.println("Crc_t: " + c_1 + " " + Integer.toHexString(c_1));
         
         int crc = crc_calculate_crc( (short)0xffff, test_crc, 4 );  
         
