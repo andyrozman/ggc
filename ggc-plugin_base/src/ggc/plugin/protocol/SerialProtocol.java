@@ -15,6 +15,7 @@ import gnu.io.UnsupportedCommOperationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.TooManyListenersException;
 import java.util.Vector;
@@ -543,7 +544,52 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 	    return new String(stringbuffer);
     }
     
-  
+
+    
+    public byte[] readLineBytes() throws IOException //, SerialIOHaltedException
+    {
+        char c = '\uFFFF';
+        boolean flag = false;
+        StringBuffer stringbuffer = new StringBuffer("");
+
+        ArrayList<Byte> lst = new ArrayList<Byte>();
+        
+        byte j;
+        do
+        {
+            int i = c;
+            j = (byte)this.portInputStream.read();
+            
+            //System.out.print(j + " ");
+            
+            c = (char)j;
+            if(j != -1)
+            {
+                Byte b = new Byte(j);
+                lst.add(b);
+                //stringbuffer.append(c);
+            }
+            if(i == 13 && c == '\n')
+                flag = true;
+        } while(j != -1 && !flag);
+        
+        byte[] arr = new byte[lst.size()];
+        
+        for(int i=0; i<lst.size(); i++)
+        {
+            arr[i] = lst.get(i).byteValue();
+        }
+        
+        return arr;
+        //byte[] arr = lst.toArray(arr);
+        
+        //return lst.toArray(a);
+        
+        //return new String(stringbuffer);
+    }
+    
+    
+    
     
     public void write(byte[] b) throws IOException
     {
