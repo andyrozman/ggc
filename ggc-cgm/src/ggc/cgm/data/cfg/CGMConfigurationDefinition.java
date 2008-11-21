@@ -1,5 +1,12 @@
-package ggc.cgm.data.defs;
+package ggc.cgm.data.cfg;
 
+import ggc.cgm.device.DummyCGM;
+import ggc.cgm.manager.CGMManager;
+import ggc.plugin.cfg.DeviceConfigurationDefinition;
+
+import java.util.Vector;
+
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 
 /**
@@ -29,30 +36,34 @@ package ggc.cgm.data.defs;
  */
 
 
-public class CGMEvents
+
+public class CGMConfigurationDefinition implements DeviceConfigurationDefinition
 {
+    
+    public String getDevicePrefix()
+    {
+        return "CGM";
+    }
+    
+    public boolean doesDeviceSupportTimeFix()
+    {
+        return true;
+    }
 
-    // infussion sets
-    public static final int PUMP_EVENT_PRIME_INFUSION_SET = 1;
-    public static final int PUMP_EVENT_CARTRIDGE_CHANGED = 2;
-    
-    // start / end
-    public static final int PUMP_EVENT_BASAL_RUN = 20;
-    public static final int PUMP_EVENT_BASAL_STOP = 21;
-    public static final int PUMP_EVENT_POWER_DOWN = 22;
-    public static final int PUMP_EVENT_POWER_UP = 23;
-    
-    
-    // date/time
-    public static final int PUMP_EVENT_DATETIME_SET = 40;
-    public static final int PUMP_EVENT_DATETIME_CORRECT = 41;
-    public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK = 42;
-    public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD = 43;
-    
-    
-    
-    
+    public String getDevicesConfigurationFile()
+    {
+        return "../data/tools/CGMConfiguration.properties";
+    }
 
+    public Object getDummyObject()
+    {
+        return new DummyCGM();
+    }
+
+    public Vector<? extends SelectableInterface> getSupportedDevices()
+    {
+        return CGMManager.getInstance().getSupportedDevices();
+    }
     
     
     

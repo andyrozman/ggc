@@ -1,3 +1,5 @@
+package ggc.cgm.manager; 
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -27,15 +29,42 @@
  */
 
 
-package ggc.cgm.manager; 
-
 import ggc.cgm.device.CGMInterface;
-import ggc.cgm.manager.company.AbstractCGMCompany;
 import ggc.cgm.util.DataAccessCGM;
 import ggc.cgm.util.I18nControl;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import java.util.Hashtable;
 import java.util.Vector;
+
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
 
 public class CGMManager
 {
@@ -44,8 +73,8 @@ public class CGMManager
     protected DataAccessCGM m_da = DataAccessCGM.getInstance();
     
 
-    private Hashtable<String,AbstractCGMCompany> companies_ht = new Hashtable<String,AbstractCGMCompany>(); 
-    private Vector<AbstractCGMCompany> companies = new Vector<AbstractCGMCompany>(); 
+    private Hashtable<String,AbstractDeviceCompany> companies_ht = new Hashtable<String,AbstractDeviceCompany>(); 
+    private Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>(); 
     private Vector<CGMInterface> supported_devices = new Vector<CGMInterface>(); 
 
 
@@ -97,7 +126,7 @@ public class CGMManager
     }
     
     
-    public Vector<AbstractCGMCompany> getCompanies()
+    public Vector<AbstractDeviceCompany> getCompanies()
     {
         return this.companies;
     }
@@ -191,9 +220,9 @@ public class CGMManager
     }
 */
     
-    public CGMInterface getMeterDevice(String group, String device)
+    public DeviceInterface getCGMSDevice(String group, String device)
     {
-        AbstractCGMCompany cmp = getCompany(group);
+        AbstractDeviceCompany cmp = getCompany(group);
         
         if (cmp==null)
         {
@@ -206,7 +235,7 @@ public class CGMManager
     }
     
     
-    public String getMeterDeviceClassName(String group, String device)
+    public String getCGMDeviceClassName(String group, String device)
     {
         //CGMInterface mi = getMeterDevice(group, device);
         //return mi.getDeviceClassName();
@@ -214,7 +243,7 @@ public class CGMManager
     }
     
     
-    public AbstractCGMCompany getCompany(String name)
+    public AbstractDeviceCompany getCompany(String name)
     {
         if (this.companies_ht.containsKey(name))
         {

@@ -3,15 +3,15 @@ package ggc.cgm.gui;
 import ggc.cgm.data.CGMValuesEntry;
 import ggc.cgm.data.CGMValuesTable;
 import ggc.cgm.data.CGMValuesTableModel;
-import ggc.cgm.data.cfg.CGMConfigEntry;
-import ggc.cgm.device.DeviceIdentification;
-import ggc.cgm.output.AbstractOutputWriter;
-import ggc.cgm.output.OutputUtil;
-import ggc.cgm.output.OutputWriter;
 import ggc.cgm.plugin.CGMPlugInServer;
 import ggc.cgm.util.DataAccessCGM;
-import ggc.cgm.util.I18nControl;
 import ggc.core.db.hibernate.DayValueH;
+import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputUtil;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.output.OutputWriterData;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -37,6 +37,35 @@ import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumn;
 
+import com.atech.i18n.I18nControlAbstract;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+
 public class CGMDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
 {
 
@@ -48,7 +77,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     CGMReaderRunner mrr;
 
     private DataAccessCGM m_da = DataAccessCGM.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     // private static ReadMeterDialog singleton = null;
 
@@ -61,7 +90,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
     
     private Hashtable<String,DayValueH> meter_data = null;
-    CGMConfigEntry configured_meter;
+    DeviceConfigEntry configured_device;
     
     
     private JButton bt_close, bt_import, bt_break;
@@ -138,32 +167,32 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
         //this.loadConfiguration();
 
-        this.mrr = new CGMReaderRunner(this.configured_meter, this);
+        this.mrr = new CGMReaderRunner(this.configured_device, this);
 
         dialogPreInit();
     }
 
     
-    public CGMDisplayDataDialog(CGMConfigEntry mce)
+    public CGMDisplayDataDialog(DeviceConfigEntry mce)
     {
         super();
 
-        this.configured_meter = mce;
+        this.configured_device = mce;
 
-        this.mrr = new CGMReaderRunner(this.configured_meter, this);
+        this.mrr = new CGMReaderRunner(this.configured_device, this);
 
         dialogPreInit();
     }
     
 
-    public CGMDisplayDataDialog(CGMConfigEntry mce, Hashtable<String,DayValueH> meter_data, CGMPlugInServer server)
+    public CGMDisplayDataDialog(DeviceConfigEntry mce, Hashtable<String,DayValueH> meter_data, CGMPlugInServer server)
     {
         super();
 
-        this.configured_meter = mce;
+        this.configured_device = mce;
         this.meter_data = meter_data;
 
-        this.mrr = new CGMReaderRunner(this.configured_meter, this);
+        this.mrr = new CGMReaderRunner(this.configured_device, this);
 
         this.server = server;
         dialogPreInit();
@@ -200,8 +229,8 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     private void dialogPreInit()
     {
   //      loadConfiguration();
-        setTitle(String.format(m_ic.getMessage("READ_METER_DATA_TITLE"), this.configured_meter.meter_device, 
-                this.configured_meter.communication_port));
+        setTitle(String.format(m_ic.getMessage("READ_METER_DATA_TITLE"), this.configured_device.device_device, 
+                this.configured_device.communication_port));
 
         m_da.addComponent(this);
         
@@ -583,11 +612,11 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     /*
      * getDeviceIdentification
      */
-    public DeviceIdentification getDeviceIdentification()
+/*    public DeviceIdentification getDeviceIdentification()
     {
         return device_ident;
     }
-    
+  */  
     String sub_status = null;
     
     
@@ -605,7 +634,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     
     
 
-    OutputUtil output_util = new OutputUtil(this);
+    OutputUtil output_util = OutputUtil.getInstance(this);
 
     /*
      * getOutputUtil
@@ -817,6 +846,36 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         // MeterReadDialog mrd =
         new CGMDisplayDataDialog(); // new AscensiaContour("COM12", new
                                       // ConsoleOutputWriter()));
+    }
+
+
+
+
+    public void writeData(OutputWriterData data)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void writeLog(int entry_type, String message)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void writeLog(int entry_type, String message, Exception ex)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public ggc.plugin.device.DeviceIdentification getDeviceIdentification()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 

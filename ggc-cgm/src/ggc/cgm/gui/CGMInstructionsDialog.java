@@ -1,15 +1,14 @@
 
 package ggc.cgm.gui;
 
-import ggc.cgm.data.cfg.CGMConfigEntry;
-import ggc.cgm.data.cfg.CGMConfiguration;
-import ggc.cgm.device.CGMInterface;
 import ggc.cgm.manager.CGMManager;
 import ggc.cgm.plugin.CGMPlugInServer;
-import ggc.cgm.protocol.ConnectionProtocols;
 import ggc.cgm.util.DataAccessCGM;
-import ggc.cgm.util.I18nControl;
 import ggc.core.db.hibernate.DayValueH;
+import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.protocol.ConnectionProtocols;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -28,7 +27,33 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataReadingFinishedInterface;
-import com.atech.utils.TimeZoneUtil;
+import com.atech.i18n.I18nControlAbstract;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 
 public class CGMInstructionsDialog extends JDialog implements ActionListener, DbDataReadingFinishedInterface
@@ -43,7 +68,7 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
 
     
     private DataAccessCGM m_da = DataAccessCGM.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();        
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();        
     
     JButton button_start;
     JLabel label_waiting;
@@ -57,8 +82,8 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
 
     
     
-    CGMInterface meter_interface;
-    CGMConfigEntry configured_meter;
+    DeviceInterface meter_interface;
+    DeviceConfigEntry configured_device;
     DbDataReaderAbstract reader;
     CGMPlugInServer server;
 /*
@@ -111,9 +136,10 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
     {
         // TODO: this should be read from config
         
-        CGMConfiguration mc = new CGMConfiguration(false);
+        DeviceConfiguration mc = m_da.getDeviceConfiguration(); 
+            //new CGMConfiguration(false);
         
-        this.configured_meter = mc.getDefaultCGM();
+        this.configured_device = mc.getSelectedDeviceInstance(); //.getDefaultCGM();
         
         /*
         this.configured_meter = new MeterConfigEntry();
@@ -133,7 +159,7 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
         tzu.setSummerTimeChange(+1);
         */
         
-        CGMInterface mi = CGMManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
+        DeviceInterface mi = CGMManager.getInstance().getCGMSDevice(this.configured_device.device_company, this.configured_device.device_device);
         
         this.meter_interface = mi;
         
@@ -265,7 +291,7 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.name);
+        label = new JLabel(this.configured_device.name);
         label.setBounds(130, 20, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -275,7 +301,7 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.meter_company);
+        label = new JLabel(this.configured_device.device_company);
         label.setBounds(130, 40, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -285,7 +311,7 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.meter_device);
+        label = new JLabel(this.configured_device.device_device);
         label.setBounds(130, 60, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -305,7 +331,7 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
         label.setFont(bold);
         panel_device.add(label);
         
-        label = new JLabel(this.configured_meter.communication_port);
+        label = new JLabel(this.configured_device.communication_port);
         label.setBounds(130, 100, 320, 25);
         label.setFont(normal);
         panel_device.add(label);
@@ -320,14 +346,14 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
         label.setFont(normal);
         panel_device.add(label);
         
-        if (this.configured_meter.ds_fix)
+        if (this.configured_device.ds_fix)
         {
-            label.setText(this.configured_meter.getDayLightFix());
-            label.setToolTipText(this.configured_meter.getDayLightFixLong());
+            label.setText(this.configured_device.getDayLightFix());
+            label.setToolTipText(this.configured_device.getDayLightFixLong());
         }
         else
         {
-            label.setText(this.configured_meter.getDayLightFix());
+            label.setText(this.configured_device.getDayLightFix());
         }
         
         
@@ -439,7 +465,8 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
         else if (action.equals("start_download"))
         {
 
-            System.out.println("Conf. meter: " + this.configured_meter);
+            System.out.println("Conf. meter: " + this.configured_device);
+            /*
             if (this.configured_meter.ds_fix)
             {
                 TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
@@ -448,16 +475,16 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
                 tzu.setWinterTimeChange(this.configured_meter.ds_winter_change);
                 tzu.setSummerTimeChange(this.configured_meter.ds_summer_change);
             }
-            
+            */
             this.dispose();
             
             if (this.meter_data==null)
             {
-                new CGMDisplayDataDialog(this.configured_meter);
+                new CGMDisplayDataDialog(this.configured_device);
             }
             else
             {
-                new CGMDisplayDataDialog(this.configured_meter, this.meter_data, this.server);
+                new CGMDisplayDataDialog(this.configured_device, this.meter_data, this.server);
             }
             
         }

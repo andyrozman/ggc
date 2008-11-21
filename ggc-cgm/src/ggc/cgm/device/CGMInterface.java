@@ -1,8 +1,7 @@
 package ggc.cgm.device;
 
-import ggc.cgm.manager.company.AbstractCGMCompany;
-
-import com.atech.graphics.dialogs.selector.SelectableInterface;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.PlugInBaseException;
 
 
 /*
@@ -35,7 +34,34 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  */
 
 
-public interface CGMInterface extends SelectableInterface
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+
+public interface CGMInterface extends DeviceInterface
 {
 
 
@@ -47,21 +73,18 @@ public interface CGMInterface extends SelectableInterface
     /**
      * Used for opening connection with device.
      * @return boolean - if connection established
+     * @throws PlugInBaseException 
      */
-    boolean open() throws CGMException;
+    boolean open() throws PlugInBaseException;
 
 
     /**
      * Will be called, when the import is ended and freeing resources.
+     * @throws PlugInBaseException 
      */
-    void close() throws CGMException;
+    void close() throws PlugInBaseException;
 
 
-    /**
-     * This is method for reading data from device. All reading from actual device should be done from here.
-     * Reading can be done directly here, or event can be used to read data.
-     */
-    void readDeviceData() throws CGMException;
 
 
 
@@ -86,14 +109,6 @@ public interface CGMInterface extends SelectableInterface
     String getIconName();
 
 
-    /**
-     * getMeterIndex - Get Index of Meter 
-     * Should be implemented by protocol class.
-     */
-    int getCGMIndex();
-
-    
-    String getPort();
     
 
     //************************************************
@@ -125,41 +140,6 @@ public interface CGMInterface extends SelectableInterface
     //************************************************
     //***       Device Implemented methods         ***
     //************************************************
-    
-
-    
-    
-
-
-    
-    /**
-     * This is method for reading data from device. All reading from actual device should be done from here.
-     * Reading can be done directly here, or event can be used to read data.
-     */
-    void readDeviceDataFull() throws CGMException;
-    
-    
-    /**
-     * This is method for reading partitial data from device. All reading from actual device should be done from 
-     * here. Reading can be done directly here, or event can be used to read data.
-     */
-    void readDeviceDataPartitial() throws CGMException;
-
-
-    /** 
-     * This is method for reading configuration
-     * 
-     * @throws MeterExceptions
-     */
-    void readConfiguration() throws CGMException;
-    
-
-    /**
-     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
-     * information (most dumps do). 
-     * @throws MeterExceptions
-     */
-    void readInfo() throws CGMException;
     
 
     
@@ -219,10 +199,6 @@ public interface CGMInterface extends SelectableInterface
     void test();
 
     
-    public void setCGMCompany(AbstractCGMCompany company);
-    
-    
-    public AbstractCGMCompany getCGMCompany();
     
     public int getConnectionProtocol();
 

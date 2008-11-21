@@ -2,15 +2,42 @@
 package ggc.cgm.gui;
 
 import ggc.cgm.data.CGMValuesEntry;
-import ggc.cgm.data.cfg.CGMConfigEntry;
 import ggc.cgm.device.CGMInterface;
-import ggc.cgm.device.DeviceIdentification;
 import ggc.cgm.manager.CGMManager;
-import ggc.cgm.output.AbstractOutputWriter;
-import ggc.cgm.output.OutputUtil;
-import ggc.cgm.output.OutputWriter;
+import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputUtil;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.output.OutputWriterData;
 
 import java.lang.reflect.Constructor;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 
 public class CGMReaderRunner extends Thread implements OutputWriter // extends JDialog implements ActionListener
@@ -34,10 +61,10 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     /* 
      * getDeviceIdentification
      */
-    public DeviceIdentification getDeviceIdentification()
+/*    public DeviceIdentification getDeviceIdentification()
     {
         return this.dialog.device_ident;
-    }
+    } */
 
 
     /* 
@@ -67,7 +94,7 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     }
 
 
-    /* 
+    /** 
      * setDeviceIdentification
      */
     public void setDeviceIdentification(DeviceIdentification di)
@@ -206,14 +233,14 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     private static final long serialVersionUID = 7159799607489791137L;
 
     
-    CGMConfigEntry configured_meter;
+    DeviceConfigEntry configured_device;
     CGMDisplayDataDialog dialog;
 
     
-    public CGMReaderRunner(CGMConfigEntry configured_meter, CGMDisplayDataDialog dialog)
+    public CGMReaderRunner(DeviceConfigEntry cnf_device, CGMDisplayDataDialog dialog)
     {
 //        this.writer = writer;
-        this.configured_meter = configured_meter;
+        this.configured_device = cnf_device;
         this.dialog = dialog;
     }
     
@@ -257,12 +284,12 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
             try
             {
             
-                String className = CGMManager.getInstance().getMeterDeviceClassName(this.configured_meter.meter_company, this.configured_meter.meter_device); 
+                String className = CGMManager.getInstance().getCGMDeviceClassName(this.configured_device.device_company, this.configured_device.device_device); 
                 
                 Class<?> c = Class.forName(className);
                 
                 Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class);
-                this.m_mi = (CGMInterface)cnst.newInstance(this.configured_meter.communication_port, this);
+                this.m_mi = (CGMInterface)cnst.newInstance(this.configured_device.communication_port, this);
                 this.setDeviceComment(this.m_mi.getDeviceSpecialComment());
                 this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
             
@@ -288,6 +315,36 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
             
         }  // while
 
+    }
+
+
+
+
+    public void writeData(OutputWriterData data)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void writeLog(int entry_type, String message)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void writeLog(int entry_type, String message, Exception ex)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public ggc.plugin.device.DeviceIdentification getDeviceIdentification()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 

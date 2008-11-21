@@ -1,3 +1,6 @@
+package ggc.cgm.data;
+
+
 /*
  *  GGC - GNU Gluco Control
  *
@@ -19,25 +22,52 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: DailyValuesRow.java
- *  Purpose:  One row in the DailyValues Data Model.
+ *  Filename: CGMValuesEntry.java
+ *  Purpose:  Collection of CGMValuesEntry, which conatains all daily values.
  *
  *  Author:   Andy Rozman {andy@atech-software.com}
  */
 
-package ggc.cgm.data;
 
-import ggc.cgm.output.OutputUtil;
 import ggc.cgm.util.DataAccessCGM;
 import ggc.cgm.util.I18nControl;
 import ggc.core.db.hibernate.DayValueH;
+import ggc.plugin.output.OutputUtil;
 
 import java.util.Hashtable;
 
 import com.atech.utils.ATechDate;
 
-//import ggc.db.hibernate.DayValueH;
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
 
+
+//IMPORTANT NOTICE: 
+//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
+//class, with different type of data. Trying to find a way to use super class instead of this.
 
 public class CGMValuesEntry 
 {
@@ -60,7 +90,7 @@ public class CGMValuesEntry
 	public static I18nControl ic = I18nControl.getInstance(); 
 	
 	public String bg_original = null;
-	public OutputUtil util = new OutputUtil();
+	public OutputUtil util = OutputUtil.getInstance();
 	
 	
 	public static final int STATUS_UNKNOWN = 0;
@@ -126,6 +156,9 @@ public class CGMValuesEntry
 	}
 	
 	
+    /**
+     * @param sub_type
+     */
     public void setSubType(int sub_type)
     {
         this.sub_type = sub_type;

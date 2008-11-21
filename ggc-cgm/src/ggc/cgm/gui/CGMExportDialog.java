@@ -1,12 +1,11 @@
 package ggc.cgm.gui;
 
 import ggc.cgm.data.CGMValuesEntry;
-import ggc.cgm.data.cfg.CGMConfigEntry;
-import ggc.cgm.output.OutputWriter;
 import ggc.cgm.plugin.CGMPlugInServer;
 import ggc.cgm.util.DataAccessCGM;
-import ggc.cgm.util.I18nControl;
 import ggc.core.db.hibernate.DayValueH;
+import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.output.OutputWriter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,6 +24,34 @@ import javax.swing.JProgressBar;
 import javax.swing.border.LineBorder;
 
 import com.atech.graphics.components.StatusReporterInterface;
+import com.atech.i18n.I18nControlAbstract;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
 
 public class CGMExportDialog extends JDialog implements ActionListener, StatusReporterInterface
 {
@@ -52,14 +79,14 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
 
 
     private DataAccessCGM m_da = DataAccessCGM.getInstance();
-    private I18nControl m_ic = m_da.getI18nInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     public JProgressBar progress = null;
 
 
     
     private Hashtable<String,ArrayList<DayValueH>> meter_data = null;
-    CGMConfigEntry configured_meter;
+    DeviceConfigEntry configured_device;
     
     
     private JButton bt_close, bt_start;
@@ -114,11 +141,11 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
     
 
     
-    public CGMExportDialog(CGMConfigEntry mce)
+    public CGMExportDialog(DeviceConfigEntry mce)
     {
         super();
 
-        this.configured_meter = mce;
+        this.configured_device = mce;
         dialogPreInit(false);
     }
     

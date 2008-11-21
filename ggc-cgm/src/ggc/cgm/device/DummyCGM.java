@@ -3,18 +3,45 @@ package ggc.cgm.device;
 
 
 import ggc.cgm.util.DataAccessCGM;
-import ggc.cgm.util.I18nControl;
 
 import javax.swing.ImageIcon;
+
+import com.atech.i18n.I18nControlAbstract;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 
 public class DummyCGM extends GenericCGM //implements MeterInterface
 {
 
     DataAccessCGM m_da = DataAccessCGM.getInstance();
-    I18nControl m_ic = m_da.getI18nInstance();
+    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
-    public int m_meter_index = 0;
+    //public int m_meter_index = 0;
     
 
     
@@ -88,9 +115,9 @@ public class DummyCGM extends GenericCGM //implements MeterInterface
         return "Dummy Meter";
     }
 
-    public int getMeterIndex()
+    public int getDeviceIndex()
     {
-        return m_meter_index;
+        return 0;
     }
 
     
@@ -121,28 +148,6 @@ public class DummyCGM extends GenericCGM //implements MeterInterface
     //***          Process Meter Data              ***
     //************************************************
 
-
-    /**
-     * processMeterDataMain - this is main method for processing data. It should be called on all data received, and 
-     * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
-     * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
-     */
-    public void processMeterData(String data) {}
-
-    /**
-     * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
-     */
-    public void processMeterIdentification(String data) {}
-
-    /**
-     * processMeterTime - this should be used to process time and date of meter
-     */
-    public void processMeterTime(String data) {}
-
-    /**
-     * processMeterBGEntry - this should be used to process BG data from meter
-     */
-    public void processMeterBGEntry(String data) {}
 
 
 
@@ -181,6 +186,9 @@ public class DummyCGM extends GenericCGM //implements MeterInterface
     //***                    Test                  ***
     //************************************************
 
+    /**
+     * test
+     */
     public void test()
     {
     }
