@@ -34,7 +34,6 @@ import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.list.BaseListEntry;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -44,7 +43,6 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.atech.db.hibernate.HibernateDb;
@@ -54,14 +52,37 @@ import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
 
 public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 {
     
     public String web_server_port = "444";
-
-    public static final String pathPrefix = ".";
-    public Font fonts[] = null;
 
     public String plugin_version = "0.2.1";
 
@@ -93,48 +114,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 
     public Vector<String> time_zones_vector;
     
-//    public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
-
-    public ImageIcon config_icons[] = null;
-/*
-    {
-	    new ImageIcon("/icons/cfg_general.png"), 
-	    new ImageIcon("/icons/cfg_medical.png"), 
-	    new ImageIcon("icons/cfg_colors.png"), 
-	    new ImageIcon("icons/cfg_render.png"), 
-	    new ImageIcon("icons/cfg_meter.png"), 
-	    new ImageIcon("icons/cfg_print.png")
-	};
-*/
-/*	public ImageIcon config_icons[] = {
-	    new ImageIcon("images/cfg_db.gif"), 
-	    new ImageIcon("images/cfg_look.gif"), 
-	    new ImageIcon("images/cfg_myparish.gif"), 
-	    new ImageIcon("images/cfg_masses.gif"), 
-	    new ImageIcon("images/cfg_users.gif"), 
-	    new ImageIcon("images/cfg_lang.gif"), 
-	    new ImageIcon("images/cfg_web.gif"), 
-	    null
-	};
-
-    public String config_types[] = { 
-	m_ic.getMessage("GENERAL"),
-	m_ic.getMessage("MEDICAL_DATA"),
-	m_ic.getMessage("COLORS_AND_FONTS"),
-	m_ic.getMessage("RENDERING_QUALITY"),
-	m_ic.getMessage("METER_CONFIGURATION"),
-	m_ic.getMessage("PRINTING")
-    };
-
-*/
-        public String[] options_yes_no = null;
-
-
-       JFrame m_main = null;        
-        
-        
-    //public Hashtable<String,String> metersUrl;
-    //public ArrayList<String> metersNames;
+    JFrame m_main = null;        
         
     
 
@@ -148,6 +128,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      *  This is DataAccessMeter constructor; Since classes use Singleton Pattern,
      *  constructor is protected and can be accessed only with getInstance() 
      *  method.<br><br>
+     *  @param i18n I18nControlAbstract instance
      *
      */
     public DataAccessPlugInBase(I18nControlAbstract i18n)
@@ -171,67 +152,20 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }*/
     
     
-    //  Method:       getInstance
-    //  Author:       Andy
-    /**
-     *
-     *  This method returns reference to OmniI18nControl object created, or if no 
-     *  object was created yet, it creates one.<br><br>
-     *
-     *  @return Reference to OmniI18nControl object
-     * 
-     */
-/*    public static DataAccessMeter getInstance()
-    {
-        if (s_da == null)
-            s_da = new DataAccessMeter(null);
-        return s_da;
-    }
-
-    public static DataAccessMeter createInstance(JFrame main)
-    {
-        if (s_da == null)
-        {
-            //GGCDb db = new GGCDb();
-            s_da = new DataAccessMeter(main);
-//x            s_da.setParent(main);
-        }
-
-        return s_da;
-    }
-*/
- 
-    
     
     public void loadConfigIcons()
     {
-        config_icons = new ImageIcon[5];
+/*        config_icons = new ImageIcon[5];
         config_icons[0] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
         config_icons[1] = new ImageIcon(getImage("/icons/cfg_medical.png", m_main));
         config_icons[2] = new ImageIcon(getImage("/icons/cfg_print.png", m_main));
         config_icons[3] = new ImageIcon(getImage("/icons/cfg_meter.png", m_main));
         config_icons[4] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
-        
+  */      
     }
 
   
 
-
-    /*
-     static public DataAccessMeter getInstance()
-     {
-     return m_da;
-     }
-     */
-
-    //  Method:       deleteInstance
-    /**
-     *  This method sets handle to DataAccessMeter to null and deletes the instance. <br><br>
-     */
-    public void deleteInstance()
-    {
-        m_i18n = null;
-    }
 
     
     

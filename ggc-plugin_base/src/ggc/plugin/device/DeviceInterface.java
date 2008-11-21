@@ -1,9 +1,11 @@
 package ggc.plugin.device;
 
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 
-/*
+/**
  *  GGC - GNU Gluco Control
  *
  *  A pure java app to help you manage your diabetes.
@@ -39,6 +41,34 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  */
 
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+
+
 public interface DeviceInterface extends SelectableInterface
 {
 
@@ -58,6 +88,7 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * getIcon - Get Icon of device
      * Should be implemented by device class.
+     * @return 
      */
     String getIconName();
 
@@ -69,6 +100,16 @@ public interface DeviceInterface extends SelectableInterface
      */
     int getDeviceId();
 
+    
+    
+    /**
+     * getInstructions - get instructions for device
+     * Should be implemented by meter class.
+     * 
+     * @return instructions for reading data 
+     */
+    String getInstructions();
+    
     
     /**
      * getComment - Get Comment for device 
@@ -84,7 +125,7 @@ public interface DeviceInterface extends SelectableInterface
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
-     * @see ggc.meter.manager.MeterImplementationStatus
+     * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     int getImplementationStatus(); 
     
@@ -223,13 +264,36 @@ public interface DeviceInterface extends SelectableInterface
     public int getConnectionProtocol();
 
     
+    
     /**
-     * getInstructions - get instructions for device
-     * Should be implemented by device class.
+     * getConnectionPort - connection port data
      * 
-     * @return instructions for reading data 
+     * @return connection port as string
      */
-    String getInstructions();
+    public String getConnectionPort();
+    
+    
+    
+    //************************************************
+    //***          Company Specific Settings                ***
+    //************************************************
+
+  
+    /**
+     * setDeviceCompany - set Company for device
+     * 
+     * @param company
+     */
+    public void setDeviceCompany(AbstractDeviceCompany company);
+    
+    
+    /**
+     * getDeviceCompany - get Company for device
+     * 
+     * @return 
+     */
+    public AbstractDeviceCompany getDeviceCompany();
+
     
     
 

@@ -2,40 +2,37 @@ package ggc.plugin.manager;
 
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import javax.swing.ImageIcon;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: MeterInterface
- *  Purpose:  This is interface class, used for meters. It should be primary implemented by protocol class, and 
- *       protocol class should be used as super class for meter definitions. Each meter family "should" 
- *       have it's own super class and one class for each meter.
- *
- *  Author:   andyrozman {andyrozman@sourceforge.net}
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:  ###---###  
+ *  Description:
+ * 
+ *  Author: Andy {andy@atech-software.com}
  */
 
 
@@ -151,7 +148,7 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
      * Should be implemented by meter class.
      * 
      * @return implementation status as number
-     * @see ggc.meter.manager.MeterImplementationStatus
+     * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     public int getImplementationStatus()
     {
@@ -371,6 +368,27 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
 
 
     public String getDeviceClassName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public AbstractDeviceCompany getDeviceCompany()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public void setDeviceCompany(AbstractDeviceCompany company)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public String getConnectionPort()
     {
         // TODO Auto-generated method stub
         return null;
