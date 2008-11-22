@@ -1,6 +1,5 @@
 package ggc.meter.device.ascensia;
 
-
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 
@@ -24,8 +23,8 @@ import ggc.plugin.output.AbstractOutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AscensiaEliteXL
+ *  Description:  Support for Ascensia/Bayer Elite XL Meter
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -34,17 +33,31 @@ import ggc.plugin.output.AbstractOutputWriter;
 public class AscensiaEliteXL extends AscensiaMeter
 {
     
+    /**
+     * Constructor
+     */
     public AscensiaEliteXL()
     {
     }
     
 
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
     public AscensiaEliteXL(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param portName
+     * @param writer
+     */
     public AscensiaEliteXL(String portName, AbstractOutputWriter writer)
     {
     	super(portName, writer);
@@ -125,7 +138,7 @@ public class AscensiaEliteXL extends AscensiaMeter
     
     
     /**
-     * getImplementationStatus - Get Company Id 
+     * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
@@ -136,13 +149,18 @@ public class AscensiaEliteXL extends AscensiaMeter
     }
     
     
-    
+    /** 
+     * Get Device ClassName
+     */
     public String getDeviceClassName()
     {
         return "ggc.meter.device.ascensia.AscensiaEliteXL";
     }
 
     
+    /**
+     * Maximum of records that device can store
+     */
     public int getMaxMemoryRecords()
     {
         return 120;

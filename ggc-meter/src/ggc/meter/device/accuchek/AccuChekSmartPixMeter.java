@@ -3,6 +3,7 @@ package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -38,8 +39,8 @@ import com.atech.utils.ATechDate;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AccuChekSmartPixMeter
+ *  Description:  Super class for all AccuChek Meter devices supported through SmartPix 
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -52,42 +53,109 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     //OutputWriter output_writer = null;
 
     
+    /**
+     * Meter Company: Roche
+     */
     public static final int ROCHE_COMPANY             = 2;
     
+    /**
+     * Meter Device: SmartPix
+     */
     public static final int METER_ROCHE_SMARTPIX_DEVICE   = 20001;
+    
+    /**
+     * Meter Device: Accu Chek Active
+     */
     public static final int METER_ACCUCHEK_ACTIVE         = 20002;
+    
+    /**
+     * Meter Device: Accu Chek Advantage
+     */
     public static final int METER_ACCUCHEK_ADVANTAGE      = 20003;
+    
+    /**
+     * Meter Device: Accu Chek Aviva
+     */
     public static final int METER_ACCUCHEK_AVIVA          = 20004;
+    
+    /**
+     * Meter Device: Accu Chek Comfort
+     */
     public static final int METER_ACCUCHEK_COMFORT        = 20005;
+    
+    /**
+     * Meter Device: Accu Chek Compact
+     */
     public static final int METER_ACCUCHEK_COMPACT        = 20006;
+    
+    /**
+     * Meter Device: Accu Chek Compact Plus
+     */
     public static final int METER_ACCUCHEK_COMPACT_PLUS   = 20007;
+    
+    /**
+     * Meter Device: Accu Chek Go
+     */
     public static final int METER_ACCUCHEK_GO             = 20008;
+    
+    /**
+     * Meter Device: Accu Chek Integra
+     */
     public static final int METER_ACCUCHEK_INTEGRA        = 20009;
+    
+    /**
+     * Meter Device: Accu Chek Performa
+     */
     public static final int METER_ACCUCHEK_PERFORMA       = 20010;
+    
+    /**
+     * Meter Device: Accu Chek Sensor
+     */
     public static final int METER_ACCUCHEK_SENSOR         = 20011;
     
     
     private int bg_unit = OutputUtil.BG_MGDL;
 
     
+    /**
+     * Constructor
+     */
     public AccuChekSmartPixMeter()
     {
         super();
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
     public AccuChekSmartPixMeter(AbstractDeviceCompany cmp)
     {
         this.setDeviceCompany(cmp);
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param drive_letter
+     * @param writer
+     */
     public AccuChekSmartPixMeter(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer); 
     }
     
     
+    /** 
+     * open
+     */
+    public boolean open() throws PlugInBaseException
+    {
+        return true;
+    }
     
     
     /**
@@ -120,6 +188,9 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     Document document;
 
 
+    /** 
+     * Process Xml
+     */
     public void processXml(File file)
     {
         try
@@ -148,21 +219,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     
     
     
-    
-    
-/*    
-    private Document openXmlFile(File file) throws DocumentException {
-        SAXReader reader = new SAXReader();
-        
-        
-        //Document 
-        document = reader.read(file);
-        return document;
-    }
-*/    
-
-    
-    public void getPixDeviceInfo()
+    private void getPixDeviceInfo()
     {
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
@@ -196,7 +253,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     }
 
     
-    public void getMeterDeviceInfo()
+    private void getMeterDeviceInfo()
     {
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
 
@@ -225,7 +282,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     }
     
     
-    public void readData()
+    private void readData()
     {
         //this.output_writer.
         
@@ -240,7 +297,8 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     }
     
     
-    public MeterValuesEntry getDataEntry(Node entry)
+    
+    private MeterValuesEntry getDataEntry(Node entry)
     {
         Element el = (Element)entry;
         
@@ -278,44 +336,17 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
         
         return Long.parseLong(o);
         
-        
-    }
-    
-/*
-    public void setMeterCompany(AbstractMeterCompany company)
-    {
-        this.meter_company = company;
     }
     
     
-    public AbstractMeterCompany getMeterCompany()
-    {
-        return this.meter_company;
-    }
-*/
     
-    
-    /*
-    public static final void main(String[] args)
-    {
-        AccuChekSmartPix acspd = new AccuChekSmartPix();
-        
-        acspd.testXml(new File("G0003006.XML"));
-        
-    }
-    */
-    
+    /** 
+     * Get Connection Protocol
+     */
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
     }
-    
-    /*
-    public int getMaxMemoryRecords()
-    {
-        return 1;
-    }
-    */
     
     
 }

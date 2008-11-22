@@ -33,8 +33,8 @@ import java.io.FileReader;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AccuChekSmartPix  
+ *  Description:  Super class for all AccuChek devices supported through SmartPix device
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -43,22 +43,21 @@ import java.io.FileReader;
 public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
 {
     
-    //DataAccessMeter m_da = DataAccessMeter.getInstance();
     
-    //AbstractMeterCompany meter_company = null;
-    //String drive_letter;
-    //OutputWriter output_writer = null;
-    
-    
-    
-
-    //AccuChekSmartPixProcessor xml_processor = null;
-    
+    /**
+     * Constructor
+     */
     public AccuChekSmartPix()
     {
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param drive_letter
+     * @param writer
+     */
     public AccuChekSmartPix(String drive_letter, OutputWriter writer)
     {
         this.setConnectionPort(drive_letter);
@@ -163,13 +162,17 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     
     
     
+    /**
+     * Process Xml - This differs for Meter or/and Pump
+     * @param file
+     */
     public abstract void processXml(File file);    
     
 
 
 
 
-    /* 
+    /** 
      * readDeviceDataFull
      */
     public void readDeviceDataFull() throws PlugInBaseException
@@ -329,26 +332,13 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     }
     
     
-    
-    
-/*
-    public String getConnectionPort()
-    {
-        return "XML";
-    }
-  */  
-    
 
-    /* 
+    /** 
      * test
      */
     public void test()
     {
-        // TODO Auto-generated method stub
-        
     }
-    
-    
     
     
     /**
@@ -363,7 +353,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     /** 
      * This is method for reading configuration
      * 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readConfiguration() throws PlugInBaseException
     {
@@ -373,7 +363,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readInfo() throws PlugInBaseException
     {
@@ -609,6 +599,9 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     
     
     
+    /** 
+     * Get Connection Protocol
+     */
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;

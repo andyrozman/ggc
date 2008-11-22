@@ -300,9 +300,9 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
      */
     public void actionPerformed(ActionEvent e)
     {
-        String action = e.getActionCommand();
+        String action_cmd = e.getActionCommand();
 
-        if (action.equals("close"))
+        if (action_cmd.equals("close"))
         {
             if (started)
                 this.action = true;

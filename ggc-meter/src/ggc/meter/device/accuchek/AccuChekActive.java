@@ -24,8 +24,8 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AccuChekActive
+ *  Description:  Support for AccuChek Active Meter
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -34,17 +34,31 @@ import ggc.plugin.output.OutputWriter;
 public class AccuChekActive extends AccuChekSmartPixMeter
 {
     
+    /**
+     * Constructor
+     */
     public AccuChekActive()
     {
         super();
     }
     
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
     public AccuChekActive(AbstractDeviceCompany cmp)
     {
         this.setDeviceCompany(cmp);
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param drive_letter
+     * @param writer
+     */
     public AccuChekActive(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);

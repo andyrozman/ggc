@@ -24,8 +24,8 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AccuChekIntegra
+ *  Description:  Support for AccuChek Integra Meter
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -35,17 +35,31 @@ public class AccuChekIntegra extends AccuChekSmartPixMeter
 {
     
     
+    /**
+     * Constructor
+     */
     public AccuChekIntegra()
     {
         super();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
     public AccuChekIntegra(AbstractDeviceCompany cmp)
     {
         this.setDeviceCompany(cmp);
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param drive_letter
+     * @param writer
+     */
     public AccuChekIntegra(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);

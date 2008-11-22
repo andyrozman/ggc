@@ -46,7 +46,17 @@ public class DayValueH implements Serializable
     /** nullable persistent field */
     private long changed;
 
-    /** full constructor */
+    /** full constructor 
+     * @param dt_info 
+     * @param bg 
+     * @param ins1 
+     * @param ins2 
+     * @param ch 
+     * @param meals_ids 
+     * @param extended 
+     * @param person_id 
+     * @param comment 
+     * @param changed */
     public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String extended, int person_id, String comment, long changed) {
         this.dt_info = dt_info;
         this.bg = bg;
@@ -64,7 +74,9 @@ public class DayValueH implements Serializable
     public DayValueH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param dt_info 
+     * @param person_id */
     public DayValueH(long dt_info, int person_id) {
         this.dt_info = dt_info;
         this.person_id = person_id;
@@ -154,16 +166,25 @@ public class DayValueH implements Serializable
         return this.changed;
     }
 
+    /**
+     * @param changed
+     */
     public void setChanged(long changed) {
         this.changed = changed;
     }
 
+    /** 
+     * toString
+     */
     public String toString() {
         return new ToStringBuilder(this)
             .append("id", getId())
             .toString();
     }
 
+    /** 
+     * equals
+     */
     public boolean equals(Object other) {
         if ( !(other instanceof DayValueH) ) return false;
         DayValueH castOther = (DayValueH) other;
@@ -172,6 +193,9 @@ public class DayValueH implements Serializable
             .isEquals();
     }
 
+    /** 
+     * hashCode
+     */
     public int hashCode() {
         return new HashCodeBuilder()
             .append(getId())

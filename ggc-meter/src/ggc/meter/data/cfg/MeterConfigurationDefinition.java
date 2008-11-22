@@ -28,8 +28,8 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      MeterConfigurationDefinition  
+ *  Description:   Definition for Meter configurator
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -38,33 +38,56 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public class MeterConfigurationDefinition implements DeviceConfigurationDefinition
 {
     
+    /**
+     * Keyword used through configuration and configuration file describing device (for meter plugin, this
+     * would be word METER).
+     *  
+     * @return keyword representing device
+     */
     public String getDevicePrefix()
     {
         return "METER";
     }
-    
+
+    /**
+     * Only certain devices support manual time fix for application (meters do, other's don't).
+     * 
+     * @return true if time fix is supported, false otherwise
+     */
     public boolean doesDeviceSupportTimeFix()
     {
         return true;
     }
 
+    /**
+     * Get path to Configuration file as string
+     * 
+     * @return path to configuration file
+     */
     public String getDevicesConfigurationFile()
     {
         return "../data/tools/MeterConfiguration.properties";
     }
 
+    /**
+     * Returns Dummy object (needed for some actions)
+     * 
+     * @return
+     */
     public Object getDummyObject()
     {
         return new DummyMeter();
     }
 
+    /**
+     * Returns list of all supported devices for plugin. Needed for device selection
+     * 
+     * @return
+     */
     public Vector<? extends SelectableInterface> getSupportedDevices()
     {
         return MeterManager.getInstance().getSupportedDevices();
     }
-    
-    
-    
     
 
 }

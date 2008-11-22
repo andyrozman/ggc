@@ -45,8 +45,8 @@ import javax.swing.table.TableColumn;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     MeterValuesTable
+ *  Description:  Table of meter values
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -60,6 +60,9 @@ public class MeterValuesTable extends JTable //implements TableModelListener
 	MeterValuesTableModel model = null;
 	DataAccessMeter m_da = DataAccessMeter.getInstance();
 
+    /**
+     * Constructor
+     */
     public MeterValuesTable()
     {
         super();
@@ -73,6 +76,11 @@ public class MeterValuesTable extends JTable //implements TableModelListener
         
     }
 
+    /**
+     * Constructor
+     * 
+     * @param model
+     */
     public MeterValuesTable(MeterValuesTableModel model)
     {
         super(model);
@@ -96,6 +104,11 @@ public class MeterValuesTable extends JTable //implements TableModelListener
         return header;
     }
 
+    /**
+     * Set Model
+     * 
+     * @param model
+     */
     public void setModel(MeterValuesTableModel model)
     {
         super.setModel(model);
@@ -123,6 +136,12 @@ public class MeterValuesTable extends JTable //implements TableModelListener
         });
     }
 
+    /**
+     * Create Meter Values Table
+     * 
+     * @param model
+     * @return
+     */
     public static JComponent createMeterValuesTable(final MeterValuesTableModel model)
     {
         MeterValuesTable table = new MeterValuesTable(model);

@@ -4,7 +4,6 @@ import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
@@ -58,12 +57,13 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     protected boolean device_running = true;
     protected ArrayList<MeterValuesEntry> data = null;
 //    protected OutputWriter m_output_writer;
-    public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+    protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     //public int meter_type = 20000;
     private int entries_max = 0;
     private int entries_current = 0;
     private int reading_status = 0;
     
+    @SuppressWarnings("unused")
     private int info_tokens;
     private String date_order;
     
@@ -88,6 +88,12 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param portName
+     * @param writer
+     */
     public OneTouchMeter2(String portName, OutputWriter writer)
     {
         super(DataAccessMeter.getInstance());
@@ -144,8 +150,8 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
 
 
     
-    
-    /* 
+    // DO
+    /** 
      * getComment
      */
     public String getComment()
@@ -155,8 +161,8 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     }
 
 
-
-    /* 
+    // DO
+    /** 
      * getImplementationStatus
      */
     public int getImplementationStatus()
@@ -165,7 +171,8 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         return 0;
     }
 
-    /* 
+    // DO
+    /** 
      * getInstructions
      */
     public String getInstructions()
@@ -184,6 +191,9 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     String ack_pc = "02" + "06" + "07" + "03" + "FC" + "72";
 
 
+    /** 
+     * readDeviceDataFull
+     */
     public void readDeviceDataFull()
     {
         
@@ -198,7 +208,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         {
             HexUtils hu = new HexUtils();
 
-            String ret;
+            //String ret;
             byte[] reta;
             
             
@@ -224,7 +234,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
             int idx = sw_dd.indexOf("/") -2;
             
             
-            //System.out.println("Sw Ver: " + sw_dd.substring(0, idx ) + " date: " + sw_dd.substring(idx));
+            System.out.println("Sw Ver: " + sw_dd.substring(0, idx ) + " date: " + sw_dd.substring(idx));
             
             
             //System.out.println("Value Meter: " + this.readLine());
@@ -263,6 +273,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
             
             reta = this.readLineBytes();
             
+            @SuppressWarnings("unused")
             String els = tryToConvert(reta, 6+5, 3, true);
             
             reta = getByteSubArray(reta, 6+5, 3, 2);
@@ -430,7 +441,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         return crc;
     }    
     
-    public int crc_calc(int initial_crc, int[] buffer, int length)
+    private int crc_calc(int initial_crc, int[] buffer, int length)
     {
         int crc = 0; // = initial_crc;
         
@@ -450,6 +461,9 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     
     
     
+    /**
+     * 
+     */
     public void test_crc()
     {
         int test_crc[] = {0x02,0x06,0x06,0x03 };
@@ -604,7 +618,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     /** 
      * This is method for reading configuration
      * 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readConfiguration() throws PlugInBaseException
     {
@@ -614,7 +628,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readInfo() throws PlugInBaseException
     {
@@ -623,6 +637,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     
     
     
+    @SuppressWarnings("unused")
     private boolean isDeviceStopped(String vals)
     {
     	if ((vals == null) ||
@@ -637,42 +652,14 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     
     
     
-    private void processEntry(String entry)
-    {
-        if ((entry==null) || (entry.length()==0))
-            return;
-        
-        
-        StringTokenizer strtok = new StringTokenizer(entry, ",");
-        
-        System.out.println("tokens: " + strtok.countTokens());
-        
-        if (strtok.countTokens()==this.info_tokens) // we can have different info tokens for different meters
-        {
-        	if (this.reading_status==0) // info can be read only before reading of data, if we receive entry 
-        		this.readInfo(strtok);  // with same nr of parameters, this is error
-        	else
-        		setDeviceStopped();
-        	
-        }
-        else if (strtok.countTokens()==5)
-        {
-            this.readBGEntry(strtok, entry);
-        }
-        else
-        {
-//        	System.out.println("wrong oaraomn: ");
-        	setDeviceStopped();
-        }
-        
-        
-        
-    }
+ 
     
     
     
     
-    
+    /**
+     * 
+     */
     public void setDeviceStopped()
     {
         this.device_running = false;
@@ -680,50 +667,6 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     }
     
     
-    public void readInfo(StringTokenizer strtok)
-    {
-/*        P nnn,“ MeterSN ”,“MG/DL ”
-        (1) (2) (3)
-        (1) Number of datalog records to follow (0 – 150)
-        (2) Meter serial number (9 characters)
-        (3) Unit of measure for glucose values */
-        
-        //strtok 
-        
-        String num_x = strtok.nextToken(); // 1 token: number of entries
-        num_x = num_x.substring(2).trim();
-        
-        this.entries_max = Integer.parseInt(num_x);
-        
-        
-        String dev = strtok.nextToken(); // 2. token: device id
-        
-        DeviceIdentification di = new DeviceIdentification(ic);
-        di.device_serial_number = dev;
-        di.company = "OneTouch";
-        di.device_selected = "Ultra";
-        
-        this.output_writer.setDeviceIdentification(di);
-        this.output_writer.writeDeviceIdentification();
-
-        
-        if (this.getDeviceId()!=OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA)
-        {
-            //'P nnn,"MeterSN","ENGL. ","M.D.Y. ","AM/PM","MG/DL","!min","!max" cksm' 
-            //"M.D.Y. " or "D.M.Y. "
-            strtok.nextToken(); // 3
-            
-            String dx = this.getParameterValue(strtok.nextToken()); // 4. token: date
-            
-            if (dx.equals("M.D.Y."))
-                this.date_order = "MDY";
-            else
-                this.date_order = "DMY";
-        }
-        
-        
-        reading_status = 1;
-    }
 
     
     
@@ -735,119 +678,9 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     }
     
 
-    public void readBGEntry(StringTokenizer strtok, String entry)
-    {
-        try
-        {
-            System.out.println("BG: " + entry);
-            /*
-            P “dow”,“mm/dd/yy”,“hh:mm:30 ”,“xxxxx ”, n cksm<CR><LF>
-            (4) (5) (6) (7)
-            (4) Day of week (SUN, MON, TUE, WED, THU, FRI, SAT)
-            (5) Date of reading
-            (6) Time of reading (If two or more readings were taken within the same minute, they will be
-            separated by 8 second intervals)
-            (7) Result format:
-            “ nnn ” - blood test result (mg/dL)
-            “ HIGH ” - blood test result >600 mg/dL
-            “C nnn ” - control solution test result (mg/dL)
-            “CHIGH ” - control solution test result >600 mg/dL
-            
-            
-            (12) Result format: (Profile) 
-                 "  nnn " - blood test result (mg/dL)
-                 "MMnn.n" - blood test result (mmol/dL)
-                 " HIGH " - blood test result > 600 mg/dL
-                 "! nnn" - check strip test result (mg/dL)
-                 "! nn.n " - check strip test result (mmol/L)
-                 "!HIGH " - check strip test result > 600 mg/dL
-                 "C nnn " - control solution test result (mg/dL)
-                 "C nn.n" - control solution test result (mmol/L)
-                 "CHIGH " - control solution test result > 600 mg/dL
-                 "I 000 " to "I 150 " - CARB records
-                 "I 00.0 " to "I 20.0 " - BOLUS insulin records
-                 "I  00 " to "I  99 " - all other insulin records             
-            
-      glucose value formatting (there are language variations): (OT2)
-        If the datalog record had a checksum error, the last character
-          is forced to be a question mark (e.g., '...," nnn?",...') All
-          data in a record so flagged must be considered "suspect".
-        If glucose > 600 mg/dL, '...," HIGH ",...' is transmitted.
-        If UNITS are mmol/L, '...,"MMnn.n ",...' is transmitted.
-        If a checkstrip reading, ',,,,"! nnn ",...' (mg/dL) or
-          '...,"! n.n ",...' (mmol/L) is transmitted.
-        If flagged as control solution, '...,"C nnn ",...' (mg/dL) or
-          '...,"C nn.n ",...' (mmol/L) is transmitted.  (The 'C' becomes
-          a 'K' if the languages is SVENS or DEUTS.)             
-            
-            */
-            
-            strtok.nextToken();
-            String date = strtok.nextToken();
-            String time = strtok.nextToken();
-            
-            String res = this.getParameterValue(strtok.nextToken());
-            
-            //if ((res.contains("CHIGH")) || (res.contains("C ")))
-            if ((res.startsWith("C")) ||  // control solution
-                (res.startsWith("!")) ||  // check strip
-                (res.startsWith("I")) ||  // insulin or other data
-                (res.startsWith("K")))    // control solution (on OT2 when language is SVENS or DEUTSCH)
-            {
-            	this.entries_current++;
-            }
-            else
-            {
-            	this.entries_current++;
-
-            	MeterValuesEntry mve = new MeterValuesEntry();
-                mve.setBgUnit(DataAccessMeter.BG_MGDL);
-                mve.setDateTime(getDateTime(date, time));
-                
-                
-                if (res.contains("HIGH"))
-                {
-                    mve.setBgValue("600");
-                    mve.addParameter("RESULT", "High");
-                }
-                else
-                {
-                    if (res.contains("?"))
-                    {
-                        res = m_da.replaceExpression(res, "?", " ").trim();
-                        mve.addParameter("RESULT", "Suspect Entry");
-                    }
-                    
-                    if (res.contains("MM"))
-                    {
-                        // mmol value, this is not supported by ultra, but some other meters support this
-                        res = m_da.replaceExpression(res, "MM", " ").trim();
-                        
-                        try
-                        {
-                            mve.setBgValue("" + m_da.getBGValueByType(DataAccessMeter.BG_MMOL, DataAccessMeter.BG_MGDL, res));
-                        }
-                        catch(Exception ex)
-                        {}
-                        
-                    }
-                    else
-                        mve.setBgValue(res);
-                }
-                
-                this.output_writer.writeData(mve);
-            }
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Exception: " + ex);
-            System.out.println("Entry: " + entry);
-            ex.printStackTrace();
-        }
-        
-    }
     
     
+    @SuppressWarnings("unused")
     private ATechDate getDateTime(String date, String time)
     {
         // “mm/dd/yy”,“hh:mm:30 ”

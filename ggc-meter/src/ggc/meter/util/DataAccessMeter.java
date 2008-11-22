@@ -86,8 +86,8 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
     private MeterManager m_meterManager = null;
 
-    public Hashtable<String,String> timeZones;
-    public Vector<String> time_zones_vector;
+    //public Hashtable<String,String> timeZones;
+    //public Vector<String> time_zones_vector;
     
 
     public ImageIcon config_icons[] = null;

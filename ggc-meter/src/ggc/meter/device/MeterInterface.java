@@ -3,7 +3,6 @@ package ggc.meter.device;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
@@ -57,8 +56,10 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     MeterInterface
+ *  Description:  This is interface class, used for meters. It should be primary implemented by abstract 
+ *                protocol class. Each meter family "should" have it's own super class and one class for 
+ *                each meter type instance.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -73,6 +74,12 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
     //************************************************
 
 
+    /**
+     * Will be called, on start of import to start communication with device
+     * @return 
+     * @throws PlugInBaseException 
+     */
+    boolean open() throws PlugInBaseException;
 
 
     /**
@@ -108,30 +115,6 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
     public int getMaxMemoryRecords();
 
     
-    /**
-     * getConnectionPort - connection port data
-     * 
-     * @return connection port as string
-     */
-    public String getConnectionPort();
-    
-    
-    /**
-     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
-     *    special comment about device (for example pix device, doesn't display anything till the end, which
-     *    would be nice if user knew. 
-     */
-    public String getDeviceSpecialComment();
-    
-    
-    
-    /**
-     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
-     *    normal progress status, but with some special devices we calculate progress through other means.
-     * @return true is progress status is special
-     */
-    public boolean hasSpecialProgressStatus();
-    
     
 
 
@@ -139,56 +122,12 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
     //***        Available Functionality for Meter          ***
     //************************************************
 
-
-    
-    public int getConnectionProtocol();
-    
-    
-    
     
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
+     * @return 
      */
     public DeviceIdentification getDeviceInfo();
-    
-    
-    
-
-    /**
-     * canReadData - Can Meter Class read data from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadData();
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadPartitialData();
-
-
-    
-    /**
-     * canReadDeviceInfo - tells if we can read info about device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadDeviceInfo();
-    
-    
-    /**
-     * canReadConfiguration - tells if we can read configuration from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadConfiguration();
-
-
-
-    
-    
     
     
     

@@ -41,13 +41,7 @@ import ggc.meter.manager.company.Roche;
 import ggc.meter.manager.company.Sanvita;
 import ggc.meter.manager.company.USDiagnostic;
 import ggc.meter.manager.company.Wavesense;
-import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
-import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
-
-import java.util.Hashtable;
-import java.util.Vector;
+import ggc.plugin.manager.DeviceManager;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -76,38 +70,31 @@ import java.util.Vector;
  */
 
 
-public class MeterManager
+public class MeterManager extends DeviceManager
 {
-
-    protected I18nControl m_ic = I18nControl.getInstance();
-    protected DataAccessMeter m_da = DataAccessMeter.getInstance();
     
-
-    private Hashtable<String,AbstractDeviceCompany> companies_ht = new Hashtable<String,AbstractDeviceCompany>(); 
-    private Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>(); 
-    private Vector<DeviceInterface> supported_devices = new Vector<DeviceInterface>(); 
-
-
-
-
-
-    
-    
-    
-    
+    /**
+     * Single instance
+     */
     public static MeterManager s_manager = null;
     
 
     /**
-     * Constructor for SerialMeterImport.
+     * Constructor
      */
     private MeterManager()
     {
-    	this.loadMeterCompanies();
-    	this.loadSupportedDevices();
+        super();
+    	//this.loadMeterCompanies();
+    	//this.loadSupportedDevices();
     }
 
     
+    /**
+     * Get MeterManager instance
+     * 
+     * @return
+     */
     public static MeterManager getInstance()
     {
     	if (MeterManager.s_manager==null)
@@ -117,135 +104,40 @@ public class MeterManager
     }
 
 
-    
-    public void loadMeterCompanies()
+    /**
+     * Load devices companies
+     */
+    public void loadDeviceCompanies()
     {
-        addMeterCompany(new AscensiaBayer());
-        addMeterCompany(new Roche());
-        addMeterCompany(new LifeScan());
-        addMeterCompany(new Abbott());
-        addMeterCompany(new Menarini());
-        addMeterCompany(new DiabeticSupplyOfSunCoast());
-        addMeterCompany(new HipoGuard());
-        addMeterCompany(new HomeDiagnostic());
-        addMeterCompany(new Prodigy());
-        addMeterCompany(new Sanvita());
-        addMeterCompany(new USDiagnostic());
-        addMeterCompany(new Wavesense());
-        //addMeterCompany(new PseudoMeters());
+        addDeviceCompany(new AscensiaBayer());
+        addDeviceCompany(new Roche());
+        addDeviceCompany(new LifeScan());
+        addDeviceCompany(new Abbott());
+        addDeviceCompany(new Menarini());
+        addDeviceCompany(new DiabeticSupplyOfSunCoast());
+        addDeviceCompany(new HipoGuard());
+        addDeviceCompany(new HomeDiagnostic());
+        addDeviceCompany(new Prodigy());
+        addDeviceCompany(new Sanvita());
+        addDeviceCompany(new USDiagnostic());
+        addDeviceCompany(new Wavesense());
     }
     
     
-    private void addMeterCompany(AbstractDeviceCompany company)
-    {
-        this.companies.add(company);
-        this.companies_ht.put(company.getName(), company);
-    }
     
-    
+    /**
+     * Load Supported Devices
+     */
     public void loadSupportedDevices()
     {
         this.supported_devices.addAll(new AscensiaBayer().getDevices());
-        //this.supported_devices.addAll(new PseudoMeters().getDevices());
         this.supported_devices.addAll(new Roche().getDevices());
         this.supported_devices.addAll(new LifeScan().getDevices());
     }
     
     
-    public Vector<AbstractDeviceCompany> getCompanies()
-    {
-        return this.companies;
-    }
-   
-    
-    public Vector<DeviceInterface> getSupportedDevices()
-    {
-        return this.supported_devices;
-    }
 
-    /**
-     * Gets the image
-     * @return Returns a ImageIcon
-     */
-/*    public ImageIcon getMeterImage(int index)
-    {
-        return this.meter_pictures[index];
-    } */
-
-
-    /**
-     * Gets the name
-     * @return Returns a String
-     */
-/*    public String getMeterName(int index)
-    {
-        return this.meter_names[index];
-    } */
-
-/*
-    public String[] getAvailableMeters()
-    {
-        return this.meter_names;
-    }
-
-
-    public String getMeterClassName(int index)
-    {
-        return this.meter_classes[index];
-    }
-
-    public String getMeterDeviceClassName(int index)
-    {
-        return this.meter_device_classes[index];
-    }
-    
-
-    public String getMeterClassName(String name)
-    {
-    int index = 0;
-
-    for (int i=0; i<this.meter_names.length; i++)
-    {
-        if (this.meter_names.equals(name))
-        {
-        index = i;
-        break;
-        }
-    }
-
-    return this.meter_classes[index];
-    }
-
-
-    public static final int METER_INTERFACE_1 = 1;  // old meter interface (stephen)
-    public static final int METER_INTERFACE_2 = 2;  // new meter interface (andy)
-
-    public int getSelectedMeterIndex(int type, int index)
-    {
-	if (type==1)
-	{
-	    if (index<4)
-	    {
-		return index;
-	    }
-	    else
-		return 0;
-	}
-	else if (type==2)
-	{
-	    if (index>3)
-	    {
-		return index;
-	    }
-	    else
-		return 0;
-	}
-	else
-	    return 0;
-
-    }
-*/
-    
+/*    
     public DeviceInterface getMeterDevice(String group, String device)
     {
         AbstractDeviceCompany cmp = getCompany(group);
@@ -266,81 +158,7 @@ public class MeterManager
         DeviceInterface mi = getMeterDevice(group, device);
         return mi.getDeviceClassName();
     }
+  */  
     
-    
-    public AbstractDeviceCompany getCompany(String name)
-    {
-        if (this.companies_ht.containsKey(name))
-        {
-            return this.companies_ht.get(name);
-        }
-        else
-            return null;
-        
-    }
-    
-    
-    
-    
-    
-    /*
-    public Hashtable<String,MeterCompany> groups = new Hashtable<String,MeterCompany>();
-    public Hashtable<String,MeterDevice> meters_list = new Hashtable<String,MeterDevice>();
-    
-    
-    public void loadMetersDefinitions()
-    {
-    	Hashtable<String,String> defs = m_da.loadPropertyFile("MeterDefinition.properties");
-    	
-    	if (defs==null)
-    	{
-    		System.out.println("loadMeterDefinition failed !");
-    		return;
-    	}
-    	
-    	int last_group = Integer.parseInt(defs.get("LAST_GROUP"));
-    	int last_meter = Integer.parseInt(defs.get("LAST_METER"));
-    	
-    	for(int i = 0; i<=last_group; i++)
-    	{
-    		MeterCompany mc = new MeterCompany(i, defs.get("GROUP_" + i + "_ID"), defs.get("GROUP_" + i + "_NAME"));
-
-    		this.groups.put(mc.id, mc);
-    		System.out.println(mc);
-    	}
-    	
-    	for(int i = 1; i<=last_meter; i++)
-    	{
-    		MeterDevice md = new MeterDevice(
-    				defs.get("DEVICE_" + i + "_ID"),
-    				defs.get("DEVICE_" + i + "_GROUP"),
-    				defs.get("DEVICE_" + i + "_NAME"),
-    				defs.get("DEVICE_" + i + "_PICTURE"),
-    				defs.get("DEVICE_" + i + "_CLASS"),
-    				defs.get("DEVICE_" + i + "_STATUS"));
-    				
-    		this.groups.get(md.group).addDevice(md);
-    		this.meters_list.put(md.getFullName(), md);
-    	}
-    	
-    }
-*/
-    
-
-
-/*
-    public Object[] getAvailableMetersCombo()
-    {
-        Object oo[] = new Object[this.meter_names.length+1];
-        oo[0] = this.m_ic.getMessage("NONE");
-
-        for (int i=0; i<this.meter_names.length; i++) 
-        {
-            oo[i+1] = this.meter_names[i];
-        }
-
-        return oo;
-    }
-*/
 
 }

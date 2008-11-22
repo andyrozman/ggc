@@ -1,6 +1,5 @@
 package ggc.meter.device;
 
-import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
@@ -9,8 +8,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPortEvent;
-
-import java.util.ArrayList;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -35,8 +32,8 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AbstractSerialMeter
+ *  Description:  This abstract class for all meters using serial interface
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -45,43 +42,44 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public abstract class AbstractSerialMeter extends SerialProtocol implements MeterInterface, SelectableInterface
 {
 
-    protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
-
-    protected String m_info = "";
-    protected int m_time_difference = 0;
-    protected ArrayList<MeterValuesEntry> data = null;
-    protected String device_name = "Undefined";
     protected OutputWriter output_writer;
-
     AbstractDeviceCompany device_company = null;
-
+    protected int m_status = 0;
+    
+    /**
+     * Constructor
+     */
     public AbstractSerialMeter()
     {
         super();
     }
 
     
+    /**
+     * Constructor
+     * @param cmp
+     */
     public AbstractSerialMeter(AbstractDeviceCompany cmp)
     {
         this.setDeviceCompany(cmp);
     }
     
     
-    /*
-    public AbstractSerialMeter(int i2, int i3, int i4, int i5)
-    {
-        super();
-    }
-    */
 
+    /**
+     * Constructor
+     * @param da
+     */
     public AbstractSerialMeter(DataAccessMeter da)
     {
         super(da);
     }
 
-    // this.m_device_index = device_index;
 
+    /** 
+     * Serial Event - for handling serial events, this method is called internally
+     */
     public void serialEvent(SerialPortEvent event)
     {
 
@@ -92,6 +90,9 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     boolean can_read_device_info = false;
     boolean can_read_device_configuration = false;
 
+    /** 
+     * Set Device Allowed Actions
+     */
     public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data, boolean can_read_device_info, boolean can_read_device_configuration)
     {
         this.can_read_data = can_read_data;
@@ -100,6 +101,9 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         this.can_read_device_configuration = can_read_device_configuration;
     }
 
+    /** 
+     * Set Communication Settings
+     */
     public void setCommunicationSettings(int baudrate, int databits, int stopbits, int parity, int flow_control, int event_type)
     {
         super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
@@ -108,11 +112,16 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     String meter_group = null;
     String meter_device = null;
 
-    // MeterDevice device_instance = null;
 
+    /**
+     * Set meter type
+     * 
+     * @param group
+     * @param device
+     */
     public void setMeterType(String group, String device)
     {
-        this.device_name = device;
+        //this.device_name = device;
 
         DeviceIdentification di = new DeviceIdentification(DataAccessMeter.getInstance().getI18nControlInstance());
         di.company = group;
@@ -124,20 +133,19 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         // MeterManager.getInstance().getMeterDevice(group, device);
     }
 
-    /*
-    public String getName()
-    {
-        return this.device_name;
-    }*/
 
     String serial_port = null;
 
+    /**
+     * Set Serial Port used
+     * 
+     * @param port
+     * @throws PlugInBaseException
+     */
     public void setSerialPort(String port) throws PlugInBaseException
     {
         this.serial_port = port;
-
         this.setPort(port);
-
     }
 
     /**
@@ -150,6 +158,11 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return this.serial_port;
     }
 
+    /**
+     * Get Serial port
+     * 
+     * @return
+     */
     public String getSerialPort()
     {
         return this.serial_port;
@@ -165,39 +178,11 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return false;
     }
 
-    /*
-    public GenericMeter(int meter_type, String portName)
-    {
-
-    super(meter_type,
-          9600, 
-          SerialPort.DATABITS_8, 
-          SerialPort.STOPBITS_1, 
-          SerialPort.PARITY_NONE);
-
-    data = new ArrayList<DailyValuesRow>();
-
-    try
-    {
-        this.setPort(portName);
-
-        if (!this.open())
-        {
-    	this.m_status = 1;
-        }
-    }
-    catch(Exception ex)
-    {
-        System.out.println("AscensiaMeter -> Error adding listener: " + ex);
-        ex.printStackTrace();
-    }
-    }
-    */
     /**
      * Used for opening connection with device.
+     * 
      * @return boolean - if connection established
      */
-    // @Override
     public boolean open() throws PlugInBaseException
     {
         return super.open();
@@ -207,7 +192,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    // @Override
     public void close()
     {
         if (this.serialPort == null)
@@ -217,38 +201,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         this.serialPort.close();
     }
 
-    /**
-     * getTimeDifference - returns time difference between Meter and Computer
-     */
-    public int getTimeDifference()
-    {
-        // return this.m_time_difference;
-        return 0;
-    }
-
-    /**
-     * getInfo - returns Meter information
-     */
-    public String getInfo()
-    {
-        return "Generic Device, v0.1\nNo real device connected.";
-    }
-
-    /**
-     * getStatus - get Status of meter
-     */
-    public int getStatus()
-    {
-        return m_status;
-    }
-
-    /**
-     * isStatusOK - has Meter OK status
-     */
-    public boolean isStatusOK()
-    {
-        return (m_status == 0);
-    }
 
     /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
@@ -280,50 +232,13 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return this.output_writer.getDeviceIdentification();
     }
 
+
+
+    
     /**
-     * getDeviceConfiguration - return device configuration
-     * @return
+     * Wait for x ms
+     * @param time
      */
-    public ArrayList<String> getDeviceConfiguration()
-    {
-        return new ArrayList<String>();
-    }
-
-    /*
-    private void writePort(String input)
-    {
-        writePort(getBytes(input));
-    }
-
-    private void writePort(int input)
-    {
-        byte[] b = new byte[1];
-        b[0] = (byte) input;
-        writePort(b);
-    }
-*/
-    public String receivedText = "";
-
-    /*
-    private void writePort(byte[] input)
-    {
-        /*
-        try
-        {
-            this.portOutputStream.write(input);
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Error writing to Serial: "+ ex);
-        }*/
-    //}
-/*
-    private byte[] getBytes(String inp)
-    {
-
-        return inp.getBytes();
-    }
-*/
     public void waitTime(long time)
     {
         try
@@ -336,122 +251,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         }
     }
 
-    /*
-    {
-
-
-    //System.out.println();
-
-    // Determine type of event.
-    switch (event.getEventType()) 
-    {
-        case SerialPortEvent.DATA_AVAILABLE:
-    	{
-    	    int newData = 0;
-    	    receivedText = "";
-    	    try
-    	    {
-    		while ((newData=portInputStream.read())!=-1)
-    		{
-    		    switch (newData)
-    		    {
-    			case 6:
-    			    System.out.println("<ACK>");
-    			    mode = AscensiaMeter.MODE_ACK;
-    			    break;
-
-    			case 13:
-    			    System.out.println("<CR>");
-    			    break;
-
-    			case 5:
-    			    System.out.println("<ENQ>");
-    			    mode = AscensiaMeter.MODE_ENQ;
-    			    //this.portOutputStream.write(6);
-    			    break;
-    			case 4:
-    			    System.out.println("<EOT>");
-    			    mode = AscensiaMeter.MODE_EOT;
-    			    break;
-
-    			case 23:
-    			    System.out.println("<ETB>");
-    			    break;
-
-    			case 3:
-    			    System.out.println("<ETX>");
-    			    break;
-
-    			case 10:
-    			    System.out.println("<LF>");
-    			    break;
-
-    			case 21:
-    			    System.out.println("<NAK>");
-    			    mode = AscensiaMeter.MODE_NAK;
-    			    break;
-
-    			case 2:
-    			    System.out.println("<STX>");
-    			    break;
-
-    			default:
-    			    {
-    				System.out.print((char)newData);
-    				receivedText += (new Character((char)newData)).toString();
-    			    }
-    		    }
-    		    //inputBuffer.append((char)newData);
-    		    //System.out.print((char)newData);
-    		}
-    	    }
-    	    catch(Exception ex)
-    	    {
-    		System.out.println("Exception:" + ex);
-    	    }
-
-    	    //System.out.print(newData + " ");
-    /*
-    	    dataFromMeter = true;
-
-    	    System.out.println("Data");
-
-    	    timeOut += 5000;
-    */
-    /*              } break;
-
-
-    	// If break event append BREAK RECEIVED message.
-        case SerialPortEvent.BI:
-    	System.out.println("recievied break");
-    	break;
-        case SerialPortEvent.CD:
-    	System.out.println("recievied cd");
-    	break;
-        case SerialPortEvent.CTS:
-    	System.out.println("recievied cts");
-    	break;
-        case SerialPortEvent.DSR:
-    	System.out.println("recievied dsr");
-    	break;
-        case SerialPortEvent.FE:
-    	System.out.println("recievied fe");
-    	break;
-        case SerialPortEvent.OE:
-    	System.out.println("recievied oe");
-    	break;
-        case SerialPortEvent.PE:
-    	System.out.println("recievied pe");
-    	break;
-        case SerialPortEvent.RI:
-    	System.out.println("recievied ri");
-    	break;
-    }
-      } */
-
-    public void readDeviceData() throws PlugInBaseException
-    {
-    }
 
     // ************************************************
     // *** Process Meter Data ***
@@ -502,11 +301,14 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     // *** Test ***
     // ************************************************
 
+    /**
+     * test
+     */
     public void test()
     {
     }
 
-    /* 
+    /** 
      * compareTo
      */
     public int compareTo(SelectableInterface o)
@@ -515,7 +317,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return 0;
     }
 
-    /* 
+    /** 
      * getColumnCount
      */
     public int getColumnCount()
@@ -525,7 +327,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
     String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") };
 
-    /* 
+    /** 
      * getColumnName
      */
     public String getColumnName(int num)
@@ -533,7 +335,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return device_columns[num - 1];
     }
 
-    /* 
+    /** 
      * getColumnValue
      */
     public String getColumnValue(int num)
@@ -557,7 +359,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         }
     }
 
-    /* 
+    /** 
      * getColumnValueObject
      */
     public Object getColumnValueObject(int num)
@@ -565,7 +367,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return this.getColumnValue(num);
     }
 
-    /* 
+    /** 
      * getColumnWidth
      */
     public int getColumnWidth(int num, int width)
@@ -574,7 +376,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return 0;
     }
 
-    /* 
+    /** 
      * getItemId
      */
     public long getItemId()
@@ -582,7 +384,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return 0;
     }
 
-    /* 
+    /** 
      * getShortDescription
      */
     public String getShortDescription()
@@ -590,7 +392,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return this.getName();
     }
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(int from, int till, int state)
@@ -598,7 +400,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return true;
     }
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(int value)
@@ -606,7 +408,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return true;
     }
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(String text)
@@ -614,14 +416,14 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return true;
     }
 
-    /* 
+    /** 
      * setColumnSorter
      */
     public void setColumnSorter(ColumnSorter cs)
     {
     }
 
-    /* 
+    /** 
      * setSearchContext
      */
     public void setSearchContext()
@@ -640,8 +442,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
     /**
      * getDeviceCompany - get Company for device
-     * 
-     * @param company
      */
     public AbstractDeviceCompany getDeviceCompany()
     {

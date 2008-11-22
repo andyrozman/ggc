@@ -24,8 +24,8 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AccuChekCompactPlus
+ *  Description:  Support for AccuChek Compact Plus Meter
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -34,17 +34,31 @@ import ggc.plugin.output.OutputWriter;
 public class AccuChekCompactPlus extends AccuChekSmartPixMeter
 {
     
+    /**
+     * Constructor
+     */
     public AccuChekCompactPlus()
     {
         super();
     }
     
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
     public AccuChekCompactPlus(AbstractDeviceCompany cmp)
     {
         this.setDeviceCompany(cmp);
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param drive_letter
+     * @param writer
+     */
     public AccuChekCompactPlus(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);

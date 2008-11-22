@@ -475,7 +475,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     JButton sel_all, unsel_all;
     
     
-    public JPanel createTablePanel(MeterValuesTable table)
+    public JPanel createTablePanel(MeterValuesTable table_in)
     {
 
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -526,7 +526,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         TableColumn column = null;
         for (int i = 0; i < 5; i++)
         {
-            column = table.getColumnModel().getColumn(i);
+            column = table_in.getColumnModel().getColumn(i);
             column.setPreferredWidth(cw[i]);
         }
 

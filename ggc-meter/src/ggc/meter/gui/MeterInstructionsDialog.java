@@ -141,42 +141,16 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     
     private boolean loadConfiguration()
     {
-        //MeterConfiguration mc = new MeterConfiguration(false);
-        
         this.configured_meter = this.m_da.getDeviceConfiguration().getSelectedDeviceInstance(); //mc.getDefaultMeter();
-        
-        System.out.println("configured meter: " + this.configured_meter);
         
         if (this.configured_meter==null)
             return false;
         
-        /*
-        this.configured_meter = new MeterConfigEntry();
-        this.configured_meter.id =1;
-        this.configured_meter.communication_port = "COM9";
-        this.configured_meter.name = "My Countour";
-        this.configured_meter.meter_company = "Ascensia/Bayer";
-        this.configured_meter.meter_device = "Contour";
-        this.configured_meter.ds_area= "Europe/Prague";
-        this.configured_meter.ds_winter_change = 0;
-        this.configured_meter.ds_summer_change = 1;
-        this.configured_meter.ds_fix = true;
-        */
-        /*
-        tzu.setTimeZone("Europe/Prague");
-        tzu.setWinterTimeChange(0);
-        tzu.setSummerTimeChange(+1);
-        */
-        
-        //System.out.println(this.configured_meter.meter_company + " " + this.configured_meter.meter_device);
-        
-        
-        DeviceInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.device_company, this.configured_meter.device_device);
+        DeviceInterface mi = MeterManager.getInstance().getDevice(this.configured_meter.device_company, this.configured_meter.device_device);
         
         this.meter_interface = (MeterInterface)mi;
         
         return true;
-        
     }
     
     
@@ -202,8 +176,8 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     }
     
     
-    public static final int METER_INTERFACE_PARAM_CONNECTION_TYPE = 1;
-    public static final int METER_INTERFACE_PARAM_STATUS = 2;
+    private static final int METER_INTERFACE_PARAM_CONNECTION_TYPE = 1;
+    private static final int METER_INTERFACE_PARAM_STATUS = 2;
     
     
     public String getMeterInterfaceParameter(int param)

@@ -8,8 +8,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
 
-import java.util.ArrayList;
-
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
@@ -33,8 +31,8 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AbstractXmlMeter
+ *  Description:  This abstract class for all meters using Xml interface
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -52,12 +50,19 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     
     String connection_port = "";
 
+    /**
+     * Constructor
+     */
     public AbstractXmlMeter()
     {
         super();
     }
 
 
+    /**
+     * Constructor
+     * @param cmp
+     */
     public AbstractXmlMeter(AbstractDeviceCompany cmp)
     {
         this.setDeviceCompany(cmp);
@@ -70,11 +75,17 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
 	boolean can_read_device_configuration = false;
     
     
+    /** 
+     * close
+     */
     public void close() throws PlugInBaseException
     {
     }
 	
 	
+    /** 
+     * Set Device Allowed Actions
+     */
     public void setDeviceAllowedActions(boolean can_read_data, 
     									boolean can_read_partitial_data,
     									boolean can_read_device_info,
@@ -94,6 +105,12 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     //MeterDevice device_instance = null;
     
     
+    /**
+     * Set Meter type
+     * 
+     * @param group
+     * @param device
+     */
     public void setMeterType(String group, String device)
     {
         this.device_name = device;
@@ -107,7 +124,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
     }
     
-    /*
+    /**
     public String getName()
     {
         return this.device_name;
@@ -131,49 +148,13 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     /**
      * setConnectionPort - connection port data
      * 
+     * @param con_port 
      */
     public void setConnectionPort(String con_port)
     {
         this.connection_port = con_port;
     }
     
-    
-    
-    
-    
-    
-    
-    /*
-    public GenericMeter(int meter_type, String portName)
-    {
-
-	super(meter_type,
-	      9600, 
-	      SerialPort.DATABITS_8, 
-	      SerialPort.STOPBITS_1, 
-	      SerialPort.PARITY_NONE);
-
-	data = new ArrayList<DailyValuesRow>();
-
-	try
-	{
-	    this.setPort(portName);
-
-	    if (!this.open())
-	    {
-		this.m_status = 1;
-	    }
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("AscensiaMeter -> Error adding listener: " + ex);
-	    ex.printStackTrace();
-	}
-    }
-*/
-
-
-
     
     /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
@@ -207,35 +188,6 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
         return this.output_writer.getDeviceIdentification();
     }
     
-    
-    /**
-     * getDeviceConfiguration - return device configuration
-     * @return
-     */
-    public ArrayList<String> getDeviceConfiguration()
-    {
-    	return new ArrayList<String>();
-    }
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-    public void readDeviceData() throws PlugInBaseException
-    {
-    }
-
-
-
-
 
     
     //************************************************
@@ -289,17 +241,14 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     
     
 
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
-
-
 
     //************************************************
     //***                    Test                  ***
     //************************************************
 
+    /** 
+     * test
+     */
     public void test()
     {
     }
@@ -307,7 +256,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
 
 
     
-    /* 
+    /** 
      * compareTo
      */
     public int compareTo(SelectableInterface o)
@@ -317,7 +266,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * getColumnCount
      */
     public int getColumnCount()
@@ -328,7 +277,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
 
     String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
     
-    /* 
+    /** 
      * getColumnName
      */
     public String getColumnName(int num)
@@ -337,7 +286,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * getColumnValue
      */
     public String getColumnValue(int num)
@@ -363,7 +312,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * getColumnValueObject
      */
     public Object getColumnValueObject(int num)
@@ -372,7 +321,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * getColumnWidth
      */
     public int getColumnWidth(int num, int width)
@@ -382,7 +331,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * getItemId
      */
     public long getItemId()
@@ -391,7 +340,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * getShortDescription
      */
     public String getShortDescription()
@@ -400,7 +349,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(int from, int till, int state)
@@ -409,7 +358,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(int value)
@@ -418,7 +367,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(String text)
@@ -427,7 +376,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * setColumnSorter
      */
     public void setColumnSorter(ColumnSorter cs)
@@ -435,7 +384,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    /* 
+    /** 
      * setSearchContext
      */
     public void setSearchContext()
@@ -458,8 +407,6 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     
     /**
      * getDeviceCompany - get Company for device
-     * 
-     * @param company
      */
     public AbstractDeviceCompany getDeviceCompany()
     {

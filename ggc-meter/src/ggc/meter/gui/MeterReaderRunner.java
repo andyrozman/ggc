@@ -268,7 +268,7 @@ public class MeterReaderRunner extends Thread implements OutputWriter // extends
                 log.debug(lg);
                 writeLog(LogEntryType.DEBUG, lg);
                 
-                String className = MeterManager.getInstance().getMeterDeviceClassName(this.configured_meter.device_company, this.configured_meter.device_device); 
+                String className = MeterManager.getInstance().getDeviceClassName(this.configured_meter.device_company, this.configured_meter.device_device); 
                 
                 Class<?> c = Class.forName(className);
                 

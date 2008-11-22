@@ -1,36 +1,5 @@
 package ggc.meter.device.ascensia;
 
-
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: AscensiaContourMeter.java
- *  Purpose:  This class is used for data retrival from Ascensia Contour Meter and
- *            implements SerialProtocol.
- *
- *  Author:   andyrozman {andyrozman@sourceforge.net}
- *
- */
-
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import gnu.io.SerialPortEventListener;
@@ -55,8 +24,8 @@ import gnu.io.SerialPortEventListener;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AscensiaContourLink
+ *  Description:  Support for Ascensia/Bayer Contour Link Meter
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -66,17 +35,31 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
 {
 
 	
+    /**
+     * Constructor
+     */
     public AscensiaContourLink()
     {
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
     public AscensiaContourLink(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param portName
+     * @param writer
+     */
     public AscensiaContourLink(String portName, OutputWriter writer)
     {
     	super(portName, writer);
@@ -118,7 +101,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
      */
     public int getDeviceId()
     {
-        return AscensiaMeter.METER_ASCENSIA_CONTOUR;
+        return AscensiaMeter.METER_ASCENSIA_CONTOUR_LINK;
     }
 
     
@@ -166,13 +149,18 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     }
 
 
-    
+    /** 
+     * Get Device ClassName
+     */
     public String getDeviceClassName()
     {
         return "ggc.meter.device.ascensia.AscensiaContourLink";
     }
 
     
+    /**
+     * Maximum of records that device can store
+     */
     public int getMaxMemoryRecords()
     {
         return 480;

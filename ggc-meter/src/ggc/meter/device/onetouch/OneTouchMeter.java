@@ -39,33 +39,79 @@ import com.atech.utils.TimeZoneUtil;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     OneTouchMeter  
+ *  Description:  Super class for OT meters with basic ASCII protocol
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 
+// while basic OT ascii protocol is implemented this file is still unclean and we are waiting to get 
+// more of old protocols, before we do finishing touches...
+// so far we are also missing few pictures and ALL instructions for meters
+
 public abstract class OneTouchMeter extends AbstractSerialMeter
 {
     
     
+    /**
+     * 
+     */
     public static final int LIFESCAN_COMPANY          = 3;
     
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA      = 30001;
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_2    = 30002;  // NP
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_ULTRASMART = 30003;  // NI
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_ULTRALINK  = 30004;  // NI  NP
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_SELECT     = 30005;  // NI  NP
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_INDUO                = 30006;  // NI
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_BASIC      = 30007;  // NI
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_SURESTEP   = 30008;  // NI
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_FASTTAKE   = 30009;  // NI
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_PROFILE    = 30010;  
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_II         = 30011;  // NI
     
     // these have different protocol and are extended from OneTouchMeter2
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_MINI = 30050;  // NI NP
+    /**
+     * 
+     */
     public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY = 30050;  // NI NP
     
     
@@ -73,7 +119,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     protected boolean device_running = true;
     //protected ArrayList<MeterValuesEntry> data = null;
 //    protected OutputWriter m_output_writer;
-    public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+    protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     //public int meter_type = 20000;
     private int entries_max = 0;
     private int entries_current = 0;
@@ -103,6 +149,12 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param portName
+     * @param writer
+     */
     public OneTouchMeter(String portName, OutputWriter writer)
     {
         super(DataAccessMeter.getInstance());
@@ -160,7 +212,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     
     
-    /* 
+    /** 
      * getComment
      */
     public String getComment()
@@ -170,8 +222,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     }
 
 
-
-    /* 
+    // DO
+    /** 
      * getImplementationStatus
      */
     public int getImplementationStatus()
@@ -180,7 +232,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         return 0;
     }
 
-    /* 
+    // DO
+    /** 
      * getInstructions
      */
     public String getInstructions()
@@ -192,6 +245,9 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
    
 
 
+    /** 
+     * readDeviceDataFull
+     */
     public void readDeviceDataFull()
     {
         
@@ -328,7 +384,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     /** 
      * This is method for reading configuration
      * 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readConfiguration() throws PlugInBaseException
     {
@@ -338,7 +394,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readInfo() throws PlugInBaseException
     {
@@ -397,14 +453,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     
     
     
-    public void setDeviceStopped()
+    protected void setDeviceStopped()
     {
         this.device_running = false;
         this.output_writer.endOutput();
     }
     
     
-    public void readInfo(StringTokenizer strtok)
+    private void readInfo(StringTokenizer strtok)
     {
 /*        P nnn,“ MeterSN ”,“MG/DL ”
         (1) (2) (3)
@@ -459,7 +515,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     }
     
 
-    public void readBGEntry(StringTokenizer strtok, String entry)
+    protected void readBGEntry(StringTokenizer strtok, String entry)
     {
         try
         {

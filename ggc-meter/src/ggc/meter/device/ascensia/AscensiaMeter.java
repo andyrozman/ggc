@@ -62,20 +62,46 @@ import com.atech.utils.TimeZoneUtil;
 public abstract class AscensiaMeter extends AbstractSerialMeter
 {
 
-    public static final int ASCENSIA_COMPANY          = 1;
+    /**
+     * Meter Company: Ascensia
+     */
+    public static final int ASCENSIA_COMPANY            = 1;
     
-    public static final int METER_ASCENSIA_ELITE_XL   = 10001;
-    public static final int METER_ASCENSIA_DEX        = 10002;
-    public static final int METER_ASCENSIA_BREEZE     = 10003;
-    public static final int METER_ASCENSIA_CONTOUR    = 10004;
-    public static final int METER_ASCENSIA_BREEZE2    = 10005;
+    /**
+     * Meter: Elite XL
+     */
+    public static final int METER_ASCENSIA_ELITE_XL     = 10001;
+    
+    /**
+     * Meter: Dex
+     */
+    public static final int METER_ASCENSIA_DEX          = 10002;
+    
+    /**
+     * Meter: Breeze
+     */
+    public static final int METER_ASCENSIA_BREEZE       = 10003;
+    
+    /**
+     * Meter: Contour
+     */
+    public static final int METER_ASCENSIA_CONTOUR      = 10004;
+    
+    /**
+     * Meter: Breeze 2
+     */
+    public static final int METER_ASCENSIA_BREEZE2      = 10005;
+    
+    /**
+     * Meter: Contour Link
+     */
+    public static final int METER_ASCENSIA_CONTOUR_LINK = 10006;
     
     
     protected I18nControl ic = I18nControl.getInstance();
 
-    public TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+    protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
-    public boolean device_running = false;
 
     boolean multiline = false;
     String multiline_body;
@@ -83,18 +109,33 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 //    String end_string;
     String end_strings[] = null;
     String text_def[] = null;
+    boolean device_running;
+
     
-    
+    /**
+     * Constructor
+     */
     public AscensiaMeter()
     {
     }
     
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
     public AscensiaMeter(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param portName
+     * @param writer
+     */
     public AscensiaMeter(String portName, OutputWriter writer)
     {
     	
@@ -127,7 +168,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 	
 		    if (!this.open())
 		    {
-		    	this.m_status = 1;
+		    	//this.m_status = 1;
+		        return;
 		    }
 		    
 	        this.output_writer.writeHeader();
@@ -155,15 +197,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		
     }
 
-
-
-    /**
-     * getInfo - returns Meter information
-     */
-    public String getInfo()
-    {
-        return m_info;
-    }
 
 
 
@@ -340,6 +373,9 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     }
     
     
+    /**
+     * Set Device Stopped
+     */
     public void setDeviceStopped()
     {
         this.device_running = false;
@@ -514,7 +550,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     
     	inf += ic.getMessage("\nSERIAL_NUMBER") + ": " + serial;
     
-    	this.m_info = inf;
+//    	this.m_info = inf;
 
     }
 
@@ -534,8 +570,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     	gc_comp.set(Calendar.HOUR_OF_DAY, gc_curr.get(Calendar.HOUR_OF_DAY));
     	gc_comp.set(Calendar.MINUTE, gc_curr.get(Calendar.MINUTE));
     
-    	long diff = gc_comp.getTimeInMillis() - gc_meter.getTimeInMillis();
-    	this.m_time_difference = (-1) * (int)diff;
+    	//long diff = gc_comp.getTimeInMillis() - gc_meter.getTimeInMillis();
+    	//this.m_time_difference = (-1) * (int)diff;
     
     	//System.out.println("Computer Time: " + gc_comp + "\nMeter Time: " + gc_meter + " Diff: " + this.m_time_difference);
 
@@ -621,7 +657,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     }
 
 
-    public String getCorrectDecimal(String input)
+    protected String getCorrectDecimal(String input)
     {
         float f = Float.parseFloat(input);
         return DataAccessMeter.MmolDecimalFormat.format(f).replace(',', '.');
@@ -641,6 +677,9 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     //***                    Test                  ***
     //************************************************
 
+    /**
+     * test
+     */
     public void test()
     {
     }
@@ -659,7 +698,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     /** 
      * This is method for reading configuration
      * 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readConfiguration() throws PlugInBaseException
     {
@@ -669,7 +708,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readInfo() throws PlugInBaseException
     {

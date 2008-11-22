@@ -243,7 +243,7 @@ public class MeterConsoleTester //extends JFrame
         try
         {
             AccuChekAviva acv = new AccuChekAviva();
-            acv.readDeviceData();
+            acv.readDeviceDataFull();
         }
         catch(Exception ex)
         {

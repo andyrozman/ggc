@@ -4,11 +4,8 @@ package ggc.meter.device;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-
-import java.util.ArrayList;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -33,14 +30,14 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AbstractOtherMeter
+ *  Description:  Abstract class for Meters using other protocols
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 
-public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements MeterInterface, SelectableInterface
+public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements MeterInterface, SelectableInterface
 {
 
     protected I18nControl ic = I18nControl.getInstance();
@@ -55,6 +52,9 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     DataAccessMeter m_da = DataAccessMeter.getInstance();
     
 
+    /**
+     * Constructor
+     */
     public AbstractOtherMeter()
     {
         super();
@@ -70,6 +70,9 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
 	
 	
 	
+    /** 
+     * Set Device Allowed Actions
+     */
     public void setDeviceAllowedActions(boolean can_read_data, 
     									boolean can_read_partitial_data,
     									boolean can_read_device_info,
@@ -89,6 +92,10 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     //MeterDevice device_instance = null;
     
     
+    /**
+     * @param group
+     * @param device
+     */
     public void setMeterType(String group, String device)
     {
         this.device_name = device;
@@ -102,7 +109,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
     }
     
-    /*
+    /**
     public String getName()
     {
         return this.device_name;
@@ -126,6 +133,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     /**
      * setConnectionPort - connection port data
      * 
+     * @param con_port 
      */
     public void setConnectionPort(String con_port)
     {
@@ -137,7 +145,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     
     
     
-    /*
+    /**
     public GenericMeter(int meter_type, String portName)
     {
 
@@ -202,34 +210,6 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
     
     
-    /**
-     * getDeviceConfiguration - return device configuration
-     * @return
-     */
-    public ArrayList<String> getDeviceConfiguration()
-    {
-    	return new ArrayList<String>();
-    }
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-    public void readDeviceData() throws PlugInBaseException
-    {
-    }
-
-
-
-
 
     
     //************************************************
@@ -290,6 +270,9 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     //***                    Test                  ***
     //************************************************
 
+    /** 
+     * test
+     */
     public void test()
     {
     }
@@ -297,7 +280,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
 
 
     
-    /* 
+    /** 
      * compareTo
      */
     public int compareTo(SelectableInterface o)
@@ -307,7 +290,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * getColumnCount
      */
     public int getColumnCount()
@@ -318,7 +301,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
 
     String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
     
-    /* 
+    /** 
      * getColumnName
      */
     public String getColumnName(int num)
@@ -327,7 +310,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * getColumnValue
      */
     public String getColumnValue(int num)
@@ -350,7 +333,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * getColumnValueObject
      */
     public Object getColumnValueObject(int num)
@@ -359,7 +342,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * getColumnWidth
      */
     public int getColumnWidth(int num, int width)
@@ -369,7 +352,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * getItemId
      */
     public long getItemId()
@@ -378,7 +361,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * getShortDescription
      */
     public String getShortDescription()
@@ -387,7 +370,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(int from, int till, int state)
@@ -396,7 +379,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(int value)
@@ -405,7 +388,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * isFound
      */
     public boolean isFound(String text)
@@ -414,7 +397,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * setColumnSorter
      */
     public void setColumnSorter(ColumnSorter cs)
@@ -422,7 +405,7 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     }
 
 
-    /* 
+    /** 
      * setSearchContext
      */
     public void setSearchContext()
@@ -445,8 +428,6 @@ public abstract class AbstractOtherMeter /*extends XmlProtocol*/ implements Mete
     
     /**
      * getDeviceCompany - get Company for device
-     * 
-     * @param company
      */
     public AbstractDeviceCompany getDeviceCompany()
     {

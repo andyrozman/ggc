@@ -1,14 +1,9 @@
 package ggc.meter.device;
 
-import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.protocol.ConnectionProtocols;
-
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -32,21 +27,17 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DummyMeter
+ *  Description:  Dummy Meter device
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
 
 public class DummyMeter extends AbstractMeter //implements MeterInterface
 {
 
     DataAccessMeter m_da = DataAccessMeter.getInstance();
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-
-    public int m_meter_index = 0;
-    
 
     
     /**
@@ -78,40 +69,9 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
 
 
-    public static final int LOG_DEBUG = 1;
-    public static final int LOG_INFO = 2;
-    public static final int LOG_WARN = 3;
-    public static final int LOG_ERROR = 4;
-    
-    public void writeLog(int problem, String text)
-    {
-        System.out.println("Dummy -> " + text);
-    }
-
-
-    public String getInfo() //throws MeterException
-    {
-        writeLog(LOG_DEBUG, "getVersion() - Start");
-        writeLog(LOG_DEBUG, "getVersion() - End");
-        return "Dummy Meter\n" +
-               "v0.1\n" +
-               m_ic.getMessage("DUMMY_INFO_TEXT");
-    }
-
-    
-
     
 
 
-    public int getStatus()
-    {
-        return 0;
-    }
-    
-    public boolean isStatusOK()
-    {
-        return true;
-    }
 
 
     
@@ -127,58 +87,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     
     
 
-    // Internal methods
-
-/*
-    public String getName()
-    {
-        return "Dummy Meter";
-    }
-*/
-    public int getMeterIndex()
-    {
-        return m_meter_index;
-    }
-
-/*    
-    public ImageIcon getIcon()
-    {
-        return m_da.getMeterManager().getMeterImage(1); //m_meter_index);
-    }
-*/
-    /*
-     * 
-     * Dupkicate
-    public ArrayList<MeterValuesEntry> getDataFull()
-    {
-        writeLog(LOG_DEBUG, "getDataFull() - Start");
-        ArrayList<MeterValuesEntry> al = new ArrayList<MeterValuesEntry>();
-        writeLog(LOG_DEBUG, "getDataFull() - End");
-        return al;
-    }
-
-    public ArrayList<MeterValuesEntry> getData(int from, int to)
-    {
-        writeLog(LOG_DEBUG, "getData() - Start");
-        ArrayList<MeterValuesEntry> al = new ArrayList<MeterValuesEntry>();
-        writeLog(LOG_DEBUG, "getData() - End");
-        return al;
-    }
-*/
-
-    public void loadInitialData()
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-
-
-
-    public void readDeviceData()
-    {
-    }
 
 
     /**
@@ -228,6 +136,9 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     //***                    Test                  ***
     //************************************************
 
+    /** 
+     * test
+     */
     public void test()
     {
     }
@@ -246,22 +157,10 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
      */
     public String getName()
     {
-        return "name";
+        return "Dummy Meter";
     }
 
 
-    /**
-     * getIcon - Get Icon of meter
-     * Should be implemented by meter class.
-     * 
-     * @return ImageIcon
-     */
-    public ImageIcon getIcon()
-    {
-        return null;
-    }
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -279,17 +178,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
      * @return id of meter within company
      */
     public int getMeterId()
-    {
-        return 0;
-    }
-
-    
-    /**
-     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
-     * 
-     * @return global id of meter
-     */
-    public int getGlobalMeterId()
     {
         return 0;
     }
@@ -339,6 +227,9 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
 
 
+    /**
+     * Get Device ClassName
+     */
     public String getDeviceClassName()
     {
         return "ggc.meter.device.DummyMeter";
@@ -354,6 +245,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
 
     /** 
      * clearDeviceData - Clear data from device 
+     * @throws PlugInBaseException 
      */
     public void clearDeviceData() throws PlugInBaseException
     {
@@ -368,49 +260,28 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
     
     
-    /**
-     * getDeviceConfiguration - return device configuration
-     * @return
+    
+    /** 
+     * getConnectionPort
      */
-    public ArrayList<String> getDeviceConfiguration() throws PlugInBaseException
-    {
-        return null;
-    }
-    
-    
-    /**
-     * getDataFull - get all data from Meter
-     * This data should be read from meter, and is used in Meter GUI
-     */
-    public ArrayList<MeterValuesEntry> getDataFull() //throws MeterException
-    {
-        return null;
-    }
-
-
-    /**
-     * getData - get data for specified time
-     * This data should be read from meter and preprocessed, and is used in Meter GUI
-     */
-    public ArrayList<MeterValuesEntry> getData(int from, int to) //throws MeterException
-    {
-        return null;
-    }
-    
-    
-    
     public String getConnectionPort()
     {
         return "No port";
     }
 
 
+    /** 
+     * Get Connection Protocol
+     */
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_NONE;
     }
     
     
+    /** 
+     * Get Max Memory Records
+     */
     public int getMaxMemoryRecords()
     {
         return 1;
@@ -430,7 +301,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     /** 
      * This is method for reading configuration
      * 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readConfiguration() throws PlugInBaseException
     {
@@ -440,7 +311,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readInfo() throws PlugInBaseException
     {
@@ -464,20 +335,13 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
 
 
-
+    /** 
+     * Get Device Id
+     */
     public int getDeviceId()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
-
-
-    public String getPort()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
     
 }
