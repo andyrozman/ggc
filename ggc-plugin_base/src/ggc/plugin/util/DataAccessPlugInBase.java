@@ -116,6 +116,17 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
     JFrame m_main = null;        
         
+
+    // about
+    protected String about_title;
+    protected String about_image_name;
+    protected String about_plugin_name;
+    protected int about_plugin_copyright_from;
+    protected ArrayList<LibraryInfoEntry> plugin_libraries;
+    protected ArrayList<CreditsGroup> plugin_developers;
+    protected ArrayList<FeaturesGroup> plugin_features; 
+    
+    
     
 
     // ********************************************************
@@ -175,21 +186,33 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
 
 
+    /** 
+     * Get Application Name
+     */
     public abstract String getApplicationName();
     
     
     
+    /** 
+     * Check Prerequisites for Plugin
+     */
     public void checkPrerequisites()
     {
     }
     
     
+    /** 
+     * Get Images Root
+     */
     public String getImagesRoot()
     {
     	return "/icons/";
     }
     
     
+    /** 
+     * loadBackupRestoreCollection
+     */
     public void loadBackupRestoreCollection()
     {
     }
@@ -199,16 +222,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ******            About Methods                    *****    
     // ********************************************************
     
-    
+    /**
+     * Create About Context for plugin
+     */
     public abstract void createPlugInAboutContext();
     
-    protected String about_title;
-    protected String about_image_name;
-    protected String about_plugin_name;
-    protected int about_plugin_copyright_from;
-    protected ArrayList<LibraryInfoEntry> plugin_libraries;
-    protected ArrayList<CreditsGroup> plugin_developers;
-    protected ArrayList<FeaturesGroup> plugin_features; 
+    
     
     public String getAboutTitle()
     {
@@ -276,7 +295,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     public String weblister_desc;
     public ArrayList<BaseListEntry> weblister_items;
     
-    
+    /**
+     * Create WebLister (for List) Context for plugin
+     */
     public abstract void createWebListerContext();
     
     
@@ -313,6 +334,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ******                Configuration                *****    
     // ********************************************************
     
+    /**
+     * Create Configuration Context for plugin
+     */
     public abstract void createConfigurationContext();
     
     
@@ -334,7 +358,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return this.device_config;
     }
     
-
+    /**
+     * Create Device Configuration for plugin
+     */
     public abstract void createDeviceConfiguration();
 
     
@@ -347,6 +373,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return this.plugin_version;
     }
     
+    /**
+     * Create Plugin Version
+     */
     public abstract void createPlugInVersion();
     
     
@@ -538,6 +567,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
             
     }
 
+    
+    // ********************************************************
+    // ******                   Database                  *****    
+    // ********************************************************
+    
+    
+    /** 
+     * Get HibernateDb instance (for working with database in plugin)
+     */
     public HibernateDb getHibernateDb()
     {
         return null;

@@ -81,6 +81,8 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * getName - Get Name of device. 
      * Should be implemented by device class.
+     * 
+     * @return 
      */
     String getName();
 
@@ -172,6 +174,8 @@ public interface DeviceInterface extends SelectableInterface
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
      * be done from here. Reading can be done directly here, or event can be used to read data. Usage of events 
      * is discouraged because reading takes 3-4x more time.
+     * 
+     * @throws PlugInBaseException 
      */
     void readDeviceDataFull() throws PlugInBaseException;
     
@@ -204,6 +208,7 @@ public interface DeviceInterface extends SelectableInterface
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
      *    special comment about device (for example pix device, doesn't display anything till the end, which
      *    would be nice if user knew. 
+     * @return 
      */
     public String getDeviceSpecialComment();
     

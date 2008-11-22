@@ -24,8 +24,9 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      DeviceConfigurationDefinition  
+ *  Description:   This is interface which must be implemented for all plugins which will
+ *                 share configuration tool. It defines basic values needed for configurator.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -34,14 +35,42 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public interface DeviceConfigurationDefinition
 {
     
+    
+    /**
+     * Keyword used through configuration and configuration file describing device (for meter plugin, this
+     * would be word METER).
+     *  
+     * @return keyword representing device
+     */
     public String getDevicePrefix();
     
+    /**
+     * Only certain devices support manual time fix for application (meters do, other's don't).
+     * 
+     * @return true if time fix is supported, false otherwise
+     */
     public boolean doesDeviceSupportTimeFix();
     
+    /**
+     * Get path to Configuration file as string
+     * 
+     * @return path to configuration file
+     */
     public String getDevicesConfigurationFile();
     
+    /**
+     * Returns Dummy object (needed for some actions)
+     * 
+     * @return
+     */
     public Object getDummyObject();
     
+    
+    /**
+     * Returns list of all supported devices for plugin. Needed for device selection
+     * 
+     * @return
+     */
     public Vector<? extends SelectableInterface> getSupportedDevices(); 
 
 }
