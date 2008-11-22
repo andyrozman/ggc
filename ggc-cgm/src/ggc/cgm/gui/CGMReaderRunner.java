@@ -13,7 +13,7 @@ import ggc.plugin.output.OutputWriterData;
 
 import java.lang.reflect.Constructor;
 
-/**
+/***
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
@@ -33,11 +33,17 @@ import java.lang.reflect.Constructor;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMReaderRunner
+ *  Description:  This is separate thread class to get current data from database in otder to 
+ *                compare it later.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+//IMPORTANT NOTICE: 
+//This class is not implemented yet, all existing methods should be rechecked.
+//
+//Try to assess possibility of super-classing
 
 
 public class CGMReaderRunner extends Thread implements OutputWriter // extends JDialog implements ActionListener
@@ -48,36 +54,24 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     CGMInterface m_mi = null;
     boolean special_status = false;
 
-    /* 
+    /** 
      * endOutput
      */
     public void endOutput()
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
-    /* 
-     * getDeviceIdentification
-     */
-/*    public DeviceIdentification getDeviceIdentification()
-    {
-        return this.dialog.device_ident;
-    } */
-
-
-    /* 
+    /** 
      * getOutputUtil
      */
     public OutputUtil getOutputUtil()
     {
         return this.dialog.output_util;
-        //return null;
     }
 
 
-    /* 
+    /** 
      * interruptCommunication
      */
     public void interruptCommunication()
@@ -85,7 +79,7 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     }
 
 
-    /* 
+    /** 
      * setBGOutputType
      */
     public void setBGOutputType(int bg_type)
@@ -100,10 +94,13 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     public void setDeviceIdentification(DeviceIdentification di)
     {
         this.dialog.setDeviceIdentification(di);
-        // TODO Auto-generated method stub
-        
     }
 
+
+    /**
+     * Set Device comment
+     * @param com
+     */
     public void setDeviceComment(String com)
     {
         this.dialog.setDeviceComment(com);
@@ -111,8 +108,9 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     
     int count = 0;
     
-    /* 
+    /** 
      * writeBGData
+     * @param mve 
      */
     public void writeBGData(CGMValuesEntry mve)
     {
@@ -134,7 +132,7 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
 
    
     
-    /**
+    /***
      * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
      * done with this method.
      * @param value
@@ -147,6 +145,9 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     
     
     
+    /**
+     * setSubStatus
+     */
     public void setSubStatus(String sub_status)
     {
         //System.out.println("Runner: Sub Status: " + sub_status);
@@ -154,6 +155,9 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     }
     
     
+    /** 
+     * getSubStatus
+     */
     public String getSubStatus()
     {
         return this.dialog.getSubStatus();
@@ -190,6 +194,9 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
         this.dialog.setStatus(status);
     }
     
+    /** 
+     * getStatus
+     */
     public int getStatus()
     {
         return this.dialog.getStatus();
@@ -202,7 +209,7 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     
     
 
-    /* 
+    /** 
      * writeDeviceIdentification
      */
     public void writeDeviceIdentification()
@@ -211,7 +218,7 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     }
 
 
-    /* 
+    /** 
      * writeHeader
      */
     public void writeHeader()
@@ -219,15 +226,17 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     }
 
 
-    /* 
+    /** 
      * writeRawData
+     * @param input 
+     * @param is_bg_data 
      */
     public void writeRawData(String input, boolean is_bg_data)
     {
     }
 
 
-    /**
+    /***
      * 
      */
     private static final long serialVersionUID = 7159799607489791137L;
@@ -237,6 +246,11 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
     CGMDisplayDataDialog dialog;
 
     
+    /**
+     * Constructor
+     * @param cnf_device
+     * @param dialog
+     */
     public CGMReaderRunner(DeviceConfigEntry cnf_device, CGMDisplayDataDialog dialog)
     {
 //        this.writer = writer;
@@ -244,37 +258,12 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
         this.dialog = dialog;
     }
     
-/*    
-    private void loadConfiguration()
-    {
-        // TODO: this should be read from config
-        
-        this.configured_meter = new MeterConfigEntry();
-        this.configured_meter.id =1;
-        this.configured_meter.communication_port = "COM9";
-        this.configured_meter.name = "My Countour";
-        this.configured_meter.meter_company = "Ascensia/Bayer";
-        this.configured_meter.meter_device = "Contour";
-        this.configured_meter.ds_area= "Europe/Prague";
-        this.configured_meter.ds_winter_change = 0;
-        this.configured_meter.ds_summer_change = 1;
-        this.configured_meter.ds_fix = true;
-        
-        /*
-        tzu.setTimeZone("Europe/Prague");
-        tzu.setWinterTimeChange(0);
-        tzu.setSummerTimeChange(+1);
-        */
-        
-        //MeterInterface mi = MeterManager.getInstance().getMeterDevice(this.configured_meter.meter_company, this.configured_meter.meter_device);
-        
-        //this.meter_interface = mi;
-  /*      
-    }
-*/
     
     boolean running = true;
     
+    /** 
+     * run
+     */
     public void run()
     {
 
@@ -284,7 +273,7 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
             try
             {
             
-                String className = CGMManager.getInstance().getCGMDeviceClassName(this.configured_device.device_company, this.configured_device.device_device); 
+                String className = CGMManager.getInstance().getDeviceClassName(this.configured_device.device_company, this.configured_device.device_device); 
                 
                 Class<?> c = Class.forName(className);
                 
@@ -320,30 +309,38 @@ public class CGMReaderRunner extends Thread implements OutputWriter // extends J
 
 
 
+    /** 
+     * writeData
+     */
     public void writeData(OutputWriterData data)
     {
         // TODO Auto-generated method stub
-        
     }
 
 
+    /** 
+     * writeLog
+     */
     public void writeLog(int entry_type, String message)
     {
         // TODO Auto-generated method stub
-        
     }
 
 
+    /** 
+     * writeLog
+     */
     public void writeLog(int entry_type, String message, Exception ex)
     {
         // TODO Auto-generated method stub
-        
     }
 
 
-    public ggc.plugin.device.DeviceIdentification getDeviceIdentification()
+    /** 
+     * getDeviceIdentification
+     */
+    public DeviceIdentification getDeviceIdentification()
     {
-        // TODO Auto-generated method stub
         return null;
     }
     

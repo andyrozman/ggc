@@ -1,37 +1,9 @@
 package ggc.cgm.data;
 
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: CGMValuesEntry.java
- *  Purpose:  Collection of CGMValuesEntry, which conatains all daily values.
- *
- *  Author:   Andy Rozman {andy@atech-software.com}
- */
-
-
 import ggc.cgm.util.DataAccessCGM;
 import ggc.cgm.util.I18nControl;
 import ggc.core.db.hibernate.DayValueH;
+import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputUtil;
 
 import java.util.Hashtable;
@@ -58,8 +30,8 @@ import com.atech.utils.ATechDate;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMValuesEntry.java
+ *  Description:  Collection of CGMValuesEntry, which contains all daily values.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -69,7 +41,7 @@ import com.atech.utils.ATechDate;
 //This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
-public class CGMValuesEntry 
+public class CGMValuesEntry extends DeviceValuesEntry
 {
 	DataAccessCGM da = DataAccessCGM.getInstance();
 	
@@ -81,30 +53,17 @@ public class CGMValuesEntry
 	String profile;
 	
 	// old
-	public String bg_str;
-	public int bg_unit;
-	public boolean checked = false;
+	String bg_str;
+	int bg_unit;
 	//public
+	
 	public Hashtable<String,String> params;
-	public int status = 1; //MeterValuesEntry.
 	public static I18nControl ic = I18nControl.getInstance(); 
 	
 	public String bg_original = null;
 	public OutputUtil util = OutputUtil.getInstance();
 	
 	
-	public static final int STATUS_UNKNOWN = 0;
-    public static final int STATUS_NEW = 1;
-    public static final int STATUS_CHANGED = 2;
-    public static final int STATUS_OLD = 3;
-	
-	
-    public static final int OBJECT_STATUS_NEW = 1;
-    public static final int OBJECT_STATUS_EDIT = 2;
-    public static final int OBJECT_STATUS_OLD =3;
-    
-    
-    public int object_status = 0;
     
     public DayValueH entry_object = null;
     
@@ -116,17 +75,11 @@ public class CGMValuesEntry
 	     CGMValuesEntry.ic.getMessage("OLD")
 	};
 	
-    public static String entry_status_icons[] = 
-    {
-         "led_gray.gif",
-         "led_green.gif",
-         "led_yellow.gif",
-         "led_red.gif"
-    };
 	
 	
 	public CGMValuesEntry()
 	{
+	    super();
 	}
 	
 	
@@ -179,9 +132,9 @@ public class CGMValuesEntry
 	
 	
 	
-	public void addParameter(String key, String value)
+	public void addParameter(String key, String value_in)
 	{
-		if ((value.equals("_")) || (value.trim().length()==0))
+		if ((value_in.equals("_")) || (value_in.trim().length()==0))
 			return;
 		
 		if (params==null)
@@ -189,7 +142,7 @@ public class CGMValuesEntry
 			params = new Hashtable<String,String>();
 		}
 		
-		this.params.put(key, value);
+		this.params.put(key, value_in);
 		
 	}
 
@@ -205,15 +158,6 @@ public class CGMValuesEntry
 	}
 	
 	
-	public boolean getCheched()
-	{
-	    return this.checked;
-	}
-
-	public int getStatus()
-	{
-	    return this.status;
-	}
 	
 	
 	public void setBgValue(String value)

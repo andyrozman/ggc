@@ -2,6 +2,7 @@ package ggc.cgm.data;
 
 
 import ggc.cgm.util.DataAccessCGM;
+import ggc.plugin.data.DeviceValuesEntry;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -46,8 +47,8 @@ import javax.swing.table.TableColumn;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMValuesTable  
+ *  Description:  Table for CGMS values
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -66,6 +67,9 @@ public class CGMValuesTable extends JTable //implements TableModelListener
     CGMValuesTableModel model = null;
 	DataAccessCGM m_da = DataAccessCGM.getInstance();
 
+    /**
+     *  Constructor
+     */
     public CGMValuesTable()
     {
         super();
@@ -79,6 +83,10 @@ public class CGMValuesTable extends JTable //implements TableModelListener
         
     }
 
+    /**
+     *  Constructor
+     * @param model 
+     */
     public CGMValuesTable(CGMValuesTableModel model)
     {
         super(model);
@@ -102,6 +110,10 @@ public class CGMValuesTable extends JTable //implements TableModelListener
         return header;
     }
 
+    /**
+     * Set Model
+     * @param model
+     */
     public void setModel(CGMValuesTableModel model)
     {
         super.setModel(model);
@@ -129,7 +141,12 @@ public class CGMValuesTable extends JTable //implements TableModelListener
         });
     }
 
-    public static JComponent createMeterValuesTable(final CGMValuesTableModel model)
+    /**
+     * Create CGMS Values Table
+     * @param model
+     * @return
+     */
+    public static JComponent createCGMSValuesTable(final CGMValuesTableModel model)
     {
         CGMValuesTable table = new CGMValuesTable(model);
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -251,7 +268,7 @@ public class CGMValuesTable extends JTable //implements TableModelListener
                 // setSelected(b.booleanValue());
                 status = i.intValue();
                 setText(CGMValuesEntry.entry_statuses[status]);
-                setIcon(m_da.getImageIcon(CGMValuesEntry.entry_status_icons[status], 8, 8, this));
+                setIcon(m_da.getImageIcon(DeviceValuesEntry.entry_status_icons[status], 8, 8, this));
             }
 
             setBackground(isSelected && !hasFocus ? table.getSelectionBackground() : table.getBackground());

@@ -22,22 +22,38 @@ package ggc.cgm.data.defs;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMDataType  
+ *  Description:  CGMS Data types, as used in database (undefined at this time)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+//IMPORTANT NOTICE: 
+//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
+//class, with different type of data.
 
 
 public class CGMDataType
 {
 
-    public static final int PUMP_DATA_BASAL    = 1; 
-    public static final int PUMP_DATA_BOLUS    = 2;
-    public static final int PUMP_DATA_EVENT    = 3; 
-    public static final int PUMP_DATA_ALARM    = 4;
-    public static final int PUMP_DATA_ERROR    = 5;
-    public static final int PUMP_DATA_PROFILE  = 6;
+    /**
+     * 
+     */
+    public static final int CGMS_DATA_DATA    = 1; 
+    
+    
+    /**
+     * 
+     */
+    public static final int CGMS_DATA_EVENT    = 3; 
+    /**
+     * 
+     */
+    public static final int CGMS_DATA_ALARM    = 4;
+    /**
+     * 
+     */
+    public static final int CGMS_DATA_ERROR    = 5;
     
 
 }

@@ -54,8 +54,9 @@ import ggc.plugin.device.PlugInBaseException;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMInterface  
+ *  Description:  Interface used for CGMS devices, it contains only methods not used in DeviceInterface,
+ *                which is considered super-parent.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -84,133 +85,6 @@ public interface CGMInterface extends DeviceInterface
      */
     void close() throws PlugInBaseException;
 
-
-
-
-
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
-    //void loadInitialData();
-    //void readCommData();
-
-    /**
-     * getName - Get Name of meter. 
-     * Should be implemented by protocol class.
-     */
-    String getName();
-
-
-    /**
-     * getIcon - Get Icon of meter
-     * Should be implemented by protocol class.
-     */
-    String getIconName();
-
-
-    
-
-    //************************************************
-    //***           Meter GUI Methods              ***
-    //************************************************
-
-
-
-    
-    /**
-     * setDeviceAllowedActions - sets actions which are allowed by implementation
-     *   of MeterInterface (actually of GenericMeterXXXXX classes)
-     *   
-     * @param can_read_data
-     * @param can_read_partitial_data
-     * @param can_clear_data
-     * @param can_read_device_info
-     * @param can_read_device_configuration
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-    									boolean can_read_partitial_data,
-    									boolean can_read_device_info,
-    									boolean can_read_device_configuration);
-    
-    
-    
-    
-
-    //************************************************
-    //***       Device Implemented methods         ***
-    //************************************************
-    
-
-    
-    /**
-     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
-     *    special comment about device (for example pix device, doesn't display anything till the end, which
-     *    would be nice if user knew. 
-     */
-    public String getDeviceSpecialComment();
-    
-    
-    
-    /**
-     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
-     *    normal progress status, but with some special devices we calculate progress through other means.
-     * @return true is progress status is special
-     */
-    public boolean hasSpecialProgressStatus();
-    
-    
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-    /**
-     * canReadData - Can Meter Class read data from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadData();
-
-
-    
-    /**
-     * canReadDeviceInfo - tells if we can read info about device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadDeviceInfo();
-    
-    
-    /**
-     * canReadConfiguration - tells if we can read configuration from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadConfiguration();
-
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
-
-    void test();
-
-    
-    
-    public int getConnectionProtocol();
-
-    
-    /**
-     * getInstructions - get instructions for device
-     * Should be implemented by meter class.
-     * 
-     * @return instructions for reading data 
-     */
-    String getInstructions();
-    
     
 
 }

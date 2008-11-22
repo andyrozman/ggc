@@ -1,32 +1,5 @@
 package ggc.cgm.data;
 
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: GlucoTableModel.java Purpose: The Model behind the "readFromMeter"
- * Table. It is the bridge between the table and the data behind.
- * 
- * Author: schultd
- */
-
 import ggc.cgm.gui.CGMDisplayDataDialog;
 import ggc.cgm.util.DataAccessCGM;
 import ggc.cgm.util.I18nControl;
@@ -58,15 +31,14 @@ import javax.swing.table.AbstractTableModel;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMValuesTableModel  
+ *  Description:  Model for table of CGMS values
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 
-public class CGMValuesTableModel extends AbstractTableModel // implements
-                                                              // GlucoValueEventListener
+public class CGMValuesTableModel extends AbstractTableModel 
 {
 
     private static final long serialVersionUID = 2881771615052748327L;
@@ -148,7 +120,7 @@ public class CGMValuesTableModel extends AbstractTableModel // implements
     {
         for (int i = 0; i < this.displayed_dl_data.size(); i++)
         {
-            this.displayed_dl_data.get(i).checked = select;
+            this.displayed_dl_data.get(i).setChecked(select);
         }
 
         this.fireTableDataChanged();
@@ -238,7 +210,7 @@ public class CGMValuesTableModel extends AbstractTableModel // implements
             return new Integer(mve.getStatus());
 
         case 4:
-            return new Boolean(mve.getCheched());
+            return new Boolean(mve.getChecked());
 
         default:
             return "";
@@ -258,7 +230,7 @@ public class CGMValuesTableModel extends AbstractTableModel // implements
 //        processMeterValuesEntry(mve);
         this.dl_data.add(mve);
         
-        if (this.shouldBeDisplayed(mve.status))
+        if (this.shouldBeDisplayed(mve.getStatus()))
         {
             this.displayed_dl_data.add(mve);
         }
@@ -336,7 +308,7 @@ public class CGMValuesTableModel extends AbstractTableModel // implements
         {
             CGMValuesEntry mve = this.dl_data.get(i);
             
-            if (!mve.checked)
+            if (!mve.getChecked())
                 continue;
             
             mve.prepareEntry();
@@ -385,7 +357,7 @@ public class CGMValuesTableModel extends AbstractTableModel // implements
     public void setValueAt(Object aValue, int row, int column)
     {
         Boolean b = (Boolean) aValue;
-        this.displayed_dl_data.get(row).checked = b.booleanValue();
+        this.displayed_dl_data.get(row).setChecked(b.booleanValue());
         // System.out.println("set Value: rw=" + row + ",column=" + column +
         // ",value=" + aValue);
         // dayData.setValueAt(aValue, row, column);

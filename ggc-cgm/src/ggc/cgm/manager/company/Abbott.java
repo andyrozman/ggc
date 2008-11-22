@@ -24,8 +24,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      Abbott  
+ *  Description:   CGMS Company - Abbott
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -35,6 +35,9 @@ public class Abbott extends AbstractDeviceCompany
 {
 
     
+    /**
+     * Constructor
+     */
     public Abbott()
     {
         super(I18nControl.getInstance());

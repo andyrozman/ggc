@@ -46,11 +46,16 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMExportDialog
+ *  Description:  For exporting data into database (or somewhere else)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+//IMPORTANT NOTICE: 
+//This class is not implemented yet, all existing methods should be rechecked.
+//
+//Try to assess possibility of super-classing
 
 
 public class CGMExportDialog extends JDialog implements ActionListener, StatusReporterInterface
@@ -60,7 +65,7 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
     CGMPlugInServer server;
     
     
-    /* 
+    /** 
      * setStatus
      */
     public void setStatus(int status)
@@ -81,7 +86,7 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
     private DataAccessCGM m_da = DataAccessCGM.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
-    public JProgressBar progress = null;
+    private JProgressBar progress = null;
 
 
     
@@ -126,6 +131,9 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
     }
 */
     
+    /**
+     * Constructor
+     */
     public CGMExportDialog()
     {
         super();
@@ -133,6 +141,11 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
     }
 
     
+    /**
+     * Constructor
+     * @param lst 
+     * @param writer 
+     */
     public CGMExportDialog(ArrayList<CGMValuesEntry> lst, OutputWriter writer)
     {
         super();
@@ -140,7 +153,10 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
     }
     
 
-    
+    /**
+     * Constructor
+     * @param mce DeviceConfigEntry instance
+     */
     public CGMExportDialog(DeviceConfigEntry mce)
     {
         super();
@@ -149,7 +165,12 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
         dialogPreInit(false);
     }
     
-
+    /**
+     * Constructor
+     * @param parent 
+     * @param meter_data 
+     * @param server 
+     */
     public CGMExportDialog(JDialog parent, Hashtable<String,ArrayList<DayValueH>> meter_data, CGMPlugInServer server)
     {
         super();
@@ -283,8 +304,8 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
 
 
     
-
-    public JButton createButton(String command_text, String tooltip, String image_d)
+/*
+    private JButton createButton(String command_text, String tooltip, String image_d)
     {
         JButton b = new JButton();
         b.setIcon(m_da.getImageIcon(image_d, 15, 15, this));
@@ -293,16 +314,16 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
         b.setToolTipText(tooltip);
         return b;
     }
+*/
 
-
-    /*
+    /**
      * Invoked when an action occurs.
      */
     public void actionPerformed(ActionEvent e)
     {
-        String action = e.getActionCommand();
+        String action_cmd = e.getActionCommand();
 
-        if (action.equals("close"))
+        if (action_cmd.equals("close"))
         {
             if (started)
                 this.action = true;
@@ -311,13 +332,17 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
             this.dispose();
         }
         else
-            System.out.println("MeterExportDialog::Unknown command: " + action);
+            System.out.println("CGMExportDialog::Unknown command: " + action);
 
     }
 
     boolean started = false;
     boolean action = false;
     
+    /**
+     * Determines if action was executed in this dialog
+     * @return
+     */
     public boolean wasAction()
     {
         return this.action;
@@ -326,6 +351,10 @@ public class CGMExportDialog extends JDialog implements ActionListener, StatusRe
     
     
     
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args)
     {
         // MeterReadDialog mrd =

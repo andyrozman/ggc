@@ -4,8 +4,6 @@ package ggc.cgm.device;
 
 import ggc.cgm.util.DataAccessCGM;
 
-import javax.swing.ImageIcon;
-
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -28,8 +26,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DummyCGM  
+ *  Description:  Dummy CGM device, used for special stuff
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -65,137 +63,30 @@ public class DummyCGM extends GenericCGM //implements MeterInterface
     }
 
 
-    public static final int LOG_DEBUG = 1;
-    public static final int LOG_INFO = 2;
-    public static final int LOG_WARN = 3;
-    public static final int LOG_ERROR = 4;
-    
-    public void writeLog(int problem, String text)
-    {
-        System.out.println("Dummy -> " + text);
-    }
-
-
-    public String getInfo() //throws MeterException
-    {
-        writeLog(LOG_DEBUG, "getVersion() - Start");
-        writeLog(LOG_DEBUG, "getVersion() - End");
-        return "Dummy Meter\n" +
-               "v0.1\n" +
-               m_ic.getMessage("DUMMY_INFO_TEXT");
-    }
-
-    
-
-    public int getTimeDifference() // throws MeterException
-    {
-        writeLog(LOG_DEBUG, "getTimeDifference() - Start");
-        writeLog(LOG_DEBUG, "getTimeDifference() - End");
-        return 0;
-    }
-
-
-    public int getStatus()
-    {
-        return 0;
-    }
-    
-    public boolean isStatusOK()
-    {
-        return true;
-    }
 
 
 
-    // Internal methods
-
-
+    /**
+     * getName - Get Name of device. 
+     * Should be implemented by device class.
+     * 
+     * @return 
+     */
     public String getName()
     {
         return "Dummy Meter";
     }
 
-    public int getDeviceIndex()
+    
+    /**
+     * getDeviceId - Get Device Id, this are plugin specific and global (for example only one device 
+     * of type meter, can have same id.  
+     * Should be implemented by protocol class.
+     */
+    public int getDeviceId()
     {
         return 0;
     }
-
-    
-    public ImageIcon getIcon()
-    {
-        //return m_da..getMeterManager().getMeterImage(1); //m_meter_index);
-        
-        return null;
-    }
-
-    public void readDataFull()
-    {
-    }
-
-
-
-
-
-
-    public void readDeviceData()
-    {
-    }
-
-
-
-
-    //************************************************
-    //***          Process Meter Data              ***
-    //************************************************
-
-
-
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-    /**
-     * canReadData - Can Meter Class read data from device
-     */
-    public boolean canReadData()
-    {
-        return false;
-    }
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     */
-    public boolean canReadPartitialData()
-    {
-        return false;
-    }
-
-    /**
-     * canClearData - Can Meter class clear data from meter.
-     */
-    public boolean canClearData()
-    {
-        return false;
-    }
-
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
-
-    /**
-     * test
-     */
-    public void test()
-    {
-    }
-
-
-
-
 
 
 

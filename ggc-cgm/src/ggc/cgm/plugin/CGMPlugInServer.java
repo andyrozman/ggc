@@ -28,8 +28,8 @@ import com.atech.utils.ATDataAccessAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMPlugInServer
+ *  Description:  This is server side of plugin architecture
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -37,18 +37,30 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class CGMPlugInServer extends PlugInServer
 {
-    /**
-     * Version of Meter Tool
-     */
     private String cgm_tool_version = "0.0.1";
     
+    /**
+     *  Command: Read CGMS data 
+     */
     public static final int COMMAND_READ_CGMS_DATA = 0;
+    
+    /**
+     *  Command: Get List of devices
+     */
     public static final int COMMAND_CGMS_LIST = 1;
+    
+    /**
+     *  Command: Configuration 
+     */
     public static final int COMMAND_CGMS_CONFIGURATION = 2;
+    
+    /**
+     *  Command: About  
+     */
     public static final int COMMAND_CGMS_ABOUT = 3;
     
     
-    public String commands[] = {
+    private String commands[] = {
                                 "MN_CGMS_READ_DESC",
                                 "MN_CGMS_LIST_DESC",
                                 "MN_CGMS_CONFIG_DESC",
@@ -57,24 +69,34 @@ public class CGMPlugInServer extends PlugInServer
     
     
     
+    /**
+     * Constructor
+     */
     public CGMPlugInServer()
     {
         super();
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param cont
+     * @param selected_lang
+     * @param da
+     */
     public CGMPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
         super(cont, selected_lang, da);
         DataAccessCGM.getInstance().addComponent(cont);
     }
     
-
     
     
-    
-    /* 
-     * executeCommand
+    /**
+     * Execute Command on Server Side
+     * 
+     * @param command
      */
     @Override
     public void executeCommand(int command, Object obj_data)
@@ -114,8 +136,10 @@ public class CGMPlugInServer extends PlugInServer
         
     }
 
-    /* 
-     * getName
+    /**
+     * Get Name of plugin
+     * 
+     * @return
      */
     @Override
     public String getName()
@@ -123,8 +147,10 @@ public class CGMPlugInServer extends PlugInServer
         return ic.getMessage("CGMS_PLUGIN");
     }
 
-    /* 
-     * getVersion
+    /**
+     * Get Version of plugin
+     * 
+     * @return
      */
     @Override
     public String getVersion()
@@ -132,8 +158,10 @@ public class CGMPlugInServer extends PlugInServer
         return this.cgm_tool_version;
     }
 
-    /* 
-     * getWhenWillBeImplemented
+    /**
+     * Get Information When will it be implemented
+     * 
+     * @return
      */
     @Override
     public String getWhenWillBeImplemented()
@@ -141,8 +169,8 @@ public class CGMPlugInServer extends PlugInServer
         return "0.4";
     }
 
-    /* 
-     * initPlugIn
+    /**
+     * Init PlugIn which needs to be implemented 
      */
     @Override
     public void initPlugIn()
@@ -151,8 +179,6 @@ public class CGMPlugInServer extends PlugInServer
         I18nControl.getInstance().setLanguage(this.selected_lang);
         DataAccessCGM.getInstance().addComponent(this.parent);
     }
-    
-    
     
     
 }

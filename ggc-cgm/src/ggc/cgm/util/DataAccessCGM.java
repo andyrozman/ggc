@@ -32,19 +32,8 @@ package ggc.cgm.util;
 import ggc.cgm.manager.CGMManager;
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Image;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Properties;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import com.atech.db.hibernate.HibernateDb;
 
@@ -68,8 +57,8 @@ import com.atech.db.hibernate.HibernateDb;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DataAccessCGM  
+ *  Description:  Singelton class containing all data used through plugin
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -78,32 +67,12 @@ import com.atech.db.hibernate.HibernateDb;
 public class DataAccessCGM extends DataAccessPlugInBase
 {
 
-    // LF
-    //    Hashtable<String,String> availableLF_full = null;
-    //    Object[]  availableLF = null;
-    //    Object[]  availableLang = null;
-    //    private LanguageInfo m_lang_info = null;
-
-    //    String selectedLF = null;
-    //    String subSelectedLF = null;
-
-    // Config file
-    //    Hashtable<String,String> config_db_values = null;
-    //    public int selected_db = -1;
-    //    public int selected_lang = 1;
-    //    public String selected_LF_Class = null; // class
-    //  public String selected_LF_Name = null; // name
-    //    public String skinLFSelected = null;
-    //    String allDbs[] = null;
 
 
     private static DataAccessCGM s_da = null; // This is handle to unique 
 
-    private CGMManager m_meterManager = null;
+    private CGMManager m_device_manager = null;
 
-
-//    public Hashtable<String,String> metersUrl;
-//    public ArrayList<String> metersNames;
         
         
 
@@ -111,7 +80,6 @@ public class DataAccessCGM extends DataAccessPlugInBase
     // ******      Constructors and Access methods        *****    
     // ********************************************************
 
-    //   Constructor:  DataAccess
     /**
      *
      *  This is DataAccess constructor; Since classes use Singleton Pattern,
@@ -125,6 +93,9 @@ public class DataAccessCGM extends DataAccessPlugInBase
     } 
 
     
+    /** 
+     * Init Special - All methods that we support should be called here
+     */
     public void initSpecial()
     {
         this.loadFonts();
@@ -133,15 +104,12 @@ public class DataAccessCGM extends DataAccessPlugInBase
     }
     
     
-    //  Method:       getInstance
-    //  Author:       Andy
     /**
      *
-     *  This method returns reference to OmniI18nControl object created, or if no 
+     *  This method returns reference to DataAccessCGM object created, or if no 
      *  object was created yet, it creates one.<br><br>
      *
-     *  @return Reference to OmniI18nControl object
-     * 
+     *  @return Reference to DataAccessCGM instance
      */
     public static DataAccessCGM getInstance()
     {
@@ -150,32 +118,6 @@ public class DataAccessCGM extends DataAccessPlugInBase
         return s_da;
     }
 
-    public static DataAccessCGM createInstance(JFrame main)
-    {
-        if (s_da == null)
-        {
-            //GGCDb db = new GGCDb();
-            s_da = new DataAccessCGM();
-//x            s_da.setParent(main);
-        }
-
-        return s_da;
-    }
-
- 
-    
-    
-    
-
-  
-
-
-    /*
-     static public DataAccess getInstance()
-     {
-     return m_da;
-     }
-     */
 
     //  Method:       deleteInstance
     /**
@@ -190,18 +132,6 @@ public class DataAccessCGM extends DataAccessPlugInBase
     
     
 
-    /*
-    public void startDb(StatusBarL bar2)
-    {
-        GGCDbLoader loader = new GGCDbLoader(this, bar2);
-        loader.start();
-    } */
-/*
-    public GGCDb getDb()
-    {
-        return m_db;
-    }
-*/
 
     
     
@@ -212,37 +142,27 @@ public class DataAccessCGM extends DataAccessPlugInBase
     // ********************************************************
     
 
-
+    /** 
+     * Get Application Name
+     */
     public String getApplicationName()
     {
     	return "GGC_CGMSTool";
     }
     
     
-    
+    /** 
+     * Check Prerequisites for Plugin
+     */
     public void checkPrerequisites()
     {
     }
     
     
-    public String getImagesRoot()
-    {
-    	return "/icons/";
-    }
-    
-    
-    public void loadBackupRestoreCollection()
-    {
-    }
-    
-    
     
     
 
 
-    // ********************************************************
-    // ******                    Db                       *****    
-    // ********************************************************
 
 
 
@@ -250,31 +170,14 @@ public class DataAccessCGM extends DataAccessPlugInBase
     // ******                   Pumps                    *****    
     // ********************************************************
 
+    /**
+     * Get Device Manager
+     * @return
+     */
     public CGMManager getCGMManager()
     {
-        return this.m_meterManager;
+        return this.m_device_manager;
     }
-
-
-    // ********************************************************
-    // ******                   Pumps                    *****    
-    // ********************************************************
-
-
-    // ********************************************************
-    // ******                  Settings                   *****    
-    // ********************************************************
-
-    public Color getColor(int color)
-    {
-        return new Color(color);
-    }
-/*
-    public ConfigurationManager getConfigurationManager()
-    {
-	return this.m_cfgMgr;
-    }
-*/
 
 
 
@@ -282,17 +185,11 @@ public class DataAccessCGM extends DataAccessPlugInBase
     // ******          Parent handling (for UIs)          *****    
     // ********************************************************
 
-/*
-    public I18nControlAbstract getI18nInstance()
-    {
-        return I18nControl.getInstance();
-    }
-*/
     /**
      *  Utils
      */
 
-
+/*
     public Image getImage(String filename, Component cmp)
     {
         Image img;
@@ -325,37 +222,7 @@ public class DataAccessCGM extends DataAccessPlugInBase
         }
         return img;
     }
-
-
-
-    // ********************************************************
-    // ******               Look and Feel                 *****    
-    // ********************************************************
-
-
-    public static String[] getLFData()
-    {
-        String out[] = new String[2];
-
-        try
-        {
-            Properties props = new Properties();
-
-            FileInputStream in = new FileInputStream("../data/GGC_Config.properties");
-            props.load(in);
-
-            out[0] = (String)props.get("LF_CLASS");
-            out[1] = (String)props.get("SKINLF_SELECTED");
-
-            return out;
-
-        }
-        catch(Exception ex)
-        {
-            System.out.println("DataAccess::getLFData::Exception> " + ex);
-            return null;
-        }
-    }
+*/
 
 
 
@@ -372,12 +239,14 @@ public class DataAccessCGM extends DataAccessPlugInBase
     }
 
 
-    
+    // ********************************************************
+    // ******                   Database                  *****    
+    // ********************************************************
 
 
-
-
-
+    /** 
+     * Get HibernateDb instance (for working with database in plugin)
+     */
     @Override
     public HibernateDb getHibernateDb()
     {
@@ -385,7 +254,15 @@ public class DataAccessCGM extends DataAccessPlugInBase
         return null;
     }
 
-
+    
+    // ********************************************************
+    // ******                Configuration                *****    
+    // ********************************************************
+    
+    
+    /**
+     * Create Configuration Context for plugin
+     */
     @Override
     public void createConfigurationContext()
     {
@@ -393,23 +270,37 @@ public class DataAccessCGM extends DataAccessPlugInBase
         
     }
 
-
+    /**
+     * Create Device Configuration for plugin
+     */
     @Override
     public void createDeviceConfiguration()
     {
         // TODO Auto-generated method stub
-        
     }
 
-
+    
+    // ********************************************************
+    // ******            About Methods                    *****    
+    // ********************************************************
+    
+    /**
+     * Create About Context for plugin
+     */
     @Override
     public void createPlugInAboutContext()
     {
         // TODO Auto-generated method stub
-        
     }
 
-
+    
+    // ********************************************************
+    // ******                  Version                    *****    
+    // ********************************************************
+    
+    /**
+     * Create Plugin Version
+     */
     @Override
     public void createPlugInVersion()
     {
@@ -417,7 +308,14 @@ public class DataAccessCGM extends DataAccessPlugInBase
         
     }
 
-
+    
+    // ********************************************************
+    // ******         Web Lister Methods                  *****    
+    // ********************************************************
+    
+    /**
+     * Create WebLister (for List) Context for plugin
+     */
     @Override
     public void createWebListerContext()
     {

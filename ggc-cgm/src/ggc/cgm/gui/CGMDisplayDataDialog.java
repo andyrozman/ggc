@@ -39,7 +39,7 @@ import javax.swing.table.TableColumn;
 
 import com.atech.i18n.I18nControlAbstract;
 
-/**
+/***
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
@@ -59,11 +59,17 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      CGMDisplayDataDialog
+ *  Description:   This is dialog for displaying data as it's been downloaded. 
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+
+//IMPORTANT NOTICE: 
+//This class is not implemented yet, all existing methods should be rechecked.
+//
+//Try to assess possibility of super-classing
 
 
 public class CGMDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
@@ -135,14 +141,14 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     
     
     
-    /*
+    /**
      * Constructor for ReadMeterDialog.
      * 
      * @param owner
      * 
      * @throws HeadlessException
      */
-/*    public MeterDisplayDataDialog(JFrame owner, MeterInterface mi)
+/**    public MeterDisplayDataDialog(JFrame owner, MeterInterface mi)
     {
         super(owner);
         m_da.addComponent(this);
@@ -199,7 +205,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     }
     
     
-    /*
+    /**
     private void loadConfiguration()
     {
         // TODO: this should be read from config
@@ -215,7 +221,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         this.configured_meter.ds_summer_change = 1;
         this.configured_meter.ds_fix = true;
 
-        /*
+        /**
          * tzu.setTimeZone("Europe/Prague"); tzu.setWinterTimeChange(0);
          * tzu.setSummerTimeChange(+1);
          */
@@ -242,7 +248,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
     }
 
-    /*
+    /**
     private void guiTest()
     {
         MeterValuesEntry mve = new MeterValuesEntry();
@@ -290,7 +296,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 */
     
     
-    /**
+    /***
      * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
      * done with this method.
      * @param value
@@ -352,7 +358,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
         // TableColumnModel tcm = this.table.getColumnModel();
         // tcm.removeColumn(this.table.setC)
-        /*
+        /**
          * for (int k = 0; k < this.model.getColumnCount(); k++) {
          * 
          * 
@@ -478,7 +484,12 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     JButton sel_all, unsel_all;
     
     
-    public JPanel createTablePanel(CGMValuesTable table)
+    /***
+     * Create panel for table
+     * @param table_in
+     * @return
+     */
+    public JPanel createTablePanel(CGMValuesTable table_in)
     {
 
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -507,7 +518,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         filter_combo.addItemListener(new ItemListener() 
         {
 
-            /* 
+            /** 
              * itemStateChanged
              */
             public void itemStateChanged(ItemEvent ev)
@@ -529,7 +540,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         TableColumn column = null;
         for (int i = 0; i < 5; i++)
         {
-            column = table.getColumnModel().getColumn(i);
+            column = table_in.getColumnModel().getColumn(i);
             column.setPreferredWidth(cw[i]);
         }
 
@@ -552,7 +563,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     }
 
 
-    /*
+    /**
      * Invoked when an action occurs.
      */
     public void actionPerformed(ActionEvent e)
@@ -597,7 +608,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
     }
 
-    /*
+    /**
      * endOutput
      */
     public void endOutput()
@@ -609,10 +620,10 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
     DeviceIdentification device_ident;
 
-    /*
+    /**
      * getDeviceIdentification
      */
-/*    public DeviceIdentification getDeviceIdentification()
+/**    public DeviceIdentification getDeviceIdentification()
     {
         return device_ident;
     }
@@ -636,7 +647,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
     OutputUtil output_util = OutputUtil.getInstance(this);
 
-    /*
+    /**
      * getOutputUtil
      */
     public OutputUtil getOutputUtil()
@@ -644,7 +655,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         return this.output_util;
     }
 
-    /*
+    /**
      * interruptCommunication
      */
     public void interruptCommunication()
@@ -653,7 +664,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
     }
 
-    /*
+    /**
      * setBGOutputType
      */
     public void setBGOutputType(int bg_type)
@@ -663,7 +674,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         this.output_util.setBGMeasurmentType(bg_type);
     }
 
-    /*
+    /**
      * setDeviceIdentification
      */
     public void setDeviceIdentification(DeviceIdentification di)
@@ -673,8 +684,9 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
     int count = 0;
 
-    /*
+    /**
      * writeBGData
+     * @param mve 
      */
     public void writeBGData(CGMValuesEntry mve)
     {
@@ -682,7 +694,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         this.model.addEntry(mve);
     }
 
-    /*
+    /**
      * writeDeviceIdentification
      */
     public void writeDeviceIdentification()
@@ -690,15 +702,17 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         this.ta_info.setText(this.device_ident.getShortInformation());
     }
 
-    /*
+    /***
      * writeHeader
      */
     public void writeHeader()
     {
     }
 
-    /*
+    /***
      * writeRawData
+     * @param input 
+     * @param is_bg_data 
      */
     public void writeRawData(String input, boolean is_bg_data)
     {
@@ -706,7 +720,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
 
     boolean device_should_be_stopped = false;
 
-    /*
+    /**
      * User can stop readings from his side (if supported)
      */
     public void setReadingStop()
@@ -714,7 +728,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
         this.device_should_be_stopped = true;
     }
 
-    /*
+    /**
      * This should be queried by device implementation, to see if it must stop
      * reading
      */
@@ -728,7 +742,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     
     
     
-    /*
+    /**
      * This is status of device and also of GUI that is reading device (if we
      * have one) This is to set that status to see where we are. Allowed
      * statuses are: 1-Ready, 2-Downloading, 3-Stopped by device, 4-Stoped by
@@ -872,7 +886,7 @@ public class CGMDisplayDataDialog extends JDialog implements ActionListener, Out
     }
 
 
-    public ggc.plugin.device.DeviceIdentification getDeviceIdentification()
+    public DeviceIdentification getDeviceIdentification()
     {
         // TODO Auto-generated method stub
         return null;

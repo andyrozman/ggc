@@ -24,8 +24,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      MiniMed  
+ *  Description:   CGMS Company - MiniMed
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -35,6 +35,9 @@ public class Minimed extends AbstractDeviceCompany
 {
 
     
+    /**
+     * Constructor
+     */
     public Minimed()
     {
         super(I18nControl.getInstance());

@@ -6,7 +6,6 @@ import ggc.cgm.plugin.CGMPlugInServer;
 import ggc.cgm.util.DataAccessCGM;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.plugin.cfg.DeviceConfigEntry;
-import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.protocol.ConnectionProtocols;
 
@@ -49,8 +48,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CGMInstructionsDialog
+ *  Description:  Dialog showing us device, and instructions on how to connect and download data.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -108,6 +107,9 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
     }
 */
 
+    /**
+     * Constructor
+     */
     public CGMInstructionsDialog()
     {
         super();
@@ -117,7 +119,11 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
         this.setVisible(true);
     }
 
-    
+    /**
+     * Constructor
+     * @param reader 
+     * @param server 
+     */
     public CGMInstructionsDialog(DbDataReaderAbstract reader, CGMPlugInServer server)
     {
         super();
@@ -134,35 +140,11 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
     
     private void loadConfiguration()
     {
-        // TODO: this should be read from config
+        this.configured_device = m_da.getDeviceConfiguration().getSelectedDeviceInstance(); //.getDefaultCGM();
         
-        DeviceConfiguration mc = m_da.getDeviceConfiguration(); 
-            //new CGMConfiguration(false);
-        
-        this.configured_device = mc.getSelectedDeviceInstance(); //.getDefaultCGM();
-        
-        /*
-        this.configured_meter = new MeterConfigEntry();
-        this.configured_meter.id =1;
-        this.configured_meter.communication_port = "COM9";
-        this.configured_meter.name = "My Countour";
-        this.configured_meter.meter_company = "Ascensia/Bayer";
-        this.configured_meter.meter_device = "Contour";
-        this.configured_meter.ds_area= "Europe/Prague";
-        this.configured_meter.ds_winter_change = 0;
-        this.configured_meter.ds_summer_change = 1;
-        this.configured_meter.ds_fix = true;
-        */
-        /*
-        tzu.setTimeZone("Europe/Prague");
-        tzu.setWinterTimeChange(0);
-        tzu.setSummerTimeChange(+1);
-        */
-        
-        DeviceInterface mi = CGMManager.getInstance().getCGMSDevice(this.configured_device.device_company, this.configured_device.device_device);
+        DeviceInterface mi = CGMManager.getInstance().getDevice(this.configured_device.device_company, this.configured_device.device_device);
         
         this.meter_interface = mi;
-        
     }
     
     
@@ -184,11 +166,11 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
     }
     
     
-    public static final int METER_INTERFACE_PARAM_CONNECTION_TYPE = 1;
-    public static final int METER_INTERFACE_PARAM_STATUS = 2;
+    private static final int METER_INTERFACE_PARAM_CONNECTION_TYPE = 1;
+    private static final int METER_INTERFACE_PARAM_STATUS = 2;
     
     
-    public String getMeterInterfaceParameter(int param)
+    private String getMeterInterfaceParameter(int param)
     {
         switch(param)
         {
@@ -494,7 +476,7 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
     }
 
     
-    /* 
+    /** 
      * readingFinished
      */
     @SuppressWarnings("unchecked")
@@ -517,6 +499,10 @@ public class CGMInstructionsDialog extends JDialog implements ActionListener, Db
     
     
 
+    /**
+     * Main method - for testing only
+     * @param args
+     */
     public static void main(String[] args)
     {
         new CGMInstructionsDialog();

@@ -2,7 +2,6 @@ package ggc.cgm.test;
 
 import ggc.cgm.device.minimed.MinimedCareLink;
 
-import java.awt.TextArea;
 import java.io.File;
 
 import com.atech.utils.TimeZoneUtil;
@@ -37,20 +36,13 @@ import com.atech.utils.TimerThread;
 
 public class CGMConsoleTester //extends JFrame
 {
-	static final long serialVersionUID = 0;
-
 	
-//    private JButton openButton, sendButton, enterButton, clearButton;
-//    private JTextField textField, textField2, textField3;
-
-    public static TextArea messageArea;
-
-    //private AscensiaContour m_meter;
-    //private AbstractSerialMeter m_meter;
-    //private SerialProtocol m_meter;
-
     TimerThread thread;
     
+    /**
+     * Constructor
+     * @param portName
+     */
     public CGMConsoleTester(String portName)
     {
     	
@@ -102,7 +94,7 @@ public class CGMConsoleTester //extends JFrame
     
     
     
-    public void startMiniMed(String portName) throws Exception
+    private void startMiniMed(String portName) throws Exception
     {
         
         MinimedCareLink mcl = new MinimedCareLink();
@@ -126,6 +118,10 @@ public class CGMConsoleTester //extends JFrame
     
 
 
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String args[])
     {
 	try

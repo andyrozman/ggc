@@ -23,8 +23,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      Dexcom  
+ *  Description:   CGMS Company - Dexcom
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -33,6 +33,9 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 public class Dexcom extends AbstractDeviceCompany
 {
 
+    /**
+     * Constructor
+     */
     public Dexcom()
     {
         super(I18nControl.getInstance());
@@ -89,12 +92,18 @@ public class Dexcom extends AbstractDeviceCompany
     }
     
 
+    /** 
+     * Get Connection Sample
+     */
     public String getConnectionSample()
     {
         return "COM9";
     }
     
     
+    /** 
+     * Get Connection Samples
+     */
     public String getConnectionSamples()
     {
         return m_ic.getMessage("SERIAL_PORTS");  //"Serial Ports: COM2,...";
