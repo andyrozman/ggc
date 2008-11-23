@@ -31,6 +31,7 @@ package ggc.plugin.util;
 
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
+import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.list.BaseListEntry;
 
 import java.awt.Color;
@@ -583,230 +584,60 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 
 
 
-
     // ********************************************************
-    // ******          Dates and Times Handling           *****    
+    // ******             Data Retrieval                  *****    
     // ********************************************************
+    
+    
+    DeviceValuesEntry m_entry_type;
+    String columns_manual[] = null;
+    int column_widths_manual[] = null;
 
+    String columns_table[] = null;
+    int column_widths_table[] = null;
+    
+    String[] entry_statuses = null;
+    
+    
+    /**
+     * Create About Context for plugin
+     */
+    public abstract void createPlugInDataRetrievalContext();
+    
 
-
-    /*
-    public String getDateString(int date)
+    public String[] getColumnsManual()
     {
-        // 20051012
-
-        int year = date / 10000;
-        int months = date - (year * 10000);
-
-        months = months / 100;
-
-        int days = date - (year * 10000) - (months * 100);
-
-        if (year == 0)
-            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2);
-        else
-            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2)
-                    + "/" + year;
+        return this.columns_manual;
     }
 
-    public String getTimeString(int time)
+    public int[] getColumnsWidthManual()
     {
-        int hours = time / 100;
-        int min = time - hours * 100;
-
-        return getLeadingZero(hours, 2) + ":" + getLeadingZero(min, 2);
+        return this.column_widths_manual;
     }
 
-    public String getDateTimeString(long date)
+    
+    public String[] getColumnsTable()
     {
-        return getDateTimeString(date, 1);
+        return this.columns_table;
     }
 
-    public String getDateTimeAsDateString(long date)
+    public int[] getColumnsWidthTable()
     {
-        return getDateTimeString(date, 2);
+        return this.column_widths_table;
     }
-
-    public String getDateTimeAsTimeString(long date)
+    
+    
+    public String[] getEntryStatuses()
     {
-        return getDateTimeString(date, 3);
+        return this.entry_statuses;
     }
-
-    // ret_type = 1 (Date and time)
-    // ret_type = 2 (Date)
-    // ret_type = 3 (Time)
-
-    public static final int DT_DATETIME = 1;
-
-    public static final int DT_DATE = 2;
-
-    public static final int DT_TIME = 3;
-
-    public String getDateTimeString(long dt, int ret_type)
+    
+    public DeviceValuesEntry getDataEntryObject()
     {
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        if (ret_type == DT_DATETIME)
-            return getLeadingZero(d, 2) + "." + getLeadingZero(m, 2) + "." + y
-                    + "  " + getLeadingZero(h, 2) + ":"
-                    + getLeadingZero(min, 2);
-        else if (ret_type == DT_DATE)
-            return getLeadingZero(d, 2) + "." + getLeadingZero(m, 2) + "." + y;
-        else
-            return getLeadingZero(h, 2) + ":" + getLeadingZero(min, 2);
-
+        return m_entry_type;
     }
+    
 
-    public Date getDateTimeAsDateObject(long dt)
-    {
-
-        //Date dt_obj = new Date();
-        GregorianCalendar gc = new GregorianCalendar();
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        gc.set(Calendar.DATE, d);
-        gc.set(Calendar.MONTH, m - 1);
-        gc.set(Calendar.YEAR, y);
-        gc.set(Calendar.HOUR_OF_DAY, h);
-        gc.set(Calendar.MINUTE, min);
-
-        /*
-         dt_obj.setHours(h);
-         dt_obj.setMinutes(min);
-
-         dt_obj.setDate(d);
-         dt_obj.setMonth(m);
-         dt_obj.setYear(y);
-
-         return dt_obj;
-         */
-/* xa
-        return gc.getTime();
-
-    }
-
-    public long getDateTimeLong(long dt, int ret_type)
-    {
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        if (ret_type == DT_DATETIME)
-        {
-            return Integer.parseInt(y + getLeadingZero(m, 2)
-                    + getLeadingZero(d, 2) + getLeadingZero(h, 2)
-                    + getLeadingZero(min, 2));
-        } else if (ret_type == DT_DATE)
-        {
-            return Integer.parseInt(getLeadingZero(d, 2) + getLeadingZero(m, 2)
-                    + y);
-        } else
-            return Integer.parseInt(getLeadingZero(h, 2)
-                    + getLeadingZero(min, 2));
-
-    }
-
-    public long getDateTimeFromDateObject(Date dt)
-    {
-
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(dt);
-
-        String dx = "";
-
-        dx += "" + gc.get(Calendar.YEAR);
-        dx += "" + getLeadingZero(gc.get(Calendar.MONTH + 1), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.MINUTE), 2);
-
-        return Long.parseLong(dx);
-
-    }
-
-    // 1 = Db Date: yyyyMMdd
-    // 2 = Db Full: yyyyMMddHHMM (24h format)
-    public String getDateTimeStringFromGregorianCalendar(GregorianCalendar gc,
-            int type)
-    {
-        String st = "";
-
-        if (gc.get(Calendar.YEAR) < 1000)
-        {
-            st += gc.get(Calendar.YEAR) + 1900;
-        } else
-        {
-            st += gc.get(Calendar.YEAR);
-        }
-
-        st += getLeadingZero(gc.get(Calendar.MONTH) + 1, 2);
-        st += getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
-
-        if (type == 2)
-        {
-            st += getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
-            st += getLeadingZero(gc.get(Calendar.MINUTE), 2);
-        }
-
-        //System.out.println(st);
-
-        return st;
-    }
-
-    public String getDateTimeString(int date, int time)
-    {
-        return getDateString(date) + " " + getTimeString(time);
-    }
-
-    public String getLeadingZero(int number, int places)
-    {
-        String nn = "" + number;
-
-        while (nn.length() < places)
-        {
-            nn = "0" + nn;
-        }
-
-        return nn;
-    }
-*/
 
     public int getStartYear()
     {

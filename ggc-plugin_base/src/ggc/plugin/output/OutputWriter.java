@@ -32,6 +32,11 @@ import ggc.plugin.device.DeviceIdentification;
 public interface OutputWriter
 {
 	
+    /**
+     * Write Data to OutputWriter
+     * 
+     * @param data
+     */
     public abstract void writeData(OutputWriterData data);
     
 	public abstract void writeHeader();

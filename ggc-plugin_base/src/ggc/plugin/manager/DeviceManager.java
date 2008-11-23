@@ -42,10 +42,10 @@ import java.util.Vector;
 public abstract class DeviceManager
 {
 
-    private Hashtable<String,AbstractDeviceCompany> companies_ht = new Hashtable<String,AbstractDeviceCompany>(); 
-    private Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>(); 
-    private Vector<? extends DeviceInterface> supported_devices = null; //new Vector<CGMInterface>(); 
-
+    protected Hashtable<String,AbstractDeviceCompany> companies_ht = new Hashtable<String,AbstractDeviceCompany>(); 
+    protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>(); 
+    //protected Vector<? extends DeviceInterface> supported_devices = null; //new Vector<CGMInterface>(); 
+    protected Vector<DeviceInterface> supported_devices = null; //new Vector<CGMInterface>();
 
     /**
      * Constructor 
@@ -89,6 +89,18 @@ public abstract class DeviceManager
     }
 
 
+    
+    /**
+     * @param company
+     */
+    public void addDeviceCompany(AbstractDeviceCompany company)
+    {
+        this.companies.add(company);
+        this.companies_ht.put(company.getName(), company);
+    }
+    
+    
+    
     /**
      * Gets the name
      * @param group 

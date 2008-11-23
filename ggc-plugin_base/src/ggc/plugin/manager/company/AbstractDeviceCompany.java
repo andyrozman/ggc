@@ -140,12 +140,26 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
     }
     
 
+    
+    /**
+     * Get Connection Sample - This will display sample of connection parameter, for example on Serial
+     * devices this is COMx. On other OSes there are of course other parameters, but COMx parameter is
+     * "known" serial parameter and will be known to all people.
+     * 
+     * @return
+     */
     public String getConnectionSample()
     {
         return "";
     }
     
     
+    /**
+     * Get Connection Samples - This is I18N keyword, which needs to be added to language file. For Serial 
+     * devices this is SERIAL_PORTS.
+     * 
+     * @return
+     */
     public String getConnectionSamples()
     {
         return "";

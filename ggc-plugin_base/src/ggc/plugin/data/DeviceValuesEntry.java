@@ -1,5 +1,7 @@
 package ggc.plugin.data;
 
+import java.util.ArrayList;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -32,7 +34,7 @@ package ggc.plugin.data;
 //This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
-public class DeviceValuesEntry 
+public abstract class DeviceValuesEntry 
 {
 	protected boolean checked = false;
 	protected int status = 1; 
@@ -110,10 +112,13 @@ public class DeviceValuesEntry
 	}
 	
 	
-	
+	public abstract long getDateTime();
 	
 
+	public abstract int getDateTimeFormat();
 	
+	
+	public abstract Object getColumnValue(int index);
 	
 	
 	public boolean getChecked()
@@ -140,6 +145,9 @@ public class DeviceValuesEntry
     }
     
 	
+	public abstract void prepareEntry();
+	
+	public abstract ArrayList<Object> getDbObjects();
 	
 	
 	//public void prepareEntry()

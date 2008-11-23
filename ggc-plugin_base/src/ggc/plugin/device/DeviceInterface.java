@@ -190,7 +190,7 @@ public interface DeviceInterface extends SelectableInterface
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
      * 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     void readConfiguration() throws PlugInBaseException;
     
@@ -198,7 +198,7 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     void readInfo() throws PlugInBaseException;
     
