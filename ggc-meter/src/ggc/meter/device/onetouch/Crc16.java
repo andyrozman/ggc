@@ -70,35 +70,56 @@ public class Crc16 //extends AbstractChecksum
         0x8201,0x42C0,0x4380,0x8341,0x4100,0x81C1,0x8081,0x4040
     };
 
+    /**
+     * 
+     */
     public Crc16() {
         //super();
         val = 0;
     }
 
+    /**
+     * 
+     */
     public void reset() {
         val = 0;
         length = 0;
     }
 
+    /**
+     * @param b
+     */
     public void update(byte b) {
         val = ( val >>> 8 ) ^ crc16tab[( val ^ b ) & 0xff];
         length++;
     }
 
+    /**
+     * @param b
+     */
     public void update(int b) {
         update((byte)(b & 0xFF));
     }
 
     
+    /**
+     * @return
+     */
     public int getValueInt() {
         return ((val));
     }
     
     
+    /**
+     * @return
+     */
     public long getValue() {
         return (((long)val)&0xffffL);
     }
 
+    /**
+     * @return
+     */
     public byte[] getByteArray() {
         return new byte[]
         {(byte)((val>>8)&0xff),

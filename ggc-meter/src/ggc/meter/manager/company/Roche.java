@@ -34,8 +34,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      Roche 
+ *  Description:   Meter Company - Roche
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -44,7 +44,9 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 public class Roche extends AbstractDeviceCompany
 {
 
-    
+    /**
+     * Constructor
+     */
     public Roche()
     {
         super(I18nControl.getInstance());
@@ -118,12 +120,25 @@ public class Roche extends AbstractDeviceCompany
     }
     
   
+    /**
+     * Get Connection Sample - This will display sample of connection parameter, for example on Serial
+     * devices this is COMx. On other OSes there are of course other parameters, but COMx parameter is
+     * "known" serial parameter and will be known to all people.
+     * 
+     * @return
+     */
     public String getConnectionSample()
     {
         return "G:";
     }
     
     
+    /**
+     * Get Connection Samples - This is I18N keyword, which needs to be added to language file. For Serial 
+     * devices this is SERIAL_PORTS.
+     * 
+     * @return
+     */
     public String getConnectionSamples()
     {
         return m_ic.getMessage("MASS_STORAGE");  //"Serial Ports: COM2,...";

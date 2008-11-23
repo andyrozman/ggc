@@ -46,11 +46,13 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     MeterExportDialog
+ *  Description:  For exporting data into database (or somewhere else)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+//Try to assess possibility of super-classing
 
 
 public class MeterExportDialog extends JDialog implements ActionListener, StatusReporterInterface
@@ -59,73 +61,21 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
     private static final long serialVersionUID = -5673838593827489827L;
     MeterPlugInServer server;
     
-    
-    /* 
-     * setStatus
-     */
-    public void setStatus(int status)
-    {
-        if (this.progress!=null)
-            this.progress.setValue(status);
-        
-        if (status==100)
-        {
-            bt_close.setEnabled(true);
-            this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_FINISHED"));
-
-        }
-    }
-
-
-
     private DataAccessMeter m_da = DataAccessMeter.getInstance();
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
-    public JProgressBar progress = null;
-
-
-    
+    private JProgressBar progress = null;
+  
     private Hashtable<String,ArrayList<DayValueH>> meter_data = null;
     DeviceConfigEntry configured_meter;
-    
     
     private JButton bt_close, bt_start;
     JLabel lbl_status;
 
     
-    
-    
-    
-    
-    
-    
-    /*
-     * Constructor for ReadMeterDialog.
-     * 
-     * @param owner
-     * 
-     * @throws HeadlessException
+    /**
+     * Constructor
      */
-/*    public MeterDisplayDataDialog(JFrame owner, MeterInterface mi)
-    {
-        super(owner);
-        m_da.addComponent(this);
-        meter_interface = mi;
-        this.parentMy = owner;
-
-        dialogPreInit();
-    }
-
-    public MeterDisplayDataDialog(MeterInterface mi)
-    {
-        super();
-        m_da.addComponent(this);
-        meter_interface = mi;
-
-        dialogPreInit();
-    }
-*/
-    
     public MeterExportDialog()
     {
         super();
@@ -133,6 +83,12 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param lst
+     * @param writer
+     */
     public MeterExportDialog(ArrayList<MeterValuesEntry> lst, OutputWriter writer)
     {
         super();
@@ -141,6 +97,11 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
     
 
     
+    /**
+     * Constructor
+     * 
+     * @param mce
+     */
     public MeterExportDialog(DeviceConfigEntry mce)
     {
         super();
@@ -150,6 +111,13 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
     }
     
 
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param meter_data
+     * @param server
+     */
     public MeterExportDialog(JDialog parent, Hashtable<String,ArrayList<DayValueH>> meter_data, MeterPlugInServer server)
     {
         super();
@@ -284,6 +252,14 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
 
     
 
+    /**
+     * Create Button
+     * 
+     * @param command_text
+     * @param tooltip
+     * @param image_d
+     * @return
+     */
     public JButton createButton(String command_text, String tooltip, String image_d)
     {
         JButton b = new JButton();
@@ -295,7 +271,7 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
     }
 
 
-    /*
+    /**
      * Invoked when an action occurs.
      */
     public void actionPerformed(ActionEvent e)
@@ -318,14 +294,38 @@ public class MeterExportDialog extends JDialog implements ActionListener, Status
     boolean started = false;
     boolean action = false;
     
+    /**
+     * Was action succesful
+     * @return
+     */
     public boolean wasAction()
     {
         return this.action;
         
     }
+
+    /**
+     * setStatus
+     */
+    public void setStatus(int status)
+    {
+        if (this.progress!=null)
+            this.progress.setValue(status);
+        
+        if (status==100)
+        {
+            bt_close.setEnabled(true);
+            this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_FINISHED"));
+
+        }
+    }
     
     
     
+    /**
+     * Main method for testing
+     * @param args
+     */
     public static void main(String[] args)
     {
         // MeterReadDialog mrd =

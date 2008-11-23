@@ -50,11 +50,13 @@ import com.atech.utils.TimeZoneUtil;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     MeterInstructionsDialog
+ *  Description:  Dialog showing us device, and instructions on how to connect and download data.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+//Try to assess possibility of super-classing
 
 
 public class MeterInstructionsDialog extends JDialog implements ActionListener, DbDataReadingFinishedInterface
@@ -104,6 +106,9 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     }
 */
 
+    /**
+     * Constructor
+     */
     public MeterInstructionsDialog()
     {
         super();
@@ -114,6 +119,12 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param reader
+     * @param server
+     */
     public MeterInstructionsDialog(DbDataReaderAbstract reader, MeterPlugInServer server)
     {
         super();
@@ -180,7 +191,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     private static final int METER_INTERFACE_PARAM_STATUS = 2;
     
     
-    public String getMeterInterfaceParameter(int param)
+    private String getMeterInterfaceParameter(int param)
     {
         switch(param)
         {
@@ -448,8 +459,6 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     {
         String action = e.getActionCommand();
 
-        
-        
         if (action.equals("cancel")) 
         {
             this.dispose();
@@ -485,7 +494,7 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
     }
 
     
-    /* 
+    /** 
      * readingFinished
      */
     @SuppressWarnings("unchecked")
@@ -506,8 +515,11 @@ public class MeterInstructionsDialog extends JDialog implements ActionListener, 
         
     }
     
-    
 
+    /**
+     * Main method - for testing
+     * @param args
+     */
     public static void main(String[] args)
     {
         new MeterInstructionsDialog();

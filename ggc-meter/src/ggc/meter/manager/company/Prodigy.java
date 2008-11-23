@@ -24,8 +24,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      Prodigy  
+ *  Description:   Meter Company - Prodigy
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -34,15 +34,13 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 public class Prodigy extends AbstractDeviceCompany
 {
 
-    
+    /**
+     * Constructor
+     */
     public Prodigy()
     {
         super(I18nControl.getInstance(), true);
     }
-
-
-
-    
     
     
     //********************************************************

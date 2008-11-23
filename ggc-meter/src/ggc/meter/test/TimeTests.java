@@ -26,8 +26,8 @@ import com.atech.utils.TimeZoneUtil;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     TimeTests  
+ *  Description:  Time testing
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -40,6 +40,9 @@ public class TimeTests
 	//TimeZone tzi;
 	TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 	
+	/**
+	 * Constructor
+	 */
 	public TimeTests()
 	{
 		
@@ -208,6 +211,11 @@ public class TimeTests
     
     
     
+	/**
+	 * Main methods
+	 * 
+	 * @param args
+	 */
 	public static void main(String args[])
 	{
 		new TimeTests();

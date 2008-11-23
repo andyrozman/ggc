@@ -30,8 +30,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      AscensiaBayer  
+ *  Description:   Meter Company - Ascensia/Bayer
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -40,6 +40,9 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 public class AscensiaBayer extends AbstractDeviceCompany
 {
 
+    /**
+     * Constructor
+     */
     public AscensiaBayer()
     {
         super(I18nControl.getInstance());
@@ -105,12 +108,25 @@ public class AscensiaBayer extends AbstractDeviceCompany
     }
     
 
+    /**
+     * Get Connection Sample - This will display sample of connection parameter, for example on Serial
+     * devices this is COMx. On other OSes there are of course other parameters, but COMx parameter is
+     * "known" serial parameter and will be known to all people.
+     * 
+     * @return
+     */
     public String getConnectionSample()
     {
         return "COM9";
     }
+
     
-    
+    /**
+     * Get Connection Samples - This is I18N keyword, which needs to be added to language file. For Serial 
+     * devices this is SERIAL_PORTS.
+     * 
+     * @return
+     */
     public String getConnectionSamples()
     {
         return m_ic.getMessage("SERIAL_PORTS");  //"Serial Ports: COM2,...";

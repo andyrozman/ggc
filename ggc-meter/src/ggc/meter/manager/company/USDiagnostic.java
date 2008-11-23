@@ -24,8 +24,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      USDiagnostic 
+ *  Description:   Meter Company - USDiagnostic
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -35,6 +35,9 @@ public class USDiagnostic extends AbstractDeviceCompany
 {
 
     
+    /**
+     * Constructor
+     */
     public USDiagnostic()
     {
         super(I18nControl.getInstance(), true);

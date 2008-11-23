@@ -59,11 +59,14 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      MeterDisplayDataDialog
+ *  Description:   This is dialog for displaying data as it's been downloaded. 
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+
+//Try to assess possibility of super-classing
 
 
 public class MeterDisplayDataDialog extends JDialog implements ActionListener, OutputWriter
@@ -132,14 +135,14 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     
     
     
-    /*
+    /**
      * Constructor for ReadMeterDialog.
      * 
      * @param owner
      * 
      * @throws HeadlessException
      */
-/*    public MeterDisplayDataDialog(JFrame owner, MeterInterface mi)
+/**    public MeterDisplayDataDialog(JFrame owner, MeterInterface mi)
     {
         super(owner);
         m_da.addComponent(this);
@@ -196,7 +199,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     }
     
     
-    /*
+    /**
     private void loadConfiguration()
     {
         // TODO: this should be read from config
@@ -212,7 +215,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         this.configured_meter.ds_summer_change = 1;
         this.configured_meter.ds_fix = true;
 
-        /*
+        /**
          * tzu.setTimeZone("Europe/Prague"); tzu.setWinterTimeChange(0);
          * tzu.setSummerTimeChange(+1);
          */
@@ -239,7 +242,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     }
 
-    /*
+    /**
     private void guiTest()
     {
         MeterValuesEntry mve = new MeterValuesEntry();
@@ -299,7 +302,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     
     
 
-    public void addLogText(String s)
+    private void addLogText(String s)
     {
         logText.append(s + "\n");
     }
@@ -349,7 +352,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
         // TableColumnModel tcm = this.table.getColumnModel();
         // tcm.removeColumn(this.table.setC)
-        /*
+        /**
          * for (int k = 0; k < this.model.getColumnCount(); k++) {
          * 
          * 
@@ -504,7 +507,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         filter_combo.addItemListener(new ItemListener() 
         {
 
-            /* 
+            /** 
              * itemStateChanged
              */
             public void itemStateChanged(ItemEvent ev)
@@ -549,7 +552,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     }
 
 
-    /*
+    /**
      * Invoked when an action occurs.
      */
     public void actionPerformed(ActionEvent e)
@@ -594,7 +597,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     }
 
-    /*
+    /**
      * endOutput
      */
     public void endOutput()
@@ -606,7 +609,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     DeviceIdentification device_ident;
 
-    /*
+    /**
      * getDeviceIdentification
      */
     public DeviceIdentification getDeviceIdentification()
@@ -633,7 +636,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     OutputUtil output_util = OutputUtil.getInstance(this);
 
-    /*
+    /**
      * getOutputUtil
      */
     public OutputUtil getOutputUtil()
@@ -641,7 +644,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         return this.output_util;
     }
 
-    /*
+    /**
      * interruptCommunication
      */
     public void interruptCommunication()
@@ -650,7 +653,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     }
 
-    /*
+    /**
      * setBGOutputType
      */
     public void setBGOutputType(int bg_type)
@@ -660,7 +663,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         this.output_util.setBGMeasurmentType(bg_type);
     }
 
-    /*
+    /**
      * setDeviceIdentification
      */
     public void setDeviceIdentification(DeviceIdentification di)
@@ -671,7 +674,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     int count = 0;
 
 
-    /*
+    /**
      * writeDeviceIdentification
      */
     public void writeDeviceIdentification()
@@ -679,15 +682,18 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         this.ta_info.setText(this.device_ident.getShortInformation());
     }
 
-    /*
+    /**
      * writeHeader
      */
     public void writeHeader()
     {
     }
 
-    /*
+    /**
      * writeRawData
+     * 
+     * @param input 
+     * @param is_bg_data 
      */
     public void writeRawData(String input, boolean is_bg_data)
     {
@@ -695,7 +701,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
 
     boolean device_should_be_stopped = false;
 
-    /*
+    /**
      * User can stop readings from his side (if supported)
      */
     public void setReadingStop()
@@ -703,7 +709,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
         this.device_should_be_stopped = true;
     }
 
-    /*
+    /**
      * This should be queried by device implementation, to see if it must stop
      * reading
      */
@@ -717,7 +723,7 @@ public class MeterDisplayDataDialog extends JDialog implements ActionListener, O
     
     
     
-    /*
+    /**
      * This is status of device and also of GUI that is reading device (if we
      * have one) This is to set that status to see where we are. Allowed
      * statuses are: 1-Ready, 2-Downloading, 3-Stopped by device, 4-Stoped by

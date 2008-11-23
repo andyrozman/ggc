@@ -24,8 +24,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      DiabeticSupplyOfSunCoast
+ *  Description:   Meter Company - DiabeticSupplyOfSunCoast
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -34,15 +34,13 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 public class DiabeticSupplyOfSunCoast extends AbstractDeviceCompany
 {
 
-    
+    /**
+     * Constructor
+     */
     public DiabeticSupplyOfSunCoast()
     {
         super(I18nControl.getInstance(), true);
     }
-
-
-
-    
     
     
     //********************************************************

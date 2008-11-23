@@ -35,8 +35,8 @@ import com.atech.utils.ATDataAccessAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     MeterPlugInServer
+ *  Description:  This is server side of plugin architecture
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -44,14 +44,25 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class MeterPlugInServer extends PlugInServer
 {
-    /**
-     * Version of Meter Tool
-     */
-    //private String meter_tool_version = "0.3.7";
     
+    /**
+     *  Command: Read Meter Data  
+     */
     public static final int COMMAND_READ_METER_DATA = 0;
+    
+    /**
+     *  Command: Meters List  
+     */
     public static final int COMMAND_METERS_LIST = 1;
+
+    /**
+     *  Command: Configuration
+     */
     public static final int COMMAND_CONFIGURATION = 2;
+
+    /**
+     *  Command: About  
+     */
     public static final int COMMAND_ABOUT = 3;
     
     /*
@@ -65,12 +76,22 @@ public class MeterPlugInServer extends PlugInServer
     
     
     
+    /**
+     * Constructor
+     */
     public MeterPlugInServer()
     {
         super();
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param cont
+     * @param selected_lang
+     * @param da
+     */
     public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
         super(cont, selected_lang, da);
@@ -79,10 +100,10 @@ public class MeterPlugInServer extends PlugInServer
     
 
     
-    
-    
-    /* 
-     * executeCommand
+    /**
+     * Execute Command on Server Side
+     * 
+     * @param command
      */
     @Override
     public void executeCommand(int command, Object obj_data)
@@ -125,8 +146,11 @@ public class MeterPlugInServer extends PlugInServer
         
     }
 
-    /* 
-     * getName
+    
+    /**
+     * Get Name of plugin
+     * 
+     * @return
      */
     @Override
     public String getName()
@@ -134,19 +158,23 @@ public class MeterPlugInServer extends PlugInServer
         return ic.getMessage("METERS_PLUGIN");
     }
 
-    /* 
-     * getVersion
+    
+    /**
+     * Get Version of plugin
+     * 
+     * @return
      */
     @Override
     public String getVersion()
     {
         return DataAccessMeter.PLUGIN_VERSION;
-        //return DataAccessMeter.getInstance().getPlugInVersion();
-        //return this.meter_tool_version;
     }
 
-    /* 
-     * getWhenWillBeImplemented
+    
+    /**
+     * Get Information When will it be implemented
+     * 
+     * @return
      */
     @Override
     public String getWhenWillBeImplemented()
@@ -154,8 +182,9 @@ public class MeterPlugInServer extends PlugInServer
         return "0.4";
     }
 
-    /* 
-     * initPlugIn
+    
+    /**
+     * Init PlugIn which needs to be implemented 
      */
     @Override
     public void initPlugIn()
@@ -164,9 +193,6 @@ public class MeterPlugInServer extends PlugInServer
         I18nControl.getInstance().setLanguage(this.selected_lang);
         DataAccessMeter.getInstance().addComponent(this.parent);
     }
-    
-    
-    
     
 }
 

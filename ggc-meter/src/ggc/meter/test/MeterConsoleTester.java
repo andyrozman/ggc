@@ -7,7 +7,6 @@ import ggc.meter.device.onetouch.OneTouchUltraEasy;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 
-import java.awt.TextArea;
 import java.util.Vector;
 
 import com.atech.utils.TimeZoneUtil;
@@ -33,29 +32,23 @@ import com.atech.utils.TimerThread;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     MeterConsoleTester  
+ *  Description:  Console tester for testing meter implementations.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 
-public class MeterConsoleTester //extends JFrame
+public class MeterConsoleTester 
 {
-
-	
-//    private JButton openButton, sendButton, enterButton, clearButton;
-//    private JTextField textField, textField2, textField3;
-
-    public static TextArea messageArea;
-
-    //private AscensiaContour m_meter;
-    //private AbstractSerialMeter m_meter;
-    private OneTouchUltra m_meter;
-    //private SerialProtocol m_meter;
 
     TimerThread thread;
     
+    /**
+     * Constructor
+     * 
+     * @param portName
+     */
     public MeterConsoleTester(String portName)
     {
     	
@@ -213,6 +206,12 @@ public class MeterConsoleTester //extends JFrame
     }
 
 
+    /**
+     * Ascensia Testing
+     * 
+     * @param portName
+     * @throws Exception
+     */
     public void startAscensia(String portName) throws Exception
     {
         //GGCFileOutputWriter ow = new GGCFileOutputWriter();
@@ -238,6 +237,9 @@ public class MeterConsoleTester //extends JFrame
     }
 
     
+    /**
+     * Roche Testing
+     */
     public void startAccuChekAviva()
     {
         try
@@ -253,6 +255,12 @@ public class MeterConsoleTester //extends JFrame
     
     
     
+    /**
+     * OT Ultra testing
+     * 
+     * @param portName
+     * @throws Exception
+     */
     public void startOneTouchUltra(String portName) throws Exception
     {
         
@@ -273,6 +281,11 @@ public class MeterConsoleTester //extends JFrame
 
     }
     
+    /**
+     * OT Easy Testing
+     * @param portName
+     * @throws Exception
+     */
     public void startOneTouchEasy(String portName) throws Exception
     {
         
@@ -288,6 +301,9 @@ public class MeterConsoleTester //extends JFrame
     
 
     
+    /**
+     * Display Serial Ports
+     */
     public void displaySerialPorts()
     {
     	Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
@@ -301,19 +317,13 @@ public class MeterConsoleTester //extends JFrame
     }
     
 
-    public void readyToWrite(String str)
-    {
-	try
-	{
-	    this.m_meter.portOutputStream.write(str.getBytes());
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Tester -> Error writing to meter: " + ex);
-	}
-    }
 
 
+    /**
+     * Main method
+     * 
+     * @param args
+     */
     public static void main(String args[])
     {
 	try

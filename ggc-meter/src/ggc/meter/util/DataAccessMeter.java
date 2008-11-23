@@ -36,11 +36,7 @@ import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.atech.graphics.components.about.CreditsEntry;
@@ -80,24 +76,20 @@ import com.atech.i18n.I18nControlAbstract;
 public class DataAccessMeter extends DataAccessPlugInBase
 {
 
+    /**
+     * PlugIn Version
+     */
     public static final String PLUGIN_VERSION = "1.0.1";
     
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
     private MeterManager m_meterManager = null;
 
-    //public Hashtable<String,String> timeZones;
-    //public Vector<String> time_zones_vector;
-    
 
-    public ImageIcon config_icons[] = null;
-    public String[] options_yes_no = null;
 
     JFrame m_main = null;        
         
         
-    public Hashtable<String,String> metersUrl;
-    public ArrayList<String> metersNames;
         
         
 
@@ -120,9 +112,11 @@ public class DataAccessMeter extends DataAccessPlugInBase
     } 
 
     
+    /** 
+     * Init Special - All methods that we support should be called here
+     */
     public void initSpecial()
     {
-        loadTimeZones();
         checkPrerequisites();
         createWebListerContext();
         createPlugInAboutContext();
@@ -149,21 +143,10 @@ public class DataAccessMeter extends DataAccessPlugInBase
         return s_da;
     }
 
-    public static DataAccessMeter createInstance(JFrame main)
-    {
-        if (s_da == null)
-        {
-            //GGCDb db = new GGCDb();
-            s_da = new DataAccessMeter(main);
-//x            s_da.setParent(main);
-        }
-
-        return s_da;
-    }
 
  
     
-    
+/*    
     public void loadConfigIcons()
     {
         config_icons = new ImageIcon[5];
@@ -174,12 +157,11 @@ public class DataAccessMeter extends DataAccessPlugInBase
         config_icons[4] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
         
     }
-
+*/
   
 
 
 
-    //  Method:       deleteInstance
     /**
      *  This method sets handle to DataAccessMeter to null and deletes the instance. <br><br>
      */
@@ -190,7 +172,13 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
  
 
+    // ********************************************************
+    // ******            About Methods                    *****    
+    // ********************************************************
     
+    /**
+     * Create About Context for plugin
+     */
     public void createPlugInAboutContext()
     {
         I18nControlAbstract ic = getI18nControlInstance();
@@ -264,6 +252,27 @@ public class DataAccessMeter extends DataAccessPlugInBase
         
     }
 
+    
+    /** 
+     * Get About Image Size - Define about image size
+     */
+    public int[] getAboutImageSize()
+    {
+        int[] sz = new int[2];
+        sz[0] = 200;
+        sz[1] = 125;
+        
+        return sz;
+    }
+    
+    
+    // ********************************************************
+    // ******         Web Lister Methods                  *****    
+    // ********************************************************
+    
+    /**
+     * Create WebLister (for List) Context for plugin
+     */
     public void createWebListerContext()
     {
         I18nControlAbstract ic = getI18nControlInstance();
@@ -288,24 +297,26 @@ public class DataAccessMeter extends DataAccessPlugInBase
     }
         
     
+    
+    // ********************************************************
+    // ******         Abstract Methods                    *****    
+    // ********************************************************
+    
+
+    /** 
+     * Get Application Name
+     */
     public String getApplicationName()
     {
-    	return "GGC_MeterTool";
+        return "GGC_MeterTool";
     }
     
     
-    public String getImagesRoot()
+    /** 
+     * Check Prerequisites for Plugin
+     */
+    public void checkPrerequisites()
     {
-    	return "/icons/";
-    }
-    
-    public int[] getAboutImageSize()
-    {
-        int[] sz = new int[2];
-        sz[0] = 200;
-        sz[1] = 125;
-        
-        return sz;
     }
     
     
@@ -314,7 +325,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
     // ******                  Version                    *****    
     // ********************************************************
     
-    
+    /**
+     * Create Plugin Version
+     */
     public void createPlugInVersion()
     {
         this.plugin_version = DataAccessMeter.PLUGIN_VERSION;
@@ -323,114 +336,19 @@ public class DataAccessMeter extends DataAccessPlugInBase
     
 
     // ********************************************************
-    // ******                   Meters                    *****    
+    // ******                   Manager                   *****    
     // ********************************************************
 
+    /**
+     * Get Device Manager
+     * 
+     * @return
+     */
     public MeterManager getMeterManager()
     {
         return this.m_meterManager;
     }
 
-
-    public void loadTimeZones()
-    {
-        this.timeZones = new Hashtable<String,String>();
-
-        // Posible needed enchancment. We should probably list all ID's as values. On windows default ID can be different 
-        // as in this table. We should add this names, if we encounter problems.
-
-        addTimeZoneEntry("(GMT+13:00) Nuku'alofa", "Pacific/Tongatapu");
-        addTimeZoneEntry("(GMT+12:00) Fiji, Kamchatka, Marshall Is.", "Pacific/Fiji");
-        addTimeZoneEntry("(GMT+12:00) Auckland, Wellington", "Pacific/Auckland");
-        addTimeZoneEntry("(GMT+11:00) Magadan, Solomon Is., New Caledonia", "Asia/Magadan");
-        addTimeZoneEntry("(GMT+10:00) Vladivostok", "Asia/Vladivostok");
-        addTimeZoneEntry("(GMT+10:00) Hobart", "Australia/Hobart");
-        addTimeZoneEntry("(GMT+10:00) Guam, Port Moresby", "Pacific/Guam");
-        addTimeZoneEntry("(GMT+10:00) Canberra, Melbourne, Sydney", "Australia/Sydney");
-        addTimeZoneEntry("(GMT+10:00) Brisbane", "Australia/Brisbane");
-        addTimeZoneEntry("(GMT+09:30) Adelaide", "Australia/Adelaide");
-        addTimeZoneEntry("(GMT+09:00) Yakutsk", "Asia/Yakutsk");
-        addTimeZoneEntry("(GMT+09:00) Seoul", "Asia/Seoul");
-        addTimeZoneEntry("(GMT+09:00) Osaka, Sapporo, Tokyo", "Asia/Tokyo");
-        addTimeZoneEntry("(GMT+08:00) Taipei", "Asia/Taipei");
-        addTimeZoneEntry("(GMT+08:00) Perth", "Australia/Perth");
-        addTimeZoneEntry("(GMT+08:00) Kuala Lumpur, Singapore", "Asia/Kuala_Lumpur");
-        addTimeZoneEntry("(GMT+08:00) Irkutsk, Ulaan Bataar", "Asia/Irkutsk");
-        addTimeZoneEntry("(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi", "Asia/Hong_Kong");
-        addTimeZoneEntry("(GMT+07:00) Krasnoyarsk", "Asia/Krasnoyarsk");
-        addTimeZoneEntry("(GMT+07:00) Bangkok, Hanoi, Jakarta", "Asia/Bangkok");
-        addTimeZoneEntry("(GMT+06:30) Rangoon", "Asia/Rangoon");
-        addTimeZoneEntry("(GMT+06:00) Sri Jayawardenepura", "Asia/Colombo");
-        addTimeZoneEntry("(GMT+06:00) Astana, Dhaka", "Asia/Dhaka");
-        addTimeZoneEntry("(GMT+06:00) Almaty, Novosibirsk", "Asia/Almaty");
-        addTimeZoneEntry("(GMT+05:45) Kathmandu", "Asia/Katmandu");
-        addTimeZoneEntry("(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi", "Asia/Calcutta");
-        addTimeZoneEntry("(GMT+05:00) Islamabad, Karachi, Tashkent", "Asia/Karachi");
-        addTimeZoneEntry("(GMT+05:00) Ekaterinburg", "Asia/Yekaterinburg");
-        addTimeZoneEntry("(GMT+04:30) Kabul", "Asia/Kabul");
-        addTimeZoneEntry("(GMT+04:00) Baku, Tbilisi, Yerevan", "Asia/Baku");
-        addTimeZoneEntry("(GMT+04:00) Abu Dhabi, Muscat", "Asia/Dubai");
-        addTimeZoneEntry("(GMT+03:30) Tehran", "Asia/Tehran");
-        addTimeZoneEntry("(GMT+03:00) Nairobi", "Africa/Nairobi");
-        addTimeZoneEntry("(GMT+03:00) Moscow, St. Petersburg, Volgograd", "Europe/Moscow");
-        addTimeZoneEntry("(GMT+03:00) Kuwait, Riyadh", "Asia/Kuwait");
-        addTimeZoneEntry("(GMT+03:00) Baghdad", "Asia/Baghdad");
-        addTimeZoneEntry("(GMT+02:00) Jerusalem", "Asia/Jerusalem");
-        addTimeZoneEntry("(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Europe/Helsinki");
-        addTimeZoneEntry("(GMT+02:00) Harare, Pretoria", "Africa/Harare");
-        addTimeZoneEntry("(GMT+02:00) Cairo", "Africa/Cairo");
-        addTimeZoneEntry("(GMT+02:00) Bucharest", "Europe/Bucharest");
-        addTimeZoneEntry("(GMT+02:00) Athens, Istanbul, Minsk", "Europe/Athens");
-        addTimeZoneEntry("(GMT+01:00) West Central Africa", "Africa/Lagos");
-        addTimeZoneEntry("(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb", "Europe/Warsaw");
-        addTimeZoneEntry("(GMT+01:00) Brussels, Copenhagen, Madrid, Paris", "Europe/Brussels");
-        addTimeZoneEntry("(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague", "Europe/Prague,Europe/Belgrade");
-        addTimeZoneEntry("(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Europe/Amsterdam");
-        addTimeZoneEntry("(GMT) Casablanca, Monrovia", "Africa/Casablanca");
-        addTimeZoneEntry("(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London", "Europe/Dublin");
-        addTimeZoneEntry("(GMT-01:00) Azores", "Atlantic/Azores");
-        addTimeZoneEntry("(GMT-01:00) Cape Verde Is.", "Atlantic/Cape_Verde");
-        addTimeZoneEntry("(GMT-02:00) Mid-Atlantic", "Atlantic/South_Georgia");
-        addTimeZoneEntry("(GMT-03:00) Brasilia", "America/Sao_Paulo");
-        addTimeZoneEntry("(GMT-03:00) Buenos Aires, Georgetown", "America/Buenos_Aires");
-        addTimeZoneEntry("(GMT-03:00) Greenland", "America/Thule");
-        addTimeZoneEntry("(GMT-03:30) Newfoundland", "America/St_Johns");
-        addTimeZoneEntry("(GMT-04:00) Atlantic Time (Canada)", "America/Halifax");
-        addTimeZoneEntry("(GMT-04:00) Caracas, La Paz", "America/Caracas");
-        addTimeZoneEntry("(GMT-04:00) Santiago", "America/Santiago");
-        addTimeZoneEntry("(GMT-05:00) Bogota, Lima, Quito", "America/Bogota");
-       addTimeZoneEntry("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
-       addTimeZoneEntry("(GMT-05:00) Indiana (East)", "America/Indianapolis");
-       addTimeZoneEntry("(GMT-06:00) Central America", "America/Costa_Rica");
-       addTimeZoneEntry("(GMT-06:00) Central Time (US & Canada)", "America/Chicago");
-       addTimeZoneEntry("(GMT-06:00) Guadalajara, Mexico City, Monterrey", "America/Mexico_City");
-       addTimeZoneEntry("(GMT-06:00) Saskatchewan", "America/Winnipeg");
-       addTimeZoneEntry("(GMT-07:00) Arizona", "America/Phoenix");
-       addTimeZoneEntry("(GMT-07:00) Chihuahua, La Paz, Mazatlan", "America/Tegucigalpa");
-       addTimeZoneEntry("(GMT-07:00) Mountain Time (US & Canada)", "America/Denver");
-       addTimeZoneEntry("(GMT-08:00) Pacific Time (US & Canada); Tijuana", "America/Los_Angeles");
-       addTimeZoneEntry("(GMT-09:00) Alaska", "America/Anchorage");
-       addTimeZoneEntry("(GMT-10:00) Hawaii", "Pacific/Honolulu");
-       addTimeZoneEntry("(GMT-11:00) Midway Island, Samoa", "Pacific/Apia");
-       addTimeZoneEntry("(GMT-12:00) International Date Line West", "MIT");
-
-       
-       this.time_zones_vector = new Vector<String>();
-       
-       for(Enumeration<String> en= this.timeZones.keys(); en.hasMoreElements(); )
-       {
-           this.time_zones_vector.add(en.nextElement());
-       }
-       
-       
-    }
-
-
-    public void addTimeZoneEntry(String long_desc, String keycode)
-    {
-        //SimpleConfigurationTZDialog.time_zones.put(long_desc, keycode);
-        //SimpleConfigurationTZDialog.time_zones_vector.add(long_desc);
-    }
 
     
     // ********************************************************
@@ -438,29 +356,24 @@ public class DataAccessMeter extends DataAccessPlugInBase
     // ********************************************************
     
     
-
+    /**
+     * Create Configuration Context for plugin
+     */
     @Override
     public void createConfigurationContext()
     {
         this.device_config_def = new MeterConfigurationDefinition();
     }
 
-
+    
+    /**
+     * Create Device Configuration for plugin
+     */
     @Override
     public void createDeviceConfiguration()
     {
         this.device_config = new DeviceConfiguration(this);
     }
     
-    
-    
-
-
-
-    
-    
-
-
-
 
 }
