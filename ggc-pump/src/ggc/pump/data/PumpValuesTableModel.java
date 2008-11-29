@@ -29,8 +29,8 @@ import javax.swing.table.AbstractTableModel;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpValuesTableModel  
+ *  Description:  Model for table of Pump values
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -60,6 +60,9 @@ public class PumpValuesTableModel extends AbstractTableModel
     private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
                                      m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
+    /**
+     * Constructor
+     */
     public PumpValuesTableModel()
     {
         this.displayed_dl_data = new ArrayList<PumpValuesEntry>();

@@ -128,6 +128,7 @@ public class PumpManager
 
     /**
      * Gets the name
+     * @param index 
      * @return Returns a String
      */
     public String getPumpName(int index)

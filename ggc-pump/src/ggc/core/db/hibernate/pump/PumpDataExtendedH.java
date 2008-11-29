@@ -34,7 +34,14 @@ public class PumpDataExtendedH implements Serializable {
     /** nullable persistent field */
     private long changed;
 
-    /** full constructor */
+    /** full constructor 
+     * @param dt_info 
+     * @param type 
+     * @param value 
+     * @param extended 
+     * @param person_id 
+     * @param comment 
+     * @param changed */
     public PumpDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment, long changed) {
         this.dt_info = dt_info;
         this.type = type;
@@ -49,7 +56,9 @@ public class PumpDataExtendedH implements Serializable {
     public PumpDataExtendedH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param dt_info 
+     * @param person_id */
     public PumpDataExtendedH(long dt_info, int person_id) {
         this.dt_info = dt_info;
         this.person_id = person_id;

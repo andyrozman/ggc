@@ -5,10 +5,8 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
-import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.device.AbstractPump;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
@@ -210,7 +208,7 @@ public abstract class EZManagerDb extends AbstractPump
     /** 
      * This is method for reading configuration
      * 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readConfiguration() throws PlugInBaseException
     {
@@ -257,7 +255,7 @@ public abstract class EZManagerDb extends AbstractPump
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readInfo() throws PlugInBaseException
     {
@@ -267,83 +265,6 @@ public abstract class EZManagerDb extends AbstractPump
     
     
     
-    
-    /**
-     * getDataFull - get all data from Meter
-     * This data should be read from meter, and is used in Meter GUI
-     */
-    
-    // FIXME Not used
-    public ArrayList<PumpValuesEntryExt> getDataFull() //throws MeterException
-    {
-        
-        return null;
-        
-        /*
-        if (m_fileName == null)
-        {
-            try 
-            {
-                open();
-            }
-            catch(MeterException e)
-            {
-                return null;
-            }
-            
-        }
-        
-        
-        
-        ArrayList<MeterValuesEntry> toRet = new ArrayList<MeterValuesEntry>();
-        
-        try {
-            Class.forName("mdbtools.jdbc.Driver");
-            
-            Connection conn = DriverManager.getConnection("jdbc:mdbtools:" + m_fileName);            
-            
-            PreparedStatement bgValsStatement = conn.prepareStatement("Select * From bgLog");
-            ResultSet bgVals = bgValsStatement.executeQuery();
-            while (bgVals.next())
-            {         
-              String bg = bgVals.getString("bg");
-              
-              int day = Integer.parseInt( bgVals.getString("day") );
-              int month = Integer.parseInt( bgVals.getString("month") );
-              int year = Integer.parseInt( bgVals.getString("year") );
-              int hours = Integer.parseInt( bgVals.getString("hours") );
-              int mins = Integer.parseInt( bgVals.getString("minutes") );
-             
-              
-              long dateTime = 0;
-              
-              dateTime += year*100000000L; 
-              dateTime += month*1000000L;
-              dateTime += day*10000L;
-              dateTime += hours*100L;
-              dateTime += mins;
-              
-              ATechDate date = new ATechDate(dateTime);              
-              
-              MeterValuesEntry newEntry = new MeterValuesEntry();
-              newEntry.setBgValue(bg);
-              newEntry.setDateTime(date);
-              
-              toRet.add(newEntry);
-                      
-            }
-            bgVals.close();
-            conn.close();
-        }
-            catch (Exception e) {
-            System.out.println("Error: " + e);
-            return null;
-        }
-        
-        return toRet; */
-        
-        
-    }
 
 
     public Hashtable<String, Integer> getAlarmMappings()

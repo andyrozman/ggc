@@ -4,10 +4,7 @@ import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.util.I18nControl;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
@@ -42,9 +39,8 @@ import javax.swing.ImageIcon;
 public class GenericPump extends AbstractPump //implements PumpInterface 
 {
 
-    protected I18nControl ic = I18nControl.getInstance();
+    //protected I18nControl ic = I18nControl.getInstance();
 
-    protected ArrayList<PumpValuesEntry> data = null;
 
 
     public GenericPump()
@@ -62,27 +58,6 @@ public class GenericPump extends AbstractPump //implements PumpInterface
     
     
 
-    boolean can_read_data = false; 
-	boolean can_read_partitial_data = false;
-	boolean can_clear_data = false;
-	boolean can_read_device_info = false;
-	boolean can_read_device_configuration = false;
-    
-    
-    public void setDeviceAllowedActions(boolean can_read_data, 
-    									boolean can_read_partitial_data,
-    									boolean can_clear_data,
-    									boolean can_read_device_info,
-    									boolean can_read_device_configuration)
-    {
-        this.can_read_data = can_read_data; 
-        this.can_read_partitial_data = can_read_partitial_data;
-        this.can_clear_data = can_clear_data;
-        this.can_read_device_info = can_read_device_info;
-        this.can_read_device_configuration = can_read_device_configuration;
-    	
-    }
-    
     
     
     
@@ -159,120 +134,7 @@ public class GenericPump extends AbstractPump //implements PumpInterface
         return "Generic device";
     }
 
-    /**
-     * getTimeDifference - returns time difference between Meter and Computer
-     */
-    public int getTimeDifference()
-    {
-	//return this.m_time_difference;
-        return 0;
-    }
-
-
-    /**
-     * getInfo - returns Meter information
-     */
-    public String getInfo()
-    {
-        return "Generic Device, v0.1\nNo real device connected.";
-    }
-
-
-    /**
-     * getStatus - get Status of meter
-     */
-    public int getStatus()
-    {
-        return m_status;
-    }
-
-
-    /**
-     * isStatusOK - has Meter OK status
-     */
-    public boolean isStatusOK()
-    {
-        return (m_status == 0);
-    }
-
-    public String getPort()
-    {
-    	return "None";
-    }
     
-
-    //************************************************
-    //***       Device Implemented methods         ***
-    //************************************************
-    
-
-    /** 
-     * clearDeviceData - Clear data from device 
-     */
-    public void clearDeviceData()
-    {
-    	
-    }
-    
-    
-    /**
-     * getDeviceConfiguration - return device configuration
-     * @return
-     */
-    public ArrayList<String> getDeviceConfiguration()
-    {
-    	return new ArrayList<String>();
-    }
-    
-    
-    
-
-
-
-
-
-
-
-    //************************************************
-    //***          Process Meter Data              ***
-    //************************************************
-
-
-    /**
-     * processMeterDataMain - this is main method for processing data. It should be called on all data received, and 
-     * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
-     * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
-     */
-    public void processMeterData(String data)
-    {
-    }
-
-    /**
-     * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
-     */
-    public void processMeterIdentification(String data)
-    {
-    }
-
-    /**
-     * processMeterTime - this should be used to process time and date of meter
-     */
-    public void processMeterTime(String data)
-    {
-    }
-
-    /**
-     * processMeterBGEntry - this should be used to process BG data from meter
-     */
-    public void processMeterBGEntry(String data)
-    {
-    }
-
-
-
-
-
-
 
     //************************************************
     //***                    Test                  ***
@@ -281,8 +143,6 @@ public class GenericPump extends AbstractPump //implements PumpInterface
     public void test()
     {
     }
-
-
 
 
 
@@ -521,6 +381,13 @@ public class GenericPump extends AbstractPump //implements PumpInterface
     {
         // TODO Auto-generated method stub
         return false;
+    }
+
+
+    public void dispose()
+    {
+        // TODO Auto-generated method stub
+        
     }
 
     

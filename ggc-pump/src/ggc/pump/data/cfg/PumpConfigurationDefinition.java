@@ -64,6 +64,15 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
     }
     
     
+    /**
+     * Returns prefix for help context
+     * 
+     * @return help context prefix
+     */
+    public String getHelpPrefix()
+    {
+        return "pages.PumpTool_";
+    }
     
     
 

@@ -144,6 +144,11 @@ public class AnimasTest extends EZManagerDb
     }
 
 
+    public void dispose()
+    {
+        // TODO: close db here
+    }
+    
 
 
     public String getDeviceSpecialComment()

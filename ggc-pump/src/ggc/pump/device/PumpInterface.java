@@ -77,12 +77,14 @@ public interface PumpInterface extends DeviceInterface
     /**
      * Used for opening connection with device.
      * @return boolean - if connection established
+     * @throws PlugInBaseException 
      */
     boolean open() throws PlugInBaseException;
 
 
     /**
      * Will be called, when the import is ended and freeing resources.
+     * @throws PlugInBaseException 
      */
     void close() throws PlugInBaseException;
 
@@ -160,6 +162,7 @@ public interface PumpInterface extends DeviceInterface
     
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
+     * @return 
      */
     public DeviceIdentification getDeviceInfo();
     
@@ -220,8 +223,6 @@ public interface PumpInterface extends DeviceInterface
     
     /**
      * getDeviceCompany - get Company for device
-     * 
-     * @param company
      */
     public AbstractDeviceCompany getDeviceCompany();
     

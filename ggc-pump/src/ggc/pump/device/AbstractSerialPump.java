@@ -73,7 +73,10 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     	
     }
 
-    
+    public void dispose()
+    {
+        this.close();
+    }
     
     boolean can_read_data = false; 
 	boolean can_read_partitial_data = false;
@@ -491,8 +494,6 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     
     /**
      * getDeviceCompany - get Company for device
-     * 
-     * @param company
      */
     public AbstractDeviceCompany getDeviceCompany()
     {

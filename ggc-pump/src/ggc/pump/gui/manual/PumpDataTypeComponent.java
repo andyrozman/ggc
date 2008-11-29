@@ -700,7 +700,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     {
         
         private static final long serialVersionUID = 1195430308386555236L;
-        JLabel label_1, label_2;
+        JLabel label_1_1, label_2_1;
         JButton button_1;
 
         public ProfileComponent()
@@ -712,13 +712,13 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         private void init()
         {
-            label_1 = new JLabel(ic.getMessage("PROFILE") + ":");
-            label_1.setBounds(0, 0, 140, 25);
-            this.add(label_1);
+            label_1_1 = new JLabel(ic.getMessage("PROFILE") + ":");
+            label_1_1.setBounds(0, 0, 140, 25);
+            this.add(label_1_1);
             
-            label_2 = new JLabel(ic.getMessage("NOT_SELECTED"));
-            label_2.setBounds(150, 0, 140, 25);
-            this.add(label_2);
+            label_2_1 = new JLabel(ic.getMessage("NOT_SELECTED"));
+            label_2_1.setBounds(150, 0, 140, 25);
+            this.add(label_2_1);
             
             button_1 = new JButton("...");
             button_1.setBounds(300, 0, 25, 25 );
@@ -753,7 +753,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         JSpinner spinner = null;
         JComboBox cb_sign = null;
-        JLabel label_1, label_2;
+        JLabel label_1_1, label_2_1;
         
         public TemporaryBasalRateComponent()
         {
@@ -764,9 +764,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         private void init()
         {
-            label_1 = new JLabel(ic.getMessage("TEMPORARY_BASAL_RATE") + ":");
-            label_1.setBounds(0, 0, 140, 25);
-            this.add(label_1);
+            label_1_1 = new JLabel(ic.getMessage("TEMPORARY_BASAL_RATE") + ":");
+            label_1_1.setBounds(0, 0, 140, 25);
+            this.add(label_1_1);
             
             
             cb_sign = new JComboBox(vals);
@@ -778,9 +778,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             spinner.setBounds(270, 0, 40, 25);
             this.add(spinner);
             
-            label_2 = new JLabel("%");
-            label_2.setBounds(320, 0, 40, 25);
-            this.add(label_2);
+            label_2_1 = new JLabel("%");
+            label_2_1.setBounds(320, 0, 40, 25);
+            this.add(label_2_1);
             
         }
         

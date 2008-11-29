@@ -44,11 +44,16 @@ import javax.swing.table.TableColumn;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpValuesTable  
+ *  Description:  Table for Pump values
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+
+//IMPORTANT NOTICE: 
+//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
+//class, with different type of data. Trying to find a way to use super class instead of this.
 
 public class PumpValuesTable extends JTable //implements TableModelListener
 {
@@ -59,6 +64,10 @@ public class PumpValuesTable extends JTable //implements TableModelListener
     PumpValuesTableModel model = null;
 	DataAccessPump m_da = DataAccessPump.getInstance();
 
+	
+    /**
+     * Constructor
+     */
     public PumpValuesTable()
     {
         super();
@@ -72,6 +81,12 @@ public class PumpValuesTable extends JTable //implements TableModelListener
         
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param model
+     */
     public PumpValuesTable(PumpValuesTableModel model)
     {
         super(model);
@@ -95,6 +110,10 @@ public class PumpValuesTable extends JTable //implements TableModelListener
         return header;
     }
 
+    /**
+     * Set Model
+     * @param model
+     */
     public void setModel(PumpValuesTableModel model)
     {
         super.setModel(model);

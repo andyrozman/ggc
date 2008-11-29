@@ -490,7 +490,7 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
     JButton sel_all, unsel_all;
     
     
-    public JPanel createTablePanel(PumpValuesTable table)
+    public JPanel createTablePanel(PumpValuesTable _table)
     {
 
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -541,7 +541,7 @@ public class PumpDisplayDataDialog extends JDialog implements ActionListener, Ou
         TableColumn column = null;
         for (int i = 0; i < 5; i++)
         {
-            column = table.getColumnModel().getColumn(i);
+            column = _table.getColumnModel().getColumn(i);
             column.setPreferredWidth(cw[i]);
         }
 

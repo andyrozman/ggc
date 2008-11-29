@@ -54,7 +54,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -286,6 +285,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     
     /**
      *  Populates JList component
+     * @param input 
      */
     public void populateJListExtended(ArrayList<?> input)
     {
@@ -618,12 +618,23 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     
     
 
+    /**
+     * @param columns
+     * @param decimal_places
+     * @param value
+     * @param x
+     * @param y
+     * @param width_in
+     * @param height_in
+     * @param cont
+     * @return
+     */
     public JFormattedTextField getTextField(int columns, int decimal_places,
-            Object value, int x, int y, int width, int height, Container cont)
+            Object value, int x, int y, int width_in, int height_in, Container cont)
 
     {
         JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
-        tf.setBounds(x, y, width, height);
+        tf.setBounds(x, y, width_in, height_in);
         tf.addKeyListener(this);
         
         cont.add(tf);
@@ -679,20 +690,21 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
 
     }
 
+    /*
     public void addComponent(JComponent comp, int posX, int posY, int width,
             JPanel parent)
     {
         addComponent(comp, posX, posY, width, 23, true, parent);
-    }
+    }*/
 
-    public void addComponent(JComponent comp, int posX, int posY, int width,
+/*    public void addComponent(JComponent comp, int posX, int posY, int width,
             int height, boolean change_font, JPanel parent)
     {
         comp.setBounds(posX, posY, width, height);
         comp.addKeyListener(this);
         parent.add(comp);
     }
-
+*/
     /*
      * private void init_old() { this.setBounds(150, 150, 300, 150);
      * 

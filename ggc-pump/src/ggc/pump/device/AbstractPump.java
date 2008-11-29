@@ -7,8 +7,6 @@ import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
-
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
@@ -124,73 +122,12 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
 */
 
 
-    public int getMeterIndex()
-    {
-        return 0;
-    }
 
-    public ImageIcon getIcon()
-    {
-        return null;
-    }
 
     public String getName()
     {
         return "Generic device";
     }
-
-    /**
-     * getTimeDifference - returns time difference between Meter and Computer
-     */
-    public int getTimeDifference()
-    {
-	//return this.m_time_difference;
-        return 0;
-    }
-
-
-    /**
-     * getInfo - returns Meter information
-     */
-    public String getInfo()
-    {
-        return "Generic Device, v0.1\nNo real device connected.";
-    }
-
-
-    /**
-     * getStatus - get Status of meter
-     */
-    public int getStatus()
-    {
-        return m_status;
-    }
-
-
-    /**
-     * isStatusOK - has Meter OK status
-     */
-    public boolean isStatusOK()
-    {
-        return (m_status == 0);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -200,6 +137,9 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     //***                    Test                  ***
     //************************************************
 
+    /** 
+     * test
+     */
     public void test()
     {
     }
@@ -411,8 +351,6 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     
     /**
      * getDeviceCompany - get Company for device
-     * 
-     * @param company
      */
     public AbstractDeviceCompany getDeviceCompany()
     {

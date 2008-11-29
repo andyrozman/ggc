@@ -174,35 +174,6 @@ public class DummyPump extends GenericPump //implements MeterInterface
 
 
     //************************************************
-    //***          Process Meter Data              ***
-    //************************************************
-
-
-    /**
-     * processMeterDataMain - this is main method for processing data. It should be called on all data received, and 
-     * from here it should be sent to other process* methods. This methods are meant to be used, but don't have to 
-     * be used if we have other ways to get data for methods needed (methods marked as used in Meter GUI)
-     */
-    public void processMeterData(String data) {}
-
-    /**
-     * processMeterIdentification - this should be used to process identification of meter and versions of firmware.
-     */
-    public void processMeterIdentification(String data) {}
-
-    /**
-     * processMeterTime - this should be used to process time and date of meter
-     */
-    public void processMeterTime(String data) {}
-
-    /**
-     * processMeterBGEntry - this should be used to process BG data from meter
-     */
-    public void processMeterBGEntry(String data) {}
-
-
-
-    //************************************************
     //***        Available Functionality           ***
     //************************************************
 

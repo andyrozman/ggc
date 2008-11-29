@@ -271,11 +271,11 @@ public class DataAccessPump extends DataAccessPlugInBase
     public void createPlugInAboutContext()
     {
         I18nControlAbstract ic = this.getI18nControlInstance();
-        this.about_title = ic.getMessage("PUMP_PLUGIN_ABOUT");
+        //this.about_title = ic.getMessage("PUMP_PLUGIN_ABOUT");
         this.about_image_name = "/icons/about_logo.gif";
 
         this.about_plugin_copyright_from = 2008;
-        this.about_plugin_name = ic.getMessage("PUMP_PLUGIN");
+        //this.about_plugin_name = ic.getMessage("PUMP_PLUGIN");
         
         
         // libraries
@@ -461,6 +461,37 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         // TODO Auto-generated method stub
         
+    }
+
+
+    @Override
+    public void createPlugInDataRetrievalContext()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void loadManager()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void loadDeviceDataHandler()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public String getDeviceImagesRoot()
+    {
+        return "/icons/pumps/";
     }
 
     

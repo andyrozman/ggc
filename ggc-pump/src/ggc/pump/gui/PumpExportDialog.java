@@ -295,14 +295,14 @@ public class PumpExportDialog extends JDialog implements ActionListener, StatusR
     }
 
 
-    /*
+    /**
      * Invoked when an action occurs.
      */
     public void actionPerformed(ActionEvent e)
     {
-        String action = e.getActionCommand();
+        String action_cmd = e.getActionCommand();
 
-        if (action.equals("close"))
+        if (action_cmd.equals("close"))
         {
             if (started)
                 this.action = true;

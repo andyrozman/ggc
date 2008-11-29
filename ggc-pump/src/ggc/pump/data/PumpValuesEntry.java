@@ -212,9 +212,9 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
     // added - End
     
 	
-	public void addParameter(String key, String value)
+	public void addParameter(String key, String valuex)
 	{
-		if ((value.equals("_")) || (value.trim().length()==0))
+		if ((valuex.equals("_")) || (valuex.trim().length()==0))
 			return;
 		
 		if (params==null)
@@ -222,7 +222,7 @@ public class PumpValuesEntry extends PumpDataH implements DatabaseObjectHibernat
 			params = new Hashtable<String,String>();
 		}
 		
-		this.params.put(key, value);
+		this.params.put(key, valuex);
 		
 	}
 

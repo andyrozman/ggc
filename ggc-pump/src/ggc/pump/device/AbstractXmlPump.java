@@ -120,6 +120,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     /**
      * setConnectionPort - connection port data
+     * @param con_port 
      * 
      */
     public void setConnectionPort(String con_port)
@@ -128,6 +129,9 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
     
     
+    public void dispose()
+    {
+    }
     
     
     
@@ -455,8 +459,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     /**
      * getDeviceCompany - get Company for device
-     * 
-     * @param company
      */
     public AbstractDeviceCompany getDeviceCompany()
     {

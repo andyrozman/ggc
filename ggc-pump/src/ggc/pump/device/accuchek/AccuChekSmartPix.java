@@ -362,7 +362,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     /** 
      * This is method for reading configuration
      * 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readConfiguration() throws PlugInBaseException
     {
@@ -372,7 +372,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
-     * @throws MeterExceptions
+     * @throws PlugInBaseException
      */
     public void readInfo() throws PlugInBaseException
     {

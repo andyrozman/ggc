@@ -5,11 +5,14 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/** @author Hibernate CodeGenerator */
-public class DayValueH implements Serializable {
+/**
+ *  @author Hibernate CodeGenerator 
+ */
+public class DayValueH implements Serializable
+{
 
     private static final long serialVersionUID = -1661031856854546844L;
-    
+
     /** identifier field */
     private long id;
 
@@ -43,8 +46,23 @@ public class DayValueH implements Serializable {
     /** nullable persistent field */
     private long changed;
 
-    /** full constructor */
-    public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String extended, int person_id, String comment, long changed) {
+    /**
+     * full constructor
+     * 
+     * @param dt_info
+     * @param bg
+     * @param ins1
+     * @param ins2
+     * @param ch
+     * @param meals_ids
+     * @param extended
+     * @param person_id
+     * @param comment
+     * @param changed
+     */
+    public DayValueH(long dt_info, int bg, int ins1, int ins2, float ch, String meals_ids, String extended,
+            int person_id, String comment, long changed)
+    {
         this.dt_info = dt_info;
         this.bg = bg;
         this.ins1 = ins1;
@@ -57,122 +75,276 @@ public class DayValueH implements Serializable {
         this.changed = changed;
     }
 
-    /** default constructor */
-    public DayValueH() {
+    /** 
+     * default constructor 
+     */
+    public DayValueH()
+    {
     }
 
-    /** minimal constructor */
-    public DayValueH(long dt_info, int person_id) {
+    /**
+     * minimal constructor
+     * 
+     * @param dt_info
+     * @param person_id
+     */
+    public DayValueH(long dt_info, int person_id)
+    {
         this.dt_info = dt_info;
         this.person_id = person_id;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public long getDt_info() {
+    /**
+     * Get DateTime Info
+     * 
+     * @return
+     */
+    public long getDt_info()
+    {
         return this.dt_info;
     }
 
-    public void setDt_info(long dt_info) {
+    /**
+     * Set DateTime Info
+     * 
+     * @param dt_info
+     */
+    public void setDt_info(long dt_info)
+    {
         this.dt_info = dt_info;
     }
 
-    public int getBg() {
+    /**
+     * Get Bg
+     * 
+     * @return
+     */
+    public int getBg()
+    {
         return this.bg;
     }
 
-    public void setBg(int bg) {
+    /**
+     * Set Bg
+     * 
+     * @param bg
+     */
+    public void setBg(int bg)
+    {
         this.bg = bg;
     }
 
-    public int getIns1() {
+    /**
+     * Get Insulin 1
+     * 
+     * @return
+     */
+    public int getIns1()
+    {
         return this.ins1;
     }
 
-    public void setIns1(int ins1) {
+    /**
+     * Set Insulin 1
+     * 
+     * @param ins1
+     */
+    public void setIns1(int ins1)
+    {
         this.ins1 = ins1;
     }
 
-    public int getIns2() {
+    /**
+     * Get Insulin 2
+     * 
+     * @return
+     */
+    public int getIns2()
+    {
         return this.ins2;
     }
 
-    public void setIns2(int ins2) {
+    /**
+     * Set Insulin 2
+     * 
+     * @param ins2
+     */
+    public void setIns2(int ins2)
+    {
         this.ins2 = ins2;
     }
 
-    public float getCh() {
+    /**
+     * Get Carbohydrates
+     * 
+     * @return
+     */
+    public float getCh()
+    {
         return this.ch;
     }
 
-    public void setCh(float ch) {
+    
+    /**
+     * Set Carbohydrates
+     * 
+     * @param ch
+     */
+    public void setCh(float ch)
+    {
         this.ch = ch;
     }
 
-    public String getMeals_ids() {
+    /**
+     * Get Meal Ids
+     * 
+     * @return
+     */
+    public String getMeals_ids()
+    {
         return this.meals_ids;
     }
 
-    public void setMeals_ids(String meals_ids) {
+    /**
+     * Set Meal Ids
+     * 
+     * @param meals_ids
+     */
+    public void setMeals_ids(String meals_ids)
+    {
         this.meals_ids = meals_ids;
     }
 
-    public String getExtended() {
+    /**
+     * Get Extended
+     * 
+     * @return
+     */
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    /**
+     * Set Extended
+     * 
+     * @param extended
+     */
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
-    public int getPerson_id() {
+    /**
+     * Get Person Id
+     * 
+     * @return
+     */
+    public int getPerson_id()
+    {
         return this.person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    /**
+     * Set Person Id
+     * 
+     * @param person_id
+     */
+    public void setPerson_id(int person_id)
+    {
         this.person_id = person_id;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public long getChanged() {
+    /**
+     * Get Changed
+     * 
+     * @return
+     */
+    public long getChanged()
+    {
         return this.changed;
     }
 
-    public void setChanged(long changed) {
+    /**
+     * Set Changed
+     * 
+     * @param changed
+     */
+    public void setChanged(long changed)
+    {
         this.changed = changed;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
+    /**
+     * Custom toString implementation
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
     }
 
-    public boolean equals(Object other) {
-        if ( !(other instanceof DayValueH) ) return false;
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other)
+    {
+        if (!(other instanceof DayValueH))
+            return false;
         DayValueH castOther = (DayValueH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * Hash code generator
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }
