@@ -3,9 +3,11 @@ package ggc.cgm.data;
 import ggc.cgm.util.DataAccessCGM;
 import ggc.cgm.util.I18nControl;
 import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputUtil;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import com.atech.utils.ATechDate;
@@ -278,6 +280,54 @@ public class CGMValuesEntry extends DeviceValuesEntry
 	    //OutputUtil o= null;
 	    return "MeterValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
 	}
+
+
+    @Override
+    public Object getColumnValue(int index)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public int getDateTimeFormat()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    @Override
+    public ArrayList<? extends GGCHibernateObject> getDbObjects()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public String getDataAsString()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public boolean isDataBG()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    @Override
+    public void setOutputType(int type)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 	
 	
 }	

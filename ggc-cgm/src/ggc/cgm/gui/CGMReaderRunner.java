@@ -34,7 +34,7 @@ import java.lang.reflect.Constructor;
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
  *  Filename:     CGMReaderRunner
- *  Description:  This is separate thread class to get current data from database in otder to 
+ *  Description:  This is separate thread class to get current data from database in order to 
  *                compare it later.
  * 
  *  Author: Andy {andy@atech-software.com}

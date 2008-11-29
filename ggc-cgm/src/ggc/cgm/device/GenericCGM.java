@@ -472,4 +472,10 @@ public class GenericCGM implements CGMInterface
         return null;
     }
 
+    public void dispose()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

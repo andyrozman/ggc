@@ -54,6 +54,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
+//Try to assess possibility of super-classing
+
 
 public class CGMInstructionsDialog extends JDialog implements ActionListener, DbDataReadingFinishedInterface
 {

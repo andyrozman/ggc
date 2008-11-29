@@ -89,5 +89,16 @@ public class CGMConfigurationDefinition implements DeviceConfigurationDefinition
         return CGMManager.getInstance().getSupportedDevices();
     }
     
+    
+    /**
+     * Returns prefix for help context
+     * 
+     * @return help context prefix
+     */
+    public String getHelpPrefix()
+    {
+        return "pages.CGMSTool_";
+    }
+    
 
 }
