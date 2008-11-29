@@ -81,10 +81,10 @@ public class BaseListRenderer extends DefaultTreeCellRenderer
     }
 
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
-            boolean leaf, int row, boolean hasFocus)
+            boolean leaf, int row, boolean _hasFocus)
     {
 
-        super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+        super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, _hasFocus);
         
         if (leaf)
         {

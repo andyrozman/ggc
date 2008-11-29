@@ -121,10 +121,10 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
     }
 
     
-    public DeviceInterface getDevice(String name)
+    public DeviceInterface getDevice(String _name)
     {
-        if (this.devices.containsKey(name))
-            return this.devices.get(name);
+        if (this.devices.containsKey(_name))
+            return this.devices.get(_name);
         else
             return null;
     }

@@ -80,11 +80,14 @@ public class DeviceIdentification
         StringBuffer sb = new StringBuffer();
         
         sb.append(this.company);
-        sb.append("  " + this.device_selected);
+        sb.append(" - " + this.device_selected);
         sb.append("\n");
         
         //sb.append(prefix + " ");
-        sb.append(this.device_identified + " ");
+        
+        if (this.device_identified!=null)
+            sb.append(this.device_identified + " ");
+        
         appendParameter(this.device_serial_number, "S/N", sb);
         sb.append("\n");
 

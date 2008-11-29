@@ -81,36 +81,27 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
     private JTree tree;
 
     public DataAccessPlugInBase m_da = null;
-
-
-//    private static boolean playWithLineStyle = false;
-//    private static String lineStyle = "Horizontal";
-    
-//    private static boolean useSystemLookAndFeel = false;
-
-
     private I18nControlAbstract ic = null;
     public BaseListAbstractPanel  panels[] = null;
-// x   private int selectedPanel = 0;
-
-//    addMouseListener(this);
-//    add(pop);
-    
     BaseListRoot m_root = null;
     
     
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param da
+     */
     public BaseListDialog(JFrame parent, DataAccessPlugInBase da) 
     {
 
         super(parent, "", true);
-	//super((JDialog)null, "", true);
 
         m_da = da;
         ic = m_da.getI18nControlInstance();
-        
-        this.setTitle(ic.getMessage("LIST_DIALOG_TITLE"));
 
-        //m_da.addComponent(parent);
+        this.setTitle();
+
         m_da.addComponent(this);
         
         m_root = new BaseListRoot(m_da);
@@ -168,9 +159,9 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 
     
 
-    public void setTitle()
+    private void setTitle()
     {
-	    this.setTitle(m_da.getWebListerTitle());
+	    this.setTitle(String.format(ic.getMessage("DEVICE_LIST_WEB"), ic.getMessage("DEVICE_NAME_BIG")));
     }
 
     public void setTreeModel(JTree tree)

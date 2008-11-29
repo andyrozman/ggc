@@ -2,6 +2,21 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.2.3
+    - changed GUI classes to use ATSwingUtils for better code visibility
+
+0.2.2
+    - moved most of data classes, here (DeviceValues, DeviceValuesDay, DeviceValuesEntry, 
+      DeviceValuesTable, DeviceValuesTableModel)
+    - because of move several new items were added DataAccess classes
+    - moved GUI for reading data, this code is complete, but must be tested !!!
+    - when adding GUI to plugins, we now need to implement only some methods in DataAccess*, 
+      add *ValuesEntry (derived from DeviceValuesEntry), and *ValuesTableModel 
+      (also derived)
+    - we might have to change some stuff here, when we add new types of data, but changes 
+      should be minor.
+
+
 0.2.1
     - changed about dialog - resizing of about picture now possible
     - added configuration for devices (ggc.plugin.cfg). Configuration is now done globally.

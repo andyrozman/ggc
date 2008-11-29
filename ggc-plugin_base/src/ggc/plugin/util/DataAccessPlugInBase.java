@@ -31,8 +31,10 @@ package ggc.plugin.util;
 
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
+import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.list.BaseListEntry;
+import ggc.plugin.manager.DeviceManager;
 
 import java.awt.Color;
 import java.math.BigDecimal;
@@ -119,9 +121,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         
 
     // about
-    protected String about_title;
+    //protected String about_title;
     protected String about_image_name;
-    protected String about_plugin_name;
+    //protected String about_plugin_name;
     protected int about_plugin_copyright_from;
     protected ArrayList<LibraryInfoEntry> plugin_libraries;
     protected ArrayList<CreditsGroup> plugin_developers;
@@ -211,6 +213,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
     
     
+    public abstract String getDeviceImagesRoot();
+    
+    
     /** 
      * loadBackupRestoreCollection
      */
@@ -229,11 +234,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     public abstract void createPlugInAboutContext();
     
     
-    
+    /*
     public String getAboutTitle()
     {
         return this.about_title;
-    }
+    }*/
     
     public String getAboutImageName()
     {
@@ -264,10 +269,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         
     }
     
+    /*
     public String getAboutPlugInName()
     {
         return this.about_plugin_name;
-    }
+    }*/
     
     public ArrayList<LibraryInfoEntry> getPlugInLibraries()
     {
@@ -583,20 +589,37 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
 
 
+    // ********************************************************
+    // ******                   Database                  *****    
+    // ********************************************************
 
+    protected DeviceManager m_manager = null;
+    
+    
+    public DeviceManager getManager()
+    {
+        return this.m_manager;
+    }
+
+    public abstract void loadManager();
+    
+    
+    
     // ********************************************************
     // ******             Data Retrieval                  *****    
     // ********************************************************
     
     
-    DeviceValuesEntry m_entry_type;
-    String columns_manual[] = null;
-    int column_widths_manual[] = null;
+    protected DeviceValuesEntry m_entry_type;
+    protected String columns_manual[] = null;
+    protected int column_widths_manual[] = null;
 
-    String columns_table[] = null;
-    int column_widths_table[] = null;
+    protected String columns_table[] = null;
+    protected int column_widths_table[] = null;
     
-    String[] entry_statuses = null;
+    protected String[] entry_statuses = null;
+    protected String[] reading_statuses = null;
+    protected String[] filtering_states = null;
     
     
     /**
@@ -637,7 +660,53 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return m_entry_type;
     }
     
+    
+    protected DeviceDataHandler m_ddh;
 
+    public abstract void loadDeviceDataHandler();
+    
+    public DeviceDataHandler getDeviceDataHandler()
+    {
+        return this.m_ddh;
+    }
+    
+
+    public String[] getReadingStatuses()
+    {
+        return reading_statuses;
+    }
+    
+    public String[] getFilteringStates()
+    {
+        return this.filtering_states;
+    }
+    
+    public void loadReadingStatuses()
+    {
+        reading_statuses = new String[7];
+        
+        reading_statuses[0] = m_i18n.getMessage("STATUS_NONE");
+        reading_statuses[1] = m_i18n.getMessage("STATUS_READY");
+        reading_statuses[2] = m_i18n.getMessage("STATUS_DOWNLOADING");
+        reading_statuses[3] = m_i18n.getMessage("STATUS_STOPPED_DEVICE");
+        reading_statuses[4] = m_i18n.getMessage("STATUS_STOPPED_USER");
+        reading_statuses[5] = m_i18n.getMessage("STATUS_DOWNLOAD_FINISHED");
+        reading_statuses[6] = String.format(m_i18n.getMessage("STATUS_READER_ERROR"), m_i18n.getMessage("DEVICE_NAME_BIG"));
+
+        
+        this.filtering_states = new String[7];
+        
+        filtering_states[0] = m_i18n.getMessage("FILTER_ALL"); 
+        filtering_states[1] = m_i18n.getMessage("FILTER_NEW");
+        filtering_states[2] = m_i18n.getMessage("FILTER_CHANGED"); 
+        filtering_states[3] = m_i18n.getMessage("FILTER_EXISTING");
+        filtering_states[4] = m_i18n.getMessage("FILTER_UNKNOWN");
+        filtering_states[5] = m_i18n.getMessage("FILTER_NEW_CHANGED");
+        filtering_states[6] = m_i18n.getMessage("FILTER_ALL_BUT_EXISTING");
+        
+        
+    }
+    
 
     public int getStartYear()
     {

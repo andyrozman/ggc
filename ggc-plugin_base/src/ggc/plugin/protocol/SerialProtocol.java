@@ -436,7 +436,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     
     
-    
+
     
     
     
@@ -573,7 +573,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     {
         char c = '\uFFFF';
         boolean flag = false;
-        StringBuffer stringbuffer = new StringBuffer("");
+        //StringBuffer stringbuffer = new StringBuffer("");
 
         ArrayList<Byte> lst = new ArrayList<Byte>();
         

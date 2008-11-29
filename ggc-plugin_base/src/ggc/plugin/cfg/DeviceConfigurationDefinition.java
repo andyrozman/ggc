@@ -72,5 +72,13 @@ public interface DeviceConfigurationDefinition
      * @return
      */
     public Vector<? extends SelectableInterface> getSupportedDevices(); 
+    
+    
+    /**
+     * Returns prefix for help context
+     * 
+     * @return help context prefix
+     */
+    public String getHelpPrefix();
 
 }

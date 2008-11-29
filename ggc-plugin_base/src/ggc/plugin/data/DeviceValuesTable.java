@@ -69,7 +69,7 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     //x    private I18nControl m_ic = I18nControl.getInstance();    
     DeviceValuesTableModel model = null;
 
-	DataAccessPlugInBase m_da;
+	public DataAccessPlugInBase m_da;
 	
     /**
      *  Constructor
@@ -77,6 +77,7 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     public DeviceValuesTable(DataAccessPlugInBase da)
     {
         super();
+        m_da = da;
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         
         this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
@@ -91,9 +92,10 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
      *  Constructor
      * @param model 
      */
-    public DeviceValuesTable(DeviceValuesTableModel model)
+    public DeviceValuesTable(DataAccessPlugInBase da, DeviceValuesTableModel model)
     {
         super(model);
+        m_da = da;
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
         this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
@@ -150,9 +152,9 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
      * @param model
      * @return
      */
-    public JComponent createValuesTable()
+    public JComponent createValuesTable(DataAccessPlugInBase da)
     {
-        DeviceValuesTable table = new DeviceValuesTable(model);
+        DeviceValuesTable table = new DeviceValuesTable(da, model);
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         JToolBar toolBar = new JToolBar();
@@ -276,6 +278,7 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
                 Integer i = (Integer) value;
                 // setSelected(b.booleanValue());
                 status = i.intValue();
+                
                 setText(m_da.getEntryStatuses()[status]);
                 setIcon(m_da.getImageIcon(DeviceValuesEntry.entry_status_icons[status], 8, 8, this));
             }

@@ -77,7 +77,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
 
         Font fnt_18 = new Font("Times New Roman", Font.PLAIN, 14);
 
-        label = new JLabel(m_da.getWebListerTitle());
+        label = new JLabel(String.format(m_ic.getMessage("DEVICE_LIST_WEB"), m_ic.getMessage("DEVICE_NAME_BIG")));
         label.setBounds(0, 35, 520, 40);
         label.setFont(font_big); 
         label.setHorizontalAlignment(SwingConstants.CENTER);

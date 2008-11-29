@@ -110,7 +110,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     public void init()
     {
     	
-    	System.out.println("init()");
+    	//System.out.println("init()");
     	this.setBounds(0,0,500,500);
         this.setLayout(new java.awt.BorderLayout());
 
@@ -277,6 +277,9 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         try
         {
             URL url = new URL("http://localhost:444" + url_src);          //this.getClass().getResource("/html/abbott_diabetes_care.html");
+            
+            System.out.println("url: " + url.toString());
+            
             InputStreamReader ins = new InputStreamReader(url.openStream());
             BufferedReader br = new BufferedReader( ins );
             String line;

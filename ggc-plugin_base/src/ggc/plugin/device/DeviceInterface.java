@@ -140,6 +140,12 @@ public interface DeviceInterface extends SelectableInterface
      */
     String getDeviceClassName();
     
+    
+    /**
+     * dispose this device interface
+     */
+    void dispose();
+    
 
     //************************************************
     //***          Device GUI Methods              ***

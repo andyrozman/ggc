@@ -393,6 +393,13 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
         // TODO Auto-generated method stub
         return null;
     }
+
+
+    public void dispose()
+    {
+        // TODO Auto-generated method stub
+        
+    }
     
     
     

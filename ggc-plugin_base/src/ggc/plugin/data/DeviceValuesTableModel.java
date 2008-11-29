@@ -1,5 +1,6 @@
 package ggc.plugin.data;
 
+import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.ArrayList;
@@ -45,24 +46,26 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     // GlucoValues dayData;
 
     private static final long serialVersionUID = -6542265335372702616L;
-    ArrayList<DeviceValuesEntry> dl_data;
-    ArrayList<DeviceValuesEntry> displayed_dl_data;
+    protected ArrayList<DeviceValuesEntry> dl_data;
+    protected ArrayList<DeviceValuesEntry> displayed_dl_data;
     
-    Hashtable<String,Object> old_data = null;
+    //Hashtable<String,Object> old_data = null;
+    protected DeviceDataHandler m_ddh = null;
 
     // GGCProperties props = GGCProperties.getInstance();
 
     // TODO: fix this
     int current_filter = 0; //DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
 
-    DataAccessPlugInBase m_da;
+    protected DataAccessPlugInBase m_da;
     // public String status_icon_name
 
     //private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
     //                                 m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
-    public DeviceValuesTableModel(DataAccessPlugInBase da)
+    public DeviceValuesTableModel(DataAccessPlugInBase da, DeviceDataHandler ddh)
     {
+        this.m_ddh = ddh;
         this.m_da = da;
         this.displayed_dl_data = new ArrayList<DeviceValuesEntry>();
         this.dl_data = new ArrayList<DeviceValuesEntry>();
@@ -233,7 +236,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
 
     public void addEntry(DeviceValuesEntry mve)
     {
-//        processMeterValuesEntry(mve);
+        processDeviceValueEntry(mve);
         this.dl_data.add(mve);
         
         if (this.shouldBeDisplayed(mve.getStatus()))
@@ -243,6 +246,10 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
         this.fireTableDataChanged();
     }
 
+    
+    public abstract void processDeviceValueEntry(DeviceValuesEntry mve);
+    
+    
     /*
     public void processMeterValuesEntry(MeterValuesEntry mve)
     {
@@ -301,13 +308,13 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     */
     
     
-    public Hashtable<String,ArrayList<Object>> getCheckedEntries()
+    public Hashtable<String,ArrayList<?>> getCheckedEntries()
     {
         
-        Hashtable<String,ArrayList<Object>> ht = new Hashtable<String,ArrayList<Object>>();
+        Hashtable<String,ArrayList<?>> ht = new Hashtable<String,ArrayList<?>>();
         
-        ht.put("ADD", new ArrayList<Object>());
-        ht.put("EDIT", new ArrayList<Object>());
+        ht.put("ADD", getEmptyArrayList());
+        ht.put("EDIT", getEmptyArrayList());
         
         
         for(int i=0; i<this.dl_data.size(); i++)
@@ -321,16 +328,33 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
             
             if (mve.object_status==DeviceValuesEntry.OBJECT_STATUS_NEW)
             {
-                ht.get("ADD").addAll(mve.getDbObjects());
+                //addToArray(ht.get("ADD").addAll(mve.getDbObjects());
+                addToArray(ht.get("ADD"), mve.getDbObjects());
             }
             else if (mve.object_status==DeviceValuesEntry.OBJECT_STATUS_EDIT)
             {
-                ht.get("EDIT").addAll(mve.getDbObjects());
+                addToArray(ht.get("EDIT"), mve.getDbObjects());
             }
         }
         
         return ht;
     }
+    
+    
+    public abstract ArrayList<? extends GGCHibernateObject> getEmptyArrayList();
+    
+    public abstract void addToArray(ArrayList<?> lst, ArrayList<?> source);
+    
+    /*
+    {
+        for(int i=0; i<source.size(); i++)
+        {
+            lst.add(source.get(i));
+        }
+        
+    }
+    */
+    
     
     
     @Override
@@ -372,33 +396,15 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     }
 */
     
-    public void setOldValues(Hashtable<String,Object> data)
+    //public abstract void setOldValues(Hashtable<String,?> data);
+    
+    /*
     {
         this.old_data = data;
         //System.out.println(this.old_data);
         //System.out.println(this.old_data.keys());
     }
+    */
     
-    
-    /*
-     * @see event.GlucoValueEventListener#glucoValuesChanged(GlucoValueEvent)
-     */
-    /*
-     * public void glucoValuesChanged(GlucoValueEvent event) { switch
-     * (event.getType()) { case GlucoValueEvent.INSERT:
-     * fireTableRowsInserted(event.getFirstRow(), event.getLastRow()); break;
-     * case GlucoValueEvent.DELETE: fireTableRowsDeleted(event.getFirstRow(),
-     * event.getLastRow()); break; case GlucoValueEvent.UPDATE:
-     * fireTableCellUpdated(event.getFirstRow(), event.getColumn()); break; } }
-     */
-
-    /*
-     * Returns the dayData.
-     * 
-     * @return GlucoValues
-     */
-    /*
-     * public GlucoValues getDayData() { return dayData; }
-     */
 
 }

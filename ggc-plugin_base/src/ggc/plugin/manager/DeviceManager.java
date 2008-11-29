@@ -45,7 +45,7 @@ public abstract class DeviceManager
     protected Hashtable<String,AbstractDeviceCompany> companies_ht = new Hashtable<String,AbstractDeviceCompany>(); 
     protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>(); 
     //protected Vector<? extends DeviceInterface> supported_devices = null; //new Vector<CGMInterface>(); 
-    protected Vector<DeviceInterface> supported_devices = null; //new Vector<CGMInterface>();
+    protected Vector<DeviceInterface> supported_devices = new Vector<DeviceInterface>(); //new Vector<CGMInterface>();
 
     /**
      * Constructor 

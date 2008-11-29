@@ -50,8 +50,8 @@ import com.atech.utils.ATSwingUtils;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      DeviceConfigurationDialog  
+ *  Description:   Configuration dialog for plug-in devices
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -98,7 +98,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         m_da.addComponent(this);
 
         setSize(450,600);
-        setTitle(m_ic.getMessage("DEVICE_CONFIGURATION"));
+        setTitle(String.format(m_ic.getMessage("DEVICE_CONFIGURATION"), m_ic.getMessage("DEVICE_NAME_BIG")));
         m_da.centerJDialog(this, m_da.getCurrentComponentParent());
 
         if (DeviceConfigurationDialog.time_zones_vector==null)
@@ -214,12 +214,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
         JPanel main_panel = ATSwingUtils.getPanel(0,0,450,600, null, null, null); 
 
-        ATSwingUtils.getTitleLabel(m_ic.getMessage("DEVICE_CONFIGURATION"), 0,20, 450, 30, main_panel, ATSwingUtils.FONT_BIG_BOLD); 
+        ATSwingUtils.getTitleLabel(String.format(m_ic.getMessage("DEVICE_CONFIGURATION"), m_ic.getMessage("DEVICE_NAME_BIG")), 0,20, 450, 30, main_panel, ATSwingUtils.FONT_BIG_BOLD); 
 
         // select 
-        JPanel pan_sel = ATSwingUtils.getPanel(20, 75, 410, 60, null, new TitledBorder(m_ic.getMessage("SELECT_X_DEVICE")), main_panel); 
+        JPanel pan_sel = ATSwingUtils.getPanel(20, 75, 410, 60, null, new TitledBorder(String.format(m_ic.getMessage("SELECT_X_DEVICE"), m_ic.getMessage("DEVICE_NAME_BIG"))), main_panel); 
 
-        ATSwingUtils.getLabel(m_ic.getMessage("SELECTED_X_DEVICE") + ":", 25,25, 200, 25, pan_sel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(String.format(m_ic.getMessage("SELECTED_X_DEVICE"), m_ic.getMessage("DEVICE_NAME_BIG")) + ":", 25,25, 200, 25, pan_sel, ATSwingUtils.FONT_NORMAL_BOLD);
 
         cb_entry = ATSwingUtils.getComboBox(getComboEntriesFromConfiguration(), 205, 25, 190, 25, pan_sel, ATSwingUtils.FONT_NORMAL);
         
@@ -231,9 +231,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         cb_entry.addItemListener(this);
 
         // device configuration
-        JPanel pan_meter = ATSwingUtils.getPanel(20, 140, 410, 150, null, new TitledBorder(m_ic.getMessage("DEVICE_CONFIGURATION")), main_panel);
+        JPanel pan_meter = ATSwingUtils.getPanel(20, 140, 410, 150, 
+            null, 
+            new TitledBorder(String.format(m_ic.getMessage("DEVICE_CONFIGURATION"), m_ic.getMessage("DEVICE_NAME_BIG"))), 
+            main_panel);
         
-        ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_CUSTOM_NAME") + ":", 25, 25, 150, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(String.format(m_ic.getMessage("DEVICE_CUSTOM_NAME"), m_ic.getMessage("DEVICE_NAME_BIG")) + ":", 25, 25, 150, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
         this.tf_name = ATSwingUtils.getTextField("", 170, 25, 225, 25, pan_meter);
         
         ATSwingUtils.getLabel(m_ic.getMessage("DEVICE_COMPANY") + ":", 25, 55, 150, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
@@ -292,7 +295,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
         if (this.current_entry==null)
         {
-            this.tf_name.setText("My " + m_ic.getMessage("DEVICE_NAME") + " #1");
+            this.tf_name.setText("My " + m_ic.getMessage("DEVICE_NAME_BIG") + " #1");
         }
         
         getContentPane().add(main_panel, null);

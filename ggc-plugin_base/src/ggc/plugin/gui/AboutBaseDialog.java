@@ -67,8 +67,8 @@ import com.atech.graphics.components.about.LicenceInfo;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AboutBaseDialog  
+ *  Description:  About Dialog for Plug-ins
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -81,6 +81,12 @@ public class AboutBaseDialog extends AboutDialog
     DataAccessPlugInBase m_da;
 
 	
+    /**
+     * Constructor 
+     * 
+     * @param parent
+     * @param da
+     */
     public AboutBaseDialog(JFrame parent, DataAccessPlugInBase da)
     {
         super(parent, true, da.getI18nControlInstance());
@@ -106,7 +112,7 @@ public class AboutBaseDialog extends AboutDialog
         createCustomTab();
 
         // title
-        this.setTitle(m_da.getAboutTitle());
+        this.setTitle(String.format(m_ic.getMessage("DEVICE_PLUGIN_ABOUT"), m_ic.getMessage("DEVICE_NAME_BIG")));
 
         // finalize
         this.createAbout();
@@ -123,7 +129,7 @@ public class AboutBaseDialog extends AboutDialog
     } */
 
 
-    public void createCustomTab()
+    private void createCustomTab()
     {
         AboutCustomPanel acp = new AboutCustomPanel(m_ic);
         acp.setTabName(m_ic.getMessage("ABOUT"));
@@ -153,7 +159,8 @@ public class AboutBaseDialog extends AboutDialog
 
         jEditorPaneAbout.setContentType("text/html");
         jEditorPaneAbout.setText("<HTML><body><font face=\"SansSerif\" size=\"3\"><center><b>" + 
-                                 m_da.getAboutPlugInName() +"</b><br>&nbsp;&nbsp;(c) " + m_da.getAboutPluginCopyright() + "  " +
+                                 String.format(m_ic.getMessage("DEVICE_PLUGIN"), m_ic.getMessage("DEVICE_NAME_BIG")) +
+                                 "</b><br>&nbsp;&nbsp;(c) " + m_da.getAboutPluginCopyright() + "  " +
                                  m_ic.getMessage("GGC_DEVELOPMENT_TEAM")+ "<br>" +
                                  m_ic.getMessage("SEE_CREDITS") + 
                                  "<br><A HREF=\"http://ggc.sourceforge.net/\">http://ggc.sourceforge.net/</A><br>" + 

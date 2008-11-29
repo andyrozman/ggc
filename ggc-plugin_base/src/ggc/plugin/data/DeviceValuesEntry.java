@@ -1,5 +1,8 @@
 package ggc.plugin.data;
 
+import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.plugin.output.OutputWriterData;
+
 import java.util.ArrayList;
 
 
@@ -34,7 +37,7 @@ import java.util.ArrayList;
 //This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
-public abstract class DeviceValuesEntry 
+public abstract class DeviceValuesEntry extends OutputWriterData
 {
 	protected boolean checked = false;
 	protected int status = 1; 
@@ -147,7 +150,7 @@ public abstract class DeviceValuesEntry
 	
 	public abstract void prepareEntry();
 	
-	public abstract ArrayList<Object> getDbObjects();
+	public abstract ArrayList<? extends GGCHibernateObject> getDbObjects();
 	
 	
 	//public void prepareEntry()
