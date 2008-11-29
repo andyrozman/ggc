@@ -141,6 +141,17 @@ public class OneTouchUltraSmart extends OneTouchMeter
     }
 
     /**
+     * getInstructions - get instructions for device
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return "INSTRUCTIONS_LIFESCAN_ON";
+    }
+    
+    
+    /**
      * Maximum of records that device can store
      */
     public int getMaxMemoryRecords()

@@ -1,15 +1,17 @@
 package ggc.meter.data;
 
 import ggc.core.db.hibernate.DayValueH;
-import ggc.meter.gui.MeterDisplayDataDialog;
+import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesTableModel;
+import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.output.OutputUtil;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-
-import javax.swing.table.AbstractTableModel;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,36 +40,38 @@ import javax.swing.table.AbstractTableModel;
  */
 
 
-public class MeterValuesTableModel extends AbstractTableModel 
+public class MeterValuesTableModel extends DeviceValuesTableModel        //extends AbstractTableModel 
 {
 
     private static final long serialVersionUID = 7198690314603156531L;
     private I18nControl m_ic = I18nControl.getInstance();
     // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
 
-    // GlucoValues dayData;
 
-    ArrayList<MeterValuesEntry> dl_data;
-    ArrayList<MeterValuesEntry> displayed_dl_data;
+    //ArrayList<MeterValuesEntry> dl_data;
+    //ArrayList<MeterValuesEntry> displayed_dl_data;
+    //Hashtable<String,DayValueH> old_data = null;
     
-    Hashtable<String,DayValueH> old_data = null;
+    //Hashtable<String,DayValueH> old_data_typed = null;
+    //old_data_typed
+    
 
     // GGCProperties props = GGCProperties.getInstance();
 
-    int current_filter = MeterDisplayDataDialog.FILTER_NEW_CHANGED;
+    int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
 
     // public String status_icon_name
 
     private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
                                      m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
-    public MeterValuesTableModel()
+    public MeterValuesTableModel(DeviceDataHandler ddh)
     {
-        this.displayed_dl_data = new ArrayList<MeterValuesEntry>();
-        this.dl_data = new ArrayList<MeterValuesEntry>();
-        // this.dayData = dayData;
-        fireTableChanged(null);
-        // dayData.addGlucoValueEventListener(this);
+        super(DataAccessMeter.getInstance(), ddh);
+        
+        //this.displayed_dl_data = new ArrayList<MeterValuesEntry>();
+        //this.dl_data = new ArrayList<MeterValuesEntry>();
+        //fireTableChanged(null);
     }
 
     public int getColumnCount()
@@ -105,6 +109,7 @@ public class MeterValuesTableModel extends AbstractTableModel
 
     }
 
+    /*
     public void selectAll()
     {
         setSelectors(true);
@@ -119,13 +124,13 @@ public class MeterValuesTableModel extends AbstractTableModel
     {
         for (int i = 0; i < this.displayed_dl_data.size(); i++)
         {
-            this.displayed_dl_data.get(i).checked = select;
+            this.displayed_dl_data.get(i).setChecked(select);
         }
 
         this.fireTableDataChanged();
     }
-
-    
+*/
+  /*  
     public void setFilter(int filter)
     {
         if (this.current_filter==filter)
@@ -137,7 +142,7 @@ public class MeterValuesTableModel extends AbstractTableModel
         
         for(int i=0; i< this.dl_data.size(); i++)
         {
-            MeterValuesEntry mve = this.dl_data.get(i);
+            MeterValuesEntry mve = (MeterValuesEntry)this.dl_data.get(i);
             
             if (shouldBeDisplayed(mve.getStatus()))
             {
@@ -148,7 +153,7 @@ public class MeterValuesTableModel extends AbstractTableModel
         this.fireTableDataChanged();
         
     }
-    
+    */
     
     
 
@@ -156,27 +161,27 @@ public class MeterValuesTableModel extends AbstractTableModel
     {
         switch (this.current_filter)
         {
-            case MeterDisplayDataDialog.FILTER_ALL:
+            case DeviceDisplayDataDialog.FILTER_ALL:
                 return true;
                 
-            case MeterDisplayDataDialog.FILTER_NEW:
-                return (status == MeterValuesEntry.STATUS_NEW);
+            case DeviceDisplayDataDialog.FILTER_NEW:
+                return (status == DeviceValuesEntry.STATUS_NEW);
     
-            case MeterDisplayDataDialog.FILTER_CHANGED:
-                return (status == MeterValuesEntry.STATUS_CHANGED);
+            case DeviceDisplayDataDialog.FILTER_CHANGED:
+                return (status == DeviceValuesEntry.STATUS_CHANGED);
                 
-            case MeterDisplayDataDialog.FILTER_EXISTING:
-                return (status == MeterValuesEntry.STATUS_OLD);
+            case DeviceDisplayDataDialog.FILTER_EXISTING:
+                return (status == DeviceValuesEntry.STATUS_OLD);
                 
-            case MeterDisplayDataDialog.FILTER_UNKNOWN:
-                return (status == MeterValuesEntry.STATUS_UNKNOWN);
+            case DeviceDisplayDataDialog.FILTER_UNKNOWN:
+                return (status == DeviceValuesEntry.STATUS_UNKNOWN);
                 
-            case MeterDisplayDataDialog.FILTER_NEW_CHANGED:
-                return ((status == MeterValuesEntry.STATUS_NEW) ||
-                        (status == MeterValuesEntry.STATUS_CHANGED));
+            case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
+                return ((status == DeviceValuesEntry.STATUS_NEW) ||
+                        (status == DeviceValuesEntry.STATUS_CHANGED));
                 
-            case MeterDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
-                return (status != MeterValuesEntry.STATUS_OLD);
+            case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
+                return (status != DeviceValuesEntry.STATUS_OLD);
         }
         return false;
 
@@ -189,12 +194,12 @@ public class MeterValuesTableModel extends AbstractTableModel
 
     public Object getValueAt(int row, int column)
     {
-        MeterValuesEntry mve = this.displayed_dl_data.get(row);
+        MeterValuesEntry mve = (MeterValuesEntry)this.displayed_dl_data.get(row);
 
         switch (column)
         {
         case 0:
-            return mve.getDateTime().getDateTimeString();
+            return mve.getDateTimeObject().getDateTimeString();
 
         case 1:
             return mve.getBGValue(DataAccessMeter.BG_MMOL);
@@ -206,23 +211,20 @@ public class MeterValuesTableModel extends AbstractTableModel
             return new Integer(mve.getStatus());
 
         case 4:
-            return new Boolean(mve.getCheched());
+            return new Boolean(mve.getChecked());
 
         default:
             return "";
         }
 
-        // Object o = dayData.getValueAt(row, column);
-        /*
-         * if (o != null && column == 0) { SimpleDateFormat sdf = new
-         * SimpleDateFormat("dd.MM.yyyy HH:mm"); return sdf.format(o); }
-         * 
-         * return o;
-         */
+        
     }
 
-    public void addEntry(MeterValuesEntry mve)
+/*    
+    public void addEntry(DeviceValuesEntry dve)
     {
+        MeterValuesEntry mve = (MeterValuesEntry)dve; 
+        
         processMeterValuesEntry(mve);
         this.dl_data.add(mve);
         
@@ -232,47 +234,49 @@ public class MeterValuesTableModel extends AbstractTableModel
         }
         this.fireTableDataChanged();
     }
-
+*/
     
-    public void processMeterValuesEntry(MeterValuesEntry mve)
+    public void processDeviceValueEntry(DeviceValuesEntry mve)
     {
         //System.out.println("processMeterValuesEntry");
-        if (old_data!=null)
+        if (this.m_ddh.hasOldData())
         {
             //System.out.println("oldData != null");
-            long dt = mve.getDateTime().getATDateTimeAsLong();
+            long dt = mve.getDateTime(); //.getATDateTimeAsLong();
             
             //System.out.println("Dt='" + dt + "'");
             
             //System.out.println("Found: " + old_data.containsKey("" + dt));
             
             
-            if (!old_data.containsKey("" + dt))
+            if (!this.m_ddh.getOldData().containsKey("" + dt))
             {
             //    System.out.println("not Contains");
-                mve.status = MeterValuesEntry.STATUS_NEW;
+                mve.setStatus(DeviceValuesEntry.STATUS_NEW);
                 mve.object_status = MeterValuesEntry.OBJECT_STATUS_NEW;
             }
             else
             {
                 
+                MeterValuesEntry mve2 = (MeterValuesEntry)mve; 
+                
              //   System.out.println("Found !!!");
                 
-                DayValueH gvh = old_data.get("" + dt);
+                DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" + dt);
                   
-                int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
+                int vl = Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));
                 
                 //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
                 if (gvh.getBg()==vl)
                 {
-                    mve.status = MeterValuesEntry.STATUS_OLD;
-                    mve.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;
+                    mve2.setStatus(MeterValuesEntry.STATUS_OLD);
+                    mve2.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;
                 }
                 else
                 {
-                    mve.status = MeterValuesEntry.STATUS_CHANGED;
-                    mve.object_status = MeterValuesEntry.OBJECT_STATUS_EDIT;
-                    mve.entry_object = gvh;
+                    mve2.setStatus(MeterValuesEntry.STATUS_CHANGED);
+                    mve2.object_status = MeterValuesEntry.OBJECT_STATUS_EDIT;
+                    mve2.entry_object = gvh;
                     
                     //System.out.println("Changed: " + gvh.getId());
                     
@@ -284,12 +288,11 @@ public class MeterValuesTableModel extends AbstractTableModel
         else
         {
             System.out.println("oldData == null");
-
-            mve.status = MeterValuesEntry.STATUS_NEW;
+            mve.setStatus(MeterValuesEntry.STATUS_NEW);
         }
     }
     
-    
+    /*
     public Hashtable<String,ArrayList<DayValueH>> getCheckedEntries()
     {
         
@@ -320,7 +323,7 @@ public class MeterValuesTableModel extends AbstractTableModel
         
         return ht;
     }
-    
+    */
     
     @Override
     public String getColumnName(int column)
@@ -352,40 +355,35 @@ public class MeterValuesTableModel extends AbstractTableModel
     public void setValueAt(Object aValue, int row, int column)
     {
         Boolean b = (Boolean) aValue;
-        this.displayed_dl_data.get(row).checked = b.booleanValue();
+        this.displayed_dl_data.get(row).setChecked(b.booleanValue());
         // System.out.println("set Value: rw=" + row + ",column=" + column +
         // ",value=" + aValue);
         // dayData.setValueAt(aValue, row, column);
         // fireTableChanged(null);
     }
 
-    public void setOldValues(Hashtable<String,DayValueH> data)
-    {
-        this.old_data = data;
-        //System.out.println(this.old_data);
-        //System.out.println(this.old_data.keys());
-    }
-    
-    
-    /*
-     * @see event.GlucoValueEventListener#glucoValuesChanged(GlucoValueEvent)
-     */
-    /*
-     * public void glucoValuesChanged(GlucoValueEvent event) { switch
-     * (event.getType()) { case GlucoValueEvent.INSERT:
-     * fireTableRowsInserted(event.getFirstRow(), event.getLastRow()); break;
-     * case GlucoValueEvent.DELETE: fireTableRowsDeleted(event.getFirstRow(),
-     * event.getLastRow()); break; case GlucoValueEvent.UPDATE:
-     * fireTableCellUpdated(event.getFirstRow(), event.getColumn()); break; } }
-     */
 
-    /*
-     * Returns the dayData.
-     * 
-     * @return GlucoValues
-     */
-    /*
-     * public GlucoValues getDayData() { return dayData; }
-     */
+    @Override
+    public void addToArray(ArrayList<?> lst, ArrayList<?> source)
+    {
+        if ((source==null) || (source.size()==0))
+            return;
+        
+        ArrayList<DayValueH> lst2 = (ArrayList<DayValueH>)lst;
+        ArrayList<DayValueH> src2 = (ArrayList<DayValueH>)source;
+        
+        for(int i=0; i<source.size(); i++)
+        {
+            lst2.add(src2.get(i));
+        }
+    }
+
+    @Override
+    public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
+    {
+        return new ArrayList<DayValueH>();
+    }
+
+  
 
 }

@@ -5,6 +5,7 @@ import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPortEvent;
@@ -112,6 +113,10 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     String meter_group = null;
     String meter_device = null;
 
+    public void dispose()
+    {
+        this.close();
+    }
 
     /**
      * Set meter type
@@ -251,6 +256,14 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         }
     }
 
+    
+    protected void deviceDisconnected()
+    {
+        this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+        this.output_writer.endOutput();
+    }
+    
+    
 
     // ************************************************
     // *** Process Meter Data ***

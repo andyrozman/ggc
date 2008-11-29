@@ -310,7 +310,7 @@ public class MeterConsoleTesterAlex //extends JFrame
         
         OneTouchUltraEasy otu = new OneTouchUltraEasy(portName, cow);
         otu.readDeviceDataFull();
-        otu.test_crc();
+        //otu.test_crc();
 
     }
     

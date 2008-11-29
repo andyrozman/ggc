@@ -17,7 +17,7 @@ import com.atech.utils.TimerThread;
  *  Plug-in:       Meter Tool (support for Meter devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *  <pre>
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
@@ -31,7 +31,7 @@ import com.atech.utils.TimerThread;
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *  </pre>
  *  Filename:     MeterConsoleTester  
  *  Description:  Console tester for testing meter implementations.
  * 
@@ -54,9 +54,11 @@ public class MeterConsoleTester
     	
     	TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
     	
+    	
 		tzu.setTimeZone("Europe/Prague");
 		tzu.setWinterTimeChange(0);
-		tzu.setSummerTimeChange(+1);
+		//tzu.setSummerTimeChange(+1);
+		tzu.setSummerTimeChange(0);
     	
         
 		//thread = new TimerThread();
@@ -96,113 +98,6 @@ public class MeterConsoleTester
     	    ex.printStackTrace();
     	} 
 
-/*
-        //MeterImportManager mim = new MeterImportManager();
-
-        if (mim.getErrorCode()!=0)
-        {
-            System.exit(1);
-        }
-*/
-
-
-/*
-
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        JDialog.setDefaultLookAndFeelDecorated(true);
-
-        enableEvents(AWTEvent.WINDOW_EVENT_MASK);
-
-        this.getContentPane().setLayout(null);
-        this.setSize(640, 480);
-        this.setTitle("Meter Tester - v0.1");
-        this.setResizable(true);
-        
-        JPanel fullPanel = new JPanel();
-        fullPanel.setLayout(null);
-        fullPanel.setBounds(0,0,640,480);
-        this.getContentPane().add(fullPanel);
-
-
-        JLabel label = new JLabel("String to Send:");
-        label.setBounds(30, 10, 100, 25);
-
-        fullPanel.add(label);
-
-
-
-        textField  = new JTextField();
-        textField.setBounds(30, 35, 360, 25);
-        fullPanel.add(textField);
-
-        sendButton = new JButton("Send");
-        sendButton.setBounds(405, 35, 65, 25);
-        //sendButton.setEnabled(false);
-        sendButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e) 
-                {
-                    readyToWrite(textField.getText()+"\n");
-                    messageArea.append("--> "+textField.getText()+"\n");
-                }
-            });
-        fullPanel.add(sendButton);
-
-
-        enterButton = new JButton("Test");
-        enterButton.setBounds(480, 35, 120, 25);
-        //enterButton.setEnabled(false);
-        enterButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e) 
-                {
-                    //readyToWrite("\n");
-                    //messageArea.append("--> <Enter> sent.\n");
-		    //m_meter.test2();
-		    try
-		    {
-			m_meter.loadInitialData();
-
-			System.out.println("Info: \n" + m_meter.getInfo());
-			System.out.println("Time Difference: \n" + m_meter.getTimeDifference());
-
-			//m_meter.getDataFull();
-		    }
-		    catch(Exception ex)
-		    {
-			System.out.println("Exception: " + ex);
-		    }
-
-		    m_meter.getInfo();
-		    m_meter.getTimeDifference();
-                }
-            });
-        fullPanel.add(enterButton);
-
-
-        label = new JLabel("Communication window:");
-        label.setBounds(30, 70, 200, 25);
-        fullPanel.add(label);
-
-
-        clearButton = new JButton("Clear");
-        clearButton.setBounds(535, 73, 65, 20);
-        clearButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e) 
-                {
-                    messageArea.setText("");
-                }
-            });
-        fullPanel.add(clearButton);
-
-
-        messageArea = new TextArea();
-        messageArea.setBounds(30, 95, 570, 300);
-        fullPanel.add(messageArea, null);
-
-	this.setVisible(true);
-	*/
     }
 
 
@@ -295,8 +190,6 @@ public class MeterConsoleTester
         
         OneTouchUltraEasy otu = new OneTouchUltraEasy(portName, cow);
         otu.readDeviceDataFull();
-        otu.test_crc();
-
     }
     
 
@@ -330,7 +223,7 @@ public class MeterConsoleTester
 	{
 	    
 	    if (args.length == 0)
-	        new MeterConsoleTester("COM5");
+	        new MeterConsoleTester("/dev/ttyUSB0"); //COM5");
 	    else
 	        new MeterConsoleTester(args[0]);
 

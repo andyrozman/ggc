@@ -118,6 +118,17 @@ public class OneTouchII extends OneTouchMeter
         return "ls_ot_2.jpg";
     }
 
+    
+    /**
+     * getInstructions - get instructions for device
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return "INSTRUCTIONS_LIFESCAN_ON";
+    }
+    
 
     /**
      * Maximum of records that device can store

@@ -1,10 +1,11 @@
 package ggc.meter.plugin;
 
-import ggc.meter.gui.MeterInstructionsDialog;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
+import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
 
 import java.awt.Container;
@@ -12,7 +13,6 @@ import java.awt.Container;
 import javax.swing.JFrame;
 
 import com.atech.db.DbDataReaderAbstract;
-import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 
 /**
@@ -42,7 +42,7 @@ import com.atech.utils.ATDataAccessAbstract;
  */
 
 
-public class MeterPlugInServer extends PlugInServer
+public class MeterPlugInServer extends DevicePlugInServer
 {
     
     /**
@@ -113,7 +113,8 @@ public class MeterPlugInServer extends PlugInServer
             case MeterPlugInServer.COMMAND_READ_METER_DATA:
                 {
                     DbDataReaderAbstract reader = (DbDataReaderAbstract)obj_data; 
-                    new MeterInstructionsDialog(reader, this);
+                    //new MeterInstructionsDialog(reader, this);
+                    new DeviceInstructionsDialog(DataAccessMeter.getInstance(), reader, this);
                     return;
                 }
 
@@ -192,6 +193,7 @@ public class MeterPlugInServer extends PlugInServer
         ic = m_da.getI18nControlInstance();
         I18nControl.getInstance().setLanguage(this.selected_lang);
         DataAccessMeter.getInstance().addComponent(this.parent);
+        DataAccessMeter.getInstance().setHelpContext(m_da.getHelpContext());
     }
     
 }

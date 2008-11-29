@@ -122,6 +122,17 @@ public class OneTouchSelect extends OneTouchMeter
         return null;
     }
 
+    
+    /**
+     * getInstructions - get instructions for device
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return "INSTRUCTIONS_LIFESCAN_OFF";
+    }
+    
 
     /**
      * Maximum of records that device can store

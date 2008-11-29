@@ -18,6 +18,7 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 
 import com.atech.utils.ATechDate;
+import com.atech.utils.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -116,6 +117,8 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     
     private int bg_unit = OutputUtil.BG_MGDL;
 
+    protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+    
     
     /**
      * Constructor
@@ -304,7 +307,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
         
         MeterValuesEntry mve = new MeterValuesEntry();
         //ATechDate at = null;
-        mve.setDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm"))));
+        mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")))));
         mve.setBgUnit(this.bg_unit);
         mve.setBgValue(el.attributeValue("Val"));
         

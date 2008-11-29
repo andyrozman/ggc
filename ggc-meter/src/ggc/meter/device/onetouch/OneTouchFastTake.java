@@ -120,7 +120,18 @@ public class OneTouchFastTake extends OneTouchMeter
         return "ls_ot_fasttake.jpg";
     }
 
+    
+    /**
+     * getInstructions - get instructions for device
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return "INSTRUCTIONS_LIFESCAN_OFF";
+    }
 
+    
     /**
      * Maximum of records that device can store
      */

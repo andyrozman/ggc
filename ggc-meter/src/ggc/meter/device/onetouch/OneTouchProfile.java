@@ -118,6 +118,17 @@ public class OneTouchProfile extends OneTouchMeter
         return "ls_ot_profile.jpg";
     }
 
+    
+    /**
+     * getInstructions - get instructions for device
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return "INSTRUCTIONS_LIFESCAN_ON";
+    }
+    
 
     /**
      * Maximum of records that device can store

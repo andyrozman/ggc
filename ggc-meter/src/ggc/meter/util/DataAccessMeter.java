@@ -1,34 +1,6 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DataAccessMeter
- *  Purpose:  Used for utility works and static data handling (this is singelton
- *      class which holds all our definitions, so that we don't need to create them
- *      again for each class.      
- *
- *  Author:   andyrozman
- */
-
 package ggc.meter.util;
 
+import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
 import ggc.meter.manager.MeterManager;
 import ggc.plugin.cfg.DeviceConfiguration;
@@ -66,8 +38,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DataAccessMeter  
+ *  Description:  Static data class used by Meter Plugin.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -109,6 +81,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
     	super(I18nControl.getInstance());
         this.m_main = frame;
+        initSpecial();
     } 
 
     
@@ -117,11 +90,16 @@ public class DataAccessMeter extends DataAccessPlugInBase
      */
     public void initSpecial()
     {
+        System.out.println("init special");
         checkPrerequisites();
         createWebListerContext();
         createPlugInAboutContext();
         createConfigurationContext();
         createPlugInVersion();
+        loadDeviceDataHandler();
+        loadManager();
+        loadReadingStatuses();
+        createPlugInDataRetrievalContext();
     }
     
     
@@ -183,11 +161,11 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         I18nControlAbstract ic = getI18nControlInstance();
         
-        about_title = ic.getMessage("METER_PLUGIN_ABOUT");
+        //about_title = ic.getMessage("METER_PLUGIN_ABOUT");
         about_image_name = "/icons/about_meter.jpg";
 //        about_image_name = "/icons/about_logo.gif";
         about_plugin_copyright_from = 2006;
-        about_plugin_name = ic.getMessage("METER_PLUGIN");
+        //about_plugin_name = ic.getMessage("METER_PLUGIN");
         
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
         lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
@@ -292,7 +270,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         weblister_items.add(new BaseListEntry("U.S. Diagnostics", "/meters/us_diagnostics.html", 5));
         weblister_items.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
         
-        weblister_title = ic.getMessage("METERS_LIST_WEB");
+        //weblister_title = ic.getMessage("METERS_LIST_WEB");
         weblister_desc = ic.getMessage("METERS_LIST_WEB_DESC");
     }
         
@@ -373,6 +351,61 @@ public class DataAccessMeter extends DataAccessPlugInBase
     public void createDeviceConfiguration()
     {
         this.device_config = new DeviceConfiguration(this);
+    }
+
+
+    
+    
+    
+    /**
+     * Create Data Retrieval Context for Plug-in
+     * 
+     * @see ggc.plugin.util.DataAccessPlugInBase#createPlugInDataRetrievalContext()
+     */
+    @Override
+    public void createPlugInDataRetrievalContext()
+    {
+        entry_statuses = new String[4];
+        entry_statuses[0] = m_i18n.getMessage("UNKNOWN");
+        entry_statuses[1] = m_i18n.getMessage("NEW");
+        entry_statuses[2] = m_i18n.getMessage("CHANGED");
+        entry_statuses[3] = m_i18n.getMessage("OLD");
+    }
+
+
+    /**
+     * Load Device Manager
+     * 
+     * @see ggc.plugin.util.DataAccessPlugInBase#loadManager()
+     */
+    @Override
+    public void loadManager()
+    {
+        this.m_manager = MeterManager.getInstance();
+    }
+
+
+    /**
+     * Load Device Data Handler
+     * 
+     * @see ggc.plugin.util.DataAccessPlugInBase#loadDeviceDataHandler()
+     */
+    @Override
+    public void loadDeviceDataHandler()
+    {
+        this.m_ddh = new MeterDataHandler(this);
+    }
+
+
+    /**
+     * Get Images for Devices
+     * 
+     * @see ggc.plugin.util.DataAccessPlugInBase#getDeviceImagesRoot()
+     */
+    @Override
+    public String getDeviceImagesRoot()
+    {
+        return "/icons/meters/";
     }
     
 

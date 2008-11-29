@@ -131,6 +131,9 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }*/
     
     
+    public void dispose()
+    {
+    }
     
     
     

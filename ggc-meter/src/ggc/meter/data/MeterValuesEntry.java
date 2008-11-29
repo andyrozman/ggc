@@ -1,12 +1,14 @@
 package ggc.meter.data;
 
 import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriterData;
 import ggc.plugin.output.OutputWriterType;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import com.atech.utils.ATechDate;
@@ -39,16 +41,16 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class MeterValuesEntry extends OutputWriterData
+public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterData
 {
 	DataAccessMeter da = DataAccessMeter.getInstance();
 	public ATechDate datetime;
 	public String bg_str;
 	public int bg_unit;
-	public boolean checked = false;
+	//public boolean checked = false;
 	//public
 	public Hashtable<String,String> params;
-	public int status = 1; //MeterValuesEntry.
+	//public int status = 1; //MeterValuesEntry.
 	public static I18nControl ic = I18nControl.getInstance(); 
 	
 	public String bg_original = null;
@@ -70,38 +72,38 @@ public class MeterValuesEntry extends OutputWriterData
     
     public DayValueH entry_object = null;
     
-	public static String entry_statuses[] = 
-	{
-	     MeterValuesEntry.ic.getMessage("UNKNOWN"),
-         MeterValuesEntry.ic.getMessage("NEW"),
-         MeterValuesEntry.ic.getMessage("CHANGED"),
-         MeterValuesEntry.ic.getMessage("OLD")
-	};
-	
+	/*
     public static String entry_status_icons[] = 
     {
          "led_gray.gif",
          "led_green.gif",
          "led_yellow.gif",
          "led_red.gif"
-    };
+    };*/
 	
 	
 	public MeterValuesEntry()
 	{
+	    super();
 	}
 	
 	
 	
-	public void setDateTime(ATechDate dt)
+	public void setDateTimeObject(ATechDate dt)
 	{
 		this.datetime = dt;
 	}
 	
-	public ATechDate getDateTime()
+	public ATechDate getDateTimeObject()
 	{
 		return this.datetime;
 	}
+	
+
+    public long getDateTime()
+    {
+        return this.datetime.getATDateTimeAsLong();
+    }
 	
 	
 	public void addParameter(String key, String value)
@@ -129,12 +131,13 @@ public class MeterValuesEntry extends OutputWriterData
 		return this.bg_unit;
 	}
 	
-	
+	/*
 	public boolean getCheched()
 	{
 	    return this.checked;
-	}
+	}*/
 
+	
 	public int getStatus()
 	{
 	    return this.status;
@@ -224,7 +227,7 @@ public class MeterValuesEntry extends OutputWriterData
             this.entry_object.setIns2(0);
             this.entry_object.setCh(0.0f);
             this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setDt_info(this.getDateTime().getATDateTimeAsLong());
+	        this.entry_object.setDt_info(this.getDateTime());
             this.entry_object.setChanged(System.currentTimeMillis());
             this.entry_object.setComment(createComment());
 	    }
@@ -270,7 +273,7 @@ public class MeterValuesEntry extends OutputWriterData
                 
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                return this.getDateTime().getDateTimeString() + " = " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
+                return this.getDateTimeObject().getDateTimeString() + " = " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
                 
             case OutputWriterType.GGC_FILE_EXPORT:
             {
@@ -302,7 +305,7 @@ public class MeterValuesEntry extends OutputWriterData
                 else
                     System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
                 */
-                return "0|" + this.getDateTime().getATDateTimeAsLong() + "|" + val + 
+                return "0|" + this.getDateTime() + "|" + val + 
                             "|0.0|0.0|0.0|null|null|1|MTI;" + parameters + "|" + System.currentTimeMillis();
                 
             }
@@ -328,6 +331,37 @@ public class MeterValuesEntry extends OutputWriterData
     public void setOutputType(int type)
     {
         this.output_type = type;
+    }
+
+
+
+    @Override
+    public Object getColumnValue(int index)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+    @Override
+    public int getDateTimeFormat()
+    {
+        return ATechDate.FORMAT_DATE_AND_TIME_MIN;
+    }
+
+
+
+    @Override
+    public ArrayList<? extends GGCHibernateObject> getDbObjects()
+    {
+        prepareEntry();
+        ArrayList<DayValueH> lst = new ArrayList<DayValueH>();
+        
+        if (this.entry_object!=null)
+            lst.add(this.entry_object);
+        
+        return lst;
     }
     
 	

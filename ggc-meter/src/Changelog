@@ -2,6 +2,10 @@
 Changes file for GGC Meter Tool
 ===============================
 
+1.0.2
+    * Support for OT Mini/Easy done
+    * Moved GUI to PlugInBase
+
 1.0.1 
     * Meter Tool is now complete, at least all functionalities that were planned, which is reason why we progressed
       version to 1.x. There is a lot of stuff done, but some stuff still needs to be done (configured and some

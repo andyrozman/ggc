@@ -6,6 +6,7 @@ import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
@@ -172,7 +173,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
         
         // set meter type (this will be deprecated in future, but it's needed for now
-        this.setMeterType("OneTouch", this.getName());
+        this.setMeterType("LifeScan", this.getName());
 
         // set device company (needed for now, will also be deprecated)
         this.setDeviceCompany(new LifeScan());
@@ -186,6 +187,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             if (!this.open())
             {
                 this.m_status = 1;
+                this.deviceDisconnected();
+                return;
             }
 
             this.output_writer.writeHeader();
@@ -217,7 +220,6 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      */
     public String getComment()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -228,17 +230,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      */
     public int getImplementationStatus()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
 
-    // DO
     /** 
      * getInstructions
      */
     public String getInstructions()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -251,13 +250,6 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     public void readDeviceDataFull()
     {
         
-        System.out.println("loadInitionalData");
-
-        //waitTime(5000);
-        
-        //this.output_writer.
-        
-        
         try
         {
             
@@ -266,20 +258,20 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             write("M".getBytes());
             waitTime(100);
             write("?".getBytes());
-            waitTime(500);
+            waitTime(100);
             
             String line;
 
-            System.out.println("Serial Number: " + this.readLine());
-            System.out.println("Serial Number: " + this.readLine());
+            //System.out.println("Serial Number: " + this.readLine());
+            //System.out.println("Serial Number: " + this.readLine());
             
             
             while((line=this.readLine())==null)
             {
-                
+                System.out.println("Serial Number1: " + line);
             }
             
-            System.out.println("Serial Number: " + line);
+            System.out.println("Serial Number2: " + line);
             //System.out.println("Serial Number: " + this.readLine());
             //System.out.println("Serial Number: " + this.readLine());
             
@@ -291,57 +283,20 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             write("P".getBytes());
             waitTime(100);
             
-            //write("DM?".getBytes());
-            
-            //write("DMP".getBytes());
-            
-/*
-            this.device_running = true;
-            
-            */
-            /*
-            write(5);  // ENQ
-            waitTime(1000); 
-            write(6);  // ACK
-  */
-            //String line;
-
-            System.out.println("loadInitialData()::");
          
-            //powerOn();
-            /* Z
-            int ch;
-            boolean running = true;
-            while(running)
-            {
-                ch = this.read();
-                System.out.print((char)ch + " int: " + ch);
-            }
-            /*
-            while ((ch = this.read()) != -1) && (!isDeviceStopped(line)))
-            {
-                System.out.print((char)ch);
-            }*/
-//            String line="";
-            
-            System.out.println("Out");
-            //String line;    
-            
-            //while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
             while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
             {
                 processEntry(line);
-                //System.out.println("D: " + line);
-                //processData(line.trim());
-                //sendToProcess(line);
-                //write(6);
                 
-                System.out.println(this.entries_current + "/" + this.entries_max  );
+                //System.out.println(this.entries_current + "/" + this.entries_max  );
                 
                 if (line==null)
                     break;
                 
             }
+            
+            this.output_writer.setSpecialProgress(100);
+            this.output_writer.setSubStatus(null);
         
         }
         catch(Exception ex)
@@ -425,7 +380,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         
         StringTokenizer strtok = new StringTokenizer(entry, ",");
         
-        System.out.println("tokens: " + strtok.countTokens());
+        //System.out.println("tokens: " + strtok.countTokens());
         
         if (strtok.countTokens()==this.info_tokens) // we can have different info tokens for different meters
         {
@@ -462,9 +417,12 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     
     private void readInfo(StringTokenizer strtok)
     {
-/*        P nnn,“ MeterSN ”,“MG/DL ”
+        this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
+
+        
+/*        P nnn, MeterSN ,MG/DL 
         (1) (2) (3)
-        (1) Number of datalog records to follow (0 – 150)
+        (1) Number of datalog records to follow (0  150)
         (2) Meter serial number (9 characters)
         (3) Unit of measure for glucose values */
         
@@ -478,13 +436,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         
         String dev = strtok.nextToken(); // 2. token: device id
         
-        DeviceIdentification di = new DeviceIdentification(ic);
+        DeviceIdentification di = this.output_writer.getDeviceIdentification();
         di.device_serial_number = dev;
-        di.company = "OneTouch";
-        di.device_selected = "Ultra";
+        //di.company = "OneTouch";
+        //di.device_selected = "Ultra";
         
         this.output_writer.setDeviceIdentification(di);
         this.output_writer.writeDeviceIdentification();
+        this.output_writer.setSpecialProgress(2);
 
         
         if (this.getDeviceId()!=OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA)
@@ -503,6 +462,9 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         
         
         reading_status = 1;
+        
+        this.output_writer.setSpecialProgress(4);
+        
     }
 
     
@@ -521,17 +483,17 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         {
             System.out.println("BG: " + entry);
             /*
-            P “dow”,“mm/dd/yy”,“hh:mm:30 ”,“xxxxx ”, n cksm<CR><LF>
+            P "dow","mm/dd/yy","hh:mm:30 ","xxxxx ", n cksm<CR><LF>
             (4) (5) (6) (7)
             (4) Day of week (SUN, MON, TUE, WED, THU, FRI, SAT)
             (5) Date of reading
             (6) Time of reading (If two or more readings were taken within the same minute, they will be
             separated by 8 second intervals)
             (7) Result format:
-            “ nnn ” - blood test result (mg/dL)
-            “ HIGH ” - blood test result >600 mg/dL
-            “C nnn ” - control solution test result (mg/dL)
-            “CHIGH ” - control solution test result >600 mg/dL
+            " nnn " - blood test result (mg/dL)
+            " HIGH " - blood test result >600 mg/dL
+            "C nnn " - control solution test result (mg/dL)
+            "CHIGH " - control solution test result >600 mg/dL
             
             
             (12) Result format: (Profile) 
@@ -568,6 +530,10 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             
             String res = this.getParameterValue(strtok.nextToken());
             
+            
+            this.output_writer.setSubStatus(ic.getMessage("READING_PROCESSING_ENTRY") + (this.entries_current+1));
+
+            
             //if ((res.contains("CHIGH")) || (res.contains("C ")))
             if ((res.startsWith("C")) ||  // control solution
                 (res.startsWith("!")) ||  // check strip
@@ -582,7 +548,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
             	MeterValuesEntry mve = new MeterValuesEntry();
                 mve.setBgUnit(DataAccessMeter.BG_MGDL);
-                mve.setDateTime(getDateTime(date, time));
+                mve.setDateTimeObject(getDateTime(date, time));
                 
                 
                 if (res.contains("HIGH"))
@@ -616,6 +582,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                 }
                 
                 this.output_writer.writeData(mve);
+                readingEntryStatus();
             }
         }
         catch(Exception ex)
@@ -630,7 +597,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     
     private ATechDate getDateTime(String date, String time)
     {
-        // “mm/dd/yy”,“hh:mm:30 ”
+        // "mm/dd/yy","hh:mm:30 "
         
         date = this.getParameterValue(date); 
         time = this.getParameterValue(time); 
@@ -734,6 +701,28 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     
     //private void 
+    
+    private void readingEntryStatus()
+    {
+        float proc_read = ((this.entries_current*1.0f)  / this.entries_max);
+        
+        float proc_total = 4 + (96 * proc_read);
+        
+        //System.out.println("proc_read: " + proc_read + ", proc_total: " + proc_total);
+        
+        this.output_writer.setSpecialProgress((int)proc_total); //.setSubStatus(sub_status)
+    }
+    
+    
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
+    public boolean hasSpecialProgressStatus()
+    {
+        return true;
+    }    
     
     
     

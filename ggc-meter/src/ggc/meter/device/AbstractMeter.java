@@ -65,6 +65,9 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     boolean can_read_device_configuration = false;
     
     
+    public void dispose()
+    {
+    }
     
     
     

@@ -88,6 +88,16 @@ public class MeterConfigurationDefinition implements DeviceConfigurationDefiniti
     {
         return MeterManager.getInstance().getSupportedDevices();
     }
+
+    /**
+     * Returns prefix for help context
+     * 
+     * @return help context prefix
+     */
+    public String getHelpPrefix()
+    {
+        return "pages.MeterTool_";
+    }
     
 
 }

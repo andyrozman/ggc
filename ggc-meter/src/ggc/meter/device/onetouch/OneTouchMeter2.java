@@ -4,17 +4,20 @@ import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.GregorianCalendar;
+import java.util.SimpleTimeZone;
 
 import com.atech.utils.ATechDate;
 import com.atech.utils.HexUtils;
@@ -50,23 +53,12 @@ import com.atech.utils.TimeZoneUtil;
 public abstract class OneTouchMeter2 extends AbstractSerialMeter
 {
     
-    
-    
-    
-    
     protected boolean device_running = true;
-    protected ArrayList<MeterValuesEntry> data = null;
-//    protected OutputWriter m_output_writer;
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
-    //public int meter_type = 20000;
     private int entries_max = 0;
     private int entries_current = 0;
     private int reading_status = 0;
-    
-    @SuppressWarnings("unused")
-    private int info_tokens;
-    private String date_order;
-    
+    SimpleTimeZone empty_tzi;
     
     
     /**
@@ -97,6 +89,18 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     public OneTouchMeter2(String portName, OutputWriter writer)
     {
         super(DataAccessMeter.getInstance());
+
+    	empty_tzi = new SimpleTimeZone(0,
+				"Europe/Empty",
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0);		
+        
         
         this.setCommunicationSettings( 
                   9600,
@@ -111,7 +115,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
         
         // set meter type (this will be deprecated in future, but it's needed for now
-        this.setMeterType("OneTouch", this.getName());
+        this.setMeterType("LifeScan", this.getName());
 
         // set device company (needed for now, will also be deprecated)
         this.setDeviceCompany(new LifeScan());
@@ -125,6 +129,8 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
             if (!this.open())
             {
                 this.m_status = 1;
+                deviceDisconnected();
+                return;
             }
 
             this.output_writer.writeHeader();
@@ -132,54 +138,43 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         }
         catch(Exception ex)
         {
-            System.out.println("OneTouchMeter -> Error adding listener: " + ex);
+            System.out.println("OneTouchMeter2 -> Exception: " + ex);
             ex.printStackTrace();
         }
         
-        if (this.getDeviceId()==OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA)
-        {
-            this.info_tokens = 3;
-            this.date_order = "MDY";
-        }
-        else
-        {
-            this.info_tokens = 8;
-        }
         
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param n
+     */
+    public OneTouchMeter2(boolean n)
+    {
+    	
+    }
+    
 
     
-    // DO
     /** 
      * getComment
      */
     public String getComment()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
-    // DO
     /** 
      * getImplementationStatus
      */
     public int getImplementationStatus()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
 
-    // DO
-    /** 
-     * getInstructions
-     */
-    public String getInstructions()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 
     HexUtils hex_utils = new HexUtils();
@@ -197,114 +192,61 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     public void readDeviceDataFull()
     {
         
-        System.out.println("loadInitionalData");
-
-        //waitTime(5000);
-        
-        //this.output_writer.
-        
+        this.output_writer.setBGOutputType(OutputUtil.BG_MMOL);
         
         try
         {
-            HexUtils hu = new HexUtils();
-
-            //String ret;
             byte[] reta;
-            
             
             cmdDisconnectAcknowledge();
             
-
+            this.output_writer.setSpecialProgress(1);
             
-            
-            // read sw version and sw creation date
-            System.out.println("PC-> read sw version and sw creation date");
-            String read_sw_ver_create = "02" + "09" + "00" + 
-                                        "05" + "0D" + "02" +
-                                        "03" + "DA" + "71";
-            
-            write(hu.reconvert(read_sw_ver_create));
-            
-            //reta = this.readLineBytes();
-            
-            
-            //System.out.println("Acknowledge Meter: " + this.readLine());
-            String sw_dd = tryToConvert(this.readLineBytes(), 6+6, 3, false);
-
-            int idx = sw_dd.indexOf("/") -2;
-            
-            
-            System.out.println("Sw Ver: " + sw_dd.substring(0, idx ) + " date: " + sw_dd.substring(idx));
-            
-            
-            //System.out.println("Value Meter: " + this.readLine());
-
-
-            System.out.println("PC-> Acknowledge");
-            
-            write(hu.reconvert(ack_pc));
-
-            
-            // read serial number
-            System.out.println("PC-> read serial nr");
-
-            String read_serial_nr = "02" + "12" + "00" + "05" + // STX Len Link
-            "0B" + "02" + "00" + "00" + "00" + "00" + "84" + "6A" + "E8" + "73" + "00" +  // CM1-CM12
-            "03" + "9B" + "EA"; // ETX CRC-L CRC-H
-            
-            write(hu.reconvert(read_serial_nr));
-            
-            String sn = tryToConvert(this.readLineBytes(), 6+5, 3, false);
-            
-            System.out.println("S/N: " + sn);
-            
-            System.out.println("PC-> Acknowledge");
-            write(hu.reconvert(ack_pc));
+            if (!readDeviceInfo())
+            {
+                deviceDisconnected();
+                return;
+            }
             
             
             // read entry 501 to return count
-            
+            this.output_writer.setSubStatus(ic.getMessage("READING_DATA_COUNTER"));
             
             System.out.println("PC-> read record 501 to receive nr");
             
-            write(hu.reconvert(rec_bef + "F5" + "01" + rec_af));
-            
-            //ret = this.readLine();
+            write(hex_utils.reconvert(rec_bef + "F5" + "01" + rec_af));
             
             reta = this.readLineBytes();
-            
-            @SuppressWarnings("unused")
-            String els = tryToConvert(reta, 6+5, 3, true);
-            
             reta = getByteSubArray(reta, 6+5, 3, 2);
             
-            this.showByteArray(reta);
-            
-//            System.out.println("10: " + Integer.parseInt("10", 16));
-//            System.out.println("Val: " + Integer.toString(10, 16));
+            //this.showByteArray(reta);
             
             int nr = (reta[1] * 255) + reta[0];
+            this.entries_max = nr;
+            this.output_writer.setSpecialProgress(6);
             
-            System.out.println("Entries: " + nr);
-            
-            System.out.println("PC-> Acknowledge");
-            write(hu.reconvert(ack_pc));
+            //System.out.println("Entries: " + nr);
+
+            this.cmdAcknowledge();
           
-            
-            //readEntry(260);
+            for(int i=1; i<=nr; i++)
+            {
+                if (!readEntry(i))
+                {
+                    deviceDisconnected();
+                	break;
+                }
+            }
+
             cmdDisconnectAcknowledge();
             
-            readEntry(1);
-
-            readEntry(2);
+            this.output_writer.setSubStatus(null);
             
-
         }
         catch(Exception ex)
         {
             System.out.println("Exception: " + ex);
             ex.printStackTrace();
-            
         }
         
         if (this.isDeviceFinished())
@@ -312,14 +254,71 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         	this.output_writer.endOutput();
         }
         
-        
-        
         System.out.println("Reading finsihed");
 
-        
-        
     }
 
+    
+    
+    private boolean readDeviceInfo() throws Exception
+    {
+        
+        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+
+        
+        // read sw version and sw creation date
+        
+        //System.out.println("PC-> read sw version and sw creation date");
+        String read_sw_ver_create = "02" + "09" + "00" + "05" + "0D" + "02" + "03" + "DA" + "71";
+
+        this.output_writer.setSubStatus(ic.getMessage("READING_SW_VERSION"));
+        
+        write(hex_utils.reconvert(read_sw_ver_create));
+        
+        String sw_dd = tryToConvert(this.readLineBytes(), 6+6, 3, false);
+
+        int idx = sw_dd.indexOf("/") -2;
+        
+        if (idx==-3)
+        {
+            //System.out.println("Reading from device FAILED !!!");
+            return false;
+        }
+        
+        this.output_writer.setSpecialProgress(2);
+        //System.out.println("Sw Ver: " + sw_dd.substring(0, idx ) + " date: " + sw_dd.substring(idx));
+        cmdAcknowledge();
+
+        di.device_hardware_version = sw_dd.substring(0, idx) + ", " + sw_dd.substring(idx);
+        
+        
+        // read serial number
+        this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR"));
+
+        
+        //System.out.println("PC-> read serial nr");
+
+        String read_serial_nr = "02" + "12" + "00" + "05" + // STX Len Link
+        "0B" + "02" + "00" + "00" + "00" + "00" + "84" + "6A" + "E8" + "73" + "00" +  // CM1-CM12
+        "03" + "9B" + "EA"; // ETX CRC-L CRC-H
+        
+        write(hex_utils.reconvert(read_serial_nr));
+        
+        String sn = tryToConvert(this.readLineBytes(), 6+5, 3, false);
+        
+        //System.out.println("S/N: " + sn);
+        
+        di.device_serial_number = sn;
+        
+        this.cmdAcknowledge();
+        
+        this.output_writer.setSpecialProgress(4);
+        
+        this.output_writer.writeDeviceIdentification();
+        
+        return true;
+    }
+    
     
     private void cmdDisconnectAcknowledge() throws IOException
     {
@@ -331,10 +330,20 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         System.out.println("Disconected and acknowledged: " + this.readLine());
     }
     
-    
-    
-    private void readEntry(int number) throws IOException
+    private void cmdAcknowledge() throws IOException
     {
+        //System.out.println("PC-> Acknowledge");
+        write(hex_utils.reconvert(ack_pc));
+
+    }
+    
+    
+    
+    private boolean readEntry(int number) throws IOException
+    {
+    	
+    	this.output_writer.setSubStatus(ic.getMessage("READING_PROCESSING_ENTRY") + number);
+    	
         int num_nr = number-1;
         
         String nr1= "";
@@ -367,186 +376,263 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         
 //        write(hex_utils.reconvert(rec_bef + nr1 + nr2 + "03" + "4B5F"));   //rec_af));
   
+        char[] for_crc = new char[8];
+        
+        for_crc[0] = 0x02;
+        for_crc[1] = 0x0A;
+        
+        if (number%2==0)
+            for_crc[2] = 0x00;
+        else
+            for_crc[2] = 0x03;
+            
+        for_crc[3] = 0x05;
+        for_crc[4] = 0x1F;
+        
+        for_crc[5] = (char)(num_nr);
+        
+        if(nr2.equals("01"))
+            for_crc[6] = 0x01;
+        else
+            for_crc[6] = 0x00;
+        
+        for_crc[7] = 0x03;
+        
+        //int crc_ret = this.calculateCrc(for_crc);
+        String crc_ret = Integer.toHexString(this.calculateCrc(for_crc));
+        
+        for(int i=crc_ret.length();i<4; i++)
+        {
+        	crc_ret = "0" + crc_ret;
+        }
+        
+        
+        // create question for device
+        String create_question = "02" + "0A";
+        
+        if (number%2==0)
+            create_question += "00";
+        else
+            create_question += "03";
+        
+        create_question += "05" + "1F";
+        create_question += nr1 + nr2;
+        create_question += "03";
+        
+        create_question += crc_ret.substring(2).toUpperCase();
+        create_question += crc_ret.substring(0,2).toUpperCase();
+        
+        //System.out.println("PC-> Req: " + create_question);
+        write(hex_utils.reconvert(create_question));
+        
+        /*
+        if (number==1)
+        {
+            System.out.println("Orig: " + "02" + "0A" + "03" + "05" + "1F" + "0000" + "03" + "4B5F");
+            System.out.println("Gen:  " + create_question);
+            
+        }
+        else if (number==2)
+        {
+            System.out.println("Orig: " + "02" + "0A" + "00" + "05" + "1F" + "0100" + "03" + "9BA6");
+            System.out.println("Gen:  " + create_question);
+            //write(hex_utils.reconvert("02" + "0A" + "00" + "05" + "1F" + "0100" + "03" + "9BA6"));   //rec_af));
+        }
+        else if (number==3)
+        {
+            System.out.println("Orig: " + "02" + "0A" + "03" + "05" + "1F" + "0200" + "03" + "2B31");
+            System.out.println("Gen:  " + create_question);
+            
+        }
+        */
+        
+        
+        /*
         if (number==1)
             write(hex_utils.reconvert("02" + "0A" + "03" + "05" + "1F" + "0000" + "03" + "4B5F"));   //rec_af));
         else if (number==2)
             write(hex_utils.reconvert("02" + "0A" + "00" + "05" + "1F" + "0100" + "03" + "9BA6"));   //rec_af));
-        
+        */
         
         //ret = this.readLine();
         
         byte[] reta = this.readLineBytes();
         
+        
+        if ((reta==null) || (reta.length==0))
+        {
+        	this.setDeviceStopped();
+        	return false;
+        }
+        
+        
         //String els = tryToConvert(reta, 6+5, 3, true);
         
         //reta = getByteSubArray(reta, 6+5, 3, 2);
+        this.showByteArrayHex(reta);
         
-        this.showByteArray(reta);
+        byte[] dt_bg = this.getByteSubArray(reta, 6+5, 3, 8);
         
-        //System.out.println("10: " + Integer.parseInt("10", 16));
+        int bg_val = Integer.parseInt(this.getCorrectHexValue(dt_bg[7]) +
+        		this.getCorrectHexValue(dt_bg[6]) +
+        		this.getCorrectHexValue(dt_bg[5]) +
+        		this.getCorrectHexValue(dt_bg[4])
+        		, 16);
         
-        //System.out.println("Val: " + Integer.toString(10, 16));
+        System.out.println("BG: " + bg_val + " -> " + m_da.getBGValueDifferent(DataAccessMeter.BG_MGDL, bg_val));
         
-  //      int nr = (reta[1] * 255) + reta[0];
+        long dt_val = Integer.parseInt(this.getCorrectHexValue(dt_bg[3]) +
+        		this.getCorrectHexValue(dt_bg[2]) +
+        		this.getCorrectHexValue(dt_bg[1]) +
+        		this.getCorrectHexValue(dt_bg[0])
+        		, 16);
         
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTimeInMillis(dt_val * 1000);
+        gc.setTimeZone(empty_tzi);
         
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setBgUnit(OutputUtil.BG_MGDL);
+        mve.setBgValue("" + bg_val);
+    	mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, gc)));
         
+    	this.output_writer.writeData(mve);
         
-        System.out.println("PC-> Acknowledge");
-        
-        write(hex_utils.reconvert(ack_pc));
-        
-        
+    	this.entries_current = number;
+    	readingEntryStatus();
+    	
+        return true;
     }
-    
-    
-    private short crc_calculate_crc (short initial_crc, int[] buffer, int length)
-    {
-        //short index = 0;
-        short crc = initial_crc;
-        if (buffer != null)
-        {
-            for (int index = 0; index < length; index++)
-            {
-                crc = (short)((char)(crc >> 8) | (short)(crc << 8));
-                crc ^= buffer [index];
-                crc ^= (char)(crc & 0xff) >> 4;
-                //crc ^= (short)((short)(crc << 8) << 4);
-                crc ^= (short)((crc << 8) << 4);
-                crc ^= (short)(((crc & 0xff) << 4) << 1);
-//                crc ^= (short)((short)((crc & 0xff) << 4) << 1);
-            }
-        }
-        return crc;
-    }    
 
     
-    private short crc_calculate_crc (short initial_crc, String buffer, int length)
+    private void readingEntryStatus()
+    {
+    	float proc_read = ((this.entries_current*1.0f)  / this.entries_max);
+    	
+    	float proc_total = 6 + (94 * proc_read);
+    	
+    	System.out.println("proc_read: " + proc_read + ", proc_total: " + proc_total);
+    	
+    	this.output_writer.setSpecialProgress((int)proc_total); //.setSubStatus(sub_status)
+    	
+    	
+    }
+    
+    
+    private String getCorrectHexValue(byte inp)
+    {
+    	String hx = Integer.toHexString((char)inp);
+    	
+    	if (hx.length()==0)
+    		return "00";
+    	else if (hx.length()==1)
+    		return "0" + hx;
+    	else if (hx.length()==2)
+    		return hx;
+    	else if (hx.length()==4)
+    		return hx.substring(2);
+    	else
+    		System.out.println("HEX ERROR !!!!!!!!!!!!!!!!");
+    	
+        //System.out.print(Integer.toHexString((char)arr[i]) + " ");
+
+    	
+    	return null;
+    }
+    
+    
+    boolean debug_crc = false;
+    
+    
+    private int calculateCrc(char[] buffer)
+    {
+        return this.calculateCrc((short)0xffff, buffer);    
+    }
+    
+    private int calculateCrc(int initial_crc, char[] buffer)
     {
         //short index = 0;
-        short crc = initial_crc;
+        int crc = initial_crc;
         if (buffer != null)
         {
-            for (int index = 0; index < length; index+=2)
+            for (int index = 0; index < buffer.length; index++)
             {
-                crc = (short)((char)(crc >> 8) | (short)(crc << 8));
-                crc ^= buffer.charAt(index) + buffer.charAt(index+1); // [index];
+                
+                crcDebug("-- Round " + index +  "  [" + Integer.toHexString(crc) + "]");
+                
+                crc = (char)((char)(crc >> 8) | (short)(crc << 8));
+                crcDebug("Crc 1: " + crc + " " + Integer.toHexString(crc));
+
+                crc ^= buffer[index];
+                crcDebug("Crc 2: " + crc + " " + Integer.toHexString(crc));
+             
                 crc ^= (char)(crc & 0xff) >> 4;
-                //crc ^= (short)((short)(crc << 8) << 4);
-                crc ^= (short)((crc << 8) << 4);
-                crc ^= (short)(((crc & 0xff) << 4) << 1);
-//                crc ^= (short)((short)((crc & 0xff) << 4) << 1);
+                crcDebug("Crc 3: " + crc + " " + Integer.toHexString(crc));
+                
+                crc ^= (char)((crc << 8) << 4);
+                crcDebug("Crc 4: " + crc + " " + Integer.toHexString(crc));
+
+                crc ^= (int)(((crc & 0xff) << 4) << 1);
+                crcDebug("Crc 5: " + crc + " " + Integer.toHexString(crc) + "\n");
             }
         }
         return crc;
     }    
     
-    private int crc_calc(int initial_crc, int[] buffer, int length)
-    {
-        int crc = 0; // = initial_crc;
-        
-        // char ser_data;
-        
-        for (int index = 0; index < length; index++)
-        {
-            crc  = (char)(crc >> 8) | (crc << 8);
-            crc ^= (char)buffer [index]; //ser_data;
-            crc ^= (char)(crc & 0xff) >> 4;
-            crc ^= (crc << 8) << 4;
-            crc ^= ((crc & 0xff) << 4) << 1;
-        }
-        return crc;
-        
-    }
     
+    private void crcDebug(String val)
+    {
+        if (this.debug_crc)
+            System.out.println(val);
+    }
     
     
     /**
-     * 
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
      */
-    public void test_crc()
+    public boolean hasSpecialProgressStatus()
     {
-        int test_crc[] = {0x02,0x06,0x06,0x03 };
-        
-        int test_crc2[] = {0x02, 0x0A, 0x03, 0x05, 0x1F, 0x00, 0x00, 0x03};
-        //"02" + "0A" + "03" + "05" + "1F" + "0000" + "03"; // 4B5F
-        
-        System.out.println("Correct decoding is 0x41CD: " + Integer.parseInt("41CD", 16));
+        return true;
+    }    
+    
+/*    
+    public void test_crc_c()
+    {
+        char test_crc[] = {0x02,0x06,0x06,0x03 };
 
-        int c_1 = crc_calculate_crc( (short)0xffff, test_crc2, 4);
+//        this.crc_calculate_crc_tst1(initial_crc, buffer, length)
         
-        System.out.println("Crc_t: " + c_1 + " " + Integer.toHexString(c_1));
-        
-        int crc = crc_calculate_crc( (short)0xffff, test_crc, 4 );  
-        
-        int crc2 = crc_calculate_crc( (short)0xffff, "02060603", 8 );
+        int crc = this.calculateCrc(test_crc );
         
         System.out.println("Crc: " + crc + " " + Integer.toHexString(crc));
 
-        System.out.println("Crc2: " + crc2 + " " + Integer.toHexString(crc2));
-     
-        int crc3 = this.crc_calc(0xffff, test_crc, 4);
         
-        System.out.println("Crc3: " + crc3 + " " + Integer.toHexString(crc3));
+        char test_crc2[] = {0x02, 0x0A, 0x03, 0x05, 0x1F, 0x00, 0x00, 0x03};
         
-        Crc16 cr = new Crc16();
+        crc = this.calculateCrc( (short)0xffff, test_crc2 );
         
-        cr.reset();
+        System.out.println("Crc [4b5f]: " + crc + " " + Integer.toHexString(crc));
         
-        cr.update(0x02);
-        cr.update(0x06);
-        cr.update(0x06);
-        cr.update(0x03);
+        char test_crc3[] = {0x02, 0x0A, 0x03, 0x05, 0x1F, 0x00, 0x00, 0x03 };
+
+        crc = this.calculateCrc( (short)0xffff, test_crc3 );
         
-        System.out.println("Crc16: " + cr.getValueInt() + " " + Integer.toHexString((int)cr.getValue()));
-        
-        FCS16 f1 = new FCS16();
-        
-        f1.reset();
-        
-        f1.update(0x02);
-        f1.update(0x06);
-        f1.update(0x06);
-        f1.update(0x03);
-        
-        System.out.println("FCS16: " + f1.getValue() + " " + Integer.toHexString((int)f1.getValue()));
+        System.out.println("Crc [4b5f]: " + crc + " " + Integer.toHexString(crc));
         
     }
-    
-    
-
-    
-    /*
-
-    unsigned short crc_calculate_crc (unsigned short initial_crc, const unsigned char *buffer, unsigned short length)
-    {
-    unsigned short index = 0;
-    unsigned short crc = initial_crc;
-    if (buffer != NULL)
-    {
-    for (index = 0; index < length; index++)
-    {
-    crc = (unsigned short)((unsigned char)(crc >> 8) | (unsigned short)(crc << 8));
-    crc ^= buffer [index];
-    crc ^= (unsigned char)(crc & 0xff) >> 4;
-    crc ^= (unsigned short)((unsigned short)(crc << 8) << 4);
-    crc ^= (unsigned short)((unsigned short)((crc & 0xff) << 4) << 1);
-    }
-    }
-    return (crc);
-    }    
-
-
-
-     */
+  */  
     
     
     private boolean isDeviceFinished()
     {
+//    	System.out.println("entry: cur=" + this.entries_current + ", ent_max=" + this.entries_max);
     	return (this.entries_current==this.entries_max);
     }
     
     
+    @SuppressWarnings("unused")
     private void showByteArray(byte[] arr)
     {
         System.out.println("Byte array: ");
@@ -559,6 +645,22 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     }
     
 
+    private void showByteArrayHex(byte[] arr)
+    {
+        System.out.print("Byte array: ");
+        
+        for(int i=0; i<arr.length; i++)
+        {
+        	System.out.print(getCorrectHexValue(arr[i]) + " ");
+        	//getCorrectHexValue(arr[i]);
+            //System.out.print(Integer.toHexString((char)arr[i]) + " ");
+        }
+        
+        System.out.print("\n");
+        
+    }
+    
+    
     private String tryToConvert(byte[] arr, int start, int end, boolean display)
     {
         //System.out.println();
@@ -577,7 +679,12 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         
         return ret;
     }
-    
+
+    /*
+    private byte[] getByteSubArray(byte[] arr, int start, int end)
+    {
+    	return getByteSubArray(arr, start, end, 0);
+    }*/
 
     
     private byte[] getByteSubArray(byte[] arr, int start, int end, int length)
@@ -651,12 +758,6 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     
     
     
-    
- 
-    
-    
-    
-    
     /**
      * 
      */
@@ -680,111 +781,6 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
 
     
     
-    @SuppressWarnings("unused")
-    private ATechDate getDateTime(String date, String time)
-    {
-        // “mm/dd/yy”,“hh:mm:30 ”
-        
-        date = this.getParameterValue(date); 
-        time = this.getParameterValue(time); 
-        
-       
-        String dt = "";
-        
-        StringTokenizer st = new StringTokenizer(date, "/");
-        
-        String m="",d="",y="";
-        
-        if (this.date_order.equals("MDY"))
-        {
-            m = st.nextToken();
-            d = st.nextToken();
-            y = st.nextToken();
-        }
-        else
-        {
-            d = st.nextToken();
-            m = st.nextToken();
-            y = st.nextToken();
-        }
-        		
-        
-        try
-        {
-            int year = Integer.parseInt(y);
-            
-            if (year<100)
-            {
-                if (year>70)
-                    dt += "19" + m_da.getLeadingZero(year, 2);
-                else
-                    dt += "20" + m_da.getLeadingZero(year, 2);
-            }
-            else
-                dt += year;
-            
-        }
-        catch(Exception ex)
-        {
-            
-        }
-        
-        dt += m;
-        dt += d;
-
-        if (time.contains(" "))
-        {
-
-            st = new StringTokenizer(time, ":");
-            
-            String hr = st.nextToken();
-            String min = st.nextToken();
-            
-            int hr_s = Integer.parseInt(hr);
-            
-            if (time.contains("AM"))
-            {
-                // am
-                if (hr_s==12)
-                {
-                    dt += "00";
-                }
-                else
-                {
-                    dt += m_da.getLeadingZero(hr_s, 2);
-                }
-                
-                
-            }
-            else
-            {
-                // pm
-                if (hr_s==12)
-                {
-                    dt += "12";
-                }
-                else
-                {
-                    hr_s += 12;
-                    dt += m_da.getLeadingZero(hr_s, 2);
-                }
-                
-            }
-            
-            dt += min;
-            
-        }
-        else
-        {
-            st = new StringTokenizer(time, ":");
-            
-            dt += st.nextToken();
-            dt += st.nextToken();
-        }
-        
-        return tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(dt)));
-        
-    }
 
     
     //private void 
@@ -845,139 +841,6 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
                 break;
         }
     } 
-    
-    
-    @SuppressWarnings("unused")
-    private class OldOTProcessor extends OneTouchMeter //AbstractSerialMeter
-    {
-        
-        
-        public OldOTProcessor(String portName, OutputWriter writer)
-        {
-            super(portName, writer);
-        }
-
-        protected void writeCmd(short line[]) throws IOException, InterruptedException
-        {
-            for (int c = 0; c < line.length; c++)
-                writeCmd(line[c]);
-
-        }
-
-        protected void writeCmd(int c) throws IOException, InterruptedException
-        {
-            // addDebug(c, D_WR);
-            this.write(c);
-            this.waitTime(commandPause);
-
-        }
-
-        protected void writeCmd(String line) throws IOException, InterruptedException
-        {
-            for (int c = 0; c < line.length(); c++)
-            {
-                // addDebug(line.charAt(c), D_WR);
-                this.write(line.charAt(c));
-                this.waitTime(commandPause);
-            }
-
-            this.waitTime(commandPause);
-        }
-
-        int commandPause = 100;
-
-        void SendCommand(String command) throws Exception
-        {
-            int x;
-            char c;
-
-            x = command.length();
-            c = command.charAt(0);
-            int com_curr = 0;
-
-            if (c == 'D')
-            {
-                while (x > 0)
-                {
-                    c = command.charAt(com_curr);
-                    this.write(c);
-                    waitTime(100);
-                    x--;
-                    com_curr++;
-                }
-            }
-            else
-                System.out.println("Invalid Command: " + command);
-            return;
-        }
-
-        public int getCompanyId()
-        {
-            return 0;
-        }
-
-        public int getMaxMemoryRecords()
-        {
-            return 0;
-        }
-
-        public String getDeviceClassName()
-        {
-            return null;
-        }
-
-        public int getDeviceId()
-        {
-            return 0;
-        }
-
-        public String getIconName()
-        {
-            return null;
-        }
-
-        public String getName()
-        {
-            return null;
-        }
-
-        @Override
-        public String getShortName()
-        {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-
-
-
-        /*
-        char *ReadLine(void) {
-            int nBytes, x=0;
-            char cComm, *line;
-            struct timeval last, now;
-            line = malloc(80);
-            gettimeofday(&last, NULL);
-
-            while ( 1 ) {
-                nBytes = read(fd_ComX, &cComm, 1);
-                    if ( (nBytes>0) && (cComm!=EOF) ) {
-                    *line = cComm;
-                    line++;
-                    x++;
-                    gettimeofday(&last, NULL);
-                    if (cComm == '\n') break;
-                }
-                gettimeofday(&now, NULL);
-                if ((last.tv_sec + 2) < now.tv_sec) break;
-            }
-            line = line - x;
-            return line;
-        } */
-        
-        
-        
-    }
     
     
     

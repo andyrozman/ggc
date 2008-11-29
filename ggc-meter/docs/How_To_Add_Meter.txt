@@ -1,0 +1,80 @@
+
+HOW TO ADD NEW METER
+====================
+
+
+
+1. All data is written to output writer
+2. If there is problem reading device (we need to make regular checks to see that device is online), we need to send following commands and stop all reading from device.
+
+                deviceDisconnected();
+This method is in AbstractSerialMeter, if you use any other, check that method is there and if not, copy from AbstractSerialMeter.
+
+ 
+3. When adding Company that doesn't exist 
+TOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+3. Typical constructor for main meter class
+
+		super(DataAccessMeter.getInstance()); 
+
+		// communcation settings for this meter(s)
+		this.setCommunicationSettings( 
+			      9600,
+			      SerialPort.DATABITS_8, 
+			      SerialPort.STOPBITS_1, 
+			      SerialPort.PARITY_NONE,
+			      SerialPort.FLOWCONTROL_NONE,
+			      SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT|SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+				
+		// output writer, this is how data is returned (for testing new devices, we can use Consol
+		this.output_writer = writer; 
+		this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+
+		// set meter type (this will be deprecated in future, but it's needed for now
+                this.setMeterType("Ascensia/Bayer", this.getName());   
+
+               // set device company (needed for now, will also be deprecated)
+               this.setDeviceCompany(new AscensiaBayer());    <- Company class
+        
+
+                // settting serial port in com library
+		try
+		{
+	            this.setSerialPort(portName);
+	
+		    if (!this.open())
+		    {
+		    	//this.m_status = 1;
+	                deviceDisconnected();
+		        return;
+		    }
+		    
+		    this.output_writer.writeHeader();
+
+			// any device specific code here	        
+
+		}
+		catch(Exception ex)
+		{
+		    System.out.println("XXXMeter -> Error adding listener: " + ex);
+		    ex.printStackTrace();
+		}
+
+
+3. When we read identification data from device, we need to 1st get DeviceIdentification object from output writer:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
