@@ -291,7 +291,12 @@ public class OneTouchUltraSmart extends OneTouchMeter
             System.out.println("Processing record #" + record++);
             byte[] completeArr = itr.next();            
             // stripping the comm bytes and checksum byte
-            byte[] recordArr = Arrays.copyOfRange(completeArr, 2, completeArr.length-3);
+            //byte[] recordArr = Arrays.copyOfRange(completeArr, 2, completeArr.length-3);
+            byte[] recordArr = new byte[12];
+            for(int i=2; i<=completeArr.length-3; i++)
+            {
+                recordArr[i-2] = completeArr[i];
+            }
             // stripping 0x10 escape characters.
             List<Byte> recordList = strip10s(recordArr);
             Byte[] recordArray = recordList.toArray(new Byte[0]);
@@ -301,7 +306,12 @@ public class OneTouchUltraSmart extends OneTouchMeter
             if (typeByte == 0x00)
             {
                 System.out.printf("record type is: %h  - BG: ", typeByte);
-                Byte[] timeDateArr = Arrays.copyOfRange(recordArray, 2, 5);
+                //Byte[] timeDateArr = Arrays.copyOfRange(recordArray, 2, 5);
+                Byte[] timeDateArr = new Byte[4];
+                for(int i=2; i<=5; i++)
+                {
+                    timeDateArr[i-2] = completeArr[i];
+                }
                 Date dateTime = parseDateTime(timeDateArr);               
                 byte bgByte = recordArray[5];
                 int bgMg = bgByte & 0xFF;
