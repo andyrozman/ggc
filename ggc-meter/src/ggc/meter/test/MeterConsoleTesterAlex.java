@@ -296,8 +296,8 @@ public class MeterConsoleTesterAlex //extends JFrame
         
         
         //m_meter = new OneTouchUltra(portName, cow);
-         List<byte[]> records = otUS.readDeviceDataFullUS(); 
-         otUS.processRecords(records);
+        otUS.readDeviceDataFull(); 
+
 
     }
     
