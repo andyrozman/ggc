@@ -1,15 +1,27 @@
 package ggc.meter.device.onetouch;
 
+import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.AbstractSerialMeter;
+import ggc.meter.manager.company.LifeScan;
+import ggc.meter.util.DataAccessMeter;
+import ggc.meter.util.ExtendedBitSet;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
+import gnu.io.SerialPort;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,9 +50,11 @@ import java.util.List;
  */
 
 // in works
-public class OneTouchUltraSmart extends OneTouchMeter
+public class OneTouchUltraSmart extends AbstractSerialMeter
 {
-    // This is CRC-7 polynomial lookup table for computing checksum byte for OneTouch UltraSmart meter.
+    /**
+     * This is CRC-7 polynomial lookup table for computing checksum byte for OneTouch UltraSmart meter.
+     */
     static byte[] lookupArr = new byte[] { 0x00, 0x1a, 0x34, 0x2e, 0x68, 0x72, 0x5c, 0x46, 0x5d, 0x47, 0x69, 0x73, 0x35,
                                     0x2f, 0x01, 0x1b, 0x37, 0x2d, 0x03, 0x19, 0x5f, 0x45, 0x6b, 0x71, 0x6a, 0x70,
                                     0x5e, 0x44, 0x02, 0x18, 0x36, 0x2c, 0x6e, 0x74, 0x5a, 0x40, 0x06, 0x1c, 0x32,
@@ -70,7 +84,46 @@ public class OneTouchUltraSmart extends OneTouchMeter
      */
     public OneTouchUltraSmart(String portName, OutputWriter writer)
     {
-        super(portName, writer);
+        //super(portName, writer);
+        
+        setCommunicationSettings( 
+            38400,
+            SerialPort.DATABITS_8, 
+            SerialPort.STOPBITS_1, 
+            SerialPort.PARITY_NONE,
+            SerialPort.FLOWCONTROL_NONE, 
+            SerialProtocol.SERIAL_EVENT_ALL);
+        
+     // output writer, this is how data is returned (for testing new devices, we can use Consol
+        this.output_writer = writer; 
+        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        
+        // set meter type (this will be deprecated in future, but it's needed for now
+        this.setMeterType("LifeScan", this.getName());
+
+        // set device company (needed for now, will also be deprecated)
+        this.setDeviceCompany(new LifeScan());
+        
+        // settting serial port in com library
+        try
+        {
+            this.setSerialPort(portName);
+    
+            if (!this.open())
+            {
+                this.m_status = 1;
+                this.deviceDisconnected();
+                return;
+            }
+
+            this.output_writer.writeHeader();
+            
+        }
+        catch(Exception ex)
+        {
+            System.out.println("OneTouchMeter -> Error adding listener: " + ex);
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -89,6 +142,14 @@ public class OneTouchUltraSmart extends OneTouchMeter
     public OneTouchUltraSmart(AbstractDeviceCompany cmp)
     {
         super(cmp);
+    }
+    
+    /** 
+     * Set Communication Settings
+     */
+    public void setCommunicationSettings(int baudrate, int databits, int stopbits, int parity, int flow_control, int event_type)
+    {
+        super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
     }
 
     /**
@@ -156,7 +217,6 @@ public class OneTouchUltraSmart extends OneTouchMeter
      */
     public int getMaxMemoryRecords()
     {
-        // TODO:
         return 5000;
     }
 
@@ -169,25 +229,34 @@ public class OneTouchUltraSmart extends OneTouchMeter
     {
         return "UltraSmart";
     }
-
-    /**
-     * The interface is the combination of old LifeScan syntax, using DMx commands,
-     * except that DMP does not work any more and it was replaced by
-     * binary protocol. 
-     * Records are followed by one byte checksum, using CRC-7 algorithm.
-     * The binary protocol is NOT the same as for OT Mini, etc.
-     * 
-     * 
-     * @return
+    
+    /** 
+     * getImplementationStatus
      */
-    public List<byte[]> readDeviceDataFullUS()
+    public int getImplementationStatus()
     {
-        System.out.println("reading device data");
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+    }
+    
+    /** 
+     * getComment
+     */
+    public String getComment()
+    {
+        return null;
+    }
+    
+    /**
+     * OT Ultasmart version of readInfo() overloaded method.
+     */
+    public void readInfo()
+    {
+        //DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
-        List<byte[]> dataRecords = new ArrayList<byte[]>();
-
         try
         {
+            //this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
+            
             // getting meter serial number
             write("D".getBytes());
             waitTime(100);
@@ -201,7 +270,52 @@ public class OneTouchUltraSmart extends OneTouchMeter
 
             String line = this.readLine();
             System.out.println("Serial number: " + line);
+            //di.device_serial_number = line;
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Exception: " + ex);
+            ex.printStackTrace();
+        }
+        finally
+        {
+            //this.output_writer.setSpecialProgress(4);
+        }
+    }
+    
+    /**
+     * This is method for reading configuration
+     * 
+     * @throws PlugInBaseException
+     */
+    public void readConfiguration() throws PlugInBaseException
+    {
+    }
 
+    /**
+     * Reads dump of data from the OT UltraSmart device.
+     * 
+     * The interface is the combination of old LifeScan syntax, using DMx commands,
+     * except that DMP does not work any more and it was replaced by
+     * binary protocol. 
+     * Records are followed by one byte checksum, using CRC-7 algorithm.
+     * The binary protocol is NOT the same as for OT Mini, etc.
+     * The binary data are BigEndian, or read from right to the left.
+     * 
+     * 
+     * @return a list of records
+     */
+    public void readDeviceDataFull()
+    {
+        System.out.println("reading device data");
+        
+        List<byte[]> dataRecords = new ArrayList<byte[]>();
+
+        try
+        {
+            // reading meter settings
+            readInfo();
+            
             // retrieving records from the meter
             short recNo = 0;
             int packetSize = 7;
@@ -212,11 +326,12 @@ public class OneTouchUltraSmart extends OneTouchMeter
                 commList.add((byte) 0x52);
                 // record number reversed
                 commList.add((byte) 0x00); 
-                // commList.add((byte) 0x00);
                 commList.add((byte) recNo);
                 // computing checksum
                 byte checksum = calcCheckSum(commList);
                 System.out.printf("computed checksum: %h \n", checksum);
+                // add escape characters if needed
+                commList = escape10s(commList);
                 // adding STX
                 commList.addFirst((byte) 0x02);
                 commList.addFirst((byte) 0x10);
@@ -231,6 +346,8 @@ public class OneTouchUltraSmart extends OneTouchMeter
                 {
                     write(b);
                 }
+//                byte eol[] = new byte[] { 0x0d, 0x0A };
+//                write(eol);
                 byte resp[] = this.readLineBytes();
                 packetSize = resp.length;
                 if (packetSize == 7)
@@ -258,29 +375,32 @@ public class OneTouchUltraSmart extends OneTouchMeter
             System.out.println("Exception: " + ex);
             ex.printStackTrace();
         }
+       
+        // now process all retrieved records and insert them to the database
+        processRecords(dataRecords);
         
         System.out.println("done");
-        return dataRecords;
-
-    }
-
-    private final byte calcCheckSum(List<Byte> dataPacket)
-    {
-        int crc = 0x7F;
         
-        for (Byte dataByte : dataPacket)
-        {
-            byte b = (byte)dataByte.byteValue();
-            crc = lookupArr[crc & 0xFF];
-            crc ^= b;
-        }
-        crc = lookupArr[crc];
-        crc ^= 0;
-
-        return (byte) crc;
+        this.output_writer.setSpecialProgress(100);
+        this.output_writer.setSubStatus(null);
+        this.output_writer.endOutput();
+    }
+    
+    /**
+     * This is method for reading partial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
+    public void readDeviceDataPartitial() throws PlugInBaseException
+    {
+        
     }
 
-
+    /**
+     * This method processes the retrieved records
+     * and writes them to the database.
+     * 
+     * @param records a list of records
+     */
     public void processRecords(List<byte[]> records)
     {
         Iterator<byte[]> itr = records.iterator();
@@ -292,8 +412,8 @@ public class OneTouchUltraSmart extends OneTouchMeter
             byte[] completeArr = itr.next();            
             // stripping the comm bytes and checksum byte
             //byte[] recordArr = Arrays.copyOfRange(completeArr, 2, completeArr.length-3);
-            byte[] recordArr = new byte[12];
-            for(int i=2; i<=completeArr.length-3; i++)
+            byte[] recordArr = new byte[completeArr.length-5];
+            for(int i=2; i<completeArr.length-3; i++)
             {
                 recordArr[i-2] = completeArr[i];
             }
@@ -306,18 +426,7 @@ public class OneTouchUltraSmart extends OneTouchMeter
             if (typeByte == 0x00)
             {
                 System.out.printf("record type is: %h  - BG: ", typeByte);
-                //Byte[] timeDateArr = Arrays.copyOfRange(recordArray, 2, 5);
-                Byte[] timeDateArr = new Byte[4];
-                for(int i=2; i<=5; i++)
-                {
-                    timeDateArr[i-2] = completeArr[i];
-                }
-                Date dateTime = parseDateTime(timeDateArr);               
-                byte bgByte = recordArray[5];
-                int bgMg = bgByte & 0xFF;
-                double bgMmol = ((double)bgMg)/18.0;
-                System.out.printf("%.1f", bgMmol);
-                System.out.println(", timestamp: " + dateTime);
+                processBGRecord(recordArr);
             }
             else if (typeByte == 0x54 || typeByte == 0x50)
             {
@@ -338,8 +447,91 @@ public class OneTouchUltraSmart extends OneTouchMeter
         }
         
     }
+    
+    /**
+     * Processes the Blood Glucose data record
+     * 
+     * @param recordArray
+     */
+    private void processBGRecord(byte[] recordArray)
+    {
+        // Byte[] timeDateArr = Arrays.copyOfRange(recordArray, 2, 5);
+        Byte[] timeDateArr = new Byte[4];
+        // for(int i=2; i<=5; i++)
+        // {
+        // timeDateArr[i-2] = completeArr[i];
+        // }
+        for (int i = 2; i <= 4; i++)
+        {
+            timeDateArr[i - 2] = recordArray[i];
+        }
+        GregorianCalendar dateTime = (GregorianCalendar) parseDateTime(timeDateArr);
+        byte bgByte = recordArray[5];
+        int bgMg = bgByte & 0xFF;
+        float bgMmol = OutputUtil.getInstance().getBGValueDifferent(OutputUtil.BG_MGDL, bgMg);
+        //double bgMmol = ((double) bgMg) / 18.0;
+        System.out.printf("%.1f", bgMmol);
+        System.out.println(", timestamp: " + dateTime.getTime());
+
+        // create GGC internal entry record
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setBgUnit(DataAccessMeter.BG_MGDL);
+        ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dateTime);
+        mve.setDateTimeObject(atd);
+        mve.setBgValue(Integer.toString(bgMg));
+        
+        this.output_writer.writeData(mve);
+
+    }
+    
+    private void processExerciseRecord(byte[] recordArray)
+    {
+        // J = Junk
+        // D = Duration
+        // T = Type
+        // JJJJ JJJJ JJJJ JDDD DDDD DDTT
+        // 0000 0000 0011 1111 1111 2222
+        // 0123 4567 8901 2345 6789 0123
+        
+        // Create reverse order bitset from the arrat=y.
+        //BitSet recordBits = new ExtendedBitSet(recordArray, true);
+        
+        // in bitset
+        // T => 0,1;
+        // D => 2-9;
+    }
+    
+    
+    /**
+     * Computes the CRC checksum byte.
+     * 
+     * @param dataPacket
+     * @return
+     */
+    private final byte calcCheckSum(List<Byte> dataPacket)
+    {
+        int crc = 0x7F;
+        
+        for (Byte dataByte : dataPacket)
+        {
+            byte b = (byte)dataByte.byteValue();
+            crc = lookupArr[crc & 0xFF];
+            crc ^= b;
+        }
+        crc = lookupArr[crc & 0xFF];
+        crc ^= 0;
+
+        return (byte) crc;
+    }
+
       
-    private Date parseDateTime(Byte[] dateArr)
+    /**
+     * Parses date and time from byte array to Calendar object
+     * 
+     * @param dateArr
+     * @return
+     */
+    private Calendar parseDateTime(Byte[] dateArr)
     {
         byte[] reversedDateArr = new byte[4];
         reversedDateArr[0] = 0x00;
@@ -352,10 +544,18 @@ public class OneTouchUltraSmart extends OneTouchMeter
         Calendar calendar = Calendar.getInstance();
         calendar.set(2000, 0, 1, 0, 0, 0);
         calendar.add(Calendar.MINUTE, minutes);
-        Date date = calendar.getTime();
-        return date;
+        
+        return calendar;
+       
     }
     
+    /**
+     * Creates a java signed integer from byte array of unsigned bytes.
+     * 
+     * @param b
+     * @param littleEndian
+     * @return
+     */
     public static final int makeIntFromByte4(byte[] b, boolean littleEndian) {
         int time = 0;
         if (littleEndian)
@@ -372,6 +572,12 @@ public class OneTouchUltraSmart extends OneTouchMeter
         return time;
     }
     
+    /**
+     * Strips communication escape characters from the data.
+     * 
+     * @param inArray
+     * @return
+     */
     private static List<Byte> strip10s(byte[] inArray)
     {
         List<Byte> tempList = new ArrayList<Byte>();
@@ -386,8 +592,27 @@ public class OneTouchUltraSmart extends OneTouchMeter
                 tempList.add(new Byte(inArray[i]));
             }
         }
-        return tempList;
-            
+        return tempList;            
+    }
+    
+    /**
+     * Add communication escape characters to the data, if needed.
+     * 
+     * @param inArray
+     * @return
+     */
+    private static LinkedList<Byte> escape10s(LinkedList<Byte> inArray)
+    {
+        LinkedList<Byte> tempList = new LinkedList<Byte>();
+        for (Byte packet : inArray)
+        {
+            tempList.add(packet);
+            if (packet == 0x10)
+            {
+                tempList.add(new Byte((byte)0x10));
+            }
+        }
+        return tempList;            
     }
 
 
