@@ -1,8 +1,6 @@
 package ggc.cgm.data;
 
 import ggc.cgm.util.DataAccessCGM;
-import ggc.cgm.util.I18nControl;
-import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputUtil;
@@ -59,45 +57,46 @@ public class CGMValuesEntry extends DeviceValuesEntry
 	int bg_unit;
 	//public
 	
-	public Hashtable<String,String> params;
-	public static I18nControl ic = I18nControl.getInstance(); 
+	private Hashtable<String,String> params;
+	//private static I18nControl ic = I18nControl.getInstance(); 
 	
-	public String bg_original = null;
-	public OutputUtil util = OutputUtil.getInstance();
+	//private String bg_original = null;
+	//private OutputUtil util = OutputUtil.getInstance();
 	
 	
     
-    public DayValueH entry_object = null;
+    //private DayValueH entry_object = null;
     
-	public static String entry_statuses[] = 
-	{
-	     CGMValuesEntry.ic.getMessage("UNKNOWN"),
-	     CGMValuesEntry.ic.getMessage("NEW"),
-	     CGMValuesEntry.ic.getMessage("CHANGED"),
-	     CGMValuesEntry.ic.getMessage("OLD")
-	};
 	
 	
 	
+	/**
+	 * Constructor
+	 */
 	public CGMValuesEntry()
 	{
 	    super();
 	}
 	
 	
-	public void setDateTime(long dt)
-	{
-	    this.datetime = dt;
-	}
 	
 	
-	
+    /**
+     * Get DateTime (long)
+     * 
+     * @return
+     */
 	public long getDateTime()
 	{
 		return this.datetime;
 	}
 	
 	
+    /**
+     * Get DateTime Object (ATechDate)
+     * 
+     * @return ATechDate instance
+     */
     public ATechDate getDateTimeObject()
     {
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
@@ -105,35 +104,17 @@ public class CGMValuesEntry extends DeviceValuesEntry
 	
 	
 	
-	public void setBaseType(int base_type)
-	{
-	    this.base_type = base_type;
-	}
-	
-	
-    /**
-     * @param sub_type
-     */
-    public void setSubType(int sub_type)
-    {
-        this.sub_type = sub_type;
-    }
-
-    
-    public void setValue(String val)
-    {
-        this.value = val;
-    }
-    
-	
-	public void setProfile(String profile)
-	{
-	    this.profile = profile;
-	}
 	
 	
 	
 	
+	
+	/**
+	 * Add Parameter
+	 * 
+	 * @param key
+	 * @param value_in
+	 */
 	public void addParameter(String key, String value_in)
 	{
 		if ((value_in.equals("_")) || (value_in.trim().length()==0))
@@ -149,66 +130,12 @@ public class CGMValuesEntry extends DeviceValuesEntry
 	}
 
 	
-	public void setBgUnit(int bg_type)
-	{
-		this.bg_unit = bg_type;
-	}
-
-	public int getBgUnit()
-	{
-		return this.bg_unit;
-	}
 	
 	
 	
-	
-	public void setBgValue(String value)
-	{
-		this.bg_str = value;
-		
-		if (this.bg_original==null)
-		    this.setDisplayableBGValue(value);
-	}
-	
-	public String getBgValue()
-	{
-		return this.bg_str;
-	}
-	
-	public void setDisplayableBGValue(String value)
-	{
-	    bg_original = value; 
-	}
-	
-	public String getBGValue(int st)
-	{
-	    if (this.bg_unit == OutputUtil.BG_MMOL)
-	    {
-	        if (st == OutputUtil.BG_MMOL)
-	        {
-	            return this.bg_original;
-	        }
-	        else
-	        {
-	            return "" + (int)(this.util.getBGValueDifferent(OutputUtil.BG_MMOL, Float.parseFloat(this.bg_original)));
-	        }
-	    }
-	    else
-	    {
-            if (st == OutputUtil.BG_MGDL)
-            {
-                return this.bg_original;
-            }
-            else
-            {
-                return DataAccessCGM.MmolDecimalFormat.format((this.util.getBGValueDifferent(OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
-            }
-	        
-	    }
-	    
-	}
-	
-	
+	/**
+	 * @return
+	 */
 	public String getParametersAsString()
 	{
 		if (this.params==null)
@@ -228,6 +155,11 @@ public class CGMValuesEntry extends DeviceValuesEntry
 	}
 	
 	
+	/**
+	 * Prepare Entry
+	 * 
+	 * @see ggc.plugin.data.DeviceValuesEntry#prepareEntry()
+	 */
 	public void prepareEntry()
 	{
 	    /*
@@ -254,12 +186,13 @@ public class CGMValuesEntry extends DeviceValuesEntry
 	
 	
 	
-	public DayValueH getDbObject()
-	{
-	    return this.entry_object;
-	}
 	
 	
+	/**
+	 * Create Comment
+	 * 
+	 * @return
+	 */
 	public String createComment()
 	{
 	    String p = this.getParametersAsString();
@@ -275,13 +208,23 @@ public class CGMValuesEntry extends DeviceValuesEntry
 	}
 	
 	
+	/**
+	 * To String
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString()
 	{
 	    //OutputUtil o= null;
-	    return "MeterValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
+	    return "CGMValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
 	}
 
-
+	
+	/**
+     * Get Column Value
+     * 
+     * @param index
+     * @return
+     */
     @Override
     public Object getColumnValue(int index)
     {
@@ -289,15 +232,24 @@ public class CGMValuesEntry extends DeviceValuesEntry
         return null;
     }
 
-
+    
+    /**
+     * Get DateTime format
+     * 
+     * @return format of date time (precission)
+     */
     @Override
     public int getDateTimeFormat()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
-
+    
+    /**
+     * Get Db Objects
+     * 
+     * @return ArrayList of elements extending GGCHibernateObject
+     */
     @Override
     public ArrayList<? extends GGCHibernateObject> getDbObjects()
     {
@@ -306,6 +258,11 @@ public class CGMValuesEntry extends DeviceValuesEntry
     }
 
 
+    /**
+     * Get Data As String
+     * 
+     * @see ggc.plugin.output.OutputWriterData#getDataAsString()
+     */
     @Override
     public String getDataAsString()
     {
@@ -314,19 +271,15 @@ public class CGMValuesEntry extends DeviceValuesEntry
     }
 
 
+    /**
+     * Set DateTime Object (ATechDate)
+     * 
+     * @param dt ATechDate instance
+     */
     @Override
-    public boolean isDataBG()
+    public void setDateTimeObject(ATechDate dt)
     {
         // TODO Auto-generated method stub
-        return false;
-    }
-
-
-    @Override
-    public void setOutputType(int type)
-    {
-        // TODO Auto-generated method stub
-        
     }
 	
 	

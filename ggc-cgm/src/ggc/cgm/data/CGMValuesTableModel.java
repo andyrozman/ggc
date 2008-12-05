@@ -1,14 +1,14 @@
 package ggc.cgm.data;
 
-import ggc.cgm.gui.CGMDisplayDataDialog;
 import ggc.cgm.util.DataAccessCGM;
 import ggc.cgm.util.I18nControl;
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesTableModel;
+import ggc.plugin.gui.DeviceDisplayDataDialog;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-
-import javax.swing.table.AbstractTableModel;
 
 
 /**
@@ -38,44 +38,44 @@ import javax.swing.table.AbstractTableModel;
  */
 
 
-public class CGMValuesTableModel extends AbstractTableModel 
+public class CGMValuesTableModel extends DeviceValuesTableModel 
 {
 
     private static final long serialVersionUID = 2881771615052748327L;
 
     private I18nControl m_ic = I18nControl.getInstance();
-    // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
 
-    // GlucoValues dayData;
-
-    ArrayList<CGMValuesEntry> dl_data;
-    ArrayList<CGMValuesEntry> displayed_dl_data;
-    
-    Hashtable<String,DayValueH> old_data = null;
-
-    // GGCProperties props = GGCProperties.getInstance();
-
-    int current_filter = CGMDisplayDataDialog.FILTER_NEW_CHANGED;
-
-    // public String status_icon_name
+    int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
 
     private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
                                      m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
-    public CGMValuesTableModel()
+    /**
+     * Constructor
+     * 
+     * @param ddh DeviceDataHandler instance
+     */
+    public CGMValuesTableModel(DeviceDataHandler ddh)
     {
-        this.displayed_dl_data = new ArrayList<CGMValuesEntry>();
-        this.dl_data = new ArrayList<CGMValuesEntry>();
-        // this.dayData = dayData;
-        fireTableChanged(null);
-        // dayData.addGlucoValueEventListener(this);
+        super(DataAccessCGM.getInstance(), ddh);
     }
 
+    /**
+     * Get Column Count
+     * 
+     * @see ggc.plugin.data.DeviceValuesTableModel#getColumnCount()
+     */
     public int getColumnCount()
     {
         return 5;
     }
 
+    /**
+     * Is Boolean
+     * 
+     * @param column column index
+     * @return true if column type is boolean
+     */
     public boolean isBoolean(int column)
     {
         if (column == 4)
@@ -84,6 +84,12 @@ public class CGMValuesTableModel extends AbstractTableModel
             return false;
     }
 
+    /**
+     * Is Editable Column
+     * 
+     * @param column column index
+     * @return true if column is editable
+     */
     public boolean isEditableColumn(int column)
     {
         if (column == 4)
@@ -93,6 +99,14 @@ public class CGMValuesTableModel extends AbstractTableModel
 
     }
 
+    
+    /**
+     * Get Column Width
+     * 
+     * @param column column index
+     * @param width width for column
+     * @return calculated size of column
+     */
     public int getColumnWidth(int column, int width)
     {
         if (column == 0)
@@ -106,53 +120,13 @@ public class CGMValuesTableModel extends AbstractTableModel
 
     }
 
-    public void selectAll()
-    {
-        setSelectors(true);
-    }
 
-    public void deselectAll()
-    {
-        setSelectors(false);
-    }
-
-    private void setSelectors(boolean select)
-    {
-        for (int i = 0; i < this.displayed_dl_data.size(); i++)
-        {
-            this.displayed_dl_data.get(i).setChecked(select);
-        }
-
-        this.fireTableDataChanged();
-    }
-
-    
-    public void setFilter(int filter)
-    {
-        if (this.current_filter==filter)
-            return;
-        
-        this.current_filter = filter;
-        
-        this.displayed_dl_data.clear();
-        
-        for(int i=0; i< this.dl_data.size(); i++)
-        {
-            CGMValuesEntry mve = this.dl_data.get(i);
-            
-            if (shouldBeDisplayed(mve.getStatus()))
-            {
-                this.displayed_dl_data.add(mve);
-            }
-        }
-        
-        this.fireTableDataChanged();
-        
-    }
-    
-    
-    
-
+    /**
+     * Should be displayed filter
+     * 
+     * @param status
+     * @return
+     */    
     public boolean shouldBeDisplayed(int status)
     {
         
@@ -186,14 +160,15 @@ public class CGMValuesTableModel extends AbstractTableModel
         return true;
     }
 
-    public int getRowCount()
-    {
-        return this.displayed_dl_data.size();
-    }
 
+    /**
+     * Get Value At
+     * 
+     * @see javax.swing.table.TableModel#getValueAt(int, int)
+     */
     public Object getValueAt(int row, int column)
     {
-        CGMValuesEntry mve = this.displayed_dl_data.get(row);
+        CGMValuesEntry mve = (CGMValuesEntry)this.displayed_dl_data.get(row);
 
         switch (column)
         {
@@ -201,10 +176,10 @@ public class CGMValuesTableModel extends AbstractTableModel
             return mve.getDateTimeObject().getDateTimeString();
 
         case 1:
-            return mve.getBGValue(DataAccessCGM.BG_MMOL);
+            //return mve.getBGValue(DataAccessCGM.BG_MMOL);
 
         case 2:
-            return mve.getBGValue(DataAccessCGM.BG_MGDL);
+            //return mve.getBGValue(DataAccessCGM.BG_MGDL);
 
         case 3:
             return new Integer(mve.getStatus());
@@ -225,17 +200,6 @@ public class CGMValuesTableModel extends AbstractTableModel
          */
     }
 
-    public void addEntry(CGMValuesEntry mve)
-    {
-//        processMeterValuesEntry(mve);
-        this.dl_data.add(mve);
-        
-        if (this.shouldBeDisplayed(mve.getStatus()))
-        {
-            this.displayed_dl_data.add(mve);
-        }
-        this.fireTableDataChanged();
-    }
 
     /*
     public void processMeterValuesEntry(MeterValuesEntry mve)
@@ -295,44 +259,24 @@ public class CGMValuesTableModel extends AbstractTableModel
     */
     
     
-    public Hashtable<String,ArrayList<DayValueH>> getCheckedEntries()
-    {
-        
-        Hashtable<String,ArrayList<DayValueH>> ht = new Hashtable<String,ArrayList<DayValueH>>();
-        
-        ht.put("ADD", new ArrayList<DayValueH>());
-        ht.put("EDIT", new ArrayList<DayValueH>());
-        
-        
-        for(int i=0; i<this.dl_data.size(); i++)
-        {
-            CGMValuesEntry mve = this.dl_data.get(i);
-            
-            if (!mve.getChecked())
-                continue;
-            
-            mve.prepareEntry();
-            
-            if (mve.object_status==CGMValuesEntry.OBJECT_STATUS_NEW)
-            {
-                ht.get("ADD").add(mve.getDbObject());
-            }
-            else if (mve.object_status==CGMValuesEntry.OBJECT_STATUS_EDIT)
-            {
-                ht.get("EDIT").add(mve.getDbObject());
-            }
-        }
-        
-        return ht;
-    }
     
-    
+    /**
+     * Get Column Name
+     * 
+     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
+     */    
     @Override
     public String getColumnName(int column)
     {
         return column_names[column];
     }
 
+    
+    /**
+     * Get Column Class
+     * 
+     * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
+     */
     @Override
     public Class<?> getColumnClass(int c)
     {
@@ -344,6 +288,11 @@ public class CGMValuesTableModel extends AbstractTableModel
         // return getValueAt(0,c).getClass();
     }
 
+    /**
+     * Is Cell Editable
+     * 
+     * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
+     */    
     @Override
     public boolean isCellEditable(int row, int col)
     {
@@ -353,44 +302,52 @@ public class CGMValuesTableModel extends AbstractTableModel
             return false;
     }
 
+    /**
+     * Set Value At
+     * 
+     * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
+     */    
     @Override
     public void setValueAt(Object aValue, int row, int column)
     {
         Boolean b = (Boolean) aValue;
         this.displayed_dl_data.get(row).setChecked(b.booleanValue());
-        // System.out.println("set Value: rw=" + row + ",column=" + column +
-        // ",value=" + aValue);
-        // dayData.setValueAt(aValue, row, column);
-        // fireTableChanged(null);
     }
 
-    public void setOldValues(Hashtable<String,DayValueH> data)
-    {
-        this.old_data = data;
-        //System.out.println(this.old_data);
-        //System.out.println(this.old_data.keys());
-    }
-    
-    
-    /*
-     * @see event.GlucoValueEventListener#glucoValuesChanged(GlucoValueEvent)
-     */
-    /*
-     * public void glucoValuesChanged(GlucoValueEvent event) { switch
-     * (event.getType()) { case GlucoValueEvent.INSERT:
-     * fireTableRowsInserted(event.getFirstRow(), event.getLastRow()); break;
-     * case GlucoValueEvent.DELETE: fireTableRowsDeleted(event.getFirstRow(),
-     * event.getLastRow()); break; case GlucoValueEvent.UPDATE:
-     * fireTableCellUpdated(event.getFirstRow(), event.getColumn()); break; } }
-     */
 
-    /*
-     * Returns the dayData.
+    /**
+     * Add To Array 
      * 
-     * @return GlucoValues
+     * @param lst
+     * @param source
      */
-    /*
-     * public GlucoValues getDayData() { return dayData; }
-     */
+    @Override
+    public void addToArray(ArrayList<?> lst, ArrayList<?> source)
+    {
+        // TODO Auto-generated method stub
+    }
 
+    /**
+     * Get Empty ArrayList
+     * 
+     * @return
+     */
+    @Override
+    public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * Process Device Value Entry
+     * 
+     * @param mve DeviceValuesEntry instance
+     */
+    @Override
+    public void processDeviceValueEntry(DeviceValuesEntry mve)
+    {
+        // TODO Auto-generated method stub
+    }
+   
 }

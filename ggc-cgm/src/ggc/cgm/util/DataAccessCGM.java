@@ -290,7 +290,10 @@ public class DataAccessCGM extends DataAccessPlugInBase
         
     }
 
-
+    
+    /**
+     * Create About Context for plugin
+     */
     @Override
     public void createPlugInDataRetrievalContext()
     {
@@ -299,6 +302,9 @@ public class DataAccessCGM extends DataAccessPlugInBase
     }
 
 
+    /**
+     * Load Manager instance
+     */
     @Override
     public void loadManager()
     {
@@ -306,7 +312,10 @@ public class DataAccessCGM extends DataAccessPlugInBase
         
     }
 
-
+    
+    /**
+     * Load Device Data Handler
+     */
     @Override
     public void loadDeviceDataHandler()
     {
@@ -314,15 +323,18 @@ public class DataAccessCGM extends DataAccessPlugInBase
         
     }
 
-
+    /**
+     * Get Images for Devices
+     * 
+     * @see ggc.plugin.util.DataAccessPlugInBase#getDeviceImagesRoot()
+     * @return String with images path 
+     */
     @Override
     public String getDeviceImagesRoot()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
 
 
 }

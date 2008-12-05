@@ -472,6 +472,11 @@ public class GenericCGM implements CGMInterface
         return null;
     }
 
+    /**
+     * Dispose
+     * 
+     * @see ggc.plugin.device.DeviceInterface#dispose()
+     */
     public void dispose()
     {
         // TODO Auto-generated method stub
