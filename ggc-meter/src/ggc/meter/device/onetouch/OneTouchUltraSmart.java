@@ -4,7 +4,7 @@ import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.ExtendedBitSet;
+//import ggc.meter.util.ExtendedBitSet;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
