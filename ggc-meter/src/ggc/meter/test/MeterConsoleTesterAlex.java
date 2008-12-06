@@ -23,357 +23,135 @@
  *  Purpose:  This class contains all definitions for Meters. This includes:
  *        meter names, classes that handle meter and all other relevant data.
  *
- *  Author:   andyrozman
+ *  Author:   Alex {abalaban1@yahoo.ca}
+ *  
  */
-
 
 package ggc.meter.test;
 
-import ggc.meter.device.accuchek.AccuChekAviva;
-import ggc.meter.device.ascensia.AscensiaContour;
-import ggc.meter.device.onetouch.OneTouchUltra;
-import ggc.meter.device.onetouch.OneTouchUltraEasy;
 import ggc.meter.device.onetouch.OneTouchUltraSmart;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 
-import java.awt.TextArea;
-import java.util.List;
 import java.util.Vector;
 
 import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Meter Tool (support for Meter devices)
+ *
+ *  See AUTHORS for copyright information.
+ *  <pre>
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *  </pre>
+ *  Filename:     MeterConsoleTesterAlex  
+ *  Description:  Console tester for testing meter implementation of OT Ultra Smart
+ * 
+ *  Author: Alex {abalaban1@yahoo.ca}
+ */
 
-public class MeterConsoleTesterAlex //extends JFrame
+
+public class MeterConsoleTesterAlex // extends JFrame
 {
 
-	
-//    private JButton openButton, sendButton, enterButton, clearButton;
-//    private JTextField textField, textField2, textField3;
-
-    public static TextArea messageArea;
-
-    //private AscensiaContour m_meter;
-    //private AbstractSerialMeter m_meter;
-    private OneTouchUltra m_meter;
-    //private SerialProtocol m_meter;
-
     TimerThread thread;
-    
+
+    /**
+     * Constructor
+     * 
+     * @param portName
+     */
     public MeterConsoleTesterAlex(String portName)
     {
-    	
-    	TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
-    	
-		tzu.setTimeZone("Europe/Prague");
-		tzu.setWinterTimeChange(0);
-		tzu.setSummerTimeChange(+1);
-    	
-        
-		//thread = new TimerThread();
-	    //thread.start();
-	    
-    	try
-    	{
-    	    //startAscensia(portName);
-    	    this.startOneTouchUltraSmart(portName);
-    	    //this.startOneTouchUltra(portName);
-    	    //this.startOneTouchUltra(portName);
-    	    //this.startOneTouchEasy(portName);
-    	    
-    	    //startAccuChekAviva();
-    	    
-    	    
-    	    /*
-    		//GGCFileOutputWriter gfo = new GGCFileOutputWriter();
-    	    ConsoleOutputWriter cow = new ConsoleOutputWriter();
-    		
-//    		thread.addJob(gfo.getOutputUtil());
-    		
-    		displaySerialPorts();
-    		
-/*    		
-    		m_meter = new AscensiaContour(portName, gfo);
-    	    m_meter.setPort(portName);
-    	    m_meter.loadInitialData();
-  */
-    		
-    //		m_meter = new OneTouchUltra(portName, cow);
-    	//	m_meter.loadInitialData();
-    		
-    	}
-    	catch(Exception ex)
-    	{
-    	    System.out.println("Tester -> Exception on creation of meter. " + ex);
-    	    ex.printStackTrace();
-    	} 
 
-/*
-        //MeterImportManager mim = new MeterImportManager();
+        TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
-        if (mim.getErrorCode()!=0)
+        tzu.setTimeZone("Europe/Prague");
+        tzu.setWinterTimeChange(0);
+        tzu.setSummerTimeChange(0);
+
+        try
         {
-            System.exit(1);
+            this.startOneTouchUltraSmart(portName);
         }
-*/
+        catch (Exception ex)
+        {
+            System.out.println("Tester -> Exception on creation of meter. " + ex);
+            ex.printStackTrace();
+        }
 
-
-/*
-
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        JDialog.setDefaultLookAndFeelDecorated(true);
-
-        enableEvents(AWTEvent.WINDOW_EVENT_MASK);
-
-        this.getContentPane().setLayout(null);
-        this.setSize(640, 480);
-        this.setTitle("Meter Tester - v0.1");
-        this.setResizable(true);
-        
-        JPanel fullPanel = new JPanel();
-        fullPanel.setLayout(null);
-        fullPanel.setBounds(0,0,640,480);
-        this.getContentPane().add(fullPanel);
-
-
-        JLabel label = new JLabel("String to Send:");
-        label.setBounds(30, 10, 100, 25);
-
-        fullPanel.add(label);
-
-
-
-        textField  = new JTextField();
-        textField.setBounds(30, 35, 360, 25);
-        fullPanel.add(textField);
-
-        sendButton = new JButton("Send");
-        sendButton.setBounds(405, 35, 65, 25);
-        //sendButton.setEnabled(false);
-        sendButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e) 
-                {
-                    readyToWrite(textField.getText()+"\n");
-                    messageArea.append("--> "+textField.getText()+"\n");
-                }
-            });
-        fullPanel.add(sendButton);
-
-
-        enterButton = new JButton("Test");
-        enterButton.setBounds(480, 35, 120, 25);
-        //enterButton.setEnabled(false);
-        enterButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e) 
-                {
-                    //readyToWrite("\n");
-                    //messageArea.append("--> <Enter> sent.\n");
-		    //m_meter.test2();
-		    try
-		    {
-			m_meter.loadInitialData();
-
-			System.out.println("Info: \n" + m_meter.getInfo());
-			System.out.println("Time Difference: \n" + m_meter.getTimeDifference());
-
-			//m_meter.getDataFull();
-		    }
-		    catch(Exception ex)
-		    {
-			System.out.println("Exception: " + ex);
-		    }
-
-		    m_meter.getInfo();
-		    m_meter.getTimeDifference();
-                }
-            });
-        fullPanel.add(enterButton);
-
-
-        label = new JLabel("Communication window:");
-        label.setBounds(30, 70, 200, 25);
-        fullPanel.add(label);
-
-
-        clearButton = new JButton("Clear");
-        clearButton.setBounds(535, 73, 65, 20);
-        clearButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e) 
-                {
-                    messageArea.setText("");
-                }
-            });
-        fullPanel.add(clearButton);
-
-
-        messageArea = new TextArea();
-        messageArea.setBounds(30, 95, 570, 300);
-        fullPanel.add(messageArea, null);
-
-	this.setVisible(true);
-	*/
     }
 
-
-    public void startAscensia(String portName) throws Exception
+    /**
+     * @param portName
+     * @throws Exception
+     */
+    public void startOneTouchUltraSmart(String portName) throws Exception
     {
-        //GGCFileOutputWriter ow = new GGCFileOutputWriter();
-        ConsoleOutputWriter ow = new ConsoleOutputWriter();
-        
-        //thread.addJob(cow.getOutputUtil());
-        //thread.addJob(ow.getOutputUtil());
-        
+
+        ConsoleOutputWriter cow = new ConsoleOutputWriter();
+
+        // a thread.addJob(cow.getOutputUtil());
+
         displaySerialPorts();
-        
-          
-        AscensiaContour asc_meter = new AscensiaContour(portName, ow);
-        asc_meter.setPort(portName);
-        
-       
-        
-        asc_meter.readDeviceDataFull(); 
-        
-        System.out.println("We are back in tester !!!!");
-        
-        System.exit(0);
-        
+
+        OneTouchUltraSmart otUS = new OneTouchUltraSmart(portName, cow);
+
+        // m_meter = new OneTouchUltra(portName, cow);
+        otUS.readDeviceDataFull();
+
     }
 
-    
-    public void startAccuChekAviva()
+    /**
+     * Display Serial Ports
+     */
+    public void displaySerialPorts()
+    {
+        Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
+
+        System.out.println(" --- List Serial Ports -----");
+
+        for (int i = 0; i < vct.size(); i++)
+        {
+            System.out.println(vct.get(i));
+        }
+    }
+
+    /**
+     * Main startup method
+     * 
+     * @param args
+     */
+    public static void main(String args[])
     {
         try
         {
-            AccuChekAviva acv = new AccuChekAviva();
-            acv.readDeviceDataFull();
+
+            if (args.length == 0)
+                new MeterConsoleTesterAlex("COM5");
+            else
+                new MeterConsoleTesterAlex(args[0]);
+
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            System.out.println("Exception: " + ex);
+            System.out.println("Error:" + ex);
+            ex.printStackTrace();
         }
     }
-    
-    
-    
-    public void startOneTouchUltra(String portName) throws Exception
-    {
-        
-        ConsoleOutputWriter cow = new ConsoleOutputWriter();
-        
-//a        thread.addJob(cow.getOutputUtil());
-        
-        
-        
-        displaySerialPorts();
-        
-        OneTouchUltra otu = new OneTouchUltra(portName, cow);
-        //OneTouchMeter2 otu = new OneTouchMeter2(portName, cow);
-        
-        
-        
-        //m_meter = new OneTouchUltra(portName, cow);
-         otu.readDeviceDataFull(); 
-
-    }
-    
-    public void startOneTouchUltraSmart(String portName) throws Exception
-    {
-        
-        ConsoleOutputWriter cow = new ConsoleOutputWriter();
-        
-//a        thread.addJob(cow.getOutputUtil());
-        
-        
-        
-        displaySerialPorts();
-        
-        OneTouchUltraSmart otUS = new OneTouchUltraSmart(portName, cow);
-        
-        
-        
-        //m_meter = new OneTouchUltra(portName, cow);
-        otUS.readDeviceDataFull(); 
-
-
-    }
-    
-    public void startOneTouchEasy(String portName) throws Exception
-    {
-        
-        ConsoleOutputWriter cow = new ConsoleOutputWriter();
-        
-        displaySerialPorts();
-        
-        OneTouchUltraEasy otu = new OneTouchUltraEasy(portName, cow);
-        otu.readDeviceDataFull();
-        //otu.test_crc();
-
-    }
-    
-    
-    public void displaySerialPorts()
-    {
-    	Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
-    	
-		System.out.println(" --- List Serial Ports -----");
-    	
-    	for(int i=0; i<vct.size(); i++)
-    	{
-    		System.out.println(vct.get(i));
-    	}
-    }
-    
-
-    public void readyToWrite(String str)
-    {
-	try
-	{
-	    this.m_meter.portOutputStream.write(str.getBytes());
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Tester -> Error writing to meter: " + ex);
-	}
-    }
-
-
-    public static void main(String args[])
-    {
-	try
-	{
-	    
-	    if (args.length == 0)
-	        new MeterConsoleTesterAlex("COM5");
-	    else
-	        new MeterConsoleTesterAlex(args[0]);
-
-	    /*
-	    AscensiaMeter am = new AscensiaMeter();
-	    am.setPort("COM1");
-	    am.open();
-
-	    try
-	    {
-		Thread.sleep(2000);
-		am.test();
-
-	    }
-	    catch(Exception ex)
-	    {
-	    }*/
-
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Error:" + ex);
-	    ex.printStackTrace();
-	}
-    }
-
-
 
 }

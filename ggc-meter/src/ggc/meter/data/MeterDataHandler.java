@@ -26,22 +26,22 @@ import java.util.Hashtable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     CGMValues.java
- *  Description:  Collection of CGMValuesDay.
+ *  Filename:     MeterDataHandler
+ *  Description:  Data Handler for Meter Tool
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
-
-
-//IMPORTANT NOTICE: 
-//This class is not implemented yet.
 
 public class MeterDataHandler extends DeviceDataHandler
 {
 
 
     
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public MeterDataHandler(DataAccessPlugInBase da)
     {
         super(da);
@@ -50,6 +50,11 @@ public class MeterDataHandler extends DeviceDataHandler
     
     
     
+    /**
+     * Execute export Db
+     * 
+     * @see ggc.plugin.data.DeviceDataHandler#executeExportDb()
+     */
     public void executeExportDb()
     {
         System.out.println("Checked entries: " + this.getDeviceValuesTableModel().getCheckedEntries());
@@ -58,32 +63,38 @@ public class MeterDataHandler extends DeviceDataHandler
     }
     
     
+    /**
+     * Execute Export Other (not supported for now)
+     * 
+     * @see ggc.plugin.data.DeviceDataHandler#executeExportOther()
+     */
     public void executeExportOther()
     {
-        
     }
     
     
+    /**
+     * Create Device Values Table Model
+     */
     public void createDeviceValuesTableModel()
     {
         this.m_model = new MeterValuesTableModel(this);
     }
 
 
-    //Hashtable<String,MeterValuesEntry> m_data = null;
 
-
+    /**
+     * Set Device Data
+     * 
+     * @param data data as Hashtable<String,?> data
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void setDeviceData(Hashtable<String, ?> data)
     {
-        
         old_data = (Hashtable<String,MeterValuesEntry>)data;
-        
-        System.out.println("Old data: " + old_data);
+//        System.out.println("Old data: " + old_data);
     }
-
-    //Hashtable<String,ArrayList<?>> ht = this.model.getCheckedEntries();
 
     
 }	

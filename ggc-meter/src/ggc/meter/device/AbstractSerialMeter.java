@@ -113,6 +113,9 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     String meter_group = null;
     String meter_device = null;
 
+    /**
+     * Dispose this instance
+     */
     public void dispose()
     {
         this.close();

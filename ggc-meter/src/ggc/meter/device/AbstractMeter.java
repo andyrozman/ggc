@@ -65,6 +65,11 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     boolean can_read_device_configuration = false;
     
     
+    /**
+     * Dispose instance
+     * 
+     * @see ggc.plugin.device.DeviceInterface#dispose()
+     */
     public void dispose()
     {
     }

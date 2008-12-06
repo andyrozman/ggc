@@ -11,7 +11,6 @@ import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.output.OutputUtil;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,40 +44,39 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
 
     private static final long serialVersionUID = 7198690314603156531L;
     private I18nControl m_ic = I18nControl.getInstance();
-    // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
-
-
-    //ArrayList<MeterValuesEntry> dl_data;
-    //ArrayList<MeterValuesEntry> displayed_dl_data;
-    //Hashtable<String,DayValueH> old_data = null;
-    
-    //Hashtable<String,DayValueH> old_data_typed = null;
-    //old_data_typed
-    
-
-    // GGCProperties props = GGCProperties.getInstance();
 
     int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
-
-    // public String status_icon_name
 
     private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
                                      m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
+    
+    /**
+     * Constructor
+     * 
+     * @param ddh DeviceDataHandler instance
+     */
     public MeterValuesTableModel(DeviceDataHandler ddh)
     {
         super(DataAccessMeter.getInstance(), ddh);
-        
-        //this.displayed_dl_data = new ArrayList<MeterValuesEntry>();
-        //this.dl_data = new ArrayList<MeterValuesEntry>();
-        //fireTableChanged(null);
     }
 
+    /**
+     * Get Column Count
+     * 
+     * @see javax.swing.table.TableModel#getColumnCount()
+     */
     public int getColumnCount()
     {
         return 5;
     }
 
+    /**
+     * Is Boolean
+     * 
+     * @param column column index
+     * @return true if column type is boolean
+     */
     public boolean isBoolean(int column)
     {
         if (column == 4)
@@ -87,6 +85,12 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
             return false;
     }
 
+    /**
+     * Is Editable Column
+     * 
+     * @param column column index
+     * @return true if column is editable
+     */
     public boolean isEditableColumn(int column)
     {
         if (column == 4)
@@ -96,6 +100,13 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
 
     }
 
+    /**
+     * Get Column Width
+     * 
+     * @param column column index
+     * @param width width for column
+     * @return calculated size of column
+     */
     public int getColumnWidth(int column, int width)
     {
         if (column == 0)
@@ -108,55 +119,14 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
         }
 
     }
-
-    /*
-    public void selectAll()
-    {
-        setSelectors(true);
-    }
-
-    public void deselectAll()
-    {
-        setSelectors(false);
-    }
-
-    private void setSelectors(boolean select)
-    {
-        for (int i = 0; i < this.displayed_dl_data.size(); i++)
-        {
-            this.displayed_dl_data.get(i).setChecked(select);
-        }
-
-        this.fireTableDataChanged();
-    }
-*/
-  /*  
-    public void setFilter(int filter)
-    {
-        if (this.current_filter==filter)
-            return;
-        
-        this.current_filter = filter;
-        
-        this.displayed_dl_data.clear();
-        
-        for(int i=0; i< this.dl_data.size(); i++)
-        {
-            MeterValuesEntry mve = (MeterValuesEntry)this.dl_data.get(i);
-            
-            if (shouldBeDisplayed(mve.getStatus()))
-            {
-                this.displayed_dl_data.add(mve);
-            }
-        }
-        
-        this.fireTableDataChanged();
-        
-    }
-    */
     
     
-
+    /**
+     * Should be displayed filter
+     * 
+     * @param status
+     * @return
+     */
     public boolean shouldBeDisplayed(int status)
     {
         switch (this.current_filter)
@@ -187,11 +157,11 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
 
     }
 
-    public int getRowCount()
-    {
-        return this.displayed_dl_data.size();
-    }
 
+    /**
+     * Get Value At
+     * @see javax.swing.table.TableModel#getValueAt(int, int)
+     */
     public Object getValueAt(int row, int column)
     {
         MeterValuesEntry mve = (MeterValuesEntry)this.displayed_dl_data.get(row);
@@ -236,6 +206,11 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
     }
 */
     
+    /**
+     * Process Device Value Entry
+     * 
+     * @param mve DeviceValuesEntry instance
+     */
     public void processDeviceValueEntry(DeviceValuesEntry mve)
     {
         //System.out.println("processMeterValuesEntry");
@@ -325,12 +300,22 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
     }
     */
     
+    /**
+     * Get Column Name
+     * 
+     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
+     */
     @Override
     public String getColumnName(int column)
     {
         return column_names[column];
     }
 
+    /**
+     * Get Column Class
+     * 
+     * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
+     */
     @Override
     public Class<?> getColumnClass(int c)
     {
@@ -342,6 +327,11 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
         // return getValueAt(0,c).getClass();
     }
 
+    /**
+     * Is Cell Editable
+     * 
+     * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
+     */
     @Override
     public boolean isCellEditable(int row, int col)
     {
@@ -351,6 +341,11 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
             return false;
     }
 
+    /**
+     * Set Value At
+     * 
+     * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
+     */
     @Override
     public void setValueAt(Object aValue, int row, int column)
     {
@@ -363,6 +358,13 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
     }
 
 
+    /**
+     * Add To Array 
+     * 
+     * @param lst
+     * @param source
+     */
+    @SuppressWarnings("unchecked")
     @Override
     public void addToArray(ArrayList<?> lst, ArrayList<?> source)
     {
@@ -378,6 +380,11 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
         }
     }
 
+    /**
+     * Get Empty ArrayList
+     * 
+     * @return
+     */
     @Override
     public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
     {
