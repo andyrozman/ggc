@@ -4,7 +4,6 @@ import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
-//import ggc.meter.util.ExtendedBitSet;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -14,7 +13,6 @@ import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -22,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.atech.utils.ATechDate;
+import com.atech.utils.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,7 +45,7 @@ import com.atech.utils.ATechDate;
  *  Filename:     OneTouchUltraSmart
  *  Description:  Support for LifeScan OneTouch Ultra Smart Meter
  * 
- *  Author: Andy {andy@atech-software.com}
+ *  Author: Alex {abalaban1@yahoo.ca}
  */
 
 // in works
@@ -76,6 +75,9 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
                                     0x79, 0x63, 0x25, 0x3f, 0x11, 0x0b, 0x27, 0x3d, 0x13, 0x09, 0x4f, 0x55, 0x7b,
                                     0x61, 0x7a, 0x60, 0x4e, 0x54, 0x12, 0x08, 0x26, 0x3C };
 
+    protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+    
+    
     /**
      * Constructor used by most classes
      * 
@@ -301,12 +303,12 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
      * Records are followed by one byte checksum, using CRC-7 algorithm.
      * The binary protocol is NOT the same as for OT Mini, etc.
      * The binary data are BigEndian, or read from right to the left.
-     * 
-     * 
-     * @return a list of records
      */
     public void readDeviceDataFull()
     {
+        
+        readInfo();
+        
         System.out.println("reading device data");
         
         List<byte[]> dataRecords = new ArrayList<byte[]>();
@@ -476,14 +478,20 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         // create GGC internal entry record
         MeterValuesEntry mve = new MeterValuesEntry();
         mve.setBgUnit(DataAccessMeter.BG_MGDL);
-        ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dateTime);
-        mve.setDateTimeObject(atd);
+        // changed by andy
+        //ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dateTime);
+        //mve.setDateTimeObject(atd);
+        
+        mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(dateTime.getTimeInMillis())));
+
+        
         mve.setBgValue(Integer.toString(bgMg));
         
         this.output_writer.writeData(mve);
 
     }
     
+    @SuppressWarnings("unused")
     private void processExerciseRecord(byte[] recordArray)
     {
         // J = Junk
