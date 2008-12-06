@@ -156,255 +156,288 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#canReadConfiguration()
+     */
     public boolean canReadConfiguration()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#canReadData()
+     */
     public boolean canReadData()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#canReadDeviceInfo()
+     */
     public boolean canReadDeviceInfo()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * @throws PlugInBaseException
+     */
     public void close() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
 
-
-    public int getCGMIndex()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
+    /**
+     * @see ggc.plugin.device.DeviceInterface#getConnectionProtocol()
+     */
     public int getConnectionProtocol()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
-
+    /**
+     * @see ggc.plugin.device.DeviceInterface#getDeviceSpecialComment()
+     */
     public String getDeviceSpecialComment()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
-
+    /**
+     * @return
+     */
     public String getPort()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#hasSpecialProgressStatus()
+     */
     public boolean hasSpecialProgressStatus()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * @return
+     * @throws PlugInBaseException
+     */
     public boolean open() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#readConfiguration()
+     */
     public void readConfiguration() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
-    public void readDeviceData() throws PlugInBaseException
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
+    /**
+     * @see ggc.plugin.device.DeviceInterface#readDeviceDataFull()
+     */
     public void readDeviceDataFull() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#readDeviceDataPartitial()
+     */
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#readInfo()
+     */
     public void readInfo() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#setDeviceAllowedActions(boolean, boolean, boolean, boolean)
+     */
     public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data,
             boolean can_read_device_info, boolean can_read_device_configuration)
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#test()
+     */
     public void test()
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#compareTo(com.atech.graphics.dialogs.selector.SelectableInterface)
+     */
     public int compareTo(SelectableInterface o)
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnCount()
+     */
     public int getColumnCount()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnName(int)
+     */
     public String getColumnName(int num)
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnValue(int)
+     */
     public String getColumnValue(int num)
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnValueObject(int)
+     */
     public Object getColumnValueObject(int num)
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnWidth(int, int)
+     */
     public int getColumnWidth(int num, int width)
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getItemId()
+     */
     public long getItemId()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getShortDescription()
+     */
     public String getShortDescription()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#isFound(java.lang.String)
+     */
     public boolean isFound(String text)
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#isFound(int)
+     */
     public boolean isFound(int value)
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#isFound(int, int, int)
+     */
     public boolean isFound(int from, int till, int state)
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#setColumnSorter(com.atech.graphics.dialogs.selector.ColumnSorter)
+     */
     public void setColumnSorter(ColumnSorter cs)
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#setSearchContext()
+     */
     public void setSearchContext()
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#getDeviceClassName()
+     */
     public String getDeviceClassName()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#getDeviceCompany()
+     */
     public AbstractDeviceCompany getDeviceCompany()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#setDeviceCompany(ggc.plugin.manager.company.AbstractDeviceCompany)
+     */
     public void setDeviceCompany(AbstractDeviceCompany company)
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#getConnectionPort()
+     */
     public String getConnectionPort()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
 
+    /**
+     * @see ggc.plugin.device.DeviceInterface#dispose()
+     */
     public void dispose()
     {
-        // TODO Auto-generated method stub
-        
     }
-    
-    
-    
-    
-    
-
 
 }

@@ -20,8 +20,8 @@ package ggc.plugin.manager.company;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DeviceCompanyInterface
+ *  Description:  Device Company Interface
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -30,20 +30,17 @@ package ggc.plugin.manager.company;
 public interface DeviceCompanyInterface
 {
 
-
-    
-    
     
     //********************************************************
-    //***      Meter Company Identification Methods        ***
+    //***      Device Company Identification Methods       ***
     //********************************************************
 
 
     /**
-     * getName - Get Name of meter. 
+     * getName - Get Name of device. 
      * Should be implemented by company class.
      * 
-     * @return name of meter
+     * @return name of device
      */
     String getName();
 
@@ -66,7 +63,6 @@ public interface DeviceCompanyInterface
     String getDescription();
     
     
-    
     /**
      * getImplementationStatus - Get Implementation status 
      * Should be implemented by company class.
@@ -75,10 +71,6 @@ public interface DeviceCompanyInterface
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     int getImplementationStatus(); 
-    
-    
-    
-    
     
     
 }

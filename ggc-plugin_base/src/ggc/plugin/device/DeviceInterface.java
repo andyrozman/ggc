@@ -99,6 +99,8 @@ public interface DeviceInterface extends SelectableInterface
      * getDeviceId - Get Device Id, this are plugin specific and global (for example only one device 
      * of type meter, can have same id.  
      * Should be implemented by protocol class.
+     * 
+     * @return id of device
      */
     int getDeviceId();
 
@@ -189,6 +191,8 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
+     * 
+     * @throws PlugInBaseException 
      */
     void readDeviceDataPartitial() throws PlugInBaseException;
 
@@ -264,13 +268,16 @@ public interface DeviceInterface extends SelectableInterface
     //***                    Test                  ***
     //************************************************
 
+    /**
+     * Test
+     */
     void test();
 
 
     /**
      * getConnectionProtocol - returns id of connection protocol
      * 
-     * @return
+     * @return id of connection protocol
      */
     public int getConnectionProtocol();
 

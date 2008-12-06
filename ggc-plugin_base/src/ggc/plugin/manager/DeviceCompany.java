@@ -53,8 +53,8 @@ import java.util.Hashtable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      DeviceCompany  
+ *  Description:   This is class for companies that are added to Managers.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -63,16 +63,20 @@ import java.util.Hashtable;
 public abstract class DeviceCompany
 {
 
-    //protected I18nControl m_ic = I18nControl.getInstance();
-    //protected DataAccessCGM m_da = DataAccessCGM.getInstance();
-    
-    public String id = "";
-    public String name = "";
-    public int index = 0;
+    protected String id = "";
+    protected String name = "";
+    protected int index = 0;
     
     Hashtable<String,DeviceInterface> devices = new Hashtable<String,DeviceInterface>();
 
 
+    /**
+     * Constructor 
+     * 
+     * @param index index of device 
+     * @param id id of device
+     * @param name name of device
+     */
     public DeviceCompany(int index, String id, String name)
     {
     	this.index = index;
@@ -81,6 +85,11 @@ public abstract class DeviceCompany
     }
 
 
+    /**
+     * Add Device
+     * 
+     * @param md device interface instance
+     */
     public void addDevice(DeviceInterface md)
     {
     	this.devices.put(""+md.getDeviceId(), md);
@@ -93,6 +102,11 @@ public abstract class DeviceCompany
     public abstract String getCompanyTypeDescription();
     
     
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     public String toString()
     {
     	return getCompanyTypeDescription() + " Company [index=" + index + ",id=" + id + ",name=" + name + "]";

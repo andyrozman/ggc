@@ -57,8 +57,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AbstractDeviceCompany
+ *  Description:  Abstract Device Company...
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -67,34 +67,34 @@ import com.atech.i18n.I18nControlAbstract;
 public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //, SelectableInterface
 {
 
-
     protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
-    //protected DataAccessPlugInBase m_da = DataAccessCGM.getInstance();
     
-    public String id = "";
-    public String name = "";
-    public int index = 0;
+    protected String id = "";
+    protected String name = "";
+    protected int index = 0;
     
     Hashtable<String,DeviceInterface> devices = new Hashtable<String,DeviceInterface>();
     Vector<DeviceInterface> devices_vector = new Vector<DeviceInterface>();
     
 
-/*
-    public AbstractMeterCompany(int index, String id, String name)
-    {
-    	this.index = index;
-    	this.id = id;
-    	this.name = name;
-    }
-*/
-
     
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public AbstractDeviceCompany(I18nControlAbstract ic)
     {
         this.m_ic = ic;
     }
     
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param empty
+     */
     public AbstractDeviceCompany(I18nControlAbstract ic, boolean empty)
     {
         this(ic);
@@ -106,21 +106,35 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
     }
     
     
+    /**
+     * Get Devices
+     * 
+     * @return vector of devices (Vector<DeviceInterface>)
+     */
     public Vector<DeviceInterface> getDevices()
     {
         return this.devices_vector;
     }
     
     
+    /**
+     * Add Device
+     * 
+     * @param md DeviceInterface instance
+     */
     public void addDevice(DeviceInterface md)
     {
-        // TODO
-//        md.setCGMCompany(this);
     	this.devices.put(""+md.getName(), md);
     	this.devices_vector.add(md);
     }
 
     
+    /**
+     * Get Device
+     * 
+     * @param _name name of device
+     * @return DeviceInterface instance
+     */
     public DeviceInterface getDevice(String _name)
     {
         if (this.devices.containsKey(_name))
@@ -129,16 +143,24 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
             return null;
     }
     
+    
+    /**
+     * Get Name
+     * 
+     * @see ggc.plugin.manager.company.DeviceCompanyInterface#getName()
+     */
     public abstract String getName();
     
     
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     public String toString()
     {
-        return this.getName();
-        
-        //"Meter Company [name=" + this.getName() + ",id=" + this.getCompanyId() + "]";
+        return "Device Company [name=" + this.getName() + ",id=" + this.getCompanyId() + "]";
     }
-    
 
     
     /**

@@ -85,7 +85,7 @@ import com.atech.utils.ATDataAccessAbstract;
 public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 {
     
-    public String web_server_port = "444";
+    //public String web_server_port = "444";
 
     public String plugin_version = "0.2.1";
 
@@ -213,6 +213,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
     
     
+    /**
+     * Get Images for Devices
+     * 
+     * @see ggc.plugin.util.DataAccessPlugInBase#getDeviceImagesRoot()
+     * @return String with images path 
+     */
     public abstract String getDeviceImagesRoot();
     
     
@@ -601,6 +607,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return this.m_manager;
     }
 
+    /**
+     * Load Manager instance
+     */
     public abstract void loadManager();
     
     
@@ -663,6 +672,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
     protected DeviceDataHandler m_ddh;
 
+    /**
+     * Load Device Data Handler
+     */
     public abstract void loadDeviceDataHandler();
     
     public DeviceDataHandler getDeviceDataHandler()

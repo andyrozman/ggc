@@ -27,35 +27,25 @@ import com.atech.utils.ATechDate;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DeviceValuesDay  
+ *  Description:  Device Values Day, with table constructs for Daily Overview table
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 public class DeviceValuesDay 
 {
-	//DataAccessPump da = DataAccessPump.getInstance();
-	
-    // TODO: Make whole class
-	
 	
 	private ArrayList<DeviceValuesEntry> list = null;
 	private Hashtable<String,DeviceValuesEntry> table = null;
-	
 	DataAccessPlugInBase m_da;
-    //private I18nControl m_ic = I18nControl.getInstance();
-/*
-    private String[] column_names = { 
-                        m_ic.getMessage("TIME"),
-                        m_ic.getMessage("BASE_TYPE"),
-                        m_ic.getMessage("SUB_TYPE"),
-                        m_ic.getMessage("VALUE"),
-                        m_ic.getMessage("ADDITIONAL"),
-                        m_ic.getMessage("COMMENT") };
-	*/
+
 	
-	
+	/**
+	 * Constructor
+	 * 
+	 * @param da
+	 */
 	public DeviceValuesDay(DataAccessPlugInBase da)
 	{
 	    this.m_da = da;
@@ -64,6 +54,11 @@ public class DeviceValuesDay
 	}
 	
 	
+	/**
+	 * Add Entry
+	 * 
+	 * @param pve DeviceValuesEntry instance (or derivate)
+	 */
 	public void addEntry(DeviceValuesEntry pve)
 	{
 	    this.list.add(pve);
@@ -77,12 +72,24 @@ public class DeviceValuesDay
 	    
 	}
 	
+	/**
+	 * Is Entry Available
+	 * 
+	 * @param datetime
+	 * @return
+	 */
 	public boolean isEntryAvailable(long datetime)
 	{
 	    ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), datetime);
 	    return this.table.containsKey(atd.getTimeString());
 	}
 	
+	/**
+	 * Get Entry
+	 * 
+	 * @param dt
+	 * @return
+	 */
 	public DeviceValuesEntry getEntry(long dt)
 	{
         ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), dt);
@@ -92,6 +99,13 @@ public class DeviceValuesDay
 	
 	
 	
+    /**
+     * Get Column Width
+     * 
+     * @param column
+     * @param width
+     * @return
+     */
     public int getColumnWidth(int column, int width)
     {
         float mult;
@@ -111,43 +125,60 @@ public class DeviceValuesDay
 	
 	
 	
+	/**
+	 * Get Column Count
+	 * 
+	 * @return
+	 */
 	public int getColumnCount()
 	{
 	    return this.m_da.getColumnsManual().length;
 	}
 	
+	/**
+	 * Get Row Count
+	 * 
+	 * @return
+	 */
 	public int getRowCount()
 	{
-	    //System.out.println("row_count(valDay)=" + this.list);
 	    return this.list.size();
 	}
 	
+    /**
+     * Get Row At
+     * 
+     * @param index
+     * @return
+     */
     public DeviceValuesEntry getRowAt(int index)
     {
         return this.list.get(index);
     }
 	
 	
+	/**
+	 * Get Column Name
+	 * 
+	 * @param column
+	 * @return
+	 */
 	public String getColumnName(int column)
 	{
 	    return this.m_da.getColumnsManual()[column];
 	}
 	
+	/**
+	 * Get Value At
+	 * 
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public Object getValueAt(int row, int column)
 	{
-	    //System.out.println("column: " + column + ",row=" + row);
 	    return this.list.get(row).getColumnValue(column);
-	    //return "";
 	}
-/*	
-    m_ic.getMessage("DATE_TIME"),
-    m_ic.getMessage("BG"),
-    m_ic.getMessage("INS_1"),
-    m_ic.getMessage("INS_2"),
-    m_ic.getMessage("BU"),
-    m_ic.getMessage("ACTIVITY"),
-    m_ic.getMessage("URINE"),
-    m_ic.getMessage("COMMENT") };
-*/	
+
 	
 }	

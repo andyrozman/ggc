@@ -22,8 +22,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DeviceIdentification  
+ *  Description:  Class for display of Device Identification.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -31,30 +31,65 @@ import com.atech.i18n.I18nControlAbstract;
 
 public class DeviceIdentification
 {
+    /**
+     * Company
+     */
     public String company = null;
+    
+    /**
+     * Device Selected 
+     */
     public String device_selected = null;
     
+    /**
+     * Device Identified
+     */
     public String device_identified = null;
+    
+    /**
+     * Device Family 
+     */
     public String device_family = null;
     
+    /**
+     * Device Software Version
+     */
     public String device_software_version = null;
+    
+    /**
+     * Device Hardware Version 
+     */
     public String device_hardware_version = null;
+    /**
+     * 
+     */
     public String device_serial_number = null;
     
     I18nControlAbstract m_ic;
     
+    /**
+     * Constructor 
+     * 
+     * @param ic
+     */
     public DeviceIdentification(I18nControlAbstract ic)
     {
         this.m_ic = ic;
     }
     
     
+    /**
+     * Get Information
+     * 
+     * @param prefix
+     * @return
+     */
     public String getInformation(String prefix)
     {
         StringBuffer sb = new StringBuffer();
         
         sb.append(prefix);
-        sb.append(" Meter Company: " + this.company);
+        sb.append(" " + m_ic.getMessage("DEVICE_NAME_BIG") + " Company: " + this.company);
         sb.append("  Selected Device: " + this.device_selected);
         sb.append("\n");
         
@@ -75,6 +110,11 @@ public class DeviceIdentification
     }
 
     
+    /**
+     * Get Short Information
+     * 
+     * @return
+     */
     public String getShortInformation()
     {
         StringBuffer sb = new StringBuffer();
@@ -102,7 +142,7 @@ public class DeviceIdentification
     }
     
     
-    public void appendParameter(String param, String text, StringBuffer sb)
+    private void appendParameter(String param, String text, StringBuffer sb)
     {
         if (param!=null)
             sb.append(text + ": " + param + "  ");

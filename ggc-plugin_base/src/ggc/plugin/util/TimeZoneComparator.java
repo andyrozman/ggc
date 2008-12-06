@@ -32,7 +32,7 @@ public class TimeZoneComparator implements Comparator<String>
 {
  
     
-    /*
+    /**
      * Compare two TimeZones.
      * 
      * GMT- (12->1) < GMT < GMT+ (1->12)
@@ -71,7 +71,7 @@ public class TimeZoneComparator implements Comparator<String>
         }
     } // end compare
 
-    public int typeChanger(String first, String second)
+    private int typeChanger(String first, String second)
     {
         if ((first.startsWith("(GMT-")) && (second.startsWith("(GMT-")))
             return -1;
@@ -79,7 +79,7 @@ public class TimeZoneComparator implements Comparator<String>
             return 1;
     }
 
-    public boolean areSameType(String first, String second)
+    private boolean areSameType(String first, String second)
     {
         if (((first.startsWith("(GMT+")) && (second.startsWith("(GMT+")))
                 || ((first.startsWith("(GMT)")) && (second.startsWith("(GMT)")))

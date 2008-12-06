@@ -33,15 +33,14 @@ import org.dom4j.io.SAXReader;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     XmlProtocol  
+ *  Description:  This is implementation for Xml protocol. It contains methods for looking
+ *                through Xml files
+ *                
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-//STUB ONLY. Not implemented
-//Will be used by Roche (Pump/Meter) in future
 
 
 public abstract class XmlProtocol 
@@ -51,10 +50,19 @@ public abstract class XmlProtocol
     protected OutputWriter m_output_writer = null;
 
 
+    /**
+     * Constructor
+     */
     public XmlProtocol()
     {
     }
 
+    /**
+     * Constructor 
+     * 
+     * @param da
+     * @param ow
+     */
     public XmlProtocol(DataAccessPlugInBase da, OutputWriter ow)
     {
         this.m_da = da;
@@ -65,6 +73,13 @@ public abstract class XmlProtocol
     protected Document document;
 
 
+    /**
+     * Open Xml File
+     * 
+     * @param file
+     * @return
+     * @throws DocumentException
+     */
     public Document openXmlFile(File file) throws DocumentException 
     {
         SAXReader reader = new SAXReader();
@@ -74,32 +89,42 @@ public abstract class XmlProtocol
     }
     
     
+    /**
+     * Get Node
+     * 
+     * @param tag_path tag path
+     * @return Node object
+     */
     public Node getNode(String tag_path)
     {
         return document.selectSingleNode(tag_path);
     }
     
+    
+    /**
+     * Get Element
+     * 
+     * @param tag_path tag path
+     * @return Element object
+     */
     public Element getElement(String tag_path)
     {
         return (Element)getNode(tag_path);
     }
-
     
     
+    /**
+     * Return List of nodes from path
+     * 
+     * @param tag_path tag path
+     * @return List<Nodes> instance with nodes
+     */
     @SuppressWarnings("unchecked")
     public List<Node> getNodes(String tag_path)
     {
         List<Node> nodes = document.selectNodes(tag_path);
         return nodes;
     }
-    
-    
-/*
-    public int getConnectionProtocol()
-    {
-        return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
-    }
-  */  
-
+ 
 
 }

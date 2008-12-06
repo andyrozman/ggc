@@ -45,8 +45,8 @@ import com.atech.utils.ATSwingUtils;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CommunicationPortSelector
+ *  Description:  Selector for communication ports
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -74,6 +74,13 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     
     int connection_protocol_type = 0;
     
+    /**
+     * Constructor 
+     * 
+     * @param parent
+     * @param da
+     * @param protocol_type
+     */
     public CommunicationPortSelector(JDialog parent, DataAccessPlugInBase da, int protocol_type)
     {
         super(parent, true);
@@ -90,6 +97,9 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     }
     
     
+    /**
+     * Init
+     */
     public void init()
     {
         this.setLayout(null);
@@ -154,6 +164,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     }
 
     
+    /**
+     * Init Type
+     * 
+     * @return
+     */
     public int initType()
     {
         // New_Item_Edit
@@ -210,6 +225,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     }
     
     
+    /**
+     * Check If Item Selected
+     * 
+     * @return
+     */
     public boolean checkIfItemSelected()
     {
         // New_Item_Edit
@@ -227,6 +247,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     }
     
 
+    /**
+     * Get Selected Item
+     * 
+     * @return
+     */
     public String getSelectedItem()
     {
         // New_Item_Edit
@@ -245,6 +270,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     
     
     
+    /**
+     * Get Protocol Parameter Name
+     * 
+     * @return
+     */
     public String getProtocolParameterName()
     {
         // New_Item_Edit
@@ -265,6 +295,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     }
     
     
+    /**
+     * Get Not Fillled Error
+     * 
+     * @return
+     */
     public String getNotFilledError()
     {
         // New_Item_Edit
@@ -308,12 +343,22 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     }
     
 
+    /**
+     * Was Action
+     * 
+     * @return true if action was executed
+     */
     public boolean wasAction()
     {
         return was_action;
     }
     
 
+    /**
+     * Action Performed (for Action Listener)
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent ae)
     {
         String action = ae.getActionCommand();
@@ -343,13 +388,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     }
     
     
-    
-    
     // ****************************************************************
     // ******              HelpCapable Implementation             *****
     // ****************************************************************
     
-    /* 
+    /** 
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -357,7 +400,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         return this.getRootPane();
     }
 
-    /* 
+    /** 
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -365,17 +408,13 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         return this.help_button;
     }
 
-    /* 
+    /** 
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-        // TODO: fix
-        return "pages.GGC_BG_Daily_View";
+        return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration_PortSelector";
     }
-    
-    
-    
     
     
 }

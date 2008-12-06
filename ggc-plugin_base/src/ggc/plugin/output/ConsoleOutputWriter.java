@@ -20,8 +20,8 @@ package ggc.plugin.output;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     ConsoleOutputWriter  
+ *  Description:  Output Writer for writing to Console.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -31,38 +31,30 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
 {
 
 	
+	/**
+	 * Constructor
+	 */
 	public ConsoleOutputWriter()
 	{
 	    super();
 	}
+
 	
+    /**
+     * Write Data to OutputWriter
+     * 
+     * @param data OutputWriterData instance
+     */
 	public void writeData(OutputWriterData data)
 	{
 	    data.setOutputType(OutputWriterType.CONSOLE);
 		System.out.println(data.getDataAsString());
 	}
 	
-
-	/*
-	public void writeBGData(String date, String bg_value, int bg_type)
-	{
-		writeBGData(new ATechDate(Long.parseLong(date)), bg_value, bg_type);
-	}
-
-	public void writeBGData(ATechDate date, String bg_value, int bg_type)
-	{
-		System.out.println(date.getDateTimeString() + " = " + bg_value + " " + this.out_util.getBGTypeName(bg_type));
-	}*/
 	
-	/*
-	public void writeBGData(MeterValuesEntry mve)
-	{
-		System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
-	}
-	*/
-	
-	
-	
+    /**
+     * Write Header
+     */
 	public void writeHeader()
 	{
 		// header
@@ -72,18 +64,21 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
 	}
 
 	
+    /**
+     * Write Device Identification
+     */
 	public void writeDeviceIdentification()
 	{
 	    System.out.println(this.getDeviceIdentification().getInformation("* "));
 	}
 	
-	
 
-	
+    /**
+     * End Output
+     */
 	public void endOutput()
 	{
 		System.out.println("=======================================================");
 	}
-	
 	
 }

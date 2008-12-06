@@ -24,12 +24,12 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DatabaseProtocol  
+ *  Description:  This is implementation for Database protocol. It contains methods for looking
+ *                through database files
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
 
 // STUB ONLY. Not implemented
 // Will be used by Animas (Pump) in future
@@ -40,22 +40,33 @@ public abstract class DatabaseProtocol
     protected DataAccessPlugInBase m_da = null; 
 
 
-
+    /**
+     * Constructor
+     */
     public DatabaseProtocol()
     {
     }
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public DatabaseProtocol(DataAccessPlugInBase da)
     {
         this.m_da = da;
     }
 
 
+    /**
+     * Get Connection Protocol
+     * 
+     * @return id of connection protocol (see ConnectionProtocols)
+     */
     public int getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_FILE_IMPORT;
+        return ConnectionProtocols.PROTOCOL_DATABASE;
     }
-    
 
 
 }

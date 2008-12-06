@@ -20,8 +20,8 @@ package ggc.plugin.output;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     OutputWriterData  
+ *  Description:  Data for Output Writer.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -29,10 +29,25 @@ package ggc.plugin.output;
 public abstract class OutputWriterData 
 {
     
+    /**
+     * Get Data As String
+     * 
+     * @return data as string
+     */
     public abstract String getDataAsString();
 
+    /**
+     * Is Data BG
+     * 
+     * @return true if data is BG
+     */
     public abstract boolean isDataBG();
     
+    /**
+     * Set Output Type
+     * 
+     * @param type output type as defined in OutputWriterType
+     */
     public abstract void setOutputType(int type);
     
 }

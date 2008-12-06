@@ -30,8 +30,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DeviceConfiguration  
+ *  Description:  Device Configuration, class for reading and writing configuration.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -44,15 +44,18 @@ public class DeviceConfiguration
     String config_text = "";
     File config_file = null;
     I18nControlAbstract ic;
-    //MeterConfigEntry default_meter = null;
     
     Hashtable<String,DeviceConfigEntry> device_entries;
-    //Hashtable<String,DeviceConfigEntry> device_entries_old;
 
     String default_device = "";
     DeviceConfigurationDefinition dcd;
     String dev_prefix;
     
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public DeviceConfiguration(DataAccessPlugInBase da)
     {
         this.m_da = da;
@@ -61,6 +64,7 @@ public class DeviceConfiguration
         init();
         readConfigData();
     }
+    
     
     private void init()
     {
@@ -72,6 +76,10 @@ public class DeviceConfiguration
     }
     
     
+    /**
+     * Get Config Data Copy
+     * @return
+     */
     public Hashtable<String,DeviceConfigEntry> getConfigDataCopy()
     {
         Hashtable<String,DeviceConfigEntry> devent_new = new Hashtable<String,DeviceConfigEntry>();
@@ -87,6 +95,9 @@ public class DeviceConfiguration
     }
     
     
+    /**
+     * Read Config Data
+     */
     public void readConfigData()
     {
         
@@ -131,6 +142,11 @@ public class DeviceConfiguration
         }
     }
     
+    /**
+     * Get Selected Device Instance
+     * 
+     * @return DeviceConfigEntry object
+     */
     public DeviceConfigEntry getSelectedDeviceInstance()
     {
         if ((this.default_device == null) || (this.default_device.length()==0))
@@ -146,22 +162,43 @@ public class DeviceConfiguration
     }
     
     
+    /**
+     * Get Selected Device Index as String
+     * 
+     * @return String as device index
+     */
     public String getSelectedDeviceIndex()
     {
         return this.default_device;
     }
     
     
+    /**
+     * Set New Config Data
+     * 
+     * @param data data in format Hashtable<String,DeviceConfigEntry> as received from 
+     *             DeviceConfigurationDialog
+     */
     public void setNewConfigData(Hashtable<String,DeviceConfigEntry> data)
     {
         this.device_entries = data;
     }
     
+    /**
+     * Set Selected Device
+     * 
+     * @param sel selected device as string
+     */
     public void setSelectedDevice(String sel)
     {
         this.default_device = sel;
     }
 
+    /**
+     * Set Selected Device From Configurator
+     * 
+     * @param sel
+     */
     public void setSelectedDeviceFromConfigurator(String sel)
     {
         if (sel.startsWith(ic.getMessage("NEW__")))
@@ -177,12 +214,20 @@ public class DeviceConfiguration
     }
     
     
+    /**
+     * Set Selected Device
+     * 
+     * @param sel number of device selected
+     */
     public void setSelectedDevice(int sel)
     {
         this.default_device = "" + sel;
     }
 
     
+    /**
+     * Write Config Data
+     */
     public void writeConfigData()
     {
         checkDirectoryStructure();
@@ -229,6 +274,9 @@ public class DeviceConfiguration
     
     
     
+    /**
+     * Save Config
+     */
     public void saveConfig()
     {
         try
@@ -253,6 +301,9 @@ public class DeviceConfiguration
     }
     
     
+    /**
+     * Check Directory Structure
+     */
     public void checkDirectoryStructure()
     {
         File f = new File("../data");

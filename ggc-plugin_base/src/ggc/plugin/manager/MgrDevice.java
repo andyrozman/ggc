@@ -29,7 +29,6 @@
 
 package ggc.plugin.manager; 
 
-import javax.swing.ImageIcon;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -51,8 +50,8 @@ import javax.swing.ImageIcon;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     MgrDevice  
+ *  Description:  Device used in manager.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -61,20 +60,26 @@ import javax.swing.ImageIcon;
 public class MgrDevice
 {
 
-//    protected I18nControl m_ic = I18nControl.getInstance();
-//    protected DataAccessCGM m_da = DataAccessCGM.getInstance();
+
+    private String id;
+    private String group;
+    private String name;
+    private String picture;
+    private String class_name;
+    @SuppressWarnings("unused")
+    private String unpacked_status;
     
 
-
-
-    public String id;
-    public String group;
-    public String name;
-    public String picture;
-    public String class_name;
-    public String unpacked_status;
-    
-
+    /**
+     * Constructor 
+     * 
+     * @param id
+     * @param group
+     * @param name
+     * @param picture
+     * @param class_name
+     * @param status
+     */
     public MgrDevice(String id, String group, String name, String picture, String class_name, String status)
     {
     	this.id = id;
@@ -86,6 +91,11 @@ public class MgrDevice
     }
     
     
+    /**
+     * Get Full Name
+     * 
+     * @return full name
+     */
     public String getFullName()
     {
     	return group + "_" + id;
@@ -94,28 +104,33 @@ public class MgrDevice
 
 
     /**
-     * Gets the image
-     * @return Returns a ImageIcon
+     * Gets the image name
+     * 
+     * @return name of image
      */
-    public ImageIcon getMeterImage()
+    public String getDeviceImageName()
     {
-        //return this.picture;
-        
-        return null;
+        return this.picture;
     }
 
 
     /**
      * Gets the name
+     * 
      * @return Returns a String
      */
-    public String getMeterName()
+    public String getDeviceName()
     {
         return this.name;
     }
 
 
-    public String getMeterClassName()
+    /**
+     * Get Device Class Name
+     * 
+     * @return device class name
+     */
+    public String getDeviceClassName()
     {
         return this.class_name;
     }

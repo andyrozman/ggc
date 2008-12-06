@@ -36,25 +36,75 @@ public class DeviceConfigEntry
     
     I18nControlAbstract ic = null;
     
+    /**
+     * Id
+     */
     public int id;
+    
+    /**
+     * Name
+     */
     public String name;
+    
+    /**
+     * Company
+     */
     public String device_company;
+    
+    /**
+     * Device
+     */
     public String device_device;
+    
+    /**
+     * Communication Port
+     */
     public String communication_port;
+    
+    /**
+     * DS Fix 
+     */
     public boolean ds_fix = false;
+    
+    /**
+     * DS Area 
+     */
     public String ds_area = "";
+    
+    /**
+     * DS Area Long 
+     */
     public String ds_area_long = "";
+    
+    /**
+     * DS Winter Change 
+     */
     public int ds_winter_change = 0;
+    
+    /**
+     * DS Summer Change 
+     */
     public int ds_summer_change = 0;
     boolean valid = true;
     DeviceConfigurationDefinition dcd;
     
+    /**
+     * Constructor
+     * 
+     * @param dcd
+     * @param ic
+     */
     public DeviceConfigEntry(DeviceConfigurationDefinition dcd, I18nControlAbstract ic)
     {
         this.ic = ic;
         this.dcd = dcd;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public DeviceConfigEntry(I18nControlAbstract ic)
     {
         this.ic = ic;
@@ -62,6 +112,11 @@ public class DeviceConfigEntry
     
     
     
+    /**
+     * Clone
+     * 
+     * @see java.lang.Object#clone()
+     */
     public DeviceConfigEntry clone()
     {
         DeviceConfigEntry dce = new DeviceConfigEntry(ic);
@@ -81,16 +136,31 @@ public class DeviceConfigEntry
         return dce;
     }
     
+    /**
+     * Set Device Configuration Definition
+     * 
+     * @param dcd
+     */
     public void setDeviceConfigurationDefinition(DeviceConfigurationDefinition dcd)
     {
         this.dcd = dcd;
     }
     
+    /**
+     * Set Id (int)
+     * 
+     * @param id
+     */
     public void setId(int id)
     {
         this.id = id;
     }
 
+    /**
+     * Set Id (String)
+     * 
+     * @param id
+     */
     public void setId(String id)
     {
         this.id = Integer.parseInt(id);
@@ -98,6 +168,11 @@ public class DeviceConfigEntry
     
     
     
+    /**
+     * Get DayLight Fix
+     * 
+     * @return
+     */
     public String getDayLightFix()
     {
         if (!ds_fix)
@@ -107,6 +182,11 @@ public class DeviceConfigEntry
         
     }
 
+    /**
+     * Get DayLight Fix Long
+     * 
+     * @return
+     */
     public String getDayLightFixLong()
     {
         if (!ds_fix)
@@ -117,12 +197,23 @@ public class DeviceConfigEntry
     }
 
     
+    /**
+     * Is Valid
+     * 
+     * @return
+     */
     public boolean isValid()
     {
         return this.valid;
     }
     
     
+    /**
+     * Raed Configuration
+     * 
+     * @param cfg
+     * @param selected
+     */
     public void readConfiguration(Hashtable<String,String> cfg, int selected)
     {
         this.name = getParameter("NAME", selected, cfg, true);
@@ -181,6 +272,11 @@ public class DeviceConfigEntry
     }
     
     
+    /**
+     * Get File Entry
+     * 
+     * @return entry as string
+     */
     public String getFileEntry()
     {
         String prefix = dcd.getDevicePrefix() + "_" + this.id + "_";
@@ -206,6 +302,12 @@ public class DeviceConfigEntry
     }
     
     
+    /**
+     * Get Time Change
+     * 
+     * @param change
+     * @return
+     */
     public String getTimeChange(int change)
     {
         if (change==0)
@@ -229,7 +331,7 @@ public class DeviceConfigEntry
     
     
     
-    public String getParameter(String tag, int selected, Hashtable<String,String> cfg, boolean validate)
+    private String getParameter(String tag, int selected, Hashtable<String,String> cfg, boolean validate)
     {
         if (cfg.containsKey(this.dcd.getDevicePrefix() + "_" + selected + "_" + tag))
         {
@@ -246,7 +348,7 @@ public class DeviceConfigEntry
     }
     
 
-    public boolean getParameterBoolean(String tag, int selected, Hashtable<String,String> cfg)
+    private boolean getParameterBoolean(String tag, int selected, Hashtable<String,String> cfg)
     {
         String par = getParameter(tag, selected, cfg, false);
         
@@ -265,7 +367,7 @@ public class DeviceConfigEntry
     }
     
 
-    public int getParameterInt(String tag, int selected, Hashtable<String,String> cfg)
+    private int getParameterInt(String tag, int selected, Hashtable<String,String> cfg)
     {
         String par = getParameter(tag, selected, cfg, false);
         
@@ -290,20 +392,13 @@ public class DeviceConfigEntry
         }
     }
 
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     public String toString()
     {
-/*        public int id;
-        public String name;
-        public String meter_company;
-        public String meter_device;
-        public String communication_port;
-        public boolean ds_fix = false;
-        public String ds_area = "";
-        public int ds_winter_change = 0;
-        public int ds_summer_change = 0;
-        boolean valid = true;
-*/
-        
         return "ds_fix=" + this.ds_fix + ",area=" + this.ds_area + ",winter=" + this.ds_winter_change + ",summer=" + this.ds_summer_change;
     }
     

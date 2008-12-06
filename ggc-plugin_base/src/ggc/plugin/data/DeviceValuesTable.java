@@ -46,8 +46,8 @@ import javax.swing.table.TableColumn;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     CGMValuesTable  
- *  Description:  Table for CGMS values
+ *  Filename:     DeviceValuesTable  
+ *  Description:  Table for Device values
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -61,18 +61,15 @@ import javax.swing.table.TableColumn;
 public class DeviceValuesTable extends JTable //implements TableModelListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -278868328278678493L;
+    protected DeviceValuesTableModel model = null;
+	protected DataAccessPlugInBase m_da;
 
-    //x    private I18nControl m_ic = I18nControl.getInstance();    
-    DeviceValuesTableModel model = null;
-
-	public DataAccessPlugInBase m_da;
 	
     /**
-     *  Constructor
+     * Constructor
+     *  
+     * @param da 
      */
     public DeviceValuesTable(DataAccessPlugInBase da)
     {
@@ -90,6 +87,8 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
 
     /**
      *  Constructor
+     *  
+     * @param da 
      * @param model 
      */
     public DeviceValuesTable(DataAccessPlugInBase da, DeviceValuesTableModel model)
@@ -103,6 +102,8 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     }
 
     /**
+     * Create Default Table Header
+     * 
      * @see javax.swing.JTable#createDefaultTableHeader()
      */
     @Override
@@ -148,7 +149,9 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     }
 
     /**
-     * Create CGMS Values Table
+     * Create Values Table
+     * 
+     * @param da 
      * @param model
      * @return
      */

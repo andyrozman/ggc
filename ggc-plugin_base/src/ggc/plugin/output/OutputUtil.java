@@ -38,9 +38,9 @@ import com.atech.utils.TimerControlAbstract;
 public class OutputUtil extends TimerControlAbstract
 {
 
-    public int max_records = 1;
+    private int max_records = 1;
     
-	public static String[] unitsName = { "", "mg/dL", "mmol/L" };
+	private static String[] unitsName = { "", "mg/dL", "mmol/L" };
 	
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
@@ -49,7 +49,10 @@ public class OutputUtil extends TimerControlAbstract
 	
     private OutputWriter writer;
     
-    public static OutputUtil m_outputUtil;
+    /**
+     * Singelton instance of this class
+     */
+    public static OutputUtil s_outputUtil;
     
     
     private OutputUtil()
@@ -61,31 +64,47 @@ public class OutputUtil extends TimerControlAbstract
     
     
     
+    /**
+     * Get Instance
+     * 
+     * @return OutputUtil instance
+     */
     public static OutputUtil getInstance()
     {
-        if (OutputUtil.m_outputUtil==null)
+        if (OutputUtil.s_outputUtil==null)
         {
-            OutputUtil.m_outputUtil = new OutputUtil();
+            OutputUtil.s_outputUtil = new OutputUtil();
         }
         
-        return OutputUtil.m_outputUtil;
+        return OutputUtil.s_outputUtil;
         
     }
-    
 
+    
+    /**
+     * Get Instance
+     * 
+     * @param writer OutputWriter instance
+     * @return OutputUtil instance
+     */
     public static OutputUtil getInstance(OutputWriter writer)
     {
-        if (OutputUtil.m_outputUtil==null)
+        if (OutputUtil.s_outputUtil==null)
         {
-            OutputUtil.m_outputUtil = new OutputUtil();
+            OutputUtil.s_outputUtil = new OutputUtil();
         }
         
-        OutputUtil.m_outputUtil.setOutputWriter(writer);
-        return OutputUtil.m_outputUtil;
+        OutputUtil.s_outputUtil.setOutputWriter(writer);
+        return OutputUtil.s_outputUtil;
     }
     
     
     
+    /**
+     * Set Output Writer
+     * 
+     * @param writer OutputWriter instance
+     */
     public void setOutputWriter(OutputWriter writer)
     {
         this.writer = writer;

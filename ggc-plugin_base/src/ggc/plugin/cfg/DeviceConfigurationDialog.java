@@ -67,8 +67,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     //private JPanel prefPane;
     
-    public static Vector<String> time_zones_vector = null;
-    public static Hashtable<String,String> time_zones = null;
+    protected static Vector<String> time_zones_vector = null;
+    protected static Hashtable<String,String> time_zones = null;
     JComboBox cb_timezone, cb_winter_fix, cb_summer_fix;
     JComboBox cb_entry;
     JCheckBox chb_fix;
@@ -87,6 +87,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     String current_index_object = "";
     String first_selected = "";
 
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param da
+     */
     public DeviceConfigurationDialog(JFrame parent, ATDataAccessAbstract da)
     {
         super(parent, "", true);
@@ -334,6 +340,11 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     
     private boolean action_was = false;
     
+    /**
+     * Was Action
+     * 
+     * @return
+     */
     public boolean wasAction()
     {
         return action_was;
@@ -408,7 +419,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
 
     
-    /* 
+    /** 
      * stateChanged
      */
     public void stateChanged(ChangeEvent e)
@@ -418,7 +429,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     
     
-    //Hashtable<String,String> timeZones;
+    /**
+     * Load Time Zones
+     */
     public void loadTimeZones()
     {
         DeviceConfigurationDialog.time_zones = new Hashtable<String,String>();
@@ -505,6 +518,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     }
     
     
+    /**
+     * Add Time Zone Entry
+     * 
+     * @param long_desc
+     * @param keycode
+     */
     public void addTimeZoneEntry(String long_desc, String keycode)
     {
         DeviceConfigurationDialog.time_zones.put(long_desc, keycode);
@@ -554,6 +573,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
     }
     
+    /**
+     * Save Item Data
+     */
     public void saveItemData()
     {
         DeviceConfigEntry dce = new DeviceConfigEntry(m_ic);
@@ -625,10 +647,13 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     boolean act = false;
     
     
+    /**
+     * Item State Changed
+     * 
+     * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+     */
     public void itemStateChanged(ItemEvent arg0)
     {
-        // TODO Auto-generated method stub
-     
         if (act)
             return;
         
@@ -668,7 +693,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     // ******              HelpCapable Implementation             *****
     // ****************************************************************
     
-    /* 
+    /** 
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -676,7 +701,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         return this.getRootPane();
     }
 
-    /* 
+    /** 
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -684,13 +709,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         return this.help_button;
     }
 
-    /* 
+    /** 
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-        // TODO: fix
-        return "pages.GGC_BG_Daily_View";
+        return this.m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration";
     }
     
     

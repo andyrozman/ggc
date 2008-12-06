@@ -30,8 +30,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     BaseListMainPanel
+ *  Description:  Base List Main Panel
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -51,6 +51,11 @@ public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
 
     
 
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public BaseListMainPanel(BaseListDialog dia)
     {
 
@@ -69,6 +74,9 @@ public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
     }
 
 
+    /**
+     * Create Panel
+     */
     public void createPanel()
     {
 
@@ -94,6 +102,11 @@ public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
     }
 
 
+    /**
+     * Set Data
+     * 
+     * @see ggc.plugin.list.BaseListAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
     }

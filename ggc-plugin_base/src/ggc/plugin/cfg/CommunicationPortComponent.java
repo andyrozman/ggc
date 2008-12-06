@@ -35,8 +35,8 @@ import com.atech.utils.ATSwingUtils;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     CommunicationPortComponent
+ *  Description:  Communication Port Component
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -58,6 +58,12 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
     JDialog parent;
     DataAccessPlugInBase m_da;
     
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param parent
+     */
     public CommunicationPortComponent(DataAccessPlugInBase da, JDialog parent)
     {
         super();
@@ -72,6 +78,9 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
     }
     
     
+    /**
+     * Init
+     */
     public void init()
     {
         this.setLayout(null);
@@ -86,18 +95,32 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
         
     }
 
+    /**
+     * Set Communication Port
+     * 
+     * @param val
+     */
     public void setCommunicationPort(String val)
     {
         this.tf_port.setText(val);
         this.tf_port.setToolTipText(val);
     }
     
+    /**
+     * Get Communication Port
+     * @return
+     */
     public String getCommunicationPort()
     {
         return this.tf_port.getText();
     }
     
 
+    /**
+     * Action Performed
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent arg0)
     {
         /*if (m_type!=0)
@@ -119,6 +142,11 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
     }
     
 
+    /**
+     * Set Protocol
+     * 
+     * @param protocol
+     */
     public void setProtocol(int protocol)
     {
         // New_Item_Edit

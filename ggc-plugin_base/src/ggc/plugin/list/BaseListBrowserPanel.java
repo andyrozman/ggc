@@ -63,8 +63,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     BaseListBrowserPanel
+ *  Description:  Base List Browser Panel
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -88,6 +88,11 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
 
 	
 	
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public BaseListBrowserPanel(BaseListDialog dia)
     {
 
@@ -107,18 +112,17 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     }
 
 
+    /**
+     * Init
+     */
     public void init()
     {
-    	
-    	//System.out.println("init()");
     	this.setBounds(0,0,500,500);
         this.setLayout(new java.awt.BorderLayout());
 
         this.editor  = new JEditorPane();
 
-
         JScrollPane jScrollPane1 = new JScrollPane(this.editor);
-        //jScrollPane1.setPreferredSize(new java.awt.Dimension(13, 1200));
 
         this.editor.setEditable(false);
         this.editor.setContentType("text/html");
@@ -129,11 +133,12 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
 
         this.editor.select(0,0);
     	
-    	
-    	
     }
 
     
+    /**
+     * Init Browser
+     */
     public void initBrowser()
     {
     	this.setBounds(0,0,640,565);
@@ -146,137 +151,41 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     }
     
     
+    /**
+     * Create Panel
+     */
     public void createPanel()
     {
-    	
-    	
-        //this.setLayout(new java.awt.BorderLayout());
     	this.setLayout(null);
 
         editor = new JEditorPane();
-
 
         JScrollPane jScrollPane1 = new JScrollPane(editor);
         jScrollPane1.setBounds(0,0,300,300);
         jScrollPane1.setBackground(Color.blue);
         
-        
-        //jScrollPane1.setPreferredSize(new java.awt.Dimension(13, 1200));
-
         editor.setEditable(false);
         editor.setContentType("text/html");
-        //jScrollPane1.setViewportView(editor);
         editor.setText("<html><body><font color=\"#CCCCCC\"><h1>Test</h1></font></body></html>");
 
         this.add(jScrollPane1, null);
-
-        //editor.select(0,0);
-    	
-    	
-    	
-	/*
-	
-        this.setSize(460, 520);
-        this.setLayout(new BorderLayout());
-        
-        this.editor = new JEditorPane();
-        this.editor.setContentType("html");
-        this.editor.s
-        
-        
-        JScrollPane scroll = new JScrollPane();
-    */    
-        
-        /*
-
-        Font fnt_18 = new Font("Times New Roman", Font.PLAIN, 14);
-
-        //String nut_db = nutrition_db[this.m_dialog.getType()];
-        
-        String nut_db = "SSS";
-
-        label = new JLabel(ic.getMessage(nut_db));
-        label.setBounds(0, 35, 520, 40);
-        label.setFont(font_big); 
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(label, null);
-
-
-        label = new JLabel(ic.getMessage(nut_db + "_DESC"));
-        label.setBounds(40, 120, 400, 250);
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setFont(fnt_18); 
-        this.add(label, null);
-
-        
-        label_test = new JLabel(ic.getMessage("ADD_DIOCESE_DESC"));
-        label_test.setBounds(40, 330, 300, 60);
-        label_test.setFont(font_normal); 
-        this.add(label_test, null);
-
-
-
-        label = new JLabel(ic.getMessage("EDIT_VIEW"));
-        label.setBounds(40, 280, 300, 30);
-        label.setFont(fnt_18); 
-//        this.add(label, null);
-
-        label = new JLabel(ic.getMessage("EDIT_VIEW_DESC"));
-        label.setBounds(40, 310, 300, 60);
-        //label.setFont(font_normal); 
-//        this.add(label, null);
-*/
         
         return;
     }
 
-/* xa
-    public void loadFile(String name)
-    {
-        System.out.println("loadFile: " + name);
-    	String res = m_da.metersUrl.get(name);
-    	
-    	String web = "http://localhost:88/meters/" + res;
-    	
-    	System.out.println(web);
-    	
-    	
-    	this.mbp.setPage(web);
-    	
-    	/*
-    	//abbott_diabetes_care.html
-        try
-        {
-            URL url = new URL("http://localhost:88/meters/" + res);          //this.getClass().getResource("/html/abbott_diabetes_care.html");
-            InputStreamReader ins = new InputStreamReader(url.openStream());
-            BufferedReader br = new BufferedReader( ins );
-            String line;
-            StringBuffer sb = new StringBuffer();
-
-            while ((line = br.readLine())!=null)
-            {
-                sb.append(line);
-            }
-
-            //System.out.println("Sb: " + sb);
-
-            this.editor.setText(sb.toString());
-            //this.jEditorPane1.setText(sb.toString());
-        }
-        catch(Exception ex)
-        {
-            System.out.println("PumpListCompanyPanel::error reading. Ex: " + ex);
-            ex.printStackTrace();
-        }
-    	*/
-  //  }
 
     
+    /**
+     * Load Page
+     * 
+     * @param url_src
+     */
     public void loadPage(String url_src)
     {
         try
         {
-            URL url = new URL("http://localhost:444" + url_src);          //this.getClass().getResource("/html/abbott_diabetes_care.html");
+            URL url = new URL("http://localhost:444" + url_src);          
+            //this.getClass().getResource("/html/abbott_diabetes_care.html");
             
             System.out.println("url: " + url.toString());
             
@@ -290,12 +199,8 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
                 sb.append(line);
             }
 
-            //System.out.println("Sb: " + sb);
-
             this.mbp.setPage("http://localhost:444" + url_src);
             
-            //this.editor.setText(sb.toString());
-            //this.jEditorPane1.setText(sb.toString());
         }
         catch(Exception ex)
         {
@@ -306,23 +211,16 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     }
     
     
+    /**
+     * Set Data
+     * 
+     * @see ggc.plugin.list.BaseListAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
-    	//System.out.println((String)obj);
-    	
-    	//editor.setText("<html><body><font color=\"#CCCCCC\"><h1>" + (String)obj + "</h1></font></body></html>");
-    	//editor.setText("<html><body><h1>" + (String)obj + "</h1></body></html>");
-    	
-    	//loadFile((String)obj);
-        
         BaseListEntry ble = (BaseListEntry)obj; 
-        
         loadPage(ble.page);
-        
     }
 	
-	
-	
-    
 
 }

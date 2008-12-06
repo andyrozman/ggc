@@ -30,8 +30,10 @@ import com.atech.db.hibernate.HibernateDb;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PluginDb  
+ *  Description:  This is master class for using Db instance within plug-in. In most cases, we 
+ *                would want data to be handled by outside authority (GGC), but in some cases
+ *                we wouldn't want that.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -48,6 +50,11 @@ public class PluginDb
     private String m_addId = "";
     
     
+    /**
+     * Constructor
+     * 
+     * @param db
+     */
     public PluginDb(HibernateDb db)
     {
         this.db = db;
@@ -55,6 +62,11 @@ public class PluginDb
     
 
     
+    /**
+     * Get Session
+     * 
+     * @return session instance
+     */
     public Session getSession()
     {
         return this.db.getSession();
@@ -68,6 +80,12 @@ public class PluginDb
     // --- BASIC METHODS (Hibernate and DataLayer processing)
     // ---
 
+    /**
+     * Add entry to database
+     * 
+     * @param obj object we try to write (it must be DatabaseObjectHibernate)
+     * @return true if successful
+     */
     public boolean add(Object obj)
     {
 
@@ -114,6 +132,12 @@ public class PluginDb
     }
 
     
+    /**
+     * Commit entry to database
+     * 
+     * @param obj object we try to write (it must be DatabaseObjectHibernate)
+     * @return true if successful
+     */
     public boolean commit(Object obj)
     {
         if (obj instanceof DatabaseObjectHibernate)
@@ -133,10 +157,12 @@ public class PluginDb
     }
     
     
-    
-    // this method is used for direct use with hibernate objects (unlike use
-    // with our
-    // datalayer classes)
+    /**
+     * Add hibernate entry to database
+     * 
+     * @param obj object we try to write (it must be Hibernate object (raw))
+     * @return true if successful
+     */
     public long addHibernate(Object obj)
     {
 
@@ -160,6 +186,12 @@ public class PluginDb
 
     }
 
+    /**
+     * Edit entry to database
+     * 
+     * @param obj object we try to write (it must be DatabaseObjectHibernate)
+     * @return true if successful
+     */
     public boolean edit(Object obj)
     {
 
@@ -203,10 +235,12 @@ public class PluginDb
     }
 
     
-    
-    // this method is used for direct use with hibernate objects (unlike use
-    // with our
-    // datalayer classes)
+    /**
+     * Edit hibernate entry in database
+     * 
+     * @param obj object we try to write (it must be Hibernate object (raw))
+     * @return true if successful
+     */
     public boolean editHibernate(Object obj)
     {
 
@@ -232,6 +266,13 @@ public class PluginDb
 
     }
 
+    
+    /**
+     * Delete hibernate entry to database
+     * 
+     * @param obj object we try to write (it must be Hibernate object (raw))
+     * @return true if successful
+     */
     public boolean deleteHibernate(Object obj)
     {
 
@@ -257,6 +298,12 @@ public class PluginDb
 
     }
 
+    /**
+     * Get entry from database
+     * 
+     * @param obj object we try to write (it must be DatabaseObjectHibernate)
+     * @return true if successful
+     */
     public boolean get(Object obj)
     {
 
@@ -300,6 +347,12 @@ public class PluginDb
 
     }
 
+    /**
+     * Delete entry from database
+     * 
+     * @param obj object we try to write (it must be DatabaseObjectHibernate)
+     * @return true if successful
+     */
     public boolean delete(Object obj)
     {
 
@@ -352,28 +405,49 @@ public class PluginDb
 
     }
 
+    /**
+     * Get Id from add action
+     * @return
+     */
     public String addGetId()
     {
         return this.m_addId;
     }
 
+    /**
+     * Get Error Code
+     * 
+     * @return error code
+     */
     public int getErrorCode()
     {
         return this.m_errorCode;
     }
 
+    
+    /**
+     * Get Error Description
+     * 
+     * @return description of error
+     */
     public String getErrorDescription()
     {
         return this.m_errorDesc;
     }
 
+    
+    /**
+     * Set Error
+     * 
+     * @param code error code
+     * @param desc error description
+     * @param source source of error
+     */
     public void setError(int code, String desc, String source)
     {
         this.m_errorCode = code;
         this.m_errorDesc = source + " : " + desc;
     }
-    
-    
     
 
 }

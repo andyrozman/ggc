@@ -53,8 +53,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     BaseListRenderer
+ *  Description:  Tree Renderer
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -76,10 +76,18 @@ public class BaseListRenderer extends DefaultTreeCellRenderer
     
     
     
+    /**
+     * Constructor
+     */
     public BaseListRenderer()
     {
     }
 
+    /**
+     * Get Tree Cell Renderer Component
+     * 
+     * @see javax.swing.tree.DefaultTreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
+     */
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
             boolean leaf, int row, boolean _hasFocus)
     {

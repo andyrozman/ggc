@@ -40,8 +40,8 @@ import com.atech.utils.ATDataAccessAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DeviceSelectorDialog  
+ *  Description:  Dialog for selecting supported devices
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -50,17 +50,16 @@ import com.atech.utils.ATDataAccessAbstract;
 public class DeviceSelectorDialog extends SelectorAbstractDialog
 {
 
-    //private DataAccessMeter m_da = null;
-    
-    
-    /**
-     * 
-     */
     private static final long serialVersionUID = -391406165609998040L;
     DeviceConfigurationDefinition dcd = null; 
- 
 
 
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param da
+     */
     public DeviceSelectorDialog(JDialog parent, ATDataAccessAbstract da) 
     {
         super(parent, da, 0, null, true);
@@ -68,6 +67,11 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     }
 
   
+    /**
+     * Get Device Configuration Definition
+     * 
+     * @return DeviceConfigurationDefinition instance
+     */
     public DeviceConfigurationDefinition getDeviceConfigurationDefinition()
     {
         if (this.dcd == null)
@@ -77,6 +81,11 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     }
     
     
+    /**
+     * Init Selector Values For Type
+     * 
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#initSelectorValuesForType()
+     */
     public void initSelectorValuesForType()
     {
         setSelectorObject((SelectableInterface)this.getDeviceConfigurationDefinition().getDummyObject());
@@ -86,11 +95,10 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
 	    this.setHelpEnabled(false);
     }
 
-     
-    
 
-
-    /* (non-Javadoc)
+    /**
+     * Get Full Data
+     * 
      * @see com.atech.graphics.components.selector.SelectorAbstractDialog#getFullData()
      */
     public void getFullData()
@@ -100,15 +108,21 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     }
     
     
+    /**
+     * Set Help Context
+     */
     public void setHelpContext()
     {
+        // TODO: 
 //	m_da.getHelpContext().getMainHelpBroker().enableHelpOnButton(this.getHelpButton(), this.getHelpId(), null);
 //	m_da.getHelpContext().getMainHelpBroker().enableHelpKey(this.getRootPane(), this.getHelpId(), null);
     }
     
 
 
-    /* (non-Javadoc)
+    /**
+     * Check And Execute Action : Edit
+     * 
      * @see com.atech.graphics.components.selector.SelectorAbstractDialog#checkAndExecuteActionEdit()
      */
     @Override
@@ -117,7 +131,9 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     }
 
 
-    /* (non-Javadoc)
+    /**
+     * Check And Execute Action : New
+     * 
      * @see com.atech.graphics.components.selector.SelectorAbstractDialog#checkAndExecuteActionNew()
      */
     @Override
@@ -126,7 +142,9 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     }
 
 
-    /* (non-Javadoc)
+    /** 
+     * Check And Execute Action : Select
+     * 
      * @see com.atech.graphics.components.selector.SelectorAbstractDialog#checkAndExecuteActionSelect()
      */
     @Override
@@ -148,7 +166,9 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
 
 
 
-    /* (non-Javadoc)
+    /**
+     * Item State Changed
+     * 
      * @see com.atech.graphics.components.selector.SelectorAbstractDialog#itemStateChanged(java.awt.event.ItemEvent)
      */
     @Override

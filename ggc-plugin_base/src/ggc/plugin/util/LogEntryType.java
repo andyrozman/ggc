@@ -20,8 +20,8 @@ package ggc.plugin.util;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     LogEntryType  
+ *  Description:  Log Entry Type (for our personal logging)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -29,10 +29,29 @@ package ggc.plugin.util;
 
 public class LogEntryType
 {
+    /**
+     * Log: Trace
+     */
     public static final int TRACE = 1;
+    
+    /**
+     * Log: Debug
+     */
     public static final int DEBUG = 2;
+    
+    /**
+     * Log: Info
+     */
     public static final int INFO = 3;
+    
+    /**
+     * Log: Warning
+     */
     public static final int WARNING = 4;
+    
+    /**
+     * Log: Error
+     */
     public static final int ERROR = 5;
     
 }

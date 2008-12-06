@@ -24,9 +24,9 @@ import java.io.FileWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
- * 
+ *  Filename:     FileOutputWriter  
+ *  Description:  Output Writer for writing to File.
+ *  
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -36,6 +36,11 @@ public class FileOutputWriter extends AbstractOutputWriter
 	
 	BufferedWriter bw;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param fileName
+	 */
 	public FileOutputWriter(String fileName)
 	{
 	    super();
@@ -50,43 +55,24 @@ public class FileOutputWriter extends AbstractOutputWriter
 		}
 	}
 
-	/* x
-	private void setReadData()
-	{
-		this.out_util.setLastChangedTime();
-	} */
+
 	
 	
-	
+    /**
+     * Write Data to OutputWriter
+     * 
+     * @param data OutputWriterData instance
+     */
     public void writeData(OutputWriterData data)
     {
         data.setOutputType(OutputWriterType.FILE);
         writeToFile(data.getDataAsString());
     }
 	
-/*	
-	public void writeRawData(String input, boolean is_bg_data)
-	{
-		writeToFile(input);
-	}
 	
-	
-	public void writeBGData(String date, String bg_value, int bg_type)
-	{
-		writeBGData(new ATechDate(Long.parseLong(date)), bg_value, bg_type);
-	}
-
-	public void writeBGData(ATechDate date, String bg_value, int bg_type)
-	{
-		writeToFile(date.getDateTimeString() + " = " + bg_value + " " + this.out_util.getBGTypeName(bg_type));
-	}*/
-/*	
-	public void writeBGData(MeterValuesEntry mve)
-	{
-		writeToFile(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
-	}
-	*/
-	
+    /**
+     * Write Header
+     */
 	public void writeHeader()
 	{
 		// header
@@ -98,6 +84,9 @@ public class FileOutputWriter extends AbstractOutputWriter
 	}
 
 	
+    /**
+     * Write Device Identification
+     */
     public void writeDeviceIdentification()
     {
         writeToFile(this.getDeviceIdentification().getInformation("; "));
@@ -118,6 +107,9 @@ public class FileOutputWriter extends AbstractOutputWriter
 	}
 	
 
+    /**
+     * End Output
+     */
 	public void endOutput()
 	{
 		try

@@ -23,15 +23,15 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     FileProtocol  
+ *  Description:  This is implementation for File protocol. It contains methods for looking
+ *                through File
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 
 //STUB ONLY. Not implemented
-//Will be used by Minimed (Pump/CGMS) in future
 
 
 public abstract class FileProtocol 
@@ -40,17 +40,29 @@ public abstract class FileProtocol
     protected DataAccessPlugInBase m_da = null; 
 
 
-
+    /**
+     * Constructor
+     */
     public FileProtocol()
     {
     }
 
+    /**
+     * Constructor 
+     * 
+     * @param da
+     */
     public FileProtocol(DataAccessPlugInBase da)
     {
         this.m_da = da;
     }
 
 
+    /**
+     * Get Connection Protocol
+     * 
+     * @return id of connection protocol (see ConnectionProtocols)
+     */
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_FILE_IMPORT;

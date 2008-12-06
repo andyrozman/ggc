@@ -20,69 +20,56 @@ package ggc.plugin.output;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DummyOutputWriter  
+ *  Description:  Dummy Output Writer
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
 
 public class DummyOutputWriter extends AbstractOutputWriter
 {
 	
 	
+	/**
+	 * Constructor
+	 */
 	public DummyOutputWriter()
 	{
 	    super();
 	}
 	
 	
-	
+    /**
+     * Write Data to OutputWriter
+     * 
+     * @param data OutputWriterData instance
+     */
     public void writeData(OutputWriterData data)
     {
     }
 	
-	/*
-	public void writeBGData(String date, String bg_value)
-	{
-	}
-
-	public void writeBGData(String date, String bg_value, int bg_type)
-	{
-	}
 	
-	
-	public void writeBGData(ATechDate date, String bg_value, int bg_type)
-	{
-		
-	} */
-	
-	/*
-	public void writeBGData(MeterValuesEntry mve)
-	{
-		//System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
-	}*/
-	
-	
-	public void writeHeader(int bg_type)
-	{
-	}
-	
+    /**
+     * Write Header
+     */
 	public void writeHeader()
 	{
 	}
 
 	
-
+    /**
+     * Write Device Identification
+     */
     public void writeDeviceIdentification()
     {
-//        System.out.println(this.getDeviceIdentification().getInformation("* "));
     }
 	
 	
+    /**
+     * End Output
+     */
 	public void endOutput()
 	{
 	}
-	
 	
 }

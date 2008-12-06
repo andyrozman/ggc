@@ -29,8 +29,8 @@ import com.atech.utils.ATechDate;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     GGCFileOutputWriter  
+ *  Description:  Output Writer for writing to GGC Import/Export File.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -40,16 +40,19 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 {
 	
 	BufferedWriter bw;
-//	DataAccessCGM m_da;
 	long time_created;
 	DataAccessPlugInBase m_da;
 	
+	/**
+	 * Constructor 
+	 * 
+	 * @param da
+	 */
 	public GGCFileOutputWriter(DataAccessPlugInBase da)
 	{
 	    super();
 		out_util = OutputUtil.getInstance(this);
 		m_da = da;
-//		m_da = DataAccessCGM.getInstance();
 		
 		try
 		{
@@ -64,7 +67,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 	}
 	
 	
-    public String getCurrentDateForFile()
+    private String getCurrentDateForFile()
     {
     	GregorianCalendar gc = new GregorianCalendar();
     	gc.setTimeInMillis(System.currentTimeMillis());
@@ -76,13 +79,17 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
     }
 	
 	
-	
 	private void setReadData()
 	{
 //b		this.out_util.setLastChangedTime();
 	}
 	
 	
+    /**
+     * Write Data to OutputWriter
+     * 
+     * @param data OutputWriterData instance
+     */
     public void writeData(OutputWriterData data)
     {
         data.setOutputType(OutputWriterType.GGC_FILE_EXPORT);
@@ -94,7 +101,12 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
     }
 	
 	
-	
+	/**
+	 * Write Raw Data
+	 * 
+	 * @param input
+	 * @param bg_data
+	 */
 	public void writeRawData(String input, boolean bg_data)
 	{
 		writeToFile(input);
@@ -103,103 +115,19 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 			setReadData();
 	}
 	
-/*	
-	public void writeBGData(String date, String bg_value, int bg_type)
-	{
-		writeBGData(new ATechDate(Long.parseLong(date)), bg_value, bg_type);
-	}
-
-	public void writeBGData(ATechDate date, String bg_value, int bg_type)
-	{
-
-		/*
-		1|200603250730|0|10.0|0.0|0.0|null|null|
-		2|200603300730|91|6.0|0.0|0.0|null|null|
-		3|200603290730|163|10.0|0.0|0.0|null|null|
-		4|200604030730|0|6.0|0.0|0.0|null|null|
-		*/
-/*		int val = 0;
-		
-		if (bg_type == OutputUtil.BG_MMOL)
-		{
-			float fl = Float.parseFloat(bg_value);
-			val = (int)this.out_util.getBGValueDifferent(bg_type, fl);
-			
-		}
-		else
-		{
-			try
-			{
-				val = Integer.parseInt(bg_value);
-			}
-			catch(Exception ex)
-			{
-				val = 0;
-			}
-		}
-		
-		//1|200603250730|0|10.0|0.0|0.0|null|null|
-		System.out.println(date.getDateTimeString() + " = " + bg_value + " " + this.out_util.getBGTypeName(bg_type));
-		
-		writeToFile("0|" + date.getATDateTimeAsLong() + "|" + val + "|0.0|0.0|0.0|null|null|");
-		setReadData();
-		
-	}
-	*/
 	
-	
-	   public void writeDeviceIdentification()
-	    {
-	        writeToFile(this.getDeviceIdentification().getInformation("; "));
-	    }
+    /**
+     * Write Device Identification
+     */
+	public void writeDeviceIdentification()
+    {
+        writeToFile(this.getDeviceIdentification().getInformation("; "));
+    }
 
-/*	
-	public void writeBGData(MeterValuesEntry mve)
-	{
-		/*
-		1|200603250730|0|10.0|0.0|0.0|null|null|
-		2|200603300730|91|6.0|0.0|0.0|null|null|
-		3|200603290730|163|10.0|0.0|0.0|null|null|
-		4|200604030730|0|6.0|0.0|0.0|null|null|
-		*/
-/*		int val = 0;
-		
-		if (mve.getBgUnit() == OutputUtil.BG_MMOL)
-		{
-			float fl = Float.parseFloat(mve.getBgValue());
-			val = (int)this.out_util.getBGValueDifferent(mve.getBgUnit(), fl);
-			
-		}
-		else
-		{
-			try
-			{
-				val = Integer.parseInt(mve.getBgValue());
-			}
-			catch(Exception ex)
-			{
-				val = 0;
-			}
-		}
-
-		String parameters = mve.getParametersAsString();
-		
-		//1|200603250730|0|10.0|0.0|0.0|null|null|
-		
-		if (parameters.equals(""))
-			System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
-		else
-			System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
-		
-		writeToFile("0|" + mve.getDateTime().getATDateTimeAsLong() + "|" + val + 
-				    "|0.0|0.0|0.0|null|null|1|MTI;" + parameters + "|" + this.time_created);
-		setReadData();
-		
-		//writeToFile(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()));
-	}
-	*/
 	
-	
+    /**
+     * Write Header
+     */
 	public void writeHeader()
 	{
 		// header
@@ -217,20 +145,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 		sb.append(";\n");
 
 		writeToFile(sb.toString());
-//		setReadData();
-		/*
-		1|200603250730|0|10.0|0.0|0.0|null|null|
-		2|200603300730|91|6.0|0.0|0.0|null|null|
-		3|200603290730|163|10.0|0.0|0.0|null|null|
-		4|200604030730|0|6.0|0.0|0.0|null|null|
-		*/
-		
-		/*
-		String dta = "=======================================================\n";
-		dta += "==             Meter Tool Data Dump                  ==\n";
-		dta += "=======================================================\n";
-		
-		writeToFile(dta); */
+
 	}
 
 	
@@ -249,6 +164,9 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 	}
 	
 
+    /**
+     * End Output
+     */
 	public void endOutput()
 	{
 		System.out.println("END OUTPUT");
@@ -265,8 +183,5 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
 		this.interruptCommunication();
 		
 	}
-
-	
-
 	
 }

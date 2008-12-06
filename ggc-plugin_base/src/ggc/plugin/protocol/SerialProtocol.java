@@ -43,8 +43,9 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     SerialProtocol  
+ *  Description:  This is implementation for Serial protocol. It contains methods for reading
+ *                and writing to/from serial port.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -54,34 +55,44 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 {
 
     private static Log log = LogFactory.getLog("ProtocolLog");
-
-    
     
     protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
     protected DataAccessPlugInBase m_da = null; //DataAccessMeter.getInstance();
 
 
     protected boolean isPortOpen = false;
-    public boolean dataFromMeter = false;
-    public SerialPort serialPort = null;
+    protected SerialPort serialPort = null;
     protected CommPortIdentifier portIdentifier = null;
-    public OutputStream portOutputStream = null;
-    public InputStream portInputStream = null;
-    public String port_name = null;
+    protected OutputStream portOutputStream = null;
+    protected InputStream portInputStream = null;
+    protected String port_name = null;
 
-    public long startTime = System.currentTimeMillis();
+    protected long startTime = System.currentTimeMillis();
     protected long timeOut = 50000;
 
-//x    private EventListenerList listenerList = new EventListenerList();
-//x    private ImageIcon image = null;
-//z    private String useInfoMessage = null;
-//x    private String name = null;
-
+    /**
+     * Serial Event: None 
+     */
     public static final int SERIAL_EVENT_NONE = 0;
+    
+    /**
+     * Serial Event: Data Available 
+     */
     public static final int SERIAL_EVENT_DATA_AVAILABLE = 1;
+    
+    /**
+     * Serial Event: Break Interrupt 
+     */
     public static final int SERIAL_EVENT_BREAK_INTERRUPT = 2;
+    
+    /**
+     * Serial Event: Output Empty 
+     */
     public static final int SERIAL_EVENT_OUTPUT_EMPTY = 4;
     
+    /**
+     * Serial Event: All 
+     */
     public static final int SERIAL_EVENT_ALL = 7;
     
     
@@ -92,9 +103,11 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     int parity;
     int flow_control;
     protected int event_type;
-    //serialPort.getFlowControlMode();
 
 
+    /**
+     * Constructor 
+     */
     public SerialProtocol()
     {
     	//super();
@@ -104,7 +117,9 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     
     /**
-     * Constructor for SerialMeterImport.
+     * Constructor
+     * 
+     * @param da 
      */
     public SerialProtocol(DataAccessPlugInBase da)
     {
@@ -113,6 +128,16 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     }
 
     
+    /**
+     * Set Communication Settings
+     * 
+     * @param baudrate
+     * @param databits
+     * @param stopbits
+     * @param parity
+     * @param flow_control
+     * @param event_type
+     */
     public void setCommunicationSettings(int baudrate, 
                                          int databits,
     									 int stopbits, 
@@ -139,8 +164,11 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     }
 
     /**
-     * Set the COM-Port from wich will be read.
+     * Set the COM-Port from which will be read.
+     * 
+     * @param port 
      * @param String port
+     * @throws PlugInBaseException 
      */
     public void setPort(String port) throws PlugInBaseException
     {
@@ -164,10 +192,6 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     }*/
     
     
-    /**
-     * @throws MeterException 
-     * @see data.imports.DataImport#open()
-     */
     
     // open was moved to abstract
     //public boolean open() throws PlugInBaseException
@@ -288,7 +312,12 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 */
     
     
-    
+    /**
+     * Open Serial Port
+     * 
+     * @throws PlugInBaseException 
+     * @return true if port is opened 
+     */
     public boolean open() throws PlugInBaseException
     {
         if (isPortOpen)
@@ -504,43 +533,58 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
         serialPort.removeEventListener();
         serialPort.close();
         isPortOpen = false;
-        dataFromMeter = false;
+        //dataFromMeter = false;
         System.out.println("close port : " + portIdentifier.getName());
 //        fireImportChanged(new ImportEvent(this, ImportEvent.PORT_CLOSED, portIdentifier));
     }
 
+    
+    
     /**
-     * @see data.imports.DataImport#importData()
+     * Read
+     * 
+     * @throws IOException
+     * @return
      */
-/*    public void importData() throws ImportException
-    {
-        if (portIdentifier == null || serialPort == null || portOutputStream == null || portInputStream == null)
-            throw new ImportException(m_ic.getMessage("COM_PORT_NOT_INIT_CORRECT"));
-
-        startTime = System.currentTimeMillis();
-        //Thread thread = new Thread(this);
-        //thread.start();
-    }
-*/
-    
-    
     public int read() throws IOException
     {
     	return portInputStream.read();
     }
     
+    /**
+     * Read
+     * 
+     * @param b 
+     * @throws IOException
+     * @return
+     */
     public int read(byte[] b) throws IOException
     {
     	return portInputStream.read(b);
     }
     
     
+    /**
+     * Read
+     * 
+     * @param b 
+     * @param off 
+     * @param len 
+     * @throws IOException
+     * @return
+     */
     public int read(byte[] b, int off, int len) throws IOException
     {
     	return portInputStream.read(b, off, len);
     }
     
     
+    /**
+     * Read Line
+     * 
+     * @return
+     * @throws IOException
+     */
     public String readLine() throws IOException //, SerialIOHaltedException
     {
 	    char c = '\uFFFF';
@@ -569,6 +613,11 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
 
     
+    /**
+     * Read Line as array of bytes
+     * @return
+     * @throws IOException
+     */
     public byte[] readLineBytes() throws IOException //, SerialIOHaltedException
     {
         char c = '\uFFFF';
@@ -614,75 +663,84 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     
     
+    /**
+     * Write (byte[]) 
+     * 
+     * @param b
+     * @throws IOException
+     */
     public void write(byte[] b) throws IOException
     {
     	portOutputStream.write(b);
     }
 
     
+    /**
+     * Write (int)
+     * @param i
+     * @throws IOException
+     */
     public void write(int i) throws IOException
     {
     	portOutputStream.write(i);
     }
     
     
+    /**
+     * Write (byte[],int,int)
+     * 
+     * @param b byte array
+     * @param off offset 
+     * @param len length
+     * @throws IOException
+     */
     public void write(byte[] b, int off, int len) throws IOException
     {
     	portOutputStream.write(b, off, len);
     }
     
     
+    /**
+     * Test
+     */
     public void test()
     {
-    	//portOutputStream.write(b);
-    	//portOutputStream.
     }
-    
-    
-    
-//    portInputStream.read()
-    
-    
     
     
     
     
     
     /**
-     * @see data.imports.DataImport#getImportedData()
-     */
-/*    public DailyValuesRow[] getImportedData()
-    {
-        return new DailyValuesRow[0];
-    }
-*/
-
-    
-    
-    
-    
-    
-    /**
+     * Serial Event
+     * 
      * @see gnu.io.SerialPortEventListener#serialEvent(SerialPortEvent)
      */
     public abstract void serialEvent(SerialPortEvent event);
 
 
+    /**
+     * Get Timeout
+     * 
+     * @return
+     */
     public long getTimeOut()
     {
         return timeOut;
     }
 
-
+/*
     public void stopImport()
     {
         timeOut = 1;
     }
+*/
 
 
 
-
-
+    /**
+     * Print All Available Serial Ports as vector of CommPortIdentifier
+     */
     public void printAllAvailableSerialPorts()
     {
         Vector<CommPortIdentifier> lst = SerialProtocol.getAllAvailablePorts();
@@ -700,7 +758,11 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 
 
 
-    
+    /**
+     * Get All Available Serial Ports as vector of CommPortIdentifier
+     *  
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static Vector<CommPortIdentifier> getAvailableSerialPorts()
     {
@@ -727,6 +789,11 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 
 
     
+    /**
+     * Get All Available Ports as Vector of Strings
+     * 
+     * @return
+     */
     public static Vector<String> getAllAvailablePortsString()
     {
         Vector<String> retVal = new Vector<String>();
@@ -757,39 +824,40 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     }
     
     
+    /**
+     * Get All Available Ports as vector of CommPortIdentifier
+     *  
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static Vector<CommPortIdentifier> getAllAvailablePorts()
     {
-//        Vector<String> retVal = new Vector<String>();
         Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
 
         try
         {
-            //Vector retVal = new Vector();
-//            int counter = 0;
-            
-            //CommPortIdentifier.
-            
             Enumeration enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 
             {
                 CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
-                //if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
-                    retVal.add(portID);
+                retVal.add(portID);
             }
         }
         catch(Exception ex)
         {
             System.out.println("Exception: getAvailableSerialPorts: " + ex);
-
         }
+
         return retVal;
 
     }
     
-    
 
-
+    /**
+     * Get Connection Protocol
+     * 
+     * @return id of connection protocol (see ConnectionProtocols)
+     */
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE;

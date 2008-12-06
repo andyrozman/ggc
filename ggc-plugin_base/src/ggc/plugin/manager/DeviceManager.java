@@ -33,19 +33,13 @@ import java.util.Vector;
  *  Author: Andy {andy@atech-software.com}
  */
 
-//IMPORTANT NOTICE: 
-//This class is not implemented yet, all existing methods should be rechecked.
-//
-//Try to assess possibility of super-classing
-
 
 public abstract class DeviceManager
 {
 
     protected Hashtable<String,AbstractDeviceCompany> companies_ht = new Hashtable<String,AbstractDeviceCompany>(); 
     protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>(); 
-    //protected Vector<? extends DeviceInterface> supported_devices = null; //new Vector<CGMInterface>(); 
-    protected Vector<DeviceInterface> supported_devices = new Vector<DeviceInterface>(); //new Vector<CGMInterface>();
+    protected Vector<DeviceInterface> supported_devices = new Vector<DeviceInterface>();
 
     /**
      * Constructor 

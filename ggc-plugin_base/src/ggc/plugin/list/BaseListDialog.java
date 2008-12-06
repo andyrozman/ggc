@@ -1,38 +1,9 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionTreeDialog
- *  Purpose:  Main class for displaying nutrition information.
- *
- *  Author:   andyrozman
- */
-
 package ggc.plugin.list;
  
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -66,23 +37,23 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     BaseListDialog  
+ *  Description:  Base List Dialog
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 
-public class BaseListDialog extends JDialog implements TreeSelectionListener, ActionListener
+public class BaseListDialog extends JDialog implements TreeSelectionListener //, ActionListener
 {
 
     private static final long serialVersionUID = -331463474036415168L;
     private JPanel mainPane;
     private JTree tree;
 
-    public DataAccessPlugInBase m_da = null;
+    protected DataAccessPlugInBase m_da = null;
     private I18nControlAbstract ic = null;
-    public BaseListAbstractPanel  panels[] = null;
+    protected BaseListAbstractPanel  panels[] = null;
     BaseListRoot m_root = null;
     
     
@@ -164,12 +135,20 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 	    this.setTitle(String.format(ic.getMessage("DEVICE_LIST_WEB"), ic.getMessage("DEVICE_NAME_BIG")));
     }
 
+    /**
+     * Set Tree Model
+     * 
+     * @param tree
+     */
     public void setTreeModel(JTree tree)
     {
 	    tree.setModel(new BaseListModel(this.m_root));
     }
     
     
+    /**
+     * Create Panels
+     */
     public void createPanels()
     {
     	panels = new BaseListAbstractPanel[2];
@@ -187,12 +166,21 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
 
     }
 
+    /**
+     * Panel: Main
+     */
     public static final int PANEL_MAIN = 0;
+    
+    /**
+     * Panel: Browser
+     */
     public static final int PANEL_BROWSER = 1;
 
 
     /** 
      * Makes selected panel visible
+     * 
+     * @param num 
      */
     public void makePanelVisible(int num)
     {
@@ -226,139 +214,15 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
     	    makePanelVisible(BaseListDialog.PANEL_BROWSER);
     	    this.panels[BaseListDialog.PANEL_BROWSER].setData(this.selected_last_path);
     	}
-	
-    	
-	/*
-	if (tree.getLastSelectedPathComponent() instanceof GGCTreeRoot)
-	{
-	    makePanelVisible(NutritionTreeDialog.PANEL_MAIN);
-	    //System.out.println("NutritionTreeDialog::valueChanged:: NOT IMPLEMENTED");
-	    //Diocese dio = (Diocese)tree.getLastSelectedPathComponent();
-	    //((ViewDiocesePanel)panels[DioceseCfgDialog.PANEL_VIEW_DIOCESE]).setData((DioceseH)dio); //node2.getObject());
-	}
-	else if (tree.getLastSelectedPathComponent() instanceof FoodGroup)
-	{
-	    makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP);
-	    this.panels[NutritionTreeDialog.PANEL_FOODGROUP].setData(tree.getLastSelectedPathComponent());
-	}
-	else if (tree.getLastSelectedPathComponent() instanceof FoodDescription)
-	{
-	    makePanelVisible(NutritionTreeDialog.PANEL_FOOD);
-	    this.panels[NutritionTreeDialog.PANEL_FOOD].setData(tree.getLastSelectedPathComponent());
-	}
-*/
-
-/*
-        if (panels[selectedPanel] instanceof EditablePanel)
-        {
-            EditablePanel p = (EditablePanel)panels[selectedPanel];
-            if (p.hasDataChanged())
-            {
-                if (!p.saveData())
-                    return;
-            }
-        }
-
-
-        if (tree.getLastSelectedPathComponent() instanceof Diocese)
-        {
-            makePanelVisible(DioceseCfgDialog.PANEL_VIEW_DIOCESE);
-            Diocese dio = (Diocese)tree.getLastSelectedPathComponent();
-            ((ViewDiocesePanel)panels[DioceseCfgDialog.PANEL_VIEW_DIOCESE]).setData((DioceseH)dio); //node2.getObject());
-        }
-        else if (tree.getLastSelectedPathComponent() instanceof Parish)
-        {
-            makePanelVisible(DioceseCfgDialog.PANEL_VIEW_PARISH);
-            Parish pi = (Parish)tree.getLastSelectedPathComponent();
-            ((ViewParishPanel)panels[DioceseCfgDialog.PANEL_VIEW_PARISH]).setData((ParishH)pi);
-        }
-        else if (tree.getLastSelectedPathComponent() instanceof ParishPerson)
-        {
-            ParishPerson pp = (ParishPerson)tree.getLastSelectedPathComponent();
-            makePanelVisible(DioceseCfgDialog.PANEL_VIEW_PARISH_PERSONAL);
-            ((ViewParishPersonalPanel)panels[DioceseCfgDialog.PANEL_VIEW_PARISH_PERSONAL]).setData((ParishH)pp.getParish());
-        }
-        else if (tree.getLastSelectedPathComponent() instanceof DiocesePerson)
-        {
-            DiocesePerson pp = (DiocesePerson)tree.getLastSelectedPathComponent();
-            makePanelVisible(DioceseCfgDialog.PANEL_VIEW_DIOCESE_PERSONAL);
-            ((ViewDiocesePanel)panels[DioceseCfgDialog.PANEL_VIEW_DIOCESE_PERSONAL]).setData((DioceseH)pp.getDiocese());
-        } 
-        else
-        {
-            System.out.println("DioceseCfgDialog::valueChanged::UnknownAction");
-        }
-*/
     }
 
-    /*
-    public static int PANEL_VIEW = 0;
-    public static int PANEL_EDIT = 1;
-    public static int PANEL_ADD  = 2;
-    public static int PANEL_ADD_ITEM  = 3;
     
     
-
-    private void displayPanel(int special_action)
-    {
-	
-    	
-	//System.out.println()
-	
-	if (this.selected_last_path instanceof GGCTreeRoot)
-	{
-	    makePanelVisible(NutritionTreeDialog.PANEL_MAIN);
-	}
-	else if (this.selected_last_path instanceof FoodGroup)
-	{
-	    if (special_action == NutritionTreeDialog.PANEL_VIEW)
-	    {
-                makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP);
-                this.panels[NutritionTreeDialog.PANEL_FOODGROUP].setData(this.selected_last_path);
-	    }
-	    else if (special_action == NutritionTreeDialog.PANEL_EDIT)
-	    {
-                makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP_EDIT);
-                this.panels[NutritionTreeDialog.PANEL_FOODGROUP_EDIT].setData(this.selected_last_path);
-		
-		//System.out.println("FoodGroup Edit failed");
-	    }
-	    else if (special_action == NutritionTreeDialog.PANEL_ADD)
-	    {
-		//System.out.println("FoodGroup Add Group failed");
-                makePanelVisible(NutritionTreeDialog.PANEL_FOODGROUP_EDIT);
-                this.panels[NutritionTreeDialog.PANEL_FOODGROUP_EDIT].setParent(this.selected_last_path);
-	    }
-	    else
-	    {
-		//System.out.println("FoodGroup Add Item failed");
-                makePanelVisible(NutritionTreeDialog.PANEL_FOOD_EDIT);
-                this.panels[NutritionTreeDialog.PANEL_FOOD_EDIT].setParent(this.selected_last_path);
-	    }
-	}
-	else if (this.selected_last_path instanceof FoodDescription)
-	{
-	    if (special_action == NutritionTreeDialog.PANEL_VIEW)
-	    {
-		makePanelVisible(NutritionTreeDialog.PANEL_FOOD);
-		this.panels[NutritionTreeDialog.PANEL_FOOD].setData(this.selected_last_path);
-	    }
-	    else if (special_action == NutritionTreeDialog.PANEL_EDIT)
-	    {
-		System.out.println("FoodDescription Edit failed");
-	    }
-	    else
-	    {
-		System.out.println("FoodDescription Add failed");
-	    }
-	    
-	}
-	
-    }
-    */
-    
-    
-    
+    /**
+     * Dispose
+     * 
+     * @see java.awt.Window#dispose()
+     */
     public void dispose()
     {
         this.m_da.removeComponent(this);
@@ -366,100 +230,19 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener, Ac
     }
     
     
-    
-    
-    
     boolean made = false;
     int menu_prev_type = 0;
     
 
     
+    /**
+     * Get Tree Item Type
+     * 
+     * @return
+     */
     public int getTreeItemType()
     {
-/*    	
-	if (this.mouse_selected_object instanceof GGCTreeRoot)
-	{
-	    return 1;
-	}
-	else
-	{
-	    if (this.m_tree_type==2)
-	    {
-		if (this.mouse_selected_object instanceof FoodGroup)
-		    return 2;
-		else
-		    return 3;
-	    }
-	    else if (this.m_tree_type==3)
-	    {
-		if (this.mouse_selected_object instanceof MealGroup)
-		    return 2;
-		else
-		    return 3;
-		
-	    }
-	    else
-            {
-                System.out.println("Error on mouse click: Wrong type:" + this.mouse_selected_object);
-                return -1;
-            }
-	    
-	}
-	//else
-	*/
-    	
     	return 0;
-    	
-    }
-    
-    
-    /*
-    public static void main(String args[])
-    {
-        DataAccessPlugInBase da = DataAccessPump.getInstance();
-	
-	
-
-        new PumpListDialog(da);
-
-    }
-*/
-
-    public void actionPerformed(ActionEvent ae)
-    {
-    	/*
-	// TODO Auto-generated method stub
-	//System.out.println("Action performed, NOT handled");
-	
-	String command = ae.getActionCommand();
-	
-	if (command.equals("close"))
-	{
-	}
-	else if (command.equals("view"))
-	{
-	    this.selected_last_path = this.mouse_selected_object;
-	    this.displayPanel(NutritionTreeDialog.PANEL_VIEW);
-	}
-	else if (command.equals("add_item"))
-	{
-	    this.selected_last_path = this.mouse_selected_object;
-	    this.displayPanel(NutritionTreeDialog.PANEL_ADD_ITEM);
-	}
-	else if (command.equals("add_group"))
-	{
-	    this.selected_last_path = this.mouse_selected_object;
-	    this.displayPanel(NutritionTreeDialog.PANEL_ADD);
-	}
-	else if ((command.equals("edit_item")) || 
-	         (command.equals("edit_group")))
-	{
-	    this.selected_last_path = this.mouse_selected_object;
-	    this.displayPanel(NutritionTreeDialog.PANEL_EDIT);
-	}
-	
-	*/
-	
     }
     
     

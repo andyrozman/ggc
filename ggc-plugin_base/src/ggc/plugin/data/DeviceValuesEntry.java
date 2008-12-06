@@ -5,6 +5,8 @@ import ggc.plugin.output.OutputWriterData;
 
 import java.util.ArrayList;
 
+import com.atech.utils.ATechDate;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -26,8 +28,8 @@ import java.util.ArrayList;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     CGMValuesEntry.java
- *  Description:  Collection of CGMValuesEntry, which contains all daily values.
+ *  Filename:     DeviceValuesEntry
+ *  Description:  Collection of DeviceValuesEntry, which contains all daily values.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -41,6 +43,8 @@ public abstract class DeviceValuesEntry extends OutputWriterData
 {
 	protected boolean checked = false;
 	protected int status = 1; 
+    protected int output_type = 0;
+    protected boolean is_bg = false;
 	
 	
 	
@@ -115,71 +119,130 @@ public abstract class DeviceValuesEntry extends OutputWriterData
 	}
 	
 	
+	/**
+	 * Get DateTime (long)
+	 * 
+	 * @return
+	 */
 	public abstract long getDateTime();
 	
+	
+    /**
+     * Set DateTime Object (ATechDate)
+     * 
+     * @param dt ATechDate instance
+     */
+    public abstract void setDateTimeObject(ATechDate dt);
+    
+    
+    /**
+     * Get DateTime Object (ATechDate)
+     * 
+     * @return ATechDate instance
+     */
+    public abstract ATechDate getDateTimeObject();
+    
 
+	/**
+	 * Get DateTime format
+	 * 
+	 * @return format of date time (precission)
+	 */
 	public abstract int getDateTimeFormat();
 	
 	
+	/**
+	 * Get Column Value
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public abstract Object getColumnValue(int index);
 	
 	
+	/**
+	 * Get Checked 
+	 * 
+	 * @return true if element is checked
+	 */
 	public boolean getChecked()
 	{
 	    return this.checked;
 	}
 
 	
+    /**
+     * Set Checked
+     * 
+     * @param check true if element is checked
+     */
     public void setChecked(boolean check)
     {
         this.checked = check;
     }
 	
 	
+	/**
+	 * Get Status
+	 * 
+	 * @return status
+	 */
 	public int getStatus()
 	{
 	    return this.status;
 	}
 	
 	
+    /**
+     * Set Status
+     * 
+     * @param status_in
+     */
     public void setStatus(int status_in)
     {
         this.status = status_in;
     }
     
 	
+	/**
+	 * Prepare Entry
+	 */
 	public abstract void prepareEntry();
 	
+	
+	/**
+	 * Get Db Objects
+	 * 
+	 * @return ArrayList of elements extending GGCHibernateObject
+	 */
 	public abstract ArrayList<? extends GGCHibernateObject> getDbObjects();
 	
 	
-	//public void prepareEntry()
-	//{
-	    /*
-	    if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
-	        return;
-	    else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
-	    {
-	        this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setChanged(System.currentTimeMillis());
-	        this.entry_object.setComment(createComment());
-	    }
-	    else
-	    {
-	        this.entry_object = new DayValueH();
-	        this.entry_object.setIns1(0);
-            this.entry_object.setIns2(0);
-            this.entry_object.setCh(0.0f);
-            this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setDt_info(this.datetime);
-            this.entry_object.setChanged(System.currentTimeMillis());
-            this.entry_object.setComment(createComment());
-	    }*/
-	//}
 	
 	
+	/**
+	 * Set Output Type
+	 * 
+	 * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
+	 */
+	@Override
+    public void setOutputType(int type)
+    {
+	    this.output_type = type;
+    }
 	
 	
+    /**
+     * Is Data BG
+     * 
+     * @see ggc.plugin.output.OutputWriterData#isDataBG()
+     */
+    @Override
+    public boolean isDataBG()
+    {
+        return this.is_bg; 
+    }
+
 	
 	
 }	
