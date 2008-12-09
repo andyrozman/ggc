@@ -79,6 +79,20 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             // this.done_backup_elements++;
         }
 
+        if (this.isBackupObjectSelected(ic.getMessage("COLOR_SCHEMES")))
+        {
+            this.setTask(ic.getMessage("COLOR_SCHEMES"));
+            GGCExporter ge = new GGCExporter(this);
+            //ge.setBackupObject("ggc.core.db.hibernate.ColorSchemeH");
+            //ge.export();
+            ge.export("ggc.core.db.hibernate.ColorSchemeH");
+            //ge.run();
+            this.setStatus(100);
+        }
+        
+        
+        
+        
         if (isAnyNutritionBackupObjectSelected())
         {
             ExportNutritionDb end = new ExportNutritionDb(this);

@@ -22,7 +22,9 @@ public class DoctorTypeH implements Serializable {
     /** nullable persistent field */
     private int predefined;
 
-    /** full constructor */
+    /** full constructor 
+     * @param name 
+     * @param predefined */
     public DoctorTypeH(String name, int predefined) {
         this.name = name;
         this.predefined = predefined;
@@ -32,21 +34,47 @@ public class DoctorTypeH implements Serializable {
     public DoctorTypeH() {
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+
+    /**
+     * Get Name
+     * 
+     * @return name
+     */
+    public String getName() 
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    /**
+     * Set Name
+     * 
+     * @param name as string
+     */
+    public void setName(String name) 
+    {
         this.name = name;
     }
+
 
     public int getPredefined() {
         return this.predefined;
@@ -56,11 +84,6 @@ public class DoctorTypeH implements Serializable {
         this.predefined = predefined;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof DoctorTypeH) ) return false;
@@ -70,10 +93,25 @@ public class DoctorTypeH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

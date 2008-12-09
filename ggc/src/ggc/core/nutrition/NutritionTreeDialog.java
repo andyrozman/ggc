@@ -66,27 +66,50 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     NutritionTreeDialog 
+ *  Description:  Main class for displaying nutrition information.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class NutritionTreeDialog extends JDialog implements TreeSelectionListener, MouseListener, ActionListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 5682055227220084443L;
     private JPanel mainPane;
     private JTree tree;
 
     private DataAccess m_da = null;
-
-    // private static boolean playWithLineStyle = false;
-    // private static String lineStyle = "Horizontal";
-
-    // private static boolean useSystemLookAndFeel = false;
-
+    /**
+     * I18n Control instance
+     */
     public I18nControlAbstract ic = null;
-    public GGCTreePanel panels[] = null;
+    private GGCTreePanel panels[] = null;
     private int selectedPanel = 0;
 
+    /**
+     * Tree type
+     */
     public int m_tree_type = 1;
 
     private Hashtable<String, MenuItem> menus;
@@ -96,11 +119,24 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     PopupMenu pop = new PopupMenu(); // the popup menu you want to use with the
                                      // tree
 
+    /**
+     * Constructor 
+     * 
+     * @param da
+     * @param type
+     */
     public NutritionTreeDialog(DataAccess da, int type)
     {
         this(da, type, false);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param type
+     * @param selector
+     */
     public NutritionTreeDialog(DataAccess da, int type, boolean selector)
     {
         super(da.getParent(), "", true);
@@ -117,6 +153,11 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     }
 
     
+    /**
+     * Process Window Event
+     * 
+     * @see javax.swing.JDialog#processWindowEvent(java.awt.event.WindowEvent)
+     */
     public void processWindowEvent(WindowEvent ev)
     {
         if (ev.getID() == WindowEvent.WINDOW_CLOSING)
@@ -127,10 +168,8 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     }
     
     
-    public void init()
+    private void init()
     {
-
-        // this.setResizable(false);
         if (selector)
             this.setBounds(120, 90, 740, 560);
         else
@@ -179,12 +218,17 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     }
 
+    /**
+     * Get Type
+     * 
+     * @return
+     */
     public int getType()
     {
         return this.m_tree_type;
     }
 
-    public void setTitle()
+    private void setTitle()
     {
         if (this.getType() == 1)
             this.setTitle(ic.getMessage("USDA_NUTRITION_DATABASE"));
@@ -194,27 +238,20 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
             this.setTitle(ic.getMessage("MEALS_DATABASE"));
     }
 
-    public void setTreeModel(JTree tree)
+    private void setTreeModel(JTree tree)
     {
-        // if ((this.m_tree_type==1) || (this.m_tree_type==2))
         tree.setModel(new NutritionTreeModel(m_da.tree_roots.get("" + this.m_tree_type)));
-        // else
-        // tree.setModel(new NutritionTreeModel(m_da.tree_roots.get("" +
-        // this.m_tree_type)));
-        // else
-
     }
 
+    /**
+     * Refresh Tree
+     */
     public void refreshTree()
     {
-        //tree.fireTreeWillExpand(null);
-        
-        
-        //((DefaultTreeModel)tree.getModel()).reload();
         setTreeModel(this.tree);
     }
 
-    public void createPanels()
+    private void createPanels()
     {
 
         panels = new GGCTreePanel[3];
@@ -258,14 +295,36 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     }
 
+    /**
+     * Panel: Main
+     */
     public static final int PANEL_MAIN = 0;
+    
+    /**
+     * Panel: Group
+     */
+    
     public static final int PANEL_GROUP = 1;
+    
+    /**
+     * Panel: Item
+     */
     public static final int PANEL_ITEM = 2;
+    
+    /**
+     * Panel: Group Edit
+     */
     public static final int PANEL_GROUP_EDIT = 3;
+    
+    /**
+     * Panel: Item Edit
+     */
     public static final int PANEL_ITEM_EDIT = 4;
 
-    /*
+    /**
      * Makes selected panel visible
+     * 
+     * @param num 
      */
     public void makePanelVisible(int num)
     {
@@ -287,7 +346,9 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     // GGCTreePanel selected_last_panel = null;
 
-    /*  Required by TreeSelectionListener interface. */
+    /**
+     *   Required by TreeSelectionListener interface. 
+     */
     public void valueChanged(TreeSelectionEvent e)
     {
 
@@ -309,15 +370,29 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     }
 
+    /**
+     * Panel: View
+     */
     public static int PANEL_VIEW = 0;
+    
+    /**
+     * Panel: Edit
+     */
     public static int PANEL_EDIT = 1;
+    
+    /**
+     * Panel: Add
+     */
     public static int PANEL_ADD = 2;
+    
+    /**
+     * Panel: Add Item
+     */
     public static int PANEL_ADD_ITEM = 3;
 
+    
     private void displayPanel(int special_action)
     {
-
-        // System.out.println()
 
         if (this.selected_last_path instanceof GGCTreeRoot)
         {
@@ -390,30 +465,18 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     }
 
-    public void mouseExited(MouseEvent me)
-    {
-    }
-
-    public void mouseEntered(MouseEvent me)
-    {
-    }
 
     private Object mouse_selected_object = null;
 
+    /**
+     * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+     */
     public void mouseReleased(MouseEvent me)
     {
-
-        //System.out.println("Mouse released");
-        
-        //System.out.println("MouseEvent trigger: " + me.isPopupTrigger());
-        //System.out.println("MouseEvent Right Mouse: " + SwingUtilities.isRightMouseButton(me));
-        
 
         if ((me.isPopupTrigger()) || // right click, show popup menu
             (SwingUtilities.isRightMouseButton(me)))
         {
-            //System.out.println("In pop trigger");
-
             mouse_selected_object = tree.getClosestPathForLocation(me.getX(), me.getY()).getLastPathComponent();
             tree.setSelectionPath(tree.getClosestPathForLocation(me.getX(), me.getY()));
 
@@ -431,15 +494,28 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
         }
     }
 
-    public void mousePressed(MouseEvent me)
-    {
-    }
+    /**
+     * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+     */
+    public void mousePressed(MouseEvent me) { }
 
-    public void mouseClicked(MouseEvent me)
-    {
-    }
+    /**
+     * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+     */
+    public void mouseClicked(MouseEvent me) { }
 
-    public void initMenu()
+    /**
+     * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+     */
+    public void mouseExited(MouseEvent me) { }
+
+    /**
+     * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+     */
+    public void mouseEntered(MouseEvent me) { }
+    
+    
+    private void initMenu()
     {
         this.menus = new Hashtable<String, MenuItem>();
 
@@ -476,7 +552,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
     boolean made = false;
     int menu_prev_type = 0;
 
-    public void createMenu()
+    private void createMenu()
     {
         if (this.m_tree_type == 1)
         {
@@ -547,7 +623,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
         }
     }
 
-    public int getTreeItemType()
+    private int getTreeItemType()
     {
         if (this.mouse_selected_object instanceof GGCTreeRoot)
         {
@@ -581,21 +657,41 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     }
 
+    /**
+     * Was Action
+     * 
+     * @return
+     */
     public boolean wasAction()
     {
         return (this.selected_object != null);
     }
 
+    /**
+     * Get Selected Object
+     * 
+     * @return
+     */
     public Object getSelectedObject()
     {
         return this.selected_object;
     }
 
+    /**
+     * Get Selected Object Type
+     * 
+     * @return
+     */
     public int getSelectedObjectType()
     {
         return this.m_tree_type;
     }
 
+    /**
+     * Main
+     * 
+     * @param args
+     */
     public static void main(String args[])
     {
         DataAccess da = DataAccess.getInstance();
@@ -632,11 +728,11 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
     }
 
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent ae)
     {
-        // TODO Auto-generated method stub
-        // System.out.println("Action performed, NOT handled");
-
         String command = ae.getActionCommand();
 
         if (command.equals("close"))

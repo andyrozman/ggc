@@ -30,7 +30,6 @@ package ggc.gui.dialogs.graphs;
 import ggc.core.data.GlucoValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.gui.calendar.DateRangeSelectionPanel;
 import ggc.gui.graphs.CourseGraphView;
 import ggc.gui.graphs.DataPlotSelectorPanel;
 
@@ -45,6 +44,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import com.atech.graphics.calendar.DateRangeSelectionPanel;
 import com.atech.help.HelpCapable;
 
 public class CourseGraphDialog extends JDialog implements ActionListener, HelpCapable // JFrame
@@ -87,7 +87,7 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
     {
         JPanel cPanel = new JPanel(new BorderLayout());
 
-        dRS = new DateRangeSelectionPanel();
+        dRS = new DateRangeSelectionPanel(m_da);
 
         DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel(DataPlotSelectorPanel.BG_AVG_MASK);
         selectionPanel.disableChoice(DataPlotSelectorPanel.BG_MASK | DataPlotSelectorPanel.CH_MASK

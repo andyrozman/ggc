@@ -43,7 +43,16 @@ public class StocksH implements Serializable {
     /** nullable persistent field */
     private String comment;
 
-    /** full constructor */
+    /** full constructor 
+     * @param stock_subtype_id 
+     * @param dt_stock 
+     * @param amount 
+     * @param description 
+     * @param usage_per_day_min 
+     * @param usage_per_day_max 
+     * @param extended 
+     * @param person_id 
+     * @param comment */
     public StocksH(long stock_subtype_id, long dt_stock, float amount, String description, float usage_per_day_min, float usage_per_day_max, String extended, int person_id, String comment) {
         this.stock_subtype_id = stock_subtype_id;
         this.dt_stock = dt_stock;
@@ -60,16 +69,29 @@ public class StocksH implements Serializable {
     public StocksH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param person_id */
     public StocksH(int person_id) {
         this.person_id = person_id;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
@@ -145,11 +167,6 @@ public class StocksH implements Serializable {
         this.comment = comment;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof StocksH) ) return false;
@@ -159,10 +176,25 @@ public class StocksH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

@@ -40,7 +40,16 @@ public class PumpProfileH implements Serializable {
     /** nullable persistent field */
     private long changed;
 
-    /** full constructor */
+    /** full constructor 
+     * @param name 
+     * @param basal_base 
+     * @param basal_diffs 
+     * @param active_from 
+     * @param active_till 
+     * @param extended 
+     * @param person_id 
+     * @param comment 
+     * @param changed */
     public PumpProfileH(String name, float basal_base, String basal_diffs, long active_from, long active_till, String extended, int person_id, String comment, long changed) {
         this.name = name;
         this.basal_base = basal_base;
@@ -57,26 +66,53 @@ public class PumpProfileH implements Serializable {
     public PumpProfileH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param person_id */
     public PumpProfileH(int person_id) {
         this.person_id = person_id;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+
+    /**
+     * Get Name
+     * 
+     * @return name
+     */
+    public String getName() 
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    /**
+     * Set Name
+     * 
+     * @param name as string
+     */
+    public void setName(String name) 
+    {
         this.name = name;
     }
+
 
     public float getBasal_base() {
         return this.basal_base;
@@ -142,11 +178,6 @@ public class PumpProfileH implements Serializable {
         this.changed = changed;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof PumpProfileH) ) return false;
@@ -156,10 +187,25 @@ public class PumpProfileH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

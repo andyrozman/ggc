@@ -28,7 +28,11 @@ public class DbInfoH implements Serializable {
     /** nullable persistent field */
     private String description;
 
-    /** full constructor */
+    /** full constructor 
+     * @param key 
+     * @param value 
+     * @param type 
+     * @param description */
     public DbInfoH(String key, String value, int type, String description) {
         this.key = key;
         this.value = value;
@@ -40,16 +44,29 @@ public class DbInfoH implements Serializable {
     public DbInfoH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param key */
     public DbInfoH(String key) {
         this.key = key;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
@@ -85,11 +102,6 @@ public class DbInfoH implements Serializable {
         this.description = description;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof DbInfoH) ) return false;
@@ -99,10 +111,25 @@ public class DbInfoH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

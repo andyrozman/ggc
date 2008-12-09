@@ -25,7 +25,10 @@ public class FoodGroupH implements Serializable {
     /** nullable persistent field */
     private String description;
 
-    /** full constructor */
+    /** full constructor 
+     * @param name 
+     * @param name_i18n 
+     * @param description */
     public FoodGroupH(String name, String name_i18n, String description) {
         this.name = name;
         this.name_i18n = name_i18n;
@@ -36,27 +39,63 @@ public class FoodGroupH implements Serializable {
     public FoodGroupH() {
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+    /**
+     * Get Name
+     * 
+     * @return name
+     */
+    public String getName() 
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    /**
+     * Set Name
+     * 
+     * @param name as string
+     */
+    public void setName(String name) 
+    {
         this.name = name;
     }
 
-    public String getName_i18n() {
+    /**
+     * Get Name (I18n)
+     * 
+     * @return name
+     */
+    public String getName_i18n() 
+    {
         return this.name_i18n;
     }
 
-    public void setName_i18n(String name_i18n) {
+    /**
+     * Set Name (I18n)
+     * 
+     * @param name_i18n as string
+     */
+    public void setName_i18n(String name_i18n) 
+    {
         this.name_i18n = name_i18n;
     }
 
@@ -68,11 +107,6 @@ public class FoodGroupH implements Serializable {
         this.description = description;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof FoodGroupH) ) return false;
@@ -82,10 +116,25 @@ public class FoodGroupH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

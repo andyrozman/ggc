@@ -132,6 +132,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         // m_da.enableHelp(this);
     }
 
+    
     private void init()
     {
         setLayout(new BorderLayout());
@@ -246,21 +247,25 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         }
     }
 
-    public void mousePressed(MouseEvent e)
-    {
-    }
+    /**
+     * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+     */
+    public void mousePressed(MouseEvent e) { }
 
-    public void mouseReleased(MouseEvent e)
-    {
-    }
+    /**
+     * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+     */
+    public void mouseReleased(MouseEvent e) { }
 
-    public void mouseEntered(MouseEvent e)
-    {
-    }
+    /**
+     * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+     */
+    public void mouseEntered(MouseEvent e) { }
 
-    public void mouseExited(MouseEvent e)
-    {
-    }
+    /**
+     * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+     */
+    public void mouseExited(MouseEvent e) { }
 
     public Color getColor(String name)
     {

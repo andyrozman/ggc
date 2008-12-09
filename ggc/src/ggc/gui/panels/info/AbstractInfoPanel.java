@@ -63,7 +63,7 @@ public abstract class AbstractInfoPanel extends JPanel
 
     public void invalidateFirstRefresh()
     {
-	this.first_refresh = true;
+        this.first_refresh = true;
     }
 
 }

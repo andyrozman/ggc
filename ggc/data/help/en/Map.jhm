@@ -6,79 +6,85 @@
 
 <mapID target="popup_icon" url="images/popup.gif "/>
 
-<mapID target="pages.GGC_Prefs_General" url="pages/GGC_Prefs_General.html"/>
-
-<mapID target="pages.GGC_Food_Meal_Main" url="pages/GGC_Food_Meal_Main.html"/>
-
-<mapID target="pages.GGC_Food_User_Select_HomeWeight" url="pages/GGC_Food_User_Select_HomeWeight.html"/>
-
-<mapID target="pages.GGC_Food_Meal_Meal_View" url="pages/GGC_Food_Meal_Meal_View.html"/>
-
-<mapID target="pages.GGC_Food_Meal_Select_FoodParts" url="pages/GGC_Food_Meal_Select_FoodParts.html"/>
-
-<mapID target="pages.GGC_Prefs_Colors_Fonts" url="pages/GGC_Prefs_Colors_Fonts.html"/>
-
-<mapID target="pages.GGC_BG_Graph_Spread" url="pages/GGC_BG_Graph_Spread.html"/>
-
-<mapID target="pages.GGC_Food_User_Food_View" url="pages/GGC_Food_User_Food_View.html"/>
-
-<mapID target="pages.GGC_Prefs_Rendering" url="pages/GGC_Prefs_Rendering.html"/>
-
-<mapID target="pages.GGC_Print_Selector" url="pages/GGC_Print_Selector.html"/>
-
-<mapID target="pages.GGC_Food_User_Select_Nutrition" url="pages/GGC_Food_User_Select_Nutrition.html"/>
-
-<mapID target="pages.GGC_File_Login" url="pages/GGC_File_Login.html"/>
-
-<mapID target="pages.GGC_Food_Meal_Group_View" url="pages/GGC_Food_Meal_Group_View.html"/>
-
-<mapID target="pages.GGC_Food_User_Group_View" url="pages/GGC_Food_User_Group_View.html"/>
-
-<mapID target="pages.GGC_Food_User_Group_Edit" url="pages/GGC_Food_User_Group_Edit.html"/>
-
-<mapID target="pages.GGC_File_Logout" url="pages/GGC_File_Logout.html"/>
-
-<mapID target="pages.GGC_Food_Meal_Meal_Edit" url="pages/GGC_Food_Meal_Meal_Edit.html"/>
-
-<mapID target="pages.GGC_Prefs_MedicalData" url="pages/GGC_Prefs_MedicalData.html"/>
-
-<mapID target="pages.GGC_BG_Daily_View" url="pages/GGC_BG_Daily_View.html"/>
-
-<mapID target="pages.GGC_BG_HbA1c" url="pages/GGC_BG_HbA1c.html"/>
-
-<mapID target="pages.GGC_Food_User_Food_Edit" url="pages/GGC_Food_User_Food_Edit.html"/>
-
-<mapID target="pages.GGC_Prefs_Printing" url="pages/GGC_Prefs_Printing.html"/>
-
-<mapID target="pages.GGC_Prefs_Main" url="pages/GGC_Prefs_Main.html"/>
-
-<mapID target="pages.GGC_BG_Graph_Course" url="pages/GGC_BG_Graph_Course.html"/>
-
-<mapID target="pages.GGC_BG_Daily_Add" url="pages/GGC_BG_Daily_Add.html"/>
-
-<mapID target="pages.GGC_Food_User_Select_Nutrition_Main" url="pages/GGC_Food_User_Select_Nutrition_Main.html"/>
-
-<mapID target="pages.GGC_Food_User_Main" url="pages/GGC_Food_User_Main.html"/>
-
-<mapID target="pages.GGC_Food_USDA_View" url="pages/GGC_Food_USDA_View.html"/>
-
-<mapID target="pages.GGC_Food_User_Select_HomeWeight_Main" url="pages/GGC_Food_User_Select_HomeWeight_Main.html"/>
-
-<mapID target="pages.GGC_Food_USDA_Group" url="pages/GGC_Food_USDA_Group.html"/>
-
-<mapID target="pages.GGC_Food_Meal_Group_Edit" url="pages/GGC_Food_Meal_Group_Edit.html"/>
-
 <mapID target="pages.GGC_Main" url="pages/GGC_Main.html"/>
 
-<mapID target="pages.GGC_BG_Graph_Frequency" url="pages/GGC_BG_Graph_Frequency.html"/>
 
+
+<mapID target="pages.GGC_File_Login" url="pages/GGC_File_Login.html"/>
+<mapID target="pages.GGC_File_Logout" url="pages/GGC_File_Logout.html"/>
+
+
+<mapID target="pages.GGC_BG_Daily_View" url="pages/GGC_BG_Daily_View.html"/>
+<mapID target="pages.GGC_BG_HbA1c" url="pages/GGC_BG_HbA1c.html"/>
+<mapID target="pages.GGC_BG_Graph_Spread" url="pages/GGC_BG_Graph_Spread.html"/>
+<mapID target="pages.GGC_BG_Graph_Course" url="pages/GGC_BG_Graph_Course.html"/>
+<mapID target="pages.GGC_BG_Daily_Add" url="pages/GGC_BG_Daily_Add.html"/>
+<mapID target="pages.GGC_BG_Graph_Frequency" url="pages/GGC_BG_Graph_Frequency.html"/>
+<mapID target="pages.GGC_BG_BolusHelper" url="pages/GGC_BG_BolusHelper.html"/>
+<mapID target="pages.GGC_MFS_Daily_Selector" url="pages/GGC_MFS_Daily_Selector.html"/>
+<mapID target="pages.GGC_MFS_Item_Selector" url="pages/GGC_MFS_Item_Selector.html"/>
+
+
+<mapID target="pages.GGC_Ratio_Base" url="pages/GGC_Ratio_Base.html"/>
+<mapID target="pages.GGC_Ratio_Extended" url="pages/GGC_Ratio_Extended.html"/>
+<mapID target="pages.GGC_Ratio_Calculator" url="pages/GGC_Ratio_Calculator.html"/>
+
+<mapID target="pages.GGC_Prefs_Main" url="pages/GGC_Prefs_Main.html"/>
+<mapID target="pages.GGC_Prefs_General" url="pages/GGC_Prefs_General.html"/>
+<mapID target="pages.GGC_Prefs_Colors_Fonts" url="pages/GGC_Prefs_Colors_Fonts.html"/>
+<mapID target="pages.GGC_Prefs_Rendering" url="pages/GGC_Prefs_Rendering.html"/>
+<mapID target="pages.GGC_Prefs_MedicalData" url="pages/GGC_Prefs_MedicalData.html"/>
+<mapID target="pages.GGC_Prefs_Printing" url="pages/GGC_Prefs_Printing.html"/>
+
+<mapID target="pages.GGC_Print_Selector" url="pages/GGC_Print_Selector.html"/>
+<mapID target="pages.GGC_Print_Selector_2" url="pages/GGC_Print_Selector_2.html"/>
+
+<mapID target="pages.GGC_Food_Meal_Main" url="pages/GGC_Food_Meal_Main.html"/>
+<mapID target="pages.GGC_Food_User_Select_HomeWeight" url="pages/GGC_Food_User_Select_HomeWeight.html"/>
+<mapID target="pages.GGC_Food_Meal_Meal_View" url="pages/GGC_Food_Meal_Meal_View.html"/>
+<mapID target="pages.GGC_Food_Meal_Select_FoodParts" url="pages/GGC_Food_Meal_Select_FoodParts.html"/>
+<mapID target="pages.GGC_Food_User_Food_View" url="pages/GGC_Food_User_Food_View.html"/>
+<mapID target="pages.GGC_Food_User_Select_Nutrition" url="pages/GGC_Food_User_Select_Nutrition.html"/>
+<mapID target="pages.GGC_Food_Meal_Group_View" url="pages/GGC_Food_Meal_Group_View.html"/>
+<mapID target="pages.GGC_Food_User_Group_View" url="pages/GGC_Food_User_Group_View.html"/>
+<mapID target="pages.GGC_Food_User_Group_Edit" url="pages/GGC_Food_User_Group_Edit.html"/>
+<mapID target="pages.GGC_Food_Meal_Meal_Edit" url="pages/GGC_Food_Meal_Meal_Edit.html"/>
+<mapID target="pages.GGC_Food_User_Food_Edit" url="pages/GGC_Food_User_Food_Edit.html"/>
+<mapID target="pages.GGC_Food_User_Select_Nutrition_Main" url="pages/GGC_Food_User_Select_Nutrition_Main.html"/>
+<mapID target="pages.GGC_Food_User_Main" url="pages/GGC_Food_User_Main.html"/>
+<mapID target="pages.GGC_Food_USDA_View" url="pages/GGC_Food_USDA_View.html"/>
+<mapID target="pages.GGC_Food_User_Select_HomeWeight_Main" url="pages/GGC_Food_User_Select_HomeWeight_Main.html"/>
+<mapID target="pages.GGC_Food_USDA_Group" url="pages/GGC_Food_USDA_Group.html"/>
+<mapID target="pages.GGC_Food_Meal_Group_Edit" url="pages/GGC_Food_Meal_Group_Edit.html"/>
 <mapID target="pages.GGC_Food_USDA_Main" url="pages/GGC_Food_USDA_Main.html"/>
 
 <mapID target="pages.GGC_Tools_Update" url="pages/GGC_Tools_Update.html"/>
-
 <mapID target="pages.GGC_Tools_Backup" url="pages/GGC_Tools_Backup.html"/>
-
 <mapID target="pages.GGC_Tools_Restore" url="pages/GGC_Tools_Restore.html"/>
+<mapID target="pages.GGC_Tools_Restore_File_Selector" url="pages/GGC_Tools_Restore_File_Selector.html"/>
+
+
+<mapID target="pages.MeterTool_Read_Instruction" url="pages/MeterTool_Read_Instruction.html"/>
+<mapID target="pages.MeterTool_Reading_View" url="pages/MeterTool_Reading_View.html"/>
+<mapID target="pages.MeterTool_Export_Data" url="pages/MeterTool_Export_Data.html"/>
+<mapID target="pages.MeterTool_Configuration" url="pages/MeterTool_Configuration.html"/>
+<mapID target="pages.MeterTool_Configuration_PortSelector" url="pages/MeterTool_Configuration_PortSelector.html"/>
+<mapID target="pages.MeterTool_List" url="pages/MeterTool_List.html"/>
+
+<mapID target="pages.PumpTool_Read_Instruction" url="pages/PumpTool_Read_Instruction.html"/>
+<mapID target="pages.PumpTool_Reading_View" url="pages/PumpTool_Reading_View.html"/>
+<mapID target="pages.PumpTool_Export_Data" url="pages/PumpTool_Export_Data.html"/>
+<mapID target="pages.PumpTool_Configuration" url="pages/PumpTool_Configuration.html"/>
+<mapID target="pages.PumpTool_Configuration_PortSelector" url="pages/PumpTool_Configuration_PortSelector.html"/>
+<mapID target="pages.PumpTool_List" url="pages/PumpTool_List.html"/>
+
+<mapID target="pages.CGMSTool_Read_Instruction" url="pages/CGMSTool_Read_Instruction.html"/>
+<mapID target="pages.CGMSTool_Reading_View" url="pages/CGMSTool_Reading_View.html"/>
+<mapID target="pages.CGMSTool_Export_Data" url="pages/CGMSTool_Export_Data.html"/>
+<mapID target="pages.CGMSTool_Configuration" url="pages/CGMSTool_Configuration.html"/>
+<mapID target="pages.CGMSTool_Configuration_PortSelector" url="pages/CGMSTool_Configuration_PortSelector.html"/>
+<mapID target="pages.CGMSTool_List" url="pages/CGMSTool_List.html"/>
+
 
 <mapID target="images.popup" url="images/popup.gif"/>
 

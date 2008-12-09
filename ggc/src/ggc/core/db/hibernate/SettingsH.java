@@ -31,7 +31,12 @@ public class SettingsH implements Serializable {
     /** persistent field */
     private int person_id;
 
-    /** full constructor */
+    /** full constructor 
+     * @param key 
+     * @param value 
+     * @param type 
+     * @param description 
+     * @param person_id */
     public SettingsH(String key, String value, int type, String description, int person_id) {
         this.key = key;
         this.value = value;
@@ -44,17 +49,31 @@ public class SettingsH implements Serializable {
     public SettingsH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param key 
+     * @param person_id */
     public SettingsH(String key, int person_id) {
         this.key = key;
         this.person_id = person_id;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
@@ -98,11 +117,6 @@ public class SettingsH implements Serializable {
         this.person_id = person_id;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof SettingsH) ) return false;
@@ -112,10 +126,25 @@ public class SettingsH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

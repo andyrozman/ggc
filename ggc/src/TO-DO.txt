@@ -45,50 +45,37 @@ GGC Meter Tool
 GGC Pump Tool
 -------------
   See TO-DO.txt (in svn/trunk/ggc-pumps)
-  !!! Project not started yet. Planned for end of 2008 or maybe before
+  !!! Project not started yet. Planned for end of 2nd Q 2009 or maybe before
+
+
+GGC CGMS Tool
+--------------
+  See TO-DO.txt (in svn/trunk/ggc-cgms)
+  !!! Project not started yet. Planned for end of 4th Q 2009 or maybe before
 
 
 
-
-II. SORTED BY VERSION  (Updated 27.06.2008)
-=========================
-
-
-Version 0.3
-------------
-* Documentation:
-    - Readme (in all langs.)
-    - How to help
-    - How to update
-    - How to USB
-
-* Error handling (and logger)
-* Printing error display
-* Meter Tool integration
-    - GUI
-* Restore data:
-    - GUI
-    - only full restore
-
-
+II. SORTED BY VERSION  (Updated 5.12.2008)
+===========================================
 
 Version 0.4
 ------------
 
-* Db Tools Integration:  - InitDb
-* GGC Little
-* Meter Tool integration
-    - Configuration
-* Update (client)
-    - Update configuration in DA
-* Update (server) 
-    - Software updater Server
-    - Db Updater Server
-* Java Help – Write help pages
+Documentation:
+    - How to update
+    - How to USB
+
+* Java Help - Write help pages I.
             - Load from language jar
-* Graphs with new library
-* Selector: 
-    - Double click on item = select and close 
+
+   
+
+Version 0.5
+------------
+
+* Graphs: - New framework
+* Db Tools Integration:  - InitDb
+* Food Menu III.
 * Added functionality for Nutrition Db: 
     - Import data (selective)
     - Import Entry
@@ -98,31 +85,23 @@ Version 0.4
     - Column Sorting in meal
     - Column Sorting in Food
     - Glycemic data change
-    
+    - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
+* Update (server) 
+    - Software updater Server
+    - Db Updater Server
+* Support for multiple persons
+* External foods database
+
 * Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
 
-* CGM Tool: <Basic CGM support>
-    
-* Smart Insulin Recommendation (Bolus Helper):
-    - Helper 
-    - Calculate ratios
-    - Change ratios
-    
-* Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
+* Java Help - Write help pages II. (finish EN)
+            - Load from language jar
 
-
-Version 0.5
-------------
-
+Version 0.6
+-------------
+* GGC Little
+* Server Error Resolution (exceptions thrown by application, that help can be found on internet).
 * Activity Manager
-
-* Appoinmtments Mngr
-    - AED doctor
-    - AED appointment
-* Stocks
-    - AED subtypes
-    - AED stocks
-
 * Synchronization
 * GGC Network
 * Internet data (links for pages, forums, blogs - informational)
@@ -130,16 +109,18 @@ Version 0.5
     - AED Inet Type
     - AED Inet Links
 * GGC PPC (??)
-* Support for multiple persons
+* Appoinmtments Mngr
+    - AED doctor
+    - AED appointment
+* Stocks
+    - AED subtypes
+    - AED stocks
+
+* CGM Tool: <Basic CGM support>
 * GGC Network - Support for multiple instances of GGC and their communication
 * Import of data from SiDiary Desktop application. SiDiary has its sister 
     applications running on many small devices (PocketPC, Palms, SmartPhones, 
     Java Phones), and it has import for a lot of Meters and also some pumps...
-* External foods database
-* Restore: 
-   - partitial/update
-* Server Error Resolution (exceptions thrown by application, that help can be found on internet).
-
 
 
 III. SORTED BY LEVELS OF PRIORITY  (not updated !!!)
@@ -235,15 +216,49 @@ DONE
 ===============================================================================
 ===============================================================================
 
-* Meter Tool integration
+* Restore: 
+   - partitial/update
+
+* Selector: 
+    - Double click on item = select and close 
+
+* Graphs with new library
+
+* Update (client)
+    - Update configuration in DA
+
+
+* Error handling (and logger)
+* Printing error display
+* Meter Tool:
+    - integration
+    - GUI
+    - Configuration
     - GGC Output
     - Simple configuration
+* Restore data:
+    - GUI
+    - only full restore
+
+
+
+* Smart Insulin Recommendation (Bolus Helper):
+    - Helper 
+    - Calculate ratios
+    - Change ratios
+
+
+* Documentation:
+    - Readme (in all langs.)
+    - How to help
+
 
 
 * Startup
     - Run GGC
     - Db Tool
     - Db Check
+    
 * Added functiuonality for Nutrition Db: 
     - Export data
     - Import data (full)
@@ -252,7 +267,7 @@ DONE
 
 * Add Daily Data support for Meals
 * Db Versioning
-* Daily Values – Check values, Double click edit
+* Daily Values - Check values, Double click edit
 * Update (client side): 
     - Software updater framework
     - Db Updater framework

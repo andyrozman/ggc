@@ -2,6 +2,8 @@ package ggc.core.db.tool.transfer;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.datalayer.DailyValue;
+import ggc.core.db.datalayer.SettingsColorScheme;
+import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
 
@@ -80,6 +82,13 @@ public class GGCExporter extends ExportTool implements Runnable
 
     private void exportAll()
     {
+        System.out.println("export: all");
+
+        if (this.backup_object!=null)
+        {
+            export(this.getBackupRestoreObject(this.backup_object));
+            this.backup_object = null;
+        }
         //export(_DailyValues();
     }
 
@@ -97,11 +106,16 @@ public class GGCExporter extends ExportTool implements Runnable
     }
     
 
-    public BackupRestoreObject getBackupRestoreObject(String class_name)
+    private BackupRestoreObject getBackupRestoreObject(String class_name)
     {
         if (class_name.equals("ggc.core.db.hibernate.DayValueH"))
         {
-            return new DailyValue();
+            //return new DailyValue();
+            return null;
+        }
+        else if (class_name.equals("ggc.core.db.hibernate.ColorSchemeH"))
+        {
+            return new SettingsColorScheme();
         }
         else
             return null;
@@ -110,13 +124,18 @@ public class GGCExporter extends ExportTool implements Runnable
     }
     
     
-    public BackupRestoreObject getBackupRestoreObject(Object obj, BackupRestoreObject bro)
+    private BackupRestoreObject getBackupRestoreObject(Object obj, BackupRestoreObject bro)
     {
         if (bro.getBackupClassName().equals("ggc.core.db.hibernate.DayValueH"))
         {
             DayValueH eh = (DayValueH)obj;
             return new DailyValue(eh);
         }
+        else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.ColorSchemeH"))
+        {
+            ColorSchemeH eh = (ColorSchemeH)obj;
+            return new SettingsColorScheme(eh);
+        }
         else
             return null;
            
@@ -124,10 +143,16 @@ public class GGCExporter extends ExportTool implements Runnable
     }
     
     
-
-    @SuppressWarnings("unused")
-    private void export(BackupRestoreObject bro)
+    
+    public void export(String name)
     {
+        export(this.getBackupRestoreObject(name));
+    }
+    
+    
+    public void export(BackupRestoreObject bro)
+    {
+        System.out.println("export: first");
     
         openFile(this.getRootPath() + bro.getBackupFile() + this.getFileLastPart() + ".dbe");
 
@@ -135,7 +160,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.DayValueH as grp order by grp.id asc");
+        Query q = sess.createQuery("select grp from " + bro.getClassName() + " as grp order by grp.id asc");
 
         this.statusSetMaxEntry(q.list().size());
 
@@ -146,7 +171,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
         while (it.hasNext())
         {
-            
+            System.out.println("export: next");
             BackupRestoreObject bt = getBackupRestoreObject(it.next(), bro);
             
             //DayValueH eh = (DayValueH) it.next();
@@ -166,11 +191,33 @@ public class GGCExporter extends ExportTool implements Runnable
         closeFile();
     }
 
+    boolean running = true;
+    String backup_object = null;
+    
+    public void setBackupObject(String name)
+    {
+        this.backup_object = name;
+    }
+    
+    
     public void run()
     {
-        exportAll();
+        while (running)
+        {
+            exportAll();
+            try
+            {
+                Thread.sleep(2000);
+            }
+            catch(Exception ex) {}
+        }
     }
 
+    public void stopThread()
+    {
+        this.running = false;
+    }
+    
     public static void main(String[] args)
     {
         GGCDb db = new GGCDb();

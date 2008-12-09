@@ -31,7 +31,13 @@ public class AppointmentH implements Serializable {
     /** nullable persistent field */
     private ggc.core.db.hibernate.DoctorH doctor;
 
-    /** full constructor */
+    /** full constructor 
+     * @param dt_apoint 
+     * @param apoint_text 
+     * @param extended 
+     * @param person_id 
+     * @param comment 
+     * @param doctor */
     public AppointmentH(long dt_apoint, String apoint_text, String extended, int person_id, String comment, ggc.core.db.hibernate.DoctorH doctor) {
         this.dt_apoint = dt_apoint;
         this.apoint_text = apoint_text;
@@ -45,27 +51,53 @@ public class AppointmentH implements Serializable {
     public AppointmentH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param dt_apoint 
+     * @param person_id */
     public AppointmentH(long dt_apoint, int person_id) {
         this.dt_apoint = dt_apoint;
         this.person_id = person_id;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public long getDt_apoint() {
+    /**
+     * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
+     * @return
+     */
+    public long getDt_apoint()
+    {
         return this.dt_apoint;
     }
 
-    public void setDt_apoint(long dt_apoint) {
-        this.dt_apoint = dt_apoint;
+    /**
+     * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
+     * 
+     * @param dt_info 
+     */
+    public void setDt_apoint(long dt_info)
+    {
+        this.dt_apoint = dt_info;
     }
+
 
     public String getApoint_text() {
         return this.apoint_text;
@@ -107,11 +139,6 @@ public class AppointmentH implements Serializable {
         this.doctor = doctor;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof AppointmentH) ) return false;
@@ -121,10 +148,26 @@ public class AppointmentH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

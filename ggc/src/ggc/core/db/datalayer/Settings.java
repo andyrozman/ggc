@@ -1,32 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: Settings
- *  Purpose:  This is datalayer file (data file, with methods to work with database or in 
- *      this case Hibernate). 
- *      This one is used for Settings.
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.SettingsH;
@@ -34,44 +5,86 @@ import ggc.core.util.I18nControl;
 
 import java.util.ArrayList;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-public class Settings extends SettingsH implements DatabaseObjectHibernate,
-        BackupRestoreObject
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     Settings  
+ *  Description:  This is datalayer file (data file, with methods to work with database or in 
+ *      this case Hibernate). 
+ *      This one is used for Settings.
+ * 
+ *  Author: Andy {andy@atech-software.com}  
+ */
+
+public class Settings extends SettingsH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -4062400109469906429L;
 
-    public boolean debug = false;
-
+    /**
+     * Meal Group Meals
+     */
     public static final int MEAL_GROUP_MEALS = 1;
+    
+    /**
+     * Meal Group Nutrition
+     */
     public static final int MEAL_GROUP_NUTRITION = 2;
 
-    public boolean edited = false;
-    public boolean added = false;
-
+    private boolean debug = false;
+    private boolean edited = false;
+    private boolean added = false;
     private I18nControlAbstract ic;
     private boolean backup_object = false;
 
+    /**
+     * Constructor
+     */
     public Settings()
     {
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public Settings(I18nControlAbstract ic)
     {
         this.ic = (I18nControl) ic;
         this.backup_object = true;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public Settings(SettingsH ch)
     {
         this.setId(ch.getId());
@@ -81,13 +94,21 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
         this.setDescription(ch.getDescription());
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @return
+     */
     public String getShortDescription()
     {
-        // return this.getDescription();
-        return "Settings [Key=" + this.getKey() + ";Value=" + this.getValue()
-                + "]";
+        return "Settings [Key=" + this.getKey() + ";Value=" + this.getValue() + "]";
     }
 
+    /**
+     * To String
+     * 
+     * @see ggc.core.db.hibernate.SettingsH#toString()
+     */
     @Override
     public String toString()
     {
@@ -97,21 +118,37 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
             return this.getShortDescription();
     }
 
+    /**
+     * Set Element Edited
+     */
     public void setElementEdited()
     {
         this.edited = true;
     }
 
+    
+    /**
+     * Set Element Added
+     */
     public void setElementAdded()
     {
         this.added = true;
     }
 
+    /**
+     * Is Element Edited
+     * @return
+     */
     public boolean isElementEdited()
     {
         return this.edited;
     }
 
+    /**
+     * Is Element Added
+     * 
+     * @return
+     */
     public boolean isElementAdded()
     {
         return this.added;
@@ -124,10 +161,8 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
     /**
      * DbAdd - Add this object to database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
@@ -284,7 +319,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
 
     private boolean selected = false;
 
-    /*
+    /**
      * getTargetName
      */
     public String getTargetName()
@@ -293,6 +328,11 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
     }
 
     
+    /**
+     * Get Class Name
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getClassName()
+     */
     public String getClassName()
     {
         return "ggc.core.db.hibernate.SettingsH";
@@ -300,8 +340,10 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
     
     
     
-    /*
-     * getName
+    /**
+     * Get Name
+     * 
+     * @return return name
      */
     public String getName()
     {
@@ -312,35 +354,45 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
     // --- BackupRestoreObject
     // ---
 
-    /*
-     * getChildren
+    /**
+     * Get Children
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
         return null;
     }
 
-    /*
-     * isSelected
+    /**
+     * Is Selected
      */
     public boolean isSelected()
     {
         return selected;
     }
 
-    /*
-     * setSelected
+    /**
+     * Set Selected
      */
     public void setSelected(boolean newValue)
     {
         this.selected = newValue;
     }
 
+    /**
+     * Is Collection
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#isCollection()
+     */
     public boolean isCollection()
     {
         return false;
     }
 
+    /**
+     * Has Children
+     * 
+     * @see com.atech.graphics.components.tree.CheckBoxTreeNodeInterface#hasChildren()
+     */
     public boolean hasChildren()
     {
         return false;
@@ -348,6 +400,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
 
     /**
      * getObjectUniqueId - get id of object
+     * 
      * @return unique object id
      */
     public String getObjectUniqueId()
@@ -356,6 +409,9 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate,
     }
     
 
+    /**
+     * Table Version
+     */
     public int TABLE_VERSION = 1;
     
     

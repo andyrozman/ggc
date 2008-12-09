@@ -263,11 +263,15 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     
     /**
      * Returns base filename for printing job, this is just part of end filename (starting part)
+     * 
+     * @return 
      */
     public abstract String getFileNameBase();
     
     /**
      * Returns data part of filename for printing job, showing which data is being printed
+     * 
+     * @return 
      */
     public abstract String getFileNameRange();
     

@@ -59,7 +59,6 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     //protected GGCProperties props = GGCProperties.getInstance();
     protected boolean changed = false;
 
-    public abstract void saveProps();
     PropertiesDialog parent;
 
     public AbstractPrefOptionsPanel(PropertiesDialog dialog)
@@ -101,10 +100,17 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
         changed = true;
     }
 
+    
+    /**
+     * Save Properties
+     */
+    public abstract void saveProps();
+    
+    
     public void kill()
     {
         if (changed) 
-	{
+        {
             int res = JOptionPane.showConfirmDialog(null, m_ic.getMessage("SOME_VALUES_CHANGED_LIKE_TO_SAVE"), m_ic.getMessage("VALUES_CHANGED"), JOptionPane.YES_NO_OPTION);
             if (res == JOptionPane.YES_OPTION)
                 saveProps();

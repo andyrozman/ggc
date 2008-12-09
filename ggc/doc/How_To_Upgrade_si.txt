@@ -1,0 +1,135 @@
+
+PRED-NAMESTITVENO SPOROČILO
+============================
+
+Ta dokument se nanaša na vse nadgradnje po različici 0.3.1.
+
+V različici 0.3 je prišlo do napake pri ustvarjanju varnostne kopije (v atech-tools knjižnici).
+Zaradi tega morate najprej namestiti nadgradnjo 0.3.1 na osnovno 0.3 namestitev, pred namestitvijo
+bilo katere druge nadgradnje (ne rabite namestiti vsake nadgradnje, ampak samo 0.3.1, in potem
+najnovejšo različico). Kako namestite 0.3.1 si lahko preberete v zip datoteke te nadgradnje. 
+
+
+Kako nadgraditi GGC
+====================
+
+V tem trenutku naša aplikacija nima možnosti avtomatske nadgradnje. Zaradi tega moramo namestiti
+vse nadgradnje ročno.
+
+Problem z vsemi aplikacijami, ki imajo bazo je, da je treba nadgraditi tako aplikacijo, kot tudi
+bazo. V vsaki datoteki z nadgradnjo bo datoteka, s seznamom vse možnih različic in različico 
+baze, ki jo potrebujejo. Glede na informacijo najdeno tam, se odločimo, kako nadgradimo 
+aplikacijo (razlika je v korakih 3 in 4).
+
+
+KAKO SO DATOTEKE ZA NADGRADNJO PAKIRANE
+========================================
+
+Arhivska datoteka za nadgradnjo vsebuje ta dokument (v prihodnosti z vsemi podprtimi jeziki), 
+datoteka database_info.txt, s podatki o bazi in Changes_<različica>.txt (kondenzirana verzija
+Changelog datoteke iz SVNja). Potem imamo mape, ki jih moramo nadgraditi (2 ali včasih 3):
+    - data: vsebuje datoteko za nadgradnjo, ki vsebuje vse trenutne različice vseh knjižnic
+        (to se uporablja za generiranje zagonskih datotek, ko zaženemo run_<OS ime>.<OS končnica>
+         datoteko).
+    - libs: vsebuje vse knjižnice za naš produkt (in produkt sam)
+    - bin: skripte
+    - docs: vsa nova dokumentacija (vključno s tem dokumentom)  
+
+Kako nadgradimo s to nadgradnjo bo prikazano v nekaj korakih. Prosim sledite jim natančno.
+
+
+
+KORAK 1: Ustvarimo varnostno kopijo vse podatkov
+-------------------------------------------------
+   
+Zaženite GNU Gluco Control in počakajte, da se naloži. Pojdite na Orodja -> Upravljanje z bazo -> Varnostna kopija baze.
+
+V naslednjem oknu izberite vse objekte in kliknite na 
+
+STEP 1: Create backup copy of your data
+----------------------------------------
+
+Start GNU Gluco Control and wait for it to load, then go to Tools -> Database Maintenance -> Database backup.
+
+In next window select all object and click on backup. New backup file will be created in data\export
+directory (GGC backup <year>_<month>_<day> <hour>_<minute>_<second>). Copy it to same safe location.
+
+Close GNU Gluco Control.
+
+
+
+STEP 2: Create backup copy of application
+------------------------------------------
+
+Open your favorite File manager and create directory somewhere (probably something like
+GGC_Backup_<current_date>). Copy whole GGC installation there (it should have at least bin, lib and data
+K2
+subdirectories, sometime also jre). Copy all of them. 
+
+This copy will be used in case that something goes wrong in next steps.
+
+
+
+STEP 3: Make actual update
+---------------------------
+
+Please take a look at database_info.txt file. You need to compare last entry (current version) and version
+you have installed (it is displayed in title bar when you start application). If the versions are the same
+go to step 3A if not step 3B.
+
+
+STEP 3.A: Update with same version
+-----------------------------------
+
+Use File manager (I advise to use some that has integrated Zip archiver, like Total commander) and open archive 
+file, you need to copy everything into your installation directory. You will be asked to overwrite some files, 
+you need to overwrite all files there.  
+ 
+
+STEP 3.B: Update with different version
+----------------------------------------
+
+1. Do all actions in STEP 3.A
+
+2. Run run_<os_name>.<os_extension>. Application will display some errors, this is OK. We needed to run this 
+   script just to recreate startup script. Close application as soon as you can.
+   
+3. Now you have new scripts. You need to run init_db.<os_extension> which will recreate database
+
+K3
+
+STEP 4: Start new version of application
+-----------------------------------------
+
+Start application, which should now start without problems.
+
+
+STEP 4.A: Starting with same version 
+-------------------------------------
+
+When application is started you should have all your data there, since we didn't do any changes to
+our database
+
+
+STEP 4.B: Starting with different version
+------------------------------------------
+
+Now when application is started there will be no data available anymore. Database was totally recreated 
+(and also deleted), so it's "clean" now. You will have to do following to get your data back. Click on
+Tools -> Database Maintenance -> Backup Restore. Select file you created in step 1 and in next window
+select all objects and click on Restore. After restart all your data should be there. 
+
+
+STEP 5: Finished
+-----------------
+
+Update is finished.
+
+
+If you had any problems with update please contact us, and we will help you. (ggc@atech-software.com). You 
+can write to us in following languages: English, Slovene or German.
+
+
+GGC Development Team
+
+K4

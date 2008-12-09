@@ -32,14 +32,12 @@ package ggc.gui.dialogs;
 import ggc.core.data.DailyStatsTableModel;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
-import ggc.core.data.calendar.CalendarEvent;
-import ggc.core.data.calendar.CalendarListener;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.MainFrame;
-import ggc.gui.calendar.CalendarPane;
 import ggc.gui.dialogs.graphs.DailyGraphDialog;
+import ggc.gui.dialogs.pen.DailyRowDialogPen;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -67,10 +65,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import com.atech.help.HelpCapable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.atech.graphics.calendar.CalendarEvent;
+import com.atech.graphics.calendar.CalendarListener;
+import com.atech.graphics.calendar.CalendarPane;
+import com.atech.help.HelpCapable;
 
 
 public class DailyStatsDialog extends JDialog implements ActionListener, HelpCapable
@@ -222,7 +223,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         JPanel dayCalendar = new JPanel();
         dayCalendar.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("DATE")+":"));
 
-        calPane = new CalendarPane();
+        calPane = new CalendarPane(m_da);
         calPane.addCalendarListener(new CalendarListener()
         {
             public void dateHasChanged(CalendarEvent e)
@@ -286,13 +287,21 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             		
                         DailyValuesRow dvr = dayData.getRowAt(table.getSelectedRow());
 
-                        DailyRowDialog aRF = new DailyRowDialog(dvr, getThisParent());
-
-                        if (aRF.actionSuccesful()) 
+                        if (!MainFrame.developer_version)
                         {
-                            m_db.saveDayStats(dayData);
-                            dayData.sort();
-                            getTableModel().fireTableChanged(null);
+                            DailyRowDialog aRF = new DailyRowDialog(dvr, getThisParent());
+    
+                            if (aRF.actionSuccesful()) 
+                            {
+                                m_db.saveDayStats(dayData);
+                                dayData.sort();
+                                getTableModel().fireTableChanged(null);
+                            }
+                        }
+                        else
+                        {
+                            // new pen dialog
+                            DailyRowDialogPen aRF = new DailyRowDialogPen(dvr, getThisParent());
                         }
             	    }
             	}
@@ -426,14 +435,25 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
     	{
     	    SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
     
-            DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
-
-            if (aRF.actionSuccesful()) 
-            {
-                m_db.saveDayStats(dayData);
-                dayData.sort();
-                this.model.fireTableChanged(null);
-            }
+    	    
+    	    if (!MainFrame.developer_version)
+    	    {
+    	    
+                DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
+    
+                if (aRF.actionSuccesful()) 
+                {
+                    m_db.saveDayStats(dayData);
+                    dayData.sort();
+                    this.model.fireTableChanged(null);
+                }
+    	    }
+    	    else
+    	    {
+    	        // testing only
+                DailyRowDialogPen aRF = new DailyRowDialogPen(dayData, sf.format(calPane.getSelectedDate()), this);
+    	        
+    	    }
     	}
     	else if (command.equals("edit_row"))
     	{

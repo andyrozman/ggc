@@ -46,7 +46,17 @@ public class DoctorH implements Serializable {
     /** nullable persistent field */
     private ggc.core.db.hibernate.DoctorTypeH doctor_type;
 
-    /** full constructor */
+    /** full constructor 
+     * @param name 
+     * @param address 
+     * @param phone_gsm 
+     * @param phone 
+     * @param working_time 
+     * @param extended 
+     * @param visible 
+     * @param person_id 
+     * @param comment 
+     * @param doctor_type */
     public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String extended, int visible, int person_id, String comment, ggc.core.db.hibernate.DoctorTypeH doctor_type) {
         this.name = name;
         this.address = address;
@@ -64,26 +74,52 @@ public class DoctorH implements Serializable {
     public DoctorH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param person_id */
     public DoctorH(int person_id) {
         this.person_id = person_id;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+    /**
+     * Get Name
+     * 
+     * @return name
+     */
+    public String getName() 
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    /**
+     * Set Name
+     * 
+     * @param name as string
+     */
+    public void setName(String name) 
+    {
         this.name = name;
     }
+
 
     public String getAddress() {
         return this.address;
@@ -157,11 +193,6 @@ public class DoctorH implements Serializable {
         this.doctor_type = doctor_type;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof DoctorH) ) return false;
@@ -171,10 +202,25 @@ public class DoctorH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

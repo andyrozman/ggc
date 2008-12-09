@@ -26,7 +26,7 @@
  *  Author:   andyrozman {andy@atech-software.com}
  *
  */
-package ggc.gui.dialogs;
+package ggc.gui.dialogs.ratio;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
@@ -62,7 +62,7 @@ import com.atech.help.HelpCapable;
 
 // fix this
 
-public class RatioDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
+public class RatioExtendedDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
 {
 
     /**
@@ -168,7 +168,7 @@ public class RatioDialog extends JDialog implements ActionListener, KeyListener,
 
     
 
-    public RatioDialog(JFrame dialog) 
+    public RatioExtendedDialog(JFrame dialog) 
     {
         super(dialog, "", true);
         
@@ -880,28 +880,28 @@ public class RatioDialog extends JDialog implements ActionListener, KeyListener,
     // ******              HelpCapable Implementation             *****
     // ****************************************************************
     
-    /* 
+    /** 
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
     {
-	return this.getRootPane();
+        return this.getRootPane();
     }
 
-    /* 
+    /** 
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
     {
-	return this.help_button;
+        return this.help_button;
     }
 
-    /* 
+    /** 
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-	return "pages.GGC_BG_Daily_Add";
+        return "pages.GGC_BG_Daily_Add";
     }
     
     

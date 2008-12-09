@@ -1,37 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: ggc.java
- *  Purpose:  loads the gui and sets some look and feel properties.
- *
- *  Author:   schultd
- *
- *  Version 0.1 (schultd)
- *  - basic implementation
- *
- *  Version 0.1.1 (andyrozman)
- *  - added skin load
- *  - nutrition data
- */
-
 package ggc;
 
 import ggc.core.db.GGCDbConfig;
@@ -44,6 +10,34 @@ import java.awt.Toolkit;
 
 import com.atech.db.hibernate.check.DbCheckReport;
 
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     GGC  
+ *  Description:  Main startup file
+ * 
+ *  Author: schultd
+ *          Andy {andy@atech-software.com}  
+ */
+
+
 public class GGC
 {
     // fields
@@ -51,10 +45,27 @@ public class GGC
     private static MainFrame s_mainWindow;
 
     // Version information
+    /**
+     * Version of application
+     */
     public static String s_version = "0.3.9";
+    
+    
+    /**
+     * Full Version
+     */
     public static String full_version = "v" + s_version;
+    
+    /**
+     * Version Date 
+     */
     public static String version_date = "12th November 2008";
 
+    /**
+     * Checks if Db is correct version
+     * 
+     * @return
+     */
     public static boolean isDbOk()
     {
         GGCDbConfig conf = new GGCDbConfig(true);
@@ -73,6 +84,10 @@ public class GGC
 
     }
 
+    /**
+     * Main startup method
+     * @param args
+     */
     public static void main(String[] args)
     {
 
@@ -90,6 +105,11 @@ public class GGC
         s_theApp.init(dev);
     }
 
+    /**
+     * Init
+     * 
+     * @param dev
+     */
     public void init(boolean dev)
     {
         s_mainWindow = new MainFrame("GGC - GNU Gluco Control", dev);

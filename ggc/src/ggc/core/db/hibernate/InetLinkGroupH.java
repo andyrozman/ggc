@@ -22,7 +22,9 @@ public class InetLinkGroupH implements Serializable {
     /** nullable persistent field */
     private String link_id;
 
-    /** full constructor */
+    /** full constructor 
+     * @param group_id 
+     * @param link_id */
     public InetLinkGroupH(String group_id, String link_id) {
         this.group_id = group_id;
         this.link_id = link_id;
@@ -32,13 +34,26 @@ public class InetLinkGroupH implements Serializable {
     public InetLinkGroupH() {
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
+
 
     public String getGroup_id() {
         return this.group_id;
@@ -56,11 +71,6 @@ public class InetLinkGroupH implements Serializable {
         this.link_id = link_id;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof InetLinkGroupH) ) return false;
@@ -70,10 +80,25 @@ public class InetLinkGroupH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

@@ -22,7 +22,9 @@ public class NutritionHomeWeightTypeH implements Serializable {
     /** nullable persistent field */
     private int static_entry;
 
-    /** full constructor */
+    /** full constructor 
+     * @param name 
+     * @param static_entry */
     public NutritionHomeWeightTypeH(String name, int static_entry) {
         this.name = name;
         this.static_entry = static_entry;
@@ -32,21 +34,46 @@ public class NutritionHomeWeightTypeH implements Serializable {
     public NutritionHomeWeightTypeH() {
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+    /**
+     * Get Name
+     * 
+     * @return name
+     */
+    public String getName() 
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    /**
+     * Set Name
+     * 
+     * @param name as string
+     */
+    public void setName(String name) 
+    {
         this.name = name;
     }
+
 
     public int getStatic_entry() {
         return this.static_entry;
@@ -56,11 +83,6 @@ public class NutritionHomeWeightTypeH implements Serializable {
         this.static_entry = static_entry;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof NutritionHomeWeightTypeH) ) return false;
@@ -70,10 +92,25 @@ public class NutritionHomeWeightTypeH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

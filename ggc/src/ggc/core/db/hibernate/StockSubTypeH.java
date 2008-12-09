@@ -31,7 +31,12 @@ public class StockSubTypeH implements Serializable {
     /** nullable persistent field */
     private String comment;
 
-    /** full constructor */
+    /** full constructor 
+     * @param stock_type_id 
+     * @param name 
+     * @param description 
+     * @param content 
+     * @param comment */
     public StockSubTypeH(long stock_type_id, String name, String description, float content, String comment) {
         this.stock_type_id = stock_type_id;
         this.name = name;
@@ -44,11 +49,23 @@ public class StockSubTypeH implements Serializable {
     public StockSubTypeH() {
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
@@ -60,13 +77,27 @@ public class StockSubTypeH implements Serializable {
         this.stock_type_id = stock_type_id;
     }
 
-    public String getName() {
+    
+    /**
+     * Get Name
+     * 
+     * @return name
+     */
+    public String getName() 
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    /**
+     * Set Name
+     * 
+     * @param name as string
+     */
+    public void setName(String name) 
+    {
         this.name = name;
     }
+
 
     public String getDescription() {
         return this.description;
@@ -92,11 +123,6 @@ public class StockSubTypeH implements Serializable {
         this.comment = comment;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof StockSubTypeH) ) return false;
@@ -106,10 +132,25 @@ public class StockSubTypeH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

@@ -5,8 +5,11 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/** @author Hibernate CodeGenerator */
-public class CGMDataH implements Serializable {
+/**
+ * @author Hibernate CodeGenerator
+ */
+public class CGMDataH implements Serializable
+{
 
     private static final long serialVersionUID = 1926001888869758766L;
 
@@ -37,8 +40,21 @@ public class CGMDataH implements Serializable {
     /** nullable persistent field */
     private long changed;
 
-    /** full constructor */
-    public CGMDataH(long dt_info, int base_type, int sub_type, String value, String extended, int person_id, String comment, long changed) {
+    /**
+     * full constructor
+     * 
+     * @param dt_info
+     * @param base_type
+     * @param sub_type
+     * @param value
+     * @param extended
+     * @param person_id
+     * @param comment
+     * @param changed
+     * */
+    public CGMDataH(long dt_info, int base_type, int sub_type, String value, String extended, int person_id,
+            String comment, long changed)
+    {
         this.dt_info = dt_info;
         this.base_type = base_type;
         this.sub_type = sub_type;
@@ -49,106 +65,162 @@ public class CGMDataH implements Serializable {
         this.changed = changed;
     }
 
-    /** default constructor */
-    public CGMDataH() {
+    /**
+     * default constructor
+     */
+    public CGMDataH()
+    {
     }
 
-    /** minimal constructor */
-    public CGMDataH(long dt_info, int person_id) {
+    /**
+     * minimal constructor
+     * 
+     * @param dt_info
+     * @param person_id
+     */
+    public CGMDataH(long dt_info, int person_id)
+    {
         this.dt_info = dt_info;
         this.person_id = person_id;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public long getDt_info() {
+    /**
+     * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
+     * @return
+     */
+    public long getDt_info()
+    {
         return this.dt_info;
     }
 
-    public void setDt_info(long dt_info) {
+    /**
+     * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
+     * 
+     * @param dt_info 
+     */
+    public void setDt_info(long dt_info)
+    {
         this.dt_info = dt_info;
     }
 
-    public int getBase_type() {
+    public int getBase_type()
+    {
         return this.base_type;
     }
 
-    public void setBase_type(int base_type) {
+    public void setBase_type(int base_type)
+    {
         this.base_type = base_type;
     }
 
-    public int getSub_type() {
+    public int getSub_type()
+    {
         return this.sub_type;
     }
 
-    public void setSub_type(int sub_type) {
+    public void setSub_type(int sub_type)
+    {
         this.sub_type = sub_type;
     }
 
-    public String getValue() {
+    public String getValue()
+    {
         return this.value;
     }
 
-    public void setValue(String value) {
+    public void setValue(String value)
+    {
         this.value = value;
     }
 
-    public String getExtended() {
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
-    public int getPerson_id() {
+    public int getPerson_id()
+    {
         return this.person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    public void setPerson_id(int person_id)
+    {
         this.person_id = person_id;
     }
 
-    public String getComment() {
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public long getChanged() {
+    public long getChanged()
+    {
         return this.changed;
     }
 
-    public void setChanged(long changed) {
+    public void setChanged(long changed)
+    {
         this.changed = changed;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
-    public boolean equals(Object other) {
-        if ( !(other instanceof CGMDataH) ) return false;
+    public boolean equals(Object other)
+    {
+        if (!(other instanceof CGMDataH))
+            return false;
         CGMDataH castOther = (CGMDataH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

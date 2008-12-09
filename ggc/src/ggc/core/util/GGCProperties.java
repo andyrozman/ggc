@@ -125,9 +125,9 @@ public class GGCProperties // extends GGCPropertiesHelper
         setIns2Name(settings.getIns2Name());
         setInterpolation(settings.getInterpolation());
         setLanguage(settings.getLanguage());
-        setMeterDaylightSavingsFix(settings.getMeterDaylightSavingsFix());
-        setMeterPort(settings.getMeterPort());
-        setMeterType(settings.getMeterType());
+//        setMeterDaylightSavingsFix(settings.getMeterDaylightSavingsFix());
+//        setMeterPort(settings.getMeterPort());
+//        setMeterType(settings.getMeterType());
         setPdfVieverPath(settings.getPdfVieverPath());
         setPrintDinnerStartTime(settings.getPrintDinnerStartTime());
         setPrintEmptyValue(settings.getPrintEmptyValue());
@@ -303,6 +303,7 @@ public class GGCProperties // extends GGCPropertiesHelper
     // rendering stuff
     //
 
+    /*
     public boolean getMeterDaylightSavingsFix()
     {
         return this.m_cfg_mgr.getBooleanValue("METER_DAYLIGHTSAVING_TIME_FIX");
@@ -326,7 +327,7 @@ public class GGCProperties // extends GGCPropertiesHelper
          * m_da.getI18nInstance().getMessage("NONE"); } else return
          * m_da.getMeterManager().meter_names[this.getMeterType()];
          */
-    }
+    //}
 
     public String getPdfVieverPath()
     {
@@ -385,6 +386,17 @@ public class GGCProperties // extends GGCPropertiesHelper
         return this.m_cfg_mgr.getStringValue("NAME");
     }
 
+    public float getRatio_CH_Insulin()
+    {
+        return this.m_cfg_mgr.getFloatValue("RATIO_CH_INSULIN");
+    }
+    
+    public float getRatio_BG_Insulin()
+    {
+        return this.m_cfg_mgr.getFloatValue("RATIO_BG_INSULIN");
+    }
+    
+    
     /*
      * public ColorSchemeH setSelectedColorScheme() { return this.m_colors; }
      */
@@ -612,6 +624,19 @@ public class GGCProperties // extends GGCPropertiesHelper
         this.m_cfg_mgr.setStringValue("SELECTED_COLOR_SCHEME", value);
     }
 
+    
+    public void setRatio_CH_Insulin(float val)
+    {
+        this.m_cfg_mgr.setFloatValue("RATIO_CH_INSULIN", val);
+    }
+    
+    public void setRatio_BG_Insulin(float val)
+    {
+        this.m_cfg_mgr.setFloatValue("RATIO_BG_INSULIN", val);
+    }
+    
+    
+    
     // ---
     // --- Load/Save methods
     // ---

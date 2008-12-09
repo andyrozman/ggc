@@ -67,7 +67,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 
     // getI18nControlInstance();
 
-    /*
+    /**
      * public FoodGroup() { this.setId(0); this.setDescription(""); }
      */
 
@@ -298,7 +298,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     // --- DatabaseObjectHibernate
     // ---
 
-    /*
+    /**
      * DbAdd - Add this object to database
      * 
      * @param sess Hibernate Session object
@@ -329,7 +329,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return "" + id.longValue();
     }
 
-    /*
+    /**
      * DbEdit - Edit this object in database
      * 
      * @param sess Hibernate Session object
@@ -358,7 +358,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 
     }
 
-    /*
+    /**
      * DbDelete - Delete this object in database
      * 
      * @param sess Hibernate Session object
@@ -385,7 +385,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return true;
     }
 
-    /*
+    /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
      * 
@@ -398,14 +398,14 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        /*
+        /**
          * System.out.println("Not implemented: FoodGroup::DbHasChildren");
          * return true;
          */
         return true;
     }
 
-    /*
+    /**
      * DbGet - Loads this object. Id must be set.
      * 
      * 
@@ -427,7 +427,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             sess.update(this.group_db2);
         }
 
-        /*
+        /**
          * FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new
          * Long(this.getId()));
          * 
@@ -440,7 +440,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return false;
     }
 
-    /*
+    /**
      * getObjectName - returns name of DatabaseObject
      * 
      * @return name of object (not Hibernate object)
@@ -451,7 +451,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     }
     
     
-    /*
+    /**
      * isDebugMode - returns debug mode of object
      * 
      * @return true if object in debug mode
@@ -461,7 +461,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return debug;
     }
 
-    /*
+    /**
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
      * objects, contained in lists and dialogs, used for processing by higher
@@ -478,7 +478,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     // --- BackupRestoreObject
     // ---
 
-    /*
+    /**
      * getTargetName
      */
     public String getTargetName()
@@ -491,7 +491,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return "ggc.core.db.hibernate.FoodUserGroupH";
     }
 
-    /*
+    /**
      * getChildren
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
@@ -499,7 +499,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return null;
     }
 
-    /*
+    /**
      * isSelected
      */
     public boolean isSelected()
@@ -507,7 +507,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return selected;
     }
 
-    /*
+    /**
      * setSelected
      */
     public void setSelected(boolean newValue)

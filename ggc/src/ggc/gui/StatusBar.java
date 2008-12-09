@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: StatusBar.java
- *  Purpose:  A StatusBar for the MainFrame.
- *
- *  Author:   schultd
- */
-
 package ggc.gui;
 
 import ggc.core.util.DataAccess;
@@ -40,26 +13,48 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     StatusBar  
+ *  Description:  For creation of status bar.
+ * 
+ *  Author: schultd
+ *          Andy {andy@atech-software.com}  
+ */
 
 public class StatusBar extends JPanel
 {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1184879736050179885L;
 
     I18nControl m_ic = I18nControl.getInstance();
 
     private JLabel lblMessage = null;
-//    private JLabel lblDataSource = null;
     private JLabel lblLed = null;
     private JLabel lblName = null;
     DataAccess da = DataAccess.getInstance();
 
-    //private static StatusBar singleton = null;
-
     private ImageIcon[] statusIcons = null;
 
+    /**
+     * Constructor
+     */
     public StatusBar()
     {
 
@@ -107,35 +102,43 @@ public class StatusBar extends JPanel
         add(pan, BorderLayout.EAST);
     }
 
-    /*
-    public static StatusBar getInstance()
-    {
-        if (singleton == null)
-            singleton = new StatusBar();
 
-        return singleton;
-    }
-    */
-
+    
+    /**
+     * Set Status message
+     * @param msg
+     */
     public void setStatusMessage(String msg)
     {
         lblMessage.setText(" " + msg);
     }
 
-    public void setDataSourceText(String text)
-    {
-        //lblDataSource.setText(" " + text);
-    }
 
+    /**
+     * Db Status: Stopped
+     */
     public static final int DB_STOPPED = 0;
+    
+    /**
+     * Db Status: Init done
+     */
     public static final int DB_INIT_DONE = 1;
+    
+    /**
+     * Db Status: Base done
+     */
     public static final int DB_BASE_DONE = 2;
+    
+    /**
+     * Db Status: Extended done
+     */
     public static final int DB_EXTENDED_DONE = 3;
     
+    /**
+     * Db Status: Loaded
+     */
     public static final int DB_LOADED = 3;
 
-    
-    
     
     
     
@@ -154,11 +157,21 @@ public class StatusBar extends JPanel
     // green
     
     
+    /**
+     * Set Db Status
+     * 
+     * @param status
+     */
     public void setDbStatus(int status)
     {
         this.lblLed.setIcon(statusIcons[status]);
     }
 
+    /**
+     * Set Database Name
+     * 
+     * @param dbName
+     */
     public void setDatabaseName(String dbName)
     {
         lblName.setText(m_ic.getMessage("DATABASE") + " [" + dbName +"]:");

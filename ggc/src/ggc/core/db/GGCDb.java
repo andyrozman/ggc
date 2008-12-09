@@ -136,9 +136,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         /*m_cfg =*/ createConfiguration();
         m_da = da;
         
-        System.out.println("GGCDb");
-        System.out.println("m_da: " + m_da);
-        System.out.println("m_da.getSettings(): " + m_da.getSettings());
+        //System.out.println("GGCDb");
+        //System.out.println("m_da: " + m_da);
+        //System.out.println("m_da.getSettings(): " + m_da.getSettings());
         
         
         m_loadStatus = DB_CONFIG_LOADED;
@@ -811,8 +811,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
                 table.put(eh.getName(), eh);
             }
 
-            System.out.println("m_da: " + m_da);
-            System.out.println("m_da.getSettings(): " + m_da.getSettings());
+            //System.out.println("m_da: " + m_da);
+            //System.out.println("m_da.getSettings(): " + m_da.getSettings());
             
             
             m_da.getSettings().setColorSchemes(table, false);
@@ -845,7 +845,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         try
         {
 
-            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst");
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst order by pst.name");
 
             Iterator it = q.iterate();
 
@@ -875,7 +875,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         try
         {
 
-            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst");
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
 
             Iterator it = q.iterate();
 
@@ -909,7 +909,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         try
         {
 
-            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst");
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst order by pst.name");
 
             Iterator it = q.iterate();
 
@@ -938,7 +938,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         try
         {
 
-            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst");
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst order by pst.name");
 
             Iterator it = q.iterate();
 

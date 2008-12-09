@@ -90,7 +90,8 @@ public class ConfigurationManager
         "BG2_HIGH", "20.0f",
         "BG2_TARGET_LOW", "4.4f",
         "BG2_TARGET_HIGH", "14.0f",
-
+        "RATIO_CH_INSULIN", "0.0f",
+        "RATIO_BG_INSULIN", "0.0f"
     };
 
     private String cfg_boolean[] = 

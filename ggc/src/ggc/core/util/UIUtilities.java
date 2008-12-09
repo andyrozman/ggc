@@ -73,7 +73,7 @@ public class UIUtilities
             public void mouseEntered(MouseEvent e)
             {
                 if (button.isEnabled()) 
-		{
+                {
                     button.setBorder(BorderFactory.createLineBorder(new Color(8, 36, 106), 1));
                     button.setBackground(new Color(180, 190, 213));
                 }

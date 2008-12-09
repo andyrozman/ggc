@@ -86,6 +86,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     Float float_instance = new Float(0.0);
 
 
+    /**
+     * 
+     */
     public DailyValuesRow()
     {
     	this.datetime = 0L;
@@ -101,6 +104,15 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
 
+    /**
+     * @param datetime
+     * @param bg
+     * @param ins1
+     * @param ins2
+     * @param ch
+     * @param extended
+     * @param comment
+     */
     public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String extended, String comment)
     {
         this.datetime = datetime;
@@ -115,6 +127,16 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * @param datetime
+     * @param bg
+     * @param ins1
+     * @param ins2
+     * @param ch
+     * @param activity
+     * @param urine
+     * @param comment
+     */
     public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String activity, String urine, String comment)
     {
         this.datetime = datetime;
@@ -129,6 +151,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
 
+    /**
+     * @param dv
+     */
     public DailyValuesRow(DayValueH dv)
     {
     	this.datetime = dv.getDt_info();
@@ -152,6 +177,17 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
 
+    /**
+     * @param datetime
+     * @param BG
+     * @param Ins1
+     * @param Ins2
+     * @param BU
+     * @param Act
+     * @param urine
+     * @param Comment
+     * @param lst_meals
+     */
     public DailyValuesRow(long datetime, String BG, String Ins1, String Ins2, String BU, String Act, String urine, String Comment, ArrayList<String> lst_meals)
     {
         //X

@@ -40,7 +40,15 @@ public class FoodUserDescriptionH implements Serializable {
     /** nullable persistent field */
     private long changed;
 
-    /** full constructor */
+    /** full constructor 
+     * @param group_id 
+     * @param name 
+     * @param name_i18n 
+     * @param description 
+     * @param refuse 
+     * @param nutritions 
+     * @param home_weights 
+     * @param changed */
     public FoodUserDescriptionH(long group_id, String name, String name_i18n, String description, float refuse, String nutritions, String home_weights, long changed) {
         this.group_id = group_id;
         this.name = name;
@@ -56,11 +64,23 @@ public class FoodUserDescriptionH implements Serializable {
     public FoodUserDescriptionH() {
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
@@ -72,19 +92,43 @@ public class FoodUserDescriptionH implements Serializable {
         this.group_id = group_id;
     }
 
-    public String getName() {
+    /**
+     * Get Name
+     * 
+     * @return name
+     */
+    public String getName() 
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    /**
+     * Set Name
+     * 
+     * @param name as string
+     */
+    public void setName(String name) 
+    {
         this.name = name;
     }
 
-    public String getName_i18n() {
+    /**
+     * Get Name (I18n)
+     * 
+     * @return name
+     */
+    public String getName_i18n() 
+    {
         return this.name_i18n;
     }
 
-    public void setName_i18n(String name_i18n) {
+    /**
+     * Set Name (I18n)
+     * 
+     * @param name_i18n as string
+     */
+    public void setName_i18n(String name_i18n) 
+    {
         this.name_i18n = name_i18n;
     }
 
@@ -128,12 +172,6 @@ public class FoodUserDescriptionH implements Serializable {
         this.changed = changed;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
-
     public boolean equals(Object other) {
         if ( !(other instanceof FoodUserDescriptionH) ) return false;
         FoodUserDescriptionH castOther = (FoodUserDescriptionH) other;
@@ -142,10 +180,25 @@ public class FoodUserDescriptionH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

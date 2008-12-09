@@ -30,7 +30,6 @@ package ggc.gui.dialogs.graphs;
 import ggc.core.data.GlucoValues;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.gui.calendar.DateRangeSelectionPanel;
 import ggc.gui.graphs.DataPlotSelectorPanel;
 import ggc.gui.graphs.SpreadGraphView;
 
@@ -47,6 +46,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import com.atech.graphics.calendar.DateRangeSelectionPanel;
 import com.atech.help.HelpCapable;
 
 public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCapable
@@ -92,7 +92,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
     {
         JPanel cPanel = new JPanel(new BorderLayout());
 
-        dRS = new DateRangeSelectionPanel();
+        dRS = new DateRangeSelectionPanel(m_da);
 
         DataPlotSelectorPanel selectionPanel = new DataPlotSelectorPanel(DataPlotSelectorPanel.BG_MASK);
         sGV.setData(selectionPanel.getPlotData());

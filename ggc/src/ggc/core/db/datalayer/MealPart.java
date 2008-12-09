@@ -79,7 +79,7 @@ public class MealPart
      * This constructor is used for Printing Meal data (it unpacks weight data)
      * 
      * @param meal_str
-     * @param data
+     * @param print_data 
      */
     public MealPart(String meal_str, boolean print_data)
     {

@@ -81,7 +81,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 
         ic = DataAccess.getInstance().getI18nControlInstance();
 
-        /*
+        /**
          * this.setId(0); this.setFood_group_id(0); this.setName("");
          * this.setI18n_name(""); this.setRefuse(0.0f); this.setNutritions("");
          * this.setHome_weights(""); this.setRefuse(0.0f);
@@ -94,7 +94,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         this.type = 1;
 
         ic = DataAccess.getInstance().getI18nControlInstance();
-        /*
+        /**
          * this.setId(ch.getId()); this.setFood_group_id(ch.getFood_group_id());
          * this.setName(ch.getName()); this.setI18n_name(ch.getI18n_name()); //
          * this.setCH_g(ch.getCH_g()); //
@@ -285,7 +285,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     // --- DatabaseObjectHibernate
     // ---
 
-    /*
+    /**
      * DbAdd - Add this object to database
      * 
      * @param sess Hibernate Session object
@@ -312,7 +312,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 
     }
 
-    /*
+    /**
      * DbEdit - Edit this object in database
      * 
      * @param sess Hibernate Session object
@@ -337,7 +337,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 
     }
 
-    /*
+    /**
      * DbDelete - Delete this object in database
      * 
      * @param sess Hibernate Session object
@@ -362,7 +362,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 
     }
 
-    /*
+    /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
      * 
@@ -379,7 +379,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return true;
     }
 
-    /*
+    /**
      * DbGet - Loads this object. Id must be set.
      * 
      * 
@@ -400,7 +400,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return true;
     }
     
-    /*
+    /**
      * getObjectName - returns name of DatabaseObject
      * 
      * @return name of object (not Hibernate object)
@@ -410,7 +410,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return "Food Description";
     }
 
-    /*
+    /**
      * isDebugMode - returns debug mode of object
      * 
      * @return true if object in debug mode
@@ -420,7 +420,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return debug;
     }
 
-    /*
+    /**
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
      * objects, contained in lists and dialogs, used for processing by higher
@@ -437,7 +437,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     // --- BackupRestoreObject
     // ---
 
-    /*
+    /**
      * getTargetName
      */
     public String getTargetName()
@@ -450,7 +450,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return "ggc.core.db.hibernate.FoodUserDescriptionH";
     }
 
-    /*
+    /**
      * getChildren
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
@@ -458,7 +458,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return null;
     }
 
-    /*
+    /**
      * hasChildren
      */
     public boolean hasChildren()
@@ -466,7 +466,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return false;
     }
 
-    /*
+    /**
      * isSelected
      */
     public boolean isSelected()
@@ -474,7 +474,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return selected;
     }
 
-    /*
+    /**
      * setSelected
      */
     public void setSelected(boolean newValue)

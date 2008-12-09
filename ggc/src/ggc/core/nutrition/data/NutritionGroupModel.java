@@ -39,29 +39,65 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     NutritionGroupModel  
+ *  Description:  Nutritions Group Model.
+ * 
+ *  Author: Andy {andy@atech-software.com}  
+ */
+
+
 public class NutritionGroupModel implements TreeModel 
 {
 
     private boolean m_debug = true;
-
-//x    private boolean isRoot = false;ic in
     private Vector<TreeModelListener> treeModelListeners = new Vector<TreeModelListener>();
     private GGCTreeRoot rootObj = null;
 
 
+    /**
+     * Group Type
+     */
     public int group_type = GGCTreeRoot.TREE_USER_NUTRITION;
     
     
+    /**
+     * Constructor 
+     * 
+     * @param rt
+     * @param type
+     */
     public NutritionGroupModel(GGCTreeRoot rt, int type) 
     {
-        //x isRoot = true;
         rootObj = rt;
         this.group_type = type;
-        
     }
 
 
-    public void debug(String deb)
+    /**
+     * Debug
+     * 
+     * @param deb
+     */
+    private void debug(String deb)
     {
         if (m_debug)
             System.out.println(deb);
@@ -192,9 +228,9 @@ public class NutritionGroupModel implements TreeModel
         if (parent instanceof GGCTreeRoot)
         {
             if (rootObj.getType()== GGCTreeRoot.TREE_MEALS)
-        	return rootObj.m_meal_groups_tree.indexOf(child);
+                return rootObj.m_meal_groups_tree.indexOf(child);
             else
-        	return rootObj.m_groups_tree.indexOf(child);
+                return rootObj.m_groups_tree.indexOf(child);
             
         }
     	else if (parent instanceof FoodGroup)
@@ -225,7 +261,7 @@ public class NutritionGroupModel implements TreeModel
      */
     public boolean isLeaf(Object node) 
     {
-	return (getChildCount(node)==0);
+        return (getChildCount(node)==0);
     }
 
 }

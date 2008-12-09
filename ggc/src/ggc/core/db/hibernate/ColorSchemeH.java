@@ -52,7 +52,19 @@ public class ColorSchemeH implements Serializable {
     /** nullable persistent field */
     private int color_ch;
 
-    /** full constructor */
+    /** full constructor 
+     * @param name 
+     * @param custom_type 
+     * @param color_bg 
+     * @param color_bg_avg 
+     * @param color_bg_low 
+     * @param color_bg_high 
+     * @param color_bg_target 
+     * @param color_ins 
+     * @param color_ins1 
+     * @param color_ins2 
+     * @param color_ins_perbu 
+     * @param color_ch */
     public ColorSchemeH(String name, int custom_type, int color_bg, int color_bg_avg, int color_bg_low, int color_bg_high, int color_bg_target, int color_ins, int color_ins1, int color_ins2, int color_ins_perbu, int color_ch) {
         this.name = name;
         this.custom_type = custom_type;
@@ -72,21 +84,46 @@ public class ColorSchemeH implements Serializable {
     public ColorSchemeH() {
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+    /**
+     * Get Name
+     * 
+     * @return name
+     */
+    public String getName() 
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    /**
+     * Set Name
+     * 
+     * @param name as string
+     */
+    public void setName(String name) 
+    {
         this.name = name;
     }
+
 
     public int getCustom_type() {
         return this.custom_type;
@@ -176,12 +213,6 @@ public class ColorSchemeH implements Serializable {
         this.color_ch = color_ch;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
-
     public boolean equals(Object other) {
         if ( !(other instanceof ColorSchemeH) ) return false;
         ColorSchemeH castOther = (ColorSchemeH) other;
@@ -190,10 +221,25 @@ public class ColorSchemeH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

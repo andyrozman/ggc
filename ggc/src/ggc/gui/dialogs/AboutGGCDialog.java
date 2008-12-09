@@ -1,36 +1,5 @@
 package ggc.gui.dialogs;
 
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java application to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: AboutGGCDialog
- *  
- *  Purpose:  About dialog
- *  
- *  @author andyrozman {andy@atech-software.com}
- * 
- */
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -51,12 +20,42 @@ import com.atech.graphics.components.about.LicenceInfo;
 
 import ggc.core.util.DataAccess;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     AboutGGCDialog
+ *  Description:  About GGC Dialog.
+ * 
+ *  Author: Andy {andy@atech-software.com}  
+ */
 
 public class AboutGGCDialog extends AboutDialog 
 {
 
     private static final long serialVersionUID = -5655078691807335660L;
 
+    
+    /**
+     * Constructor
+     * 
+     * @param parent
+     */
     public AboutGGCDialog(JFrame parent)
     {
         super(parent, true, DataAccess.getInstance().getI18nControlInstance());
@@ -113,15 +112,9 @@ public class AboutGGCDialog extends AboutDialog
         this.showAbout();
     }
 
-    /*
-    public void initCustom()
-    {
-	System.out.println("init Custom");
-	this.about_image = "/icons/t_asc_dex.gif";
-    } */
 
 
-    public void createCustomTab()
+    private void createCustomTab()
     {
         AboutCustomPanel acp = new AboutCustomPanel(m_ic);
         acp.setTabName(m_ic.getMessage("ABOUT"));

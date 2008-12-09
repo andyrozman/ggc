@@ -133,7 +133,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
             else
                 append = true;
             
-            System.out.println("\nLoading DailiyValues (5/dot)");
+            System.out.println("\nLoading DailyValues (5/dot)");
             
             this.openFileForReading(this.restore_file);
 

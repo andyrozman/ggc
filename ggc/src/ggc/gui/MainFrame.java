@@ -1,30 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: MainFrame.java Purpose: The MainFrame of the app. Contains
- * MenuBars, ToolBars, StatusBars, ...
- * 
- * Author: schultd, andyrozman
- */
-
 package ggc.gui;
 
 import ggc.GGC;
@@ -42,11 +15,11 @@ import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.DoctorsDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
-import ggc.gui.dialogs.RatioDialog;
 import ggc.gui.dialogs.graphs.CourseGraphDialog;
 import ggc.gui.dialogs.graphs.FrequencyGraphDialog;
 import ggc.gui.dialogs.graphs.HbA1cDialog;
 import ggc.gui.dialogs.graphs.SpreadGraphDialog;
+import ggc.gui.dialogs.ratio.RatioBaseDialog;
 import ggc.gui.panels.info.InfoPanel;
 
 import java.awt.BorderLayout;
@@ -84,16 +57,50 @@ import com.atech.help.HelpContext;
 import com.atech.update.client.UpdateDialog;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     GGC  
+ *  Description:  Main GUI file, here toolbar, menus are created.
+ * 
+ *  Author: schultd
+ *          Andy {andy@atech-software.com}  
+ */
+
+
 public class MainFrame extends JFrame
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
 
     private I18nControl m_ic = null;
+    
+    /**
+     * Skin Look and Feel
+     */
     public static SkinLookAndFeel s_skinlf;
 
     private static final String skinLFdir = "../data/skinlf_themes/";
 
+    /**
+     * 
+     */
     public static boolean developer_version = false;
 
     // fields
@@ -127,8 +134,15 @@ public class MainFrame extends JFrame
      * private GGCAction aboutAction, checkVersionAction;
      */
     // private DailyStatsFrame dailyStatsWindow;
-    public StatusBar statusPanel;
 
+    /**
+     * 
+     */
+    public StatusBar statusPanel;
+    
+    /**
+     * 
+     */
     public InfoPanel informationPanel;
 
     private DataAccess m_da = null;
@@ -141,6 +155,10 @@ public class MainFrame extends JFrame
         MainFrame.setLookAndFeel();
     }
 
+    
+    /**
+     * Set Look & Feel
+     */
     public static void setLookAndFeel()
     {
 
@@ -176,9 +194,12 @@ public class MainFrame extends JFrame
 
     }
 
-    // Specialty Definitions - Types of Doctors
-
-    // constructor
+    /**
+     * Constructor
+     * 
+     * @param title
+     * @param developer_version
+     */
     public MainFrame(String title, boolean developer_version)
     {
         // this is the first chance to call this method after an instance of
@@ -270,7 +291,9 @@ public class MainFrame extends JFrame
         // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
     }
 */
-    public void createMenus()
+    
+    
+    private void createMenus()
     {
         // file menu
         this.menu_file = this.createMenu("MN_FILE", null);
@@ -293,7 +316,11 @@ public class MainFrame extends JFrame
         this.menu_bgs.addSeparator();
         this.createAction(this.menu_bgs, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png"); // null);
         this.menu_bgs.addSeparator();
-        this.createAction(this.menu_bgs, "MN_RATIO_CALC", "MN_RATIO_CALC_DESC", "view_ratio", null); // null);
+        
+        JMenu menu_data_ratio = this.createMenu(this.menu_bgs, "MN_DATA_RATIO", null);
+
+        this.createAction(menu_data_ratio, "MN_RATIO_BASE", "MN_RATIO_BASE_DESC", "ratio_base", null); // null);
+        this.createAction(menu_data_ratio, "MN_RATIO_EXTENDED", "MN_RATIO_EXTENDED_DESC", "ratio_extended", null); // null);
 
         // food menu
         this.menu_food = this.createMenu("MN_FOOD", null);
@@ -423,7 +450,7 @@ public class MainFrame extends JFrame
 
     }
 
-    public void helpInit()
+    private void helpInit()
     {
         HelpContext hc = new HelpContext("../data/help/GGC.hs");
 
@@ -508,16 +535,27 @@ public class MainFrame extends JFrame
 
     }
 
+    /**
+     * Get this as parent
+     * 
+     * @return
+     */
     public MainFrame getMyParent()
     {
         return this;
     }
 
+    /**
+     * Invalidate panels
+     */
     public void invalidatePanels()
     {
         this.informationPanel.invalidatePanelsConstants();
     }
 
+    /**
+     * Refresh panels
+     */
     public void refreshPanels()
     {
         this.informationPanel.refreshPanels();
@@ -594,6 +632,11 @@ public class MainFrame extends JFrame
         // return action;
     }
 
+    /**
+     * Set menus by Db Loading status
+     * 
+     * @param status
+     */
     public void setMenusByDbLoad(int status)
     {
         if (status == StatusBar.DB_STOPPED)
@@ -698,6 +741,12 @@ public class MainFrame extends JFrame
         setToolbarByDbLoad(status);
     }
 
+    
+    /**
+     * Set Toolbar by Db Load
+     * 
+     * @param status
+     */
     public void setToolbarByDbLoad(int status)
     {
 
@@ -953,6 +1002,10 @@ public class MainFrame extends JFrame
             {
                 m_da.getHelpContext().getDisplayHelpFromSourceInstance().actionPerformed(e);
             }
+            else if (command.equals("ratio_base"))
+            {
+                new RatioBaseDialog(MainFrame.this);
+            }
             /*
              * else if (command.equals("hlp_check")) { new
              * VersionChecker().checkForUpdate(); }
@@ -1003,10 +1056,10 @@ public class MainFrame extends JFrame
                 // disabled for now, until it's implement to fully function
                 new PrintingDialog(MainFrame.this, 4, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
             } */
-            else if (command.equals("view_ratio"))
+            /*else if (command.equals("view_ratio"))
             {
                 new RatioDialog(getMyParent());
-            }
+            }*/
             else if (command.equals("doc_docs"))
             {
                 if (MainFrame.developer_version)
@@ -1014,7 +1067,7 @@ public class MainFrame extends JFrame
                     new DoctorsDialog(MainFrame.this);
                 }
                 else
-                    featureNotImplemented(command, "0.5");
+                    featureNotImplemented(command, "0.6");
 
             }
             else if (command.equals("doc_appoint"))
@@ -1028,11 +1081,15 @@ public class MainFrame extends JFrame
 
             }
             else // if ((command.equals("report_pdf_extended")) ||
-            if ((command.equals("doc_stocks")) || (command.equals("file_loginx")) || (command.equals("file_logout")))
+            if ((command.equals("file_login")) ||
+                (command.equals("ratio_extended")) ||
+                (command.equals("report_foodmenu_ext3")) ||
+                (command.equals("file_logout")))
             {
                 featureNotImplemented(command, "0.5");
             }
-            else if ((command.equals("misc_synchronize")))
+            else if ((command.equals("misc_synchronize")) ||
+                     (command.equals("doc_stocks"))) 
             {
                 featureNotImplemented(command, "0.6");
             }
@@ -1056,7 +1113,7 @@ public class MainFrame extends JFrame
                 // ggc.gui.ReadMeterDialog rm = new
                 // ggc.gui.ReadMeterDialog(MainFrame.this);
 
-                System.out.println("In login");
+                //System.out.println("In login");
                 /*
                                 try
                                 {
@@ -1076,7 +1133,7 @@ public class MainFrame extends JFrame
         }
     }
 
-    public void featureNotImplemented(String cmd, String version)
+    private void featureNotImplemented(String cmd, String version)
     {
         String text = m_ic.getMessage("FEATURE");
 
@@ -1097,6 +1154,12 @@ public class MainFrame extends JFrame
         }
     }
 
+    
+    /**
+     * To String
+     * 
+     * @see java.awt.Component#toString()
+     */
     @Override
     public String toString()
     {

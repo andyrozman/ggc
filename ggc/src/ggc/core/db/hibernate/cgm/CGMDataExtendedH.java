@@ -34,7 +34,14 @@ public class CGMDataExtendedH implements Serializable {
     /** nullable persistent field */
     private long changed;
 
-    /** full constructor */
+    /** full constructor 
+     * @param dt_info 
+     * @param type 
+     * @param value 
+     * @param extended 
+     * @param person_id 
+     * @param comment 
+     * @param changed */
     public CGMDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment, long changed) {
         this.dt_info = dt_info;
         this.type = type;
@@ -49,25 +56,50 @@ public class CGMDataExtendedH implements Serializable {
     public CGMDataExtendedH() {
     }
 
-    /** minimal constructor */
+    /** minimal constructor 
+     * @param dt_info 
+     * @param person_id */
     public CGMDataExtendedH(long dt_info, int person_id) {
         this.dt_info = dt_info;
         this.person_id = person_id;
     }
 
-    public long getId() {
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
         return this.id;
     }
 
-    public void setId(long id) {
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
+    public void setId(long id)
+    {
         this.id = id;
     }
 
-    public long getDt_info() {
+    /**
+     * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
+     * @return
+     */
+    public long getDt_info()
+    {
         return this.dt_info;
     }
 
-    public void setDt_info(long dt_info) {
+    /**
+     * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
+     * 
+     * @param dt_info 
+     */
+    public void setDt_info(long dt_info)
+    {
         this.dt_info = dt_info;
     }
 
@@ -119,11 +151,6 @@ public class CGMDataExtendedH implements Serializable {
         this.changed = changed;
     }
 
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", getId())
-            .toString();
-    }
 
     public boolean equals(Object other) {
         if ( !(other instanceof CGMDataExtendedH) ) return false;
@@ -133,10 +160,25 @@ public class CGMDataExtendedH implements Serializable {
             .isEquals();
     }
 
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(getId())
-            .toHashCode();
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString() 
+    {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+    
+    
+    /**
+     * Create Hash Code
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

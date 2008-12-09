@@ -8,7 +8,6 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Pump Tool"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText-2.0.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SkinLF-6.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PostgreSQL-JDBC-8.2"/>
@@ -22,5 +21,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ggc-web"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-1.5.0-sun-1.5.0.16"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

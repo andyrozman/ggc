@@ -934,8 +934,10 @@ public class InitDb
 
     public static String readPassWord()
     {
+        //System.out.println("Fix this: ");
         String pass;
 
+   
         Scanner in = new Scanner(System.in);
 
         // Reads a single line from the console

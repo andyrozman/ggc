@@ -60,7 +60,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     }
     
     
-    /* 
+    /** 
      * getTargetName
      */
     public String getTargetName()
@@ -68,7 +68,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
 	return ic.getMessage("DAILY_VALUES");
     }
 
-    /* 
+    /** 
      * getName
      */
     public String getName()
@@ -104,7 +104,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     //---
     
     
-    /* 
+    /** 
      * getChildren
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
@@ -112,7 +112,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
 	return null;
     }
 
-    /* 
+    /** 
      * isSelected
      */
     public boolean isSelected()
@@ -120,7 +120,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
 	return selected;
     }
 
-    /* 
+    /** 
      * setSelected
      */
     public void setSelected(boolean newValue)
@@ -145,7 +145,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     
     
     
-    /* 
+    /** 
      * DbAdd
      */
     public String DbAdd(Session sess) throws Exception
@@ -154,7 +154,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return null;
     }
 
-    /* 
+    /** 
      * DbDelete
      */
     public boolean DbDelete(Session sess) throws Exception
@@ -163,7 +163,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
-    /* 
+    /** 
      * DbEdit
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -172,7 +172,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
-    /* 
+    /** 
      * DbGet
      */
     public boolean DbGet(Session sess) throws Exception
@@ -181,7 +181,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
-    /* 
+    /** 
      * DbHasChildren
      */
     public boolean DbHasChildren(Session sess) throws Exception
@@ -189,7 +189,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
-    /* 
+    /** 
      * getAction
      */
     public int getAction()
@@ -300,7 +300,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     
     
     
-    /* 
+    /** 
      * getObjectName
      */
     public String getObjectName()
@@ -308,7 +308,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return "DailyValue";
     }
 
-    /* 
+    /** 
      * isDebugMode
      */
     public boolean isDebugMode()

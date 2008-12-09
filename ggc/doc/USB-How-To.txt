@@ -1,0 +1,67 @@
+
+How To Use GGC on USB
+======================
+
+GGC is application that can easily be run from USB disk. We had some problems with earlier 
+version because database we used, needed a lot of time to shutdown, after several tries
+we found database, we currently use (H2 Database) which work great also with USB drives.
+
+
+How to prepare version for USB
+================================
+
+For application to run on USB, we need to download VM from GGC site (you need to download 
+only package for OSes, which you plan to use). Each VM package contains Java Runtime
+Environment for selected OS, and startup file for that OS. Install VM first, because when 
+you copy file from GGC, they might have newer startup files.
+
+After install of VM (we will make example with Linux), you will have following tree structure
+
+Root
+  |-- GNU_Gluco_Control
+  |          |- bin
+  |-- Linux
+        |--- jre16
+               |--- bin
+                ....
+                
+In root there are several file which might help with autostart (on some systems).
+
+After install of all wanted VMs, you can download latest release of GGC (in .zip file)
+and just copy content of archive into GNU_Gluco_Control.
+
+
+
+Supported OSes
+==============
+              
+We support several OSes here, if you have any special OS, which you want supported, you 
+can make support your-self (VM), but we will have to help to change software. We have 
+special utilities for creating startup files needed (this is required for update system, we
+are implementing), and we need to modify those (this takes, about a day or so, so it 
+shouldn't be a problem). When you have problems, or new OS, contact us on: 
+ggc@atech-software.com.
+
+Some of tools use libraries for accessing serial/USB devices via rxtx library. If binary 
+files for your OS are not present in rxtx*.zip file, you won't be able to use serial/USB
+features of application (for connection to external devices - meters, pumps, ...). There
+are a lot of sources from where you can get binary files for your OS.
+
+
+OS               | Java ver. |  VM   | Rxtx  |  Comments
+--------------------------------------------------------------
+Windows          |    1.6    |  Yes  |  Yes  |   
+Linux            |    1.6    |  Yes  |  Yes  |   
+FreeBSD          |    1.6    |  Yes  |  No   | Rxtx bin. found, but it has problems...   
+
+
+
+
+
+               
+              
+              
+                
+
+
+

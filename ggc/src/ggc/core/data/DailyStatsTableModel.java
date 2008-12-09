@@ -110,9 +110,6 @@ public class DailyStatsTableModel extends AbstractTableModel
         if (o != null && column == 0) 
         {
             return m_da.getDateTimeAsTimeString(((Long)o).longValue());
-            //System.out.println("DailyStatsTableModel: " + o);
-            //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            //return sdf.format(o);
         } 
         
         return o;
@@ -133,15 +130,6 @@ public class DailyStatsTableModel extends AbstractTableModel
     public Class<?> getColumnClass(int c)
     {
         return this.objects[c].getClass();
-
-        /*
-        Object o = getValueAt(0, c);
-        if (o != null)
-            return o.getClass();
-        else
-            return null;
-            */
-        //return getValueAt(0,c).getClass();
     }
 
     @Override
@@ -151,12 +139,5 @@ public class DailyStatsTableModel extends AbstractTableModel
 	return false;
     }
 
-    /*
-    @Override
-    public void setValueAt(Object aValue, int row, int column)
-    {
-        dayData.setValueAt(aValue, row, column);
-        fireTableChanged(null);
-    }
-    */
+    
 }

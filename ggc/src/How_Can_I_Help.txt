@@ -221,14 +221,37 @@ If you are developer and would like to help, please follow this instructions to 
     - Go to working directory. Select other.
     - Click on Workspace... Select GNU Gluco Control/bin
     
-6.) Go to Preferences:
+6.) Eclipse Preferences: You will have to do this on every project or use Workspace settings
+     Go into Project -> Properties
+     
+     - Java Compiler: 
+          Compiler Compliance Level, set to 1.5
+     
+     - Java -> Compiler -> Javadoc
+         Process Javadoc comments - Checked
+         Malformed javadoc comments - Warning
+            Only consider members as visible as: Public
+            Missing tag descriptions: Ignore
+            
+         Missing javadoc tags: Warning
+            Only consider members as visible as: Public
 
-    - Java -> Compile -> Error/Warnings:
-    
-    - Go to 'Potential programming problems':
-    
-    - Option Serializable class without serialVersionUID, set to ignore (we have few generated classes which 
-      don't have this parameter inside).
+         Missing javadoc comments: Warning
+            Only consider members as visible as: Public
+
+	We are currently on 1.5 compatibility, so that application is usable on most of systems, which 
+	don't have 1.6 available... We will probably switch to 1.6 at end of 2009.
+	
+	Javadoc. We are trying to start writing documentation and Javadoc is first step towards that.
+	   Old code will be commented with time, mostly be people who created code. All new code needs
+	   to have comments (javadoc and othwerwise). Eclipse will help you with making empty javadoc
+	   comments, and then just fill all the data (upper javadoc wont check if arguments are filled, 
+	   but they should be, since after some time we will enable that function, but for now we haven't 
+	   since enabling javadoc by itself produces a lot of warnings).
+	
+	Comments. If you feel that your code might be hard to understand, please make a comment or two, 
+	   so that other people can understand what you are trying to do. You don't need to comment
+	   simple stuff, just stuff you feel could be hard to understand. 
     
 
 7.) If you wish to test GGC Meter Tool, GGC Pump tool you will also need to set binaries for rxtx library. If 

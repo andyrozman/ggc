@@ -41,6 +41,7 @@ import ggc.core.db.datalayer.FoodGroup;
 import ggc.core.db.datalayer.Meal;
 import ggc.core.db.datalayer.MealGroup;
 import ggc.core.db.datalayer.Settings;
+import ggc.core.db.datalayer.SettingsColorScheme;
 import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.plugins.CGMSPlugIn;
@@ -398,6 +399,7 @@ public class DataAccess extends ATDataAccessAbstract
 
         BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
         brc1.addChild(new Settings(this.m_i18n));
+        brc1.addChild(new SettingsColorScheme(this.m_i18n));
         
         brc.addChild(brc1);
         
@@ -726,20 +728,6 @@ public class DataAccess extends ATDataAccessAbstract
 
     }
 
-    // ********************************************************
-    // ****** Fonts *****
-    // ********************************************************
-
-    /*
-     * public static final int FONT_BIG_BOLD = 0; public static final int
-     * FONT_NORMAL = 1; public static final int FONT_NORMAL_BOLD = 2;
-     * 
-     * public void loadFonts() { fonts = new Font[3]; fonts[0] = new
-     * Font("SansSerif", Font.BOLD, 22); fonts[1] = new Font("SansSerif",
-     * Font.PLAIN, 12); fonts[2] = new Font("SansSerif", Font.BOLD, 12); }
-     * 
-     * public Font getFont(int font_id) { return fonts[font_id]; }
-     */
 
     // ********************************************************
     // ****** Parent handling (for UIs) *****
@@ -1326,6 +1314,9 @@ public class DataAccess extends ATDataAccessAbstract
             
             Server web_server = new Server(cnf);
             web_server.start();
+            
+            
+         
         }
         catch(Exception ex)
         {

@@ -89,20 +89,33 @@ public class DailyFoodEntryDisplay extends ATTableData
      * this.meal_part.getId() + "=" + this.amount; }
      */
 
+    /**
+     * Get Daily Food Entry
+     * 
+     * @return
+     */
     public DailyFoodEntry getDailyFoodEntry()
     {
         return this.daily_food_entry;
     }
 
+    /**
+     * Get String For Db
+     * 
+     * @return
+     */
     public String getStringForDb()
     {
         return this.daily_food_entry.getValueString();
     }
 
+    /**
+     * Get Column Value
+     * 
+     * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
+     */
     public String getColumnValue(int column)
     {
-        // String[] col = { "NAME", "WEIGHT_TYPE", "HOME_WEIGHT", "AMOUNT_LBL"
-        // };
 
         if (this.daily_food_entry == null)
             return null;
@@ -121,13 +134,6 @@ public class DailyFoodEntryDisplay extends ATTableData
         case 0:
         default:
             return this.daily_food_entry.getName();
-
-            /*
-             * case 1: return this.id; case 2: return this.description; case 3:
-             * return this.amount;
-             * 
-             * case 0: default: return "" + this.type_desc;
-             */
 
         }
     }
