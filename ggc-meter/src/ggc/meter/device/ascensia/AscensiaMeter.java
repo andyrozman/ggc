@@ -660,7 +660,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     protected String getCorrectDecimal(String input)
     {
         float f = Float.parseFloat(input);
-        return DataAccessMeter.MmolDecimalFormat.format(f).replace(',', '.');
+        return DataAccessMeter.Decimal1Format.format(f).replace(',', '.');
     }
 
 

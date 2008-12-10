@@ -51,7 +51,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.0.1";
+    public static final String PLUGIN_VERSION = "1.0.4";
     
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
@@ -90,7 +90,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
      */
     public void initSpecial()
     {
-        System.out.println("init special");
+        //System.out.println("init special");
         checkPrerequisites();
         createWebListerContext();
         createPlugInAboutContext();
@@ -100,6 +100,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         loadManager();
         loadReadingStatuses();
         createPlugInDataRetrievalContext();
+        loadWebLister();
     }
     
     
@@ -178,7 +179,8 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
         CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework and support for Ascensia & Roche devices"));
+        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework and support for Ascensia, Roche, LifeScan devices"));
+        cg.addCreditsEntry(new CreditsEntry("Alexander Balaban", "abalaban1@yahoo.ca", "Support for OT UltraSmart"));
         lst_credits.add(cg);
         cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
         cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
@@ -253,6 +255,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
      */
     public void createWebListerContext()
     {
+        
+        this.loadWebLister();
+        
         I18nControlAbstract ic = getI18nControlInstance();
         
         weblister_items = new ArrayList<BaseListEntry>();

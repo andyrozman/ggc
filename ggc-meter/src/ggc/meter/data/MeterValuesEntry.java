@@ -212,7 +212,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             }
             else
             {
-                return DataAccessMeter.MmolDecimalFormat.format((this.util.getBGValueDifferent(OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
+                return DataAccessMeter.Decimal1Format.format((this.util.getBGValueDifferent(OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
             }
 	        
 	    }

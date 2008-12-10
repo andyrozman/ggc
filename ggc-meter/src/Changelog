@@ -2,6 +2,14 @@
 Changes file for GGC Meter Tool
 ===============================
 
+1.0.4
+    * Partitial support for UltraSmart finisihed (we can read just BG for now) 
+    * List fixed and support here also fixed
+
+1.0.3
+    * Support for OT UltraSmart started
+
+
 1.0.2
     * Support for OT Mini/Easy done
     * Moved GUI to PlugInBase
