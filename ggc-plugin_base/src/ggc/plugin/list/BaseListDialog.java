@@ -155,7 +155,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
 
         panels[0] = new BaseListMainPanel(this);
         panels[1] = new BaseListBrowserPanel(this);
-        panels[1].setSize(500,500);
+        panels[1].setSize(500,495); // 500
 
         for(int i = 0; i < panels.length ; i++)
         {

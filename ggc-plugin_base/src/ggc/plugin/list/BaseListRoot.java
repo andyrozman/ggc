@@ -59,7 +59,7 @@ public class BaseListRoot
     @Override
     public String toString()
     {
-    	return m_da.getWebListerTitle();
+        return String.format(m_da.getI18nControlInstance().getMessage("DEVICE_LIST_WEB"), m_da.getI18nControlInstance().getMessage("DEVICE_NAME_BIG"));
     }
 
 

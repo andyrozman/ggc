@@ -1,32 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DataAccessMeter
- *  Purpose:  Used for utility works and static data handling (this is singelton
- *      class which holds all our definitions, so that we don't need to create them
- *      again for each class.      
- *
- *  Author:   andyrozman
- */
-
 package ggc.plugin.util;
 
 import ggc.plugin.cfg.DeviceConfiguration;
@@ -35,8 +6,8 @@ import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.manager.DeviceManager;
+import ggc.plugin.output.OutputUtil;
 
-import java.awt.Color;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -44,15 +15,13 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-import java.util.Vector;
-
-import javax.swing.JFrame;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.update.UpdateUtil;
 import com.atech.utils.ATDataAccessAbstract;
 
 /**
@@ -75,8 +44,9 @@ import com.atech.utils.ATDataAccessAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DataAccessPlugInBase
+ *  Description:  This is superclass for all DataAccess classes for each plugin. Here are defined
+ *                plugin specific features.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -85,21 +55,30 @@ import com.atech.utils.ATDataAccessAbstract;
 public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 {
     
-    //public String web_server_port = "444";
+    /**
+     * Plugin Version
+     */
+    public String plugin_version = "0.2.4";
 
-    public String plugin_version = "0.2.1";
 
-//xa    private GGCProperties m_settings = null;
-
-    //private DbToolApplicationGGC m_configFile = null;
-//    private ConfigurationManager m_cfgMgr = null;
-
-    
-
-    public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
+    /**
+     * Decimal format: 0 decimal places
+     */
     public static DecimalFormat Decimal0Format = new DecimalFormat("#0");
+    
+    /**
+     * Decimal format: 1 decimal places
+     */
     public static DecimalFormat Decimal1Format = new DecimalFormat("#0.0");
+    
+    /**
+     * Decimal format: 2 decimal places
+     */
     public static DecimalFormat Decimal2Format = new DecimalFormat("#0.00");
+    
+    /**
+     * Decimal format: 3 decimal places
+     */
     public static DecimalFormat Decimal3Format = new DecimalFormat("#0.000");
 
     /**
@@ -107,17 +86,17 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      */
     public int m_BG_unit = BG_MMOL;
 
-    public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
+    //public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
 
-    public String[] avLangPostfix = { "en", "de", "si", };
+    //public String[] avLangPostfix = { "en", "de", "si", };
 
-    public String[] bg_units = { "mg/dl", "mmol/l" };
+    //public String[] bg_units = { "mg/dl", "mmol/l" };
 
-    public Hashtable<String,String> timeZones;
+    //public Hashtable<String,String> timeZones;
 
-    public Vector<String> time_zones_vector;
+    //public Vector<String> time_zones_vector;
     
-    JFrame m_main = null;        
+    //JFrame m_main = null;        
         
 
     // about
@@ -128,8 +107,31 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     protected ArrayList<LibraryInfoEntry> plugin_libraries;
     protected ArrayList<CreditsGroup> plugin_developers;
     protected ArrayList<FeaturesGroup> plugin_features; 
+
+    // web lister
+    protected Hashtable<String,String> web_lister_cfg;
+    protected String weblister_title;
+    protected String weblister_desc;
+    protected ArrayList<BaseListEntry> weblister_items;
+
+    
+    protected DeviceManager m_manager = null;
+
+    protected DeviceConfigurationDefinition device_config_def;
+    protected DeviceConfiguration device_config;
     
     
+    protected DeviceValuesEntry m_entry_type;
+    protected String columns_manual[] = null;
+    protected int column_widths_manual[] = null;
+    protected String columns_table[] = null;
+    protected int column_widths_table[] = null;
+    protected String[] entry_statuses = null;
+    protected String[] reading_statuses = null;
+    protected String[] filtering_states = null;
+    
+    
+    protected DeviceDataHandler m_ddh;
     
 
     // ********************************************************
@@ -152,48 +154,16 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         initSpecial();
     } 
 
-    // FIXME should be abstract
-/*    public void initSpecial()
-    {
-        System.out.println("initSpecial - Base");
-
-        this.loadTimeZones();
-        
-        loadConfigIcons();
-        
-        checkPrerequisites();
-        this.createWebListerContext();
-    }*/
-    
-    
-    
-    public void loadConfigIcons()
-    {
-/*        config_icons = new ImageIcon[5];
-        config_icons[0] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
-        config_icons[1] = new ImageIcon(getImage("/icons/cfg_medical.png", m_main));
-        config_icons[2] = new ImageIcon(getImage("/icons/cfg_print.png", m_main));
-        config_icons[3] = new ImageIcon(getImage("/icons/cfg_meter.png", m_main));
-        config_icons[4] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
-  */      
-    }
-
-  
-
-
-    
     
     // ********************************************************
     // ******             Init Methods                    *****    
     // ********************************************************
     
 
-
     /** 
      * Get Application Name
      */
     public abstract String getApplicationName();
-    
     
     
     /** 
@@ -233,6 +203,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ********************************************************
     // ******            About Methods                    *****    
     // ********************************************************
+
     
     /**
      * Create About Context for plugin
@@ -240,17 +211,21 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     public abstract void createPlugInAboutContext();
     
     
-    /*
-    public String getAboutTitle()
-    {
-        return this.about_title;
-    }*/
-    
+    /**
+     * Get About Dialog image name
+     * 
+     * @return
+     */
     public String getAboutImageName()
     {
         return this.about_image_name;
     }
 
+    /**
+     * Get About Image Size
+     * 
+     * @return
+     */
     public int[] getAboutImageSize()
     {
         int[] sz = new int[2];
@@ -260,6 +235,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return sz;
     }
     
+    /**
+     * Get About Plugin Copyright
+     * 
+     * @return
+     */
     public String getAboutPluginCopyright()
     {
         int till = new GregorianCalendar().get(GregorianCalendar.YEAR);
@@ -275,22 +255,32 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         
     }
     
-    /*
-    public String getAboutPlugInName()
-    {
-        return this.about_plugin_name;
-    }*/
     
+    /**
+     * Get PlugIn Libraries
+     * 
+     * @return
+     */
     public ArrayList<LibraryInfoEntry> getPlugInLibraries()
     {
         return this.plugin_libraries;
     }
     
+    /**
+     * Get Plugin Developers
+     * 
+     * @return
+     */
     public ArrayList<CreditsGroup> getPlugInDevelopers()
     {
         return this.plugin_developers;
     }
     
+    /**
+     * Get Plugin Features
+     * 
+     * @return
+     */
     public ArrayList<FeaturesGroup> getPlugInFeatures()
     {
         return this.plugin_features;
@@ -303,10 +293,25 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ********************************************************
 
     
+    /**
+     * Load WebLister Configuration
+     */
+    public void loadWebLister()
+    {
+        this.web_lister_cfg = UpdateUtil.loadConfig("../data/tools/WebLister.properties");
+    }
+
+
+    /**
+     * Get WebLister Port, return poer on which WebLister is residing
+     * 
+     * @return number of port 
+     */
+    public int getWebListerPort()
+    {
+        return this.getIntValueFromString(this.web_lister_cfg.get("http.port"), 4444);
+    }
     
-    public String weblister_title;
-    public String weblister_desc;
-    public ArrayList<BaseListEntry> weblister_items;
     
     /**
      * Create WebLister (for List) Context for plugin
@@ -314,32 +319,36 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     public abstract void createWebListerContext();
     
     
+    /**
+     * Get Web Lister Title
+     * 
+     * @return web lister title
+     */
     public String getWebListerTitle()
     {
         return this.weblister_title;
     }
 
     
+    /**
+     * Get Web Lister Description
+     * 
+     * @return description text
+     */
     public String getWebListerDescription()
     {
         return this.weblister_desc;
     }
     
 
+    /**
+     * Get Web Lister Items
+     * 
+     * @return
+     */
     public ArrayList<BaseListEntry> getWebListerItems()
     {
         return weblister_items;
-    }
-    
-    
-    public ArrayList<String> getWebListerItemsTitles()
-    {
-        return null;
-    }
-    
-    public ArrayList<String> getWebListerItemsStatuses()
-    {
-        return null;
     }
     
 
@@ -347,22 +356,29 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ******                Configuration                *****    
     // ********************************************************
     
+    
     /**
      * Create Configuration Context for plugin
      */
     public abstract void createConfigurationContext();
     
     
-    protected DeviceConfigurationDefinition device_config_def;
-    
+    /**
+     * Get Device Configuration Definition
+     * 
+     * @return DeviceConfigurationDefinition instance
+     */
     public DeviceConfigurationDefinition getDeviceConfigurationDefinition()
     {
         return device_config_def;
     }
     
     
-    protected DeviceConfiguration device_config;
-    
+    /**
+     * Get Device COnfiguration
+     * 
+     * @return DeviceConfiguration instance
+     */
     public DeviceConfiguration getDeviceConfiguration()
     {
         if (this.device_config==null)
@@ -370,6 +386,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         
         return this.device_config;
     }
+    
     
     /**
      * Create Device Configuration for plugin
@@ -380,11 +397,18 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ********************************************************
     // ******                  Version                    *****    
     // ********************************************************
+
     
+    /**
+     * Get Plugin Version
+     * 
+     * @return version as string
+     */
     public String getPlugInVersion()
     {
         return this.plugin_version;
     }
+    
     
     /**
      * Create Plugin Version
@@ -393,37 +417,82 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
     
     // ********************************************************
-    // ******                  Settings                   *****    
-    // ********************************************************
-
-    
-    public Color getColor(int color)
-    {
-        return new Color(color);
-    }
-
-    // ********************************************************
     // ******             BG Measurement Type             *****    
     // ********************************************************
 
+    /**
+     * BG: mg/dL
+     */
     public static final int BG_MGDL = 1;
 
+    
+    /**
+     * BG: mmol/L
+     */
     public static final int BG_MMOL = 2;
 
+    
+    /**
+     * Get BG Measurment Type
+     * 
+     * @return type as int of measurement type
+     */
     public int getBGMeasurmentType()
     {
         return this.m_BG_unit;
     }
 
+    
+    /**
+     * Set BG Measurment Type
+     * 
+     * @param type as int of measurement type
+     */
     public void setBGMeasurmentType(int type)
     {
         this.m_BG_unit = type;
+    }
+
+    
+    /**
+     * Get BG Measurment Type Name
+     * 
+     * @return type as string
+     */
+    public String getBGMeasurmentTypeName()
+    {
+        return OutputUtil.unitsName[this.m_BG_unit];
+    }
+    
+    
+    /**
+     * Get BG Measurment Type Name
+     * 
+     * @param type type index 
+     * @return type as string
+     */
+    public String getBGTypeName(int type)
+    {
+        return OutputUtil.unitsName[type];
+    }
+    
+
+    /**
+     * Get BG Type Name Static
+     * 
+     * @param type measurment type
+     * @return name as string
+     */
+    public static String getBGTypeNameStatic(int type)
+    {
+        return OutputUtil.unitsName[type];
     }
 
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
 
     private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
 
+    
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>, either
      * return the mg/dl or the mmol/l value of the database's value. Default is mg/dl.
@@ -445,6 +514,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         }
     }
 
+    /**
+     * Get Displayed BG String 
+     * 
+     * @param bgValue
+     * @return
+     */
     public String getDisplayedBGString(String bgValue)
     {
         float val = 0.0f;
@@ -465,13 +540,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         else
             return DataAccessPlugInBase.Decimal1Format.format(val);
             
-
-        
-        
     }
     
     
-    
+    /**
+     * Get BG Value (converted to current display type)
+     * 
+     * @param bg_value bg values
+     * @return bg_value
+     */
     public float getBGValue(float bg_value)
     {
         switch (this.m_BG_unit)
@@ -485,6 +562,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
 
 
+    /**
+     * Get BG Value by type
+     * 
+     * @param type input type
+     * @param bg_value bg value to convert
+     * @return converted value
+     */
     public float getBGValueByType(int type, float bg_value)
     {
         switch (type)
@@ -497,6 +581,41 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         }
     }
 
+
+    /**
+     * Get BG Value by type
+     * 
+     * @param input_type input type
+     * @param output_type output type
+     * @param bg_value bg value to convert
+     * @return converted value
+     */
+    public float getBGValueByType(int input_type, int output_type, float bg_value)
+    {
+        
+        if (input_type==output_type)
+            return bg_value;
+        else
+        {
+            if (output_type==DataAccessPlugInBase.BG_MGDL)
+            {
+                return bg_value * MGDL_TO_MMOL_FACTOR;
+            }
+            else
+            {
+                return bg_value * MMOL_TO_MGDL_FACTOR;
+            }
+        }
+
+    }
+
+    
+    /**
+     * Get BG Value In Selected Format
+     * 
+     * @param bg_value bg value to convert
+     * @return converted value
+     */
     public float getBGValueInSelectedFormat(int bg_value)
     {
         switch (this.m_BG_unit)
@@ -509,28 +628,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         }
     }
     
-    
 
-    public float getBGValueByType(int input_type, int output_type, float bg_value)
-    {
-        
-        if (input_type==output_type)
-            return bg_value;
-        else
-        {
-            if (output_type==DataAccessPlugInBase.BG_MGDL)
-            {
-                return bg_value * DataAccessPlugInBase.MGDL_TO_MMOL_FACTOR;
-            }
-            else
-            {
-                return bg_value * DataAccessPlugInBase.MMOL_TO_MGDL_FACTOR;
-            }
-        }
-
-    }
-
-
+    /**
+     * Get BG Value by Type
+     * 
+     * @param input_type input type
+     * @param output_type output type
+     * @param bg_value_s bg value to convert (as String)
+     * @return converted value
+     */
     public float getBGValueByType(int input_type, int output_type, String bg_value_s)
     {
         
@@ -543,41 +649,30 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         catch(Exception ex)
         {
         }
-
         
-        
-        
-        if (input_type==output_type)
-            return bg_value;
-        else
-        {
-            if (output_type==DataAccessPlugInBase.BG_MGDL)
-            {
-                return bg_value * DataAccessPlugInBase.MGDL_TO_MMOL_FACTOR;
-            }
-            else
-            {
-                return bg_value * DataAccessPlugInBase.MMOL_TO_MGDL_FACTOR;
-            }
-        }
+        return getBGValueByType(input_type, output_type, bg_value);
 
     }
     
     
-    
-    
+    /**
+     * Get BG Value Different
+     * 
+     * @param type current type
+     * @param bg_value BG value
+     * @return converted BG value
+     */
     public float getBGValueDifferent(int type, float bg_value)
     {
 
-            if (type==DataAccessPlugInBase.BG_MGDL)
-            {
-                return bg_value * DataAccessPlugInBase.MGDL_TO_MMOL_FACTOR;
-            }
-            else
-            {
-                return bg_value * DataAccessPlugInBase.MMOL_TO_MGDL_FACTOR;
-            }
-            
+        if (type==DataAccessPlugInBase.BG_MGDL)
+        {
+            return bg_value * MGDL_TO_MMOL_FACTOR;
+        }
+        else
+        {
+            return bg_value * MMOL_TO_MGDL_FACTOR;
+        }
     }
 
     
@@ -599,9 +694,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ******                   Database                  *****    
     // ********************************************************
 
-    protected DeviceManager m_manager = null;
     
     
+    /**
+     * Get Device Manager 
+     * 
+     * @return DeviceManager instance
+     */
     public DeviceManager getManager()
     {
         return this.m_manager;
@@ -619,80 +718,118 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ********************************************************
     
     
-    protected DeviceValuesEntry m_entry_type;
-    protected String columns_manual[] = null;
-    protected int column_widths_manual[] = null;
-
-    protected String columns_table[] = null;
-    protected int column_widths_table[] = null;
-    
-    protected String[] entry_statuses = null;
-    protected String[] reading_statuses = null;
-    protected String[] filtering_states = null;
-    
-    
     /**
      * Create About Context for plugin
      */
     public abstract void createPlugInDataRetrievalContext();
     
 
+    /**
+     * Get Columns for Manual Entry
+     * @return
+     */
     public String[] getColumnsManual()
     {
         return this.columns_manual;
     }
 
+    
+    /**
+     * Get Columns Width for Manual Entry
+     * @return
+     */
     public int[] getColumnsWidthManual()
     {
         return this.column_widths_manual;
     }
 
     
+    /**
+     * Get Columns for Retrieval Entry
+     * 
+     * @return
+     */
     public String[] getColumnsTable()
     {
         return this.columns_table;
     }
 
+    
+    /**
+     * Get Columns Width for Retrieval Entry
+     * 
+     * @return
+     */
     public int[] getColumnsWidthTable()
     {
         return this.column_widths_table;
     }
     
     
+    /**
+     * Get Entry Statuses
+     * 
+     * @return
+     */
     public String[] getEntryStatuses()
     {
         return this.entry_statuses;
     }
+
     
+    /**
+     * Get Data Entry Object
+     * 
+     * @return
+     */
     public DeviceValuesEntry getDataEntryObject()
     {
         return m_entry_type;
     }
     
-    
-    protected DeviceDataHandler m_ddh;
 
     /**
      * Load Device Data Handler
      */
     public abstract void loadDeviceDataHandler();
     
+    
+    /**
+     * Get Device Data Handler
+     * 
+     * @return DeviceDataHandler instance
+     */
     public DeviceDataHandler getDeviceDataHandler()
     {
         return this.m_ddh;
     }
     
 
+    /**
+     * Get Reading Statuses
+     * 
+     * @return
+     */
     public String[] getReadingStatuses()
     {
         return reading_statuses;
     }
     
+    
+    /**
+     * Get Filtering States
+     * 
+     * @return
+     */
     public String[] getFilteringStates()
     {
         return this.filtering_states;
     }
     
+    
+    /**
+     * Load Reading Statuses
+     */
     public void loadReadingStatuses()
     {
         reading_statuses = new String[7];
@@ -720,23 +857,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
     
 
+    /**
+     * Get Start Year
+     * 
+     * @see com.atech.utils.ATDataAccessAbstract#getStartYear()
+     */
     public int getStartYear()
     {
-        return 1980;
+        return 1970;
     }
-
-
-
-
-
-
-
-    public static void notImplemented(String source)
-    {
-        System.out.println("Not Implemented: " + source);
-    }
-
-
 
 
 }

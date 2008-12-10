@@ -2,12 +2,14 @@ package ggc.plugin.list;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -37,7 +39,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
+public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapable //JPanel
 {
     private static final long serialVersionUID = -740039184514067065L;
     I18nControlAbstract m_ic = null;
@@ -45,7 +47,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
 
     Font font_big, font_normal, font_normal_b;
     JLabel label;
-    JButton button;
+    JButton button, help_button;
 
     BaseListDialog m_dialog = null;
 
@@ -86,7 +88,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
         Font fnt_18 = new Font("Times New Roman", Font.PLAIN, 14);
 
         label = new JLabel(String.format(m_ic.getMessage("DEVICE_LIST_WEB"), m_ic.getMessage("DEVICE_NAME_BIG")));
-        label.setBounds(0, 35, 520, 40);
+        label.setBounds(0, 35, 500, 40);  // 520
         label.setFont(font_big); 
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, null);
@@ -98,6 +100,18 @@ public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
         label.setFont(fnt_18); 
         this.add(label, null);
 
+        label = new JLabel(m_ic.getMessage("LEGEND_DESC"));
+        label.setBounds(40, 330, 400, 250);
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setFont(fnt_18); 
+        this.add(label, null);
+        
+        help_button = m_da.createHelpButtonByBounds(430, 10, 30, 30, this, DataAccessPlugInBase.FONT_NORMAL);
+        help_button.setText("");
+        this.add(help_button, null);
+        
+        m_da.enableHelp(this);
+        
         return;
     }
 
@@ -111,6 +125,37 @@ public class BaseListMainPanel extends BaseListAbstractPanel //JPanel
     {
     }
 
+    
+    
+    // ****************************************************************
+    // ******              HelpCapable Implementation             *****
+    // ****************************************************************
+    
+    /** 
+     * getComponent - get component to which to attach help context
+     */
+    public Component getComponent()
+    {
+        return this;
+    }
+
+    /** 
+     * getHelpButton - get Help button
+     */
+    public JButton getHelpButton()
+    {
+        return this.help_button;
+    }
+
+    /** 
+     * getHelpId - get id for Help
+     */
+    public String getHelpId()
+    {
+        return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "List";
+    }
+    
+    
 
 }
     

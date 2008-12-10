@@ -183,7 +183,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     private void dialogPreInit()
     {
         setTitle(String.format(m_ic.getMessage("READ_DEVICE_DATA_TITLE"), 
-            m_ic.getMessage("DEVICE_NAME_BIG"), 
             this.m_ddh.getConfiguredDevice().device_device, 
             this.m_ddh.getConfiguredDevice().communication_port));
 

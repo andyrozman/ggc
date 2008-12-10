@@ -28,8 +28,8 @@ import com.atech.utils.TimerControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     OutputUtil  
+ *  Description:  Utility class to write to Output Writer
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -40,7 +40,10 @@ public class OutputUtil extends TimerControlAbstract
 
     private int max_records = 1;
     
-	private static String[] unitsName = { "", "mg/dL", "mmol/L" };
+	/**
+	 * Units Name
+	 */
+	public static String[] unitsName = { "", "mg/dL", "mmol/L" };
 	
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
@@ -116,30 +119,64 @@ public class OutputUtil extends TimerControlAbstract
     }*/
     
     
+    /**
+     * BG: mg/dL
+     */
     public static final int BG_MGDL = 1;
+
+    /**
+     * BG: mmol/L
+     */
     public static final int BG_MMOL = 2;
 
+    /**
+     * Get BG Measurment Type
+     * 
+     * @return type as int of measurement type
+     */
     public int getBGMeasurmentType()
     {
         return this.m_BG_unit;
     }
 
+    /**
+     * Set BG Measurment Type
+     * 
+     * @param type as int of measurement type
+     */
     public void setBGMeasurmentType(int type)
     {
         this.m_BG_unit = type;
     }
 
+    /**
+     * Get BG Measurment Type Name
+     * 
+     * @return type as string
+     */
     public String getBGMeasurmentTypeName()
     {
         return OutputUtil.unitsName[this.m_BG_unit];
     }
     
+    /**
+     * Get BG Measurment Type Name
+     * 
+     * @param type type index 
+     * @return type as string
+     */
     public String getBGTypeName(int type)
     {
         return OutputUtil.unitsName[type];
     }
     
 
+    /**
+     * Get BG Type Name Static
+     * 
+     * @param type measurment type
+     * @return name as string
+     */
     public static String getBGTypeNameStatic(int type)
     {
         return OutputUtil.unitsName[type];
@@ -171,6 +208,12 @@ public class OutputUtil extends TimerControlAbstract
         }
     }
 
+    /**
+     * Get BG Value (converted to current display type)
+     * 
+     * @param bg_value bg values
+     * @return bg_value
+     */
     public float getBGValue(float bg_value)
     {
         switch (this.m_BG_unit)
@@ -184,6 +227,13 @@ public class OutputUtil extends TimerControlAbstract
     }
 
 
+    /**
+     * Get BG Value by type
+     * 
+     * @param type input type
+     * @param bg_value bg value to convert
+     * @return converted value
+     */
     public float getBGValueByType(int type, float bg_value)
     {
         switch (type)
@@ -197,6 +247,14 @@ public class OutputUtil extends TimerControlAbstract
     }
 
 
+    /**
+     * Get BG Value by type
+     * 
+     * @param input_type input type
+     * @param output_type output type
+     * @param bg_value bg value to convert
+     * @return converted value
+     */
     public float getBGValueByType(int input_type, int output_type, float bg_value)
     {
         
@@ -217,6 +275,13 @@ public class OutputUtil extends TimerControlAbstract
     }
 
 
+    /**
+     * Get BG Value Different
+     * 
+     * @param type current type
+     * @param bg_value BG value
+     * @return converted BG value
+     */
     public float getBGValueDifferent(int type, float bg_value)
     {
 
@@ -232,12 +297,22 @@ public class OutputUtil extends TimerControlAbstract
 
 	
 	
+	/**
+	 * Set Output BG Type
+	 * 
+	 * @param bg_type BG type
+	 */
 	public void setOutputBGType(int bg_type)
 	{
 		this.m_BG_unit = bg_type;
 	}
 	
 	
+	/**
+	 * Stop Action
+	 * 
+	 * @see com.atech.utils.TimerControlAbstract#stopAction()
+	 */
 	public void stopAction()
 	{
 	    
@@ -248,17 +323,33 @@ public class OutputUtil extends TimerControlAbstract
 	}
 	
 	
+	/**
+	 * Set Max Memory Records
+	 * 
+	 * @param val number of records
+	 */
 	public void setMaxMemoryRecords(int val)
 	{
 	    this.max_records = val;
 	}
 	
+	/**
+	 * Get Max Memory Records
+	 * 
+	 * @return max records supported by device
+	 */
 	public int getMaxMemoryRecords()
 	{
 	    return this.max_records;
 	}
 	
 	
+    /**
+     * Get BG Unit Name
+     * 
+     * @param unit unit as int 
+     * @return type as string
+     */
 	public static String getBGUnitName(int unit)
 	{
 	    return OutputUtil.unitsName[unit];

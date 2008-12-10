@@ -1,44 +1,12 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: GGCTreeRoot
- *  Purpose:  Used for holding tree information for nutrition and meals
- *
- *  Author:   andyrozman
- */
-
 package ggc.plugin.list;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 
 import com.atech.graphics.components.web.MiniBrowserPanel;
 import com.atech.i18n.I18nControlAbstract;
@@ -115,7 +83,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     /**
      * Init
      */
-    public void init()
+   /* public void init()
     {
     	this.setBounds(0,0,500,500);
         this.setLayout(new java.awt.BorderLayout());
@@ -134,18 +102,18 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         this.editor.select(0,0);
     	
     }
-
+*/
     
     /**
      * Init Browser
      */
     public void initBrowser()
     {
-    	this.setBounds(0,0,640,565);
+    	this.setBounds(0,0,640,560);
         this.setLayout(null);
 
         this.mbp = new MiniBrowserPanel();
-        this.mbp.setBounds(0,0,640,565);
+        this.mbp.setBounds(0,0,640,560);
 
         this.add(this.mbp, null); //, java.awt.BorderLayout.CENTER);
     }
@@ -154,7 +122,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     /**
      * Create Panel
      */
-    public void createPanel()
+    /*public void createPanel()
     {
     	this.setLayout(null);
 
@@ -172,7 +140,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         
         return;
     }
-
+*/
 
     
     /**
@@ -184,7 +152,12 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
     {
         try
         {
-            URL url = new URL("http://localhost:444" + url_src);          
+            
+            String url_x = "http://localhost:" + m_da.getWebListerPort() + url_src;
+            
+            //System.out.println("url_x: " + url_x);
+            /*
+            URL url = new URL("http://localhost: " + m_da.getWebListerPort() + url_src);          
             //this.getClass().getResource("/html/abbott_diabetes_care.html");
             
             System.out.println("url: " + url.toString());
@@ -198,13 +171,14 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
             {
                 sb.append(line);
             }
-
-            this.mbp.setPage("http://localhost:444" + url_src);
+*/
+            //this.mbp.setPage("http://localhost:444" + url_src);
+            this.mbp.setPage(url_x);
             
         }
         catch(Exception ex)
         {
-            System.out.println("PumpListCompanyPanel::error reading. Ex: " + ex);
+            System.out.println("BaseListBrowserPanel Ex: " + ex);
             ex.printStackTrace();
         }
 

@@ -68,13 +68,14 @@ public class BaseListRenderer extends DefaultTreeCellRenderer
     private static Color[] list_status_color = { 
                                                 Color.black,
                                                 Color.green,
+                                                Color.cyan,
                                                 Color.magenta,
                                                 Color.blue,
                                                 Color.orange,
                                                 Color.red
     }; 
     
-    
+   
     
     /**
      * Constructor
