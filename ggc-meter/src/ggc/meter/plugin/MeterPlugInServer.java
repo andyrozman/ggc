@@ -3,6 +3,7 @@ package ggc.meter.plugin;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.DevicePlugInServer;
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
@@ -45,6 +46,8 @@ import com.atech.utils.ATDataAccessAbstract;
 public class MeterPlugInServer extends DevicePlugInServer
 {
     
+    DataAccessMeter m_da_local = DataAccessMeter.getInstance();
+    
     /**
      *  Command: Read Meter Data  
      */
@@ -64,6 +67,14 @@ public class MeterPlugInServer extends DevicePlugInServer
      *  Command: About  
      */
     public static final int COMMAND_ABOUT = 3;
+    
+    
+    
+    /**
+     * Return Object: Selected Device with parameters
+     */
+    public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
+    
     
     /*
     private String commands[] = { 
@@ -95,7 +106,8 @@ public class MeterPlugInServer extends DevicePlugInServer
     public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
         super(cont, selected_lang, da);
-        DataAccessMeter.getInstance().addComponent(cont);
+        //m_da_local = DataAccessMeter.getInstance();
+        m_da_local.addComponent(cont);
     }
     
 
@@ -114,19 +126,19 @@ public class MeterPlugInServer extends DevicePlugInServer
                 {
                     DbDataReaderAbstract reader = (DbDataReaderAbstract)obj_data; 
                     //new MeterInstructionsDialog(reader, this);
-                    new DeviceInstructionsDialog(DataAccessMeter.getInstance(), reader, this);
+                    new DeviceInstructionsDialog(m_da_local, reader, this);
                     return;
                 }
 
             case MeterPlugInServer.COMMAND_METERS_LIST:
                 {
-                    new BaseListDialog((JFrame)parent, DataAccessMeter.getInstance());
+                    new BaseListDialog((JFrame)parent, m_da_local);
                     return;
                 }
             
             case MeterPlugInServer.COMMAND_ABOUT:
                 {
-                    new AboutBaseDialog((JFrame)parent, DataAccessMeter.getInstance());
+                    new AboutBaseDialog((JFrame)parent, m_da_local);
                     return;
                 }
             
@@ -134,7 +146,7 @@ public class MeterPlugInServer extends DevicePlugInServer
                 {
                     //m_da.listComponents();
                     //new SimpleConfigurationDialog(this.m_da);
-                    new DeviceConfigurationDialog((JFrame)parent, DataAccessMeter.getInstance());
+                    new DeviceConfigurationDialog((JFrame)parent, m_da_local);
                     return;
                 }
             
@@ -195,6 +207,31 @@ public class MeterPlugInServer extends DevicePlugInServer
         DataAccessMeter.getInstance().addComponent(this.parent);
         DataAccessMeter.getInstance().setHelpContext(m_da.getHelpContext());
     }
+   
+    
+    /**
+     * Get Return Object
+     * 
+     * @param ret_obj_id
+     * @return
+     */
+    @Override
+    public Object getReturnObject(int ret_obj_id)
+    {
+        if (ret_obj_id == MeterPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
+        {
+            DeviceConfigEntry de = m_da_local.getDeviceConfiguration().getSelectedDeviceInstance();
+            
+            if (de==null)
+                return m_da_local.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+            else
+                return String.format(m_da_local.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port); 
+        }
+        else
+            return null;
+    }
+    
+    
     
 }
 

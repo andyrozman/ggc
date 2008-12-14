@@ -10,26 +10,87 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.plugin.PlugInServer;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MetersPlugIn  
+ *  Description:  Class Meter Plugin Client
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class MetersPlugIn extends PlugInClient
 {
 
     // private PlugInServer m_srv = null;
 
+    /**
+     * Command: Read Meter Data
+     */
     public static final int COMMAND_READ_METER_DATA = 0;
+    
+    /**
+     * Command: Meter List
+     */
     public static final int COMMAND_METERS_LIST = 1;
+    
+    /**
+     * Command: Meter Configuration
+     */
     public static final int COMMAND_CONFIGURATION = 2;
+    
+    /**
+     * Command: Meter About
+     */
     public static final int COMMAND_ABOUT = 3;
 
+    /**
+     * Return Object: Selected Device with parameters
+     */
+    public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param ic
+     */
     public MetersPlugIn(Container parent, I18nControlAbstract ic)
     {
         super(parent, ic);
     }
 
+    
+    /**
+     * Constructor
+     */
     public MetersPlugIn()
     {
         super();
     }
 
+    
+    /**
+     * Init Plugin
+     */
     public void initPlugin()
     {
         this.commands = new String[4];
@@ -38,33 +99,25 @@ public class MetersPlugIn extends PlugInClient
         this.commands[2] = "MN_METERS_CONFIG_DESC";
         this.commands[3] = "MN_METERS_ABOUT_DESC";
         
-
         this.commands_implemented = new boolean[4];
         this.commands_implemented[0] = false;
         this.commands_implemented[1] = true;
         this.commands_implemented[2] = true;
         this.commands_implemented[3] = true;
-        
-        // TODO
     }
 
+    
+    /**
+     * Check If Installed
+     */
     public void checkIfInstalled()
     {
         try
         {
             Class<?> c = Class.forName("ggc.meter.plugin.MeterPlugInServer");
 
-            // PlugInServer obj = (PlugInServer)c.newInstance();
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
-            
-            //System.out.println("Parent MeterPlgin: " + this.parent);
-            
-            /*
-            this.m_server.init(this.parent, DataAccess.getInstance()
-                    .getI18nControlInstance().getSelectedLangauge(), DataAccess
-                    .getInstance(), this);
- */
             
             this.m_server.init(this.parent, 
                 DataAccess.getInstance().getI18nControlInstance().getSelectedLangauge(), 
@@ -72,26 +125,31 @@ public class MetersPlugIn extends PlugInClient
                 this, 
                 DataAccess.getInstance().getDb() );
             
-            // System.out.println("We have an instance !!! " + this.m_srv);
-            
             this.installed = true;
             
         }
         catch (Exception ex)
         {
-            //System.out.println("Ex:" + ex);
             this.installed = false;
         }
 
-        // System.out.println("We have an instance !!! " + this.m_srv);
-
     }
 
+    
+    /**
+     * Get Name 
+     * 
+     * @return name of plugin
+     */
     public String getName()
     {
         return ic.getMessage("METERS_PLUGIN");
     }
 
+    
+    /**
+     * Read Meter Data
+     */
     public void readMeterData()
     {
         //this.featureNotImplemented(commands[MetersPlugIn.COMMAND_READ_METER_DATA]);
@@ -118,18 +176,9 @@ public class MetersPlugIn extends PlugInClient
         
     }
 
-    public void metersList()
-    {
-        this.featureNotImplemented(commands[MetersPlugIn.COMMAND_METERS_LIST]);
-    }
 
-    public void meterConfiguration()
-    {
-        this.featureNotImplemented(commands[MetersPlugIn.COMMAND_CONFIGURATION]);
-    }
-
-    /*
-     * actionPerformed
+    /**
+     * Action Performed
      */
     public void actionPerformed(ActionEvent e)
     {
@@ -142,12 +191,10 @@ public class MetersPlugIn extends PlugInClient
         else if (command.equals("meters_list"))
         {
             this.executeCommand(MetersPlugIn.COMMAND_METERS_LIST);
-            // this.metersList();
         }
         else if (command.equals("meters_config"))
         {
             this.executeCommand(MetersPlugIn.COMMAND_CONFIGURATION);
-            // this.meterConfiguration();
         }
         else if (command.equals("meters_about"))
         {
@@ -161,11 +208,23 @@ public class MetersPlugIn extends PlugInClient
 
     }
 
+    
+    /**
+     * Get When Will Be Implemented
+     * 
+     * @return
+     */
     public String getWhenWillBeImplemented()
     {
         return "0.3";
     }
 
+    
+    /**
+     * Get Short Status
+     * 
+     * @return
+     */
     public String getShortStatus()
     {
         if (this.m_server != null)
@@ -175,13 +234,16 @@ public class MetersPlugIn extends PlugInClient
     }
 
     
-    
+    /**
+     * Set Return Data (for getting data from plugin - async)
+     * 
+     * @param return_data
+     * @param stat_rep_int
+     */
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
     {
         GGCDataWriter gdw = new GGCDataWriter(GGCDataWriter.DATA_METER, return_data, stat_rep_int);
         gdw.start();
     }
 
-    
-    
 }

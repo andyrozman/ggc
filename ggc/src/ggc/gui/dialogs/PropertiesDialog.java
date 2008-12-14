@@ -1,33 +1,4 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: PropertiesDialog
- *
- *  Purpose:  Dialog for setting properties for application.
- *
- *  Author:   andyrozman {andy@atech-software.com}
- *
- */
 package ggc.gui.dialogs;
-
 
 import ggc.core.data.cfg.ConfigCellRenderer;
 import ggc.core.util.DataAccess;
@@ -58,42 +29,69 @@ import javax.swing.event.ListSelectionListener;
 
 import com.atech.help.HelpCapable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PropertiesDialog
+ *  Description:  Dialog for setting properties for application.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class PropertiesDialog extends JDialog implements ListSelectionListener, ActionListener, HelpCapable
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5813992933782713913L;
     private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccess m_da; // = DataAccess.getInstance();
 
-//    private DefaultMutableTreeNode prefNode;
-    //private JTree prefTree;
     private JList list = null;
     private JPanel prefPane;
     JButton help_button;
 
-    public ArrayList<JPanel> panels = null;
-    public Hashtable<String, String> panel_id = null;
+    private ArrayList<JPanel> panels = null;
+    private Hashtable<String, String> panel_id = null;
 
     int current_index = 0;
-
     boolean ok_action = false;
 
 
+    /**
+     * Config types
+     */
     public String config_types[] = { 
-	m_ic.getMessage("GENERAL"),
-	m_ic.getMessage("MEDICAL_DATA"),
-	m_ic.getMessage("COLORS_AND_FONTS"),
-	m_ic.getMessage("RENDERING_QUALITY"),
-//	m_ic.getMessage("METER_CONFIGURATION"),
-	m_ic.getMessage("PRINTING")
+    	m_ic.getMessage("GENERAL"),
+    	m_ic.getMessage("MEDICAL_DATA"),
+    	m_ic.getMessage("COLORS_AND_FONTS"),
+    	m_ic.getMessage("RENDERING_QUALITY"),
+    //	m_ic.getMessage("METER_CONFIGURATION"),
+    	m_ic.getMessage("PRINTING")
     };
 
 
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public PropertiesDialog(DataAccess da)
     {
         super(da.getMainParent(), "", true);
@@ -263,7 +261,9 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     private int PANEL_PRINTING = 4;
 //    private int PANEL_METER = 4;
 
-
+    /**
+     * Create Panels 
+     */
     public void createPanels()
     {
 	// Each node must have a panel, and panel numbers must be as they are added 
@@ -294,6 +294,11 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     }
 
 
+    /**
+     * Select Panel (string)
+     * 
+     * @param s
+     */
     public void selectPanel(String s)
     {
 
@@ -318,6 +323,11 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     JPanel selected_panel = null;
     
     
+    /**
+     * Select Panel (int)
+     * 
+     * @param index
+     */
     public void selectPanel(int index)
     {
     	/*
@@ -369,14 +379,18 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     }
 
     
-
-    public boolean wasOKAction()
+    /**
+     * Was Action Successful
+     * 
+     * @return true if action was successful (dialog closed with OK)
+     */
+    public boolean actionSuccessful()
     {
         return ok_action;
     }
 
 
-    public void save()
+    private void save()
     {
         for (int i=0; i<panels.size(); i++)
         {
@@ -394,7 +408,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 	*/
     }
 
-    public void reset()
+    private void reset()
     {
         DataAccess.getInstance().getSettings().reload();
     }
@@ -420,7 +434,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     // ******              HelpCapable Implementation             *****
     // ****************************************************************
     
-    /* 
+    /** 
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -428,7 +442,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 	return this.getRootPane();
     }
 
-    /* 
+    /** 
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -436,15 +450,13 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 	return this.help_button;
     }
 
-    /* 
+    /** 
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
 	return ((HelpCapable)this.selected_panel).getHelpId();
     }
-    
-    
     
     
 }

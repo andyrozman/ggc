@@ -69,6 +69,30 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
         
         this.setMeterType("Roche", this.getName());
         
+        try
+        {
+            this.open();
+        }
+        catch(Exception ex)
+        {
+        }
+        
+    }
+    
+    
+    /** 
+     * open
+     */
+    public boolean open() throws PlugInBaseException
+    {
+        File f = new File(this.getConnectionPort());
+        
+        if (f.exists())
+            communication_established = true;
+        else
+            communication_established = false;
+
+        return communication_established;
     }
     
     

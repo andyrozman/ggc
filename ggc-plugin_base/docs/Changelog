@@ -2,6 +2,9 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.2.4
+    - fixed List functionality
+
 0.2.3
     - changed GUI classes to use ATSwingUtils for better code visibility
 

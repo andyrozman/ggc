@@ -12,6 +12,8 @@ import ggc.plugin.util.LogEntryType;
 
 import java.lang.reflect.Constructor;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -106,6 +108,20 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 writeLog(LogEntryType.DEBUG, lg);
             
                 this.special_status = this.m_mi.hasSpecialProgressStatus();
+
+                // check if device online (open succesful)
+                if (!this.m_mi.isDeviceCommunicating())
+                {
+                    this.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+                    
+                    JOptionPane.showMessageDialog(dialog, 
+                                 m_da.getI18nControlInstance().getMessage("ERROR_CONTACTING_DEVICE"), 
+                                 m_da.getI18nControlInstance().getMessage("ERROR"), 
+                                 JOptionPane.ERROR_MESSAGE);
+                    
+                    return;
+                }
+                
                 
                 lg = "Start reading of data";
                 log.debug(lg);

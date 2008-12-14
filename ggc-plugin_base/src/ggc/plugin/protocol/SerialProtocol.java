@@ -177,9 +177,9 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
             portIdentifier = CommPortIdentifier.getPortIdentifier(port);
             port_name = port;
         }
-        catch(NoSuchPortException ex)
+        catch (NoSuchPortException ex)
         {
-            System.out.println("SerialProtocol::setPort:: No such port: " + ex);
+            //System.out.println("SerialProtocol::setPort:: No such port: " + ex);
             log.error("No such port exception: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
@@ -335,8 +335,8 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
             
             //this.output_writer.writeLog(LogEntryType.INFO, "AbstractSerialMeter::open() - setting parameters");
             
-            
-            System.out.println("SerialProtocol: open() - parameters");
+            log.debug("SerialProtocol:open()");
+            //System.out.println("SerialProtocol: open() - parameters");
             setConnectionParameters();
         
             portOutputStream = serialPort.getOutputStream();
@@ -414,7 +414,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
         {
             if (ex instanceof NoSuchPortException)
             {
-                System.out.println("SerialProtocol::open(). No such port: " + ex);
+                //System.out.println("SerialProtocol::open(). No such port: " + ex);
                 log.error("No such port: " + ex.getMessage(), ex);
 
                 printAllAvailableSerialPorts();
@@ -423,7 +423,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
             }
             else
             {
-                System.out.println("SerialProtocol::open(). Exception: " + ex);
+                //System.out.println("SerialProtocol::open(). Exception: " + ex);
                 log.error("Exception: " + ex.getMessage(), ex);
                 throw new PlugInBaseException(ex);
             }

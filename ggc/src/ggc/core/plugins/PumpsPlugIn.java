@@ -10,38 +10,100 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.plugin.PlugInServer;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PumpsPlugIn  
+ *  Description:  Class Pump Plugin Client
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class PumpsPlugIn extends PlugInClient
 {
 
     
+    /**
+     * Command: Read Pump Data
+     */
     public static final int COMMAND_READ_PUMP_DATA = 0;
+    
+    /**
+     * Command: Pump List
+     */
     public static final int COMMAND_PUMPS_LIST = 1;
+    
+    /**
+     * Command: Pump Configuration
+     */
     public static final int COMMAND_CONFIGURATION = 2;
+    
+    /**
+     * Command: Pump Profiles
+     */
     public static final int COMMAND_PROFILES = 3;
+    
+    /**
+     * Command: Pump Manual Entry
+     */
     public static final int COMMAND_MANUAL_ENTRY = 4;
+    
+    /**
+     * Command: Pump Additional Data
+     */
     public static final int COMMAND_ADDITIONAL_DATA = 5;
+    
+    /**
+     * Command: Pump About
+     */
     public static final int COMMAND_ABOUT = 6;
     
     
-    /*
-    private String commands[] = { "MN_PUMPS_READ_DESC", 
-                                  "MN_PUMPS_LIST_DESC", 
-                                  "MN_PUMPS_CONFIG_DESC",
-                                  "MN_PUMP_PROFILES_DESC", 
-                                  "MN_PUMPS_MANUAL_ENTRY_DESC",
-                                  "MN_PUMPS_ADDITIONAL_DATA_DESC", };
-*/
+    /**
+     * Return Object: Selected Device with parameters
+     */
+    public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
     
+    
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param ic
+     */
     public PumpsPlugIn(Container parent, I18nControlAbstract ic)
     {
         super(parent, ic);
     }
 
+    /**
+     * Constructor
+     */
     public PumpsPlugIn()
     {
         super();
     }
 
+    /**
+     * Check If Installed
+     */
     public void checkIfInstalled()
     {
         try
@@ -50,9 +112,6 @@ public class PumpsPlugIn extends PlugInClient
 
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
-            
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!! Db: " + DataAccess.getInstance().getDb());
-            
             
             this.m_server.init(this.parent, 
                 DataAccess.getInstance().getI18nControlInstance().getSelectedLangauge(), 
@@ -63,23 +122,33 @@ public class PumpsPlugIn extends PlugInClient
         catch (Exception ex)
         {
             System.out.println("Ex:" + ex);
-
         }
-        
-        
     }
 
+    
+    /**
+     * Get Name 
+     * 
+     * @return name of plugin
+     */
     public String getName()
     {
         return ic.getMessage("PUMPS_PLUGIN");
     }
 
+    
+    /**
+     * Read Pumps Data
+     */
     public void readPumpsData()
     {
         this.featureNotImplemented(commands[0]);
     }
 
     
+    /**
+     * Init Plugin
+     */
     public void initPlugin()
     {
         this.commands = new String[7];
@@ -101,41 +170,18 @@ public class PumpsPlugIn extends PlugInClient
         this.commands_implemented[6] = true;
         
         this.commands_will_be_done = new String[7];
-        this.commands_will_be_done[0] = "0.5";
-        this.commands_will_be_done[1] = "0.4";
+        this.commands_will_be_done[0] = "0.6";
+        this.commands_will_be_done[1] = "0.5";
         this.commands_will_be_done[2] = null;
-        this.commands_will_be_done[3] = "0.5";
+        this.commands_will_be_done[3] = "0.6";
         this.commands_will_be_done[4] = null;
         this.commands_will_be_done[5] = null;
         this.commands_will_be_done[6] = null;
         
     }
 
-    /*
-     * else if ((command.equals("pumps_read")) || (command.equals("pumps_list"))
-     * || (command.equals("pumps_profile")) ||
-     * (command.equals("pumps_manual_entry")) ||
-     * (command.equals("pumps_additional_data")) ||
-     * (command.equals("pumps_config")) ) { featureNotImplemented(command,
-     * "0.5 " + m_ic.getMessage("OR") + " 0.6"); }
-     * 
-     * 
-     * // pumps this.menu_pumps = this.createMenu("MN_PUMPS", null);
-     * this.createAction(menu_pumps, "MN_PUMP_PROFILES",
-     * "MN_PUMP_PROFILES_DESC", "pumps_profile", null);
-     * this.menu_pumps.addSeparator(); this.createAction(menu_pumps,
-     * "MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC",
-     * "pumps_manual_entry", null); this.createAction(menu_pumps,
-     * "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
-     * this.createAction(menu_pumps, "MN_PUMPS_ADDITIONAL_DATA",
-     * "MN_PUMPS_ADDITIONAL_DATA_DESC", "pumps_additional_data", null);
-     * this.menu_pumps.addSeparator(); this.createAction(menu_pumps,
-     * "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
-     * this.menu_pumps.addSeparator(); this.createAction(menu_pumps,
-     * "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
-     */
 
-    /*
+    /**
      * actionPerformed
      */
     public void actionPerformed(ActionEvent e)
@@ -177,11 +223,23 @@ public class PumpsPlugIn extends PlugInClient
 
     }
 
+    
+    /**
+     * Get When Will Be Implemented
+     * 
+     * @return
+     */
     public String getWhenWillBeImplemented()
     {
-        return "0.4";
+        return "0.5";
     }
 
+    
+    /**
+     * Get Short Status
+     * 
+     * @return
+     */
     public String getShortStatus()
     {
         if (this.m_server != null)
@@ -190,6 +248,13 @@ public class PumpsPlugIn extends PlugInClient
             return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
+    
+    /**
+     * Set Return Data (for getting data from plugin - async)
+     * 
+     * @param return_data
+     * @param stat_rep_int
+     */
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
     {
     }

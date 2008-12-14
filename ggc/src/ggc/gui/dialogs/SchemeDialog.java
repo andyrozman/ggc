@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: SchemeDialog.java
- *  Purpose:  Add color scheme.
- *
- *  Author:   andyrozman
- */
-
 package ggc.gui.dialogs;
 
 import ggc.core.util.DataAccess;
@@ -42,6 +15,31 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     SchemeDialog  
+ *  Description:  Dialog for adding Color Schemes
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
 
 // fix this
@@ -64,6 +62,12 @@ public class SchemeDialog extends JDialog implements ActionListener
 
 
 
+    /**
+     * Constructor 
+     * 
+     * @param dialog
+     * @param schemes_names
+     */
     public SchemeDialog(JDialog dialog, String[] schemes_names) 
     {
         super(dialog, "", true);
@@ -168,15 +172,15 @@ public class SchemeDialog extends JDialog implements ActionListener
     	{
     	    if (this.tf_name.getText().trim().equals(""))
     	    {
-    		JOptionPane.showMessageDialog(this, m_ic.getMessage("TYPE_NAME_BEFORE"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
-    		return;
+        		JOptionPane.showMessageDialog(this, m_ic.getMessage("TYPE_NAME_BEFORE"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+        		return;
     	    }
 
-	    if (doesSchemeNameExist())
-	    {
-		JOptionPane.showMessageDialog(this, m_ic.getMessage("SCHEME_NAME_ALREADY_USED"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
-		return;
-	    }
+    	    if (doesSchemeNameExist())
+    	    {
+        		JOptionPane.showMessageDialog(this, m_ic.getMessage("SCHEME_NAME_ALREADY_USED"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+        		return;
+    	    }
 	    
     	    m_actionDone = true;
     	    this.dispose();
@@ -186,24 +190,35 @@ public class SchemeDialog extends JDialog implements ActionListener
 
     }
 
-    public boolean actionSuccesful()
+    /**
+     * Was Action Successful
+     * 
+     * @return true if action was successful (dialog closed with OK)
+     */
+    public boolean actionSuccessful()
     {
         return m_actionDone;
     }
 
-    public String[] getActionResult()
+    
+    /**
+     * Get Action Results
+     * 
+     * @return String array of results
+     */
+    public String[] getActionResults()
     {
-	String[] res = new String[3];
-
-	if (m_actionDone)
-	    res[0] = "1";
-	else
-	    res[0] = "0";
-
-	res[1] = this.tf_name.getText();
-	res[2] = this.cb_template.getSelectedItem().toString();
-
-	return res;
+    	String[] res = new String[3];
+    
+    	if (m_actionDone)
+    	    res[0] = "1";
+    	else
+    	    res[0] = "0";
+    
+    	res[1] = this.tf_name.getText();
+    	res[2] = this.cb_template.getSelectedItem().toString();
+    
+    	return res;
     }
 
 

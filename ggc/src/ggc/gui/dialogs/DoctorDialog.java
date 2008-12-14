@@ -39,11 +39,6 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -58,15 +53,37 @@ import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.DateTimeComponent;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     zzz  
+ *  Description:  zzz
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 // fix this
 
-public class DoctorDialog extends JDialog implements ActionListener, KeyListener
+public class DoctorDialog extends JDialog implements ActionListener
 {
 
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8276157027834968535L;
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
@@ -74,7 +91,7 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
 
     private boolean m_actionDone = false;
 
-    private long last_change = 0;
+    //private long last_change = 0;
 
 //    static AddRowFrame singleton = null;
 
@@ -122,111 +139,34 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
 
 
     
-    private boolean m_add_action = true;
+    //private boolean m_add_action = true;
     private Container m_parent = null;
 
 
     
 
+    /**
+     * Constructor 
+     * 
+     * @param ndV
+     * @param nDate
+     * @param dialog
+     */
     public DoctorDialog(DailyValues ndV, String nDate, JDialog dialog) 
     {
         super(dialog, "", true);
         m_parent = dialog;
-        initParameters(ndV,nDate);
-    }
-
-/*
-    public DailyRowDialog(DailyValues ndV, String nDate, JFrame frame) 
-    {
-        super(frame, "", true);
-        m_parent = frame;
-        initParameters(ndV,nDate);
-    }
-
-
-    public DailyRowDialog(DailyValuesRow ndr, JDialog dialog) 
-    {
-        super(dialog, "", true);
-        m_parent = dialog;
-        initParameters(ndr);
-    }
-
-
-    public DailyRowDialog(DailyValuesRow ndr, JFrame frame) 
-    {
-        super(frame, "", true);
-        m_parent = frame;
-        initParameters(ndr);
-    }
-*/
-
-
-    public void initParameters(DailyValues ndV, String nDate)
-    {
-        //if (add) 
-            setTitle(m_ic.getMessage("ADD_NEW_ROW"));
-            label_title.setText(m_ic.getMessage("ADD_NEW_ROW"));
-
-        //else
-        //    setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
-
-
-            System.out.println(props.getBG_unit());
-
-
-        sDate = nDate;
-        dV = ndV;
-        this.m_add_action = true;
-        //mod = m;
+        //initParameters(ndV,nDate);
         init();
-        setDate();
-        //load();
-
-        this.setVisible(true);
     }
 
 
-    public void initParameters(DailyValuesRow ndr)
-    {
-        //if (add) 
-        //    setTitle(m_ic.getMessage("ADD_NEW_ROW"));
-        //else
-
-        System.out.println(props.getBG_unit());
 
 
-        setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
-        label_title.setText(m_ic.getMessage("EDIT_NEW_ROW"));
-
-        sDate = ndr.getDateAsString();
-        this.m_dailyValuesRow = ndr;
-        
-        this.m_add_action = false;
-        init();
-        load();
-
-        this.setVisible(true);
-    }
 
 
-    public void setDate()
-    {
-        //System.out.println("Date: " + sDate);
-
-        StringTokenizer strtok = new StringTokenizer(sDate, ".");
-
-        String day = strtok.nextToken();
-        String month = strtok.nextToken();
-        String year = strtok.nextToken();
-
-        String dt = year + month + day + "0000";
-
-        this.dtc.setDateTime(Long.parseLong(dt));
-
-    }
-
-
-    public void load()
+    @SuppressWarnings("unused")
+    private void load()
     {
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
 
@@ -336,59 +276,7 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
         addComponent(CommentField = new JTextField(), 110, 348, 220, panel);
 
         this.cob_bg_type.setSelectedIndex(props.getBG_unit()-1);
-        cob_bg_type.addItemListener(new ItemListener(){
-                /**
-                 * Invoked when an item has been selected or deselected by the user.
-                 * The code written for this method performs the operations
-                 * that need to occur when an item is selected (or deselected).
-                 */
-                public void itemStateChanged(ItemEvent e)
-                {
-                    try
-                    {
-                        long now = System.currentTimeMillis();
-                        System.out.println("last=" + last_change + ",now=" + now);
 
-                        if ((now - last_change) < 500) 
-                        {
-                            return;
-                        }
-
-                        last_change = now;
-
-                        int prev = 0;
-
-                        if (cob_bg_type.getSelectedIndex()==1)
-                        {
-                            prev = 1;
-                        }
-                        else
-                            prev = 2;
-
-                        float v = Float.parseFloat(BGField.getText());
-
-                        System.out.println("Item state vhanged: value_old=" + v + ", value_new=" + m_da.getBGValueDifferent(prev, v));
-
-                        if (prev==2)
-                        {
-                            BGField.setText("" + (int)m_da.getBGValueDifferent(prev, v));
-                        }
-                        else
-                            BGField.setText("" + m_da.getBGValueDifferent(prev, v));
-
-                        fixDecimals();
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.println("Error with change of BG Value: " + ex);
-                    }
-                }
-                });
-
-        //cb_food_set.setDisabledIcon(cb_food_set.getIcon());
-        //cb_food_set.setDisabledSelectedIcon(cb_food_set.getSelectedIcon());
-        
-        //cb_food_set.setEnabled(false);
         cb_food_set.setMultiClickThreshhold(500);
 
         //System.out.println(cb_food_set.get
@@ -448,7 +336,7 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
     }
 
 
-    public void addLabel(String text, int posY, JPanel parent)
+    private void addLabel(String text, int posY, JPanel parent)
     {
         JLabel label = new JLabel(text);
         label.setBounds(30, posY, 100, 25);
@@ -458,7 +346,7 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
         
     }
 
-    public void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
+    private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
     {
         //JLabel label = new JLabel(text);
         comp.setBounds(posX, posY, width, 23);
@@ -577,184 +465,20 @@ public class DoctorDialog extends JDialog implements ActionListener, KeyListener
         }
         else if (action.equals("ok"))
         {
-            // to-do
-            if (this.m_add_action) 
-            {
-                // add
-
-
-                if (debug)
-                    System.out.println("dV: " + dV);
-
-
-                this.m_dailyValuesRow = new DailyValuesRow();
-
-                this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime()); 
-                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, checkDecimalFields(BGField.getText()));
-                this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText()));
-                this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
-                this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
-                this.m_dailyValuesRow.setActivity(ActField.getText());
-                this.m_dailyValuesRow.setUrine(UrineField.getText());
-                this.m_dailyValuesRow.setComment(CommentField.getText());
-                //this.m_dailyValuesRow.setMealIdsList(null);
-
-                dV.setNewRow(this.m_dailyValuesRow);
-                /*
-                dV.setNewRow(new DailyValuesRow(this.dtc.getDateTime(),
-                        checkDecimalFields(BGField.getText()), 
-                        checkDecimalFields(Ins1Field.getText()), 
-                        checkDecimalFields(Ins2Field.getText()), 
-                        checkDecimalFields(BUField.getText()), 
-                        ActField.getText(),
-                        UrineField.getText(),
-                        CommentField.getText(), 
-                        null));  // List of ids
-                //mod.fireTableChanged(null);
-                //clearFields();
-                */
-                this.m_actionDone = true;
-                this.dispose();
-            }
-            else
-            {
-
-                // edit
-                this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime()); 
-                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, checkDecimalFields(BGField.getText()));
-                this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText()));
-                this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
-                this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
-                this.m_dailyValuesRow.setActivity(ActField.getText());
-                this.m_dailyValuesRow.setUrine(UrineField.getText());
-                this.m_dailyValuesRow.setComment(CommentField.getText());
-                //this.m_dailyValuesRow.setMealIdsList(null);
-                
-                //mod.fireTableChanged(null);
-                //clearFields();
-                this.m_actionDone = true;
-                this.dispose();
-            }
         }
 
     }
 
-    public boolean actionSuccesful()
+    /**
+     * Was Action Successful
+     * 
+     * @return true if action was succesful (dialog closed with OK)
+     */
+    public boolean actionSuccessful()
     {
         return m_actionDone;
     }
 
 
-    public void keyTyped(KeyEvent e) {}
-    public void keyPressed(KeyEvent e) {}
 
-    /**
-     * Invoked when a key has been released.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key released event.
-     */
-    public void keyReleased(KeyEvent e)
-    {
-        int change = 0;
-
-        if ((e.getKeyCode() == KeyEvent.VK_LEFT)) // || (e.getKeyCode() == KeyEvent.VK_TAB)
-            change = -1;
-        else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) || (e.getKeyCode() == KeyEvent.VK_TAB))
-            change = 1;
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN)
-            change = 2;
-        else if (e.getKeyCode() == KeyEvent.VK_UP)
-            change = -2;
-
-
-        if (change==0)
-            return;
-
-        JComponent cmp = (JComponent)e.getComponent();
-	
-        int search = 0;
-
-        for (int i=0; i<9; i++)
-        {
-            if (components[i].equals(cmp))
-            {
-                search = i;
-                break;
-            }
-        }
-
-        int newres = search+change;
-        
-        if (newres<0)
-        {
-            newres = 8+newres;
-        }
-        else if (newres>8)
-        {
-            newres = newres-8;
-        }
-
-        components[newres].requestFocus();
-
-    }
-
-    private void fixDecimals()
-    {
-        if (this.BGField.getText().trim().equals(""))
-            return;
-
-        String s = this.BGField.getText().trim().replace(",", ".");
-
-        if (this.cob_bg_type.getSelectedIndex()==1)
-        {
-            try
-            {
-
-                System.out.println(s);
-
-                float f = Float.parseFloat(s);
-                String ss = DataAccess.MmolDecimalFormat.format(f);
-                ss = ss.replace(",", ".");
-                this.BGField.setText(ss);
-            }
-            catch(Exception ex)
-            {
-                System.out.println("fixDecimals: " + ex);
-            }
-        }
-        //MmolDecimalFormat
-    }
-
-
-    public String checkDecimalFields(String field)
-    {
-        field = field.replace(',', '.');
-        return field;
-    }
-
-
-/*
-    private void close() 
-    {
-        this.dispose();
-        singleton = null;
-    }
-*/
- /*   private void clearFields() 
-    {
-        TimeField.setText("");
-        BGField.setText("");
-        Ins1Field.setText("");
-        Ins2Field.setText("");
-        BUField.setText("");
-        ActField.setText("");
-        CommentField.setText("");
-    }*/
-
-    /*
-    private class CloseListener extends WindowAdapter {
-        public void windowClosing(WindowEvent e) {
-            close();
-        }
-    }*/
 }

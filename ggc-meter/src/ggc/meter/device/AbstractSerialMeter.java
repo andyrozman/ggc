@@ -47,6 +47,8 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     protected OutputWriter output_writer;
     AbstractDeviceCompany device_company = null;
     protected int m_status = 0;
+    protected boolean communication_established = false;
+    
     
     /**
      * Constructor
@@ -193,10 +195,20 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
      */
     public boolean open() throws PlugInBaseException
     {
-        return super.open();
-
+        return (communication_established = super.open());
     }
 
+    
+    /**
+     * Is Device Communicating
+     * 
+     * @return
+     */
+    public boolean isDeviceCommunicating()
+    {
+        return this.communication_established;
+    }
+    
     /**
      * Will be called, when the import is ended and freeing resources.
      */

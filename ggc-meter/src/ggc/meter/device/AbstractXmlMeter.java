@@ -49,6 +49,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     AbstractDeviceCompany meter_company = null;
     
     String connection_port = "";
+    protected boolean communication_established = false;
 
     /**
      * Constructor
@@ -416,6 +417,15 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
         return this.meter_company;
     }
 
-
+    /**
+     * Is Device Communicating
+     * 
+     * @return
+     */
+    public boolean isDeviceCommunicating()
+    {
+        return this.communication_established;
+    }
+    
 
 }

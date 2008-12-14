@@ -1,9 +1,7 @@
 package ggc.gui.dialogs.pen;
 
 import ggc.core.util.DataAccess;
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.util.I18nControl;
+import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -11,7 +9,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -72,18 +69,22 @@ public class PenDataAdditionalWizardOne extends JDialog implements ActionListene
     JPanel main_panel = null;
     private Container m_parent = null;
     
-    private Hashtable<String,PumpValuesEntryExt> old_data = null;
+//    private Hashtable<String,PumpValuesEntryExt> old_data = null;
     
-    PumpAdditionalDataType add_data;
+//    PumpAdditionalDataType add_data;
     JComboBox cb_type;
 
     
     protected boolean was_action = false;
-    protected PumpValuesEntryExt[] pump_objects_ext;
+//    protected PumpValuesEntryExt[] pump_objects_ext;
+    
+    public PenDataAdditionalWizardOne()
+    {
+        
+    }
     
     
-    
-    
+    /*
     public PenDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent, PumpAdditionalDataType pump_data)
     {
         super(parent, "", true);
@@ -93,7 +94,7 @@ public class PenDataAdditionalWizardOne extends JDialog implements ActionListene
         m_parent = parent;
         init();
     }
-
+*/
 
 
 
@@ -129,14 +130,14 @@ public class PenDataAdditionalWizardOne extends JDialog implements ActionListene
         label.setFont(f_bold);
         panel.add(label);
         
-        
-        
+        // TODO 
+        /* 
         
         cb_type = new JComboBox(add_data.createItems(this.old_data));
         cb_type.setBounds(30, 135, 240, 25);
         panel.add(cb_type);
         
-        
+        */
 
         
         String button_command[] = { 
@@ -346,12 +347,12 @@ public class PenDataAdditionalWizardOne extends JDialog implements ActionListene
     }
 
     
-    
+    /*
     public PumpValuesEntryExt[] getObjects()
     {
         return pump_objects_ext;
         
-    }
+    }*/
     
     
     private void cmdOk()
@@ -361,13 +362,13 @@ public class PenDataAdditionalWizardOne extends JDialog implements ActionListene
 
         this.dispose();
         
-        PenDataAdditionalWizardTwo padw2 = new PenDataAdditionalWizardTwo(this, (String)this.cb_type.getSelectedItem(), this.add_data); 
+        PenDataAdditionalWizardTwo padw2 = new PenDataAdditionalWizardTwo(this); //, (String)this.cb_type.getSelectedItem()); //, this.add_data); 
         padw2.setVisible(true);
         
         if (padw2.wasAction())
         {
-            this.was_action = true;
-            this.pump_objects_ext = padw2.getObjects();
+            //this.was_action = true;
+            //this.pump_objects_ext = padw2.getObjects();
         }
         
         

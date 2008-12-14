@@ -166,7 +166,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
 
             DailyRowDialog aRF = new DailyRowDialog(dv, m_da.getCurrentDateString(), getFrame());
 
-            if (aRF.actionSuccesful()) 
+            if (aRF.actionSuccessful()) 
             {
                 m_da.getDb().saveDayStats(dv);
                 reloadTable();
@@ -186,7 +186,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
 
             DailyRowDialog aRF = new DailyRowDialog(dv.getRowAt(srow), getFrame());
 
-            if (aRF.actionSuccesful()) 
+            if (aRF.actionSuccessful()) 
             {
                 m_da.getDb().saveDayStats(dv);
                 reloadTable();

@@ -196,8 +196,9 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         }
         catch(Exception ex)
         {
-            System.out.println("OneTouchMeter -> Error adding listener: " + ex);
-            ex.printStackTrace();
+            //log.error("")
+            //System.out.println("OneTouchMeter: Error connecting !\nException: " + ex);
+            //ex.printStackTrace();
         }
         
         if (this.getDeviceId()==OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA)
@@ -312,10 +313,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         }
         
         //this.output_writer.setStatus(100);
-        
         System.out.println("Reading finsihed");
-
-        
         
     }
 
@@ -481,7 +479,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     {
         try
         {
-            System.out.println("BG: " + entry);
+            //System.out.println("BG: " + entry);
             /*
             P "dow","mm/dd/yy","hh:mm:30 ","xxxxx ", n cksm<CR><LF>
             (4) (5) (6) (7)

@@ -202,17 +202,13 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
     
     
-    /**
-     * getDeviceConfiguration - return device configuration
-     * @return
-     */
-    public ArrayList<String> getDeviceConfiguration()
-    {
-    	return new ArrayList<String>();
-    }
     
     
 
+    public boolean isDeviceCommunicating()
+    {
+        return true;
+    }
 
 
 

@@ -390,6 +390,13 @@ public class GenericPump extends AbstractPump //implements PumpInterface
         
     }
 
+
+    public boolean isDeviceCommunicating()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
     
     
 

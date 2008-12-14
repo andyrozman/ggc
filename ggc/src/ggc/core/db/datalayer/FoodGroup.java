@@ -67,16 +67,24 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 
     // getI18nControlInstance();
 
-    /**
-     * public FoodGroup() { this.setId(0); this.setDescription(""); }
-     */
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public FoodGroup(I18nControlAbstract ic)
     {
         this.empty = true;
         this.ic = ic;
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param type
+     */
     public FoodGroup(int type)
     {
         ic = DataAccess.getInstance().getI18nControlInstance();
@@ -95,12 +103,22 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public FoodGroup(FoodGroupH ch)
     {
         this.group_db1 = ch;
         group_type = 1;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public FoodGroup(FoodUserGroupH ch)
     {
         this.group_db2 = ch;

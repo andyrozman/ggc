@@ -1,13 +1,7 @@
 package ggc.gui.dialogs.pen;
 
-import ggc.pump.data.defs.PumpAlarms;
-import ggc.pump.data.defs.PumpBasalSubType;
-import ggc.pump.data.defs.PumpBolusType;
-import ggc.pump.data.defs.PumpErrors;
-import ggc.pump.data.defs.PumpEvents;
-import ggc.pump.data.defs.PumpReport;
-import ggc.pump.gui.manual.PumpDataTypeComponent;
-import ggc.pump.util.I18nControl;
+
+import ggc.core.util.I18nControl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,7 +48,6 @@ import com.atech.graphics.components.JDecimalTextField;
 public class PenDataTypeComponent extends JPanel implements ActionListener
 {
     
-    private static final long serialVersionUID = -4449947661003378689L;
 
     public static final int TYPE_NONE = 0;
     public static final int TYPE_BASAL = 1;
@@ -79,14 +72,14 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
     int type = 0;
     int height = 0;
     int width = 400;
-    
+/*    
     PumpReport m_p_report = new PumpReport();
     PumpEvents m_p_event = new PumpEvents();
     PumpAlarms m_p_alarm = new PumpAlarms();
     PumpErrors m_p_error = new PumpErrors();
     PumpBolusType m_p_bolus = new PumpBolusType();
     PumpBasalSubType m_p_basal = new PumpBasalSubType();
-    
+  */  
     DailyRowDialogPen m_parent = null;
     
     I18nControl ic = I18nControl.getInstance();
@@ -168,6 +161,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
     
     public void setType(int type)
     {
+        /*
         if (this.type==type)
             return;
         
@@ -211,7 +205,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
                     this.setEmpty();
                 }  break;
         }
-        
+        */
     }
 
     
@@ -279,7 +273,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         this.label_2.setText(ic.getMessage("COMMENT") + ":");
         
         this.setHeight(85);
-
+/*
         if (this.type == PumpDataTypeComponent.TYPE_EVENT)
         {
             this.label_1.setText(ic.getMessage("EVENT_TYPE")+ ":");
@@ -299,7 +293,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         {
             this.combo_1.removeAllItems();
         }
-        
+  */      
     }
 
     
@@ -324,7 +318,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
 
         
         this.setHeight(85);
-        
+/*        
         if (this.type == PumpDataTypeComponent.TYPE_PEN_INJECTION_BASAL)
         {
             this.label_1.setText(ic.getMessage("BASAL_INSULIN") + ":");
@@ -333,7 +327,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         {
             this.label_1.setText(ic.getMessage("BOLUS_INSULIN") + ":");
         }
-        
+  */      
     }
     
     
@@ -348,7 +342,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         
         this.combo_1.setBounds(150, 20, 180, 25);
         this.combo_1.setVisible(true);
-        addAllItems(this.combo_1, m_p_report.getDescriptions());
+//        addAllItems(this.combo_1, m_p_report.getDescriptions());
 
         this.label_2.setText(ic.getMessage("REPORT_TEXT") + ":");
         this.label_2.setBounds(0, 55, 150, 25);
@@ -387,7 +381,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setBounds(150, 20, 180, 25);
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("basal");
-        addAllItems(this.combo_1, this.m_p_basal.getDescriptions());
+//        addAllItems(this.combo_1, this.m_p_basal.getDescriptions());
         
         this.label_2.setBounds(0, 55, 150, 25);
         this.label_2.setVisible(true);
@@ -431,7 +425,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         this.label_2.setVisible(true);
         this.text_1.setVisible(true);
         
-        
+/*        
         switch(this.sub_type)
         {
             case PumpBasalSubType.PUMP_BASAL_VALUE:
@@ -539,7 +533,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
                 
             } break;
         }
-
+*/
         //this.m_parent.realignComponents();
         
     }
@@ -559,7 +553,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setBounds(150, 20, 180, 25);
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("bolus");
-        addAllItems(this.combo_1, this.m_p_bolus.getDescriptions());
+//        addAllItems(this.combo_1, this.m_p_bolus.getDescriptions());
         
         this.label_2.setBounds(0, 55, 150, 25);
         this.label_2.setVisible(true);
@@ -588,7 +582,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         this.label_3.setVisible(false);
         this.label_4.setVisible(false);
         
-        
+        /*
         switch(this.sub_type)
         {
             case PumpBolusType.PUMP_BOLUS_STANDARD:
@@ -635,10 +629,6 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         
             case PumpBolusType.PUMP_BOLUS_NONE:
             {
-/*                this.num_tf_1_d2.setVisible(false);
-                this.num_tf_2_d2.setVisible(false);
-                this.label_3.setVisible(false);
-                this.label_4.setVisible(false); */
                 
                 this.label_2.setBounds(0, 55, 150, 25);
                 this.text_1.setBounds(150, 55, 180, 25);
@@ -646,7 +636,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
             } break;
             
         }
-        
+        */
         //this.m_parent.realignComponents();
         
     }

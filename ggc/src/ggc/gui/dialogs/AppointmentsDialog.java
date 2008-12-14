@@ -51,6 +51,30 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     zzz  
+ *  Description:  zzz
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
 // fix this
 
@@ -74,20 +98,29 @@ public class AppointmentsDialog extends JDialog implements ActionListener
     GregorianCalendar gc = null;
     JSpinner sl_year = null, sl_month = null;
 
+    /**
+     * Filter Types
+     */
     public String[] filter_types = 
     {
         m_ic.getMessage("FILTER_VISIBLE"),
         m_ic.getMessage("FILTER_ALL")
     };
 
-    public ArrayList<DoctorH> list_full;
-    public ArrayList<DoctorH> active_list = new ArrayList<DoctorH>();
+    @SuppressWarnings("unused")
+    private ArrayList<DoctorH> list_full;
+    private ArrayList<DoctorH> active_list = new ArrayList<DoctorH>();
     
     
     
     Font font_normal, font_normal_bold;
 
 
+    /**
+     * Constructor
+     * 
+     * @param frame
+     */
     public AppointmentsDialog(JFrame frame) 
     {
         super(frame, "", true);
@@ -218,10 +251,8 @@ public class AppointmentsDialog extends JDialog implements ActionListener
     }
 
 
-    public void populateList()
+    private void populateList()
     {
-	
-	
     }
     
     

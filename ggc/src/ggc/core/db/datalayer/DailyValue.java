@@ -70,6 +70,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
 
     /** 
      * getName
+     * @return 
      */
     public String getName()
     {

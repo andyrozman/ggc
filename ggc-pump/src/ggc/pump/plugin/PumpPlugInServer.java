@@ -54,6 +54,13 @@ public class PumpPlugInServer extends PlugInServer
     public static final int COMMAND_ADDITIONAL_DATA = 5;
     public static final int COMMAND_ABOUT = 6;
     
+    
+    /**
+     * Return Object: Selected Device with parameters
+     */
+    public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
+    
+    
     private String commands[] = { 
                                   "MN_PUMPS_READ_DESC", 
                                   "MN_PUMPS_LIST_DESC", 
@@ -178,6 +185,17 @@ public class PumpPlugInServer extends PlugInServer
     }
     
     
+    /**
+     * Get Return Object
+     * 
+     * @param ret_obj_id
+     * @return
+     */
+    @Override
+    public Object getReturnObject(int ret_obj_id)
+    {
+        return null;
+    }
     
     
 }

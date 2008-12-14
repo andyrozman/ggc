@@ -3,6 +3,11 @@ package ggc.plugin.protocol;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,8 +43,16 @@ public abstract class DatabaseProtocol
 {
 
     protected DataAccessPlugInBase m_da = null; 
-
-
+    protected String jdbc_url = null;
+    protected String db_class_name = null;
+    Connection m_connection = null;
+    
+    /**
+     * Db Class: MDB Tools for Access databases
+     */
+    public static final String DB_CLASS_MS_ACCESS_MDB_TOOLS = "mdbtools.jdbc.Driver";
+    
+    
     /**
      * Constructor
      */
@@ -69,4 +82,84 @@ public abstract class DatabaseProtocol
     }
 
 
+    /**
+     * Set JDBC Connection 
+     * @param db_class_name class name for database
+     * @param _jdbc_url full jdbc url, if user and password used, they must be part of url
+     */
+    public void setJDBCConnection(String db_class_name, String _jdbc_url)
+    {
+        this.db_class_name = db_class_name;
+        this.jdbc_url = _jdbc_url;
+    }
+
+    
+    private void createConnection()
+    {
+        try
+        {
+            Class.forName(this.db_class_name);
+        
+            this.m_connection = DriverManager.getConnection(this.jdbc_url);
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error creating connection. Ex: " + ex);
+        }
+        
+        
+    }
+    
+    
+    /**
+     * Get Connection - returns opened connection, if none exists, new is created.
+     * 
+     * @return
+     */
+    public Connection getConnection()
+    {
+        try
+        {
+            if ((m_connection==null) || 
+                (m_connection.isClosed()))
+                createConnection();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error on getConnection. Ex: " + ex);
+        }
+        
+        return this.m_connection;
+    }
+    
+    
+    /**
+     * Execute Query, return ResultSet.
+     * 
+     * @param sql
+     * @return
+     * @throws Exception
+     */
+    public ResultSet executeQuery(String sql) throws Exception
+    {
+        Statement st = getConnection().createStatement();
+        return st.executeQuery(sql);
+    }
+    
+    /**
+     * Execute Update, returns row count, for statments returning something or 0 for thoose 
+     *      that return nothing.
+     *      
+     * @param sql
+     * @return
+     * @throws Exception
+     */
+    public int executeUpdate(String sql) throws Exception
+    {
+        Statement st = getConnection().createStatement();
+        return st.executeUpdate(sql);
+    }
+    
+    
+    
 }

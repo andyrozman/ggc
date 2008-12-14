@@ -23,11 +23,10 @@ user-friendlier. <br><br>
 	<li>Store your data in:</li>
 	<ul>
 		<li>With help of Hibernate (see <a href="http://www.hibernate.org/">http://www.hibernate.org/</a>) we now support wide 
-                wariety of databases. 
+                variety of databases. 
         <li>We have one "internal" database, which can be used out-of-the-box (we use <a href="http://www.h2database.com/">H2</a> database for that)</li>
 		<li>Backup data and restore (full only)</li>
 		<li>Database versioning</li>
-
 	</ul>
 	<li>Graphs:</li>
 	<ul>
@@ -35,54 +34,69 @@ user-friendlier. <br><br>
 		<li>Course (shows you your values over a period of time)</li>
 		<li>Spread (shows data over a period of time, but plots the days over each other, so you can find accumulations)</li>
 		<li>Frequency (shows kind of a histogram for your BG values)</li>
+		<li>We are now using JFreeChart library for graphs</li>
 	</ul>
 	<li>Nutrition database:</li>
 	<ul>
-		<li>We have now tree nutritional/food databases. </li>
+		<li>We have now tree nutrition/food databases. </li>
 		<li>USDA database. This is static database of nutrition data of US department of Agriculture.</li>
-		<li>User database. To add foods taht are not USDA</li>
+		<li>User database. To add foods that are not USDA</li>
 		<li>Meals database. You can group USDA/User/Meal entries into meals</li>
 	</ul>
 	<li>Print support:</li>
 	<ul>
 		<li>We can now create PDFs with Simple and Extended reports. From within Acrobat Reader, we can
                 then print-out our data.</li>
-		<li>Simple report. Gathers together data for BGs, Insulins and CHs and displayes them.</li>
-		<li>Extended report. It shows every entry as it was writen, with fully deatailed data.</li>
+		<li>Simple report. Gathers together data for BGs, Insulins and CHs and displays them.</li>
+		<li>Extended report. It shows every entry as it was written, with fully detailed data.</li>
 	</ul>
 	<li>Approximate your current HbA1c</li>
 	<li>Customize whole application</li>
-        <li>Two sub-projects were created: Meter Tool and Pump Tool (see page Sub-Projects)</li>
-        <li>Help framework integrated (no help pages are yet written)</li>
+        <li>Two sub-projects were created: Meter Tool, Pump Tool and CGMS Tool (see page Sub-Projects)</li>
+        <li>Help framework integrated (Some help pages written)</li>
     <li>USB Image of GGC</li>
     <li>Application update: Client side is working, we need to implement server side</li>
 	<li>Tools integration:</li>
 	<ul>
-		<li>Meter Tool integration (v0.2) - See projects page for details.</li>
+		<li>Meter Tool integration (v1.0.3) - See projects page for details.</li>
 	</ul>
 	
 </ul>
+
+<b>Versioning:</b>
+Our application is still in 0.x version, but that will change, when some of major features are 
+implemented, we will go to version 1.0. This will probably happen with version 0.5, if all items
+marked with [1.0] will be finished, then first release, with them, will be 1.0. 
+
+
 <b>Planned Features:</b>
 <ul>
 
 <li><i>Version (0.4) - (end of 2008):</i></li>
 <ul>
-	<li>Rewrite "graphs" with new library (support for printing and better display)</li>
     <li>Bolus Helper (help with bolus dosage)</li>
 	<li>Add ratios for Bolus Helper (good for pump users)</li>
-    <li>Update system - Server side</li>
     <li>Write help pages for English</li>
-    <li>Extend nutrition databases</li>
-    <li>Add Remote Food database</li>
-    <li>Db Tool</li>
-    <li>Support for multiple persons</li>
     <li>Printing of foods and CH usage</li>
-    <li>Backup/Restore extension</li>
+</ul>
+
+
+<li><i>Version (0.5) [June 2009]:</i></li>
+<ul>
+	<li>New Graph Framework</li>
+	<li>Extend Bolus Helper functionality</li>
+    <li>Update system - Server side [1.0]</li>
+    <li>Write help pages for English II. (full help) [1.0] </li>
+    <li>Extend nutrition databases functionality</li>
+    <li>Add Remote Food database</li>
+    <li>Db Tool [1.0]</li>
+    <li>Support for multiple persons</li>
     <li>Integration of Pump Tool</li>
 </ul>
 
 
-<li><i>Version (0.5):</i></li>
+
+<li><i>Version (0.6) [December 2009]:</i></li>
 <ul>
 	<li>Restore data (partitial/update)</li>
 	<li>Appointment and Doctors handling</li>

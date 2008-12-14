@@ -359,9 +359,9 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         {
             SchemeDialog sd = new SchemeDialog(this.parent, this.av_schemes_names);
 
-            if (sd.actionSuccesful())
+            if (sd.actionSuccessful())
             {
-                String[] str = sd.getActionResult();
+                String[] str = sd.getActionResults();
 
                 ColorSchemeH cs = this.color_schemes.get(str[2]);
 
@@ -411,9 +411,9 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
                 SchemeEDDialog sed = new SchemeEDDialog(this.parent, av_schemes_names, (String) this.cb_scheme
                         .getSelectedItem());
 
-                if (sed.actionSuccesful())
+                if (sed.actionSuccessful())
                 {
-                    String[] res = sed.getActionResult();
+                    String[] res = sed.getActionResults();
 
                     System.out.println("Action: " + res[0] + " " + res[1]);
 

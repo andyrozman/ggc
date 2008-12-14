@@ -1,30 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: HbA1cInfoPanel.java Purpose: Contains your current HbA1c, based on
- * the BG values entered.
- * 
- * Author: schultd
- */
-
 package ggc.gui.panels.info;
 
 import ggc.core.data.HbA1cValues;
@@ -42,12 +15,35 @@ import java.util.GregorianCalendar;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     HbA1cInfoPanel  
+ *  Description:  Panel for HbA1c info
+ *
+ *  Author: schultd
+ */
+
+
 public class HbA1cInfoPanel extends AbstractInfoPanel
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8750479135671337356L;
     private JLabel lblHbA1c;
     private JLabel lblVal;
@@ -56,6 +52,9 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     private JLabel lblReadingsPerDay;
     private DataAccess m_da = DataAccess.getInstance();
 
+    /**
+     * Constructor
+     */
     public HbA1cInfoPanel()
     {
         super(I18nControl.getInstance().getMessage("HBA1C"));
@@ -84,6 +83,9 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
         add(lblPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Refresh Information 
+     */
     @Override
     public void refreshInfo()
     {
@@ -93,11 +95,6 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
 
         if ((db != null) && (db.isDbStarted()))
             hbVal = m_da.getHbA1c(new GregorianCalendar());
-
-        // if (DataBaseHandler.getInstance().isConnected())
-        // hbVal = DataAccess.getInstance().getHbA1c(new GregorianCalendar());
-        // hbVal = DataBaseHandler.getInstance().getHbA1c(new
-        // Date(System.currentTimeMillis()));
 
         DecimalFormat df = new DecimalFormat("#0.00");
 

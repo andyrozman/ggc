@@ -523,7 +523,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         
                 DailyRowDialog aRF = new DailyRowDialog(dailyStats.dayData, sf.format(gc_current.getTime()), getMyParent());
     
-                if (aRF.actionSuccesful()) 
+                if (aRF.actionSuccessful()) 
                 {
                     System.out.println("m_db:" + m_db);
                     System.out.println("dailyStats.dayData:" + dailyStats.dayData);
@@ -547,7 +547,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
         	DailyRowDialog aRF = new DailyRowDialog(dvr, getMyParent());
 
-        	if (aRF.actionSuccesful()) 
+        	if (aRF.actionSuccessful()) 
         	{
         	    m_db.saveDayStats(dailyStats.dayData);
         	    dailyStats.model.fireTableChanged(null);
@@ -750,12 +750,11 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     }
 
 
-    /* 
+    /** 
      * actionPerformed
      */
     public void actionPerformed(ActionEvent e)
     {
-	// TODO Auto-generated method stub
 	
 	String action = e.getActionCommand();
 	

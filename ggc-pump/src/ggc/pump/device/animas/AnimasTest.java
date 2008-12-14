@@ -163,5 +163,12 @@ public class AnimasTest extends EZManagerDb
         // TODO Auto-generated method stub
         return false;
     }
+
+
+    public boolean isDeviceCommunicating()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
     
 }

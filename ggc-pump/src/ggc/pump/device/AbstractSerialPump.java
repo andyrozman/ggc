@@ -50,6 +50,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     protected OutputWriter output_writer;
     
     AbstractDeviceCompany pump_company = null;
+    boolean communication_established = false;
     
 
     public AbstractSerialPump()
@@ -125,6 +126,18 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
         //this.output_writer.
     	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
     }
+    
+    
+    /**
+     * Is Device Communicating
+     * 
+     * @return
+     */
+    public boolean isDeviceCommunicating()
+    {
+        return this.communication_established;
+    }
+    
     
     /*
     public String getName()
@@ -208,9 +221,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     //@Override
     public boolean open() throws PlugInBaseException
     {
-        return super.open();
-	//return false;
-        //return true;
+        return (communication_established = super.open());
     }
 
 

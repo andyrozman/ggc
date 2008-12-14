@@ -343,5 +343,17 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
         return 0;
     }
 
+
+    /**
+     * Is Device Communicating
+     * 
+     * @return
+     */
+    public boolean isDeviceCommunicating()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
     
 }

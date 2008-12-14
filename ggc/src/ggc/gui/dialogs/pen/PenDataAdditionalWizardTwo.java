@@ -1,9 +1,7 @@
 package ggc.gui.dialogs.pen;
 
 import ggc.core.util.DataAccess;
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.util.I18nControl;
+import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -77,29 +75,29 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
     JDecimalTextField num_1, num_2;
     JCheckBox cb_1;
 
-    PumpAdditionalDataType m_pump_add; // = new PumpAdditionalDataType();
+    //PumpAdditionalDataType m_pump_add; // = new PumpAdditionalDataType();
 
     boolean was_action = false;
-    PumpValuesEntryExt pump_objects_ext[];
+    //PumpValuesEntryExt pump_objects_ext[];
     
-    PumpValuesEntryExt data_object;
+    //PumpValuesEntryExt data_object;
 
     // new data
-    public PenDataAdditionalWizardTwo(PenDataAdditionalWizardOne wiz_one, String type, PumpAdditionalDataType pump_add)
+    public PenDataAdditionalWizardTwo(PenDataAdditionalWizardOne wiz_one) //, String type, PumpAdditionalDataType pump_add)
     {
         super(wiz_one, "", true);
 
-        this.m_pump_add = pump_add;
+//        this.m_pump_add = pump_add;
 
         // this.old_data = data;
         m_parent = wiz_one;
-        this.m_type = m_pump_add.getTypeFromDescription(type);
+//        this.m_type = m_pump_add.getTypeFromDescription(type);
 
         ATSwingUtils.initLibrary();
 
         init();
     }
-
+/*
     public PenDataAdditionalWizardTwo(JDialog dialog, PumpValuesEntryExt pc)
     {
         super(dialog, "", true);
@@ -114,14 +112,15 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
 
         init();
         
-        data_object = pc;
+//        data_object = pc;
         
         loadObject();
     }
-    
+  */  
     
     private void loadObject()
     {
+        /*
         if ((this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) || 
             (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT) || 
             (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_URINE))
@@ -142,7 +141,7 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
         }
         else
             System.out.println("Load for this type is not implemented !!!");
-        
+    */    
     }
     
     
@@ -229,6 +228,7 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
 
     private void initType()
     {
+        /*
         switch (this.m_type)
         {
         case PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY:
@@ -263,12 +263,13 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
                 areaUnsupported();
             }
             break;
-        }
+        }*/
     }
 
     // activity, comment, urine
     private void areaText()
     {
+        /*
         this.label_1 = ATSwingUtils.getLabel(null, 30, 100, 100, 25, this.main_panel);
         this.text_1 = ATSwingUtils.getTextField("", 30, 130, 250, 25, this.main_panel);
 
@@ -284,7 +285,7 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
         {
             this.label_1.setText(m_ic.getMessage("URINE"));
         }
-
+*/
     }
 
     public void areaBG()
@@ -335,10 +336,11 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
 
     private void areaUnsupported()
     {
+        /*
         this.label_1 = new JLabel("Unsuported type : " + this.m_pump_add.getDescriptions()[this.m_type]);
         this.label_1.setBounds(20, 100, 100, 25);
         this.main_panel.add(this.label_1);
-
+*/
     }
 
     public boolean isMealSet()
@@ -415,16 +417,17 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
         return this.was_action;
     }
 
+    /*
     public PumpValuesEntryExt[] getObjects()
     {
         return pump_objects_ext;
 
-    }
+    }*/
 
     private void cmdOk()
     {
         // TODO:
-
+/*
         System.out.println("wizard_2 [ok]");
 
         this.was_action = true;
@@ -454,7 +457,7 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
 
         this.pump_objects_ext[0] = po;
 
-        this.dispose();
+        this.dispose();  END HERE */
         // this.m_p
 
         /*        

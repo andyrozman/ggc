@@ -45,8 +45,6 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
     private static final long serialVersionUID = 7198690314603156531L;
     private I18nControl m_ic = I18nControl.getInstance();
 
-    int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
-
     private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
                                      m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
@@ -129,7 +127,9 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
      */
     public boolean shouldBeDisplayed(int status)
     {
+        System.out.println("Should be displayed: " + status);
         switch (this.current_filter)
+        //switch (status)
         {
             case DeviceDisplayDataDialog.FILTER_ALL:
                 return true;

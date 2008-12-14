@@ -170,7 +170,7 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -178,7 +178,7 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -186,7 +186,7 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
         return this.help_button;
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()

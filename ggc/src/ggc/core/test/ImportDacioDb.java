@@ -43,6 +43,32 @@ import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.transfer.ImportTool;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:       
+ *  Description:  
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class ImportDacioDb extends ImportTool
 {
 
@@ -53,6 +79,9 @@ public class ImportDacioDb extends ImportTool
     DataAccess m_da = DataAccess.getInstance();
     
 
+    /**
+     * @param file_name
+     */
     public ImportDacioDb(String file_name)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -61,6 +90,10 @@ public class ImportDacioDb extends ImportTool
         this.restore_file = new File(file_name);
     }
 
+    /**
+     * @param file_name
+     * @param ff
+     */
     public ImportDacioDb(String file_name, boolean ff)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -68,6 +101,9 @@ public class ImportDacioDb extends ImportTool
     }
     
     
+    /**
+     * @see com.atech.db.hibernate.transfer.ImportExportAbstract#getActiveSession()
+     */
     @Override
     public int getActiveSession()
     {
@@ -75,6 +111,9 @@ public class ImportDacioDb extends ImportTool
     }
     
     
+    /**
+     * 
+     */
     public void convertFoods()
     {
 
@@ -241,6 +280,11 @@ public class ImportDacioDb extends ImportTool
         return DataAccess.MmolDecimalFormat.format( (f * 0.238845897f ));
     }
     
+    /**
+     * @param lst
+     * @param id
+     * @param value
+     */
     public void addParameters(ArrayList<DacioDbData> lst, int id, String value)
     {
         if ((value.equals("0")) || (value.equals("-")))
@@ -250,6 +294,10 @@ public class ImportDacioDb extends ImportTool
         
     }
     
+    /**
+     * @param lst
+     * @return
+     */
     public String getCollectionString(ArrayList<DacioDbData> lst)
     {
         if (lst.size()==0)
@@ -271,6 +319,10 @@ public class ImportDacioDb extends ImportTool
     }
     
     
+    /**
+     * @param s
+     * @return
+     */
     public String getElementString(String s)
     {
         String s1 = s;
@@ -284,6 +336,9 @@ public class ImportDacioDb extends ImportTool
         return s1;
     }
     
+    /**
+     * 
+     */
     public void run()
     {
         this.convertFoods(); // .importSettings();
@@ -332,6 +387,9 @@ public class ImportDacioDb extends ImportTool
     }
     
     
+    /**
+     * @param args
+     */
     public static void main(String args[])
     {
         /*

@@ -483,4 +483,15 @@ public class GenericCGM implements CGMInterface
         
     }
 
+    /**
+     * Is Device Communicating
+     * 
+     * @return
+     */
+    public boolean isDeviceCommunicating()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

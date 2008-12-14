@@ -1,31 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DailyRowDialog
- *
- *  Purpose:  Dialog for adding entry for day and time
- *
- *  Author:   andyrozman {andy@atech-software.com}
- *
- */
 package ggc.gui.dialogs.ratio;
 
 import ggc.core.data.DailyValues;
@@ -44,7 +16,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.NumberFormat;
-import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -60,7 +31,30 @@ import javax.swing.JTextField;
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.help.HelpCapable;
 
-// fix this
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     RatioCalculatorDialog  
+ *  Description:  Ratio Calculator dialog
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
 public class RatioCalculatorDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
 {
@@ -72,7 +66,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
     JComboBox cb_time_range, cb_icarb_rule, cb_sens_rule;
     
 
-    /* 
+    /** 
      * focusGained
      */
     public void focusGained(FocusEvent arg0)
@@ -82,7 +76,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
 
     boolean in_action = false;
     
-    /* 
+    /** 
      * focusLost
      */
     public void focusLost(FocusEvent ev)
@@ -168,6 +162,11 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
 
     
 
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     */
     public RatioCalculatorDialog(JFrame dialog) 
     {
         super(dialog, "", true);
@@ -189,8 +188,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
 
 
 
-
-    public void setDate()
+/*
+    private void setDate()
     {
         //System.out.println("Date: " + sDate);
 
@@ -207,9 +206,10 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
         this.dtc.setDateTime(Long.parseLong(dt));
 
     }
+*/
 
-
-    public void load()
+    @SuppressWarnings("unused")
+    private void load()
     {
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
 
@@ -596,7 +596,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
     }
     */
 
-    public void addLabel(String text, int posY, JPanel parent)
+    
+    private void addLabel(String text, int posY, JPanel parent)
     {
         JLabel label = new JLabel(text);
         label.setBounds(30, posY, 100, 25);
@@ -606,8 +607,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
         
     }
 
-    
-    public void addLabel(String text, int posX, int posY, JPanel parent)
+    /*
+    private void addLabel(String text, int posX, int posY, JPanel parent)
     {
         JLabel label = new JLabel(text);
         label.setBounds(posX, posY, 100, 25);
@@ -615,16 +616,16 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
         parent.add(label);
         //a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
         
-    }
+    }*/
     
     
-    public void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
+    private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
     {
         addComponent(comp, posX, posY, width, 23, true, parent);
     }
 
     
-    public void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
+    private void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
     {
         comp.setBounds(posX, posY, width, height);
         comp.addKeyListener(this);
@@ -762,22 +763,34 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
 
     }
 
-
-    public boolean isFieldSet(String text)
+/*
+    private boolean isFieldSet(String text)
     {
     	if ((text == null) || (text.trim().length()==0))
     	    return false;
     	else
     	    return true;
     }
-    
+  */  
+    /**
+     * Action Succesfull
+     * 
+     * @return
+     */
     public boolean actionSuccesful()
     {
         return m_actionDone;
     }
 
 
+    /**
+     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+     */
     public void keyTyped(KeyEvent e) {}
+    
+    /**
+     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     */
     public void keyPressed(KeyEvent e) {}
 
     /**
@@ -865,13 +878,13 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
         //MmolDecimalFormat
     }
 */
-
+/*
     public String checkDecimalFields(String field)
     {
         field = field.replace(',', '.');
         return field;
     }
-
+*/
 
     
     

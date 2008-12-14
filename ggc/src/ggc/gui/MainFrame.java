@@ -982,7 +982,7 @@ public class MainFrame extends JFrame
             {
                 PropertiesDialog pd = new PropertiesDialog(m_da);
 
-                if (pd.wasOKAction())
+                if (pd.actionSuccessful())
                 {
                     informationPanel.invalidatePanelsConstants();
                     informationPanel.refreshPanels();

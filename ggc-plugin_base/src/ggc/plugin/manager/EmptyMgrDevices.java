@@ -440,4 +440,16 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     {
     }
 
+    
+    /**
+     * Is Device Communicating
+     * 
+     * @return
+     */
+    public boolean isDeviceCommunicating()
+    {
+        return true;
+    }
+    
+    
 }

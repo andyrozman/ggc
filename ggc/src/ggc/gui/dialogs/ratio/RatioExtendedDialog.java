@@ -41,10 +41,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.NumberFormat;
-import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -60,19 +57,41 @@ import javax.swing.JTextField;
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.help.HelpCapable;
 
-// fix this
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     RatioExtendedDialog  
+ *  Description:  Dialog for extended ratios
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
-public class RatioExtendedDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
+// NOT IMPLEMENTED YET
+
+public class RatioExtendedDialog extends JDialog implements ActionListener, HelpCapable, FocusListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1240982985415603758L;
     JComboBox cb_time_range, cb_icarb_rule, cb_sens_rule;
     
 
-    /* 
+    /** 
      * focusGained
      */
     public void focusGained(FocusEvent arg0)
@@ -82,7 +101,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, KeyL
 
     boolean in_action = false;
     
-    /* 
+    /** 
      * focusLost
      */
     public void focusLost(FocusEvent ev)
@@ -168,6 +187,11 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, KeyL
 
     
 
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     */
     public RatioExtendedDialog(JFrame dialog) 
     {
         super(dialog, "", true);
@@ -190,25 +214,11 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, KeyL
 
 
 
-    public void setDate()
-    {
-        //System.out.println("Date: " + sDate);
-
-        StringTokenizer strtok = new StringTokenizer(sDate, ".");
-
-        String day = strtok.nextToken();
-        String month = strtok.nextToken();
-        String year = strtok.nextToken();
-
-        String dt = year + m_da.getLeadingZero(month,2) + m_da.getLeadingZero(day,2) + "0000";
-        
-        System.out.println("sDate: " + sDate);
-
-        this.dtc.setDateTime(Long.parseLong(dt));
-
-    }
 
 
+    /**
+     * Load
+     */
     public void load()
     {
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
@@ -596,7 +606,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, KeyL
     }
     */
 
-    public void addLabel(String text, int posY, JPanel parent)
+    private void addLabel(String text, int posY, JPanel parent)
     {
         JLabel label = new JLabel(text);
         label.setBounds(30, posY, 100, 25);
@@ -607,27 +617,18 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, KeyL
     }
 
     
-    public void addLabel(String text, int posX, int posY, JPanel parent)
-    {
-        JLabel label = new JLabel(text);
-        label.setBounds(posX, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        //a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
-        
-    }
     
     
-    public void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
+    private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
     {
         addComponent(comp, posX, posY, width, 23, true, parent);
     }
 
     
-    public void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
+    private void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
     {
         comp.setBounds(posX, posY, width, height);
-        comp.addKeyListener(this);
+        //comp.addKeyListener(this);
         parent.add(comp);
     }
     
@@ -763,6 +764,12 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, KeyL
     }
 
 
+    /**
+     * Is Field Set
+     * 
+     * @param text
+     * @return
+     */
     public boolean isFieldSet(String text)
     {
     	if ((text == null) || (text.trim().length()==0))
@@ -771,101 +778,23 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, KeyL
     	    return true;
     }
     
-    public boolean actionSuccesful()
+    /**
+     * Was Action Successful
+     * 
+     * @return
+     */
+    public boolean actionSuccessful()
     {
         return m_actionDone;
     }
 
 
-    public void keyTyped(KeyEvent e) {}
-    public void keyPressed(KeyEvent e) {}
+
 
     /**
-     * Invoked when a key has been released.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key released event.
+     * @param field
+     * @return
      */
-    public void keyReleased(KeyEvent e)
-    {
-
-        if (e.getKeyCode() == KeyEvent.VK_ENTER)
-        {
-            cmdOk();
-        }
-
-        /*
-        int change = 0;
-
-        if ((e.getKeyCode() == KeyEvent.VK_LEFT)) // || (e.getKeyCode() == KeyEvent.VK_TAB)
-            change = -1;
-        else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) || (e.getKeyCode() == KeyEvent.VK_TAB))
-            change = 1;
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN)
-            change = 2;
-        else if (e.getKeyCode() == KeyEvent.VK_UP)
-            change = -2;
-
-
-        if (change==0)
-            return;
-
-        JComponent cmp = (JComponent)e.getComponent();
-	
-        int search = 0;
-
-        for (int i=0; i<9; i++)
-        {
-            if (components[i].equals(cmp))
-            {
-                search = i;
-                break;
-            }
-        }
-
-        int newres = search+change;
-        
-        if (newres<0)
-        {
-            newres = 8+newres;
-        }
-        else if (newres>8)
-        {
-            newres = newres-8;
-        }
-
-        components[newres].requestFocus();
-        */
-    }
-
-    /*
-    private void fixDecimals()
-    {
-        if (m_da.isEmptyOrUnset(BGField.getText()))
-            return;
-
-        String s = BGField.getText().trim().replace(",", ".");
-
-        if (this.cob_bg_type.getSelectedIndex()==1)
-        {
-            try
-            {
-
-                //System.out.println(s);
-
-                float f = Float.parseFloat(s);
-                String ss = DataAccess.MmolDecimalFormat.format(f);
-                ss = ss.replace(",", ".");
-                this.BGField.setText(ss);
-            }
-            catch(Exception ex)
-            {
-                System.out.println("fixDecimals: " + ex);
-            }
-        }
-        //MmolDecimalFormat
-    }
-*/
-
     public String checkDecimalFields(String field)
     {
         field = field.replace(',', '.');

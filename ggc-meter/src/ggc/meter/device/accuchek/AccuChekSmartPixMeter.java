@@ -3,7 +3,6 @@ package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -152,13 +151,6 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     }
     
     
-    /** 
-     * open
-     */
-    public boolean open() throws PlugInBaseException
-    {
-        return true;
-    }
     
     
     /**

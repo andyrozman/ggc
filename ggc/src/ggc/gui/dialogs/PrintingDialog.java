@@ -60,6 +60,31 @@ import javax.swing.SwingConstants;
 import com.atech.graphics.components.DateComponent;
 import com.atech.graphics.dialogs.ActionExceptionCatchDialog;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PrintingDialog  
+ *  Description:  Dialog for Printing
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 // fix this
 
 public class PrintingDialog extends ActionExceptionCatchDialog // extends
@@ -87,10 +112,10 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     JSpinner sl_year = null, sl_month = null;
     JButton help_button;
 
-    public String[] report_types_1 = { m_ic.getMessage("SIMPLE_MONTHLY_REPORT"),
+    private String[] report_types_1 = { m_ic.getMessage("SIMPLE_MONTHLY_REPORT"),
                                       m_ic.getMessage("EXTENDED_MONTHLY_REPORT") };
 
-    public String[] report_types_2 = { m_ic.getMessage("FOOD_MENU_BASE"),
+    private String[] report_types_2 = { m_ic.getMessage("FOOD_MENU_BASE"),
                                        m_ic.getMessage("FOOD_MENU_EXT_I"),
                                        m_ic.getMessage("FOOD_MENU_EXT_II"),
 //                                       m_ic.getMessage("FOOD_MENU_EXT_III")
@@ -98,11 +123,25 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
     Font font_normal, font_normal_bold;
 
+    /**
+     * Dialog Options: Year and Month Option
+     */
     public static final int PRINT_DIALOG_YEAR_MONTH_OPTION = 1;
+
+    /**
+     * Dialog Options: Range with day option
+     */
     public static final int PRINT_DIALOG_RANGE_DAY_OPTION = 2;
 
-    public int master_type = 1;
+    private int master_type = 1;
 
+    /**
+     * Constructor 
+     * 
+     * @param frame
+     * @param type
+     * @param master_type
+     */
     public PrintingDialog(JFrame frame, int type, int master_type) // throws
                                                                    // Exception
     {
@@ -349,7 +388,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
      * }
      */
 
-    /*
+    /**
      * performAction
      */
     @Override
@@ -419,12 +458,15 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         }
     }
 
+    /**
+     * Display PDF
+     * 
+     * @param name
+     * @throws Exception
+     */
     public void displayPDF(String name) throws Exception
     {
         File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
-
-        // y System.out.println(fl.getAbsolutePath());
-        // System.out.println(File.separator);
 
         String pdf_viewer = m_da.getSettings().getPdfVieverPath().replace('\\', '/');
         String file_path = fl.getAbsolutePath().replace('\\', '/');
@@ -437,9 +479,6 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
             throw new Exception(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
         }
 
-        // ySystem.out.println(pdf_viewer);
-        // y System.out.println(file_path);
-
         File acr = new File(pdf_viewer);
 
         if (!acr.exists())
@@ -449,28 +488,9 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
         try
         {
-            // String pathToAcrobat =
-            // "c:\\Program Files\\Utils\\Acrobat 7.0\\Reader\\AcroRd32.exe ";
-            // Runtime.getRuntime().e
-            // Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +
-            // fl.getAbsolutePath() + File.separator + name);
-            // Runtime.getRuntime().exec(pdf_viewer + " " + file_path + "/" +
-            // name);
-
-            // System.out.println("Runtime: " + acr.getAbsoluteFile() + " " +
-            // fl.getAbsolutePath() + File.separator + name);
-
             Runtime.getRuntime().exec(
                 acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\"");
             System.out.println(pdf_viewer + " " + file_path + File.separator + name);
-
-            // Runtime.getRuntime().exec("\"" + pdf_viewer + "\" " + file_path +
-            // "/" + name);
-
-            // Runtime.getRuntime().exec(
-            // "c:/Program Files (x86)/Utils/Adobe Reader 8.0/Reader/AcroRd32.exe"
-            // );
-
         }
         catch (RuntimeException ex)
         {
@@ -485,32 +505,18 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
             throw ex;
 
         }
-        /*
-         * System.out.println(acr.getAbsoluteFile());
-         * 
-         * 
-         * try { // String pathToAcrobat =
-         * "c:\\Program Files\\Utils\\Acrobat 7.0\\Reader\\AcroRd32.exe ";
-         * //Runtime.getRuntime().e
-         * Runtime.getRuntime().exec(acr.getAbsoluteFile() + " " +
-         * fl.getAbsolutePath() + File.separator + name); }
-         * catch(RuntimeException ex) {
-         * System.out.println("RE running AcrobatReader: " + ex); } catch
-         * (Exception ex) { System.out.println("Error running AcrobatReader: " +
-         * ex);
-         * 
-         * }
-         */
     }
 
+    /**
+     * Display PDF External (static method)
+     * 
+     * @param name
+     */
     public static void displayPDFExternal(String name)
     {
         I18nControl ic = I18nControl.getInstance();
 
         File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
-
-        // y System.out.println(fl.getAbsolutePath());
-        // System.out.println(File.separator);
 
         String pdf_viewer = DataAccess.getInstance().getSettings().getPdfVieverPath().replace('\\', '/');
         String file_path = fl.getAbsolutePath().replace('\\', '/');
@@ -521,9 +527,6 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
             return;
         }
 
-        // ySystem.out.println(pdf_viewer);
-        // y System.out.println(file_path);
-
         File acr = new File(pdf_viewer);
 
         if (!acr.exists())
@@ -555,12 +558,24 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         }
     }
 
-    public boolean actionSuccesful()
+    
+    /**
+     * Was Action Successful
+     * 
+     * @return true if action was successful (dialog closed with OK)
+     */
+    public boolean actionSuccessful()
     {
         return m_actionDone;
     }
 
-    public String[] getActionResult()
+    
+    /**
+     * Get Action Results
+     * 
+     * @return String array of results
+     */
+    public String[] getActionResults()
     {
         String[] res = new String[3];
 
@@ -579,7 +594,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -587,7 +602,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -595,7 +610,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         return this.help_button;
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()
@@ -603,7 +618,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         return "pages.GGC_Print_Selector";
     }
 
-    /*
+    /**
      * getObject
      */
     @Override

@@ -60,6 +60,12 @@ public class CGMPlugInServer extends PlugInServer
     public static final int COMMAND_CGMS_ABOUT = 3;
     
     
+    /**
+     * Return Object: Selected Device with parameters
+     */
+    public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
+    
+    
     private String commands[] = {
                                 "MN_CGMS_READ_DESC",
                                 "MN_CGMS_LIST_DESC",
@@ -178,6 +184,18 @@ public class CGMPlugInServer extends PlugInServer
         ic = m_da.getI18nControlInstance();
         I18nControl.getInstance().setLanguage(this.selected_lang);
         DataAccessCGM.getInstance().addComponent(this.parent);
+    }
+
+    /**
+     * Get Return Object
+     * 
+     * @param ret_obj_id
+     * @return
+     */
+    @Override
+    public Object getReturnObject(int ret_obj_id)
+    {
+        return null;
     }
     
     

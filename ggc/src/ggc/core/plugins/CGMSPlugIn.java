@@ -7,35 +7,104 @@ import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     CGMSPlugIn  
+ *  Description:  Class CGMS Plugin Client
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class CGMSPlugIn extends PlugInClient
 {
 
+    /**
+     * Command: Read CGMS Data
+     */
     public static final int COMMAND_READ_CGMS_DATA = 0;
+    
+    /**
+     * Command: CGMS List
+     */
     public static final int COMMAND_CGMS_LIST = 1;
+    
+    /**
+     * Command: CGMS Configuration
+     */
     public static final int COMMAND_CGMS_CONFIGURATION = 2;
+    
+    /**
+     * Command: CGMS About
+     */
     public static final int COMMAND_CGMS_ABOUT = 3;
     
+    /**
+     * Return Object: Selected Device with parameters
+     */
+    public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
     
+    
+    /**
+     * Constructor
+     * 
+     * @param parent 
+     * @param ic 
+     */
     public CGMSPlugIn(Container parent, I18nControlAbstract ic)
     {
         super(parent, ic);
     }
 
+    
+    /**
+     * Constructor
+     */
     public CGMSPlugIn()
     {
         super();
     }
 
+    
+    /**
+     * Check If Installed
+     */
     public void checkIfInstalled()
     {
     }
 
+    
+    /**
+     * Get Name 
+     * 
+     * @return name of plugin
+     */
     public String getName()
     {
         return ic.getMessage("CGMS_PLUGIN");
     }
 
     
+    /**
+     * Init Plugin
+     */
     public void initPlugin()
     {
         this.commands = new String[4];
@@ -58,22 +127,18 @@ public class CGMSPlugIn extends PlugInClient
 
     }
 
+    
+    /**
+     * Read CGMS Data
+     */
     public void readCGMSData()
     {
         this.featureNotImplemented(commands[0]);
     }
 
-    public void CGMSList()
-    {
-        this.featureNotImplemented(commands[1]);
-    }
+    
 
-    public void CGMSConfiguration()
-    {
-        this.featureNotImplemented(commands[2]);
-    }
-
-    /* 
+    /** 
      * actionPerformed
      */
     public void actionPerformed(ActionEvent e)
@@ -103,16 +168,35 @@ public class CGMSPlugIn extends PlugInClient
 
     }
 
+    
+    /**
+     * Get When Will Be Implemented
+     * 
+     * @return
+     */
     public String getWhenWillBeImplemented()
     {
-        return "0.4";
+        return "0.6";
     }
 
+    
+    /**
+     * Get Short Status
+     * 
+     * @return
+     */
     public String getShortStatus()
     {
-        return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.4");
+        return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.6");
     }
 
+    
+    /**
+     * Set Return Data (for getting data from plugin - async)
+     * 
+     * @param return_data
+     * @param stat_rep_int
+     */
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
     {
     }

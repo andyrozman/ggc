@@ -44,7 +44,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     protected ArrayList<DeviceValuesEntry> dl_data;
     protected ArrayList<DeviceValuesEntry> displayed_dl_data;
     protected DeviceDataHandler m_ddh = null;
-    int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
+    protected int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
     protected DataAccessPlugInBase m_da;
 
 

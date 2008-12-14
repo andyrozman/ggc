@@ -21,7 +21,6 @@ import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.update.UpdateUtil;
 import com.atech.utils.ATDataAccessAbstract;
 
 /**
@@ -298,7 +297,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      */
     public void loadWebLister()
     {
-        this.web_lister_cfg = UpdateUtil.loadConfig("../data/tools/WebLister.properties");
+        this.web_lister_cfg = this.getConfiguration("../data/tools/WebLister.properties");
     }
 
 
