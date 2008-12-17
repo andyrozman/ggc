@@ -199,8 +199,8 @@ public class DataAccessMeter extends DataAccessPlugInBase
         fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
         fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration)"));
         fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
-        fg.addFeaturesEntry(new FeaturesEntry("List of meters (work in progress)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Simple configuration"));
+        fg.addFeaturesEntry(new FeaturesEntry("List of meters"));
+        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
         
         lst_features.add(fg);
         
@@ -208,19 +208,19 @@ public class DataAccessMeter extends DataAccessPlugInBase
         fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
         fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer"));
         fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
-        fg.addFeaturesEntry(new FeaturesEntry("LifeScan (work in progress)"));
+        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
         
         lst_features.add(fg);
         
         
-        fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+        //fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
         
-        lst_features.add(fg);
+        //lst_features.add(fg);
 
         
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("LifeScan (end of 2008)"));
+        //fg.addFeaturesEntry(new FeaturesEntry("LifeScan (end of 2008)"));
         fg.addFeaturesEntry(new FeaturesEntry("Abbott (in 2009)"));
         fg.addFeaturesEntry(new FeaturesEntry("???"));
         
