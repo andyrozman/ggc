@@ -75,16 +75,33 @@ public class NutritionHomeWeightTypeH implements Serializable {
     }
 
 
-    public int getStatic_entry() {
+    /**
+     * Get Is Static Entry
+     * 
+     * @return static_entry
+     */
+    public int getStatic_entry() 
+    {
         return this.static_entry;
     }
 
-    public void setStatic_entry(int static_entry) {
+    /**
+     * Set Is Static Entry
+     * 
+     * @param static_entry as string
+     */
+    public void setStatic_entry(int static_entry) 
+    {
         this.static_entry = static_entry;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof NutritionHomeWeightTypeH) ) return false;
         NutritionHomeWeightTypeH castOther = (NutritionHomeWeightTypeH) other;
         return new EqualsBuilder()

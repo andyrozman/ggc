@@ -103,56 +103,133 @@ public class CGMDataExtendedH implements Serializable {
         this.dt_info = dt_info;
     }
 
-    public int getType() {
+    /**
+     * Get Type 
+     * 
+     * @return type value
+     */
+    public int getType() 
+    {
         return this.type;
     }
 
-    public void setType(int type) {
+    /**
+     * Set Type
+     *  
+     * @param type parameter
+     */
+    public void setType(int type) 
+    {
         this.type = type;
     }
 
-    public String getValue() {
+    /**
+     * Get Value 
+     * 
+     * @return value value
+     */
+    public String getValue() 
+    {
         return this.value;
     }
 
-    public void setValue(String value) {
+    /**
+     * Set Extended
+     *  
+     * @param value parameter
+     */
+    public void setValue(String value) 
+    {
         this.value = value;
     }
 
-    public String getExtended() {
+    /**
+     * Get Extended 
+     * 
+     * @return extended value
+     */
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    /**
+     * Set Extended
+     *  
+     * @param extended parameter
+     */
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
-    public int getPerson_id() {
+    /**
+     * Get Person Id
+     * 
+     * @return person id parameter
+     */
+    public int getPerson_id()
+    {
         return this.person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    /**
+     * Set Person Id
+     * 
+     * @param person_id parameter
+     */
+    public void setPerson_id(int person_id)
+    {
         this.person_id = person_id;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public long getChanged() {
+    /**
+     * Get Changed
+     * 
+     * @return changed value
+     */
+    public long getChanged()
+    {
         return this.changed;
     }
 
-    public void setChanged(long changed) {
+    /**
+     * Set Changed
+     * 
+     * @param changed parameter
+     */
+    public void setChanged(long changed)
+    {
         this.changed = changed;
     }
 
-
-    public boolean equals(Object other) {
+    /**
+     * Equals - method to check equalicy of object
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof CGMDataExtendedH) ) return false;
         CGMDataExtendedH castOther = (CGMDataExtendedH) other;
         return new EqualsBuilder()

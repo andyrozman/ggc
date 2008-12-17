@@ -98,6 +98,7 @@ public class PenDataAdditionalWizardOne extends JDialog implements ActionListene
 
 
 
+    @SuppressWarnings("unused")
     private void init()
     {
         int width = 320;

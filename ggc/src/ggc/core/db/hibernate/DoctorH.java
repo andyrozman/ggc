@@ -153,11 +153,23 @@ public class DoctorH implements Serializable {
         this.working_time = working_time;
     }
 
-    public String getExtended() {
+    /**
+     * Get Extended 
+     * 
+     * @return extended value
+     */
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    /**
+     * Set Extended
+     *  
+     * @param extended parameter
+     */
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
@@ -169,19 +181,43 @@ public class DoctorH implements Serializable {
         this.visible = visible;
     }
 
-    public int getPerson_id() {
+    /**
+     * Get Person Id
+     * 
+     * @return person id parameter
+     */
+    public int getPerson_id()
+    {
         return this.person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    /**
+     * Set Person Id
+     * 
+     * @param person_id parameter
+     */
+    public void setPerson_id(int person_id)
+    {
         this.person_id = person_id;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
@@ -193,8 +229,13 @@ public class DoctorH implements Serializable {
         this.doctor_type = doctor_type;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof DoctorH) ) return false;
         DoctorH castOther = (DoctorH) other;
         return new EqualsBuilder()

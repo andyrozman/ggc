@@ -119,11 +119,23 @@ public class StocksH implements Serializable {
         this.amount = amount;
     }
 
-    public String getDescription() {
+    /**
+     * Get Description
+     * 
+     * @return description parameter
+     */
+    public String getDescription() 
+    {
         return this.description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Set Description
+     * 
+     * @param description parameter
+     */
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
@@ -143,32 +155,74 @@ public class StocksH implements Serializable {
         this.usage_per_day_max = usage_per_day_max;
     }
 
-    public String getExtended() {
+    /**
+     * Get Extended 
+     * 
+     * @return extended value
+     */
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    /**
+     * Set Extended
+     *  
+     * @param extended parameter
+     */
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
-    public int getPerson_id() {
+    /**
+     * Get Person Id
+     * 
+     * @return person id parameter
+     */
+    public int getPerson_id()
+    {
         return this.person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    /**
+     * Set Person Id
+     * 
+     * @param person_id parameter
+     */
+    public void setPerson_id(int person_id)
+    {
         this.person_id = person_id;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-
-    public boolean equals(Object other) {
+    
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof StocksH) ) return false;
         StocksH castOther = (StocksH) other;
         return new EqualsBuilder()

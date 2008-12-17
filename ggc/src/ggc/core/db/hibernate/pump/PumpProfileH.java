@@ -114,72 +114,173 @@ public class PumpProfileH implements Serializable {
     }
 
 
-    public float getBasal_base() {
+    /**
+     * Get Basal Rate - Base
+     * 
+     * @return basal_base value
+     */
+    public float getBasal_base() 
+    {
         return this.basal_base;
     }
 
-    public void setBasal_base(float basal_base) {
+    /**
+     * Set Basal Rate - Base
+     * 
+     * @param basal_base value
+     */
+    public void setBasal_base(float basal_base) 
+    {
         this.basal_base = basal_base;
     }
 
+    /**
+     * Get Basal Rate - Diffs (example: 1100-1230=1.26;1330-1430=1.35)
+     * 
+     * @return basal_diffs value
+     */
     public String getBasal_diffs() {
         return this.basal_diffs;
     }
 
-    public void setBasal_diffs(String basal_diffs) {
+    /**
+     * Set Basal Rate - Diffs (example: 1100-1230=1.26;1330-1430=1.35)
+     * 
+     * @param basal_diffs value
+     */
+    public void setBasal_diffs(String basal_diffs) 
+    {
         this.basal_diffs = basal_diffs;
     }
 
-    public long getActive_from() {
+    /**
+     * Get Active From
+     * 
+     * @return active_from value
+     */
+    public long getActive_from() 
+    {
         return this.active_from;
     }
 
-    public void setActive_from(long active_from) {
+    /**
+     * Set Active From
+     * 
+     * @param active_from value
+     */
+    public void setActive_from(long active_from) 
+    {
         this.active_from = active_from;
     }
 
-    public long getActive_till() {
+    /**
+     * Get Active Till
+     * 
+     * @return active_till value
+     */
+    public long getActive_till() 
+    {
         return this.active_till;
     }
 
-    public void setActive_till(long active_till) {
+    /**
+     * Set Active Till
+     * 
+     * @param active_till value
+     */
+    public void setActive_till(long active_till) 
+    {
         this.active_till = active_till;
     }
 
-    public String getExtended() {
+    /**
+     * Get Extended 
+     * 
+     * @return extended value
+     */
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    /**
+     * Set Extended
+     *  
+     * @param extended parameter
+     */
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
-    public int getPerson_id() {
+    /**
+     * Get Person Id
+     * 
+     * @return person id parameter
+     */
+    public int getPerson_id()
+    {
         return this.person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    /**
+     * Set Person Id
+     * 
+     * @param person_id parameter
+     */
+    public void setPerson_id(int person_id)
+    {
         this.person_id = person_id;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public long getChanged() {
+    /**
+     * Get Changed
+     * 
+     * @return changed value
+     */
+    public long getChanged()
+    {
         return this.changed;
     }
 
-    public void setChanged(long changed) {
+    /**
+     * Set Changed
+     * 
+     * @param changed parameter
+     */
+    public void setChanged(long changed)
+    {
         this.changed = changed;
     }
 
 
-    public boolean equals(Object other) {
+    /**
+     * Equals - method to check equalicy of object
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof PumpProfileH) ) return false;
         PumpProfileH castOther = (PumpProfileH) other;
         return new EqualsBuilder()

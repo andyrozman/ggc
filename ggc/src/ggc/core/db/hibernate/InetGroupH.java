@@ -70,11 +70,23 @@ public class InetGroupH implements Serializable {
     }
 
 
-    public String getParent() {
+    /**
+     * Get Parent Id
+     * 
+     * @return parent_id parameter
+     */
+    public String getParent() 
+    {
         return this.parent;
     }
 
-    public void setParent(String parent) {
+    /**
+     * Set Parent Id
+     * 
+     * @param parent parameter
+     */
+    public void setParent(String parent) 
+    {
         this.parent = parent;
     }
 
@@ -118,23 +130,53 @@ public class InetGroupH implements Serializable {
         this.name_i18n = name_i18n;
     }
 
-    public String getDescription() {
+    /**
+     * Get Description
+     * 
+     * @return description parameter
+     */
+    public String getDescription() 
+    {
         return this.description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Set Description
+     * 
+     * @param description parameter
+     */
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof InetGroupH) ) return false;
         InetGroupH castOther = (InetGroupH) other;
         return new EqualsBuilder()

@@ -75,11 +75,23 @@ public class FoodDescriptionH implements Serializable {
     }
 
 
-    public long getGroup_id() {
+    /**
+     * Get Group Id
+     * 
+     * @return group_id value
+     */
+    public long getGroup_id() 
+    {
         return this.group_id;
     }
 
-    public void setGroup_id(long group_id) {
+    /**
+     * Set Group Id
+     * 
+     * @param group_id value
+     */
+    public void setGroup_id(long group_id) 
+    {
         this.group_id = group_id;
     }
 
@@ -123,32 +135,73 @@ public class FoodDescriptionH implements Serializable {
         this.name_i18n = name_i18n;
     }
 
-    public float getRefuse() {
+    /**
+     * Get Refuse
+     * 
+     * @return refuse value
+     */
+    public float getRefuse() 
+    {
         return this.refuse;
     }
 
-    public void setRefuse(float refuse) {
+    /**
+     * Set Refuse
+     * 
+     * @param refuse value
+     */
+    public void setRefuse(float refuse) 
+    {
         this.refuse = refuse;
     }
 
-    public String getNutritions() {
+    /**
+     * Get Nutritions
+     * 
+     * @return nutritions value
+     */
+    public String getNutritions() 
+    {
         return this.nutritions;
     }
 
-    public void setNutritions(String nutritions) {
+    /**
+     * Set Nutritions
+     * 
+     * @param nutritions value
+     */
+    public void setNutritions(String nutritions) 
+    {
         this.nutritions = nutritions;
     }
 
-    public String getHome_weights() {
+    /**
+     * Get Home Weights
+     * 
+     * @return home_weights parameter
+     */
+    public String getHome_weights() 
+    {
         return this.home_weights;
     }
 
-    public void setHome_weights(String home_weights) {
+    /**
+     * Set Home Weights
+     * 
+     * @param home_weights parameter
+     */
+    public void setHome_weights(String home_weights) 
+    {
         this.home_weights = home_weights;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof FoodDescriptionH) ) return false;
         FoodDescriptionH castOther = (FoodDescriptionH) other;
         return new EqualsBuilder()

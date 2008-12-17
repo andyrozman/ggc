@@ -122,8 +122,13 @@ public class NutritionDefinitionH implements Serializable {
         this.static_entry = static_entry;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof NutritionDefinitionH) ) return false;
         NutritionDefinitionH castOther = (NutritionDefinitionH) other;
         return new EqualsBuilder()

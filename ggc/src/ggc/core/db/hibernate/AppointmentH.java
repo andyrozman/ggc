@@ -99,48 +99,113 @@ public class AppointmentH implements Serializable {
     }
 
 
-    public String getApoint_text() {
+    /**
+     * Get Appointment Text
+     * 
+     * @return apoint_text values
+     */
+    public String getApoint_text() 
+    {
         return this.apoint_text;
     }
 
-    public void setApoint_text(String apoint_text) {
+    /**
+     * Set Appointment Text
+     * 
+     * @param apoint_text values
+     */
+    public void setApoint_text(String apoint_text) 
+    {
         this.apoint_text = apoint_text;
     }
 
-    public String getExtended() {
+    /**
+     * Get Extended 
+     * 
+     * @return extended value
+     */
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    /**
+     * Set Extended
+     *  
+     * @param extended parameter
+     */
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
-    public int getPerson_id() {
+    /**
+     * Get Person Id
+     * 
+     * @return person id parameter
+     */
+    public int getPerson_id()
+    {
         return this.person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    /**
+     * Set Person Id
+     * 
+     * @param person_id parameter
+     */
+    public void setPerson_id(int person_id)
+    {
         this.person_id = person_id;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public ggc.core.db.hibernate.DoctorH getDoctor() {
+    /**
+     * Get Doctor
+     * 
+     * @return doctor value (DoctorH instance)
+     */
+    public ggc.core.db.hibernate.DoctorH getDoctor() 
+    {
         return this.doctor;
     }
 
-    public void setDoctor(ggc.core.db.hibernate.DoctorH doctor) {
+    /**
+     * Set Doctor
+     * 
+     * @param doctor value (DoctorH instance)
+     */
+    public void setDoctor(ggc.core.db.hibernate.DoctorH doctor) 
+    {
         this.doctor = doctor;
     }
 
-
-    public boolean equals(Object other) {
+    /**
+     * Equals - method to check equalicy of object
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof AppointmentH) ) return false;
         AppointmentH castOther = (AppointmentH) other;
         return new EqualsBuilder()

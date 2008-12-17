@@ -70,40 +70,94 @@ public class DbInfoH implements Serializable {
         this.id = id;
     }
 
-    public String getKey() {
+    
+    /**
+     * Get Key 
+     * 
+     * @return key value
+     */
+    public String getKey() 
+    {
         return this.key;
     }
 
-    public void setKey(String key) {
+    /**
+     * Set Key
+     *  
+     * @param key parameter
+     */
+    public void setKey(String key) 
+    {
         this.key = key;
     }
 
-    public String getValue() {
+    /**
+     * Get Value 
+     * 
+     * @return value value
+     */
+    public String getValue() 
+    {
         return this.value;
     }
 
-    public void setValue(String value) {
+    /**
+     * Set Extended
+     *  
+     * @param value parameter
+     */
+    public void setValue(String value) 
+    {
         this.value = value;
     }
 
-    public int getType() {
+    /**
+     * Get Type 
+     * 
+     * @return type value
+     */
+    public int getType() 
+    {
         return this.type;
     }
 
-    public void setType(int type) {
+    /**
+     * Set Type
+     *  
+     * @param type parameter
+     */
+    public void setType(int type) 
+    {
         this.type = type;
     }
 
-    public String getDescription() {
+    /**
+     * Get Description
+     * 
+     * @return description parameter
+     */
+    public String getDescription() 
+    {
         return this.description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Set Description
+     * 
+     * @param description parameter
+     */
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof DbInfoH) ) return false;
         DbInfoH castOther = (DbInfoH) other;
         return new EqualsBuilder()

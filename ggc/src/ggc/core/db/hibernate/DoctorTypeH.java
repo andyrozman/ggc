@@ -76,16 +76,33 @@ public class DoctorTypeH implements Serializable {
     }
 
 
-    public int getPredefined() {
+    /**
+     * Get Predefined
+     * 
+     * @return predefined value
+     */
+    public int getPredefined() 
+    {
         return this.predefined;
     }
 
-    public void setPredefined(int predefined) {
+    /**
+     * Set Predefined
+     * 
+     * @param predefined value
+     */
+    public void setPredefined(int predefined) 
+    {
         this.predefined = predefined;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof DoctorTypeH) ) return false;
         DoctorTypeH castOther = (DoctorTypeH) other;
         return new EqualsBuilder()

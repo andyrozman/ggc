@@ -235,9 +235,9 @@ public class DayValueH implements Serializable, GGCHibernateObject
     }
 
     /**
-     * Get Extended
+     * Get Extended 
      * 
-     * @return
+     * @return extended value
      */
     public String getExtended()
     {
@@ -246,8 +246,8 @@ public class DayValueH implements Serializable, GGCHibernateObject
 
     /**
      * Set Extended
-     * 
-     * @param extended
+     *  
+     * @param extended parameter
      */
     public void setExtended(String extended)
     {
@@ -257,7 +257,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     /**
      * Get Person Id
      * 
-     * @return
+     * @return person id parameter
      */
     public int getPerson_id()
     {
@@ -267,7 +267,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     /**
      * Set Person Id
      * 
-     * @param person_id
+     * @param person_id parameter
      */
     public void setPerson_id(int person_id)
     {
@@ -297,7 +297,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     /**
      * Get Changed
      * 
-     * @return
+     * @return changed value
      */
     public long getChanged()
     {
@@ -307,7 +307,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     /**
      * Set Changed
      * 
-     * @param changed
+     * @param changed parameter
      */
     public void setChanged(long changed)
     {
@@ -336,6 +336,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
+    
     /**
      * Hash code generator
      * 

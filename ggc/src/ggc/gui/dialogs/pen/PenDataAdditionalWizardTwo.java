@@ -68,6 +68,7 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
     JPanel main_panel = null; 
     private Container m_parent = null;
 
+    @SuppressWarnings("unused")
     private int m_type = 0;
 
     JLabel label_1, label_2;
@@ -118,6 +119,7 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
     }
   */  
     
+    @SuppressWarnings("unused")
     private void loadObject()
     {
         /*
@@ -267,6 +269,7 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
     }
 
     // activity, comment, urine
+    @SuppressWarnings("unused")
     private void areaText()
     {
         /*
@@ -334,6 +337,7 @@ public class PenDataAdditionalWizardTwo extends JDialog implements ActionListene
     
     
 
+    @SuppressWarnings("unused")
     private void areaUnsupported()
     {
         /*

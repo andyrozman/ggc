@@ -55,24 +55,54 @@ public class InetLinkGroupH implements Serializable {
     }
 
 
-    public String getGroup_id() {
+    /**
+     * Get Group Id
+     * 
+     * @return group_id value
+     */
+    public String getGroup_id() 
+    {
         return this.group_id;
     }
 
-    public void setGroup_id(String group_id) {
+    /**
+     * Set Group Id
+     * 
+     * @param group_id value
+     */
+    public void setGroup_id(String group_id) 
+    {
         this.group_id = group_id;
     }
+    
 
-    public String getLink_id() {
+    /**
+     * Get Link
+     * 
+     * @return link_id value
+     */
+    public String getLink_id() 
+    {
         return this.link_id;
     }
 
-    public void setLink_id(String link_id) {
+    /**
+     * Set Link
+     * 
+     * @param link_id value
+     */
+    public void setLink_id(String link_id) 
+    {
         this.link_id = link_id;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof InetLinkGroupH) ) return false;
         InetLinkGroupH castOther = (InetLinkGroupH) other;
         return new EqualsBuilder()

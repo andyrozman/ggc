@@ -48,6 +48,7 @@ import com.atech.graphics.components.JDecimalTextField;
 public class PenDataTypeComponent extends JPanel implements ActionListener
 {
     
+    private static final long serialVersionUID = 6299052860056491652L;
 
     public static final int TYPE_NONE = 0;
     public static final int TYPE_BASAL = 1;
@@ -237,6 +238,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
         profile_comp.setVisible(false);
     }
     
+    @SuppressWarnings("unused")
     private void setEmpty()
     {
         this.hideAll();
@@ -254,6 +256,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
     }*/
 
     // type: event, alarm, error
+    @SuppressWarnings("unused")
     private void setComboAndText()
     {
         this.hideAll();
@@ -298,6 +301,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
 
     
     // type: pen bolus, pen basal 
+    @SuppressWarnings("unused")
     private void setNumericTextAndText()
     {
         this.hideAll();
@@ -332,6 +336,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
     
     
     // type: report
+    @SuppressWarnings("unused")
     private void setReport()
     {
         this.hideAll();
@@ -369,6 +374,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
     int sub_type = 0;
 
     // types: basal
+    @SuppressWarnings("unused")
     private void setBasal()
     {
         this.hideAll();
@@ -541,6 +547,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
     
     
     // types: bolus
+    @SuppressWarnings("unused")
     private void setBolus()
     {
         this.hideAll();
@@ -646,6 +653,7 @@ public class PenDataTypeComponent extends JPanel implements ActionListener
     
     
     
+    @SuppressWarnings("unused")
     private void addAllItems(JComboBox cb, String[] array)
     {
         cb.removeAllItems();

@@ -97,8 +97,14 @@ public class StockTypeH implements Serializable
         this.name_i18n = name_i18n;
     }
 
-
-    public boolean equals(Object other) {
+    
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof StockTypeH) ) return false;
         StockTypeH castOther = (StockTypeH) other;
         return new EqualsBuilder()

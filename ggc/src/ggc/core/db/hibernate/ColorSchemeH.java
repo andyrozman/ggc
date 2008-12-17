@@ -213,7 +213,13 @@ public class ColorSchemeH implements Serializable {
         this.color_ch = color_ch;
     }
 
-    public boolean equals(Object other) {
+    /**
+     * Equals - method to check equalicy of object
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof ColorSchemeH) ) return false;
         ColorSchemeH castOther = (ColorSchemeH) other;
         return new EqualsBuilder()

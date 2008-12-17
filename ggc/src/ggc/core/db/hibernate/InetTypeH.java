@@ -104,24 +104,53 @@ public class InetTypeH implements Serializable {
         this.name_i18n = name_i18n;
     }
 
-    public String getDescription() {
+    /**
+     * Get Description
+     * 
+     * @return description parameter
+     */
+    public String getDescription() 
+    {
         return this.description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Set Description
+     * 
+     * @param description parameter
+     */
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof InetTypeH) ) return false;
         InetTypeH castOther = (InetTypeH) other;
         return new EqualsBuilder()

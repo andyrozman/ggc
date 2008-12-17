@@ -89,11 +89,23 @@ public class MealH implements Serializable {
         this.id = id;
     }
 
-    public long getGroup_id() {
+    /**
+     * Get Group Id
+     * 
+     * @return group_id value
+     */
+    public long getGroup_id() 
+    {
         return this.group_id;
     }
 
-    public void setGroup_id(long group_id) {
+    /**
+     * Set Group Id
+     * 
+     * @param group_id value
+     */
+    public void setGroup_id(long group_id) 
+    {
         this.group_id = group_id;
     }
 
@@ -137,56 +149,133 @@ public class MealH implements Serializable {
         this.name_i18n = name_i18n;
     }
 
-    public String getDescription() {
+    /**
+     * Get Description
+     * 
+     * @return description parameter
+     */
+    public String getDescription() 
+    {
         return this.description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Set Description
+     * 
+     * @param description parameter
+     */
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
-    public String getParts() {
+    /**
+     * Get Parts
+     * 
+     * @return parts value
+     */
+    public String getParts() 
+    {
         return this.parts;
     }
 
-    public void setParts(String parts) {
+    /**
+     * Set Parts
+     * 
+     * @param parts value
+     */
+    public void setParts(String parts) 
+    {
         this.parts = parts;
     }
 
-    public String getNutritions() {
+    /**
+     * Get Nutritions
+     * 
+     * @return nutritions value
+     */
+    public String getNutritions() 
+    {
         return this.nutritions;
     }
 
-    public void setNutritions(String nutritions) {
+    /**
+     * Set Nutritions
+     * 
+     * @param nutritions value
+     */
+    public void setNutritions(String nutritions) 
+    {
         this.nutritions = nutritions;
     }
 
-    public String getExtended() {
+    /**
+     * Get Extended 
+     * 
+     * @return extended value
+     */
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    /**
+     * Set Extended
+     *  
+     * @param extended parameter
+     */
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public long getChanged() {
+    /**
+     * Get Changed
+     * 
+     * @return changed value
+     */
+    public long getChanged()
+    {
         return this.changed;
     }
 
-    public void setChanged(long changed) {
+    /**
+     * Set Changed
+     * 
+     * @param changed parameter
+     */
+    public void setChanged(long changed)
+    {
         this.changed = changed;
     }
 
-
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof MealH) ) return false;
         MealH castOther = (MealH) other;
         return new EqualsBuilder()

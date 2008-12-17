@@ -109,31 +109,73 @@ public class FoodUserGroupH implements Serializable {
         this.name_i18n = name_i18n;
     }
 
-    public String getDescription() {
+    /**
+     * Get Description
+     * 
+     * @return description parameter
+     */
+    public String getDescription() 
+    {
         return this.description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Set Description
+     * 
+     * @param description parameter
+     */
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
-    public long getParent_id() {
+    /**
+     * Get Parent Id
+     * 
+     * @return parent_id parameter
+     */
+    public long getParent_id() 
+    {
         return this.parent_id;
     }
 
-    public void setParent_id(long parent_id) {
+    /**
+     * Set Parent Id
+     * 
+     * @param parent_id parameter
+     */
+    public void setParent_id(long parent_id) 
+    {
         this.parent_id = parent_id;
     }
 
-    public long getChanged() {
+    /**
+     * Get Changed
+     * 
+     * @return changed value
+     */
+    public long getChanged()
+    {
         return this.changed;
     }
 
-    public void setChanged(long changed) {
+    /**
+     * Set Changed
+     * 
+     * @param changed parameter
+     */
+    public void setChanged(long changed)
+    {
         this.changed = changed;
     }
 
-    public boolean equals(Object other) {
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof FoodUserGroupH) ) return false;
         FoodUserGroupH castOther = (FoodUserGroupH) other;
         return new EqualsBuilder()

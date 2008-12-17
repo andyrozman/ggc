@@ -69,11 +69,23 @@ public class StockSubTypeH implements Serializable {
         this.id = id;
     }
 
-    public long getStock_type_id() {
+    /**
+     * Get Stock Type Id
+     * 
+     * @return stock_type_id value
+     */
+    public long getStock_type_id() 
+    {
         return this.stock_type_id;
     }
 
-    public void setStock_type_id(long stock_type_id) {
+    /**
+     * Set Stock Type Id
+     * 
+     * @param stock_type_id value
+     */
+    public void setStock_type_id(long stock_type_id) 
+    {
         this.stock_type_id = stock_type_id;
     }
 
@@ -99,32 +111,74 @@ public class StockSubTypeH implements Serializable {
     }
 
 
-    public String getDescription() {
+    /**
+     * Get Description
+     * 
+     * @return description parameter
+     */
+    public String getDescription() 
+    {
         return this.description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Set Description
+     * 
+     * @param description parameter
+     */
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
-    public float getContent() {
+    /**
+     * Get Content
+     * 
+     * @return content parameter
+     */
+    public float getContent() 
+    {
         return this.content;
     }
 
-    public void setContent(float content) {
+    /**
+     * Get Content
+     * 
+     * @param content parameter
+     */
+    public void setContent(float content) 
+    {
         this.content = content;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-
-    public boolean equals(Object other) {
+    
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof StockSubTypeH) ) return false;
         StockSubTypeH castOther = (StockSubTypeH) other;
         return new EqualsBuilder()

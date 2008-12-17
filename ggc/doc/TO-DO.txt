@@ -32,9 +32,14 @@ GERMAN:   Translation into german language.
 Status:    ?
 Help:      No help available
 
-SLOVENE:  Translation into slovenian language.
-Status:    74% (384 / 520)
+SLOVENE:  Translation into Slovenian language.
+Status:    100% 
 Help:      No help available
+
+FRENCH:   Translation into French language.
+Status:    ?
+Help:      No help available
+
 
 
 GGC Meter Tool
@@ -67,15 +72,16 @@ Documentation:
 
 * Java Help - Write help pages I.
             - Load from language jar
-
    
 
 Version 0.5
 ------------
 
 * Graphs: - New framework
-* Db Tools Integration:  - InitDb
-* Food Menu III.
+* Db Tools Integration:  - InitDb [1.0]  
+* Printing: - Food Menu III.
+            - Use abstract class
+            - File generation fix
 * Added functionality for Nutrition Db: 
     - Import data (selective)
     - Import Entry
@@ -86,16 +92,20 @@ Version 0.5
     - Column Sorting in Food
     - Glycemic data change
     - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
-* Update (server) 
+* Update (server) [1.0] 
     - Software updater Server
     - Db Updater Server
-* Support for multiple persons
+* Support for multiple persons [1.0] 
 * External foods database
 
 * Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
 
-* Java Help - Write help pages II. (finish EN)
-            - Load from language jar
+* Java Help - Write help pages II. (finish EN) [1.0] 
+            - Load from language jar  [1.0] 
+
+
+We plan to change version to 1.0, when all entries specified with [1.0] are finished.
+
 
 Version 0.6
 -------------

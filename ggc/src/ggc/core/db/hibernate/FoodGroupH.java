@@ -99,15 +99,31 @@ public class FoodGroupH implements Serializable {
         this.name_i18n = name_i18n;
     }
 
-    public String getDescription() {
+    /**
+     * Get Description
+     * 
+     * @return description parameter
+     */
+    public String getDescription() 
+    {
         return this.description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Set Description
+     * 
+     * @param description parameter
+     */
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
-
+    /** 
+     * Custom equals implementation
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     public boolean equals(Object other) {
         if ( !(other instanceof FoodGroupH) ) return false;
         FoodGroupH castOther = (FoodGroupH) other;

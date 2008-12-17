@@ -108,64 +108,153 @@ public class PumpDataH implements Serializable {
         this.dt_info = dt_info;
     }
 
-    public int getBase_type() {
+    /**
+     * Get Base Type 
+     * 
+     * @return base_type value
+     */
+    public int getBase_type()
+    {
         return this.base_type;
     }
 
-    public void setBase_type(int base_type) {
+    /**
+     * Set Base Type 
+     * 
+     * @param base_type value
+     */
+    public void setBase_type(int base_type)
+    {
         this.base_type = base_type;
     }
 
-    public int getSub_type() {
+    /**
+     * Get Sub Type 
+     * 
+     * @return sub_type value
+     */
+    public int getSub_type()
+    {
         return this.sub_type;
     }
 
-    public void setSub_type(int sub_type) {
+    /**
+     * Set Sub Type 
+     * 
+     * @param sub_type value
+     */
+    public void setSub_type(int sub_type)
+    {
         this.sub_type = sub_type;
     }
 
-    public String getValue() {
+    /**
+     * Get Value 
+     * 
+     * @return value value
+     */
+    public String getValue() 
+    {
         return this.value;
     }
 
-    public void setValue(String value) {
+    /**
+     * Set Extended
+     *  
+     * @param value parameter
+     */
+    public void setValue(String value) 
+    {
         this.value = value;
     }
 
-    public String getExtended() {
+    /**
+     * Get Extended 
+     * 
+     * @return extended value
+     */
+    public String getExtended()
+    {
         return this.extended;
     }
 
-    public void setExtended(String extended) {
+    /**
+     * Set Extended
+     *  
+     * @param extended parameter
+     */
+    public void setExtended(String extended)
+    {
         this.extended = extended;
     }
 
-    public int getPerson_id() {
+    /**
+     * Get Person Id
+     * 
+     * @return person id parameter
+     */
+    public int getPerson_id()
+    {
         return this.person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    /**
+     * Set Person Id
+     * 
+     * @param person_id parameter
+     */
+    public void setPerson_id(int person_id)
+    {
         this.person_id = person_id;
     }
 
-    public String getComment() {
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setComment(String comment) {
+    /**
+     * Set Comment
+     * 
+     * @param comment
+     */
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public long getChanged() {
+    /**
+     * Get Changed
+     * 
+     * @return changed value
+     */
+    public long getChanged()
+    {
         return this.changed;
     }
 
-    public void setChanged(long changed) {
+    /**
+     * Set Changed
+     * 
+     * @param changed parameter
+     */
+    public void setChanged(long changed)
+    {
         this.changed = changed;
     }
 
-
-    public boolean equals(Object other) {
+    /**
+     * Equals - method to check equalicy of object
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object other) 
+    {
         if ( !(other instanceof PumpDataH) ) return false;
         PumpDataH castOther = (PumpDataH) other;
         return new EqualsBuilder()
