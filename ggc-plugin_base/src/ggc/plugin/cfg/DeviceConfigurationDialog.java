@@ -265,7 +265,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
         cb_timezone = ATSwingUtils.getComboBox(DeviceConfigurationDialog.time_zones_vector, 25, 50, 370, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
 
-        chb_fix = ATSwingUtils.getCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"), 25, 90, 350, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
+        chb_fix = ATSwingUtils.getCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"), 25, 90, 380, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
         chb_fix.addChangeListener(this);
         chb_fix.setSelected(false);
 

@@ -65,6 +65,19 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
         // dayData.addGlucoValueEventListener(this);
     }
 
+    
+    /**
+     * Clear Data
+     */
+    public void clearData()
+    {
+        this.displayed_dl_data.clear();
+        this.dl_data.clear();
+        fireTableChanged(null);
+    }
+    
+    
+    
     /**
      * Get Column Count
      * 

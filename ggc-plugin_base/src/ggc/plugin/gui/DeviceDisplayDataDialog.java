@@ -217,7 +217,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
     protected void init()
     {
-        model = this.m_ddh.getDeviceValuesTableModel(); 
+        model = this.m_ddh.getDeviceValuesTableModel();
+        model.clearData();
         
         JPanel panel = new JPanel();
         panel.setLayout(null);
