@@ -1,13 +1,16 @@
 package ggc.pump.data;
 
 import ggc.core.db.hibernate.DayValueH;
-import ggc.pump.gui.PumpDisplayDataDialog;
+import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesTableModel;
+import ggc.plugin.gui.DeviceDisplayDataDialog;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-
-import javax.swing.table.AbstractTableModel;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,8 +38,10 @@ import javax.swing.table.AbstractTableModel;
  *  Author: Andy {andy@atech-software.com}
  */
 
+// FIX: Remove unused methods...
 
-public class PumpValuesTableModel extends AbstractTableModel 
+
+public class PumpValuesTableModel extends DeviceValuesTableModel 
 {
 
     private static final long serialVersionUID = -3199123443953228082L;
@@ -53,7 +58,7 @@ public class PumpValuesTableModel extends AbstractTableModel
 
     // GGCProperties props = GGCProperties.getInstance();
 
-    int current_filter = PumpDisplayDataDialog.FILTER_NEW_CHANGED;
+    //int current_filter = PumpDisplayDataDialog.FILTER_NEW_CHANGED;
 
     // public String status_icon_name
 
@@ -63,15 +68,14 @@ public class PumpValuesTableModel extends AbstractTableModel
     /**
      * Constructor
      */
-    public PumpValuesTableModel()
+    public PumpValuesTableModel(DeviceDataHandler ddh)
     {
-        this.displayed_dl_data = new ArrayList<PumpValuesEntry>();
-        this.dl_data = new ArrayList<PumpValuesEntry>();
-        // this.dayData = dayData;
-        fireTableChanged(null);
-        // dayData.addGlucoValueEventListener(this);
+        super(DataAccessPump.getInstance(), ddh);
     }
 
+    
+    
+    
     public int getColumnCount()
     {
         return 5;
@@ -107,25 +111,7 @@ public class PumpValuesTableModel extends AbstractTableModel
 
     }
 
-    public void selectAll()
-    {
-        setSelectors(true);
-    }
 
-    public void deselectAll()
-    {
-        setSelectors(false);
-    }
-
-    private void setSelectors(boolean select)
-    {
-        for (int i = 0; i < this.displayed_dl_data.size(); i++)
-        {
-            this.displayed_dl_data.get(i).checked = select;
-        }
-
-        this.fireTableDataChanged();
-    }
 
     
     public void setFilter(int filter)
@@ -158,26 +144,26 @@ public class PumpValuesTableModel extends AbstractTableModel
     {
         switch (this.current_filter)
         {
-            case PumpDisplayDataDialog.FILTER_ALL:
+            case DeviceDisplayDataDialog.FILTER_ALL:
                 return true;
                 
-            case PumpDisplayDataDialog.FILTER_NEW:
+            case DeviceDisplayDataDialog.FILTER_NEW:
                 return (status == PumpValuesEntry.STATUS_NEW);
     
-            case PumpDisplayDataDialog.FILTER_CHANGED:
+            case DeviceDisplayDataDialog.FILTER_CHANGED:
                 return (status == PumpValuesEntry.STATUS_CHANGED);
                 
-            case PumpDisplayDataDialog.FILTER_EXISTING:
+            case DeviceDisplayDataDialog.FILTER_EXISTING:
                 return (status == PumpValuesEntry.STATUS_OLD);
                 
-            case PumpDisplayDataDialog.FILTER_UNKNOWN:
+            case DeviceDisplayDataDialog.FILTER_UNKNOWN:
                 return (status == PumpValuesEntry.STATUS_UNKNOWN);
                 
-            case PumpDisplayDataDialog.FILTER_NEW_CHANGED:
+            case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
                 return ((status == PumpValuesEntry.STATUS_NEW) ||
                         (status == PumpValuesEntry.STATUS_CHANGED));
                 
-            case PumpDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
+            case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
                 return (status != PumpValuesEntry.STATUS_OLD);
         }
         return false;
@@ -292,7 +278,7 @@ public class PumpValuesTableModel extends AbstractTableModel
         }
     }
     
-    
+    /*
     public Hashtable<String,ArrayList<DayValueH>> getCheckedEntries()
     {
         
@@ -322,7 +308,7 @@ public class PumpValuesTableModel extends AbstractTableModel
         }
         
         return ht;
-    }
+    }*/
     
     
     @Override
@@ -367,6 +353,27 @@ public class PumpValuesTableModel extends AbstractTableModel
         this.old_data = data;
         //System.out.println(this.old_data);
         //System.out.println(this.old_data.keys());
+    }
+
+    @Override
+    public void addToArray(ArrayList<?> lst, ArrayList<?> source)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void processDeviceValueEntry(DeviceValuesEntry mve)
+    {
+        // TODO Auto-generated method stub
+        
     }
     
     

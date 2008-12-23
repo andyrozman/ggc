@@ -8,7 +8,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  *  @author Hibernate CodeGenerator 
  */
-public class DayValueH implements Serializable
+public class DayValueH implements Serializable, GGCHibernateObject
 {
 
     private static final long serialVersionUID = -1661031856854546844L;
@@ -115,8 +115,7 @@ public class DayValueH implements Serializable
     }
 
     /**
-     * Get DateTime Info
-     * 
+     * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * @return
      */
     public long getDt_info()
@@ -125,9 +124,9 @@ public class DayValueH implements Serializable
     }
 
     /**
-     * Set DateTime Info
+     * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * 
-     * @param dt_info
+     * @param dt_info 
      */
     public void setDt_info(long dt_info)
     {
@@ -236,9 +235,9 @@ public class DayValueH implements Serializable
     }
 
     /**
-     * Get Extended
+     * Get Extended 
      * 
-     * @return
+     * @return extended value
      */
     public String getExtended()
     {
@@ -247,8 +246,8 @@ public class DayValueH implements Serializable
 
     /**
      * Set Extended
-     * 
-     * @param extended
+     *  
+     * @param extended parameter
      */
     public void setExtended(String extended)
     {
@@ -258,7 +257,7 @@ public class DayValueH implements Serializable
     /**
      * Get Person Id
      * 
-     * @return
+     * @return person id parameter
      */
     public int getPerson_id()
     {
@@ -268,7 +267,7 @@ public class DayValueH implements Serializable
     /**
      * Set Person Id
      * 
-     * @param person_id
+     * @param person_id parameter
      */
     public void setPerson_id(int person_id)
     {
@@ -298,7 +297,7 @@ public class DayValueH implements Serializable
     /**
      * Get Changed
      * 
-     * @return
+     * @return changed value
      */
     public long getChanged()
     {
@@ -308,7 +307,7 @@ public class DayValueH implements Serializable
     /**
      * Set Changed
      * 
-     * @param changed
+     * @param changed parameter
      */
     public void setChanged(long changed)
     {
@@ -337,6 +336,7 @@ public class DayValueH implements Serializable
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
+    
     /**
      * Hash code generator
      * 

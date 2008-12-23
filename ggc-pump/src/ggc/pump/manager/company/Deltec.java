@@ -23,8 +23,8 @@ import ggc.pump.util.I18nControl;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      Deltec  
+ *  Description:   Pump Company - Deltec
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -32,31 +32,24 @@ import ggc.pump.util.I18nControl;
 
 public class Deltec extends AbstractDeviceCompany
 {
-
     
+    /**
+     * Constructor
+     */
     public Deltec()
     {
         super(I18nControl.getInstance(), true);
     }
 
 
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
     /**
-     * getName - Get Name of meter. 
+     * getName - Get Name of pump company. 
      * 
-     * @return name of meter
+     * @return name of pump company
      */
     public String getName()
     {
-        return "Roche";
+        return "Deltec";
     }
 
     

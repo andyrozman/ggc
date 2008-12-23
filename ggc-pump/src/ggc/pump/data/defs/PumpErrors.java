@@ -26,8 +26,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpErrors  
+ *  Description:  Pump Errors 
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -39,6 +39,9 @@ public class PumpErrors
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
+    /**
+     * Errors Description
+     */
     public String[] errors_desc = { ic.getMessage("SELECT_SUBTYPE"),
                        ic.getMessage("ERROR_UNKNOWN_ERROR"),             
                        ic.getMessage("ERROR_CARTRIDGE_EMPTY"),             
@@ -59,24 +62,81 @@ public class PumpErrors
     
     Hashtable<String,String> errors_mapping = new Hashtable<String,String>(); 
     
+    /**
+     * Pump Error: Unknown Error
+     */
     public static final int PUMP_ERROR_UNKNOWN_ERROR  = 0; //__________________________151
 
+    /**
+     * Pump Error: Cartridge Empty
+     */
     public static final int PUMP_ERROR_CARTRIDGE_EMPTY  = 1; //__________________________151
+    
+    /**
+     * Pump Error: Battery Depleted
+     */
     public static final int PUMP_ERROR_BATTERY_DEPLETED =2;//__________________________152
+    
+    /**
+     * Pump Error: Automatic Off
+     */
     public static final int PUMP_ERROR_AUTOMATIC_OFF =3; //_____________________________152
+    
+    /**
+     * Pump Error: No Delivery
+     */
     public static final int PUMP_ERROR_NO_DELIVERY = 4;  // minimed 'No Delivery'=4, roche 'Occlusion'=4
+
+    /**
+     * Pump Error: End of Operation
+     */
     public static final int PUMP_ERROR_END_OF_OPERATION = 5; //__________________________154
+    
+    /**
+     * Pump Error: Mechanical Error
+     */
     public static final int PUMP_ERROR_MECHANICAL_ERROR = 6; //_________________________155
+    
+    /**
+     * Pump Error: Electronic Error
+     */
     public static final int PUMP_ERROR_ELECTRONIC_ERROR = 7; //_________________________156
+    
+    /**
+     * Pump Error: Power Interrupt
+     */
     public static final int PUMP_ERROR_POWER_INTERRUPT = 8; //__________________________157
+    
+    /**
+     * Pump Error: Cartridge Error
+     */
     public static final int PUMP_ERROR_CARTRIDGE_ERROR = 10; // _________________________158
+    
+    /**
+     * Pump Error: Set Not Primed
+     */
     public static final int PUMP_ERROR_SET_NOT_PRIMED = 11; //___________________________158
+    
+    /**
+     * Pump Error: Data Interrupted
+     */
     public static final int PUMP_ERROR_DATA_INTERRUPTED = 12; //_________________________159
-    public static final int PUMP_ERROR_LANGUAGE_ERROR = 13; //__________________________160
+    
+    /**
+     * Pump Error: Language Error
+     */
+   public static final int PUMP_ERROR_LANGUAGE_ERROR = 13; //__________________________160
+
+   /**
+    * Pump Error: Insulin Changed
+    */
     public static final int PUMP_ERROR_INSULIN_CHANGED = 14; //__________________________    
     
     
     
+    /**
+     * Constructor
+     */
     public PumpErrors()
     {
         this.errors_mapping.put(ic.getMessage("ERROR_UNKNOWN_ERROR"), "0");             
@@ -96,6 +156,12 @@ public class PumpErrors
     }
     
 
+    /**
+     * Get Type from Description
+     * 
+     * @param str type as string
+     * @return type as int
+     */
     public int getTypeFromDescription(String str)
     {
         String s = "0";
@@ -107,6 +173,11 @@ public class PumpErrors
         
     }
     
+    /**
+     * Get Descriptions (array)
+     * 
+     * @return array of strings with description
+     */
     public String[] getDescriptions()
     {
         return this.errors_desc;

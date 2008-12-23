@@ -66,6 +66,9 @@ public class PumpAlarms
     
 
     
+    /**
+     * Constructor
+     */
     public PumpAlarms()
     {
         alarms_mapping.put(ic.getMessage("ALARM_CARTRIDGE_LOW"), "1");             
@@ -77,8 +80,14 @@ public class PumpAlarms
         alarms_mapping.put(ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"), "7");             
         alarms_mapping.put(ic.getMessage("ALARM_BOLUS_CANCELED"), "8");             
     }
+
     
-    
+    /**
+     * Get Type from Description
+     * 
+     * @param str type as string
+     * @return type as int
+     */
     public int getTypeFromDescription(String str)
     {
         String s = "0";

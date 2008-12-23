@@ -26,8 +26,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpBaseType  
+ *  Description:  Pump Base Types 
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -69,6 +69,9 @@ public class PumpBaseType
     public static final int PUMP_DATA_ADDITIONAL_DATA = 9;
     
 
+    /**
+     * Constructor
+     */
     public PumpBaseType()
     {
         this.basetype_mapping.put(ic.getMessage("BASAL_DOSE"), "1");
@@ -83,6 +86,12 @@ public class PumpBaseType
     }
     
     
+    /**
+     * Get Type from Description
+     * 
+     * @param str type as string
+     * @return type as int
+     */
     public int getTypeFromDescription(String str)
     {
         String s = "0";
@@ -93,6 +102,11 @@ public class PumpBaseType
         return Integer.parseInt(s);
     }
     
+    /**
+     * Get Descriptions (array)
+     * 
+     * @return array of strings with description
+     */
     public String[] getDescriptions()
     {
         return this.basetype_desc;

@@ -28,7 +28,7 @@
 
 package ggc.pump.gui.manual;
 
-import ggc.pump.data.PumpValuesDay;
+import ggc.plugin.data.DeviceValuesDay;
 import ggc.pump.util.DataAccessPump;
 
 import javax.swing.table.AbstractTableModel;
@@ -65,7 +65,7 @@ public class PumpDataTableModel extends AbstractTableModel
     
     private static final long serialVersionUID = 412835707138372687L;
 
-    PumpValuesDay dayData;
+    DeviceValuesDay dayData;
     
     DataAccessPump m_da = DataAccessPump.getInstance();
 
@@ -95,18 +95,18 @@ public class PumpDataTableModel extends AbstractTableModel
     };
 
 
-    public PumpDataTableModel(PumpValuesDay dayData)
+    public PumpDataTableModel(DeviceValuesDay dayData)
     {
         this.dayData = dayData;
         fireTableChanged(null);
     }
 
-    public PumpValuesDay getDailyValues()
+    public DeviceValuesDay getDailyValues()
     {
         return this.dayData;
     }
 
-    public void setDailyValues(PumpValuesDay dayData)
+    public void setDailyValues(DeviceValuesDay dayData)
     {
         this.dayData = dayData;
         fireTableChanged(null);

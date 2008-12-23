@@ -38,26 +38,56 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public class PumpConfigurationDefinition implements DeviceConfigurationDefinition
 {
     
+    /**
+     * Keyword used through configuration and configuration file describing device (for pump plugin, this
+     * would be word PUMP).
+     *  
+     * @return keyword representing device
+     */
     public String getDevicePrefix()
     {
         return "PUMP";
     }
     
+    
+    /**
+     * Only certain devices support manual time fix for application (meters do, other's don't).
+     * 
+     * @return true if time fix is supported, false otherwise
+     */
     public boolean doesDeviceSupportTimeFix()
     {
         return true;
     }
 
+    
+    /**
+     * Get path to Configuration file as string
+     * 
+     * @return path to configuration file
+     */
     public String getDevicesConfigurationFile()
     {
         return "../data/tools/PumpConfiguration.properties";
     }
 
+    
+    /**
+     * Returns Dummy object (needed for some actions)
+     * 
+     * @return
+     */
     public Object getDummyObject()
     {
         return new DummyPump();
     }
 
+    
+    /**
+     * Returns list of all supported devices for plugin. Needed for device selection
+     * 
+     * @return
+     */
     public Vector<? extends SelectableInterface> getSupportedDevices()
     {
         return PumpManager.getInstance().getSupportedDevices();

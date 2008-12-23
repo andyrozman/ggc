@@ -24,8 +24,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpReport  
+ *  Description:  Pump Report Types 
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -36,6 +36,9 @@ public class PumpReport
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
+    /**
+     * Report Descriptions
+     */
     public String[] report_desc = { 
                        ic.getMessage("SELECT_SUBTYPE"),
                        ic.getMessage("REPORT_MISC"),             
@@ -45,12 +48,32 @@ public class PumpReport
     };
     
     
+    /**
+     * Pump Report: Misc
+     */
     public static final int PUMP_REPORT_MISC = 1;
+
+    /**
+     * Pump Report: Bolus Total Day
+     */
     public static final int PUMP_REPORT_BOLUS_TOTAL_DAY = 2;
+    
+    /**
+     * Pump Report: Basal Total Day
+     */
     public static final int PUMP_REPORT_BASAL_TOTAL_DAY = 3;
+    
+    /**
+     * Pump Report: Basal Total Day
+     */
     public static final int PUMP_REPORT_INSULIN_TOTAL_DAY = 4;
     
     
+    /**
+     * Get Descriptions (array)
+     * 
+     * @return array of strings with description
+     */
     public String[] getDescriptions()
     {
         return this.report_desc;

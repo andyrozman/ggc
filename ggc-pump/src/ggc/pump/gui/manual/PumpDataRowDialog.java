@@ -30,7 +30,7 @@ package ggc.pump.gui.manual;
  */
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
-import ggc.pump.data.PumpValuesDay;
+import ggc.plugin.data.DeviceValuesDay;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
@@ -137,7 +137,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
 
     String sDate = null;
 
-    PumpValuesDay dV = null;
+    DeviceValuesDay dV = null;
     PumpValuesEntry m_dailyValuesRow = null;
 
 //    NumberFormat bg_displayFormat, bg_editFormat;
@@ -167,7 +167,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     
     
 
-    public PumpDataRowDialog(PumpValuesDay ndV, String nDate, JDialog dialog)
+    public PumpDataRowDialog(DeviceValuesDay ndV, String nDate, JDialog dialog)
     {
         super(dialog, "", true);
 
@@ -196,7 +196,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         initParameters(ndr);
     }
 */
-    public void initParameters(PumpValuesDay ndV, String nDate)
+    public void initParameters(DeviceValuesDay ndV, String nDate)
     {
         // if (add)
         setTitle(m_ic.getMessage("ADD_ROW"));

@@ -3,7 +3,6 @@ package ggc.pump.device;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import java.util.Hashtable;
 
@@ -58,8 +57,10 @@ import java.util.Hashtable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpInterface
+ *  Description:  This is interface class, used for pumps. It should be primary implemented by abstract 
+ *                protocol class. Each pump family "should" have it's own super class and one class for 
+ *                each pump type instance.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -76,6 +77,7 @@ public interface PumpInterface extends DeviceInterface
 
     /**
      * Used for opening connection with device.
+     * 
      * @return boolean - if connection established
      * @throws PlugInBaseException 
      */
@@ -83,7 +85,8 @@ public interface PumpInterface extends DeviceInterface
 
 
     /**
-     * Will be called, when the import is ended and freeing resources.
+     * Used for closing connection with device
+     * 
      * @throws PlugInBaseException 
      */
     void close() throws PlugInBaseException;
@@ -132,33 +135,6 @@ public interface PumpInterface extends DeviceInterface
      */
     public Hashtable<String,Integer> getEventMappings();
     
-
-    //************************************************
-    //***        Should bne implemnetyed by Abstract Meter ter          ***
-    //************************************************
-
-
-    //************************************************
-    //***        Available Functionality for Meter          ***
-    //************************************************
-
-    
-    
-    /**
-     * setDeviceAllowedActions - sets actions which are allowed by implementation
-     *   of MeterInterface (actually of GenericMeterXXXXX classes)
-     *   
-     * @param can_read_data
-     * @param can_read_partitial_data
-     * @param can_read_device_info
-     * @param can_read_device_configuration
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-                                        boolean can_read_partitial_data,
-//                                      boolean can_clear_data,
-                                        boolean can_read_device_info,
-                                        boolean can_read_device_configuration);
-    
     
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
@@ -166,65 +142,6 @@ public interface PumpInterface extends DeviceInterface
      */
     public DeviceIdentification getDeviceInfo();
     
-    
-    
 
-    /**
-     * canReadData - Can Meter Class read data from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadData();
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadPartitialData();
-
-
-    
-    /**
-     * canReadDeviceInfo - tells if we can read info about device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadDeviceInfo();
-    
-    
-    /**
-     * canReadConfiguration - tells if we can read configuration from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadConfiguration();
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
-
-    void test();
-
-
-    //************************************************
-    //***          Company Specific Settings                ***
-    //************************************************
-
-    
-    /**
-     * setDeviceCompany - set Company for device
-     * 
-     * @param company
-     */
-    public void setDeviceCompany(AbstractDeviceCompany company);
-    
-    
-    /**
-     * getDeviceCompany - get Company for device
-     */
-    public AbstractDeviceCompany getDeviceCompany();
-    
 
 }

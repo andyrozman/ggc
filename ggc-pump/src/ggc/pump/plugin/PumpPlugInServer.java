@@ -46,12 +46,39 @@ public class PumpPlugInServer extends PlugInServer
 
     //String plugin_version = "0.1.7.1";
     
+    /**
+     *  Command: Read Pump Data  
+     */
     public static final int COMMAND_READ_PUMP_DATA = 0;
+    
+    /**
+     *  Command: Pumps List  
+     */
     public static final int COMMAND_PUMPS_LIST = 1;
+    
+    /**
+     *  Command: Configuration  
+     */
     public static final int COMMAND_CONFIGURATION = 2;
+    
+    /**
+     *  Command: Profiles  
+     */
     public static final int COMMAND_PROFILES = 3;
+    
+    /**
+     *  Command: Manual Entry 
+     */
     public static final int COMMAND_MANUAL_ENTRY = 4;
+    
+    /**
+     *  Command: Additional Data  
+     */
     public static final int COMMAND_ADDITIONAL_DATA = 5;
+    
+    /**
+     *  Command: About  
+     */
     public static final int COMMAND_ABOUT = 6;
     
     
@@ -74,12 +101,22 @@ public class PumpPlugInServer extends PlugInServer
     
     
     
+    /**
+     * Constructor
+     */
     public PumpPlugInServer()
     {
         super();
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param cont
+     * @param selected_lang
+     * @param da
+     */
     public PumpPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
         super(cont, selected_lang, da);
@@ -91,8 +128,10 @@ public class PumpPlugInServer extends PlugInServer
     
     
     
-    /* 
-     * executeCommand
+    /**
+     * Execute Command on Server Side
+     * 
+     * @param command
      */
     @Override
     public void executeCommand(int command, Object obj_data)
@@ -135,8 +174,10 @@ public class PumpPlugInServer extends PlugInServer
         
     }
 
-    /* 
-     * getName
+    /**
+     * Get Name of plugin
+     * 
+     * @return
      */
     @Override
     public String getName()
@@ -144,8 +185,10 @@ public class PumpPlugInServer extends PlugInServer
         return ic.getMessage("PUMP_PLUGIN");
     }
 
-    /* 
-     * getVersion
+    /**
+     * Get Version of plugin
+     * 
+     * @return
      */
     @Override
     public String getVersion()
@@ -153,8 +196,10 @@ public class PumpPlugInServer extends PlugInServer
         return DataAccessPump.PLUGIN_VERSION;
     }
 
-    /* 
-     * getWhenWillBeImplemented
+    /**
+     * Get Information When will it be implemented
+     * 
+     * @return
      */
     @Override
     public String getWhenWillBeImplemented()
@@ -162,25 +207,19 @@ public class PumpPlugInServer extends PlugInServer
         return "0.4";
     }
 
-    /* 
-     * initPlugIn
+    /**
+     * Init PlugIn which needs to be implemented 
      */
     @Override
     public void initPlugIn()
     {
         ic = m_da.getI18nControlInstance();
-        //ic = I18nControl.getInstance();
-        //ic.setLanguage(this.selected_lang);
-        //ic = I18nControl.getInstance();
-        //ic.setLanguage(this.selected_lang);
         I18nControl.getInstance().setLanguage(this.selected_lang);
         
         DataAccessPump da = DataAccessPump.getInstance();
-        
         da.addComponent(this.parent);
         da.setHelpContext(this.m_da.getHelpContext());
         da.createDb(m_da.getHibernateDb());
-        
         da.initAllObjects();
     }
     

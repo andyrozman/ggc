@@ -5,7 +5,6 @@ import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
 import ggc.pump.device.minimed.MinimedCareLink;
 
-import java.awt.TextArea;
 import java.io.File;
 import java.util.Vector;
 
@@ -42,19 +41,14 @@ import com.atech.utils.TimerThread;
 public class PumpConsoleTester //extends JFrame
 {
 
-	
-//    private JButton openButton, sendButton, enterButton, clearButton;
-//    private JTextField textField, textField2, textField3;
-
-    public static TextArea messageArea;
-
-    //private AscensiaContour m_meter;
-    //private AbstractSerialMeter m_meter;
-    //private OneTouchUltra m_meter;
-    //private SerialProtocol m_meter;
 
     TimerThread thread;
     
+    /**
+     * Constructor
+     * 
+     * @param portName
+     */
     public PumpConsoleTester(String portName)
     {
     	
@@ -80,6 +74,12 @@ public class PumpConsoleTester //extends JFrame
 
 
 
+    /**
+     * Start Roche
+     * 
+     * @param portName
+     * @throws Exception
+     */
     public void startRoche(String portName) throws Exception
     {
         AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
@@ -87,6 +87,12 @@ public class PumpConsoleTester //extends JFrame
     }
     
     
+    /**
+     * Start Minimed
+     * 
+     * @param file
+     * @throws Exception
+     */
     public void startMinimed(String file) throws Exception
     {
         MinimedCareLink mcl = new MinimedCareLink();
@@ -95,6 +101,9 @@ public class PumpConsoleTester //extends JFrame
     }
     
     
+    /**
+     * Display Serial Ports
+     */
     public void displaySerialPorts()
     {
     	Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
@@ -110,21 +119,24 @@ public class PumpConsoleTester //extends JFrame
 
 
 
+    /**
+     * Main startup method
+     * 
+     * @param args
+     */
     public static void main(String args[])
     {
-	try
-	{
-	    new PumpConsoleTester(args[0]);
-
-
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Error:" + ex);
-	    ex.printStackTrace();
-	}
+    	try
+    	{
+    	    new PumpConsoleTester(args[0]);
+    
+    
+    	}
+    	catch(Exception ex)
+    	{
+    	    System.out.println("Error:" + ex);
+    	    ex.printStackTrace();
+    	}
     }
-
-
 
 }

@@ -26,8 +26,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpBasalSubType  
+ *  Description:  Pump Basal Sub Types 
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -57,6 +57,9 @@ public class PumpBasalSubType
     public static final int PUMP_BASAL_PUMP_STATUS = 5;
 
     
+    /**
+     * Constructor
+     */
     public PumpBasalSubType()
     {
         this.basal_mapping.put(ic.getMessage("BASAL_VALUE"), "1");             
@@ -67,6 +70,13 @@ public class PumpBasalSubType
     }
     
     
+    
+    /**
+     * Get Type from Description
+     * 
+     * @param str type as string
+     * @return type as int
+     */
     public int getTypeFromDescription(String str)
     {
         String s = "0";
@@ -77,6 +87,11 @@ public class PumpBasalSubType
         return Integer.parseInt(s);
     }
     
+    /**
+     * Get Descriptions (array)
+     * 
+     * @return array of strings with description
+     */
     public String[] getDescriptions()
     {
         return this.basal_desc;

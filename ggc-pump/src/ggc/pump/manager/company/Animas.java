@@ -52,8 +52,8 @@ import ggc.pump.util.I18nControl;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      Animas  
+ *  Description:   Pump Company - Animas
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -63,29 +63,23 @@ public class Animas extends AbstractDeviceCompany
 {
 
     
+    /**
+     * Constructor
+     */
     public Animas()
     {
         super(I18nControl.getInstance(), true);
     }
 
 
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
     /**
-     * getName - Get Name of meter. 
+     * getName - Get Name of pump company. 
      * 
-     * @return name of meter
+     * @return name of pump company
      */
     public String getName()
     {
-        return "Roche";
+        return "Animas";
     }
 
     

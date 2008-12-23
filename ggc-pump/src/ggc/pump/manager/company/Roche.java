@@ -33,7 +33,9 @@ import ggc.pump.util.I18nControl;
 public class Roche extends AbstractDeviceCompany
 {
 
-    
+    /**
+     * Constructor
+     */
     public Roche()
     {
         super(I18nControl.getInstance(), true);
@@ -50,9 +52,9 @@ public class Roche extends AbstractDeviceCompany
 
 
     /**
-     * getName - Get Name of meter. 
+     * getName - Get Name of pump company. 
      * 
-     * @return name of meter
+     * @return name of pump company
      */
     public String getName()
     {

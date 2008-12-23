@@ -26,8 +26,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpEvents  
+ *  Description:  Pump Events 
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -74,6 +74,9 @@ public class PumpEvents
     public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD = 43;
     
     
+    /**
+     * Constructor
+     */
     public PumpEvents()
     {
         events_mapping.put(ic.getMessage("EVENT_PRIME_INFUSION_SET"), "1");             
@@ -89,6 +92,12 @@ public class PumpEvents
     }
     
 
+    /**
+     * Get Type from Description
+     * 
+     * @param str type as string
+     * @return type as int
+     */
     public int getTypeFromDescription(String str)
     {
         String s = "0";
@@ -100,6 +109,11 @@ public class PumpEvents
         
     }
     
+    /**
+     * Get Descriptions (array)
+     * 
+     * @return array of strings with description
+     */
     public String[] getDescriptions()
     {
         return this.events_desc;

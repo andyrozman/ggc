@@ -26,7 +26,7 @@
 
 package ggc.pump.gui.manual;
 
-import ggc.pump.data.PumpValuesDay;
+import ggc.plugin.data.DeviceValuesDay;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.util.DataAccessPump;
@@ -122,7 +122,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
     JLabel lblDate;
     JButton saveButton;
     JButton help_button;
-    PumpValuesDay dayData;
+    DeviceValuesDay dayData;
 
     GGCPumpDb m_db = null;
 
@@ -342,7 +342,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         resultsPane = new JScrollPane(table);
 
         
-        PumpValuesDay pvd = new PumpValuesDay();
+        DeviceValuesDay pvd = new DeviceValuesDay(DataAccessPump.getInstance());
         
         for (int i = 0; i < 5; i++) 
         {
@@ -503,10 +503,12 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                 return;
             }
 
-            PumpValuesEntry dvr = dayData.getRowAt(table.getSelectedRow());
+            System.out.println("FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!");
+            
+            // TODO: Fix this
+            //PumpValuesEntry dvr = dayData.getRowAt(table.getSelectedRow());
 
-            //DailyRowDialog aRF = new DailyRowDialog(dvr, this);
-            new PumpDataRowDialog(dvr, this);
+            //new PumpDataRowDialog(dvr, this);
             
             /*
             if (aRF.actionSuccesful())

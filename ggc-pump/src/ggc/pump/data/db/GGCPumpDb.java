@@ -1,8 +1,8 @@
 package ggc.pump.data.db;
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.db.PluginDb;
-import ggc.pump.data.PumpValuesDay;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 
@@ -48,21 +48,34 @@ public class GGCPumpDb extends PluginDb
 {
     private static Log log = LogFactory.getLog(GGCPumpDb.class);
 
+    /**
+     * Constructor
+     * 
+     * @param db
+     */
     public GGCPumpDb(HibernateDb db)
     {
         super(db);
     }
     
     
-    public PumpValuesDay getDailyPumpValues(GregorianCalendar gc)
+    /**
+     * Get Daily Pump Values
+     * 
+     * @param gc
+     * @return
+     */
+    public DeviceValuesDay getDailyPumpValues(GregorianCalendar gc)
     {
+        System.out.println("FIX THIS");
+        
         log.info("getDayStats()");
 
         //ATechDate atd = new ATechDate(ATechDate.DT_DATE, gc);
         
         long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
         
-        PumpValuesDay dV = new PumpValuesDay();
+//        PumpValuesDay dV = new PumpValuesDay();
         //dV.setDate(m_da.getDateTimeFromDateObject(day.getTime()) / 10000);
 
         String sql = "";
@@ -86,19 +99,20 @@ public class GGCPumpDb extends PluginDb
 
             while (it.hasNext())
             {
+                @SuppressWarnings("unused")
                 PumpValuesEntry dv = (PumpValuesEntry) it.next();
                 
-                dV.addEntry(dv);
+//x                dV.addEntry(dv);
             }
             
-            System.out.println("Base entries: " + dV.getRowCount());
+//x            System.out.println("Base entries: " + dV.getRowCount());
 
             // TODO extended
             ArrayList<PumpValuesEntryExt> lst_ext = getDailyPumpValuesExtended(gc);
             
             System.out.println("Extended list: " + lst_ext.size());
             
-            dV.addExtendedEntries(lst_ext);
+//x            dV.addExtendedEntries(lst_ext);
             
 //            mergePumpData(dV, lst_ext);
             
@@ -109,11 +123,18 @@ public class GGCPumpDb extends PluginDb
             log.error("getDayStats(). Exception: " + ex, ex);
         }
 
-        return dV;
-        
+//        return dV;
+   
+        return null;
     }
     
     
+    /**
+     * Get Daily Pump Values Extended
+     * 
+     * @param gc
+     * @return
+     */
     public ArrayList<PumpValuesEntryExt> getDailyPumpValuesExtended(GregorianCalendar gc)
     {
         log.info("getDailyPumpValuesExtended() - Run");

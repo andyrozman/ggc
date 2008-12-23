@@ -52,8 +52,8 @@ import ggc.pump.util.I18nControl;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      Insulet  
+ *  Description:   Pump Company - Insulet
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -63,19 +63,13 @@ public class Insulet extends AbstractDeviceCompany
 {
 
     
+    /**
+     * Constructor
+     */
     public Insulet()
     {
         super(I18nControl.getInstance(), true);
     }
-
-
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
 
 
     /**

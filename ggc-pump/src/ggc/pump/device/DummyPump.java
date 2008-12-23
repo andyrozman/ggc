@@ -37,7 +37,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class DummyPump extends GenericPump //implements MeterInterface
+public class DummyPump //extends GenericPump //implements MeterInterface
 {
 
     DataAccessPump m_da = DataAccessPump.getInstance();
@@ -53,7 +53,7 @@ public class DummyPump extends GenericPump //implements MeterInterface
     
     public DummyPump(OutputWriter ow)
     {
-        super(ow);
+        //super(ow);
     }
     
 

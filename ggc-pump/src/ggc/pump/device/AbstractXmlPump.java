@@ -6,8 +6,6 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.pump.util.I18nControl;
 
-import java.util.ArrayList;
-
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
