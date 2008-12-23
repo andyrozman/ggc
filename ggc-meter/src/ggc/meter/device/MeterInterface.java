@@ -38,44 +38,23 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public interface MeterInterface extends SelectableInterface, DeviceInterface
 {
 
-
-    //************************************************
-    //***          Working with device             ***
-    //************************************************
-
-
     /**
-     * Will be called, on start of import to start communication with device
-     * @return 
+     * Used for opening connection with device.
+     * 
+     * @return boolean - if connection established
      * @throws PlugInBaseException 
      */
     boolean open() throws PlugInBaseException;
 
 
     /**
-     * Will be called, when the import is ended and freeing resources.
+     * Used for closing connection with device
+     * 
      * @throws PlugInBaseException 
      */
     void close() throws PlugInBaseException;
 
 
-
-
-
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * Should be implemented by meter class.
-     * 
-     * @return id of company
-     */
-    int getCompanyId();
-    
-    
     
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory

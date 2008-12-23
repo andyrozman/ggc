@@ -43,15 +43,10 @@ public class Abbott extends AbstractDeviceCompany
     }
 
     
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
     /**
-     * getName - Get Name of meter. 
+     * getName - Get Name of meter company. 
      * 
-     * @return name of meter
+     * @return name of pump company
      */
     public String getName()
     {
