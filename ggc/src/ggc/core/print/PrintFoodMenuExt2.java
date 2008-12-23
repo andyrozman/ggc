@@ -46,11 +46,42 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPTable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PrintFoodMenuExt2  
+ *  Description:  Class for printing - Foodmenu Extended 2
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
 {
 
     
     
+    /**
+     * Constructor
+     * 
+     * @param mv
+     */
     public PrintFoodMenuExt2(DayValuesData mv)
     {
         super(mv);
@@ -59,6 +90,11 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
     
     
     
+    /** 
+     * Get Title
+     * 
+     * @see ggc.core.print.PrintFoodMenuAbstract#getTitle()
+     */
     public Paragraph getTitle()
     {
         Paragraph p = new Paragraph();
@@ -77,18 +113,11 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
         return p;
     }
     
-    
-    
 
-    
-    
-    
-    
-
-    
-
-
-
+    /**
+     * Fill Doucment Body
+     * @see ggc.core.print.PrintFoodMenuAbstract#fillDocumentBody(com.lowagie.text.Document)
+     */
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {

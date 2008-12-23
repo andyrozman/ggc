@@ -1,35 +1,6 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: Settings Purpose: This is datalayer file (data file, with methods
- * to work with database or in this case Hibernate). This one is used for
- * Settings.
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.db.hibernate.SettingsH;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
@@ -43,12 +14,39 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     SettingsColorScheme
+ *  Description:  DataLayer class for ColorSchemeH, also BackupRestore object
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
     private static final long serialVersionUID = 3245362572378355284L;
 
-    public boolean debug = false;
+    private boolean debug = false;
 
     // public boolean edited = false;
     // public boolean added = false;
@@ -94,8 +92,15 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         this.setColor_ins2(ch.getColor_ins2());
         this.setColor_ins_perbu(ch.getColor_ins_perbu());
         this.setColor_ch(ch.getColor_ch());
+        
+        //this.setSelected()
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @return
+     */
     public String getShortDescription()
     {
         return "ColorScheme [id=" + this.getId() + ";name=" + this.getName() + "]";
@@ -115,56 +120,54 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
             return this.getShortDescription();
     }
 
-    /*
-     * public void setElementEdited() { this.edited = true; }
-     * 
-     * public void setElementAdded() { this.added = true; }
-     * 
-     * public boolean isElementEdited() { return this.edited; }
-     * 
-     * public boolean isElementAdded() { return this.added; }
-     */
+    
     // ---
     // --- DatabaseObjectHibernate
     // ---
+    
     /**
      * DbAdd - Add this object to database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
     {
 
-        // Transaction tx = sess.beginTransaction();
+        Transaction tx = sess.beginTransaction();
 
-        // ColorSchemeH ch = new ColorSchemeH();
+        ColorSchemeH ch = new ColorSchemeH();
 
-        // ch.s
-        /*
-         * ch.setKey(this.getKey()); ch.setValue(this.getValue());
-         * ch.setType(this.getType()); ch.setDescription(this.getDescription());
-         * 
-         * Long id = (Long) sess.save(ch);
-         * 
-         * tx.commit();
-         * 
-         * return "" + id.longValue();
-         */
+        ch.setId(this.getId());
+        ch.setName(this.getName());
+        ch.setCustom_type(this.getCustom_type());
+        ch.setColor_bg(this.getColor_bg());
+        ch.setColor_bg_avg(this.getColor_bg_avg());
+        ch.setColor_bg_low(this.getColor_bg_low());
+        ch.setColor_bg_high(this.getColor_bg_high());
+        ch.setColor_bg_target(this.getColor_bg_target());
+        ch.setColor_ins(this.getColor_ins());
+        ch.setColor_ins1(this.getColor_ins1());
+        ch.setColor_ins2(this.getColor_ins2());
+        ch.setColor_ins_perbu(this.getColor_ins_perbu());
+        ch.setColor_ch(this.getColor_ch());
+        
+        Long id = (Long) sess.save(ch);
 
-        return "0";
+        tx.commit();
+        
+        ch.setId(id.longValue());
+        
+        return "" + id.longValue();
+        
     }
 
     /**
      * DbEdit - Edit this object in database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -172,12 +175,22 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
 
         Transaction tx = sess.beginTransaction();
 
-        SettingsH ch = (SettingsH) sess.get(SettingsH.class, new Long(this.getId()));
-        /*
-         * ch.setId(this.getId()); ch.setKey(this.getKey());
-         * ch.setValue(this.getValue()); ch.setType(this.getType());
-         * ch.setDescription(this.getDescription());
-         */
+        ColorSchemeH ch = (ColorSchemeH) sess.get(ColorSchemeH.class, new Long(this.getId()));
+
+        ch.setId(this.getId());
+        ch.setName(this.getName());
+        ch.setCustom_type(this.getCustom_type());
+        ch.setColor_bg(this.getColor_bg());
+        ch.setColor_bg_avg(this.getColor_bg_avg());
+        ch.setColor_bg_low(this.getColor_bg_low());
+        ch.setColor_bg_high(this.getColor_bg_high());
+        ch.setColor_bg_target(this.getColor_bg_target());
+        ch.setColor_ins(this.getColor_ins());
+        ch.setColor_ins1(this.getColor_ins1());
+        ch.setColor_ins2(this.getColor_ins2());
+        ch.setColor_ins_perbu(this.getColor_ins_perbu());
+        ch.setColor_ch(this.getColor_ch());
+        
         sess.update(ch);
         tx.commit();
 
@@ -188,10 +201,8 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     /**
      * DbDelete - Delete this object in database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
@@ -199,7 +210,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
 
         Transaction tx = sess.beginTransaction();
 
-        SettingsH ch = (SettingsH) sess.get(SettingsH.class, new Long(this.getId()));
+        ColorSchemeH ch = (ColorSchemeH) sess.get(ColorSchemeH.class, new Long(this.getId()));
 
         sess.delete(ch);
         tx.commit();
@@ -211,12 +222,9 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
-     * 
-     * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     *  
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbHasChildren(Session sess) throws Exception
@@ -234,13 +242,22 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     public boolean DbGet(Session sess) throws Exception
     {
 
-        SettingsH ch = (SettingsH) sess.get(SettingsH.class, new Long(this.getId()));
+        ColorSchemeH ch = (ColorSchemeH) sess.get(ColorSchemeH.class, new Long(this.getId()));
 
         this.setId(ch.getId());
-        /*
-         * this.setKey(ch.getKey()); this.setValue(ch.getValue());
-         * this.setType(ch.getType()); this.setDescription(ch.getDescription());
-         */
+        this.setName(ch.getName());
+        this.setCustom_type(ch.getCustom_type());
+        this.setColor_bg(ch.getColor_bg());
+        this.setColor_bg_avg(ch.getColor_bg_avg());
+        this.setColor_bg_low(ch.getColor_bg_low());
+        this.setColor_bg_high(ch.getColor_bg_high());
+        this.setColor_bg_target(ch.getColor_bg_target());
+        this.setColor_ins(ch.getColor_ins());
+        this.setColor_ins1(ch.getColor_ins1());
+        this.setColor_ins2(ch.getColor_ins2());
+        this.setColor_ins_perbu(ch.getColor_ins_perbu());
+        this.setColor_ch(ch.getColor_ch());
+        
         return true;
     }
 
@@ -251,7 +268,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public String getObjectName()
     {
-        return "ColorSchemes";
+        return "ColorScheme";
     }
 
     /**
@@ -265,10 +282,11 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     }
 
     /**
-     * getAction - returns action that should be done on object 0 = no action 1
-     * = add action 2 = edit action 3 = delete action This is used mainly for
-     * objects, contained in lists and dialogs, used for processing by higher
-     * classes (classes calling selectors, wizards, etc...
+     * getAction - returns action that should be done on object 
+     * 0 = no action, 1 = add action 2 = edit action 3 = delete action 
+     * 
+     * This is used mainly for objects, contained in lists and dialogs, used for 
+     * processing by higher classes (classes calling selectors, wizards, etc...
      * 
      * @return number of action
      */
@@ -291,21 +309,22 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return ic.getMessage("COLOR_SCHEMES");
     }
 
+    
+    /**
+     * Get Class Name
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getClassName()
+     */
     public String getClassName()
     {
         return "ggc.core.db.hibernate.ColorSchemeH";
     }
 
-    /**
-     * getName
-     */
-    /*
-     * public String getName() { return this.getTargetName(); }
-     */
 
     // ---
     // --- BackupRestoreObject
     // ---
+    
     /**
      * Get Children
      */
@@ -340,6 +359,11 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return false;
     }
 
+    /**
+     * Has Children
+     * 
+     * @see com.atech.graphics.components.tree.CheckBoxTreeNodeInterface#hasChildren()
+     */
     public boolean hasChildren()
     {
         return false;
@@ -355,6 +379,9 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return "" + this.getId();
     }
 
+    /**
+     * Table Version
+     */
     public int TABLE_VERSION = 1;
 
     /**
@@ -443,6 +470,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
+    
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -456,13 +484,38 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
+        dbImport(table_version, value_entry, null);
+    }
+    
+    
+    /**
+     * dbImport - processes input entry to right fields
+     * 
+     * @param table_version
+     *            version of table
+     * @param value_entry
+     *            whole import line
+     * @throws Exception
+     *             if import for selected table version is not supported or it
+     *             fails
+     */
+    public void dbImport(int table_version, String value_entry, Object[] special) throws Exception
+    {
         // version is ignored for now
-
-        String[] arr = value_entry.split("|");
 
         DataAccess da = DataAccess.getInstance();
 
-        this.setId(da.getLongValueFromString(arr[0]));
+        value_entry = DataAccess.getInstance().replaceExpression(value_entry, "||", "| |");
+        String[] arr = da.splitString(value_entry, "|"); 
+       
+        //System.out.println(value_entry);
+        //System.out.println("arr: " + arr);
+        
+        //if (special==null)
+            this.setId(da.getLongValueFromString(arr[0]));
+        //else
+        //    this.setId(0);
+        
         this.setName(arr[1]);
         this.setCustom_type(da.getIntValueFromString(arr[2]));
         this.setColor_bg(da.getIntValueFromString(arr[3]));
@@ -475,7 +528,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         this.setColor_ins2(da.getIntValueFromString(arr[10]));
         this.setColor_ins_perbu(da.getIntValueFromString(arr[11]));
         this.setColor_ch(da.getIntValueFromString(arr[12]));
-
+        
     }
 
     /**
@@ -496,6 +549,16 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     public String getBackupClassName()
     {
         return "ggc.core.db.hibernate.ColorSchemeH";
+    }
+
+    /**
+     * Has To Be Clean - if table needs to be cleaned before import
+     * 
+     * @return true if we need to clean
+     */
+    public boolean hasToBeCleaned()
+    {
+        return true;
     }
 
 }

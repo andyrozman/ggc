@@ -1,33 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DailyStatsPanelL
- *  Purpose:  Enter and view all data for one day. (fix)
- *
- *  Author:   andyrozman {andy@atech-software.com}
- */
-
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
-
 package ggc.gui.little.panels;
 
 import ggc.core.data.DailyStatsTableModel;
@@ -41,21 +11,45 @@ import java.util.GregorianCalendar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     DailyStatsPanelL  
+ *  Description:  Panel for Daily Stats
+ *
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel implements ActionListener
 {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 3519092324025060409L;
-    public DailyStatsTableModel model = null;
+    private DailyStatsTableModel model = null;
     JScrollPane resultsPane;
-    public JTable table;
+    private JTable table;
+    private DailyValues dayData;
 
-    public DailyValues dayData;
 
-
+    /**
+     * Constructor
+     */
     public DailyStatsPanelL()
     {
         super(""); 
@@ -65,19 +59,47 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
     }
 
 
+    /**
+     * Get Table Model
+     * 
+     * @return
+     */
     public DailyStatsTableModel getTableModel()
     {
         return model;
     }
 
+    /**
+     * Refresh Information 
+     */    
     @Override
     public void refreshInfo()
     {
-	refreshDayData();
+        refreshDayData();
     }
 
+    /**
+     * Get Table
+     * 
+     * @return
+     */
+    public JTable getTable()
+    {
+        return this.table;
+    }
     
-    public void refreshDayData()
+    /**
+     * Get Day Data
+     * 
+     * @return
+     */
+    public DailyValues getDayData()
+    {
+        return this.dayData;
+    }
+    
+    
+    private void refreshDayData()
     {
         DailyValues dv = m_da.getDayStats(new GregorianCalendar());
 
@@ -121,5 +143,24 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
         setVisible(true);
     }
 
+    
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "DailyStatsPanel";
+    }
+
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
+    
 
 }

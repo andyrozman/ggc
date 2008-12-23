@@ -32,12 +32,11 @@ package ggc.gui.dialogs;
 import ggc.core.data.DailyStatsTableModel;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
+import ggc.core.data.graph.GraphViewDaily;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.MainFrame;
-import ggc.gui.dialogs.graphs.DailyGraphDialog;
-import ggc.gui.dialogs.pen.DailyRowDialogPen;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -71,6 +70,7 @@ import org.apache.commons.logging.LogFactory;
 import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
 import com.atech.graphics.calendar.CalendarPane;
+import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpCapable;
 
 /**
@@ -111,6 +111,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
     DailyStatsTableModel model = null;
     JScrollPane resultsPane;
+    GregorianCalendar current_gc;
 
     JTable table;
 
@@ -142,7 +143,9 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         super(da.getMainParent(), "DailyStatsDialog", false);
         // setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
 
-        setTitle(new GregorianCalendar());
+        current_gc = new GregorianCalendar();
+        
+        setTitle(this.current_gc);
         this.m_da = da;
         this.m_db = m_da.getDb();
 
@@ -249,15 +252,17 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             {
                 // System.out.println("dateHasChanged");
 
-                GregorianCalendar gc = e.getNewCalendar();
+                //GregorianCalendar gc = e.getNewCalendar();
 
-                dayData = m_da.getDb().getDayStats(gc);
+                current_gc = e.getNewCalendar();
+                
+                dayData = m_da.getDb().getDayStats(current_gc);
 
                 model.setDailyValues(dayData);
                 // setDailyValues(dayData);
                 // saveButton.setEnabled(false);
                 updateLabels();
-                setTitle(gc);
+                setTitle(current_gc);
                 getTableModel().fireTableChanged(null);
                 // x dailyGraphWindow.setDailyValues(dayData);
 
@@ -303,7 +308,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
                     DailyValuesRow dvr = dayData.getRowAt(table.getSelectedRow());
 
-                    if (!MainFrame.developer_version)
+                    //if (!MainFrame.developer_version)
                     {
                         DailyRowDialog aRF = new DailyRowDialog(dvr, getThisParent());
 
@@ -314,11 +319,11 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
                             getTableModel().fireTableChanged(null);
                         }
                     }
-                    else
+/*                    else
                     {
                         // new pen dialog
-                        /* DailyRowDialogPen aRF =*/ new DailyRowDialogPen(dvr, getThisParent());
-                    }
+                        new DailyRowDialogPen(dvr, getThisParent());
+                    } */
                 }
             }
 
@@ -445,7 +450,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         {
             SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
 
-            if (!MainFrame.developer_version)
+            //if (!MainFrame.developer_version)
             {
 
                 DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
@@ -457,12 +462,12 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
                     this.model.fireTableChanged(null);
                 }
             }
-            else
+/*            else
             {
                 // testing only
-                /*DailyRowDialogPen aRF =*/ new DailyRowDialogPen(dayData, sf.format(calPane.getSelectedDate()), this);
+                new DailyRowDialogPen(dayData, sf.format(calPane.getSelectedDate()), this);
 
-            }
+            }*/
         }
         else if (command.equals("edit_row"))
         {
@@ -528,8 +533,11 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         }
         else if (command.equals("show_daily_graph"))
         {
-            DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
-            dgd.setDailyValues(this.dayData);
+            //DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
+            //dgd.setDailyValues(this.dayData);
+            
+            new GraphViewer(new GraphViewDaily(this.current_gc), m_da, this, true);
+            
         }
         else
             System.out.println("DailyStatsDialog:Unknown Action: " + command);

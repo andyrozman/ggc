@@ -215,6 +215,27 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     	    first_refresh = false;
     	}
 
-
     }
+    
+    
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "StatisticInfo";
+    }
+    
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
+    
+    
+    
 }

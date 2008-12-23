@@ -40,6 +40,8 @@ import java.util.StringTokenizer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atech.utils.ATechDate;
+
 
 public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 {
@@ -458,10 +460,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 	}
     }
 
+    /*
     public Date getDateTimeAsDate()
     {
         return m_da.getDateTimeAsDateObject(datetime);
-    }
+    }*/
 
 
     public long getDate()
@@ -493,6 +496,20 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
         return "" + i;
     }
 
+    public ATechDate getDateTimeAsATDate()
+    {
+        return new ATechDate(datetime);
+    }
+
+    
+    public Date getDateTimeAsDate()
+    {
+        ATechDate at = new ATechDate(datetime);
+        return at.getGregorianCalendar().getTime();
+    }
+    
+    
+    
     public void setDateTime(String date, String time)
     {
         datetime = getDateTimeLong(date, time);
@@ -1056,11 +1073,15 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
     public int getDateT()
     {
-        return Integer.parseInt(m_da.getDateTimeAsTimeString(datetime));
-	//return -1;
-	//return datetime.getHours()*100 + datetime.getMinutes();
+        return (new ATechDate(datetime)).getTime();
     }
 
+    
+    public long getDateTimeMs()
+    {
+        return (new ATechDate(datetime)).getGregorianCalendar().getTimeInMillis();
+        
+    }
     
     
     ///

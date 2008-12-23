@@ -167,7 +167,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -175,7 +175,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -183,7 +183,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
         return this.help_button;
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()

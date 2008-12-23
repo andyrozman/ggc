@@ -525,6 +525,8 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     }
 
     
+    
+    
     /**
      * dbExport - returns export String, for current version 
      *
@@ -535,6 +537,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
         return dbExport(this.TABLE_VERSION);
     }
+    
     
     
     /**
@@ -571,9 +574,22 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
-        // TODO
+        dbImport(table_version, value_entry, null);
     }
     
+
+    /**
+     * dbImport - processes input entry to right fields
+     * 
+     * @param table_version version of table
+     * @param value_entry whole import line
+     * @param parameters parameters
+     * @throws Exception if import for selected table version is not supported or it fails
+     */
+    public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
+    {
+        // TODO
+    }
     
     
     /**
@@ -598,6 +614,15 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return "";
     }
     
+    /**
+     * Has To Be Clean - if table needs to be cleaned before import
+     * 
+     * @return true if we need to clean
+     */
+    public boolean hasToBeCleaned()
+    {
+        return true;
+    }
     
     
 }

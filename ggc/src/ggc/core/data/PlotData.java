@@ -28,17 +28,23 @@
 
 package ggc.core.data;
 
+import java.util.GregorianCalendar;
+
 /**
  * The main purpose of this class is to store information on which kinds of data
  * should be plotted in a graph. By having a static instance of this class
  * assigned to each graph that needs it, the user's selection can be remembered
  * across different incarnations of each graph dialog.
  * 
+ * This file will be used with new framework, and is therefore little extended, with
+ * time data.
+ * 
  * @author rumbi
+ * @author andy
  */
 public class PlotData implements Cloneable, ReadablePlotData
 {
-    boolean plotBG = false;
+    boolean plotBG = true;
     boolean plotBGDayAvg = false;
     boolean plotBGReadings = false;
 
@@ -61,11 +67,27 @@ public class PlotData implements Cloneable, ReadablePlotData
     boolean plotInsPerCH = false;
     boolean plotMeals = false;
 
+    public static final int TIME_RANGE_1_WEEK = 1;
+    public static final int TIME_RANGE_1_MONTH = 2;
+    public static final int TIME_RANGE_3_MONTHS = 3;
+    public static final int TIME_RANGE_CUSTOM = 4;
+    
+    
+    int time_range = TIME_RANGE_1_MONTH;
+    
+    GregorianCalendar time_range_from = null;
+    GregorianCalendar time_range_to = null;
+    
+    
     /**
      * Initializes all data as <code>false</code>.
      */
     public PlotData()
     {
+        this.time_range_from = new GregorianCalendar();
+        this.time_range_from.add(GregorianCalendar.MONTH, -4);
+        this.time_range_to = new GregorianCalendar();
+        this.time_range_to.add(GregorianCalendar.MONTH, -5);
     }
 
     /**
@@ -99,8 +121,33 @@ public class PlotData implements Cloneable, ReadablePlotData
 
         plotInsPerCH = data.plotInsPerCH;
         plotMeals = data.plotMeals;
+
+        time_range = data.time_range;
+        
+        time_range_from = data.time_range_from;
+        time_range_to = data.time_range_to;
+    
+    
     }
 
+    
+    public int getTimeRangeType()
+    {
+        return this.time_range;
+    }
+
+    
+    public GregorianCalendar getTimeRangeFrom()
+    {
+        return this.time_range_from;
+    }
+    
+    
+    public GregorianCalendar getTimeRangeTo()
+    {
+        return this.time_range_to;
+    }
+    
     /*
      * (non-Javadoc)
      * 

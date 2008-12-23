@@ -1,34 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: MainLittlePanel
- *  Purpose:  Container for all InfoPanels an the MainFrame. Responsible for
- *            managing the handling of its children. (fix)
- *
- *  Author:   andyrozman {andy@atech-software.com}
- */
-
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
-
 package ggc.gui.little.panels;
 
 
@@ -42,33 +11,66 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MainLittlePanel  
+ *  Description:  Main Little Panel
+ *
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class MainLittlePanel extends JPanel
 {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8210688971878569493L;
 
     private Vector<JPanel> vInfoPanels = new Vector<JPanel>();
 
     GGCLittle m_little = null;
 
-    public GeneralInfoPanelL   general = null;
+    private GeneralInfoPanelL   general = null;
+    
+    /**
+     * Daily Stats Panel
+     */
     public DailyStatsPanelL    dailyStats = null;
 
     // tabs
-    public DailyStatsControlsL control = null;
-    public PlugInPanelL plug_in = null;
-    public StocksInfoPanelL stocks = null;
-    public ScheduleInfoPanelL  schedule = null;
+    private DailyStatsControlsL control = null;
+    @SuppressWarnings("unused")
+    private PlugInPanelL plug_in = null;
+    @SuppressWarnings("unused")
+    private StocksInfoPanelL stocks = null;
+    private ScheduleInfoPanelL  schedule = null;
     
     
     
-    public JTabbedPane tabbedPane = null;
+    private JTabbedPane tabbedPane = null;
     private I18nControl ic = I18nControl.getInstance();
 
 
+    /**
+     * Constructor
+     * 
+     * @param little
+     */
     public MainLittlePanel(GGCLittle little)
     {
         m_little = little;
@@ -123,12 +125,20 @@ public class MainLittlePanel extends JPanel
             add(vInfoPanels.get(i));
     }
 
+    /**
+     * Refresh Panels
+     */
     public void refreshPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
             ((AbstractInfoPanel)vInfoPanels.get(i)).refreshInfo();
     }
 
+    /**
+     * Add Panel At
+     * @param index index of panel
+     * @param panel
+     */
     public void addPanelAt(int index, AbstractInfoPanel panel)
     {
         vInfoPanels.add(index, panel);
@@ -136,6 +146,11 @@ public class MainLittlePanel extends JPanel
         addPanels();
     }
 
+    /**
+     * Remove Panel At
+     * 
+     * @param index index of panel
+     */
     public void removePanelAt(int index)
     {
         vInfoPanels.remove(index);

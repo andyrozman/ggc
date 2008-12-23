@@ -10,8 +10,8 @@ bilo katere druge nadgradnje (ne rabite namestiti vsake nadgradnje, ampak samo 0
 najnovejšo različico). Kako namestite 0.3.1 si lahko preberete v zip datoteke te nadgradnje. 
 
 
-Kako nadgraditi GGC
-====================
+Kako nadgraditi GNU Gluco Control 
+=================================
 
 V tem trenutku naša aplikacija nima možnosti avtomatske nadgradnje. Zaradi tega moramo namestiti
 vse nadgradnje ročno.
@@ -42,59 +42,57 @@ Kako nadgradimo s to nadgradnjo bo prikazano v nekaj korakih. Prosim sledite jim
 KORAK 1: Ustvarimo varnostno kopijo vse podatkov
 -------------------------------------------------
    
-Zaženite GNU Gluco Control in počakajte, da se naloži. Pojdite na Orodja -> Upravljanje z bazo -> Varnostna kopija baze.
+Zaženite GNU Gluco Control (GGC v nadaljnem besedilu) in počakajte, da se naloži. Pojdite na 
+Orodja -> Upravljanje z bazo -> Varnostna kopija baze.
 
-V naslednjem oknu izberite vse objekte in kliknite na 
+V naslednjem oknu izberite vse objekte in kliknite na 'Varnostna kopija'. Nova varnostna kopija bo
+ustvarjena v mapi data\export (GGC_backup_<leto>_<mesec>_<dan>__<ura>_<minuta>_<sekunda>.zip), 
+kopirajte jo na varno mesto.
 
-STEP 1: Create backup copy of your data
-----------------------------------------
-
-Start GNU Gluco Control and wait for it to load, then go to Tools -> Database Maintenance -> Database backup.
-
-In next window select all object and click on backup. New backup file will be created in data\export
-directory (GGC backup <year>_<month>_<day> <hour>_<minute>_<second>). Copy it to same safe location.
-
-Close GNU Gluco Control.
+Zaprite GGC.
 
 
-
-STEP 2: Create backup copy of application
-------------------------------------------
-
-Open your favorite File manager and create directory somewhere (probably something like
-GGC_Backup_<current_date>). Copy whole GGC installation there (it should have at least bin, lib and data
-K2
-subdirectories, sometime also jre). Copy all of them. 
-
-This copy will be used in case that something goes wrong in next steps.
-
-
-
-STEP 3: Make actual update
----------------------------
-
-Please take a look at database_info.txt file. You need to compare last entry (current version) and version
-you have installed (it is displayed in title bar when you start application). If the versions are the same
-go to step 3A if not step 3B.
-
-
-STEP 3.A: Update with same version
------------------------------------
-
-Use File manager (I advise to use some that has integrated Zip archiver, like Total commander) and open archive 
-file, you need to copy everything into your installation directory. You will be asked to overwrite some files, 
-you need to overwrite all files there.  
  
+KORAK 2: Ustvarite varnostno kopijo celotne aplikacije
+-------------------------------------------------------
 
-STEP 3.B: Update with different version
-----------------------------------------
+Odprite svoj priljubljen program za kopiranje datotek in ustvarite mapo nekje (nekaj podobno kot
+GGC_Backup_<datum>). Kopirajte celotno GGC instalacijo tja (ta naj bi vsebovala vsaj bin, lib in
+data mape, včasih tudi jre). Kopirajte vse mape.
 
-1. Do all actions in STEP 3.A
+To varnostno kopijo bomo uporabili če bo šlo kaj narobe v naslednjih korakih.
 
-2. Run run_<os_name>.<os_extension>. Application will display some errors, this is OK. We needed to run this 
-   script just to recreate startup script. Close application as soon as you can.
+
+
+KORAK 3: Dejanska nadgradnja
+-----------------------------
+
+Najprej si oglejte datoteko database_info.txt. Primerjati morate zadnji vnos (različica nadgradnje) in
+različico nameščenega GGCja. Če je Database Version (različica baze) enaka pojdite v korak 3A, če ne na
+korak 3B.
+
+
+KORAK 3A: Nadgradnja z enako različico baze
+--------------------------------------------
+
+Uporabite program za delo s datotekami (priporočam uporabo programa s integriranim ZIP arhivatorjem, kot 
+Total Commander) in odprite datoteko s nadgradnjo. Kopirajte vse datoteke v namestitveno mapi GGCja. 
+Vprašani boste ali želite prepisali datoteke, odgovoriti morate JA (vse stare datoteke morajo biti 
+zamenjane). 
+
+
+KORAK 3B: Nadgradnja s različno bazo
+-------------------------------------
+
+1. Izvršite 'Korak 3A'
+
+2. Zaženite run_<os_ime>.<os_končnica>. Aplikacija bo prikazala nekaj napak, to je ok. To moramo zagnati
+   da ustvarimo nove zagonske datoteke. Zaprimo aplikacijo čimprej je možno.
    
-3. Now you have new scripts. You need to run init_db.<os_extension> which will recreate database
+3. Sedaj imamo nove zagonske datoteke in moramo zagnati init_db.<os_končnica>, ki bo ustvarila novo
+   bazo.
+
+ 
 
 K3
 

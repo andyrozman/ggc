@@ -38,6 +38,7 @@ import ggc.gui.StatusBar;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.little.StatusBarL;
 
+import java.io.File;
 import java.util.GregorianCalendar;
 
 
@@ -108,6 +109,11 @@ public class GGCDbLoader extends Thread
 
         run_once = true;
 
+        
+        if (new File("../data/debug_no_food.txt").exists())
+            part_start = true;
+        		
+        
         // 1 - init
         
         long start_time = System.currentTimeMillis();
@@ -160,9 +166,9 @@ public class GGCDbLoader extends Thread
             GGCLittle mf = m_da.getParentLittle();
             //mf.setDbActions(true);
             m_da.loadSettingsFromDb();
-            mf.informationPanel.dailyStats.model.setDailyValues(m_da.getDayStats(new GregorianCalendar()));
-            mf.informationPanel.refreshPanels();
-            mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
+            mf.getInformationPanel().dailyStats.getTableModel().setDailyValues(m_da.getDayStats(new GregorianCalendar()));
+            mf.getInformationPanel().refreshPanels();
+            mf.getStatusPanel().setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
         }
 
         setDbStatus(StatusBar.DB_BASE_DONE); 

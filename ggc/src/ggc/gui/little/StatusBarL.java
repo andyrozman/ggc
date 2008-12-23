@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: StatusBarL
- *  Purpose:  A StatusBar for the MainFrame.
- *
- *  Author:   andyrozman {andy@atech-software.com}
- */
-
 package ggc.gui.little;
 
 import ggc.core.util.DataAccess;
@@ -39,6 +12,31 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     StatusBarL
+ *  Description:  StatusBar for the Little Application.
+ *
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
 
 public class StatusBarL extends JPanel
@@ -58,6 +56,9 @@ public class StatusBarL extends JPanel
 
     private ImageIcon[] statusIcons = null;
 
+    /**
+     * Constructor
+     */
     public StatusBarL()
     {
 
@@ -109,22 +110,49 @@ public class StatusBarL extends JPanel
     }
 
 
+    /**
+     * Set Status Message
+     * 
+     * @param msg
+     */
     public void setStatusMessage(String msg)
     {
         lblMessage.setText(" " + msg);
     }
 
 
+    /**
+     * Db Status: Stopped
+     */
     public static final int DB_STOPPED = 0;
+    /**
+     * Db Status: Init
+     */
     public static final int DB_INIT = 0;
+    /**
+     * Db Status: OK
+     */
     public static final int DB_INIT_OK = 1;
+    /**
+     * Db Status: Load
+     */
     public static final int DB_LOAD = 2;
 
+    
+    /**
+     * Set Db Status
+     * @param status
+     */
     public void setDbStatus(int status)
     {
         this.lblLed.setIcon(statusIcons[status]);
     }
 
+    /**
+     * Set Database Name
+     * 
+     * @param dbName
+     */
     public void setDatabaseName(String dbName)
     {
         lblName.setText(m_ic.getMessage("DATABASE") + " [" + dbName +"]:");

@@ -237,6 +237,8 @@ public class DataAccess extends ATDataAccessAbstract
         {
             new RedirectScreen();
         }
+
+        loadGraphConfigProperties();        
         
         startWebServer();
         
@@ -1340,6 +1342,13 @@ public class DataAccess extends ATDataAccessAbstract
     public static void notImplemented(String source)
     {
         System.out.println("Not Implemented: " + source);
+    }
+
+
+    @Override
+    public void loadGraphConfigProperties()
+    {
+        this.graph_config = this.m_settings;
     }
 
 }

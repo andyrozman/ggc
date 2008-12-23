@@ -95,4 +95,32 @@ public abstract class AbstractInfoPanel extends JPanel
         this.first_refresh = true;
     }
 
+    
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public abstract String getTabName();
+    
+    
+    /**
+     * RefreshInfo - Refresh info by id 
+     *  
+     * @param name
+     */
+    public void refreshInfo(String name)
+    {
+        if (this.getTabName().equals(name))
+        {
+            doRefresh();
+        }
+    }
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public abstract void doRefresh();
+    
+    
 }

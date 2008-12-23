@@ -1,30 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: DailyRowDialog
- * 
- * Purpose: Dialog for adding entry for day and time
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
 package ggc.gui.dialogs;
 
 import ggc.core.data.DailyValues;
@@ -201,7 +174,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         // else
         // setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
 
-        System.out.println(props.getBG_unit());
+        //System.out.println(props.getBG_unit());
 
         sDate = nDate;
         dV = ndV;
@@ -372,7 +345,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
                 });
         */
-        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 120, 290, 200, panel);
+        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 120, 290, 100, panel);
         addComponent(UrineField = new JTextField(), 120, 318, 240, panel);
         addComponent(ActField = new JTextField(), 120, 348, 240, panel);
         addComponent(CommentField = new JTextField(), 120, 378, 240, panel);
@@ -447,13 +420,24 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             }
         });
 
-        String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"), "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), "edit_food", m_ic.getMessage("EDIT_FOOD"), "ok", m_ic.getMessage("OK"), "cancel", m_ic.getMessage("CANCEL"),
+        String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"), 
+                                    "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), 
+                                    "edit_food", m_ic.getMessage("EDIT_FOOD"), 
+                                    "ok", m_ic.getMessage("OK"), 
+                                    "cancel", m_ic.getMessage("CANCEL"),
+                                    "food_desc", m_ic.getMessage("FOOD_BY_DESCRIPTION"),
         // "help", m_ic.getMessage("HELP")
         };
 
-        String button_icon[] = { null, null, null, "ok.png", "cancel.png" };
+        String button_icon[] = { null, null, null, "ok.png", "cancel.png", null };
 
-        int button_coord[] = { 210, 198, 140, 1, 210, 228, 140, 1, 210, 258, 140, 1, 30, 420, 110, 1, 145, 420, 110, 1,
+        int button_coord[] = { 220, 198, 140, 1, 
+                               220, 228, 140, 1, 
+                               220, 258, 140, 1, 
+                               30, 420, 110, 1, 
+                               145, 420, 110, 1,
+                               220, 288, 140, 1
+                               
         // 250, 390, 80, 0
         };
 
@@ -476,9 +460,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 button.setEnabled(false);
             }
 
-            if (k <= 1)
-                addComponent(button, button_coord[i], button_coord[i + 1], button_coord[i + 2], panel);
-            else
+            //if (k <= 1)
+            //    addComponent(button, button_coord[i], button_coord[i + 1], button_coord[i + 2], panel);
+            //else
                 addComponent(button, button_coord[i], button_coord[i + 1], button_coord[i + 2], 25, false, panel);
 
         }

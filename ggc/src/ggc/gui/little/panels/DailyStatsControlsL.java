@@ -1,37 +1,5 @@
 package ggc.gui.little.panels;
 
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DailyStatsControlsL
- *  Purpose:  Enter and view all data for one day. (fix)
- *
- *  Author:   andyrozman {andy@atech-software.com}
- */
-
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
-
-
-
 import ggc.core.data.DailyValues;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.DailyRowDialog;
@@ -51,20 +19,47 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     DailyStatsControlsL  
+ *  Description:  Panel for Daily Stats Control
+ *
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class DailyStatsControlsL extends AbstractInfoPanel implements ActionListener
 {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = -3682024667811580299L;
     GGCLittle m_little = null;
     JButton[] buttons = new JButton[4];
     MainLittlePanel m_mlp;
     GregorianCalendar m_gc = null;
 
-    //GGCDb m_db = m_da.getDb();
-
+    /**
+     * Constructor
+     * 
+     * @param mlp
+     */
     public DailyStatsControlsL(MainLittlePanel mlp)
     {
         super("");
@@ -72,8 +67,6 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         m_gc = new GregorianCalendar();
         init();
     }
-
-
 
 
     private void init()
@@ -120,6 +113,9 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     }
 
 
+    /**
+     * Refresh Information 
+     */
     @Override
     public void refreshInfo()
     {
@@ -131,30 +127,52 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         }
     }
 
+    /**
+     * Get Table
+     * 
+     * @return
+     */
     public JTable getTable()
     {
-        return this.m_mlp.dailyStats.table;
+        return this.m_mlp.dailyStats.getTable();
     }
 
 
+    /**
+     * Get Day Data
+     * 
+     * @return
+     */
     public DailyValues getDayData()
     {
-        return this.m_mlp.dailyStats.model.getDailyValues();
+        return this.m_mlp.dailyStats.getTableModel().getDailyValues();
     }
 
+    /**
+     * Reload Table
+     */
     public void reloadTable()
     {
         //m_da.getDayStats(new GregorianCalendar());
         m_da.loadDailySettingsLittle(m_gc, true);
-        this.m_mlp.dailyStats.model.setDailyValues(m_da.getDayStats(m_gc));
+        this.m_mlp.dailyStats.getTableModel().setDailyValues(m_da.getDayStats(m_gc));
     }
 
+    /**
+     * Get Frame
+     * @return
+     */
     public JFrame getFrame()
     {
         return this.m_mlp.m_little;
     }
 
 
+    /**
+     * Action Performed
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e)
     {
 
@@ -250,6 +268,23 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
 */
     
 
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "DeviceInfo";
+    }
+
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
    
     
 }

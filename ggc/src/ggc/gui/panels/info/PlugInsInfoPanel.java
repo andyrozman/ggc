@@ -122,5 +122,22 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     }
     
     
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "PlugInsInfo";
+    }
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
+    
     
 }

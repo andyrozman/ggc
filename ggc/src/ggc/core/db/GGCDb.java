@@ -1291,6 +1291,55 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return wv;
     }
 
+    
+    
+    @SuppressWarnings("unchecked")
+    public ArrayList<DailyValuesRow> getDayValuesRange(GregorianCalendar start, GregorianCalendar end)
+    {
+
+        logInfo("getDayValuesRange()");
+        
+        ArrayList<DailyValuesRow> lst = new ArrayList<DailyValuesRow>();
+
+        //WeeklyValues wv = new WeeklyValues();
+
+        try
+        {
+            String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
+            String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
+
+            logDebug("getDayStatsRange()", sDay + " - " + eDay);
+
+            Query q = getSession().createQuery(
+                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + sDay
+                        + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
+
+            System.out.println("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info <=  " + sDay
+                        + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
+            
+            
+            Iterator it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                DayValueH dv = (DayValueH) it.next();
+
+                DailyValuesRow dVR = new DailyValuesRow(dv);
+                lst.add(dVR);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            logException("getDayStatsRange()", ex);
+        }
+
+        return lst;
+    }
+    
+    
+    
+    
     @SuppressWarnings("unchecked")
     public MonthlyValues getMonthlyValues(int year, int month)
     {

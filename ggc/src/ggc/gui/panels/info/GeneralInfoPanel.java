@@ -133,4 +133,23 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     }
 
 
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "GeneralInfo";
+    }
+    
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
+    
+    
 }

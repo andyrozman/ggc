@@ -63,4 +63,40 @@ public class OtherInfoPanel extends AbstractInfoPanel
         this.panel_1.refreshInfo();
         this.panel_2.refreshInfo();
     }
+    
+    
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "OtherInfo";
+    }
+
+    
+    /**
+     * RefreshInfo - Refresh info by id 
+     *  
+     * @param name
+     */
+    public void refreshInfo(String name)
+    {
+        // TODO 
+        if (this.getTabName().equals(name))
+        {
+            doRefresh();
+        }
+    }
+    
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
+    
+    
 }

@@ -121,4 +121,25 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
             lblReadingsPerDay.setText("");
         }
     }
+    
+    
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "HbA1cInfo";
+    }
+    
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
+    
+    
 }

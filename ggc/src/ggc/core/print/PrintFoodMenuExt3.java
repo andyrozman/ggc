@@ -1,35 +1,5 @@
 package ggc.core.print;
 
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: PrintSimpleonthlyReport.java
-
- *  Purpose:  Creating PDF for Extended Monthly Report (used for printing)
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
-
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
@@ -45,24 +15,55 @@ import com.lowagie.text.Font;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPTable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PrintFoodMenuExt3  
+ *  Description:  Class for printing - Foodmenu Extended 3
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
 {
 
     
+    /**
+     * Constructor
+     * 
+     * @param mv
+     */
     public PrintFoodMenuExt3(DayValuesData mv)
     {
         super(mv);
     }
 
-    
 
-
-
-    public void fillDocumentBodyZXZ(Document document) throws Exception
+    /**
+     * Fill Doucment Body
+     * @see ggc.core.print.PrintFoodMenuAbstract#fillDocumentBody(com.lowagie.text.Document)
+     */
+    @Override
+    public void fillDocumentBody(Document document) throws Exception
     {
-        // TODO Auto-generated method stub
-        
-        System.out.println("Jedilnik");
+        //System.out.println("Jedilnik");
         
         Iterator<DailyValues> it = this.m_data.iterator();
         
@@ -238,16 +239,9 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
         document.add(datatable);
         
         
-        System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
-        
-        
+        //System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
         
     }
-
-
-    
-
-
 
     
     

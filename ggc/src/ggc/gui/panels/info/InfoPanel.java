@@ -116,6 +116,33 @@ public class InfoPanel extends JPanel
             vInfoPanels.get(i).refreshInfo();
         }
     }
+    
+    /**
+     * RefreshInfo - Refresh info by id 
+     *  
+     * @param name
+     */
+    public void refreshPanels(String name)
+    {
+        for (int i = 0; i < vInfoPanels.size(); i++)
+        {
+            vInfoPanels.get(i).refreshInfo(name);
+        }
+        
+    }
+    
+
+    /**
+     * Refresh Group
+     * 
+     * @param type
+     */
+    public void refreshGroup(int type)
+    {
+        // TODO
+    }
+    
+    
 
     /*
     public void addPanelAt(int index, AbstractInfoPanel panel)

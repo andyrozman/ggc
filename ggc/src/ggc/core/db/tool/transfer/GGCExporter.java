@@ -86,7 +86,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
         if (this.backup_object!=null)
         {
-            export(this.getBackupRestoreObject(this.backup_object));
+            exportData(this.getBackupRestoreObject(this.backup_object));
             this.backup_object = null;
         }
         //export(_DailyValues();
@@ -144,13 +144,13 @@ public class GGCExporter extends ExportTool implements Runnable
     
     
     
-    public void export(String name)
+    public void exportData(String name)
     {
-        export(this.getBackupRestoreObject(name));
+        exportData(this.getBackupRestoreObject(name));
     }
     
     
-    public void export(BackupRestoreObject bro)
+    public void exportData(BackupRestoreObject bro)
     {
         System.out.println("export: first");
     

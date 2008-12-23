@@ -36,7 +36,9 @@ import ggc.core.db.tool.DbToolApplicationGGC;
 import java.awt.Color;
 import java.util.Hashtable;
 
-public class GGCProperties // extends GGCPropertiesHelper
+import com.atech.graphics.graphs.GraphConfigProperties;
+
+public class GGCProperties implements GraphConfigProperties // extends GGCPropertiesHelper
 {
     // private boolean changed_db = false;
     private boolean changed_config = false;

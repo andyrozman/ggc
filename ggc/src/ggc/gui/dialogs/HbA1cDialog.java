@@ -1,36 +1,9 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: HbA1cFrame.java
- *  Purpose:  gives a "guess" about the current HbA1c
- *
- *  Author:   schultd
- */
-
-package ggc.gui.dialogs.graphs;
+package ggc.gui.dialogs;
 
 import ggc.core.data.HbA1cValues;
+import ggc.core.data.graph.GraphViewHbA1c;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.gui.graphs.HbA1cView;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -40,7 +13,6 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -48,7 +20,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.atech.graphics.graphs.GraphViewerPanel;
 import com.atech.help.HelpCapable;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -69,8 +43,8 @@ import com.atech.help.HelpCapable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     HbA1cDialog  
- *  Description:  Dialog for HbA1c, OLD FRAMEWORK, is DEPRECATED, will be removed
+ *  Filename:     HbA1cDialog2  
+ *  Description:  Dialog for HbA1c, using new graph framework
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -79,23 +53,19 @@ import com.atech.help.HelpCapable;
 public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 {
 
-    private static final long serialVersionUID = 4596093593058190711L;
+    private static final long serialVersionUID = 8918250955552579544L;
 
-    JButton help_button;
-
-    private I18nControl m_ic = I18nControl.getInstance();
-
-    // private static HbA1cFrame singleton = null;
-    private HbA1cView hbView;
-    private HbA1cValues hbValues;
-
+    private JButton help_button;
     private JLabel lblHbA1c;
     private JLabel lblExp;
     private JLabel lblBGAvg;
     private JLabel lblReadings;
     private JLabel lblReadingsPerDay;
 
+    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = null;
+    GraphViewHbA1c gv; // = new GraphViewHbA1c();
+    private HbA1cValues hbValues;
 
     /**
      * Constructor
@@ -104,18 +74,19 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
      */
     public HbA1cDialog(DataAccess da)
     {
-        super(da.getMainParent(), "HbA1c", false);
+        super(da.getMainParent(), "HbA1c", true);
         this.m_da = da;
-// init
-        // hbValues = this.m_da.getHbA1c(new GregorianCalendar());
-        hbValues = this.m_da.getDb().getHbA1c(new GregorianCalendar(), false);
+        
+        gv = new GraphViewHbA1c();
+        this.hbValues = gv.getDataObject();
+        
         init();
         updateLabels();
 
-        //hbView.setHbA1cValues(hbValues);
-
         this.m_da.enableHelp(this);
         this.setTitle(m_ic.getMessage("CALCULATED_HBA1C"));
+        
+        m_da.addComponent(this);
 
         this.setVisible(true);
     }
@@ -136,10 +107,16 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         setSize(700, 460);
 
         // left panel;
-        hbView = new HbA1cView(this.hbValues);
+/*        hbView = new HbA1cView(this.hbValues);
         hbView.setMinimumSize(new Dimension(450, 460));
         hbView.setPreferredSize(hbView.getMinimumSize());
-        getContentPane().add(hbView, BorderLayout.CENTER);
+        getContentPane().add(hbView, BorderLayout.CENTER); */
+        
+        GraphViewerPanel gvp = new GraphViewerPanel(gv);
+        gvp.setMinimumSize(new Dimension(450, 460));
+        gvp.setPreferredSize(gvp.getMinimumSize());
+        getContentPane().add(gvp, BorderLayout.CENTER);
+        
 
         // right panel
         JPanel rightPanel = new JPanel(new BorderLayout());
@@ -227,43 +204,13 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         rightPanel.add(infoPanel, BorderLayout.CENTER);
         rightPanel.add(bottomRightPanel, BorderLayout.SOUTH);
         
-//        hbView.redraw();
-//        hbView.redraw();
-//        hbView.redraw();
-//        hbView.redraw();
-//        hbView.redraw();
-        
-    }
-/*
-    public void setHbA1cText(String s)
-    {
-        lblHbA1c.setText(s);
     }
 
-    public void setBGAvgText(String s)
-    {
-        lblBGAvg.setText(s);
-    }
-
-    public void setReadingsText(String s)
-    {
-        lblReadings.setText(s);
-    }
-
-    public void setReadingsPerDayText(String s)
-    {
-        lblReadingsPerDay.setText(s);
-    }
-
-    public void setExpressivnessText(String s)
-    {
-        lblExp.setText(s);
-    }
-*/
     private void closeDialog()
     {
-        hbView = null;
+        gv = null;
         this.dispose();
+        m_da.removeComponent(this);
     }
 
     /**
@@ -306,7 +253,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_HbA1c";
+        return gv.getHelpId();
     }
 
 }

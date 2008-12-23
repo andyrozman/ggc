@@ -61,4 +61,24 @@ public class StocksInfoPanel extends AbstractInfoPanel
     public void refreshInfo()
     {
     }
+    
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "StocksInfo";
+    }
+    
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
+    
+    
 }

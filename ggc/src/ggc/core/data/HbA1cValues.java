@@ -93,6 +93,7 @@ public class HbA1cValues
     public void processDayValues()
     {
 
+        //System.out.println("!!!!!!!!!!!!!!!!!! HBA!C !");
         for (Enumeration<String> en = m_dataTable.keys(); en.hasMoreElements();)
         {
             DailyValues dv = m_dataTable.get(en.nextElement());
@@ -104,8 +105,52 @@ public class HbA1cValues
          * 
          * for (int i=0; i<num; i++) { addDay(0.0f, 0); }
          */
+        
+        processDayValues2();
     }
 
+    
+    public int[] valClass = new int[5];
+    
+    
+    public void processDayValues2()
+    {
+        // empty days are not in hashtable
+        int a = 90 - this.m_dataTable.size();
+        
+        if (a>0)
+            valClass[0] += a;
+        
+        for(Enumeration<String> en = this.m_dataTable.keys(); en.hasMoreElements(); )
+        {
+            DailyValues dv = this.m_dataTable.get(en.nextElement());
+            
+            int cnt= dv.getRowCount();
+            
+            //System.out.println(cnt);
+            if (cnt<=1)
+                valClass[0]++;
+            else if (cnt<=3)
+                valClass[1]++;
+            else if (cnt<=5)
+                valClass[2]++;
+            else if (cnt<=7)
+                valClass[3]++;
+            else
+                valClass[4]++;
+        }
+        
+        
+        
+       // 0, 1 = C1
+       // 2, 3 = C2
+       // 4, 5 = C3
+       // 6, 7 = C4
+       // >= 8 = C5 
+        
+    }
+    
+    
     public float getAvgBG()
     {
         if (dayCount != 0)
@@ -198,8 +243,8 @@ public class HbA1cValues
 
         if (dayCount > 0)
         {
-            System.out.println("avg bg: " + getAvgBGForMethod3());
-            System.out.println((getAvgBGForMethod3() + 86.0f) / 33.3f);
+            //System.out.println("avg bg: " + getAvgBGForMethod3());
+            //System.out.println((getAvgBGForMethod3() + 86.0f) / 33.3f);
             return ((getAvgBGForMethod3() + 86.0f) / 33.3f);
         }
         else
@@ -213,6 +258,15 @@ public class HbA1cValues
 
     public float getPercentOfDaysInClass(int r)
     {
+
+        float f = (valClass[r] /90.0f);
+        
+        //System.out.println("Class: " + r + "= "+ valClass[r] + " = " + f);
+        
+        return f;
+        
+        
+        /*
         switch (r)
         {
         case 0:
@@ -231,5 +285,7 @@ public class HbA1cValues
         default:
             return 0;
         }
+        
+        */
     }
 }

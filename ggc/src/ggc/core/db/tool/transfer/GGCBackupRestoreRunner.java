@@ -85,7 +85,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             GGCExporter ge = new GGCExporter(this);
             //ge.setBackupObject("ggc.core.db.hibernate.ColorSchemeH");
             //ge.export();
-            ge.export("ggc.core.db.hibernate.ColorSchemeH");
+            ge.exportData("ggc.core.db.hibernate.ColorSchemeH");
             //ge.run();
             this.setStatus(100);
         }
@@ -190,7 +190,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         gc.setTimeInMillis(System.currentTimeMillis());
 
         return gc.get(GregorianCalendar.YEAR) + "_" + da.getLeadingZero((gc.get(GregorianCalendar.MONTH) + 1), 2) +
-            "_" + da.getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2) + " " +
+            "_" + da.getLeadingZero(gc.get(GregorianCalendar.DAY_OF_MONTH), 2) + "__" +
             da.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2) +
             "_" + da.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2) + "_" +
             da.getLeadingZero(gc.get(GregorianCalendar.SECOND), 2); 
@@ -226,6 +226,18 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             // this.done_backup_elements++;
         }
 
+        
+        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.ColorSchemeH"))
+        {
+            System.out.println("in color scheme");
+            this.setTask(ic.getMessage("COLOR_SCHEMES"));
+            GGCImporter ge = new GGCImporter(this, this.getRestoreObject("ggc.core.db.hibernate.ColorSchemeH"));
+            ge.importData("ggc.core.db.hibernate.ColorSchemeH");
+            //ge.run();
+            this.setStatus(100);
+        }
+        
+        
         //if (isAnyNutritionRestoreObjectSelected())
         {
             

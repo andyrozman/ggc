@@ -33,6 +33,7 @@ package ggc.core.data;
 
 import ggc.core.util.DataAccess;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -47,16 +48,22 @@ public class GlucoValues extends DailyValues
 
     // ArrayList dayValues = null;
     Vector<DailyValues> dayValues = null;
+    ArrayList<DailyValuesRow> dayValuesRows = null;
 
     // private EventListenerList listenerList = new EventListenerList();
     private DataAccess m_da = DataAccess.getInstance();
 
     // private int recordCount = 0;
 
+    GregorianCalendar from_date;
+    GregorianCalendar to_date;
+    
+    
     public GlucoValues()
     {
         dayValues = new Vector<DailyValues>();
         // dayValues = new ArrayList();
+        dayValuesRows = new ArrayList<DailyValuesRow>();
     }
 
     public GlucoValues(GregorianCalendar sDate, GregorianCalendar eDate)
@@ -90,6 +97,33 @@ public class GlucoValues extends DailyValues
          */
     }
 
+    
+    public GlucoValues(GregorianCalendar sDate, GregorianCalendar eDate, boolean graph)
+    {
+        sDate.set(GregorianCalendar.HOUR_OF_DAY, 0);
+        sDate.set(GregorianCalendar.MINUTE, 0);
+        from_date = sDate;
+        
+        eDate.set(GregorianCalendar.HOUR_OF_DAY, 23);
+        eDate.set(GregorianCalendar.MINUTE, 59);
+        to_date = eDate;
+        
+        System.out.println("Range: " + from_date + " - " + to_date);
+        
+        dayValuesRows = m_da.getDb().getDayValuesRange(sDate, eDate);
+    }
+
+    
+    public GregorianCalendar getRangeFrom()
+    {
+        return from_date;
+    }
+    
+    public GregorianCalendar getRangeTo()
+    {
+        return to_date;
+    }
+    
     private void addDayValues(DailyValues dv)
     {
         // System.out.println("DailyValues: " + dv);
@@ -104,6 +138,9 @@ public class GlucoValues extends DailyValues
     @Override
     public void addRow(DailyValuesRow dRow)
     {
+        //
+        dayValuesRows.add(dRow);
+        
         String s1 = dRow.getDateAsString();
 
         for (int i = 0; i < dayValues.size(); i++)
@@ -154,6 +191,19 @@ public class GlucoValues extends DailyValues
             dayValues.elementAt(i).saveDay();
     }
 
+    public int getDailyValuesRowsCount()
+    {
+        return this.dayValuesRows.size();
+    }
+
+    
+    public DailyValuesRow getDailyValueRow(int index)
+    {
+        return this.dayValuesRows.get(index); 
+    }
+    
+    
+    
     @Override
     public int getRowCount()
     {

@@ -127,5 +127,23 @@ public class DeviceInfoPanel extends AbstractInfoPanel
             return st;
         
     }
+  
+    /**
+     * Get Tab Name
+     * 
+     * @return name as string
+     */
+    public String getTabName()
+    {
+        return "DeviceInfo";
+    }
+
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
+    }
     
 }

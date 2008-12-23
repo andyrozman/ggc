@@ -5,31 +5,54 @@ import ggc.core.db.datalayer.DailyFoodEntry;
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     DailyFoodEntryDisplay  
+ *  Description:  Class for displaying DailyFoodEntry
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class DailyFoodEntryDisplay extends ATTableData
 {
 
-    // private String type_desc;
-    // private String id;
-    // private String description;
-    // private String amount;
-
-    public static String[] weight_type_description = null;
-
-    // MealPart meal_part = null;
-
+    private static String[] weight_type_description = null;
     DailyFoodEntry daily_food_entry = null;
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public DailyFoodEntryDisplay(I18nControlAbstract ic)
     {
         super(ic);
         initStatic();
     }
 
-    /*
-     * public DailyFoodEntryDisplay(I18nControlAbstract ic, String full) {
-     * super(ic); // System.out.println("Nutr: " + full); int index =
-     * full.indexOf("="); this.id = full.substring(0, index); // this.value =
-     * full.substring(index+1); initStatic(); }
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param part 
      */
     public DailyFoodEntryDisplay(I18nControlAbstract ic, DailyFoodEntry part)
     {
@@ -54,6 +77,9 @@ public class DailyFoodEntryDisplay extends ATTableData
      * def.get.getTag(); // this.weight_unit = def.getWeight_unit(); }
      */
 
+    /**
+     * Init Static
+     */
     public void initStatic()
     {
         if (DailyFoodEntryDisplay.weight_type_description == null)
@@ -66,6 +92,11 @@ public class DailyFoodEntryDisplay extends ATTableData
 
     }
 
+    /**
+     * Init
+     * 
+     * @see com.atech.graphics.components.ATTableData#init()
+     */
     public void init()
     {
         String[] col = { "NAME", "WEIGHT_TYPE", "HOME_WEIGHT", "AMOUNT_LBL" };
@@ -74,20 +105,6 @@ public class DailyFoodEntryDisplay extends ATTableData
         init(col, col_size);
     }
 
-    /*
-     * public void resetWeightValues(DailyFoodEntry dfe) {
-     * this.daily_food_entry.resetWeightValues(dfe); }
-     */
-
-    /*
-     * public String getId() { return this.id; }
-     * 
-     * public void setAmount(float amount) { this.amount = "" + amount;
-     * this.meal_part.setAmount(amount); }
-     * 
-     * public String getSaveData() { return this.meal_part.getType() + ":" +
-     * this.meal_part.getId() + "=" + this.amount; }
-     */
 
     /**
      * Get Daily Food Entry
