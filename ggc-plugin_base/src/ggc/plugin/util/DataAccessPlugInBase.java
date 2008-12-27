@@ -872,7 +872,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      * 
      * @see com.atech.utils.ATDataAccessAbstract#loadGraphConfigProperties()
      */
-    @Override
     public void loadGraphConfigProperties()
     {
     }
