@@ -1,3 +1,18 @@
+0.3.12
+    * more functionality to panels on main screen (selectable updates to main screen) 
+    * added function to write free text for foods and accompanying CH values
+    * integration into old daily entry 
+
+0.3.11
+    * integrating new graph framework (ATGraphFramework)
+    * implementation of HbA1c view for ATGraphFramework
+    * implementation of Daily view for ATGraphFramework
+    * ATech Tools Requirement: v0.2.10
+
+0.3.10
+    * adding comments
+    * changed main view of application
+
 2008-11-12 (0.3.9) Andy Rozman <andyrozman@users.sourceforge.net>
     * Fixed nutrition processing. Minor bug
 

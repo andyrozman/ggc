@@ -1,32 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: SpreadGraphView.java
- *  Purpose:  Draws the spread of values over the day.
- *
- *  Author:   schultd
- *  Author:   reini
- *  
- */
-
 package ggc.gui.graphs;
 
 import ggc.core.data.DailyValues;
@@ -42,27 +13,67 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     SpreadGraphView
+ *  Description:  Draws the spread of values over the day. (this will be DEPRECATED)
+ *
+ *  Author:   schultd
+ *  Author:   reini
+ */
+
+
 public class SpreadGraphView extends AbstractGraphView
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 3699075079321211940L;
     GlucoValues gV = null;
     private ReadablePlotData data = null;
     boolean connect = true;
 
+    /**
+     * Constructor
+     */
     public SpreadGraphView()
     {
         this(null, true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param data
+     * @param connect
+     */
     public SpreadGraphView(PlotData data, boolean connect)
     {
         this(null, data, connect);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param gV
+     * @param data
+     * @param connect
+     */
     public SpreadGraphView(GlucoValues gV, PlotData data, boolean connect)
     {
         super();
@@ -75,6 +86,11 @@ public class SpreadGraphView extends AbstractGraphView
         }
     }
 
+    /**
+     * Set Gluco Values
+     * 
+     * @param gV
+     */
     public void setGlucoValues(GlucoValues gV)
     {
         this.gV = gV;
@@ -99,6 +115,11 @@ public class SpreadGraphView extends AbstractGraphView
         this.connect = connect;
     }
 
+    /**
+     * Paint
+     * 
+     * @see javax.swing.JComponent#paint(java.awt.Graphics)
+     */
     @Override
     public void paint(Graphics g)
     {

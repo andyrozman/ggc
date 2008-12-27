@@ -1,6 +1,5 @@
 package ggc.core.nutrition.panels;
 
-// import java.awt.Color;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.data.MealNutritionsComparator;
 import ggc.core.nutrition.data.MealPartsComparator;
@@ -43,12 +42,36 @@ import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.components.EditableAbstractPanel;
 import com.atech.graphics.layout.ZeroLayout;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PanelNutritionMealEdit
+ *  Description:  Panel for editing nutrition Meal
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements ActionListener
 {
 
     private static final long serialVersionUID = 1091537198268076868L;
-
-    DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label, label_refuse, label_name, label_name_i18n;
@@ -73,13 +96,17 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
     Meal meal;
     MealGroup meal_group;
 
+    
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public PanelNutritionMealEdit(NutritionTreeDialog dia)
     {
-
         super(true, dia.ic);
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
 
         this.mpd = new MealPartsDisplay(ic);
         this.mnd = new MealNutritionsDisplay(ic);
@@ -89,10 +116,9 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
 
         createPanel();
-
     }
 
-    public void createPanel()
+    private void createPanel()
     {
 
         this.setSize(520, 560);
@@ -101,18 +127,9 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         Font fnt_14_bold = new Font("Times New Roman", Font.BOLD, 14);
         Font fnt_14 = new Font("Times New Roman", Font.PLAIN, 14);
 
-        /*
-         * this.setId(ch.getId()); this.setFood_group_id(ch.getFood_group_id());
-         * this.setName(ch.getName()); this.setI18n_name(ch.getI18n_name());
-         * this.setRefuse(ch.getRefuse());
-         * this.setNutritions(ch.getNutritions());
-         */
-
         label_title = new JLabel(ic.getMessage("MEAL_DESCRIPTION_EDIT_ADD"));
         label_title.setBounds(0, 25, 520, 40);
         label_title.setFont(font_big);
-        // label.setBackground(Color.red);
-        // label.setBorder(BorderFactory.createLineBorder(Color.blue));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label_title, null);
 
@@ -123,7 +140,6 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
         tf_name = new JTextField();
         tf_name.setBounds(190, 80, 300, 25);
-        // tf_name.setVerticalAlignment(JLabel.TOP);
         tf_name.setFont(fnt_14);
         tf_name.addKeyListener(new KeyListener()
         {
@@ -307,8 +323,8 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         return;
     }
 
-    public static final int MODEL_MEAL_PARTS = 1;
-    public static final int MODEL_MEALS_NUTRITIONS = 2;
+    //public static final int MODEL_MEAL_PARTS = 1;
+    //public static final int MODEL_MEALS_NUTRITIONS = 2;
 
     private void createModel(ArrayList<?> lst, JTable table, ATTableData object)
     {
@@ -334,7 +350,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         tf_name_i18n.setText(ic.getMessage(key));
     }
 
-    /*
+    /**
      * Action Listener
      */
     public void actionPerformed(ActionEvent e)
@@ -344,7 +360,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
         if (action.equals("add_meal"))
         {
-            System.out.println("Add Meal");
+            //System.out.println("Add Meal");
             MealSelectorDialog msd = new MealSelectorDialog(m_da, this.meal.getId());
 
             if (msd.wasAction())
@@ -359,7 +375,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         }
         else if (action.equals("edit_meal"))
         {
-            System.out.println("Edit Meal");
+            //System.out.println("Edit Meal");
 
             if (this.table_1.getSelectedRowCount() == 0)
             {
@@ -381,7 +397,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         }
         else if (action.equals("remove_meal"))
         {
-            System.out.println("Remove Meal");
+            //System.out.println("Remove Meal");
 
             if (this.table_1.getSelectedRowCount() == 0)
             {
@@ -429,7 +445,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
-    public void refreshNutritions()
+    private void refreshNutritions()
     {
         Hashtable<String, MealNutrition> nutres = new Hashtable<String, MealNutrition>();
 
@@ -624,7 +640,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
-    public void loadMealsParts()
+    private void loadMealsParts()
     {
         this.list_parts.clear();
 
@@ -660,6 +676,11 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
+    /**
+     * Set Parent
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
+     */
     public void setParent(Object obj)
     {
         setTypeOfAction(EditableAbstractPanel.ACTION_ADD);
@@ -684,6 +705,11 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         createKeyWord();
     }
 
+    /**
+     * Set Data
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
         this.meal = (Meal) obj;
@@ -717,7 +743,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
-    /*
+    /**
      * Get Warning string. This method returns warning string for either add or
      * edit. If value returned is null, then no warning message box will be
      * displayed.
@@ -783,7 +809,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
-    /*
+    /**
      * Was data in this panel changed.
      * 
      * @return true if data changed, false otherwise
@@ -827,7 +853,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
-    /*
+    /**
      * Save data in panel
      * 
      * @return true if save was successful
@@ -891,7 +917,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         this.m_dialog.refreshTree();
     }
 
-    public void removeMealFromTree(Meal meal, long prev_group_id)
+    private void removeMealFromTree(Meal meal, long prev_group_id)
     {
         m_da.tree_roots.get("3").m_meal_groups_ht.get("" + prev_group_id).removeChild(meal);
     }

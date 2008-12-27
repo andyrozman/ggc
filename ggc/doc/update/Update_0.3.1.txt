@@ -7,7 +7,7 @@ it will damage the installation).
 
 
 In update package are three directories, which you need to copy (and overwrite) to existing installation 
-directory. It contains these files):
+directory. It contains these files:
 
 docs\*                                  - here are several doc files about updates and this update specifically 
 data\update\GGC_Update.properties       - update file (for generation of new startup scripts)
@@ -42,7 +42,7 @@ This update will not increase application version, you will still see applicatio
 This update fixes minor bug in backup/restore function. In previous version, backup was made in the
 character set supported by operating system. This sometimes creates problem on restore, because
 database requires all entries to be in UTF-8 format. This fix forces backup to write files in UTF-8
-format, which gives us possibilty to make backup/restore of database, which is requirement for applying
+format, which gives us possibility to make backup/restore of database, which is requirement for applying
 any update. 
 
 

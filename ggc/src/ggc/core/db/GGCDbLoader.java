@@ -41,6 +41,9 @@ import ggc.gui.little.StatusBarL;
 import java.io.File;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 public class GGCDbLoader extends Thread
 {
@@ -58,6 +61,8 @@ public class GGCDbLoader extends Thread
 
     // 99 - loading complete
     // green
+
+    private static Log log = LogFactory.getLog(GGCDbLoader.class);
 
     DataAccess m_da = null;
     StatusBar m_bar = null;
@@ -221,8 +226,8 @@ public class GGCDbLoader extends Thread
 */
     	long dif = System.currentTimeMillis() - start_time;
 
-    	System.out.println("We needed "  + (dif/1000) + " seconds to startup.");
-
+    	//System.out.println("We needed "  + (dif/1000) + " seconds to startup.");
+    	log.debug("We needed "  + (dif/1000) + " seconds to startup.");
     }
 
     public void setDbStatus(int status)

@@ -5,6 +5,31 @@ import ggc.core.db.datalayer.MealPart;
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MealFoodDisplay  
+ *  Description:  Meal Food Display
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 public class MealFoodDisplay extends ATTableData
 {
 
@@ -13,16 +38,27 @@ public class MealFoodDisplay extends ATTableData
     private String description;
     private String amount;
 
-    public static String[] type_description = null;
+    //private static String[] type_description = null;
 
     MealPart meal_part = null;
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public MealFoodDisplay(I18nControlAbstract ic)
     {
         super(ic);
         initStatic();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param full
+     */
     public MealFoodDisplay(I18nControlAbstract ic, String full)
     {
         super(ic);
@@ -32,6 +68,12 @@ public class MealFoodDisplay extends ATTableData
         initStatic();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param part
+     */
     public MealFoodDisplay(I18nControlAbstract ic, MealPart part)
     {
         super(ic);
@@ -48,6 +90,11 @@ public class MealFoodDisplay extends ATTableData
 
     }
 
+    /**
+     * Get Meal Part
+     * 
+     * @return
+     */
     public MealPart getMealPart()
     {
         return this.meal_part;
@@ -59,7 +106,7 @@ public class MealFoodDisplay extends ATTableData
      * def.get.getTag(); // this.weight_unit = def.getWeight_unit(); }
      */
 
-    public void initStatic()
+    private void initStatic()
     {
         if (MealPartsDisplay.type_description == null)
         {
@@ -72,6 +119,11 @@ public class MealFoodDisplay extends ATTableData
 
     }
 
+    /**
+     * Init
+     * 
+     * @see com.atech.graphics.components.ATTableData#init()
+     */
     @Override
     public void init()
     {
@@ -81,42 +133,55 @@ public class MealFoodDisplay extends ATTableData
         init(col, col_size);
     }
 
+    /**
+     * Get Id
+     * @return
+     */
     public String getId()
     {
         return this.id;
     }
 
+    /**
+     * Set Amount
+     * 
+     * @param amount
+     */
     public void setAmount(float amount)
     {
         this.amount = "" + amount;
         this.meal_part.setAmount(amount);
     }
 
+    /**
+     * Get Save Data
+     * 
+     * @return
+     */
     public String getSaveData()
     {
         return this.meal_part.getType() + ":" + this.meal_part.getId() + "=" + this.amount;
     }
 
+    /**
+     * Get Column Value
+     * 
+     * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
+     */
     @Override
     public String getColumnValue(int column)
     {
         switch (column)
         {
-        case 1:
-            return this.description;
-        case 2:
-            return this.amount;
-
-        case 0:
-        default:
-            return "" + this.type_desc;
-
-            /*
-             * case 1: return this.id; case 2: return this.description; case 3:
-             * return this.amount;
-             * 
-             * case 0: default: return "" + this.type_desc;
-             */
+            case 1:
+                return this.description;
+                
+            case 2:
+                return this.amount;
+    
+            case 0:
+            default:
+                return "" + this.type_desc;
 
         }
     }

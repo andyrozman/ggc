@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionTreeDialog
- *  Purpose:  Main class for displaying nutrition information.
- *
- *  Author:   andyrozman
- */
-
 package ggc.core.nutrition.dialogs;
 
 import ggc.core.db.datalayer.FoodDescription;
@@ -51,37 +24,59 @@ import javax.swing.border.TitledBorder;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MealSelectorDialog
+ *  Description:  Meal Selector Dialog
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class MealSelectorDialog extends JDialog implements ActionListener, KeyListener
 {
 
-    // private JPanel mainPane;
-    // private JTree tree;
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = -3830583899901022717L;
+    private DataAccess m_da = null;
+    private I18nControlAbstract ic = null;
+
     JTextField tf_selected;
     JComboBox cb_type;
     JLabel label_item, label_item_type;
     Font font_normal, font_normal_b;
     JButton button_select;
-
-    private DataAccess m_da = null;
-    private I18nControlAbstract ic = null;
+    JDecimalTextField amountField;
 
     Object action_object;
     int action_object_type = 0;
     long input_id = 0L;
-
     String[] type;
-
-    // private NumberFormat amountDisplayFormat;
-    // private NumberFormat amountEditFormat;
-    JDecimalTextField amountField;
-
     MealPart meal_part;
 
+    
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param meal_id
+     */
     public MealSelectorDialog(DataAccess da, long meal_id)
     {
         super(da.getParent(), "", true);
@@ -95,11 +90,17 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         this.setBounds(160, 100, 300, 460);
         init();
 
-        System.out.println("MealSelectorDialog");
+        //System.out.println("MealSelectorDialog");
 
         this.setVisible(true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param part
+     */
     public MealSelectorDialog(DataAccess da, MealPart part)
     {
         super(da.getParent(), "", true);
@@ -118,6 +119,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         this.setVisible(true);
     }
 
+    
     private void loadMeal()
     {
         this.cb_type.setSelectedIndex(this.meal_part.getType() - 1);
@@ -147,7 +149,8 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
 
     }
 
-    public void init()
+    
+    private void init()
     {
 
         this.setLayout(null);
@@ -272,25 +275,47 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         this.add(panel, null);
     }
 
+    /**
+     * Was Action
+     * @return
+     */
     public boolean wasAction()
     {
         return (this.action_object != null);
     }
 
+    /**
+     * Get Selected Object Type
+     * 
+     * @return
+     */
     public int getSelectedObjectType()
     {
         return this.action_object_type;
     }
 
+    /**
+     * Get Selected Object
+     * 
+     * @return
+     */
     public Object getSelectedObject()
     {
         return this.action_object;
     }
 
+    /**
+     * Get Amount Value
+     * 
+     * @return
+     */
     public float getAmountValue()
     {
-        Object o = this.amountField.getValue();
+        //Object o = this.amountField.getValue();
 
+        return m_da.getJFormatedTextValueFloat(this.amountField);
+        
+        /*
         if (o instanceof Long)
         {
             // System.out.println("Amount(long): " +
@@ -306,9 +331,15 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
 
             Double d = (Double) this.amountField.getValue();
             return d.floatValue();
-        }
+        }*/
     }
 
+    
+    /**
+     * Action Performed
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e)
     {
         String cmd = e.getActionCommand();
@@ -363,12 +394,10 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     }
 
     
-    /* 
+    /** 
      * keyPressed
      */
-    public void keyPressed(KeyEvent arg0)
-    {
-    }
+    public void keyPressed(KeyEvent ev) {}
 
 
     /**
@@ -386,7 +415,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     }
     
     
-    /* 
+    /** 
      * keyTyped
      */
     public void keyTyped(KeyEvent arg0)

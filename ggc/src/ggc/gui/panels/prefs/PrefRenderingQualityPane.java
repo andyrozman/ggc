@@ -45,20 +45,48 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.help.HelpCapable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PrefRenderingQualityPane
+ *  Description:  Setting the rendering quality of the application (graphs)
+ * 
+ *  Author: schultd
+ *          andyrozman {andy@atech-software.com}  
+ */
+
 public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implements HelpCapable
 {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = 5354608555593397390L;
 
     private JComboBox comboAntiAliasing, comboColorRendering, comboDithering, comboFractionalMetrics,
             comboInterpolation, comboTextAntiAliasing, comboRendering;
 
     private DailyGraphView dgv;
-
     private JPanel testingPanel;
 
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public PrefRenderingQualityPane(PropertiesDialog dia)
     {
         super(dia);
@@ -143,6 +171,11 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
         add(dgv, BorderLayout.CENTER);
     }
 
+    /**
+     * Save Properties
+     * 
+     * @see ggc.gui.panels.prefs.AbstractPrefOptionsPanel#saveProps()
+     */
     @Override
     public void saveProps()
     {
@@ -155,6 +188,12 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
         this.settings.setRendering(comboRendering.getSelectedIndex());
     }
 
+    
+    /**
+     * Item State Changed
+     * 
+     * @see ggc.gui.panels.prefs.AbstractPrefOptionsPanel#itemStateChanged(java.awt.event.ItemEvent)
+     */
     @Override
     public void itemStateChanged(ItemEvent e)
     {
@@ -167,7 +206,7 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -175,7 +214,7 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -183,7 +222,7 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
         return this.parent.getHelpButton();
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()

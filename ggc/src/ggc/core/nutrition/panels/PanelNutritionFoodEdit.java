@@ -1,6 +1,5 @@
 package ggc.core.nutrition.panels;
 
-//import java.awt.Color;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.data.HomeWeightComparator;
 import ggc.core.nutrition.data.NutritionsComparator;
@@ -39,19 +38,36 @@ import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.components.EditableAbstractPanel;
 import com.atech.graphics.layout.ZeroLayout;
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PanelNutritionFoodEdit  
+ *  Description:  Panel for editing nutrition Food
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
-public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements ActionListener
+
+public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5701983225229844484L;
-
-    // I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label, label_refuse, label_name, label_name_i18n;
@@ -73,28 +89,25 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
 
     HomeWeightDataDisplay hwd = null;
     NutritionDataDisplay ndd = null;
-    // MealPartsDisplay mpd = null;
-    // MealNutritionsDisplay mnd = null;
-
-    // Meal meal;
-    // MealGroup meal_group;
 
     FoodDescription food;
     FoodGroup food_group;
 
+    
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public PanelNutritionFoodEdit(NutritionTreeDialog dia)
     {
 
         super(true, dia.ic);
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
 
         this.hwd = new HomeWeightDataDisplay(ic);
         this.ndd = new NutritionDataDisplay(ic);
-
-        // this.mpd = new MealPartsDisplay(ic);
-        // this.mnd = new MealNutritionsDisplay(ic);
 
         font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
@@ -104,7 +117,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
-    public void createPanel()
+    private void createPanel()
     {
 
         this.setSize(520, 560);
@@ -214,34 +227,6 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
         button_select.addActionListener(this);
         button_select.setBounds(350, 220, 140, 25);
         this.add(button_select, null);
-
-        // scroll_3.setBounds(140, 180, 350, 45);
-
-        // jta.set
-
-        /*
-         * label_refuse = new JLabel(); label_refuse.setBounds(300, 230, 50,
-         * 30); label_refuse.setFont(fnt_14); this.add(label_refuse, null);
-         * 
-         * 
-         * 
-         * / this.label_name_i18n = new JLabel(); // 180
-         * this.label_name_i18n.setBounds(30, 165, 460, 50);
-         * label_name.setVerticalAlignment(JLabel.TOP);
-         * this.label_name_i18n.setFont(fnt_14); this.add(this.label_name_i18n,
-         * ZeroLayout.DYNAMIC);
-         * 
-         * 
-         * 
-         * label = new JLabel(ic.getMessage("REFUSE") + ":");
-         * label.setBounds(30, 230, 300, 30); label.setFont(fnt_14_bold);
-         * this.add(label, null);
-         */
-
-        /*
-         * label_refuse = new JLabel(); label_refuse.setBounds(300, 230, 50,
-         * 30); label_refuse.setFont(fnt_14); this.add(label_refuse, null);
-         */
 
         label = new JLabel(ic.getMessage("REFUSE_LBL") + ":");
         label.setBounds(30, 250, 300, 25);
@@ -355,8 +340,8 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
         return;
     }
 
-    public static final int MODEL_MEAL_PARTS = 1;
-    public static final int MODEL_MEALS_NUTRITIONS = 2;
+    //public static final int MODEL_MEAL_PARTS = 1;
+    //public static final int MODEL_MEALS_NUTRITIONS = 2;
 
     private void createModel(ArrayList<?> lst, JTable table, ATTableData object)
     {
@@ -432,7 +417,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
 
             if (fpmsd.wasAction())
             {
-                System.out.println("Returned value: " + fpmsd.getAmountValue());
+                //System.out.println("Returned value: " + fpmsd.getAmountValue());
 
                 ndd.setAmount(fpmsd.getAmountValue());
                 this.createModel(this.list_nutritions, this.table_1, this.ndd);
@@ -533,7 +518,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
     }
 
     
-    public String getExistingIds(int type)
+    private String getExistingIds(int type)
     {
         if (type == FoodPartMainSelectorDialog.SELECTOR_NUTRITION)
         {
@@ -578,6 +563,11 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
         }
     }
 
+    /**
+     * Set Parent
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
+     */
     public void setParent(Object obj)
     {
         setTypeOfAction(EditableAbstractPanel.ACTION_ADD);
@@ -606,6 +596,11 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
+    /**
+     * Set Data
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
         this.food = (FoodDescription) obj;
@@ -831,7 +826,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel /* JPanel */implements 
         this.m_dialog.refreshTree();
     }
 
-    public void removeFoodFromTree(FoodDescription food, long prev_group_id)
+    private void removeFoodFromTree(FoodDescription food, long prev_group_id)
     {
         m_da.tree_roots.get("2").m_groups_ht.get("" + prev_group_id).removeChild(food);
     }

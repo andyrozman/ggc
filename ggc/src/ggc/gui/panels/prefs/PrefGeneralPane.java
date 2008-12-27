@@ -1,30 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: prefGeneralPane.java Purpose: General options. Now containg also
- * database selection and look and feel changes.
- * 
- * Author: schultd Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.gui.panels.prefs;
 
 import ggc.core.db.tool.DbToolApplicationGGC;
@@ -47,30 +20,46 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.help.HelpCapable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PrefGeneralPane
+ *  Description:  General Preferences: Name, Database selection, Look & Feel
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCapable
 {
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5776476963040139761L;
-
     private JTextField fieldUserName;
-
-    // private I18nControl m_ic = I18nControl.getInstance();
-
     private JComboBox langBox, cb_database, cb_lf_type, cb_lf_type_class;
     private JTextField tf_lf;
-    // x private JLabel l_db_desc, l_lf_desc;
     private JButton b_browse;
-
-    // private Object[] databases = null;
-    // x private Object[] lf_classes_name = null;
-    // x private Object[] lf_classes_class = null;
-
-    // private PrefGeneralPane parent = null;
-
     DbToolApplicationGGC m_dbc = m_da.getDbConfig();
 
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public PrefGeneralPane(PropertiesDialog dia)
     {
         super(dia);
@@ -207,7 +196,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
 
     }
 
-    public void addLabel(JPanel panel, String text, int x, int y, int width, int height)
+    private void addLabel(JPanel panel, String text, int x, int y, int width, int height)
     {
         JLabel label = new JLabel(text);
         label.setBounds(x, y, width, height);
@@ -216,6 +205,11 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
 
     boolean in_change = false;
 
+    /**
+     * Item State Changed
+     * 
+     * @see ggc.gui.panels.prefs.AbstractPrefOptionsPanel#itemStateChanged(java.awt.event.ItemEvent)
+     */
     public void itemStateChanged(ItemEvent e)
     {
 
@@ -223,8 +217,6 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
             return;
         else
             in_change = true;
-
-        // System.out.println(e);
 
         JComboBox cb = (JComboBox) e.getSource();
 
@@ -243,6 +235,12 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
         in_change = false;
     }
 
+    
+    /**
+     * Save Properties
+     * 
+     * @see ggc.gui.panels.prefs.AbstractPrefOptionsPanel#saveProps()
+     */
     @Override
     public void saveProps()
     {
@@ -253,6 +251,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
         this.m_dbc.setSelectedLF(this.cb_lf_type.getSelectedIndex(), this.tf_lf.getText());
     }
 
+    
     private void processJFileChooser(Container c)
     {
         Component[] comps = c.getComponents();
@@ -297,7 +296,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -305,7 +304,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -313,7 +312,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
         return this.parent.getHelpButton();
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()

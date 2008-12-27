@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionTreeDialog
- *  Purpose:  Main class for displaying nutrition information.
- *
- *  Author:   andyrozman
- */
-
 package ggc.core.nutrition;
 
 import ggc.core.db.GGCDb;
@@ -242,6 +215,7 @@ public class TestNutritionData
     @SuppressWarnings("unused")
     private void createFakeData_Meals()
     {
+        /*
         ArrayList<MealGroup> lst = new ArrayList<MealGroup>();
 
         lst.add(getMealGroup(1, 0));
@@ -261,12 +235,13 @@ public class TestNutritionData
         gtr.manualCreate2(lst, lst1);
 
         m_da.tree_roots.put("" + GGCTreeRoot.TREE_MEALS, gtr);
-
+*/
     }
 
     @SuppressWarnings("unused")
     private void createFakeData_User()
     {
+        /*
         ArrayList<FoodGroup> lst = new ArrayList<FoodGroup>();
 
         lst.add(getUserGroup(1, 0));
@@ -286,9 +261,10 @@ public class TestNutritionData
         gtr.manualCreate(lst, lst1);
 
         m_da.tree_roots.put("2", gtr);
-
+*/
     }
 
+    @SuppressWarnings("unused")
     private FoodGroup getUserGroup(long id, long parent_id)
     {
 
@@ -305,6 +281,7 @@ public class TestNutritionData
 
     }
 
+    @SuppressWarnings("unused")
     private FoodDescription getUserFoodDescription(int id, int group_id)
     {
 
@@ -321,6 +298,7 @@ public class TestNutritionData
         return new FoodDescription(fuh);
     }
 
+    @SuppressWarnings("unused")
     private MealGroup getMealGroup(long id, long parent_id)
     {
         // public MealGroupH(String name, String name_i18n, String description,
@@ -336,6 +314,7 @@ public class TestNutritionData
 
     }
 
+    @SuppressWarnings("unused")
     private Meal getMealDescription(int id, long group_id)
     {
         // new MealH(group_id, "Meal " + id, "MEAL_" + id, "", "", "", "");

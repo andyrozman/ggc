@@ -145,6 +145,8 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
         current_gc = new GregorianCalendar();
         
+        da.addComponent(this);
+        
         setTitle(this.current_gc);
         this.m_da = da;
         this.m_db = m_da.getDb();
@@ -176,6 +178,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
         MainFrame mf = DataAccess.getInstance().getParent();
         mf.informationPanel.refreshPanels();
+        m_da.removeComponent(this);
         this.dispose();
     }
 

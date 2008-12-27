@@ -1,8 +1,6 @@
 package ggc.gui;
 
 import ggc.GGC;
-import ggc.core.data.graph.GraphViewDaily;
-import ggc.core.data.graph.GraphViewSpread;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.nutrition.GGCTreeRoot;
@@ -11,6 +9,7 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.AppointmentsDialog;
+import ggc.gui.dialogs.DailyRowMealsDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.DoctorsDialog;
 import ggc.gui.dialogs.HbA1cDialog;
@@ -32,7 +31,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
 import javax.help.CSH;
@@ -54,7 +52,6 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
-import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpContext;
 import com.atech.update.client.UpdateDialog;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
@@ -1097,12 +1094,15 @@ public class MainFrame extends JFrame
             }
             else if ((command.equals("test")))
             {
+                
+                new DailyRowMealsDialog(null, new JDialog());
+                
                 /*
                 // spread graph
                 new GraphViewer(new GraphViewSpread(), m_da);
                  */
 
-                
+             /*   
                 // daily view
                 GregorianCalendar gc = new GregorianCalendar();
                 gc.set(GregorianCalendar.DAY_OF_MONTH, 18);
@@ -1110,7 +1110,7 @@ public class MainFrame extends JFrame
                 gc.set(GregorianCalendar.YEAR, 2008);
                 
                 new GraphViewer(new GraphViewDaily(gc), m_da);
-                
+               */ 
                 
                 
                 //new HbA1cDialog(m_da);

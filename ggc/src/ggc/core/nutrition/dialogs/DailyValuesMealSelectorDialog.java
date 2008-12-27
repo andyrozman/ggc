@@ -1,30 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: NutritionTreeDialog Purpose: Main class for displaying nutrition
- * information.
- * 
- * Author: andyrozman
- */
-
 package ggc.core.nutrition.dialogs;
 
 import ggc.core.nutrition.panels.PanelMealSelector;
@@ -41,18 +14,34 @@ import javax.swing.JTextField;
 import com.atech.graphics.dialogs.TransferDialog;
 import com.atech.i18n.I18nControlAbstract;
 
-/*
- * Main Dialog used for selecting meals and foods for Daily Values.
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
  * 
- * @author arozman
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     DailyValuesMealSelectorDialog
+ *  Description:  Main Dialog used for selecting meals and foods for Daily Values.
+ *  
+ *  Author: andyrozman {andy@atech-software.com}  
  */
+
 public class DailyValuesMealSelectorDialog extends TransferDialog implements ActionListener
-// extends JDialog implements ActionListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 9105408177791270640L;
     JTextField tf_selected;
     JComboBox cb_type;
@@ -67,6 +56,12 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
     String meals_ids = null;
     PanelMealSelector panel_meal_selector = null;
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param meals_id
+     */
     public DailyValuesMealSelectorDialog(DataAccess da, String meals_id)
     {
         super(da.getCurrentComponent());
@@ -85,7 +80,7 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
         this.setVisible(true);
     }
 
-    public void init()
+    private void init()
     {
         this.panel_meal_selector = new PanelMealSelector(this, this, this.meals_ids);
         this.add(this.panel_meal_selector, null);
@@ -93,6 +88,11 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
 
     private boolean action_done = false;
 
+    /**
+     * Action Performed
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e)
     {
         String cmd = e.getActionCommand();
@@ -200,21 +200,41 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
 
     }
 
+    /**
+     * Was Action
+     * 
+     * @see com.atech.graphics.dialogs.TransferDialog#wasAction()
+     */
     public boolean wasAction()
     {
         return this.action_done;
     }
 
+    /**
+     * Get String For Db
+     * 
+     * @return
+     */
     public String getStringForDb()
     {
         return this.panel_meal_selector.getStringForDb();
     }
 
+    /**
+     * Get CH Sum
+     * 
+     * @return
+     */
     public String getCHSum()
     {
         return this.panel_meal_selector.getCHSumString();
     }
 
+    /**
+     * Get Result Values
+     * 
+     * @see com.atech.graphics.dialogs.TransferDialog#getResultValues()
+     */
     public Object[] getResultValues()
     {
         Object[] objs = new Object[2];
@@ -224,6 +244,11 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
         return objs;
     }
 
+    /**
+     * Get Result Values as String
+     * 
+     * @see com.atech.graphics.dialogs.TransferDialog#getResultValuesString()
+     */
     public String[] getResultValuesString()
     {
         String[] objs = new String[2];
@@ -233,9 +258,10 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
         return objs;
     }
 
+    /*
     public static void main(String[] args)
     {
         new DailyValuesMealSelectorDialog(DataAccess.getInstance(), null);
-    }
+    }*/
 
 }

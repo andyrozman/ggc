@@ -48,7 +48,7 @@ public class GGC
     /**
      * Version of application
      */
-    public static String s_version = "0.3.10";
+    public static String s_version = "0.3.12";
     
     
     /**
@@ -59,7 +59,7 @@ public class GGC
     /**
      * Version Date 
      */
-    public static String version_date = "12th December 2008";
+    public static String version_date = "26th December 2008";
 
     /**
      * Checks if Db is correct version

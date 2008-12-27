@@ -67,13 +67,16 @@ import com.lowagie.text.pdf.PdfPTable;
 
 public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
 {
-   
     
+    /**
+     * Constructor
+     * 
+     * @param mv
+     */
     public PrintFoodMenuExt1(DayValuesData mv)
     {
         super(mv);
     }
-
 
     
     /**

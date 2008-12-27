@@ -1,7 +1,5 @@
 package ggc.core.db.tool.transfer; 
 
-import ggc.core.util.DataAccess;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
@@ -16,6 +14,12 @@ public class BackupDialog extends BackupRestoreDialog
     private static final long serialVersionUID = -9066907986768713200L;
 
 
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param da
+     */
     public BackupDialog(JDialog parent, ATDataAccessAbstract da /*, BackupRestoreCollection br_coll*/)
     {
     	super(parent, da, da.getBackupRestoreCollection());
@@ -24,6 +28,12 @@ public class BackupDialog extends BackupRestoreDialog
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param da
+     */
     public BackupDialog(JFrame parent, ATDataAccessAbstract da /*, BackupRestoreCollection br_coll*/)
     {
     	super(parent, da, da.getBackupRestoreCollection());
@@ -32,8 +42,8 @@ public class BackupDialog extends BackupRestoreDialog
     }
     
     
-    /* 
-     * performBackup
+    /** 
+     * Perform Backup
      */
     @Override
     public void performBackup()
@@ -42,16 +52,6 @@ public class BackupDialog extends BackupRestoreDialog
     	gbrr.start();
     }
 
-    
-    public static void main(String args[])
-    {
-        JFrame fr = new JFrame();
-        fr.setSize(800,600);
-        
-        BackupDialog rsd = new BackupDialog(new JDialog(), DataAccess.getInstance());
-        rsd.showDialog();
-    }
-    
     
 }
 

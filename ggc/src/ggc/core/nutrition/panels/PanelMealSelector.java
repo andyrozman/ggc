@@ -1,6 +1,5 @@
 package ggc.core.nutrition.panels;
 
-//import java.awt.Color;
 import ggc.core.db.datalayer.DailyFoodEntries;
 import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.MealNutrition;
@@ -35,13 +34,35 @@ import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.layout.ZeroLayout;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PanelMealSelector  
+ *  Description:  Panel Meal Selector
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class PanelMealSelector extends /* GGCTreePanel */JPanel implements ActionListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 568309027874088901L;
 
     DataAccess m_da = null;
@@ -69,6 +90,13 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
     NutriI18nControl ic = null;
     String meals_ids;
 
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     * @param list
+     * @param meals_ids
+     */
     public PanelMealSelector(JDialog dialog, ActionListener list, String meals_ids)
     {
         super();
@@ -96,9 +124,9 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
-    public void loadFoodParts()
+    private void loadFoodParts()
     {
-        System.out.println("Food parts: " + this.meals_ids);
+        //System.out.println("Food parts: " + this.meals_ids);
 
         // System.out.println("Load Food Parts N/A");
         if ((this.meals_ids != null) && (this.meals_ids.length() != 0))
@@ -117,12 +145,12 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
-    public void addFoodPart(DailyFoodEntryDisplay dfed)
+    private void addFoodPart(DailyFoodEntryDisplay dfed)
     {
         this.addFoodPart(dfed, true);
     }
 
-    public void addFoodPart(DailyFoodEntryDisplay dfed, boolean refresh)
+    private void addFoodPart(DailyFoodEntryDisplay dfed, boolean refresh)
     {
         if (dfed.getDailyFoodEntry() != null)
             this.list_food_entries.add(dfed);
@@ -131,11 +159,12 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
             this.refreshFoodParts();
     }
 
-    /*
-     * public void removeFoodPart(DailyFoodEntryDisplay dfed) {
-     * //this.list_food_entries.r.add(dfed); this.refreshFoodParts(); }
-     */
 
+    /**
+     * Get String For Db 
+     * 
+     * @return
+     */
     public String getStringForDb()
     {
         int last = this.list_food_entries.size() - 1;
@@ -152,6 +181,10 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         return sb.toString();
     }
 
+    /**
+     * Get CH Sum String
+     * @return
+     */
     public String getCHSumString()
     {
         // 205
@@ -173,7 +206,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         return "0,0";
     }
 
-    public void createPanel()
+    private void createPanel()
     {
 
         this.setSize(520, 560);
@@ -283,8 +316,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         return;
     }
 
-    public static final int MODEL_MEAL_PARTS = 1;
-    public static final int MODEL_MEALS_NUTRITIONS = 2;
+    //private static final int MODEL_MEAL_PARTS = 1;
+    //private static final int MODEL_MEALS_NUTRITIONS = 2;
 
     private void createModel(ArrayList<?> lst, JTable table, ATTableData object)
     {
@@ -316,10 +349,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         this.refreshNutritions();
     }
 
-    public JTable getFoodTable()
+    /*
+    private JTable getFoodTable()
     {
         return this.table_1;
-    }
+    }*/
 
     /**
      * Action Listener

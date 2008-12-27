@@ -1,31 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DataPlotSelectorPanel.java
- *  Purpose:  A panel containing checkboxes to select the data to be plotted
- *
- *  Author:   rumbi
- *  
- */
-
 package ggc.gui.graphs;
 
 import ggc.core.data.PlotData;
@@ -42,11 +14,32 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * A graphical way (using <code>{@link JCheckBox checkboxes}</code>) to
- * manipulate a <code>{@link PlotData}</code>.
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
  * 
- * @author rumbi
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     DataPlotSelectorPanel
+ *  Description:  A panel containing checkboxes to select the data to be plotted
+ *                A graphical way (using <code>{@link JCheckBox checkboxes}</code>) 
+ *                to manipulate a <code>{@link PlotData}</code>.
+ * 
+ *  @author rumbi
  */
+
 public class DataPlotSelectorPanel extends JPanel implements ChangeListener
 {
     /**
@@ -80,27 +73,79 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
     JCheckBox insPerCHBox = new JCheckBox();
     JCheckBox mealsBox = new JCheckBox();
 
+    /**
+     * Mask: BG
+     */
     public static final int BG_MASK = 1;
+    /**
+     * Mask: BG Avg
+     */
     public static final int BG_AVG_MASK = 2;
+    /**
+     * Mask: BG Reading
+     */
     public static final int BG_READINGS_MASK = 4;
 
+    /**
+     * Mask: CH
+     */
     public static final int CH_MASK = 8;
+    /**
+     * Mask: CH Avg
+     */
     public static final int CH_AVG_MASK = 16;
+    /**
+     * Mask: CH Sum
+     */
     public static final int CH_SUM_MASK = 32;
 
+    /**
+     * Mask: Ins1
+     */
     public static final int INS1_MASK = 64;
+    /**
+     * Mask: Ins1 Avg
+     */
     public static final int INS1_AVG_MASK = 128;
+    /**
+     * Mask: Ins1 Sum
+     */
     public static final int INS1_SUM_MASK = 256;
 
+    /**
+     * Mask: Ins2
+     */
     public static final int INS2_MASK = 512;
+    /**
+     * Mask: Ins2 Avg
+     */
     public static final int INS2_AVG_MASK = 1024;
+    /**
+     * Mask: Ins2 Sum
+     */
     public static final int INS2_SUM_MASK = 2048;
 
+    /**
+     * Mask: Ins Total
+     */
     public static final int INS_TOTAL_MASK = 4096;
+    /**
+     * Mask: Ins Total Avg
+     */
     public static final int INS_TOTAL_AVG_MASK = 8192;
+    /**
+     * Mask: Ins Total Sum
+     */
     public static final int INS_TOTAL_SUM_MASK = 16384;
 
+    /**
+     * Mask: Ins/CH
+     */
     public static final int INS_PER_CH_MASK = 32768;
+    
+    /**
+     * Mask: Meals
+     */
     public static final int MEALS_MASK = 65536;
 
     /**
@@ -424,12 +469,10 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         return data;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * State Changed
      * 
-     * @see
-     * javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent
-     * )
+     * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
      */
     public void stateChanged(ChangeEvent e)
     {

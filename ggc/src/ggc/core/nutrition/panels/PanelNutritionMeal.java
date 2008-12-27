@@ -1,6 +1,5 @@
 package ggc.core.nutrition.panels;
 
-//import java.awt.Color;
 import ggc.core.db.datalayer.DailyFoodEntries;
 import ggc.core.db.datalayer.DailyFoodEntry;
 import ggc.core.db.datalayer.Meal;
@@ -33,19 +32,35 @@ import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.layout.ZeroLayout;
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PanelNutritionMeal
+ *  Description:  Panel for displaying nutrition Meal
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
-public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements ActionListener
+public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 6648128901412564424L;
-
-    // I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label, label_refuse, label_name, label_name_i18n, label_name_i18n_key;
@@ -73,13 +88,17 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
     Meal meal;
     MealGroup meal_group;
 
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public PanelNutritionMeal(NutritionTreeDialog dia)
     {
 
         super(false, dia.ic);
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
 
         this.mpd = new MealPartsDisplay(ic);
         this.mnd = new MealNutritionsDisplay(ic);
@@ -92,7 +111,7 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
-    public void createPanel()
+    private void createPanel()
     {
 
         this.setSize(520, 560);
@@ -101,18 +120,9 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
         Font fnt_14_bold = new Font("Times New Roman", Font.BOLD, 14);
         Font fnt_14 = new Font("Times New Roman", Font.PLAIN, 14);
 
-        /*
-         * this.setId(ch.getId()); this.setFood_group_id(ch.getFood_group_id());
-         * this.setName(ch.getName()); this.setI18n_name(ch.getI18n_name());
-         * this.setRefuse(ch.getRefuse());
-         * this.setNutritions(ch.getNutritions());
-         */
-
         label_title = new JLabel(ic.getMessage("MEAL_VIEW"));
         label_title.setBounds(0, 25, 520, 40);
         label_title.setFont(font_big);
-        // label.setBackground(Color.red);
-        // label.setBorder(BorderFactory.createLineBorder(Color.blue));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label_title, null);
 
@@ -175,13 +185,6 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
         label_group.setFont(fnt_14);
         this.add(label_group, null);
 
-        /*
-         * this.button_select = new JButton(ic.getMessage("SELECT_GROUP"));
-         * button_select.setActionCommand("select_group");
-         * button_select.addActionListener(this); button_select.setBounds(350,
-         * 235, 140, 25); this.add(button_select, null);
-         */
-
         label = new JLabel(ic.getMessage("FOODS_MEALS_NUTRITIONS") + ":");
         label.setBounds(30, 270, 300, 60);
         label.setFont(fnt_14_bold);
@@ -201,29 +204,6 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
         scroll_1.repaint();
 
         scroll_1.updateUI();
-
-        /*
-         * this.button = new JButton(new
-         * ImageIcon(m_da.getImage("/icons/food_add.gif", this)));
-         * this.button.addActionListener(this);
-         * this.button.setActionCommand("add_meal");
-         * this.button.setToolTipText(ic.getMessage("MEAL_FOOD_ADD_DESC"));
-         * this.button.setBounds(370, 275, 32, 32); this.add(button, null);
-         * 
-         * this.button = new JButton(new
-         * ImageIcon(m_da.getImage("/icons/food_edit.gif", this)));
-         * this.button.addActionListener(this);
-         * this.button.setActionCommand("edit_meal");
-         * this.button.setToolTipText(ic.getMessage("MEAL_FOOD_EDIT_DESC"));
-         * this.button.setBounds(410, 275, 32, 32); this.add(button, null);
-         * 
-         * this.button = new JButton(new
-         * ImageIcon(m_da.getImage("/icons/food_delete.gif", this)));
-         * this.button.addActionListener(this);
-         * this.button.setActionCommand("remove_meal");
-         * this.button.setToolTipText(ic.getMessage("MEAL_FOOD_DELETE_DESC"));
-         * this.button.setBounds(450, 275, 32, 32); this.add(button, null);
-         */
 
         // nutritions
 
@@ -250,8 +230,8 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
         return;
     }
 
-    public static final int MODEL_MEAL_PARTS = 1;
-    public static final int MODEL_MEALS_NUTRITIONS = 2;
+    //public static final int MODEL_MEAL_PARTS = 1;
+    //public static final int MODEL_MEALS_NUTRITIONS = 2;
 
     private void createModel(ArrayList<?> lst, JTable table, ATTableData object)
     {
@@ -287,7 +267,7 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
-    public void refreshNutritions()
+    private void refreshNutritions()
     {
 
         // Hashtable<String,MealNutrition> nutres = new
@@ -388,6 +368,7 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
+    
     // TODO: fix GI/GL handling 
     @SuppressWarnings("unused")
     private void loadGI_GL(Hashtable<String, MealNutrition> nutres)
@@ -503,7 +484,7 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
-    public void loadMealsParts()
+    private void loadMealsParts()
     {
         this.list_parts.clear();
 
@@ -540,10 +521,20 @@ public class PanelNutritionMeal extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
+    /**
+     * Set Parent
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
+     */
     public void setParent(Object obj)
     {
     }
 
+    /**
+     * Set Data
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
         this.meal = (Meal) obj;

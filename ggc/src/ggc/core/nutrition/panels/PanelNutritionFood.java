@@ -1,6 +1,5 @@
 package ggc.core.nutrition.panels;
 
-//import java.awt.Color;
 import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.nutrition.display.HomeWeightDataDisplay;
 import ggc.core.nutrition.display.NutritionDataDisplay;
@@ -27,19 +26,36 @@ import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.layout.ZeroLayout;
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PanelNutritionFood
+ *  Description:  Panel for displaying nutrition food
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements ActionListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 4046645712360241891L;
-
-    // I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label, label_refuse, label_name, label_name_i18n, label_name_i18n_key, label_group;
@@ -60,13 +76,16 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
     FoodGroup food_group = null;
 
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public PanelNutritionFood(NutritionTreeDialog dia)
     {
-
         super(false, dia.ic);
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
 
         this.hwd = new HomeWeightDataDisplay(ic);
         this.ndd = new NutritionDataDisplay(ic);
@@ -79,7 +98,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
-    public void createPanel()
+    private void createPanel()
     {
 
         this.setSize(520, 520);
@@ -240,11 +259,21 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         return;
     }
 
+    /**
+     * Set Parent
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
+     */
     public void setParent(Object obj)
     {
 
     }
 
+    /**
+     * Set Data
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
         FoodDescription fd = (FoodDescription) obj;
@@ -314,8 +343,8 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
-    public static final int MODEL_NUTRITIONS = 1;
-    public static final int MODEL_HOME_WEIGHTS = 2;
+    //public static final int MODEL_NUTRITIONS = 1;
+    //public static final int MODEL_HOME_WEIGHTS = 2;
 
     private void createModel(ArrayList<?> lst, JTable table, ATTableData object)
     {

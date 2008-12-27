@@ -6,6 +6,32 @@ import ggc.core.db.datalayer.NutritionHomeWeightType;
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     HomeWeightDataDisplay
+ *  Description:  Home Weight Data Display
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class HomeWeightDataDisplay extends ATTableData
 {
 
@@ -16,6 +42,11 @@ public class HomeWeightDataDisplay extends ATTableData
     private float weight;
     private NutriI18nControl nic;
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public HomeWeightDataDisplay(I18nControlAbstract ic)
     {
         super(ic);
@@ -23,6 +54,12 @@ public class HomeWeightDataDisplay extends ATTableData
         nic = (NutriI18nControl) ic;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param full
+     */
     public HomeWeightDataDisplay(I18nControlAbstract ic, String full)
     {
         super(ic);
@@ -52,6 +89,14 @@ public class HomeWeightDataDisplay extends ATTableData
         }
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param def
+     * @param amount
+     * @param weight
+     */
     public HomeWeightDataDisplay(I18nControlAbstract ic, NutritionHomeWeightType def, float amount, float weight)
     {
         super(ic);
@@ -65,6 +110,11 @@ public class HomeWeightDataDisplay extends ATTableData
         this.weight = weight;
     }
 
+    /**
+     * Init
+     * 
+     * @see com.atech.graphics.components.ATTableData#init()
+     */
     public void init()
     {
         String[] cols = { /* "ID", */"WEIGHT_TYPE", "AMOUNT_LBL", "WEIGHT" };
@@ -73,6 +123,11 @@ public class HomeWeightDataDisplay extends ATTableData
         init(cols, cols_size);
     }
 
+    /**
+     * Get Column Value
+     * 
+     * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
+     */
     public String getColumnValue(int column)
     {
         switch (column)
@@ -90,22 +145,42 @@ public class HomeWeightDataDisplay extends ATTableData
         }
     }
 
+    /**
+     * Get Id
+     * 
+     * @return
+     */
     public String getId()
     {
         return this.id;
     }
 
+    /**
+     * Get Name
+     * 
+     * @return
+     */
     public String getName()
     {
         return this.weight_type;
     }
 
+    /**
+     * Set Home Weight Definition
+     * 
+     * @param name
+     */
     public void setHomeWeightDefinition(String name)
     {
         // this.weight_type = ic.getMessage(name);
         this.weight_type = nic.getPartitialTranslation(name, "_");
     }
 
+    /**
+     * Get Amount
+     * 
+     * @return
+     */
     public float getAmount()
     {
         return this.amount;
@@ -119,22 +194,42 @@ public class HomeWeightDataDisplay extends ATTableData
          */
     }
 
+    /**
+     * Set Amount
+     * 
+     * @param val
+     */
     public void setAmount(float val)
     {
         this.amount = val; // .value = DataAccess.getFloatAsString(val,
                            // this.decimal_places);
     }
 
+    /**
+     * Get Weight
+     * 
+     * @return
+     */
     public float getWeight()
     {
         return this.weight;
     }
 
+    /**
+     * Set Weight
+     * 
+     * @param weight
+     */
     public void setWeight(float weight)
     {
         this.weight = weight;
     }
 
+    /**
+     * Get Save Data
+     * 
+     * @return
+     */
     public String getSaveData()
     {
 

@@ -21,20 +21,36 @@ import javax.swing.SwingConstants;
 
 import com.atech.graphics.components.EditableAbstractPanel;
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PanelNutritionFoodGroupEdit  
+ *  Description:  Panel for editing food/meal group
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
-public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionListener // JPanel
+
+public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionListener 
 {
 
-    // I18nControl ic = I18nControl.getInstance();
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = -824948577643991763L;
-
-    DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label, label_name, label_name_i18n, label_parent, label_title;
@@ -53,10 +69,13 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     boolean was_saved = true;
 
-    // private boolean add = false;
 
-    // JTextField tf_name_i18n=null;
-
+    /**
+     * Constructor
+     * 
+     * @param dia
+     * @param type
+     */
     public PanelNutritionFoodGroupEdit(NutritionTreeDialog dia, int type)
     {
 
@@ -65,7 +84,6 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         this.group_type = type;
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
 
         font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
@@ -75,7 +93,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     }
 
-    public void createPanel()
+    private void createPanel()
     {
 
         this.setSize(520, 520);
@@ -189,19 +207,15 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         return;
     }
 
-    public void createKeyWord()
+    private void createKeyWord()
     {
         String key = m_da.makeI18nKeyword(tf_name.getText());
         tf_name_i18n_key.setText(key);
         tf_name_i18n.setText(ic.getMessage(key));
     }
 
-    /*
-     * public void setSelectedGroup(FoodGroup group) { //label_name
-     * //label_name_i18n }
-     */
 
-    public boolean checkRecursiveGroup(FoodGroup fg, long target)
+    private boolean checkRecursiveGroup(FoodGroup fg, long target)
     {
         if (fg.getId() == target)
             return true;
@@ -218,7 +232,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         }
     }
 
-    public boolean checkRecursiveGroup(MealGroup fg, long target)
+    private boolean checkRecursiveGroup(MealGroup fg, long target)
     {
         if (fg.getId() == target)
             return true;
@@ -237,12 +251,17 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     FoodGroup parent_group;
 
+    /**
+     * Set Parent
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
+     */
     public void setParent(Object obj)
     {
         this.was_saved = false;
         this.button_select.setEnabled(false);
 
-        System.out.println("setParent: " + obj);
+//        System.out.println("setParent: " + obj);
 
         if (group_type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
@@ -264,12 +283,17 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         }
     }
 
+    /**
+     * Set Parent Root
+     * 
+     * @see ggc.core.nutrition.panels.GGCTreePanel#setParentRoot(java.lang.Object)
+     */
     public void setParentRoot(Object obj)
     {
         this.was_saved = false;
         this.button_select.setEnabled(false);
 
-        System.out.println("setParentRoot: " + obj);
+//        System.out.println("setParentRoot: " + obj);
 
         if (group_type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
@@ -293,6 +317,11 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         }
     }
 
+    /**
+     * Set Data
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
         this.was_saved = false;
@@ -355,11 +384,10 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
          */
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Action Performed
      * 
-     * @see
-     * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e)
     {
@@ -422,7 +450,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     }
 
-    /*
+    /**
      * Get Warning string. This method returns warning string for either add or
      * edit. If value returned is null, then no warning message box will be
      * displayed.
@@ -446,7 +474,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     }
 
-    /*
+    /**
      * Was data in this panel changed.
      * 
      * @return true if data changed, false otherwise
@@ -482,13 +510,13 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         }
     }
 
-    public void debug(String msg)
+    private void debug(String msg)
     {
         // System.out.println("PanelNutritionFoodGroupEdit: " + msg);
         System.out.println(msg);
     }
 
-    /*
+    /**
      * Save data in panel
      * 
      * @return true if save was successful
@@ -526,7 +554,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
                 this.m_da.getDb().add(fg);
                 this.was_saved = true;
 
-                System.out.println(fg.getLongDescription());
+                //System.out.println(fg.getLongDescription());
                 
                 this.addMealGroup2Tree(fg);
 

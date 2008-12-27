@@ -1,31 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: JFAbstractGraphView.java
- *  Purpose:  Common methods and variables for all graph views.
- *
- *  Author:   rumbi
- *  
- */
-
 package ggc.core.data.graph;
 
 import ggc.core.db.hibernate.ColorSchemeH;
@@ -34,12 +6,6 @@ import ggc.core.util.GGCProperties;
 import ggc.core.util.I18nControl;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.RenderingHints;
-import java.awt.RenderingHints.Key;
-import java.util.HashMap;
-
-import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -49,17 +15,36 @@ import org.jfree.ui.Layer;
 
 import com.atech.graphics.graphs.GraphUtil;
 
+
 /**
- * This is a replacement for AbstractGraphView using JFreeChart. It contains
- * parts common to all graphs.
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
  * 
- * @author rumbi
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     GGCGraphUtil
+ *  Description:  This is utility for creating graphs, it extends abstract GraphUtil
+ *                It has same function as AbstractGraphView from old framework.
+ *                Most of parts are copied from Rumbi's JFAbstractGraphView.
+ *                
+ *  Author: andyrozman {andy@atech-software.com}  
  */
+
 public class GGCGraphUtil extends GraphUtil
 {
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1579716091265096686L;
     Color backgroundColor = Color.WHITE;
     int BGUnit = DataAccess.BG_MGDL;
@@ -80,6 +65,9 @@ public class GGCGraphUtil extends GraphUtil
     
     DataAccess m_da_local;
 
+    /**
+     * Static instance of Graph Util
+     */
     public static GGCGraphUtil s_graph_util; 
     
     
@@ -96,6 +84,11 @@ public class GGCGraphUtil extends GraphUtil
     }
 
     
+    /**
+     * Init Local
+     * 
+     * @see com.atech.graphics.graphs.GraphUtil#initLocal()
+     */
     public void initLocal()
     {
         //System.out.println("GGCGraphUtil");
@@ -129,6 +122,11 @@ public class GGCGraphUtil extends GraphUtil
     }
     
     
+    /**
+     * Get Instance (Singelton)
+     * 
+     * @return GGCGraphUtil instance
+     */
     public static GGCGraphUtil getInstance()
     {
         if (GGCGraphUtil.s_graph_util==null)
@@ -183,12 +181,22 @@ public class GGCGraphUtil extends GraphUtil
         plot.setBackgroundPaint(m_da_local.getColor(colorScheme.getColor_bg_high()));
     }
     
+    /**
+     * Get Color Scheme
+     * 
+     * @return
+     */
     public ColorSchemeH getColorScheme()
     {
         return this.colorScheme;
     }
 
     
+    /**
+     * Get Unit Label
+     * 
+     * @return
+     */
     public String getUnitLabel()
     {
         return this.unitLabel;

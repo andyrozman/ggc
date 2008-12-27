@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionTreeDialog
- *  Purpose:  Main class for displaying nutrition information.
- *
- *  Author:   andyrozman
- */
-
 package ggc.core.nutrition.dialogs;
 
 import ggc.core.nutrition.display.HomeWeightDataDisplay;
@@ -49,21 +22,35 @@ import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
 
+
 /**
- * Selector for Nutritions and Home Weights, when defining User Foods.
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
  * 
- * @author arozman
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
  * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     FoodPartMainSelectorDialog
+ *  Description:  Selector for Nutritions and Home Weights, when defining User Foods.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
  */
+
 public class FoodPartMainSelectorDialog extends JDialog implements ActionListener, KeyListener
 {
 
-    // private JPanel mainPane;
-    // private JTree tree;
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1193693566584753748L;
     JTextField tf_selected;
     JComboBox cb_type;
@@ -82,22 +69,31 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     String[] type;
     String m_except = null;
 
-//    private NumberFormat amountDisplayFormat;
-//    private NumberFormat amountEditFormat;
     JDecimalTextField amountField;
     JDecimalTextField weightField;
 
     NutritionDataDisplay nutrition_data;
     HomeWeightDataDisplay home_weight_data;
 
+    /**
+     * Selector Nutrition
+     */
     public static final int SELECTOR_NUTRITION = 1;
+    /**
+     * Selector Home Weight
+     */
     public static final int SELECTOR_HOME_WEIGHT = 2;
 
     private int selector_type = 0;
-
-    // private SelectableInterface selected_object = null;
     boolean action_done = false;
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param type
+     * @param except
+     */
     public FoodPartMainSelectorDialog(DataAccess da, int type, String except)
     {
         super(da.getParent(), "", true);
@@ -120,6 +116,12 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         this.setVisible(true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param ndd
+     */
     public FoodPartMainSelectorDialog(DataAccess da, NutritionDataDisplay ndd)
     {
         super(da.getParent(), "", true);
@@ -138,6 +140,12 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         this.setVisible(true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param hwd
+     */
     public FoodPartMainSelectorDialog(DataAccess da, HomeWeightDataDisplay hwd)
     {
         super(da.getParent(), "", true);
@@ -182,7 +190,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         this.weightField.setValue(new Double(this.home_weight_data.getWeight()));
     }
 
-    public void init()
+    private void init()
     {
         int button_y;
         int panel_height;
@@ -371,7 +379,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         loadTypeSpecific();
     }
 
-    public void loadTypeSpecific()
+    private void loadTypeSpecific()
     {
         if (this.selector_type == FoodPartMainSelectorDialog.SELECTOR_NUTRITION)
         {
@@ -388,23 +396,46 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
     }
 
+    /**
+     * Was Action
+     * 
+     * @return
+     */
     public boolean wasAction()
     {
         return ((this.action_object != null) || (this.action_done));
     }
 
+    /**
+     * Get Selected Object Type
+     * 
+     * @return
+     */
     public int getSelectedObjectType()
     {
         return this.action_object_type;
     }
 
+    /**
+     * Get Selected Object
+     * 
+     * @return
+     */
     public Object getSelectedObject()
     {
         return this.action_object;
     }
 
+    /**
+     * Get Amount Value
+     * 
+     * @return
+     */
     public float getAmountValue()
     {
+        return m_da.getJFormatedTextValueFloat(this.amountField);
+        
+        /*
         try
         {
             this.amountField.commitEdit();
@@ -435,9 +466,14 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
             // this.amountField.getValue());
             Double d = (Double) o;
             return d.floatValue();
-        }
+        } */
     }
 
+    /**
+     * Get Weight Value
+     * 
+     * @return
+     */
     public float getWeightValue()
     {
         try
@@ -474,6 +510,11 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         }
     }
 
+    /**
+     * Action Performed
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e)
     {
         String cmd = e.getActionCommand();
@@ -505,13 +546,15 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         this.dispose();
     }
 
-    public void keyTyped(KeyEvent e)
-    {
-    }
+    /**
+     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+     */
+    public void keyTyped(KeyEvent e) { }
 
-    public void keyPressed(KeyEvent e)
-    {
-    }
+    /**
+     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     */
+    public void keyPressed(KeyEvent e) { }
 
     /**
      * Invoked when a key has been released. See the class description for

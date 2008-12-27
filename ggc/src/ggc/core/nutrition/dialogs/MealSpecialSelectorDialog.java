@@ -55,65 +55,66 @@ import com.atech.graphics.components.JDecimalTextField;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
  * 
- * Selector for single food
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
  * 
- * @author arozman
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
  * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MealSpecialSelectorDialog
+ *  Description:  Selector for single food
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
  */
+
 public class MealSpecialSelectorDialog extends JDialog implements ActionListener, ItemListener, KeyListener
 {
 
-    // private JPanel mainPane;
-    // private JTree tree;
-
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = 3869683885823162849L;
-
-    HomeWeightSpecial hws_selected = null;
-
-    JTextField tf_selected;
-    JComboBox cb_type;
-    JLabel label_item, label_item_type, label_amount;
-    Font font_normal, font_normal_b;
-    JButton button_select;
-
-    JComboBox cb_weight_type;
-    String[] wt_types_1 = null;
-    String[] wt_types_2 = null;
-
-    JLabel label_home_weight, label_home_weight_item;
-    JButton button_hw_select;
-
-    JPanel panel3;
-    Hashtable<String, JButton> buttons = new Hashtable<String, JButton>();
-
-    int current_weight_type = 0;
-
     private DataAccess m_da = null;
     private I18nControlAbstract ic = null;
 
+    JTextField tf_selected;
+    JComboBox cb_type, cb_weight_type;
+    JLabel label_item, label_item_type, label_amount;
+    JLabel label_home_weight, label_home_weight_item;
+    Font font_normal, font_normal_b;
+    JButton button_select, button_hw_select;
+    JPanel panel3, amount_panel;
+    JDecimalTextField amountField;
+
+    Hashtable<String, JButton> buttons = new Hashtable<String, JButton>();
+    int current_weight_type = 0;
+    String[] wt_types_1 = null;
+    String[] wt_types_2 = null;
+    HomeWeightSpecial hws_selected = null;
     Object action_object;
     int action_object_type = 0;
     long input_id = 0L;
-
     String[] type;
 
-    // private NumberFormat amountDisplayFormat;
-    // private NumberFormat amountEditFormat;
-    JDecimalTextField amountField;
-
-    // MealPart meal_part;
     DailyFoodEntry daily_food_entry;
-
     FoodDescription dsc_food;
     Meal dsc_meal;
 
-    JPanel amount_panel = null;
-
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param meal_id
+     */
     public MealSpecialSelectorDialog(DataAccess da, long meal_id)
     {
         super(da.getParent(), "", true);
@@ -124,13 +125,17 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR"));
         this.input_id = meal_id;
 
-        System.out.println("MealSpecialSelectorDialog");
-        
         init();
 
         this.setVisible(true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param part
+     */
     public MealSpecialSelectorDialog(DataAccess da, DailyFoodEntry part)
     {
         super(da.getParent(), "", true);
@@ -194,7 +199,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     }
 
-    public void init()
+    private void init()
     {
 
         this.setLayout(null);
@@ -376,11 +381,22 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         this.add(panel, null);
     }
 
+    /**
+     * Set Weight Type
+     * 
+     * @param type
+     */
     public void setWeightType(int type)
     {
         this.setWeightType(type, false);
     }
 
+    /**
+     * Set Weight Type
+     * 
+     * @param type
+     * @param forced 
+     */
     public void setWeightType(int type, boolean forced)
     {
         if ((current_weight_type == type) && (!forced))
@@ -429,7 +445,10 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     }
 
-    public void setEnabledWithType()
+    /**
+     * Set Enabled With Type
+     */
+    private void setEnabledWithType()
     {
         if (this.isAnyObjectSelected())
         {
@@ -454,7 +473,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     }
 
-    public void reFillItems(Object[] items)
+    private void reFillItems(Object[] items)
     {
         /*
          * this.cb_weight_type.removeAllItems();
@@ -475,7 +494,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     }
 
-    /*
+    /**
      * itemStateChanged
      */
     public void itemStateChanged(ItemEvent arg0)
@@ -483,11 +502,22 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         setWeightType(this.cb_weight_type.getSelectedIndex());
     }
 
+    
+    /**
+     * Was Action
+     * 
+     * @return
+     */
     public boolean wasAction()
     {
         return (this.action_done);
     }
 
+    /**
+     * Get Amount Value
+     * 
+     * @return
+     */
     public float getAmountValue()
     {
 
@@ -512,6 +542,11 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     private boolean action_done = false;
 
+    /**
+     * Action Performed
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e)
     {
         String cmd = e.getActionCommand();
@@ -552,7 +587,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
                 this.action_object_type = (this.cb_type.getSelectedIndex() + 1);
                 this.action_object = (ntd.getSelectedObject());
                 
-                System.out.println("ao: " + action_object);
+                //System.out.println("ao: " + action_object);
 
                 if (this.cb_type.getSelectedIndex() < 2)
                 {
@@ -598,6 +633,11 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     }
 
     
+    /**
+     * Is Any Object Selected
+     * 
+     * @return
+     */
     public boolean isAnyObjectSelected()
     {
         if ((this.dsc_food != null) || (this.dsc_meal != null))
@@ -606,6 +646,11 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
             return false;
     }
 
+    /**
+     * Get Home Weight Of Objects
+     * 
+     * @return
+     */
     public String getHomeWeightOfObjects()
     {
         if (this.dsc_food != null)
@@ -621,37 +666,42 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         return null;
     }
 
+    /**
+     * Get Daily Food Entry
+     * 
+     * @return
+     */
     public DailyFoodEntry getDailyFoodEntry()
     {
-        System.out.println("getDailyFoodEntry");
+        //System.out.println("getDailyFoodEntry");
         
         if ((!this.isAnyObjectSelected()) || (!action_done))
             return null;
 
-        System.out.println("getDailyFoodEntry: after");
+        //System.out.println("getDailyFoodEntry: after");
         
         
         // DailyFoodEntry dfe = null;
         if (this.dsc_food != null)
         {
             
-            System.out.println("in dsc_food");
+           // System.out.println("in dsc_food");
             
             if (this.cb_weight_type.getSelectedIndex() == 0)
             {
-                System.out.println("wt = 0");
+                //System.out.println("wt = 0");
                 return new DailyFoodEntry(this.dsc_food, this.getAmountValue());
             }
             else
             {
                 if (this.hws_selected != null)
                 {
-                    System.out.println("hws != null");
+                    //System.out.println("hws != null");
                     return new DailyFoodEntry(this.dsc_food, this.hws_selected, this.getAmountValue());
                 }
                 else
                 {
-                    System.out.println("hws == NULL");
+                    //System.out.println("hws == NULL");
                     return null;
                 }
             }
@@ -659,19 +709,10 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         }
         else
         {
-            System.out.println("in dsc_meal");
+            //System.out.println("in dsc_meal");
             return new DailyFoodEntry(this.dsc_meal, this.getAmountValue());
         }
 
-    }
-
-    
-    
-    /* 
-     * keyPressed
-     */
-    public void keyPressed(KeyEvent arg0)
-    {
     }
 
 
@@ -689,13 +730,15 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     }
     
+    /** 
+     * keyPressed
+     */
+    public void keyPressed(KeyEvent arg0) { }
     
-    /* 
+    /** 
      * keyTyped
      */
-    public void keyTyped(KeyEvent arg0)
-    {
-    }
+    public void keyTyped(KeyEvent ke) { }
     
     
 }

@@ -101,12 +101,22 @@ public class ConfigurationManager
     DataAccess m_da = null;
 
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public ConfigurationManager(DataAccess da)
     {
         this.m_da = da;
     }
 
 
+    /**
+     * Check Configuration
+     * 
+     * @param values
+     */
     public void checkConfiguration(Hashtable<String,Settings> values)
     {
 
@@ -168,28 +178,12 @@ public class ConfigurationManager
     }
 
 
-    public int getIntValue(String key)
-    {
-        if (checkIfExists(key))
-        {
-            Settings s = this.cfg_values.get(key);
-
-            try
-            {
-                return Integer.parseInt(s.getValue());
-            }
-            catch (Exception ex)
-            {
-                s_logger.warn("Invalid value for key=" + key + " found. It should be integer.");
-            }
-
-        }
-
-        return -1;
-
-    }
-
-
+    /**
+     * Get Boolean Value
+     * 
+     * @param key key of variable
+     * @return value as boolean
+     */
     public boolean getBooleanValue(String key)
     {
         if (checkIfExists(key))
@@ -212,6 +206,12 @@ public class ConfigurationManager
     }
 
 
+    /**
+     * Set Boolean Value
+     * 
+     * @param key key of variable
+     * @param value as boolean
+     */
     public void setBooleanValue(String key, boolean value)
     {
         if (checkIfExists(key))
@@ -242,8 +242,40 @@ public class ConfigurationManager
     }
 
 
+    /**
+     * Get Int Value
+     * 
+     * @param key key of variable
+     * @return value as int
+     */
+    public int getIntValue(String key)
+    {
+        if (checkIfExists(key))
+        {
+            Settings s = this.cfg_values.get(key);
 
+            try
+            {
+                return Integer.parseInt(s.getValue());
+            }
+            catch (Exception ex)
+            {
+                s_logger.warn("Invalid value for key=" + key + " found. It should be integer.");
+            }
 
+        }
+
+        return -1;
+
+    }
+
+    
+    /**
+     * Set Int Value
+     * 
+     * @param key key of variable
+     * @param value as int
+     */
     public void setIntValue(String key, int value)
     {
         if (checkIfExists(key))
@@ -275,6 +307,12 @@ public class ConfigurationManager
     }
 
 
+    /**
+     * Get Float Value
+     * 
+     * @param key key of variable
+     * @return value as float
+     */
     public float getFloatValue(String key)
     {
         if (checkIfExists(key))
@@ -296,6 +334,12 @@ public class ConfigurationManager
     }
 
 
+    /**
+     * Set Float Value
+     * 
+     * @param key key of variable
+     * @param value as float
+     */
     public void setFloatValue(String key, float value)
     {
         if (checkIfExists(key))
@@ -322,7 +366,12 @@ public class ConfigurationManager
     }
 
 
-
+    /**
+     * Get String Value
+     * 
+     * @param key key of variable
+     * @return value as string
+     */
     public String getStringValue(String key)
     {
         if (checkIfExists(key))
@@ -335,6 +384,13 @@ public class ConfigurationManager
 
     }
 
+    
+    /**
+     * Set String Value
+     * 
+     * @param key key of variable
+     * @param value as string
+     */
     public void setStringValue(String key, String value)
     {
         if (checkIfExists(key))
@@ -351,7 +407,6 @@ public class ConfigurationManager
     }
 
 
-
     private boolean checkIfExists(String key)
     {
         if (this.cfg_values.containsKey(key))
@@ -364,6 +419,9 @@ public class ConfigurationManager
     }
 
 
+    /**
+     * Save Config
+     */
     public void saveConfig()
     {
 

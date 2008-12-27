@@ -1,34 +1,4 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: FrequencyGraphView.java
- *  Purpose:  Shows the frequency of some values.
- *
- *  Author:   schultd
- *  Author:   reini
- *  
- */
-
 package ggc.gui.graphs;
-
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.GlucoValues;
@@ -39,12 +9,36 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     FrequencyGraphView.java
+ *  Description:  Shows the frequency of some values. (will be DEPRECATED) !
+ *
+ *  Author:   schultd
+ *  Author:   reini
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
 public class FrequencyGraphView extends AbstractGraphView
 {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8358248079574399547L;
 
     GlucoValues gV = null;
@@ -57,18 +51,31 @@ public class FrequencyGraphView extends AbstractGraphView
 
     int avgBG = 0;
 
+    /**
+     * Constructor
+     */
     public FrequencyGraphView()
     {
         super();
         dayCount = 0;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param gV
+     */
     public FrequencyGraphView(GlucoValues gV)
     {
         this();
         setGlucoValues(gV);
     }
 
+    /**
+     * Set Gluco Values
+     * 
+     * @param gV
+     */
     public void setGlucoValues(GlucoValues gV)
     {
         this.gV = gV;
@@ -122,6 +129,11 @@ public class FrequencyGraphView extends AbstractGraphView
         this.data = data;
     }
 
+    /**
+     * Painting method
+     * 
+     * @see javax.swing.JComponent#paint(java.awt.Graphics)
+     */
     @Override
     public void paint(Graphics g)
     {

@@ -94,40 +94,37 @@ KORAK 3B: Nadgradnja s različno bazo
 
  
 
-K3
+KORAK 4: Zaženite novo različico aplikacije
+--------------------------------------------
 
-STEP 4: Start new version of application
------------------------------------------
-
-Start application, which should now start without problems.
+Zaženite aplikacijo, ki naj bi se sedaj zagnala brez težav.
 
 
-STEP 4.A: Starting with same version 
--------------------------------------
+KORAK 4.A: Zagon če imamo enako verzijo baze 
+---------------------------------------------
 
-When application is started you should have all your data there, since we didn't do any changes to
-our database
-
-
-STEP 4.B: Starting with different version
-------------------------------------------
-
-Now when application is started there will be no data available anymore. Database was totally recreated 
-(and also deleted), so it's "clean" now. You will have to do following to get your data back. Click on
-Tools -> Database Maintenance -> Backup Restore. Select file you created in step 1 and in next window
-select all objects and click on Restore. After restart all your data should be there. 
+Po zagonu aplikacije vas bodo vsi vaši podatki čakali tukaj, saj nismo naredili nobene operacije
+nad bazo.
 
 
-STEP 5: Finished
+KORAK 4.B: Zagon če imamo različno različico baze
+--------------------------------------------------
+
+Sedaj ko imamo zagnano aplikacijo, ne bomo našli nobenih podatkov več. Baza je bila uničena in ponovno
+ustvarjena (s drugačno strukturo). Za vrnitev podatkov iz stare baze boste morali narediti naslednje. 
+Kliknite na Orodja -> Upravljanje s bazo -> Obnovitev baze. Izberite datoteko, ki ste jo ustvarili 
+v koraku 1 in v naslednjem oknu izberite vse objekte in kliknite na Obnovi. Po ponovnem zagonu bodo 
+vsi stari podatki v novi bazi. 
+
+
+
+KORAK 5: Končano
 -----------------
 
-Update is finished.
+Nadgradnja je zaključena.
+
+Če ste imeli težave s nadgradnjo nas prosim kontaktiranje in vam bomo probaly pomagati (ggc@atech-software.com).
+Za pomoč lahko vprašate v naslednjih jezikih: Slovenskem, Angleškem in Nemškem. 
 
 
-If you had any problems with update please contact us, and we will help you. (ggc@atech-software.com). You 
-can write to us in following languages: English, Slovene or German.
-
-
-GGC Development Team
-
-K4
+GGC Razvojna ekipa

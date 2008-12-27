@@ -9,21 +9,35 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PanelNutritionMain  
+ *  Description:  Main Nutrition Panel
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
-
-
-public class PanelNutritionMain extends GGCTreePanel //JPanel
+public class PanelNutritionMain extends GGCTreePanel
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8242508108941080163L;
-
-    //I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label;
@@ -39,13 +53,16 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
     };
     
 
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public PanelNutritionMain(NutritionTreeDialog dia)
     {
-
         super(false, dia.ic);
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
 
         font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
@@ -57,11 +74,8 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
 
 
 
-    public void createPanel()
+    private void createPanel()
     {
-
-	
-	
         this.setSize(460, 520);
         this.setLayout(null);
 
@@ -69,8 +83,6 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
 
         String nut_db = nutrition_db[this.m_dialog.getType()];
         
-        
-
         label = new JLabel(ic.getMessage(nut_db));
         label.setBounds(0, 35, 520, 40);
         label.setFont(font_big); 
@@ -84,32 +96,24 @@ public class PanelNutritionMain extends GGCTreePanel //JPanel
         label.setFont(fnt_18); 
         this.add(label, null);
 
-        /*
-        label = new JLabel(ic.getMessage("ADD_DIOCESE_DESC"));
-        label.setBounds(40, 130, 300, 60);
-        label.setFont(font_normal); 
-//        this.add(label, null);
-
-
-
-        label = new JLabel(ic.getMessage("EDIT_VIEW"));
-        label.setBounds(40, 280, 300, 30);
-        label.setFont(fnt_18); 
-//        this.add(label, null);
-
-        label = new JLabel(ic.getMessage("EDIT_VIEW_DESC"));
-        label.setBounds(40, 310, 300, 60);
-        label.setFont(font_normal); 
-//        this.add(label, null);
-*/
         return;
     }
 
+    /**
+     * Set Parent
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
+     */
     public void setParent(Object obj)
     {
     }
 
 
+    /**
+     * Set Data
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
     }

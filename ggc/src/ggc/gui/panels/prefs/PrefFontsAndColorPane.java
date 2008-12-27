@@ -1,31 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: prefFontsAndColorPane.java
- *  Purpose:  Preferences Pane to choose Fonts and Colors.
- *
- *  Author:   schultd
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
 package ggc.gui.panels.prefs;
 
 import ggc.core.data.DailyValues;
@@ -68,12 +40,37 @@ import javax.swing.event.ListSelectionListener;
 
 import com.atech.help.HelpCapable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PrefFontsAndColorPane
+ *  Description:  Preferences Panel to choose Fonts and Colors.
+ * 
+ *  Author: schultd
+ *          andyrozman {andy@atech-software.com}  
+ */
+
+
 public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements MouseListener, ActionListener,
         ListSelectionListener, ItemListener, HelpCapable
 {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = -4053935746376957308L;
     private JList itemList;
     private JLabel lblcolor;
@@ -90,15 +87,17 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     private boolean item_changed_status = false;
 
     private DailyGraphView dgv = null;
-
-    // JDialog parent = null;
-
     long selected_id = 0;
 
+    
+    /**
+     * Constructor
+     * 
+     * @param dia
+     */
     public PrefFontsAndColorPane(PropertiesDialog dia)
     {
         super(dia);
-        // this.parent = dialog;
 
         color_schemes = settings.getColorSchemes();
         selected_sheme = settings.getSelectedColorScheme();
@@ -106,14 +105,6 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         refreshColorSchemeList(false, false);
 
         this.deleted_schemes = new ArrayList<ColorSchemeH>();
-
-        /*
-         * for (int i=1; i<=color_schemes.size(); i++) { ColorSchemeH cs =
-         * (ColorSchemeH)color_schemes.get(""+i); av_schemes_names[i-1] =
-         * cs.getName();
-         * 
-         * if (cs.equals(selected_sheme)) { selected_id = i-1; } }
-         */
 
         items = new Vector<String>();
 
@@ -143,26 +134,13 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         schemePanel.add(new JLabel(m_ic.getMessage("SELECTED_COLOR_SCHEME") + ":"));
         schemePanel.add(cb_scheme = new JComboBox(av_schemes_names));
 
-        // x JPanel butPanel = new JPanel(new GridLayout(1, 3));
-
         schemePanel.add(bt_new_scheme = new JButton(m_ic.getMessage("ADD")));
         schemePanel.add(bt_edit_scheme = new JButton(m_ic.getMessage("EDIT_DEL_SHORT")));
-        // butPanel.add(bt_new_scheme = new JButton(m_ic.getMessage("ADD")));
-
-        // butPanel.add(new JButton(m_ic.getMessage("EDIT_DEL")));
-        // butPanel.add(new JButton(m_ic.getMessage("-")));
-
-        // schemePanel.add(bt_new_scheme = new JButton(m_ic.getMessage("NEW")));
-        // schemePanel.add(butPanel);
         bt_new_scheme.addActionListener(this);
         bt_new_scheme.setActionCommand("add");
 
         bt_edit_scheme.addActionListener(this);
         bt_edit_scheme.setActionCommand("edit");
-
-        // bt_new_scheme.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-
-        // System.out.println("SS: " + this.selected_sheme.getName());
 
         cb_scheme.setSelectedItem(this.selected_sheme.getName());
         cb_scheme.addItemListener(this);
@@ -267,6 +245,12 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
      */
     public void mouseExited(MouseEvent e) { }
 
+    /**
+     * Get Color
+     * 
+     * @param name
+     * @return
+     */
     public Color getColor(String name)
     {
         int color = 0;
@@ -296,6 +280,12 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
     }
 
+    /**
+     * Set Color
+     * 
+     * @param name
+     * @param clr
+     */
     public void setColor(String name, Color clr)
     {
         int color = clr.getRGB();
@@ -346,11 +336,21 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         lblcolor.setBackground(getColor(itemList.getSelectedValue().toString()));
     }
 
+    /**
+     * Value Changed
+     * 
+     * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
+     */
     public void valueChanged(ListSelectionEvent e)
     {
         lblcolor.setBackground(getColor(itemList.getSelectedValue().toString()));
     }
 
+    /**
+     * Action Performed
+     * 
+     * @see ggc.gui.panels.prefs.AbstractPrefOptionsPanel#actionPerformed(java.awt.event.ActionEvent)
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -479,6 +479,11 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
     }
 
+    /**
+     * Save Properties
+     * 
+     * @see ggc.gui.panels.prefs.AbstractPrefOptionsPanel#saveProps()
+     */
     @Override
     public void saveProps()
     {
@@ -519,7 +524,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -527,7 +532,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -535,7 +540,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         return this.parent.getHelpButton();
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()

@@ -74,12 +74,41 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import pygmy.core.Server;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.logs.RedirectScreen;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     ###--###  
+ *  Description:  ###--###
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class DataAccess extends ATDataAccessAbstract
 {
@@ -92,6 +121,7 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public long current_user_id = 1;
     
+    private static Log log = LogFactory.getLog(DataAccess.class);
     
     // LF
     // Hashtable<String,String> availableLF_full = null;
@@ -273,7 +303,7 @@ public class DataAccess extends ATDataAccessAbstract
 
             
             
-            System.out.println("create new Instance");
+            //System.out.println("create new Instance");
             s_da = new DataAccess();
             //System.out.println("setParent");
             s_da.setParent(main);
@@ -1167,7 +1197,8 @@ public class DataAccess extends ATDataAccessAbstract
         if ((isSameDay(day)) && (!force))
             return;
 
-        System.out.println("Reload daily settings (force:" + force + ")");
+        //System.out.println("Reload daily settings (force:" + force + ")");
+        log.debug("Reload daily settings (force:" + force + ")");
 
         m_date = day;
         m_HbA1c = m_db.getHbA1c(day, force);
@@ -1187,7 +1218,8 @@ public class DataAccess extends ATDataAccessAbstract
         if ((isSameDay(day)) && (!force))
             return;
 
-        System.out.println("(Re)Load daily settings Little - (force:" + force + ")");
+        //System.out.println("(Re)Load daily settings Little - (force:" + force + ")");
+        log.debug("(Re)Load daily settings Little - (force:" + force + ")");
 
         m_date = day;
         // m_HbA1c = m_db.getHbA1c(day);
@@ -1311,21 +1343,20 @@ public class DataAccess extends ATDataAccessAbstract
             p.put("mime.jpeg", "image/jpeg");
             p.put("mime.jpg", "image/jpeg"); */
             
-            System.out.println("Start internal web server");
+            //System.out.println("Start internal web server");
+            
+            log.info("Start internal Web Server");
+            
             String[] cnf = { "-config", "../data/tools/WebLister.properties" };
             
             Server web_server = new Server(cnf);
             web_server.start();
             
-            
-         
         }
         catch(Exception ex)
         {
             System.out.println("Error starting WebServer on 444. Ex: " + ex);
         }
-        
-        
         
     }
     

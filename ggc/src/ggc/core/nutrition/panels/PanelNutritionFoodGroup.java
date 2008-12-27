@@ -12,20 +12,36 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-// WORK IN PROGRESS, PLEASE DO NOT TOUCH
-// andyrozman
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     PanelNutritionFoodGroup  
+ *  Description:  Panel for displaying food/meal group
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
 
     
 public class PanelNutritionFoodGroup extends GGCTreePanel 
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -488798706263908198L;
-
-    //    I18nControl ic = I18nControl.getInstance();
-    DataAccess m_da = null;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label, label_name, label_name_i18n, label_parent, label_title, label_name_i18n_key;
@@ -36,15 +52,19 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
     int group_type = 2;
     
 
+    /**
+     * Constructor
+     * 
+     * @param dia
+     * @param type
+     */
     public PanelNutritionFoodGroup(NutritionTreeDialog dia, int type)
     {
-
         super(true, dia.ic);
         
         this.group_type = type;
 
         m_dialog = dia;
-        m_da = DataAccess.getInstance();
 
         font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
         font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
@@ -56,14 +76,13 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
 
 
 
-    public void createPanel()
+    private void createPanel()
     {
-
         this.setSize(420, 460);
         this.setLayout(null);
 
         Font fnt_14_bold = new Font("Times New Roman", Font.BOLD, 14);
-	Font fnt_14 = new Font("Times New Roman", Font.PLAIN, 14);
+        Font fnt_14 = new Font("Times New Roman", Font.PLAIN, 14);
 
 
         label_title = new JLabel(ic.getMessage("FOOD_GROUP"));
@@ -80,67 +99,41 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
         label.setFont(fnt_14_bold); 
         this.add(label, null);
 
-	label_name = new JLabel();
-	label_name.setBounds(60, 140, 300, 25);
-	label_name.setFont(fnt_14); 
-	this.add(label_name, null);
-        
-        
+    	label_name = new JLabel();
+    	label_name.setBounds(60, 140, 300, 25);
+    	label_name.setFont(fnt_14); 
+    	this.add(label_name, null);
 	
         label = new JLabel(ic.getMessage("TRANSLATION_KEYWORD") + ":");
         label.setBounds(60, 190, 320, 25);
         label.setFont(fnt_14_bold); 
         this.add(label, null);
 
-
-
-	label_name_i18n_key = new JLabel();
-	label_name_i18n_key.setBounds(60, 220, 320, 25);
-	label_name_i18n_key.setFont(fnt_14);
-	
-	this.add(label_name_i18n_key, null);
-	
-	
+    	label_name_i18n_key = new JLabel();
+    	label_name_i18n_key.setBounds(60, 220, 320, 25);
+    	label_name_i18n_key.setFont(fnt_14);
+    	this.add(label_name_i18n_key, null);
 	
         label = new JLabel(ic.getMessage("TRANSLATED_NAME") + ":");
         label.setBounds(60, 270, 300, 25);
         label.setFont(fnt_14_bold); 
         this.add(label, null);
 
+    	label_name_i18n = new JLabel();
+    	label_name_i18n.setBounds(60, 300, 300, 25);
+    	label_name_i18n.setFont(fnt_14); 
+    	this.add(label_name_i18n, null);
 
-
-	label_name_i18n = new JLabel();
-	label_name_i18n.setBounds(60, 300, 300, 25);
-	label_name_i18n.setFont(fnt_14); 
-	this.add(label_name_i18n, null);
-
-
-	
         label = new JLabel(ic.getMessage("PARENT_GROUP"));
         label.setBounds(60, 350, 300, 25);
         label.setFont(fnt_14_bold); 
         this.add(label, null);
-
 
         label_parent = new JLabel("ddd");
         label_parent.setBounds(60, 380, 300, 25);
         label_parent.setFont(fnt_14); 
         this.add(label_parent, null);
         
-        
-        
-        
-/*
-        label = new JLabel(ic.getMessage("EDIT_VIEW"));
-        label.setBounds(40, 280, 300, 30);
-        label.setFont(fnt_18); 
-        this.add(label, null);
-
-        label = new JLabel(ic.getMessage("EDIT_VIEW_DESC"));
-        label.setBounds(40, 310, 300, 60);
-        label.setFont(font_normal); 
-        this.add(label, null);
-*/
         return;
     }
 
@@ -148,66 +141,68 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
     
     
     
-    public void setSelectedGroup(FoodGroup group)
-    {
-	//label_name
-	//label_name_i18n
-    }
 
 
+    /**
+     * Set Parent
+     *   
+     * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
+     */
     public void setParent(Object obj)
     {
-	
     }
     
     
     
+    /**
+     * Set Data
+     * 
+     * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
+     */
     public void setData(Object obj)
     {
-	//if (obj instanceof GGCTreeRoot)
-	//    return;
 	
-	if ((group_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
-	    (group_type == GGCTreeRoot.TREE_USER_NUTRITION))
-	{
-	    FoodGroup group = (FoodGroup)obj;
-
-	    label_title.setText(ic.getMessage("FOOD_GROUP"));
-	    label_name.setText(group.getName());
-	    label_name_i18n_key.setText(group.getName_i18n());
-	    label_name_i18n.setText(ic.getMessage(group.getName_i18n()));
-	    
-	    if (group.getParentId()>0)
-	    {
-		FoodGroup fg = m_da.tree_roots.get("2").m_groups_ht.get("" + group.getParentId());
-		this.label_parent.setText(fg.getName());
-	    }
-	    else
-	    {
-		this.label_parent.setText(ic.getMessage("ROOT"));
-	    }
-	}
-	else
-	{
-	    MealGroup group = (MealGroup)obj;
-
-	    label_title.setText(ic.getMessage("MEAL_GROUP"));
-	    label_name.setText(group.getName());
-	    label_name_i18n_key.setText(group.getName_i18n());
-	    label_name_i18n.setText(ic.getMessage(group.getName_i18n()));
-	    
-	    if (group.getParent_id()>0)
-	    {
-		MealGroup fg = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + group.getParent_id());
-		this.label_parent.setText(fg.getName());
-	    }
-	    else
-	    {
-		this.label_parent.setText(ic.getMessage("ROOT"));
-	    }
-	    
-	    
-	}
+    	if ((group_type == GGCTreeRoot.TREE_USDA_NUTRITION) ||
+    	    (group_type == GGCTreeRoot.TREE_USER_NUTRITION))
+    	{
+    	    FoodGroup group = (FoodGroup)obj;
+    
+    	    label_title.setText(ic.getMessage("FOOD_GROUP"));
+    	    label_name.setText(group.getName());
+    	    label_name_i18n_key.setText(group.getName_i18n());
+    	    label_name_i18n.setText(ic.getMessage(group.getName_i18n()));
+    	    
+    	    if (group.getParentId()>0)
+    	    {
+        		FoodGroup fg = m_da.tree_roots.get("2").m_groups_ht.get("" + group.getParentId());
+        		this.label_parent.setText(fg.getName());
+    	    }
+    	    else
+    	    {
+    	        this.label_parent.setText(ic.getMessage("ROOT"));
+    	    }
+    	}
+    	else
+    	{
+    	    MealGroup group = (MealGroup)obj;
+    
+    	    label_title.setText(ic.getMessage("MEAL_GROUP"));
+    	    label_name.setText(group.getName());
+    	    label_name_i18n_key.setText(group.getName_i18n());
+    	    label_name_i18n.setText(ic.getMessage(group.getName_i18n()));
+    	    
+    	    if (group.getParent_id()>0)
+    	    {
+        		MealGroup fg = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + group.getParent_id());
+        		this.label_parent.setText(fg.getName());
+    	    }
+    	    else
+    	    {
+    	        this.label_parent.setText(ic.getMessage("ROOT"));
+    	    }
+    	    
+    	    
+    	}
 
     }
 
@@ -221,10 +216,8 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
      */
     public String getWarningString(int action_type)
     {
-	return null;
+        return null;
     }
-
-
 
     /**
      * Was data in this panel changed.
@@ -233,10 +226,8 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
      */
     public boolean hasDataChanged()
     {
-	return false;
+        return false;
     }
-
-
 
     /**
      * Save data in panel
@@ -245,7 +236,7 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
      */
     public boolean saveData()
     {
-	return false;
+        return false;
     }
 
     

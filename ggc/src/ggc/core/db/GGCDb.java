@@ -1199,7 +1199,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
             logDebug("getHbA1c()", "Readings: " + hbVal.getDayCount() + " " + hbVal.getReadings());
             
-            System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
+            //System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
 
         }
         catch (Exception ex)

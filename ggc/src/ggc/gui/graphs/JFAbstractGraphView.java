@@ -1,31 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: JFAbstractGraphView.java
- *  Purpose:  Common methods and variables for all graph views.
- *
- *  Author:   rumbi
- *  
- */
-
 package ggc.gui.graphs;
 
 import ggc.core.db.hibernate.ColorSchemeH;
@@ -48,16 +20,33 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.Layer;
 
 /**
- * This is a replacement for AbstractGraphView using JFreeChart. It contains
- * parts common to all graphs.
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
  * 
- * @author rumbi
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     JFAbstractGraphView
+ *  Description:  This is a replacement for AbstractGraphView using JFreeChart. It 
+ *                contains parts common to all graphs.
+ * 
+ *  @author rumbi  
  */
+
 public abstract class JFAbstractGraphView extends JPanel
 {
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1579716091265096686L;
     Color backgroundColor = Color.WHITE;
     int BGUnit = DataAccess.BG_MGDL;
@@ -230,6 +219,11 @@ public abstract class JFAbstractGraphView extends JPanel
         setPreferredSize(new Dimension(chartPanel.getMinimumDrawWidth(), chartPanel.getMinimumDrawHeight()));
     }
 
+    /**
+     * Repaint
+     * 
+     * @see java.awt.Component#repaint()
+     */
     @Override
     public void repaint()
     {

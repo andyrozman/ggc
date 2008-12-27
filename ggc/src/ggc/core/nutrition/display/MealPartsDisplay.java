@@ -1,4 +1,3 @@
-
 package ggc.core.nutrition.display;
 
 import ggc.core.db.datalayer.DailyFoodEntry;
@@ -6,6 +5,32 @@ import ggc.core.db.datalayer.MealPart;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MealPartsDisplay  
+ *  Description:  Meal Parts Display
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class MealPartsDisplay extends ATTableData
     {
@@ -15,24 +40,33 @@ public class MealPartsDisplay extends ATTableData
 	private String description;
 	private String amount;
 	
+	/**
+	 * Type Description
+	 */
 	public static String[] type_description = null;
 	
 	MealPart meal_part = null;
 	DailyFoodEntry daily_food_entry = null;
 
 	
-	
-	
+	/**
+	 * Constructor
+	 * 
+	 * @param ic
+	 */
 	public MealPartsDisplay(I18nControlAbstract ic)
 	{
 	    super(ic);
 	    initStatic();
 	}
 
-	
-	
-	
 
+	/**
+	 * Constructor
+	 * 
+	 * @param ic
+	 * @param full
+	 */
 	public MealPartsDisplay(I18nControlAbstract ic, String full)
 	{
 	    super(ic);
@@ -43,6 +77,12 @@ public class MealPartsDisplay extends ATTableData
 	}
 
 
+	/**
+	 * Constructor
+	 * 
+	 * @param ic
+	 * @param part
+	 */
 	public MealPartsDisplay(I18nControlAbstract ic, MealPart part)
 	{
 	    super(ic);
@@ -54,13 +94,15 @@ public class MealPartsDisplay extends ATTableData
 	    this.amount = "" + part.getAmount();
 	    
 	    this.meal_part = part;
-	    
-//	    String[] col = { "TYPE", "ID", "DESCRIPTION", "AMOUNT" };
-
-	    
 	}
 	
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param ic
+	 * @param part
+	 */
 	public MealPartsDisplay(I18nControlAbstract ic, DailyFoodEntry part)
 	{
 	    super(ic);
@@ -80,41 +122,45 @@ public class MealPartsDisplay extends ATTableData
 	
 	
 	
+	/**
+	 * Get Meal Part
+	 * 
+	 * @return
+	 */
 	public MealPart getMealPart()
 	{
 	    return this.meal_part;
 	}
 	
+	/**
+	 * Get Daily Food Entry
+	 * 
+	 * @return
+	 */
 	public DailyFoodEntry getDailyFoodEntry()
 	{
 	    return this.daily_food_entry;
 	}
 	
 	
-/*	
-	public void setNutritionDefinition(NutritionDefinition def)
-	{
-	    this.id = "" + def.getId();
-//	    this.name = def.getName();
-	    //this.value = def.get.getTag();
-//	    this.weight_unit = def.getWeight_unit();
-	}
-*/	
-	
-	public void initStatic()
+	private void initStatic()
 	{
 	    if (MealPartsDisplay.type_description==null)
 	    {
-	    
-		MealPartsDisplay.type_description = new String[3];
-		MealPartsDisplay.type_description[0] = ic.getMessage("USDA_NUTRITION");
-		MealPartsDisplay.type_description[1] = ic.getMessage("USER_NUTRITION");
-		MealPartsDisplay.type_description[2] = ic.getMessage("MEAL");
+    		MealPartsDisplay.type_description = new String[3];
+    		MealPartsDisplay.type_description[0] = ic.getMessage("USDA_NUTRITION");
+    		MealPartsDisplay.type_description[1] = ic.getMessage("USER_NUTRITION");
+    		MealPartsDisplay.type_description[2] = ic.getMessage("MEAL");
 	    }
 	    
 	}
 	
 
+	/**
+	 * Init
+	 * 
+	 * @see com.atech.graphics.components.ATTableData#init()
+	 */
 	public void init()
 	{
 	    String[] col = { "MEAL_TYPE", "DESCRIPTION", "AMOUNT_LBL" };
@@ -123,11 +169,21 @@ public class MealPartsDisplay extends ATTableData
 	    init(col, col_size);
 	}
 
+	/**
+	 * Get Id
+	 * 
+	 * @return
+	 */
 	public String getId()
 	{
 	    return this.id;
 	}
 
+	/**
+	 * Set Amount
+	 * 
+	 * @param amount
+	 */
 	public void setAmount(float amount)
 	{
 	    this.amount = "" + amount;
@@ -135,13 +191,14 @@ public class MealPartsDisplay extends ATTableData
 	}
 	
 	
-	public String getSaveData()
-	{
-	    return this.meal_part.getType() + ":" + this.meal_part.getId() + "=" + this.amount;
-	}
 	
 	
 
+	/**
+	 * Get Column Value
+	 * 
+	 * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
+	 */
 	public String getColumnValue(int column)
 	{
 	    switch(column)
@@ -171,4 +228,18 @@ public class MealPartsDisplay extends ATTableData
 
 	    }
 	}
+	
+	
+    /**
+     * Get Save Data
+     * 
+     * @return
+     */
+    public String getSaveData()
+    {
+        return this.meal_part.getType() + ":" + this.meal_part.getId() + "=" + this.amount;
     }
+	
+	
+	
+}

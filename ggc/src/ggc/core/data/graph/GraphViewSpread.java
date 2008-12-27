@@ -5,14 +5,12 @@ import ggc.core.data.GlucoValues;
 import ggc.core.data.PlotData;
 import ggc.core.util.DataAccess;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.FastScatterPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.xy.XYSeries;

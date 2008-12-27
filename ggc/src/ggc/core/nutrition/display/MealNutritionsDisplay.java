@@ -9,6 +9,31 @@ import java.util.Comparator;
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MealNutritionsDisplay  
+ *  Description:  Meal Nutritions Display 
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 public class MealNutritionsDisplay extends ATTableData implements Comparator<MealNutritionsDisplay>
 {
 
@@ -17,35 +42,25 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     private String name;
     private String weight_unit;
     private String decimal_places;
+    //private float calculated_value;
 
-    float calculated_value;
-
-    // private float amount = 1.0f;
-
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public MealNutritionsDisplay(I18nControlAbstract ic)
     {
         super(ic);
     }
 
-    /*
-     * public MealNutritionsDisplay(I18nControlAbstract ic, String full) {
-     * super(ic);
-     * 
-     * int index = full.indexOf("="); this.id = full.substring(0, index);
-     * 
-     * String val = full.substring(index+1);
-     * 
-     * if (val.indexOf("*")>-1) { index = val.indexOf("*"); this.amount =
-     * Float.parseFloat(val.substring(0, index));
-     * 
-     * String ww = val.substring(index+1);
-     * 
-     * if (ww.startsWith(".")) ww = "0" + ww;
-     * 
-     * this.weight = Float.parseFloat(ww); } else { this.weight =
-     * Float.parseFloat(val); } }
-     */
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param mn
+     */
     public MealNutritionsDisplay(I18nControlAbstract ic, MealNutrition mn)
     {
         super(ic);
@@ -55,6 +70,12 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
 
     }
 
+    
+    /**
+     * Set Nutrition Definition
+     * 
+     * @param def
+     */
     public void setNutritionDefinition(NutritionDefinition def)
     {
         this.id = "" + def.getId();
@@ -64,28 +85,47 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         this.decimal_places = def.getDecimal_places();
     }
 
+    /**
+     * Init
+     * 
+     * @see com.atech.graphics.components.ATTableData#init()
+     */
     public void init()
     {
-        /*
-         * String[] cols = { "ID", "NUTRITION", "AMOUNT", "UNITS" }; float[]
-         * cols_size = { 0.1f, 0.5f, 0.2f, 0.2f };
-         * 
-         * init(cols, cols_size);
-         */
-
         String[] cols = { "NUTRITION", "AMOUNT_LBL", "UNITS" };
         float[] cols_size = { 0.6f, 0.2f, 0.2f };
 
         init(cols, cols_size);
-
     }
 
+    
+    /**
+     * Get Id
+     * @return
+     */
+    public String getId()
+    {
+        return this.id;
+    }
+    
+    
+    /**
+     * Get Value
+     * 
+     * @return
+     */
     public String getValue()
     {
         float fl = Float.parseFloat(this.value);
         return DataAccess.getFloatAsString(fl, this.decimal_places);
     }
 
+    
+    /**
+     * Get Column Value
+     * 
+     * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
+     */
     public String getColumnValue(int column)
     {
 
@@ -102,16 +142,11 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
 
         }
 
-        /*
-         * switch(column) { case 1: return this.name; case 2: return this.value;
-         * case 3: return this.weight_unit;
-         * 
-         * case 0: default: return "" + this.id; }
-         */
     }
 
-    /*
-     * (non-Javadoc)
+    
+    /**
+     * Compare
      * 
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
@@ -120,16 +155,23 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         return mnd1.name.compareTo(mnd2.name);
     }
 
+    
+    /**
+     * Get Save Data
+     * 
+     * @return
+     */
     public String getSaveData()
     {
         return this.id + "=" + this.getValue();
     }
 
-    public String getId()
-    {
-        return this.id;
-    }
 
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     public String toString()
     {
         return getSaveData();
