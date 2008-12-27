@@ -57,8 +57,7 @@ public class MeterDataHandler extends DeviceDataHandler
      */
     public void executeExportDb()
     {
-        System.out.println("Checked entries: " + this.getDeviceValuesTableModel().getCheckedEntries());
-        
+        //System.out.println("Checked entries: " + this.getDeviceValuesTableModel().getCheckedEntries());
         this.m_server.setReturnData(this.getDeviceValuesTableModel().getCheckedEntries(), this);
     }
     

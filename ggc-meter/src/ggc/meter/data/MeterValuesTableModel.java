@@ -213,19 +213,19 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
      */
     public void processDeviceValueEntry(DeviceValuesEntry mve)
     {
-        System.out.println("processMeterValuesEntry");
+//        System.out.println("processMeterValuesEntry");
         if (this.m_ddh.hasOldData())
         {
-            System.out.println("oldData != null");
+//            System.out.println("oldData != null");
             long dt = mve.getDateTime(); //.getATDateTimeAsLong();
             
-            System.out.println("Dt='" + dt + "'");
-            System.out.println("Found: " + this.m_ddh.getOldData().containsKey("" + dt));
+//            System.out.println("Dt='" + dt + "'");
+//            System.out.println("Found: " + this.m_ddh.getOldData().containsKey("" + dt));
             
             
             if (!this.m_ddh.getOldData().containsKey("" + dt))
             {
-                System.out.println("not Contains");
+//                System.out.println("not Contains");
                 mve.setStatus(DeviceValuesEntry.STATUS_NEW);
                 mve.object_status = MeterValuesEntry.OBJECT_STATUS_NEW;
             }
@@ -234,7 +234,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
                 
                 MeterValuesEntry mve2 = (MeterValuesEntry)mve; 
                 
-                System.out.println("Found !!!");
+//                System.out.println("Found !!!");
                 
                 DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" + dt);
                   
@@ -261,7 +261,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
         }
         else
         {
-            System.out.println("oldData == null");
+//            System.out.println("oldData == null");
             mve.setStatus(MeterValuesEntry.STATUS_NEW);
         }
     }

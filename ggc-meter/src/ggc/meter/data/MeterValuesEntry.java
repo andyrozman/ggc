@@ -286,12 +286,10 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	    
 	    if ((p==null) || (p.trim().length()==0))
 	    {
-	        return "MTI";
+	        return "";
 	    }
 	    else
-	        return "MTI;" + p;
-	    
-	    
+	        return p;
 	}
 	
 	

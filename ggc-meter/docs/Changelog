@@ -2,8 +2,12 @@
 Changes file for GGC Meter Tool
 ===============================
 
+1.0.5
+    * Fixed setting of old data reader (in MeterPlugInServer)
+    * Changed instructions dialog (old data problem)
+
 1.0.4
-    * Partitial support for UltraSmart finisihed (we can read just BG for now) 
+    * Partitial support for UltraSmart finished (we can read just BG for now) 
     * List fixed and support here also fixed
 
 1.0.3
