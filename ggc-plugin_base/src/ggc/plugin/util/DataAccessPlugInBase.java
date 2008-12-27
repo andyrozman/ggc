@@ -57,7 +57,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     /**
      * Plugin Version
      */
-    public String plugin_version = "0.2.4";
+    public String plugin_version = "0.2.5";
 
 
     /**

@@ -271,14 +271,14 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
         String[] changes = { "-1", "0", "+1" }; 
         
-        ATSwingUtils.getLabel(m_ic.getMessage("WINTERTIME_FIX") + ":", 40,120, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getLabel(m_ic.getMessage("WINTERTIME_FIX") + ":", 40,120, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        this.cb_winter_fix = ATSwingUtils.getComboBox(changes, 240, 120, 60, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
+        this.cb_winter_fix = ATSwingUtils.getComboBox(changes, 240, 120, 80, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
         this.cb_winter_fix.setSelectedIndex(1);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("SUMMERTIME_FIX") + ":", 40, 155, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getLabel(m_ic.getMessage("SUMMERTIME_FIX") + ":", 40, 155, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
 
-        this.cb_summer_fix = ATSwingUtils.getComboBox(changes, 240, 155, 60, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
+        this.cb_summer_fix = ATSwingUtils.getComboBox(changes, 240, 155, 80, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
         this.cb_summer_fix.setSelectedIndex(1);
         
         ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 50, 510, 110, 25, 

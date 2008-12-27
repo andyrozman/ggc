@@ -23,7 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataReadingFinishedInterface;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
@@ -69,6 +68,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     
     JButton button_start, help_button;
     JLabel label_waiting;
+    boolean reading_old_done = false;
     
     //Hashtable<String,?> device_data = null;
     //int x,y;
@@ -89,6 +89,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         this.m_ic = da.getI18nControlInstance();
         
         this.m_ddh = m_da.getDeviceDataHandler();
+        this.checkReading(this.m_ddh.isOldDataReadingFinished());
+        this.m_ddh.setReadingFinishedObject(this);
         
         if (!loadConfiguration())
         {
@@ -109,7 +111,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      * @param reader
      * @param server
      */
-    public DeviceInstructionsDialog(DataAccessPlugInBase da, DbDataReaderAbstract reader, DevicePlugInServer server)
+    public DeviceInstructionsDialog(DataAccessPlugInBase da, /*DbDataReaderAbstract reader,*/ DevicePlugInServer server)
     {
         super();
 
@@ -118,7 +120,14 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         
         this.m_ddh = m_da.getDeviceDataHandler();
         this.m_ddh.setDevicePlugInServer(server);
-        this.m_ddh.setDbDataReader(reader);
+        //this.m_ddh.setDbDataReader(reader);
+        this.checkReading(this.m_ddh.isOldDataReadingFinished());
+        this.m_ddh.setReadingFinishedObject(this);
+        
+        //this.reading_old_done = this.m_ddh.isOldDataReadingFinished();
+        //this.checkReading(status)
+        //if (this.m_ddh)
+            
         
         if (!loadConfiguration())
         {
@@ -369,24 +378,37 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
         button_start = ATSwingUtils.getButton(m_ic.getMessage("START_DOWNLOAD"), 370, 520, 240, 25, panel, 
             ATSwingUtils.FONT_NORMAL, null, "start_download", this, m_da);
- 
-            
-        this.m_ddh.setReadingFinishedObject(this);
+        this.button_start.setEnabled(false);
+
         
+        if (this.reading_old_done)
+        {
+            this.button_start.setEnabled(true);
+            this.label_waiting.setText("");
+        }
+        
+            
+        //this.m_ddh.setReadingFinishedObject(this);
+        
+ /*       
         if (this.m_ddh.getDbDataReader()!=null)
         {
             if (this.m_ddh.getDbDataReader().isFinished())
             {
-                this.m_ddh.readingFinished();
+                //this.m_ddh.readingFinished();
+                this.readingFinished();
             }
-/*            else
+            /*else
             {
                 this.m_ddh.setReadingFinishedObject(this);
             } */
-        }
+ /*       }
         else
-            this.m_ddh.readingFinished();
-        
+        {
+            //this.m_ddh.readingFinished();
+            this.readingFinished();
+        }
+   */     
     }
 
 
@@ -433,10 +455,23 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      */
     public void readingFinished()
     {
-        this.button_start.setEnabled(true);
-        this.label_waiting.setText("");
+        checkReading(true);
+        //System.out.println("DeviceInstructionDialog:readingFinished");
+        
+        if (this.button_start!=null)
+        {
+            this.button_start.setEnabled(true);
+            this.label_waiting.setText("");
+        }
     }
 
+    
+    private synchronized void checkReading(boolean status)
+    {
+        //System.out.println("CheckReading: " + status);
+        reading_old_done = status;
+    }
+    
     
     // ****************************************************************
     // ******              HelpCapable Implementation             *****

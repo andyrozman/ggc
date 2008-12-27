@@ -2,6 +2,10 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.2.5
+    - Fixed reading of old data (in device data handler)
+    * Fixed GUI for configuration
+
 0.2.4
     - fixed List functionality
 

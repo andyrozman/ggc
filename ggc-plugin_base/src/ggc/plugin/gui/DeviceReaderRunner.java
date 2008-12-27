@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Meter Tool (support for Meter devices)
+ *  Plug-in:       Base PlugIn 
  *
  *  See AUTHORS for copyright information.
  * 
@@ -37,8 +37,8 @@ import org.apache.commons.logging.LogFactory;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     MeterReaderRunner
- *  Description:  This is separate thread class to get current data from database in otder to 
+ *  Filename:     DeviceReaderRunner
+ *  Description:  This is separate thread class to get current data from database in order to 
  *                compare it later.
  * 
  *  Author: Andy {andy@atech-software.com}

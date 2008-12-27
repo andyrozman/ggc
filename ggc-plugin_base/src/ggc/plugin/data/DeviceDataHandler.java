@@ -106,6 +106,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     public void setDbDataReader(DbDataReaderAbstract reader)
     {
         this.m_reader = reader;
+        this.m_reader.setReadingFinishedObject(this);
     }
 
     /**
@@ -180,6 +181,15 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     public abstract void executeExportOther();
     
 
+    /**
+     * Is Old Data Reading Finished
+     * @return
+     */
+    public boolean isOldDataReadingFinished()
+    {
+        return this.m_reader.isFinished();
+    }
+    
     
     /**
      * Set Reading Finished Object
@@ -198,7 +208,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     @SuppressWarnings("unchecked")
     public void readingFinished()
     {
-        System.out.println("DDH Reading finsihed");
+        //System.out.println("DDH Reading finsihed");
         
         if (this.m_reading_inst!=null)
             this.m_reading_inst.readingFinished();
