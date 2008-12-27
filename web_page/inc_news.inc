@@ -3,6 +3,54 @@
 <h2 class="head">News</h2>
 
 
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2008-12-24 22:44</td>
+<td>Release 0.4 comming out soon</td>
+</tr>
+<tr>
+<td colspan="2">
+After first public release it was decided, that there will be one major release every six months, 
+at least until we finish all main functionalities. Next release will come out in January 2009,
+with some major changes and lots of minor ones.<br>
+As you can see, we are still in 0.x versions. When all tagged (required) functionalities are finished, 
+we will go to version 1.0 (this might happen with release 0.5 or maybe 0.6).  
+</td></tr>
+</table> 
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2008-12-24 18:00</td>
+<td>Best wishes for next year</td>
+</tr>
+<tr>
+<td colspan="2">
+Merry Christmas (Happy Hanukkah) and Happy New Year 2009 for all Diabetics, their loved ones and all other people.<br>
+GGC Development Team
+</td></tr>
+</table> 
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2008-12-01 4:44</td>
+<td>New developers</td>
+</tr>
+<tr>
+<td colspan="2">
+In last few months, we gathered several new developers, which will help us with development
+of several parts of GGC, so please welcome them.<br>
+So welcome Aleksander Balaban (support for Meter OT UltraSmart and other stuff), Magnus Odell (Support for
+Animas pump and other stuff) and Tom S. (translation to French and some other stuff).
+</td></tr>
+</table> 
+
+<br><br>
 
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
