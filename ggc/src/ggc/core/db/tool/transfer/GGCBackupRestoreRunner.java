@@ -13,17 +13,29 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.PackFiles;
 
-/*
- * AddressDialog
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
  * 
- * This is dialog for adding PersonAddress or InternalAddress, to either Person
- * or InternalPerson.
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
  * 
- * This class is part of PIS (Parish Information System) package.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
  * 
- * @author Andy (Aleksander) Rozman {andy@triera.net}
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- * @version 1.0
+ *  Filename:     GGCBackupRestoreRunner
+ *  Description:  GGC Backup Restore Runner
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
  */
 
 public class GGCBackupRestoreRunner extends BackupRestoreRunner
@@ -34,12 +46,25 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     I18nControlAbstract ic = da.getI18nControlInstance();
     boolean restore_with_append = true;
 
+    /**
+     * Constructor
+     * 
+     * @param objects
+     * @param giver
+     */
     public GGCBackupRestoreRunner(Hashtable<String, BackupRestoreObject> objects, BackupRestoreWorkGiver giver)
     {
         super(objects, giver);
         // this.ht_backup_objects = objects;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param objects
+     * @param work_giver
+     * @param special
+     */
     public GGCBackupRestoreRunner(Hashtable<String,RestoreFileInfo> objects, BackupRestoreWorkGiver work_giver, String special)
     {
         super(objects, work_giver, special);
@@ -58,6 +83,11 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     
     
     
+    /**
+     * Execute Backup
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreRunner#executeBackup()
+     */
     public void executeBackup()
     {
 
@@ -89,8 +119,6 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             //ge.run();
             this.setStatus(100);
         }
-        
-        
         
         
         if (isAnyNutritionBackupObjectSelected())
@@ -201,9 +229,13 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
                 + "_" + da.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2) + "_"
                 + da.getLeadingZero(gc.get(GregorianCalendar.SECOND), 2); */
     }
-
     
     
+    /**
+     * Execute Restore
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreRunner#executeRestore()
+     */
     public void executeRestore()
     {
 
@@ -290,6 +322,11 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     }
     
     
+    /**
+     * Run
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreRunner#run()
+     */
     public void run()
     {
         super.run();

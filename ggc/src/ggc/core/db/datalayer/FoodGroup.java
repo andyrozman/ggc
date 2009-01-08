@@ -1,31 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: FoodGroup Purpose: This is datalayer file (data file, with methods
- * to work with database or in this case Hibernate). This one is used for
- * description of food groups.
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.FoodGroupH;
@@ -42,14 +14,38 @@ import com.atech.i18n.I18nControlAbstract;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     FoodGroup
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in 
+ *                this case Hibernate). This one is used for FoodGroupH and FoodUserGroupH. 
+ *                This one is also BackupRestoreObject.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
-// extends FoodGroupH implements DatabaseObjectHibernate
 {
 
-    public boolean debug = false;
-
-    // ggc.core.db.hibernate.FoodGroupH
-    // ggc.core.db.hibernate.FoodUserGroupH;
+    private boolean debug = false;
 
     FoodGroupH group_db1 = null;
     FoodUserGroupH group_db2 = null;
@@ -125,11 +121,21 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         group_type = 2;
     }
 
+    /**
+     * Get Group Type
+     * 
+     * @return
+     */
     public int getGroupType()
     {
         return this.group_type;
     }
 
+    /**
+     * Get Hibernate Object
+     * 
+     * @return
+     */
     public Object getHibernateObject()
     {
         if (group_type == 1)
@@ -138,11 +144,21 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             return this.group_db2;
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @return
+     */
     public String getShortDescription()
     {
         return this.getDescription();
     }
 
+    /**
+     * Get Id
+     * 
+     * @return
+     */
     public long getId()
     {
         if ((this.group_db1 == null) && (this.group_db2 == null))
@@ -156,11 +172,21 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             return this.group_db2.getId();
     }
 
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
     public void setId(int id)
     {
         setId((long) id);
     }
 
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
     public void setId(long id)
     {
         if ((this.group_db1 == null) && (this.group_db2 == null))
@@ -174,6 +200,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         }
     }
 
+    /**
+     * Get Name
+     * 
+     * @return
+     */
     public String getName()
     {
         if (group_type == 1)
@@ -182,6 +213,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             return this.group_db2.getName();
     }
 
+    /**
+     * Set Name
+     * 
+     * @param name
+     */
     public void setName(String name)
     {
         if (group_type == 1)
@@ -190,6 +226,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             this.group_db2.setName(name);
     }
 
+    /**
+     * Get Name I18n
+     * 
+     * @return
+     */
     public String getName_i18n()
     {
         if (group_type == 1)
@@ -198,6 +239,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             return this.group_db2.getName_i18n();
     }
 
+    /**
+     * Set Name I18n
+     * 
+     * @param name
+     */
     public void setName_i18n(String name)
     {
         if (group_type == 1)
@@ -206,6 +252,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             this.group_db2.setName_i18n(name);
     }
 
+    /**
+     * Set Description
+     * 
+     * @param name
+     */
     public void setDescription(String name)
     {
         if (group_type == 1)
@@ -214,6 +265,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             this.group_db2.setDescription(name);
     }
 
+    /**
+     * Get Description
+     * 
+     * @return
+     */
     public String getDescription()
     {
         if (group_type == 1)
@@ -222,68 +278,137 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             return this.group_db2.getDescription();
     }
 
+    /**
+     * Get Group Children Count
+     * 
+     * @return
+     */
     public int getGroupChildrenCount()
     {
         return this.children_group.size();
     }
 
+    /**
+     * Get Child Count
+     * 
+     * @return
+     */
     public int getChildCount()
     {
         return this.children.size();
     }
 
+    /**
+     * Has Group Children
+     * 
+     * @return
+     */
     public boolean hasGroupChildren()
     {
         return (getGroupChildrenCount() != 0);
     }
 
+    /**
+     * Has Children
+     * 
+     * @see com.atech.graphics.components.tree.CheckBoxTreeNodeInterface#hasChildren()
+     */
     public boolean hasChildren()
     {
         return (getChildCount() != 0);
     }
 
+    /**
+     * Add Child
+     * 
+     * @param fg
+     */
     public void addChild(FoodGroup fg)
     {
         children_group.add(fg);
         children.add(fg);
     }
 
+    /**
+     * Add Child
+     * 
+     * @param fd
+     */
     public void addChild(FoodDescription fd)
     {
         children.add(fd);
     }
 
+    /**
+     * Remove Child
+     * 
+     * @param fg
+     */
     public void removeChild(FoodGroup fg)
     {
         children_group.remove(fg);
         children.remove(fg);
     }
 
+    /**
+     * Remove Child
+     * 
+     * @param fd
+     */
     public void removeChild(FoodDescription fd)
     {
         children.remove(fd);
     }
 
+    /**
+     * Get Group Child
+     * 
+     * @param index
+     * @return
+     */
     public Object getGroupChild(int index)
     {
         return this.children_group.get(index);
     }
 
+    /**
+     * Get Child
+     * 
+     * @param index
+     * @return
+     */
     public Object getChild(int index)
     {
         return this.children.get(index);
     }
 
+    /**
+     * Find Group Child
+     * 
+     * @param child
+     * @return
+     */
     public int findGroupChild(Object child)
     {
         return this.children_group.indexOf(child);
     }
 
+    /**
+     * Find Child
+     * 
+     * @param child
+     * @return
+     */
     public int findChild(Object child)
     {
         return this.children.indexOf(child);
     }
 
+    /**
+     * Get Parent Id
+     * 
+     * @return
+     */
     public long getParentId()
     {
         if (this.group_type == 1)
@@ -292,12 +417,22 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             return this.group_db2.getParent_id();
     }
 
+    /**
+     * Set Parent Id
+     * 
+     * @param parent_id
+     */
     public void setParentId(long parent_id)
     {
         if (this.group_type == 2)
             this.group_db2.setParent_id(parent_id);
     }
 
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
@@ -307,6 +442,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
             return this.getName();
     }
 
+    /**
+     * Get Long Description
+     * 
+     * @return
+     */
     public String getLongDescription()
     {
         return "FoodGroup [id=" + this.getId() + ",name=" + this.getName() + ",parent_id=" + this.getParentId() + "]";
@@ -320,9 +460,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      * DbAdd - Add this object to database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
@@ -351,9 +489,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      * DbEdit - Edit this object in database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -380,9 +516,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      * DbDelete - Delete this object in database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
@@ -407,11 +541,8 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
      * 
-     * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbHasChildren(Session sess) throws Exception
@@ -426,11 +557,8 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     /**
      * DbGet - Loads this object. Id must be set.
      * 
-     * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbGet(Session sess) throws Exception
@@ -444,16 +572,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         {
             sess.update(this.group_db2);
         }
-
-        /**
-         * FoodGroupH ch = (FoodGroupH)sess.get(FoodGroupH.class, new
-         * Long(this.getId()));
-         * 
-         * this.setId(ch.getId()); this.setDescription(ch.getDescription());
-         * this.setDescription_i18n(ch.getDescription_i18n());
-         * 
-         * return true;
-         */
 
         return false;
     }
@@ -504,6 +622,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return ic.getMessage("USER_FOOD_GROUPS");
     }
 
+    /**
+     * Get Class Name
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getClassName()
+     */
     public String getClassName()
     {
         return "ggc.core.db.hibernate.FoodUserGroupH";
@@ -533,6 +656,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         this.selected = newValue;
     }
 
+    /**
+     * Is Collection
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#isCollection()
+     */
     public boolean isCollection()
     {
         return false;
@@ -549,6 +677,9 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     }
 
     
+    /**
+     * Table Version
+     */
     public int TABLE_VERSION = 1;
     
     

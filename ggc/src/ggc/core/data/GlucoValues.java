@@ -1,34 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: GlucoValues.java
- *  Purpose:  The data read from the meter and translated into a more general
- *            form.
- *
- *  Author:   schultd
- *  
- *  @deprecated
- *  
- */
-
 package ggc.core.data;
 
 import ggc.core.util.DataAccess;
@@ -39,26 +8,48 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     GlucoValues  
+ *  Description:  This is collection of DailyValuesRow for different tasks:
+ *                graphs, printing and other stuff.
+ * 
+ *  Author: schultd
+ *          Andy {andy@atech-software.com}  
+ */
+
+
 public class GlucoValues extends DailyValues
 {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 3904480643937213485L;
 
-    // ArrayList dayValues = null;
+    private static final long serialVersionUID = 3904480643937213485L;
     Vector<DailyValues> dayValues = null;
     ArrayList<DailyValuesRow> dayValuesRows = null;
-
-    // private EventListenerList listenerList = new EventListenerList();
     private DataAccess m_da = DataAccess.getInstance();
-
-    // private int recordCount = 0;
-
     GregorianCalendar from_date;
     GregorianCalendar to_date;
     
     
+    /**
+     * Constructor
+     */
     public GlucoValues()
     {
         dayValues = new Vector<DailyValues>();
@@ -66,6 +57,12 @@ public class GlucoValues extends DailyValues
         dayValuesRows = new ArrayList<DailyValuesRow>();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param sDate
+     * @param eDate
+     */
     public GlucoValues(GregorianCalendar sDate, GregorianCalendar eDate)
     {
         this();
@@ -98,6 +95,13 @@ public class GlucoValues extends DailyValues
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param sDate
+     * @param eDate
+     * @param graph
+     */
     public GlucoValues(GregorianCalendar sDate, GregorianCalendar eDate, boolean graph)
     {
         sDate.set(GregorianCalendar.HOUR_OF_DAY, 0);
@@ -114,11 +118,21 @@ public class GlucoValues extends DailyValues
     }
 
     
+    /**
+     * Get Range From
+     * 
+     * @return
+     */
     public GregorianCalendar getRangeFrom()
     {
         return from_date;
     }
     
+    /**
+     * Get Range To
+     * 
+     * @return
+     */
     public GregorianCalendar getRangeTo()
     {
         return to_date;
@@ -130,11 +144,16 @@ public class GlucoValues extends DailyValues
 
         for (int i = 0; i < dv.getRowCount(); i++)
         {
-            addRow(dv.getRowAt(i));
+            addRow(dv.getRow(i));
         }
 
     }
 
+    /**
+     * Add Row
+     * 
+     * @see ggc.core.data.DailyValues#addRow(ggc.core.data.DailyValuesRow)
+     */
     @Override
     public void addRow(DailyValuesRow dRow)
     {
@@ -150,7 +169,7 @@ public class GlucoValues extends DailyValues
             // System.out.println("date2:" + dV.getDateAsString() + "");
             if (s1.equals(dV.getDateAsString()))
             {
-                dV.setNewRow(dRow);
+                dV.addRow(dRow);
 
                 // X GlucoValueEvent event = new GlucoValueEvent(this, i, i, 0,
                 // GlucoValueEvent.INSERT);
@@ -174,29 +193,44 @@ public class GlucoValues extends DailyValues
         }
     }
 
-    @Override
-    public void setNewRow(DailyValuesRow dRow)
+    /**
+     * Set New Row
+     * 
+     * @see ggc.core.data.DailyValues#setNewRow(ggc.core.data.DailyValuesRow)
+     */
+    /*public void setNewRow(DailyValuesRow dRow)
     {
-        // DataBaseHandler dbH = DataBaseHandler.getInstance();
         if (!m_da.getDb().dateTimeExists(dRow.getDateTime()))
         {
             addRow(dRow);
-            // rMF.getResTableModel().fireTableChanged(null);
         }
-    }
+    }*/
 
-    public void saveValues()
+    /**
+     * Save Values
+     */
+/*    public void saveValues()
     {
         for (int i = 0; i < dayValues.size(); i++)
             dayValues.elementAt(i).saveDay();
-    }
+    } */
 
+    /**
+     * Get Daily Values Row Count
+     * 
+     * @return
+     */
     public int getDailyValuesRowsCount()
     {
         return this.dayValuesRows.size();
     }
 
-    
+    /**
+     * Get Daily Values Row 
+     * 
+     * @param index 
+     * @return
+     */
     public DailyValuesRow getDailyValueRow(int index)
     {
         return this.dayValuesRows.get(index); 
@@ -204,6 +238,11 @@ public class GlucoValues extends DailyValues
     
     
     
+    /**
+     * Get Row Count
+     * 
+     * @see ggc.core.data.DailyValues#getRowCount()
+     */
     @Override
     public int getRowCount()
     {
@@ -213,6 +252,11 @@ public class GlucoValues extends DailyValues
         return c;
     }
 
+    /**
+     * Delete Row
+     * 
+     * @see ggc.core.data.DailyValues#deleteRow(int)
+     */
     @Override
     public void deleteRow(int row)
     {
@@ -237,6 +281,11 @@ public class GlucoValues extends DailyValues
         }
     }
 
+    /**
+     * Get Value At
+     * 
+     * @see ggc.core.data.DailyValues#getValueAt(int, int)
+     */
     @Override
     public Object getValueAt(int row, int column)
     {
@@ -253,13 +302,23 @@ public class GlucoValues extends DailyValues
         return o;
     }
 
+    /**
+     * Get Daily Values For Day
+     * 
+     * @param day
+     * @return
+     */
     public DailyValues getDailyValuesForDay(int day)
     {
         return dayValues.elementAt(day);
     }
 
-    @Override
-    public void setValueAt(Object aValue, int row, int column)
+    /**
+     * Set Value At
+     * 
+     * @see ggc.core.data.DailyValues#setValueAt(java.lang.Object, int, int)
+     */
+/*    public void setValueAt(Object aValue, int row, int column)
     {
         int c = 0;
         for (int i = 0; i < dayValues.size(); i++)
@@ -275,7 +334,8 @@ public class GlucoValues extends DailyValues
         // GlucoValueEvent.UPDATE);
         // X fireGlucoValueChanged(event);
     }
-
+*/
+    
     /**
      * @return The amount of days physically present in this
      *         <code>{@link GlucoValues}</code>.
@@ -325,6 +385,12 @@ public class GlucoValues extends DailyValues
         return dayCount;
     }
 
+    /**
+     * Get Date For Day At
+     * 
+     * @param i
+     * @return
+     */
     public String getDateForDayAt(int i)
     {
         // if the caller requests a key we can't supply, return null (not an

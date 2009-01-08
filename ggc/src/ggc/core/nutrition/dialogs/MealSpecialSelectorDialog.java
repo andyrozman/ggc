@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionTreeDialog
- *  Purpose:  Main class for displaying nutrition information.
- *
- *  Author:   andyrozman
- */
-
 package ggc.core.nutrition.dialogs;
 
 import ggc.core.db.datalayer.DailyFoodEntry;
@@ -155,21 +128,21 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     private void loadMeal()
     {
-        this.cb_type.setSelectedIndex(this.daily_food_entry.nutrition_food_type - 1);
+        this.cb_type.setSelectedIndex(this.daily_food_entry.getNutritionFoodType() - 1);
         this.cb_type.setEnabled(false);
         this.button_select.setEnabled(false);
 
-        this.action_object_type = (this.daily_food_entry.nutrition_food_type - 1);
+        this.action_object_type = (this.daily_food_entry.getNutritionFoodType() - 1);
 
         if (this.cb_type.getSelectedIndex() < 2)
         {
-            this.dsc_food = this.daily_food_entry.m_food;
+            this.dsc_food = this.daily_food_entry.getFoodObject();
             this.label_item.setText(this.dsc_food.getName());
             // this.action_object = fd;
         }
         else
         {
-            this.dsc_meal = this.daily_food_entry.m_meal;
+            this.dsc_meal = this.daily_food_entry.getMealObject();
             // Meal m = this.meal_part.getMealObject();
             this.label_item.setText(this.dsc_meal.getName());
 
@@ -180,13 +153,13 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
         setEnabledWithType();
 
-        if (this.daily_food_entry.m_food != null)
+        if (this.daily_food_entry.getFoodObject() != null)
         {
-            this.cb_weight_type.setSelectedIndex(this.daily_food_entry.amount_type - 1);
+            this.cb_weight_type.setSelectedIndex(this.daily_food_entry.getAmountType() - 1);
 
-            if (this.daily_food_entry.amount_type == DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
+            if (this.daily_food_entry.getAmountType() == DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
             {
-                this.hws_selected = this.daily_food_entry.m_home_weight_special;
+                this.hws_selected = this.daily_food_entry.getHomeWeightSpecialObject();
                 this.label_home_weight_item.setText(this.hws_selected.getName());
             }
         }
@@ -195,7 +168,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
             this.cb_weight_type.setSelectedIndex(0);
         }
 
-        this.amountField.setValue(new Double(this.daily_food_entry.amount));
+        this.amountField.setValue(this.daily_food_entry.getAmount());
 
     }
 

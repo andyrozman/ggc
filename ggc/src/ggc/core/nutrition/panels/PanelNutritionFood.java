@@ -296,7 +296,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
         if (fd.getGroup_id() > 0)
         {
-            this.food_group = m_da.tree_roots.get("" + fd.type).m_groups_ht.get("" + fd.getGroup_id());
+            this.food_group = m_da.tree_roots.get("" + fd.getFoodType()).m_groups_ht.get("" + fd.getGroup_id());
             this.label_group.setText(this.food_group.getName());
         }
         else

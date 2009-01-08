@@ -544,7 +544,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
                     return;
                 }
 
-                DailyValuesRow dvr = dailyStats.getDayData().getRowAt(dailyStats.getTable().getSelectedRow());
+                DailyValuesRow dvr = dailyStats.getDayData().getRow(dailyStats.getTable().getSelectedRow());
 
                 DailyRowDialog aRF = new DailyRowDialog(dvr, getMyParent());
 

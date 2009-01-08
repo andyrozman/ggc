@@ -42,6 +42,31 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.ATechDate;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     DailyValuesRow
+ *  Description:  One row in the DailyValues Data Model.
+ * 
+ *  @author schultd
+ *  @author Andy {andy@atech-software.com}  
+ */
 
 public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 {
@@ -72,7 +97,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     private String food_desc;     // extended
     private String food_desc_ch;  // extended
     private String decimal_part;  // extended
-    public String meals;
+    private String meals;
 
     private boolean changed = false;
 
@@ -468,17 +493,34 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
     
     
+    /**
+     * Get Meals Ids
+     * 
+     * @return
+     */
     public String getMealsIds()
     {
-	return this.meals;
+        return this.meals;
     }
     
+    /**
+     * Set Meals Ids
+     * 
+     * @param val 
+     */
     public void setMealsIds(String val)
     {
 	this.meals = val;
     }
     
 
+    /**
+     * Get DateTime Long
+     * 
+     * @param date
+     * @param time
+     * @return
+     */
     public long getDateTimeLong(String date, String time)
     {
         StringTokenizer strtok = new StringTokenizer(date, ".");
@@ -571,6 +613,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
         return tmp;
     }
 */
+    
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
@@ -579,6 +627,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Get DateTime
+     * 
+     * @return
+     */
     public long getDateTime()
     {
 	//System.out.println(datetime);
@@ -586,6 +639,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Set DateTime
+     * 
+     * @param dt
+     */
     public void setDateTime(long dt)
     {
 	if (this.datetime!=dt)
@@ -602,6 +660,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }*/
 
 
+    /**
+     * Get Date
+     * 
+     * @return
+     */
     public long getDate()
     {
         return (datetime/10000);
@@ -609,6 +672,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
 
+    /**
+     * Get Date As String
+     * 
+     * @return
+     */
     public String getDateAsString()
     {
         return m_da.getDateTimeAsDateString(datetime);
@@ -617,6 +685,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 	//dssreturn m_da.getDateTimeAsDateString(datetime);
     }
 
+    /**
+     * Get Time As String
+     * 
+     * @return
+     */
     public String getTimeAsString()
     {
         //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -624,6 +697,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
         return m_da.getDateTimeAsTimeString(datetime);
     }
 
+    /**
+     * Get DateTime As Time
+     * 
+     * @return
+     */
     public String getDateTimeAsTime()
     {
         long i = m_da.getDateTimeLong(datetime, DataAccess.DT_TIME);
@@ -631,12 +709,22 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
         return "" + i;
     }
 
+    /**
+     * Get DateTime As ATDate
+     * 
+     * @return
+     */
     public ATechDate getDateTimeAsATDate()
     {
         return new ATechDate(datetime);
     }
 
     
+    /**
+     * Get DateTime As Date
+     * 
+     * @return
+     */
     public Date getDateTimeAsDate()
     {
         ATechDate at = new ATechDate(datetime);
@@ -645,12 +733,23 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     
     
     
+    /**
+     * Set DateTime
+     * 
+     * @param date
+     * @param time
+     */
     public void setDateTime(String date, String time)
     {
         datetime = getDateTimeLong(date, time);
-    }
+    } 
 
 
+    /**
+     * Get BG
+     * 
+     * @return
+     */
     public float getBG()
     {
         if (debug)
@@ -681,6 +780,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Get BG As String
+     * 
+     * @return
+     */
     public String getBGAsString()
     {
         if (debug)
@@ -714,12 +818,23 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
 
+    /**
+     * Get BG Raw
+     * 
+     * @return
+     */
     public float getBGRaw()
     {
         return bg;
     }
 
 
+    /**
+     * Get BG
+     * 
+     * @param type
+     * @return
+     */
     public float getBG(int type)
     {
 
@@ -746,9 +861,22 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 */
 
+    /**
+     * BG: mmol/L 
+     */
     public static int BG_MMOLL = 2;
+
+    /**
+     * BG: mg/dL 
+     */
     public static int BG_MGDL = 1;
 
+    /**
+     * Set BG
+     * 
+     * @param type
+     * @param val
+     */
     public void setBG(int type, float val)
     {
         // FIX THIS
@@ -790,6 +918,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     
 
     
+    /**
+     * Set BG
+     * 
+     * @param type
+     * @param val
+     */
     public void setBG(int type, String val)
     {
         if (m_da.isEmptyOrUnset(val))
@@ -815,6 +949,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
 
+    /**
+     * Set BG
+     * 
+     * @param val
+     */
     public void setBG(int val)
     {
         if (bg!=val) 
@@ -828,11 +967,19 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Get Ins 1
+     * @return
+     */
     public float getIns1()
     {
         return ins1;
     }
 
+    /**
+     * Get Ins 1 As String
+     * @return
+     */
     public String getIns1AsString()
     {
 	return getFloatAsIntString(ins1);
@@ -840,13 +987,23 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
-
+    /**
+     * Set Ins 1
+     * 
+     * @param val
+     */
     public void setIns1(String val)
     {
         if (!m_da.isEmptyOrUnset(val))
             setIns1(m_da.getIntValue(val));
     }
 
+    
+    /**
+     * Set Ins 1
+     * 
+     * @param val
+     */
     public void setIns1(int val)
     {
         if (ins1!=val) 
@@ -857,18 +1014,30 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Get Ins 2
+     * @return
+     */
     public float getIns2()
     {
         return ins2;
     }
 
+    /**
+     * Get Ins 1 As String
+     * @return
+     */
     public String getIns2AsString()
     {
-	return getFloatAsIntString(ins2);
-//        return this.getFloatAsString(ins2);
+        return getFloatAsIntString(ins2);
     }
 
 
+    /**
+     * Set Ins 2
+     * 
+     * @param val
+     */
     public void setIns2(String val)
     {
         if (! m_da.isEmptyOrUnset(val))
@@ -881,6 +1050,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
         }
     }
 
+    
+    /**
+     * Set Ins 2
+     * 
+     * @param val
+     */
     public void setIns2(int val)
     {
         if (ins2!=val) 
@@ -891,23 +1066,43 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Get CH
+     * 
+     * @return
+     */
     public float getCH()
     {
         return ch;
     }
 
 
+    /**
+     * Get CH As String
+     * 
+     * @return
+     */
     public String getCHAsString()
     {
         return this.getFloatAsString(ch);
     }
 
 
+    /**
+     * Set CH
+     * 
+     * @param val
+     */
     public void setCH(String val)
     {
         setCH(m_da.getFloatValue(val));
     }
 
+    /**
+     * Set CH
+     * 
+     * @param val
+     */
     public void setCH(float val)
     {
         if (ch!=val) 
@@ -918,16 +1113,21 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Get Activity
+     * 
+     * @return
+     */
     public String getActivity()
     {
         return activity;
     }
-/*
-    public void setAct(String val)
-    {
-        act = val;
-    }
-*/
+
+    /**
+     * Set Activity
+     * 
+     * @param val
+     */
     public void setActivity(String val)
     {
         if ((activity==null) || (!activity.equals(val)))
@@ -1003,16 +1203,22 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     
     
     
+    /**
+     * Get Urine
+     * 
+     * @return
+     */
     public String getUrine()
     {
         return urine;
     }
-/*
-    public void setAct(String val)
-    {
-        act = val;
-    }
-*/
+    
+    
+    /**
+     * Set Urine
+     * 
+     * @param val
+     */
     public void setUrine(String val)
     {
         if ((urine==null) || (!urine.equals(val)) )
@@ -1025,19 +1231,29 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
 
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
     public String getComment()
     {
         return comment;
     }
 
+    /**
+     * Set Comment
+     * 
+     * @param val
+     */
     public void setComment(String val)
     {
-	if (comment==null) 
-	{
-	    comment = val;
-            changed = true;
-	}
-	else if (!comment.equals(val)) 
+    	if (comment==null)
+    	{
+    	    comment = val;
+                changed = true;
+    	}
+    	else if (!comment.equals(val)) 
         {
             comment = val;
             changed = true;
@@ -1045,15 +1261,21 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
-
-
-
-
+    /**
+     * Has Changed
+     * 
+     * @return
+     */
     public boolean hasChanged()
     {
         return changed;
     }
 
+    /**
+     * Is New
+     * 
+     * @return
+     */
     public boolean isNew()
     {
         if (m_dv==null)
@@ -1062,6 +1284,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
             return false;
     }
 
+    /**
+     * Get Hibernate Object
+     * 
+     * @return
+     */
     public DayValueH getHibernateObject()
     {
         if (m_dv==null)
@@ -1094,12 +1321,23 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
     }
 
+    /**
+     * Has Hibernate Object
+     * 
+     * @return
+     */
     public boolean hasHibernateObject()
     {
         return (m_dv!=null);
     }
 
 
+    /**
+     * Get Float As Int String
+     * 
+     * @param fl
+     * @return
+     */
     public String getFloatAsIntString(float fl)
     {
         if (fl == 0.0)
@@ -1113,6 +1351,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
         }
     }
 
+    /**
+     * Get Float As String
+     * 
+     * @param fl
+     * @return
+     */
     public String getFloatAsString(float fl)
     {
         if (fl == 0.0)
@@ -1126,6 +1370,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Get Float As String
+     * 
+     * @param fl
+     * @return
+     */
     public String getFloat2AsString(float fl)
     {
         if (fl == 0.0)
@@ -1139,7 +1389,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
     
     
-    
+    /**
+     * Get Float As Int
+     * 
+     * @param f
+     * @return
+     */
     public int getFloatAsInt(float f)
     {
         Float f_i = new Float(f);
@@ -1149,6 +1404,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
     //stupid but TableModel needs Objects...
+    /**
+     * Get Value At
+     * 
+     * @param column
+     * @return
+     */
     public Object getValueAt(int column)
     {
         //return "X";
@@ -1183,6 +1444,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Set Value At
+     * 
+     * @param aValue
+     * @param column
+     */
     public void setValueAt(Object aValue, int column)
     {
         switch (column) 
@@ -1251,6 +1518,10 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
 
 
 
+    /**
+     * Get DateD
+     * @return
+     */
     public int getDateD()
     {
         return Integer.parseInt(m_da.getDateTimeAsDateString(datetime));
@@ -1267,12 +1538,20 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Get DateT
+     * @return
+     */
     public int getDateT()
     {
         return (new ATechDate(datetime)).getTime();
     }
 
     
+    /**
+     * Get DateTime Ms
+     * @return
+     */
     public long getDateTimeMs()
     {
         return (new ATechDate(datetime)).getGregorianCalendar().getTimeInMillis();

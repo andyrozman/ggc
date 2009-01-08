@@ -57,12 +57,13 @@ import javax.swing.JFrame;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###--###  
- *  Description:  ###--###
+ *  Filename:     DailyGraphDialog
+ *  Description:  Daily Graph Dialog (DEPRECATED - WILL BE REMOVED)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
+// DailyGraphDialog is already added with new framework
 
 public class DailyGraphDialog extends JDialog
 {
@@ -73,6 +74,11 @@ public class DailyGraphDialog extends JDialog
     private I18nControl m_ic = I18nControl.getInstance();
     private DailyGraphView dGV = null;
 
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     */
     public DailyGraphDialog(JDialog dialog)
     {
         this(dialog, null);
@@ -94,6 +100,12 @@ public class DailyGraphDialog extends JDialog
          */
     }
 
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     * @param dV
+     */
     public DailyGraphDialog(JDialog dialog, DailyValues dV)
     {
 
@@ -113,11 +125,22 @@ public class DailyGraphDialog extends JDialog
         setVisible(true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param frame
+     */
     public DailyGraphDialog(JFrame frame)
     {
         this(frame, null);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param frame
+     * @param dV
+     */
     public DailyGraphDialog(JFrame frame, DailyValues dV)
     {
         super(frame, "DailyGraphFrame", true);
@@ -135,6 +158,11 @@ public class DailyGraphDialog extends JDialog
         setVisible(true);
     }
 
+    /**
+     * Set Daily Values
+     * 
+     * @param dV
+     */
     public void setDailyValues(DailyValues dV)
     {
         dGV.setDailyValues(dV);

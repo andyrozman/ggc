@@ -95,6 +95,11 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
     private JCheckBox chkConnect;
     private DateRangeSelectionPanel dRS;
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public SpreadGraphDialog(DataAccess da)
     {
         super(da.getParent(), "", true);

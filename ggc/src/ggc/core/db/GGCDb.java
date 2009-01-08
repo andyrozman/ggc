@@ -1238,7 +1238,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
                 DayValueH dv = (DayValueH) it.next();
 
                 DailyValuesRow dVR = new DailyValuesRow(dv);
-                dV.setNewRow(dVR);
+                dV.addRow(dVR);
             }
 
         }
@@ -1455,7 +1455,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
                 for (int i = 0; i < dV.getRowCount(); i++)
                 {
-                    DailyValuesRow dwr = dV.getRowAt(i);
+                    DailyValuesRow dwr = dV.getRow(i);
 
                     if (dwr.isNew())
                     {

@@ -1,36 +1,7 @@
 package ggc.core.print;
 
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: PrintSimpleonthlyReport.java
-
- *  Purpose:  Creating PDF for Extended Monthly Report (used for printing)
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
-
 import ggc.core.data.DayValuesData;
+import ggc.core.data.MonthlyValues;
 import ggc.core.util.DataAccess;
 
 import java.awt.Color;
@@ -53,7 +24,6 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfPageEventHelper;
 import com.lowagie.text.pdf.PdfWriter;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -73,17 +43,17 @@ import com.lowagie.text.pdf.PdfWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###--###  
- *  Description:  ###--###
+ *  Filename:     PrintAbstract
+ *  Description:  Abstract class for printing via creation of PDF (iText)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public abstract class PrintAbstract extends PdfPageEventHelper
 {
     
-    public DayValuesData m_data = null;
+    protected DayValuesData m_data = null;
+    protected MonthlyValues m_mv = null;
     protected DataAccess m_da = DataAccess.getInstance();
     protected I18nControlAbstract ic = null;
     String name = "";
@@ -96,10 +66,39 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param data
+     * @param ic
+     */
     public PrintAbstract(DayValuesData data, I18nControlAbstract ic)
     {
         this.m_data = data;
         this.ic = ic;
+        init();
+    }
+
+    
+     
+    /**
+     * Constructor
+     * 
+     * @param mv
+     * @param ic
+     */
+    public PrintAbstract(MonthlyValues mv, I18nControlAbstract ic)
+    {
+        //this.m_data = data;
+        this.m_mv = mv;
+        this.ic = ic;
+        init();
+    }
+    
+    
+    
+    private void init()
+    {
         //name = System.currentTimeMillis();
         createName();
 
@@ -117,26 +116,43 @@ public abstract class PrintAbstract extends PdfPageEventHelper
         }
         
         createDocument();
+        
     }
-
     
+    
+    /**
+     * Get Name
+     * 
+     * @return
+     */
     public String getName()
     {
-        // TODO: 
         return name + ".pdf";
     }
 
     
+    /**
+     * Create Name
+     */
     public void createName()
     {
-        this.name = this.getFileNameBase(); // + "_" + this.getFileNameRange();
+        // TODO: create name (check if exists)
+        this.name = this.getFileNameBase() + "_" + this.getFileNameRange();
     }
     
+    /**
+     * Get Title
+     * 
+     * @return
+     */
     public abstract Paragraph getTitle();
     
 
     
     
+    /**
+     * Create Document
+     */
     public void createDocument()
     {
 
@@ -253,6 +269,11 @@ public abstract class PrintAbstract extends PdfPageEventHelper
 
 
     
+    /**
+     * On End Page
+     * 
+     * @see com.lowagie.text.pdf.PdfPageEventHelper#onEndPage(com.lowagie.text.pdf.PdfWriter, com.lowagie.text.Document)
+     */
     @Override
     public void onEndPage(PdfWriter writer, Document document) 
     {

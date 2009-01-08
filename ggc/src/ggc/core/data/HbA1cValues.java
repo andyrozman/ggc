@@ -1,40 +1,37 @@
 package ggc.core.data;
 
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: HbA1cValues.java 
- * 
- * Purpose: Calculates the HbA1c based on a given date.
- * 
- * Author: schultd
- * Author: andyrozman {andy@atech-software.com}
- * 
- */
-
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     HbA1cValues  
+ *  Description:  Calculates the HbA1c based on data for last 3 months
+ * 
+ *  Author: schultd
+ *          Andy {andy@atech-software.com}  
+ */
+
 
 public class HbA1cValues
 {
@@ -50,6 +47,9 @@ public class HbA1cValues
 
     private Hashtable<String, DailyValues> m_dataTable = null;
 
+    /**
+     * Constructor
+     */
     public HbA1cValues()
     {
         sumBG = 0;
@@ -60,6 +60,12 @@ public class HbA1cValues
         m_dataTable = new Hashtable<String, DailyValues>();
     }
 
+    /**
+     * Add Day
+     * 
+     * @param avgBG
+     * @param readings
+     */
     public void addDay(float avgBG, int readings)
     {
         sumBG += avgBG;
@@ -69,6 +75,11 @@ public class HbA1cValues
         dayCount++;
     }
 
+    /**
+     * Add Day Value Row
+     * 
+     * @param dvr
+     */
     public void addDayValueRow(DailyValuesRow dvr)
     {
         int date = (int) dvr.getDate();
@@ -90,6 +101,9 @@ public class HbA1cValues
 
     }
 
+    /**
+     * Process Day Values
+     */
     public void processDayValues()
     {
 
@@ -110,9 +124,15 @@ public class HbA1cValues
     }
 
     
+    /**
+     * Values Class
+     */
     public int[] valClass = new int[5];
     
     
+    /**
+     * Process Day Values 2 (new one for new Hba1c Graphs)
+     */
     public void processDayValues2()
     {
         // empty days are not in hashtable
@@ -151,6 +171,10 @@ public class HbA1cValues
     }
     
     
+    /**
+     * Get Average BG
+     * @return
+     */
     public float getAvgBG()
     {
         if (dayCount != 0)
@@ -168,6 +192,11 @@ public class HbA1cValues
             return 0;
     }
 
+    /**
+     * Get Average BG For Method 3
+     * 
+     * @return
+     */
     public float getAvgBGForMethod3()
     {
         if (dayCount != 0)
@@ -177,11 +206,21 @@ public class HbA1cValues
             return 0;
     }
 
+    /**
+     * Get Day Count
+     * 
+     * @return
+     */
     public int getDayCount()
     {
         return dayCount;
     }
 
+    /**
+     * Get Valuation
+     * 
+     * @return
+     */
     public String getValuation()
     {
         float value = 0;
@@ -199,11 +238,21 @@ public class HbA1cValues
             return m_ic.getMessage("GOOD_EXPRESSIVENESS");
     }
 
+    /**
+     * Get Readings
+     * 
+     * @return
+     */
     public int getReadings()
     {
         return readings;
     }
 
+    /**
+     * Get Reading Per Day
+     * 
+     * @return
+     */
     public float getReadingsPerDay()
     {
         if (dayCount != 0)
@@ -212,6 +261,11 @@ public class HbA1cValues
             return 0;
     }
 
+    /**
+     * Get HbA1c Method 1
+     * 
+     * @return
+     */
     public float getHbA1c_Method1()
     {
         if (readings == 0)
@@ -223,6 +277,11 @@ public class HbA1cValues
             return 0;
     }
 
+    /**
+     * Get HbA1c Method 2
+     * 
+     * @return
+     */
     public float getHbA1c_Method2()
     {
         if (readings == 0)
@@ -234,6 +293,12 @@ public class HbA1cValues
             return 0;
     }
 
+    
+    /**
+     * Get HbA1c Method 3
+     * 
+     * @return
+     */
     public float getHbA1c_Method3()
     {
         // HbA1c =( mg/dl + 86) / 33.3
@@ -251,11 +316,22 @@ public class HbA1cValues
             return 0;
     }
 
+    /**
+     * Get Exp
+     * 
+     * @return
+     */
     public int getExp()
     {
         return exp;
     }
 
+    /**
+     * Get Percent Of Days In Class
+     * 
+     * @param r
+     * @return
+     */
     public float getPercentOfDaysInClass(int r)
     {
 

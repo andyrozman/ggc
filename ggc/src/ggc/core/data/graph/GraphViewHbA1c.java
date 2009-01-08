@@ -14,7 +14,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import com.atech.graphics.graphs.AbstractGraphView;
+import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.graphics.graphs.GraphViewControlerInterface;
 import com.atech.i18n.I18nControlAbstract;
 
@@ -44,7 +44,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class GraphViewHbA1c extends AbstractGraphView //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
 {
 
     private HbA1cValues hbValues; 

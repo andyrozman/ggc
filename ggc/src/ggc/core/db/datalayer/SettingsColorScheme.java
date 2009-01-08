@@ -35,7 +35,9 @@ import com.atech.i18n.I18nControlAbstract;
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
  *  Filename:     SettingsColorScheme
- *  Description:  DataLayer class for ColorSchemeH, also BackupRestore object
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in 
+ *                this case Hibernate). This one is used for ColorSchemes. This one is also 
+ *                BackupRestoreObject.
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */

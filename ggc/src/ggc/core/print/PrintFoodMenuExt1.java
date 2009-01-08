@@ -153,18 +153,18 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
         
         float value = 0.0f;
         
-        if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
+        if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
         {
             table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_normal));
             //value = mp.getNutrientValue(205);
             value = mp.getMealCH();
             
         }
-        else if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
+        else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
         {
             table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), this.text_normal));
             //value = mp.getNutrientValue(205);
-            value = mp.getNutrientValue(205) * (mp.amount / 100.0f);
+            value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
         }
         else
         {

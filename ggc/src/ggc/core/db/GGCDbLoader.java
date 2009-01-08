@@ -44,6 +44,32 @@ import java.util.GregorianCalendar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     GGCDbLoader  
+ *  Description:  This is GGCDb Loader. It help system to load all needed data for 
+ *                GGC Database Session.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class GGCDbLoader extends Thread
 {
@@ -67,9 +93,8 @@ public class GGCDbLoader extends Thread
     DataAccess m_da = null;
     StatusBar m_bar = null;
     StatusBarL m_barL = null;
-    public boolean real_run = false;
-
-    public boolean run_once = false;
+    //private boolean real_run = false;
+    private boolean run_once = false;
 
     
     //public boolean part_start = true;
@@ -81,6 +106,11 @@ public class GGCDbLoader extends Thread
     //public boolean debug = false;
     
     
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public GGCDbLoader(DataAccess da)
     {
         m_da = da;
@@ -90,6 +120,12 @@ public class GGCDbLoader extends Thread
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param bar
+     */
     public GGCDbLoader(DataAccess da, StatusBar bar)
     {
         m_da = da;
@@ -98,6 +134,12 @@ public class GGCDbLoader extends Thread
     }
 
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param bar2
+     */
     public GGCDbLoader(DataAccess da, StatusBarL bar2)
     {
         m_da = da;
@@ -105,6 +147,11 @@ public class GGCDbLoader extends Thread
     }
 
 
+    /**
+     * Run (Thread)
+     * 
+     * @see java.lang.Thread#run()
+     */
     @Override
     public void run()
     {
@@ -230,6 +277,11 @@ public class GGCDbLoader extends Thread
     	log.debug("We needed "  + (dif/1000) + " seconds to startup.");
     }
 
+    /**
+     * Set Db Status
+     * 
+     * @param status
+     */
     public void setDbStatus(int status)
     {
         //if (part_start)

@@ -1,31 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DailyValue
- *  Purpose:  This is backup class for DailyValuesH
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.DayValueH;
@@ -40,6 +12,35 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     FoodDescription
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in 
+ *                this case Hibernate). This one is used for FoodDescriptionH and FoodUserDescriptionH. 
+ *                This one is also BackupRestoreObject. 
+ *                File is not YET DataLayer File at least not active
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+// TODO: DL
 
 public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
 {
@@ -50,67 +51,88 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
     
 
+    /**
+     * Constructor
+     */
     public DailyValue()
     {
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param dvh
+     */
     public DailyValue(DayValueH dvh)
     {
     }
+
     
-    
-    /** 
-     * getTargetName
+    /**
+     * Constructor
+     * 
+     * @param ic
      */
-    public String getTargetName()
-    {
-	return ic.getMessage("DAILY_VALUES");
-    }
-
-    /** 
-     * getName
-     * @return 
-     */
-    public String getName()
-    {
-	return this.getTargetName();
-    }
-
-
-    public String getClassName()
-    {
-        return "ggc.core.db.hibernate.DayValueH";
-    }
-    
-    
     public DailyValue(I18nControlAbstract ic)
     {
-	this.ic = (I18nControl)ic;
+        this.ic = (I18nControl)ic;
     }
-
-
-    public String toString()
-    {
-	return this.getTargetName();
-    }
-    
-
-    
-    
     
     
     //---
     //---  BackupRestoreObject
     //---
+
     
     
+    /**
+     * Get Target Name
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getTargetName()
+     */
+    public String getTargetName()
+    {
+        return ic.getMessage("DAILY_VALUES");
+    }
+
+    /** 
+     * Get Name
+     * @return 
+     */
+    public String getName()
+    {
+        return this.getTargetName();
+    }
+
+    /**
+     * getBackupClassName - name of class which will be updated/restored
+     * 
+     * @return
+     */
+    public String getClassName()
+    {
+        return "ggc.core.db.hibernate.DayValueH";
+    }
+    
+
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return this.getTargetName();
+    }
+    
+
     /** 
      * getChildren
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
-	return null;
+        return null;
     }
 
     /** 
@@ -118,7 +140,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public boolean isSelected()
     {
-	return selected;
+        return selected;
     }
 
     /** 
@@ -126,28 +148,37 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public void setSelected(boolean newValue)
     {
-	this.selected = newValue;
+        this.selected = newValue;
     }
     
-    
+    /**
+     * Is Object Collection
+     * 
+     * @return true if it has children
+     */
     public boolean isCollection()
     {
-	return false;
+        return false;
     }
     
     
+    /**
+     * Has Children
+     * 
+     * @see com.atech.graphics.components.tree.CheckBoxTreeNodeInterface#hasChildren()
+     */
     public boolean hasChildren()
     {
-	return false;
+        return false;
     }
     
     
-
-    
-    
-    
-    /** 
-     * DbAdd
+    /**
+     * DbAdd - Add this object to database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
     {
@@ -155,8 +186,13 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return null;
     }
 
-    /** 
-     * DbDelete
+    
+    /**
+     * DbDelete - Delete this object in database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
     {
@@ -164,8 +200,13 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
-    /** 
-     * DbEdit
+    
+    /**
+     * DbEdit - Edit this object in database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
     {
@@ -173,8 +214,13 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
-    /** 
-     * DbGet
+    
+    /**
+     * DbGet - Loads this object. Id must be set.
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
      */
     public boolean DbGet(Session sess) throws Exception
     {
@@ -182,8 +228,13 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
-    /** 
-     * DbHasChildren
+    
+    /**
+     * DbHasChildren - Shows if this entry has any children object, this is needed for delete
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
@@ -198,11 +249,14 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return 0;
     }
 
+    /**
+     * Table Version
+     */
     public int TABLE_VERSION = 1;
     
     
     /**
-     * getTableVersion - returns version of table
+     * Get Table Version - returns version of table
      * 
      * @return version information
      */
@@ -297,7 +351,6 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String getBackupFile()
     {
-        // TODO
         return "DayValueH";
     }
     

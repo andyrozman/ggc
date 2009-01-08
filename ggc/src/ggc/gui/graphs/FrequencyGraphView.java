@@ -95,7 +95,7 @@ public class FrequencyGraphView extends AbstractGraphView
             DailyValues dV = gV.getDailyValuesForDay(i);
             for (int j = 0; j < dV.getRowCount(); j++) 
 	    {
-                int tmp = (int)dV.getBGAt(j);
+                int tmp = (int)dV.getRow(j).getBG();
                 if (tmp > 0) 
 		{
                     if (tmp < minvalue)

@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: StatisticValues
- *  Purpose:  Data class for storing statistic data  
- *
- *  Author:   schultd
- */
-
 package ggc.core.data;
 
 import ggc.core.util.DataAccess;
@@ -33,9 +6,35 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     StatisticValues  
+ *  Description:  Data class for storing statistic data
+ * 
+ *  Author: schultd
+ *          Andy {andy@atech-software.com}  
+ */
+
+
 public class StatisticValues
 {
-//    DataBaseHandler dbH = null;
     DataAccess m_da = DataAccess.getInstance();
 
     float dayCounter = 0;
@@ -51,17 +50,33 @@ public class StatisticValues
     int countIns1 = 0;
     int countIns2 = 0;
 
+    
+    /**
+     * Constructor
+     */
     public StatisticValues()
     {
     }
 
 
+    /**
+     * Constructor
+     * 
+     * @param sDay
+     * @param eDay
+     */
     public StatisticValues(GregorianCalendar sDay, GregorianCalendar eDay)
     {
         this();
         setDayRange(sDay,eDay);
     }
 
+    /**
+     * Set Day Range
+     * 
+     * @param sDay
+     * @param eDay
+     */
     public void setDayRange(GregorianCalendar sDay, GregorianCalendar eDay)
     {
         WeeklyValues wv = DataAccess.getInstance().getDayStatsRange(sDay, eDay);
@@ -115,11 +130,21 @@ public class StatisticValues
 
     }
 
+    /**
+     * Get Count BG
+     * 
+     * @return
+     */
     public int getCountBG()
     {
         return countBG;
     }
 
+    /**
+     * Get Avg BG
+     * 
+     * @return
+     */
     public float getAvgBG()
     {
         
@@ -141,16 +166,31 @@ public class StatisticValues
             return 0;*/
     }
 
+    /**
+     * Get Sum CH/BU
+     * 
+     * @return
+     */
     public float getSumBU()
     {
         return sumBU;
     }
 
+    /**
+     * Get Count CH/BU
+     * 
+     * @return
+     */
     public int getCountBU()
     {
         return countBU;
     }
 
+    /**
+     * Get Avg CH(BU)/Day
+     * 
+     * @return
+     */
     public float getAvgBUPerDay()
     {
         if(dayCounter > 0)
@@ -159,6 +199,11 @@ public class StatisticValues
             return 0;
     }
 
+    /**
+     * Get Avg CH/BU
+     * 
+     * @return
+     */
     public float getAvgBU()
     {
         if(countBU > 0)
@@ -167,6 +212,11 @@ public class StatisticValues
             return 0;
     }
 
+    /**
+     * Get  CH/BU Per Day Count
+     * 
+     * @return
+     */
     public float getBUCountPerDay()
     {
         if(dayCounter > 0)
@@ -175,16 +225,31 @@ public class StatisticValues
             return 0;
     }
 
+    /**
+     * Get Sum Ins 1
+     * 
+     * @return
+     */
     public float getSumIns1()
     {
         return sumIns1;
     }
 
+    /**
+     * Get Count Ins 1
+     * 
+     * @return
+     */
     public int getCountIns1()
     {
         return countIns1;
     }
 
+    /**
+     * Get Avg Ins1 / Day
+     * 
+     * @return
+     */
     public float getAvgIns1PerDay()
     {
         if(dayCounter > 0)
@@ -193,6 +258,11 @@ public class StatisticValues
             return 0;
     }
 
+    /**
+     * Get Avg Ins1 
+     * 
+     * @return
+     */
     public float getAvgIns1()
     {
         if(countIns1 > 0)
@@ -201,6 +271,11 @@ public class StatisticValues
             return 0;
     }
 
+    /**
+     * Get Ins 1 Count per Day
+     * 
+     * @return
+     */
     public float getIns1CountPerDay()
     {
         if(dayCounter > 0)
@@ -209,16 +284,31 @@ public class StatisticValues
             return 0;
     }
 
+    /**
+     * Get Sum Ins 2
+     * 
+     * @return
+     */
     public float getSumIns2()
     {
         return sumIns2;
     }
 
+    /**
+     * Get Count Ins 2
+     * 
+     * @return
+     */
     public int getCountIns2()
     {
         return countIns2;
     }
 
+    /**
+     * Get Avg Ins2 / Day
+     * 
+     * @return
+     */
     public float getAvgIns2PerDay()
     {
         if(dayCounter > 0)
@@ -228,6 +318,11 @@ public class StatisticValues
     }
 
 
+    /**
+     * Get Avg Ins2 
+     * 
+     * @return
+     */
     public float getAvgIns2()
     {
         if(countIns2 > 0)
@@ -236,6 +331,11 @@ public class StatisticValues
             return 0;
     }
 
+    /**
+     * Get Ins 2 Count per Day
+     * 
+     * @return
+     */
     public float getIns2CountPerDay()
     {
         if(dayCounter > 0)

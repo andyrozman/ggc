@@ -408,13 +408,21 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
                 int yr = ((Integer) sl_year.getValue()).intValue();
                 int mnth = ((Integer) sl_month.getValue()).intValue();
 
+                //ATechDate at = new ATechDate(0, mnth, yr, 0, 0, ATechDate.FORMAT_DATE_ONLY);
+                
                 MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
 
+                
+                
+                //DayValuesData ddv = m_da.getDb().getDayValuesData(0, 0);
+                
+                
                 this.dispose();
 
                 if (this.cb_template.getSelectedIndex() == 0)
                 {
                     PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
+                    
                     displayPDF(psm.getName());
 
                 }
@@ -466,6 +474,13 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
      */
     public void displayPDF(String name) throws Exception
     {
+        //Thread.sleep(2000);
+        
+        //File f = new File(".");
+        //File f2 = f.getParentFile();
+        
+        //System.out.println("Parent: " + f2);
+        
         File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
 
         String pdf_viewer = m_da.getSettings().getPdfVieverPath().replace('\\', '/');
@@ -488,8 +503,22 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
         try
         {
+            if (System.getProperty("os.name").toUpperCase().contains("WIN"))
+            {
+                //System.out.println("Windows found");
+                Runtime.getRuntime().exec(
+                    acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\"");
+            }
+            else
+            {
+                //System.out.println("Non-Windows found");
+                Runtime.getRuntime().exec(
+                    acr.getAbsoluteFile() + " " + fl.getAbsolutePath() + File.separator + name);
+            }
+            
+            /*
             Runtime.getRuntime().exec(
-                acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\"");
+                acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\""); */
             System.out.println(pdf_viewer + " " + file_path + File.separator + name);
         }
         catch (RuntimeException ex)

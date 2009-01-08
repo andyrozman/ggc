@@ -1,31 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: NutritionHomeWeightType Purpose: This is datalayer file (data file,
- * with methods to work with database or in this case Hibernate). This one is
- * used for Food's Home Weights.
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.util.DataAccess;
@@ -34,13 +6,39 @@ import ggc.core.util.NutriI18nControl;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     HomeWeightSpecial
+ *  Description:  Home Weight handling - Special
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class HomeWeightSpecial implements SelectableInterface
 {
 
     NutriI18nControl ic = NutriI18nControl.getInstance();
     DataAccess m_da = DataAccess.getInstance();
 
-    public boolean debug = false;
+    private boolean debug = false;
     String text_idx;
 
     long id;
@@ -49,16 +47,31 @@ public class HomeWeightSpecial implements SelectableInterface
     String weight;
     float calculated_weight = 0.0f;
 
+    /**
+     * Constructor
+     */
     public HomeWeightSpecial()
     {
 
     }
 
+    /**
+     * Constructor
+     * 
+     * @param id
+     * @param name
+     * @param weight
+     */
     public HomeWeightSpecial(long id, String name, String weight)
     {
         this(id, name, "1", weight);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param hw_string
+     */
     public HomeWeightSpecial(String hw_string)
     {
         //System.out.println("Hw: " + hw_string);
@@ -85,6 +98,14 @@ public class HomeWeightSpecial implements SelectableInterface
 
     }
 
+    /**
+     * Constructor
+     * 
+     * @param id
+     * @param name
+     * @param amount
+     * @param weight
+     */
     public HomeWeightSpecial(long id, String name, String amount, String weight)
     {
         this.id = id;
@@ -115,6 +136,11 @@ public class HomeWeightSpecial implements SelectableInterface
 
     }
 
+    /**
+     * Get Calculated Weight
+     * 
+     * @return
+     */
     public float getCalculatedWeight()
     {
         if (this.calculated_weight == 0.0f)
@@ -123,25 +149,39 @@ public class HomeWeightSpecial implements SelectableInterface
         return this.calculated_weight;
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getShortDescription()
+     */
     public String getShortDescription()
     {
         // return this.getDescription();
         return this.name + " [" + this.amount + " x " + this.weight + " g]";
     }
 
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
-        // return this.getShortDescription();
         return getShortDescription();
     }
 
+    /**
+     * Get Name
+     * 
+     * @return
+     */
     public String getName()
     {
         return this.name;
     }
 
-    /*
+    /**
      * getObjectName - returns name of DatabaseObject
      * 
      * @return name of object (not Hibernate object)
@@ -151,7 +191,7 @@ public class HomeWeightSpecial implements SelectableInterface
         return "Home Weight Type";
     }
 
-    /*
+    /**
      * isDebugMode - returns debug mode of object
      * 
      * @return true if object in debug mode
@@ -161,7 +201,7 @@ public class HomeWeightSpecial implements SelectableInterface
         return debug;
     }
 
-    /*
+    /**
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
      * objects, contained in lists and dialogs, used for processing by higher
@@ -178,16 +218,16 @@ public class HomeWeightSpecial implements SelectableInterface
     // --- SelectorInterface
     // ---
 
-    /*
-     * getColumnCount
+    /**
+     * Get Column Count
      */
     public int getColumnCount()
     {
         return 4;
     }
 
-    /*
-     * getColumnName
+    /**
+     * Get Column Name
      */
     public String getColumnName(int num)
     {
@@ -206,22 +246,10 @@ public class HomeWeightSpecial implements SelectableInterface
             return ic.getMessage("ID");
 
         }
-        /*
-         * switch(num) { case 4: return ic.getMessage("TRANSLATED");
-         * 
-         * case 3: return ic.getMessage("USER_DEFINED");
-         * 
-         * case 2: return ic.getMessage("NAME");
-         * 
-         * default: return ic.getMessage("ID");
-         * 
-         * }
-         */
-
     }
 
-    /*
-     * getColumnValue
+    /**
+     * Get Column Value
      */
     public String getColumnValue(int num)
     {
@@ -241,25 +269,10 @@ public class HomeWeightSpecial implements SelectableInterface
 
         }
 
-        /*
-         * switch(num) {
-         * 
-         * 
-         * case 4: return ic.getPartitialTranslation(this.getName(), "_");
-         * 
-         * case 3: return getYesNo(this.getStatic_entry());
-         * 
-         * case 2: return this.getName();
-         * 
-         * default: return "" + this.getItemId();
-         * 
-         * }
-         */
-
     }
 
-    /*
-     * getColumnValueObject
+    /**
+     * Get Column Value Object
      */
     public Object getColumnValueObject(int num)
     {
@@ -280,8 +293,8 @@ public class HomeWeightSpecial implements SelectableInterface
         }
     }
 
-    /*
-     * getColumnWidth
+    /**
+     * Get Column Width
      */
     public int getColumnWidth(int num, int width)
     {
@@ -308,32 +321,32 @@ public class HomeWeightSpecial implements SelectableInterface
 
     }
 
-    /*
-     * getItemId
+    /**
+     * Get Item Id
      */
     public long getItemId()
     {
         return this.id;
     }
 
-    /*
-     * isFound
+    /**
+     * Is Found
      */
     public boolean isFound(int from, int till, int state)
     {
         return true;
     }
 
-    /*
-     * isFound
+    /**
+     * Is Found
      */
     public boolean isFound(int value)
     {
         return true;
     }
 
-    /*
-     * isFound
+    /**
+     * Is Found
      */
     public boolean isFound(String text)
     {
@@ -343,8 +356,8 @@ public class HomeWeightSpecial implements SelectableInterface
             return false;
     }
 
-    /*
-     * setSearchContext
+    /**
+     * Set Search Context
      */
     public void setSearchContext()
     {
@@ -357,7 +370,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
     private ColumnSorter columnSorter = null;
 
-    /*
+    /**
      * setColumnSorter - sets class that will help with column sorting
      * 
      * @param cs ColumnSorter instance
@@ -367,7 +380,7 @@ public class HomeWeightSpecial implements SelectableInterface
         this.columnSorter = cs;
     }
 
-    /*
+    /**
      * Compares this object with the specified object for order. Returns a
      * negative integer, zero, or a positive integer as this object is less
      * than, equal to, or greater than the specified object.

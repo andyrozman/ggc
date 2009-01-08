@@ -23,7 +23,7 @@ import org.jfree.data.time.DateRange;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import com.atech.graphics.graphs.AbstractGraphView;
+import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,7 +53,7 @@ import com.atech.graphics.graphs.AbstractGraphView;
  */
 
 
-public class GraphViewDaily extends AbstractGraphView //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
 {
 
     GregorianCalendar gc;

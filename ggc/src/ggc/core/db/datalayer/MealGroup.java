@@ -1,31 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: MealGroup Purpose: This is datalayer file (data file, with methods
- * to work with database or in this case Hibernate). This one is used for
- * description of Meal Groups
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.MealGroupH;
@@ -42,6 +14,34 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MealGroup
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in 
+ *                this case Hibernate). This one is used for MealGroupH. 
+ *                This one is also BackupRestoreObject.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
@@ -50,9 +50,16 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     private static final long serialVersionUID = 1123099194144366632L;
 
-    public boolean debug = false;
+    private boolean debug = false;
 
+    /**
+     * Meal Group: Meals
+     */
     public static final int MEAL_GROUP_MEALS = 1;
+
+    /**
+     * Meal Group: Nutrition
+     */
     public static final int MEAL_GROUP_NUTRITION = 2;
 
     private ArrayList<MealGroup> children_group = new ArrayList<MealGroup>();
@@ -63,18 +70,31 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     // getI18nControlInstance();
     boolean meal_empty = false;
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public MealGroup(I18nControlAbstract ic)
     {
         this.ic = ic;
         this.meal_empty = true;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param meal_empty
+     */
     public MealGroup(boolean meal_empty)
     {
         this.meal_empty = meal_empty;
         ic = DataAccess.getInstance().getI18nControlInstance();
     }
 
+    /**
+     * Constructor
+     */
     public MealGroup()
     {
         ic = DataAccess.getInstance().getI18nControlInstance();
@@ -85,6 +105,11 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.setParent_id(-1);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public MealGroup(MealGroupH ch)
     {
         ic = DataAccess.getInstance().getI18nControlInstance();
@@ -95,78 +120,156 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.setParent_id(ch.getParent_id());
     }
 
+    /**
+     * Get Child Count
+     * 
+     * @return
+     */
     public int getChildCount()
     {
         return this.children.size();
     }
 
+    /**
+     * Has Children
+     * 
+     * @see com.atech.graphics.components.tree.CheckBoxTreeNodeInterface#hasChildren()
+     */
     public boolean hasChildren()
     {
         return (getChildCount() != 0);
     }
 
+    /**
+     * Add Child
+     * 
+     * @param fg
+     */
     public void addChild(MealGroup fg)
     {
         children_group.add(fg);
         children.add(fg);
     }
 
+    /**
+     * Add Child
+     * 
+     * @param fd
+     */
     public void addChild(Meal fd)
     {
         children.add(fd);
     }
 
+    /**
+     * Remove Child
+     * 
+     * @param fg
+     */
     public void removeChild(MealGroup fg)
     {
         children_group.remove(fg);
         children.remove(fg);
     }
 
+    /**
+     * Remove Child
+     * 
+     * @param fd
+     */
     public void removeChild(Meal fd)
     {
         children.remove(fd);
     }
 
+    /**
+     * Get Child
+     * 
+     * @param index
+     * @return
+     */
     public Object getChild(int index)
     {
         return this.children.get(index);
     }
 
+    /**
+     * Find Child
+     * 
+     * @param child
+     * @return
+     */
     public int findChild(Object child)
     {
         return this.children.indexOf(child);
     }
 
+    /**
+     * Get Group Children Count
+     * 
+     * @return
+     */
     public int getGroupChildrenCount()
     {
         return this.children_group.size();
     }
 
+    /**
+     * Has Group Children
+     * 
+     * @return
+     */
     public boolean hasGroupChildren()
     {
         return (getGroupChildrenCount() != 0);
     }
 
+    /**
+     * Get Group Child
+     * 
+     * @param index
+     * @return
+     */
     public Object getGroupChild(int index)
     {
         return this.children_group.get(index);
     }
 
+    /**
+     * Find Group Child
+     * 
+     * @param child
+     * @return
+     */
     public int findGroupChild(Object child)
     {
         return this.children_group.indexOf(child);
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @return
+     */
     public String getShortDescription()
     {
         return this.getName();
     }
 
+    /**
+     * Get Long Description
+     * @return
+     */
     public String getLongDescription()
     {
         return "MealGroup [id=" + this.getId() + ",name=" + this.getName() + ",parent_id=" + this.getParent_id() + "]";
     }
 
+    /**
+     * To String
+     * 
+     * @see ggc.core.db.hibernate.MealGroupH#toString()
+     */
     @Override
     public String toString()
     {
@@ -180,13 +283,11 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     // --- DatabaseObjectHibernate
     // ---
 
-    /*
+    /**
      * DbAdd - Add this object to database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
@@ -212,13 +313,11 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     }
 
-    /*
+    /**
      * DbEdit - Edit this object in database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -240,13 +339,11 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     }
 
-    /*
+    /**
      * DbDelete - Delete this object in database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
@@ -263,15 +360,12 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     }
 
-    /*
+    /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
      * 
-     * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbHasChildren(Session sess) throws Exception
@@ -293,14 +387,11 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     }
 
-    /*
+    /**
      * DbGet - Loads this object. Id must be set.
      * 
-     * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbGet(Session sess) throws Exception
@@ -317,7 +408,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return true;
     }
 
-    /*
+    /**
      * getObjectName - returns name of DatabaseObject
      * 
      * @return name of object (not Hibernate object)
@@ -327,7 +418,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return "Meal Group";
     }
 
-    /*
+    /**
      * isDebugMode - returns debug mode of object
      * 
      * @return true if object in debug mode
@@ -337,7 +428,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return debug;
     }
 
-    /*
+    /**
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
      * objects, contained in lists and dialogs, used for processing by higher
@@ -354,43 +445,54 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     // --- BackupRestoreObject
     // ---
 
-    /*
-     * getTargetName
+    /**
+     * Get Target Name
      */
     public String getTargetName()
     {
         return ic.getMessage("MEAL_GROUPS");
     }
 
+    /**
+     * Get Class Name
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getClassName()
+     */
     public String getClassName()
     {
         return "ggc.core.db.hibernate.MealGroupH";
     }
 
-    /*
-     * getChildren
+    /**
+     * Get Children
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
         return null;
     }
 
-    /*
-     * isSelected
+    /**
+     * Is Selected
      */
     public boolean isSelected()
     {
         return selected;
     }
 
-    /*
-     * setSelected
+    /**
+     * Set Selected
      */
     public void setSelected(boolean newValue)
     {
         this.selected = newValue;
     }
 
+    
+    /**
+     * Is Collection
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#isCollection()
+     */
     public boolean isCollection()
     {
         return false;
@@ -398,7 +500,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     
     /**
-     * getObjectUniqueId - get id of object
+     * Get Object Unique Id - get id of object
      * @return unique object id
      */
     public String getObjectUniqueId()
@@ -407,6 +509,9 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     }
 
     
+    /**
+     * Table Version
+     */
     public int TABLE_VERSION = 1;
     
     

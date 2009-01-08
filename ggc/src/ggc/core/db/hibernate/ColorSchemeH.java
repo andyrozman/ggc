@@ -6,7 +6,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class ColorSchemeH implements Serializable {
+public class ColorSchemeH implements Serializable 
+{
 
     /**
      * 
@@ -125,91 +126,220 @@ public class ColorSchemeH implements Serializable {
     }
 
 
-    public int getCustom_type() {
+    /**
+     * Get Is Custom Type
+     * 
+     * @return
+     */
+    public int getCustom_type() 
+    {
         return this.custom_type;
     }
 
-    public void setCustom_type(int custom_type) {
+    /**
+     * Set Is Custom Type
+     * 
+     * @param custom_type 
+     */
+    public void setCustom_type(int custom_type) 
+    {
         this.custom_type = custom_type;
     }
 
-    public int getColor_bg() {
+    /**
+     * Get Color BG
+     *  
+     * @return
+     */
+    public int getColor_bg() 
+    {
         return this.color_bg;
     }
 
-    public void setColor_bg(int color_bg) {
+    /**
+     * Set Color BG
+     * 
+     * @param color_bg 
+     */
+    public void setColor_bg(int color_bg) 
+    {
         this.color_bg = color_bg;
     }
 
-    public int getColor_bg_avg() {
+    /**
+     * Get Color BG Average
+     *  
+     * @return
+     */
+    public int getColor_bg_avg() 
+    {
         return this.color_bg_avg;
     }
 
-    public void setColor_bg_avg(int color_bg_avg) {
+    /**
+     * Set Color BG Average
+     * 
+     * @param color_bg_avg 
+     */
+    public void setColor_bg_avg(int color_bg_avg) 
+    {
         this.color_bg_avg = color_bg_avg;
     }
 
-    public int getColor_bg_low() {
+    /**
+     * Get Color BG Low
+     *  
+     * @return
+     */
+    public int getColor_bg_low() 
+    {
         return this.color_bg_low;
     }
 
-    public void setColor_bg_low(int color_bg_low) {
+    /**
+     * Set Color BG Low
+     * 
+     * @param color_bg_low 
+     */
+    public void setColor_bg_low(int color_bg_low) 
+    {
         this.color_bg_low = color_bg_low;
     }
 
+    /**
+     * Get Color BG High
+     *  
+     * @return
+     */
     public int getColor_bg_high() {
         return this.color_bg_high;
     }
 
-    public void setColor_bg_high(int color_bg_high) {
+    /**
+     * Set Color BG High
+     * 
+     * @param color_bg_high 
+     */
+    public void setColor_bg_high(int color_bg_high) 
+    {
         this.color_bg_high = color_bg_high;
     }
 
+    /**
+     * Get Color BG Target
+     *  
+     * @return
+     */
     public int getColor_bg_target() {
         return this.color_bg_target;
     }
 
-    public void setColor_bg_target(int color_bg_target) {
+    /**
+     * Set Color BG Target
+     * 
+     * @param color_bg_target 
+     */
+    public void setColor_bg_target(int color_bg_target) 
+    {
         this.color_bg_target = color_bg_target;
     }
 
-    public int getColor_ins() {
+    /**
+     * Get Color Insulin
+     *  
+     * @return
+     */
+    public int getColor_ins() 
+    {
         return this.color_ins;
     }
 
-    public void setColor_ins(int color_ins) {
+    /**
+     * Set Color Insulin
+     * 
+     * @param color_ins 
+     */
+    public void setColor_ins(int color_ins) 
+    {
         this.color_ins = color_ins;
     }
 
-    public int getColor_ins1() {
+    /**
+     * Get Color Insulin 1
+     *  
+     * @return
+     */
+    public int getColor_ins1() 
+    {
         return this.color_ins1;
     }
 
-    public void setColor_ins1(int color_ins1) {
+    /**
+     * Set Color Insulin 1
+     * 
+     * @param color_ins1
+     */
+    public void setColor_ins1(int color_ins1) 
+    {
         this.color_ins1 = color_ins1;
     }
 
-    public int getColor_ins2() {
+    /**
+     * Get Color Insulin 2
+     *  
+     * @return
+     */
+    public int getColor_ins2() 
+    {
         return this.color_ins2;
     }
 
-    public void setColor_ins2(int color_ins2) {
+    /**
+     * Set Color Insulin 2
+     * 
+     * @param color_ins2 
+     */
+    public void setColor_ins2(int color_ins2) 
+    {
         this.color_ins2 = color_ins2;
     }
 
-    public int getColor_ins_perbu() {
+    /**
+     * Get Color Insulin per CH
+     *  
+     * @return
+     */
+    public int getColor_ins_perbu() 
+    {
         return this.color_ins_perbu;
     }
 
-    public void setColor_ins_perbu(int color_ins_perbu) {
+    /**
+     * Set Color Insulin per CH
+     * 
+     * @param color_ins_perbu 
+     */
+    public void setColor_ins_perbu(int color_ins_perbu) 
+    {
         this.color_ins_perbu = color_ins_perbu;
     }
 
-    public int getColor_ch() {
+    /**
+     * Get Color CH
+     *  
+     * @return
+     */
+    public int getColor_ch() 
+    {
         return this.color_ch;
     }
 
-    public void setColor_ch(int color_ch) {
+    /**
+     * Set Color CH
+     * @param color_ch 
+     */
+    public void setColor_ch(int color_ch) 
+    {
         this.color_ch = color_ch;
     }
 

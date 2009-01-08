@@ -202,7 +202,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
 
             DailyValues dv = getDayData();
 
-            DailyRowDialog aRF = new DailyRowDialog(dv.getRowAt(srow), getFrame());
+            DailyRowDialog aRF = new DailyRowDialog(dv.getRow(srow), getFrame());
 
             if (aRF.actionSuccessful()) 
             {

@@ -2,21 +2,25 @@ package ggc.core.data.graph;
 
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.GlucoValues;
-import ggc.core.data.PlotData;
 import ggc.core.util.DataAccess;
 
 import java.awt.Rectangle;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import com.atech.graphics.graphs.AbstractGraphView;
+import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
+import com.atech.graphics.graphs.GraphViewControlerInterface;
+import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,15 +48,24 @@ import com.atech.graphics.graphs.AbstractGraphView;
  */
 
 
-public class GraphViewSpread extends AbstractGraphView 
+public class GraphViewSpread extends AbstractGraphViewAndProcessor 
 {
 
     DataAccess da_local = null;
     XYSeriesCollection dataset = new XYSeriesCollection();
     
     GlucoValues gv;
-    PlotData plot_data_old = null;
-    PlotData plot_data = new PlotData();
+    PlotSelectorData plot_data_old = null;
+    PlotSelectorData plot_data = null; //new PlotData();
+    GGCGraphViewControler controler = null;
+    //PlotData plot_data = null;
+    DateAxis dateAxis;
+    
+    int time_range = 0;
+    GregorianCalendar gc_from, gc_to;
+    
+    GregorianCalendar dt_from = null;
+    GregorianCalendar dt_to = null;
     
     /**
      * Constructor
@@ -61,6 +74,22 @@ public class GraphViewSpread extends AbstractGraphView
     {
         super(DataAccess.getInstance());
         da_local = DataAccess.getInstance();
+        plot_data = new PlotSelectorData();
+        plot_data.setPlotBG(true);
+        //plot_data.setTimeRangeType(PlotData.TIME_RANGE_1_MONTH);
+        
+        //GregorianCalendar gc = new GregorianCalendar();
+        //gc.add(GregorianCalendar.MONTH, -1);
+        
+        //plot_data.setTimeRangeFrom(gc);
+        //plot_data.setTimeRangeFrom(new GregorianCalendar());
+        
+        this.dt_from = new GregorianCalendar(2008, 1, 1, 0, 0);
+        this.dt_to = new GregorianCalendar(2008, 1, 1, 23, 59);
+        
+        //Date d = new Date(2008,)
+        
+        this.controler = new GGCGraphViewControler(this, GGCGraphViewControler.GRAPH_SPREAD);
     }
     
 
@@ -81,7 +110,7 @@ public class GraphViewSpread extends AbstractGraphView
      */
     public String getTitle()
     {
-        return null;
+        return m_ic.getMessage("SPREAD_GRAPH");
     }
 
     
@@ -92,9 +121,22 @@ public class GraphViewSpread extends AbstractGraphView
      */
     public Rectangle getViewerDialogBounds()
     {
-        return new Rectangle(100,100,600,500);
+        return new Rectangle(100,100,750,500);
     }
 
+    
+    
+    /**
+     * Set Controller Data
+     * 
+     * @see com.atech.graphics.graphs.AbstractGraphViewAndProcessor#setControllerData(java.lang.Object)
+     */
+    public void setControllerData(Object obj)
+    {
+        plot_data = (PlotSelectorData)obj;
+    }
+    
+    
 
     /**
      * Load Data
@@ -107,27 +149,50 @@ public class GraphViewSpread extends AbstractGraphView
         //    (plot_data.getTimeRangeTo()!=plot_data_old.getTimeRangeTo()))
             //this.gv = new GlucoValues(this.plot_data.getTimeRangeFrom(), this.plot_data.getTimeRangeTo());
             
-            System.out.println("From: " + this.plot_data.getTimeRangeFrom());
-            System.out.println("To: " + this.plot_data.getTimeRangeTo());
+//            System.out.println("From: " + this.plot_data.getTimeRangeFrom());
+//            System.out.println("To: " + this.plot_data.getTimeRangeTo());
             
-            GregorianCalendar from, to;
+        boolean changed = false;
+        
+        if ((gc_from==null) || (!m_da.compareGregorianCalendars(gc_from, this.plot_data.getDateRangeData().getRangeFrom())))
+        {
+            gc_from = this.plot_data.getDateRangeData().getRangeFrom();
+            changed = true;
+        }
+        
+        if ((gc_to==null) || (!m_da.compareGregorianCalendars(gc_to, this.plot_data.getDateRangeData().getRangeTo())))
+        {
+            gc_to = this.plot_data.getDateRangeData().getRangeTo();
+            changed = true;
+        }
+
+        if (changed)
+        {
+            this.gv = new GlucoValues(gc_from, gc_to, true);
+            System.out.println("Reread data [rows=" + this.gv.getDailyValuesRowsCount());
+        }
+        
+        
+        /*
+        GregorianCalendar from, to;
             
-            from = new GregorianCalendar();
-            from.add(GregorianCalendar.MONTH, -3);
+        from = new GregorianCalendar();
+        from.add(GregorianCalendar.MONTH, -3);
             
-            to = new GregorianCalendar();
-            to.add(GregorianCalendar.MONTH, -2);
-            
-            this.gv = new GlucoValues(from, to, true);
-            
-            System.out.println("Dv rows: " + this.gv.getDailyValuesRowsCount());
-            //System.out.println("rows: " + this.gv.getRowCount());
+        to = new GregorianCalendar();
+        to.add(GregorianCalendar.MONTH, -2); */
             
             
-            //this.gv = new GlucoValues(this.plot_data.getTimeRangeFrom(), this.plot_data.getTimeRangeTo());            
+        //System.out.println("Dv rows: " + this.gv.getDailyValuesRowsCount());
+        //System.out.println("rows: " + this.gv.getRowCount());
+            
+            
+        //this.gv = new GlucoValues(this.plot_data.getTimeRangeFrom(), this.plot_data.getTimeRangeTo());            
             
     }
 
+    
+    
     
     
     
@@ -160,11 +225,19 @@ public class GraphViewSpread extends AbstractGraphView
             DailyValuesRow dv = this.gv.getDailyValueRow(i);
             //ts.addOrUpdate(new Minute(dv.getDateTimeAsDate()), dv.getBG());
             
-            if (dv.getBG()>0)
-                xs.add(dv.getDateT(), dv.getBG());
+            System.out.println("DateT: " + dv.getDateT());
+            
+            if (this.plot_data.isPlotBG())
+            {
+                if (dv.getBG()>0)
+                    xs.add(getFakeDate(dv.getDateTimeAsATDate()).getTimeInMillis(), dv.getBG());
+            }
+            
         }
+
         dataset.addSeries(xs);
 
+        /*
         xs = new XYSeries("CH");
         
         for(int i=0; i<count; i++)
@@ -175,10 +248,10 @@ public class GraphViewSpread extends AbstractGraphView
                 xs.add(dv.getDateT(), dv.getCH());
             
         }
-
+         
         //org.jfree.data.time.
         dataset.addSeries(xs);
-        
+        */
         /*
         dataset.clear();
 
@@ -193,6 +266,12 @@ public class GraphViewSpread extends AbstractGraphView
         */
     }
 
+    private GregorianCalendar getFakeDate(ATechDate date)
+    {
+        return new GregorianCalendar(2008, 1, 1, date.hour_of_day, date.minute);
+    }
+    
+    
     /**
      * Set Plot
      * 
@@ -200,6 +279,17 @@ public class GraphViewSpread extends AbstractGraphView
      */
     public void setPlot(JFreeChart chart)
     {
+        //XYPlot plot = (XYPlot)chart.getPlot();
+        XYPlot plot = chart.getXYPlot();
+        DateAxis dateAxis = (DateAxis) plot.getDomainAxis();
+
+        dateAxis.setDateFormatOverride(new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
+        dateAxis.setAutoRange(false);
+        dateAxis.setRange(this.dt_from.getTime(), this.dt_to.getTime());
+        //dateAxis.setTimeline(new Timeline());
+        
+        dateAxis.setLabel(m_ic.getMessage("AXIS_TIME_LABEL"));
+        
         //FastScatterPlot plot = (FastScatterPlot) chart.getPlot();
 
         //chart.setRenderingHints(renderingHints);
@@ -224,7 +314,9 @@ public class GraphViewSpread extends AbstractGraphView
      */
     public void createChart()
     {
-        this.chart = ChartFactory.createScatterPlot(null, "xAxisLabel", "yAxisLabel", dataset, PlotOrientation.VERTICAL, true, false, false);
+        this.chart = ChartFactory.createScatterPlot(null, m_ic.getMessage("AXIS_TIME_LABEL"), "yAxisLabel", dataset, PlotOrientation.VERTICAL, false, false, false);
+        XYPlot plot = this.chart.getXYPlot();
+        plot.setDomainAxis(new DateAxis());
     }
 
 
@@ -237,5 +329,16 @@ public class GraphViewSpread extends AbstractGraphView
     }
 
  
+    
+    /**
+     * Get Controler Interface instance
+     * 
+     * @return GraphViewControlerInterface instance or null
+     */
+    public GraphViewControlerInterface getControler()
+    {
+        return this.controler;
+    }
+    
     
 }

@@ -1,32 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionDefinition
- *  Purpose:  This is datalayer file (data file, with methods to work with database or in 
- *      this case Hibernate). 
- *      This one is used for nutritions definition.
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.NutritionDefinitionH;
@@ -42,20 +13,46 @@ import com.atech.i18n.I18nControlAbstract;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     NutritionDefinition
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in 
+ *                this case Hibernate). This one is used for NutritionDefinitionH. 
+ *                This one is also BackupRestoreObject (NOT YET).
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface,
         Comparator<NutritionDefinition>
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 3655011406766918193L;
-
-    public I18nControlAbstract ic = null;
-
-    public boolean debug = false;
+    private I18nControlAbstract ic = null;
+    private boolean debug = false;
     String text_idx = "";
 
+    /**
+     * Constructor
+     */
     public NutritionDefinition()
     {
         this.setId(0);
@@ -69,6 +66,11 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         this.setSearchContext();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public NutritionDefinition(NutritionDefinitionH ch)
     {
         this.setId(ch.getId());
@@ -80,11 +82,21 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         this.setSearchContext();
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getShortDescription()
+     */
     public String getShortDescription()
     {
         return this.getResolvedName() + " (" + this.getWeight_unit() + ")";
     }
 
+    /**
+     * To String
+     * 
+     * @see ggc.core.db.hibernate.NutritionDefinitionH#toString()
+     */
     @Override
     public String toString()
     {
@@ -98,10 +110,8 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     /**
      * DbAdd - Add this object to database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
@@ -128,10 +138,8 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     /**
      * DbEdit - Edit this object in database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -157,10 +165,8 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     /**
      * DbDelete - Delete this object in database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
@@ -181,11 +187,8 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
      * 
-     * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbHasChildren(Session sess) throws Exception
@@ -197,11 +200,8 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     /**
      * DbGet - Loads this object. Id must be set.
      * 
-     * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbGet(Session sess) throws Exception
@@ -240,6 +240,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return debug;
     }
 
+    
     /**
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
@@ -253,24 +254,23 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return 0;
     }
 
-    /*
-     * (non-Javadoc)
+    
+    /**
+     * getColumnCount - return number of displayable columns
      * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#getColumnCount
-     * ()
+     * @return number of displayable columns
      */
     public int getColumnCount()
     {
         return 4;
+    
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * getColumnName - return name of specified column
      * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#getColumnName
-     * (int)
+     * @param num number of column
+     * @return string displaying name of column (usually this is I18N version of string
      */
     public String getColumnName(int num)
     {
@@ -296,12 +296,12 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
-    /*
-     * (non-Javadoc)
+    
+    /**
+     * getColumnValue - return value of specified column
      * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#getColumnValue
-     * (int)
+     * @param num number of column
+     * @return string value of column
      */
     public String getColumnValue(int num)
     {
@@ -328,11 +328,12 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
-    /*
-     * (non-Javadoc)
+    
+    /**
+     * getColumnValueObject - return value of specified column
      * 
-     * @seecom.atech.graphics.components.selector.SelectableInterface#
-     * getColumnValueObject(int)
+     * @param num number of column
+     * @return string value of column
      */
     public Object getColumnValueObject(int num)
     {
@@ -353,6 +354,11 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         }
     }
 
+    /**
+     * Get Resolved Name
+     * 
+     * @return
+     */
     public String getResolvedName()
     {
 
@@ -370,12 +376,13 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
-    /*
-     * (non-Javadoc)
+    
+    /**
+     * getColumnWidth - return width of specified column
      * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#getColumnWidth
-     * (int, int)
+     * @param num number of column
+     * @param width total width of table
+     * @return width in int of column
      */
     public int getColumnWidth(int num, int width)
     {
@@ -393,46 +400,35 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         }
     }
 
-    /*
-     * (non-Javadoc)
+    
+    /**
+     * Get Item Id
      * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#getItemId()
+     * @return id of item
      */
     public long getItemId()
     {
         return this.getId();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#isFound(int,
-     * int, int)
+    /**
+     * Is Found
      */
     public boolean isFound(int from, int till, int state)
     {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#isFound(int)
+    /**
+     * Is Found
      */
     public boolean isFound(int value)
     {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#isFound(java
-     * .lang.String)
+    /**
+     * Is Found
      */
     public boolean isFound(String text)
     {
@@ -442,12 +438,10 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
             return false;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Set Search Context
      * 
-     * @see
-     * com.atech.graphics.components.selector.SelectableInterface#setSearchContext
-     * ()
+     * @see com.atech.graphics.components.selector.SelectableInterface#setSearchContext()
      */
     public void setSearchContext()
     {

@@ -30,27 +30,17 @@ package ggc.core.print;
 
 
 import ggc.core.data.MonthlyValues;
-import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.awt.Color;
-import java.io.File;
-import java.io.FileOutputStream;
 
-import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
-import com.lowagie.text.ExceptionConverter;
 import com.lowagie.text.Font;
-import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPageEventHelper;
-import com.lowagie.text.pdf.PdfWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -71,23 +61,37 @@ import com.lowagie.text.pdf.PdfWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###--###  
- *  Description:  ###--###
+ *  Filename:     PrintSimpleMonthlyReport  
+ *  Description:  For printing simple Monthly Report
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class PrintSimpleMonthlyReport extends PdfPageEventHelper 
+public class PrintSimpleMonthlyReport extends PrintAbstract //   extends PdfPageEventHelper 
 {
 
-    public MonthlyValues m_mv = null;
-    private DataAccess m_da = DataAccess.getInstance();
-    private I18nControl ic = I18nControl.getInstance();
-    long name = 0L;
+//    public MonthlyValues m_mv = null;
+//    private DataAccess m_da = DataAccess.getInstance();
+//    private I18nControl ic = I18nControl.getInstance();
+    //long name = 0L;
 
-    BaseFont base_helvetica = null;
-    BaseFont base_times = null;
+    //BaseFont base_helvetica = null;
+    //BaseFont base_times = null;
     
+    
+    /**
+     * Constructor
+     * 
+     * @param mv
+     */
+    public PrintSimpleMonthlyReport(MonthlyValues mv)
+    {
+        super(mv, I18nControl.getInstance());
+    }
+    
+    
+    
+    /*
     public PrintSimpleMonthlyReport(MonthlyValues mv)
     {
         m_mv = mv;
@@ -104,14 +108,20 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
         }
         
         createDocument();
-    }
+    }*/
 
+    /*
     public String getName()
     {
         return name + ".pdf";
-    }
+    }*/
 
 
+    /**
+     * Get Title
+     * 
+     * @return
+     */
     public Paragraph getTitle()
     {
         Paragraph p = new Paragraph();
@@ -130,7 +140,7 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
         return p;
     }
 
-
+/*
     public void createDocument()
     {
         // step1
@@ -312,8 +322,8 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
 	    }
 
     }
-
-
+*/
+/*
     @Override
     public void onEndPage(PdfWriter writer, Document document) 
     {
@@ -327,7 +337,7 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
             head.setTotalWidth(page.width() - document.leftMargin() - document.rightMargin());
             head.writeSelectedRows(0, -1, document.leftMargin(), page.height() - document.topMargin() + head.getTotalHeight(),
                 writer.getDirectContent()); */
-            PdfPTable foot = new PdfPTable(1);
+  /*          PdfPTable foot = new PdfPTable(1);
 
             PdfPCell pc = new PdfPCell();
             pc.setBorderColor(Color.white);
@@ -347,6 +357,192 @@ public class PrintSimpleMonthlyReport extends PdfPageEventHelper
         {
             throw new ExceptionConverter(e);
         }
+    }
+*/
+
+    /**
+     * Create document body.
+     * 
+     * @param document
+     * @throws Exception
+     */
+    @Override
+    public void fillDocumentBody(Document document) throws Exception
+    {
+        
+        //Font f = text_bold;
+        
+        int NumColumns = 13;
+        float groupWidth[] = { 30, 40, 30 };
+
+        PdfPTable datatable = new PdfPTable(NumColumns);
+        int headerwidths[] = { 8, 
+                           6, 8, 6,  
+                           6, 8, 6, 
+                           6, 8, 6, 
+                           6, 8, 6 
+                   }; // percentage
+        datatable.setWidths(headerwidths);
+        datatable.setWidthPercentage(100); // percentage
+        datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+
+        PdfPCell pd = new PdfPCell();
+        pd.setPhrase(new Phrase(ic.getMessage("DATE"), this.text_bold));
+        pd.setHorizontalAlignment(Element.ALIGN_CENTER);
+    
+        pd.setBorderWidth(1);
+        datatable.addCell(pd);
+
+
+        // Breakfast
+        PdfPTable meal_b = new PdfPTable(3);
+        meal_b.setHorizontalAlignment(Element.ALIGN_CENTER);
+        meal_b.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        meal_b.getDefaultCell().setBorderWidth(1);
+        meal_b.setWidths(groupWidth);
+
+        PdfPCell p1 = new PdfPCell();
+        p1.setPhrase(new Phrase(ic.getMessage("BREAKFAST"), this.text_bold));
+        p1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        p1.setBorderWidth(1);
+        p1.setColspan(3);
+
+        meal_b.addCell(p1);
+        meal_b.addCell(new Phrase(ic.getMessage("BG"), this.text_bold));
+        meal_b.addCell(new Phrase(ic.getMessage("INS_SHORT"), this.text_bold));
+        meal_b.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+
+        PdfPCell m = new PdfPCell(meal_b);
+        m.setColspan(3);
+        datatable.addCell(m);
+
+        // Lunch
+        PdfPTable meal_l = new PdfPTable(3);
+        meal_l.setHorizontalAlignment(Element.ALIGN_CENTER);
+        meal_l.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        meal_l.getDefaultCell().setBorderWidth(1);
+        meal_l.setWidths(groupWidth);
+
+        PdfPCell p2 = new PdfPCell();
+        p2.setPhrase(new Phrase(ic.getMessage("LUNCH"), this.text_bold));
+        p2.setHorizontalAlignment(Element.ALIGN_CENTER);
+        p2.setBorderWidth(1);
+        p2.setColspan(3);
+
+        meal_l.addCell(p2);
+        meal_l.addCell(new Phrase(ic.getMessage("BG"),this.text_bold));
+        meal_l.addCell(new Phrase(ic.getMessage("INS_SHORT"),this.text_bold));
+        meal_l.addCell(new Phrase(ic.getMessage("CH"),this.text_bold));
+
+        PdfPCell m2 = new PdfPCell(meal_l);
+        m2.setColspan(3);
+        datatable.addCell(m2);
+
+
+        // Dinner
+        PdfPTable meal_d = new PdfPTable(3);
+        meal_d.setHorizontalAlignment(Element.ALIGN_CENTER);
+        meal_d.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        meal_d.getDefaultCell().setBorderWidth(1);
+        meal_d.setWidths(groupWidth);
+
+
+        PdfPCell p3 = new PdfPCell();
+        p3.setPhrase(new Phrase(ic.getMessage("DINNER"), this.text_bold));
+        p3.setHorizontalAlignment(Element.ALIGN_CENTER);
+        p3.setBorderWidth(1);
+        p3.setColspan(3);
+
+        meal_d.addCell(p3);
+        meal_d.addCell(new Phrase(ic.getMessage("BG"), this.text_bold));
+        meal_d.addCell(new Phrase(ic.getMessage("INS_SHORT"), this.text_bold));
+        meal_d.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+
+        PdfPCell m3 = new PdfPCell(meal_d);
+        m3.setColspan(3);
+        datatable.addCell(m3);
+
+        // Night
+        PdfPTable meal_n = new PdfPTable(3);
+        meal_n.setHorizontalAlignment(Element.ALIGN_CENTER);
+        meal_n.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        meal_n.getDefaultCell().setBorderWidth(1);
+        meal_n.setWidths(groupWidth);
+
+        PdfPCell p4 = new PdfPCell();
+        p4.setPhrase(new Phrase(ic.getMessage("NIGHT"), this.text_bold));
+        p4.setHorizontalAlignment(Element.ALIGN_CENTER);
+        p4.setColspan(3);
+
+        meal_n.addCell(p4);
+        meal_n.addCell(new Phrase(ic.getMessage("BG"), this.text_bold));
+        meal_n.addCell(new Phrase(ic.getMessage("INS_SHORT"), this.text_bold));
+        meal_n.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+
+        PdfPCell m4 = new PdfPCell(meal_n);
+        m4.setColspan(3);
+        m4.setBorderWidth(1);
+        datatable.addCell(m4);
+        datatable.getDefaultCell().setBorderWidth(1);
+
+
+        for (int i = 1; i <= m_mv.getDaysInMonth(); i++) 
+        {
+            String[][] dta = m_mv.getDayValuesSimple(i);
+
+            if (i%2==1) 
+            {
+                datatable.getDefaultCell().setGrayFill(0.9f);
+            }
+            else
+            {
+                datatable.getDefaultCell().setBackgroundColor(Color.white); //.setGrayFill(0.0f);
+                //datatable.getDefaultCell().se
+            }
+
+            datatable.addCell(i+"." + this.m_mv.getMonth());
+
+            //System.out.println(i);
+
+            for (int x=0; x < 4; x++) 
+            {
+                datatable.addCell(dta[x][0]);
+                datatable.addCell(dta[x][1]);
+                datatable.addCell(dta[x][2]);
+            }
+
+            if (i%2==1) 
+            {
+                datatable.getDefaultCell().setGrayFill(0.0f);
+            }
+        }
+
+        document.add(datatable);
+        
+    }
+
+
+    /**
+     * Returns base filename for printing job, this is just part of end filename (starting part)
+     * 
+     * @return 
+     */
+    @Override
+    public String getFileNameBase()
+    {
+        return "ReportSimple";
+    }
+
+
+    /**
+     * Returns data part of filename for printing job, showing which data is being printed
+     * 
+     * @return 
+     */
+    @Override
+    public String getFileNameRange()
+    {
+        return "" + System.currentTimeMillis();
     }
 
 

@@ -1,9 +1,22 @@
-0.3.12
+0.3.14 (1.1.2009)
+    * changed free-text food entries. Horizontal scroll disabled.
+    * Graph changes. Working on Spread Graph, and GGC Controller class, we created 
+      new PlotSelectorPanel and PlotSelectorData from existing classes and extended 
+      both of them (we are not dependant on any of current implementations anymore)
+    * 
+
+0.3.13  (29.12
+    * Changed printing to use abstract class
+    * Change to PrintingDialog to use correct command when calling application from 
+      non-windows environment
+    * changed free-text food entries (minor bug)
+
+0.3.12 (27.12)
     * more functionality to panels on main screen (selectable updates to main screen) 
     * added function to write free text for foods and accompanying CH values
     * integration into old daily entry 
 
-0.3.11
+0.3.11 (22.12)
     * integrating new graph framework (ATGraphFramework)
     * implementation of HbA1c view for ATGraphFramework
     * implementation of Daily view for ATGraphFramework

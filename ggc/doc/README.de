@@ -26,6 +26,46 @@ ist Pflichtlektüre für alle Entwickler.
 2. Aktuelle Version und Entwicklungsstatus
 ==========================================
 
+This is version 0.4 of GGC.
+
+At this point we are at version 0.4, which is second public release. If you have
+installed version 0.3, you can either deinstall and install 0.4 or do updates 
+(you will need to apply two of them (0.3.1 and 0.4): instructions are Update package.
+
+If you used any of "preview" versions (before 0.3), you will need to uninstall.
+We made a lot of changes in database and application itself, so you can't update 
+old version (if you already have data in old application contact us, and we will 
+help you migrate it to new version). 
+
+Updates are now possible, but so far only manual updates. We are working on 
+automatic updates, but we are still far from working model.
+
+In this public release you can still only use the internal database. If you have 
+little above average computer knowledge (read 'if you like to dabble'), you can 
+try to make it work with any database (see file 'How_Can_I_Help.txt') with just a 
+little work.
+
+New (major) releases are planned to occur in 6 month intervals (we almost managed
+that one). This means that you can expect release 0.5 somewgere in June 2009.
+
+A minor release will be done, when functionality has been change in such a way
+that it is beneficial to user to be released (major functionality changes and
+bug fixes)
+
+For now you need to update files manually, which means exactly following the
+instructions supplied with the release (there will be a file called
+'How To Upgrade.txt' supplied with each upgrade release).
+
+You are probably wondering, why are we still in 0.x versions if we already had 
+public release... Answer is simple. We have several goals set, and when this goals 
+are achieved, we will progress to version 1.0. If you look at Planned functionalities 
+you will find several items marked with double asterix (**), this are required
+functions for 1.0 release.  
+
+
+################
+
+
 Die aktuelle GGC-Version ist 0.3.
 
 Wir sind bei Version 0.3 angelangt, der ersten freigegebenen Version. Wenn Sie
@@ -58,6 +98,21 @@ Version wird eine Datei 'How To Upgrade.txt' (Englisch) enthalten).
 3. Welche Funktionalität ist verfügbar?
 =======================================
 
+- Adding Daily data about insulin, BG entries, activity, urine, comments
+- Display graphs for this Pen/Injecttion theraphy (new framework, still work in progress)
+- Food databases for "Carb Counting": USDA Nutrition DB, User Nutrition DB
+  and Meals database
+- Printing reports
+- Update mechanism (client side only), this means that until the server side
+  of update is done, you won't be able to update, but as soon as that works
+  you will have the option to update.
+- Backup mechanism (and restore)
+- Meter Tool finished. Now we just have to add more devices.
+- Bolus Helper and Simple Ratio Settings
+
+###
+
+
 - Täglich Daten über Insulin, BZ-Einträge, Aktivität, Urin und Kommentare
   hinzufügen
 - Diagramme für diese Daten anzeigen (noch nicht fertiggestellt)
@@ -73,6 +128,41 @@ Version wird eine Datei 'How To Upgrade.txt' (Englisch) enthalten).
 
 4. Geplante Funktionalität
 ==========================
+
+
+Version 0.5
+------------
+- DB Tool (for using other databases and install of initial data)  (**)
+- Multi person instance
+- Finalization of GGC Little, which is used as a resident application for adding
+  new data throughout the day
+- Update mechanism (server side)   (**)
+- Fully write English help files and add help through application (English version so far) (**)
+- Add some functionality to food databases
+??!!?? - Pump Tool: <Basic pump support> (manual input, integration, no graphs)
+- Smart Insulin Recommendation (Bolus Helper), Ratio Helper
+
+
+
+Version 0.6
+------------
+- Automatic DB Update
+- GGC Network (running several instances of GGC on several computers)
+- I18n Help Files
+- CGMS Tool: <Basic CGMS support>
+- Synchronization (for GGC network)
+- Links to data about diabetes on internet
+- GGC PPC - the version of the application to be used by the Pocket PC (not all the
+  functionality of the full version will be available)
+- Appointments (adding appointment, adding data from doctor's visit), Doctors
+  management (adding)
+- Medical stock - Listing of everything that patient has, and what he needs to
+  get to handle diabetes (and also any other condition)
+- Remote Food database functionality
+
+
+####
+
 
 Version 0.4
 ------------
@@ -120,6 +210,17 @@ Im Augenblick existieren zwei Unterprojekte.
 Messgeräte-Werkzeug
 -------------------
 
+This is a plug-in for getting data from glucose meters. Currently this project is in
+beta phase (all functionalities finished, now we just need to add more devices). 
+Currently supported devices:
+ - Bayer/Ascensia: whole family
+ - Roche/Accu-chek: all devices supported by Accu-Chek Pix device
+ - LifeScan: OT Ultra/2, OT UltraSmart, OT Ultra Mini/Easy
+Current version of plugin: 1.0.5
+
+####
+
+
 Dies ist ein Plug-in für den Datenabruf von Blutzuckermessgeräten. Dieses
 Projekt befindet sich zur Zeit in der Entwicklungsphase. Zusammen mit der
 Unterstützung für Ascensia/Bayer-Messgeräte, ist das gesamte Plug-in-Framework
@@ -134,6 +235,24 @@ gemacht. Danach werden Roche-(Oktober 2008) und LifeScan-Messgeräte (Dezember
 Pumpen-Werkzeug
 ---------------
 
+This is plug-in for entering, retrieving and handling data from Insulin Pumps. 
+This project is slowly starting into development phase. We plan to have at least some
+pump functionality in next GGC version (0.5). The first supported pumps will be those 
+from Roche, after them probably Minimed, and some developers are working parallel to 
+also add support for Animas.
+
+!!  OR  !!
+
+This is plug-in for entering, retrieving and handling data from Insulin Pumps.
+We have already started with development and most of framework is ready for Pump
+data. For now we have added Manual adding of Pump Data and next step is retrieval
+of data from Pumps. First supported Pumps will be those of Roche and Minimed (at
+first through CareLink export file) and we have some developers also working on 
+Animas.
+
+##############
+
+
 Dies ist ein Plug-in zur Eingabe und zum Abruf von Daten von Insulinpumpen.
 Dieses Projekt geht langsam in die Entwicklungsphase über. Wir planen in die
 nächste Version (0.4) schon teilweise die Funktionalität des Pumpen-Werkzeugs
@@ -144,6 +263,14 @@ gleichzeitig an der Unterstützung für Animas.
 
 CGMS-Werkzeug
 -------------
+
+This is a plug-in for retrieving data from CGMS device and viewing of this data. This
+project is still in the planning phase. The project will move into the development phase
+by end of 2009. The first supported CGMS will be that of Minimed through export file from 
+CareLink.
+
+###
+
 
 Dies ist ein Plug-in zum Abrufen und Anzeigen von Daten von CGMS-Geräten.
 Dieses Projekt befindet sich noch in der Planungsphase. Es wird im Januar 2009

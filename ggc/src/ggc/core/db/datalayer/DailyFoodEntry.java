@@ -1,31 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: NutritionHomeWeightType Purpose: This is datalayer file (data file,
- * with methods to work with database or in this case Hibernate). This one is
- * used for Food's Home Weights.
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.nutrition.GGCTreeRoot;
@@ -37,12 +9,38 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     DailyFoodEntry  
+ *  Description:  Daily Food Entry, main object for working with Nutritions
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class DailyFoodEntry // implements SelectableInterface
 {
 
     NutriI18nControl ic = NutriI18nControl.getInstance();
 
-    public boolean debug = false;
+    private boolean debug = false;
     String text_idx;
     DataAccess m_da = DataAccess.getInstance();
     GlycemicNutrients glyc_nutr = null;
@@ -59,20 +57,31 @@ public class DailyFoodEntry // implements SelectableInterface
     // public static final int AMOUNT_AMOUNT = 3;
 
     // 1=usda food, 2=user food, 3=meal
-    public int nutrition_food_type = 0;
-    public long nutrition_food_id = 0L;
+    private int nutrition_food_type = 0;
+    private long nutrition_food_id = 0L;
     private long home_weight_id = 0L;
-    public int amount_type = 0;
-    public float amount = 0.0f;
-    public String[] amount_type_str = { "", "W", "HW", "A" };
+    private int amount_type = 0;
+    private float amount = 0.0f;
+    private String[] amount_type_str = { "", "W", "HW", "A" };
 
-    public FoodDescription m_food = null;
-    public Meal m_meal = null;
+    private FoodDescription m_food = null;
+    private Meal m_meal = null;
 
-    public HomeWeightSpecial m_home_weight_special = null;
+    private HomeWeightSpecial m_home_weight_special = null;
 
+    /**
+     * Weight Type: Weight
+     */
     public static final int WEIGHT_TYPE_WEIGHT = 1;
+
+    /**
+     * Weight Type: Home Weight
+     */
     public static final int WEIGHT_TYPE_HOME_WEIGHT = 2;
+
+    /**
+     * Weight Type: Amount
+     */
     public static final int WEIGHT_TYPE_AMOUNT = 3;
 
     private float calculated_multiplier = 0.0f;
@@ -84,38 +93,57 @@ public class DailyFoodEntry // implements SelectableInterface
 
     ArrayList<DailyFoodEntry> children = null;
 
-    //private boolean is_printing_mode = false;
-    
-    /*
-     * public DailyFoodEntry() { this.nutrients = new
-     * ArrayList<MealNutrition>(); this.calculated_multiplier = 1.0f;
-     * this.root_entry = true; }
-     */
 
-    // food + weight
+    /**
+     * Constructor (food + weight)
+     * 
+     * @param fd
+     * @param weight
+     */
     public DailyFoodEntry(/* int food_type, */FoodDescription fd, float weight)
     {
         this(fd.getFoodType(), fd, null, DailyFoodEntry.WEIGHT_TYPE_WEIGHT, null, weight);
     }
 
-    // food + home weight
+    /**
+     * Constructor (food + home weight)
+     * 
+     * @param fd
+     * @param hw
+     * @param amount
+     */
     public DailyFoodEntry(/* int food_type, */FoodDescription fd, HomeWeightSpecial hw, float amount)
     {
         this(fd.getFoodType(), fd, null, DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT, hw, amount);
     }
 
-    // meal + amount
+    /**
+     * Constructor (meal + amount)
+     * 
+     * @param ml
+     * @param amount
+     */
     public DailyFoodEntry(/* int food_type, */Meal ml, float amount)
     {
         this(3, null, ml, DailyFoodEntry.WEIGHT_TYPE_AMOUNT, null, amount);
     }
 
+    /**
+     * Constructor (many parameters) - Main
+     * 
+     * @param food_type
+     * @param fd
+     * @param ml
+     * @param amount_type
+     * @param hws
+     * @param amount
+     */
     public DailyFoodEntry(int food_type, FoodDescription fd, Meal ml, int amount_type, HomeWeightSpecial hws,
             float amount)
     {
 
-        System.out.println("food_type=" + food_type + ",food=" + fd + ",meal=" + ml + ",amount_type=" + amount_type
-                + ",home weight sp: " + hws + ",amount:" + amount);
+//        System.out.println("food_type=" + food_type + ",food=" + fd + ",meal=" + ml + ",amount_type=" + amount_type
+//                + ",home weight sp: " + hws + ",amount:" + amount);
 
         this.nutrition_food_type = food_type;
 
@@ -147,6 +175,10 @@ public class DailyFoodEntry // implements SelectableInterface
 
     }
 
+    /**
+     * Daily Food Entry (String)
+     * @param val
+     */
     public DailyFoodEntry(String val)
     {
         String v1[] = m_da.splitString(val, "=");
@@ -176,6 +208,12 @@ public class DailyFoodEntry // implements SelectableInterface
 
     }
 
+    /**
+     * Constructor (String, boolean)
+     * 
+     * @param val
+     * @param direct
+     */
     public DailyFoodEntry(String val, boolean direct)
     {
         // 2:103=30.0 ;2:215=100.0
@@ -197,6 +235,12 @@ public class DailyFoodEntry // implements SelectableInterface
         loadNutrients();
     }
 
+    /**
+     * Constructor (String, int)
+     * 
+     * @param val
+     * @param type
+     */
     public DailyFoodEntry(String val, int type)
     {
         // 1:122=1.0
@@ -240,13 +284,13 @@ public class DailyFoodEntry // implements SelectableInterface
      * public DailyFoodEntry(MealPart mpart) { if mpart.getType()== }
      */
 
-    public void init()
+    private void init()
     {
         createId();
         loadObjects();
     }
 
-    public void loadObjects()
+    private void loadObjects()
     {
         // new GGCTreeRoot(1);
 
@@ -269,6 +313,11 @@ public class DailyFoodEntry // implements SelectableInterface
 
     }
 
+    /**
+     * Add Child
+     * 
+     * @param dfe
+     */
     public void addChild(DailyFoodEntry dfe)
     {
         if (this.children == null)
@@ -282,6 +331,11 @@ public class DailyFoodEntry // implements SelectableInterface
 
     }
 
+    /**
+     * Has Children
+     * 
+     * @return
+     */
     public boolean hasChildren()
     {
         if ((children == null) || (children.size() == 0))
@@ -295,6 +349,12 @@ public class DailyFoodEntry // implements SelectableInterface
         this.component_id = m_da.getNewComponentId();
     }
 
+    /**
+     * Add Multiplier
+     * 
+     * @param id
+     * @param multiplier
+     */
     public void addMultiplier(String id, float multiplier)
     {
         if (this.multiplier == null)
@@ -308,6 +368,11 @@ public class DailyFoodEntry // implements SelectableInterface
         }
     }
 
+    /**
+     * Add Multipliers
+     * 
+     * @param multipliers
+     */
     public void addMultipliers(Hashtable<String, String> multipliers)
     {
         if (this.multiplier == null)
@@ -326,15 +391,12 @@ public class DailyFoodEntry // implements SelectableInterface
         }
     }
 
-    /*
-     * public void resetWeightValues(DailyFoodEntry dfe) { this.amount_type =
-     * dfe.amount_type; this.amount = dfe.amount; this.m_home_weight_special =
-     * dfe.m_home_weight_special; this.home_weight_id = dfe.home_weight_id;
-     * 
-     * 
-     * this.calculated_multiplier = 0.0f; }
-     */
 
+    /**
+     * Get Name
+     * 
+     * @return
+     */
     public String getName()
     {
         if (this.m_food != null)
@@ -349,6 +411,23 @@ public class DailyFoodEntry // implements SelectableInterface
             return "";
     }
 
+    
+    /**
+     * Get Nutrition Food Type
+     * 
+     * @return
+     */
+    public int getNutritionFoodType()
+    {
+        return this.nutrition_food_type;
+    }
+    
+    
+    /**
+     * Get Food Type
+     * 
+     * @return
+     */
     public int getFoodType()
     {
         if (this.m_food != null)
@@ -361,16 +440,31 @@ public class DailyFoodEntry // implements SelectableInterface
         }
     }
 
+    /**
+     * Get Weight Type
+     * 
+     * @return
+     */
     public int getWeightType()
     {
         return this.amount_type;
     }
 
+    /**
+     * Get Weight Type String
+     * 
+     * @return
+     */
     public String getWeightTypeString()
     {
         return this.amount_type_str[this.amount_type];
     }
 
+    /**
+     * Get Home Weight Description
+     * 
+     * @return
+     */
     public String getHomeWeightDescription()
     {
         
@@ -389,11 +483,21 @@ public class DailyFoodEntry // implements SelectableInterface
         }
     }
 
+    /**
+     * Get Amount String
+     * 
+     * @return
+     */
     public String getAmountString()
     {
         return DataAccess.Decimal2Format.format(this.amount);
     }
 
+    /**
+     * Get Amount Single Decimal String
+     * 
+     * @return
+     */
     public String getAmountSingleDecimalString()
     {
         return DataAccess.MmolDecimalFormat.format(this.amount);
@@ -426,6 +530,11 @@ public class DailyFoodEntry // implements SelectableInterface
     }
 
     
+    /**
+     * Get Meal CHs
+     * 
+     * @return
+     */
     public float getMealCH()
     {
         float sum = 0.0f;
@@ -477,7 +586,7 @@ public class DailyFoodEntry // implements SelectableInterface
         }
     }
 
-    public float getMultiplier()
+    private float getMultiplier()
     {
         if (this.calculated_multiplier == 0.0f)
             this.calculateMultiplier();
@@ -485,21 +594,17 @@ public class DailyFoodEntry // implements SelectableInterface
         return this.calculated_multiplier;
     }
 
-    public Hashtable<String, String> getMultipliers()
+    private Hashtable<String, String> getMultipliers()
     {
         return this.multiplier;
     }
 
-    /*
-     * public void mergeNutrientsData(DailyFoodEntry dfe) { // first we merge
-     * multipliers
-     * 
-     * 
-     * // then we merge nutrients
-     * 
-     * }
-     */
 
+    /**
+     * Get Children
+     * 
+     * @return
+     */
     public ArrayList<DailyFoodEntry> getChildren()
     {
         for (int i = 0; i < this.children.size(); i++)
@@ -510,9 +615,13 @@ public class DailyFoodEntry // implements SelectableInterface
         return this.children;
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @return
+     */
     public String getShortDescription()
     {
-        // return this.getDescription();
         return this.getName() + " [" + this.getAmountString() + " x " + this.weight + " g]";
     }
 
@@ -527,6 +636,67 @@ public class DailyFoodEntry // implements SelectableInterface
         return -1;
     }
 
+    
+    /**
+     * Get Amount Type
+     * 
+     * @return
+     */
+    public int getAmountType()
+    {
+        return this.amount_type;
+    }
+    
+    /**
+     * Get Amount
+     * 
+     * @return
+     */
+    public float getAmount()
+    {
+        return this.amount;
+    }
+    
+    /**
+     * Get Food Object
+     * @return
+     */
+    public FoodDescription getFoodObject()
+    {
+        return this.m_food;
+    }
+    
+    /**
+     * Get Meal Object
+     * 
+     * @return
+     */
+    public Meal getMealObject()
+    {
+        return this.m_meal;
+    }
+
+    
+    /**
+     * Get Home Weight Special Object
+     * 
+     * @return
+     */
+    public HomeWeightSpecial getHomeWeightSpecialObject()
+    {
+        return this.m_home_weight_special;
+    }
+    
+    
+    // TODO: New code
+    
+    
+    
+    /**
+     * Display Nutritions
+     * 
+     * @param nuts
+     */
     public void displayNutritions(ArrayList<MealNutrition> nuts)
     {
         for (int i = 0; i < nuts.size(); i++)
@@ -536,6 +706,9 @@ public class DailyFoodEntry // implements SelectableInterface
 
     }
 
+    /**
+     * Display Nutritions
+     */
     public void displayNutritions()
     {
         // ArrayList<MealNutrition> nuts = this.getNutrientsCalculated(); //
@@ -550,6 +723,11 @@ public class DailyFoodEntry // implements SelectableInterface
 
     }
 
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
@@ -557,10 +735,12 @@ public class DailyFoodEntry // implements SelectableInterface
         return getShortDescription();
     }
 
-    /*
-     * public String getName() { return this.name; }
-     */
 
+    /**
+     * Get Value String
+     * 
+     * @return
+     */
     public String getValueString()
     {
         StringBuffer sb = new StringBuffer();
@@ -691,14 +871,14 @@ public class DailyFoodEntry // implements SelectableInterface
      * } } }
      */
 
-    public void mergeGlycemicData(DailyFoodEntry dfe)
+    /*  v3.1
+    private void mergeGlycemicData(DailyFoodEntry dfe)
     {
         if (dfe.containsGlycemicNutrients())
         {
             if (this.containsGlycemicNutrients())
             {
                 // process
-                // TODO: do it
             }
             else
             {
@@ -707,7 +887,7 @@ public class DailyFoodEntry // implements SelectableInterface
         }
 
     }
-
+*/
     /*
      * private MealNutrition findNutrient(int id) { for(int i=0;
      * i<this.nutrients.size(); i++) { if (this.nutrients.get(i).getId()==id) {
@@ -745,6 +925,11 @@ public class DailyFoodEntry // implements SelectableInterface
         }
     }
 
+    /**
+     * Get Nutrients
+     * 
+     * @return
+     */
     public ArrayList<MealNutrition> getNutrients()
     {
         if (this.nutrients == null)
@@ -790,6 +975,12 @@ public class DailyFoodEntry // implements SelectableInterface
     }
 
     
+    /**
+     * Get Nutrient Value
+     * 
+     * @param id
+     * @return
+     */
     public float getNutrientValue(int id)
     {
         ArrayList<MealNutrition> lst = this.getNutrients();
@@ -806,7 +997,8 @@ public class DailyFoodEntry // implements SelectableInterface
     
     
     
-    public ArrayList<MealNutrition> createList(Hashtable<String, MealNutrition> table)
+    @SuppressWarnings("unused")
+    private ArrayList<MealNutrition> createList(Hashtable<String, MealNutrition> table)
     {
         ArrayList<MealNutrition> lst = new ArrayList<MealNutrition>();
 
@@ -824,6 +1016,11 @@ public class DailyFoodEntry // implements SelectableInterface
     }
 
     
+    /**
+     * Get Home Weight Multiplier
+     * 
+     * @return
+     */
     public float getHomeWeightMultiplier()
     {
         float f = 1.0f;
@@ -911,27 +1108,37 @@ public class DailyFoodEntry // implements SelectableInterface
         }
     }
 
+    /**
+     * Contains Glycemic Nutrients
+     * 
+     * @return
+     */
     public boolean containsGlycemicNutrients()
     {
         return (this.glyc_nutr != null);
     }
 
+    /**
+     * Get Glycemic Nutrients
+     * 
+     * @return
+     */
     public GlycemicNutrients getGlycemicNutrients()
     {
         return this.glyc_nutr;
     }
 
-    /*
+    /**
      * getObjectName - returns name of DatabaseObject
      * 
      * @return name of object (not Hibernate object)
      */
     public String getObjectName()
     {
-        return "Home Weight Type";
+        return "Daily Food Entry";
     }
 
-    /*
+    /**
      * isDebugMode - returns debug mode of object
      * 
      * @return true if object in debug mode
@@ -941,11 +1148,13 @@ public class DailyFoodEntry // implements SelectableInterface
         return debug;
     }
 
-    /*
-     * getAction - returns action that should be done on object 0 = no action 1
-     * = add action 2 = edit action 3 = delete action This is used mainly for
-     * objects, contained in lists and dialogs, used for processing by higher
-     * classes (classes calling selectors, wizards, etc...
+    /**
+     * getAction - returns action that should be done on object 
+     * 0 = no action 1 = add action 2 = edit action 3 = delete action 
+     * 
+     * This is used mainly for objects, contained in lists and dialogs, 
+     * used for processing by higher classes (classes calling selectors, 
+     * wizards, etc...
      * 
      * @return number of action
      */
@@ -954,8 +1163,10 @@ public class DailyFoodEntry // implements SelectableInterface
         return 0;
     }
 
-    /*
+    /**
      * getItemId
+     * 
+     * @return 
      */
     public long getItemId()
     {

@@ -702,7 +702,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
             this.m_dailyValuesRow.setComment(CommentField.getText());
             //this.m_dailyValuesRow.setMealIdsList(null);
 
-            dV.setNewRow(this.m_dailyValuesRow);
+            dV.addRow(this.m_dailyValuesRow);
             /*
             dV.setNewRow(new DailyValuesRow(this.dtc.getDateTime(),
                     checkDecimalFields(BGField.getText()), 

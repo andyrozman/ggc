@@ -1,32 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: NutritionHomeWeightType
- *  Purpose:  This is datalayer file (data file, with methods to work with database or in 
- *      this case Hibernate). 
- *      This one is used for Food's Home Weights.
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
@@ -39,21 +10,48 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     NutritionHomeWeightType
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in 
+ *                this case Hibernate). This one is used for NutritionHomeWeightTypeH. 
+ *                This one is also BackupRestoreObject (NOT YET).
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+// backup/restore todo
+
 public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         DatabaseObjectHibernate, SelectableInterface
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -2073935312018845795L;
-
-    // I18nControl ic = I18nControl.getInstance();
     NutriI18nControl ic = NutriI18nControl.getInstance();
 
-    public boolean debug = false;
+    private boolean debug = false;
     String text_idx;
 
+    /**
+     * Constructor
+     */
     public NutritionHomeWeightType()
     {
         this.setId(0L);
@@ -61,6 +59,11 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         setSearchContext();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public NutritionHomeWeightType(NutritionHomeWeightTypeH ch)
     {
         this.setId(ch.getId());
@@ -68,16 +71,25 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         setSearchContext();
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getShortDescription()
+     */
     public String getShortDescription()
     {
         // return this.getDescription();
         return this.getResolvedName();
     }
 
+    /**
+     * To String
+     * 
+     * @see ggc.core.db.hibernate.NutritionHomeWeightTypeH#toString()
+     */
     @Override
     public String toString()
     {
-        // return this.getShortDescription();
         return getShortDescription();
     }
 
@@ -88,10 +100,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     /**
      * DbAdd - Add this object to database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
@@ -116,10 +126,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     /**
      * DbEdit - Edit this object in database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -143,10 +151,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     /**
      * DbDelete - Delete this object in database
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
@@ -169,10 +175,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      * needed for delete
      * 
      * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbHasChildren(Session sess) throws Exception
@@ -184,16 +188,12 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     /**
      * DbGet - Loads this object. Id must be set.
      * 
-     * 
-     * @param sess
-     *            Hibernate Session object
-     * @throws Exception
-     *             (HibernateException) with error
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
      */
     public boolean DbGet(Session sess) throws Exception
     {
-
         NutritionHomeWeightTypeH ch = (NutritionHomeWeightTypeH) sess.get(
                 NutritionHomeWeightTypeH.class, new Long(this.getId()));
 
@@ -240,7 +240,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     // --- SelectorInterface
     // ---
 
-    /*
+    /**
      * getColumnCount
      */
     public int getColumnCount()
@@ -249,7 +249,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         // return 4;
     }
 
-    /*
+    /**
      * getColumnName
      */
     public String getColumnName(int num)
@@ -266,22 +266,10 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
             return ic.getMessage("ID");
 
         }
-        /*
-         * switch(num) { case 4: return ic.getMessage("TRANSLATED");
-         * 
-         * case 3: return ic.getMessage("USER_DEFINED");
-         * 
-         * case 2: return ic.getMessage("NAME");
-         * 
-         * default: return ic.getMessage("ID");
-         * 
-         * }
-         */
-
     }
 
-    /*
-     * getColumnValue
+    /**
+     * Get Column Value
      */
     public String getColumnValue(int num)
     {
@@ -298,21 +286,6 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
         }
 
-        /*
-         * switch(num) {
-         * 
-         * 
-         * case 4: return ic.getPartitialTranslation(this.getName(), "_");
-         * 
-         * case 3: return getYesNo(this.getStatic_entry());
-         * 
-         * case 2: return this.getName();
-         * 
-         * default: return "" + this.getItemId();
-         * 
-         * }
-         */
-
     }
 
     private String getYesNo(int value)
@@ -323,36 +296,37 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
             return ic.getMessage("NO");
     }
 
-    /*
-     * getColumnValueObject
+    /**
+     * Get Column Value Object
      */
     public Object getColumnValueObject(int num)
     {
         switch (num)
         {
-        //
-        // case 4:
-        // return ic.getPartitialTranslation(this.getName(), "_");
-
-        case 3:
-            return getYesNo(this.getStatic_entry());
-
-        case 2:
-            return getResolvedName();
-
-        default:
-            return new Long(this.getItemId());
+            case 3:
+                return getYesNo(this.getStatic_entry());
+    
+            case 2:
+                return getResolvedName();
+    
+            default:
+                return new Long(this.getItemId());
 
         }
     }
 
+    /**
+     * Get Resolved Name
+     * 
+     * @return
+     */
     public String getResolvedName()
     {
         return ic.getPartitialTranslation(this.getName(), "_");
     }
 
-    /*
-     * getColumnWidth
+    /**
+     * Get Column Width
      */
     public int getColumnWidth(int num, int width)
     {
@@ -366,43 +340,36 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         default:
             return (int) (width * 20);
 
-        } /*
-           * 
-           * switch(num) { case 4: return(int)(width40); case 3:
-           * return(int)(width10); case 2: return(int)(width40); default:
-           * return(int)(width10);
-           * 
-           * }
-           */
+        } 
 
     }
 
-    /*
-     * getItemId
+    /**
+     * Get Item Id
      */
     public long getItemId()
     {
         return this.getId();
     }
 
-    /*
-     * isFound
+    /**
+     * Is Found
      */
     public boolean isFound(int from, int till, int state)
     {
         return true;
     }
 
-    /*
-     * isFound
+    /**
+     * Is Found
      */
     public boolean isFound(int value)
     {
         return true;
     }
 
-    /*
-     * isFound
+    /**
+     * Is Found
      */
     public boolean isFound(String text)
     {
@@ -413,8 +380,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
             return false;
     }
 
-    /*
-     * setSearchContext
+    /**
+     * Set Search Context
      */
     public void setSearchContext()
     {

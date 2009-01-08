@@ -69,19 +69,43 @@ public class NutritionDefinitionH implements Serializable {
         this.id = id;
     }
 
-    public String getWeight_unit() {
+    /**
+     * Get Weight Unit
+     * 
+     * @return
+     */
+    public String getWeight_unit() 
+    {
         return this.weight_unit;
     }
 
-    public void setWeight_unit(String weight_unit) {
+    /**
+     * Set Weight Unit
+     * 
+     * @param weight_unit 
+     */
+    public void setWeight_unit(String weight_unit) 
+    {
         this.weight_unit = weight_unit;
     }
 
-    public String getTag() {
+    /**
+     * Get Tag
+     * 
+     * @return
+     */
+    public String getTag() 
+    {
         return this.tag;
     }
 
-    public void setTag(String tag) {
+    /**
+     * Set Tag
+     * 
+     * @param tag 
+     */
+    public void setTag(String tag) 
+    {
         this.tag = tag;
     }
 
@@ -106,19 +130,43 @@ public class NutritionDefinitionH implements Serializable {
     }
 
 
-    public String getDecimal_places() {
+    /**
+     * Get Decimal Places
+     * 
+     * @return
+     */
+    public String getDecimal_places() 
+    {
         return this.decimal_places;
     }
 
-    public void setDecimal_places(String decimal_places) {
+    /**
+     * Set Decimal Places
+     * 
+     * @param decimal_places 
+     */
+    public void setDecimal_places(String decimal_places) 
+    {
         this.decimal_places = decimal_places;
     }
 
-    public int getStatic_entry() {
+    /**
+     * Get Is Static Entry (non user supplied)
+     * 
+     * @return
+     */
+    public int getStatic_entry() 
+    {
         return this.static_entry;
     }
 
-    public void setStatic_entry(int static_entry) {
+    /**
+     * Set Is Static Entry (non user supplied)
+     * 
+     * @param static_entry 
+     */
+    public void setStatic_entry(int static_entry) 
+    {
         this.static_entry = static_entry;
     }
 

@@ -635,13 +635,12 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
             MealNutrition meal_nut = nut_list.get(i); // en.nextElement());
 
-            // System.out.println(meal_nut.getCalculatedAmount()); // proc v1
-
+            //System.out.println(meal_nut.getCalculatedAmount()); // proc v1
             //System.out.println("Meal Nut: " + meal_nut);
-            
+           
             
             //if (meal_nut.getAmount() > 0)
-            if (meal_nut.getAmountSum() > 0)
+            if ((meal_nut.getAmount() > 0) || (meal_nut.getAmountSum() > 0))
             {
                 MealNutritionsDisplay mnd = new MealNutritionsDisplay(ic, meal_nut);
 

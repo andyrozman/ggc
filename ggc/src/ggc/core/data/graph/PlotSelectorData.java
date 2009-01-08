@@ -1,40 +1,50 @@
-package ggc.core.data;
-
-import java.util.GregorianCalendar;
-
-/**
- *  Application:   GGC - GNU Gluco Control
+/*
+ *  GGC - GNU Gluco Control
+ *
+ *  A pure java app to help you manage your diabetes.
  *
  *  See AUTHORS for copyright information.
- * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
- * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
- * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     PlotData  
- *  Description:  The main purpose of this class is to store information on which 
- *      kinds of data should be plotted in a graph. By having a static instance of 
- *      this class assigned to each graph that needs it, the user's selection can 
- *      be remembered across different incarnations of each graph dialog.
- * 
- *  This file will be used with new framework, and is therefore little extended, with
- *  time data. (at later time new data file will be created) - Andy
- * 
- *  @author rumbi
- *  @author Andy {andy@atech-software.com}  
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *  Filename: PlotData.java
+ *  Purpose:  Contains information about which kinds of data should be plotted.
+ *
+ *  Author:   rumbi
+ *  
  */
 
-public class PlotData implements Cloneable, ReadablePlotData
+package ggc.core.data.graph;
+
+import ggc.core.data.PlotData;
+
+import com.atech.graphics.calendar.DateRangeData;
+
+/**
+ * The main purpose of this class is to store information on which kinds of data
+ * should be plotted in a graph. By having a static instance of this class
+ * assigned to each graph that needs it, the user's selection can be remembered
+ * across different incarnations of each graph dialog.
+ * 
+ * This file was originally copied from Rumbi's implementation and then adapted 
+ * for usage with new framework (time data and some other stuff)
+ * 
+ * @author rumbi
+ * @author andy
+ */
+public class PlotSelectorData implements Cloneable //, ReadablePlotData
 {
     boolean plotBG = true;
     boolean plotBGDayAvg = false;
@@ -59,39 +69,38 @@ public class PlotData implements Cloneable, ReadablePlotData
     boolean plotInsPerCH = false;
     boolean plotMeals = false;
 
+    DateRangeData range_data;
+    
     /**
      * Time Range: 1 Week
      */
-    public static final int TIME_RANGE_1_WEEK = 1;
+//    public static final int TIME_RANGE_1_WEEK = 1;
     /**
      * Time Range: 1 Month
      */
-    public static final int TIME_RANGE_1_MONTH = 2;
+//    public static final int TIME_RANGE_1_MONTH = 2;
     /**
      * Time Range: 3 Months
      */
-    public static final int TIME_RANGE_3_MONTHS = 3;
+//    public static final int TIME_RANGE_3_MONTHS = 3;
     /**
      * Time Range: Custom
      */
-    public static final int TIME_RANGE_CUSTOM = 4;
+//    public static final int TIME_RANGE_CUSTOM = 4;
     
-    
+  /*  
     int time_range = TIME_RANGE_1_MONTH;
     
     GregorianCalendar time_range_from = null;
     GregorianCalendar time_range_to = null;
-    
+    */
     
     /**
      * Initializes all data as <code>false</code>.
      */
-    public PlotData()
+    public PlotSelectorData()
     {
-        this.time_range_from = new GregorianCalendar();
-        this.time_range_from.add(GregorianCalendar.MONTH, -4);
-        this.time_range_to = new GregorianCalendar();
-        this.time_range_to.add(GregorianCalendar.MONTH, -5);
+        this.range_data = new DateRangeData();
     }
 
     /**
@@ -101,7 +110,7 @@ public class PlotData implements Cloneable, ReadablePlotData
      * @param data
      *            The <code>{@link PlotData}</code> to be copied.
      */
-    public PlotData(PlotData data)
+    public PlotSelectorData(PlotSelectorData data)
     {
         plotBG = data.plotBG;
         plotBGDayAvg = data.plotBGDayAvg;
@@ -126,87 +135,40 @@ public class PlotData implements Cloneable, ReadablePlotData
         plotInsPerCH = data.plotInsPerCH;
         plotMeals = data.plotMeals;
 
-        time_range = data.time_range;
-        
-        time_range_from = data.time_range_from;
-        time_range_to = data.time_range_to;
-    
-    
+        this.range_data = data.range_data;
     }
 
     
     /**
-     * Get Time Range Type
+     * Get Date Range Data 
      * 
      * @return
      */
-    public int getTimeRangeType()
+    public DateRangeData getDateRangeData()
     {
-        return this.time_range;
+        return this.range_data;
     }
 
     
     /**
-     * Set Time Range Type
-     * 
-     * @param type 
+     * Set Date Range Data
+     *  
+     * @param drd 
      */
-    public void setTimeRangeType(int type)
+    public void setDateRangeData(DateRangeData drd)
     {
-        this.time_range = type;
+        this.range_data = drd;
     }
     
     
     
     
-    /**
-     * Get Time Range From
-     * 
-     * @return
-     */
-    public GregorianCalendar getTimeRangeFrom()
-    {
-        return this.time_range_from;
-    }
-
-    
-    /**
-     * Set Time Range From
-     * 
-     * @param gc 
-     */
-    public void setTimeRangeFrom(GregorianCalendar gc)
-    {
-        this.time_range_from = gc;
-    }
-    
-    
-    
-    /**
-     * Get Time Range To
-     * 
-     * @return
-     */
-    public GregorianCalendar getTimeRangeTo()
-    {
-        return this.time_range_to;
-    }
-
-    
-    /**
-     * Set Time Range To
-     * 
-     * @param gc 
-     */
-    public void setTimeRangeTo(GregorianCalendar gc)
-    {
-        this.time_range_to = gc;
-    }
     
     
     /**
      * (non-Javadoc)
      * 
+     * @return 
      * @see ggc.core.data.ReadablePlotData#isPlotBG()
      */
     public boolean isPlotBG()
@@ -216,6 +178,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotBGDayAvg()
      */
@@ -226,6 +189,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotBGReadings()
      */
@@ -236,6 +200,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotCH()
      */
@@ -246,6 +211,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotCHDayAvg()
      */
@@ -256,6 +222,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotCHSum()
      */
@@ -266,6 +233,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotIns1()
      */
@@ -276,6 +244,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotIns1DayAvg()
      */
@@ -286,6 +255,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotIns1Sum()
      */
@@ -296,6 +266,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotIns2()
      */
@@ -306,6 +277,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotIns2DayAvg()
      */
@@ -316,6 +288,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotIns2Sum()
      */
@@ -326,6 +299,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotInsTotal()
      */
@@ -336,6 +310,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotInsTotalDayAvg()
      */
@@ -346,6 +321,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotInsTotalSum()
      */
@@ -356,6 +332,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotInsPerCH()
      */
@@ -366,6 +343,7 @@ public class PlotData implements Cloneable, ReadablePlotData
 
     /**
      * (non-Javadoc)
+     * @return 
      * 
      * @see ggc.core.data.ReadablePlotData#isPlotMeals()
      */

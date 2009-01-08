@@ -356,6 +356,7 @@ public class CourseGraphView extends JFAbstractGraphView
 
                 if (row.getIns1() > 0)
                 {
+                    // ins 1 avg
                     if (ins1AvgSeries.getDataItem(time) == null)
                     {
                         ins1AvgSeries.add(time, row.getIns1());
@@ -365,22 +366,28 @@ public class CourseGraphView extends JFAbstractGraphView
                         ins1AvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns1(), ins1AvgSeries.getDataItem(
                             time).getValue()));
                     }
-                }
-                if (row.getIns1() > 0)
-                {
+
+                    // ins 1 sum
                     if (ins1SumSeries.getDataItem(time) == null)
                     {
                         ins1SumSeries.add(time, row.getIns1());
                     }
                     else
                     {
-                        ins1SumSeries.addOrUpdate(time, MathUtils.add(row.getIns1(), ins1SumSeries.getDataItem(time)
-                                .getValue()));
+                        float sum = ((Number)ins1SumSeries.getDataItem(time).getValue()).floatValue();
+                        sum += row.getIns1();
+                            
+                        ins1SumSeries.addOrUpdate(time, sum); 
                     }
+                    
+                    
                 }
+                
 
                 if (row.getIns2() > 0)
                 {
+                    
+                    // ins 2 avg
                     if (ins2AvgSeries.getDataItem(time) == null)
                     {
                         ins2AvgSeries.add(time, row.getIns2());
@@ -390,9 +397,8 @@ public class CourseGraphView extends JFAbstractGraphView
                         ins2AvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns2(), ins2AvgSeries.getDataItem(
                             time).getValue()));
                     }
-                }
-                if (row.getIns2() > 0)
-                {
+                    
+                    // ins 2 sum
                     if (ins2SumSeries.getDataItem(time) == null)
                     {
                         ins2SumSeries.add(time, row.getIns2());
@@ -402,10 +408,12 @@ public class CourseGraphView extends JFAbstractGraphView
                         ins2SumSeries.addOrUpdate(time, MathUtils.add(row.getIns2(), ins2SumSeries.getDataItem(time)
                                 .getValue()));
                     }
+                    
                 }
 
                 if ((row.getIns1() > 0) || (row.getIns2() > 0))
                 {
+                    // ins avg
                     if (insAvgSeries.getDataItem(time) == null)
                     {
                         insAvgSeries.add(time, row.getIns1() + row.getIns2());
@@ -415,9 +423,8 @@ public class CourseGraphView extends JFAbstractGraphView
                         insAvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns1() + row.getIns2(), insAvgSeries
                                 .getDataItem(time).getValue()));
                     }
-                }
-                if ((row.getIns1() > 0) || (row.getIns2() > 0))
-                {
+
+                    // ins sum
                     if (insSumSeries.getDataItem(time) == null)
                     {
                         insSumSeries.add(time, row.getIns1() + row.getIns2());
@@ -429,11 +436,28 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                 }
 
+                // TODO check 
                 if ((CHSumSeries.getDataItem(time) != null)
                         && (CHSumSeries.getDataItem(time).getValue().doubleValue() > 0))
                 {
-                    insPerCHSeries.addOrUpdate(time, insSumSeries.getDataItem(time).getValue().doubleValue()
-                            / CHSumSeries.getDataItem(time).getValue().doubleValue());
+
+                    double a=0.0f,b=0.0f;
+                    
+                    if (insSumSeries.getDataItem(time)!=null)
+                    {
+                        a = insSumSeries.getDataItem(time).getValue().doubleValue();
+                    }
+                        
+                    if (CHSumSeries.getDataItem(time)!=null)
+                    {
+                        b = CHSumSeries.getDataItem(time).getValue().doubleValue();
+                    }
+                    
+                    if ((a!=0.0d) && (b!=0.0d))
+                    {
+                        double ins_ch = a/b;
+                        insPerCHSeries.addOrUpdate(time, ins_ch);
+                    }
                 }
                 if (row.getCH() > 0)
                 {
@@ -451,6 +475,7 @@ public class CourseGraphView extends JFAbstractGraphView
 
         if (!plotData.isPlotBGDayAvg())
             BGAvgSeries = new TimeSeries(translator.getMessage("AVG_BG_PER_DAY"), Day.class);
+        
         if (!plotData.isPlotBGReadings())
             BGReadingsSeries = new TimeSeries(translator.getMessage("READINGS"), Day.class);
         if (!plotData.isPlotCHDayAvg())
@@ -459,8 +484,13 @@ public class CourseGraphView extends JFAbstractGraphView
             CHSumSeries = new TimeSeries(translator.getMessage("SUM_BU"), Day.class);
         if (!plotData.isPlotIns1DayAvg())
             ins1AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns1Name(), Day.class);
+        
         if (!plotData.isPlotIns1Sum())
+        {
+            System.out.println("ins1sum");
             ins1SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns1Name(), Day.class);
+        }
+        
         if (!plotData.isPlotIns2DayAvg())
             ins2AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns2Name(), Day.class);
         if (!plotData.isPlotIns2Sum())

@@ -309,7 +309,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
                 {
                     // System.out.println("mouse 2x clicked");
 
-                    DailyValuesRow dvr = dayData.getRowAt(table.getSelectedRow());
+                    DailyValuesRow dvr = dayData.getRow(table.getSelectedRow());
 
                     //if (!MainFrame.developer_version)
                     {
@@ -486,7 +486,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
                 return;
             }
 
-            DailyValuesRow dvr = dayData.getRowAt(table.getSelectedRow());
+            DailyValuesRow dvr = dayData.getRow(table.getSelectedRow());
 
             DailyRowDialog aRF = new DailyRowDialog(dvr, this);
 

@@ -116,14 +116,19 @@ public class DailyRowMealsDialog extends JDialog implements ActionListener, Help
             System.out.println("CH:" + ch);
             
             ch = ch.replace(DataAccess.false_decimal, DataAccess.real_decimal);
+            
+            ch = ch.replace(",", ".");
     
             try
             {
                 float f = Float.parseFloat(ch);
-                this.ftf_ch.setValue(new Float(f));
+                System.out.println("CH:" + f);
+                
+                this.ftf_ch.setValue(f);
             }
             catch(Exception ex)
             {
+                System.out.println("load ex: " + ex);
             }
         }
 
@@ -133,16 +138,16 @@ public class DailyRowMealsDialog extends JDialog implements ActionListener, Help
     {
         this.m_dailyValuesRow.setFoodDescription(this.text_area.getText());
         
-        //System.out.println(this.ftf_ch.getValue());
-        //System.out.println(this.ftf_ch.getCurrentValue());
+        System.out.println(this.ftf_ch.getValue());
+        System.out.println(this.ftf_ch.getCurrentValue());
         
         float ch = m_da.getFloatValue(this.ftf_ch.getCurrentValue()); 
         //ch = ch.replace(DataAccess.false_decimal, DataAccess.real_decimal);
 
-        //System.out.println("Save.Float= " + ch);
+        System.out.println("Save.Float= " + ch);
         
         if (ch>0)
-            this.m_dailyValuesRow.setFoodDescriptionCH(DataAccess.Decimal2Format.format(ch));
+            this.m_dailyValuesRow.setFoodDescriptionCH("" + ch); //DataAccess.Decimal2Format.format(ch));
         else
             this.m_dailyValuesRow.setFoodDescriptionCH("");
         
@@ -189,7 +194,9 @@ public class DailyRowMealsDialog extends JDialog implements ActionListener, Help
             40, 65, 310, 50, panel);
         
         this.text_area = new JTextArea();
+        this.text_area.setLineWrap(true);
         JScrollPane scr = new JScrollPane(text_area);
+        scr.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER|JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scr.setBounds(40, 115, 310, 75);
         panel.add(scr);
         
@@ -249,20 +256,28 @@ public class DailyRowMealsDialog extends JDialog implements ActionListener, Help
         {
             String t = strtok.nextToken();
             
+            System.out.println("Token: " + t);
+            
             if (t.indexOf("]")==-1)
                 continue;
                 
             t = t.substring(0, t.indexOf("]"));
-            t = t.replace(DataAccess.false_decimal, DataAccess.real_decimal);
+            System.out.println("Bef: " + t);
+            
+            t = t.replace(",", "."); //DataAccess.false_decimal, DataAccess.real_decimal);
 
+            System.out.println("False dec: " + DataAccess.false_decimal + " rwal=" + DataAccess.real_decimal);
+
+            System.out.println("Aff: " + t);
             try
             {
                 float f = Float.parseFloat(t);
+                System.out.println("entry: " + f);
                 sum += f;
             }
             catch(Exception ex)
             {
-                
+                System.out.println("Ex: " + ex);
             }
         }
         

@@ -1,42 +1,41 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: MealNutrition
- *  Purpose:  This is datalayer file (data file). 
- *      This one is used for Meal (Nutrition) values.
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
+
+import ggc.core.util.DataAccess;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import ggc.core.util.DataAccess;
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MealNutrition  
+ *  Description:  Meal Nutrient handling. This is used internally for calculation 
+ *                of nutrients
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class MealNutrition
 {
 
-    public boolean debug = false;
+    //private boolean debug = false;
     private int nutrition_type_id = 0;
     private String nutrition_desc;
     private float amount = 0.0f;
@@ -50,9 +49,13 @@ public class MealNutrition
 
     DataAccess m_da = DataAccess.getInstance();
 
-    // private boolean no_desc = false;
 
-    // value pack: id=amount
+    /**
+     * Constructor (value pack: id=amount)
+     * 
+     * @param packed
+     * @param load_description
+     */
     public MealNutrition(String packed, boolean load_description)
     {
         int index = packed.indexOf("=");
@@ -68,6 +71,11 @@ public class MealNutrition
         init();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param mn
+     */
     public MealNutrition(MealNutrition mn)
     {
         this.nutrition_type_id = mn.nutrition_type_id;
@@ -77,6 +85,13 @@ public class MealNutrition
         init();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param id
+     * @param amount
+     * @param desc
+     */
     public MealNutrition(int id, float amount, String desc)
     {
         this.nutrition_type_id = id;
@@ -99,6 +114,12 @@ public class MealNutrition
         this.component_id = m_da.getNewComponentId();
     }
 
+    /**
+     * Add Multiplier
+     * 
+     * @param id
+     * @param multiplier
+     */
     public void addMultiplier(String id, float multiplier)
     {
         if (this.multiplier == null)
@@ -112,6 +133,11 @@ public class MealNutrition
         }
     }
 
+    /**
+     * Add Multipliers (Hashtable)
+     * 
+     * @param multipliers
+     */
     public void addMultipliers(Hashtable<String, String> multipliers)
     {
         // System.out.println("Adding multiplier !!!");
@@ -136,21 +162,39 @@ public class MealNutrition
 
     }
 
+    /**
+     * Get Id
+     * @return
+     */
     public int getId()
     {
         return this.nutrition_type_id;
     }
 
+    /**
+     * Get Amount
+     * 
+     * @return
+     */
     public float getAmount()
     {
         return this.amount;
     }
 
+    /**
+     * Set Amount
+     * 
+     * @param val
+     */
     public void setAmount(float val)
     {
         this.amount = val;
     }
 
+    /**
+     * Add To Calculated Amount
+     * @param val
+     */
     public void addToCalculatedAmount(float val)
     {
         this.calculated_amount += val;
@@ -166,22 +210,39 @@ public class MealNutrition
      * public void clearCalculated() { this.calculated_amount = 0.0f; }
      */
 
+    /**
+     * Clear Sum
+     */
     public void clearSum()
     {
         this.amount_sum = 0.0f;
     }
 
+    /**
+     * Add Amount To Sum
+     * 
+     * @param amount
+     */
     public void addAmountToSum(float amount)
     {
         //System.out.println("addAmountToSum: nutr=" + this.nutrition_desc + "old=" + amount_sum + ",add=" + amount);
         this.amount_sum += amount;
     }
 
+    /**
+     * Get Amount Sum
+     * @return
+     */
     public float getAmountSum()
     {
         return this.amount_sum;
     }
 
+    /**
+     * Get Calculated Amount
+     * 
+     * @return
+     */
     public float getCalculatedAmount()
     {
         float f = 1.0f; // this.food_value;
@@ -202,22 +263,37 @@ public class MealNutrition
         return f;
     }
 
+    /**
+     * Get Description
+     * 
+     * @return
+     */
     public String getDescription()
     {
         return this.nutrition_desc;
     }
-
-    public void loadMealPart()
+/*
+    private void loadMealPart()
     {
         // DataAccess.getInstance().getDb().getMeals();
 
     }
-
+*/
+    
+    /**
+     * Is Glycemic Nutrient (GI, GL)
+     * @return
+     */
     public boolean isGlycemicNutrient()
     {
         return ((nutrition_type_id >= 4000) && (nutrition_type_id <= 4005));
     }
 
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {

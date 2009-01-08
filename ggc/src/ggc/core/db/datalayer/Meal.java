@@ -1,55 +1,51 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: Meal Purpose: This is datalayer file (data file, with methods to
- * work with database or in this case Hibernate). This one is used for
- * description of meal.
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.MealH;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     Meal
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in 
+ *                this case Hibernate). This one is used for MealH. 
+ *                This one is also BackupRestoreObject.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 
 public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 3028931713064051809L;
-    public boolean debug = false;
+    private boolean debug = false;
     ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();
     // ArrayList<MealPart> parts_lst = new ArrayList<MealPart>();
 
@@ -58,18 +54,31 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
                                    // getI18nControlInstance();
     boolean meal_empty = false;
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public Meal(I18nControlAbstract ic)
     {
         this.ic = ic;
         this.meal_empty = true;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param meal_empty
+     */
     public Meal(boolean meal_empty)
     {
         this.meal_empty = meal_empty;
         ic = DataAccess.getInstance().getI18nControlInstance();
     }
 
+    /**
+     * Constructor
+     */
     public Meal()
     {
         this.setId(0L);
@@ -88,6 +97,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         loadValues();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public Meal(MealH ch)
     {
         ic = DataAccess.getInstance().getI18nControlInstance();
@@ -108,25 +122,34 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
     private void loadParts()
     {
+        /*
         StringTokenizer strtok = new StringTokenizer(this.getParts(), ";");
 
         while (strtok.hasMoreTokens())
         {
 
-        }
-
+        }*/
     }
 
     private void loadValues()
     {
-
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @return
+     */
     public String getShortDescription()
     {
         return this.getName();
     }
 
+    /**
+     * To String
+     * 
+     * @see ggc.core.db.hibernate.MealH#toString()
+     */
     @Override
     public String toString()
     {
@@ -140,13 +163,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     // --- DatabaseObjectHibernate
     // ---
 
-    /*
+    /**
      * DbAdd - Add this object to database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return id in type of String
      */
     public String DbAdd(Session sess) throws Exception
@@ -172,13 +193,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return "" + id.longValue();
     }
 
-    /*
+    /**
      * DbEdit - Edit this object in database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbEdit(Session sess) throws Exception
@@ -204,13 +223,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return true;
     }
 
-    /*
+    /**
      * DbDelete - Delete this object in database
      * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbDelete(Session sess) throws Exception
@@ -244,14 +261,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return true;
     }
 
-    /*
+    /**
      * DbGet - Loads this object. Id must be set.
      * 
-     * 
      * @param sess Hibernate Session object
-     * 
      * @throws Exception (HibernateException) with error
-     * 
      * @return true if action done or Exception if not
      */
     public boolean DbGet(Session sess) throws Exception
@@ -272,7 +286,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return true;
     }
 
-    /*
+    /**
      * getObjectName - returns name of DatabaseObject
      * 
      * @return name of object (not Hibernate object)
@@ -282,7 +296,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return "Meal";
     }
 
-    /*
+    /**
      * isDebugMode - returns debug mode of object
      * 
      * @return true if object in debug mode
@@ -309,51 +323,65 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     // --- BackupRestoreObject
     // ---
 
-    /*
-     * getTargetName
+    /**
+     * Get Target Name
      */
     public String getTargetName()
     {
         return ic.getMessage("MEALS");
     }
 
+    /**
+     * Get Class Name
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getClassName()
+     */
     public String getClassName()
     {
         return "ggc.core.db.hibernate.MealH";
     }
 
-    /*
-     * getChildren
+    /**
+     * Get Children
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
         return null;
     }
 
-    /*
-     * hasChildren
+    /**
+     * Has Children
      */
     public boolean hasChildren()
     {
         return false;
     }
 
-    /*
-     * isSelected
+    /**
+     * Is Selected
+     * 
+     * @return true if selected
      */
     public boolean isSelected()
     {
         return selected;
     }
 
-    /*
-     * setSelected
+    /**
+     * Set Selected
+     * 
+     * @param selected true if selected
      */
     public void setSelected(boolean newValue)
     {
         this.selected = newValue;
     }
 
+    /**
+     * Is Object Collection
+     * 
+     * @return true if it has children
+     */
     public boolean isCollection()
     {
         return false;
@@ -369,6 +397,9 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return "" + this.getId();
     }
 
+    /**
+     * Table Version
+     */
     public int TABLE_VERSION = 1;
     
     

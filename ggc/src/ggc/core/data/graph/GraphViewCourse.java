@@ -13,7 +13,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import com.atech.graphics.graphs.AbstractGraphView;
+import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.graphics.graphs.GraphViewDataProcessorInterface;
 import com.atech.i18n.I18nControlAbstract;
 
@@ -43,7 +43,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class GraphViewCourse extends AbstractGraphView 
+public class GraphViewCourse extends AbstractGraphViewAndProcessor 
 {
 
     DataAccess da_local = null;
@@ -183,6 +183,17 @@ public class GraphViewCourse extends AbstractGraphView
     public void createChartPanel()
     {
         chart_panel = new ChartPanel(getChart(), false, true, true, false, true);
+    }
+
+
+    /**
+     * Set Controller Data (Processor)
+     * 
+     * @see com.atech.graphics.graphs.AbstractGraphViewAndProcessor#setControllerData(java.lang.Object)
+     */
+    public void setControllerData(Object data)
+    {
+        // TODO: implement
     }
     
 }

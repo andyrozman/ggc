@@ -1,31 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: FoodDescription Purpose: This is datalayer file (data file, with
- * methods to work with database or in this case Hibernate). This one is used
- * for description of food.
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.FoodDescriptionH;
@@ -42,12 +14,39 @@ import com.atech.i18n.I18nControlAbstract;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     FoodDescription
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in 
+ *                this case Hibernate). This one is used for FoodDescriptionH and FoodUserDescriptionH. 
+ *                This one is also BackupRestoreObject.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreObject
-// extends FoodDescriptionH implements DatabaseObjectHibernate
 {
 
-    public boolean debug = false;
-    public int type = 1;
+    private boolean debug = false;
+    private int type = 1;
 
     private FoodDescriptionH m_food_desc1;
     private FoodUserDescriptionH m_food_desc2;
@@ -58,18 +57,33 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     // getI18nControlInstance();
     boolean food_empty = false;
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
     public FoodDescription(I18nControlAbstract ic)
     {
         this.ic = ic;
         this.food_empty = true;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param food_empty
+     */
     public FoodDescription(boolean food_empty)
     {
         this.food_empty = food_empty;
         ic = DataAccess.getInstance().getI18nControlInstance();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param type
+     */
     public FoodDescription(int type)
     {
         this.type = type;
@@ -88,6 +102,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
          */
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public FoodDescription(FoodDescriptionH ch)
     {
         this.m_food_desc1 = ch;
@@ -108,6 +127,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
          */
     }
 
+    /**
+     * Constructor
+     * 
+     * @param ch
+     */
     public FoodDescription(FoodUserDescriptionH ch)
     {
         this.m_food_desc2 = ch;
@@ -116,6 +140,10 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         ic = DataAccess.getInstance().getI18nControlInstance();
     }
 
+    /**
+     * Get Hibernate Object
+     * @return
+     */
     public Object getHibernateObject()
     {
         if (this.type == 1)
@@ -124,6 +152,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2;
     }
 
+    /**
+     * Get Short Description
+     * 
+     * @return
+     */
     public String getShortDescription()
     {
         return this.getName();
@@ -131,6 +164,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         // ",parent_id=" + this.getGroup_id() + "]";
     }
 
+    /**
+     * Get Id
+     * 
+     * @return
+     */
     public long getId()
     {
         if ((this.m_food_desc1 == null) && (this.m_food_desc2 == null))
@@ -144,6 +182,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2.getId();
     }
 
+    /**
+     * Set Id
+     * 
+     * @param id
+     */
     public void setId(long id)
     {
         if ((this.m_food_desc1 == null) && (this.m_food_desc2 == null))
@@ -157,6 +200,10 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             this.m_food_desc2.setId(id);
     }
 
+    /**
+     * Get Group Id
+     * @return
+     */
     public long getGroup_id()
     {
         if (type == 1)
@@ -165,6 +212,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2.getGroup_id();
     }
 
+    /**
+     * Set Group Id
+     * 
+     * @param group_id
+     */
     public void setGroup_id(long group_id)
     {
         if (type == 1)
@@ -173,6 +225,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             this.m_food_desc2.setGroup_id(group_id);
     }
 
+    /**
+     * Get Name
+     * 
+     * @return
+     */
     public String getName()
     {
         if (type == 1)
@@ -181,6 +238,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2.getName();
     }
 
+    /**
+     * Set Name
+     * 
+     * @param name
+     */
     public void setName(String name)
     {
         if (type == 1)
@@ -189,6 +251,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             this.m_food_desc2.setName(name);
     }
 
+    /**
+     * Get Name I18n
+     * 
+     * @return
+     */
     public String getName_i18n()
     {
         if (type == 1)
@@ -197,6 +264,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2.getName_i18n();
     }
 
+    /**
+     * Set Name I18n
+     * 
+     * @param name_i18n
+     */
     public void setName_i18n(String name_i18n)
     {
         if (type == 1)
@@ -205,6 +277,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             this.m_food_desc2.setName_i18n(name_i18n);
     }
 
+    /**
+     * Get Refuse
+     * 
+     * @return
+     */
     public float getRefuse()
     {
         if (type == 1)
@@ -213,6 +290,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2.getRefuse();
     }
 
+    /**
+     * Set Refuse
+     * 
+     * @param refuse
+     */
     public void setRefuse(float refuse)
     {
         if (type == 1)
@@ -221,6 +303,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             this.m_food_desc2.setRefuse(refuse);
     }
 
+    /**
+     * Get Nutritions
+     * 
+     * @return
+     */
     public String getNutritions()
     {
         if (type == 1)
@@ -229,6 +316,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2.getNutritions();
     }
 
+    /**
+     * Set Nutritions
+     * 
+     * @param nutritions
+     */
     public void setNutritions(String nutritions)
     {
         if (type == 1)
@@ -237,6 +329,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             this.m_food_desc2.setNutritions(nutritions);
     }
 
+    /**
+     * Get Home Weights
+     * 
+     * @return
+     */
     public String getHome_weights()
     {
         if (type == 1)
@@ -245,6 +342,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2.getHome_weights();
     }
 
+    /**
+     * Set Home Weights
+     * 
+     * @param home_weights
+     */
     public void setHome_weights(String home_weights)
     {
         if (type == 1)
@@ -253,6 +355,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             this.m_food_desc2.setHome_weights(home_weights);
     }
 
+    /**
+     * Get Description
+     * 
+     * @return
+     */
     public String getDescription()
     {
         if (type == 2)
@@ -261,17 +368,32 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return null;
     }
 
+    /**
+     * Set Description
+     * 
+     * @param description
+     */
     public void setDescription(String description)
     {
         if (type == 2)
             this.m_food_desc2.setDescription(description);
     }
 
+    /**
+     * Get Food Type
+     * 
+     * @return
+     */
     public int getFoodType()
     {
         return type;
     }
 
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
@@ -445,13 +567,18 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return ic.getMessage("FOODS");
     }
 
+    /**
+     * Get Class Name
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getClassName()
+     */
     public String getClassName()
     {
         return "ggc.core.db.hibernate.FoodUserDescriptionH";
     }
 
     /**
-     * getChildren
+     * Get Children
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
@@ -459,7 +586,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     }
 
     /**
-     * hasChildren
+     * Has Children
      */
     public boolean hasChildren()
     {
@@ -467,7 +594,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     }
 
     /**
-     * isSelected
+     * Is Selected
      */
     public boolean isSelected()
     {
@@ -475,13 +602,18 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     }
 
     /**
-     * setSelected
+     * Set Selected
      */
     public void setSelected(boolean newValue)
     {
         this.selected = newValue;
     }
 
+    /**
+     * Is Collection
+     * 
+     * @see com.atech.db.hibernate.transfer.BackupRestoreBase#isCollection()
+     */
     public boolean isCollection()
     {
         return false;
@@ -498,6 +630,9 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     }
 
     
+    /**
+     * Table Version
+     */
     public int TABLE_VERSION = 1;
     
     

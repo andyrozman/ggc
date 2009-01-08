@@ -63,8 +63,8 @@ import com.lowagie.text.pdf.PdfPTable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###--###  
- *  Description:  ###--###
+ *  Filename:     PrintFoodMenuAbstract
+ *  Description:  Abstract class for printing Food Menu's
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -73,6 +73,11 @@ import com.lowagie.text.pdf.PdfPTable;
 public abstract class PrintFoodMenuAbstract extends PrintAbstract
 {
 
+    /**
+     * Constructor
+     * 
+     * @param mv
+     */
     public PrintFoodMenuAbstract(DayValuesData mv)
     {
         super(mv, DataAccess.getInstance().getNutriI18nControl());
@@ -82,6 +87,11 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
         // this.ic = m_da.getNutriI18nControl();
     }
 
+    /**
+     * Get Title
+     * 
+     * @see ggc.core.print.PrintAbstract#getTitle()
+     */
     public Paragraph getTitle()
     {
         Paragraph p = new Paragraph();
@@ -103,14 +113,15 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
     }
 
 
-    
+    /**
+     * Create document body.
+     * 
+     * @param document
+     * @throws Exception
+     */
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        // TODO Auto-generated method stub
-
-        // System.out.println("Jedilnik CH,Ins,BG");
-
         Iterator<DailyValues> it = this.m_data.iterator();
 
         int count = 0;
@@ -119,14 +130,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
                                    // Font.NORMAL); // this.base_times
 
         PdfPTable datatable = new PdfPTable(getTableColumnsCount());
-        //int headerwidths[] = { 13, 7, 35, 17, 8, 8, 6, 6 }; // percentage
-
-        // int headerwidths
-
         datatable.setWidths(getTableColumnWidths());
         datatable.setWidthPercentage(100); // percentage
-        // datatable.getDefaultCell().setPadding(3);
-        // datatable.getDefaultCell().setBorderWidth(2);
 
         datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
         datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); // ALIGN_CENTER);
@@ -140,12 +145,6 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
         writeAdditionalHeader(datatable);
 
-        /*
-        datatable.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("INS"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("BG"), this.text_bold));
-        */
-        // document.add(datatable);
         while (it.hasNext())
         {
             DailyValues dv = it.next();
@@ -153,8 +152,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
             datatable.addCell(new Phrase(dv.getDateAsLocalizedString(), f));
 
-            System.out.println("Row count: " + dv.getRowCount());
-            System.out.println(dv.getDateAsString());
+//            System.out.println("Row count: " + dv.getRowCount());
+//            System.out.println(dv.getDateAsString());
 
             int active_day_entry = 0;
 
@@ -273,15 +272,17 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
     }
 
-
+    /**
+     * Returns data part of filename for printing job, showing which data is being printed
+     * 
+     * @return 
+     */
     @Override
     public String getFileNameRange()
     {
         return this.m_data.getRangeBeginObject().getDateString() + "-"
                 + this.m_data.getRangeEndObject().getDateString();
     }
-
-    
     
     
     /**

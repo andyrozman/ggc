@@ -1,6 +1,5 @@
 package ggc.core.db.tool.transfer;
 
-import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
 
@@ -14,9 +13,40 @@ import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     ###---###  
+ *  Description:  ###---###
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class ExportDailyValues extends ExportTool implements Runnable
 {
 
+    /**
+     * Constructor
+     * 
+     * @param giver
+     */
     public ExportDailyValues(BackupRestoreWorkGiver giver)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -29,6 +59,11 @@ public class ExportDailyValues extends ExportTool implements Runnable
         // exportAll();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cfg
+     */
     public ExportDailyValues(HibernateConfiguration cfg)
     {
         super(cfg);
@@ -89,6 +124,11 @@ public class ExportDailyValues extends ExportTool implements Runnable
      */
 
     
+    /**
+     * Get Active Session
+     * 
+     * @see com.atech.db.hibernate.transfer.ImportExportAbstract#getActiveSession()
+     */
     public int getActiveSession()
     {
         return 2;
@@ -132,16 +172,22 @@ public class ExportDailyValues extends ExportTool implements Runnable
         closeFile();
     }
 
+    /**
+     * Run
+     * 
+     * @see java.lang.Runnable#run()
+     */
     public void run()
     {
         exportAll();
     }
 
+/*
     public static void main(String[] args)
     {
         GGCDb db = new GGCDb();
         db.initDb();
         new ExportDailyValues(db.getHibernateConfiguration());
     }
-
+*/
 }

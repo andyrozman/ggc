@@ -1,32 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: DailyFoodEntries 
- * 
- * Purpose: This is collection class which is used for collection DailyFoodEntry instances
- *      used by calcultator for dailyvalue entry food use.
- *      
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.util.DataAccess;
@@ -37,12 +8,39 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     DailyFoodEntries  
+ *  Description:  This is collection class which is used for collection DailyFoodEntry 
+ *                instances used by calcultator for dailyvalue entry food use.
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class DailyFoodEntries // implements SelectableInterface
 {
 
     NutriI18nControl ic = NutriI18nControl.getInstance();
 
-    public boolean debug = false;
+    //private boolean debug = false;
     String text_idx;
     DataAccess m_da = DataAccess.getInstance();
     GlycemicNutrients glyc_nutr = null;
@@ -61,6 +59,11 @@ public class DailyFoodEntries // implements SelectableInterface
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param meals_ids
+     */
     public DailyFoodEntries(String meals_ids)
     {
         entries = new ArrayList<DailyFoodEntry>();
@@ -73,6 +76,12 @@ public class DailyFoodEntries // implements SelectableInterface
     }
     
 
+    /**
+     * Constructor
+     * 
+     * @param meals_ids
+     * @param print_mode
+     */
     public DailyFoodEntries(String meals_ids, boolean print_mode)
     {
         this.print_mode = print_mode;
@@ -87,7 +96,11 @@ public class DailyFoodEntries // implements SelectableInterface
     }
     
     
-    
+    /**
+     * Add Daily Food Entry
+     * 
+     * @param dfe
+     */
     public void addDailyFoodEntry(DailyFoodEntry dfe)
     {
         if (dfe.hasChildren())
@@ -103,6 +116,11 @@ public class DailyFoodEntries // implements SelectableInterface
         }
     }
 
+    /**
+     * Get Calculated Nutrients
+     * 
+     * @return
+     */
     public ArrayList<MealNutrition> getCalculatedNutrients()
     {
 
@@ -121,21 +139,33 @@ public class DailyFoodEntries // implements SelectableInterface
             for (int j = 0; j < lst.size(); j++)
             {
                 MealNutrition mn = lst.get(j);
-
-                if (!ht.containsKey("" + mn.getId()))
+                
+                if ((mn.getId()>=4000) && (mn.getId()<=4005))
                 {
-                    mn.clearSum();
-
-                    float cm = mn.getCalculatedAmount();
-
-                    // System.out.println("Calculated amount: " + cm);
-                    mn.addAmountToSum(cm);
-
-                    ht.put("" + mn.getId(), mn);
+                    // glycemic nutrients
+                    
+                    // TODO: Implement this
+                    
                 }
                 else
                 {
-                    ht.get("" + mn.getId()).addAmountToSum(mn.getCalculatedAmount());
+                    // non-glycemic nutrients
+                    
+                    if (!ht.containsKey("" + mn.getId()))
+                    {
+                        mn.clearSum();
+    
+                        float cm = mn.getCalculatedAmount();
+    
+                        // System.out.println("Calculated amount: " + cm);
+                        mn.addAmountToSum(cm);
+    
+                        ht.put("" + mn.getId(), mn);
+                    }
+                    else
+                    {
+                        ht.get("" + mn.getId()).addAmountToSum(mn.getCalculatedAmount());
+                    }
                 }
             }
         }
@@ -151,12 +181,23 @@ public class DailyFoodEntries // implements SelectableInterface
     }
 
     
+    /**
+     * Get Elements Count
+     * 
+     * @return
+     */
     public int getElementsCount()
     {
         return this.entries.size();
     }
     
     
+    /**
+     * Get Element
+     * 
+     * @param index
+     * @return
+     */
     public DailyFoodEntry getElement(int index)
     {
         return this.entries.get(index);
@@ -165,12 +206,15 @@ public class DailyFoodEntries // implements SelectableInterface
     
     
     
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
-        // return this.getShortDescription();
-        return "DailyFoodEntries [count=" + this.entries + "]"; // getShortDescription
-                                                                // ();
+        return "DailyFoodEntries [count=" + this.entries.size() + "]"; 
     }
 
 }

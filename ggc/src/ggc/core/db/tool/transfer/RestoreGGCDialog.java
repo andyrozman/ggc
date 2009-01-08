@@ -1,6 +1,5 @@
 package ggc.core.db.tool.transfer;
 
-import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 
 import javax.swing.JCheckBox;
@@ -12,17 +11,29 @@ import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.db.hibernate.transfer.RestoreDialog;
 import com.atech.utils.ATDataAccessAbstract;
 
-
 /**
- *  AddressDialog 
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
  * 
- *  This is dialog for adding PersonAddress or InternalAddress, to either Person 
- *  or InternalPerson.
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
  * 
- *  This class is part of PIS (Parish Information System) package.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
  * 
- *  @author      Andy (Aleksander) Rozman {andy@triera.net}
- *  @version     1.0
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     RestoreGGCDialog  
+ *  Description:  GGC Dialog for Restore
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
  */
 
 public class RestoreGGCDialog extends RestoreDialog
@@ -32,12 +43,28 @@ public class RestoreGGCDialog extends RestoreDialog
     JCheckBox cb_daily;
     
     
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param da
+     * @param br_coll
+     * @param filename
+     */
     public RestoreGGCDialog(JDialog parent, ATDataAccessAbstract da, BackupRestoreCollection br_coll, String filename)
     {
         super(parent, da, br_coll, filename);
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param da
+     * @param br_coll
+     * @param filename
+     */
     public RestoreGGCDialog(JFrame parent, ATDataAccessAbstract da, BackupRestoreCollection br_coll, String filename)
     {
         super(parent, da, br_coll, filename);
@@ -45,6 +72,11 @@ public class RestoreGGCDialog extends RestoreDialog
     
     
     
+    /**
+     * Init Special
+     * 
+     * @see com.atech.db.hibernate.transfer.RestoreDialog#initSpecial()
+     */
     public void initSpecial()
     {
         this.cb_daily = new JCheckBox(ic.getMessage("DAILY_VALUES_APPEND"));
@@ -58,25 +90,19 @@ public class RestoreGGCDialog extends RestoreDialog
 
     }
     
-    
 
+    /**
+     * Perform Restore
+     * 
+     * @see com.atech.db.hibernate.transfer.RestoreDialog#performRestore()
+     */
     public void performRestore()
     {
         GGCBackupRestoreRunner gbrr = new GGCBackupRestoreRunner(this.restore_files, this, "" + this.cb_daily.isSelected());
         gbrr.start();
     }
 
-    
-    
-    
-    
-    
-        
-    
-    
-    
-
-
+/*
     public static void main(String args[])
     {
         JFrame fr = new JFrame();
@@ -95,9 +121,7 @@ public class RestoreGGCDialog extends RestoreDialog
         rgd.showDialog();
         
     }
-
-
-
+*/
 
 }
 

@@ -1,35 +1,5 @@
 package ggc.core.print;
 
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: PrintSimpleonthlyReport.java
-
- *  Purpose:  Creating PDF for Extended Monthly Report (used for printing)
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
-
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
@@ -64,8 +34,8 @@ import com.lowagie.text.pdf.PdfPTable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###--###  
- *  Description:  ###--###
+ *  Filename:     PrintFoodMenuBase  
+ *  Description:  Print Base Food Menu
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -73,9 +43,13 @@ import com.lowagie.text.pdf.PdfPTable;
 
 public class PrintFoodMenuBase extends PrintFoodMenuAbstract
 {
-
+   
     
-    
+    /**
+     * Constructor 
+     * 
+     * @param mv
+     */
     public PrintFoodMenuBase(DayValuesData mv)
     {
         super(mv);
@@ -259,6 +233,10 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
 
     
     
+    /**
+     * @param document
+     * @throws Exception
+     */
     public void fillDocumentBodyX1(Document document) throws Exception
     {
         // TODO Auto-generated method stub
@@ -437,7 +415,7 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
                     
                     float value = 0.0f;
                     
-                    if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
+                    if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
                     {
                         datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
                         //value = mp.getNutrientValue(205);
@@ -449,11 +427,11 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
                         value = mp.getMealCH();
                         
                     }
-                    else if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
+                    else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
                     {
                         datatable.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), f));
                         //value = mp.getNutrientValue(205);
-                        value = mp.getNutrientValue(205) * (mp.amount / 100.0f);
+                        value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
                     }
                     else
                     {
@@ -513,7 +491,11 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     }
     
 
-
+    /**
+     * Returns base filename for printing job, this is just part of end filename (starting part)
+     * 
+     * @return 
+     */
     @Override
     public String getFileNameBase()
     {
@@ -522,17 +504,10 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     }
 
 
-
-
-    @Override
-    public String getFileNameRange()
-    {
-        return this.m_data.getRangeBeginObject().getDateString() + "-" + this.m_data.getRangeEndObject().getDateString(); 
-    }
-
-
-
-
+    /** 
+     * Return columns widths for table
+     * @return
+     */
     @Override
     public int[] getTableColumnWidths()
     {
@@ -542,7 +517,11 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         return headerwidths;
     }
 
-
+    
+    /**
+     * Return count of table columns
+     * @return
+     */
     @Override
     public int getTableColumnsCount()
     {
@@ -550,8 +529,11 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     }
 
 
-
-
+    /**
+     * Get text for title
+     * 
+     * @return title
+     */
     @Override
     public String getTitleText()
     {
@@ -560,7 +542,12 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
 
 
 
-
+    /**
+     * Write additional header to documents
+     *  
+     * @param table
+     * @throws Exception
+     */
     @Override
     public void writeAdditionalHeader(PdfPTable table) throws Exception
     {
@@ -568,6 +555,12 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     }
 
 
+    /**
+     * Write empty column data. If there is no data, this is used, to fill empty places.
+     * 
+     * @param table
+     * @throws Exception
+     */
     @Override
     public void writeEmptyColumnData(PdfPTable table) throws Exception
     {
@@ -578,7 +571,13 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         table.addCell(new Phrase("", this.text_normal));
     }
 
-
+    /**
+     * Write data in column
+     * 
+     * @param table
+     * @param mp
+     * @throws Exception
+     */
     @Override
     public void writeColumnData(PdfPTable table, DailyFoodEntry mp) throws Exception
     {
@@ -590,18 +589,18 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         
         float value = 0.0f;
         
-        if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
+        if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
         {
             table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_normal));
             //value = mp.getNutrientValue(205);
             value = mp.getMealCH();
             
         }
-        else if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
+        else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
         {
             table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), this.text_normal));
             //value = mp.getNutrientValue(205);
-            value = mp.getNutrientValue(205) * (mp.amount / 100.0f);
+            value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
         }
         else
         {
@@ -616,7 +615,13 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
 
 
 
-
+    /**
+     * Write together data (all data of certain type summed)
+     * 
+     * @param table
+     * @param rw
+     * @throws Exception
+     */
     @Override
     public void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception
     {
@@ -627,6 +632,22 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
     }
 
+    
+    /**
+     * Returns data part of filename for printing job, showing which data is being printed
+     * 
+     * @return 
+     */
+    @Override
+    public String getFileNameRange()
+    {
+        //return this.m_data.getRangeBeginObject().getDateString() + "-" + this.m_data.getRangeEndObject().getDateString(); 
+        return "" + System.currentTimeMillis();
+    }
+    
+    
+    
+    
 }
 
 

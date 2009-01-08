@@ -230,10 +230,10 @@ public class SpreadGraphView extends AbstractGraphView
 
             for (int j = 0; j < dV.getRowCount(); j++)
             {
-                int offset = TimetoCoord(dV.getDateTimeAt(j));
+                int offset = TimetoCoord(dV.getRow(j).getDateTime());
 
                 // draw BG
-                float tmpBG = dV.getBGAt(j);
+                float tmpBG = dV.getRow(j).getBG();
                 if (drawBG && (tmpBG != 0))
                 {
                     g2D.setPaint(colorBG);
@@ -252,7 +252,7 @@ public class SpreadGraphView extends AbstractGraphView
                 }
 
                 // draw BU
-                float tmpBU = dV.getCHAt(j);
+                float tmpBU = dV.getRow(j).getCH();
                 if (drawCH && (tmpBU != 0))
                 {
                     g2D.setPaint(colorBU);
@@ -271,7 +271,7 @@ public class SpreadGraphView extends AbstractGraphView
                 }
 
                 // draw Ins1
-                float tmpIns1 = dV.getIns1At(j);
+                float tmpIns1 = dV.getRow(j).getIns1();
                 if (drawIns1 && (tmpIns1 != 0))
                 {
                     g2D.setPaint(colorIns1);
@@ -290,7 +290,7 @@ public class SpreadGraphView extends AbstractGraphView
                 }
 
                 // draw Ins2
-                float tmpIns2 = dV.getIns2At(j);
+                float tmpIns2 = dV.getRow(j).getIns2();
                 if (drawIns2 && (tmpIns2 != 0))
                 {
                     g2D.setPaint(colorIns2);

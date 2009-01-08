@@ -35,8 +35,7 @@ import com.atech.i18n.I18nControlAbstract;
  * 
  *  Filename:     Settings  
  *  Description:  This is datalayer file (data file, with methods to work with database or in 
- *      this case Hibernate). 
- *      This one is used for Settings.
+ *      this case Hibernate). This one is used for Settings.
  * 
  *  Author: Andy {andy@atech-software.com}  
  */

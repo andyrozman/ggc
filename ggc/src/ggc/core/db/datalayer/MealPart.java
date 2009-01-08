@@ -1,30 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: MealPart Purpose: This is datalayer file (data file, with methods).
- * This one is used for Meal Parts data
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.nutrition.GGCTreeRoot;
@@ -36,13 +9,39 @@ import java.util.StringTokenizer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     ###---###  
+ *  Description:  ###---###
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
+
 public class MealPart
 {
 
     private static Log log = LogFactory.getLog(MealPart.class);
 
     DataAccess m_da = DataAccess.getInstance();
-    public boolean debug = false;
+    //private boolean debug = false;
     private int meal_type = 0;
     // private long meal_type_id = 0L;
 
@@ -52,6 +51,11 @@ public class MealPart
 
     private ArrayList<MealNutrition> nutritions = null;
 
+    /**
+     * Constructor
+     * 
+     * @param meal_str
+     */
     public MealPart(String meal_str)
     {
         // 1:122=1.0
@@ -104,11 +108,21 @@ public class MealPart
     }
     
     
+    /**
+     * Constructor
+     */
     public MealPart()
     {
         log.warn("MealPart was created with empty constructor");
     }
 
+    /**
+     * Constructor
+     * 
+     * @param type
+     * @param obj
+     * @param amount
+     */
     public MealPart(int type, Object obj, float amount)
     {
         this.meal_type = type;
@@ -128,7 +142,7 @@ public class MealPart
 
     }
 
-    public void loadMealPart(int type, String id)
+    private void loadMealPart(int type, String id)
     {
         if ((type == GGCTreeRoot.TREE_USDA_NUTRITION) || (type == GGCTreeRoot.TREE_USER_NUTRITION))
         {
@@ -143,18 +157,11 @@ public class MealPart
 
     }
 
-    /*
-     * p ublic void createDailiyFoodEntry() { if ((this.meal_type ==
-     * GGCTreeRoot.TREE_USDA_NUTRITION) || (this.meal_type ==
-     * GGCTreeRoot.TREE_USER_NUTRITION)) { DailyFoodEntry dfe = new
-     * DailyFoodEntry()
+    /**
+     * Get Id
      * 
-     * } else { }
-     * 
-     * 
-     * }
+     * @return
      */
-
     public long getId()
     {
         if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
@@ -167,6 +174,11 @@ public class MealPart
         }
     }
 
+    /**
+     * Get Name
+     * 
+     * @return
+     */
     public String getName()
     {
         if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
@@ -179,26 +191,51 @@ public class MealPart
         }
     }
 
+    /**
+     * Get Type
+     * 
+     * @return
+     */
     public int getType()
     {
         return this.meal_type;
     }
 
+    /**
+     * Get Amount
+     * 
+     * @return
+     */
     public float getAmount()
     {
         return this.amount;
     }
 
+    /**
+     * Set Amount
+     * 
+     * @param amount
+     */
     public void setAmount(float amount)
     {
         this.amount = amount;
     }
 
+    /**
+     * Get Food Object
+     * 
+     * @return
+     */
     public FoodDescription getFoodObject()
     {
         return this.meal_obj_food;
     }
 
+    /**
+     * Get Meal Object
+     * 
+     * @return
+     */
     public Meal getMealObject()
     {
         return this.meal_obj_meal;
@@ -240,6 +277,11 @@ public class MealPart
 
     }
 
+    /**
+     * Get Nutrients
+     * 
+     * @return
+     */
     public ArrayList<MealNutrition> getNutrients()
     {
         if (this.nutritions == null)
@@ -248,6 +290,11 @@ public class MealPart
         return this.nutritions;
     }
 
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {

@@ -88,10 +88,15 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
     // ivate GGCProperties props = GGCProperties.getInstance();
     private DateRangeSelectionPanel dRS;
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public FrequencyGraphDialog(DataAccess da)
     {
         super(da.getMainParent(), "CourseGraphFrame", true);
-        setTitle(m_ic.getMessage("FREQGRAPHFRAME"));
+        setTitle(m_ic.getMessage("FREQGRAPHFRAME") + " [" + m_ic.getMessage("NOT_WORKING_100PRO") + "]");
 
         this.m_da = da;
         /*

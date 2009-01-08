@@ -1,6 +1,7 @@
 package ggc.gui;
 
 import ggc.GGC;
+import ggc.core.data.graph.GraphViewSpread;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.nutrition.GGCTreeRoot;
@@ -9,7 +10,6 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.AppointmentsDialog;
-import ggc.gui.dialogs.DailyRowMealsDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.DoctorsDialog;
 import ggc.gui.dialogs.HbA1cDialog;
@@ -52,6 +52,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
+import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpContext;
 import com.atech.update.client.UpdateDialog;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
@@ -584,13 +585,10 @@ public class MainFrame extends JFrame
 
         if (tool_tip != null)
         {
-            item.setToolTipText(tool_tip);
+            item.setToolTipText(m_ic.getMessage(tool_tip));
         }
 
-        // System.out.println("Item: " + item);
-
         parent.add(item);
-        // this.menuBar.add(item);
 
         return item;
     }
@@ -1095,13 +1093,19 @@ public class MainFrame extends JFrame
             else if ((command.equals("test")))
             {
                 
-                new DailyRowMealsDialog(null, new JDialog());
+                //new DailyRowMealsDialog(null, new JDialog());
                 
-                /*
+                
                 // spread graph
                 new GraphViewer(new GraphViewSpread(), m_da);
-                 */
-
+                
+                
+                /*
+                // graph course
+                new GraphViewer(new GraphViewCourse(), m_da);
+                */
+                
+                
              /*   
                 // daily view
                 GregorianCalendar gc = new GregorianCalendar();

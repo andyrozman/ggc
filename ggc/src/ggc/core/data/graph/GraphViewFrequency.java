@@ -13,7 +13,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import com.atech.graphics.graphs.AbstractGraphView;
+import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -42,7 +42,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class GraphViewFrequency extends AbstractGraphView //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewFrequency extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
 {
 
     DataAccess da_local = null;

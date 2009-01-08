@@ -1,30 +1,3 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: MealParts Purpose: This is collection class for storing and
- * grouping of MealPart class instances.
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 package ggc.core.db.datalayer;
 
 import ggc.core.util.DataAccess;
@@ -35,26 +8,55 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MealParts  
+ *  Description:  Meal Part Collection
+ * 
+ *  Author: andyrozman {andy@atech-software.com}  
+ */
+
 public class MealParts // implements SelectableInterface
 {
 
     NutriI18nControl ic = NutriI18nControl.getInstance();
-
-    public boolean debug = false;
-    String text_idx;
+    //private boolean debug = false;
     DataAccess m_da = DataAccess.getInstance();
     GlycemicNutrients glyc_nutr = null;
-
     boolean root_entry = false;
-
     ArrayList<MealPart> entries = null;
 
+    /**
+     * Constructor
+     */
     public MealParts()
     {
         entries = new ArrayList<MealPart>();
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param meals_ids
+     */
     public MealParts(String meals_ids)
     {
         StringTokenizer strtok = new StringTokenizer(meals_ids, ";");
@@ -66,6 +68,11 @@ public class MealParts // implements SelectableInterface
     }
     
     
+    /**
+     * Add Meal Part
+     * 
+     * @param dfe
+     */
     public void addMealPart(MealPart dfe)
     {
         /*
@@ -77,10 +84,15 @@ public class MealParts // implements SelectableInterface
         // }
     }
 
+    /**
+     * Get Calculated Nutrients
+     * 
+     * @return
+     */
     public ArrayList<MealNutrition> getCalculatedNutrients()
     {
 
-        System.out.println("calcultedNutrients ");
+        //System.out.println("calcultedNutrients ");
 
         Hashtable<String, MealNutrition> ht = new Hashtable<String, MealNutrition>();
 
@@ -88,7 +100,7 @@ public class MealParts // implements SelectableInterface
         {
             ArrayList<MealNutrition> lst = this.entries.get(i).getNutrients();
 
-            System.out.println("Lst: " + lst);
+            //System.out.println("Lst: " + lst);
 
             for (int j = 0; j < lst.size(); j++)
             {
@@ -100,7 +112,7 @@ public class MealParts // implements SelectableInterface
 
                     float cm = mn.getCalculatedAmount();
 
-                    System.out.println("Calculated amount: " + cm);
+                    //System.out.println("Calculated amount: " + cm);
                     mn.addAmountToSum(cm);
 
                     ht.put("" + mn.getId(), mn);
@@ -123,24 +135,38 @@ public class MealParts // implements SelectableInterface
     }
 
     
+    /**
+     * Get Elements Count
+     * 
+     * @return
+     */
     public int getElementsCount()
     {
         return this.entries.size();
     }
     
     
+    /**
+     * Get Element
+     * 
+     * @param index
+     * @return
+     */
     public MealPart getElement(int index)
     {
         return this.entries.get(index);
     }
     
     
+    /**
+     * To String
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
-        // return this.getShortDescription();
-        return "MealParts [count=" + this.entries + "]"; //getShortDescription()
-                                                         // ;
+        return "MealParts [count=" + this.entries + "]"; 
     }
 
 }
