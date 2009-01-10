@@ -99,7 +99,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     /**
      * Get Full Data
      * 
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#getFullData()
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#getFullData()
      */
     public void getFullData()
     {
@@ -122,8 +122,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
 
     /**
      * Check And Execute Action : Edit
-     * 
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#checkAndExecuteActionEdit()
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#checkAndExecuteActionEdit()
      */
     @Override
     public void checkAndExecuteActionEdit()
@@ -134,7 +133,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     /**
      * Check And Execute Action : New
      * 
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#checkAndExecuteActionNew()
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#checkAndExecuteActionNew()
      */
     @Override
     public void checkAndExecuteActionNew()
@@ -145,7 +144,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     /** 
      * Check And Execute Action : Select
      * 
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#checkAndExecuteActionSelect()
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#checkAndExecuteActionSelect()
      */
     @Override
     public void checkAndExecuteActionSelect()
@@ -169,7 +168,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     /**
      * Item State Changed
      * 
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#itemStateChanged(java.awt.event.ItemEvent)
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#itemStateChanged(java.awt.event.ItemEvent)
      */
     @Override
     public void itemStateChanged(ItemEvent e)

@@ -152,7 +152,6 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
      * Create Values Table
      * 
      * @param da 
-     * @param model
      * @return
      */
     public JComponent createValuesTable(DataAccessPlugInBase da)

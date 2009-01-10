@@ -21,6 +21,7 @@ import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.update.startup.os.OSUtil;
 import com.atech.utils.ATDataAccessAbstract;
 
 /**
@@ -875,6 +876,61 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     public void loadGraphConfigProperties()
     {
     }
+    
+    
+    
+    
+    /**
+     * Check if specified exception was caused by UnsatisfiedLinkError
+     * 
+     * @param ex1
+     * @return
+     */
+    public boolean checkUnsatisfiedLink(Exception ex1)
+    {
+        Throwable ex = ex1.getCause();
+        String ex_txt = ex.toString();
+        
+        if (ex_txt.contains("java.lang.UnsatisfiedLinkError"))
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
+    
+    /**
+     * Get Extended data for UnsatisfiedLinkError (if we add new libraries that need native 
+     * parts, this is the method to extend it).
+     * 
+     * @param ex1
+     * @return String[], it contains following data: [0] = library name, [1] = native file name, [2] = short os name
+     */
+    public String[] getUnsatisfiedLinkData(Exception ex1)
+    {
+        Throwable ex = ex1.getCause();
+        String ex_txt = ex.toString();
+        String[] ret = new String[3];
+        
+        if (ex_txt.contains("rxtxSerial"))
+        {
+            ret[0] = "Rxtx";
+            ret[1] = "rxtxSerial";
+        }
+        else
+        {
+            ret[0] = "Unknown";
+            ret[1] = "Unknown";
+        }
+        
+        ret[2] = OSUtil.getShortOSName();
+        
+        return ret;
+        
+    }
+    
+    
     
 
 }

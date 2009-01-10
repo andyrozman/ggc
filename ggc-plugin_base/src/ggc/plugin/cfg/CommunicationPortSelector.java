@@ -3,6 +3,7 @@ package ggc.plugin.cfg;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
+import gnu.io.SerialPortEvent;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -323,7 +324,20 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         // New_Item_Edit
         if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE)
         {
-            return SerialProtocol.getAllAvailablePortsString();
+            try
+            {
+                SerialPortDummy spd = new SerialPortDummy();
+                spd.setPort("COM1");
+                //AscensiaMeter am = new AscensiaMeter();
+                return spd.getAllAvailablePortsStringInternal();
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Exception: " + ex);
+                return new Vector<String>();
+            }
+            
+            
         }
         else if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML)
         {
@@ -415,6 +429,22 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     {
         return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration_PortSelector";
     }
+    
+    
+    
+    private class SerialPortDummy extends SerialProtocol
+    {
+
+        @Override
+        public void serialEvent(SerialPortEvent event)
+        {
+            // TODO Auto-generated method stub
+            
+        }
+        
+    }
+    
+    
     
     
 }

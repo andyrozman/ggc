@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atech.i18n.I18nControlAbstract;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Base PlugIn 
@@ -103,7 +105,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 this.setDeviceComment(this.m_mi.getDeviceSpecialComment());
                 this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
                 
-                lg = "Meter device instance created and initied";
+                lg = "Device instance created and initied";
                 log.debug(lg);
                 writeLog(LogEntryType.DEBUG, lg);
             
@@ -140,10 +142,25 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 //System.out.println("Exception: " + ex);
                 //ex.printStackTrace();
                 //log.error("MeterReaderRunner:Exception:" + ex, ex);
-                lg = "MeterReaderRunner:Exception:" + ex;
+                lg = "DeviceReaderRunner:Exception:" + ex;
                 log.error(lg, ex);
                 writeLog(LogEntryType.ERROR, lg, ex);
                 running = false;
+                
+                if (m_da.checkUnsatisfiedLink(ex))
+                {
+                    I18nControlAbstract ic = this.m_da.getI18nControlInstance();
+                    
+                    String[] dta = m_da.getUnsatisfiedLinkData(ex);
+                    
+                    JOptionPane.showMessageDialog(this.dialog,
+                        String.format(ic.getMessage("NO_BINARY_PART_FOUND"), dta[0], dta[2], dta[1]),
+                        ic.getMessage("ERROR") + ": " + dta[0], 
+                        JOptionPane.ERROR_MESSAGE, 
+                        null);
+                    
+                }
+                
             }
             
             this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
@@ -156,6 +173,8 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
         }  // while
 
     }
+
+    
 
     
     /**

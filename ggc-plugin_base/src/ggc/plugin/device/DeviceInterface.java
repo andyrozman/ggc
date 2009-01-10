@@ -133,7 +133,6 @@ public interface DeviceInterface extends SelectableInterface
      *   
      * @param can_read_data
      * @param can_read_partitial_data
-     * @param can_clear_data
      * @param can_read_device_info
      * @param can_read_device_configuration
      */

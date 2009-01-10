@@ -108,7 +108,6 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      * Constructor
      * @param da 
      * 
-     * @param reader
      * @param server
      */
     public DeviceInstructionsDialog(DataAccessPlugInBase da, /*DbDataReaderAbstract reader,*/ DevicePlugInServer server)

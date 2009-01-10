@@ -167,7 +167,6 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
      * Set the COM-Port from which will be read.
      * 
      * @param port 
-     * @param String port
      * @throws PlugInBaseException 
      */
     public void setPort(String port) throws PlugInBaseException
@@ -523,7 +522,6 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     
     /**
-     * @see data.imports.DataImport#close()
      */
     public void close()
     {
@@ -806,6 +804,8 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
             
             //CommPortIdentifier.
             
+//            CommPortIdentifier.getPortIdentifier("xx");
+            
             Enumeration<?> enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 
             {
@@ -816,12 +816,68 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
         }
         catch(Exception ex)
         {
-            System.out.println("Exception: getAvailableSerialPorts: " + ex);
-
-        }
+            log.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
+        } 
         return retVal;
 
     }
+
+    
+    /**
+     * Get All Available Ports as String (Internal)
+     * @return
+     * @throws Exception
+     */
+    public Vector<String> getAllAvailablePortsStringInternal() throws Exception
+    {
+        Vector<String> retVal = new Vector<String>();
+//        Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
+
+  //      try
+        {
+            //Vector retVal = new Vector();
+//            int counter = 0;
+            
+            //CommPortIdentifier.
+            
+//            CommPortIdentifier.getPortIdentifier("xx");
+            
+            try
+            {
+                this.setPort("COM1");
+                //System.loadLibrary( "rxtxSerial" );            
+            }
+            catch(Exception ex)
+            {
+                System.out.println(ex);
+                if (m_da.checkUnsatisfiedLink(ex))
+                {
+                    System.out.println("UNSATISFIED");
+                }
+                
+                
+            }
+            
+            
+            Enumeration<?> enume = CommPortIdentifier.getPortIdentifiers();
+            while (enume.hasMoreElements()) 
+            {
+                CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
+                //if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
+                    retVal.add(portID.getName());
+            }
+        }
+    /*    catch(Exception ex)
+        {
+            log.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
+            throw ex;
+            //System.out.println("Exception: getAvailableSerialPorts: " + ex);
+
+        } */
+        return retVal;
+
+    }
+    
     
     
     /**
