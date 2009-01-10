@@ -20,6 +20,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.utils.ATechDate;
 import com.atech.utils.TimeZoneUtil;
 
@@ -52,8 +55,8 @@ import com.atech.utils.TimeZoneUtil;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AscensiaMeter  
+ *  Description:  Base Implementation for all Ascensia/Bayer meter devices
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -101,6 +104,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     protected I18nControl ic = I18nControl.getInstance();
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+    private static Log log = LogFactory.getLog(AscensiaMeter.class);
 
 
     boolean multiline = false;
@@ -191,8 +195,9 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 		}
 		catch(Exception ex)
 		{
-		    System.out.println("AscensiaMeter -> Error adding listener: " + ex);
-		    ex.printStackTrace();
+		    log.error("Exception on create:" + ex, ex);
+		    //System.out.println("AscensiaMeter -> Exception on create: " + ex);
+		    //ex.printStackTrace();
 		}
 		
     }

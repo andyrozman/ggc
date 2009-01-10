@@ -16,12 +16,14 @@ Tasks that need to be done:
                     * EuroFlash
                     * FreeStyle
                     * GlucoCard
+    * Standalone application ??
 
 
 Documentation:
 ---------------
 - How-To for Sniffing data for Meters (just add entry into forum)
 - JavaHelp for GUI
+- How-To-Add-Meter
 
 
 ===========================================================================

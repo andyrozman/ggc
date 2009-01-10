@@ -121,14 +121,23 @@ public class MeterConsoleTesterAlex // extends JFrame
      */
     public void displaySerialPorts()
     {
-        Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
-
-        System.out.println(" --- List Serial Ports -----");
-
-        for (int i = 0; i < vct.size(); i++)
+        try
         {
-            System.out.println(vct.get(i));
+            Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
+    
+            System.out.println(" --- List Serial Ports -----");
+    
+            for (int i = 0; i < vct.size(); i++)
+            {
+                System.out.println(vct.get(i));
+            }
         }
+        catch(Exception ex)
+        {
+            System.out.println("Exception getting serial ports. Ex: " + ex);
+            ex.printStackTrace();
+        }
+        
     }
 
     /**

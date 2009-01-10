@@ -416,9 +416,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
      * This method processes the retrieved records
      * and writes them to the database.
      * 
-     * @param completeArr 
-     * 
-     * @param records a list of records
+     * @param completeArr array of byte elements 
      */
     public void processRecord(byte[] completeArr)
     {
