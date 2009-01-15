@@ -354,12 +354,12 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
             if (meal_nut.getAmount() > 0)
             {
-                MealNutritionsDisplay mnd = new MealNutritionsDisplay(ic, meal_nut);
+                MealNutritionsDisplay _mnd = new MealNutritionsDisplay(ic, meal_nut);
 
-                NutritionDefinition nd = this.m_da.getDb().nutrition_defs.get(mnd.getId());
-                mnd.setNutritionDefinition(nd);
+                NutritionDefinition nd = this.m_da.getDb().nutrition_defs.get(_mnd.getId());
+                _mnd.setNutritionDefinition(nd);
 
-                this.list_nutritions.add(mnd);
+                this.list_nutritions.add(_mnd);
             }
         }
 
@@ -572,11 +572,11 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
      * edit. If value returned is null, then no warning message box will be
      * displayed.
      * 
-     * @param action_type
+     * @param _action_type
      *            type of action (ACTION_ADD, ACTION_EDIT)
      * @return String value as warning string
      */
-    public String getWarningString(int action_type)
+    public String getWarningString(int _action_type)
     {
         return null;
     }

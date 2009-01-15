@@ -352,19 +352,19 @@ public class DailyFoodEntry // implements SelectableInterface
     /**
      * Add Multiplier
      * 
-     * @param id
-     * @param multiplier
+     * @param _id
+     * @param _multiplier
      */
-    public void addMultiplier(String id, float multiplier)
+    public void addMultiplier(String _id, float _multiplier)
     {
         if (this.multiplier == null)
         {
             this.multiplier = new Hashtable<String, String>();
         }
 
-        if (!this.multiplier.containsKey(id))
+        if (!this.multiplier.containsKey(_id))
         {
-            this.multiplier.put(id, "" + multiplier);
+            this.multiplier.put(_id, "" + _multiplier);
         }
     }
 
@@ -978,16 +978,16 @@ public class DailyFoodEntry // implements SelectableInterface
     /**
      * Get Nutrient Value
      * 
-     * @param id
+     * @param _id
      * @return
      */
-    public float getNutrientValue(int id)
+    public float getNutrientValue(int _id)
     {
         ArrayList<MealNutrition> lst = this.getNutrients();
         
         for(int i=0; i<lst.size(); i++)
         {
-            if (lst.get(i).getId()==id)
+            if (lst.get(i).getId()==_id)
                 return lst.get(i).getAmount();
                 //return DataAccess.Decimal2Format.format(lst.get(i).getAmount());
         }

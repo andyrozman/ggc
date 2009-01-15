@@ -82,10 +82,10 @@ public class HbA1cView extends JFAbstractGraphView
     public HbA1cView(HbA1cValues hbValues)
     {
         data = hbValues;
-        chart = ChartFactory.createPieChart3D(null, dataset, true, true, false);
+        m_chart = ChartFactory.createPieChart3D(null, dataset, true, true, false);
         
         //title, dataset, legend, tooltips, urls).createPieChart(
-        chartPanel = new ChartPanel(chart, false, true, true, false, true);
+        chartPanel = new ChartPanel(m_chart, false, true, true, false, true);
         redraw();
         setLayout(new BorderLayout());
         add(chartPanel, BorderLayout.CENTER);

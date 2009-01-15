@@ -394,10 +394,10 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
             if (fpmsd.wasAction())
             {
-                NutritionDataDisplay ndd = new NutritionDataDisplay(ic,
+                NutritionDataDisplay ndd1 = new NutritionDataDisplay(ic,
                         (NutritionDefinition) fpmsd.getSelectedObject(), fpmsd.getAmountValue());
 
-                this.list_nutritions.add(ndd);
+                this.list_nutritions.add(ndd1);
                 this.createModel(this.list_nutritions, this.table_1, this.ndd);
             }
 
@@ -411,15 +411,15 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
                 return;
             }
 
-            NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
+            NutritionDataDisplay _ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
 
-            FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, ndd);
+            FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, _ndd);
 
             if (fpmsd.wasAction())
             {
                 //System.out.println("Returned value: " + fpmsd.getAmountValue());
 
-                ndd.setAmount(fpmsd.getAmountValue());
+                _ndd.setAmount(fpmsd.getAmountValue());
                 this.createModel(this.list_nutritions, this.table_1, this.ndd);
             }
 
@@ -438,9 +438,9 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
             if (ii == JOptionPane.YES_OPTION)
             {
-                NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
+                NutritionDataDisplay _ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
 
-                this.list_nutritions.remove(ndd);
+                this.list_nutritions.remove(_ndd);
                 this.createModel(this.list_nutritions, this.table_1, this.ndd);
             }
 
@@ -453,10 +453,10 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
             if (fpmsd.wasAction())
             {
-                HomeWeightDataDisplay hwd = new HomeWeightDataDisplay(ic, (NutritionHomeWeightType) fpmsd
+                HomeWeightDataDisplay _hwd = new HomeWeightDataDisplay(ic, (NutritionHomeWeightType) fpmsd
                         .getSelectedObject(), fpmsd.getAmountValue(), fpmsd.getWeightValue());
 
-                this.list_hweight.add(hwd);
+                this.list_hweight.add(_hwd);
                 this.createModel(this.list_hweight, this.table_2, this.hwd);
             }
 
@@ -470,14 +470,14 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
                 return;
             }
 
-            HomeWeightDataDisplay hwd = this.list_hweight.get(this.table_2.getSelectedRow());
+            HomeWeightDataDisplay _hwd = this.list_hweight.get(this.table_2.getSelectedRow());
 
-            FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, hwd);
+            FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, _hwd);
 
             if (fpmsd.wasAction())
             {
-                hwd.setAmount(fpmsd.getAmountValue());
-                hwd.setWeight(fpmsd.getWeightValue());
+                _hwd.setAmount(fpmsd.getAmountValue());
+                _hwd.setWeight(fpmsd.getWeightValue());
 
                 this.createModel(this.list_hweight, this.table_2, this.hwd);
             }
@@ -499,9 +499,9 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
             if (ii == JOptionPane.YES_OPTION)
             {
 
-                HomeWeightDataDisplay hwd = this.list_hweight.get(this.table_2.getSelectedRow());
+                HomeWeightDataDisplay _hwd = this.list_hweight.get(this.table_2.getSelectedRow());
 
-                this.list_hweight.remove(hwd);
+                this.list_hweight.remove(_hwd);
                 this.createModel(this.list_hweight, this.table_2, this.hwd);
             }
         }
@@ -668,11 +668,11 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
      * edit. If value returned is null, then no warning message box will be
      * displayed.
      * 
-     * @param action_type
+     * @param _action_type
      *            type of action (ACTION_ADD, ACTION_EDIT)
      * @return String value as warning string
      */
-    public String getWarningString(int action_type)
+    public String getWarningString(int _action_type)
     {
         if (this.isAddAction())
         {
@@ -817,18 +817,18 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
     }
 
-    private void addFood2Tree(FoodDescription food)
+    private void addFood2Tree(FoodDescription _food)
     {
 //        System.out.println(food);
-        m_da.tree_roots.get("2").m_groups_ht.get("" + food.getGroup_id()).addChild(food);
-        m_da.tree_roots.get("2").m_foods_ht.put("" + food.getId(), food);
+        m_da.tree_roots.get("2").m_groups_ht.get("" + _food.getGroup_id()).addChild(_food);
+        m_da.tree_roots.get("2").m_foods_ht.put("" + _food.getId(), _food);
         
         this.m_dialog.refreshTree();
     }
 
-    private void removeFoodFromTree(FoodDescription food, long prev_group_id)
+    private void removeFoodFromTree(FoodDescription _food, long prev_group_id)
     {
-        m_da.tree_roots.get("2").m_groups_ht.get("" + prev_group_id).removeChild(food);
+        m_da.tree_roots.get("2").m_groups_ht.get("" + prev_group_id).removeChild(_food);
     }
 
 }

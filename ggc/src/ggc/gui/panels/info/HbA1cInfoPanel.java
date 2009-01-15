@@ -1,9 +1,8 @@
 package ggc.gui.panels.info;
 
 import ggc.core.data.HbA1cValues;
-import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.core.db.GGCDb;
+import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -50,7 +49,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     private JLabel lblAvgBG;
     private JLabel lblReadings;
     private JLabel lblReadingsPerDay;
-    private DataAccess m_da = DataAccess.getInstance();
+    //private DataAccess m_da = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -83,11 +82,23 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
         add(lblPanel, BorderLayout.NORTH);
     }
 
+    
+    
     /**
-     * Refresh Information 
+     * Get Tab Name
+     * 
+     * @return name as string
      */
-    @Override
-    public void refreshInfo()
+    public String getTabName()
+    {
+        return "HbA1cInfo";
+    }
+    
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
     {
         HbA1cValues hbVal = null;
 
@@ -124,21 +135,14 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     
     
     /**
-     * Get Tab Name
+     * Get Panel Id
      * 
-     * @return name as string
+     * @return id of panel
      */
-    public String getTabName()
+    @Override
+    public int getPanelId()
     {
-        return "HbA1cInfo";
-    }
-    
-    
-    /**
-     * Do Refresh - This method can do Refresh
-     */
-    public void doRefresh()
-    {
+        return InfoPanelsIds.INFO_PANEL_HBA1C;
     }
     
     

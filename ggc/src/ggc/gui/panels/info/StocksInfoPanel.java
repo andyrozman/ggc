@@ -81,4 +81,16 @@ public class StocksInfoPanel extends AbstractInfoPanel
     }
     
     
+    /**
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    @Override
+    public int getPanelId()
+    {
+        return InfoPanelsIds.INFO_PANEL_STOCKS;
+    }
+    
+    
 }

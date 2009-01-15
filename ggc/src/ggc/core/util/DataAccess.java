@@ -141,7 +141,7 @@ public class DataAccess extends ATDataAccessAbstract
     // public String skinLFSelected = null;
     // String allDbs[] = null;
 
-    public static final String pathPrefix = ".";
+    //public static final String pathPrefix = ".";
 
     // public I18nControl m_i18n = null;
 
@@ -974,23 +974,24 @@ public class DataAccess extends ATDataAccessAbstract
 
     }
 
+    /*
     @Override
     public String getDateString(int date)
     {
         // 20051012
 
         int year = date / 10000;
-        int months = date - (year * 10000);
+        int _months = date - (year * 10000);
 
-        months = months / 100;
+        _months = _months / 100;
 
-        int days = date - (year * 10000) - (months * 100);
+        int _days = date - (year * 10000) - (_months * 100);
 
         if (year == 0)
             return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2);
         else
             return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2) + "/" + year;
-    }
+    }*/
 
     @Override
     public String getTimeString(int time)
@@ -1023,11 +1024,6 @@ public class DataAccess extends ATDataAccessAbstract
     // ret_type = 2 (Date)
     // ret_type = 3 (Time)
 
-    public static final int DT_DATETIME = 1;
-
-    public static final int DT_DATE = 2;
-
-    public static final int DT_TIME = 3;
 
     @Override
     public String getDateTimeString(long dt, int ret_type)

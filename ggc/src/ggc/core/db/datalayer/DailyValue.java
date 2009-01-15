@@ -307,7 +307,6 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     /**
      * dbExportHeader - header for export file
      * 
-     * @param table_version
      * @return
      */
     public String dbExportHeader()

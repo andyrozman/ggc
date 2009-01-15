@@ -331,10 +331,10 @@ public class TestNutritionData
     }
 
     @SuppressWarnings({ "unchecked", "unused" })
-    private void getKeywords(GGCDb db)
+    private void getKeywords(GGCDb _db)
     {
 
-        ArrayList<FoodDescription> lst = db.getUSDAFoodDescriptions();
+        ArrayList<FoodDescription> lst = _db.getUSDAFoodDescriptions();
         // ArrayList<SelectableInterface> lst = sb.getNutritionHomeWeights();
 
         Hashtable ht = new Hashtable();

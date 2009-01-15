@@ -384,12 +384,12 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
                 return;
             }
 
-            MealPartsDisplay mnd = this.list_parts.get(this.table_1.getSelectedRow());
-            MealSelectorDialog msd = new MealSelectorDialog(m_da, mnd.getMealPart());
+            MealPartsDisplay _mnd = this.list_parts.get(this.table_1.getSelectedRow());
+            MealSelectorDialog msd = new MealSelectorDialog(m_da, _mnd.getMealPart());
 
             if (msd.wasAction())
             {
-                mnd.setAmount(msd.getAmountValue());
+                _mnd.setAmount(msd.getAmountValue());
                 this.createModel(this.list_parts, this.table_1, this.mpd);
                 refreshNutritions();
             }
@@ -411,11 +411,11 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
             if (ii == JOptionPane.YES_OPTION)
             {
-                MealPartsDisplay mnd = this.list_parts.get(this.table_1.getSelectedRow());
+                MealPartsDisplay _mnd = this.list_parts.get(this.table_1.getSelectedRow());
                 // PersonContact pc =
                 // m_contact_data.get(list_contact.getSelectedIndex());
 
-                this.list_parts.remove(mnd);
+                this.list_parts.remove(_mnd);
 
                 this.createModel(this.list_parts, this.table_1, this.mpd);
                 refreshNutritions();
@@ -519,12 +519,12 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
             if (meal_nut.getAmount() > 0)
             {
-                MealNutritionsDisplay mnd = new MealNutritionsDisplay(ic, meal_nut);
+                MealNutritionsDisplay _mnd = new MealNutritionsDisplay(ic, meal_nut);
 
-                NutritionDefinition nd = this.m_da.getDb().nutrition_defs.get(mnd.getId());
-                mnd.setNutritionDefinition(nd);
+                NutritionDefinition nd = this.m_da.getDb().nutrition_defs.get(_mnd.getId());
+                _mnd.setNutritionDefinition(nd);
 
-                this.list_nutritions.add(mnd);
+                this.list_nutritions.add(_mnd);
             }
         }
 
@@ -748,11 +748,11 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
      * edit. If value returned is null, then no warning message box will be
      * displayed.
      * 
-     * @param action_type type of action (ACTION_ADD, ACTION_EDIT)
+     * @param _action_type type of action (ACTION_ADD, ACTION_EDIT)
      * 
      * @return String value as warning string
      */
-    public String getWarningString(int action_type)
+    public String getWarningString(int _action_type)
     {
         if (this.isAddAction())
         {
@@ -910,16 +910,16 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     }
 
-    private void addMeal2Tree(Meal meal)
+    private void addMeal2Tree(Meal _meal)
     {
-        m_da.tree_roots.get("3").m_meal_groups_ht.get("" + meal.getGroup_id()).addChild(meal);
-        m_da.tree_roots.get("3").m_meals_ht.put("" + meal.getId(), meal);
+        m_da.tree_roots.get("3").m_meal_groups_ht.get("" + _meal.getGroup_id()).addChild(_meal);
+        m_da.tree_roots.get("3").m_meals_ht.put("" + _meal.getId(), _meal);
         this.m_dialog.refreshTree();
     }
 
-    private void removeMealFromTree(Meal meal, long prev_group_id)
+    private void removeMealFromTree(Meal _meal, long prev_group_id)
     {
-        m_da.tree_roots.get("3").m_meal_groups_ht.get("" + prev_group_id).removeChild(meal);
+        m_da.tree_roots.get("3").m_meal_groups_ht.get("" + prev_group_id).removeChild(_meal);
     }
 
 }

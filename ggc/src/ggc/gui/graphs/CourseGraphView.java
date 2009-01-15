@@ -128,9 +128,9 @@ public class CourseGraphView extends JFAbstractGraphView
         this.plotData = data;
         setBackground(backgroundColor);
 
-        chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"), String.format(
+        m_chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"), String.format(
             translator.getMessage("AXIS_VALUE_LABEL"), unitLabel), BGDataset, true, true, false);
-        chartPanel = new ChartPanel(chart, false, true, true, false, true);
+        chartPanel = new ChartPanel(m_chart, false, true, true, false, true);
         chartPanel.setDomainZoomable(true);
         chartPanel.setRangeZoomable(true);
         setLayout(new BorderLayout());

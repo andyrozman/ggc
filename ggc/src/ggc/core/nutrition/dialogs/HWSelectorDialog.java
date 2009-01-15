@@ -90,7 +90,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
     /**
      * Get Full Data
      * 
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#getFullData()
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#getFullData()
      */
     public void getFullData()
     {
@@ -202,7 +202,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
     /**
      * Item State Changed
      * 
-     * @see com.atech.graphics.components.selector.SelectorAbstractDialog#itemStateChanged(java.awt.event.ItemEvent)
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#itemStateChanged(java.awt.event.ItemEvent)
      */
     @Override
     public void itemStateChanged(ItemEvent e)

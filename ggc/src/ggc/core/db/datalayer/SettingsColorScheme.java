@@ -464,7 +464,6 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     /**
      * dbExportHeader - header for export file
      * 
-     * @param table_version
      * @return
      */
     public String dbExportHeader()

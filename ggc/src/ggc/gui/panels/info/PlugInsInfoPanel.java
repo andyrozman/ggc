@@ -45,7 +45,7 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     private JLabel lblMeter;
     private JLabel lblPump;
     private JLabel lblCgms;
-    private DataAccess m_da = DataAccess.getInstance();
+    //private DataAccess m_da = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -137,6 +137,18 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
      */
     public void doRefresh()
     {
+    }
+    
+    
+    /**
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    @Override
+    public int getPanelId()
+    {
+        return InfoPanelsIds.INFO_PANEL_PLUGINS;
     }
     
     

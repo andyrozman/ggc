@@ -467,22 +467,22 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
 
         Transaction tx = sess.beginTransaction();
-        Long id;
+        Long _id;
 
         if (this.group_type == 1)
         {
-            id = (Long) sess.save(this.group_db1);
-            this.group_db1.setId(id);
+            _id = (Long) sess.save(this.group_db1);
+            this.group_db1.setId(_id);
         }
         else
         {
-            id = (Long) sess.save(this.group_db2);
-            this.group_db2.setId(id);
+            _id = (Long) sess.save(this.group_db2);
+            this.group_db2.setId(_id);
         }
 
         tx.commit();
 
-        return "" + id.longValue();
+        return "" + _id.longValue();
     }
 
     /**
@@ -735,7 +735,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     /**
      * dbExportHeader - header for export file
      * 
-     * @param table_version
      * @return
      */
     public String dbExportHeader()

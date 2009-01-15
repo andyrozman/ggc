@@ -150,6 +150,17 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     public void doRefresh()
     {
     }
+
     
+    /**
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    @Override
+    public int getPanelId()
+    {
+        return InfoPanelsIds.INFO_PANEL_GENERAL;
+    }
     
 }

@@ -43,6 +43,12 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
+// NOT IMPLEMENTED !!!!!
+// NOT IMPLEMENTED !!!!!
+// NOT IMPLEMENTED !!!!!
+// NOT IMPLEMENTED !!!!!
+
+
 public class GraphViewCourse extends AbstractGraphViewAndProcessor 
 {
 
@@ -57,6 +63,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
      */
     public GraphViewCourse()
     {
+        // NOT IMPLEMENTED !!!!!
         super(DataAccess.getInstance());
         da_local = DataAccess.getInstance();
     }

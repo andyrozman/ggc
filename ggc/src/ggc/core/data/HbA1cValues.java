@@ -64,14 +64,14 @@ public class HbA1cValues
      * Add Day
      * 
      * @param avgBG
-     * @param readings
+     * @param _readings
      */
-    public void addDay(float avgBG, int readings)
+    public void addDay(float avgBG, int _readings)
     {
         sumBG += avgBG;
-        ReadingsPerDay[readings]++;
-        this.readings += readings;
-        exp += readings * readings;
+        ReadingsPerDay[_readings]++;
+        this.readings += _readings;
+        exp += _readings * _readings;
         dayCount++;
     }
 

@@ -1,6 +1,8 @@
 package ggc.core.plugins;
 
 import ggc.core.util.DataAccess;
+import ggc.gui.MainFrame;
+import ggc.gui.panels.info.InfoPanel;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -187,6 +189,7 @@ public class MetersPlugIn extends PlugInClient
         if (command.equals("meters_read"))
         {
             this.readMeterData();
+            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("meters_list"))
         {
@@ -195,6 +198,7 @@ public class MetersPlugIn extends PlugInClient
         else if (command.equals("meters_config"))
         {
             this.executeCommand(MetersPlugIn.COMMAND_CONFIGURATION);
+            refreshPanels(InfoPanel.PANEL_GROUP_PLUGINS_DEVICES);
         }
         else if (command.equals("meters_about"))
         {
@@ -208,6 +212,14 @@ public class MetersPlugIn extends PlugInClient
 
     }
 
+    
+    private void refreshPanels(int mask)
+    {
+        MainFrame mf = (MainFrame)parent;
+        mf.informationPanel.refreshGroup(mask);
+    }
+    
+    
     
     /**
      * Get When Will Be Implemented

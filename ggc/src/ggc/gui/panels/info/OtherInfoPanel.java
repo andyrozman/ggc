@@ -77,18 +77,28 @@ public class OtherInfoPanel extends AbstractInfoPanel
 
     
     /**
-     * RefreshInfo - Refresh info by id 
+     * RefreshInfo - Refresh info by name
      *  
      * @param name
      */
     public void refreshInfo(String name)
     {
-        // TODO 
-        if (this.getTabName().equals(name))
-        {
-            doRefresh();
-        }
+        this.panel_1.refreshInfo(name);
+        this.panel_2.refreshInfo(name);
     }
+    
+    
+    /**
+     * RefreshInfo - Refresh info by mask 
+     *  
+     * @param mask
+     */
+    public void refreshInfo(int mask)
+    {
+        this.panel_1.refreshInfo(mask);
+        this.panel_2.refreshInfo(mask);
+    }
+    
     
     
     /**
@@ -97,6 +107,20 @@ public class OtherInfoPanel extends AbstractInfoPanel
     public void doRefresh()
     {
     }
+    
+    
+    /**
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    @Override
+    public int getPanelId()
+    {
+        return InfoPanelsIds.INFO_PANEL_NONE;
+    }
+   
+    
     
     
 }

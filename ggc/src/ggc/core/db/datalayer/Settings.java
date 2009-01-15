@@ -466,7 +466,6 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
     /**
      * dbExportHeader - header for export file
      * 
-     * @param table_version
      * @return
      */
     public String dbExportHeader()

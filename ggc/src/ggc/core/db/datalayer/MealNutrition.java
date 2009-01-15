@@ -118,9 +118,9 @@ public class MealNutrition
      * Add Multiplier
      * 
      * @param id
-     * @param multiplier
+     * @param _multiplier
      */
-    public void addMultiplier(String id, float multiplier)
+    public void addMultiplier(String id, float _multiplier)
     {
         if (this.multiplier == null)
         {
@@ -129,7 +129,7 @@ public class MealNutrition
 
         if (!this.multiplier.containsKey(id))
         {
-            this.multiplier.put(id, "" + multiplier);
+            this.multiplier.put(id, "" + _multiplier);
         }
     }
 
@@ -221,12 +221,12 @@ public class MealNutrition
     /**
      * Add Amount To Sum
      * 
-     * @param amount
+     * @param _amount
      */
-    public void addAmountToSum(float amount)
+    public void addAmountToSum(float _amount)
     {
         //System.out.println("addAmountToSum: nutr=" + this.nutrition_desc + "old=" + amount_sum + ",add=" + amount);
-        this.amount_sum += amount;
+        this.amount_sum += _amount;
     }
 
     /**

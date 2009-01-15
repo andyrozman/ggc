@@ -164,13 +164,24 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         add(PanelIns2);
     }
 
+    
+    
     /**
-     * Refresh Information 
+     * Get Tab Name
+     * 
+     * @return name as string
      */
-    @Override
-    public void refreshInfo()
+    public String getTabName()
     {
-
+        return "StatisticInfo";
+    }
+    
+    
+    /**
+     * Do Refresh - This method can do Refresh
+     */
+    public void doRefresh()
+    {
         if (!m_da.isDatabaseInitialized()) 
             return;
 
@@ -201,41 +212,31 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         lblIns2CountDay.setText(df.format(sV.getIns2CountPerDay()));
 
         
-    	if (first_refresh)
-    	{
-    	    PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
-    	    PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
+        if (first_refresh)
+        {
+            PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
+            PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
     
-    	    lbl_sum_ins1_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr() + ":");
-    	    lbl_sum_ins1_day_name.setText(m_da.getSettings().getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
+            lbl_sum_ins1_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr() + ":");
+            lbl_sum_ins1_day_name.setText(m_da.getSettings().getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
     
-    	    lbl_sum_ins2_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns2Abbr() + ":");
-    	    lbl_sum_ins2_day_name.setText(m_da.getSettings().getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
+            lbl_sum_ins2_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns2Abbr() + ":");
+            lbl_sum_ins2_day_name.setText(m_da.getSettings().getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
     
-    	    first_refresh = false;
-    	}
-
+            first_refresh = false;
+        }
     }
     
     
     /**
-     * Get Tab Name
+     * Get Panel Id
      * 
-     * @return name as string
+     * @return id of panel
      */
-    public String getTabName()
+    @Override
+    public int getPanelId()
     {
-        return "StatisticInfo";
+        return InfoPanelsIds.INFO_PANEL_STATISTICS;
     }
-    
-    
-    /**
-     * Do Refresh - This method can do Refresh
-     */
-    public void doRefresh()
-    {
-    }
-    
-    
     
 }

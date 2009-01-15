@@ -1,30 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: PrefPrintingPane.java
- *  Purpose:  Preferences Pane to configure the meter.
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
 package ggc.gui.panels.prefs;
 
 import ggc.gui.dialogs.PropertiesDialog;
@@ -157,27 +130,27 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
     /**
      * Create Little Panel
      * 
-     * @param parent
+     * @param _parent
      * @param comp
      */
-    public void createLittlePanel(JPanel parent, JComponent comp)
+    public void createLittlePanel(JPanel _parent, JComponent comp)
     {
         JPanel pp = new JPanel();
         pp.setLayout(new GridLayout(0, 2));
         pp.add(comp);
         pp.add(new JLabel());
 
-        parent.add(pp);
+        _parent.add(pp);
     }
 
     /**
      * Create Little Panel
      * 
-     * @param parent
+     * @param _parent
      * @param comp1
      * @param comp2
      */
-    public void createLittlePanel(JPanel parent, JComponent comp1, JComponent comp2)
+    public void createLittlePanel(JPanel _parent, JComponent comp1, JComponent comp2)
     {
         JPanel pp = new JPanel();
         pp.setLayout(new GridLayout(0, 3));
@@ -185,7 +158,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         pp.add(comp2);
         // pp.add(new JLabel());
 
-        parent.add(pp);
+        _parent.add(pp);
     }
 
     private int getTimeValue(JTextField field, int default_value)

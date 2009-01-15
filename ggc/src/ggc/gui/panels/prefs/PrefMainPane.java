@@ -28,7 +28,6 @@
 package ggc.gui.panels.prefs;
 
 import ggc.gui.dialogs.PropertiesDialog;
-import ggc.core.util.I18nControl;
 
 import java.awt.GridLayout;
 
@@ -67,7 +66,7 @@ public class PrefMainPane extends AbstractPrefOptionsPanel
 {
 
     private static final long serialVersionUID = -7014183829896704623L;
-    private I18nControl m_ic = I18nControl.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();
 
 
     /**

@@ -27,14 +27,12 @@ import ggc.core.db.hibernate.SettingsH;
 import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.util.DataAccess;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,7 +42,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
-import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -78,9 +75,9 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateDb
 {
-    public static final int DB_CONFIG_LOADED = 1;
-    public static final int DB_INITIALIZED = 2;
-    public static final int DB_STARTED = 3;
+    //public static final int DB_CONFIG_LOADED = 1;
+    //public static final int DB_INITIALIZED = 2;
+    //public static final int DB_STARTED = 3;
 
     private boolean debug = true;
     // x private boolean db_debug = false;
@@ -89,9 +86,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 //    private Session m_session = null;
 //    private Session m_session_2 = null;
 //    private SessionFactory sessions = null;
-    private int m_errorCode = 0;
-    private String m_errorDesc = "";
-    private String m_addId = "";
+//    private int m_errorCode = 0;
+//    private String m_errorDesc = "";
+//    private String m_addId = "";
 
     GGCDbConfig hib_config = null;
 
@@ -101,9 +98,24 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     private int m_loadStatus = 0;
 
     // GLOBAL DATA
+    /**
+     * Data: Nutrition Definitions (Hashtable)
+     */
     public Hashtable<String, NutritionDefinition> nutrition_defs = null;
+    
+    /**
+     * Data: Home Weight Definitions (Hashtable)
+     */
     public Hashtable<String, NutritionHomeWeightType> homeweight_defs = null;
+
+    /**
+     * Data: Nutrition Definitions (ArrayList)
+     */
     public ArrayList<SelectableInterface> nutrition_defs_list = null;
+
+    /**
+     * Data: Home Weight Definitions (ArrayList)
+     */
     public ArrayList<SelectableInterface> homeweight_defs_list = null;
 
     /*
@@ -122,6 +134,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
      * db_conn_username = null; protected String db_conn_password = null;
      */
 
+    /**
+     * Constructor 
+     * 
+     * @param da
+     */
     public GGCDb(DataAccess da)
     {
         /*m_cfg =*/ createConfiguration();
@@ -137,6 +154,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     }
 
     
+    /**
+     * Constructor
+     */
     public GGCDb()
     {
         /*m_cfg =*/ 
@@ -145,6 +165,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         // debugConfig();
     }
 
+    /**
+     * Get Configuration
+     */
     public Configuration getConfiguration()
     {
         return this.m_cfg;
@@ -166,27 +189,42 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
      */
     // }
 
+    /**
+     * Init Db
+     */
     public void initDb()
     {
         openHibernateSimple();
     }
 
+    /**
+     * Is Db Started
+     */
     public boolean isDbStarted()
     {
         return (this.m_loadStatus == DB_STARTED);
     }
 
+    /** 
+     * Close Db
+     */
     public void closeDb()
     {
         this.hib_config.closeDb();
         m_loadStatus = DB_CONFIG_LOADED;
     }
 
+    /** 
+     * Get Hibernate Configuration
+     */
     public GGCDbConfig getHibernateConfiguration()
     {
         return this.hib_config;
     }
 
+    /** 
+     * Open Hibernate Simple
+     */
     public void openHibernateSimple()
     {
         this.hib_config.createSessionFactory();
@@ -205,21 +243,18 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         m_loadStatus = DB_INITIALIZED;
     }
 
-    /*
-     * public void getStartStatus() { Map mpp = m_cfg.getSqlResultSetMappings();
-     * 
-     * System.out.println("isEmpty: " + mpp.isEmpty());
-     * 
-     * //log.debug(arg0);
-     * 
-     * }
-     */
 
+    /**
+     * Get Load Status
+     */
     public int getLoadStatus()
     {
         return m_loadStatus;
     }
 
+    /** 
+     * Display Error
+     */
     public void displayError(String source, Exception ex)
     {
 
@@ -254,11 +289,20 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         log.info(source + " - Process");
     }
 
+    /**
+     * Get Session
+     */
     public Session getSession()
     {
         return getSession(1);
     }
 
+    /**
+     * Get Session
+     * 
+     * @param session_nr 
+     * @return 
+     */
     public Session getSession(int session_nr)
     {
         return this.hib_config.getSession(session_nr);
@@ -275,15 +319,16 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         }*/
     }
 
+    /**
+     * Create Database
+     */
     public void createDatabase()
     {
         logInfo("createDatabase", "Process");
-
         new SchemaExport(this.getHibernateConfiguration().getConfiguration()).create(true, true);
-
-        //logInfo("openHibernateSimple", "End");
     }
 
+    
     // *************************************************************
     // **** SETTINGS ****
     // *************************************************************
@@ -291,7 +336,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     // ---
     // --- BASIC METHODS (Hibernate and DataLayer processing)
     // ---
-
+/*
     public boolean add(Object obj)
     {
 
@@ -567,6 +612,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+    
     public String addGetId()
     {
         return this.m_addId;
@@ -587,11 +633,15 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         this.m_errorCode = code;
         this.m_errorDesc = source + " : " + desc;
     }
-
+*/
+    
     // *************************************************************
     // **** SETTINGS ****
     // *************************************************************
 
+    /** 
+     * Create Configuration
+     */
     public HibernateConfiguration createConfiguration()
     {
         logInfo("createConfiguration()");
@@ -601,96 +651,31 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return this.hib_config;
     }
 
-    /*
-     * public Configuration createConfiguration() {
-     * 
-     * try {
-     * 
-     * Properties props = new Properties();
-     * 
-     * boolean config_read = false;
-     * 
-     * try { FileInputStream in = new
-     * FileInputStream("../data/GGC_Config.properties"); props.load(in);
-     * in.close();
-     * 
-     * db_num = new Integer(props.getProperty("SELECTED_DB")); db_conn_name =
-     * props.getProperty("DB"+db_num+"_CONN_NAME");
-     * 
-     * config_read = true; } catch (Exception ex) {
-     * 
-     * }
-     * 
-     * 
-     * 
-     * if (config_read) { log.info("GGCDb: Loading Db Configuration #"+ db_num +
-     * ": " + db_conn_name);
-     * 
-     * db_hib_dialect = props.getProperty("DB"+db_num+"_HIBERNATE_DIALECT");
-     * 
-     * 
-     * db_driver_class = props.getProperty("DB"+db_num+"_CONN_DRIVER_CLASS");
-     * db_conn_url = props.getProperty("DB"+db_num+"_CONN_URL");
-     * db_conn_username = props.getProperty("DB"+db_num+"_CONN_USERNAME");
-     * db_conn_password = props.getProperty("DB"+db_num+"_CONN_PASSWORD"); }
-     * else { // we had trouble reading config so we use default database
-     * 
-     * db_num = 0; db_conn_name = "Internal Database";
-     * 
-     * 
-     * log.info("GGCDb: Database configuration not found. Using default database."
-     * ); log.info("GGCDb: Loading Db Configuration #"+ db_num + ": " +
-     * db_conn_name);
-     * 
-     * db_hib_dialect = "org.hibernate.dialect.HSQLDialect"; db_driver_class =
-     * "org.hsqldb.jdbcDriver"; db_conn_url = "jdbc:hsqldb:file:../data/ggc_db";
-     * db_conn_username = "sa"; db_conn_password = ""; }
-     * 
-     * 
-     * 
-     * Configuration cfg = new Configuration()
-     * .addResource("GGC_Nutrition.hbm.xml") .addResource("GGC_Main.hbm.xml")
-     * .addResource("GGC_Other.hbm.xml") .addResource("GGC_Pump.hbm.xml")
-     * 
-     * .setProperty("hibernate.dialect", db_hib_dialect)
-     * .setProperty("hibernate.connection.driver_class", db_driver_class)
-     * .setProperty("hibernate.connection.url", db_conn_url)
-     * .setProperty("hibernate.connection.username", db_conn_username)
-     * .setProperty("hibernate.connection.password", db_conn_password)
-     * .setProperty("hibernate.connection.charSet", "utf-8")
-     * .setProperty("hibernate.use_outer_join", "true"); //
-     * .setProperty("hibernate.show_sql", "true") /
-     * .setProperty("hibernate.c3p0.min_size", "5")
-     * .setProperty("hibernate.c3p0.max_size", "20")
-     * .setProperty("hibernate.c3p0.timeout", "1800")
-     * .setProperty("hibernate.c3p0.max_statements", "50");
-     */
-    /*
-     * 
-     * 
-     * // System.out.println("Config loaded.");
-     * 
-     * 
-     * return m_cfg; } catch (Exception ex) {
-     * log.error("Loading GGCConfiguration Exception: " + ex.getMessage(), ex);
-     * //ex.printStackTrace(); } return null; }
-     */
 
     // *************************************************************
     // **** DATABASE INIT METHODS ****
     // *************************************************************
 
+    /** 
+     * Load Static Data
+     */
     public void loadStaticData()
     {
         m_loadStatus = DB_STARTED;
     }
 
+    /**
+     * Load Nutrition Db Base
+     */
     public void loadNutritionDbBase()
     {
         this.loadNutritionDefinitions();
         this.loadHomeWeights();
     }
 
+    /**
+     * Load Nutrition Db 1 - USDA
+     */
     public void loadNutritionDb1()
     {
         // tree root, now in static data
@@ -700,11 +685,17 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+    /**
+     * Load Nutrition Db 2 - User
+     */
     public void loadNutritionDb2()
     {
         m_da.tree_roots.put("2", new GGCTreeRoot(GGCTreeRoot.TREE_USER_NUTRITION, this));
     }
 
+    /**
+     * Load Meals Db
+     */
     public void loadMealsDb()
     {
         m_da.tree_roots.put("3", new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, this));
@@ -714,7 +705,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     // **** SETTINGS ****
     // *************************************************************
 
-    /*
+    /**
      * We load all config data (including schemes)
      */
     public void loadConfigData()
@@ -741,7 +732,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     }
 
     @SuppressWarnings("unchecked")
-    public void loadConfigDataEntries()
+    private void loadConfigDataEntries()
     {
 
         logInfo("loadConfigDataEntries()");
@@ -773,7 +764,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
-    /*
+    /**
+     * Save Config Data (without schemes)
      * We save just config, schemes save must be called separately
      */
     public void saveConfigData()
@@ -825,6 +817,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     // *************************************************************
     // **** NUTRITION DATA ****
     // *************************************************************
+    
+    
+    /**
+     * Get Food Groups - USDA
+     * 
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUSDAFoodGroups()
     {
@@ -856,6 +855,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+    /**
+     * Get Food Groups - User
+     * 
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUserFoodGroups()
     {
@@ -889,6 +893,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return list;
     }
 
+    /**
+     * Get Meal Groups
+     * 
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public ArrayList<MealGroup> getMealGroups()
     {
@@ -919,6 +928,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return list;
     }
 
+    /**
+     * Get Food Descriptions - USDA
+     * 
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUSDAFoodDescriptions()
     {
@@ -949,6 +963,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return list;
     }
 
+    /**
+     * Get Food Descriptions - User
+     * 
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUserFoodDescriptions()
     {
@@ -982,8 +1001,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+    /**
+     * Get Meals Descriptions
+     * 
+     * @return
+     */
     @SuppressWarnings("unchecked")
-    // public Hashtable<String, Meal> getMeals()
     public ArrayList<Meal> getMeals()
     {
         logInfo("getMeals()");
@@ -1017,7 +1040,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     }
 
     @SuppressWarnings("unchecked")
-    public void loadNutritionDefinitions()
+    private void loadNutritionDefinitions()
     {
 
         logInfo("loadNutritionDefinitions()");
@@ -1081,7 +1104,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     }
 
     @SuppressWarnings("unchecked")
-    public void loadHomeWeights()
+    private void loadHomeWeights()
     {
 
         logInfo("loadHomeWeights()");
@@ -1146,6 +1169,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     HbA1cValues hba1c_object = null;
 
+    /**
+     * Get HbA1c
+     * 
+     * @param day
+     * @param force
+     * @return
+     */
     public HbA1cValues getHbA1c(GregorianCalendar day, boolean force)
     {
         if (this.hba1c_object == null)
@@ -1162,6 +1192,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+    /**
+     * Load HbA1c
+     * 
+     * @param day
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public HbA1cValues loadHbA1c(GregorianCalendar day)
     {
@@ -1210,6 +1246,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return hbVal;
     }
 
+    /**
+     * Get Day Stats
+     * 
+     * @param day
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public DailyValues getDayStats(GregorianCalendar day)
     {
@@ -1250,6 +1292,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return dV;
     }
 
+    /**
+     * Get Day Stats Range (WeeklyValues)
+     * 
+     * @param start
+     * @param end
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public WeeklyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
     {
@@ -1293,6 +1342,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     
     
+    /**
+     * Get Day Values Range (ArrayList<DailyValuesRow>)
+     * 
+     * @param start
+     * @param end
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public ArrayList<DailyValuesRow> getDayValuesRange(GregorianCalendar start, GregorianCalendar end)
     {
@@ -1340,6 +1396,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     
     
     
+    /**
+     * Get Monthly Values
+     * 
+     * @param year
+     * @param month
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public MonthlyValues getMonthlyValues(int year, int month)
     {
@@ -1380,6 +1443,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     }
 
     
+    /**
+     * Get DayValuesData
+     * 
+     * @param from
+     * @param till
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public DayValuesData getDayValuesData(long from, long till)
     {
@@ -1419,6 +1489,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     
     
     
+    /**
+     * Save Day Stats
+     * 
+     * @param dV
+     */
     public void saveDayStats(DailyValues dV)
     {
 
@@ -1497,6 +1572,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+    /**
+     * DateTime Exists
+     * 
+     * @param datetime
+     * @return
+     */
     public boolean dateTimeExists(long datetime)
     {
         if (m_loadStatus == DB_CONFIG_LOADED)
@@ -1531,16 +1612,32 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     // **** NUTRITION DATA ****
     // *************************************************************
 
+    /**
+     * Get Nutrition Home Weights
+     * 
+     * @return
+     */
     public ArrayList<SelectableInterface> getNutritionHomeWeights()
     {
         return this.homeweight_defs_list;
     }
 
+    /**
+     * Get Nutrition Home Weight
+     * 
+     * @param id 
+     * @return
+     */
     public NutritionHomeWeightType getNutritionHomeWeight(long id)
     {
         return this.homeweight_defs.get("" + id);
     }
 
+    /**
+     * Get Nutrition Definitions
+     * 
+     * @return
+     */
     public ArrayList<SelectableInterface> getNutritionDefinitions()
     {
         return this.nutrition_defs_list;
@@ -1566,6 +1663,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 </class>
 */
     
+    /**
+     * Get Meter Values
+     * 
+     * @return
+     */
     public Hashtable<String,DayValueH> getMeterValues()
     {
 
@@ -1610,7 +1712,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     // *************************************************************
     // **** U T I L S ****
     // *************************************************************
-
+/*
     public String changeCase(String in)
     {
 
@@ -1653,7 +1755,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         }
 
     }
-
+*/
+    
+    
+    /**
+     * Debug Out
+     */
     public void debugOut(String source, Exception ex)
     {
 
@@ -1669,6 +1776,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     }
 
 
+    /**
+     * Get Application Db Name
+     */
     @Override
     public String getApplicationDbName()
     {

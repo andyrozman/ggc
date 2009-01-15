@@ -211,10 +211,10 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
      * Get Warning string. This method returns warning string for either add or edit.
      * If value returned is null, then no warning message box will be displayed.
      * 
-     * @param action_type type of action (ACTION_ADD, ACTION_EDIT)
+     * @param _action_type type of action (ACTION_ADD, ACTION_EDIT)
      * @return String value as warning string
      */
-    public String getWarningString(int action_type)
+    public String getWarningString(int _action_type)
     {
         return null;
     }

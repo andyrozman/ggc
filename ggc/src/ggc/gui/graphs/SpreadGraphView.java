@@ -82,7 +82,7 @@ public class SpreadGraphView extends AbstractGraphView
         this.connect = connect;
         if (gV != null)
         {
-            dayCount = gV.getDayCount();
+            dayCount = gV.getDailyValuesItemsCount();
         }
     }
 
@@ -94,7 +94,7 @@ public class SpreadGraphView extends AbstractGraphView
     public void setGlucoValues(GlucoValues gV)
     {
         this.gV = gV;
-        dayCount = gV.getDayCount();
+        dayCount = gV.getDailyValuesItemsCount();
     }
 
     /**
@@ -226,7 +226,7 @@ public class SpreadGraphView extends AbstractGraphView
 
         for (int i = 0; i < dayCount; i++)
         {
-            dV = gV.getDailyValuesForDay(i);
+            dV = gV.getDailyValuesItem(i);
 
             for (int j = 0; j < dV.getRowCount(); j++)
             {

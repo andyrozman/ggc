@@ -1,31 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: InfoPanel.java
- *  Purpose:  Container for all InfoPanels an the MainFrame. Responsible for
- *            managing the handling of its children.
- *
- *  Author:   schultd
- */
-
 package ggc.gui.panels.info;
 
 
@@ -118,7 +90,7 @@ public class InfoPanel extends JPanel
     }
     
     /**
-     * RefreshInfo - Refresh info by id 
+     * RefreshInfo - Refresh info by name 
      *  
      * @param name
      */
@@ -133,12 +105,56 @@ public class InfoPanel extends JPanel
     
 
     /**
+     * RefreshInfo - Refresh info by id 
+     *  
+     * @param mask
+     */
+    public void refreshPanels(int mask)
+    {
+        for (int i = 0; i < vInfoPanels.size(); i++)
+        {
+            vInfoPanels.get(i).refreshInfo(mask);
+        }
+    }
+    
+    
+    
+    /**
+     * Panel Group - Plugins Devices
+     */
+    public static final int PANEL_GROUP_PLUGINS_DEVICES = 1;
+
+    /**
+     * Panel Group - All Data (HbA1c and Statistics)
+     */
+    public static final int PANEL_GROUP_ALL_DATA = 2;
+
+    /**
+     * Panel Group - General Info
+     */
+    public static final int PANEL_GROUP_GENERAL_INFO = 3;
+
+    
+    /**
      * Refresh Group
      * 
      * @param type
      */
     public void refreshGroup(int type)
     {
+        if (type == InfoPanel.PANEL_GROUP_PLUGINS_DEVICES)
+        {
+            this.refreshPanels(InfoPanelsIds.INFO_PANEL_PLUGIN_DEVICES);
+        }
+        else if (type == InfoPanel.PANEL_GROUP_ALL_DATA)
+        {
+            this.refreshPanels(InfoPanelsIds.INFO_PANEL_HBA1C|InfoPanelsIds.INFO_PANEL_STATISTICS);
+        }
+        if (type == InfoPanel.PANEL_GROUP_GENERAL_INFO)
+        {
+            this.refreshPanels(InfoPanelsIds.INFO_PANEL_GENERAL);
+        }
+        
         // TODO
     }
     

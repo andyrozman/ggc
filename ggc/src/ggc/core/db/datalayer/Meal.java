@@ -370,11 +370,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     /**
      * Set Selected
      * 
-     * @param selected true if selected
+     * @param _selected true if selected
      */
-    public void setSelected(boolean newValue)
+    public void setSelected(boolean _selected)
     {
-        this.selected = newValue;
+        this.selected = _selected;
     }
 
     /**
@@ -455,7 +455,6 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     /**
      * dbExportHeader - header for export file
      * 
-     * @param table_version
      * @return
      */
     public String dbExportHeader()

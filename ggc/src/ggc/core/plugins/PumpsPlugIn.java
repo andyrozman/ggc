@@ -1,6 +1,8 @@
 package ggc.core.plugins;
 
 import ggc.core.util.DataAccess;
+import ggc.gui.MainFrame;
+import ggc.gui.panels.info.InfoPanel;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -191,6 +193,7 @@ public class PumpsPlugIn extends PlugInClient
         if (command.equals("pumps_read"))
         {
             this.readPumpsData();
+            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("pumps_list"))
         {
@@ -203,14 +206,17 @@ public class PumpsPlugIn extends PlugInClient
         else if (command.equals("pumps_manual_entry"))
         {
             this.executeCommand(PumpsPlugIn.COMMAND_MANUAL_ENTRY);
+            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("pumps_additional_data"))
         {
             this.executeCommand(PumpsPlugIn.COMMAND_ADDITIONAL_DATA);
+            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("pumps_config"))
         {
             this.executeCommand(PumpsPlugIn.COMMAND_CONFIGURATION);
+            refreshPanels(InfoPanel.PANEL_GROUP_PLUGINS_DEVICES);
         }
         else if (command.equals("pumps_about"))
         {
@@ -248,6 +254,13 @@ public class PumpsPlugIn extends PlugInClient
             return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
+    
+    private void refreshPanels(int mask)
+    {
+        MainFrame mf = (MainFrame)parent;
+        mf.informationPanel.refreshGroup(mask);
+    }
+    
     
     /**
      * Set Return Data (for getting data from plugin - async)

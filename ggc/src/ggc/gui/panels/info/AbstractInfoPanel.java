@@ -42,6 +42,13 @@ public abstract class AbstractInfoPanel extends JPanel
     protected DataAccess m_da = DataAccess.getInstance();
     protected boolean first_refresh = true;
 
+    
+    
+    
+    
+    
+    
+    
     /**
      * Constructor
      * 
@@ -85,7 +92,10 @@ public abstract class AbstractInfoPanel extends JPanel
     /**
      * Refresh Information 
      */
-    public abstract void refreshInfo();
+    public void refreshInfo()
+    {
+        doRefresh();
+    }
 
     /**
      * Invalidate First Refresh
@@ -104,8 +114,29 @@ public abstract class AbstractInfoPanel extends JPanel
     public abstract String getTabName();
     
     
+    
     /**
-     * RefreshInfo - Refresh info by id 
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    public abstract int getPanelId();
+    
+    
+    /** 
+     * Is Tab Checked
+     * 
+     * @param check_mask 
+     * @return 
+     */
+    public boolean isPanelTaged(int check_mask)
+    {
+        return ((check_mask & this.getPanelId()) == this.getPanelId());
+    }
+    
+    
+    /**
+     * RefreshInfo - Refresh info by name 
      *  
      * @param name
      */
@@ -116,6 +147,22 @@ public abstract class AbstractInfoPanel extends JPanel
             doRefresh();
         }
     }
+    
+    
+    /**
+     * RefreshInfo - Refresh info by mask 
+     *  
+     * @param mask
+     */
+    public void refreshInfo(int mask)
+    {
+        if (this.isPanelTaged(mask))
+        {
+            doRefresh();
+        }
+    }
+    
+    
     
     /**
      * Do Refresh - This method can do Refresh

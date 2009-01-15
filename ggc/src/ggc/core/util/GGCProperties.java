@@ -163,7 +163,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         setPrintNightStartTime(settings.getPrintNightStartTime());
         setRendering(settings.getRendering());
         setTextAntiAliasing(settings.getTextAntiAliasing());
-        setTimeZone(settings.getTimeZone());
+        //setTimeZone(settings.getTimeZone());
         setUserName(settings.getUserName());
     }
 
@@ -401,12 +401,12 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getIntValue("RENDER_TEXT_ANTIALIASING");
     }
-
+/*
     public String getTimeZone()
     {
         return this.m_cfg_mgr.getStringValue("TIMEZONE");
     }
-
+*/
     // colors
 
     public String getUserName()
@@ -429,40 +429,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
      * public ColorSchemeH setSelectedColorScheme() { return this.m_colors; }
      */
 
-    public void load()
-    {
-        m_da.getDb().loadConfigData();
-        m_da.setBGMeasurmentType(this.getBG_unit());
-        this.setColorSchemeObject(this.m_cfg_mgr.getStringValue("SELECTED_COLOR_SCHEME"));
-    }
-
-    public void reload()
-    {
-        load();
-    }
-
-    public void save()
-    {
-        // System.out.println("save");
-
-        // fix
-        /*
-         * if (changed_scheme) {
-         * DataAccess.notImplemented("GGCProperties:save():: changed scheme");
-         * System.out.println("save Scheme"); //m_da.m_db.s }
-         */
-
-        this.m_cfg_mgr.saveConfig();
-
-        if ((changed_config) || (this.m_config.hasChanged()))
-        {
-            // System.out.println("save Config REAL");
-            this.m_config.saveConfig();
-        }
-
-        m_da.setBGMeasurmentType(this.getBG_unit());
-
-    }
 
     public void setAntiAliasing(int value)
     {
@@ -514,7 +480,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setFloatValue("BG2_TARGET_HIGH", value);
     }
 
-    // meter
 
     public void setBG2_TargetLow(float value)
     {
@@ -568,9 +533,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setStringValue("INS2_ABBR", value);
     }
 
-    // ---
-    // --- Language methods
-    // ---
 
     public void setIns2Name(String value)
     {
@@ -643,9 +605,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setIntValue("RENDER_RENDERING", value);
     }
 
-    // ---
-    // --- Utility methods
-    // ---
 
     public void setSelectedColorSchemeInCfg(String value)
     {
@@ -665,49 +624,77 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     
     
     
-    // ---
-    // --- Load/Save methods
-    // ---
 
     public void setTextAntiAliasing(int value)
     {
         this.m_cfg_mgr.setIntValue("RENDER_TEXT_ANTIALIASING", value);
     }
 
+    /*
     public void setTimeZone(String value)
     {
         this.m_cfg_mgr.setStringValue("TIMEZONE", value);
-    }
+    }*/
 
+    /**
+     * Set User's Name
+     * 
+     * @param value
+     */
     public void setUserName(String value)
     {
         this.m_cfg_mgr.setStringValue("NAME", value);
     }
 
-    /*
-     * this.name = name;
-     * 
-     * this.ins1_name = ins1_name; this.ins1_abbr = ins1_abbr; this.ins2_name =
-     * ins2_name; this.ins2_abbr = ins2_abbr;
-     * 
-     * this.meter_type = meter_type; this.meter_port = meter_port;
-     * 
-     * this.bg_unit = bg_unit; this.bg1_low = bg1_low; this.bg1_high = bg1_high;
-     * this.bg1_target_low = bg1_target_low; this.bg1_target_high =
-     * bg1_target_high; this.bg2_low = bg2_low; this.bg2_high = bg2_high;
-     * this.bg2_target_low = bg2_target_low; this.bg2_target_high =
-     * bg2_target_high;
-     * 
-     * this.render_rendering = render_rendering; this.render_dithering =
-     * render_dithering; this.render_interpolation = render_interpolation;
-     * this.render_antialiasing = render_antialiasing;
-     * this.render_textantialiasing = render_textantialiasing;
-     * this.render_colorrendering = render_colorrendering;
-     * this.render_fractionalmetrics = render_fractionalmetrics;
-     * this.pdf_display_software_path = pdf_display_software_path;
-     * this.lunch_start_time = lunch_start_time; this.dinner_start_time =
-     * dinner_start_time; this.night_start_time = night_start_time;
-     * this.color_scheme = color_scheme;
+    
+    // ---
+    // --- Load/Save methods
+    // ---
+    
+    
+    /**
+     * Load 
      */
+    public void load()
+    {
+        m_da.getDb().loadConfigData();
+        m_da.setBGMeasurmentType(this.getBG_unit());
+        this.setColorSchemeObject(this.m_cfg_mgr.getStringValue("SELECTED_COLOR_SCHEME"));
+    }
+
+    /**
+     * Reload
+     */
+    public void reload()
+    {
+        load();
+    }
+
+    /**
+     * Save
+     */
+    public void save()
+    {
+        // System.out.println("save");
+
+        // fix
+        /*
+         * if (changed_scheme) {
+         * DataAccess.notImplemented("GGCProperties:save():: changed scheme");
+         * System.out.println("save Scheme"); //m_da.m_db.s }
+         */
+
+        this.m_cfg_mgr.saveConfig();
+
+        if ((changed_config) || (this.m_config.hasChanged()))
+        {
+            // System.out.println("save Config REAL");
+            this.m_config.saveConfig();
+        }
+
+        m_da.setBGMeasurmentType(this.getBG_unit());
+
+    }
+    
 
 }

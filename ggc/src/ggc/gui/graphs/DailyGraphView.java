@@ -133,9 +133,9 @@ public class DailyGraphView extends JFAbstractGraphView
         data = dv;
         setBackground(backgroundColor);
 
-        chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"), String.format(
+        m_chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"), String.format(
             translator.getMessage("AXIS_VALUE_LABEL"), unitLabel), BGDataset, true, true, false);
-        chartPanel = new ChartPanel(chart, false, true, true, false, true);
+        chartPanel = new ChartPanel(m_chart, false, true, true, false, true);
         chartPanel.setDomainZoomable(false);
         chartPanel.setRangeZoomable(true);
         setLayout(new BorderLayout());
@@ -151,14 +151,14 @@ public class DailyGraphView extends JFAbstractGraphView
      * )
      */
     @Override
-    protected void drawFramework(JFreeChart chart)
+    protected void drawFramework(JFreeChart _chart)
     {
-        if ((data == null) || (chart == null))
+        if ((data == null) || (_chart == null))
         {
             return;
         }
 
-        XYPlot plot = chart.getXYPlot();
+        XYPlot plot = _chart.getXYPlot();
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
         XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
         dateAxis = (DateAxis) plot.getDomainAxis();
@@ -166,9 +166,9 @@ public class DailyGraphView extends JFAbstractGraphView
         insBUAxis = new NumberAxis();
 
 
-        chart.setBackgroundPaint(backgroundColor);
-        chart.setRenderingHints(renderingHints);
-        chart.setBorderVisible(false);
+        _chart.setBackgroundPaint(backgroundColor);
+        _chart.setRenderingHints(renderingHints);
+        _chart.setBorderVisible(false);
 
         plot.setRangeAxis(1, insBUAxis);
         plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);

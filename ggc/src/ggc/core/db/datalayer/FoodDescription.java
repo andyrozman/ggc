@@ -421,16 +421,16 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 
         Transaction tx = sess.beginTransaction();
 
-        Long id;
+        Long _id;
 
         if (this.type == 1)
-            id = (Long) sess.save(this.m_food_desc1);
+            _id = (Long) sess.save(this.m_food_desc1);
         else
-            id = (Long) sess.save(this.m_food_desc2);
+            _id = (Long) sess.save(this.m_food_desc2);
 
         tx.commit();
 
-        return "" + id.longValue();
+        return "" + _id.longValue();
 
     }
 
@@ -691,7 +691,6 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     /**
      * dbExportHeader - header for export file
      * 
-     * @param table_version
      * @return
      */
     public String dbExportHeader()

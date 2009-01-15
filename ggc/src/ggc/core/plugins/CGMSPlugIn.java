@@ -1,5 +1,8 @@
 package ggc.core.plugins;
 
+import ggc.gui.MainFrame;
+import ggc.gui.panels.info.InfoPanel;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
@@ -148,6 +151,7 @@ public class CGMSPlugIn extends PlugInClient
         if (command.equals("cgms_read"))
         {
             this.readCGMSData();
+            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("cgms_list"))
         {
@@ -156,6 +160,7 @@ public class CGMSPlugIn extends PlugInClient
         else if (command.equals("cgms_config"))
         {
             this.executeCommand(CGMSPlugIn.COMMAND_CGMS_CONFIGURATION);
+            refreshPanels(InfoPanel.PANEL_GROUP_PLUGINS_DEVICES);
         }
         else if (command.equals("cgms_about"))
         {
@@ -190,6 +195,12 @@ public class CGMSPlugIn extends PlugInClient
         return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.6");
     }
 
+    private void refreshPanels(int mask)
+    {
+        MainFrame mf = (MainFrame)parent;
+        mf.informationPanel.refreshGroup(mask);
+    }
+    
     
     /**
      * Set Return Data (for getting data from plugin - async)

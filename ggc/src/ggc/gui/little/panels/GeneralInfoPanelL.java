@@ -1,6 +1,7 @@
 package ggc.gui.little.panels;
 
 import ggc.gui.panels.info.AbstractInfoPanel;
+import ggc.gui.panels.info.InfoPanelsIds;
 import ggc.core.util.I18nControl;
 
 import java.awt.GridLayout;
@@ -107,6 +108,18 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
      */
     public void doRefresh()
     {
+    }
+
+    
+    /**
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    @Override
+    public int getPanelId()
+    {
+        return InfoPanelsIds.INFO_PANEL_NONE;
     }
     
     

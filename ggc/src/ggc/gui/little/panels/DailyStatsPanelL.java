@@ -3,6 +3,7 @@ package ggc.gui.little.panels;
 import ggc.core.data.DailyStatsTableModel;
 import ggc.core.data.DailyValues;
 import ggc.gui.panels.info.AbstractInfoPanel;
+import ggc.gui.panels.info.InfoPanelsIds;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -163,4 +164,16 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
     }
     
 
+    /**
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    @Override
+    public int getPanelId()
+    {
+        return InfoPanelsIds.INFO_PANEL_NONE;
+    }
+    
+    
 }

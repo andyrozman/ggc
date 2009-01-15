@@ -113,7 +113,7 @@ public class InitDb
 
     }
 
-    public void setDbInfo()
+    private void setDbInfo()
     {
         DbInfoH dbi = new DbInfoH();
 

@@ -1,3 +1,9 @@
+0.3.15
+    * fixed Freetext food entries processing (problem with parsing floats)
+    * Refresh panels mechanism redone
+    * Panels refresh when data from Meter plugin is processed
+
+
 0.3.14 (1.1.2009)
     * changed free-text food entries. Horizontal scroll disabled.
     * Graph changes. Working on Spread Graph, and GGC Controller class, we created 

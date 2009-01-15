@@ -50,7 +50,7 @@ public abstract class JFAbstractGraphView extends JPanel
     private static final long serialVersionUID = -1579716091265096686L;
     Color backgroundColor = Color.WHITE;
     int BGUnit = DataAccess.BG_MGDL;
-    JFreeChart chart;
+    JFreeChart m_chart;
 
     ChartPanel chartPanel;
     DataAccess dataAccessInst = DataAccess.getInstance();
@@ -208,13 +208,13 @@ public abstract class JFAbstractGraphView extends JPanel
      */
     public void redraw()
     {
-        if ((chart == null) || (chartPanel == null))
+        if ((m_chart == null) || (chartPanel == null))
         {
             return;
         }
 
-        drawFramework(chart);
-        drawValues(chart);
+        drawFramework(m_chart);
+        drawValues(m_chart);
 
         setPreferredSize(new Dimension(chartPanel.getMinimumDrawWidth(), chartPanel.getMinimumDrawHeight()));
     }

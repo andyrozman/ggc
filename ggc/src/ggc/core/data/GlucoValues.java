@@ -36,15 +36,16 @@ import java.util.Vector;
  */
 
 
-public class GlucoValues extends DailyValues
+public class GlucoValues //extends DailyValues
 {
 
     private static final long serialVersionUID = 3904480643937213485L;
     Vector<DailyValues> dayValues = null;
     ArrayList<DailyValuesRow> dayValuesRows = null;
-    private DataAccess m_da = DataAccess.getInstance();
+    //private DataAccess m_da = DataAccess.getInstance();
     GregorianCalendar from_date;
     GregorianCalendar to_date;
+    DataAccess m_da = DataAccess.getInstance();
     
     
     /**
@@ -115,8 +116,14 @@ public class GlucoValues extends DailyValues
         System.out.println("Range: " + from_date + " - " + to_date);
         
         dayValuesRows = m_da.getDb().getDayValuesRange(sDate, eDate);
+        
+        fillDailyValues();
     }
 
+    
+    
+    
+    
     
     /**
      * Get Range From
@@ -149,16 +156,42 @@ public class GlucoValues extends DailyValues
 
     }
 
+    private void fillDailyValues()
+    {
+        dayValues = new Vector<DailyValues>();
+        
+        //dayValuesRows
+        for (int i=0; i<this.dayValuesRows.size(); i++)
+        {
+            addRow(this.dayValuesRows.get(i), false);
+        }
+        
+    }
+    
+
     /**
      * Add Row
      * 
-     * @see ggc.core.data.DailyValues#addRow(ggc.core.data.DailyValuesRow)
+     * @param dRow 
      */
-    @Override
     public void addRow(DailyValuesRow dRow)
     {
+        addRow(dRow, true);
+    }
+    
+    
+    
+    /**
+     * Add Row
+     * 
+     * @param dRow 
+     * @param external 
+     */
+    public void addRow(DailyValuesRow dRow, boolean external)
+    {
         //
-        dayValuesRows.add(dRow);
+        if (external)
+            dayValuesRows.add(dRow);
         
         String s1 = dRow.getDateAsString();
 
@@ -240,10 +273,10 @@ public class GlucoValues extends DailyValues
     
     /**
      * Get Row Count
+     * @return 
      * 
      * @see ggc.core.data.DailyValues#getRowCount()
      */
-    @Override
     public int getRowCount()
     {
         int c = 0;
@@ -254,10 +287,10 @@ public class GlucoValues extends DailyValues
 
     /**
      * Delete Row
+     * @param row 
      * 
      * @see ggc.core.data.DailyValues#deleteRow(int)
      */
-    @Override
     public void deleteRow(int row)
     {
         if (row != -1)
@@ -283,10 +316,12 @@ public class GlucoValues extends DailyValues
 
     /**
      * Get Value At
+     * @param row 
+     * @param column 
+     * @return 
      * 
      * @see ggc.core.data.DailyValues#getValueAt(int, int)
      */
-    @Override
     public Object getValueAt(int row, int column)
     {
         int c = 0;
@@ -307,6 +342,8 @@ public class GlucoValues extends DailyValues
      * 
      * @param day
      * @return
+     * 
+     * @deprecated Use getDailyValuesItem() instead
      */
     public DailyValues getDailyValuesForDay(int day)
     {
@@ -335,10 +372,35 @@ public class GlucoValues extends DailyValues
         // X fireGlucoValueChanged(event);
     }
 */
+
+    
+    /**
+     * Get Daily Values Item (one Day)
+     * 
+     * @param index
+     * @return
+     */
+    public DailyValues getDailyValuesItem(int index)
+    {
+        return dayValues.elementAt(index);
+    }
+    
+    
+    /**
+     * Get Daily Values Items Count
+     * 
+     * @return
+     */
+    public int getDailyValuesItemsCount()
+    {
+        return dayValues.size();
+    }
     
     /**
      * @return The amount of days physically present in this
      *         <code>{@link GlucoValues}</code>.
+     *         
+     * @deprecated use getDailyValuesItemCount() instead
      */
     public int getDayCount()
     {

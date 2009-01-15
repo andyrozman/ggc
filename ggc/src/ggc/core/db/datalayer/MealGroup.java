@@ -567,7 +567,6 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     /**
      * dbExportHeader - header for export file
      * 
-     * @param table_version
      * @return
      */
     public String dbExportHeader()

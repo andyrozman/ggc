@@ -6,6 +6,7 @@ import ggc.gui.dialogs.DailyRowDialog;
 import ggc.gui.dialogs.graphs.DailyGraphDialog;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.panels.info.AbstractInfoPanel;
+import ggc.gui.panels.info.InfoPanelsIds;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -286,5 +287,18 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     {
     }
    
+    
+    /**
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    @Override
+    public int getPanelId()
+    {
+        return InfoPanelsIds.INFO_PANEL_NONE;
+    }
+    
+    
     
 }

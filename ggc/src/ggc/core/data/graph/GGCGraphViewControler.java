@@ -131,8 +131,20 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
                     | DataPlotSelectorPanel.INS_TOTAL_MASK);
             //cGV.setData(selectionPanel.getPlotData());
         }
+        else if (this.graph_type==GGCGraphViewControler.GRAPH_SPREAD)
+        {
+            selectionPanel = new PlotSelectorPanel(DataPlotSelectorPanel.BG_MASK);
+            selectionPanel.removeChoice(DataPlotSelectorPanel.BG_AVG_MASK | DataPlotSelectorPanel.BG_READINGS_MASK
+                    | DataPlotSelectorPanel.CH_AVG_MASK | DataPlotSelectorPanel.CH_SUM_MASK
+                    | DataPlotSelectorPanel.INS1_AVG_MASK| DataPlotSelectorPanel.INS2_AVG_MASK
+                    | DataPlotSelectorPanel.INS1_SUM_MASK| DataPlotSelectorPanel.INS2_SUM_MASK
+                    | DataPlotSelectorPanel.INS_PER_CH_MASK| DataPlotSelectorPanel.INS_TOTAL_AVG_MASK
+                    | DataPlotSelectorPanel.INS_TOTAL_SUM_MASK| DataPlotSelectorPanel.MEALS_MASK);
+            selectionPanel.setSelectionMode(PlotSelectorPanel.SELECTION_MODE_SINGLE);
+        }
         else
         {
+            System.out.println("GGC Graph View Controler needs to be implemented for type [" + this.graph_type + "]");
             selectionPanel = new PlotSelectorPanel(DataPlotSelectorPanel.BG_MASK);
             /*selectionPanel.disableChoice(DataPlotSelectorPanel.BG_MASK | DataPlotSelectorPanel.CH_MASK
                     | DataPlotSelectorPanel.INS1_MASK | DataPlotSelectorPanel.INS2_MASK
@@ -180,6 +192,8 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
     {
         PlotSelectorData psd = this.selectionPanel.getPlotData();
         psd.setDateRangeData(this.dRS.getDateRangeData());
+        
+        System.out.println("runDraw: " + psd.isPlotBG());
         
         this.getGraphView().getProcessor().setControllerData(psd);
         this.getGraphView().getProcessor().reloadData();

@@ -441,7 +441,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     /**
      * Set Search Context
      * 
-     * @see com.atech.graphics.components.selector.SelectableInterface#setSearchContext()
+     * @see com.atech.graphics.dialogs.selector.SelectableInterface#setSearchContext()
      */
     public void setSearchContext()
     {
@@ -544,9 +544,9 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      * language is
      * "Note: this comparator imposes orderings that are inconsistent with equals."
      * 
-     * @param mpd1
+     * @param mnd1
      *            - the first object to be compared.
-     * @param mpd2
+     * @param mnd2
      *            - the second object to be compared.
      * 
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)

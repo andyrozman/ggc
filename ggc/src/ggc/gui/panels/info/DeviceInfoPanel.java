@@ -47,7 +47,7 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     private JLabel lblMeter;
     private JLabel lblPump;
     private JLabel lblCgms;
-    private DataAccess m_da = DataAccess.getInstance();
+    //private DataAccess m_da = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -94,20 +94,6 @@ public class DeviceInfoPanel extends AbstractInfoPanel
         add(lblPanel, BorderLayout.NORTH);
     }
 
-    /**
-     * Refresh Information 
-     */
-    @Override
-    public void refreshInfo()
-    {
-        if (m_da.getPlugIn(DataAccess.PLUGIN_METERS)==null)
-            return;
-        
-        lblMeter.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_METERS)));
-        lblPump.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS)));
-        lblCgms.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_CGMS)));
-        //m_da.getPlugIn(key)
-    }
     
     
     private String getDeviceInfo(PlugInClient cl)
@@ -144,6 +130,26 @@ public class DeviceInfoPanel extends AbstractInfoPanel
      */
     public void doRefresh()
     {
+        if (m_da.getPlugIn(DataAccess.PLUGIN_METERS)==null)
+            return;
+        
+        lblMeter.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_METERS)));
+        lblPump.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS)));
+        lblCgms.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_CGMS)));
     }
+    
+    
+    /**
+     * Get Panel Id
+     * 
+     * @return id of panel
+     */
+    @Override
+    public int getPanelId()
+    {
+        return InfoPanelsIds.INFO_PANEL_PLUGIN_DEVICES;
+    }
+    
+    
     
 }

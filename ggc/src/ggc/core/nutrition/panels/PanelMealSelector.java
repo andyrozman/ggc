@@ -145,15 +145,15 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
-    private void addFoodPart(DailyFoodEntryDisplay dfed)
+    private void addFoodPart(DailyFoodEntryDisplay _dfed)
     {
-        this.addFoodPart(dfed, true);
+        this.addFoodPart(_dfed, true);
     }
 
-    private void addFoodPart(DailyFoodEntryDisplay dfed, boolean refresh)
+    private void addFoodPart(DailyFoodEntryDisplay _dfed, boolean refresh)
     {
-        if (dfed.getDailyFoodEntry() != null)
-            this.list_food_entries.add(dfed);
+        if (_dfed.getDailyFoodEntry() != null)
+            this.list_food_entries.add(_dfed);
 
         if (refresh)
             this.refreshFoodParts();
@@ -296,22 +296,22 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         scroll_2.repaint();
         scroll_2.updateUI();
 
-        JButton button = new JButton("  " + ic.getMessage("OK"));
-        button.setActionCommand("ok");
-        button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
-        button.setBounds(55, 410, 120, 25);
-        button.addActionListener(this.action_listener);
-        this.add(button, null);
+        JButton button1 = new JButton("  " + ic.getMessage("OK"));
+        button1.setActionCommand("ok");
+        button1.setIcon(m_da.getImageIcon_22x22("ok.png", this));
+        button1.setBounds(55, 410, 120, 25);
+        button1.addActionListener(this.action_listener);
+        this.add(button1, null);
 
-        button = new JButton("  " + ic.getMessage("CANCEL"));
-        button.setActionCommand("cancel");
-        button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
-        button.setBounds(190, 410, 120, 25);
-        button.addActionListener(this.action_listener);
-        this.add(button);
+        button1 = new JButton("  " + ic.getMessage("CANCEL"));
+        button1.setActionCommand("cancel");
+        button1.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        button1.setBounds(190, 410, 120, 25);
+        button1.addActionListener(this.action_listener);
+        this.add(button1);
 
-        button = m_da.createHelpButtonByBounds(380, 410, 110, 25, this);
-        this.add(button);
+        button1 = m_da.createHelpButtonByBounds(380, 410, 110, 25, this);
+        this.add(button1);
 
         return;
     }
@@ -369,9 +369,9 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
             System.out.println(mssd.getDailyFoodEntry());
             
-            DailyFoodEntryDisplay dfed = new DailyFoodEntryDisplay(ic, mssd.getDailyFoodEntry());
+            DailyFoodEntryDisplay _dfed = new DailyFoodEntryDisplay(ic, mssd.getDailyFoodEntry());
 
-            this.addFoodPart(dfed);
+            this.addFoodPart(_dfed);
         }
         else if (action.equals("edit_food"))
         {
@@ -386,25 +386,25 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
                 return;
             }
 
-            DailyFoodEntryDisplay dfed = this.list_food_entries.get(this.table_1.getSelectedRow());
-            MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_da, dfed.getDailyFoodEntry());
+            DailyFoodEntryDisplay _dfed = this.list_food_entries.get(this.table_1.getSelectedRow());
+            MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_da, _dfed.getDailyFoodEntry());
 
             if (mssd.wasAction())
             {
-                System.out.println(dfed);
+                //System.out.println(dfed);
                 DailyFoodEntry dfed_new = mssd.getDailyFoodEntry();
 
                 System.out.println(dfed_new);
 
                 // dfed.resetWeightValues(mssd.getDailyFoodEntry());
 
-                System.out.println(dfed);
+                //System.out.println(dfed);
 
                 this.refreshFoodParts();
             }
             else
             {
-                System.out.println("NO Action !");
+                //System.out.println("NO Action !");
             }
         }
         else if (action.equals("remove_food"))
@@ -422,9 +422,9 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
             if (ii == JOptionPane.YES_OPTION)
             {
-                DailyFoodEntryDisplay dfed = this.list_food_entries.get(this.table_1.getSelectedRow());
+                DailyFoodEntryDisplay _dfed = this.list_food_entries.get(this.table_1.getSelectedRow());
 
-                this.list_food_entries.remove(dfed);
+                this.list_food_entries.remove(_dfed);
                 this.refreshFoodParts();
             }
 
@@ -642,12 +642,12 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
             //if (meal_nut.getAmount() > 0)
             if ((meal_nut.getAmount() > 0) || (meal_nut.getAmountSum() > 0))
             {
-                MealNutritionsDisplay mnd = new MealNutritionsDisplay(ic, meal_nut);
+                MealNutritionsDisplay _mnd = new MealNutritionsDisplay(ic, meal_nut);
 
-                NutritionDefinition nd = this.m_da.getDb().nutrition_defs.get(mnd.getId());
-                mnd.setNutritionDefinition(nd);
+                NutritionDefinition nd = this.m_da.getDb().nutrition_defs.get(_mnd.getId());
+                _mnd.setNutritionDefinition(nd);
 
-                this.list_nutritions.add(mnd);
+                this.list_nutritions.add(_mnd);
             }
         }
 
