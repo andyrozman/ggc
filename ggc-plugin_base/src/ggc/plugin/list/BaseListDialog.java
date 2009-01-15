@@ -78,7 +78,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
         m_root = new BaseListRoot(m_da);
 
         //this.setResizable(false);
-        this.setBounds(80, 50, 700, 500);
+        this.setBounds(80, 50, 710, 523);
         setTitle();
 
         JPanel panel = new JPanel();
@@ -123,7 +123,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
         makePanelVisible(0);
         
         
- 
+        this.setResizable(false);
         this.setVisible(true);
         
     }

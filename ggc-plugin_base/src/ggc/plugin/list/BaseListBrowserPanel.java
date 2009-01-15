@@ -2,6 +2,7 @@ package ggc.plugin.list;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -109,13 +110,24 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
      */
     public void initBrowser()
     {
-    	this.setBounds(0,0,640,560);
-        this.setLayout(null);
+        /*
+    	//this.setBounds(0,0,640,560);
+        //this.setLayout(null);
 
         this.mbp = new MiniBrowserPanel();
         this.mbp.setBounds(0,0,640,560);
 
-        this.add(this.mbp, null); //, java.awt.BorderLayout.CENTER);
+        this.add(this.mbp, null); //, java.awt.BorderLayout.CENTER);*/
+
+        //this.setBounds(0,0,640,560);
+        this.setLayout(new BorderLayout());
+
+        this.mbp = new MiniBrowserPanel();
+        //this.mbp.setBounds(0,0,640,560);
+
+        this.add(this.mbp, BorderLayout.CENTER);
+    
+    
     }
     
     

@@ -23,6 +23,7 @@ import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.update.startup.os.OSUtil;
 import com.atech.utils.ATDataAccessAbstract;
+import com.sun.jna.NativeLibrary;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -929,6 +930,46 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return ret;
         
     }
+    
+    
+    /**
+     * Check Native Library
+     * 
+     * @param native_dll_file
+     * @return
+     */
+    public boolean checkNativeLibrary(String native_dll_file) 
+    {
+        try 
+        {
+            // RXTX
+            //NativeLibrary.a
+            
+            //NativeLibrary nl = new NativeLibrary();
+            
+            System.out.println("File: " + native_dll_file + "\nPath: " + System.getProperty("java.library.path"));
+            
+            NativeLibrary.addSearchPath(native_dll_file, System.getProperty("java.library.path"));
+            //NativeLibrary.addSearchPath(native_dll_file, ".");
+            NativeLibrary.getInstance(native_dll_file);
+            
+            
+            System.out.println("Found");
+            return true;
+        } 
+        catch (UnsatisfiedLinkError e) 
+        {
+            System.out.println("NOT Found");
+            e.printStackTrace();
+            return false;
+        }
+        catch(Exception e)
+        {
+            System.out.println("NOT Found");
+            e.printStackTrace();
+            return false;
+        }
+    } //END check_library 
     
     
     

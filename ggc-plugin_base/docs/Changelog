@@ -2,6 +2,10 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.2.6
+    - Native Library problems fixed (if native part of Rxtx is missing there is now warning displayed)
+      done when reading and configuration (we require new library for this jna-3.0.9)
+
 0.2.5
     - Fixed reading of old data (in device data handler)
     * Fixed GUI for configuration

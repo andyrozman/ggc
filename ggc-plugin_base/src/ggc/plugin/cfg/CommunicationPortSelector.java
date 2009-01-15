@@ -3,7 +3,6 @@ package ggc.plugin.cfg;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-import gnu.io.SerialPortEvent;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -24,6 +23,7 @@ import javax.swing.event.ListDataListener;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.update.startup.os.OSUtil;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -89,14 +89,40 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
         this.connection_protocol_type = protocol_type;
+
+        if (checkNative())
+        {
+            this.m_da.addComponent(this);
+            ATSwingUtils.initLibrary();
+            
+            init();
+            this.setVisible(true);
+        }
         
-        this.m_da.addComponent(this);
-        ATSwingUtils.initLibrary();
         
-        init();
-        this.setVisible(true);
+        
     }
+
     
+    private boolean checkNative()
+    {
+        if (this.connection_protocol_type==ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE)
+        {
+            if (!m_da.checkNativeLibrary("rxtxSerial"))
+            {
+                JOptionPane.showMessageDialog(this,
+                    String.format(m_ic.getMessage("NO_BINARY_PART_FOUND"), "Rxtx", OSUtil.getShortOSName(), "rxtxSerial"),
+                    m_ic.getMessage("ERROR") + ": Rxtx", 
+                    JOptionPane.ERROR_MESSAGE, 
+                    null);
+                
+                return false;
+            }
+        }
+        
+        return true;
+        
+    }
     
     /**
      * Init
@@ -326,10 +352,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         {
             try
             {
-                SerialPortDummy spd = new SerialPortDummy();
-                spd.setPort("COM1");
-                //AscensiaMeter am = new AscensiaMeter();
-                return spd.getAllAvailablePortsStringInternal();
+                return SerialProtocol.getAllAvailablePortsString();
             }
             catch(Exception ex)
             {
@@ -429,22 +452,6 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     {
         return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration_PortSelector";
     }
-    
-    
-    
-    private class SerialPortDummy extends SerialProtocol
-    {
-
-        @Override
-        public void serialEvent(SerialPortEvent event)
-        {
-            // TODO Auto-generated method stub
-            
-        }
-        
-    }
-    
-    
     
     
 }
