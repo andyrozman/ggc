@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
@@ -87,6 +90,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      */
     public int m_BG_unit = BG_MMOL;
 
+    private static Log log = LogFactory.getLog(DataAccessPlugInBase.class);
+    
     //public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
 
     //public String[] avLangPostfix = { "en", "de", "si", };
@@ -942,36 +947,26 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     {
         try 
         {
+            log.debug("checkNativeLibrary: " + native_dll_file);
             // RXTX
-            //NativeLibrary.a
-            
-            //NativeLibrary nl = new NativeLibrary();
-            
-            System.out.println("File: " + native_dll_file + "\nPath: " + System.getProperty("java.library.path"));
-            
+            //System.out.println("File: " + native_dll_file + "\nPath: " + System.getProperty("java.library.path"));
             NativeLibrary.addSearchPath(native_dll_file, System.getProperty("java.library.path"));
-            //NativeLibrary.addSearchPath(native_dll_file, ".");
             NativeLibrary.getInstance(native_dll_file);
             
-            
-            System.out.println("Found");
+            //System.out.println("Found");
             return true;
         } 
-        catch (UnsatisfiedLinkError e) 
+        catch (UnsatisfiedLinkError ex) 
         {
-            System.out.println("NOT Found");
-            e.printStackTrace();
+            log.warn("checkNativeLibrary: Not found: " + ex, ex);
             return false;
         }
-        catch(Exception e)
+        catch(Exception ex)
         {
-            System.out.println("NOT Found");
-            e.printStackTrace();
+            log.warn("checkNativeLibrary: Not found: " + ex, ex);
             return false;
         }
-    } //END check_library 
-    
-    
+    } 
     
 
 }
