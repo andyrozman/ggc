@@ -64,8 +64,8 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     ImportNutrition  
+ *  Description:  Import Nutrition (will be deprecated)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -80,12 +80,22 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     DataAccess m_da = DataAccess.getInstance();
 
+    /**
+     * Constructor
+     * 
+     * @param file_name
+     */
     public ImportNutrition(String file_name)
     {
         this(file_name, true);
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param giver
+     */
     public ImportNutrition(BackupRestoreWorkGiver giver)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -95,6 +105,12 @@ public class ImportNutrition extends ImportTool implements Runnable
     }
 
 
+    /**
+     * Constructor
+     * 
+     * @param giver
+     * @param res
+     */
     public ImportNutrition(BackupRestoreWorkGiver giver, RestoreFileInfo res)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
@@ -107,6 +123,12 @@ public class ImportNutrition extends ImportTool implements Runnable
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param file_name
+     * @param identify
+     */
     public ImportNutrition(String file_name, boolean identify)
     {
         super();
@@ -120,6 +142,12 @@ public class ImportNutrition extends ImportTool implements Runnable
             this.identifyAndImport();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cfg
+     * @param file_name
+     */
     public ImportNutrition(HibernateConfiguration cfg, String file_name)
     {
         super(cfg);
@@ -137,6 +165,9 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     String selected_class = null;
 
+    /**
+     * Identify And Import
+     */
     public void identifyAndImport()
     {
 
@@ -168,11 +199,17 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     }
 
+    /**
+     * Get Active Session
+     */
     public int getActiveSession()
     {
         return 2;
     }
 
+    /**
+     * Check File Target
+     */
     public void checkFileTarget()
     {
         selected_class = "None";
@@ -205,6 +242,10 @@ public class ImportNutrition extends ImportTool implements Runnable
         }
     }
 
+    
+    /**
+     * Import User Food
+     */
     public void importUserFood()
     {
 
@@ -284,6 +325,10 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     }
 
+    
+    /**
+     * Import User Groups
+     */
     public void importUserGroups()
     {
 
@@ -357,6 +402,10 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     }
 
+    
+    /**
+     * Import Meals
+     */
     public void importMeals()
     {
 
@@ -434,6 +483,10 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     }
 
+    
+    /**
+     * Import Meal Groups
+     */
     public void importMealGroups()
     {
 
@@ -507,6 +560,9 @@ public class ImportNutrition extends ImportTool implements Runnable
     }
 
     
+    /**
+     * Thread Run
+     */
     public void run()
     {
         
@@ -531,6 +587,9 @@ public class ImportNutrition extends ImportTool implements Runnable
     }
     
     
+    /**
+     * @param args
+     */
     public static void main(String args[])
     {
         if (args.length == 0)

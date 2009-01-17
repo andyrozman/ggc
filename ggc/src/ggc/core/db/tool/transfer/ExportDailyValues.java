@@ -32,8 +32,8 @@ import com.atech.db.hibernate.transfer.ExportTool;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     ExportDailyValues
+ *  Description:  Export Daily Values (will be deprecated)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */

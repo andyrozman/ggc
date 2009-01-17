@@ -1,9 +1,6 @@
 package ggc.core.db.tool;
 
 import com.atech.db.hibernate.tool.DbTool;
-//import com.atech.db.hibernate.tool.DbToolApplicationInterface;
-//import java.util.ArrayList;
-//import java.util.Iterator;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -24,8 +21,8 @@ import com.atech.db.hibernate.tool.DbTool;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     DbToolGGC  
+ *  Description:  DbTool GGC
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -33,12 +30,20 @@ import com.atech.db.hibernate.tool.DbTool;
 
 public class DbToolGGC 
 {
+    /**
+     * Constructor
+     */
     public DbToolGGC()
     {
         DbToolApplicationGGC appl = new DbToolApplicationGGC();
         /*DbTool tool =*/ new DbTool(appl);
     }
 
+    /**
+     * Main Startup Method
+     * 
+     * @param args
+     */
     public static void main(String args[])
     {
         new DbToolGGC();

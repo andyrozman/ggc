@@ -190,7 +190,7 @@ public class GGCDbLoader extends Thread
         
         db.loadConfigData();
         db.loadStaticData();
-        m_da.m_db = db;
+        m_da.setDb(db);
         
         // 3 - init plugins
         m_da.initPlugIns();

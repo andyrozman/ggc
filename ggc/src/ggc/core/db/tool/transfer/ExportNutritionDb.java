@@ -36,8 +36,8 @@ import com.atech.db.hibernate.transfer.ExportTool;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     ExportNutritionDb
+ *  Description:  Export Nutrition Database (will be deprecated)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -46,6 +46,11 @@ import com.atech.db.hibernate.transfer.ExportTool;
 public class ExportNutritionDb extends ExportTool
 {
 
+    /**
+     * Constructor
+     * 
+     * @param giver
+     */
     public ExportNutritionDb(BackupRestoreWorkGiver giver)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -58,6 +63,11 @@ public class ExportNutritionDb extends ExportTool
         // exportAll();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cfg
+     */
     public ExportNutritionDb(HibernateConfiguration cfg)
     {
         super(cfg);
@@ -68,6 +78,7 @@ public class ExportNutritionDb extends ExportTool
         exportAll();
     }
 
+    
     private void checkPrerequisites()
     {
         File f = new File("../data");
@@ -84,6 +95,7 @@ public class ExportNutritionDb extends ExportTool
         this.setFileLastPart("_" + getCurrentDateForFile());
     }
 
+    
     private void checkPrerequisitesForAutoBackup()
     {
         File f = new File("../data");
@@ -106,6 +118,9 @@ public class ExportNutritionDb extends ExportTool
     }
 
     
+    /**
+     * Get Active Session
+     */
     public int getActiveSession()
     {
         return 2;
@@ -122,6 +137,9 @@ public class ExportNutritionDb extends ExportTool
         export_Meals();
     }
 
+    /**
+     * Export User Food Group
+     */
     @SuppressWarnings("unchecked")
     public void export_UserFoodGroups()
     {
@@ -160,6 +178,9 @@ public class ExportNutritionDb extends ExportTool
         closeFile();
     }
 
+    /**
+     * Export User Foods
+     */
     @SuppressWarnings("unchecked")
     public void export_UserFoods()
     {
@@ -200,6 +221,9 @@ public class ExportNutritionDb extends ExportTool
         closeFile();
     }
 
+    /**
+     * Export Meal Groups
+     */
     @SuppressWarnings("unchecked")
     public void export_MealGroups()
     {
@@ -237,6 +261,9 @@ public class ExportNutritionDb extends ExportTool
         closeFile();
     }
 
+    /**
+     * Export Meals
+     */
     @SuppressWarnings("unchecked")
     public void export_Meals()
     {
@@ -277,6 +304,9 @@ public class ExportNutritionDb extends ExportTool
         closeFile();
     }
 
+    /**
+     * @param args
+     */
     public static void main(String[] args)
     {
         GGCDb db = new GGCDb();

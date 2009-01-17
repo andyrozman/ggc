@@ -79,7 +79,7 @@ public class FrequencyGraphView extends AbstractGraphView
     public void setGlucoValues(GlucoValues gV)
     {
         this.gV = gV;
-        dayCount = gV.getDayCount();
+        dayCount = gV.getDailyValuesItemsCount();
 
 
         values = new int[500];
@@ -92,7 +92,7 @@ public class FrequencyGraphView extends AbstractGraphView
 
         for (int i = 0; i < dayCount; i++) 
 	{
-            DailyValues dV = gV.getDailyValuesForDay(i);
+            DailyValues dV = gV.getDailyValuesItem(i);
             for (int j = 0; j < dV.getRowCount(); j++) 
 	    {
                 int tmp = (int)dV.getRow(j).getBG();

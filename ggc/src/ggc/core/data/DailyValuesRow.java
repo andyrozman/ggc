@@ -704,9 +704,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
      */
     public String getDateTimeAsTime()
     {
-        long i = m_da.getDateTimeLong(datetime, DataAccess.DT_TIME);
+        //long i = m_da.getDateTimeLong(datetime, DataAccess.DT_TIME);
         //System.out.println("X: " + i);
-        return "" + i;
+        return "" + ATechDate.convertATDate(datetime, ATechDate.FORMAT_DATE_AND_TIME_MIN, ATechDate.FORMAT_TIME_ONLY_MIN);
     }
 
     /**
@@ -800,7 +800,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
             if (debug)
                 System.out.println("getBgAsString [type=2,return=" + v + "]");
 
-            String ss = DataAccess.MmolDecimalFormat.format(v);
+            String ss = DataAccess.Decimal1Format.format(v);
             ss = ss.replace(",", ".");
             return ss;
 
@@ -1365,7 +1365,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
         }
         else
         {
-            return DataAccess.MmolDecimalFormat.format(fl);
+            return DataAccess.Decimal1Format.format(fl);
         }
     }
 

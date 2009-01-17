@@ -51,6 +51,8 @@ import org.jfree.data.time.Hour;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+import com.atech.utils.ATechDate;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -190,10 +192,10 @@ public class DailyGraphView extends JFAbstractGraphView
 
         dateAxis.setDateFormatOverride(new SimpleDateFormat(translator.getMessage("FORMAT_DATE_HOURS")));
         dateAxis.setAutoRange(false);
-        GregorianCalendar dayStart = new GregorianCalendar();
-        GregorianCalendar dayEnd = new GregorianCalendar();
-        dayStart.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate() * 10000));
-        dayEnd.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate() * 10000 + 2359));
+        GregorianCalendar dayStart = (new ATechDate(data.getDate() * 10000)).getGregorianCalendar();
+        GregorianCalendar dayEnd = (new ATechDate(data.getDate() * 10000 + 2359)).getGregorianCalendar();
+        //dayStart.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate() * 10000));
+        //dayEnd.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate() * 10000 + 2359));
         dayStart.set(Calendar.SECOND, 0);
         dayEnd.set(Calendar.SECOND, 59);
         dateAxis.setRange(new DateRange(dayStart.getTime(), dayEnd.getTime()));

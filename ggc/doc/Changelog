@@ -1,4 +1,11 @@
-0.3.15
+0.3.16 (17.1.2009)
+    * Finished Spread Graph
+    * Graph Development stopped for Release 0.4
+    * Frequency graph is disabled
+    * Course graph was tagged as not working 100%, this one is still in second version 
+      of graph framework (we are not working on 3rd one, which is final one) 
+
+0.3.15 (10.1.2009)
     * fixed Freetext food entries processing (problem with parsing floats)
     * Refresh panels mechanism redone
     * Panels refresh when data from Meter plugin is processed

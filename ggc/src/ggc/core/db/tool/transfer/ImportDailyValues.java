@@ -61,8 +61,8 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     ImportDailyValues  
+ *  Description:  Import Daily Values (will be deprecated)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -79,6 +79,11 @@ public class ImportDailyValues extends ImportTool implements Runnable
     boolean clean_db = false; 
 
     
+    /**
+     * Constructor
+     * 
+     * @param giver
+     */
     public ImportDailyValues(BackupRestoreWorkGiver giver)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -88,6 +93,12 @@ public class ImportDailyValues extends ImportTool implements Runnable
     }
     
 
+    /**
+     * Constructor
+     * 
+     * @param giver
+     * @param res
+     */
     public ImportDailyValues(BackupRestoreWorkGiver giver, RestoreFileInfo res)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
@@ -98,11 +109,20 @@ public class ImportDailyValues extends ImportTool implements Runnable
     
     
     
+    /**
+     * @param file_name
+     */
     public ImportDailyValues(String file_name)
     {
         this(file_name, true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param file_name
+     * @param identify
+     */
     public ImportDailyValues(String file_name, boolean identify)
     {
         super();
@@ -119,6 +139,12 @@ public class ImportDailyValues extends ImportTool implements Runnable
 
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cfg
+     * @param file_name
+     */
     public ImportDailyValues(HibernateConfiguration cfg, String file_name)
     {
         super(cfg);
@@ -132,12 +158,20 @@ public class ImportDailyValues extends ImportTool implements Runnable
     }
 
     
+    /**
+     * Set Import Clean
+     * 
+     * @param clean
+     */
     public void setImportClean(boolean clean)
     {
         this.clean_db = clean;
     }
     
     
+    /**
+     * Get Active Session
+     */
     public int getActiveSession()
     {
         return 2;
@@ -145,6 +179,9 @@ public class ImportDailyValues extends ImportTool implements Runnable
     
     
     
+    /**
+     * Import Daily Values
+     */
     public void importDailyValues()
     {
 
@@ -262,12 +299,18 @@ public class ImportDailyValues extends ImportTool implements Runnable
     }
 
     
+    /**
+     * Thread Run
+     */
     public void run()
     {
         this.importDailyValues();
     }    
     
     
+    /**
+     * @param args
+     */
     public static void main(String args[])
     {
         if (args.length == 0)

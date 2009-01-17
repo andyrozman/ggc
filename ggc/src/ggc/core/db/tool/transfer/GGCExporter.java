@@ -37,8 +37,9 @@ import com.atech.db.hibernate.transfer.ExportTool;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     GGCExporter
+ *  Description:  GGC Exporter (this is exporter, which will be used for all exports,
+ *                when all objects will be fully implemented)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -47,6 +48,11 @@ import com.atech.db.hibernate.transfer.ExportTool;
 public class GGCExporter extends ExportTool implements Runnable
 {
 
+    /**
+     * Constructor
+     * 
+     * @param giver
+     */
     public GGCExporter(BackupRestoreWorkGiver giver)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -59,6 +65,11 @@ public class GGCExporter extends ExportTool implements Runnable
         // exportAll();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cfg
+     */
     public GGCExporter(HibernateConfiguration cfg)
     {
         super(cfg);
@@ -69,6 +80,7 @@ public class GGCExporter extends ExportTool implements Runnable
         exportAll();
     }
 
+    
     private void checkPrerequisites()
     {
         File f = new File("../data");
@@ -85,6 +97,7 @@ public class GGCExporter extends ExportTool implements Runnable
         this.setFileLastPart("_" + getCurrentDateForFile());
     }
 
+    
     private void checkPrerequisitesForAutoBackup()
     {
         File f = new File("../data");
@@ -126,6 +139,9 @@ public class GGCExporter extends ExportTool implements Runnable
      */
 
     
+    /**
+     * Get Active Session
+     */
     public int getActiveSession()
     {
         return 2;
@@ -170,12 +186,22 @@ public class GGCExporter extends ExportTool implements Runnable
     
     
     
+    /**
+     * Export Data (object name)
+     * 
+     * @param name
+     */
     public void exportData(String name)
     {
         exportData(this.getBackupRestoreObject(name));
     }
     
     
+    /**
+     * Export Data (object)
+     * 
+     * @param bro BackupRestoreObject
+     */
     public void exportData(BackupRestoreObject bro)
     {
         System.out.println("export: first");
@@ -220,12 +246,20 @@ public class GGCExporter extends ExportTool implements Runnable
     boolean running = true;
     String backup_object = null;
     
+    /**
+     * Set Backup Object
+     * 
+     * @param name
+     */
     public void setBackupObject(String name)
     {
         this.backup_object = name;
     }
     
     
+    /**
+     * Run for Thread
+     */
     public void run()
     {
         while (running)
@@ -239,11 +273,17 @@ public class GGCExporter extends ExportTool implements Runnable
         }
     }
 
+    /**
+     * Stop Thread
+     */
     public void stopThread()
     {
         this.running = false;
     }
     
+    /**
+     * @param args
+     */
     public static void main(String[] args)
     {
         GGCDb db = new GGCDb();

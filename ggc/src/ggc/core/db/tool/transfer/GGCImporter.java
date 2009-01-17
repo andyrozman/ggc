@@ -38,8 +38,9 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     GGCImporter
+ *  Description:  GGC Importer (this is importer, which will be used for all exports,
+ *                when all objects will be fully implemented)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -49,12 +50,17 @@ public class GGCImporter extends ImportTool implements Runnable
 {
 
     GGCDb m_db = null;
-    public String file_name;
+    private String file_name;
     private static Log log = LogFactory.getLog(GGCImporter.class);
     String selected_class = null;
     DataAccess m_da = DataAccess.getInstance();
 
     
+    /**
+     * Constructor
+     * 
+     * @param giver
+     */
     public GGCImporter(BackupRestoreWorkGiver giver)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -68,6 +74,11 @@ public class GGCImporter extends ImportTool implements Runnable
         // exportAll();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cfg
+     */
     public GGCImporter(HibernateConfiguration cfg)
     {
         super(cfg);
@@ -80,6 +91,12 @@ public class GGCImporter extends ImportTool implements Runnable
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param giver
+     * @param res
+     */
     public GGCImporter(BackupRestoreWorkGiver giver, RestoreFileInfo res)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
@@ -90,12 +107,20 @@ public class GGCImporter extends ImportTool implements Runnable
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param file_name
+     */
     public GGCImporter(String file_name)
     {
         this.file_name = file_name;
         this.identifyAndImport();
     }
 
+    /**
+     * Identify and Import
+     */
     public void identifyAndImport()
     {
 
@@ -143,6 +168,9 @@ public class GGCImporter extends ImportTool implements Runnable
 
     }
 
+    /**
+     * Check File Target
+     */
     public void checkFileTarget()
     {
         selected_class = "None";
@@ -198,18 +226,34 @@ public class GGCImporter extends ImportTool implements Runnable
     }
 
     
+    /**
+     * Import data (object name)
+     * 
+     * @param object_class_name
+     */
     public void importData(String object_class_name)
     {
         importData(getBackupRestoreObject(object_class_name));   
     }
     
     
+    /**
+     * Import data (object)
+     * 
+     * @param bro BackupRestoreObject
+     */
     public void importData(BackupRestoreObject bro)
     {
         importData(bro, true);
     }
 
     
+    /**
+     * Import data (object)
+     * 
+     * @param bro BackupRestoreObject
+     * @param clean_db if database should be cleaned
+     */
     public void importData(BackupRestoreObject bro, boolean clean_db)
     {
 
@@ -315,7 +359,6 @@ public class GGCImporter extends ImportTool implements Runnable
                  */
 
                 this.hibernate_util.add(bro_new); //dvh);
-
                 
                 count++;
                 this.writeStatus(dot_mark, count);
@@ -332,9 +375,10 @@ public class GGCImporter extends ImportTool implements Runnable
 
     }
     
-    
-    
 
+    /**
+     * @param args
+     */
     public static void main(String args[])
     {
         if (args.length == 0)
@@ -346,12 +390,18 @@ public class GGCImporter extends ImportTool implements Runnable
         new GGCImporter(args[0]);
     }
 
+    /**
+     * Get Active Session
+     */
     @Override
     public int getActiveSession()
     {
         return 2;
     }
 
+    /**
+     * Thread Run method
+     */
     public void run()
     {
         // TODO Auto-generated method stub

@@ -277,7 +277,7 @@ public class ImportDacioDb extends ImportTool
         }
         catch(Exception ex) {}
         
-        return DataAccess.MmolDecimalFormat.format( (f * 0.238845897f ));
+        return DataAccess.Decimal1Format.format( (f * 0.238845897f ));
     }
     
     /**

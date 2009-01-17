@@ -500,7 +500,7 @@ public class DailyFoodEntry // implements SelectableInterface
      */
     public String getAmountSingleDecimalString()
     {
-        return DataAccess.MmolDecimalFormat.format(this.amount);
+        return DataAccess.Decimal1Format.format(this.amount);
     }
     
     

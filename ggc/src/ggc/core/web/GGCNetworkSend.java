@@ -5,6 +5,10 @@ package ggc.core.web;
 
 
 
+/**
+ * @author Andy
+ *
+ */
 public class GGCNetworkSend //implements Runnable 
 {
 /*        String text;

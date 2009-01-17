@@ -63,8 +63,8 @@ import java.util.StringTokenizer;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     InitDb  
+ *  Description:  Init Db for GGC
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -81,13 +81,24 @@ public class InitDb
     Hashtable<String, NutritionHomeWeightType> home_weight_type_list = null;
     DataAccess m_da = DataAccess.getInstance();
 
+    /**
+     * Password for Init
+     */
     public static String passWord = "I_Really_Want_To_Do_This";
 
+    /**
+     * Constructor
+     */
     public InitDb()
     {
         this(true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param load_nutr
+     */
     public InitDb(boolean load_nutr)
     {
         long time_start = System.currentTimeMillis();
@@ -99,6 +110,7 @@ public class InitDb
 
         setDbInfo();
         loadSettings();
+        insertDoctorTypes();
 
         if (load_nutrition)
             loadNutritionDatabase();
@@ -124,12 +136,17 @@ public class InitDb
         m_db.addHibernate(dbi);
     }
 
+    /**
+     * Set Load Nutrition
+     * 
+     * @param load_nutr
+     */
     public void setLoadNutrition(boolean load_nutr)
     {
         this.load_nutrition = load_nutr;
     }
 
-    public void loadSettings()
+    private void loadSettings()
     {
 
         System.out.println("\n --- Loading Settings --- ");
@@ -156,17 +173,8 @@ public class InitDb
         System.out.println();
     }
 
-    /*
-     * public void loadMeters() {
-     * System.out.println("\n --- Loading Meter Data --- ");
-     * 
-     * this.insertMeterCompanies(); this.insertMeters();
-     * this.insertMeterInterfaces(); this.insertMeterImplementations();
-     * 
-     * System.out.println(); }
-     */
 
-    public boolean checkIfNutritionDbFilesExist()
+    private boolean checkIfNutritionDbFilesExist()
     {
 
         String files[] = { "FD_GROUP.txt", "FOOD_DES.txt", "NUT_DATA.txt", "NUTR_DEF.txt", "WEIGHT.txt" };
@@ -182,7 +190,7 @@ public class InitDb
     }
 
     // load nutrition database
-    public void loadNutritionDatabase()
+    private void loadNutritionDatabase()
     {
 
         if (!checkIfNutritionDbFilesExist())
@@ -205,7 +213,7 @@ public class InitDb
         System.out.println();
     }
 
-    public void insertFoodGroups()
+    private void insertFoodGroups()
     {
 
         try
@@ -225,7 +233,7 @@ public class InitDb
                 String st = getString(strtok.nextToken()); // name
 
                 fg.setName(st);
-                fg.setName_i18n(this.makeI18nKeyword(st));
+                fg.setName_i18n(m_da.makeI18nKeyword(st));
                 fg.setDescription(st);
 
                 m_db.add(fg);
@@ -241,7 +249,7 @@ public class InitDb
 
     }
 
-    public void insertFoodDescription()
+    private void insertFoodDescription()
     {
 
         // 204 = Fat(Lipid) (g)
@@ -302,7 +310,7 @@ public class InitDb
 
     }
 
-    public void insertNutritionData()
+    private void insertNutritionData()
     {
 
         int i = 0;
@@ -391,7 +399,7 @@ public class InitDb
 
     }
 
-    public void insertNutritionDefintions()
+    private void insertNutritionDefintions()
     {
 
         try
@@ -437,7 +445,7 @@ public class InitDb
 
     }
 
-    public void insertHomeWeightTypes()
+    private void insertHomeWeightTypes()
     {
 
         // System.out.println("FIX!!!!!");
@@ -501,7 +509,7 @@ public class InitDb
 
     }
 
-    public void insertHomeWeightData()
+    private void insertHomeWeightData()
     {
 
         int i = 0;
@@ -615,7 +623,7 @@ public class InitDb
      * }
      */
 
-    public void insertDoctorTypes()
+    private void insertDoctorTypes()
     {
 
         System.out.println("\nLoading Doctor Types (4/dot)");
@@ -668,214 +676,8 @@ public class InitDb
 
     }
 
-    /*
-     * public void insertMeters() { // implementation id=special // 0 = Unknown
-     * status // -1 = No support from company // -2 = We got protocol data, but
-     * at this time not implemented (implementation in future) // -3 = " , work
-     * is in progress // -4 = Implemented, but not tested enough // -5 = No
-     * reply from company
-     * 
-     * System.out.println("\nLoading Meters (1/dot)");
-     * 
-     * 
-     * // meter_id, company_id, name, picture, implementation_id, extended
-     * String data[] = { "250", "1", "Dummy Meter (old interface-Stephan)",
-     * null, "250", "MULTISITE=?;SAMPLE_SIZE=?;TEST_TIME=?;MEMORY=?;STRIPS=?",
-     * "251", "1", "Dummy Meter (new interface-Andy)", null, "251",
-     * "MULTISITE=?;SAMPLE_SIZE=?;TEST_TIME=?;MEMORY=?;STRIPS=?",
-     * 
-     * "1", "3", "Freestyle", null, "3",
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.3;TEST_TIME=7;MEMORY=250;STRIPS=Freestyles",
-     * "2", "3", "Flash", null, null,
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.3;TEST_TIME=7;MEMORY=250;STRIPS=Freestyles",
-     * "3", "3", "Freedom", null, null,
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.3;TEST_TIME=5;MEMORY=250;STRIPS=Freestyles",
-     * "4", "3", "Precision Xtra", null, null,
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.6;TEST_TIME=5;MEMORY=450;STRIPS=Precision Xtra"
-     * ,
-     * 
-     * "5", "4", "Ascensia Breeze", null, "6",
-     * "MULTISITE=Yes;SAMPLE_SIZE=3.0;TEST_TIME=30;MEMORY=100;STRIPS=Autodisk",
-     * "6", "4", "Ascensia Contour", null, "4",
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.6;TEST_TIME=15;MEMORY=240;STRIPS=Contour",
-     * "7", "4", "Ascensia Contour II.", null, "4",
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.6(?);TEST_TIME=5;MEMORY=240(?);STRIPS=Contour"
-     * , "8", "4", "Ascensia Elite", null, "7",
-     * "MULTISITE=Yes;SAMPLE_SIZE=3.0;TEST_TIME=30;MEMORY=120;STRIPS=Elite",
-     * "9", "4", "Ascensia Elite XL", null, "7",
-     * "MULTISITE=Yes;SAMPLE_SIZE=3.0;TEST_TIME=30;MEMORY=120;STRIPS=Elite",
-     * "10", "4", "Ascensia Dex", null, "5",
-     * "MULTISITE=Yes(?);SAMPLE_SIZE=3.0(?);TEST_TIME=30(?);MEMORY=120(?);STRIPS=DEX Autodisk"
-     * ,
-     * 
-     * "11", "5", "Logic", null, null,
-     * "MULTISITE=No;SAMPLE_SIZE=0.3;TEST_TIME=5;MEMORY=250;STRIPS=BD Test Strips"
-     * , "12", "5", "The Link", null, null,
-     * "MULTISITE=No;SAMPLE_SIZE=0.3;TEST_TIME=5;MEMORY=250;STRIPS=BD Test Strips"
-     * ,
-     * 
-     * "13", "6", "Advance Microdraw", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=1.5;TEST_TIME=15;MEMORY=250;STRIPS=Advance Test Strips"
-     * , "14", "6", "Advance Intuition", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=3.0;TEST_TIME=10;MEMORY=10;STRIPS=Advance Intuition"
-     * , "15", "6", "Assure II", null, "-1",
-     * "MULTISITE=--;SAMPLE_SIZE=3.0;TEST_TIME=30;MEMORY=--;STRIPS=Assure II Test Strips"
-     * , "16", "6", "Assure 3", null, "-1",
-     * "MULTISITE=--;SAMPLE_SIZE=3.0;TEST_TIME=10;MEMORY=--;STRIPS=Assure 3 Test Strips"
-     * , "17", "6", "Assure Pro", null, "-1",
-     * "MULTISITE=--;SAMPLE_SIZE=1;TEST_TIME=10;MEMORY=250;STRIPS=Assure Pro Test Strips"
-     * , "18", "6", "Quicktek", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=3.5;TEST_TIME=15;MEMORY=250;STRIPS=Quicktek Test Strips"
-     * , "19", "6", "Supreme Plus", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=?;TEST_TIME=30-60(?);MEMORY=70;STRIPS=Supreme Plus Test Strips"
-     * ,
-     * 
-     * "20", "7", "OneTouch Basic", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=10.0;TEST_TIME=45;MEMORY=75;STRIPS=Basics",
-     * "21", "7", "OneTouch FastTake", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=1.5;TEST_TIME=15;MEMORY=150;STRIPS=FastTakes",
-     * "22", "7", "OneTouch SureStep", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=10;TEST_TIME=15;MEMORY=150;STRIPS=SureSteps",
-     * "23", "7", "OneTouch Ultra", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=1.0;TEST_TIME=5;MEMORY=150;STRIPS=Ultras",
-     * "24", "7", "OneTouch UltraMini", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=1.0;TEST_TIME=5;MEMORY=50;STRIPS=Ultras",
-     * "25", "7", "OneTouch UltraSmart", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=1.0;TEST_TIME=5;MEMORY=150;STRIPS=Ultras",
-     * 
-     * "26", "8", "Prodigy Advance Meter", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.6;TEST_TIME=6;MEMORY=450;STRIPS=Prodigy Personal Strips"
-     * , "27", "8", "Prodigy Audio Meter", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=0.6;TEST_TIME=6;MEMORY=450;STRIPS=Prodigy Personal Strips"
-     * , "28", "8", "Prodigy Autocode Meter", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=0.6;TEST_TIME=6;MEMORY=450;STRIPS=Autocode Strips"
-     * , "29", "8", "Prodigy Duo Meter", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.6;TEST_TIME=6;MEMORY=450;STRIPS=Duo Strips",
-     * "30", "8", "Prodigy Eject Meter", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.6;TEST_TIME=6;MEMORY=450;STRIPS=Eject Strips"
-     * ,
-     * 
-     * "31", "9", "Accu Check Active", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=1.0;TEST_TIME=5;MEMORY=200;STRIPS=Active",
-     * "32", "9", "Accu Check Advantage", null, "-1",
-     * "MULTISITE=No;SAMPLE_SIZE=3.0;TEST_TIME=26;MEMORY=480;STRIPS=Comfort Curve"
-     * , "33", "9", "Accu Check Aviva", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=0.6;TEST_TIME=5;MEMORY=500;STRIPS=Aviva",
-     * "34", "9", "Accu Check Compact", null, "-1",
-     * "MULTISITE=Yes;SAMPLE_SIZE=1.5;TEST_TIME=8;MEMORY=100;STRIPS=Compact Drum"
-     * ,
-     * 
-     * "35", "2", "Gluco Card", null, "1",
-     * "MULTISITE=?;SAMPLE_SIZE=?;TEST_TIME=?;MEMORY=?;STRIPS=?", "36", "2",
-     * "Euro Flash", null, "2",
-     * "MULTISITE=?;SAMPLE_SIZE=?;TEST_TIME=?;MEMORY=?;STRIPS=?",
-     * 
-     * };
-     * 
-     * // meter_id, company_id, name, picture, implementation_id, extended
-     * 
-     * for(int i=0; i<data.length; i+=6) { // company_id, name, picture,
-     * extended, implementation_id,
-     * 
-     * long imp_id = 0;
-     * 
-     * if (data[i+4]!=null) { imp_id = Long.parseLong(data[i+4]); }
-     * 
-     * MeterH mc = new MeterH(Long.parseLong(data[i+1]), data[i+2], data[i+3],
-     * data[i+5], imp_id); mc.setId(Long.parseLong(data[i]));
-     * 
-     * m_db.addHibernate(mc); System.out.print("."); }
-     * 
-     * 
-     * //"MULTISITE=?;SAMPLE_SIZE=?;TEST_TIME=?;MEMORY=?;STRIPS=?" }
-     * 
-     * public void insertMeterInterfaces() {
-     * 
-     * System.out.println("\nLoading Meter Interfaces (1/dot)");
-     * 
-     * // id, desc, classname String data[] = { "1",
-     * "Meter Interface by Stephan (pre 2003)", "ggc.gui.ReadMeterDialog", "2",
-     * "Meter Interface by Andy (2006)", "ggc.gui.dialogs.MeterReadDialog" };
-     * 
-     * 
-     * for(int i=0; i<data.length; i+=3) { MeterInterfaceH mi = new
-     * MeterInterfaceH(data[i+1], data[i+2]); mi.setId(Long.parseLong(data[i]));
-     * 
-     * m_db.addHibernate(mi); System.out.print("."); } }
-     * 
-     * 
-     * 
-     * public void insertMeterImplementations() {
-     * 
-     * System.out.println("\nLoading Meter Implementation (1/dot)");
-     * 
-     * // id, desc, classname, interface_id String data[] = { "250",
-     * "Dummy Meter Implementation (Stephan)", "ggc.data.imports.DummyImport",
-     * "1", "99", "251", "Dummy Meter Implementation (Andy)",
-     * "ggc.data.meter.device.DummyMeter", "1", "99",
-     * 
-     * "1", "Gluco Card Implementation", "ggc.data.imports.GlucoCardImport",
-     * "1", "0", "2", "EuroFlash Impl.", "ggc.data.imports.EuroFlashImport",
-     * "1", "0", "3", "FreeStyle Impl.", "ggc.data.imports.FreeStyleImport",
-     * "1", "0",
-     * 
-     * "4", "Ascensia Couyour", "ggc.data.meter.device.AscensiaContourMeter",
-     * "2", "2", "5", "Ascensia DEX", "ggc.data.meter.device.AscensiaDEXMeter",
-     * "2", "2", "6", "Ascensia Breeze",
-     * "ggc.data.meter.device.AscensiaBreezeMeter", "2", "3", "7",
-     * "Ascensia Elite/XL", "ggc.data.meter.device.AscensiaEliteXLMeter", "2",
-     * "3", };
-     * 
-     * //<!-- 0 = Unknown/Untested, 1=In testing, 2=In implementation,
-     * 3=Planned, 99=Complete -->
-     * 
-     * for(int i=0; i<data.length; i+=5) { MeterImplementationH mih = new
-     * MeterImplementationH(data[i+1], data[i+2], Long.parseLong(data[i+3]),
-     * Integer.parseInt(data[i+4])); mih.setId(Long.parseLong(data[i]));
-     * 
-     * m_db.addHibernate(mih); System.out.print("."); } }
-     */
 
-    /*
-     * public void insertHomeWeightData() {
-     * 
-     * try {
-     * 
-     * System.out.println("\nInsert Home Weight (WEIGHT.txt) (200/dot)");
-     * 
-     * int i=0;
-     * 
-     * BufferedReader br = new BufferedReader(new FileReader(new
-     * File(path+"WEIGHT.txt"))); String line = null;
-     * 
-     * while ((line=br.readLine())!=null) { line = parseExpressionFull(line,
-     * "^^", "^0.0^");
-     * 
-     * if (line.charAt(line.length()-1)=='^') line = line+"0.0";
-     * 
-     * StringTokenizer strtok = new StringTokenizer(line, "^");
-     * 
-     * FoodHomeWeight fhw = new FoodHomeWeight();
-     * 
-     * fhw.setFood_number(getLong(strtok.nextToken()));
-     * fhw.setSequence(getInt(strtok.nextToken()));
-     * fhw.setAmount(getFloat(strtok.nextToken()));
-     * fhw.setMsr_desc(strtok.nextToken());
-     * fhw.setWeight_g(getFloat(strtok.nextToken()));
-     * 
-     * m_db.add(fhw);
-     * 
-     * if (i%200==0) System.out.print(".");
-     * 
-     * i++; } } catch (Exception ex) {
-     * System.err.println("Error on insertHomeWeightData(): " + ex);
-     * ex.printStackTrace(); }
-     * 
-     * 
-     * }
-     */
-
-    public int getInt(String input)
+    private int getInt(String input)
     {
 
         if (input.startsWith("~"))
@@ -888,7 +690,8 @@ public class InitDb
 
     }
 
-    public short getShort(String input)
+    /*
+    private short getShort(String input)
     {
 
         if (input.startsWith("~"))
@@ -899,11 +702,10 @@ public class InitDb
         else
             return Short.parseShort(input);
 
-    }
+    }*/
 
-    public long getLong(String input)
+    private long getLong(String input)
     {
-
         if (input.startsWith("~"))
             input = input.substring(1, input.length() - 1);
 
@@ -911,12 +713,10 @@ public class InitDb
             return 0;
         else
             return Long.parseLong(input);
-
     }
 
-    public float getFloat(String input)
+    private float getFloat(String input)
     {
-
         if (input.startsWith("~"))
             input = input.substring(1, input.length() - 1);
 
@@ -924,19 +724,24 @@ public class InitDb
             return 0;
         else
             return Float.parseFloat(input);
-
     }
 
+    
+    /**
+     * Get String
+     * 
+     * @param input
+     * @return
+     */
     public String getString(String input)
     {
-
         if (input.startsWith("~"))
             input = input.substring(1, input.length() - 1);
 
         return input;
-
     }
 
+    /*
     public String makeI18nKeyword(String input)
     {
         String i = input.toUpperCase();
@@ -945,8 +750,11 @@ public class InitDb
 
         return i;
 
-    }
+    }*/
 
+    /**
+     * Usage
+     */
     public static void usage()
     {
         System.out.println("InitDb is very dangerous application. It will totally DESTROY your database.\n"
@@ -958,6 +766,11 @@ public class InitDb
                 + "again with right password as parameter. Press CTRL-C to abort.");
     }
 
+    /**
+     * Read Password
+     * 
+     * @return
+     */
     public static String readPassWord()
     {
         //System.out.println("Fix this: ");
@@ -975,6 +788,11 @@ public class InitDb
         return pass;
     }
 
+    /**
+     * Startup Method
+     * 
+     * @param args
+     */
     public static void main(String args[])
     {
         // I_Really_Want_To_Do_This

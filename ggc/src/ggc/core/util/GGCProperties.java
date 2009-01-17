@@ -33,7 +33,6 @@ import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.db.tool.DbToolApplicationGGC;
 
-import java.awt.Color;
 import java.util.Hashtable;
 
 import com.atech.graphics.graphs.GraphConfigProperties;
@@ -57,10 +56,14 @@ import com.atech.graphics.graphs.GraphConfigProperties;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###--###  
- *  Description:  ###--###
+ *  Filename:     GGCProperties  
+ *  Description:  GGC Properties contains all configuration options that are used in
+ *                configuration. In older version of GGC this options were written
+ *                to file, but from 0.2.x this options are written in database
+ *                for which we call ConfigurationManager
  * 
- *  Author: andyrozman {andy@atech-software.com}  
+ *  Author:  schultd
+ *  Author:  andyrozman {andy@atech-software.com}  
  */
 
 
@@ -72,14 +75,17 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     private ConfigurationManager m_cfg_mgr = null;
     private Hashtable<String, ColorSchemeH> m_color_schemes = null;
 
-    // private static GGCProperties singleton = null;
-    // private SettingsMainH m_settings = null;
     private ColorSchemeH m_colors = null;
-
     DbToolApplicationGGC m_config = null;
-
     private DataAccess m_da = null;
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param config
+     * @param cfg_mgr
+     */
     public GGCProperties(DataAccess da, DbToolApplicationGGC config, ConfigurationManager cfg_mgr)
     {
         this.m_da = da;
@@ -167,31 +173,85 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         setUserName(settings.getUserName());
     }
 
-    public int getAntiAliasing()
-    {
-        return this.m_cfg_mgr.getIntValue("RENDER_ANTIALIASING");
-    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    public float getBG_High()
-    {
-        if (this.getBG_unit() == 1)
-            return this.getBG1_High();
-        else
-            return this.getBG2_High();
-    }
-
-    public float getBG_Low()
-    {
-        if (this.getBG_unit() == 1)
-            return this.getBG1_Low();
-        else
-            return this.getBG2_Low();
-    }
 
     // ---
     // --- General Data
     // ---
 
+
+    /**
+     * Get Language
+     * 
+     * @return
+     */
+    public String getLanguage()
+    {
+        return this.m_config.getSelectedLanguage();
+    }
+    
+    /**
+     * Set Language
+     * 
+     * @param name
+     */
+    public void setLanguage(String name)
+    {
+        int idx = m_da.getLanguageIndexByName(name);
+        String post = m_da.avLangPostfix[idx];
+
+        if (!this.m_config.getSelectedLanguage().equals(post))
+        {
+            this.m_config.setSelectedLanguage(post);
+            this.changed_config = true;
+        }
+    }
+    
+    /**
+     * Get User's Name
+     * 
+     * @return
+     */
+    public String getUserName()
+    {
+        return this.m_cfg_mgr.getStringValue("NAME");
+    }
+    
+    /**
+     * Set User's Name
+     * 
+     * @param value
+     */
+    public void setUserName(String value)
+    {
+        this.m_cfg_mgr.setStringValue("NAME", value);
+    }
+    
+    
+    // ---
+    // --- Medical Data (Insulins and BG)
+    // ---
+
+    
+    /**
+     * Get BG: Target High
+     * 
+     * @return 
+     */
     public float getBG_TargetHigh()
     {
         if (this.getBG_unit() == 1)
@@ -200,6 +260,12 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
             return this.getBG2_TargetHigh();
     }
 
+    
+    /**
+     * Get BG: Target Low
+     * 
+     * @return 
+     */
     public float getBG_TargetLow()
     {
         if (this.getBG_unit() == 1)
@@ -207,16 +273,63 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         else
             return this.getBG2_TargetLow();
     }
+    
+    
+    /**
+     * Get BG: High
+     * 
+     * @return 
+     */
+    public float getBG_High()
+    {
+        if (this.getBG_unit() == 1)
+            return this.getBG1_High();
+        else
+            return this.getBG2_High();
+    }
 
-    // ---
-    // --- Medical Data (Insulins and BG)
-    // ---
+    
+    /**
+     * Get BG: Low
+     * 
+     * @return 
+     */
+    public float getBG_Low()
+    {
+        if (this.getBG_unit() == 1)
+            return this.getBG1_Low();
+        else
+            return this.getBG2_Low();
+    }
 
+    
+    /**
+     * Get BG Unit
+     * 
+     * @return 
+     */
     public int getBG_unit()
     {
         return this.m_cfg_mgr.getIntValue("BG_UNIT");
     }
 
+    
+    /**
+     * Set BG Unit
+     * 
+     * @param bgunit
+     */
+    public void setBG_unit(int bgunit)
+    {
+        this.m_cfg_mgr.setIntValue("BG_UNIT", bgunit);
+    }
+    
+    
+    /**
+     * Get BG Unit String
+     * 
+     * @return 
+     */
     public String getBG_unitString()
     {
         int unit = getBG_unit();
@@ -230,267 +343,453 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
 
     }
 
+    
+    /**
+     * Get BG 1 (mg/dL): High
+     * 
+     * @return
+     */
     public float getBG1_High()
     {
         return this.m_cfg_mgr.getFloatValue("BG1_HIGH");
     }
 
-    public float getBG1_Low()
-    {
-        return this.m_cfg_mgr.getFloatValue("BG1_LOW");
-    }
-
-    public float getBG1_TargetHigh()
-    {
-        return this.m_cfg_mgr.getFloatValue("BG1_TARGET_HIGH");
-    }
-
-    public float getBG1_TargetLow()
-    {
-        return this.m_cfg_mgr.getFloatValue("BG1_TARGET_LOW");
-    }
-
-    public float getBG2_High()
-    {
-        return this.m_cfg_mgr.getFloatValue("BG2_HIGH");
-    }
-
-    public float getBG2_Low()
-    {
-        return this.m_cfg_mgr.getFloatValue("BG2_LOW");
-    }
-
-    // BG settings
-
-    public float getBG2_TargetHigh()
-    {
-        return this.m_cfg_mgr.getFloatValue("BG2_TARGET_HIGH");
-    }
-
-    public float getBG2_TargetLow()
-    {
-        return this.m_cfg_mgr.getFloatValue("BG2_TARGET_LOW");
-    }
-
-    public Color getColor(int key)
-    {
-        return new Color(key);
-    }
-
-    public int getColorRendering()
-    {
-        return this.m_cfg_mgr.getIntValue("RENDER_COLOR_RENDERING");
-    }
-
-    public Hashtable<String, ColorSchemeH> getColorSchemes()
-    {
-        return this.m_color_schemes;
-    }
-
-    public int getDithering()
-    {
-        return this.m_cfg_mgr.getIntValue("RENDER_DITHERING");
-    }
-
-    public int getFractionalMetrics()
-    {
-        return this.m_cfg_mgr.getIntValue("RENDER_FRACTIONAL_METRICS");
-    }
-
-    public String getIns1Abbr()
-    {
-        return this.m_cfg_mgr.getStringValue("INS1_ABBR");
-    }
-
-    public String getIns1Name()
-    {
-        return this.m_cfg_mgr.getStringValue("INS1_NAME");
-    }
-
-    public String getIns2Abbr()
-    {
-        return this.m_cfg_mgr.getStringValue("INS2_ABBR");
-    }
-
-    public String getIns2Name()
-    {
-        return this.m_cfg_mgr.getStringValue("INS2_NAME");
-    }
-
-    public int getInterpolation()
-    {
-        return this.m_cfg_mgr.getIntValue("RENDER_INTERPOLATION");
-    }
-
-    public String getLanguage()
-    {
-        return this.m_config.selected_lang;
-    }
-
-    //
-    // rendering stuff
-    //
-
-    /*
-    public boolean getMeterDaylightSavingsFix()
-    {
-        return this.m_cfg_mgr.getBooleanValue("METER_DAYLIGHTSAVING_TIME_FIX");
-    }
-
-    public String getMeterPort()
-    {
-        return this.m_cfg_mgr.getStringValue("METER_PORT");
-    }
-
-    public int getMeterType()
-    {
-        return this.m_cfg_mgr.getIntValue("METER_TYPE");
-    }
-
-    public String getMeterTypeString()
-    {
-        return m_da.getI18nControlInstance().getMessage("NONE");
-        /*
-         * if (this.getMeterType()==-1) { return
-         * m_da.getI18nInstance().getMessage("NONE"); } else return
-         * m_da.getMeterManager().meter_names[this.getMeterType()];
-         */
-    //}
-
-    public String getPdfVieverPath()
-    {
-        return this.m_cfg_mgr.getStringValue("PRINT_PDF_VIEWER_PATH");
-    }
-
-    public int getPrintDinnerStartTime()
-    {
-        return this.m_cfg_mgr.getIntValue("PRINT_DINNER_START_TIME");
-    }
-
-    public String getPrintEmptyValue()
-    {
-        return this.m_cfg_mgr.getStringValue("PRINT_EMPTY_VALUE");
-    }
-
-    public int getPrintLunchStartTime()
-    {
-        return this.m_cfg_mgr.getIntValue("PRINT_LUNCH_START_TIME");
-    }
-
-    public int getPrintNightStartTime()
-    {
-        return this.m_cfg_mgr.getIntValue("PRINT_NIGHT_START_TIME");
-    }
-
-    public int getRendering()
-    {
-        return this.m_cfg_mgr.getIntValue("RENDER_RENDERING");
-    }
-
-    public ColorSchemeH getSelectedColorScheme()
-    {
-        return this.m_colors;
-    }
-
-    public String getSelectedColorSchemeInCfg()
-    {
-        return this.m_cfg_mgr.getStringValue("SELECTED_COLOR_SCHEME");
-    }
-
-    public int getTextAntiAliasing()
-    {
-        return this.m_cfg_mgr.getIntValue("RENDER_TEXT_ANTIALIASING");
-    }
-/*
-    public String getTimeZone()
-    {
-        return this.m_cfg_mgr.getStringValue("TIMEZONE");
-    }
-*/
-    // colors
-
-    public String getUserName()
-    {
-        return this.m_cfg_mgr.getStringValue("NAME");
-    }
-
-    public float getRatio_CH_Insulin()
-    {
-        return this.m_cfg_mgr.getFloatValue("RATIO_CH_INSULIN");
-    }
     
-    public float getRatio_BG_Insulin()
-    {
-        return this.m_cfg_mgr.getFloatValue("RATIO_BG_INSULIN");
-    }
-    
-    
-    /*
-     * public ColorSchemeH setSelectedColorScheme() { return this.m_colors; }
+    /**
+     * Set BG 1 (mg/dL): High
+     * 
+     * @param value 
      */
-
-
-    public void setAntiAliasing(int value)
-    {
-        this.m_cfg_mgr.setIntValue("RENDER_ANTIALIASING", value);
-    }
-
-    /*
-     * public Color getColorByName(String identifier) { return
-     * getColor(identifier); }
-     */
-
-    public void setBG_unit(int bgunit)
-    {
-        this.m_cfg_mgr.setIntValue("BG_UNIT", bgunit);
-    }
-
     public void setBG1_High(float value)
     {
         this.m_cfg_mgr.setFloatValue("BG1_HIGH", value);
     }
 
+    
+    /**
+     * Get BG 1 (mg/dL): Low
+     * 
+     * @return
+     */
+    public float getBG1_Low()
+    {
+        return this.m_cfg_mgr.getFloatValue("BG1_LOW");
+    }
+
+    
+    /**
+     * Set BG 1 (mg/dL): Low
+     * 
+     * @param value 
+     */
     public void setBG1_Low(float value)
     {
         this.m_cfg_mgr.setFloatValue("BG1_LOW", value);
     }
 
+    
+    /**
+     * Get BG 1 (mg/dL): Target High
+     * 
+     * @return
+     */
+    public float getBG1_TargetHigh()
+    {
+        return this.m_cfg_mgr.getFloatValue("BG1_TARGET_HIGH");
+    }
+
+    
+    /**
+     * Set BG 1 (mg/dL): Target High
+     * 
+     * @param value 
+     */
     public void setBG1_TargetHigh(float value)
     {
         this.m_cfg_mgr.setFloatValue("BG1_TARGET_HIGH", value);
     }
 
+    
+    /**
+     * Get BG 1 (mg/dL): Target Low
+     * 
+     * @return
+     */
+    public float getBG1_TargetLow()
+    {
+        return this.m_cfg_mgr.getFloatValue("BG1_TARGET_LOW");
+    }
+
+    
+    /**
+     * Set BG 1 (mg/dL): Target Low
+     * 
+     * @param value 
+     */
     public void setBG1_TargetLow(float value)
     {
         this.m_cfg_mgr.setFloatValue("BG1_TARGET_LOW", value);
     }
 
+    
+    /**
+     * Get BG 2 (mmol/L): High
+     * 
+     * @return
+     */
+    public float getBG2_High()
+    {
+        return this.m_cfg_mgr.getFloatValue("BG2_HIGH");
+    }
+
+    
+    /**
+     * Set BG 2 (mmol/L): High
+     * 
+     * @param value 
+     */
     public void setBG2_High(float value)
     {
         this.m_cfg_mgr.setFloatValue("BG2_HIGH", value);
     }
 
+    
+    /**
+     * Get BG 2 (mmol/L): Low
+     * 
+     * @return
+     */
+    public float getBG2_Low()
+    {
+        return this.m_cfg_mgr.getFloatValue("BG2_LOW");
+    }
+
+
+    /**
+     * Set BG 2 (mmol/L): Low
+     * 
+     * @param value 
+     */
     public void setBG2_Low(float value)
     {
         this.m_cfg_mgr.setFloatValue("BG2_LOW", value);
     }
 
+    
+    /**
+     * Get BG 2 (mmol/L): Taget High
+     * 
+     * @return
+     */
+    public float getBG2_TargetHigh()
+    {
+        return this.m_cfg_mgr.getFloatValue("BG2_TARGET_HIGH");
+    }
+
+    
+    /**
+     * Set BG 2 (mmol/L): Target High
+     * 
+     * @param value 
+     */
     public void setBG2_TargetHigh(float value)
     {
         this.m_cfg_mgr.setFloatValue("BG2_TARGET_HIGH", value);
     }
+    
+    
+    /**
+     * Get BG 2 (mmol/L): Target Low
+     * 
+     * @return
+     */
+    public float getBG2_TargetLow()
+    {
+        return this.m_cfg_mgr.getFloatValue("BG2_TARGET_LOW");
+    }
 
-
+    
+    /**
+     * Set BG 2 (mmol/L): Target Low
+     * 
+     * @param value 
+     */
     public void setBG2_TargetLow(float value)
     {
         this.m_cfg_mgr.setFloatValue("BG2_TARGET_LOW", value);
     }
+    
+    
+    /**
+     * Get Insulin 1 Abbreviation
+     * 
+     * @return
+     */
+    public String getIns1Abbr()
+    {
+        return this.m_cfg_mgr.getStringValue("INS1_ABBR");
+    }
 
+    
+    /**
+     * Set Insulin 1 Abbreviation
+     * 
+     * @param value 
+     */
+    public void setIns1Abbr(String value)
+    {
+        this.m_cfg_mgr.setStringValue("INS1_ABBR", value);
+    }
+
+    
+    /**
+     * Get Insulin 1 Name
+     * 
+     * @return
+     */
+    public String getIns1Name()
+    {
+        return this.m_cfg_mgr.getStringValue("INS1_NAME");
+    }
+
+    
+    /**
+     * Set Insulin 1 Name
+     * 
+     * @param value 
+     */
+    public void setIns1Name(String value)
+    {
+        this.m_cfg_mgr.setStringValue("INS1_NAME", value);
+    }
+    
+    
+    /**
+     * Get Insulin 2 Abbreviation
+     * 
+     * @return
+     */
+    public String getIns2Abbr()
+    {
+        return this.m_cfg_mgr.getStringValue("INS2_ABBR");
+    }
+
+    
+    /**
+     * Set Insulin 2 Abbreviation
+     * 
+     * @param value 
+     */
+    public void setIns2Abbr(String value)
+    {
+        this.m_cfg_mgr.setStringValue("INS2_ABBR", value);
+    }
+    
+    
+    /**
+     * Get Insulin 2 Name
+     * 
+     * @return
+     */
+    public String getIns2Name()
+    {
+        return this.m_cfg_mgr.getStringValue("INS2_NAME");
+    }
+    
+
+    /**
+     * Set Insulin 2 Name
+     * 
+     * @param value 
+     */
+    public void setIns2Name(String value)
+    {
+        this.m_cfg_mgr.setStringValue("INS2_NAME", value);
+    }
+    
+    
+    // ---
+    // --- Graphs
+    // ---
+    
+    
+    /** 
+     * Get AntiAliasing
+     */
+    public int getAntiAliasing()
+    {
+        return this.m_cfg_mgr.getIntValue("RENDER_ANTIALIASING");
+    }
+    
+    
+    /** 
+     * Set AntiAliasing
+     * 
+     * @param value 
+     */
+    public void setAntiAliasing(int value)
+    {
+        this.m_cfg_mgr.setIntValue("RENDER_ANTIALIASING", value);
+    }
+    
+
+    /** 
+     * Get Color Rendering
+     */
+    public int getColorRendering()
+    {
+        return this.m_cfg_mgr.getIntValue("RENDER_COLOR_RENDERING");
+    }
+
+    
+    /** 
+     * Set Color Rendering
+     * 
+     * @param value 
+     */
     public void setColorRendering(int value)
     {
         this.m_cfg_mgr.setIntValue("RENDER_COLOR_RENDERING", value);
     }
 
+    
+    /** 
+     * Get Dithering
+     */
+    public int getDithering()
+    {
+        return this.m_cfg_mgr.getIntValue("RENDER_DITHERING");
+    }
+
+    
+    /** 
+     * Set Dithering
+     * 
+     * @param value 
+     */
+    public void setDithering(int value)
+    {
+        this.m_cfg_mgr.setIntValue("RENDER_DITHERING", value);
+    }
+
+    
+    /** 
+     * Get Fractional Meetrics
+     */
+    public int getFractionalMetrics()
+    {
+        return this.m_cfg_mgr.getIntValue("RENDER_FRACTIONAL_METRICS");
+    }
+
+    
+    /** 
+     * Set Fractional Meetrics
+     * 
+     * @param value 
+     */
+    public void setFractionalMetrics(int value)
+    {
+        this.m_cfg_mgr.setIntValue("RENDER_FRACTIONAL_METRICS", value);
+    }
+    
+    
+    /** 
+     * Get Interpolation
+     */
+    public int getInterpolation()
+    {
+        return this.m_cfg_mgr.getIntValue("RENDER_INTERPOLATION");
+    }
+
+    
+    /** 
+     * Set Interpolation
+     * 
+     * @param value 
+     */
+    public void setInterpolation(int value)
+    {
+        this.m_cfg_mgr.setIntValue("RENDER_INTERPOLATION", value);
+    }
+
+
+    /** 
+     * Get Rendering
+     */
+    public int getRendering()
+    {
+        return this.m_cfg_mgr.getIntValue("RENDER_RENDERING");
+    }
+
+    
+    /** 
+     * Set Rendering
+     * 
+     * @param value 
+     */
+    public void setRendering(int value)
+    {
+        this.m_cfg_mgr.setIntValue("RENDER_RENDERING", value);
+    }
+
+    
+    /** 
+     * Get Text Antialiasing
+     */
+    public int getTextAntiAliasing()
+    {
+        return this.m_cfg_mgr.getIntValue("RENDER_TEXT_ANTIALIASING");
+    }
+    
+    
+    /** 
+     * Set Text Antialiasing
+     * 
+     * @param value 
+     */
+    public void setTextAntiAliasing(int value)
+    {
+        this.m_cfg_mgr.setIntValue("RENDER_TEXT_ANTIALIASING", value);
+    }
+
+    
+    /**
+     * Get Selected Color Scheme
+     * 
+     * @return
+     */
+    public ColorSchemeH getSelectedColorScheme()
+    {
+        return this.m_colors;
+    }
+
+    /**
+     * Get Selected Color Scheme In Cfg
+     * 
+     * @return
+     */
+    public String getSelectedColorSchemeInCfg()
+    {
+        return this.m_cfg_mgr.getStringValue("SELECTED_COLOR_SCHEME");
+    }
+
+    /**
+     * Set Selected Color Scheme In Cfg
+     * 
+     * @param value 
+     */
+    public void setSelectedColorSchemeInCfg(String value)
+    {
+        this.m_cfg_mgr.setStringValue("SELECTED_COLOR_SCHEME", value);
+    }
+
+    
+
+    /**
+     * Set Color Scheme Object
+     * 
+     * @param name
+     */
     public void setColorSchemeObject(String name)
     {
         ColorSchemeH cs = this.m_color_schemes.get(name);
@@ -502,149 +801,202 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         }
     }
 
+    /**
+     * Set Color Schemes
+     * @param table
+     * @param isnew
+     */
     public void setColorSchemes(Hashtable<String, ColorSchemeH> table, boolean isnew)
     {
         this.m_color_schemes = table;
         // this.changed_scheme = isnew;
     }
 
-    public void setDithering(int value)
+    /**
+     * Get Color Schemes
+     * @return
+     */
+    public Hashtable<String, ColorSchemeH> getColorSchemes()
     {
-        this.m_cfg_mgr.setIntValue("RENDER_DITHERING", value);
-    }
-
-    public void setFractionalMetrics(int value)
-    {
-        this.m_cfg_mgr.setIntValue("RENDER_FRACTIONAL_METRICS", value);
-    }
-
-    public void setIns1Abbr(String value)
-    {
-        this.m_cfg_mgr.setStringValue("INS1_ABBR", value);
-    }
-
-    public void setIns1Name(String value)
-    {
-        this.m_cfg_mgr.setStringValue("INS1_NAME", value);
-    }
-
-    public void setIns2Abbr(String value)
-    {
-        this.m_cfg_mgr.setStringValue("INS2_ABBR", value);
+        return this.m_color_schemes;
     }
 
 
-    public void setIns2Name(String value)
-    {
-        this.m_cfg_mgr.setStringValue("INS2_NAME", value);
-    }
 
-    public void setInterpolation(int value)
-    {
-        this.m_cfg_mgr.setIntValue("RENDER_INTERPOLATION", value);
-    }
 
+    
+    
+    
+    
+
+    
+
+    
+
+    
     // ---
-    // --- Printing methods
+    // --- Printing
     // ---
 
-    public void setLanguage(String name)
-    {
-        int idx = m_da.getLanguageIndexByName(name);
-        String post = m_da.avLangPostfix[idx];
 
-        if (!this.m_config.selected_lang.equals(post))
-        {
-            this.m_config.selected_lang = post;
-            this.changed_config = true;
-        }
+    /**
+     * Get PDF Viewer Path
+     * 
+     * @return
+     */
+    public String getPdfVieverPath()
+    {
+        return this.m_cfg_mgr.getStringValue("PRINT_PDF_VIEWER_PATH");
     }
 
-    public void setMeterDaylightSavingsFix(boolean value)
-    {
-        this.m_cfg_mgr.setBooleanValue("METER_DAYLIGHTSAVING_TIME_FIX", value);
-    }
-
-    public void setMeterPort(String value)
-    {
-        this.m_cfg_mgr.setStringValue("METER_PORT", value);
-    }
-
-    public void setMeterType(int value)
-    {
-        this.m_cfg_mgr.setIntValue("METER_TYPE", value);
-    }
-
+    
+    /**
+     * Set PDF Viewer Path
+     * 
+     * @param value 
+     */
     public void setPdfVieverPath(String value)
     {
         this.m_cfg_mgr.setStringValue("PRINT_PDF_VIEWER_PATH", value);
     }
+    
 
-    public void setPrintDinnerStartTime(int value)
+    /**
+     * Get Print Empty Value
+     * 
+     * @return 
+     */
+    public String getPrintEmptyValue()
     {
-        this.m_cfg_mgr.setIntValue("PRINT_DINNER_START_TIME", value);
+        return this.m_cfg_mgr.getStringValue("PRINT_EMPTY_VALUE");
     }
+    
 
+    /**
+     * Set Print Empty Value
+     * 
+     * @param value 
+     */
     public void setPrintEmptyValue(String value)
     {
         this.m_cfg_mgr.setStringValue("PRINT_EMPTY_VALUE", value);
     }
 
+    
+    /**
+     * Get Print Start Time: Lunch
+     * 
+     * @return
+     */
+    public int getPrintLunchStartTime()
+    {
+        return this.m_cfg_mgr.getIntValue("PRINT_LUNCH_START_TIME");
+    }
+    
+    
+    /**
+     * Set Print Start Time: Lunch
+     * 
+     * @param value 
+     */
     public void setPrintLunchStartTime(int value)
     {
         this.m_cfg_mgr.setIntValue("PRINT_LUNCH_START_TIME", value);
     }
+    
+    
+    /**
+     * Get Print Start Time: Dinner
+     * 
+     * @return
+     */
+    public int getPrintDinnerStartTime()
+    {
+        return this.m_cfg_mgr.getIntValue("PRINT_DINNER_START_TIME");
+    }
 
+
+    /**
+     * Set Print Start Time: Dinner
+     * 
+     * @param value 
+     */
+    public void setPrintDinnerStartTime(int value)
+    {
+        this.m_cfg_mgr.setIntValue("PRINT_DINNER_START_TIME", value);
+    }
+
+    
+    /**
+     * Get Print Start Time: Night
+     * 
+     * @return
+     */
+    public int getPrintNightStartTime()
+    {
+        return this.m_cfg_mgr.getIntValue("PRINT_NIGHT_START_TIME");
+    }
+
+    
+    /**
+     * Set Print Start Time: Night
+     * 
+     * @param value 
+     */
     public void setPrintNightStartTime(int value)
     {
         this.m_cfg_mgr.setIntValue("PRINT_NIGHT_START_TIME", value);
     }
+    
 
-    public void setRendering(int value)
+    // ---
+    // --- Ratios
+    // ---
+
+
+    /**
+     * Get Ratio CH/Insulin
+     * 
+     * @return
+     */
+    public float getRatio_CH_Insulin()
     {
-        this.m_cfg_mgr.setIntValue("RENDER_RENDERING", value);
-    }
-
-
-    public void setSelectedColorSchemeInCfg(String value)
-    {
-        this.m_cfg_mgr.setStringValue("SELECTED_COLOR_SCHEME", value);
+        return this.m_cfg_mgr.getFloatValue("RATIO_CH_INSULIN");
     }
 
     
+    /**
+     * Set Ratio CH/Insulin
+     * 
+     * @param val 
+     */
     public void setRatio_CH_Insulin(float val)
     {
         this.m_cfg_mgr.setFloatValue("RATIO_CH_INSULIN", val);
     }
     
+    
+    /**
+     * Get Ratio BG/Insulin
+     * 
+     * @return
+     */
+    public float getRatio_BG_Insulin()
+    {
+        return this.m_cfg_mgr.getFloatValue("RATIO_BG_INSULIN");
+    }
+    
+
+    /**
+     * Set Ratio BG/Insulin
+     * 
+     * @param val 
+     */
     public void setRatio_BG_Insulin(float val)
     {
         this.m_cfg_mgr.setFloatValue("RATIO_BG_INSULIN", val);
     }
     
-    
-    
-
-    public void setTextAntiAliasing(int value)
-    {
-        this.m_cfg_mgr.setIntValue("RENDER_TEXT_ANTIALIASING", value);
-    }
-
-    /*
-    public void setTimeZone(String value)
-    {
-        this.m_cfg_mgr.setStringValue("TIMEZONE", value);
-    }*/
-
-    /**
-     * Set User's Name
-     * 
-     * @param value
-     */
-    public void setUserName(String value)
-    {
-        this.m_cfg_mgr.setStringValue("NAME", value);
-    }
 
     
     // ---

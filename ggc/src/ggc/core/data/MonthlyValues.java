@@ -228,7 +228,7 @@ public class MonthlyValues extends WeeklyValues
                 if (m_da.getSettings().getBG_unit()==1)
                     dataStr[i][0] = "" + (int)(data[i][0]/data[i][1]); // mg/dl
                 else
-                    dataStr[i][0] = "" + DataAccess.MmolDecimalFormat.format(data[i][0]/data[i][1]);  // mmol/l
+                    dataStr[i][0] = "" + DataAccess.Decimal1Format.format(data[i][0]/data[i][1]);  // mmol/l
             }
             else
                 dataStr[i][0] = this.empty_value;

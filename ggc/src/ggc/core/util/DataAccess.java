@@ -1,32 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DataAccess
- *  Purpose:  Used for utility works and static data handling (this is singelton
- *      class which holds all our definitions, so that we don't need to create them
- *      again for each class.      
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
 package ggc.core.util;
 
 import ggc.core.data.DailyValues;
@@ -53,21 +24,13 @@ import ggc.gui.little.GGCLittle;
 import ggc.gui.little.StatusBarL;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Image;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -103,8 +66,10 @@ import com.atech.utils.logs.RedirectScreen;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###--###  
- *  Description:  ###--###
+ *  Filename:     DataAccess
+ *  Description:  This class is singelton instance and contains most of utility 
+ *                methods and also hold instances of several important classes
+ *                used through whole application it also hold most of "static" data.      
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -113,6 +78,9 @@ import com.atech.utils.logs.RedirectScreen;
 public class DataAccess extends ATDataAccessAbstract
 {
 
+    /**
+     * Current Db Version
+     */
     public String current_db_version = "7";
 
     
@@ -149,15 +117,18 @@ public class DataAccess extends ATDataAccessAbstract
 
     // singelton instance
 
-    public GGCDb m_db = null;
+    private GGCDb m_db = null;
 
-    public MainFrame m_main = null;
-    public GGCLittle m_main_little = null;
+    private MainFrame m_main = null;
+    private GGCLittle m_main_little = null;
 
 
     // public GGCTreeRoot m_nutrition_treeroot = null;
     // public GGCTreeRoot m_meals_treeroot = null;
 
+    /**
+     * Tree Roots
+     */
     public Hashtable<String, GGCTreeRoot> tree_roots = null;
 
     // daily and weekly data
@@ -167,17 +138,29 @@ public class DataAccess extends ATDataAccessAbstract
     private DailyValues m_dvalues = null;
     private WeeklyValues m_dRangeValues = null;
 
-    // x private MeterManager m_meterManager = null;
-
     private GGCProperties m_settings = null;
-
     private DbToolApplicationGGC m_configFile = null;
     private ConfigurationManager m_cfgMgr = null;
 
-    public static DecimalFormat MmolDecimalFormat = new DecimalFormat("#0.0");
+    
+    /**
+     * Decimal with zero decimals
+     */
     public static DecimalFormat Decimal0Format = new DecimalFormat("#0");
+
+    /**
+     * Decimal with 1 decimal
+     */
     public static DecimalFormat Decimal1Format = new DecimalFormat("#0.0");
+
+    /**
+     * Decimal with 2 decimal
+     */
     public static DecimalFormat Decimal2Format = new DecimalFormat("#0.00");
+
+    /**
+     * Decimal with 3 decimal
+     */
     public static DecimalFormat Decimal3Format = new DecimalFormat("#0.000");
 
     /**
@@ -185,43 +168,47 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public int m_BG_unit = BG_MGDL;
 
-    public String[] availableLanguages = { "English", "Deutsch", "Slovenski", "Fran\u00e7ais" };
-
+    private String[] availableLanguages = { "English", "Deutsch", "Slovenski", "Fran\u00e7ais" };
+  
+    /**
+     * Available Language Extensions (posfixes)
+     */
     public String[] avLangPostfix = { "en", "de", "si", "fr" };
 
+    /**
+     * BG Units
+     */
     public String[] bg_units = { "mg/dl", "mmol/l" };
 
-    public Hashtable<String, String> timeZones;
+//    public Hashtable<String, String> timeZones;
 
-    public ArrayList<Container> parents_list;
+    //public ArrayList<Container> parents_list;
 
+    /**
+     * Config Icons 
+     */
     public ImageIcon config_icons[] = null;
 
+    /**
+     * Plug In - Meter Tool
+     */
     public static final String PLUGIN_METERS = "MetersPlugIn";
+
+    /**
+     * Plug In - Pump Tool
+     */
     public static final String PLUGIN_PUMPS = "PumpsPlugIn";
+
+    /**
+     * Plug In - CGMS Tool
+     */
     public static final String PLUGIN_CGMS = "CGMSPlugIn";
 
-    /*
-     * { new ImageIcon("/icons/cfg_general.png"), new
-     * ImageIcon("/icons/cfg_medical.png"), new
-     * ImageIcon("icons/cfg_colors.png"), new ImageIcon("icons/cfg_render.png"),
-     * new ImageIcon("icons/cfg_meter.png"), new
-     * ImageIcon("icons/cfg_print.png") };
-     */
-    /*
-     * public ImageIcon config_icons[] = { new ImageIcon("images/cfg_db.gif"),
-     * new ImageIcon("images/cfg_look.gif"), new
-     * ImageIcon("images/cfg_myparish.gif"), new
-     * ImageIcon("images/cfg_masses.gif"), new
-     * ImageIcon("images/cfg_users.gif"), new ImageIcon("images/cfg_lang.gif"),
-     * new ImageIcon("images/cfg_web.gif"), null };
-     * 
-     * public String config_types[] = { m_ic.getMessage("GENERAL"),
-     * m_ic.getMessage("MEDICAL_DATA"), m_ic.getMessage("COLORS_AND_FONTS"),
-     * m_ic.getMessage("RENDERING_QUALITY"),
-     * m_ic.getMessage("METER_CONFIGURATION"), m_ic.getMessage("PRINTING") };
-     */
-    public String[] options_yes_no = null;
+    
+    private int current_person_id = 1;
+    NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
+    
+    
 
     // ********************************************************
     // ****** Constructors and Access methods *****
@@ -243,6 +230,9 @@ public class DataAccess extends ATDataAccessAbstract
     }
 
     
+    /**
+     * Init Special
+     */
     @Override
     public void initSpecial()
     {
@@ -292,6 +282,12 @@ public class DataAccess extends ATDataAccessAbstract
         return s_da;
     }
 
+    /**
+     * Create Instance
+     * 
+     * @param main
+     * @return
+     */
     public static DataAccess createInstance(MainFrame main)
     {
         s_da = null;
@@ -316,6 +312,12 @@ public class DataAccess extends ATDataAccessAbstract
         return s_da;
     }
 
+    /**
+     * Create Instance
+     * 
+     * @param main
+     * @return
+     */
     public static DataAccess createInstance(GGCLittle main)
     {
         if (s_da == null)
@@ -344,23 +346,42 @@ public class DataAccess extends ATDataAccessAbstract
         DataAccess.s_da = null;
     }
 
+    /**
+     * Start Db
+     * 
+     * @param bar
+     */
     public void startDb(StatusBar bar)
     {
         GGCDbLoader loader = new GGCDbLoader(this, bar);
         loader.start();
     }
 
+    /**
+     * Start Db
+     * 
+     * @param bar2
+     */
     public void startDb(StatusBarL bar2)
     {
         GGCDbLoader loader = new GGCDbLoader(this, bar2);
         loader.start();
     }
 
+    /**
+     * Get Db
+     * @return
+     */
     public GGCDb getDb()
     {
         return m_db;
     }
 
+    /**
+     * Set Db
+     * 
+     * @param db
+     */
     public void setDb(GGCDb db)
     {
         this.m_db = db;
@@ -370,17 +391,31 @@ public class DataAccess extends ATDataAccessAbstract
     // ****** Static Methods *****
     // ********************************************************
 
+    /**
+     * Get Float As String
+     * 
+     * @param f
+     * @param decimal_places
+     * @return
+     */
     public static String getFloatAsString(float f, String decimal_places)
     {
         return DataAccess.getFloatAsString(f, Integer.parseInt(decimal_places));
     }
 
+    /**
+     * Get Float As String
+     * 
+     * @param f
+     * @param decimal_places
+     * @return
+     */
     public static String getFloatAsString(float f, int decimal_places)
     {
         switch (decimal_places)
         {
         case 1:
-            return DataAccess.MmolDecimalFormat.format(f);
+            return DataAccess.Decimal1Format.format(f);
 
         case 2:
             return DataAccess.Decimal2Format.format(f);
@@ -397,12 +432,20 @@ public class DataAccess extends ATDataAccessAbstract
     // ****** Abstract Methods *****
     // ********************************************************
 
+    /**
+     * Get Application Name
+     * 
+     * @return
+     */
     @Override
     public String getApplicationName()
     {
         return "GGC";
     }
 
+    /**
+     * Check Prerequisites
+     */
     @Override
     public void checkPrerequisites()
     {
@@ -415,12 +458,20 @@ public class DataAccess extends ATDataAccessAbstract
         }
     }
 
+    /**
+     * Get Images Root (Must have ending back-slash)
+     * 
+     * @return
+     */
     @Override
     public String getImagesRoot()
     {
         return "/icons/";
     }
 
+    /**
+     * Load Backup Restore Collection
+     */
     @Override
     public void loadBackupRestoreCollection()
     {
@@ -448,6 +499,16 @@ public class DataAccess extends ATDataAccessAbstract
         this.backup_restore_collection = brc;
     }
 
+    /**
+     * Load Graph Config Properties
+     */
+    @Override
+    public void loadGraphConfigProperties()
+    {
+        this.graph_config = this.m_settings;
+    }
+    
+    
     // ********************************************************
     // ****** Icons *****
     // ********************************************************
@@ -469,127 +530,65 @@ public class DataAccess extends ATDataAccessAbstract
     // ****** Db *****
     // ********************************************************
 
+    /**
+     * Get Db Config (DbToolApplicationGGC)
+     * 
+     * @return
+     */
     public DbToolApplicationGGC getDbConfig()
     {
         return this.m_configFile;
     }
 
     
-    public void loadTimeZones()
-    {
-        this.timeZones = new Hashtable<String, String>();
-
-        // Posible needed enchancment. We should probably list all ID's as
-        // values. On windows default ID can be different
-        // as in this table. We should add this names, if we encounter problems.
-
-        this.timeZones.put("(GMT+13:00) Nuku'alofa", "Pacific/Tongatapu");
-        this.timeZones.put("(GMT+12:00) Fiji, Kamchatka, Marshall Is.", "Pacific/Fiji");
-        this.timeZones.put("(GMT+12:00) Auckland, Wellington", "Pacific/Auckland");
-        this.timeZones.put("(GMT+11:00) Magadan, Solomon Is., New Caledonia", "Asia/Magadan");
-        this.timeZones.put("(GMT+10:00) Vladivostok", "Asia/Vladivostok");
-        this.timeZones.put("(GMT+10:00) Hobart", "Australia/Hobart");
-        this.timeZones.put("(GMT+10:00) Guam, Port Moresby", "Pacific/Guam");
-        this.timeZones.put("(GMT+10:00) Canberra, Melbourne, Sydney", "Australia/Sydney");
-        this.timeZones.put("(GMT+10:00) Brisbane", "Australia/Brisbane");
-        this.timeZones.put("(GMT+09:30) Adelaide", "Australia/Adelaide");
-        this.timeZones.put("(GMT+09:00) Yakutsk", "Asia/Yakutsk");
-        this.timeZones.put("(GMT+09:00) Seoul", "Asia/Seoul");
-        this.timeZones.put("(GMT+09:00) Osaka, Sapporo, Tokyo", "Asia/Tokyo");
-        this.timeZones.put("(GMT+08:00) Taipei", "Asia/Taipei");
-        this.timeZones.put("(GMT+08:00) Perth", "Australia/Perth");
-        this.timeZones.put("(GMT+08:00) Kuala Lumpur, Singapore", "Asia/Kuala_Lumpur");
-        this.timeZones.put("(GMT+08:00) Irkutsk, Ulaan Bataar", "Asia/Irkutsk");
-        this.timeZones.put("(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi", "Asia/Hong_Kong");
-        this.timeZones.put("(GMT+07:00) Krasnoyarsk", "Asia/Krasnoyarsk");
-        this.timeZones.put("(GMT+07:00) Bangkok, Hanoi, Jakarta", "Asia/Bangkok");
-        this.timeZones.put("(GMT+06:30) Rangoon", "Asia/Rangoon");
-        this.timeZones.put("(GMT+06:00) Sri Jayawardenepura", "Asia/Colombo");
-        this.timeZones.put("(GMT+06:00) Astana, Dhaka", "Asia/Dhaka");
-        this.timeZones.put("(GMT+06:00) Almaty, Novosibirsk", "Asia/Almaty");
-        this.timeZones.put("(GMT+05:45) Kathmandu", "Asia/Katmandu");
-        this.timeZones.put("(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi", "Asia/Calcutta");
-        this.timeZones.put("(GMT+05:00) Islamabad, Karachi, Tashkent", "Asia/Karachi");
-        this.timeZones.put("(GMT+05:00) Ekaterinburg", "Asia/Yekaterinburg");
-        this.timeZones.put("(GMT+04:30) Kabul", "Asia/Kabul");
-        this.timeZones.put("(GMT+04:00) Baku, Tbilisi, Yerevan", "Asia/Baku");
-        this.timeZones.put("(GMT+04:00) Abu Dhabi, Muscat", "Asia/Dubai");
-        this.timeZones.put("(GMT+03:30) Tehran", "Asia/Tehran");
-        this.timeZones.put("(GMT+03:00) Nairobi", "Africa/Nairobi");
-        this.timeZones.put("(GMT+03:00) Moscow, St. Petersburg, Volgograd", "Europe/Moscow");
-        this.timeZones.put("(GMT+03:00) Kuwait, Riyadh", "Asia/Kuwait");
-        this.timeZones.put("(GMT+03:00) Baghdad", "Asia/Baghdad");
-        this.timeZones.put("(GMT+02:00) Jerusalem", "Asia/Jerusalem");
-        this.timeZones.put("(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Europe/Helsinki");
-        this.timeZones.put("(GMT+02:00) Harare, Pretoria", "Africa/Harare");
-        this.timeZones.put("(GMT+02:00) Cairo", "Africa/Cairo");
-        this.timeZones.put("(GMT+02:00) Bucharest", "Europe/Bucharest");
-        this.timeZones.put("(GMT+02:00) Athens, Istanbul, Minsk", "Europe/Athens");
-        this.timeZones.put("(GMT+01:00) West Central Africa", "Africa/Lagos");
-        this.timeZones.put("(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb", "Europe/Warsaw");
-        this.timeZones.put("(GMT+01:00) Brussels, Copenhagen, Madrid, Paris", "Europe/Brussels");
-        this.timeZones.put("(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague",
-            "Europe/Prague,Europe/Belgrade");
-        this.timeZones.put("(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Europe/Amsterdam");
-        this.timeZones.put("(GMT) Casablanca, Monrovia", "Africa/Casablanca");
-        this.timeZones.put("(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London", "Europe/Dublin");
-        this.timeZones.put("(GMT-01:00) Azores", "Atlantic/Azores");
-        this.timeZones.put("(GMT-01:00) Cape Verde Is.", "Atlantic/Cape_Verde");
-        this.timeZones.put("(GMT-02:00) Mid-Atlantic", "Atlantic/South_Georgia");
-        this.timeZones.put("(GMT-03:00) Brasilia", "America/Sao_Paulo");
-        this.timeZones.put("(GMT-03:00) Buenos Aires, Georgetown", "America/Buenos_Aires");
-        this.timeZones.put("(GMT-03:00) Greenland", "America/Thule");
-        this.timeZones.put("(GMT-03:30) Newfoundland", "America/St_Johns");
-        this.timeZones.put("(GMT-04:00) Atlantic Time (Canada)", "America/Halifax");
-        this.timeZones.put("(GMT-04:00) Caracas, La Paz", "America/Caracas");
-        this.timeZones.put("(GMT-04:00) Santiago", "America/Santiago");
-        this.timeZones.put("(GMT-05:00) Bogota, Lima, Quito", "America/Bogota");
-        this.timeZones.put("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
-        this.timeZones.put("(GMT-05:00) Indiana (East)", "America/Indianapolis");
-        this.timeZones.put("(GMT-06:00) Central America", "America/Costa_Rica");
-        this.timeZones.put("(GMT-06:00) Central Time (US & Canada)", "America/Chicago");
-        this.timeZones.put("(GMT-06:00) Guadalajara, Mexico City, Monterrey", "America/Mexico_City");
-        this.timeZones.put("(GMT-06:00) Saskatchewan", "America/Winnipeg");
-        this.timeZones.put("(GMT-07:00) Arizona", "America/Phoenix");
-        this.timeZones.put("(GMT-07:00) Chihuahua, La Paz, Mazatlan", "America/Tegucigalpa");
-        this.timeZones.put("(GMT-07:00) Mountain Time (US & Canada)", "America/Denver");
-        this.timeZones.put("(GMT-08:00) Pacific Time (US & Canada); Tijuana", "America/Los_Angeles");
-        this.timeZones.put("(GMT-09:00) Alaska", "America/Anchorage");
-        this.timeZones.put("(GMT-10:00) Hawaii", "Pacific/Honolulu");
-        this.timeZones.put("(GMT-11:00) Midway Island, Samoa", "Pacific/Apia");
-        this.timeZones.put("(GMT-12:00) International Date Line West", "MIT");
-
-    }
 
     // ********************************************************
     // ****** Settings *****
     // ********************************************************
 
+    /**
+     * Get Settings
+     * 
+     * @return
+     */
     public GGCProperties getSettings()
     {
         return this.m_settings;
     }
 
+    /**
+     * Load Settings from Db
+     */
     public void loadSettingsFromDb()
     {
         this.m_settings.load();
     }
 
+    /**
+     * Get Color
+     * 
+     * @param color
+     * @return
+     */
     public Color getColor(int color)
     {
         return new Color(color);
     }
 
+    /**
+     * Get Configuration Manager (Db)
+     * 
+     * @return
+     */
     public ConfigurationManager getConfigurationManager()
     {
         return this.m_cfgMgr;
     }
 
     
-    
-    
-    
-    
+    /**
+     * Init PlugIns
+     */
     public void initPlugIns()
     {
         addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
@@ -604,6 +603,9 @@ public class DataAccess extends ATDataAccessAbstract
     
     
     
+    /**
+     * Get Hibernate Db
+     */
     public HibernateDb getHibernateDb()
     {
         return this.m_db;
@@ -618,16 +620,32 @@ public class DataAccess extends ATDataAccessAbstract
     // ****** Language *****
     // ********************************************************
 
+    /**
+     * Get Available Languages
+     * 
+     * @return
+     */
     public String[] getAvailableLanguages()
     {
         return this.availableLanguages;
     }
 
+    /**
+     * Get Selected Language Index
+     * 
+     * @return
+     */
     public int getSelectedLanguageIndex()
     {
         return this.getLanguageIndex(this.getSettings().getLanguage());
     }
 
+    /**
+     * Get Language Index
+     * 
+     * @param postfix
+     * @return
+     */
     public int getLanguageIndex(String postfix)
     {
         // System.out.println(postfix);
@@ -642,6 +660,12 @@ public class DataAccess extends ATDataAccessAbstract
         return 0;
     }
 
+    /**
+     * Get Language Index By Name
+     * 
+     * @param name
+     * @return
+     */
     public int getLanguageIndexByName(String name)
     {
         // stem.out.println(name);
@@ -659,23 +683,39 @@ public class DataAccess extends ATDataAccessAbstract
     // ****** BG Measurement Type *****
     // ********************************************************
 
+    /**
+     * BG: mg/dL
+     */
     public static final int BG_MGDL = 1;
 
+    /**
+     * BG: mmol/L
+     */
     public static final int BG_MMOL = 2;
 
+    /**
+     * Get Measurment Type
+     * 
+     * @return
+     */
     public int getBGMeasurmentType()
     {
         return this.m_BG_unit;
     }
 
+    /**
+     * Set Measurment Type
+     * 
+     * @param type 
+     */
     public void setBGMeasurmentType(int type)
     {
         this.m_BG_unit = type;
     }
 
-    public static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
+    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
 
-    public static final float MMOL_TO_MGDL_FACTOR = 18.016f;
+    private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
 
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>,
@@ -701,6 +741,12 @@ public class DataAccess extends ATDataAccessAbstract
         }
     }
 
+    /**
+     * Get BG Value
+     * 
+     * @param bg_value
+     * @return
+     */
     public float getBGValue(float bg_value)
     {
         switch (this.m_BG_unit)
@@ -714,6 +760,13 @@ public class DataAccess extends ATDataAccessAbstract
 
     }
 
+    /**
+     * Get BG Value By Type
+     * 
+     * @param type
+     * @param bg_value
+     * @return
+     */
     public float getBGValueByType(int type, float bg_value)
     {
         switch (type)
@@ -727,6 +780,14 @@ public class DataAccess extends ATDataAccessAbstract
 
     }
 
+    /**
+     * Get BG Value By Type
+     * 
+     * @param input_type
+     * @param output_type
+     * @param bg_value
+     * @return
+     */
     public float getBGValueByType(int input_type, int output_type, float bg_value)
     {
 
@@ -746,6 +807,13 @@ public class DataAccess extends ATDataAccessAbstract
 
     }
 
+    /**
+     * Get BG Value Different
+     * 
+     * @param type
+     * @param bg_value
+     * @return
+     */
     public float getBGValueDifferent(int type, float bg_value)
     {
 
@@ -764,36 +832,53 @@ public class DataAccess extends ATDataAccessAbstract
     // ********************************************************
     // ****** Parent handling (for UIs) *****
     // ********************************************************
+    
+    
+    /**
+     * Set Parent
+     * 
+     * @param main
+     */
     public void setParent(MainFrame main)
     {
         m_main = main;
         loadIcons();
     }
 
+    /**
+     * Set Parent
+     * 
+     * @param main
+     */
     public void setParent(GGCLittle main)
     {
         m_main_little = main;
     }
 
+    /**
+     * Get Parent
+     */
     @Override
     public MainFrame getParent()
     {
         return m_main;
     }
 
+    /**
+     * Get Parent Little
+     * 
+     * @return 
+     */
     public GGCLittle getParentLittle()
     {
         return m_main_little;
     }
 
-    /*
-     * public I18nControl getI18nInstance() { return this.getI18nInstance(); }
-     */
 
     /**
      * Utils
      */
-
+/*
     @Override
     public Image getImage(String filename, Component cmp)
     {
@@ -824,13 +909,17 @@ public class DataAccess extends ATDataAccessAbstract
         }
         return img;
     }
-
+*/
+    
     // ********************************************************
     // ****** Person Id / Login *****
     // ********************************************************
 
-    private int current_person_id = 1;
-
+    /**
+     * Get Current Person Id
+     * 
+     * @return
+     */
     public int getCurrentPersonId()
     {
         return this.current_person_id;
@@ -840,8 +929,12 @@ public class DataAccess extends ATDataAccessAbstract
     // ****** I18n Utils *****
     // ********************************************************
 
-    NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
 
+    /**
+     * Get Nutrition I18n Control
+     * 
+     * @return
+     */
     public NutriI18nControl getNutriI18nControl()
     {
         return this.m_nutri_i18n;
@@ -893,6 +986,11 @@ public class DataAccess extends ATDataAccessAbstract
      * null; } }
      */
 
+    /**
+     * Get Look & Feel Data
+     * 
+     * @return
+     */
     public static String[] getLFData()
     {
         String out[] = new String[2];
@@ -923,18 +1021,24 @@ public class DataAccess extends ATDataAccessAbstract
 
     private long component_id_last;
 
+    /**
+     * Get New Component Id
+     * 
+     * @return
+     */
     public String getNewComponentId()
     {
         component_id_last++;
-
         return "" + this.component_id_last;
-
     }
 
     // ********************************************************
     // ****** Options *****
     // ********************************************************
 
+    /**
+     * Load Options
+     */
     public void loadOptions()
     {
         this.options_yes_no = new String[2];
@@ -946,112 +1050,18 @@ public class DataAccess extends ATDataAccessAbstract
     // ****** Dates and Times Handling *****
     // ********************************************************
 
-    public String getCurrentDateString()
-    {
-        GregorianCalendar gc = new GregorianCalendar();
-        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
-    }
 
-    @Override
-    public String[] getMonthsArray()
-    {
-        String arr[] = new String[12];
+    
+   
 
-        arr[0] = m_i18n.getMessage("JANUARY");
-        arr[1] = m_i18n.getMessage("FEBRUARY");
-        arr[2] = m_i18n.getMessage("MARCH");
-        arr[3] = m_i18n.getMessage("APRIL");
-        arr[4] = m_i18n.getMessage("MAY");
-        arr[5] = m_i18n.getMessage("JUNE");
-        arr[6] = m_i18n.getMessage("JULY");
-        arr[7] = m_i18n.getMessage("AUGUST");
-        arr[8] = m_i18n.getMessage("SEPTEMBER");
-        arr[9] = m_i18n.getMessage("OCTOBER");
-        arr[10] = m_i18n.getMessage("NOVEMBER");
-        arr[11] = m_i18n.getMessage("DECEMBER");
+ 
 
-        return arr;
+  
 
-    }
-
-    /*
-    @Override
-    public String getDateString(int date)
-    {
-        // 20051012
-
-        int year = date / 10000;
-        int _months = date - (year * 10000);
-
-        _months = _months / 100;
-
-        int _days = date - (year * 10000) - (_months * 100);
-
-        if (year == 0)
-            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2);
-        else
-            return getLeadingZero(days, 2) + "/" + getLeadingZero(months, 2) + "/" + year;
-    }*/
-
-    @Override
-    public String getTimeString(int time)
-    {
-        int hours = time / 100;
-        int min = time - hours * 100;
-
-        return getLeadingZero(hours, 2) + ":" + getLeadingZero(min, 2);
-    }
-
-    @Override
-    public String getDateTimeString(long date)
-    {
-        return getDateTimeString(date, 1);
-    }
-
-    @Override
-    public String getDateTimeAsDateString(long date)
-    {
-        return getDateTimeString(date, 2);
-    }
-
-    @Override
-    public String getDateTimeAsTimeString(long date)
-    {
-        return getDateTimeString(date, 3);
-    }
-
-    // ret_type = 1 (Date and time)
-    // ret_type = 2 (Date)
-    // ret_type = 3 (Time)
+  
 
 
-    @Override
-    public String getDateTimeString(long dt, int ret_type)
-    {
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        if (ret_type == DT_DATETIME)
-            return getLeadingZero(d, 2) + "." + getLeadingZero(m, 2) + "." + y + "  " + getLeadingZero(h, 2) + ":"
-                    + getLeadingZero(min, 2);
-        else if (ret_type == DT_DATE)
-            return getLeadingZero(d, 2) + "." + getLeadingZero(m, 2) + "." + y;
-        else
-            return getLeadingZero(h, 2) + ":" + getLeadingZero(min, 2);
-
-    }
+   /*
 
     public Date getDateTimeAsDateObject(long dt)
     {
@@ -1079,13 +1089,6 @@ public class DataAccess extends ATDataAccessAbstract
         gc.set(Calendar.HOUR_OF_DAY, h);
         gc.set(Calendar.MINUTE, min);
 
-        /*
-         * dt_obj.setHours(h); dt_obj.setMinutes(min);
-         * 
-         * dt_obj.setDate(d); dt_obj.setMonth(m); dt_obj.setYear(y);
-         * 
-         * return dt_obj;
-         */
 
         return gc.getTime();
 
@@ -1139,10 +1142,10 @@ public class DataAccess extends ATDataAccessAbstract
         return Long.parseLong(dx);
 
     }
-
+*/
     // 1 = Db Date: yyyyMMdd
     // 2 = Db Full: yyyyMMddHHMM (24h format)
-    public String getDateTimeStringFromGregorianCalendar(GregorianCalendar gc, int type)
+   /* public String getDateTimeStringFromGregorianCalendar(GregorianCalendar gc, int type)
     {
         String st = "";
 
@@ -1174,7 +1177,10 @@ public class DataAccess extends ATDataAccessAbstract
     {
         return getDateString(date) + " " + getTimeString(time);
     }
-
+*/
+    /**
+     * Get Start Year
+     */
     @Override
     public int getStartYear()
     {
@@ -1184,6 +1190,15 @@ public class DataAccess extends ATDataAccessAbstract
     /*
      * public Date m_date = null; public HbA1cValues m_HbA1c = null; public
      * DailyValues m_dvalues = null;
+     */
+    
+    
+    
+    /**
+     * Load Daily Settings
+     * 
+     * @param day
+     * @param force
      */
     public synchronized void loadDailySettings(GregorianCalendar day, boolean force)
     {
@@ -1206,6 +1221,13 @@ public class DataAccess extends ATDataAccessAbstract
         m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
+
+    /**
+     * Load Daily Settings (Little)
+     * 
+     * @param day
+     * @param force
+     */
     public synchronized void loadDailySettingsLittle(GregorianCalendar day, boolean force)
     {
         if ((m_db == null) || (m_db.getLoadStatus() < 2))
@@ -1228,6 +1250,12 @@ public class DataAccess extends ATDataAccessAbstract
         // m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
+    /**
+     * Get HbA1c
+     * 
+     * @param day
+     * @return
+     */
     public HbA1cValues getHbA1c(GregorianCalendar day)
     {
         // System.out.println("DA::getHbA1c");
@@ -1240,6 +1268,12 @@ public class DataAccess extends ATDataAccessAbstract
         return m_HbA1c;
     }
 
+    /**
+     * Get Day Stats
+     * 
+     * @param day
+     * @return
+     */
     public DailyValues getDayStats(GregorianCalendar day)
     {
         // System.out.println("DA::getDayStats");
@@ -1250,6 +1284,13 @@ public class DataAccess extends ATDataAccessAbstract
         return m_dvalues;
     }
 
+    /**
+     * Get Day Stats Range
+     * 
+     * @param start
+     * @param end
+     * @return
+     */
     public WeeklyValues getDayStatsRange(GregorianCalendar start, GregorianCalendar end)
     {
         // System.out.println("DA::getDayStatsRange");
@@ -1270,11 +1311,22 @@ public class DataAccess extends ATDataAccessAbstract
         }
     }
 
-    public boolean isSameDay(GregorianCalendar day)
+    /**
+     * Is Same Day (if we compare current day with day we got stats for main display from)
+     * 
+     * @param gc
+     * @return
+     */
+    public boolean isSameDay(GregorianCalendar gc)
     {
-        return isSameDay(m_date, day);
+        return isSameDay(m_date, gc);
     }
 
+    /**
+     * Is Database Initialized
+     * 
+     * @return
+     */
     public boolean isDatabaseInitialized()
     {
         if ((m_db == null) || (m_db.getLoadStatus() < 2))
@@ -1283,6 +1335,13 @@ public class DataAccess extends ATDataAccessAbstract
             return true;
     }
 
+    /**
+     * Is Same Day (GregorianCalendars)
+     * 
+     * @param gc1
+     * @param gc2 
+     * @return
+     */
     public boolean isSameDay(GregorianCalendar gc1, GregorianCalendar gc2)
     {
 
@@ -1308,6 +1367,9 @@ public class DataAccess extends ATDataAccessAbstract
     }
 
     
+    /**
+     * Start Internal Web Server
+     */
     public void startWebServer()
     {
         try
@@ -1357,25 +1419,16 @@ public class DataAccess extends ATDataAccessAbstract
     }
     
     
-    @Override
-    public GregorianCalendar getGregorianCalendar(Date date)
-    {
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(date);
 
-        return gc;
-    }
-
+    /**
+     * Console message Not Implemented
+     * @param source
+     */
     public static void notImplemented(String source)
     {
         System.out.println("Not Implemented: " + source);
     }
 
 
-    @Override
-    public void loadGraphConfigProperties()
-    {
-        this.graph_config = this.m_settings;
-    }
 
 }

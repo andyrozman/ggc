@@ -45,6 +45,7 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.utils.ATechDate;
 
 
 /**
@@ -1262,8 +1263,10 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         logInfo("getDayStats()");
 
         DailyValues dV = new DailyValues();
-        dV.setDate(m_da.getDateTimeFromDateObject(day.getTime()) / 10000);
+        //dV.setDate(m_da.getDateTimeFromDateObject(day.getTime()) / 10000);
 
+        dV.setDate(ATechDate.getATDateTimeFromGC(day, ATechDate.FORMAT_DATE_ONLY));
+        
         try
         {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -1312,8 +1315,10 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
         try
         {
-            String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
-            String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
+            String sDay = "" + ATechDate.getATDateTimeFromGC(start, ATechDate.FORMAT_DATE_ONLY); 
+            String eDay = "" + ATechDate.getATDateTimeFromGC(end, ATechDate.FORMAT_DATE_ONLY); 
+            //String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
+            //String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
 
             logDebug("getDayStatsRange()", sDay + " - " + eDay);
 
@@ -1361,8 +1366,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
         try
         {
-            String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
-            String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
+            String sDay = "" + ATechDate.getATDateTimeFromGC(start, ATechDate.FORMAT_DATE_ONLY); 
+            String eDay = "" + ATechDate.getATDateTimeFromGC(end, ATechDate.FORMAT_DATE_ONLY); 
+
+            
+//            String sDay = m_da.getDateTimeStringFromGregorianCalendar(start, 1);
+//            String eDay = m_da.getDateTimeStringFromGregorianCalendar(end, 1);
 
             logDebug("getDayStatsRange()", sDay + " - " + eDay);
 

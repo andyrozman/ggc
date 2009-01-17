@@ -289,7 +289,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable,
         
         float cal_r = m_da.getSettings().getRatio_CH_Insulin() / m_da.getSettings().getRatio_BG_Insulin();
         
-        this.lbl_bg_oh.setText("1 " + this.bg_unit + "  =  " + DataAccess.MmolDecimalFormat.format(cal_r) + " g " + m_ic.getMessage("CH"));
+        this.lbl_bg_oh.setText("1 " + this.bg_unit + "  =  " + DataAccess.Decimal1Format.format(cal_r) + " g " + m_ic.getMessage("CH"));
     }
     
     private void calculateInsulin()
@@ -307,7 +307,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable,
             //System.out.println("difference: " + cu);
             
             float cu_fix = cu / m_da.getJFormatedTextValueFloat(this.ftf_bg_ins);
-            this.lbl_correction.setText(DataAccess.MmolDecimalFormat.format(cu_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
+            this.lbl_correction.setText(DataAccess.Decimal1Format.format(cu_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
             
             sum = cu_fix;
         }
@@ -320,7 +320,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable,
         if (this.curr_ch>0)
         {
             float ch_fix = this.curr_ch / m_da.getJFormatedTextValueFloat(this.ftf_ch_ins);
-            this.lbl_carb_dose.setText(DataAccess.MmolDecimalFormat.format(ch_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
+            this.lbl_carb_dose.setText(DataAccess.Decimal1Format.format(ch_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
             
             sum += ch_fix;
         }
@@ -329,7 +329,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable,
             this.lbl_carb_dose.setText(m_ic.getMessage("NO_CARBS_DEFINED"));
         }
         
-        this.lbl_together.setText(DataAccess.MmolDecimalFormat.format(sum) + "  " + m_ic.getMessage("UNIT_SHORT"));
+        this.lbl_together.setText(DataAccess.Decimal1Format.format(sum) + "  " + m_ic.getMessage("UNIT_SHORT"));
         
         this.calc_insulin = Math.round(sum);
         

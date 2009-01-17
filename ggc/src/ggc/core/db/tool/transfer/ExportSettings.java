@@ -33,8 +33,8 @@ import com.atech.db.hibernate.transfer.ExportTool;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     ExportSettings  
+ *  Description:  Export Settings (will be deprecated)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -42,6 +42,11 @@ import com.atech.db.hibernate.transfer.ExportTool;
 public class ExportSettings extends ExportTool implements Runnable
 {
 
+    /**
+     * Constructor
+     * 
+     * @param giver
+     */
     public ExportSettings(BackupRestoreWorkGiver giver)
     {
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
@@ -54,6 +59,11 @@ public class ExportSettings extends ExportTool implements Runnable
         // exportAll();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cfg
+     */
     public ExportSettings(HibernateConfiguration cfg)
     {
         super(cfg);
@@ -102,6 +112,9 @@ public class ExportSettings extends ExportTool implements Runnable
     }
 
     
+    /**
+     * Get Active Session
+     */
     public int getActiveSession()
     {
         return 2;
@@ -155,11 +168,17 @@ public class ExportSettings extends ExportTool implements Runnable
         closeFile();
     }
 
+    /**
+     * Run
+     */
     public void run()
     {
         exportAll();
     }
 
+    /**
+     * @param args
+     */
     public static void main(String[] args)
     {
         GGCDb db = new GGCDb();

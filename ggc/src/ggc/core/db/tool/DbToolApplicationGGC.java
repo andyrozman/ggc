@@ -50,8 +50,8 @@ New methods :
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     ###---###  
- *  Description:  ###---###
+ *  Filename:     DbToolApplicationGGC  
+ *  Description:  DbTool Application Interface for GGC
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -61,8 +61,8 @@ New methods :
 public class DbToolApplicationGGC implements DbToolApplicationInterface
 {
 
-    public int selected_db = 0;
-    public String selected_lang = "en";
+    private int selected_db = 0;
+    private String selected_lang = "en";
 
 
     Hashtable<String,String> config_db_values = null;
@@ -86,6 +86,9 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     private boolean m_changed = false;
 
 
+    /**
+     * Constuctor
+     */
     public DbToolApplicationGGC()
     {
         this.staticDatabases = new Hashtable<String, DatabaseSettings>();
@@ -96,7 +99,30 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
+    /**
+     * Get Selected Language
+     * 
+     * @return
+     */
+    public String getSelectedLanguage()
+    {
+        return this.selected_lang;
+    }
+    
+    /**
+     * Set Selected Language
+     * 
+     * @param lang
+     */
+    public void setSelectedLanguage(String lang)
+    {
+        this.selected_lang = lang;
+    }
+    
 
+    /**
+     * Load Available LFs
+     */
     public void loadAvailableLFs()
     {
 
@@ -106,8 +132,6 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
         availableLF = new Object[info.length+1];
         availableLFClass = new Object[info.length+1];
 
-        //ring selectedLF = null;
-        //String subSelectedLF = null;
 
         int i;
         for (i=0; i<info.length; i++)
@@ -118,30 +142,39 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
             availableLF_full.put(name, className);
             availableLF[i] = name;
             availableLFClass[i] = className;
-
-            //System.out.println(humanReadableName);
         }     
 
         availableLF_full.put("SkinLF", "com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
         availableLF[i] = "SkinLF";
         availableLFClass[i] = "com.l2fprod.gui.plaf.skin.SkinLookAndFeel";
         skinlf_LF = i;
-
-
     }
 
 
+    /**
+     * Get Avilable LFs
+     * 
+     * @return
+     */
     public Object[] getAvailableLFs()
     {
         return availableLF;
     }
 
+    /**
+     * Get Available LFs Class
+     * @return
+     */
     public Object[] getAvailableLFsClass()
     {
         return this.availableLFClass;
     }
 
 
+    /**
+     * Get Selected LF Index
+     * @return
+     */
     public int getSelectedLFIndex()
     {
         for (int i=0; i<this.availableLFClass.length; i++)
@@ -157,6 +190,12 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
+    /**
+     * Set Selected LF
+     * 
+     * @param index
+     * @param skin
+     */
     public void setSelectedLF(int index, String skin)
     {
 
@@ -178,24 +217,44 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
 
 
+    /**
+     * Get Selected LF Skin
+     * @return
+     */
     public String getSelectedLFSkin()
     {
         return this.skinLFSelected;
     }
 
 
+    /**
+     * Get SkinLF Index
+     * 
+     * @return
+     */
     public int getSkinLFIndex()
     {
         return this.skinlf_LF;
     }
 
 
+    /**
+     * Is SkinLF Selected
+     * 
+     * @return
+     */
     public boolean isSkinLFSelected()
     {
         return isSkinLFSelected(getSelectedLFIndex());
     }
 
 
+    /**
+     * Is SkinLF Selected
+     * 
+     * @param index
+     * @return
+     */
     public boolean isSkinLFSelected(int index)
     {
         return(this.skinlf_LF == index);
@@ -213,22 +272,37 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 */
 
 
-
+    /**
+     * Init Static Dbs
+     */
     public void initStaticDbs()
     {
         // load all static database info
     }
 
+    /**
+     * Get Application Name
+     * 
+     * @return
+     */
     public String getApplicationName()
     {
         return "GNU Gluco Control";
     }   
 
+    /**
+     * Get Application Database Config
+     * 
+     * @return
+     */
     public String getApplicationDatabaseConfig()
     {
         return "../data/GGC_Config.properties";
     }
 
+    /**
+     * Load Config
+     */
     public void loadConfig()
     {
 
@@ -339,6 +413,9 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
+    /**
+     * Save Config
+     */
     public void saveConfig()
     {
 
@@ -403,28 +480,55 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
-
+    /**
+     * Get First Available Database
+     * 
+     * @return get number of first database (this can be either 0 or 1)
+     */
     public int getFirstAvailableDatabase()
     {
         return 1;
     }
 
+    
+    /**
+     * Get Static Databases
+     * 
+     * @return
+     */
     public Hashtable<String, DatabaseSettings> getStaticDatabases()
     {
         return this.staticDatabases; 
     }
 
 
+    /**
+     * Get Custom Databases
+     * 
+     * @return
+     */
     public Hashtable<String, DatabaseSettings> getCustomDatabases()
     {
         return this.customDatabases;
     }
 
+    
+    /**
+     * Get All Databases
+     * 
+     * @return
+     */
     public Hashtable<String, DatabaseSettings> getAllDatabases()
     {
         return this.allDatabases;
     }
 
+    
+    // NEW
+    /**
+     * Get All Databases Names As Array
+     * @return
+     */
     public String[] getAllDatabasesNamesAsArray()
     {
         String[] arr = new String[this.allDatabases.size()];
@@ -436,10 +540,14 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
         }
 
         return arr;
-
     }
 
-
+    
+    // NEW
+    /**
+     * Get All Databases Names Plus As Array
+     * @return
+     */
     public String[] getAllDatabasesNamesPlusAsArray()
     {
         String[] arr = new String[this.allDatabases.size()];
@@ -455,23 +563,47 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
-
+    /**
+     * Get Database
+     * 
+     * @param index
+     * @return
+     */
     public DatabaseSettings getDatabase(int index)
     {
         return null;
     }
 
+    
+    /**
+     * Get Selected Database
+     * 
+     * @return
+     */
     public DatabaseSettings getSelectedDatabase()
     {
         return null;
     }
 
+    
+    // NEW
+    /**
+     * Get Selected Database Index
+     * @return
+     */
     public int getSelectedDatabaseIndex()
     {
         return this.selected_db;
     }
 
 
+    // NEW
+    /**
+     * Add Database Settings
+     * 
+     * @param setting
+     * @param value
+     */
     public void addDatabaseSetting(String setting, String value)
     {
         int dbnum = Integer.parseInt(setting.substring(2,3));
@@ -500,6 +632,14 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
+    // NEW
+    /**
+     * Add Database Settings
+     * 
+     * @param ds
+     * @param setting
+     * @param value
+     */
     public void addDatabaseSetting(DatabaseSettings ds, String setting, String value)
     {
         String sett = setting.substring(setting.indexOf("_")+1);
@@ -545,7 +685,11 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
 
     }
 
-
+    
+    // NEW
+    /**
+     * 
+     */
     public void test()
     {
         /*
@@ -580,12 +724,24 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
+    // NEW
+    /**
+     * Has Changed
+     * 
+     * @return
+     */
     public boolean hasChanged()
     {
         return this.m_changed;
     }
 
 
+    // NEW
+    /**
+     * Set Selected Database Index
+     * 
+     * @param index
+     */
     public void setSelectedDatabaseIndex(int index)
     {
         if (this.selected_db!=index)
@@ -597,9 +753,9 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
-
-
-
+    /**
+     * To String
+     */
     @Override
     public String toString()
     {
@@ -607,6 +763,10 @@ public class DbToolApplicationGGC implements DbToolApplicationInterface
     }
 
 
+    /**
+     * Main Startup 
+     * @param args
+     */
     public static void main(String args[])
     {
         DbToolApplicationGGC apl = new DbToolApplicationGGC();

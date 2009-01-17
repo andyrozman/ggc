@@ -16,8 +16,6 @@ import ggc.gui.dialogs.HbA1cDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.graphs.CourseGraphDialog;
-import ggc.gui.dialogs.graphs.FrequencyGraphDialog;
-import ggc.gui.dialogs.graphs.SpreadGraphDialog;
 import ggc.gui.dialogs.ratio.RatioBaseDialog;
 import ggc.gui.panels.info.InfoPanel;
 
@@ -965,11 +963,13 @@ public class MainFrame extends JFrame
             }
             else if (command.equals("view_spread"))
             {
-                new SpreadGraphDialog(m_da);
+                new GraphViewer(new GraphViewSpread(), m_da);
+                //new SpreadGraphDialog(m_da);
             }
             else if (command.equals("view_freq"))
             {
-                new FrequencyGraphDialog(m_da);
+                //new FrequencyGraphDialog(m_da);
+                featureNotImplementedDescription(m_ic.getMessage("FREQGRAPHFRAME"), "0.5");
             }
             else if (command.equals("view_hba1c"))
             {
@@ -1168,6 +1168,20 @@ public class MainFrame extends JFrame
 
     }
 
+    
+    private void featureNotImplementedDescription(String desc, String version)
+    {
+        String text = m_ic.getMessage("FEATURE");
+
+        text += " '" + desc + "' ";
+        text += String.format(m_ic.getMessage("IMPLEMENTED_VERSION"), version);
+        text += "!";
+
+        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
+
+    }
+    
+    
     private class CloseListener extends WindowAdapter
     {
         @Override

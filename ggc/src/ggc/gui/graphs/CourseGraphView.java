@@ -296,12 +296,12 @@ public class CourseGraphView extends JFAbstractGraphView
         TimeSeries insPerCHSeries = new TimeSeries(translator.getMessage("INS_SLASH_BU"), Day.class);
         TimeSeries mealsSeries = new TimeSeries(translator.getMessage("MEALS"), Day.class);
 
-        int days = data.getDayCount();
+        int days = data.getDailyValuesItemsCount();
         for (int i = 0; i < days; i++)
         {
-            for (int j = 0; j < data.getDailyValuesForDay(i).getRowCount(); j++)
+            for (int j = 0; j < data.getDailyValuesItem(i).getRowCount(); j++)
             {
-                row = data.getDailyValuesForDay(i).getRow(j);
+                row = data.getDailyValuesItem(i).getRow(j);
                 time = new Day(row.getDateTimeAsDate());
 
                 if (row.getBG(BGUnit) > 0)

@@ -8,6 +8,8 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import com.atech.utils.ATechDate;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -431,9 +433,13 @@ public class GlucoValues //extends DailyValues
             return 1L;
         }
 
-        firstDay = m_da.getDateTimeAsDateObject(firstDay * 10000).getTime();
-        lastDay = m_da.getDateTimeAsDateObject(lastDay * 10000).getTime();
+        //firstDay = m_da.getDateTimeAsDateObject(firstDay * 10000).getTime();
+        //lastDay = m_da.getDateTimeAsDateObject(lastDay * 10000).getTime();
 
+        // FIXME This is experimental, untested
+        firstDay = (ATechDate.getGregorianCalendar(ATechDate.FORMAT_DATE_ONLY, firstDay).getTimeInMillis()); //getTime()).getTime();
+        lastDay = (ATechDate.getGregorianCalendar(ATechDate.FORMAT_DATE_ONLY, lastDay).getTimeInMillis());
+        
         long timeDiff = lastDay - firstDay;
         dayCount = (timeDiff / (1000 * 60 * 60 * 24));
 
