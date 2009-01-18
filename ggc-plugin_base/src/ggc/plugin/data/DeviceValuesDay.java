@@ -3,6 +3,7 @@ package ggc.plugin.data;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
 import com.atech.utils.ATechDate;
@@ -39,6 +40,7 @@ public class DeviceValuesDay
 	private ArrayList<DeviceValuesEntry> list = null;
 	private Hashtable<String,DeviceValuesEntry> table = null;
 	DataAccessPlugInBase m_da;
+	GregorianCalendar gc_today;
 
 	
 	/**
@@ -97,6 +99,14 @@ public class DeviceValuesDay
 	}
 	
 	
+	/**
+	 * Set Date Time GC
+	 * @param gc
+	 */
+	public void setDateTimeGC(GregorianCalendar gc)
+	{
+	    this.gc_today = gc;
+	}
 	
 	
     /**
@@ -142,7 +152,10 @@ public class DeviceValuesDay
 	 */
 	public int getRowCount()
 	{
-	    return this.list.size();
+	    if (this.list==null)
+	        return 0;
+	    else
+	        return this.list.size();
 	}
 	
     /**
