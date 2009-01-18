@@ -53,12 +53,23 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     boolean communication_established = false;
     
 
+    /**
+     * Constructor
+     */
     public AbstractSerialPump()
     {
         super();
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param i2
+     * @param i3
+     * @param i4
+     * @param i5
+     */
     public AbstractSerialPump(int i2, int i3, int i4, int i5)
     {
         super();
@@ -69,11 +80,17 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 //	this.m_device_index = device_index;
     
     
+    /**
+     * Serial Event
+     */
     public void serialEvent(SerialPortEvent event)
     {
     	
     }
 
+    /**
+     * Dispose
+     */
     public void dispose()
     {
         this.close();
@@ -88,6 +105,9 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 	
 	
 	
+    /** 
+     * Set Device Allowed Actions
+     */
     public void setDeviceAllowedActions(boolean can_read_data, 
     									boolean can_read_partitial_data,
     									boolean can_read_device_info,
@@ -100,6 +120,9 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
     
 
+    /**
+     * Set Communication Settings
+     */
     public void setCommunicationSettings(int baudrate, int databits,
     									 int stopbits, int parity,
     									 int flow_control, int event_type)
@@ -107,9 +130,10 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     	super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
     }
     
-    
+    /*
     String meter_group = null;
     String meter_device = null;
+    
     
     PumpInterface device_instance = null;
     
@@ -125,7 +149,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
         this.output_writer.setDeviceIdentification(di);
         //this.output_writer.
     	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-    }
+    }*/
     
     
     /**
@@ -148,6 +172,11 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     
     String serial_port = null;
     
+    /**
+     * Set Serial Port
+     * 
+     * @param port
+     */
     public void setSerialPort(String port)
     {
     	this.serial_port = port;
@@ -180,6 +209,10 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     
     
     
+    /**
+     * Get Serial Port
+     * @return
+     */
     public String getSerialPort()
     {
     	return this.serial_port;
@@ -324,32 +357,15 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     
     
 
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
-    /**
-     * getName - Get Name of meter. 
-     * Should be implemented by protocol class.
-     */
-    public String getName()
-    {
-    	if (this.device_instance==null)
-    		return "Generic Serial Device";
-    	else
-    		return this.device_instance.getName();
-    }
-
-
-    
-
-
 
 
     //************************************************
     //***                    Test                  ***
     //************************************************
 
+    /** 
+     * test
+     */
     public void test()
     {
     }
@@ -357,8 +373,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 
 
     
-    /* 
-     * compareTo
+    /** 
+     * Compare To
      */
     public int compareTo(SelectableInterface o)
     {
@@ -367,8 +383,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * getColumnCount
+    /** 
+     * Get Column Count
      */
     public int getColumnCount()
     {
@@ -378,8 +394,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 
     String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
     
-    /* 
-     * getColumnName
+    /** 
+     * Get Column Name
      */
     public String getColumnName(int num)
     {
@@ -387,8 +403,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * getColumnValue
+    /**
+     * Get Column Value
      */
     public String getColumnValue(int num)
     {
@@ -410,8 +426,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * getColumnValueObject
+    /** 
+     * Get Column Value Object
      */
     public Object getColumnValueObject(int num)
     {
@@ -419,8 +435,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * getColumnWidth
+    /**
+     * Get Column Width
      */
     public int getColumnWidth(int num, int width)
     {
@@ -429,8 +445,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * getItemId
+    /** 
+     * Get Item Id
      */
     public long getItemId()
     {
@@ -438,8 +454,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * getShortDescription
+    /** 
+     * Get Short Description
      */
     public String getShortDescription()
     {
@@ -447,8 +463,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(int from, int till, int state)
     {
@@ -456,8 +472,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(int value)
     {
@@ -465,8 +481,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(String text)
     {
@@ -474,22 +490,20 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
-    /* 
-     * setColumnSorter
+    /** 
+     * Set Column Sorter
      */
     public void setColumnSorter(ColumnSorter cs)
     {
     }
 
 
-    /* 
-     * setSearchContext
+    /** 
+     * Set Search Context
      */
     public void setSearchContext()
     {
     }
-
-    
     
     
     /**

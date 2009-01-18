@@ -39,6 +39,9 @@ public class PumpEvents
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
+    /**
+     * Events Description
+     */
     public String[] events_desc = { ic.getMessage("SELECT_SUBTYPE"),
                        ic.getMessage("EVENT_PRIME_INFUSION_SET"),             
                        ic.getMessage("EVENT_CARTRIDGE_CHANGED"),             
@@ -57,20 +60,59 @@ public class PumpEvents
     
     
     // infussion sets
+    /**
+     * Pump Event: Prime Infusion Set
+     */
     public static final int PUMP_EVENT_PRIME_INFUSION_SET = 1;
+
+    /**
+     * Pump Event: Cartridge Changed
+     */
     public static final int PUMP_EVENT_CARTRIDGE_CHANGED = 2;
     
     // start / end
+
+    /**
+     * Pump Event: Basal Run
+     */
     public static final int PUMP_EVENT_BASAL_RUN = 20;
+
+    /**
+     * Pump Event: Basal Stop
+     */
     public static final int PUMP_EVENT_BASAL_STOP = 21;
+
+    /**
+     * Pump Event: Power Down
+     */
     public static final int PUMP_EVENT_POWER_DOWN = 22;
+
+    /**
+     * Pump Event: Power Up
+     */
     public static final int PUMP_EVENT_POWER_UP = 23;
     
     
     // date/time
+
+    /**
+     * Pump Event: Date/Time Set
+     */
     public static final int PUMP_EVENT_DATETIME_SET = 40;
+
+    /**
+     * Pump Event: Date/Time Correct
+     */
     public static final int PUMP_EVENT_DATETIME_CORRECT = 41;
+
+    /**
+     * Pump Event: Date/Time Correct Time Shift Back
+     */
     public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK = 42;
+
+    /**
+     * Pump Event: Date/Time Correct Time Shift Forward
+     */
     public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD = 43;
     
     

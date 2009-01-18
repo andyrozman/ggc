@@ -2,6 +2,7 @@ package ggc.pump.gui.manual;
 
 import ggc.pump.data.defs.PumpAlarms;
 import ggc.pump.data.defs.PumpBasalSubType;
+import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
@@ -55,6 +56,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     
     private static final long serialVersionUID = -4449947661003378689L;
 
+    /*
     public static final int TYPE_NONE = 0;
     public static final int TYPE_BASAL = 1;
     public static final int TYPE_BOLUS = 2;
@@ -65,7 +67,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     public static final int TYPE_PEN_INJECTION_BASAL = 7;
     public static final int TYPE_PEN_INJECTION_BOLUS = 8;
     public static final int TYPE_ADDITIONAL_DATA = 9;
-    
+    */
     TemporaryBasalRateComponent tbr_cmp = null;
     JLabel label_1, label_2, label_3, label_4;
     JTextField text_1, text_2;
@@ -107,6 +109,12 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param startx
+     */
     public PumpDataTypeComponent(PumpDataRowDialog parent, int startx)
     {
         super();
@@ -116,6 +124,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.setBounds(30, startx, width, height);
     }
     
+    /**
+     * Init
+     */
     public void init()
     {
         tbr_cmp = new TemporaryBasalRateComponent();
@@ -165,6 +176,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     
     
     
+    /**
+     * Set Type
+     * 
+     * @param type
+     */
     public void setType(int type)
     {
         if (this.type==type)
@@ -175,36 +191,36 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         switch(this.type)
         {
 
-            case PumpDataTypeComponent.TYPE_EVENT:
-            case PumpDataTypeComponent.TYPE_ALARM:
-            case PumpDataTypeComponent.TYPE_ERROR:
+            case PumpBaseType.PUMP_DATA_EVENT:
+            case PumpBaseType.PUMP_DATA_ALARM:
+            case PumpBaseType.PUMP_DATA_ERROR:
                 {
                     this.setComboAndText();
                 } break;
         
-            case PumpDataTypeComponent.TYPE_BASAL:
+            case PumpBaseType.PUMP_DATA_BASAL:
                 {
                     this.setBasal();
                 } break;
                 
-            case PumpDataTypeComponent.TYPE_BOLUS:
+            case PumpBaseType.PUMP_DATA_BOLUS:
                 {
                     this.setBolus();
                 } break;
                 
-            case PumpDataTypeComponent.TYPE_REPORT:
+            case PumpBaseType.PUMP_DATA_REPORT:
                 {
                     this.setReport();
                 } break;
                 
-            case PumpDataTypeComponent.TYPE_PEN_INJECTION_BASAL:
-            case PumpDataTypeComponent.TYPE_PEN_INJECTION_BOLUS:
+            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL: 
+            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS: 
                 {
                     this.setNumericTextAndText();
                 } break;
     
-            case PumpDataTypeComponent.TYPE_NONE:
-            case PumpDataTypeComponent.TYPE_ADDITIONAL_DATA:
+            case PumpBaseType.PUMP_DATA_NONE: 
+            case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA: 
             default:
                 {
                     this.setEmpty();
@@ -214,6 +230,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     }
 
     
+    /**
+     * Get Items
+     * 
+     * @return
+     */
     public Object[] getItems()
     {
         return this.type_items;
@@ -279,17 +300,17 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         this.setHeight(85);
 
-        if (this.type == PumpDataTypeComponent.TYPE_EVENT)
+        if (this.type == PumpBaseType.PUMP_DATA_EVENT)
         {
             this.label_1.setText(ic.getMessage("EVENT_TYPE")+ ":");
             addAllItems(this.combo_1, this.m_p_event.getDescriptions());
         }
-        else if (this.type == PumpDataTypeComponent.TYPE_ALARM)
+        else if (this.type == PumpBaseType.PUMP_DATA_ALARM)
         {
             this.label_1.setText(ic.getMessage("ALARM_TYPE")+ ":");
             addAllItems(this.combo_1, this.m_p_alarm.getDescriptions());
         }
-        else if (this.type == PumpDataTypeComponent.TYPE_ERROR)
+        else if (this.type == PumpBaseType.PUMP_DATA_ERROR)
         {
             this.label_1.setText(ic.getMessage("ERROR_TYPE")+ ":");
             addAllItems(this.combo_1, this.m_p_error.getDescriptions());
@@ -324,11 +345,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         this.setHeight(85);
         
-        if (this.type == PumpDataTypeComponent.TYPE_PEN_INJECTION_BASAL)
+        if (this.type == PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL)
         {
             this.label_1.setText(ic.getMessage("BASAL_INSULIN") + ":");
         }
-        else if (this.type == PumpDataTypeComponent.TYPE_PEN_INJECTION_BOLUS)
+        else if (this.type == PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS)
         {
             this.label_1.setText(ic.getMessage("BOLUS_INSULIN") + ":");
         }
@@ -400,6 +421,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     }
 
     
+    /**
+     * Set Basal Sub Type
+     * 
+     * @param stype
+     */
     public void setBasalSubType(int stype)
     {
         // 20 55 
@@ -573,6 +599,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     
     
+    /**
+     * Set Bolus Sub Type
+     * @param stype
+     */
     public void setBolusSubType(int stype)
     {
         // 20 55 
@@ -666,18 +696,29 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     }
     
     
+    /**
+     * Set Height
+     * 
+     * @param height
+     */
     public void setHeight(int height)
     {
         this.height = height;
         this.setSize(width, height);
     }
     
+    /**
+     * Get Height
+     */
     public int getHeight()
     {
         return this.height;
     }
 
     
+    /**
+     * Action Performed
+     */
     public void actionPerformed(ActionEvent ev)
     {
         String cmd = ev.getActionCommand();

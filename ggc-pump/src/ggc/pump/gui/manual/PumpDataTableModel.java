@@ -30,6 +30,7 @@ package ggc.pump.gui.manual;
 
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.pump.util.DataAccessPump;
+import ggc.pump.util.I18nControl;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -68,6 +69,7 @@ public class PumpDataTableModel extends AbstractTableModel
     DeviceValuesDay dayData;
     
     DataAccessPump m_da = DataAccessPump.getInstance();
+    I18nControl m_ic = I18nControl.getInstance(); 
 
     /*
     Object objects[] = 
@@ -95,31 +97,65 @@ public class PumpDataTableModel extends AbstractTableModel
     };
 
 
+    private String[] column_names = { 
+                                     m_ic.getMessage("TIME"),
+                                     m_ic.getMessage("BASE_TYPE"),
+                                     m_ic.getMessage("SUB_TYPE"),
+                                     m_ic.getMessage("VALUE"),
+                                     m_ic.getMessage("ADDITIONAL"),
+                                     m_ic.getMessage("COMMENT") };
+    
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param dayData
+     */
     public PumpDataTableModel(DeviceValuesDay dayData)
     {
-        this.dayData = dayData;
-        fireTableChanged(null);
+        setDailyValues(dayData);
     }
 
+    /**
+     * Get Daily Values
+     * 
+     * @return
+     */
     public DeviceValuesDay getDailyValues()
     {
         return this.dayData;
     }
 
+    /**
+     * Set Daily Values
+     * 
+     * @param dayData
+     */
     public void setDailyValues(DeviceValuesDay dayData)
     {
         this.dayData = dayData;
+        
+        System.out.println("DayData: " + dayData.getRowCount()); //.getRowCount());
+        
+        
         fireTableChanged(null);
     }
 
+    /**
+     * Get Column Count
+     */
     public int getColumnCount()
     {
-        if (dayData == null)
-            return 0;
+        //if (dayData == null)
+        //    return 0;
 
-        return dayData.getColumnCount();
+        return this.column_names.length;
     }
 
+    /**
+     * Get Row Count
+     */
     public int getRowCount()
     {
         if (dayData == null)
@@ -128,6 +164,9 @@ public class PumpDataTableModel extends AbstractTableModel
         return dayData.getRowCount();
     }
 
+    /**
+     * Get Value At
+     */
     public Object getValueAt(int row, int column)
     {
         Object o = dayData.getValueAt(row, column);
@@ -144,17 +183,24 @@ public class PumpDataTableModel extends AbstractTableModel
         return o;
     }
 
+    /** 
+     * Get Column Name
+     */
     @Override
     public String getColumnName(int column)
     {
+        return this.column_names[column];
         /*if (column == 2)
             return m_da.getSettings().getIns1Abbr();
         if (column == 3)
             return m_da.getSettings().getIns2Abbr();
 */
-        return dayData.getColumnName(column);
+        //..return dayData.getColumnName(column);
     }
 
+    /**
+     * Get Column Class
+     */
     @Override
     public Class<?> getColumnClass(int c)
     {
@@ -225,19 +271,13 @@ public class PumpDataTableModel extends AbstractTableModel
     
     
     
+    /**
+     * Is Cell Editable
+     */
     @Override
     public boolean isCellEditable(int row, int col)
     {
-        //return true;
-	return false;
+        return false;
     }
 
-    /*
-    @Override
-    public void setValueAt(Object aValue, int row, int column)
-    {
-        dayData.setValueAt(aValue, row, column);
-        fireTableChanged(null);
-    }
-    */
 }

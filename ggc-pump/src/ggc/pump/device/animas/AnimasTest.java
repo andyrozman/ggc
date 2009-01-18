@@ -1,5 +1,7 @@
 package ggc.pump.device.animas;
 
+import java.util.Hashtable;
+
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 
@@ -33,12 +35,27 @@ import ggc.plugin.output.OutputWriter;
 public class AnimasTest extends EZManagerDb
 {
     
+    
+    private Hashtable<String,Integer> error_mappings = null;
+    private Hashtable<String,Integer> bolus_mappings = null;
+    private Hashtable<String,Integer> report_mappings = null;
+    
+    
+    /**
+     * Constructor
+     */
     public AnimasTest()
     {
         super();
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param db_path 
+     * @param writer 
+     */
     public AnimasTest(String db_path, OutputWriter writer)
     {
         super(db_path, writer);
@@ -144,6 +161,9 @@ public class AnimasTest extends EZManagerDb
     }
 
 
+    /** 
+     * Dispose
+     */
     public void dispose()
     {
         // TODO: close db here
@@ -151,6 +171,12 @@ public class AnimasTest extends EZManagerDb
     
 
 
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
+     * @return 
+     */
     public String getDeviceSpecialComment()
     {
         // TODO Auto-generated method stub
@@ -158,6 +184,11 @@ public class AnimasTest extends EZManagerDb
     }
 
 
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     * @return true is progress status is special
+     */
     public boolean hasSpecialProgressStatus()
     {
         // TODO Auto-generated method stub
@@ -165,10 +196,50 @@ public class AnimasTest extends EZManagerDb
     }
 
 
+    /**
+     * Is Device Communicating
+     * 
+     * @return
+     */
     public boolean isDeviceCommunicating()
     {
         // TODO Auto-generated method stub
         return false;
     }
+
+    
+    /**
+     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
+     *     event codes
+     * @return
+     */
+    public Hashtable<String,Integer> getErrorMappings()
+    {
+        return this.error_mappings;
+    }
+    
+
+    /**
+     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
+     *     event codes
+     * @return
+     */
+    public Hashtable<String,Integer> getBolusMappings()
+    {
+        return this.bolus_mappings;
+    }
+    
+
+    /**
+     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
+     *     event codes
+     * @return
+     */
+    public Hashtable<String,Integer> getReportMappings()
+    {
+        return this.report_mappings;
+    }
+    
+    
     
 }

@@ -9,6 +9,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Xpp Xml Parser 3-1.1.4c"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.x"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.1"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GGC Plugin Base"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate-3.1"/>
 	<classpathentry kind="output" path="bin"/>

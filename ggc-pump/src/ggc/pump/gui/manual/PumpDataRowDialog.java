@@ -29,11 +29,11 @@ package ggc.pump.gui.manual;
  *
  */
 
-import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -42,8 +42,6 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
@@ -55,7 +53,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -63,8 +60,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.atech.graphics.components.DateTimeComponent;
-import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -95,7 +92,7 @@ import com.atech.help.HelpCapable;
 
 // fix this
 
-public class PumpDataRowDialog extends JDialog implements ActionListener, KeyListener, HelpCapable
+public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyListener,*/ HelpCapable
 {
 
     private static final long serialVersionUID = 8280477836138077888L;
@@ -107,7 +104,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     private DataAccessPump m_da = DataAccessPump.getInstance();
 //x    private GGCProperties props = m_da.getSettings();
 
-    private boolean m_actionDone = false;
+    //private boolean m_actionDone = false;
 
     // private long last_change = 0;
 
@@ -167,6 +164,13 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     
     
 
+    /**
+     * Constructor
+     * 
+     * @param ndV
+     * @param nDate
+     * @param dialog
+     */
     public PumpDataRowDialog(DeviceValuesDay ndV, String nDate, JDialog dialog)
     {
         super(dialog, "", true);
@@ -182,6 +186,12 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         initParameters(ndV, nDate);
     }
 */
+    /**
+     * Constructor
+     * 
+     * @param ndr
+     * @param dialog
+     */
     public PumpDataRowDialog(PumpValuesEntry ndr, JDialog dialog)
     {
         super(dialog, "", true);
@@ -196,6 +206,13 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         initParameters(ndr);
     }
 */
+    
+    /**
+     * Init Parameters
+     * 
+     * @param ndV
+     * @param nDate
+     */
     public void initParameters(DeviceValuesDay ndV, String nDate)
     {
         // if (add)
@@ -223,6 +240,11 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         this.setVisible(true);
     }
 
+    /**
+     * Init Parameters
+     * 
+     * @param ndr
+     */
     public void initParameters(PumpValuesEntry ndr)
     {
         setTitle(m_ic.getMessage("EDIT_ROW"));
@@ -235,14 +257,14 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         init();
         load();
 
-        System.out.println("Add data: " + this.m_dailyValuesRow.additional_data.size());
+        System.out.println("Add data: " + this.m_dailyValuesRow.getAdditionalData().size());
         
-        if (this.m_dailyValuesRow.additional_data.size()>0)
+        if (this.m_dailyValuesRow.getAdditionalData().size()>0)
         {
-            for(Enumeration<String> en = this.m_dailyValuesRow.additional_data.keys(); en.hasMoreElements(); )
+            for(Enumeration<String> en = this.m_dailyValuesRow.getAdditionalData().keys(); en.hasMoreElements(); )
             {
                 String key = en.nextElement();
-                this.addAddItem(this.m_dailyValuesRow.additional_data.get(key));
+                this.addAddItem(this.m_dailyValuesRow.getAdditionalData().get(key));
             }
             this.populateJListExtended(this.list_data);
         }
@@ -251,6 +273,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         this.setVisible(true);
     }
 
+    /**
+     * Set Date
+     */
     public void setDate()
     {
         // System.out.println("Date: " + sDate);
@@ -302,12 +327,21 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     
     
     
+    /**
+     * Load
+     */
     public void load()
     {
-        this.dtc.setDateTime(this.m_dailyValuesRow.getDt_info());
-        System.out.println("Load not implemented for this type: " + this.m_dailyValuesRow.getBase_type());
+        // TODO fix
 
-        this.cb_entry_type.setSelectedIndex(this.m_dailyValuesRow.getBase_type());
+//        this.dtc.setDateTime(this.m_dailyValuesRow.getDt_info());
+//        System.out.println("Load not implemented for this type: " + this.m_dailyValuesRow.getBase_type());
+//        this.cb_entry_type.setSelectedIndex(this.m_dailyValuesRow.getBase_type());
+
+        // TODO fix
+        
+        
+        
 //        CommentField.setText(this.m_dailyValuesRow.getComment());
         
         
@@ -358,6 +392,8 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         this.setBounds(x, y, width, height);
 */
         
+        ATSwingUtils.initLibrary();
+        
         this.setSize(width, height);
         m_da.centerJDialog(this, this.m_parent);
         
@@ -374,9 +410,14 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
 
-        addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
-        addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
-//        addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
+        ATSwingUtils.getLabel(m_ic.getMessage("DATE") + ":", 30, 78, 100, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(m_ic.getMessage("TIME") + ":", 30, 108, 100, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        
+//        addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
+//        addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
+
+        
+        //        addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
 /*        addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 198,
                 panel);
         addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 228,
@@ -398,11 +439,12 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 
+        ATSwingUtils.getLabel(m_ic.getMessage("ENTRY_TYPE") + ":", 30, 150, 100, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        addLabel(m_ic.getMessage("ENTRY_TYPE") + ":", 150, panel);
+//        addLabel(m_ic.getMessage("ENTRY_TYPE") + ":", 150, panel);
         
         pdtc = new PumpDataTypeComponent(this, 175);
-        pdtc.setType(PumpDataTypeComponent.TYPE_NONE);
+        pdtc.setType(PumpBaseType.PUMP_DATA_NONE);
         panel.add(pdtc);
         
         cb_entry_type = new JComboBox(pdtc.getItems());
@@ -414,126 +456,6 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         
         
         
-        /*
-        this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 55, 25,
-                panel);
-        this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25,
-                panel);
-
-        this.ftf_ins1 = getTextField(2, 0, new Integer(0), 140, 198, 55, 25,
-                panel);
-        this.ftf_ins2 = getTextField(2, 0, new Integer(0), 140, 228, 55, 25,
-                panel);
-        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, 258, 55, 25,
-                panel);
-
-        this.ftf_bg1.addFocusListener(this);
-        this.ftf_bg2.addFocusListener(this); */
-
-        // this.ftf_bg1.addKeyListener(this);
-        // this.ftf_bg2.addKeyListener(this);
-/*
-        this.ftf_bg2.addKeyListener(new KeyListener()
-        {
-
-            public void keyPressed(KeyEvent arg0)
-            {
-            }
-
-            public void keyTyped(KeyEvent arg0)
-            {
-            }
-
-            public void keyReleased(KeyEvent ke)
-            {
-                if (ke.getKeyCode() == KeyEvent.VK_PERIOD)
-                {
-                    JFormattedTextField tf = (JFormattedTextField) ke
-                            .getSource();
-                    String s = tf.getText();
-                    s = s.replace('.', ',');
-                    tf.setText(s);
-                }
-            }
-
-        });
-*/
-//        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 120, 290, 200, panel);
-//        addComponent(UrineField = new JTextField(), 120, 318, 240, panel);
-//        addComponent(ActField = new JTextField(), 120, 348, 240, panel);
-//        addComponent(CommentField = new JTextField(), 120, 378, 240, panel);
-
-        /*
-        cb_food_set.setMultiClickThreshhold(500);
-
-        // cb_food_set.setEnabled(false);
-        cb_food_set.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent e)
-            {
-                if (in_process)
-                    return;
-
-                in_process = true;
-                // System.out.println("State: " + cb_food_set.isSelected());
-                cb_food_set.setSelected(isMealSet());
-                in_process = false;
-            }
-        });
-*/
-        /*
-        String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"),
-                                    "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), 
-                                    "edit_food", m_ic.getMessage("EDIT_FOOD"), 
-                                    "ok", m_ic.getMessage("OK"),
-                                    "cancel", m_ic.getMessage("CANCEL"),
-//                                    "item_add", "-", 
-        // "help", m_ic.getMessage("HELP")
-        };
-
-        
-
-        
-        // button
-        String button_icon[] = { null, null, null, "ok.png", "cancel.png" };
-
-        int button_coord[] = { 210, 198, 140, 1,
-                               210, 228, 140, 1, 
-                               210, 258, 140, 1, 
-                               30, 620, 110, 1, 
-                               145, 620, 110, 1,
-                               //300, 400, 80, 1,
-        // 250, 390, 80, 0
-        };
-
-        JButton button;
-        // int j=0;
-        for (int i = 0, j = 0, k = 0; i < button_coord.length; i += 4, j += 2, k++)
-        {
-            button = new JButton("   " + button_command[j + 1]);
-            button.setActionCommand(button_command[j]);
-            // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-            button.addActionListener(this);
-
-            if (button_icon[k] != null)
-            {
-                button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
-            }
-
-            if (button_coord[i + 3] == 0)
-            {
-                button.setEnabled(false);
-            }
-
-            if (k <= 1)
-                addComponent(button, button_coord[i], button_coord[i + 1],
-                        button_coord[i + 2], panel);
-            else
-                addComponent(button, button_coord[i], button_coord[i + 1],
-                        button_coord[i + 2], 25, false, panel);
-
-        }
-*/
         
         int sy = 175 + 20;
         
@@ -592,6 +514,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     }
 
     
+    /**
+     * Realign Components
+     */
     public void realignComponents()
     {
         
@@ -618,170 +543,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     
     
 
-    /**
-     * @param columns
-     * @param decimal_places
-     * @param value
-     * @param x
-     * @param y
-     * @param width_in
-     * @param height_in
-     * @param cont
-     * @return
-     */
-    public JFormattedTextField getTextField(int columns, int decimal_places,
-            Object value, int x, int y, int width_in, int height_in, Container cont)
-
-    {
-        JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
-        tf.setBounds(x, y, width_in, height_in);
-        tf.addKeyListener(this);
-        
-        cont.add(tf);
-        
-        return tf;
-        
-        /*
-        NumberFormat displayFormat, editFormat;
-
-        displayFormat = NumberFormat.getNumberInstance();
-        displayFormat.setMinimumFractionDigits(0);
-        displayFormat.setMaximumFractionDigits(decimal_places);
-
-        editFormat = NumberFormat.getNumberInstance();
-        editFormat.setMinimumFractionDigits(0);
-        editFormat.setMaximumFractionDigits(decimal_places);
-
-        JFormattedTextField ftf = new JFormattedTextField(
-                new DefaultFormatterFactory(new NumberFormatter(displayFormat),
-                        new NumberFormatter(displayFormat),
-                        new NumberFormatter(editFormat)));
-
-        ftf.setValue(value);
-        ftf.setBounds(x, y, width, height);
-        ftf.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
-        ftf.addKeyListener(this);
-        cont.add(ftf);
-
-        return ftf;
-*/
-    }
-
-
-    public void addLabel(String text, int posY, JPanel parent)
-    {
-        JLabel label = new JLabel(text);
-        label.setBounds(30, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
-        // SwingConstants.RIGHT));
-
-    }
-
-    public void addLabel(String text, int posX, int posY, JPanel parent)
-    {
-        JLabel label = new JLabel(text);
-        label.setBounds(posX, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
-        // SwingConstants.RIGHT));
-
-    }
-
-    /*
-    public void addComponent(JComponent comp, int posX, int posY, int width,
-            JPanel parent)
-    {
-        addComponent(comp, posX, posY, width, 23, true, parent);
-    }*/
-
-/*    public void addComponent(JComponent comp, int posX, int posY, int width,
-            int height, boolean change_font, JPanel parent)
-    {
-        comp.setBounds(posX, posY, width, height);
-        comp.addKeyListener(this);
-        parent.add(comp);
-    }
-*/
-    /*
-     * private void init_old() { this.setBounds(150, 150, 300, 150);
-     * 
-     * JPanel a = new JPanel(new GridLayout(0, 1)); a.add(new
-     * JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT)); a.add(new
-     * JLabel(m_ic.getMessage("BG") + ":", SwingConstants.RIGHT)); a.add(new
-     * JLabel(m_da.getSettings().getIns1Abbr() + ":", SwingConstants.RIGHT));
-     * a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
-     * 
-     * JPanel b = new JPanel(new GridLayout(0, 1)); DateField = new
-     * JTextField(10); if (sDate != null) { DateField.setText(sDate);
-     * DateField.setEditable(false); } b.add(DateField);
-     * 
-     * 
-     * b.add(BGField = new JTextField()); components[1] = BGField;
-     * BGField.addKeyListener(this);
-     * 
-     * b.add(Ins1Field = new JTextField()); components[3] = Ins1Field;
-     * Ins1Field.addKeyListener(this);
-     * 
-     * 
-     * b.add(ActField = new JTextField()); components[5] = ActField;
-     * ActField.addKeyListener(this);
-     * 
-     * 
-     * JPanel c = new JPanel(new GridLayout(0, 1)); c.add(new
-     * JLabel(m_ic.getMessage("TIME") + ":", SwingConstants.RIGHT)); c.add(new
-     * JLabel(m_ic.getMessage("BU") + ":", SwingConstants.RIGHT)); c.add(new
-     * JLabel(m_da.getSettings().getIns2Abbr() + ":", SwingConstants.RIGHT));
-     * c.add(new JLabel(m_ic.getMessage("COMMENT") + ":",
-     * SwingConstants.RIGHT));
-     * 
-     * JPanel d = new JPanel(new GridLayout(0, 1)); d.add(TimeField = new
-     * JTextField(10)); components[0] = TimeField;
-     * TimeField.addKeyListener(this);
-     * 
-     * 
-     * d.add(BUField = new JTextField()); components[2] = BUField;
-     * BUField.addKeyListener(this);
-     * 
-     * 
-     * d.add(Ins2Field = new JTextField()); components[4] = Ins2Field;
-     * Ins2Field.addKeyListener(this);
-     * 
-     * 
-     * d.add(CommentField = new JTextField()); components[6] = CommentField;
-     * CommentField.addKeyListener(this);
-     * 
-     * 
-     * Box e = Box.createHorizontalBox(); e.add(a); e.add(b); e.add(c);
-     * e.add(d);
-     * 
-     * Box g = Box.createHorizontalBox(); AddButton = new
-     * JButton(m_ic.getMessage("OK")); components[7] = AddButton;
-     * AddButton.addKeyListener(this); AddButton.setActionCommand("ok");
-     * AddButton.addActionListener(this);
-     * 
-     * g.add(Box.createHorizontalGlue());
-     * getRootPane().setDefaultButton(AddButton);
-     * 
-     * g.add(AddButton); JButton CloseButton = new
-     * JButton(m_ic.getMessage("CANCEL")); components[8] = CloseButton;
-     * CloseButton.addKeyListener(this); CloseButton.setActionCommand("close");
-     * CloseButton.addActionListener(this);
-     * 
-     * 
-     * g.add(Box.createHorizontalStrut(10)); g.add(CloseButton);
-     * g.add(Box.createHorizontalGlue()); this.getContentPane().add(g,
-     * BorderLayout.SOUTH);
-     * 
-     * getContentPane().add(e, BorderLayout.NORTH); getContentPane().add(g,
-     * BorderLayout.SOUTH);
-     * 
-     * }
-     */
-
-    Hashtable<String, PumpDataExtendedH> add_data = new Hashtable<String, PumpDataExtendedH>();
+//    Hashtable<String, PumpDataExtendedH> add_data = new Hashtable<String, PumpDataExtendedH>();
     
     
     /**
@@ -911,9 +673,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     {
         for(int i=0; i<objs.length; i++)
         {
-            if (this.ht_data.containsKey(this.m_da.getAdditionalType().getTypeDescription(objs[i].getType())))
+            if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(objs[i].getType())))
             {
-                deleteAddItem(this.m_da.getAdditionalType().getTypeDescription(objs[i].getType()));
+                deleteAddItem(this.m_da.getAdditionalTypes().getTypeDescription(objs[i].getType()));
             }
 
             addAddItem(objs[i]);
@@ -927,7 +689,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
     private void addAddItem(PumpValuesEntryExt obj)
     {
         this.list_data.add(obj);
-        this.ht_data.put(this.m_da.getAdditionalType().getTypeDescription(obj.getType()), obj);
+        this.ht_data.put(this.m_da.getAdditionalTypes().getTypeDescription(obj.getType()), obj);
     }
     
     
@@ -1072,73 +834,15 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
 */
     }
 
-    public boolean isFieldSet(String text)
-    {
-        if ((text == null) || (text.trim().length() == 0))
-            return false;
-        else
-            return true;
-    }
 
-    public boolean actionSuccesful()
-    {
-        return m_actionDone;
-    }
 
-    public void keyTyped(KeyEvent e)
-    {
-    }
 
-    public void keyPressed(KeyEvent e)
-    {
-    }
 
-    /**
-     * Invoked when a key has been released. See the class description for
-     * {@link KeyEvent} for a definition of a key released event.
-     */
-    public void keyReleased(KeyEvent e)
-    {
-/*
-        if ((e.getSource().equals(this.ftf_bg1)) || (e.getSource().equals(this.ftf_bg2)))
-        {
-            focusProcess(e.getSource());
-        }
-        
-        if (e.getKeyCode() == KeyEvent.VK_ENTER)
-        {
-            cmdOk();
-        }
-*/
-    }
-
-    /*
-     * private void fixDecimals() { if (m_da.isEmptyOrUnset(BGField.getText()))
-     * return;
-     * 
-     * String s = BGField.getText().trim().replace(",", ".");
-     * 
-     * if (this.cob_bg_type.getSelectedIndex()==1) { try {
-     * 
-     * //System.out.println(s);
-     * 
-     * float f = Float.parseFloat(s); String ss =
-     * DataAccess.MmolDecimalFormat.format(f); ss = ss.replace(",", ".");
-     * this.BGField.setText(ss); } catch(Exception ex) {
-     * System.out.println("fixDecimals: " + ex); } } //MmolDecimalFormat }
-     */
-/*
-    public String checkDecimalFields(String field)
-    {
-        field = field.replace(',', '.');
-        return field;
-    }
-*/
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -1146,7 +850,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -1154,11 +858,12 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, KeyLis
         return this.help_button;
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
+        // FIXME 
         return "pages.GGC_BG_Daily_Add";
     }
 

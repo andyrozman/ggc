@@ -24,8 +24,8 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DisetronicDTron  
+ *  Description:  Disetronic D-Tron Pump Implementation
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -34,12 +34,21 @@ import ggc.plugin.output.OutputWriter;
 public class DisetronicDTron extends AccuChekSmartPixPump
 {
     
+    /**
+     * Constructor
+     */
     public DisetronicDTron()
     {
         super();
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param drive_letter 
+     * @param writer 
+     */
     public DisetronicDTron(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
@@ -153,17 +162,20 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     }
 
 
-    public void close() throws PlugInBaseException
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-
+    /**
+     * Open
+     */
     public boolean open() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
+    }
+    
+
+    /**
+     * Close
+     */
+    public void close() throws PlugInBaseException
+    {
     }
     
 }

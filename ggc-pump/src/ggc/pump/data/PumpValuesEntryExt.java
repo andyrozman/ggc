@@ -1,6 +1,5 @@
 package ggc.pump.data;
 
-import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
@@ -48,8 +47,8 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     I18nControlAbstract ic = da.getI18nControlInstance();
 
     
-    public boolean checked = false;
-    public int status = 1; //MeterValuesEntry.
+    //public boolean checked = false;
+    //public int status = 1; //MeterValuesEntry.
     
 	// pump 
 //	long datetime;
@@ -71,54 +70,37 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	public OutputUtil util = new OutputUtil();
 */	
 	
-	public static final int STATUS_UNKNOWN = 0;
-    public static final int STATUS_NEW = 1;
-    public static final int STATUS_CHANGED = 2;
-    public static final int STATUS_OLD = 3;
-	
-	
-    public static final int OBJECT_STATUS_NEW = 1;
-    public static final int OBJECT_STATUS_EDIT = 2;
-    public static final int OBJECT_STATUS_OLD =3;
     
-    
-    public int object_status = 0;
-    
-    public DayValueH entry_object = null;
-    
-	public static String entry_statuses[] = 
-	{
-	     PumpValuesEntry.ic.getMessage("UNKNOWN"),
-         PumpValuesEntry.ic.getMessage("NEW"),
-         PumpValuesEntry.ic.getMessage("CHANGED"),
-         PumpValuesEntry.ic.getMessage("OLD")
-	};
-	
-    public static String entry_status_icons[] = 
-    {
-         "led_gray.gif",
-         "led_green.gif",
-         "led_yellow.gif",
-         "led_red.gif"
-    };
-	
 	
     PumpAdditionalDataType m_pump_add = null;
 
     
     
+	/**
+	 * Constructor
+	 * 
+	 * @param pump_add
+	 */
 	public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
 	{
 	    this.m_pump_add = pump_add;
 	}
 
 	
+    /**
+     * Constructor
+     */
     public PumpValuesEntryExt()
     {
         m_pump_add = new PumpAdditionalDataType();
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param pd
+     */
     public PumpValuesEntryExt(PumpDataExtendedH pd)
     {
         m_pump_add = new PumpAdditionalDataType();
@@ -151,6 +133,11 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	}
 	*/
 	
+    /**
+     * Get DateTime Object (ATechDate)
+     * 
+     * @return
+     */
     public ATechDate getDateTimeObject()
     {
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getDt_info());
@@ -183,7 +170,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 */
 	
 	
-	
+	/*
 	public boolean getCheched()
 	{
 	    return this.checked;
@@ -193,7 +180,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	{
 	    return this.status;
 	}
-	
+	*/
 	
 	
 	/*
@@ -216,9 +203,12 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	}*/
 	
 	
+	/**
+	 * Prepare Entry
+	 */
 	public void prepareEntry()
 	{
-	    
+	    /*
 	    if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
 	        return;
 	    else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
@@ -238,30 +228,16 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
             this.entry_object.setChanged(System.currentTimeMillis());
 //            this.entry_object.setComment(createComment());
 	    }
+	    */
 	}
 	
 	
-	public DayValueH getDbObject()
-	{
-	    return this.entry_object;
-	}
-	
-	/*
-	public String createComment()
-	{
-	    String p = this.getParametersAsString();
-	    
-	    if ((p==null) || (p.trim().length()==0))
-	    {
-	        return "PTI";
-	    }
-	    else
-	        return "PTI;" + p;
-	    
-	    
-	}*/
 	
 	
+	
+	/** 
+	 * To String
+	 */
 	public String toString()
 	{
 	    //OutputUtil o= null;
@@ -324,6 +300,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	}
 
 
+    /** 
+     * DbAdd
+     */
     public String DbAdd(Session sess) throws Exception
     {
         Transaction tx = sess.beginTransaction();
@@ -348,6 +327,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     }
 
 
+    /** 
+     * DbDelete
+     */
     public boolean DbDelete(Session sess) throws Exception
     {
         Transaction tx = sess.beginTransaction();
@@ -359,7 +341,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return true;
     }
 
-
+    /** 
+     * Db Edit
+     */
     public boolean DbEdit(Session sess) throws Exception
     {
         PumpDataExtendedH ch = (PumpDataExtendedH)sess.get(PumpDataExtendedH.class, new Long(this.getId()));
@@ -378,6 +362,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     }
 
 
+    /** 
+     * Db Get
+     */
     public boolean DbGet(Session sess) throws Exception
     {
         // TODO Auto-generated method stub
@@ -385,25 +372,36 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     }
 
 
+    /**
+     * Db Has Children
+     */
     public boolean DbHasChildren(Session sess) throws Exception
     {
         return false;
     }
 
 
+    /** 
+     * Get Action
+     */
     public int getAction()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
 
+    /** 
+     * Get Object Name
+     */
     public String getObjectName()
     {
         return "PumpDataExtendedH";
     }
 
 
+    /**
+     * Is Debug Mode
+     */
     public boolean isDebugMode()
     {
         // TODO Auto-generated method stub

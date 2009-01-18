@@ -67,6 +67,8 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
 
     /**
      * Constructor
+     * 
+     * @param ddh 
      */
     public PumpValuesTableModel(DeviceDataHandler ddh)
     {
@@ -76,11 +78,17 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     
     
     
+    /**
+     * Get Column Count
+     */
     public int getColumnCount()
     {
         return 5;
     }
 
+    /** 
+     * Is Boolean
+     */
     public boolean isBoolean(int column)
     {
         if (column == 4)
@@ -89,6 +97,9 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
             return false;
     }
 
+    /**
+     * Is Editable Column
+     */
     public boolean isEditableColumn(int column)
     {
         //if (column == 4)
@@ -98,6 +109,9 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
 
     }
 
+    /**
+     * Get Column Width
+     */
     public int getColumnWidth(int column, int width)
     {
         if (column == 0)
@@ -114,6 +128,9 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
 
 
     
+    /**
+     * Set Filter
+     */
     public void setFilter(int filter)
     {
         if (this.current_filter==filter)
@@ -140,6 +157,9 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     
     
 
+    /**
+     * Should Be Displayed
+     */
     public boolean shouldBeDisplayed(int status)
     {
         switch (this.current_filter)
@@ -170,11 +190,17 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
 
     }
 
+    /**
+     * Get Row Count
+     */
     public int getRowCount()
     {
         return this.displayed_dl_data.size();
     }
 
+    /**
+     * Get Value At
+     */
     public Object getValueAt(int row, int column)
     {
         // TODO: Fix this
@@ -195,7 +221,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
             return new Integer(mve.getStatus());
 
         case 4:
-            return new Boolean(mve.getCheched());
+            return new Boolean(mve.getChecked());
 
         default:
             return "";
@@ -210,12 +236,17 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
          */
     }
 
+    /**
+     * Add Entry
+     * 
+     * @param mve
+     */
     public void addEntry(PumpValuesEntry mve)
     {
         processPumpValuesEntry(mve);
         this.dl_data.add(mve);
         
-        if (this.shouldBeDisplayed(mve.status))
+        if (this.shouldBeDisplayed(mve.getStatus()))
         {
             this.displayed_dl_data.add(mve);
         }
@@ -223,8 +254,15 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     }
 
     
+    /**
+     * Process Pump Values Entry
+     * 
+     * @param mve
+     */
     public void processPumpValuesEntry(PumpValuesEntry mve)
     {
+        // FIXME need to fix this... 
+        /*
         //System.out.println("processMeterValuesEntry");
         if (old_data!=null)
         {
@@ -275,7 +313,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
             System.out.println("oldData == null");
 
             mve.status = PumpValuesEntry.STATUS_NEW;
-        }
+        }*/
     }
     
     /*
@@ -311,12 +349,18 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     }*/
     
     
+    /** 
+     * Get Column Name
+     */
     @Override
     public String getColumnName(int column)
     {
         return column_names[column];
     }
 
+    /**
+     * Get Column Class
+     */
     @Override
     public Class<?> getColumnClass(int c)
     {
@@ -328,6 +372,9 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
         // return getValueAt(0,c).getClass();
     }
 
+    /**
+     * Is Cell Editable
+     */
     @Override
     public boolean isCellEditable(int row, int col)
     {
@@ -337,6 +384,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
             return false;
     }
 
+    /*
     @Override
     public void setValueAt(Object aValue, int row, int column)
     {
@@ -346,8 +394,14 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
         // ",value=" + aValue);
         // dayData.setValueAt(aValue, row, column);
         // fireTableChanged(null);
-    }
+    }*/
 
+
+    /**
+     * Set Old Value
+     * 
+     * @param data
+     */
     public void setOldValues(Hashtable<String,DayValueH> data)
     {
         this.old_data = data;
@@ -355,6 +409,12 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
         //System.out.println(this.old_data.keys());
     }
 
+    /**
+     * Add To Array 
+     * 
+     * @param lst
+     * @param source
+     */
     @Override
     public void addToArray(ArrayList<?> lst, ArrayList<?> source)
     {
@@ -362,6 +422,11 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
         
     }
 
+    /**
+     * Get Empty ArrayList
+     * 
+     * @return
+     */
     @Override
     public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
     {
@@ -369,33 +434,16 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
         return null;
     }
 
+    /**
+     * Process Device Value Entry
+     * 
+     * @param mve DeviceValuesEntry instance
+     */
     @Override
     public void processDeviceValueEntry(DeviceValuesEntry mve)
     {
         // TODO Auto-generated method stub
-        
     }
     
-    
-    /*
-     * @see event.GlucoValueEventListener#glucoValuesChanged(GlucoValueEvent)
-     */
-    /*
-     * public void glucoValuesChanged(GlucoValueEvent event) { switch
-     * (event.getType()) { case GlucoValueEvent.INSERT:
-     * fireTableRowsInserted(event.getFirstRow(), event.getLastRow()); break;
-     * case GlucoValueEvent.DELETE: fireTableRowsDeleted(event.getFirstRow(),
-     * event.getLastRow()); break; case GlucoValueEvent.UPDATE:
-     * fireTableCellUpdated(event.getFirstRow(), event.getColumn()); break; } }
-     */
-
-    /*
-     * Returns the dayData.
-     * 
-     * @return GlucoValues
-     */
-    /*
-     * public GlucoValues getDayData() { return dayData; }
-     */
 
 }

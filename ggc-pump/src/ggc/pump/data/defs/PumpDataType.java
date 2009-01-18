@@ -31,14 +31,14 @@ package ggc.pump.data.defs;
 // unknown usage of this file...
 public class PumpDataType
 {
-
+/*
     public static final int PUMP_DATA_BASAL    = 1; 
     public static final int PUMP_DATA_BOLUS    = 2;
     public static final int PUMP_DATA_EVENT    = 3; 
     public static final int PUMP_DATA_ALARM    = 4;
     public static final int PUMP_DATA_ERROR    = 5;
     public static final int PUMP_DATA_PROFILE  = 6;
-    
+  */  
     
 
 }

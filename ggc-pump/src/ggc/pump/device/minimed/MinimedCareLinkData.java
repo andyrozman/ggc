@@ -20,8 +20,8 @@ package ggc.pump.device.minimed;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      MinimedCareLinkData
+ *  Description:   Minimed CareLink Data
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -53,6 +53,11 @@ public class MinimedCareLinkData
 //  BWZ Active Insulin (U),Alarm,Sensor Calibration BG (mmol/L),Sensor Glucose (mmol/L),ISIG Value,
 //  Daily Insulin Total (U),Raw-Type,Raw-Values,Raw-ID,Raw-Upload ID,Raw-Seq Num,Raw-Device Type
 
+    /**
+     * Constructor
+     * 
+     * @param data
+     */
     public MinimedCareLinkData(String[] data)
     {
         this.index = data[0];
@@ -68,6 +73,11 @@ public class MinimedCareLinkData
     }
     
     
+    /**
+     * Is Identified
+     * 
+     * @return
+     */
     public boolean isIdentified()
     {
         
@@ -318,6 +328,11 @@ public class MinimedCareLinkData
         */
     }
     
+    /**
+     * Get Raw Type
+     * 
+     * @return
+     */
     public String getRawType()
     {
         return this.raw_type;
@@ -325,6 +340,9 @@ public class MinimedCareLinkData
     
 //    System.out.println(count + ": [size=" + ld.length + ",id=" + ld[0] + ",el33=" + ld[33] + "]");
 
+    /**
+     * To String
+     */
     public String toString()
     {
         return "MinimedCareLinkData [index=" + this.index + "date=" + this.date + ",time=" + this.time + ",raw_type=" + this.raw_type +

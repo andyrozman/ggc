@@ -39,6 +39,9 @@ public class PumpBolusType
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
+    /**
+     * Bolus Descriptions
+     */
     public String[] bolus_desc = { ic.getMessage("SELECT_BOLUS_TYPE"),
                        ic.getMessage("BOLUS_STANDARD"),             
                        ic.getMessage("BOLUS_SCROLL"),             
@@ -50,10 +53,29 @@ public class PumpBolusType
     Hashtable<String,String> bolus_mapping = new Hashtable<String,String>(); 
     
     
+    /**
+     * Pump Bolus: None
+     */
     public static final int PUMP_BOLUS_NONE = 0;
+
+    /**
+     * Pump Bolus: Standard
+     */
     public static final int PUMP_BOLUS_STANDARD = 1;
+
+    /**
+     * Pump Bolus: Scrool
+     */
     public static final int PUMP_BOLUS_SCROLL = 2;
+
+    /**
+     * Pump Bolus: Extended
+     */
     public static final int PUMP_BOLUS_EXTENDED = 3;
+
+    /**
+     * Pump Bolus: Multiwave
+     */
     public static final int PUMP_BOLUS_MULTIWAVE = 4;
     
     

@@ -31,6 +31,7 @@ package ggc.pump.util;
 
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBasalSubType;
@@ -40,8 +41,6 @@ import ggc.pump.data.defs.PumpReport;
 import ggc.pump.manager.PumpManager;
 
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsEntry;
@@ -81,7 +80,10 @@ import com.atech.i18n.I18nControlAbstract;
 public class DataAccessPump extends DataAccessPlugInBase
 {
 
-    public static final String PLUGIN_VERSION = "0.1.7.1";
+    /**
+     * PlugIn Version
+     */
+    public static final String PLUGIN_VERSION = "0.1.8.1";
 
     private static DataAccessPump s_da = null; // This is handle to unique 
 
@@ -113,6 +115,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     } 
 
     
+    /**
+     * Init Special
+     */
     public void initSpecial()
     {
         //this.loadTimeZones();
@@ -121,7 +126,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         
         this.createWebListerContext();
         this.createPlugInAboutContext();
-        
+        this.createPlugInDataRetrievalContext();
         
     }
     
@@ -143,41 +148,55 @@ public class DataAccessPump extends DataAccessPlugInBase
         return s_da;
     }
 
-    public static DataAccessPump createInstance(JFrame main)
-    {
-        if (s_da == null)
-        {
-            //GGCDb db = new GGCDb();
-            s_da = new DataAccessPump();
-//x            s_da.setParent(main);
-        }
-
-        return s_da;
-    }
 
  
     
-    public PumpBaseType getPumpBaseType()
+    /**
+     * Get Pump Base Types
+     * 
+     * @return
+     */
+    public PumpBaseType getPumpBaseTypes()
     {
         return this.m_pump_base_type;
     }
     
-    public PumpBolusType getBolusSubType()
+    /**
+     * Get Bolus Sub Types
+     * 
+     * @return
+     */
+    public PumpBolusType getBolusSubTypes()
     { 
         return m_pump_bolus_type;
     }
     
-    public PumpBasalSubType getBasalSubType()
+    /**
+     * Get Basal Sub Types
+     * 
+     * @return
+     */
+    public PumpBasalSubType getBasalSubTypes()
     {
         return m_pump_basal_type;
     }
 
+    /**
+     * Get Pump Report Types
+     * 
+     * @return
+     */
     public PumpReport getPumpReportTypes()
     { 
         return this.m_pump_report;
     }
     
-    public PumpAdditionalDataType getAdditionalType()
+    /**
+     * Get Additional Types
+     * 
+     * @return
+     */
+    public PumpAdditionalDataType getAdditionalTypes()
     {
         return this.m_pump_add_type;
     }
@@ -249,6 +268,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     
 
 
+    /**
+     * Init All Objects
+     */
     public void initAllObjects()
     {
         this.m_pump_base_type = new PumpBaseType();
@@ -258,16 +280,19 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.m_pump_add_type = new PumpAdditionalDataType();
     }
 
-    
-    
 
+    /** 
+     * Get Application Name
+     */
     public String getApplicationName()
     {
     	return "GGC_PumpTool";
     }
     
     
-    
+    /**
+     * Create About Context for plugin
+     */
     public void createPlugInAboutContext()
     {
         I18nControlAbstract ic = this.getI18nControlInstance();
@@ -319,6 +344,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     
 
     
+    /**
+     * Create WebLister (for List) Context for plugin
+     */
     @Override
     public void createWebListerContext()
     {
@@ -380,12 +408,12 @@ public class DataAccessPump extends DataAccessPlugInBase
     // ********************************************************
     // ******                   Pumps                    *****    
     // ********************************************************
-
+/*
     public PumpManager getPumpManager()
     {
         return this.m_pumpManager;
     }
-
+*/
 
     
     // ********************************************************
@@ -393,20 +421,15 @@ public class DataAccessPump extends DataAccessPlugInBase
     // ********************************************************
     
     
+    /**
+     * Create Plugin Version
+     */
     public void createPlugInVersion()
     {
         this.plugin_version = DataAccessPump.PLUGIN_VERSION;
     }
     
     
-    // ********************************************************
-    // ******                   Pumps                    *****    
-    // ********************************************************
-
-
-
-
-
 
 
     // ********************************************************
@@ -414,6 +437,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     // ********************************************************
 
 
+    /**
+     * Get Start Year
+     */
     public int getStartYear()
     {
         return 1980;
@@ -426,15 +452,25 @@ public class DataAccessPump extends DataAccessPlugInBase
     // ********************************************************
     
     GGCPumpDb m_db;
+    HibernateDb hdb;
     
-    
+    /**
+     * Create Db
+     * 
+     * @param db
+     */
     public void createDb(HibernateDb db)
     {
         this.m_db = new GGCPumpDb(db);
-        
+        this.hdb = db;
     }
     
 
+    /**
+     * Get Db
+     * 
+     * @return
+     */
     public GGCPumpDb getDb()
     {
         return this.m_db;
@@ -442,12 +478,18 @@ public class DataAccessPump extends DataAccessPlugInBase
 
 
     
+    /**
+     * Get Hibernate Db
+     */
     public HibernateDb getHibernateDb()
     {
-        return null;
+        return this.hdb;
     }
 
-
+    
+    /**
+     * Create Configuration Context for plugin
+     */
     @Override
     public void createConfigurationContext()
     {
@@ -456,6 +498,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
+    /**
+     * Create Device Configuration for plugin
+     */    
     @Override
     public void createDeviceConfiguration()
     {
@@ -464,30 +509,39 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
+    /**
+     * Create About Context for plugin
+     */
     @Override
     public void createPlugInDataRetrievalContext()
     {
-        // TODO Auto-generated method stub
-        
+        m_entry_type = new PumpValuesEntry(true);
     }
 
-
+    /**
+     * Load Manager instance
+     */
     @Override
     public void loadManager()
     {
-        // TODO Auto-generated method stub
-        
+        this.m_manager = this.m_pumpManager;
     }
 
 
+    /**
+     * Load Device Data Handler
+     */
     @Override
     public void loadDeviceDataHandler()
     {
         // TODO Auto-generated method stub
-        
     }
 
-
+    /**
+     * Get Images for Devices (must end with backslash)
+     * 
+     * @return String with images path 
+     */
     @Override
     public String getDeviceImagesRoot()
     {

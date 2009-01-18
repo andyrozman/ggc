@@ -85,6 +85,13 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     PumpValuesEntryExt data_object;
 
     // new data
+    /**
+     * Constructor
+     * 
+     * @param wiz_one
+     * @param type
+     * @param pump_add
+     */
     public PumpDataAdditionalWizardTwo(PumpDataAdditionalWizardOne wiz_one, String type, PumpAdditionalDataType pump_add)
     {
         super(wiz_one, "", true);
@@ -100,11 +107,18 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         init();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     * @param pc
+     */
     public PumpDataAdditionalWizardTwo(JDialog dialog, PumpValuesEntryExt pc)
     {
         super(dialog, "", true);
 
-        this.m_pump_add = m_da.getAdditionalType();
+        // FIXME
+        this.m_pump_add = m_da.getAdditionalTypes();
 
         // this.old_data = data;
         m_parent = dialog;
@@ -287,6 +301,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
+    /**
+     * Area: BG
+     */
     public void areaBG()
     {
         
@@ -304,6 +321,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     }
     
     
+    /**
+     * Area: CH
+     */
     public void areaCH()
     {
         
@@ -314,6 +334,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     }
     
 
+    /**
+     * Area: Food
+     */
     public void areaFood()
     {
         
@@ -332,7 +355,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     
     
     
-
+    /**
+     * Area: Unsupported
+     */
     private void areaUnsupported()
     {
         this.label_1 = new JLabel("Unsuported type : " + this.m_pump_add.getDescriptions()[this.m_type]);
@@ -341,15 +366,6 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
-    public boolean isMealSet()
-    {
-        return false;
-        /*
-        if ((this.m_dailyValuesRow.meals == null) || (this.m_dailyValuesRow.meals.trim().length() == 0))
-            return false;
-        else
-            return true; */
-    }
 
     /**
      * Invoked when an action occurs.
@@ -410,11 +426,21 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
+    /**
+     * Was Action
+     * 
+     * @return
+     */
     public boolean wasAction()
     {
         return this.was_action;
     }
 
+    /**
+     * Get Objects
+     * 
+     * @return
+     */
     public PumpValuesEntryExt[] getObjects()
     {
         return pump_objects_ext;
@@ -544,20 +570,22 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         */
     }
 
+    /*
     public boolean isFieldSet(String text)
     {
+        m_da.is
         if ((text == null) || (text.trim().length() == 0))
             return false;
         else
             return true;
-    }
+    }*/
 
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -565,7 +593,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -573,7 +601,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         return this.help_button;
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()
@@ -583,7 +611,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     
     
-    /*
+    /**
      * focusGained
      */
     public void focusGained(FocusEvent arg0)
@@ -592,7 +620,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     boolean in_action = false;
 
-    /*
+    /**
      * focusLost
      */
     public void focusLost(FocusEvent ev)
@@ -646,13 +674,15 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     
     
-    public void keyTyped(KeyEvent e)
-    {
-    }
+    /** 
+     * keyTyped
+     */
+    public void keyTyped(KeyEvent e) { }
 
-    public void keyPressed(KeyEvent e)
-    {
-    }
+    /** 
+     * keyPressed
+     */
+    public void keyPressed(KeyEvent e) { }
 
     /**
      * Invoked when a key has been released. See the class description for
@@ -670,11 +700,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         {
             cmdOk();
         }
-
     }
-    
-    
-    
     
     
 }

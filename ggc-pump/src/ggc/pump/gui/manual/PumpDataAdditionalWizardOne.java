@@ -15,14 +15,12 @@ import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -84,6 +82,13 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param hashtable
+     * @param parent
+     * @param pump_data
+     */
     public PumpDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent, PumpAdditionalDataType pump_data)
     {
         super(parent, "", true);
@@ -103,6 +108,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         int height = 300;
 
         this.setSize(width,height);
+        ATSwingUtils.initLibrary();
         
         this.m_da.centerJDialog(this, this.m_parent);
         
@@ -164,6 +170,12 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         // int j=0;
         for (int i = 0, j = 0, k = 0; i < button_coord.length; i += 4, j += 2, k++)
         {
+            
+            button = ATSwingUtils.getButton("   " + button_command[j + 1], 
+                                   button_coord[i], button_coord[i + 1], button_coord[i + 2], 25, 
+                                   panel, ATSwingUtils.FONT_NORMAL, button_icon[k], button_command[j], this, m_da);
+            
+            /*
             button = new JButton("   " + button_command[j + 1]);
             button.setActionCommand(button_command[j]);
             // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
@@ -172,19 +184,20 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
             if (button_icon[k] != null)
             {
                 button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
-            }
+            }*/
 
             if (button_coord[i + 3] == 0)
             {
                 button.setEnabled(false);
             }
 
+            /*
             if (k <= 1)
                 addComponent(button, button_coord[i], button_coord[i + 1],
                         button_coord[i + 2], panel);
             else
                 addComponent(button, button_coord[i], button_coord[i + 1],
-                        button_coord[i + 2], 25, false, panel);
+                        button_coord[i + 2], 25, false, panel);*/
         }
 
         help_button = m_da.createHelpButtonByBounds(170, 195, 120, 25, this);
@@ -196,16 +209,8 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     
     
-    public boolean isMealSet()
-    {
-        return false;
-        /*
-        if ((this.m_dailyValuesRow.meals == null) || (this.m_dailyValuesRow.meals.trim().length() == 0))
-            return false;
-        else
-            return true; */
-    }
 
+/*    
     public JFormattedTextField getTextField(int columns, int decimal_places,
             Object value, int x, int y, int width, int height, Container cont)
 
@@ -218,30 +223,6 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         
         return tf;
         
-        /*
-        NumberFormat displayFormat, editFormat;
-
-        displayFormat = NumberFormat.getNumberInstance();
-        displayFormat.setMinimumFractionDigits(0);
-        displayFormat.setMaximumFractionDigits(decimal_places);
-
-        editFormat = NumberFormat.getNumberInstance();
-        editFormat.setMinimumFractionDigits(0);
-        editFormat.setMaximumFractionDigits(decimal_places);
-
-        JFormattedTextField ftf = new JFormattedTextField(
-                new DefaultFormatterFactory(new NumberFormatter(displayFormat),
-                        new NumberFormatter(displayFormat),
-                        new NumberFormatter(editFormat)));
-
-        ftf.setValue(value);
-        ftf.setBounds(x, y, width, height);
-        ftf.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
-        ftf.addKeyListener(this);
-        cont.add(ftf);
-
-        return ftf;
-*/
     }
 
 
@@ -280,7 +261,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 //        comp.addKeyListener(this);
         parent.add(comp);
     }
-
+*/
 
     /**
      * Invoked when an action occurs.
@@ -340,6 +321,11 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     
     
     
+    /**
+     * Was Action
+     * 
+     * @return
+     */
     public boolean wasAction()
     {
         return this.was_action;
@@ -347,6 +333,11 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     
     
+    /**
+     * Get Objects
+     * 
+     * @return
+     */
     public PumpValuesEntryExt[] getObjects()
     {
         return pump_objects_ext;
@@ -458,6 +449,12 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 */
     }
 
+    /**
+     * Is Field Set
+     * 
+     * @param text
+     * @return
+     */
     public boolean isFieldSet(String text)
     {
         if ((text == null) || (text.trim().length() == 0))
@@ -467,13 +464,16 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     }
 
 
-    public void keyTyped(KeyEvent e)
-    {
-    }
+    /**
+     * @param e
+     */
+    public void keyTyped(KeyEvent e) { }
 
-    public void keyPressed(KeyEvent e)
-    {
-    }
+    
+    /**
+     * @param e
+     */
+    public void keyPressed(KeyEvent e) { }
 
     /**
      * Invoked when a key has been released. See the class description for
@@ -499,7 +499,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -507,7 +507,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -515,7 +515,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         return this.help_button;
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()

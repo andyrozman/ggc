@@ -28,8 +28,9 @@ import java.util.StringTokenizer;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     MinimedCareLink
+ *  Description:  Minimed CareLink "device". This is for importing data from CareLink
+ *                export file
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -40,11 +41,19 @@ public class MinimedCareLink
     DataAccessPump m_da = DataAccessPump.getInstance();
     int count_unk = 0; 
 
+    /**
+     * Constructor
+     */
     public MinimedCareLink()
     {
         
     }
     
+    /**
+     * Parse Export File
+     * 
+     * @param file
+     */
     public void parseExportFile(File file)
     {
         try

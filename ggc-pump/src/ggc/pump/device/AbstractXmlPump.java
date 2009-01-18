@@ -48,6 +48,9 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     String connection_port = "";
 
+    /**
+     * Constructor
+     */
     public AbstractXmlPump()
     {
         super();
@@ -63,6 +66,9 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
 	
 	
 	
+    /** 
+     * Set Device Allowed Actions
+     */
     public void setDeviceAllowedActions(boolean can_read_data, 
     									boolean can_read_partitial_data,
     									boolean can_read_device_info,
@@ -73,9 +79,30 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         this.can_read_device_info = can_read_device_info;
         this.can_read_device_configuration = can_read_device_configuration;
     }
-    
 
     
+    /**
+     * Set Pump Type
+     * 
+     * @param group
+     * @param device
+     */
+    public void setPumpType(String group, String device)
+    {
+        this.device_name = device;
+        
+        DeviceIdentification di = new DeviceIdentification(ic);
+        di.company = group;
+        di.device_selected = device;
+        
+        this.output_writer.setDeviceIdentification(di);
+        //this.output_writer.
+        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+    }
+    
+    
+
+    /*
     String meter_group = null;
     String meter_device = null;
     
@@ -93,7 +120,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         this.output_writer.setDeviceIdentification(di);
         //this.output_writer.
     	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-    }
+    }*/
     
     /*
     public String getName()
@@ -127,6 +154,9 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
     
     
+    /**
+     * Dispose
+     */
     public void dispose()
     {
     }
@@ -203,6 +233,9 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     
 
+    /** 
+     * Is Device Communicating
+     */
     public boolean isDeviceCommunicating()
     {
         return true;
@@ -273,30 +306,15 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     
 
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
-    /**
-     * getName - Get Name of meter. 
-     * Should be implemented by protocol class.
-     */
-    public String getName()
-    {
-    	if (this.device_instance==null)
-    		return "Generic Serial Device";
-    	else
-    		return this.device_instance.getName();
-    }
-
-
-
 
 
     //************************************************
     //***                    Test                  ***
     //************************************************
 
+    /** 
+     * test
+     */
     public void test()
     {
     }
@@ -304,8 +322,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
 
 
     
-    /* 
-     * compareTo
+    /** 
+     * Compare To
      */
     public int compareTo(SelectableInterface o)
     {
@@ -314,8 +332,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * getColumnCount
+    /** 
+     * Get Column Count
      */
     public int getColumnCount()
     {
@@ -325,8 +343,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
 
     String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
     
-    /* 
-     * getColumnName
+    /** 
+     * Get Column Name
      */
     public String getColumnName(int num)
     {
@@ -334,8 +352,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * getColumnValue
+    /**
+     * Get Column Value
      */
     public String getColumnValue(int num)
     {
@@ -357,8 +375,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * getColumnValueObject
+    /** 
+     * Get Column Value Object
      */
     public Object getColumnValueObject(int num)
     {
@@ -366,8 +384,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * getColumnWidth
+    /**
+     * Get Column Width
      */
     public int getColumnWidth(int num, int width)
     {
@@ -376,8 +394,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * getItemId
+    /** 
+     * Get Item Id
      */
     public long getItemId()
     {
@@ -385,8 +403,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * getShortDescription
+    /** 
+     * Get Short Description
      */
     public String getShortDescription()
     {
@@ -394,8 +412,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(int from, int till, int state)
     {
@@ -403,8 +421,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(int value)
     {
@@ -412,8 +430,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(String text)
     {
@@ -421,16 +439,16 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /* 
-     * setColumnSorter
+    /** 
+     * Set Column Sorter
      */
     public void setColumnSorter(ColumnSorter cs)
     {
     }
 
 
-    /* 
-     * setSearchContext
+    /** 
+     * Set Search Context
      */
     public void setSearchContext()
     {

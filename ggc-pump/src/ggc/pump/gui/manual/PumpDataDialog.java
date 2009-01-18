@@ -27,7 +27,6 @@
 package ggc.pump.gui.manual;
 
 import ggc.plugin.data.DeviceValuesDay;
-import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
@@ -108,7 +107,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     JTable table;
 
-    public boolean save_needed = false;
+    //public boolean save_needed = false;
 
     CalendarPane calPane;
 
@@ -126,6 +125,12 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     GGCPumpDb m_db = null;
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param parent
+     */
     public PumpDataDialog(DataAccessPump da, Component parent)
     {
         super(da.getMainParent(), "DailyStatsDialog", false);
@@ -141,17 +146,31 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         init();
     }
 
+    /**
+     * Set Title
+     * 
+     * @param gc
+     */
     public void setTitle(GregorianCalendar gc)
     {
         setTitle(m_ic.getMessage("PUMP_DAILY_OVERVIEW") + "  [" + gc.get(GregorianCalendar.DAY_OF_MONTH) + "."
                 + (gc.get(GregorianCalendar.MONTH) + 1) + "." + gc.get(GregorianCalendar.YEAR) + "]");
     }
 
+    /**
+     * Get Table Model
+     * 
+     * @return
+     */
     public PumpDataTableModel getTableModel()
     {
         return model;
     }
 
+    /**
+     * Get This Parent
+     * @return
+     */
     public PumpDataDialog getThisParent()
     {
         return this;
@@ -342,11 +361,15 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         resultsPane = new JScrollPane(table);
 
         
+        @SuppressWarnings("unused")
         DeviceValuesDay pvd = new DeviceValuesDay(DataAccessPump.getInstance());
+        
+        m_da.getColumnsWidthManual();
         
         for (int i = 0; i < 5; i++) 
         {
-            table.getColumnModel().getColumn(i).setWidth(pvd.getColumnWidth(i, 460)); 
+            // TODO
+            //table.getColumnModel().getColumn(i).setWidth(pvd.getColumnWidth(i, 460)); 
         }           
 
         
@@ -421,7 +444,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         setVisible(true);
     }
 
-    public void updateLabels()
+    private void updateLabels()
     {
         if (dayData == null)
             return;
@@ -457,17 +480,20 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
      * super.processWindowEvent(e); }
      */
 
-    public String getIns1Abbr()
+    private String getIns1Abbr()
     {
         return m_ic.getMessage("BOLUS"); //"Bolus Insulin";
     }
 
-    public String getIns2Abbr()
+    private String getIns2Abbr()
     {
         return m_ic.getMessage("BASAL");
         //return "Basal Insulin";
     }
 
+    /**
+     * Action Performed
+     */
     public void actionPerformed(ActionEvent e)
     {
 
@@ -569,7 +595,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /*
+    /**
      * getComponent - get component to which to attach help context
      */
     public Component getComponent()
@@ -577,7 +603,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         return this.getRootPane();
     }
 
-    /*
+    /**
      * getHelpButton - get Help button
      */
     public JButton getHelpButton()
@@ -585,7 +611,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         return this.help_button;
     }
 
-    /*
+    /**
      * getHelpId - get id for Help
      */
     public String getHelpId()
@@ -595,6 +621,10 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     
     
+    /**
+     * Startup Test Method
+     * @param args
+     */
     public static void main(String[] args)
     {
         JFrame frame = new JFrame();

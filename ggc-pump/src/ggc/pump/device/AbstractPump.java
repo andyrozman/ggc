@@ -52,12 +52,20 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     protected OutputWriter m_output_writer = null;
     
 
+    /**
+     * Constructor
+     */
     public AbstractPump()
     {
         super();
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param ow
+     */
     public AbstractPump(OutputWriter ow)
     {
         super();
@@ -77,6 +85,9 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     
     
     
+    /** 
+     * Set Device Allowed Actions
+     */
     public void setDeviceAllowedActions(boolean can_read_data, 
                                         boolean can_read_partitial_data,
                                         boolean can_read_device_info,
@@ -124,6 +135,9 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
 
 
 
+    /**
+     * Get Name
+     */
     public String getName()
     {
         return "Generic device";
@@ -205,7 +219,7 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
+    /** 
      * compareTo
      */
     public int compareTo(SelectableInterface o)
@@ -215,8 +229,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * getColumnCount
+    /** 
+     * Get Column Count
      */
     public int getColumnCount()
     {
@@ -226,8 +240,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
 
     String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
     
-    /* 
-     * getColumnName
+    /** 
+     * Get Column Name
      */
     public String getColumnName(int num)
     {
@@ -235,8 +249,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * getColumnValue
+    /** 
+     * Get Column Value
      */
     public String getColumnValue(int num)
     {
@@ -258,8 +272,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * getColumnValueObject
+    /** 
+     * Get Column Value Object
      */
     public Object getColumnValueObject(int num)
     {
@@ -267,8 +281,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * getColumnWidth
+    /** 
+     * Get Column Width
      */
     public int getColumnWidth(int num, int width)
     {
@@ -277,8 +291,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * getItemId
+    /** 
+     * Get Item Id
      */
     public long getItemId()
     {
@@ -286,8 +300,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * getShortDescription
+    /** 
+     * Get Short Description
      */
     public String getShortDescription()
     {
@@ -295,8 +309,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(int from, int till, int state)
     {
@@ -304,8 +318,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(int value)
     {
@@ -313,8 +327,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * isFound
+    /** 
+     * Is Found
      */
     public boolean isFound(String text)
     {
@@ -322,16 +336,16 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    /* 
-     * setColumnSorter
+    /** 
+     * Set Column Sorter
      */
     public void setColumnSorter(ColumnSorter cs)
     {
     }
 
 
-    /* 
-     * setSearchContext
+    /** 
+     * Set Search Context
      */
     public void setSearchContext()
     {

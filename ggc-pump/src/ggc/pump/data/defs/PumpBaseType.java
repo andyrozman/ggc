@@ -39,6 +39,9 @@ public class PumpBaseType
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
+    /**
+     * Base Type Descriptions
+     */
     public String[] basetype_desc = { 
                                      ic.getMessage("NONE"),
                                      ic.getMessage("BASAL_DOSE"),
@@ -57,15 +60,54 @@ public class PumpBaseType
     Hashtable<String,String> basetype_mapping = new Hashtable<String,String>(); 
     
     
+    /**
+     * Pump Data: None
+     */
     public static final int PUMP_DATA_NONE = 0;
+
+    /**
+     * Pump Data: Bassl
+     */
     public static final int PUMP_DATA_BASAL = 1;
+
+    /**
+     * Pump Data: Bolus 
+     */
     public static final int PUMP_DATA_BOLUS = 2;
+
+    /**
+     * Pump Data: Event
+     */
     public static final int PUMP_DATA_EVENT = 3;
+
+    /**
+     * Pump Data: Alarm
+     */
     public static final int PUMP_DATA_ALARM = 4;
+
+    /**
+     * Pump Data: Error
+     */
     public static final int PUMP_DATA_ERROR = 5;
+
+    /**
+     * Pump Data: Report
+     */
     public static final int PUMP_DATA_REPORT = 6;
+
+    /**
+     * Pump Data: Pen Injection Basal
+     */
     public static final int PUMP_DATA_PEN_INJECTION_BASAL = 7;
+
+    /**
+     * Pump Data: Pen Injection Bolus
+     */
     public static final int PUMP_DATA_PEN_INJECTION_BOLUS = 8;
+
+    /**
+     * Pump Data: Additional Data
+     */
     public static final int PUMP_DATA_ADDITIONAL_DATA = 9;
     
 

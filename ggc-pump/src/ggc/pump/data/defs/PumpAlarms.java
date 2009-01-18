@@ -39,6 +39,9 @@ public class PumpAlarms
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
+    /**
+     * Alarm Descriptions
+     */
     public String[] alarms_desc = { ic.getMessage("SELECT_SUBTYPE"),
                        ic.getMessage("ALARM_CARTRIDGE_LOW"),             
                        ic.getMessage("ALARM_BATTERY_LOW"),             
@@ -55,13 +58,44 @@ public class PumpAlarms
     
     
     
+    /**
+     * Pump Alarm: Cartridge Low
+     */
     public final static int PUMP_ALARM_CARTRIDGE_LOW = 1;
+
+    /**
+     * Pump Alarm: Battery Low
+     */
     public final static int PUMP_ALARM_BATTERY_LOW = 2;
+
+    /**
+     * Pump Alarm: Review Datetime
+     */
     public final static int PUMP_ALARM_REVIEW_DATETIME = 3;
+
+    /**
+     * Pump Alarm: Alarm Clock
+     */
     public final static int PUMP_ALARM_ALARM_CLOCK = 4;
+
+    /**
+     * Pump Alarm: Pump Timer
+     */
     public final static int PUMP_ALARM_PUMP_TIMER = 5;
+
+    /**
+     * Pump Alarm: Temporary Basal Rate Canceled
+     */
     public final static int PUMP_ALARM_TEMPORARY_BASAL_RATE_CANCELED = 6;
+
+    /**
+     * Pump Alarm: Temporary Basal Rate Over
+     */
     public final static int PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER = 7;
+
+    /**
+     * Pump Alarm: Bolus Canceled
+     */
     public final static int PUMP_ALARM_BOLUS_CANCELED = 8;
     
 
@@ -98,6 +132,11 @@ public class PumpAlarms
         return Integer.parseInt(s);
     }
     
+    /**
+     * Get Descriptions
+     * 
+     * @return
+     */
     public String[] getDescriptions()
     {
         return this.alarms_desc;

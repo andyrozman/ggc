@@ -51,20 +51,38 @@ public abstract class EZManagerDb extends AbstractPump
     private String m_fileName;
     
     
+    /**
+     * Animas Company
+     */
     public static final int ANIMAS_COMPANY                = 4;
     
+    /**
+     * 
+     */
     public static final int PUMP_ANIMAS_X1               = 40001;
+    /**
+     * 
+     */
     public static final int PUMP_ANIMAS_TEST             = 40099;
     
     
     
     
+    /**
+     * Constructor
+     */
     public EZManagerDb()
     {
         super();
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param db_path 
+     * @param writer 
+     */
     public EZManagerDb(String db_path, OutputWriter writer)
     {        
         super(writer);
@@ -267,6 +285,11 @@ public abstract class EZManagerDb extends AbstractPump
     
 
 
+    /**
+     * Get Alarm Mappings - Map pump specific alarms to PumpTool specific 
+     *     alarm codes
+     * @return
+     */
     public Hashtable<String, Integer> getAlarmMappings()
     {
         // TODO Auto-generated method stub
@@ -274,6 +297,11 @@ public abstract class EZManagerDb extends AbstractPump
     }
 
 
+    /**
+     * Get Event Mappings - Map pump specific events to PumpTool specific 
+     *     event codes
+     * @return
+     */
     public Hashtable<String, Integer> getEventMappings()
     {
         // TODO Auto-generated method stub
@@ -281,6 +309,9 @@ public abstract class EZManagerDb extends AbstractPump
     }
 
 
+    /**
+     * loadPumpSpecificValues
+     */
     public void loadPumpSpecificValues()
     {
         // TODO Auto-generated method stub

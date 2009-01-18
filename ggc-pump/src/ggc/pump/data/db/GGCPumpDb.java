@@ -1,10 +1,13 @@
 package ggc.pump.data.db;
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.db.PluginDb;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -47,6 +50,7 @@ import com.atech.utils.ATechDate;
 public class GGCPumpDb extends PluginDb
 {
     private static Log log = LogFactory.getLog(GGCPumpDb.class);
+    DataAccessPump m_da = DataAccessPump.getInstance();
 
     /**
      * Constructor
@@ -75,9 +79,10 @@ public class GGCPumpDb extends PluginDb
         
         long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
         
-//        PumpValuesDay dV = new PumpValuesDay();
-        //dV.setDate(m_da.getDateTimeFromDateObject(day.getTime()) / 10000);
-
+        DeviceValuesDay dV = new DeviceValuesDay(m_da);
+        dV.setDateTimeGC(gc);
+        
+        
         String sql = "";
         
         try
@@ -99,10 +104,10 @@ public class GGCPumpDb extends PluginDb
 
             while (it.hasNext())
             {
-                @SuppressWarnings("unused")
-                PumpValuesEntry dv = (PumpValuesEntry) it.next();
+                PumpDataH pdh = (PumpDataH)it.next();
+                PumpValuesEntry dv = new PumpValuesEntry(pdh);
                 
-//x                dV.addEntry(dv);
+                dV.addEntry(dv);
             }
             
 //x            System.out.println("Base entries: " + dV.getRowCount());
@@ -112,9 +117,13 @@ public class GGCPumpDb extends PluginDb
             
             System.out.println("Extended list: " + lst_ext.size());
             
-//x            dV.addExtendedEntries(lst_ext);
+            //dV.addExtendedEntries(lst_ext);
+
+            System.out.println("Dv: " + dV.getRowCount());
             
-//            mergePumpData(dV, lst_ext);
+            mergeDailyPumpData(dV, lst_ext);
+            
+            System.out.println("Dv: " + dV.getRowCount());
             
         }
         catch (Exception ex)
@@ -123,9 +132,9 @@ public class GGCPumpDb extends PluginDb
             log.error("getDayStats(). Exception: " + ex, ex);
         }
 
-//        return dV;
+        return dV;
    
-        return null;
+//        return null;
     }
     
     
@@ -191,6 +200,40 @@ public class GGCPumpDb extends PluginDb
         
     }
     
+    
+    /**
+     * Merge Daily Pump Data
+     * 
+     * @param dV
+     * @param lst_ext
+     */
+    public void mergeDailyPumpData(DeviceValuesDay dV, ArrayList<PumpValuesEntryExt> lst_ext)
+    {
+        for(int i=0; i<lst_ext.size(); i++)
+        {
+            PumpValuesEntryExt pvex = lst_ext.get(i);
+            
+            System.out.println(pvex.getDt_info());
+            
+            if (dV.isEntryAvailable(pvex.getDt_info()))
+            {
+                
+                PumpValuesEntry pve = (PumpValuesEntry)dV.getEntry(pvex.getDt_info());
+                pve.addAdditionalData(pvex);
+            }
+            else
+            {
+                
+                PumpValuesEntry pve = new PumpValuesEntry();
+                pve.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pvex.getDt_info()));
+                pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
+                
+                pve.addAdditionalData(pvex);
+                
+                dV.addEntry(pve);
+            }
+        }
+    }
     
     
     

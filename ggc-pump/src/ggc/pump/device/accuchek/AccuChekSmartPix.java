@@ -32,8 +32,8 @@ import java.io.FileReader;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     AccuChekSmartPix  
+ *  Description:  Accu Chek Smart Pix Device Implementation
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -53,11 +53,20 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
 
     //AccuChekSmartPixProcessor xml_processor = null;
     
+    /**
+     * Constructor 
+     */
     public AccuChekSmartPix()
     {
     }
 
     
+    /**
+     * Constructor 
+     * 
+     * @param drive_letter 
+     * @param writer 
+     */
     public AccuChekSmartPix(String drive_letter, OutputWriter writer)
     {
         this.setConnectionPort(drive_letter);
@@ -67,7 +76,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
         
 //        this.xml_processor = new AccuChekSmartPixProcessor(this.output_writer);
         
-        this.setMeterType("Roche", this.getName());
+        this.setPumpType("Roche", this.getName());
         
     }
     
@@ -162,14 +171,19 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     
     
     
+    /**
+     * Process Xml
+     * 
+     * @param file
+     */
     public abstract void processXml(File file);    
     
 
 
 
 
-    /* 
-     * readDeviceDataFull
+    /** 
+     * Read Device Data Full
      */
     public void readDeviceDataFull() throws PlugInBaseException
     {
@@ -338,13 +352,11 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
   */  
     
 
-    /* 
+    /**
      * test
      */
     public void test()
     {
-        // TODO Auto-generated method stub
-        
     }
     
     
@@ -558,10 +570,6 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
             System.out.println("Exception: " + ex);
             return 1;
         }
-       
-        
-        
-        
     }
     
     
@@ -585,12 +593,6 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     }
     
     
-    
-    
-    
-    
-    
-    
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
@@ -602,16 +604,12 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     }
     
     
-    
-    
-    
-    
-    
-    
+    /**
+     * Get Connection Protocol
+     */
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
     }
-    
     
 }

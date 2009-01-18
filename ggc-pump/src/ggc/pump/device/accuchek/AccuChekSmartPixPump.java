@@ -5,9 +5,7 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.defs.PumpAlarms;
-import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBolusType;
-import ggc.pump.data.defs.PumpDataType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
@@ -57,12 +55,34 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     //OutputWriter output_writer = null;
 
     
+    /**
+     * Roche Company
+     */
     public static final int ROCHE_COMPANY                 = 2;
+
+    /**
+     * Disetronic Company
+     */
     public static final int DISETRONIC_COMPANY            = 3;
     
+    /**
+     * Roche SmartPix Device
+     */
     public static final int ROCHE_SMARTPIX_DEVICE        = 20001;
+    
+    /**
+     * Pump: Disetronic DTron
+     */
     public static final int PUMP_DISETRONIC_D_TRON       = 20002;
+    
+    /**
+     * Pump: AccuChek DTron
+     */
     public static final int PUMP_ACCUCHEK_D_TRON         = 20003;
+    
+    /**
+     * Pump: AccuChek Spirit
+     */
     public static final int PUMP_ACCUCHEK_SPIRIT         = 20004;
     
     
@@ -79,12 +99,21 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     
 
     
+    /**
+     * Constructor
+     */
     public AccuChekSmartPixPump()
     {
         super();
         loadPumpSpecificValues();
     }
     
+    /**
+     * Constructor
+     * 
+     * @param drive_letter
+     * @param writer
+     */
     public AccuChekSmartPixPump(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer); 
@@ -124,6 +153,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     Document document;
 
 
+    /**
+     * Process Xml
+     */
     public void processXml(File file)
     {
         try
@@ -170,7 +202,11 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     
 
     
-    public void getPixDeviceInfo()
+    /**
+     * Get Pix Device Info 
+     */
+    @SuppressWarnings("unused")
+    private void getPixDeviceInfo()
     {
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
@@ -204,7 +240,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
-    public void getPumpDeviceInfo()
+    @SuppressWarnings("unused")
+    private void getPumpDeviceInfo()
     {
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
 
@@ -235,17 +272,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
-    public void readPumpProfiles()
+    @SuppressWarnings("unused")
+    private void readPumpProfiles()
     {
         
     }
     
     
-    
-    
-    
-    
-    public void readPumpData()
+    private void readPumpData()
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
 
@@ -284,8 +318,19 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
 
     
     
+    /**
+     * Tag: Basal
+     */
     public static final int TAG_BASAL = 1;
+    
+    /**
+     * Tag: Bolus
+     */
     public static final int TAG_BOLUS = 2;
+    
+    /**
+     * Tag: Event
+     */
     public static final int TAG_EVENT = 3;
     
     
@@ -300,7 +345,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             Element el = (Element)lst.get(i);
             
             PumpValuesEntry pve = new PumpValuesEntry();
-            pve.setDt_info(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
+            // TODO fix
+//            pve.setDt_info(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
 
             
             
@@ -365,7 +411,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
 
             if (type==0)
             {
-                pve.setSub_type(PumpBasalSubType.PUMP_BASAL_VALUE);
+                // TODO fix
+
+//                pve.setSub_type(PumpBasalSubType.PUMP_BASAL_VALUE);
                 pve.setValue(el.attributeValue("cbrf"));
             }
             else
@@ -438,8 +486,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             if (this.getBolusMappings().containsKey(type))
             {
-                pve.setBase_type(PumpDataType.PUMP_DATA_BOLUS);
-                pve.setSub_type(this.getBolusMappings().get(type));
+                // TODO fix
+
+//                pve.setBase_type(PumpDataType.PUMP_DATA_BOLUS);
+//                pve.setSub_type(this.getBolusMappings().get(type));
                 pve.setValue(amount);
             }
             else
@@ -451,8 +501,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             if (this.getReportMappings().containsKey(remark))
             {
-                pve.setBase_type(PumpDataType.PUMP_DATA_BOLUS);
-                pve.setSub_type(this.getReportMappings().get(remark));
+                // TODO fix
+                
+//                pve.setBase_type(PumpDataType.PUMP_DATA_BOLUS);
+//                pve.setSub_type(this.getReportMappings().get(remark));
                 pve.setValue(amount);
             }
             else
@@ -485,8 +537,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             {
                 if (this.getAlarmMappings().containsKey(info))
                 {
-                    pve.setBase_type(PumpDataType.PUMP_DATA_ALARM);
-                    pve.setSub_type(this.getAlarmMappings().get(info).intValue());
+                    // TODO fix
+
+//                    pve.setBase_type(PumpDataType.PUMP_DATA_ALARM);
+//                    pve.setSub_type(this.getAlarmMappings().get(info).intValue());
                     //System.out.println("info: " + info + ", desc=" + desc);
                 }
                 else
@@ -498,8 +552,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             {
                 if (this.getErrorMappings().containsKey(info))
                 {
-                    pve.setBase_type(PumpDataType.PUMP_DATA_ERROR);
-                    pve.setSub_type(this.getErrorMappings().get(info).intValue());
+                    // TODO fix
+
+//                    pve.setBase_type(PumpDataType.PUMP_DATA_ERROR);
+//                    pve.setSub_type(this.getErrorMappings().get(info).intValue());
                     //System.out.println("info: " + info + ", desc=" + desc);
                 }
                 else
@@ -513,8 +569,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
 
                 if (this.getEventMappings().containsKey(desc))
                 {
-                    pve.setBase_type(PumpDataType.PUMP_DATA_EVENT);
-                    pve.setSub_type(this.getEventMappings().get(desc));
+                    // TODO fix
+
+//                    pve.setBase_type(PumpDataType.PUMP_DATA_EVENT);
+//                    pve.setSub_type(this.getEventMappings().get(desc));
                     pve.setValue(info);
                 }
                 else
@@ -529,8 +587,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             if (this.getEventMappings().containsKey(desc))
             {
-                pve.setBase_type(PumpDataType.PUMP_DATA_EVENT);
-                pve.setSub_type(this.getEventMappings().get(desc));
+                // TODO fix
+
+//                pve.setBase_type(PumpDataType.PUMP_DATA_EVENT);
+//                pve.setSub_type(this.getEventMappings().get(desc));
             }
             else
             {
@@ -563,14 +623,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     
     
 
-    public List<Node> getSpecificDataChildren(String child_path)
+    private List<Node> getSpecificDataChildren(String child_path)
     {
         return getNodes(child_path);   // /BOLUS
     }
     
     
     
-    public PumpValuesEntry getDataEntry(Node entry)
+    @SuppressWarnings("unused")
+    private PumpValuesEntry getDataEntry(Node entry)
     {
         
         System.out.println(entry.getName());
@@ -606,7 +667,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         
     }
     */
-    
+   
+    /*
     public Node getNode(String tag_path)
     {
         return document.selectSingleNode(tag_path);
@@ -616,15 +678,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     {
         return (Element)getNode(tag_path);
     }
-
+*/
     
-    
+    /*
     @SuppressWarnings("unchecked")
     public List<Node> getNodes(String tag_path)
     {
         List<Node> nodes = document.selectNodes(tag_path);
         return nodes;
-    }
+    }*/
     
     /**
      * Pump tool, requires dates to be in seconds, so we need to return value is second, eventhough
@@ -634,6 +696,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      * @param time
      * @return
      */
+    @SuppressWarnings("unused")
     private long getDateTime(String date, String time)
     {
         String o = m_da.replaceExpression(date, "-", "");
@@ -678,6 +741,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
     */
     
+    /**
+     * Get Connection Protocol
+     */
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
@@ -771,18 +837,33 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
+    /**
+     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
+     *     event codes
+     * @return
+     */
     public Hashtable<String,Integer> getErrorMappings()
     {
         return this.error_mappings;
     }
     
 
+    /**
+     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
+     *     event codes
+     * @return
+     */
     public Hashtable<String,Integer> getBolusMappings()
     {
         return this.bolus_mappings;
     }
     
 
+    /**
+     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
+     *     event codes
+     * @return
+     */
     public Hashtable<String,Integer> getReportMappings()
     {
         return this.report_mappings;

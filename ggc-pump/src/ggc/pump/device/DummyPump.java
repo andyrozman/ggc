@@ -1,12 +1,7 @@
 package ggc.pump.device;
 
 import ggc.plugin.output.OutputWriter;
-import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -42,15 +37,21 @@ public class DummyPump //extends GenericPump //implements MeterInterface
 
     DataAccessPump m_da = DataAccessPump.getInstance();
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-
-    public int m_meter_index = 0;
     
     
+    /**
+     * Constructor
+     */
     public DummyPump()
     {
         super();
     }
     
+    /**
+     * Constructor
+     * 
+     * @param ow
+     */
     public DummyPump(OutputWriter ow)
     {
         //super(ow);
@@ -76,17 +77,41 @@ public class DummyPump //extends GenericPump //implements MeterInterface
     }
 
 
+    /**
+     * Log: Debug
+     */
     public static final int LOG_DEBUG = 1;
+    
+    /**
+     * Log: Info
+     */
     public static final int LOG_INFO = 2;
+    
+    /**
+     * Log: Warn
+     */
     public static final int LOG_WARN = 3;
+    
+    /**
+     * Log: Error
+     */
     public static final int LOG_ERROR = 4;
     
+    /**
+     * Write Log
+     * 
+     * @param problem
+     * @param text
+     */
     public void writeLog(int problem, String text)
     {
         System.out.println("Dummy -> " + text);
     }
 
 
+    /**
+     * @return
+     */
     public String getInfo() //throws MeterException
     {
         writeLog(LOG_DEBUG, "getVersion() - Start");
@@ -98,77 +123,26 @@ public class DummyPump //extends GenericPump //implements MeterInterface
 
     
 
-    public int getTimeDifference() // throws MeterException
-    {
-        writeLog(LOG_DEBUG, "getTimeDifference() - Start");
-        writeLog(LOG_DEBUG, "getTimeDifference() - End");
-        return 0;
-    }
-
-
-    public int getStatus()
-    {
-        return 0;
-    }
-    
-    public boolean isStatusOK()
-    {
-        return true;
-    }
 
 
 
-    // Internal methods
 
-
+    /**
+     * Get Name
+     * 
+     * @return
+     */
     public String getName()
     {
         return "Dummy Meter";
     }
 
-    public int getMeterIndex()
-    {
-        return m_meter_index;
-    }
 
     
-    public ImageIcon getIcon()
-    {
-        //return m_da..getMeterManager().getMeterImage(1); //m_meter_index);
-        
-        return null;
-    }
-
-    public ArrayList<PumpValuesEntry> getDataFull()
-    {
-        writeLog(LOG_DEBUG, "getDataFull() - Start");
-        ArrayList<PumpValuesEntry> al = new ArrayList<PumpValuesEntry>();
-        writeLog(LOG_DEBUG, "getDataFull() - End");
-        return al;
-    }
-
-    public ArrayList<PumpValuesEntry> getData(int from, int to)
-    {
-        writeLog(LOG_DEBUG, "getData() - Start");
-        ArrayList<PumpValuesEntry> al = new ArrayList<PumpValuesEntry>();
-        writeLog(LOG_DEBUG, "getData() - End");
-        return al;
-    }
-
-
-    public void loadInitialData()
-    {
-        // TODO Auto-generated method stub
-        
-    }
 
 
 
 
-
-    public void readDeviceData()
-    {
-    }
 
 
 
@@ -180,6 +154,7 @@ public class DummyPump //extends GenericPump //implements MeterInterface
 
     /**
      * canReadData - Can Meter Class read data from device
+     * @return 
      */
     public boolean canReadData()
     {
@@ -188,6 +163,7 @@ public class DummyPump //extends GenericPump //implements MeterInterface
 
     /**
      * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
+     * @return 
      */
     public boolean canReadPartitialData()
     {
@@ -196,6 +172,7 @@ public class DummyPump //extends GenericPump //implements MeterInterface
 
     /**
      * canClearData - Can Meter class clear data from meter.
+     * @return 
      */
     public boolean canClearData()
     {
@@ -208,6 +185,9 @@ public class DummyPump //extends GenericPump //implements MeterInterface
     //***                    Test                  ***
     //************************************************
 
+    /**
+     * 
+     */
     public void test()
     {
     }

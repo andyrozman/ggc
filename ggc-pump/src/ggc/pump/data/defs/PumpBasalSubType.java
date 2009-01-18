@@ -39,6 +39,9 @@ public class PumpBasalSubType
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
+    /**
+     * Basal Descriptions
+     */
     public String[] basal_desc = { ic.getMessage("SELECT_BASAL_TYPE"),
                        ic.getMessage("BASAL_VALUE"),             
                        ic.getMessage("BASAL_PROFILE"),             
@@ -50,10 +53,29 @@ public class PumpBasalSubType
     
     Hashtable<String,String> basal_mapping = new Hashtable<String,String>(); 
     
+    /**
+     * Pump Basal: Value
+     */
     public static final int PUMP_BASAL_VALUE = 1;
+
+    /**
+     * Pump Basal: Profile
+     */
     public static final int PUMP_BASAL_PROFILE = 2;
+
+    /**
+     * Pump Basal: Temporary Basal Rate
+     */
     public static final int PUMP_BASAL_TEMPORARY_BASAL_RATE = 3;
+
+    /**
+     * Pump Basal: Temporary Basal Rate Profile
+     */
     public static final int PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE = 4;
+
+    /**
+     * Pump Basal: Pump Status
+     */
     public static final int PUMP_BASAL_PUMP_STATUS = 5;
 
     
