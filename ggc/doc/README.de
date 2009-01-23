@@ -26,64 +26,31 @@ ist Pflichtlektüre für alle Entwickler.
 2. Aktuelle Version und Entwicklungsstatus
 ==========================================
 
-This is version 0.4 of GGC.
-
-At this point we are at version 0.4, which is second public release. If you have
-installed version 0.3, you can either deinstall and install 0.4 or do updates 
-(you will need to apply two of them (0.3.1 and 0.4): instructions are Update package.
-
-If you used any of "preview" versions (before 0.3), you will need to uninstall.
-We made a lot of changes in database and application itself, so you can't update 
-old version (if you already have data in old application contact us, and we will 
-help you migrate it to new version). 
-
-Updates are now possible, but so far only manual updates. We are working on 
-automatic updates, but we are still far from working model.
-
-In this public release you can still only use the internal database. If you have 
-little above average computer knowledge (read 'if you like to dabble'), you can 
-try to make it work with any database (see file 'How_Can_I_Help.txt') with just a 
-little work.
-
-New (major) releases are planned to occur in 6 month intervals (we almost managed
-that one). This means that you can expect release 0.5 somewgere in June 2009.
-
-A minor release will be done, when functionality has been change in such a way
-that it is beneficial to user to be released (major functionality changes and
-bug fixes)
-
-For now you need to update files manually, which means exactly following the
-instructions supplied with the release (there will be a file called
-'How To Upgrade.txt' supplied with each upgrade release).
-
-You are probably wondering, why are we still in 0.x versions if we already had 
-public release... Answer is simple. We have several goals set, and when this goals 
-are achieved, we will progress to version 1.0. If you look at Planned functionalities 
-you will find several items marked with double asterix (**), this are required
-functions for 1.0 release.  
-
-
-################
-
-
-Die aktuelle GGC-Version ist 0.3.
+Die aktuelle GGC-Version ist 0.4.
 
 Wir sind bei Version 0.3 angelangt, der ersten freigegebenen Version. Wenn Sie
-bereits eine ältere Version installiert haben, entfernen Sie sie bitte. Wir
-haben viele Änderungen an der Datenbank und der Anwendung selbst vorgenommen,
-weshalb die alte Version nicht aktualisiert werden kann. (Sollten Ihre alte
-Version wichtige Daten beinhalten, kontaktieren Sie uns bitte. Wir werden Ihnen
-dann helfen, diese zu der neuen Version zu migrieren.) Ab dieser Version wird
-das Aktualisieren viel einfacher. Die nächste Version kann sich selbst via
-Internet aktualisieren.
+Version 0.3 installiert haben, können Sie diese entweder entfernen und Version
+0.4 installieren oder Updates (0.3.1 und 0.4) anwenden; die Anleitung befindet
+sich im Update-Paket.  
 
-Diese erste öffentliche Version kann nur die interne Datenbank benutzen. Wenn
-Sie überdurchschnittliche Computerkenntnisse besitzen (also gerne
-herumspielen), können Sie mit ein wenig Arbeit jedes andere DBMS benutzen.
+Wenn Sie eine "preview"-Version (vor 0.3) verwenden, müssen Sie diese
+entfernen. Wir haben viele Änderungen an der Datenbank und der Anwendung selbst
+vorgenommen, weshalb die alte Version nicht aktualisiert werden kann. (Sollten
+Ihre alte Version wichtige Daten beinhalten kontaktieren Sie uns bitte. Wir
+werden Ihnen dann helfen, diese zu der neuen Version zu migrieren.)
+
+Updates sind nun verfügbar, bisher aber nur manuelle. Wir arbeiten an
+automatischen Updates, sind aber noch weit von einem funktionierenden Modell
+entfernt.
+
+Diese öffentliche Version kann nur die interne Datenbank benutzen. Wenn Sie
+überdurchschnittliche Computerkenntnisse besitzen (lesen Sie dazu bitte
+'if you like to dabble'), können Sie mit ein wenig Arbeit jedes andere DBMS
+benutzen (siehe 'How_Can_I_Help.txt').
 
 Neue (Haupt-) Versionen werden vorraussichtlich alle sechs Monate
-veröffentlicht. Das bedeutet, dass Sie Version 0.4 Ende dieses oder Anfang
-nächstes Jahr erwarten können.
+veröffentlicht (das hätten wir beinahe geschafft). Das bedeutet, dass Sie
+Version 0.5 irgendwann im Juni 2009 erwarten können.
 
 Neue Versionen mit kleineren Änderungen der Versionsnummer werden
 veröffentlicht, wenn größere Änderungen der Funktionalität oder die Beseitigung
@@ -93,6 +60,16 @@ Bis auf weiteres muss GGC manuell aktualisert werden, weshalb die
 mitgelieferten Anweisungen genauestens befolgt werden müssen (jede Upgrade-
 Version wird eine Datei 'How To Upgrade.txt' (Englisch) enthalten).
 
+Sie wundern sich wahrscheinlich, dass wir noch in den 0.x-Versionen befinden,
+obwohl wir bereits 
+[TODO]
+
+
+You are probably wondering, why are we still in 0.x versions if we already had 
+public release... Answer is simple. We have several goals set, and when this goals 
+are achieved, we will progress to version 1.0. If you look at Planned functionalities 
+you will find several items marked with double asterix (**), this are required
+functions for 1.0 release.  
 
 
 3. Welche Funktionalität ist verfügbar?

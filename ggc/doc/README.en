@@ -46,7 +46,7 @@ try to make it work with any database (see file 'How_Can_I_Help.txt') with just 
 little work.
 
 New (major) releases are planned to occur in 6 month intervals (we almost managed
-that one). This means that you can expect release 0.5 somewgere in June 2009.
+that one). This means that you can expect release 0.5 somewhere in June 2009.
 
 A minor release will be done, when functionality has been change in such a way
 that it is beneficial to user to be released (major functionality changes and
@@ -59,7 +59,7 @@ instructions supplied with the release (there will be a file called
 You are probably wondering, why are we still in 0.x versions if we already had 
 public release... Answer is simple. We have several goals set, and when this goals 
 are achieved, we will progress to version 1.0. If you look at Planned functionalities 
-you will find several items marked with double asterix (**), this are required
+you will find several items marked with double asterisks (**), this are required
 functions for 1.0 release.  
 
 
@@ -67,7 +67,7 @@ functions for 1.0 release.
 ==================================
 
 - Adding Daily data about insulin, BG entries, activity, urine, comments
-- Display graphs for this Pen/Injecttion theraphy (new framework, still work in progress)
+- Display graphs for this Pen/Injection therapy (new framework, still work in progress)
 - Food databases for "Carb Counting": USDA Nutrition DB, User Nutrition DB
   and Meals database
 - Printing reports
