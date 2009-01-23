@@ -14,14 +14,18 @@ How to prepare/install GGC for/on USB
 
 For application to run on USB, we need to download GVM from GGC site (you need to download 
 only package for OSes, which you plan to use). Each GVM package contains Java Runtime
-Environment for selected OS, and startup file for that OS. Install VM first, because when 
-you copy file from GGC, they might have newer startup files.
+Environment for selected OS, startup files for that OS and Rxtx binary (if available). 
+Install GVM first, because when you copy file from GGC, they might have newer startup files.
 
 After install of VM (we will make example with Linux), you will have following tree structure
 
 Root
   |-- GNU_Gluco_Control
   |          |- bin
+             |- lib
+                 |- native
+                      |- linux
+                           ...
              |- java
                  |- autorun
                  |- linux
@@ -30,7 +34,7 @@ In java\autorun directory there will be some files, which could be used for auto
 on some system. Since this is not needed for running of GGC, you will have to figure how to use 
 it on your own.
 
-After install of all wanted VMs, you can download latest release of GGC (in .zip file)
+After install of all wanted GVMs, you can download latest release of GGC (in .zip file)
 and just copy content of archive into GNU_Gluco_Control.
 
 

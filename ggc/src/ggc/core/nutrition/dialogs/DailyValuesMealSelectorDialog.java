@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 
 import com.atech.graphics.dialogs.TransferDialog;
@@ -64,7 +65,7 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
      */
     public DailyValuesMealSelectorDialog(DataAccess da, String meals_id)
     {
-        super(da.getCurrentComponent());
+        super((JDialog)da.getCurrentComponent());
         // super(da.getParent(), "", true);
 
         m_da = da;
@@ -256,6 +257,44 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
         objs[1] = this.getCHSum();
 
         return objs;
+    }
+
+    
+    /**
+     * Set Input Paramters
+     * 
+     * @param ip
+     */
+    @Override
+    public void setInputParameters(Object[] ip)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    
+    /**
+     * Show Dialog
+     * 
+     * @param visible
+     */
+    @Override
+    public void showDialog(boolean visible)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    /**
+     * Get Input Parameters Count
+     * 
+     * @return
+     */
+    @Override
+    public int getInputParametersCount()
+    {
+        return 0;
     }
 
     /*

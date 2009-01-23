@@ -1,48 +1,68 @@
+﻿
 
-***************************************
-****     How To Use GGC on USB     ****
-***************************************
+*************************************************
+****    Kako uporabljati GGC na USB disku    ****
+*************************************************
 
-GGC is application that can easily be run from USB disk. We had some problems with earlier 
-version because database we used, needed a lot of time to shutdown, after several tries
-we found database, we currently use (H2 Database) which work great also with USB drives.
-You can get description for most of terms in README_1st document.
+GGC je aplikacija, ki jo lahko preprosto uporabljamo s USB diska. V prejšnih različicah
+smo imeli s tem probleme, ker je baza imela problem s zaustavitvijo. Po nekaj preizkusih
+smo našli bazo (H2 Database), ki deluje dobro tudi s USB diski. Opis večine tukaj
+uporabljenih izrazov najdete v datoteki README_1st.si.
 
 
-How to prepare/install GGC for/on USB
-=======================================
+Kako pripraviti/namestiti GGC za/na USB
+========================================
 
-For application to run on USB, we need to download GVM from GGC site (you need to download 
-only package for OSes, which you plan to use). Each GVM package contains Java Runtime
-Environment for selected OS, and startup file for that OS. Install VM first, because when 
-you copy file from GGC, they might have newer startup files.
+Da bo aplikacija lahko delovala na USBju, bo treba prenesti GVM iz GGC spletne strani (prenesti
+morate samo pakete za OSje, ki jih nameravate uporabljati). Vsak GVM paket vsebuje Java zagonsko
+okolje (JRE) za izbran OS, zagonske datoteke, ter binarno datoteko za Rxtx knjižnico (kjer 
+je datoteka dostopna). Namestite GVM najprej in šele potem GGC (v primeru, da se kasneje odločite
+dodat nov GVM, bodite previdni katere datoteke boste prepisali).
 
-After install of VM (we will make example with Linux), you will have following tree structure
+Po namestitvi GVMja (primer s Linuxom), bomo imeli naslednjo strukturo:
 
-Root
+Root (koren)
   |-- GNU_Gluco_Control
   |          |- bin
+             |- lib
+                 |-native
+                     |- linux
              |- java
                  |- autorun
                  |- linux
-                
-In java\autorun directory there will be some files, which could be used for autorun from USB 
-on some system. Since this is not needed for running of GGC, you will have to figure how to use 
-it on your own.
 
-After install of all wanted VMs, you can download latest release of GGC (in .zip file)
+
+V java\autorun mapi bo nekaj datotek, ki jih lahko uporabimo za samodejni zagon iz USBja (deluje
+samo v nekaterih systemih). Ker so to datoteke, ki niso potrebne za samo delovanje programa
+boste morali samo ugotoviti kako jih uporabljati (v večini primerov jih samo skopirate v Root 
+(koren).
+
+
+After install of all wanted GVMs, you can download latest release of GGC (in .zip file)
 and just copy content of archive into GNU_Gluco_Control.
 
 
-How to create GVM
-==================
+Kako ustvariti svoj GVM
+========================
 
-In case that your OS has no GVM, you might be able to create your own. Use following steps:
+V primeru, da vaš OS nima GVMja, lahko ustvarite svojega. Uporabite naslednje korake:
 
-1. Read README_1st, there you will find how Startup system works.
+1. Preberite datoteko README_1st.si, kjer si lahko preberete kako celotni Zagonski sistem deluje.
 
-2. Create all startup files in \bin directory. If your OS is not supported, you will have to contact us,
-   to do our job (add support into startup java library).
+2. Ustvarite vse zagonske datoteke v \bin mapi. Če vaš OS na splošno ni podprt, nas boste morali
+   kontaktirati, da naredimo naš del (dodajanje podpore v zagonsko java knjižnico).
+   
+3. Prenesite pravilen JRE za vaš OS in ga namestite na svoj računalnik. Potrebujete Javo 1.5, če pa 
+   je možno pa prenesite Javo 1.6. Poiščite mapo kamor je bil JRE nameščen in prekopirajte vsebino 
+   v \java\<OS-kratko-ime> mapo
+   
+4. Poiščite binarne datoteke za Rxtx 2.17 in jih skopirajte v \lib\native\<OS-kratko-ime>. Binarna 
+   datoteka mora biti arhitekturno specifična, če lahko najdete datoteke za vse arhitekture jih najdite 
+   in položite v podmape (recimo primer za windows, bi bil da dobite x32 in x64 različico ustvarite x32
+   in x64 mapo, ter položite pravilne datoteke v njih.
+   
+
+
 
 3. Download correct JRE for your OS. You need Java 1.5, but it is prefered to get 1.6 if 
    available. Copy content to \java\<OS-short-name> directory.
@@ -61,15 +81,22 @@ In case that your OS has no GVM, you might be able to create your own. Use follo
    also your email, so that people can contact you.
 
 
+
+
+
+
+Podprti OS-ji
+==============
+
+Poglejte v datoteko README_1st.si za seznam vseh podprtih OSov.
+
 Supported OSes
 ==============
 
 Take a look into README_1st for list of all supported OSes.
 
-Not all supported OSes have GVM (most do but not all). On Mac it's very hard to get this
-files, since they are part of system.
+Vsi podprti sistemi nimajo nujno GVMja (večina jih ima, a ne vsi). Na Macu je precej težko priti do
+teh datotek (JRE), ker so del sistema.
 
 
-
-
-GGC Development Team
+GGC Razvojna ekipa

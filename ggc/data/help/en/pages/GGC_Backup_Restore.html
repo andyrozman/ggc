@@ -1,5 +1,43 @@
 <html>
 <body>
-<h1>Tools - Backup</h1>
+<h1>Backup/Restore System in GGC</h1>
+
+GGC has special Backup/Restore mechanism, since all user data is stored in database. <br>
+<br>
+GGC uses Hibernate framework, which can use almost any Java database, so it is very
+important that we have ability to do full Backup and Restore. (to make updates 
+and to move data to and from various databases)<br>
+<br>
+As functionalities are enabled and used, also Backup options (Tables) are created so
+that all used data can be easily preserved.<br>
+<br>
+All tables are versioned, so if there are changes in database, we can backup data and
+restore it into new version (if we installed new version).<br>
+<br>
+Backup/Restore system is intended only for FULL backup/restore operations. <br>
+<br>
+With Daily Values we have option to just append data, but this just so that we can
+also add data from other computers. At later time this functionality will be done by 
+Export/Import system, which will be Backup/Restore subsystem.<br>
+<br><br>
+Currently we support backup of following data:
+<ul>
+<li>Daily Values for Pen/Injection theraphy</li>
+<li>Configuration (full)</li>
+<li>User Foods/Groups</li>
+<li>Meals entries/Groups</li> 
+</ul>
+<br><br>
+
+Planned backup of following data:
+<ul>
+<li>Multi User Data (functionality not implemented yet)</li>
+<li>USDA Food/Groups (now they are directly imported)</li>
+<li>Home Weights and other food data (now they are directly imported)</li>
+<li>Pump data (Pump support not finished yet)</li>
+<li>CGMS data (CGMS support not started yet)</li>
+</ul>
+
+
 </body>
 </html>

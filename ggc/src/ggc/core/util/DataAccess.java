@@ -594,7 +594,16 @@ public class DataAccess extends ATDataAccessAbstract
         addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
         // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
 
+        /*
+        PumpsPlugIn ppi = new PumpsPlugIn(this.m_main, this.m_i18n);
+        
+        ArrayList<TransferDialog> lst = new ArrayList<TransferDialog>();
+        lst.add(new DailyRowMealsDialog(this.m_main));
+        ppi.setTransferObjects(lst);
+        */
+        //addPlugIn(DataAccess.PLUGIN_PUMPS, ppi);
         addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this.m_i18n));
+        
         // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
 
         addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
