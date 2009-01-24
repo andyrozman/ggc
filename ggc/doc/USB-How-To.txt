@@ -1,6 +1,6 @@
 
 ***************************************
-****     How To Use GGC on USB     ****
+****    How To Use GGC from USB    ****
 ***************************************
 
 GGC is application that can easily be run from USB disk. We had some problems with earlier 

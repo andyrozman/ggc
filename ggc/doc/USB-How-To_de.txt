@@ -1,14 +1,15 @@
+**************************************************
+****  Wie benutze ich GGC von USB-Laufwerken  ****
+**************************************************
 
-***************************************
-****     How To Use GGC on USB     ****
-***************************************
-
-GGC is application that can easily be run from USB disk. We had some problems with earlier 
-version because database we used, needed a lot of time to shutdown, after several tries
-we found database, we currently use (H2 Database) which work great also with USB drives.
-You can get description for most of terms in README_1st document.
+GGC ist eine Anwendung die problemlos von USB-Laufwerken aus gestartet werden
+kann. Wir hatten mit früheren Versionen einige Probleme weil die Datenbank, die
+wir benutzten viel Zeit zum Stoppen brauchte. Mittlerweile haben wir eine
+Datenbank (H2) gefunden, die auch auf USB-Laufwerken problemlos funktioniert.
+Eine Beschreibung der meisten Ausdrücke ist in README_1st.de enthalten.
 
 
+[TODO]
 How to prepare/install GGC for/on USB
 =======================================
 

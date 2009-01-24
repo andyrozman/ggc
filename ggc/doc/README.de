@@ -1,4 +1,3 @@
-
 GNU Gluco Control (GGC)
 =======================
 
@@ -61,46 +60,30 @@ mitgelieferten Anweisungen genauestens befolgt werden müssen (jede Upgrade-
 Version wird eine Datei 'How To Upgrade.txt' (Englisch) enthalten).
 
 Sie wundern sich wahrscheinlich, dass wir noch in den 0.x-Versionen befinden,
-obwohl wir bereits 
-[TODO]
-
-
-You are probably wondering, why are we still in 0.x versions if we already had 
-public release... Answer is simple. We have several goals set, and when this goals 
-are achieved, we will progress to version 1.0. If you look at Planned functionalities 
-you will find several items marked with double asterix (**), this are required
-functions for 1.0 release.  
+obwohl wir bereits einige Versionen veröffentlicht haben... Die Antwort ist
+einfach. Wir haben uns einige Ziele gesteckt und wenn die erreicht wurden,
+werden wir Version 1.0 herausbringen. Wenn Sie sich die geplante Funktionalität
+ansehen, werden Sie bemerken, dass einige Punkte durch zwei Sterne (**)
+gekennzeichnet sind. Wenn diese Features implementiert sind, können wir Version
+1.0 herausgeben.
 
 
 3. Welche Funktionalität ist verfügbar?
 =======================================
 
-- Adding Daily data about insulin, BG entries, activity, urine, comments
-- Display graphs for this Pen/Injecttion theraphy (new framework, still work in progress)
-- Food databases for "Carb Counting": USDA Nutrition DB, User Nutrition DB
-  and Meals database
-- Printing reports
-- Update mechanism (client side only), this means that until the server side
-  of update is done, you won't be able to update, but as soon as that works
-  you will have the option to update.
-- Backup mechanism (and restore)
-- Meter Tool finished. Now we just have to add more devices.
-- Bolus Helper and Simple Ratio Settings
-
-###
-
-
 - Täglich Daten über Insulin, BZ-Einträge, Aktivität, Urin und Kommentare
   hinzufügen
-- Diagramme für diese Daten anzeigen (noch nicht fertiggestellt)
+- Diagramme für injektionsbasierte Therapien anzeigen (neues Framework, wird
+  bearbeitet)
 - Lebensmittel-Datenbanken zum Schätzen von Kohlehydraten: USDA Nährstoff-
   Datenbank, Benutzer Nährstoff-Datenbank und Mahlzeiten-Datenbank
 - Berichte ausdrucken
-- Aktualisierungsmechanismus (nur client): Bis der Server fertig ist, wird kein
+- Aktualisierungsmechanismus (nur client): Bis der Server fertig ist wird kein
   Update möglich sein.
 - Backup-Mechanismus (und Wiederherstellen)
-- Messgerätewerkzeug (teilweise) integriert
-
+- Messgerätewerkzeug integriert. Jetzt müssen nur noch Geräte hinzugefügt
+  werden
+- Bolus-Helper und Simple-Ratio Einstellungen
 
 
 4. Geplante Funktionalität
@@ -109,63 +92,26 @@ functions for 1.0 release.
 
 Version 0.5
 ------------
-- DB Tool (for using other databases and install of initial data)  (**)
-- Multi person instance
-- Finalization of GGC Little, which is used as a resident application for adding
-  new data throughout the day
-- Update mechanism (server side)   (**)
-- Fully write English help files and add help through application (English version so far) (**)
-- Add some functionality to food databases
-??!!?? - Pump Tool: <Basic pump support> (manual input, integration, no graphs)
-- Smart Insulin Recommendation (Bolus Helper), Ratio Helper
-
+- Datenbankwerkzeug (andere Datenbanksysteme benutzen und Initialisierung der
+  benutzten Datenbank) (**)
+- Multiuser-Unterstützung
+- Fertigstellung von GGC Little, einer leichtgewichtigen Version für die
+  tägliche Dateneingabe
+- Aktualisierungsmechanismus (Serverseite) (**)
+- Hilfedateien vervollständigen und in der Applikation referenzieren (Englische
+  Version) (**)
+- neue Funktionalität für Ernährungsdatenbanken
+- Pumpen-Werkzeug: <Grundlegende Pumpenunterstützung> (manuelle Eingabe,
+  Integration, keine Diagramme)
+- Intelligente Insulinmengenempfehlung (Bolus-Helfer), Ratio-Helfer
 
 
 Version 0.6
 ------------
-- Automatic DB Update
-- GGC Network (running several instances of GGC on several computers)
-- I18n Help Files
-- CGMS Tool: <Basic CGMS support>
-- Synchronization (for GGC network)
-- Links to data about diabetes on internet
-- GGC PPC - the version of the application to be used by the Pocket PC (not all the
-  functionality of the full version will be available)
-- Appointments (adding appointment, adding data from doctor's visit), Doctors
-  management (adding)
-- Medical stock - Listing of everything that patient has, and what he needs to
-  get to handle diabetes (and also any other condition)
-- Remote Food database functionality
-
-
-####
-
-
-Version 0.4
-------------
 - Automatisches Datenbank-Update
-- Datenbankwerkzeug (andere Datenbanksysteme benutzen und Initialisierung der
-  benutzten Datenbank)
-- Multiuser-Unterstützung
-- Fertigstellung von GGC Little, einer leichtgewichtigen Version für die
-  Dateneingabe tagsüber
-- Aktualisierungsmechanismus (Serverseite)
-- Hilfedateien vervollständigen und in der Applikation referenzieren (Englische
-  Version)
-- Diagramme ändern und neue hinzufügen
-- Messgeräte-Werkzeug: Einrichtung
-- neue Funktionalität für Ernährungsdatenbanken
-- Pumpen-Werkzeug: <Grundlegende Pumpenunterstützung> (manuelle Eingabe,
-  Integration, keine Diagramme)
-- CGMS-Werkzeug: <Grundlegende CGMS-Unterstützung>
-- Intelligente Insulinmengenempfehlung (Bolus-Helfer), Ratio-Helfer
-- Lebensmitteldatenbank-Fernzugriff-Funktionalität
-
-
-
-Version 0.5
-------------
 - GGC Netzwerk (mehrere GGC-Instanzen auf mehreren Computern vernetzen)
+- Internationalisierte Hilfedateien
+- CGMS-Werkzeug: <Grundlegende CGMS-Unterstützung>
 - Synchronisierung (für GGC Netzwerk)
 - Internet-Links zu Diabetes
 - GGC PPC - eine Version der Anwendung für den Pocket PC (wird nicht die
@@ -175,7 +121,7 @@ Version 0.5
 - Medizinischer Bestand - Liste von allem, was der Patient hat und was er
   besorgen muss, um seinen Diabetes (und andere gesundheitliche Probleme) zu
   behandeln.
-
+- Lebensmitteldatenbank-Fernzugriff-Funktionalität
 
 
 5. Unterprojekte
@@ -187,31 +133,19 @@ Im Augenblick existieren zwei Unterprojekte.
 Messgeräte-Werkzeug
 -------------------
 
-This is a plug-in for getting data from glucose meters. Currently this project is in
-beta phase (all functionalities finished, now we just need to add more devices). 
-Currently supported devices:
- - Bayer/Ascensia: whole family
- - Roche/Accu-chek: all devices supported by Accu-Chek Pix device
- - LifeScan: OT Ultra/2, OT UltraSmart, OT Ultra Mini/Easy
-Current version of plugin: 1.0.5
-
-####
-
-
 Dies ist ein Plug-in für den Datenabruf von Blutzuckermessgeräten. Dieses
-Projekt befindet sich zur Zeit in der Entwicklungsphase. Zusammen mit der
-Unterstützung für Ascensia/Bayer-Messgeräte, ist das gesamte Plug-in-Framework
-und alle benötigten graphischen Masken fertig. Es müssen noch die
-Meßgeräteliste und Konfigurationsmaske fertiggestellt werden, aber die erste
-Version (0.2) ist verfügbar (und wird zusammen mit GGC herausgegeben). Die
-fehlende Funktionalität wird mit der nächsten Version von GGC verfügbar
-gemacht. Danach werden Roche-(Oktober 2008) und LifeScan-Messgeräte (Dezember
-2008) in Angriff genommen.
+Projekt befindet sich zur Zeit in der Beta-Phase (die Funktionalität ist
+fertig, jetzt müssen nur noch neue Geräte hinzugefügt werden).
+Bisher unterstützte Geräte (Plugin-Version 1.0.5):
+ - Bayer/Ascensia: alle Geräte dieser Produkt-Familie
+ - Roche/Accu-Chek: all Geräte, die vom by Accu-Chek Pix unterstützt werden
+ - LifeScan: OT Ultra/2, OT UltraSmart, OT Ultra Mini/Easy
 
 
 Pumpen-Werkzeug
 ---------------
 
+[TODO]
 This is plug-in for entering, retrieving and handling data from Insulin Pumps. 
 This project is slowly starting into development phase. We plan to have at least some
 pump functionality in next GGC version (0.5). The first supported pumps will be those 
@@ -241,16 +175,8 @@ gleichzeitig an der Unterstützung für Animas.
 CGMS-Werkzeug
 -------------
 
-This is a plug-in for retrieving data from CGMS device and viewing of this data. This
-project is still in the planning phase. The project will move into the development phase
-by end of 2009. The first supported CGMS will be that of Minimed through export file from 
-CareLink.
-
-###
-
-
 Dies ist ein Plug-in zum Abrufen und Anzeigen von Daten von CGMS-Geräten.
-Dieses Projekt befindet sich noch in der Planungsphase. Es wird im Januar 2009
+Dieses Projekt befindet sich noch in der Planungsphase. Es wird bis Ende 2009
 in die Entwicklungsphase übergehen. Die ersten unterstützten CGMS werden die
 von Minimed sein (durch eine Exportdatei vom CareLink).
 
@@ -294,7 +220,7 @@ a) Gehen Sie zur Fehlerberichtserstattungsseite für dieses Projekt und geben
    Ihre Systemkonfiguration wissen (z.B. Intel(R) Celeron(R) 2000 mit 2GB RAM,
    Ubuntu Linux, kernel 2.6.1.34 und Java 1.6.0_06).
 
-b) Senden Sie uns eine Email (ggc-de@atech-software.com), die alle in a)
+b) Senden Sie uns eine Email (ggc@atech-software.com), die alle in a)
    beschriebenen Daten enthält.
 
 ---
@@ -302,7 +228,7 @@ b) Senden Sie uns eine Email (ggc-de@atech-software.com), die alle in a)
 Sollte auf Ihrem System kein Problem auftreten, bitten wir Sie trotzdem, und
 Protokolle zu senden. Sie könnten ungefähr jeden Monat alle Protokolldateien
 in ein Zip-Archiv verpacken (und sie danach aus dem Protokollordner löschen)
-und sie an ggc-de@atech-software.com senden.
+und sie an ggc@atech-software.com senden.
 
 Wir werden ein Werkzeug benutzen um alle Dateien auf unbemerkte Fehler zu
 prüfen und diese dann zu korrigieren.
