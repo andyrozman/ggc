@@ -55,14 +55,16 @@ In case that your OS has no GVM, you might be able to create your own. Use follo
    architecture specific, if you can find files for all architecture, get them and put them into 
    subdirectories (for example for windows, if you get x32 and x64, you create directories x32 and
    x64 and put correct files there. In case of multiple architecture files, leave root empty (and
-   user will then copy correct file by themselves.
+   user will then copy correct file by themselves), or you can copy into it files for 32-bit system
+   (since they are most common).
 
 5. If your OS supports autorun (when USB inserted), you can create file and put them into \java\autorun
    directory.
 
-6. Create file GVM_<OS-short-name>.txt and write into it, all notes and also your info, so that your are 
-   credited for work you have done. If you are willing to be supporter for this specific GVM, add 
-   also your email, so that people can contact you.
+6. Create file GVM_<OS-short-name>.txt and write into it description of GVM, your notes, all data
+   you can think of (and would be helpful) and also your info, so that your are credited for work 
+   you have done. If you are willing to be supporter for this specific GVM, add also your email, 
+   so that people can contact you, if they have questions.
 
 
 Supported OSes
