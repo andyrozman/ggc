@@ -207,12 +207,19 @@ public class DeviceValuesDay
 	
     /**
      * Sort of elements
+     * 
+     * @param dve 
      */
     public void sort(Comparator<DeviceValuesEntry> dve)
     {
         Collections.sort(list, dve); //, new DeviceValuesEntry()); 
     } 
 	
+    /**
+     * Get List
+     * 
+     * @return
+     */
     public ArrayList<DeviceValuesEntry> getList()
     {
         return this.list;
