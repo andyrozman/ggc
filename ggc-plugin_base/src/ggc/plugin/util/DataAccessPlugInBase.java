@@ -24,6 +24,7 @@ import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.PlugInServer;
 import com.atech.update.startup.os.OSUtil;
 import com.atech.utils.ATDataAccessAbstract;
 import com.sun.jna.NativeLibrary;
@@ -136,7 +137,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     protected String[] reading_statuses = null;
     protected String[] filtering_states = null;
     
-    
+    PlugInServer plugin_server;
     protected DeviceDataHandler m_ddh;
     
 
@@ -160,6 +161,30 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         initSpecial();
     } 
 
+
+    /**
+     * Get PlugIn Server Instance
+     * 
+     * @param server
+     */
+    public void setPlugInServerInstance(PlugInServer server)
+    {
+        this.plugin_server = server;
+    }
+    
+
+    /**
+     * Set PlugIn Server Instance
+     * 
+     * @return 
+     */
+    public PlugInServer getPlugInServerInstance()
+    {
+        return this.plugin_server;
+    }
+    
+    
+    
     
     // ********************************************************
     // ******             Init Methods                    *****    
@@ -967,6 +992,18 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
             return false;
         }
     } 
+    
+    
+    /**
+     * Load Special Parameters
+     * 
+     * @see com.atech.utils.ATDataAccessAbstract#loadSpecialParameters()
+     */
+    public void loadSpecialParameters()
+    {
+    }
+
+    
     
 
 }

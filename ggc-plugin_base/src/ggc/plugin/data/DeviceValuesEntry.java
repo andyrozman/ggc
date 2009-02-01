@@ -4,7 +4,9 @@ import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.output.OutputWriterData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
+import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.ATechDate;
 
 
@@ -39,7 +41,7 @@ import com.atech.utils.ATechDate;
 //This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
-public abstract class DeviceValuesEntry extends OutputWriterData
+public abstract class DeviceValuesEntry extends OutputWriterData implements Comparator<DeviceValuesEntry>, Comparable<DeviceValuesEntry>, StatisticsItem
 {
 	protected boolean checked = false;
 	protected int status = 1; 
@@ -243,6 +245,26 @@ public abstract class DeviceValuesEntry extends OutputWriterData
         return this.is_bg; 
     }
 
-	
+
+    /**
+     * Comparator method, for sorting objects
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compare(DeviceValuesEntry d1, DeviceValuesEntry d2)
+    {
+        return (int)(d1.getDateTime()-d2.getDateTime());
+    }
+
+    /**
+     * Comparator method, for sorting objects
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(DeviceValuesEntry d2)
+    {
+        return (int)(this.getDateTime()-d2.getDateTime());
+    }
+    
 	
 }	

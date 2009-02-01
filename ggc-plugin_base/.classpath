@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Atech-Tools"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Atech-Tools"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/dom4j-1.6.1"/>

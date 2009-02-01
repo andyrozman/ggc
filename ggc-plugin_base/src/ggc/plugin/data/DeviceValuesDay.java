@@ -3,6 +3,8 @@ package ggc.plugin.data;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
@@ -193,5 +195,27 @@ public class DeviceValuesDay
 	    return this.list.get(row).getColumnValue(column);
 	}
 
+	
+	/**
+	 * Sort of elements
+	 */
+	public void sort()
+	{
+	    Collections.sort(list); //, new DeviceValuesEntry()); 
+	}
+	
+	
+    /**
+     * Sort of elements
+     */
+    public void sort(Comparator<DeviceValuesEntry> dve)
+    {
+        Collections.sort(list, dve); //, new DeviceValuesEntry()); 
+    } 
+	
+    public ArrayList<DeviceValuesEntry> getList()
+    {
+        return this.list;
+    }
 	
 }	
