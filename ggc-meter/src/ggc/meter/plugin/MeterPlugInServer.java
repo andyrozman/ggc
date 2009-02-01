@@ -210,6 +210,7 @@ public class MeterPlugInServer extends DevicePlugInServer
         I18nControl.getInstance().setLanguage(this.selected_lang);
         DataAccessMeter.getInstance().addComponent(this.parent);
         DataAccessMeter.getInstance().setHelpContext(m_da.getHelpContext());
+        //DataAccessMeter.getInstance().setBGMeasurmentType(m_da.get)
     }
    
     

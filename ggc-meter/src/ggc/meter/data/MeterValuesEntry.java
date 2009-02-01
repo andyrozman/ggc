@@ -418,6 +418,64 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         
         return lst;
     }
+
+    /**
+     * Get Value For Item
+     * 
+     * @param index index for statistics item 
+     * @return 
+     */
+    public float getValueForItem(int index)
+    {
+        return 0;
+    }
+
+    
+    /**
+     * Get Statistics Action - we define how statistic is done (we have several predefined 
+     *    types of statistics
+     * 
+     * @param index index for statistics item 
+     * @return
+     */
+    public int getStatisticsAction(int index)
+    {
+        return 0;
+    }
+    
+
+    /**
+     * Is Special Action - tells if selected statistics item has special actions
+     * 
+     * @param index
+     * @return
+     */
+    public boolean isSpecialAction(int index)
+    {
+        return false;
+    }
+    
+    
+    /**
+     * Get Max Statistics Object - we can have several Statistic types defined here
+     * 
+     * @return
+     */
+    public int getMaxStatisticsObject()
+    {
+        return 0;
+    }
+
+
+    /**
+     * If we have any special actions for any of objects
+     * 
+     * @return
+     */
+    public boolean weHaveSpecialActions()
+    {
+        return false;
+    }
     
 	
 }	

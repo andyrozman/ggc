@@ -179,7 +179,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
         CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework and support for Ascensia, Roche, LifeScan devices"));
+        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Full framework and support for Ascensia, Roche, LifeScan devices"));
         cg.addCreditsEntry(new CreditsEntry("Alexander Balaban", "abalaban1@yahoo.ca", "Support for OT UltraSmart"));
         lst_credits.add(cg);
         cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
