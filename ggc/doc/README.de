@@ -145,31 +145,22 @@ Bisher unterstützte Geräte (Plugin-Version 1.0.5):
 Pumpen-Werkzeug
 ---------------
 
-[TODO]
-This is plug-in for entering, retrieving and handling data from Insulin Pumps. 
-This project is slowly starting into development phase. We plan to have at least some
-pump functionality in next GGC version (0.5). The first supported pumps will be those 
-from Roche, after them probably Minimed, and some developers are working parallel to 
-also add support for Animas.
+Dies ist ein Plug-in zur Eingabe, zum Abruf und zur Behandlung von Daten von
+Insulinpumpen. Dieses Projekt geht langsam in die Entwicklungsphase über. Wir
+planen in die nächste Version (0.5) schon teilweise die Funktionalität des
+Pumpen-Werkzeugs einzubauen. Die ersten unterstützten Pumpen werden die von
+Roche sein, danach wahrscheinlich die von Minimed und einige Entwickler
+arbeiten gleichzeitig an der Unterstützung für Animas.
 
 !!  OR  !!
 
-This is plug-in for entering, retrieving and handling data from Insulin Pumps.
-We have already started with development and most of framework is ready for Pump
-data. For now we have added Manual adding of Pump Data and next step is retrieval
-of data from Pumps. First supported Pumps will be those of Roche and Minimed (at
-first through CareLink export file) and we have some developers also working on 
-Animas.
-
-##############
-
-
-Dies ist ein Plug-in zur Eingabe und zum Abruf von Daten von Insulinpumpen.
-Dieses Projekt geht langsam in die Entwicklungsphase über. Wir planen in die
-nächste Version (0.4) schon teilweise die Funktionalität des Pumpen-Werkzeugs
-einzubauen. Die ersten unterstützten Pumpen werden die von Roche sein (Dezember
-2008), danach wahrscheinlich die von Minimed und einige Entwickler arbeiten
-gleichzeitig an der Unterstützung für Animas.
+Dies ist ein Plug-in zur Eingabe, zum Abruf und zur Behandlung von Daten von
+Insulinpumpen. Wir haben schon mit der Entwicklung angefangen, und der größte
+Teil des Frameworks für Pumpen-Daten ist fertiggestellt. Bisher haben wir
+manuelles Hinzufügen von Pumpen-Daten implementiert. Der nächste Schritt ist
+der Datenabruf von Pumpen. Die ersten unterstützten Pumpen werden die von Roche
+und Minimed (vorerst durch eine CareLink-Exportdatei) sein und einige unserer
+Entwickler arbeiten an Animas.
 
 
 CGMS-Werkzeug
