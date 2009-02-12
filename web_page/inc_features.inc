@@ -14,11 +14,14 @@ user-friendlier. <br><br>
 	<ul>
 		<li>Blood Glucose (BG) Values (in both formats)</li>
 		<li>2 different Insulins (Basal, Bolus)</li>
-		<li>Carbhydrates intake</li>
+		<li>Carbohydrates intake</li>
 		<li>Activity level</li>
         <li>Urine tests</li>
 		<li>Comments</li>
-		<li>Adding food data to daily entries</li>
+		<li>Adding food data (From Db)</li>
+		<li>Adding food data (by description)</li>
+		<li>Bolus Helper to determine Bolus dose</li>
+        <li>Simple Ratio Helper</li>
 	</ul>
 	<li>Store your data in:</li>
 	<ul>
@@ -34,7 +37,7 @@ user-friendlier. <br><br>
 		<li>Course (shows you your values over a period of time)</li>
 		<li>Spread (shows data over a period of time, but plots the days over each other, so you can find accumulations)</li>
 		<li>Frequency (shows kind of a histogram for your BG values)</li>
-		<li>We are now using JFreeChart library for graphs</li>
+		<li>We are now using JFreeChart library for graphs (through ATech Graph Framework)</li>
 	</ul>
 	<li>Nutrition database:</li>
 	<ul>
@@ -45,20 +48,22 @@ user-friendlier. <br><br>
 	</ul>
 	<li>Print support:</li>
 	<ul>
-		<li>We can now create PDFs with Simple and Extended reports. From within Acrobat Reader, we can
+		<li>We can now create PDFs with Simple and Extended reports. From within PDF Reader, we can
                 then print-out our data.</li>
 		<li>Simple report. Gathers together data for BGs, Insulins and CHs and displays them.</li>
 		<li>Extended report. It shows every entry as it was written, with fully detailed data.</li>
+		<li>Printing of Food Menus (with different options)</li>
 	</ul>
 	<li>Approximate your current HbA1c</li>
 	<li>Customize whole application</li>
-        <li>Two sub-projects were created: Meter Tool, Pump Tool and CGMS Tool (see page Sub-Projects)</li>
+        <li>Three sub-projects were created: Meter Tool, Pump Tool and CGMS Tool (see page Sub-Projects)</li>
         <li>Help framework integrated (Some help pages written)</li>
     <li>USB Image of GGC</li>
     <li>Application update: Client side is working, we need to implement server side</li>
 	<li>Tools integration:</li>
 	<ul>
-		<li>Meter Tool integration (v1.0.3) - See projects page for details.</li>
+		<li>Meter Tool integration (v1.0.7) - See projects page for details.</li>
+        <li>Pump Tool integration (v0.2.1) - See projects page for details.</li>
 	</ul>
 	
 </ul>
@@ -66,19 +71,11 @@ user-friendlier. <br><br>
 <b>Versioning:</b>
 Our application is still in 0.x version, but that will change, when some of major features are 
 implemented, we will go to version 1.0. This will probably happen with version 0.5, if all items
-marked with [1.0] will be finished, then first release, with them, will be 1.0. 
+marked with [1.0] will be finished, then first release, with them, will be 1.0.<br><br> 
 
 
 <b>Planned Features:</b>
 <ul>
-
-<li><i>Version (0.4) - (end of 2008):</i></li>
-<ul>
-    <li>Bolus Helper (help with bolus dosage)</li>
-	<li>Add ratios for Bolus Helper (good for pump users)</li>
-    <li>Write help pages for English</li>
-    <li>Printing of foods and CH usage</li>
-</ul>
 
 
 <li><i>Version (0.5) [June 2009]:</i></li>
@@ -86,12 +83,12 @@ marked with [1.0] will be finished, then first release, with them, will be 1.0.
 	<li>New Graph Framework</li>
 	<li>Extend Bolus Helper functionality</li>
     <li>Update system - Server side [1.0]</li>
-    <li>Write help pages for English II. (full help) [1.0] </li>
+    <li>Write help pages for English (full help) [1.0] </li>
     <li>Extend nutrition databases functionality</li>
     <li>Add Remote Food database</li>
+    <li>Write help pages for English</li>
     <li>Db Tool [1.0]</li>
     <li>Support for multiple persons</li>
-    <li>Integration of Pump Tool</li>
 </ul>
 
 
@@ -100,6 +97,7 @@ marked with [1.0] will be finished, then first release, with them, will be 1.0.
 <ul>
 	<li>Restore data (partitial/update)</li>
 	<li>Appointment and Doctors handling</li>
+    <li>Activity manager</li>
     <li>Support for multiple instances of GGC and their communication</li>
     <li>Internet data (links for pages, forums, blogs - informational)</li>
     <li>Import of data from SiDiary Desktop application. SiDiary has its sister applications running 

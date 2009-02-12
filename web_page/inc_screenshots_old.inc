@@ -1,15 +1,14 @@
 <blockquote>
 
-<center><h2 class="header">Screenshots [Main]</h2></center>
+<center><h2 class="header">Screenshots [Old Screenshots]</h2></center>
 
 
-Since there are quite a lot of screenshots now (new functionalities) we decided to group them together,
-so that no more than few are displayed at same time. Most screenshots are from version 0.4, but some are
-older.
+This are some of old screenshots, which haven't been replaced yet (we are replacing and changing most
+of dialogs)...
 
 <h3>
 
-Screenshots Main<br>
+<a href="index.php?show=screenshots" class="menu">Screenshots Main</a><br>
 
 <a href="index.php?show=screenshots_daily" class="menu">Injection/Pen Theraphy</a><br>
 
@@ -23,7 +22,7 @@ Screenshots Main<br>
 
 <a href="index.php?show=screenshots_pump_tool" class="menu">Pump Tool</a><br>
 
-<a href="index.php?show=screenshots_old" class="menu">Old Screenshots</a><br>
+Old Screenshots<br>
 
 </h3>
 
@@ -32,22 +31,25 @@ Screenshots Main<br>
 <hr>
 <br>
 
-<br>
+
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/main_ggc_0_4.gif" border="0" alt="Main Window of GGC 0.4"></td></tr>
-<tr><td>Main Window of GGC 0.4</td></tr>
+<tr><td><img src="./images/0.3/main.gif" border="0" alt="Main Window of GGC 0.2.9"></td></tr>
+<tr><td>Main Window of GGC 0.2.9</td></tr>
 </table>
 
 <br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/help.bmp" border="0" alt="Help System"></td></tr>
-<tr><td>Help System [Content not available yet]</td></tr>
+<tr><td><img src="./images/frequency.jpg" border="0" alt="Frequency Graph"></td></tr>
+<tr><td>Frequency Graph</td></tr>
 </table>
 
 <br>
+<br>
+
+
 
 </blockquote>

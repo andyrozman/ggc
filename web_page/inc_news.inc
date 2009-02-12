@@ -5,6 +5,25 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
 <tr class="newsheader">
+<td width="150">2009-02-04 22:44</td>
+<td>Release 0.4 OUT</td>
+</tr>
+<tr>
+<td colspan="2">
+We have finally brought you next GGC release. !!!!!!!!!!!!!!!!!!!!!!!!! 
+After first public release it was decided, that there will be one major release every six months, 
+at least until we finish all main functionalities. Next release will come out in January 2009,
+with some major changes and lots of minor ones.<br>
+As you can see, we are still in 0.x versions. When all tagged (required) functionalities are finished, 
+we will go to version 1.0 (this might happen with release 0.5 or maybe 0.6).  
+</td></tr>
+</table> 
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
 <td width="150">2008-12-24 22:44</td>
 <td>Release 0.4 comming out soon</td>
 </tr>

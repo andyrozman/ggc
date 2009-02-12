@@ -28,35 +28,32 @@ supported.
 
 <h3 class="header">Meter Tool</h3>
 
-Meter tool implementation is on the way. Planning phase was finished in January and we started on development. 
-Meter tool will be used in version 0.4 of GGC (by end of year) or maybe even before.
+Meter Tool implementation is now finished. All that remains is adding support for more Meter Devices.<br>
+<b>Current version:</b> 1.0.7<br>
 <br><br>
 <b><i>Tasks that are already done:</i></b>
 <ul>
     <li>Base framework for meters</li>
     <li>Communication framework for meters (interface that all meters will use)</li>
+    <li>List of meters (most of them, not all)</li>
+    <li>Configuration </li>
     <li>Output types:</li>
     <ul>
-        <li>Console and file output
-        <li>GGC Db Output (for manual import)
-    </ul>
-</ul>
-<br>
-<b><i>Tasks that need to be done:</i></b>
-<ul>
-    <li>List of meters (most of them, not all) (0.4)</li>
-    <li>Configuration (0.4)
-    <li>Graphical interface for integration into GGC (0.4)</li>
-    <li>Output types:</li>
-    <ul>
-        <li>GGC Output (GUI integration) (0.4)
+        <li>Console and file output</li>
+        <li>GGC Db Output (for manual import)</li>
+        <li>GGC Output (GUI integration)</li>
     </ul>
     <li>Specific meter models (companies) implementations:</li>
     <ul>
-    <li>Ascensia/Bayer - Contour (in development), Dex, Elite, Breeze (September 2008)
-    <li>Lifescan - most of meters (January 2009)
-    <li>All other meters are not planned at this point, but if you wish to use your meter let us know...
+        <li>Ascensia/Bayer - Contour, Countour Link, Dex, Elite, Breeze </li>
+        <li>Roche/Accu-Chek - All devices supported through Smart Pix device</li>
+        <li>Lifescan - OT Ultra, OT Ultra2, OT Ultra Smart (partitial), OT Easy/Mini </li>
     </ul>
+</ul>
+<br>
+<b><i>Planned devices: </i></b>
+<ul>
+    <li>Abbott - Some of them
 </ul>
 
 
@@ -66,28 +63,39 @@ Meter tool will be used in version 0.4 of GGC (by end of year) or maybe even bef
 
 <h3 class="header">Pump Tool</h3>
 
-Pump tool is now out of planning phase and started with implementation. All things are still on TO-DO list. In brackets there is version of GGC
-in which functionality will be available (it may become available sooner, but it's not likely).
+Pump Tool is now in development, 1st step is already done, but still most needs to be done. In brackets there 
+is version of GGC in which functionality will be available (it may become available sooner, but it's not likely).
+Ready in brackets mean that application already has functionality, but since it depends on some other 
+functionality it wasn't activated yet.<br>
+<b>Current version:</b> 0.2.1<br>
+<br><br>
+
+
+<b><i>Tasks that are already done:</i></b>
+<ul>
+    <li>Manual adding of pump data (data that will in future be read from pump)</li>
+    <li>Adding of additional data (bg measurements, OH intake, Activity...)</li>
+</ul>
+
+
 <br><br>
 <b><i>Tasks that need to be done:</i></b>
 <ul>
-    <li>Base framework for pumps (0.4)</li>
-    <li>Communication framework for pumps (interface that all pumps will use) (later)</li>
-    <li>Manual adding of pump data (data that will in future be read from pump) (0.5)</li>
-    <li>Adding of additional data (bg measurements, OH intake, Activity...) (0.5)</li>
-    <li>List of pumps (most of them not all) (0.4)</li>
-    <li>Configuration and graphical interface for integration into GGC (0.5)</li>
+    <li>Base framework for pumps - 70% done [0.5]</li>
+    <li>Communication framework for pumps (interface that all pumps will use) [later]</li>
+    <li>List of pumps (most of them not all) [0.5 ready]</li>
+    <li>Configuration and graphical interface for integration into GGC [0.5 ready]</li>
     <li>Output types:</li>
     <ul>
-        <li>Console and file output (0.5)
-        <li>GGC Db Output (for manual import) (0.5)
-        <li>GGC Output (GUI integration) (0.5)
+        <li>Console and file output [0.5 ready]
+        <li>GGC Db Output (for manual import) [0.5 ready]
+        <li>GGC Output (GUI integration) [0.5 ready]
     </ul>
     <li>Graphs (0.6)</li>
     <li>Specific pump models implementations:</li>
     <ul>
-        <li>Roche/Disetronic (2008)
-        <li>MiniMed (2008/09)
+        <li>Roche/Disetronic (2009)
+        <li>MiniMed (2009)
         <li>Sooil Dana (?) [at this time this pump has no PC communication]
         <li>Animas (unknown) [we have one developer working just on this]
         <li>Smith's Cosmo (?)

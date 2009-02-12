@@ -29,6 +29,11 @@ to use this file. You just extract it and then follow by reading Readme_1st to g
 
 </ul>
 
+http://downloads.sourceforge.net/ggc/GGC_Update_0.3.1.zip?use_mirror=osdn
+
+
+
+
 
 <h3>USB Releases</h3>
 
@@ -40,12 +45,21 @@ USB Release is not available at this time, but it will be added by end of Septem
 </ul>
 
 
-<h4>USB VMs</h4>
+<h4>USB VMs (this were used for 0.3 version only)</h4>
 <ul>
 <li><a href="http://downloads.sourceforge.net/ggc/Windows_16.zip?use_mirror=osdn">Windows VM [Java 1.6]</a></li>
 <li><a href="http://downloads.sourceforge.net/ggc/Linux_16.zip?use_mirror=osdn">Linux VM [Java 1.6]</a></li>
 <li><a href="http://downloads.sourceforge.net/ggc/FreeBSD_v7_16.zip?use_mirror=osdn">FreeBSD VM (FreeBSD 7.0) [Java 1.6]</a></li>
 </ul>
+
+GVMS
+
+Full
+
+http://downloads.sourceforge.net/ggc/GVM_linux_x86_1.zip?use_mirror=
+http://downloads.sourceforge.net/ggc/GVM_win_1.zip?use_mirror=
+
+Lite
 
 
 
