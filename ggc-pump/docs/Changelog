@@ -2,6 +2,47 @@
 Changes file for GGC Pump Tool
 ==============================
 
+0.2.1
+    * Version advanced after, Manual Entry finished
+
+0.1.17
+    * Additional data dialogs finished
+    
+0.1.16 
+    * Statistics finished
+
+0.1.15 
+    * Work started on statistics
+
+0.1.14
+    * If everything is set check done
+
+0.1.13
+    * Editing of additional data done
+    
+0.1.12
+    * Changes to main manual pump windows (editing and addding changes made back)
+    * refresh data
+    * Editing of additional data (except for Food entries)
+
+0.1.11
+    * Editing entries (rows)
+    * Reading data to PumpDataTypeComponent
+    * Writing data to PumpDataTypeComponent
+
+0.1.10
+    * Working with database, adding entries to database
+
+0.1.9.2 
+    * Adding 'Foods by Description' to dialog
+    * Focusing problem - major one
+
+0.1.9.1
+    * Added Food by Description, by using TransferDialog mechanism. It needs to be reworked though.
+    
+0.1.8
+    * After reorganization of all plugins, database stopped working, we fixed that here
+
 0.1.7 
     * Manually... Db
 

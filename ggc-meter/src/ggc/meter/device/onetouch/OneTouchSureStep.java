@@ -78,17 +78,6 @@ public class OneTouchSureStep extends OneTouchMeter
 
     
     /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return OneTouchMeter.LIFESCAN_COMPANY;
-    }
-
-    
-    /**
      * getDeviceClassName - Get class name of device
      */
     public String getDeviceClassName()

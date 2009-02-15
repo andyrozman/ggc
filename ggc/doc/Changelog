@@ -1,35 +1,40 @@
-0.3.16 (17.1.2009)
+
+0.4 (2.2.2009)  Andy Rozman <andyrozman@users.sourceforge.net>
+    * Version is changed, since all functionality is finished for new version
+    * Changes in documentation
+
+0.3.16 (17.1.2009)   Andy Rozman <andyrozman@users.sourceforge.net>
     * Finished Spread Graph
     * Graph Development stopped for Release 0.4
     * Frequency graph is disabled
     * Course graph was tagged as not working 100%, this one is still in second version 
       of graph framework (we are not working on 3rd one, which is final one) 
 
-0.3.15 (10.1.2009)
+0.3.15 (10.1.2009)  Andy Rozman <andyrozman@users.sourceforge.net>
     * fixed Freetext food entries processing (problem with parsing floats)
     * Refresh panels mechanism redone
     * Panels refresh when data from Meter plugin is processed
 
 
-0.3.14 (1.1.2009)
+0.3.14 (1.1.2009)  Andy Rozman <andyrozman@users.sourceforge.net>
     * changed free-text food entries. Horizontal scroll disabled.
     * Graph changes. Working on Spread Graph, and GGC Controller class, we created 
       new PlotSelectorPanel and PlotSelectorData from existing classes and extended 
       both of them (we are not dependant on any of current implementations anymore)
     * 
 
-0.3.13  (29.12
+0.3.13  (29.12.2008)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Changed printing to use abstract class
     * Change to PrintingDialog to use correct command when calling application from 
       non-windows environment
     * changed free-text food entries (minor bug)
 
-0.3.12 (27.12)
+0.3.12 (27.12.2008)  Andy Rozman <andyrozman@users.sourceforge.net>
     * more functionality to panels on main screen (selectable updates to main screen) 
     * added function to write free text for foods and accompanying CH values
     * integration into old daily entry 
 
-0.3.11 (22.12)
+0.3.11 (22.12.2008)  Andy Rozman <andyrozman@users.sourceforge.net>
     * integrating new graph framework (ATGraphFramework)
     * implementation of HbA1c view for ATGraphFramework
     * implementation of Daily view for ATGraphFramework

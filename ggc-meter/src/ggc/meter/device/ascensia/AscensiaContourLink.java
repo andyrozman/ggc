@@ -106,17 +106,6 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
 
     
     /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return AscensiaMeter.ASCENSIA_COMPANY;
-    }
-    
-    
-    /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 

@@ -104,17 +104,6 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
         return AscensiaMeter.METER_ASCENSIA_CONTOUR;
     }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return AscensiaMeter.ASCENSIA_COMPANY;
-    }
     
     
     /**

@@ -14,15 +14,18 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.Constructor;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.atech.graphics.components.JDecimalTextField;
+import com.atech.graphics.dialogs.TransferDialog;
 import com.atech.help.HelpCapable;
 import com.atech.utils.ATSwingUtils;
 
@@ -76,14 +79,18 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     JTextField text_1;
     JDecimalTextField num_1, num_2;
     JCheckBox cb_1;
-
+    JButton button_1;
+    int width;
+    
     PumpAdditionalDataType m_pump_add; // = new PumpAdditionalDataType();
 
     boolean was_action = false;
     PumpValuesEntryExt pump_objects_ext[];
     
     PumpValuesEntryExt data_object;
-
+    private String internal_data[] = null;
+    
+    
     // new data
     /**
      * Constructor
@@ -133,7 +140,36 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         loadObject();
     }
     
+
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     * @param pc
+     * @param pc2 
+     */
+    public PumpDataAdditionalWizardTwo(JDialog dialog, PumpValuesEntryExt pc, PumpValuesEntryExt pc2)
+    {
+        super(dialog, "", true);
+
+        // FIXME
+        this.m_pump_add = m_da.getAdditionalTypes();
+
+        // this.old_data = data;
+        m_parent = dialog;
+        this.m_type = pc.getType();
+
+        ATSwingUtils.initLibrary();
+
+        init();
+        
+        data_object = pc;
+        
+        loadObject();
+    }
     
+    
+    // for edit
     private void loadObject()
     {
         if ((this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) || 
@@ -154,25 +190,34 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             this.num_1.setValue(new Float(this.data_object.getValue()));
 //            po.setValue(this.num_1.getValue().toString());
         }
+        else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
+        {
+            //this.num_1.setValue(new Float(this.data_object.getValue()));
+//            po.setValue(this.num_1.getValue().toString());
+        }
         else
             System.out.println("Load for this type is not implemented !!!");
         
     }
     
+    int startx = 0;
     
     private void init()
     {
-        int width = 320;
-        int height = 300;
+        width = 380;
+        int height = 310;
 
         this.setSize(width, height);
 
+        m_da.addComponent(this);
         this.m_da.centerJDialog(this, this.m_parent);
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
         panel.setLayout(null);
 
+        startx = 60;
+        
         main_panel = panel;
 
         this.getContentPane().add(panel);
@@ -200,7 +245,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         String button_icon[] = { "cancel.png", "ok.png" };
         // null, "ok.png", "cancel.png" };
 
-        int button_coord[] = { 30, 230, 120, 1, 160, 230, 130, 1,
+        int button_coord[] = { startx, 230, 120, 1, 
+                               startx + 130, 230, 130, 1,
         // 170, 190, 140, 1,
         // 30, 620, 110, 1,
         // 145, 620, 110, 1,
@@ -232,7 +278,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                 ATSwingUtils.addComponent(button, button_coord[i], button_coord[i + 1], button_coord[i + 2], 25, panel);
         }
 
-        help_button = m_da.createHelpButtonByBounds(170, 195, 120, 25, this);
+        help_button = m_da.createHelpButtonByBounds(startx + 140, 195, 120, 25, this);
         panel.add(help_button);
 
         // m_da.enableHelp(this);
@@ -266,7 +312,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
             break;
 
-        case PumpAdditionalDataType.PUMP_ADD_DATA_FOOD:
+        case PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB:
+        case PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC:
             {
                 areaFood();
             }
@@ -283,8 +330,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     // activity, comment, urine
     private void areaText()
     {
-        this.label_1 = ATSwingUtils.getLabel(null, 30, 100, 100, 25, this.main_panel);
-        this.text_1 = ATSwingUtils.getTextField("", 30, 130, 250, 25, this.main_panel);
+        this.label_1 = ATSwingUtils.getLabel(null, startx, 100, 110, 25, this.main_panel);
+        this.text_1 = ATSwingUtils.getTextField("", startx, 130, 260, 25, this.main_panel);
 
         if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY)
         {
@@ -307,12 +354,12 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     public void areaBG()
     {
         
-        ATSwingUtils.getLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 50, 108, 100, 25, main_panel);
-        ATSwingUtils.getLabel("mg/dL", 160, 108, 100, 25, main_panel);
-        ATSwingUtils.getLabel("mmol/L", 160, 138, 100, 25, main_panel);
+        ATSwingUtils.getLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", startx + 20, 108, 100, 25, main_panel);
+        ATSwingUtils.getLabel("mg/dL", startx + 130, 108, 100, 25, main_panel);
+        ATSwingUtils.getLabel("mmol/L", startx + 130, 138, 100, 25, main_panel);
         
-        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), 210, 108, 55, 25, this.main_panel);
-        this.num_2 = ATSwingUtils.getNumericTextField(2, 1, new Float(0.0f), 210, 138, 55, 25, this.main_panel);
+        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
+        this.num_2 = ATSwingUtils.getNumericTextField(2, 1, new Float(0.0f), startx + 180, 138, 55, 25, this.main_panel);
 
         this.num_1.addFocusListener(this);
         this.num_1.addKeyListener(this);
@@ -327,9 +374,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     public void areaCH()
     {
         
-        ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", 50, 108, 100, 25, main_panel);
+        ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx + 20, 108, 100, 25, main_panel);
         
-        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), 210, 108, 55, 25, this.main_panel);
+        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
         
     }
     
@@ -340,15 +387,43 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     public void areaFood()
     {
         
-        ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", 50, 108, 100, 25, main_panel);
-        
-        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), 210, 108, 55, 25, this.main_panel);
     
         this.cb_1 =  new JCheckBox();
-        this.cb_1.setBounds(50, 150, 100, 25);
+        this.cb_1.setBounds(startx + 10, 150, 130, 25);
         this.cb_1.addActionListener(this);
         this.cb_1.setActionCommand("check");
         this.main_panel.add(this.cb_1);
+
+        JLabel l = ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", 0, 60, width, 35, main_panel, ATSwingUtils.FONT_NORMAL_BOLD_P2);
+        l.setHorizontalAlignment(JLabel.CENTER);
+        //label_title = ATSwingUtils.getTitleLabel(m_ic.getMessage("ADD_PARAMETER2"), 0, 35, width, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
+
+        
+        button_1 = ATSwingUtils.getButton(m_ic.getMessage("SET"), 
+            startx + 140, 150, 120, 25, 
+            this.main_panel, 
+            ATSwingUtils.FONT_NORMAL, 
+            null, 
+            "food_desc", 
+            this, 
+            m_da);
+
+        
+        if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
+        {
+            this.cb_1.setText("  " + m_ic.getMessage("IS_FOOD_SET"));
+            ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx + 20, 108, 100, 25, main_panel);
+            this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
+            l.setText("(" + m_ic.getMessage("FOOD_FROM_DB") + ")");
+        }
+        else 
+        {
+            this.cb_1.setText("  " + m_ic.getMessage("IS_FOOD_AND_CH_SET"));
+            this.cb_1.setBounds(startx + 10, 150, 200, 25);
+            l.setText("(" + m_ic.getMessage("FOOD_BY_DESC") + ")");
+            button_1.setBounds(startx + 10, 120, 120, 25);
+        }
+        
         
         
     }
@@ -361,7 +436,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     private void areaUnsupported()
     {
         this.label_1 = new JLabel("Unsuported type : " + this.m_pump_add.getDescriptions()[this.m_type]);
-        this.label_1.setBounds(20, 100, 100, 25);
+        this.label_1.setBounds(startx, 100, 100, 25);
         this.main_panel.add(this.label_1);
 
     }
@@ -376,17 +451,61 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
         if (action.equals("cancel"))
         {
-            System.out.println("wizard_2 [cancel]");
+            //System.out.println("wizard_2 [cancel]");
             this.was_action = false;
+            m_da.removeComponent(this);
             this.dispose();
         }
         else if (action.equals("ok"))
         {
+            m_da.removeComponent(this);
             cmdOk();
         }
         else if (action.equals("check"))
         {
             System.out.println("check 1");
+        }
+        else if (action.equals("food_desc"))
+        {
+            
+            if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
+            {
+                TransferDialog td = createInstance(); 
+                    //m_da.getPlugInServerInstance().getTransferObjects().get(0);
+                
+                if (td==null)
+                {
+                    System.out.println("Instance failed to create!!");
+                    return;
+                }
+                
+                Object[] objs = td.getEmptyInputParameters();
+                objs[0] = this;
+                objs[1] = m_da;
+                objs[2] = "";
+                objs[3] = "";
+                
+                td.setInputParameters(objs);
+                td.showDialog(true); //.setVisible(true);
+                
+                if (td.wasAction())
+                {
+                    this.internal_data = td.getResultValuesString();
+                    float f = m_da.getFloatValue(this.internal_data[1]);
+                    this.cb_1.setSelected(f>0);
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, 
+                    m_ic.getMessage("FUNCTIONALITY_FOOD_DB_NA"), 
+                    m_ic.getMessage("WARNING"), 
+                    JOptionPane.WARNING_MESSAGE);
+
+                
+                
+            }
+            
         }
         /*        else if (action.equals("edit_food"))
                 {
@@ -455,30 +574,71 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
         this.was_action = true;
 
-        this.pump_objects_ext = new PumpValuesEntryExt[1];
 
-        PumpValuesEntryExt po = new PumpValuesEntryExt(this.m_pump_add);
-        po.setType(this.m_type);
+        
+        if ((this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB) ||
+            (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))
+        {
+            this.pump_objects_ext = new PumpValuesEntryExt[2];
 
-        if ((this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) || 
-            (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT) || 
-            (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_URINE))
-        {
-            po.setValue(this.text_1.getText());
-        }
-        else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
-        {
-            po.setValue(this.num_1.getValue().toString());
-        }
-        else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
-        {
-            System.out.println("val: " + this.num_1.getValue());
-            po.setValue(this.num_1.getValue().toString());
+            if (this.internal_data==null)
+            {
+                PumpValuesEntryExt po = new PumpValuesEntryExt();
+                po.setType(this.m_type);
+                po.setValue("");
+                this.pump_objects_ext[0] = po;
+
+                po = new PumpValuesEntryExt();
+                po.setType(PumpAdditionalDataType.PUMP_ADD_DATA_CH);
+                po.setValue("0");
+                this.pump_objects_ext[1] = po;
+                
+            }
+            else
+            {
+                PumpValuesEntryExt po = new PumpValuesEntryExt();
+                po.setType(this.m_type);
+                po.setValue(this.internal_data[0]);
+                this.pump_objects_ext[0] = po;
+
+                po = new PumpValuesEntryExt();
+                po.setType(PumpAdditionalDataType.PUMP_ADD_DATA_CH);
+                po.setValue(this.internal_data[1]);
+                this.pump_objects_ext[1] = po;
+            }
+            
+//            PumpValuesEntryExt po = new PumpValuesEntryExt(this.m_pump_add);
+//            po.setType(this.m_type);
+            
+            
         }
         else
-            System.out.println("Command for this type is not implemented !!!");
-
-        this.pump_objects_ext[0] = po;
+        {
+            this.pump_objects_ext = new PumpValuesEntryExt[1];
+        
+            PumpValuesEntryExt po = new PumpValuesEntryExt();
+            po.setType(this.m_type);
+    
+            if ((this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) || 
+                (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT) || 
+                (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_URINE))
+            {
+                po.setValue(this.text_1.getText());
+            }
+            else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
+            {
+                po.setValue(this.num_1.getValue().toString());
+            }
+            else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
+            {
+                System.out.println("val: " + this.num_1.getValue());
+                po.setValue(this.num_1.getValue().toString());
+            }
+            else
+                System.out.println("Command for this type is not implemented !!!");
+    
+            this.pump_objects_ext[0] = po;
+        }
 
         this.dispose();
         // this.m_p
@@ -700,6 +860,61 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         {
             cmdOk();
         }
+    }
+    
+    
+    private TransferDialog createInstance()
+    {
+        
+        if (m_type==PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
+        {
+            return null;
+        }
+        
+        try
+        {
+            String cl_name = null;
+
+            if (m_type==PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
+                cl_name = "ggc.gui.dialogs.DailyRowMealsDialog";
+            else
+                cl_name = "";
+            
+            
+            Class<?> c = Class.forName(cl_name);
+
+            Constructor<?>[] constructors = c.getConstructors();
+            
+            int found = -1;
+            
+            for(int i=0; i<constructors.length; i++)
+            {
+                if (constructors[i].toString().equals("public ggc.gui.dialogs.DailyRowMealsDialog(javax.swing.JDialog)"))
+                {
+                    System.out.println("Found: " + i + "] " + constructors[i]);
+                    found = i;
+                    
+                    break;
+                }
+                System.out.println("[num=" + i + "] " + constructors[i]);
+            }
+
+            if (found>-1)
+            {
+                TransferDialog td = (TransferDialog)constructors[found].newInstance(this);
+                return td;
+            }
+            else
+                return null;
+
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Ex:" + ex);
+            return null;
+        }
+        
+        
     }
     
     

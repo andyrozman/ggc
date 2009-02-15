@@ -1,0 +1,5 @@
+[autorun]
+icon=ggc.ico
+open=run_windows.bat
+action=Click "OK" to start GNU Gluco Control
+shell\open\command=run_windows.bat

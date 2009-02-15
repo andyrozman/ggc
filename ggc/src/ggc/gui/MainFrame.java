@@ -212,6 +212,8 @@ public class MainFrame extends JFrame
         m_ic = I18nControl.getInstance();
 
         m_da.addComponent(this);
+        
+        m_da.developer_version = developer_version;
 
         statusPanel = new StatusBar();
 

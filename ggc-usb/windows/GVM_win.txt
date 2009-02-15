@@ -1,0 +1,16 @@
+
+GGC Virtual Machine
+====================
+
+OS:        Windows 
+Java:      1.6 
+Rxtx:      present (x32 only, works with x64) [2.1.7]
+Autorun:   available
+
+
+Author:    Andy (Aleksander) Rozman 
+           andy@atech-software.com
+
+		   
+Comments:  No special comments.
+

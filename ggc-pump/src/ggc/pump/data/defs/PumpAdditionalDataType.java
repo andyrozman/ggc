@@ -50,7 +50,8 @@ public class PumpAdditionalDataType
                        ic.getMessage("ADD_DATA_BG"),             
                        ic.getMessage("ADD_DATA_URINE"),             
                        ic.getMessage("ADD_DATA_CH"),             
-                       ic.getMessage("ADD_DATA_FOOD"),             
+                       ic.getMessage("ADD_DATA_FOOD_DB"),             
+                       ic.getMessage("ADD_DATA_FOOD_DESC"),             
     };
     
     
@@ -83,11 +84,15 @@ public class PumpAdditionalDataType
     public static final int PUMP_ADD_DATA_CH    = 5;
     
     /**
-     * Pump Additional Data Type: Food
+     * Pump Additional Data Type: Food Db
      */
-    public static final int PUMP_ADD_DATA_FOOD  = 6;
-    
+    public static final int PUMP_ADD_DATA_FOOD_DB  = 6;
+   
 
+    /**
+     * Pump Additional Data Type: Food Db
+     */
+    public static final int PUMP_ADD_DATA_FOOD_DESC  = 7;
     
     /**
      * Constructor
@@ -99,7 +104,8 @@ public class PumpAdditionalDataType
         this.addata_mapping.put(ic.getMessage("ADD_DATA_BG"), "3");             
         this.addata_mapping.put(ic.getMessage("ADD_DATA_URINE"), "4");             
         this.addata_mapping.put(ic.getMessage("ADD_DATA_CH"), "5");             
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD"), "6");             
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD_DB"), "6");             
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD_DESC"), "7");             
     }
 
     

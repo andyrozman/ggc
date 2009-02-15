@@ -12,6 +12,41 @@ slovene (as is application)).
 
 <h3>GGC Releases</h3>
 
+
+<h4>Version 0.4</h4>
+
+<ul>
+<li><a href="http://downloads.sourceforge.net/ggc/GGC_Setup_0.4_jre.exe?use_mirror=osdn">GGC 0.4 Windows Installer (with JRE)</a> - You should use this 
+install file if you have no knowledge about Java. It contains JRE, so the file is much bigger, but you can just install it, out-of-the-box,
+without any special intervention (advised for most end-users).</li>
+
+<li><a href="http://downloads.sourceforge.net/ggc/GGC_Setup_0.4.exe?use_mirror=osdn">GGC 0.4 Windows Installer (without JRE)</a> - If you have Java 
+already on your computer, and your knowledge of computer is above average you can decide to take this file and manually configure 
+application to run with your installed Java.</li>
+
+<li><a href="http://downloads.sourceforge.net/ggc/GGC_0.4.zip?use_mirror=osdn">GGC 0.4 Zip file</a>, with all files - For all other platforms you need
+to use this file. You just extract it and then follow by reading Readme_1st to get it running.</li>
+
+<li><a href="http://downloads.sourceforge.net/ggc/GGC_Update_0.4.zip?use_mirror=osdn">GGC Update 0.4 Zip file</a>, this file contains only files that were 
+updates since 1st release (0.3). If you have installed GGC 0.3 and have data in it, this would be file to use. Read document 'How_To_Upgrade.txt' in zip 
+file.</li>
+
+</ul>
+
+
+
+<h4>Version 0.3.1</h4>
+
+<ul>
+
+<li><a href="http://downloads.sourceforge.net/ggc/GGC_Update_0.3.1.zip?use_mirror=osdn">Update 0.3.1</a> - This update is needed
+if you plan to update your GGC from version 0.3. If you don't have any data in 0.3, it would be wiser to uninstall 0.3
+and install one of higher versions.</li>
+
+
+</ul>
+
+
 <h4>Version 0.3</h4>
 
 <ul>
@@ -29,19 +64,34 @@ to use this file. You just extract it and then follow by reading Readme_1st to g
 
 </ul>
 
-http://downloads.sourceforge.net/ggc/GGC_Update_0.3.1.zip?use_mirror=osdn
 
-
-
-
+<br>
 
 <h3>USB Releases</h3>
 
 <h4>GGC USB Version</h4>
 <ul>
-<li><!-- a href="http://downloads.sourceforge.net/ggc/GGC_0.2.9.7.zip">GGC 0.3</a> -->
-USB Release is not available at this time, but it will be added by end of September
-</li>
+<li>USB Releases are the same as full releases. Download any of them, and extract them from zip file, then 
+download one of GVM releases (for version 0.4 and higher) or VM releases (for version 0.3).
+ /li>
+</ul>
+
+
+<h4>USB GVMs (from 0.4 up) - Full</h4>
+
+
+<ul>
+<li><a href="http://downloads.sourceforge.net/ggc/GVM_linux_x86_1.zip?use_mirror=osdn">Linux GVM [Java 1.6]</a></li>
+<li><a href="http://downloads.sourceforge.net/ggc/GVM_win_1.zip?use_mirror=osdn">Windows GVM [Java 1.6]</a></li>
+<li><a href="http://downloads.sourceforge.net/ggc/GVM_freebsd_1.zip?use_mirror=osdn">FreeBSD GVM [Java 1.6]</a></li>
+</ul>
+
+
+<h4>USB GVMs (from 0.4 up) - Lite</h4>
+
+<ul>
+<li><a href="http://downloads.sourceforge.net/ggc/GVM_freebsd_lite_1.zip?use_mirror=osdn">FreeBSD Lite GVM</a></li>
+<li><a href="http://downloads.sourceforge.net/ggc/GVM_mac_lite_1.zip?use_mirror=osdn">Mac Lite GVM</a></li>
 </ul>
 
 
@@ -52,16 +102,9 @@ USB Release is not available at this time, but it will be added by end of Septem
 <li><a href="http://downloads.sourceforge.net/ggc/FreeBSD_v7_16.zip?use_mirror=osdn">FreeBSD VM (FreeBSD 7.0) [Java 1.6]</a></li>
 </ul>
 
-GVMS
-
-Full
-
-http://downloads.sourceforge.net/ggc/GVM_linux_x86_1.zip?use_mirror=
-http://downloads.sourceforge.net/ggc/GVM_win_1.zip?use_mirror=
-
-Lite
 
 
+<br>
 
 <h3>Other files</h3>
 
@@ -76,7 +119,8 @@ Lite
 <h4>Custom Nutrition Databases</h4>
 
 <ul>
-<li><a href="http://downloads.sourceforge.net/ggc/SLO_Db_1.zip?use_mirror=osdn">Slovenian Nutrition Database 1</a> - This is nutrition database for people living in Slovenia and speaking Slovenian. All instructions and notes are inside zip archive. Required USDA SR-18.</li>
+<li><a href="http://downloads.sourceforge.net/ggc/SLO_Db_1.zip?use_mirror=osdn">Slovenian Nutrition Database 1</a> - This is nutrition database for people living in Slovenia and speaking Slovenian. All instructions and notes are inside zip archive. Required USDA SR-18. Contains database from diabetes software Kocka.</li>
+<li><a href="http://downloads.sourceforge.net/ggc/SLO_Db_2.zip?use_mirror=osdn">Slovenian Nutrition Database 2</a> - This is nutrition database for people living in Slovenia and speaking Slovenian. All instructions and notes are inside zip archive. Required USDA SR-18. Contains databases from 2 different Slovenian programs: Kocka and Daciofit</li>
 </ul>
 
 

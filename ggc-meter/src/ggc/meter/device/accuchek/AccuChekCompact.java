@@ -108,18 +108,6 @@ public class AccuChekCompact extends AccuChekSmartPixMeter
 
     
     /**
-     * getCompanyId - Get Company Id 
-     * Should be implemented by meter class.
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return AccuChekSmartPixMeter.ROCHE_COMPANY;
-    }
-    
-    
-    /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
      * 

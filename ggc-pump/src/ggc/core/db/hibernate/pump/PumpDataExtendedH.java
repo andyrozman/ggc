@@ -138,7 +138,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     }
 
     /**
-     * Set Extended
+     * Set Value
      *  
      * @param value parameter
      */

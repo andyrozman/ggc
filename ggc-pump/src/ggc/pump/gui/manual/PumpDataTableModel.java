@@ -29,6 +29,7 @@
 package ggc.pump.gui.manual;
 
 import ggc.plugin.data.DeviceValuesDay;
+import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -135,8 +136,10 @@ public class PumpDataTableModel extends AbstractTableModel
     public void setDailyValues(DeviceValuesDay dayData)
     {
         this.dayData = dayData;
+        this.dayData.sort(new PumpValuesEntry());
         
-        System.out.println("DayData: " + dayData.getRowCount()); //.getRowCount());
+        
+        //System.out.println("DayData: " + dayData.getRowCount()); //.getRowCount());
         
         
         fireTableChanged(null);

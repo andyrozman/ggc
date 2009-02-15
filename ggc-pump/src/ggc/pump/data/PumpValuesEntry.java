@@ -9,8 +9,14 @@ import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.ATechDate;
 
 /**
@@ -33,14 +39,14 @@ import com.atech.utils.ATechDate;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpValuesEntry
+ *  Description:  Pump Values Entry, with all data, also statistics item.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 
-public class PumpValuesEntry extends DeviceValuesEntry 
+public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObjectHibernate //, StatisticsItem
 //extends PumpDataH implements DatabaseObjectHibernate   // extends PumpValuesEntryAbstract
 {
 
@@ -48,64 +54,23 @@ public class PumpValuesEntry extends DeviceValuesEntry
 
     DataAccessPump m_da = null; //DataAccessPump.getInstance();
 	
-	// pump 
+	// pump
+    long id;
 	ATechDate datetime;
 	int base_type;
 	int sub_type;
 	String value;
-	String profile;
-	
-	// old
-	//public String bg_str;
-	//public int bg_unit;
-	//public boolean checked = false;
-	
-	
-	//private int bg;
-	//private float ch;
-	//public String meals;
-	
-	//public
+	String extended;
+	//String profile;
+	long person_id;
+	String comment;
+	long changed;
+
+
 	private Hashtable<String,String> params;
-	//public int status = 1; //MeterValuesEntry.
-	//private static I18nControl ic = I18nControl.getInstance(); 
-	
-	//public String bg_original = null;
-	//private OutputUtil util = OutputUtil.getInstance();
-	
-	/*
-	public static final int STATUS_UNKNOWN = 0;
-    public static final int STATUS_NEW = 1;
-    public static final int STATUS_CHANGED = 2;
-    public static final int STATUS_OLD = 3;
-	
-	
-    public static final int OBJECT_STATUS_NEW = 1;
-    public static final int OBJECT_STATUS_EDIT = 2;
-    public static final int OBJECT_STATUS_OLD =3;
-    */
-    
-    //public int object_status = 0;
     
     private PumpDataH entry_object = null;
     private Hashtable<String,PumpValuesEntryExt> additional_data = new Hashtable<String,PumpValuesEntryExt>(); 
-    
-    /*
-	public static String entry_statuses[] = 
-	{
-	     PumpValuesEntry.ic.getMessage("UNKNOWN"),
-         PumpValuesEntry.ic.getMessage("NEW"),
-         PumpValuesEntry.ic.getMessage("CHANGED"),
-         PumpValuesEntry.ic.getMessage("OLD")
-	};
-	
-    public static String entry_status_icons[] = 
-    {
-         "led_gray.gif",
-         "led_green.gif",
-         "led_yellow.gif",
-         "led_red.gif"
-    };*/
 	
 
     /**
@@ -119,12 +84,21 @@ public class PumpValuesEntry extends DeviceValuesEntry
 
 	
 	/**
-	 * 
+	 * Constructor 
 	 */
 	public PumpValuesEntry()
 	{
-	    this.entry_object = new PumpDataH();
         m_da = DataAccessPump.getInstance();
+        
+        this.id = 0L;
+        this.datetime = new ATechDate(this.getDateTimeFormat(), new GregorianCalendar());
+        this.base_type = 0;
+        this.sub_type = 0;
+        this.value = "";
+        this.extended = "";
+        this.person_id = m_da.getSelectedPersonId();
+        this.comment = "";
+        
 	}
 
 
@@ -135,8 +109,16 @@ public class PumpValuesEntry extends DeviceValuesEntry
      */
     public PumpValuesEntry(int base_type)
     {
-        this.entry_object = new PumpDataH();
         m_da = DataAccessPump.getInstance();
+
+        this.id = 0L;
+        this.datetime = new ATechDate(this.getDateTimeFormat(), new GregorianCalendar());
+        this.base_type = base_type;
+        this.sub_type = 0;
+        this.value = "";
+        this.extended = "";
+        this.person_id = m_da.getSelectedPersonId();
+        this.comment = "";
     }
 
 	
@@ -147,8 +129,18 @@ public class PumpValuesEntry extends DeviceValuesEntry
 	 */
 	public PumpValuesEntry(PumpDataH pdh)
 	{
-	    this.entry_object = pdh;
         m_da = DataAccessPump.getInstance();
+
+        //this.entry_object = pdh;
+	    this.id = pdh.getId();
+        this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
+        this.base_type = pdh.getBase_type();
+        this.sub_type = pdh.getSub_type();
+        this.value = pdh.getValue();
+        this.extended = pdh.getExtended();
+        this.person_id = pdh.getPerson_id();
+        this.comment = pdh.getComment();
+        
 	}
 	
 	
@@ -220,60 +212,19 @@ public class PumpValuesEntry extends DeviceValuesEntry
     {
         this.value = val;
     }
-    
-	
-	/**
-	 * Set Profile
-	 * 
-	 * @param profile
-	 */
-	public void setProfile(String profile)
-	{
-	    this.profile = profile;
-	}
-	
-	
-	// added
-	/*
-	public float getBG()
-	{
-	    return m_da.getBGValueInSelectedFormat(this.bg);
-	}
-	
-	
-    public float getBGRaw()
-    {
-        return this.bg;
-    }
-	
-    public float getCH()
-    {
-        return this.ch;
-    }
-    
-    public String getActivity()
-    {
-        // TODO: 
-        return "";
-    }
-    
-    public String getUrine()
-    {
-        // TODO: 
-        return "";
-    }*/
-    
-    
+
     /**
-     * Get Comment
+     * Set Value
      * 
-     * @return
+     * @return 
      */
-    public String getComment()
+    public String getValue()
     {
-        // TODO: 
-        return "";
+        return this.value;
     }
+    
+    
+    
     
     
     
@@ -409,11 +360,11 @@ public class PumpValuesEntry extends DeviceValuesEntry
     	    }
     	    case 2: // subtype
     	    {
-    	        return getSubType();
+    	        return getSubTypeString();
     	    }
     	    case 3: // value
     	    {
-    	        return this.entry_object.getValue();
+    	        return this.value;
     	    }
     	    case 4: // additional
     	    {
@@ -455,23 +406,46 @@ public class PumpValuesEntry extends DeviceValuesEntry
 	 * 
 	 * @return
 	 */
-	public String getSubType()
+	public int getSubType()
 	{
-	    if (this.entry_object.getSub_type()==0)
+	    return this.sub_type;
+	}
+	
+	
+	/**
+	 * Get Sub Type
+	 * 
+	 * @return
+	 */
+	public String getSubTypeString()
+	{
+	    if (this.sub_type==0)
 	        return "";
 	    
-	    if (this.entry_object.getBase_type()==PumpBaseType.PUMP_DATA_BASAL)
+	    if (this.base_type==PumpBaseType.PUMP_DATA_BASAL)
 	    {
-	        return m_da.getBasalSubTypes().basal_desc[this.entry_object.getSub_type()];
+	        return m_da.getBasalSubTypes().getDescriptions()[this.sub_type];
 	    }
-	    else if (this.entry_object.getBase_type()==PumpBaseType.PUMP_DATA_BOLUS)
+	    else if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
 	    {
-            return m_da.getBolusSubTypes().bolus_desc[this.entry_object.getSub_type()];
+            return m_da.getBolusSubTypes().getDescriptions()[this.sub_type];
 	    }
-	    else if (this.entry_object.getBase_type()==PumpBaseType.PUMP_DATA_REPORT)
+	    else if (this.base_type==PumpBaseType.PUMP_DATA_REPORT)
 	    {
-            return m_da.getPumpReportTypes().report_desc[this.entry_object.getSub_type()];
+            return m_da.getPumpReportTypes().getDescriptions()[this.sub_type];
 	    }
+        else if (this.base_type==PumpBaseType.PUMP_DATA_ALARM)
+        {
+            return m_da.getPumpAlarmTypes().getDescriptions()[this.sub_type];
+        }
+        else if (this.base_type==PumpBaseType.PUMP_DATA_ERROR)
+        {
+            return m_da.getPumpErrorTypes().getDescriptions()[this.sub_type];
+        }
+        else if (this.base_type==PumpBaseType.PUMP_DATA_EVENT)
+        {
+            return m_da.getPumpEventTypes().getDescriptions()[this.sub_type];
+        }
 	    else 
 	    {
 	        return "";
@@ -497,10 +471,13 @@ public class PumpValuesEntry extends DeviceValuesEntry
 	            String key = en.nextElement();
 	            
 	            if (i>0)
-	                sb.append(";");
+	                sb.append("; ");
 	            
 	            //sb.append(key + "=" + this.additional_data.get(key).toString());
 	            sb.append(this.additional_data.get(key).toString());
+	            
+	            if (i%3==0)
+	                sb.append("\n");
 	            
 	        }
 	        
@@ -589,63 +566,165 @@ public class PumpValuesEntry extends DeviceValuesEntry
 	    return "PumpValuesEntry [date/time=" + this.datetime  + " ?????? ]";
 	}
 
-/*
+
+    /**
+     * DbAdd - Add this object to database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return id in type of String
+     */
     public String DbAdd(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return null;
+        Transaction tx = sess.beginTransaction();
+        
+        PumpDataH pdh = new PumpDataH();
+        
+        pdh.setId(this.id);
+        pdh.setDt_info(this.datetime.getATDateTimeAsLong()); 
+        pdh.setBase_type(this.base_type); 
+        pdh.setSub_type(this.sub_type);
+        pdh.setValue(this.value);
+        pdh.setExtended(this.extended); 
+        pdh.setPerson_id((int)this.person_id); 
+        pdh.setComment(this.comment); 
+        pdh.setChanged(System.currentTimeMillis());
+        pdh.setChanged(System.currentTimeMillis());
+
+        Long _id = (Long)sess.save(pdh);
+        tx.commit();
+
+        pdh.setId(_id.longValue());
+        
+        return ""+_id.longValue();
     }
 
 
+    /**
+     * DbDelete - Delete this object in database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
+     */
     public boolean DbDelete(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return false;
+        Transaction tx = sess.beginTransaction();
+
+        PumpDataH ch = (PumpDataH)sess.get(PumpDataH.class, new Long(this.id));
+        sess.delete(ch);
+        tx.commit();
+
+        return true;
     }
 
 
+    /**
+     * DbEdit - Edit this object in database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
+     */
     public boolean DbEdit(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return false;
+        Transaction tx = sess.beginTransaction();
+        
+        PumpDataH pdh = (PumpDataH)sess.get(PumpDataH.class, new Long(this.id));
+        
+        pdh.setId(this.id);
+        pdh.setDt_info(this.datetime.getATDateTimeAsLong()); 
+        pdh.setBase_type(this.base_type); 
+        pdh.setSub_type(this.sub_type);
+        pdh.setValue(this.value);
+        pdh.setExtended(this.extended); 
+        pdh.setPerson_id((int)this.person_id); 
+        pdh.setComment(this.comment); 
+        pdh.setChanged(System.currentTimeMillis());
+
+        sess.update(pdh);
+        tx.commit();
+
+        return true;
     }
 
 
+    /**
+     * DbGet - Loads this object. Id must be set.
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
+     */
     public boolean DbGet(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return false;
+        PumpDataH pdh = (PumpDataH)sess.get(PumpDataH.class, new Long(this.id));
+        
+        this.id = pdh.getId();
+        this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
+        this.base_type = pdh.getBase_type();
+        this.sub_type = pdh.getSub_type();
+        this.value = pdh.getValue();
+        this.extended = pdh.getExtended();
+        this.person_id = pdh.getPerson_id();
+        this.comment = pdh.getComment();
+        
+        return true;
     }
 
 
+    /**
+     * DbHasChildren - Shows if this entry has any children object, this is needed for delete
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
+     */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /**
+     * getAction - returns action that should be done on object
+     *    0 = no action
+     *    1 = add action
+     *    2 = edit action
+     *    3 = delete action
+     *    This is used mainly for objects, contained in lists and dialogs, used for 
+     *    processing by higher classes (classes calling selectors, wizards, etc...
+     * 
+     * @return number of action
+     */
     public int getAction()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
 
+    /**
+     * getObjectName - returns name of DatabaseObject
+     * 
+     * @return name of object (not Hibernate object)
+     */
     public String getObjectName()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "PumpDataH";
     }
 
 
+    /**
+     * isDebugMode - returns debug mode of object
+     * 
+     * @return true if object in debug mode
+     */
     public boolean isDebugMode()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
-*/
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -712,5 +791,305 @@ public class PumpValuesEntry extends DeviceValuesEntry
         return this.datetime;
     }
 	
-	
-}	
+
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public long getId()
+    {
+        return this.id;
+    }
+    
+    
+    /**
+     * Get Comment
+     * 
+     * @return
+     */
+    public String getComment()
+    {
+        return this.comment;
+    }
+    
+    
+    /**
+     * Set Comment
+     * 
+     * @param value
+     */
+    public void setComment(String value)
+    {
+        this.comment = value;
+    }
+
+    
+    
+    //---
+    //---  Statistics
+    //---
+    
+    
+    /**
+     * Statistics Value: Bolus Insulin Sum
+     */
+    public static final int INS_SUM_BOLUS =1;
+    
+    /**
+     * Statistics Value: Basal Insulin Sum
+     */
+    public static final int INS_SUM_BASAL =2;
+
+    /**
+     * Statistics Value: Both Insulin Sum
+     */
+    public static final int INS_SUM_TOGETHER =3;
+    
+    /**
+     * Statistics Value: Bolus Insulin Average
+     */
+    public static final int INS_AVG_BOLUS =4;
+
+    /**
+     * Statistics Value: Basal Insulin Average
+     */
+    public static final int INS_AVG_BASAL =5;
+
+    /**
+     * Statistics Value: Both Insulin Average
+     */
+    public static final int INS_AVG_TOGETHER =6;
+
+    /**
+     * Statistics Value: Bolus Insulin Doses
+     */
+    public static final int INS_DOSES_BOLUS =7;
+
+    /**
+     * Statistics Value: Basal Insulin Doses
+     */
+    public static final int INS_DOSES_BASAL =8;
+
+    /**
+     * Statistics Value: Both Insulin Doses
+     */
+    public static final int INS_DOSES_TOGETHER =9;
+    
+    /**
+     * Statistics Value: Carbohydrates Sum
+     */
+    public static final int CH_SUM =10;
+
+    /**
+     * Statistics Value: Carbohydrates Average
+     */
+    public static final int CH_AVG =11;
+
+    /**
+     * Statistics Value: Meals
+     */
+    public static final int MEALS =12;
+
+    /**
+     * Statistics Value: Blood Glucose Average
+     */
+    public static final int BG_AVG =13;
+
+    /**
+     * Statistics Value: Blood Glucose Maximal
+     */
+    public static final int BG_MAX =14;
+
+    /**
+     * Statistics Value: Blood Glucose Minimal
+     */
+    public static final int BG_MIN =15;
+    
+    /**
+     * Statistics Value: Blood Glucose Count
+     */
+    public static final int BG_COUNT =16;
+    
+    /**
+     * Statistics Value: Blood Glucose Standard Deviation
+     */
+    public static final int BG_STD_DEV =17;
+
+    
+    /**
+     * Get Max Statistics Object - we can have several Statistic types defined here
+     * 
+     * @return
+     */
+    public int getMaxStatisticsObject()
+    {
+        return 18;
+    }
+
+    
+    /**
+     * Get Statistics Action - we define how statistic is done (we have several predefined 
+     *    types of statistics
+     * 
+     * @param index index for statistics item 
+     * @return
+     */
+    public int getStatisticsAction(int index)
+    {
+        switch (index)
+        {
+
+            case PumpValuesEntry.CH_AVG:
+            case PumpValuesEntry.BG_AVG:
+            case PumpValuesEntry.INS_AVG_BOLUS:
+                return StatisticsObject.OPERATION_AVERAGE;
+        
+        
+            case PumpValuesEntry.INS_SUM_BOLUS:
+            case PumpValuesEntry.CH_SUM:
+                return StatisticsObject.OPERATION_SUM;
+
+
+            case PumpValuesEntry.MEALS:
+            case PumpValuesEntry.INS_DOSES_BOLUS:
+            case PumpValuesEntry.BG_COUNT:
+                return StatisticsObject.OPERATION_COUNT;
+                
+
+            case PumpValuesEntry.BG_MAX:
+                return StatisticsObject.OPERATION_MAX;
+                
+            case PumpValuesEntry.BG_MIN:
+                return StatisticsObject.OPERATION_MIN;
+                
+                
+                
+            case PumpValuesEntry.INS_SUM_BASAL:
+            case PumpValuesEntry.INS_SUM_TOGETHER:
+            
+            case PumpValuesEntry.INS_AVG_BASAL:
+            case PumpValuesEntry.INS_AVG_TOGETHER:
+            case PumpValuesEntry.INS_DOSES_BASAL:
+    
+            case PumpValuesEntry.INS_DOSES_TOGETHER:
+            case PumpValuesEntry.BG_STD_DEV:
+                return StatisticsObject.OPERATION_SPECIAL;
+    
+                
+        
+            default:
+                return 0;
+        }
+    }
+
+
+    /**
+     * Get Value For Item
+     * 
+     * @param index index for statistics item 
+     * @return 
+     */
+    public float getValueForItem(int index)
+    {
+        switch (index)
+        {
+            case PumpValuesEntry.INS_AVG_BOLUS:
+            case PumpValuesEntry.INS_SUM_BOLUS:
+            case PumpValuesEntry.INS_DOSES_BOLUS:
+            {
+                if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
+                    return m_da.getFloatValueFromString(this.getValue(), 0.0f);
+                else
+                    return 0.0f;
+            }
+                
+                
+            case PumpValuesEntry.CH_SUM:
+            case PumpValuesEntry.CH_AVG:
+            case PumpValuesEntry.MEALS:
+            {
+                if (this.additional_data.containsKey(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_CH]))
+                {
+                    return m_da.getFloatValueFromString(this.additional_data.get(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_CH]).getValue(), 0.0f);
+                }
+                else
+                    return 0.0f;
+            }
+                
+            
+            case PumpValuesEntry.BG_AVG:
+            case PumpValuesEntry.BG_MAX:
+            case PumpValuesEntry.BG_MIN:
+            case PumpValuesEntry.BG_COUNT:
+            {
+                if (this.additional_data.containsKey(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_BG]))
+                {
+                    return m_da.getFloatValueFromString(this.additional_data.get(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_BG]).getValue(), 0.0f);
+                }
+                else
+                    return 0.0f;
+                
+            }
+                
+            case PumpValuesEntry.INS_DOSES_BASAL:
+            case PumpValuesEntry.INS_DOSES_TOGETHER:
+                
+            case PumpValuesEntry.BG_STD_DEV:
+            case PumpValuesEntry.INS_SUM_BASAL:
+            case PumpValuesEntry.INS_SUM_TOGETHER:
+            case PumpValuesEntry.INS_AVG_BASAL:
+            case PumpValuesEntry.INS_AVG_TOGETHER:
+                
+            default:
+                return 0.0f;
+        }
+    }
+
+
+    /**
+     * Is Special Action - tells if selected statistics item has special actions
+     * 
+     * @param index
+     * @return
+     */
+    public boolean isSpecialAction(int index)
+    {
+        switch (index)
+        {
+            case PumpValuesEntry.INS_SUM_BASAL:
+            case PumpValuesEntry.INS_SUM_TOGETHER:
+            case PumpValuesEntry.INS_AVG_BASAL:
+            case PumpValuesEntry.INS_AVG_TOGETHER:
+            case PumpValuesEntry.INS_DOSES_BASAL:
+            case PumpValuesEntry.INS_DOSES_TOGETHER:
+            case PumpValuesEntry.BG_STD_DEV:
+                return true;
+                
+            case PumpValuesEntry.INS_AVG_BOLUS:
+            case PumpValuesEntry.INS_SUM_BOLUS:
+            case PumpValuesEntry.INS_DOSES_BOLUS:
+            case PumpValuesEntry.CH_SUM:
+            case PumpValuesEntry.CH_AVG:
+            case PumpValuesEntry.MEALS:
+            case PumpValuesEntry.BG_AVG:
+            case PumpValuesEntry.BG_MAX:
+            case PumpValuesEntry.BG_MIN:
+            case PumpValuesEntry.BG_COUNT:
+            default:
+                return false;
+        }
+    }
+
+
+    /**
+     * If we have any special actions for any of objects
+     * 
+     * @return
+     */
+    public boolean weHaveSpecialActions()
+    {
+        return true;
+    }
+ 	
+}

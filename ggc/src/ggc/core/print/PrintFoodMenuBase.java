@@ -491,17 +491,6 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     }
     
 
-    /**
-     * Returns base filename for printing job, this is just part of end filename (starting part)
-     * 
-     * @return 
-     */
-    @Override
-    public String getFileNameBase()
-    {
-        return "" + System.currentTimeMillis();
-        //return "foodmenu_base_";
-    }
 
 
     /** 
@@ -632,18 +621,18 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
     }
 
-    
+
     /**
-     * Returns data part of filename for printing job, showing which data is being printed
-     * 
-     * @return 
+     * Returns base filename for printing job, this is just part of end filename (starting part)
      */
     @Override
-    public String getFileNameRange()
+    public String getFileNameBase()
     {
-        //return this.m_data.getRangeBeginObject().getDateString() + "-" + this.m_data.getRangeEndObject().getDateString(); 
-        return "" + System.currentTimeMillis();
+        return "FoodMenuBase";
     }
+    
+    
+    
     
     
     

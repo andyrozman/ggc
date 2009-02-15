@@ -113,7 +113,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         getContentPane().add(hbView, BorderLayout.CENTER); */
         
         GraphViewerPanel gvp = new GraphViewerPanel(gv);
-        gvp.setMinimumSize(new Dimension(450, 460));
+        gvp.setMinimumSize(new Dimension(450, 440)); // 450, 460
         gvp.setPreferredSize(gvp.getMinimumSize());
         getContentPane().add(gvp, BorderLayout.CENTER);
         

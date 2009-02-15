@@ -1,32 +1,8 @@
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: DailyStatsFrame.java Purpose: Enter and view all data for one day.
- * 
- * Author: schultd Changes by andy
- */
-
 package ggc.pump.gui.manual;
 
 import ggc.plugin.data.DeviceValuesDay;
+import ggc.pump.data.PumpDailyStatistics;
+import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
@@ -54,8 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
 import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
@@ -110,6 +84,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
     //public boolean save_needed = false;
 
     CalendarPane calPane;
+    PumpDailyStatistics stats = null;
 
     JLabel sumIns1, sumIns2, sumIns;
     JLabel avgIns1, avgIns2, avgIns;
@@ -125,6 +100,8 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     GGCPumpDb m_db = null;
 
+    GregorianCalendar current_date;
+    
     /**
      * Constructor
      * 
@@ -139,6 +116,8 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         setTitle(new GregorianCalendar());
         this.m_da = da;
         this.m_db = m_da.getDb();
+        stats = new PumpDailyStatistics();        
+        m_da.addComponent(this);
 
         setSize(700, 470);
         m_da.centerJDialog(this, parent);
@@ -153,6 +132,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
      */
     public void setTitle(GregorianCalendar gc)
     {
+        this.current_date = gc;
         setTitle(m_ic.getMessage("PUMP_DAILY_OVERVIEW") + "  [" + gc.get(GregorianCalendar.DAY_OF_MONTH) + "."
                 + (gc.get(GregorianCalendar.MONTH) + 1) + "." + gc.get(GregorianCalendar.YEAR) + "]");
     }
@@ -167,6 +147,20 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         return model;
     }
 
+    private void refreshData()
+    {
+        dayData = m_da.getDb().getDailyPumpValues(this.current_date);
+        dayData.sort();
+        model.setDailyValues(dayData); //setDailyValues(dayData);
+        //ArrayList al = new ArrayList();
+        //Collections.s
+        stats.processFullCollection(dayData.getList());
+        updateLabels();
+        
+        this.model.fireTableChanged(null);
+    }
+    
+    
     /**
      * Get This Parent
      * @return
@@ -179,6 +173,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
     protected void close()
     {
         this.dispose();
+        m_da.getPlugInServerInstance().getParent().requestFocus();
     }
 
     private void init()
@@ -206,7 +201,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
         InsPanel.add(new JLabel(m_ic.getMessage("TOTAL") + ":"));
         InsPanel.add(sumIns = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG_INS") + ":"));
+        InsPanel.add(new JLabel("")); //m_ic.getMessage("AVG_INS") + ":"));
         InsPanel.add(avgIns = new JLabel());
         InsPanel.add(new JLabel(m_ic.getMessage("DOSE_INS") + ":"));
         InsPanel.add(doseIns = new JLabel());
@@ -253,13 +248,13 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                   { 
                       public void dateHasChanged(CalendarEvent e) 
                       {
-                         System.out.println("dateHasChanged");
+                          setTitle(e.getNewCalendar());
+                          //current_date = e.getNewCalendar();
+                          //GregorianCalendar gc = e.getNewCalendar();
                   
-                         // TODO date changed
-                         GregorianCalendar gc = e.getNewCalendar();
-                  
-                         dayData = m_da.getDb().getDailyPumpValues(gc);
-                         model.setDailyValues(dayData); //setDailyValues(dayData);
+                         //dayData = m_da.getDb().getDailyPumpValues(gc);
+                         //model.setDailyValues(dayData); //setDailyValues(dayData);
+                          refreshData();
                       }
                   });
                  
@@ -277,16 +272,14 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                   dayHeader.add(dayStats, BorderLayout.CENTER);
                  
         // TODO
-        dayData = m_da.getDb().getDailyPumpValues(new GregorianCalendar());
-        // dbH.getDayStats(new Grenew Date(System.currentTimeMillis()));
-        // dailyGraphWindow.setDailyValues(dayData);
-        // DailyGraphFrame.setDailyValues(dayData);
-        
-        
+        dayData = m_da.getDb().getDailyPumpValues(this.current_date);
+        dayData.sort();
+        stats.processFullCollection(dayData.getList());
+        updateLabels();
         
         model = new PumpDataTableModel(dayData);
         
-        model.addTableModelListener(new TableModelListener()
+/*        model.addTableModelListener(new TableModelListener()
         {
             public void tableChanged(TableModelEvent e)
             {
@@ -295,7 +288,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                 updateLabels();
                 // saveButton.setEnabled(true);
             }
-        });
+        }); */
         //table = new JTable(model = new model);
         
         
@@ -305,7 +298,8 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             private static final long serialVersionUID = 1613807277320213251L;
 
             //Implement table cell tool tips.
-            public String getToolTipText(MouseEvent e) {
+            public String getToolTipText(MouseEvent e) 
+            {
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
@@ -332,6 +326,8 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             {
                 if ((SwingUtilities.isLeftMouseButton(e)) && (e.getClickCount() == 2))
                 {
+                    editEntry(false);
+
                     /*
                      // TODO: fix
                                         // System.out.println("mouse 2x clicked");
@@ -437,17 +433,62 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         // getContentPane().add(EntryBox, BorderLayout.SOUTH);
         getContentPane().add(gg, BorderLayout.SOUTH);
 
-        updateLabels();
+        //updateLabels();
         // TODO re-enable
         // m_da.enableHelp(this);
 
         setVisible(true);
     }
 
+    
+    
+    
+    
     private void updateLabels()
     {
         if (dayData == null)
             return;
+
+        
+        sumIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_BOLUS, 1)); //df.format(dayData.getSumIns1()));
+        sumIns2.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_BASAL, 1)); //df.format(dayData.getSumIns2()));
+        sumIns.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_TOGETHER, 1)); //df.format(dayData.getSumIns()));
+        
+        avgIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_AVG_BOLUS, 1));
+        avgIns2.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_AVG_BASAL, 1)); //df.format(dayData.getAvgIns2()));
+        //avgIns.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_TOGETHER, 1)); //df.format(dayData.getAvgIns()));
+
+        doseIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_BOLUS, 0));
+        doseIns2.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_BASAL, 0)); //dayData.getIns2Count() + "");
+        doseIns.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_TOGETHER, 0)); //dayData.getInsCount() + "");
+
+        sumBE.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.CH_SUM, 0));
+        avgBE.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.CH_AVG, 0));
+        meals.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.MEALS, 0));
+
+        readings.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_COUNT, 0));
+        
+        
+        //if ()
+        int dec_pls = 1;
+        
+        if (this.m_da.getBGMeasurmentType()==DataAccessPump.BG_MGDL)
+        {
+            dec_pls = 0;
+            avgBG.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_AVG, dec_pls));
+            stdDev.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_STD_DEV, dec_pls));
+            highestBG.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_MAX, dec_pls));
+            lowestBG.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_MIN, dec_pls));
+        }
+        else
+        {
+            dec_pls = 1;
+            avgBG.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_AVG, dec_pls));
+            stdDev.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_STD_DEV, dec_pls));
+            highestBG.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_MAX, dec_pls));
+            lowestBG.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_MIN, dec_pls));
+        }
+        
         /*
                 DecimalFormat df = new DecimalFormat("#0.0");
                 sumIns1.setText(df.format(dayData.getSumIns1()));
@@ -503,7 +544,14 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         {
             SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
             
-            /*PumpDataRowDialog pdrd =*/ new PumpDataRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
+            PumpDataRowDialog pdrd = new PumpDataRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
+            
+            if (pdrd.wasAction())
+            {
+                refreshData();
+            }
+            
+            
             /*
             SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -518,6 +566,9 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         }
         else if (command.equals("edit_row"))
         {
+            this.editEntry(true);
+            
+/*            
             // SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
             // EditRowFrame eRF = EditRowFrame.getInstance(model, dayData,
             // sf.format(calPane.getSelectedDate()));
@@ -529,21 +580,23 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                 return;
             }
 
-            System.out.println("FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!");
+            //System.out.println("FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!");
             
             // TODO: Fix this
-            //PumpValuesEntry dvr = dayData.getRowAt(table.getSelectedRow());
+            PumpValuesEntry dvr = (PumpValuesEntry) dayData.getRowAt(table.getSelectedRow());
 
-            //new PumpDataRowDialog(dvr, this);
+            PumpDataRowDialog aRF = new PumpDataRowDialog(dvr, this);
             
-            /*
-            if (aRF.actionSuccesful())
+            
+            if (aRF.wasAction())
             {
-                m_db.saveDayStats(dayData);
-                dayData.sort();
-                this.model.fireTableChanged(null);
-            }*/
-
+                System.out.println("Save not done !!!!");
+                
+                //m_db.saveDayStats(dayData);
+                //dayData.sort();
+                //this.model.fireTableChanged(null);
+            }
+*/
         }
         /*else if (command.equals("delete_row"))
         {
@@ -579,6 +632,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         } */
         else if (command.equals("close"))
         {
+            m_da.removeComponent(this);
             this.close();
         }
         /*        else if (command.equals("show_daily_graph"))
@@ -591,6 +645,34 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     }
 
+    
+    
+    private void editEntry(boolean check)
+    {
+        if (check)
+        {
+            if (table.getSelectedRow() == -1)
+            {
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        PumpValuesEntry dvr = (PumpValuesEntry) dayData.getRowAt(table.getSelectedRow());
+        PumpDataRowDialog aRF = new PumpDataRowDialog(dvr, this);
+        
+        if (aRF.wasAction())
+        {
+            //System.out.println("Save not done !!!!");
+            
+            //m_db.saveDayStats(dayData);
+            //dayData.sort();
+            refreshData();
+        }
+        
+    }
+    
+    
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************

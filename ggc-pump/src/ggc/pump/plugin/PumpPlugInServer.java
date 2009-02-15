@@ -121,6 +121,7 @@ public class PumpPlugInServer extends PlugInServer
     {
         super(cont, selected_lang, da);
         DataAccessPump.getInstance().addComponent(cont);
+        //DataAccessPump.getInstance().setPlugInServerInstance(this);
         //DataAccessPump.getInstance().m
     }
     
@@ -216,11 +217,20 @@ public class PumpPlugInServer extends PlugInServer
         ic = m_da.getI18nControlInstance();
         I18nControl.getInstance().setLanguage(this.selected_lang);
         
+        //System.out.println("initPlugIn");
+        
         DataAccessPump da = DataAccessPump.getInstance();
         da.addComponent(this.parent);
         da.setHelpContext(this.m_da.getHelpContext());
+        da.setPlugInServerInstance(this);
         da.createDb(m_da.getHibernateDb());
         da.initAllObjects();
+        da.loadSpecialParameters();
+        
+        m_da.loadSpecialParameters();
+        System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        
+        da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
     }
     
     
@@ -238,5 +248,3 @@ public class PumpPlugInServer extends PlugInServer
     
     
 }
-
-

@@ -1,0 +1,51 @@
+
+Nadgradnja 0.3.1
+=================
+
+To je majhna a POTREBNA nadgradnja. Nameščena mora biti na različico 0.3 (če jo namestite na bilo 
+katero drugo različico boste pokvarili namestitev).
+
+V tem paketu za nadgradnjo so tri različne mape, ki jih morate kopirati (in prepisati) v trenutni
+namestitvi. Vsebuje te datoteke:
+
+docs\*                                  - tukaj imamo nekaj dokumentacije o tej nadgradnji 
+data\update\GGC_Update.properties       - datoteka nadgradnje (za ustvaritev zagonskih datotek)
+lib\utils\atech-tools-0.2.5.jar         - to je dejansko nova knjižnica
+
+
+
+Kako namestimo to nadgradnjo
+=============================
+
+1. Odprite arhivsko (zip) datoteko in razširite vse datoteke v začasen direktorij
+2. Označite vse razširjene mape in s desno tipko izberite opcijo Copy (Koriraj)
+3. Poiščite namestitev GGCja (ponavadi nekaj kot c:\Program Files\GGC)
+4. Sedaj morate videti vse podmape (bin, docs, lib,..), kliknite desno tipko na 
+   miški tukaj in izberite ukaz Paste (Prilepi). Kopiranje se bo začelo in vprašani
+   boste ali prepišete datoteke (overwrite), tukaj odgovorite s JA. 
+5. Ko je to zaključeno, je bila nadgradnja uspešno nameščena.
+6. Zaženite GGC aplikacijo
+7. Izberite opcijo Pomoč -Preveri posodobitve. Ko se odpre okno poiščite v seznamu
+   vnos Atech Tools, prikazana verzija mora biti 0.2.5. Če je podatek drugačen je šlo
+   nekaj narobe in morate ponovno namestiti posodobitev.
+
+Če ste imeli težave s nadgradnjo nas prosim kontaktiranje in vam bomo probaly pomagati 
+(ggc@atech-software.com). Za pomoč lahko vprašate v naslednjih jezikih: Slovenskem, 
+Angleškem in Nemškem.
+
+   
+Kaj ta nadgradnja popravi
+==========================
+
+Ta nadgradnja ne popravi verzije celotne aplikacije, aplikacija bo še vedno imeli različico 0.3.
+
+Ta nadgradnja popravi manjšo napako v funkcijah za varnostno kopijo/obnovitev baze. V prejšnji
+različici je bila varnostna kopija narejena v kodni strani, ki je privzeta za operacijski 
+sistem. To lahko povzroči problem, še posebej če baza potrebuje vnose v UTF-8 formatu. Ta
+nadgradnja popravi to napako, in sedaj bere in piše datoteke v UTF-8 formatu, ki popravi
+funkcionalonost varnostne kopije in obnove baze, ki je zahteva za uspešno nadgradnjo 
+aplikacije.  
+
+
+GGC Razvojna Ekipa
+  

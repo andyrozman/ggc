@@ -92,17 +92,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
 
     
     /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return OneTouchMeter.LIFESCAN_COMPANY;
-    }
-
-    
-    /**
      * getDeviceClassName - Get class name of device
      */
     public String getDeviceClassName()

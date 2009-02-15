@@ -72,7 +72,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	
     
 	
-    PumpAdditionalDataType m_pump_add = null;
+    //PumpAdditionalDataType m_pump_add = null;
 
     
     
@@ -81,10 +81,10 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	 * 
 	 * @param pump_add
 	 */
-	public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
+	/*public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
 	{
 	    this.m_pump_add = pump_add;
-	}
+	}*/
 
 	
     /**
@@ -92,7 +92,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public PumpValuesEntryExt()
     {
-        m_pump_add = new PumpAdditionalDataType();
+        //m_pump_add = new PumpAdditionalDataType();
     }
 
     
@@ -103,7 +103,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public PumpValuesEntryExt(PumpDataExtendedH pd)
     {
-        m_pump_add = new PumpAdditionalDataType();
+        //m_pump_add = new PumpAdditionalDataType();
         
         this.setId(pd.getId());
         this.setDt_info(pd.getDt_info());
@@ -117,6 +117,16 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         
     }
     
+
+    /**
+     * Has Changed - This is method which is tied only to changes of value or datetime
+     * 
+     * @return
+     */
+    public boolean hasChanged()
+    {
+        return this.changed;
+    }
     
 	
 /*	
@@ -245,41 +255,45 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 	    
 	    StringBuffer sb = new StringBuffer();
 	    
-        if (this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD)
+        if ((this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB) &&
+            (this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))   
         {
-    	    sb.append(this.m_pump_add.getTypeDescription(this.getType()));
-    	    sb.append(":  ");
-        }
+    	    sb.append(DataAccessPump.getInstance().getAdditionalTypes().getTypeDescription(this.getType()));
+    	    sb.append(": ");
 	    
-	    if ((this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) ||
-	        (this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT) ||
-	        (this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_URINE))
-	    {
-	        sb.append(this.getValue());
-	    }
-        else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
-        {
-            if (this.da.m_BG_unit==DataAccessPump.BG_MGDL)
-                sb.append(this.getValue() + " mg/dL");
-            else
+    	    if ((this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) ||
+    	        (this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT) ||
+    	        (this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_URINE))
+    	    {
+    	        sb.append(this.getValue());
+    	    }
+            else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
             {
-                System.out.println("Displayed BG: " + da.getDisplayedBGString(this.getValue()));
-                sb.append(da.getDisplayedBGString(this.getValue()));
-                //sb.append(this.getValue() + " mmol/L");
-                sb.append(" mmol/L");
-                
-                //da.getBGValueDifferent(DataAccessPump.BG_MGDL, Float.parseFloat(arg0)bg_value)
+                if (this.da.m_BG_unit==DataAccessPump.BG_MGDL)
+                    sb.append(this.getValue() + " mg/dL");
+                else
+                {
+                    //System.out.println("Displayed BG: " + da.getDisplayedBGString(this.getValue()));
+                    sb.append(da.getDisplayedBGString(this.getValue()));
+                    //sb.append(this.getValue() + " mmol/L");
+                    sb.append(" mmol/L");
+                    
+                    //da.getBGValueDifferent(DataAccessPump.BG_MGDL, Float.parseFloat(arg0)bg_value)
+                }
+                    
+                //po.setValue(this.num_1.getValue().toString());
             }
-                
-            //po.setValue(this.num_1.getValue().toString());
+            else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
+            {
+                sb.append(this.getValue() + " g");
+            }
         }
-        else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
+        else
         {
-            sb.append(this.getValue() + " g");
-        }
-        else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD)
-        {
-            sb.append(ic.getMessage("FOOD_SET") + ":");
+            if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
+                sb.append(ic.getMessage("FOOD_SET_DB") + ":  ");
+            else
+                sb.append(ic.getMessage("FOOD_SET_DESC") + ":  ");
             
             if ((this.getValue()==null) || (this.getValue().length()==0))
                 sb.append(ic.getMessage("NO"));
@@ -346,6 +360,11 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public boolean DbEdit(Session sess) throws Exception
     {
+        if (!this.hasChanged())
+            return false;
+
+        Transaction tx = sess.beginTransaction();
+        
         PumpDataExtendedH ch = (PumpDataExtendedH)sess.get(PumpDataExtendedH.class, new Long(this.getId()));
 
         // TODO: changed check
@@ -358,6 +377,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
+        sess.update(ch);
+        tx.commit();
+        
         return true;
     }
 
@@ -414,8 +436,43 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public String getObjectUniqueId()
     {
+        //System.out.println("getObjectUID: " + this.getId());
         return "" + this.getId();
     }
     
+    boolean changed = false;
 	
+    
+    /**
+     * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
+     * 
+     * @param dt_info 
+     */
+    public void setDt_info(long dt_info)
+    {
+        if (dt_info != getDt_info())
+        {
+            super.setDt_info(dt_info);
+            changed = true;
+        }
+    }
+    
+    
+    /**
+     * Set Value
+     *  
+     * @param value parameter
+     */
+    public void setValue(String value) 
+    {
+        if (!value.equals(this.getValue()))
+        {
+            super.setValue(value);
+            changed = true;
+        }
+    }
+    
+    
+    
+    
 }	

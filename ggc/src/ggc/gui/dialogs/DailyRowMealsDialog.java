@@ -19,6 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.TransferDialog;
 import com.atech.help.HelpCapable;
@@ -56,6 +59,7 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
 
     private static final long serialVersionUID = 6763016271693781911L;
 
+    private static Log log = LogFactory.getLog(DailyRowMealsDialog.class);
     private I18nControl m_ic = I18nControl.getInstance();
     //private DataAccess m_da = DataAccess.getInstance();
 //    private GGCProperties props = m_da.getSettings();
@@ -338,28 +342,29 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
         {
             String t = strtok.nextToken();
             
-            System.out.println("Token: " + t);
+            //System.out.println("Token: " + t);
             
             if (t.indexOf("]")==-1)
                 continue;
                 
             t = t.substring(0, t.indexOf("]"));
-            System.out.println("Bef: " + t);
+            //System.out.println("Bef: " + t);
             
             t = t.replace(",", "."); //DataAccess.false_decimal, DataAccess.real_decimal);
 
-            System.out.println("False dec: " + DataAccess.false_decimal + " rwal=" + DataAccess.real_decimal);
+//            System.out.println("False dec: " + DataAccess.false_decimal + " rwal=" + DataAccess.real_decimal);
 
-            System.out.println("Aff: " + t);
+            //System.out.println("Aff: " + t);
             try
             {
                 float f = Float.parseFloat(t);
-                System.out.println("entry: " + f);
+//                System.out.println("entry: " + f);
                 sum += f;
             }
             catch(Exception ex)
             {
-                System.out.println("Ex: " + ex);
+                log.error("Error on parse: [token=" + t + ",exception=" + ex + "]", ex );
+                //System.out.println("Ex: " + ex);
             }
         }
         
@@ -394,7 +399,8 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
             calculateCH();
         }
         else
-            System.out.println("DailyRowMealsDialog::unknown command: " + action);
+            log.error("DailyRowMealsDialog::unknown command: " + action);
+            //System.out.println("DailyRowMealsDialog::unknown command: " + action);
 
     }
 

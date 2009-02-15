@@ -16,7 +16,6 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.graphics.graphs.GraphViewControlerInterface;
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,7 +48,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
 
     private HbA1cValues hbValues; 
     private DefaultPieDataset dataset = new DefaultPieDataset();
-    I18nControlAbstract  m_ic = null;
+    //I18nControlAbstract  m_ic = null;
     
     /**
      * Constructor
@@ -140,9 +139,12 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
     {
         dataset.clear();
 
-        System.out.println("Read HbA1c data:\n" + hbValues.getPercentOfDaysInClass(0) + "\n" + hbValues.getPercentOfDaysInClass(1) + "\n"
-                + hbValues.getPercentOfDaysInClass(2) + "\n" + hbValues.getPercentOfDaysInClass(3) + "\n"
-                + hbValues.getPercentOfDaysInClass(4));
+        //System.out.println("Read HbA1c data:\n" + hbValues.getPercentOfDaysInClass(0) + "\n" + hbValues.getPercentOfDaysInClass(1) + "\n"
+        //        + hbValues.getPercentOfDaysInClass(2) + "\n" + hbValues.getPercentOfDaysInClass(3) + "\n"
+        //        + hbValues.getPercentOfDaysInClass(4));
+        
+        //System.out.println("m_ic: " + m_ic);
+        
         dataset.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"), hbValues.getPercentOfDaysInClass(0));
         dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"), hbValues.getPercentOfDaysInClass(1));
         dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"), hbValues.getPercentOfDaysInClass(2));

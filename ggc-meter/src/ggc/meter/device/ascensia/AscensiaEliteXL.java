@@ -102,18 +102,6 @@ public class AscensiaEliteXL extends AscensiaMeter
     {
         return AscensiaMeter.METER_ASCENSIA_ELITE_XL;
     }
-
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return AscensiaMeter.ASCENSIA_COMPANY;
-    }
     
     
     /**

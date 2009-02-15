@@ -208,7 +208,10 @@ public class DataAccess extends ATDataAccessAbstract
     private int current_person_id = 1;
     NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
     
-    
+    /**
+     * Developer Version
+     */
+    public boolean developer_version = false;
 
     // ********************************************************
     // ****** Constructors and Access methods *****
@@ -261,6 +264,8 @@ public class DataAccess extends ATDataAccessAbstract
         loadGraphConfigProperties();        
         
         startWebServer();
+        
+        this.loadSpecialParameters();
         
     }    
     
@@ -1439,5 +1444,18 @@ public class DataAccess extends ATDataAccessAbstract
     }
 
 
+    
+    /**
+     * Load Special Parameters
+     * 
+     * @see com.atech.utils.ATDataAccessAbstract#loadSpecialParameters()
+     */
+    public void loadSpecialParameters()
+    {
+        this.special_parameters = new Hashtable<String,String>();
+        this.special_parameters.put("BG", "" + this.m_settings.getBG_unit());
+    }
+    
+    
 
 }

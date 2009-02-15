@@ -261,7 +261,7 @@ public class DoctorDialog extends JDialog implements ActionListener
         addLabel(m_ic.getMessage("ACTIVITY") + ":", 318, panel);
         addLabel(m_ic.getMessage("COMMENT") + ":", 348, panel);
 
-        this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5);
+        this.dtc = new DateTimeComponent(this.m_da, DateTimeComponent.ALIGN_VERTICAL, 5);
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 

@@ -104,20 +104,6 @@ public class AccuChekActive extends AccuChekSmartPixMeter
     {
         return AccuChekSmartPixMeter.METER_ACCUCHEK_ACTIVE;
     }
-
-    
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * Should be implemented by meter class.
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return AccuChekSmartPixMeter.ROCHE_COMPANY;
-    }
     
     
     /**

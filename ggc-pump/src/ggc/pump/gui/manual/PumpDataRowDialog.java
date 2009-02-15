@@ -257,7 +257,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         init();
         load();
 
-        System.out.println("Add data: " + this.m_dailyValuesRow.getAdditionalData().size());
+        //System.out.println("Add data: " + this.m_dailyValuesRow.getAdditionalData().size());
         
         if (this.m_dailyValuesRow.getAdditionalData().size()>0)
         {
@@ -332,43 +332,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
      */
     public void load()
     {
-        // TODO fix
-
-//        this.dtc.setDateTime(this.m_dailyValuesRow.getDt_info());
-//        System.out.println("Load not implemented for this type: " + this.m_dailyValuesRow.getBase_type());
-//        this.cb_entry_type.setSelectedIndex(this.m_dailyValuesRow.getBase_type());
-
-        // TODO fix
-        
-        
-        
-//        CommentField.setText(this.m_dailyValuesRow.getComment());
-        
-        
-        //System.out.println("Load not implemented for this type: " + this.m_dailyValuesRow.getBase_type());
-        
-        
-/*
-        if (m_dailyValuesRow.getBG() > 0)
-        {
-            this.ftf_bg1.setValue(new Integer((int) m_dailyValuesRow.getBGRaw()));
-            this.ftf_bg2.setValue(new Float(m_da.getBGValueDifferent(DataAccessPump.BG_MGDL, m_dailyValuesRow.getBGRaw())));
-        }
-
-        
-        
-// x       this.ftf_ins1.setValue(new Integer((int) this.m_dailyValuesRow.getIns1()));
-// x       this.ftf_ins2.setValue(new Integer((int) this.m_dailyValuesRow.getIns2()));
-        this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
-*/
-/*        ActField.setText(this.m_dailyValuesRow.getActivity());
-        UrineField.setText(this.m_dailyValuesRow.getUrine());
-
-        this.cb_food_set.setEnabled(false);
-        this.cb_food_set.setSelected(this.m_dailyValuesRow.areMealsSet());
-        this.cb_food_set.setEnabled(true);
-*/
-
+        this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
+        this.cb_entry_type.setSelectedIndex(this.m_dailyValuesRow.getBaseType());
+        this.pdtc.loadData(this.m_dailyValuesRow);
     }
 
     /*
@@ -393,6 +359,8 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 */
         
         ATSwingUtils.initLibrary();
+        
+        m_da.addComponent(this);
         
         this.setSize(width, height);
         m_da.centerJDialog(this, this.m_parent);
@@ -435,7 +403,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 //        addLabel("mg/dL", 140, 138, panel);
 //        addLabel("mmol/L", 140, 168, panel);
 
-        this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5, DateTimeComponent.TIME_MAXIMAL_SECOND);
+        this.dtc = new DateTimeComponent(this.m_da, DateTimeComponent.ALIGN_VERTICAL, 5, DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 
@@ -459,10 +427,14 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         
         int sy = 175 + 20;
         
-        lbl_add = new JLabel(m_ic.getMessage("ADDITONAL_DATA") + ":");
+        lbl_add = ATSwingUtils.getLabel(m_ic.getMessage("ADDITIONAL_DATA") + ":", 30, sy, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+ 
+            
+/*            
+            new JLabel(m_ic.getMessage("ADDITONAL_DATA") + ":");
         lbl_add.setBounds(30, sy, 200, 25);
         panel.add(lbl_add);
-        
+  */      
         
         // list
         this.m_list_data = new JList();
@@ -540,6 +512,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         
     }
     
+    private boolean was_action = false;
     
     
 
@@ -555,11 +528,45 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
         if (action.equals("cancel"))
         {
+            m_da.removeComponent(this);
             this.dispose();
         }
         else if (action.equals("ok"))
         {
-            cmdOk();
+
+            if ( (((this.pdtc.getBaseType()==0) || 
+                   (this.pdtc.getBaseType()==PumpBaseType.PUMP_DATA_ADDITIONAL_DATA))  && 
+                  (this.list_data.size() ==0)) ||
+                 (!this.pdtc.areRequiredElementsSet())) 
+                this.warningNotSet();
+            else
+                cmdOk();
+
+            /*
+            if (this.pdtc.getBaseType()==0)
+            {
+                if (this.list_data.size() > 0)
+                    this.warningNotSet();
+                else
+                    cmdOk();
+            }
+            else
+            {
+                
+                if (this.pdtc.areRequiredElementsSet()) 
+                {
+                    cmdOk();
+                }
+                else
+                {
+                    this.warningNotSet();
+                }
+                
+                
+                
+            }*/
+            
+            
         }
         else if (action.equals("item_add"))
         {
@@ -650,6 +657,15 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
     }
 
+
+    private void warningNotSet()
+    {
+        JOptionPane.showMessageDialog(this, 
+            m_ic.getMessage("NOT_ALL_REQUIRED_VALUES_SET"), 
+            m_ic.getMessage("ERROR"), 
+            JOptionPane.ERROR_MESSAGE);
+    }
+    
     
     private void processAdditionalData(PumpDataAdditionalWizardOne w1)
     {
@@ -671,17 +687,66 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
     
     private void processAdditionalData(PumpValuesEntryExt[] objs)
     {
+
         for(int i=0; i<objs.length; i++)
         {
+            if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(objs[i].getType())))
+            {
+                PumpValuesEntryExt o1 = this.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(objs[i].getType()));
+                o1.setValue(objs[i].getValue());
+                
+                if (o1.getId()==0)
+                    m_da.getDb().add(o1);
+                else
+                    m_da.getDb().edit(o1);
+                
+                //deleteAddItem(this.m_da.getAdditionalTypes().getTypeDescription(objs[i].getType()));
+            }
+            else
+            {
+                addAddItem(objs[i]);
+            }
+        }
+        
+       
+        
+/*
+        for(int i=0; i<objs.length; i++)
+        {
+            if (objs[i].getObjectUniqueId().equals("0"))
+            {
+                this.m_da.getDb().add(objs[i]);
+            }
+            else
+            {
+                if (objs[i].hasChanged())
+                {
+                    if (objs[i].getObjectUniqueId().equals("0"))
+                    {
+                        this.m_da.getDb().edit(objs[i]);
+                    }
+                }
+            }
+        }        
+*/
+        
+        /*
+        for(int i=0; i<objs.length; i++)
+        {
+            //System.out.println("objs[]: " + objs);
+            //System.out.println("objs[].getType(): " + objs[i].getType());
+            //System.out.println("ht_data: " + ht_data);
+            //System.out.println("add types: " + this.m_da.getAdditionalTypes());
+            
             if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(objs[i].getType())))
             {
                 deleteAddItem(this.m_da.getAdditionalTypes().getTypeDescription(objs[i].getType()));
             }
 
             addAddItem(objs[i]);
-        }
+        }*/
         
-        populateJListExtended(this.list_data);
+        populateJListExtended(this.list_data); 
         
     }
 
@@ -693,6 +758,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
     }
     
     
+    @SuppressWarnings("unused")
     private void deleteAddItem(String item_desc)
     {
         if (this.ht_data.containsKey(item_desc))
@@ -722,6 +788,26 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
     private void cmdOk()
     {
+        //System.out.println("Entry Type: " + this.cb_entry_type.getSelectedIndex());
+        
+        if ((this.cb_entry_type.getSelectedIndex()!=PumpBaseType.PUMP_DATA_ADDITIONAL_DATA) &&
+            (this.cb_entry_type.getSelectedIndex()!=0))
+        {
+            if (this.m_dailyValuesRow==null)
+                this.m_dailyValuesRow = new PumpValuesEntry();
+            
+            this.m_dailyValuesRow.setDateTimeObject(this.dtc.getDateTimeObject());
+            this.pdtc.saveData(m_dailyValuesRow);
+            this.m_dailyValuesRow.setBaseType(this.cb_entry_type.getSelectedIndex());
+            
+            if (this.m_dailyValuesRow.getId()==0)
+                m_da.getDb().add(this.m_dailyValuesRow);
+            else
+                m_da.getDb().edit(this.m_dailyValuesRow);
+            
+            this.was_action = true;
+            
+        }
         
         
         // additional data
@@ -732,6 +818,8 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
             PumpValuesEntryExt ext = this.list_data.get(i);
             ext.setDt_info(dt);
             m_da.getDb().commit(ext);
+
+            this.was_action = true;
         }
 
         
@@ -739,102 +827,24 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         {
             //PumpValuesEntryExt ext = this.delete_list_data.get(i);
             m_da.getDb().delete(this.delete_list_data.get(i));
+
+            this.was_action = true;
         }
         
+        m_da.removeComponent(this);
         this.dispose();
         
-        
-        
-        // TODO: 
-        
-/*        
-        if (this.m_add_action)
-        {
-            // add
-
-            if (debug)
-                System.out.println("dV: " + dV);
-
-            // this.m_dailyValuesRow = new DailyValuesRow();
-
-            this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
-
-            // if (isFieldSet(BGField.getText()))
-
-            float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
-
-            if (f > 0.0)
-            {
-                //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
-                // )+1, f);
-                this.m_dailyValuesRow.setBG(1, f);
-            }
-
-            this.m_dailyValuesRow.setIns1(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins1));
-            this.m_dailyValuesRow.setIns2(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins2));
-            // checkDecimalFields(Ins1Field.getText()));
-            //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
-            // ()));
-            //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
-            // ;
-            this.m_dailyValuesRow.setCH(m_da
-                    .getJFormatedTextValueFloat(this.ftf_ch));
-            this.m_dailyValuesRow.setActivity(ActField.getText());
-            this.m_dailyValuesRow.setUrine(UrineField.getText());
-            this.m_dailyValuesRow.setComment(CommentField.getText());
-            // this.m_dailyValuesRow.setMealIdsList(null);
-
-            dV.setNewRow(this.m_dailyValuesRow);
-            this.m_actionDone = true;
-            this.dispose();
-        }
-        else
-        {
-
-            // edit
-            this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
-
-            float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
-
-            if (f > 0.0)
-            {
-                //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
-                // )+1, f);
-                this.m_dailyValuesRow.setBG(1, f);
-            }
-
-            // if (isFieldSet(BGField.getText()))
-            //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1,
-            // checkDecimalFields(BGField.getText()));
-            this.m_dailyValuesRow.setIns1(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins1));
-            this.m_dailyValuesRow.setIns2(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins2));
-
-            //this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText
-            // ()));
-            //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
-            // ()));
-            this.m_dailyValuesRow.setCH(m_da
-                    .getJFormatedTextValueFloat(this.ftf_ch));
-            //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
-            // ;
-            this.m_dailyValuesRow.setActivity(ActField.getText());
-            this.m_dailyValuesRow.setUrine(UrineField.getText());
-            this.m_dailyValuesRow.setComment(CommentField.getText());
-            // this.m_dailyValuesRow.setMealIdsList(null);
-
-            // mod.fireTableChanged(null);
-            // clearFields();
-            this.m_actionDone = true;
-            this.dispose();
-        }
-*/
     }
 
-
+    /**
+     * Was Action
+     * 
+     * @return
+     */
+    public boolean wasAction()
+    {
+        return this.was_action;
+    }
 
 
 
@@ -867,4 +877,6 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         return "pages.GGC_BG_Daily_Add";
     }
 
+    
+    
 }

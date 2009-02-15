@@ -280,8 +280,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
     @Override
     public String getFileNameRange()
     {
-        return this.m_data.getRangeBeginObject().getDateString() + "-"
-                + this.m_data.getRangeEndObject().getDateString();
+        return this.m_data.getRangeBeginObject().getDateFilenameString() + "-"
+                + this.m_data.getRangeEndObject().getDateFilenameString();
     }
     
     

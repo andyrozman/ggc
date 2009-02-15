@@ -7,6 +7,8 @@ import ggc.gui.panels.info.InfoPanel;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
+
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
@@ -144,7 +146,9 @@ public class PumpsPlugIn extends PlugInClient
      */
     public void readPumpsData()
     {
-        this.featureNotImplemented(commands[0]);
+        //this.featureNotImplemented(commands[0]);
+        this.executeCommand(PumpsPlugIn.COMMAND_READ_PUMP_DATA);
+//        executeCommand(commands[0]);
     }
 
     
@@ -165,17 +169,17 @@ public class PumpsPlugIn extends PlugInClient
         this.commands_implemented = new boolean[7];
         this.commands_implemented[0] = false;
         this.commands_implemented[1] = false;
-        this.commands_implemented[2] = true;
+        this.commands_implemented[2] = false;
         this.commands_implemented[3] = false;
         this.commands_implemented[4] = true;
         this.commands_implemented[5] = true;
         this.commands_implemented[6] = true;
         
         this.commands_will_be_done = new String[7];
-        this.commands_will_be_done[0] = "0.6";
+        this.commands_will_be_done[0] = "0.5";
         this.commands_will_be_done[1] = "0.5";
-        this.commands_will_be_done[2] = null;
-        this.commands_will_be_done[3] = "0.6";
+        this.commands_will_be_done[2] = "0.5";
+        this.commands_will_be_done[3] = "0.5";
         this.commands_will_be_done[4] = null;
         this.commands_will_be_done[5] = null;
         this.commands_will_be_done[6] = null;
@@ -193,7 +197,7 @@ public class PumpsPlugIn extends PlugInClient
         if (command.equals("pumps_read"))
         {
             this.readPumpsData();
-            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
+//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("pumps_list"))
         {
@@ -205,13 +209,19 @@ public class PumpsPlugIn extends PlugInClient
         }
         else if (command.equals("pumps_manual_entry"))
         {
+            if (!DataAccess.getInstance().developer_version)
+                displayExperimental();
+            
             this.executeCommand(PumpsPlugIn.COMMAND_MANUAL_ENTRY);
-            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
+//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("pumps_additional_data"))
         {
+            if (!DataAccess.getInstance().developer_version)
+                displayExperimental();
+
             this.executeCommand(PumpsPlugIn.COMMAND_ADDITIONAL_DATA);
-            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
+//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("pumps_config"))
         {
@@ -240,6 +250,32 @@ public class PumpsPlugIn extends PlugInClient
         return "0.5";
     }
 
+    
+    private void displayExperimental()
+    {
+        JOptionPane.showMessageDialog(this.parent, 
+            ic.getMessage("PUMP_PLUGIN_EXPERIMENTAL")
+/*            "Pumps Plug-in\n\n" +
+            "This part is just experimental. We took quite a time\n" +
+            "to work on it and tried to add all needed functions\n" +
+            "and options. We did some testing, but we still need\n" +
+            "to add some functionalities and do more exhaustive\n" +
+            "testing. Therefore this module is marked as experimental\n" +
+            "and may be used for testing only. At this point we also\n" +
+            "don't support backup/restore, so even if data would be\n" +
+            "added succesfully, we have no means to backup it up.\n\n" +
+            "This is required step, before we delve into world of\n" +
+            "automatic data retriveal from actual devices. Once \n" +
+            "this testing is done, we can start with data retrieval.\n\n" +
+            "If you find any problem here, or have any additional\n" +
+            "options/ideas that could be added, don't hesitate to\n" +
+            "contact us on our e-mail address:\n" +
+            "ggc@atech-software.com.\n\n" */
+            , 
+            ic.getMessage("WARNING"), 
+            JOptionPane.WARNING_MESSAGE);
+    }
+    
     
     /**
      * Get Short Status

@@ -1,32 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DataAccess
- *  Purpose:  Used for utility works and static data handling (this is singelton
- *      class which holds all our definitions, so that we don't need to create them
- *      again for each class.      
- *
- *  Author:   andyrozman
- */
-
 package ggc.pump.util;
 
 import ggc.plugin.list.BaseListEntry;
@@ -34,13 +5,17 @@ import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpAlarms;
 import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.data.defs.PumpErrors;
+import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
 import ggc.pump.manager.PumpManager;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsEntry;
@@ -70,8 +45,9 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     DataAccessPump  
+ *  Description:  Contains instances of utilities, private (plugin specific) data,
+ *                help classes, ...
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -83,7 +59,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "0.1.8.1";
+    public static final String PLUGIN_VERSION = "0.2.1";
 
     private static DataAccessPump s_da = null; // This is handle to unique 
 
@@ -94,8 +70,12 @@ public class DataAccessPump extends DataAccessPlugInBase
     PumpBasalSubType m_pump_basal_type = null;
     PumpReport m_pump_report = null;
     PumpAdditionalDataType m_pump_add_type = null;
-//    GGCPumpDb m_db = null;
-        
+    PumpAlarms m_pump_alarms = null;
+    PumpEvents m_pump_events = null;
+    PumpErrors m_pump_errors = null;
+    //    GGCPumpDb m_db = null;
+  
+    long selected_person_id = 0;
 
     // ********************************************************
     // ******      Constructors and Access methods        *****
@@ -126,6 +106,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         
         this.createWebListerContext();
         this.createPlugInAboutContext();
+        this.createPlugInVersion();
         this.createPlugInDataRetrievalContext();
         
     }
@@ -190,6 +171,41 @@ public class DataAccessPump extends DataAccessPlugInBase
     { 
         return this.m_pump_report;
     }
+
+    
+    /**
+     * Get Pump Alarm Types
+     * 
+     * @return
+     */
+    public PumpAlarms getPumpAlarmTypes()
+    { 
+        return this.m_pump_alarms;
+    }
+
+
+    /**
+     * Get Pump Error Types
+     * 
+     * @return
+     */
+    public PumpErrors getPumpErrorTypes()
+    { 
+        return this.m_pump_errors;
+    }
+    
+    
+    
+    /**
+     * Get Pump Events Types
+     * 
+     * @return
+     */
+    public PumpEvents getPumpEventTypes()
+    { 
+        return this.m_pump_events;
+    }
+    
     
     /**
      * Get Additional Types
@@ -277,7 +293,11 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.m_pump_bolus_type = new PumpBolusType(); 
         this.m_pump_basal_type = new PumpBasalSubType(); 
         this.m_pump_report = new PumpReport();
+        this.m_pump_alarms = new PumpAlarms();
+        this.m_pump_events = new PumpEvents();
         this.m_pump_add_type = new PumpAdditionalDataType();
+        this.m_pump_errors = new PumpErrors();
+    
     }
 
 
@@ -319,12 +339,12 @@ public class DataAccessPump extends DataAccessPlugInBase
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
 
         CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework")); // and support for Ascensia & Roche devices"));
+        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework, About, Outputs")); // and support for Ascensia & Roche devices"));
         lst_credits.add(cg);
 
         //cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
         //cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
-        lst_credits.add(cg);
+        //lst_credits.add(cg);
                 
         this.plugin_developers = lst_credits;
 
@@ -333,10 +353,41 @@ public class DataAccessPump extends DataAccessPlugInBase
         ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
 
         
-        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("not implemented"));
-        fg.addFeaturesEntry(new FeaturesEntry("test"));
+        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Base Pump Tools Framework (partitial)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
+        fg.addFeaturesEntry(new FeaturesEntry("Manual data entry (also additional data entry)"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
         
         lst_features.add(fg);
+        
+        
+//        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
+//        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
+        
+//        lst_features.add(fg);
+        
+        
+        fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration) [Ready]"));
+        fg.addFeaturesEntry(new FeaturesEntry("Configuration [Ready]"));
+        fg.addFeaturesEntry(new FeaturesEntry("List of pumps [Ready]"));
+        fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
+        fg.addFeaturesEntry(new FeaturesEntry("Profiles"));
+        fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
+        
+        lst_features.add(fg);
+
+        
+        fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Minimed (in 2009)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Roche (in 2009)"));
+        
+        lst_features.add(fg);
+        
         
         this.plugin_features = lst_features;
         
@@ -548,5 +599,39 @@ public class DataAccessPump extends DataAccessPlugInBase
         return "/icons/pumps/";
     }
 
+    
+    /**
+     * Get Selected Persons Id
+     * 
+     * @return
+     */
+    public long getSelectedPersonId()
+    {
+        return this.selected_person_id;
+    }
+    
+    
+    /**
+     * Set Selected Persons Id
+     * 
+     * @param id 
+     */
+    public void setSelectedPersonId(long id)
+    {
+        this.selected_person_id = id;
+    }
+    
+    
+    /**
+     * Load Special Parameters
+     * 
+     * @see com.atech.utils.ATDataAccessAbstract#loadSpecialParameters()
+     */
+    public void loadSpecialParameters()
+    {
+        this.special_parameters = new Hashtable<String,String>();
+        this.special_parameters.put("BG", "" + this.getBGMeasurmentType());
+    }
+    
     
 }

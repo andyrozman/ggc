@@ -3,6 +3,7 @@ package ggc.meter.device.ascensia;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
+import ggc.meter.manager.MeterManager;
 import ggc.meter.manager.company.AscensiaBayer;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
@@ -65,10 +66,6 @@ import com.atech.utils.TimeZoneUtil;
 public abstract class AscensiaMeter extends AbstractSerialMeter
 {
 
-    /**
-     * Meter Company: Ascensia
-     */
-    public static final int ASCENSIA_COMPANY            = 1;
     
     /**
      * Meter: Elite XL
@@ -720,5 +717,15 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     }
 
 
+    /**
+     * getCompanyId - Get Company Id 
+     * 
+     * @return id of company
+     */
+    public int getCompanyId()
+    {
+        return MeterManager.METER_COMPANY_ASCENSIA;
+    }
+    
 
 }

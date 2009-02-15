@@ -432,14 +432,8 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
     @Override
     public String getFileNameBase()
     {
-        return "" + System.currentTimeMillis();
+        return "FoodMenuExt2";
     }
     
     
-    
-    
 }
-
-
-
-

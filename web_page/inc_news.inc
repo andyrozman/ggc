@@ -3,21 +3,43 @@
 <h2 class="head">News</h2>
 
 
+
 <table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
 <tr class="newsheader">
-<td width="150">2009-02-04 22:44</td>
+<td width="150">2009-02-14 11:00</td>
+<td>About versioning of GGC</td>
+</tr>
+<tr>
+<td colspan="2">
+As you can see, we are still in 0.x versions. We now had two releases, which both work, but yet we are still in 
+so called pre-versions (bellow 1.0). <br>
+Problem is that we "tagged" several features, we need/want to have implemented before we put out "real" 1.0 
+release. If everything goes alright this will happen with next release (0.5)...
+</td>
+</tr>
+</table> 
+
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2009-02-14 10:00</td>
 <td>Release 0.4 OUT</td>
 </tr>
 <tr>
 <td colspan="2">
-We have finally brought you next GGC release. !!!!!!!!!!!!!!!!!!!!!!!!! 
-After first public release it was decided, that there will be one major release every six months, 
-at least until we finish all main functionalities. Next release will come out in January 2009,
-with some major changes and lots of minor ones.<br>
-As you can see, we are still in 0.x versions. When all tagged (required) functionalities are finished, 
-we will go to version 1.0 (this might happen with release 0.5 or maybe 0.6).  
+We have finally brought you next GGC release (this time we are just over a month late...). New version features
+changes in main gui, additional food support (we support free-text food entries), Bolus Helper (and Simple Ratios
+for that), new graph framework, Meter Tool finsihed (and new devices added), development of Pump Tool started 
+(Manual adding of data only, so far). <br>
+There were also several changes to this web page, added files to Documentation, changed Screenshots, Downloads, 
+Features. 
 </td></tr>
 </table> 
+
+
 
 <br><br>
 

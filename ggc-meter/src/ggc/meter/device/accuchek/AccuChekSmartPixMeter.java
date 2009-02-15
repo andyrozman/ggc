@@ -2,6 +2,7 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.manager.MeterManager;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
@@ -52,11 +53,6 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     //DataAccessMeter m_da = DataAccessMeter.getInstance();
     //OutputWriter output_writer = null;
 
-    
-    /**
-     * Meter Company: Roche
-     */
-    public static final int ROCHE_COMPANY             = 2;
     
     /**
      * Meter Device: SmartPix
@@ -164,8 +160,6 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     }
 
     
-
-    
     /**
      * getCompanyId - Get Company Id 
      * 
@@ -173,11 +167,8 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
      */
     public int getCompanyId()
     {
-        return AccuChekSmartPixMeter.ROCHE_COMPANY;
+        return MeterManager.METER_COMPANY_ROCHE;
     }
-    
-    
-    
     
     
     Document document;
@@ -342,6 +333,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
     }
+    
     
     
 }

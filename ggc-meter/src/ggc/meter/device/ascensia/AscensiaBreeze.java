@@ -109,17 +109,6 @@ public class AscensiaBreeze extends AscensiaMeter
     }
 
     
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return AscensiaMeter.ASCENSIA_COMPANY;
-    }
-    
-    
     /** 
      * Get Device ClassName
      */

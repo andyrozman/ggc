@@ -116,17 +116,6 @@ public class AscensiaDEX extends AscensiaMeter
     {
         return AscensiaMeter.METER_ASCENSIA_DEX;
     }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return AscensiaMeter.ASCENSIA_COMPANY;
-    }
     
     
     /**

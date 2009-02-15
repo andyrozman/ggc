@@ -2,6 +2,8 @@
 Changes file for GGC Meter Tool
 ===============================
 
+1.0.7
+    * Minor changes gone through from PlugInBase changes (DeviceValuesEntry, DataAccess..)
 
 1.0.6
     * Native file handling (for Rxtx)

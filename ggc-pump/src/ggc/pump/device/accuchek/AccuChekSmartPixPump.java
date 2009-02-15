@@ -407,7 +407,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             else if (isSet(el.attributeValue("TBRinc")))
                 type = 2;
             
-            pve.setProfile(el.attributeValue("profile"));
+            //pve.setProfile(el.attributeValue("profile"));
 
             if (type==0)
             {

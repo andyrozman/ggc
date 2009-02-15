@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="**/.svn/**" kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Atech-Tools"/>
+	<classpathentry excluding="**/.svn/**" kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Meter Tool">
 		<accessrules>
 			<accessrule kind="accessible" pattern="**/icons/**"/>

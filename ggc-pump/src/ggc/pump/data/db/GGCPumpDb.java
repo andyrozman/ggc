@@ -71,9 +71,9 @@ public class GGCPumpDb extends PluginDb
      */
     public DeviceValuesDay getDailyPumpValues(GregorianCalendar gc)
     {
-        System.out.println("FIX THIS");
+        //System.out.println("FIX THIS");
         
-        log.info("getDayStats()");
+        log.info("getPumpDayStats()");
 
         //ATechDate atd = new ATechDate(ATechDate.DT_DATE, gc);
         
@@ -115,15 +115,15 @@ public class GGCPumpDb extends PluginDb
             // TODO extended
             ArrayList<PumpValuesEntryExt> lst_ext = getDailyPumpValuesExtended(gc);
             
-            System.out.println("Extended list: " + lst_ext.size());
+            //System.out.println("Extended list: " + lst_ext.size());
             
             //dV.addExtendedEntries(lst_ext);
 
-            System.out.println("Dv: " + dV.getRowCount());
+            //System.out.println("Dv: " + dV.getRowCount());
             
             mergeDailyPumpData(dV, lst_ext);
             
-            System.out.println("Dv: " + dV.getRowCount());
+            //System.out.println("Dv: " + dV.getRowCount());
             
         }
         catch (Exception ex)
@@ -213,7 +213,7 @@ public class GGCPumpDb extends PluginDb
         {
             PumpValuesEntryExt pvex = lst_ext.get(i);
             
-            System.out.println(pvex.getDt_info());
+            //System.out.println(pvex.getDt_info());
             
             if (dV.isEntryAvailable(pvex.getDt_info()))
             {

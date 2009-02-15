@@ -305,7 +305,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         addLabel("mg/dL", 140, 138, panel);
         addLabel("mmol/L", 140, 168, panel);
 
-        this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5);
+        this.dtc = new DateTimeComponent(this.m_da, DateTimeComponent.ALIGN_VERTICAL, 5);
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 

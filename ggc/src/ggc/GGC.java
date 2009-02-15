@@ -48,7 +48,7 @@ public class GGC
     /**
      * Version of application
      */
-    public static String s_version = "0.3.16";
+    public static String s_version = "0.4"; //3.16";
     
     
     /**
@@ -59,7 +59,7 @@ public class GGC
     /**
      * Version Date 
      */
-    public static String version_date = "17th January 2009";
+    public static String version_date = "2nd February 2009";
 
     /**
      * Checks if Db is correct version
@@ -113,15 +113,24 @@ public class GGC
     public void init(boolean dev)
     {
         s_mainWindow = new MainFrame("GGC - GNU Gluco Control", dev);
-        Toolkit theKit = s_mainWindow.getToolkit();
-        Dimension wndSize = theKit.getScreenSize();
 
-        int x, y;
-        x = wndSize.width / 2 - 400;
-        y = wndSize.height / 2 - 300;
-
-        s_mainWindow.setBounds(x, y, 800, 600);
-        s_mainWindow.setVisible(true);
+        if (dev)
+        {
+            s_mainWindow.setBounds(0, 0, 800, 600);
+            s_mainWindow.setVisible(true);
+        }
+        else
+        {
+            Toolkit theKit = s_mainWindow.getToolkit();
+            Dimension wndSize = theKit.getScreenSize();
+    
+            int x, y;
+            x = wndSize.width / 2 - 400;
+            y = wndSize.height / 2 - 300;
+    
+            s_mainWindow.setBounds(x, y, 800, 600);
+            s_mainWindow.setVisible(true);
+        }
     }
 
 }

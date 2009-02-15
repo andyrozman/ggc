@@ -2,6 +2,7 @@ package ggc.meter.device.onetouch;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
+import ggc.meter.manager.MeterManager;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
@@ -841,6 +842,17 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
                 break;
         }
     } 
+    
+ 
+    /**
+     * getCompanyId - Get Company Id 
+     * 
+     * @return id of company
+     */
+    public int getCompanyId()
+    {
+        return MeterManager.METER_COMPANY_LIFESCAN;
+    }
     
     
     

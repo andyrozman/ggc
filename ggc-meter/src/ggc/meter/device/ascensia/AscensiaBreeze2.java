@@ -105,18 +105,6 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
     }
 
     
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return AscensiaMeter.ASCENSIA_COMPANY;
-    }
-    
     
     /** 
      * Get Device ClassName

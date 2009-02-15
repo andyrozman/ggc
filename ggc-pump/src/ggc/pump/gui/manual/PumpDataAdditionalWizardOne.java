@@ -104,12 +104,13 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     private void init()
     {
-        int width = 320;
-        int height = 300;
+        int width = 380;
+        int height = 310;
 
         this.setSize(width,height);
         ATSwingUtils.initLibrary();
         
+        m_da.addComponent(this);
         this.m_da.centerJDialog(this, this.m_parent);
         
         JPanel panel = new JPanel();
@@ -125,13 +126,14 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         label_title.setBounds(0, 35, width, 35);
         panel.add(label_title);
 
+        int startx = 60;
         
         setTitle(m_ic.getMessage("ADD_PARAMETER"));
         label_title.setText(m_ic.getMessage("ADD_PARAMETER"));
         
 
         JLabel label = new JLabel(m_ic.getMessage("SELECT_ADDITONAL_DATA"));
-        label.setBounds(30, 100, 250, 25);
+        label.setBounds(startx+10, 100, 250, 25);
         label.setFont(f_bold);
         panel.add(label);
         
@@ -139,7 +141,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         
         
         cb_type = new JComboBox(add_data.createItems(this.old_data));
-        cb_type.setBounds(30, 135, 240, 25);
+        cb_type.setBounds(startx+10, 135, 240, 25);
         panel.add(cb_type);
         
         
@@ -158,8 +160,8 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         String button_icon[] = { "cancel.png", "nav_right_blue.png" }; 
                                  //null, "ok.png", "cancel.png" };
 
-        int button_coord[] = { 30, 230, 120, 1,
-                               160, 230, 130, 1, 
+        int button_coord[] = { startx, 230, 120, 1,
+                               startx+130, 230, 130, 1, 
         //                       170, 190, 140, 1, 
 //                               30, 620, 110, 1, 
 //                               145, 620, 110, 1,
@@ -200,7 +202,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
                         button_coord[i + 2], 25, false, panel);*/
         }
 
-        help_button = m_da.createHelpButtonByBounds(170, 195, 120, 25, this);
+        help_button = m_da.createHelpButtonByBounds(startx + 140, 195, 120, 25, this);
         panel.add(help_button);
 
 //        m_da.enableHelp(this);
@@ -273,6 +275,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         if (action.equals("cancel"))
         {
             System.out.println("wizard_1 [cancel]");
+            m_da.removeComponent(this);
             this.was_action = false;
             this.dispose();
         }
@@ -349,7 +352,9 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     {
         // TODO: 
         System.out.println("wizard_1 [ok]");
+        m_da.removeComponent(this);
 
+        
         this.dispose();
         
         PumpDataAdditionalWizardTwo padw2 = new PumpDataAdditionalWizardTwo(this, (String)this.cb_type.getSelectedItem(), this.add_data); 
@@ -361,6 +366,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
             this.pump_objects_ext = padw2.getObjects();
         }
         
+        this.m_parent.requestFocus();
         
 /*        
         if (this.m_add_action)
