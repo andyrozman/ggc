@@ -2,19 +2,25 @@ package ggc.meter.device.freestyle;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.company.LifeScan;
+import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.company.Abbott;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.ConsoleOutputWriter;
+import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
-import java.util.StringTokenizer;
+import java.io.IOException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.ATechDate;
 import com.atech.utils.TimeZoneUtil;
@@ -57,63 +63,36 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     /**
      * 
      */
-    public static final int LIFESCAN_COMPANY          = 3;
+    public static final int METER_FREESTYLE                 = 40001;
     
     /**
      * 
      */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA      = 30001;
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_2    = 30002;  // NP
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRASMART = 30003;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRALINK  = 30004;  // NI  NP
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_SELECT     = 30005;  // NI  NP
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_INDUO                = 30006;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_BASIC      = 30007;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_SURESTEP   = 30008;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_FASTTAKE   = 30009;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_PROFILE    = 30010;  
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_II         = 30011;  // NI
+    public static final int METER_FREESTYLE_LITE            = 40002;
     
-    // these have different protocol and are extended from OneTouchMeter2
     /**
      * 
      */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_MINI = 30050;  // NI NP
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY = 30050;  // NI NP
+    public static final int METER_FREESTYLE_FREEDOM         = 40003;
     
+    /**
+     * 
+     */
+    public static final int METER_FREESTYLE_FREEDOM_LITE    = 40004;
+    
+    /**
+     * 
+     */
+    public static final int METER_FREESTYLE_FLASH           = 40005;
+    
+    /**
+     * 
+     */
+    public static final int METER_PRECISION_XTRA            = 40006;
+    
+    
+    private static Log log = LogFactory.getLog(FreestyleMeter.class);
+
     
     
     protected boolean device_running = true;
@@ -125,8 +104,8 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     private int entries_current = 0;
     private int reading_status = 0;
     
-    private int info_tokens;
-    private String date_order;
+    //private int info_tokens;
+    //private String date_order;
     
     
     
@@ -160,9 +139,9 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         super(DataAccessMeter.getInstance());
         
         this.setCommunicationSettings( 
-                  9600,
+                  19200,
                   SerialPort.DATABITS_8, 
-                  SerialPort.STOPBITS_1, 
+                  SerialPort.STOPBITS_2, 
                   SerialPort.PARITY_NONE,
                   SerialPort.FLOWCONTROL_NONE, 
                   SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT|SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
@@ -172,10 +151,10 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
         
         // set meter type (this will be deprecated in future, but it's needed for now
-        this.setMeterType("LifeScan", this.getName());
+        this.setMeterType("Abbott", this.getName());
 
         // set device company (needed for now, will also be deprecated)
-        this.setDeviceCompany(new LifeScan());
+        this.setDeviceCompany(new Abbott());
         
 
         // settting serial port in com library
@@ -254,42 +233,33 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         try
         {
             
-            write("D".getBytes());
-            waitTime(100);
-            write("M".getBytes());
-            waitTime(100);
-            write("?".getBytes());
+            
+            write("MEM".getBytes());
             waitTime(100);
             
             String line;
+            
+            
+            readInfo();
 
-            //System.out.println("Serial Number: " + this.readLine());
-            //System.out.println("Serial Number: " + this.readLine());
             
             
+            /*
             while((line=this.readLine())==null)
             {
                 System.out.println("Serial Number1: " + line);
-            }
+            }*/
             
-            System.out.println("Serial Number2: " + line);
+            //System.out.println("Serial Number2: " + line);
             //System.out.println("Serial Number: " + this.readLine());
             //System.out.println("Serial Number: " + this.readLine());
             
             
-            write("D".getBytes());
-            waitTime(100);
-            write("M".getBytes());
-            waitTime(100);
-            write("P".getBytes());
-            waitTime(100);
             
          
             while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
             {
-                processEntry(line);
-                
-                //System.out.println(this.entries_current + "/" + this.entries_max  );
+                processBGData(line);
                 
                 if (line==null)
                     break;
@@ -351,8 +321,43 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
      */
     public void readInfo() throws PlugInBaseException
     {
+        try
+        {
+            this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
+            this.output_writer.setSpecialProgress(1);
+    
+            // first we read device identification data
+            DeviceIdentification di = this.output_writer.getDeviceIdentification();
+            
+            di.device_serial_number = this.readLineDebug();
+            this.output_writer.setSpecialProgress(2);
+            di.device_hardware_version = this.readLineDebug();
+            this.output_writer.setSpecialProgress(3);
+            this.readLineDebug();
+            this.output_writer.setSpecialProgress(4);
+            this.entries_max = Integer.parseInt(this.readLineDebug());
+            
+            
+            this.output_writer.setDeviceIdentification(di);
+            this.output_writer.writeDeviceIdentification();
+            this.output_writer.setSpecialProgress(5);
+        }
+        catch(IOException ex)
+        {
+            throw new PlugInBaseException(ex);
+        }
+    
     }
     
+    
+    protected String readLineDebug() throws IOException
+    {
+        String rdl = this.readLine();
+        
+        log.debug(rdl);
+        
+        return rdl;
+    }
     
     
     
@@ -370,37 +375,49 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     
     
     
-    private void processEntry(String entry)
+    /**
+     * Process BG Data
+     * 
+     * @param entry
+     */
+    public void processBGData(String entry)
     {
         if ((entry==null) || (entry.length()==0))
             return;
         
-        
-        StringTokenizer strtok = new StringTokenizer(entry, ",");
-        
-        //System.out.println("tokens: " + strtok.countTokens());
-        
-        if (strtok.countTokens()==this.info_tokens) // we can have different info tokens for different meters
+        if (entry.contains("END"))
         {
-        	if (this.reading_status==0) // info can be read only before reading of data, if we receive entry 
-        		this.readInfo(strtok);  // with same nr of parameters, this is error
-        	else
-        		setDeviceStopped();
-        	
+            this.device_running = false;
+            this.output_writer.setReadingStop();
+            return;
         }
-        else if (strtok.countTokens()==5)
+        
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setBgUnit(OutputUtil.BG_MGDL);
+        
+        //227  Oct  11 2006 01:38 17 0x00
+        String BGString = entry.substring(0,5);
+        
+        if (BGString.contains("HI"))
         {
-            this.readBGEntry(strtok, entry);
+            mve.setBgValue("500");
+            mve.addParameter("RESULT", "High");
         }
         else
         {
-//        	System.out.println("wrong oaraomn: ");
-        	setDeviceStopped();
+            mve.setBgValue("" + BGString.trim());
         }
         
+        String timeString = entry.substring(5,23);
+        mve.setDateTimeObject(getDateTime(timeString));
         
-        
+        this.output_writer.writeData(mve);
+        this.entries_current++;
+        readingEntryStatus();
     }
+        
+        
+        
     
     
     
@@ -413,58 +430,6 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     }
     
     
-    private void readInfo(StringTokenizer strtok)
-    {
-        this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
-
-        
-/*        P nnn, MeterSN ,MG/DL 
-        (1) (2) (3)
-        (1) Number of datalog records to follow (0  150)
-        (2) Meter serial number (9 characters)
-        (3) Unit of measure for glucose values */
-        
-        //strtok 
-        
-        String num_x = strtok.nextToken(); // 1 token: number of entries
-        num_x = num_x.substring(2).trim();
-        
-        this.entries_max = Integer.parseInt(num_x);
-        
-        
-        String dev = strtok.nextToken(); // 2. token: device id
-        
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
-        di.device_serial_number = dev;
-        //di.company = "OneTouch";
-        //di.device_selected = "Ultra";
-        
-        this.output_writer.setDeviceIdentification(di);
-        this.output_writer.writeDeviceIdentification();
-        this.output_writer.setSpecialProgress(2);
-
-        /*
-        if (this.getDeviceId()!=OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA)
-        {
-            //'P nnn,"MeterSN","ENGL. ","M.D.Y. ","AM/PM","MG/DL","!min","!max" cksm' 
-            //"M.D.Y. " or "D.M.Y. "
-            strtok.nextToken(); // 3
-            
-            String dx = this.getParameterValue(strtok.nextToken()); // 4. token: date
-            
-            if (dx.equals("M.D.Y."))
-                this.date_order = "MDY";
-            else
-                this.date_order = "DMY";
-        }*/
-        
-        
-        reading_status = 1;
-        
-        this.output_writer.setSpecialProgress(4);
-        
-    }
-
     
     
     
@@ -475,225 +440,45 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     }
     
 
-    protected void readBGEntry(StringTokenizer strtok, String entry)
-    {
-        try
-        {
-            //System.out.println("BG: " + entry);
-            /*
-            P "dow","mm/dd/yy","hh:mm:30 ","xxxxx ", n cksm<CR><LF>
-            (4) (5) (6) (7)
-            (4) Day of week (SUN, MON, TUE, WED, THU, FRI, SAT)
-            (5) Date of reading
-            (6) Time of reading (If two or more readings were taken within the same minute, they will be
-            separated by 8 second intervals)
-            (7) Result format:
-            " nnn " - blood test result (mg/dL)
-            " HIGH " - blood test result >600 mg/dL
-            "C nnn " - control solution test result (mg/dL)
-            "CHIGH " - control solution test result >600 mg/dL
-            
-            
-            (12) Result format: (Profile) 
-                 "  nnn " - blood test result (mg/dL)
-                 "MMnn.n" - blood test result (mmol/dL)
-                 " HIGH " - blood test result > 600 mg/dL
-                 "! nnn" - check strip test result (mg/dL)
-                 "! nn.n " - check strip test result (mmol/L)
-                 "!HIGH " - check strip test result > 600 mg/dL
-                 "C nnn " - control solution test result (mg/dL)
-                 "C nn.n" - control solution test result (mmol/L)
-                 "CHIGH " - control solution test result > 600 mg/dL
-                 "I 000 " to "I 150 " - CARB records
-                 "I 00.0 " to "I 20.0 " - BOLUS insulin records
-                 "I  00 " to "I  99 " - all other insulin records             
-            
-      glucose value formatting (there are language variations): (OT2)
-        If the datalog record had a checksum error, the last character
-          is forced to be a question mark (e.g., '...," nnn?",...') All
-          data in a record so flagged must be considered "suspect".
-        If glucose > 600 mg/dL, '...," HIGH ",...' is transmitted.
-        If UNITS are mmol/L, '...,"MMnn.n ",...' is transmitted.
-        If a checkstrip reading, ',,,,"! nnn ",...' (mg/dL) or
-          '...,"! n.n ",...' (mmol/L) is transmitted.
-        If flagged as control solution, '...,"C nnn ",...' (mg/dL) or
-          '...,"C nn.n ",...' (mmol/L) is transmitted.  (The 'C' becomes
-          a 'K' if the languages is SVENS or DEUTS.)             
-            
-            */
-            
-            strtok.nextToken();
-            String date = strtok.nextToken();
-            String time = strtok.nextToken();
-            
-            String res = this.getParameterValue(strtok.nextToken());
-            
-            
-            this.output_writer.setSubStatus(ic.getMessage("READING_PROCESSING_ENTRY") + (this.entries_current+1));
-
-            
-            //if ((res.contains("CHIGH")) || (res.contains("C ")))
-            if ((res.startsWith("C")) ||  // control solution
-                (res.startsWith("!")) ||  // check strip
-                (res.startsWith("I")) ||  // insulin or other data
-                (res.startsWith("K")))    // control solution (on OT2 when language is SVENS or DEUTSCH)
-            {
-            	this.entries_current++;
-            }
-            else
-            {
-            	this.entries_current++;
-
-            	MeterValuesEntry mve = new MeterValuesEntry();
-                mve.setBgUnit(DataAccessMeter.BG_MGDL);
-                mve.setDateTimeObject(getDateTime(date, time));
-                
-                
-                if (res.contains("HIGH"))
-                {
-                    mve.setBgValue("600");
-                    mve.addParameter("RESULT", "High");
-                }
-                else
-                {
-                    if (res.contains("?"))
-                    {
-                        res = m_da.replaceExpression(res, "?", " ").trim();
-                        mve.addParameter("RESULT", "Suspect Entry");
-                    }
-                    
-                    if (res.contains("MM"))
-                    {
-                        // mmol value, this is not supported by ultra, but some other meters support this
-                        res = m_da.replaceExpression(res, "MM", " ").trim();
-                        
-                        try
-                        {
-                            mve.setBgValue("" + m_da.getBGValueByType(DataAccessMeter.BG_MMOL, DataAccessMeter.BG_MGDL, res));
-                        }
-                        catch(Exception ex)
-                        {}
-                        
-                    }
-                    else
-                        mve.setBgValue(res);
-                }
-                
-                this.output_writer.writeData(mve);
-                readingEntryStatus();
-            }
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Exception: " + ex);
-            System.out.println("Entry: " + entry);
-            ex.printStackTrace();
-        }
-        
-    }
+    private static String months_en[] = { "", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"  };
     
-    
-    private ATechDate getDateTime(String date, String time)
+    protected ATechDate getDateTime(String datetime)
     {
         // "mm/dd/yy","hh:mm:30 "
+        // Oct  11 2006 01:38
+        ATechDate dt = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN);
         
-        date = this.getParameterValue(date); 
-        time = this.getParameterValue(time); 
+        //dt.day_of_month = Integer.parseInt(datetime.substring(6, 8));
+        String mnth = datetime.substring(0, 3);
         
-       
-        String dt = "";
+        //dt.month = 
+        dt.day_of_month = Integer.parseInt(datetime.substring(5, 7));
+        dt.year = Integer.parseInt(datetime.substring(8, 12));
+        dt.hour_of_day = Integer.parseInt(datetime.substring(13, 15));
+        dt.minute = Integer.parseInt(datetime.substring(16, 18));
         
-        StringTokenizer st = new StringTokenizer(date, "/");
-        
-        String m="",d="",y="";
-        
-        if (this.date_order.equals("MDY"))
+        for(int i=0; i<FreestyleMeter.months_en.length; i++)
         {
-            m = st.nextToken();
-            d = st.nextToken();
-            y = st.nextToken();
-        }
-        else
-        {
-            d = st.nextToken();
-            m = st.nextToken();
-            y = st.nextToken();
-        }
-        		
-        
-        try
-        {
-            int year = Integer.parseInt(y);
-            
-            if (year<100)
+            if (mnth.equals(FreestyleMeter.months_en[i]))
             {
-                if (year>70)
-                    dt += "19" + m_da.getLeadingZero(year, 2);
-                else
-                    dt += "20" + m_da.getLeadingZero(year, 2);
-            }
-            else
-                dt += year;
-            
-        }
-        catch(Exception ex)
-        {
-            
-        }
-        
-        dt += m;
-        dt += d;
-
-        if (time.contains(" "))
-        {
-
-            st = new StringTokenizer(time, ":");
-            
-            String hr = st.nextToken();
-            String min = st.nextToken();
-            
-            int hr_s = Integer.parseInt(hr);
-            
-            if (time.contains("AM"))
-            {
-                // am
-                if (hr_s==12)
-                {
-                    dt += "00";
-                }
-                else
-                {
-                    dt += m_da.getLeadingZero(hr_s, 2);
-                }
-                
-                
-            }
-            else
-            {
-                // pm
-                if (hr_s==12)
-                {
-                    dt += "12";
-                }
-                else
-                {
-                    hr_s += 12;
-                    dt += m_da.getLeadingZero(hr_s, 2);
-                }
-                
+                dt.month = i;
+                break;
             }
             
-            dt += min;
-        }
-        else
-        {
-            st = new StringTokenizer(time, ":");
-            
-            dt += st.nextToken();
-            dt += st.nextToken();
         }
         
-        return tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(dt)));
+        return dt;
+        
+        /*
+        System.out.println("Month: '" + datetime.substring(0, 3) + "'");
+        System.out.println("Day: '" + datetime.substring(5, 7)+ "'");
+        System.out.println("Year: '" + datetime.substring(8, 12)+ "'");
+                        
+        System.out.println("Hour: '" + datetime.substring(13, 15)+ "'");
+        System.out.println("Year: '" + datetime.substring(16, 18)+ "'");
+        
+        */
+        
         
     }
 
@@ -704,7 +489,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
         float proc_read = ((this.entries_current*1.0f)  / this.entries_max);
         
-        float proc_total = 4 + (96 * proc_read);
+        float proc_total = 5 + (95 * proc_read);
         
         //System.out.println("proc_read: " + proc_read + ", proc_total: " + proc_total);
         
@@ -729,7 +514,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
      * 
      * @return short name of meter
      */
-    public abstract String getShortName();
+    //public abstract String getShortName();
     
     
     
@@ -779,6 +564,48 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         }
     } 
     
+    
+    /**
+     * getCompanyId - Get Company Id 
+     * 
+     * @return id of company
+     */
+    public int getCompanyId()
+    {
+        return MeterManager.METER_COMPANY_ABBOTT;
+    }
+    
+    
+    /**
+     * @param args
+     */
+    public static void main(String args[])
+    {
+        /*
+        //Oct  11 2006 01:38
+        
+        Freestyle fm = new Freestyle();
+        
+        ATechDate atd = fm.getDateTime("Oct  11 2006 01:38");
+        
+        System.out.println(atd.getDateString() + " " + atd.getTimeString());
+        */
+
+        Freestyle fm = new Freestyle();
+        fm.output_writer = new ConsoleOutputWriter();
+        
+        String data[] = { "093  May  30 2005 00:46 16 0x01",
+                          "105  May  30 2005 00:42 16 0x00",
+                          "085  May  29 2005 23:52 16 0x00",
+                          "073  May  29 2005 21:13 16 0x00",
+                          "091  May  29 2005 21:11 16 0x01"  };
+        
+        for(int i=0; i<data.length; i++)
+        {
+            fm.processBGData(data[i]);
+        }
+        
+    }
     
     
     
