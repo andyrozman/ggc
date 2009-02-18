@@ -9,6 +9,7 @@ import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
+import ggc.pump.manager.PumpManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,15 +56,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     //OutputWriter output_writer = null;
 
     
-    /**
-     * Roche Company
-     */
-    public static final int ROCHE_COMPANY                 = 2;
-
-    /**
-     * Disetronic Company
-     */
-    public static final int DISETRONIC_COMPANY            = 3;
     
     /**
      * Roche SmartPix Device
@@ -143,7 +135,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      */
     public int getCompanyId()
     {
-        return AccuChekSmartPixPump.ROCHE_COMPANY;
+        return PumpManager.PUMP_COMPANY_ROCHE;
     }
     
     
