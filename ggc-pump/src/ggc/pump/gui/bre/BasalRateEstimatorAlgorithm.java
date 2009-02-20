@@ -1,29 +1,22 @@
 package ggc.pump.gui.bre;
 
-import ggc.pump.util.DataAccessPump;
-
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.TitledBorder;
-
-import com.atech.utils.ATSwingUtils;
+import ggc.pump.data.graph.GraphViewBasalRateEstimator;
 
 public class BasalRateEstimatorAlgorithm 
 {
+    GraphViewBasalRateEstimator m_gv;
     
-    public BasalRateEstimatorAlgorithm()
+    public BasalRateEstimatorAlgorithm(GraphViewBasalRateEstimator gv)
     {
+        this.m_gv = gv;
     }
 
     
+    public void setData(BasalRateEstimatorDataCollection data_coll)
+    {
+        // do algorithm data
+        m_gv.setData(data_coll);
+    }
     
     
     
