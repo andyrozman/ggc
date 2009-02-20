@@ -33,6 +33,27 @@ import ggc.plugin.manager.DeviceManager;
 public class CGMManager extends DeviceManager
 {
     
+    
+    /**
+     * CGMS Company: Minimed
+     */
+    public static final int CGMS_COMPANY_MINIMED              = 1;
+    
+
+    /**
+     * CGMS Company: Roche
+     */
+    public static final int CGMS_COMPANY_ABBOTT               = 2;
+
+    
+    /**
+     * CGMS Company: Disetronic
+     */
+    public static final int CGMS_COMPANY_DEXCOM               = 3;
+    
+
+    
+    
     /**
      * Singelton instance
      */
