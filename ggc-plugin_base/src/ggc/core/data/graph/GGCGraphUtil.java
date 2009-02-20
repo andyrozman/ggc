@@ -114,7 +114,7 @@ public class GGCGraphUtil extends GraphUtil
         }
         BGDiff = maxBG - minBG;
 
-        getRenderingQuality();
+//        getRenderingQuality();
         
     }
     
