@@ -1,4 +1,4 @@
-package ggc.pump.data.graph;
+package ggc.pump.data.graph.bre;
 
 import ggc.core.data.graph.GGCGraphUtil;
 import ggc.pump.data.bre.BREData;
@@ -51,7 +51,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInterface, GraphViewDataProcessorInterface 
 {
 
     GregorianCalendar gc;
@@ -71,10 +71,6 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     private XYSeriesCollection insBUDataset = new XYSeriesCollection();
     
     
-    DataAccessPump da_local = DataAccessPump.getInstance();
-    GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
-    
-    BREDataCollection data_coll;
 
     
     
@@ -83,9 +79,9 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
      * 
      * @param gc 
      */
-    public GraphViewBasalRateEstimator()
+    public GraphViewBasals()
     {
-        super(DataAccessPump.getInstance());
+        super();
     }
     
 

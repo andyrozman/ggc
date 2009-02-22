@@ -1,4 +1,4 @@
-package ggc.pump.data.graph;
+package ggc.pump.data.graph.bre;
 
 import ggc.core.data.graph.GGCGraphUtil;
 import ggc.pump.data.bre.BREData;
@@ -51,16 +51,11 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewBasalRate extends BREGraphsAbstract //implements GraphViewInterface, GraphViewDataProcessorInterface 
 {
 
-    GregorianCalendar gc;
-//    private GlucoValues gluco_values;
     @SuppressWarnings("unused")
-//    private GlucoValues gluco_values_prev;
     XYSeriesCollection dataset = new XYSeriesCollection();
-    //TimeSeriesCollection dataset = new TimeSeriesCollection();
-    //DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
 
     NumberAxis BGAxis;
 //    private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
@@ -71,10 +66,6 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     private XYSeriesCollection insBUDataset = new XYSeriesCollection();
     
     
-    DataAccessPump da_local = DataAccessPump.getInstance();
-    GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
-    
-    BREDataCollection data_coll;
 
     
     
@@ -83,9 +74,11 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
      * 
      * @param gc 
      */
-    public GraphViewBasalRateEstimator()
+    public GraphViewBasalRate(int type)
     {
-        super(DataAccessPump.getInstance());
+        super();
+        
+        System.out.println("TYpe: " + type);
     }
     
 
