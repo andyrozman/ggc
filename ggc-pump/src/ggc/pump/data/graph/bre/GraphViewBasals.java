@@ -1,9 +1,7 @@
 package ggc.pump.data.graph.bre;
 
-import ggc.core.data.graph.GGCGraphUtil;
 import ggc.pump.data.bre.BREData;
 import ggc.pump.data.bre.BREDataCollection;
-import ggc.pump.util.DataAccessPump;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -19,9 +17,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
-import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
-import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,9 +49,8 @@ import com.atech.utils.ATechDate;
 public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInterface, GraphViewDataProcessorInterface 
 {
 
-    GregorianCalendar gc;
+    //GregorianCalendar gc;
 //    private GlucoValues gluco_values;
-    @SuppressWarnings("unused")
 //    private GlucoValues gluco_values_prev;
     XYSeriesCollection dataset = new XYSeriesCollection();
     //TimeSeriesCollection dataset = new TimeSeriesCollection();
@@ -68,7 +62,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
     DateAxis dateAxis;
     NumberAxis insBUAxis;
     //private TimeSeriesCollection insBUDataset = new TimeSeriesCollection();
-    private XYSeriesCollection insBUDataset = new XYSeriesCollection();
+    //private XYSeriesColleion insBUDataset = new XYSeriesCollection();
     
     
 
@@ -76,8 +70,6 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
     
     /**
      * Constructor
-     * 
-     * @param gc 
      */
     public GraphViewBasals()
     {
@@ -150,6 +142,55 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         if (this.data_coll==null)
             return;
         
+        
+        dataset.removeAllSeries();
+    
+        
+        XYSeries basals_old = new XYSeries(this.m_ic.getMessage("CH_INS_RATIO"), false, false); //, Hour.class);
+        XYSeries basals_new = new XYSeries(this.m_ic.getMessage("BG_INS_RATIO"), true, true); //, Hour.class);
+//        XYSeries ratio_ch_bg = new XYSeries(this.m_ic.getMessage("CH_BG_RATIO"), true, true); //, Hour.class);
+        
+        ArrayList<BREData> lst = this.data_coll.getDataByType(BREData.BRE_DATA_BASAL_OLD);
+        
+        for (int i = 0; i < lst.size(); i++)
+        {
+            BREData rd = lst.get(i);
+            
+            long time = getTimeMs(rd.time);
+            basals_old.add(time, rd.value);
+            
+            
+            time = getTimeMs(rd.time_end);
+            basals_old.add(time, rd.value);
+
+            System.out.println("Old Start: " + rd.time + " End: " + rd.time_end + "  Value: " + rd.value);
+            //System.out.println("Old End: " + rd.time_end);
+        }
+        
+        
+        
+        
+        dataset.addSeries(basals_old);
+        
+        
+        lst = this.data_coll.getDataByType(BREData.BRE_DATA_BASAL_NEW);
+        
+        for (int i = 0; i < lst.size(); i++)
+        {
+            BREData rd = lst.get(i);
+            
+            long time = getTimeMs(rd.time);
+            basals_new.add(time, rd.value);
+            System.out.println("New Start: " + rd.time + "  Value: " + rd.value);
+            
+            time = getTimeMs(rd.time_end);
+            basals_new.add(time, rd.value);
+            System.out.println("New End: " + rd.time_end);
+        }
+        
+        
+        dataset.addSeries(basals_new);
+        
         /*
         //XYSeries xs = new XYSeries("BG");
         TimeSeries ts = new TimeSeries("BG", Minute.class);
@@ -197,117 +238,14 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), hbValues.getPercentOfDaysInClass(4));
 */        
         
-        dataset.removeAllSeries();
-        insBUDataset.removeAllSeries();
-        
-        /*
-        TimeSeries BGSeries = new TimeSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), Hour.class);
-        TimeSeries CHSeries = new TimeSeries(this.m_ic.getMessage("CH_LONG"), Hour.class);
-        TimeSeries ins1Series = new TimeSeries(da_local.getSettings().getIns1Name(), Hour.class);
-        TimeSeries ins2Series = new TimeSeries(da_local.getSettings().getIns2Name(), Hour.class);
-*/
 
-        XYSeries bg = new XYSeries(this.m_ic.getMessage("MEASURED_BASAL_BG"), true, true); //, Hour.class);
-        
-        XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); //, Hour.class);
-//        XYSeries ins1Series = new XYSeries(da_local.getSettings().getIns1Name(), true, true); //, Hour.class);
-//        XYSeries ins2Series = new XYSeries(da_local.getSettings().getIns2Name(), true, true); //, Hour.class);
-        
-        
-        int BGUnit = 1; // AAA da_local.getSettings().getBG_unit();
-        
-        ArrayList<BREData> lst = this.data_coll.getDataByType(BREData.BRE_DATA_BG);  
-        
-        for (int i = 0; i < lst.size(); i++)
-        {
-            //DailyValuesRow row = this.gluco_values.getDailyValueRow(i);
-            //Hour time = new Hour(row.getDateTimeAsDate());
-            //int time = row.getDateT();
-            
-            BREData row = lst.get(i); 
-            
-            long time = getTimeMs(row.time);
-
-            bg.add(time, row.value);
-        }
-        
-        
-        dataset.addSeries(bg);
-
-            //System.out.println(row.getDateTimeAsDate());
-            
-            //if (row.getBG(BGUnit) > 0)
-            //{
-                //BGSeries.getD
-                
-/*                
-                
-                if (BGSeries..getDataItem(time) == null)
-                {
-                    BGSeries.add(time, row.getBG(BGUnit));
-                }
-                else
-                {
-                    BGSeries.addOrUpdate(time, MathUtils.getAverage(row.getBG(BGUnit), BGSeries.getDataItem(time).getY()));
-                } */
-  /*          }
-            
-            if (row.getCH() > 0)
-            {
-                CHSeries.add(time, row.getCH());
-/*
-                if (CHSeries.getDataItem(time) == null)
-                {
-                    CHSeries.add(time, row.getCH());
-                }
-                else
-                {
-                    CHSeries.addOrUpdate(time, MathUtils.getAverage(row.getCH(), CHSeries.getDataItem(time).getYValue()));
-                }
-                */
-/*            }
-            if (row.getIns1() > 0)
-            {
-                ins1Series.add(time, row.getIns1());
-/*                if (ins1Series.getDataItem(time) == null)
-                {
-                    ins1Series.add(time, row.getIns1());
-                }
-                else
-                {
-                    ins1Series.addOrUpdate(time, MathUtils.getAverage(row.getIns1(), ins1Series.getDataItem(time)
-                            .getYValue()));
-                } */
-/*            }
-            
-            if (row.getIns2() > 0)
-            {
-                ins2Series.add(time, row.getIns2());
-/*
-                if (ins2Series.getDataItem(time) == null)
-                {
-                    ins2Series.add(time, row.getIns2());
-                }
-                else
-                {
-                    ins2Series.addOrUpdate(time, MathUtils.getAverage(row.getIns2(), ins2Series.getDataItem(time)
-                            .getYValue()));
-                } */
-/*            }
-        }
-
-        dataset.addSeries(BGSeries);
-        insBUDataset.addSeries(CHSeries);
-        insBUDataset.addSeries(ins1Series);
-        insBUDataset.addSeries(ins2Series);
-  */      
         
         
     }
 
 
-    GregorianCalendar gcx = new GregorianCalendar();
-    
+    //GregorianCalendar gcx = new GregorianCalendar();
+    /*
     public long getTimeMs(int time)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
@@ -316,7 +254,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         gcx.set(GregorianCalendar.MINUTE, atd.minute);
         
         return gcx.getTimeInMillis();
-    }
+    }*/
     
     
     /**
@@ -338,16 +276,19 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
     public void setPlot(JFreeChart chart)
     {
 
-        
+        /*
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
         XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
         dateAxis = (DateAxis) plot.getDomainAxis();
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
-        
+        */
         //plot.s
 
+        XYPlot plot = chart.getXYPlot();
+        BGAxis = (NumberAxis) plot.getRangeAxis();
+        BGAxis.setAutoRangeIncludesZero(true);
         //ColorSchemeH colorScheme = graph_util.getColorScheme();
 
         //chart.setBackgroundPaint(graph_util.backgroundColor);
@@ -376,10 +317,10 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         insBURenderer.setSeriesPaint(1, da_local.getColor(colorScheme.getColor_ins1()));
         insBURenderer.setSeriesPaint(2, da_local.getColor(colorScheme.getColor_ins2()));
 */        
-        defaultRenderer.setSeriesShapesVisible(0, true);
-        insBURenderer.setSeriesShapesVisible(0, true);
-        insBURenderer.setSeriesShapesVisible(1, true);
-        insBURenderer.setSeriesShapesVisible(2, true);
+        //defaultRenderer.setSeriesShapesVisible(0, true);
+        //insBURenderer.setSeriesShapesVisible(0, true);
+        //insBURenderer.setSeriesShapesVisible(1, true);
+        //insBURenderer.setSeriesShapesVisible(2, true);
 
 // AX        dateAxis.setDateFormatOverride(new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
 // AX       dateAxis.setAutoRange(false);
@@ -396,6 +337,9 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
     }
 
     
+    /**
+     * Set Data for Graph (all handling done after that)
+     */
     public void setData(BREDataCollection data_coll)
     {
         this.data_coll = data_coll;
@@ -415,8 +359,8 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
             this.m_ic.getMessage("AXIS_TIME_LABEL"), 
             String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()), 
             dataset, 
-            true, 
-            true, 
+            false, 
+            false, 
             false);
         
         this.setPlot(chart);

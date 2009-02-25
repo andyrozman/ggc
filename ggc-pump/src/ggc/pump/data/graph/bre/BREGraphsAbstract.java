@@ -64,8 +64,6 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     
     /**
      * Constructor
-     * 
-     * @param gc 
      */
     public BREGraphsAbstract()
     {
@@ -102,6 +100,13 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     public long getTimeMs(int time)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
+        
+        System.out.println("Ms: " + atd.hour_of_day + ":" + atd.minute);
+        
+        if (atd.minute == 99)
+        {
+            
+        }
         
         gcx.set(GregorianCalendar.HOUR_OF_DAY, atd.hour_of_day);
         gcx.set(GregorianCalendar.MINUTE, atd.minute);

@@ -146,19 +146,12 @@ public class BasalRateEstimator extends JDialog implements ActionListener
         /*
         JPanel panel_graph = new JPanel();
         panel_graph.setBounds(300, 120, 560, 360);
-        
-        
-        
-        
-        
-        
         tabbed_graphs.addTab("Both Basal Graphs", panel_graph);
         */
 
         
-        tabbed_graphs.addTab("Both Basal Graphs", this.createPanelGraph(BasalRateEstimator.GRAPH_BOTH_BASAL_RATES));
         
-        
+        /*
         JPanel panel_graph = new JPanel();
         panel_graph.setBounds(300, 120, 560, 360);
         
@@ -168,16 +161,17 @@ public class BasalRateEstimator extends JDialog implements ActionListener
         gvp.setMinimumSize(new Dimension(550, 320)); // 450, 460
         gvp.setPreferredSize(gvp.getMinimumSize());
         panel_graph.add(gvp, BorderLayout.CENTER);
-        //panel.add(panel_graph);
-        tabbed_graphs.addTab("Current Basal Graph", panel_graph);
-
+        //panel.add(panel_graph); */
         
-        tabbed_graphs.addTab("Estimated Basal Graph", new JPanel());
+        tabbed_graphs.addTab("Both Basal Graphs", this.createPanelGraph(BasalRateEstimator.GRAPH_BOTH_BASAL_RATES));
 
-        //tabbed_graphs.addTab("Ratio's", new JPanel());
+        tabbed_graphs.addTab("Current Basal Graph", this.createPanelGraph(BasalRateEstimator.GRAPH_OLD_RATE));
+        
+        tabbed_graphs.addTab("Estimated Basal Graph", this.createPanelGraph(BasalRateEstimator.GRAPH_NEW_RATE));
+
         tabbed_graphs.addTab("Ratio's", this.createPanelGraph(BasalRateEstimator.GRAPH_RATIO));
         
-        tabbed_graphs.addTab("Basal Rates", new JPanel());
+        tabbed_graphs.addTab("Basal Rates", this.createPanelGraph(BasalRateEstimator.GRAPH_BASALS));
         
         
         
@@ -405,6 +399,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
         coll.add(BREData.BRE_DATA_BASAL_OLD, 1830, 0.6f);
 
         refreshList(BREData.BRE_DATA_BASAL_OLD, coll.getDataByType(BREData.BRE_DATA_BASAL_OLD));
+        coll.processOldBasals();
         
         coll.add(BREData.BRE_DATA_BASAL_NEW, 900, 0.8f);
         coll.add(BREData.BRE_DATA_BASAL_NEW, 1200, 0.8f);
@@ -412,6 +407,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
         coll.add(BREData.BRE_DATA_BASAL_NEW, 1830, 0.8f);
 
         refreshList(BREData.BRE_DATA_BASAL_NEW, coll.getDataByType(BREData.BRE_DATA_BASAL_NEW));
+        coll.processNewBasals();
         //gv.setData(coll);
         
         // float ratio_ch_insulin, float ratio_bg_insulin, float ratio_ch_bg

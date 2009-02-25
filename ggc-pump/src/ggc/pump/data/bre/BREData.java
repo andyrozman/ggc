@@ -35,6 +35,7 @@ public class BREData
     
     public int data_type = 0;
     public int time;
+    public int time_end;
     public float value = 0.0f;
     
     

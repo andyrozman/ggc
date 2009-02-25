@@ -116,6 +116,60 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         }
         
     }
+
+    
+    public void processOldBasals()
+    {
+        processBasals(this.basal_old);
+        /*
+        for(int i=0; i<this.basal_old.size(); i++)
+        {
+            BREData rd = this.basal_old.get(i);
+            
+            if (i==(this.basal_old.size()-1))
+            {
+                rd.time_end = 2359;
+            }
+            else
+            {
+                BREData rd2 = this.basal_old.get(i+1);
+                rd.time_end = rd2.time - 1;
+            }
+        }*/
+        
+    }
+
+    public void processNewBasals()
+    {
+        processBasals(this.basal_new);
+    }
+    
+
+    public void processBasals(ArrayList<BREData> list)
+    {
+        
+        for(int i=0; i<list.size(); i++)
+        {
+            BREData rd = list.get(i);
+            
+            if (i==0)
+            {
+                rd.time = 0;
+            }
+            
+            if (i==(list.size()-1))
+            {
+                rd.time_end = 2359;
+            }
+            else
+            {
+                BREData rd2 = list.get(i+1);
+                rd.time_end = rd2.time - 1;
+            }
+        }
+    }
+    
+    
     
     
 }

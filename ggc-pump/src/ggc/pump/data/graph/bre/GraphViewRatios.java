@@ -1,28 +1,18 @@
 package ggc.pump.data.graph.bre;
 
-import ggc.core.data.graph.GGCGraphUtil;
 import ggc.pump.data.bre.BREData;
-import ggc.pump.data.bre.BREDataCollection;
 import ggc.pump.data.bre.RatioData;
-import ggc.pump.util.DataAccessPump;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
-import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
-import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -65,7 +55,7 @@ public class GraphViewRatios extends BREGraphsAbstract //implements GraphViewInt
     DateAxis dateAxis;
     NumberAxis insBUAxis;
     //private TimeSeriesCollection insBUDataset = new TimeSeriesCollection();
-    private XYSeriesCollection insBUDataset = new XYSeriesCollection();
+    //private XYSeriesCollection insBUDataset = new XYSeriesCollection();
     
     
 
@@ -73,8 +63,6 @@ public class GraphViewRatios extends BREGraphsAbstract //implements GraphViewInt
     
     /**
      * Constructor
-     * 
-     * @param gc 
      */
     public GraphViewRatios()
     {
@@ -184,8 +172,8 @@ public class GraphViewRatios extends BREGraphsAbstract //implements GraphViewInt
 
         
         XYPlot plot = chart.getXYPlot();
-        XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
-        XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
+        //XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
+        //XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
         dateAxis = (DateAxis) plot.getDomainAxis();
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
@@ -221,9 +209,9 @@ public class GraphViewRatios extends BREGraphsAbstract //implements GraphViewInt
         insBURenderer.setSeriesPaint(2, da_local.getColor(colorScheme.getColor_ins2()));
 */        
         // fdfdd defaultRenderer.setSeriesShapesVisible(0, true);
-        insBURenderer.setSeriesShapesVisible(0, true);
-        insBURenderer.setSeriesShapesVisible(1, true);
-        insBURenderer.setSeriesShapesVisible(2, true);
+        //insBURenderer.setSeriesShapesVisible(0, true);
+        //insBURenderer.setSeriesShapesVisible(1, true);
+        //insBURenderer.setSeriesShapesVisible(2, true);
 
 // AX        dateAxis.setDateFormatOverride(new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
 // AX       dateAxis.setAutoRange(false);

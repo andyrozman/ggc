@@ -21,8 +21,10 @@ public class BasalRateEstimatorAlgorithm
     {
         // do algorithm data
         //m_gv.setData(data_coll);
+        m_graphs.get("" + BasalRateEstimator.GRAPH_OLD_RATE).setData(data_coll);
         
         m_graphs.get("" + BasalRateEstimator.GRAPH_RATIO).setData(data_coll);
+        m_graphs.get("" + BasalRateEstimator.GRAPH_BASALS).setData(data_coll);
         
     }
     
