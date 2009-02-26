@@ -5,15 +5,20 @@ import ggc.pump.data.bre.BREDataCollection;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CombinedDomainXYPlot;
+import org.jfree.chart.plot.CombinedRangeXYPlot;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYStepAreaRenderer;
+import org.jfree.data.Range;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -52,21 +57,26 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
     //GregorianCalendar gc;
 //    private GlucoValues gluco_values;
 //    private GlucoValues gluco_values_prev;
-    XYSeriesCollection dataset = new XYSeriesCollection();
+    XYSeriesCollection dataset_old = new XYSeriesCollection();
+    XYSeriesCollection dataset_new = new XYSeriesCollection();
     //TimeSeriesCollection dataset = new TimeSeriesCollection();
     //DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
 
-    NumberAxis BGAxis;
+    //NumberAxis BGAxis;
 //    private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
     //private DailyValues data = new DailyValues();
-    DateAxis dateAxis;
-    NumberAxis insBUAxis;
+    //DateAxis dateAxis;
+    //NumberAxis insBUAxis;
     //private TimeSeriesCollection insBUDataset = new TimeSeriesCollection();
     //private XYSeriesColleion insBUDataset = new XYSeriesCollection();
     
     
-
+    CombinedDomainXYPlot comb_plot;
+    double basal_old_max =1.5d;
+    double basal_new_max =1.5d;
+    double basal_display = 1.5d;
     
+    NumberAxis numberAxis;
     
     /**
      * Constructor
@@ -130,7 +140,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
      */
     public AbstractDataset getDataSet()
     {
-        return this.dataset;
+        return this.dataset_old;
     }
 
     /**
@@ -143,7 +153,8 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
             return;
         
         
-        dataset.removeAllSeries();
+        dataset_old.removeAllSeries();
+        dataset_new.removeAllSeries();
     
         
         XYSeries basals_old = new XYSeries(this.m_ic.getMessage("CH_INS_RATIO"), false, false); //, Hour.class);
@@ -151,6 +162,10 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
 //        XYSeries ratio_ch_bg = new XYSeries(this.m_ic.getMessage("CH_BG_RATIO"), true, true); //, Hour.class);
         
         ArrayList<BREData> lst = this.data_coll.getDataByType(BREData.BRE_DATA_BASAL_OLD);
+
+        basal_old_max =1.5d;
+        basal_new_max =1.5d;
+        
         
         for (int i = 0; i < lst.size(); i++)
         {
@@ -163,6 +178,10 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
             time = getTimeMs(rd.time_end);
             basals_old.add(time, rd.value);
 
+            if (rd.value > basal_old_max)
+                basal_old_max = rd.value;
+            
+            
             System.out.println("Old Start: " + rd.time + " End: " + rd.time_end + "  Value: " + rd.value);
             //System.out.println("Old End: " + rd.time_end);
         }
@@ -170,7 +189,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         
         
         
-        dataset.addSeries(basals_old);
+        dataset_old.addSeries(basals_old);
         
         
         lst = this.data_coll.getDataByType(BREData.BRE_DATA_BASAL_NEW);
@@ -186,10 +205,25 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
             time = getTimeMs(rd.time_end);
             basals_new.add(time, rd.value);
             System.out.println("New End: " + rd.time_end);
+
+            if (rd.value > basal_new_max)
+                basal_new_max = rd.value;
+        
         }
         
         
-        dataset.addSeries(basals_new);
+        dataset_new.addSeries(basals_new);
+
+        
+        if (basal_new_max > basal_old_max)
+        {
+            basal_display = basal_new_max;
+        }
+        else
+            basal_display = basal_old_max;
+            
+        
+        basal_display += 0.5d;
         
         /*
         //XYSeries xs = new XYSeries("BG");
@@ -268,6 +302,48 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
     }
     
     
+    private JFreeChart createCombinedChartOld() {
+
+        // create subplot 1...
+        //IntervalXYDataset data1 = createDataset1();
+        
+        
+        
+        XYItemRenderer renderer1 = new XYBarRenderer(0.20);
+        /*renderer1.setToolTipGenerator(
+            new StandardXYItemLabelGenerator(
+                new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.0")
+            )
+        );*/
+        XYPlot subplot1 = new XYPlot(dataset_old, new DateAxis("Date"), null, renderer1);
+
+        // create subplot 2...
+        //XYDataset data2 = createDataset2();
+        XYItemRenderer renderer2 = new StandardXYItemRenderer();
+        /*renderer2.setToolTipGenerator(
+            new StandardXYItemLabelGenerator(
+                new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.0")
+            )
+        );*/
+        XYPlot subplot2 = new XYPlot(dataset_new, new DateAxis("Date"), null, renderer2);
+
+        // create a parent plot...
+        CombinedRangeXYPlot plot = new CombinedRangeXYPlot(new NumberAxis("Value"));
+
+        // add the subplots...
+        plot.add(subplot1, 1);
+        plot.add(subplot2, 1);
+
+        // return a new chart containing the overlaid plot...
+        return new JFreeChart(null,
+                              JFreeChart.DEFAULT_TITLE_FONT, plot, true);
+
+    }
+
+    
+    
+    
+    
     /**
      * Set Plot
      * 
@@ -275,7 +351,19 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
      */
     public void setPlot(JFreeChart chart)
     {
+        
+        this.numberAxis.setRange(new Range(0.0d, this.basal_display));
 
+/*        
+        NumberAxis numberAxis = new NumberAxis("Value");
+        numberAxis.setAutoRangeIncludesZero(true);
+        numberAxis.setRange(new Range(0.0d, 1.5d));
+  */
+        
+        
+        
+        //chart.getPlot();
+        
         /*
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
@@ -285,14 +373,44 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         insBUAxis = new NumberAxis();
         */
         //plot.s
-
+/* jdskdsk
+        XYStepAreaRenderer xy_step = new XYStepAreaRenderer(XYStepAreaRenderer.AREA);
+        
         XYPlot plot = chart.getXYPlot();
-        BGAxis = (NumberAxis) plot.getRangeAxis();
-        BGAxis.setAutoRangeIncludesZero(true);
         //ColorSchemeH colorScheme = graph_util.getColorScheme();
 
+        //CombinedRangeXYPlot plot = (CombinedRangeXYPlot)chart.getXYPlot();
+        //CombinedRangeXYPlot plot = new CombinedRangeXYPlot(chart.getXYPlot());
+
+        BGAxis = (NumberAxis) plot.getRangeAxis();
+        BGAxis.setAutoRangeIncludesZero(true);
+        
+        
+        CombinedRangeXYPlot comb_plot = new CombinedRangeXYPlot(BGAxis);
+        comb_plot.setGap(10.0);
+*/        
+//        CombinedRangeXYPlot pl = new CombinedRangeXYPlot();
+
+        
+//        plot.add(subplot1, 1);
+//        plot.add(subplot2, 1);
+//        plot.setOrientation(PlotOrientation.VERTICAL);        
+/* dsjhdjs        
+        comb_plot.add(new XYPlot(dataset_old, plot.getDomainAxis(), BGAxis, xy_step), 1);
+        comb_plot.add(new XYPlot(dataset_new, plot.getDomainAxis(), BGAxis, xy_step), 1);
+        comb_plot.setOrientation(PlotOrientation.VERTICAL);        
+*/
+        //new XYPlot(dataset, plot.getDomainAxis(), BGAxis, xy_step);
+        //XYItemRenderer renderer);
+        
+        
+        
+        
         //chart.setBackgroundPaint(graph_util.backgroundColor);
         
+        //plot.setRenderer(new XYStepAreaRenderer();)
+        
+        //plot.setRenderer(xy_step);
         /*
         RenderingHints rh = graph_util.getRenderingHints();
         
@@ -337,6 +455,51 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
     }
 
     
+    
+    /**
+     * Creates a combined XYPlot chart.
+     *
+     * @return the combined chart.
+     */
+    private JFreeChart createCombinedChart() {
+
+        XYStepAreaRenderer xy_step = new XYStepAreaRenderer(XYStepAreaRenderer.AREA);
+        
+        //XYPlot plot = chart.getXYPlot();
+        //ColorSchemeH colorScheme = graph_util.getColorScheme();
+
+        //CombinedRangeXYPlot plot = (CombinedRangeXYPlot)chart.getXYPlot();
+        //CombinedRangeXYPlot plot = new CombinedRangeXYPlot(chart.getXYPlot());
+
+        numberAxis = new NumberAxis("Value");
+        numberAxis.setAutoRangeIncludesZero(true);
+        numberAxis.setRange(new Range(0.0d, 1.5d));
+        
+        
+        
+        
+        comb_plot = new CombinedDomainXYPlot(new DateAxis("Date"));
+        comb_plot.setGap(10.0);
+        
+//        CombinedRangeXYPlot pl = new CombinedRangeXYPlot();
+
+        
+//        plot.add(subplot1, 1);
+//        plot.add(subplot2, 1);
+//        plot.setOrientation(PlotOrientation.VERTICAL);        
+        
+        comb_plot.add(new XYPlot(dataset_old, null, numberAxis, xy_step), 1);
+        comb_plot.add(new XYPlot(dataset_new, null, numberAxis, xy_step), 1);
+        comb_plot.setOrientation(PlotOrientation.VERTICAL);        
+
+        // return a new chart containing the overlaid plot...
+        return new JFreeChart(null,
+                              JFreeChart.DEFAULT_TITLE_FONT, comb_plot, false);
+
+    }
+    
+    
+    
     /**
      * Set Data for Graph (all handling done after that)
      */
@@ -346,7 +509,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         this.loadData();
         this.preprocessData();
         
-        this.setPlot(chart);
+        //this.setPlot(chart);
     }
     
     
@@ -355,15 +518,20 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
      */
     public void createChart()
     {
+        chart = this.createCombinedChart();
+        
+        
+        /*
         chart = ChartFactory.createTimeSeriesChart(null, 
             this.m_ic.getMessage("AXIS_TIME_LABEL"), 
             String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()), 
-            dataset, 
+            dataset_old, 
             false, 
             false, 
             false);
         
-        this.setPlot(chart);
+        //ChartFactory. */
+        //this.setPlot(chart);
     }
 
 
