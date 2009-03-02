@@ -3,6 +3,8 @@ package ggc.pump.data.graph.bre;
 import ggc.pump.data.bre.BREData;
 import ggc.pump.data.bre.BREDataCollection;
 
+import java.awt.Color;
+import java.awt.Paint;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -59,6 +61,10 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
 //    private GlucoValues gluco_values_prev;
     XYSeriesCollection dataset_old = new XYSeriesCollection();
     XYSeriesCollection dataset_new = new XYSeriesCollection();
+    
+    XYStepAreaRenderer xy_step2;
+    XYStepAreaRenderer xy_step;
+    
     //TimeSeriesCollection dataset = new TimeSeriesCollection();
     //DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
 
@@ -354,6 +360,14 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         
         this.numberAxis.setRange(new Range(0.0d, this.basal_display));
 
+        xy_step.setBaseFillPaint(Color.green);
+        xy_step.setBaseOutlinePaint(Color.black);
+        xy_step.setBasePaint(Color.green);
+        
+        xy_step2.setBaseFillPaint(Color.blue);
+        
+        
+        
 /*        
         NumberAxis numberAxis = new NumberAxis("Value");
         numberAxis.setAutoRangeIncludesZero(true);
@@ -463,7 +477,25 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
      */
     private JFreeChart createCombinedChart() {
 
-        XYStepAreaRenderer xy_step = new XYStepAreaRenderer(XYStepAreaRenderer.AREA);
+        xy_step = new XYStepAreaRenderer(XYStepAreaRenderer.AREA);
+        //xy_step.setBaseFillPaint(new Paint(Color.green));
+        
+        //xy_step.setBaseFillPaint(Color.green);
+        xy_step.setBaseOutlinePaint(Color.black);
+        //xy_step.setBasePaint(Color.green);
+        xy_step.setPaint(Color.green.darker());
+        
+        
+        xy_step2 = new XYStepAreaRenderer(XYStepAreaRenderer.AREA);
+        //xy_step2.setBaseFillPaint(Color.blue);
+        xy_step2.setPaint(Color.blue);
+        //Paint p = xy_step.getBaseFillPaint();
+        
+        
+        //xy_step.s
+        
+        
+        //new Paint();
         
         //XYPlot plot = chart.getXYPlot();
         //ColorSchemeH colorScheme = graph_util.getColorScheme();
@@ -489,7 +521,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
 //        plot.setOrientation(PlotOrientation.VERTICAL);        
         
         comb_plot.add(new XYPlot(dataset_old, null, numberAxis, xy_step), 1);
-        comb_plot.add(new XYPlot(dataset_new, null, numberAxis, xy_step), 1);
+        comb_plot.add(new XYPlot(dataset_new, null, numberAxis, xy_step2), 1);
         comb_plot.setOrientation(PlotOrientation.VERTICAL);        
 
         // return a new chart containing the overlaid plot...
