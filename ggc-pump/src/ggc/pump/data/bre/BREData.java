@@ -39,6 +39,17 @@ public class BREData
     public float value = 0.0f;
     
     
+    public boolean areWeInTimeRange(int time_q)
+    {
+        if ((time_q >= time) && (time_q <= time_end))
+            return true;
+        else
+            return false;
+    }
+    
+    
+    
+    
     public String toString()
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);

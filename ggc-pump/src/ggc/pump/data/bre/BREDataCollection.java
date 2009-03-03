@@ -12,6 +12,9 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     ArrayList<RatioData> ratios;
     ArrayList<RatioData> ratios_graph;
     
+    ArrayList<BasalEstimationData> basal_estimation;
+    
+    
     public BREDataCollection()
     {
         bg = new ArrayList<BREData>();
@@ -19,6 +22,7 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         basal_new = new ArrayList<BREData>();
         ratios = new ArrayList<RatioData>();
         ratios_graph = new ArrayList<RatioData>();
+        basal_estimation = new ArrayList<BasalEstimationData>();
     }
 
     public void add(int type, BREData data)
@@ -169,6 +173,16 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         }
     }
     
+    
+    public void setBasalEstimationData(ArrayList<BasalEstimationData> data)
+    {
+        this.basal_estimation = data;
+    }
+    
+    public ArrayList<BasalEstimationData> getBasalEstimationData()
+    {
+        return this.basal_estimation;
+    }
     
     
     
