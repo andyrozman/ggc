@@ -1004,6 +1004,30 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
 
     
+    /**
+     * This method is intended to load additional Language info. Either special langauge configuration
+     * or special data required for real Locale handling.
+     */
+    @Override
+    public void loadLanguageInfo()
+    {
+        // TODO Auto-generated method stub
+    }
+ 
+    
+    public int getSelectedLangIndex()
+    {
+        return 0;
+    }
+
+    
+    public void setSelectedLangIndex(int index)
+    {
+        
+    }
+    
+    
+    
     
 
 }
