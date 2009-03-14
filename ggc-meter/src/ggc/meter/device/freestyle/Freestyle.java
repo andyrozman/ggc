@@ -151,7 +151,7 @@ public class Freestyle extends FreestyleMeter
      */
     public int getImplementationStatus() 
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
     
