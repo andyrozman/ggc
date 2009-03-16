@@ -75,6 +75,7 @@ public class WeeklyValues implements Serializable
         else
         {
             DailyValues dv = new DailyValues();
+            dv.setDate(dvr.getDateTime());
             dv.addRow(dvr);
             m_dataTable.put(""+date, dv);
         }

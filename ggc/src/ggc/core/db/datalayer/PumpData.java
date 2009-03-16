@@ -1,11 +1,13 @@
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pump.PumpDataH;
+import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
@@ -42,11 +44,10 @@ import com.atech.i18n.I18nControlAbstract;
 
 // TODO: DL
 
-public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
+public class PumpData extends PumpDataH implements BackupRestoreObject, DatabaseObjectHibernate
 {
 
-
-
+    private static final long serialVersionUID = -2783864807987398195L;
     private boolean selected = false;
     I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
     
@@ -54,7 +55,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     /**
      * Constructor
      */
-    public DailyValue()
+    public PumpData()
     {
     }
     
@@ -62,10 +63,19 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     /**
      * Constructor
      * 
-     * @param dvh
+     * @param ch
      */
-    public DailyValue(DayValueH dvh)
+    public PumpData(PumpDataH ch)
     {
+        this.setId(ch.getId());
+        this.setDt_info(ch.getDt_info());
+        this.setBase_type(ch.getBase_type());
+        this.setSub_type(ch.getSub_type());
+        this.setValue(ch.getValue());
+        this.setExtended(ch.getExtended());
+        this.setPerson_id(ch.getPerson_id());
+        this.setComment(ch.getComment());
+        this.setChanged(ch.getChanged());
     }
 
     
@@ -74,7 +84,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      * 
      * @param ic
      */
-    public DailyValue(I18nControlAbstract ic)
+    public PumpData(I18nControlAbstract ic)
     {
         this.ic = (I18nControl)ic;
     }
@@ -93,7 +103,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String getTargetName()
     {
-        return ic.getMessage("DAILY_VALUES");
+        return ic.getMessage("PUMP_DATA");
     }
 
     /** 
@@ -112,7 +122,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.DayValueH";
+        return "ggc.core.db.hibernate.pump.PumpDataH";
     }
     
 
@@ -180,8 +190,25 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String DbAdd(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return null;
+        Transaction tx = sess.beginTransaction();
+
+        PumpDataH ch = new PumpDataH();
+
+        ch.setId(this.getId());
+        ch.setDt_info(this.getDt_info());
+        ch.setBase_type(this.getBase_type());
+        ch.setSub_type(this.getSub_type());
+        ch.setValue(this.getValue());
+        ch.setExtended(this.getExtended());
+        ch.setPerson_id(this.getPerson_id());
+        ch.setComment(this.getComment());
+        ch.setChanged(System.currentTimeMillis());
+        
+        Long id = (Long) sess.save(ch);
+        tx.commit();
+        ch.setId(id.longValue());
+        
+        return "" + id.longValue();
     }
 
     
@@ -194,8 +221,14 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public boolean DbDelete(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return false;
+        Transaction tx = sess.beginTransaction();
+
+        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
+
+        sess.delete(ch);
+        tx.commit();
+
+        return true;
     }
 
     
@@ -208,8 +241,24 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public boolean DbEdit(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return false;
+        Transaction tx = sess.beginTransaction();
+
+        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
+
+        ch.setId(this.getId());
+        ch.setDt_info(this.getDt_info());
+        ch.setBase_type(this.getBase_type());
+        ch.setSub_type(this.getSub_type());
+        ch.setValue(this.getValue());
+        ch.setExtended(this.getExtended());
+        ch.setPerson_id(this.getPerson_id());
+        ch.setComment(this.getComment());
+        ch.setChanged(System.currentTimeMillis());
+        
+        sess.update(ch);
+        tx.commit();
+
+        return true;
     }
 
     
@@ -222,8 +271,19 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public boolean DbGet(Session sess) throws Exception
     {
-        // TODO Auto-generated method stub
-        return false;
+        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
+
+        this.setId(ch.getId());
+        this.setDt_info(ch.getDt_info());
+        this.setBase_type(ch.getBase_type());
+        this.setSub_type(ch.getSub_type());
+        this.setValue(ch.getValue());
+        this.setExtended(ch.getExtended());
+        this.setPerson_id(ch.getPerson_id());
+        this.setComment(ch.getComment());
+        this.setChanged(ch.getChanged());
+        
+        return true;
     }
 
     
@@ -272,8 +332,29 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String dbExport(int table_version) throws Exception
     {
-        // TODO
-        return null;
+        // version is ignored for now
+
+        StringBuffer sb = new StringBuffer();
+
+        sb.append(this.getId());
+        sb.append("|");
+        sb.append(this.getDt_info());
+        sb.append("|");
+        sb.append(this.getBase_type());
+        sb.append("|");
+        sb.append(this.getSub_type());
+        sb.append("|");
+        sb.append(this.getValue());
+        sb.append("|");
+        sb.append(this.getExtended());
+        sb.append("|");
+        sb.append(this.getPerson_id());
+        sb.append("|");
+        sb.append(this.getComment());
+        sb.append("|");
+        sb.append(this.getChanged());
+
+        return sb.toString();
     }
 
     
@@ -297,8 +378,8 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String dbExportHeader(int table_version)
     {
-        // TODO
-        return null;
+        return "; Columns: id|dt_info|base_type|sub_type|value|extended|person_id|comment|changed\n" + 
+               "; Table version: " + getTableVersion() + "\n";
     }
     
 
@@ -336,7 +417,21 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
     {
-        // TODO
+        DataAccess da = DataAccess.getInstance();
+
+        value_entry = DataAccess.getInstance().replaceExpression(value_entry, "||", "| |");
+        String[] arr = da.splitString(value_entry, "|");
+        
+        this.setId(da.getLongValueFromString(arr[0]));
+        this.setDt_info(da.getLongValueFromString(arr[1]));
+        this.setBase_type(da.getIntValueFromString(arr[2]));
+        this.setSub_type(da.getIntValueFromString(arr[3]));
+        this.setValue(arr[4]);
+        this.setExtended(arr[5]);
+        this.setPerson_id(da.getIntValueFromString(arr[6]));
+        this.setComment(arr[7]);
+        this.setChanged(da.getLongValueFromString(arr[8]));
+        
     }
     
     
@@ -348,7 +443,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String getBackupFile()
     {
-        return "DayValueH";
+        return "PumpDataH";
     }
     
     /**
@@ -358,11 +453,8 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String getBackupClassName()
     {
-        // TODO
-        return "";
+        return "ggc.core.db.hibernate.pump.PumpDataH";
     }
-    
-    
     
     
     /** 
@@ -370,7 +462,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String getObjectName()
     {
-        return "DailyValue";
+        return "PumpData";
     }
 
     /** 

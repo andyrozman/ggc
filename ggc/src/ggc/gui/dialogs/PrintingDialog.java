@@ -423,13 +423,13 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
                 {
                     PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
                     
-                    displayPDF(psm.getName());
+                    displayPDF(psm.getNameWithPath());
 
                 }
                 else
                 {
                     PrintExtendedMonthlyReport psm = new PrintExtendedMonthlyReport(mv);
-                    displayPDF(psm.getName());
+                    displayPDF(psm.getNameWithPath());
                 }
             }
             else
@@ -461,7 +461,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
                 
                 
                 
-                displayPDF(pa.getName());
+                displayPDF(pa.getNameWithPath());
             }
         }
     }
@@ -469,7 +469,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     /**
      * Display PDF
      * 
-     * @param name
+     * @param name name must be full path to file name (not just name as it was in previous versions)
      * @throws Exception
      */
     public void displayPDF(String name) throws Exception
@@ -481,10 +481,11 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         
         //System.out.println("Parent: " + f2);
         
-        File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
+        //File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
+        File file = new File(name);
 
         String pdf_viewer = m_da.getSettings().getPdfVieverPath().replace('\\', '/');
-        String file_path = fl.getAbsolutePath().replace('\\', '/');
+        //String file_path = fl.getAbsolutePath().replace('\\', '/');
 
         this.setErrorMessages(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"), m_ic
                 .getMessage("PRINTING_SETTINGS_NOT_SET_SOL"));
@@ -507,19 +508,24 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
             {
                 //System.out.println("Windows found");
                 Runtime.getRuntime().exec(
-                    acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\"");
+                    acr.getAbsoluteFile() + " \"" + file.getAbsolutePath() + "\"");
+//                Runtime.getRuntime().exec(
+//                    acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\"");
             }
             else
             {
                 //System.out.println("Non-Windows found");
                 Runtime.getRuntime().exec(
-                    acr.getAbsoluteFile() + " " + fl.getAbsolutePath() + File.separator + name);
+                    acr.getAbsoluteFile() + " " + file.getAbsolutePath() );
+//                Runtime.getRuntime().exec(
+//                    acr.getAbsoluteFile() + " " + fl.getAbsolutePath() + File.separator + name);
             }
             
             /*
             Runtime.getRuntime().exec(
                 acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\""); */
-            System.out.println(pdf_viewer + " " + file_path + File.separator + name);
+            //System.out.println(pdf_viewer + " " + file_path + File.separator + name);
+            System.out.println(pdf_viewer + " " + file.getAbsolutePath());
         }
         catch (RuntimeException ex)
         {

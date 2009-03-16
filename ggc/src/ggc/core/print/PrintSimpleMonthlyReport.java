@@ -542,7 +542,7 @@ public class PrintSimpleMonthlyReport extends PrintAbstract //   extends PdfPage
     @Override
     public String getFileNameRange()
     {
-        return "" + System.currentTimeMillis();
+        return "" + m_mv.getYear() + "_" + m_da.getLeadingZero(m_mv.getMonth(), 2); 
     }
 
 

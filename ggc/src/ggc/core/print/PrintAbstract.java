@@ -8,6 +8,9 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.i18n.I18nControlAbstract;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
@@ -52,6 +55,8 @@ import com.lowagie.text.pdf.PdfWriter;
 public abstract class PrintAbstract extends PdfPageEventHelper
 {
     
+    private static Log log = LogFactory.getLog(PrintAbstract.class);
+
     protected DayValuesData m_data = null;
     protected MonthlyValues m_mv = null;
     protected DataAccess m_da = DataAccess.getInstance();
@@ -63,6 +68,13 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     Font text_normal = null;
     Font text_bold = null;
     Font text_italic = null;
+
+    /**
+     * Print root must always contain trailing slash, so ../data/print/ is correct, while ../data/print is incorrect.
+     * It should be stored under GGC main structure, so that parent of last directory (in this case data) already 
+     * exists. And of course unix path divider must be used. (/ instead of \ on windows) 
+     */
+    private static String print_root = "../data/print/";
     
     
     
@@ -127,17 +139,52 @@ public abstract class PrintAbstract extends PdfPageEventHelper
      */
     public String getName()
     {
-        return name + ".pdf";
+        return name;
     }
 
+
+    /**
+     * Returns Name of report with Full Path
+     * 
+     * @return
+     */
+    public String getNameWithPath()
+    {
+        File f = new File(print_root + getName());
+        return f.getAbsolutePath();
+    }
+    
+    /**
+     * Returns report name as File instance
+     * 
+     * @return
+     */
+    public File getNameFile()
+    {
+        File f = new File(print_root + getName());
+        return f;
+    }
     
     /**
      * Create Name
      */
     public void createName()
     {
-        // TODO: create name (check if exists)
-        this.name = this.getFileNameBase() + "_" + this.getFileNameRange();
+        checkIfRootExists();
+        
+        this.name = this.getFileNameBase() + "_" + this.getFileNameRange() + "_";
+        
+        for(int i=1; i< Integer.MAX_VALUE; i++)
+        {
+            File f = new File(PrintAbstract.print_root + this.name + i + ".pdf");
+            
+            if (!f.exists())
+            {
+                name += i + ".pdf";
+                break;
+            }
+        }
+        
     }
     
     /**
@@ -157,7 +204,7 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     {
 
         // step1
-        File fl = new File("../data/temp/" + this.getName());
+        File fl = new File(PrintAbstract.print_root + this.getName());
         Document document = new Document(PageSize.A4, 40, 40, 40, 40);
 
         try 
@@ -178,6 +225,7 @@ public abstract class PrintAbstract extends PdfPageEventHelper
         } 
         catch (Exception de) 
         {
+            log.error("Error on document creation [" + de.getMessage() + "]: "+ de, de);
             de.printStackTrace();
         }
 
@@ -265,7 +313,29 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     
     
     
-    
+    private void checkIfRootExists()
+    {
+        File f = new File(print_root);
+        
+        if (!f.exists())
+        {
+            
+//            String s = print_root.substring(0, print_root.lastIndexOf("/"));
+//            s = print_root.substring(0, print_root.lastIndexOf("/"));
+            
+            try
+            {
+                f.mkdir();
+//                File fs = new File(s);
+//                f.createNewFile();
+            }
+            catch(Exception ex)
+            {
+                log.error("Error creating new print directory ! [" + PrintAbstract.print_root + "]. Ex: " + ex, ex);
+            }
+        }
+        
+    }
 
 
     

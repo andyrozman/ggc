@@ -165,10 +165,11 @@ public class NutritionGroupModel implements TreeModel
 
         if (parent instanceof GGCTreeRoot)
         {
-            if (rootObj.getType()== GGCTreeRoot.TREE_MEALS )
+            return rootObj.getChild(index);
+/*            if (rootObj.getType()== GGCTreeRoot.TREE_MEALS )
         	return rootObj.m_meal_groups_tree.get(index);
             else
-        	return rootObj.m_groups_tree.get(index);
+        	return rootObj.m_groups_tree.get(index); */
         }
     	else if (parent instanceof FoodGroup)
     	{
@@ -195,10 +196,12 @@ public class NutritionGroupModel implements TreeModel
 
         if (parent instanceof GGCTreeRoot)
         {
+            return rootObj.getChildCount();
+            /*
             if (rootObj.getType()== GGCTreeRoot.TREE_MEALS)
         	return rootObj.m_meal_groups_tree.size();
             else
-        	return rootObj.m_groups_tree.size();
+        	return rootObj.m_groups_tree.size();*/
 
         }
     	else if (parent instanceof FoodGroup)
@@ -227,11 +230,13 @@ public class NutritionGroupModel implements TreeModel
 
         if (parent instanceof GGCTreeRoot)
         {
+            return rootObj.indexOf(child);
+            /*
             if (rootObj.getType()== GGCTreeRoot.TREE_MEALS)
                 return rootObj.m_meal_groups_tree.indexOf(child);
             else
                 return rootObj.m_groups_tree.indexOf(child);
-            
+            */
         }
     	else if (parent instanceof FoodGroup)
     	{

@@ -226,7 +226,7 @@ public class GGCDbLoader extends Thread
         setDbStatus(StatusBar.DB_BASE_DONE); 
         
    
-        if (!part_start)
+//        if (!part_start)
         {
         
             // 4 - load doctors data
@@ -246,11 +246,11 @@ public class GGCDbLoader extends Thread
             setDbStatus(StatusBar.DB_LOADED);
 
         }
-        else
+/*        else
         {
             db.loadNutritionDbBase();
             setDbStatus(StatusBar.DB_LOADED);
-        }
+        }*/
         
         
         

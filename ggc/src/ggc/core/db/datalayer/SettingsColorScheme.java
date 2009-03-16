@@ -329,6 +329,8 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     
     /**
      * Get Children
+     * 
+     * @return 
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
@@ -364,7 +366,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     /**
      * Has Children
      * 
-     * @see com.atech.graphics.components.tree.CheckBoxTreeNodeInterface#hasChildren()
+     * @return 
      */
     public boolean hasChildren()
     {
@@ -458,7 +460,8 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public String dbExportHeader(int table_version)
     {
-        return "; Table version: " + getTableVersion() + "\n";
+        return "; Columns: id|name|custom_type|color_bg|color_bg_avg|color_bg_low|color_bg_high|color_bg_target|color_ins|color_ins1|color_ins2|color_ins_perbu|color_ch\n" + 
+               "; Table version: " + getTableVersion() + "\n";
     }
 
     /**
@@ -560,6 +563,22 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     public boolean hasToBeCleaned()
     {
         return true;
+    }
+
+    /** 
+     * Get Node Children
+     */
+    public ArrayList<CheckBoxTreeNodeInterface> getNodeChildren()
+    {
+        return null;
+    }
+
+    /** 
+     * Has Node Children
+     */
+    public boolean hasNodeChildren()
+    {
+        return false;
     }
 
 }

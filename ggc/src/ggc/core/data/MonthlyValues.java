@@ -208,11 +208,13 @@ public class MonthlyValues extends WeeklyValues
                 
                 //data[grp][0] = DataAccess.MmolDecimalFormat.format(data[grp][0]);
             }
+            //else
+            //    data[grp][0] += "";
 	    //else
 	    //data[grp][0]
 
             data[grp][2] += dv.getRow(i).getIns1(); //dv.getIns1At(i);
-            data[grp][3] += dv.getRow(i).getIns1(); // dv.getIns2At(i);
+            data[grp][3] += dv.getRow(i).getIns2(); // dv.getIns2At(i);
             data[grp][4] += dv.getRow(i).getCH(); //.getIns1()dv.getCHAt(i);
         }
 
@@ -222,7 +224,7 @@ public class MonthlyValues extends WeeklyValues
 
         for (int i=0; i<4; i++)
         {
-	    // BG
+	        // BG
             if (data[i][1]>=1)
             {
                 if (m_da.getSettings().getBG_unit()==1)

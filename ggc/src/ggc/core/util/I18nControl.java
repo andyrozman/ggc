@@ -91,7 +91,9 @@ public class I18nControl extends I18nControlAbstract
     	    String tempLang = (String)props.get("SELECTED_LANG");
     
     	    if (tempLang != null)
-    		this.selected_language = tempLang;
+    	        this.selected_language = tempLang;
+    	    
+    	    System.out.println("selected language: " + this.selected_language);
     	}
     	catch(Exception ex)
     	{

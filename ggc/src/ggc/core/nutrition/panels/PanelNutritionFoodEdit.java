@@ -618,7 +618,8 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
         if (this.food.getGroup_id() > 0)
         {
-            this.food_group = m_da.tree_roots.get("2").m_groups_ht.get("" + this.food.getGroup_id());
+            //this.food_group = m_da.tree_roots.get("2").m_groups_ht.get("" + this.food.getGroup_id());
+            this.food_group = m_da.tree_roots.get("2").findFoodGroup(2,this.food.getGroup_id());
             this.tf_group.setText(this.food_group.getName());
         }
         else
@@ -820,15 +821,18 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
     private void addFood2Tree(FoodDescription _food)
     {
 //        System.out.println(food);
-        m_da.tree_roots.get("2").m_groups_ht.get("" + _food.getGroup_id()).addChild(_food);
-        m_da.tree_roots.get("2").m_foods_ht.put("" + _food.getId(), _food);
+        //m_da.tree_roots.get("2").m_groups_ht.get("" + _food.getGroup_id()).addChild(_food);
+        //m_da.tree_roots.get("2").m_foods_ht.put("" + _food.getId(), _food);
+        
+        m_da.tree_roots.get("2").addFood2Tree(2, _food);
         
         this.m_dialog.refreshTree();
     }
 
     private void removeFoodFromTree(FoodDescription _food, long prev_group_id)
     {
-        m_da.tree_roots.get("2").m_groups_ht.get("" + prev_group_id).removeChild(_food);
+        m_da.tree_roots.get("2").removeFoodFromTree(2, _food, prev_group_id);
+        //m_da.tree_roots.get("2").m_groups_ht.get("" + prev_group_id).removeChild(_food);
     }
 
 }

@@ -1,4 +1,33 @@
 
+Changelog file for GGC (GNU Gluco Control) 
+==========================================
+
+Newer entries are on top, older on bottom.
+
+--------------------------------------------------------------------------------------------------
+
+0.4.3 (16.3)
+    * Dynamic loading of data finished
+    * Startup tools changed
+   
+
+0.4.2
+    * Continue work on dynamic loading of Nutrition data
+    * Dynamic loading now works for printing
+
+0.4.1.2 (28.2.2009)
+    * Correct dates are now printed in Food Menu reports
+
+0.4.1.1 (17.2.2009)
+    * All printing now uses abstract core file
+    * All printing is now done to \data\print
+    * All printing jobs create real names now, with real data in name (AT)
+    * Started work on dynamic loading of Nutrition data
+
+0.4.1 
+    * Bug fixing HbA1c graph display
+    * Printing files problem
+
 0.4 (2.2.2009)  Andy Rozman <andyrozman@users.sourceforge.net>
     * Version is changed, since all functionality is finished for new version
     * Changes in documentation

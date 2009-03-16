@@ -727,7 +727,8 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
         if (this.meal.getGroup_id() > 0)
         {
-            this.meal_group = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + this.meal.getGroup_id());
+            //this.meal_group = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + this.meal.getGroup_id());
+            this.meal_group = m_da.tree_roots.get("3").findMealGroup(3, this.meal.getGroup_id());
             this.tf_group.setText(this.meal_group.getName());
         }
         else
@@ -912,14 +913,16 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     private void addMeal2Tree(Meal _meal)
     {
-        m_da.tree_roots.get("3").m_meal_groups_ht.get("" + _meal.getGroup_id()).addChild(_meal);
-        m_da.tree_roots.get("3").m_meals_ht.put("" + _meal.getId(), _meal);
+        m_da.tree_roots.get("3").addMeal2Tree(3, _meal); 
+        //m_da.tree_roots.get("3").m_meal_groups_ht.get("" + _meal.getGroup_id()).addChild(_meal);
+        //m_da.tree_roots.get("3").m_meals_ht.put("" + _meal.getId(), _meal);
         this.m_dialog.refreshTree();
     }
 
     private void removeMealFromTree(Meal _meal, long prev_group_id)
     {
-        m_da.tree_roots.get("3").m_meal_groups_ht.get("" + prev_group_id).removeChild(_meal);
+        m_da.tree_roots.get("3").removeMealFromTree(3, _meal, prev_group_id);
+        //m_da.tree_roots.get("3").m_meal_groups_ht.get("" + prev_group_id).removeChild(_meal);
     }
 
 }

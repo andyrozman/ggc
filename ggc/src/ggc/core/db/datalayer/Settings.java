@@ -355,6 +355,8 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
 
     /**
      * Get Children
+     * 
+     * @return 
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
@@ -390,7 +392,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
     /**
      * Has Children
      * 
-     * @see com.atech.graphics.components.tree.CheckBoxTreeNodeInterface#hasChildren()
+     * @return 
      */
     public boolean hasChildren()
     {
@@ -501,7 +503,6 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
     }
     
     
-    
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -509,8 +510,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
      */
     public String getBackupFile()
     {
-        // TODO
-        return "DayValueH";
+        return "SettingsH";
     }
     
     /**
@@ -520,8 +520,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
      */
     public String getBackupClassName()
     {
-        // TODO
-        return "";
+        return "ggc.core.db.hibernate.SettingsH";
     }
 
     
@@ -533,6 +532,22 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
     public boolean hasToBeCleaned()
     {
         return true;
+    }
+
+    /** 
+     * Get Node Children
+     */
+    public ArrayList<CheckBoxTreeNodeInterface> getNodeChildren()
+    {
+        return null;
+    }
+
+    /** 
+     * Has Node Children
+     */
+    public boolean hasNodeChildren()
+    {
+        return false;
     }
     
 }

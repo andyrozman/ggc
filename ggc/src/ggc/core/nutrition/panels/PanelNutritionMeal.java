@@ -553,7 +553,8 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
         if (this.meal.getGroup_id() > 0)
         {
-            this.meal_group = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + this.meal.getGroup_id());
+            //this.meal_group = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + this.meal.getGroup_id());
+            this.meal_group = m_da.tree_roots.get("3").findMealGroup(3, this.meal.getGroup_id());
             this.label_group.setText(this.meal_group.getName());
         }
         else

@@ -11,6 +11,9 @@ import ggc.core.db.datalayer.FoodDescription;
 import ggc.core.db.datalayer.FoodGroup;
 import ggc.core.db.datalayer.Meal;
 import ggc.core.db.datalayer.MealGroup;
+import ggc.core.db.datalayer.PumpData;
+import ggc.core.db.datalayer.PumpDataExtended;
+import ggc.core.db.datalayer.PumpProfile;
 import ggc.core.db.datalayer.Settings;
 import ggc.core.db.datalayer.SettingsColorScheme;
 import ggc.core.db.tool.DbToolApplicationGGC;
@@ -175,6 +178,10 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public String[] avLangPostfix = { "en", "de", "si", "fr" };
 
+    
+    //public Locale[] realLocales = { Locale.ENGLISH, Locale.GERMANY, Locale.
+    
+    
     /**
      * BG Units
      */
@@ -266,6 +273,17 @@ public class DataAccess extends ATDataAccessAbstract
         startWebServer();
         
         this.loadSpecialParameters();
+      
+        /*
+        System.out.println(Locale.getAvailableLocales());
+        
+        Locale[] lcls = Locale.getAvailableLocales();
+        
+        for(int i=0; i<lcls.length; i++)
+        {
+            System.out.println(lcls[i].getDisplayName() + "," + lcls[i].getISO3Country() + "," + lcls[i].getISO3Language());
+        }
+        */
         
     }    
     
@@ -482,25 +500,29 @@ public class DataAccess extends ATDataAccessAbstract
     {
 
         BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
-        brc.addChild(new DailyValue(this.m_i18n));
+        brc.addNodeChild(new DailyValue(this.m_i18n));
 
 
         BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
-        brc1.addChild(new Settings(this.m_i18n));
-        brc1.addChild(new SettingsColorScheme(this.m_i18n));
-        
-        brc.addChild(brc1);
+        brc1.addNodeChild(new Settings(this.m_i18n));
+        brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
+        brc.addNodeChild(brc1);
         
         
         BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
-        brc_nut.addChild(new FoodGroup(this.m_i18n));
-        brc_nut.addChild(new FoodDescription(this.m_i18n));
+        brc_nut.addNodeChild(new FoodGroup(this.m_i18n));
+        brc_nut.addNodeChild(new FoodDescription(this.m_i18n));
+        brc_nut.addNodeChild(new MealGroup(this.m_i18n));
+        brc_nut.addNodeChild(new Meal(this.m_i18n));
+        brc.addNodeChild(brc_nut);
 
-        brc_nut.addChild(new MealGroup(this.m_i18n));
-        brc_nut.addChild(new Meal(this.m_i18n));
+        brc_nut = new BackupRestoreCollection("PUMP_TOOL", this.m_i18n);
+        brc_nut.addNodeChild(new PumpData(this.m_i18n));
+        brc_nut.addNodeChild(new PumpDataExtended(this.m_i18n));
+        brc_nut.addNodeChild(new PumpProfile(this.m_i18n));
+        brc.addNodeChild(brc_nut);
 
-        brc.addChild(brc_nut);
-
+        
         this.backup_restore_collection = brc;
     }
 
@@ -1454,6 +1476,32 @@ public class DataAccess extends ATDataAccessAbstract
     {
         this.special_parameters = new Hashtable<String,String>();
         this.special_parameters.put("BG", "" + this.m_settings.getBG_unit());
+    }
+
+
+    
+
+    /**
+     * This method is intended to load additional Language info. Either special langauge configuration
+     * or special data required for real Locale handling.
+     */
+    @Override
+    public void loadLanguageInfo()
+    {
+        // TODO Auto-generated method stub
+    }
+    
+
+    
+    public int getSelectedLangIndex()
+    {
+        return 0;
+    }
+
+    
+    public void setSelectedLangIndex(int index)
+    {
+        
     }
     
     

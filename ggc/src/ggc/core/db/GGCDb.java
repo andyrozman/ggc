@@ -25,6 +25,7 @@ import ggc.core.db.hibernate.NutritionDefinitionH;
 import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.core.db.hibernate.SettingsH;
 import ggc.core.nutrition.GGCTreeRoot;
+import ggc.core.nutrition.GGCTreeRootDyn;
 import ggc.core.util.DataAccess;
 
 import java.text.SimpleDateFormat;
@@ -640,6 +641,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     // **** SETTINGS ****
     // *************************************************************
 
+    GGCDbCache cache_db = null;
+    
     /** 
      * Create Configuration
      */
@@ -648,11 +651,24 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         logInfo("createConfiguration()");
         this.hib_config = new GGCDbConfig(true);
         this.hib_config.getConfiguration();
+    
+        cache_db = new GGCDbCache(this); 
         
         return this.hib_config;
     }
 
 
+    /**
+     * Get Db Cache
+     * 
+     * @return
+     */
+    public GGCDbCache getDbCache()
+    {
+        return cache_db;
+    }
+    
+    
     // *************************************************************
     // **** DATABASE INIT METHODS ****
     // *************************************************************
@@ -680,7 +696,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     public void loadNutritionDb1()
     {
         // tree root, now in static data
-        m_da.tree_roots.put("1", new GGCTreeRoot(GGCTreeRoot.TREE_USDA_NUTRITION, this));
+        m_da.tree_roots.put("1", new GGCTreeRootDyn(GGCTreeRoot.TREE_USDA_NUTRITION, this));
 
         // m_da.m_nutrition_treeroot = new GGCTreeRoot(1, this);
 
@@ -691,7 +707,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
      */
     public void loadNutritionDb2()
     {
-        m_da.tree_roots.put("2", new GGCTreeRoot(GGCTreeRoot.TREE_USER_NUTRITION, this));
+        m_da.tree_roots.put("2", new GGCTreeRootDyn(GGCTreeRoot.TREE_USER_NUTRITION, this));
     }
 
     /**
@@ -699,7 +715,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
      */
     public void loadMealsDb()
     {
-        m_da.tree_roots.put("3", new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, this));
+        m_da.tree_roots.put("3", new GGCTreeRootDyn(GGCTreeRoot.TREE_MEALS, this));
     }
 
     // *************************************************************
@@ -819,6 +835,49 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     // **** NUTRITION DATA ****
     // *************************************************************
     
+
+    /**
+     * Get Food Groups - USDA
+     * 
+     * @param type 
+     * @param parent_id 
+     * @return
+     */
+    public ArrayList<FoodGroup> getFoodGroups(int type, long parent_id)
+    {
+        if (type==GGCTreeRoot.TREE_USER_NUTRITION)
+        {
+            return this.getUserFoodGroups(parent_id);
+        }
+        else
+        {
+            if (parent_id == 0)
+                return this.getUSDAFoodGroups();
+            else
+                return new ArrayList<FoodGroup>();
+        }
+    }
+    
+    
+    /**
+     * Get Food Group By Id
+     * 
+     * @param type
+     * @param id
+     * @return
+     */
+    public FoodGroup getFoodGroupById(int type, long id)
+    {
+        if (type==GGCTreeRoot.TREE_USER_NUTRITION)
+        {
+            return this.getUserFoodGroup(id);
+        }
+        else
+        {
+            return this.getUSDAFoodGroup(id);
+        }
+    }
+    
     
     /**
      * Get Food Groups - USDA
@@ -856,6 +915,84 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+
+    /**
+     * Get USDA Food Group
+     * 
+     * @param id 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public FoodGroup getUSDAFoodGroup(long id)
+    {
+
+        logInfo("getUSDAFoodGroup(id=)" + id + ")");
+
+        //ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst where pst.id=" + id);
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                FoodGroupH eh = (FoodGroupH) it.next();
+                return new FoodGroup(eh);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            logException("getUSDAFoodGroups()", ex);
+        }
+
+        return null;
+
+    }
+
+    
+    /**
+     * Get Food Groups - User
+     * 
+     * @param id 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public FoodGroup getUserFoodGroup(long id)
+    {
+        logInfo("getUserFoodGroup(id=" + id + ")");
+
+        //ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                FoodUserGroupH eh = (FoodUserGroupH) it.next();
+                return new FoodGroup(eh);
+            }
+        }
+        catch (Exception ex)
+        {
+            logException("getUserFoodGroup()", ex);
+
+            // log.error("Exception on getloadConfigData: " + ex.getMessage(),
+            // ex);
+        }
+
+        return null;
+    }
+    
+    
+    
     /**
      * Get Food Groups - User
      * 
@@ -894,6 +1031,50 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return list;
     }
 
+    
+    
+    /**
+     * Get Food Groups - User
+     * 
+     * @param parent_id 
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public ArrayList<FoodGroup> getUserFoodGroups(long parent_id)
+    {
+        logInfo("getUserFoodGroups()");
+
+        ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst where pst.parent_id=" + parent_id + " order by pst.name");
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                FoodUserGroupH eh = (FoodUserGroupH) it.next();
+                list.add(new FoodGroup(eh));
+            }
+
+            return list;
+        }
+        catch (Exception ex)
+        {
+            logException("getUserFoodGroups()", ex);
+
+            // log.error("Exception on getloadConfigData: " + ex.getMessage(),
+            // ex);
+        }
+
+        return list;
+    }
+    
+    
+    
     /**
      * Get Meal Groups
      * 
@@ -929,6 +1110,71 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return list;
     }
 
+    
+    /**
+     * Get Meal Groups
+     * 
+     * @param parent_id 
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public ArrayList<MealGroup> getMealGroups(long parent_id)
+    {
+
+        logInfo("getMealGroups()");
+
+        ArrayList<MealGroup> list = new ArrayList<MealGroup>();
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.parent_id=" + parent_id + " order by pst.name");
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                MealGroupH eh = (MealGroupH) it.next();
+                list.add(new MealGroup(eh));
+            }
+
+        }
+        catch (Exception ex)
+        {
+            logException("getMealGroups()", ex);
+        }
+
+        return list;
+    }
+    
+
+    /**
+     * Get Food Descriptions - USDA
+     * 
+     * @param type 
+     * @param parent_id 
+     * 
+     * @return
+     */
+    public ArrayList<FoodDescription> getFoodsByParent(int type, long parent_id)
+    {
+        logInfo("getFoodsByParent(type=" + type + ",parent_id=" + parent_id + ")");
+
+        if (type==GGCTreeRoot.TREE_USDA_NUTRITION)
+        {
+            return this.getUSDAFoodDescriptionsByParent(parent_id);
+        }
+        else
+        {
+            return this.getUserFoodDescriptionsByParent(parent_id);
+            
+        }
+        
+    }
+    
+    
+    
     /**
      * Get Food Descriptions - USDA
      * 
@@ -964,6 +1210,182 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         return list;
     }
 
+    
+    /**
+     * Get Food Descriptions - USDA
+     * 
+     * @param parent_id 
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public ArrayList<FoodDescription> getUSDAFoodDescriptionsByParent(long parent_id)
+    {
+        logInfo("getUSDAFoodDescriptionsByParent(parent_id=" + parent_id + ")");
+
+        ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.group_id=" + parent_id + " order by pst.name");
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                FoodDescriptionH eh = (FoodDescriptionH) it.next();
+                list.add(new FoodDescription(eh));
+            }
+
+            return list;
+        }
+        catch (Exception ex)
+        {
+            logException("getUSDAFoodDescriptions()", ex);
+        }
+
+        return list;
+    }
+    
+    
+    
+    /**
+     * Get Food Descriptions - USDA
+     * 
+     * @param id 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public FoodDescription getUSDAFoodDescriptionById(long id)
+    {
+        logInfo("getUSDAFoodDescriptionById(id=" + id + ")");
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.id=" + id);
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                FoodDescriptionH eh = (FoodDescriptionH) it.next();
+                return new FoodDescription(eh);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            logException("getUSDAFoodDescriptions()", ex);
+        }
+
+        return null;
+    }
+    
+    
+    
+    /**
+     * Get Food by Id
+     * 
+     * @param type
+     * @param id
+     * @return
+     */
+    public FoodDescription getFoodDescriptionById(int type, long id)
+    {
+        if (type==GGCTreeRoot.TREE_USER_NUTRITION)
+        {
+            return getUserFoodDescriptionById(id);
+        }
+        else
+        {
+            return this.getUSDAFoodDescriptionById(id);
+        }
+    }
+
+    
+    /**
+     * Get User Food Description By Id
+     * 
+     * @param id 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public FoodDescription getUserFoodDescriptionById(long id)
+    {
+
+        logInfo("getUserFoodDescriptionById(id=" + id +")");
+        //ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+
+        try
+        {
+
+            Query q = getSession(2).createQuery(
+                "select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst where pst.id=" + id);
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                FoodUserDescriptionH eh = (FoodUserDescriptionH) it.next();
+                return new FoodDescription(eh);
+            }
+
+            // System.out.println("Loaded Food Descriptions: " + list.size());
+
+        }
+        catch (Exception ex)
+        {
+            logException("getUserFoodDescriptions()", ex);
+        }
+
+        return null;
+
+    }
+    
+
+    
+    /**
+     * Get Food Descriptions - User
+     * 
+     * @param parent_id 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public ArrayList<FoodDescription> getUserFoodDescriptionsByParent(long parent_id)
+    {
+
+        logInfo("getUserFoodDescriptions()");
+        ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+
+        try
+        {
+
+            Query q = getSession(2).createQuery(
+                "select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst where pst.group_id=" + parent_id + " order by pst.name");
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                FoodUserDescriptionH eh = (FoodUserDescriptionH) it.next();
+                list.add(new FoodDescription(eh));
+            }
+
+            // System.out.println("Loaded Food Descriptions: " + list.size());
+
+        }
+        catch (Exception ex)
+        {
+            logException("getUserFoodDescriptions()", ex);
+        }
+
+        return list;
+
+    }
+    
+    
     /**
      * Get Food Descriptions - User
      * 
@@ -1040,6 +1462,156 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+    
+    
+    /**
+     * Get Meals Descriptions
+     * 
+     * @param type 
+     * @param meal_id 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public Meal getMealById(int type, long meal_id)
+    {
+        logInfo("getMealById()");
+
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.id=" + meal_id);
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                MealH eh = (MealH) it.next();
+                // list.put("" + eh.getId(), new Meal(eh));
+                return new Meal(eh);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            logException("getMealById()", ex);
+        }
+
+        return null;
+
+    }
+    
+
+    /**
+     * Get Meals Descriptions
+     * 
+     * @param parent_id 
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public ArrayList<Meal> getMealsByParent(long parent_id)
+    {
+        logInfo("getMealsByParent()");
+
+        ArrayList<Meal> list = new ArrayList<Meal>();
+
+        try
+        {
+
+            Query q = getSession(2).createQuery(
+                "select pst from ggc.core.db.hibernate.MealH as pst where pst.group_id=" + parent_id  + " order by pst.group_id, pst.name");
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                MealH eh = (MealH) it.next();
+                // list.put("" + eh.getId(), new Meal(eh));
+                list.add(new Meal(eh));
+            }
+
+            return list;
+        }
+        catch (Exception ex)
+        {
+            logException("getMealsByParent()", ex);
+        }
+
+        return list;
+
+    }
+    
+    
+    /**
+     * Get Meal
+     * @param id 
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public Meal getMealById(long id)
+    {
+        logInfo("getMealById(id=" + id + ")");
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.id=" + id);
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                MealH eh = (MealH) it.next();
+                return new Meal(eh);
+            }
+        }
+        catch (Exception ex)
+        {
+            logException("getMealById()", ex);
+        }
+
+        return null;
+
+    }
+    
+
+    /**
+     * Get Meal Group
+     * @param id 
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public MealGroup getMealGroupById(long id)
+    {
+        logInfo("getMealGroupById(id=" + id + ")");
+
+        try
+        {
+
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.id=" + id);
+
+            Iterator it = q.iterate();
+
+            while (it.hasNext())
+            {
+                MealGroupH eh = (MealGroupH) it.next();
+                return new MealGroup(eh);
+            }
+        }
+        catch (Exception ex)
+        {
+            logException("getMealGroupById()", ex);
+        }
+
+        return null;
+
+    }
+    
+    
+    
     @SuppressWarnings("unchecked")
     private void loadNutritionDefinitions()
     {

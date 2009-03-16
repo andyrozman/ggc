@@ -164,16 +164,16 @@ public class TestNutritionData
 
         // root
         BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", ic);
-        brc.addChild(new DailyValue(ic));
+        brc.addNodeChild(new DailyValue(ic));
 
         BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", ic);
-        brc_nut.addChild(new FoodGroup(ic));
-        brc_nut.addChild(new FoodDescription(ic));
+        brc_nut.addNodeChild(new FoodGroup(ic));
+        brc_nut.addNodeChild(new FoodDescription(ic));
 
-        brc_nut.addChild(new MealGroup(ic));
-        brc_nut.addChild(new Meal(ic));
+        brc_nut.addNodeChild(new MealGroup(ic));
+        brc_nut.addNodeChild(new Meal(ic));
 
-        brc.addChild(brc_nut);
+        brc.addNodeChild(brc_nut);
 
         frame.setBounds(0, 0, 640, 480);
 

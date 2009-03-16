@@ -343,6 +343,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
     /**
      * Get Children
+     * 
+     * @return 
      */
     public ArrayList<CheckBoxTreeNodeInterface> getChildren()
     {
@@ -351,6 +353,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
     /**
      * Has Children
+     * 
+     * @return 
      */
     public boolean hasChildren()
     {
@@ -521,6 +525,22 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     public boolean hasToBeCleaned()
     {
         return true;
+    }
+
+    /**
+     * Get Node Children
+     */
+    public ArrayList<CheckBoxTreeNodeInterface> getNodeChildren()
+    {
+        return null;
+    }
+
+    /**
+     * Has Node Children
+     */
+    public boolean hasNodeChildren()
+    {
+        return false;
     }
     
 }

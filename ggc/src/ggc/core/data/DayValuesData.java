@@ -129,6 +129,7 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
         else
         {
             DailyValues dv = new DailyValues();
+            dv.setDate(dvr.getDateTime());
             dv.addRow(dvr);
             m_dataTable.put(""+date, dv);
         }

@@ -296,13 +296,15 @@ public class DailyFoodEntry // implements SelectableInterface
 
         if (this.nutrition_food_type == GGCTreeRoot.TREE_MEALS)
         {
-            this.m_meal = m_da.tree_roots.get("3").m_meals_ht.get("" + this.nutrition_food_id);
+            //this.m_meal = m_da.tree_roots.get("3").m_meals_ht.get("" + this.nutrition_food_id);
+            this.m_meal = m_da.tree_roots.get("3").findMeal(3, this.nutrition_food_id);
             processMeal(this.m_meal);
         }
         else
         {
-            this.m_food = m_da.tree_roots.get("" + this.nutrition_food_type).m_foods_ht
-                    .get("" + this.nutrition_food_id);
+            this.m_food = m_da.tree_roots.get("" + this.nutrition_food_type).findFood(this.nutrition_food_type, this.nutrition_food_id);
+            //.m_foods_ht
+            //        .get("" + this.nutrition_food_id);
 
             if (this.amount_type == DailyFoodEntry.WEIGHT_TYPE_HOME_WEIGHT)
             {

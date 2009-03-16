@@ -580,7 +580,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     /**
      * Get Children
      */
-    public ArrayList<CheckBoxTreeNodeInterface> getChildren()
+    public ArrayList<CheckBoxTreeNodeInterface> getNodeChildren()
     {
         return null;
     }
@@ -588,7 +588,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     /**
      * Has Children
      */
-    public boolean hasChildren()
+    public boolean hasNodeChildren()
     {
         return false;
     }

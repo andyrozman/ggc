@@ -218,7 +218,7 @@ public class GlucoValues //extends DailyValues
             DailyValues dV = new DailyValues();
 
             dV.addRow(dRow);
-            // dV.setD.setDate(dRow.getDateTime());
+            dV.setDate(dRow.getDateTime());
             dV.setIsNew(true);
             dayValues.add(dV);
 

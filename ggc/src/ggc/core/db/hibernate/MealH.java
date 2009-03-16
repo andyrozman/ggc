@@ -1,6 +1,7 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -8,9 +9,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** @author Hibernate CodeGenerator */
 public class MealH implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8237292183858746065L;
 
     /** identifier field */

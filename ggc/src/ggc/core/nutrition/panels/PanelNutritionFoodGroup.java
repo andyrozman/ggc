@@ -174,7 +174,8 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
     	    
     	    if (group.getParentId()>0)
     	    {
-        		FoodGroup fg = m_da.tree_roots.get("2").m_groups_ht.get("" + group.getParentId());
+        		//FoodGroup fg = m_da.tree_roots.get("2").m_groups_ht.get("" + group.getParentId());
+    	        FoodGroup fg = m_da.tree_roots.get("2").findFoodGroup(2, group.getParentId()); 
         		this.label_parent.setText(fg.getName());
     	    }
     	    else
@@ -193,7 +194,8 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
     	    
     	    if (group.getParent_id()>0)
     	    {
-        		MealGroup fg = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + group.getParent_id());
+        		MealGroup fg = m_da.tree_roots.get("3").findMealGroup(3, group.getParent_id()); 
+//                MealGroup fg = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + group.getParent_id());
         		this.label_parent.setText(fg.getName());
     	    }
     	    else

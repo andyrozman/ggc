@@ -338,7 +338,8 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
             if (this.food_group.getParentId() > 0)
             {
-                this.parent_food_group = m_da.tree_roots.get("2").m_groups_ht.get("" + this.food_group.getParentId());
+                //this.parent_food_group = m_da.tree_roots.get("2").m_groups_ht.get("" + this.food_group.getParentId());
+                this.parent_food_group = m_da.tree_roots.get("2").findFoodGroup(2, this.food_group.getParentId());
                 this.tf_parent.setText(this.parent_food_group.getName());
             }
             else
@@ -361,8 +362,8 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
             if (this.meal_group.getParent_id() > 0)
             {
-                this.parent_meal_group = m_da.tree_roots.get("3").m_meal_groups_ht.get(""
-                        + this.meal_group.getParent_id());
+                //this.parent_meal_group = m_da.tree_roots.get("3").m_meal_groups_ht.get("" + this.meal_group.getParent_id());
+                this.parent_meal_group = m_da.tree_roots.get("3").findMealGroup(3, this.meal_group.getParent_id());
                 this.tf_parent.setText(this.parent_meal_group.getName());
             }
             else
@@ -608,18 +609,21 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     private void removeFoodGroupFromTree(FoodGroup fg, long prev_parent_id)
     {
-        if (prev_parent_id == 0)
+        m_da.tree_roots.get("2").removeFoodGroupFromTree(2, fg, prev_parent_id);
+        /*if (prev_parent_id == 0)
         {
             m_da.tree_roots.get("2").m_groups_tree.remove(fg);
         }
         else
         {
             m_da.tree_roots.get("2").m_groups_ht.get("" + prev_parent_id).removeChild(fg);
-        }
+        }*/
     }
 
     private void removeMealGroupFromTree(MealGroup fg, long prev_parent_id)
     {
+        m_da.tree_roots.get("3").removeMealGroupFromTree(3, fg, prev_parent_id);
+        /*
         if (prev_parent_id == 0)
         {
             m_da.tree_roots.get("3").m_meal_groups_tree.remove(fg);
@@ -627,13 +631,13 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         else
         {
             m_da.tree_roots.get("3").m_meal_groups_ht.get("" + prev_parent_id).removeChild(fg);
-        }
-
+        }*/
     }
 
     private void addFoodGroup2Tree(FoodGroup fg)
     {
-        m_da.tree_roots.get("2").addFoodGroup(fg);
+        m_da.tree_roots.get("2").addFoodGroup2Tree(2, fg);
+        //m_da.tree_roots.get("2").addFoodGroup(fg);
         m_dialog.refreshTree();
 
         /*
@@ -650,7 +654,8 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     private void addMealGroup2Tree(MealGroup fg)
     {
-        m_da.tree_roots.get("3").addMealGroup(fg);
+        m_da.tree_roots.get("3").addMealGroup2Tree(3, fg);
+        //m_da.tree_roots.get("3").addMealGroup(fg);
         m_dialog.refreshTree();
 
         /*

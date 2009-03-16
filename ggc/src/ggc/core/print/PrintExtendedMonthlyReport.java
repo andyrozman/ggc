@@ -316,7 +316,12 @@ public class PrintExtendedMonthlyReport extends PrintAbstract // extends PdfPage
 	
 	
         table.addCell(dvr.getTimeAsString());
-        table.addCell(dvr.getBGAsString());
+        
+        if (dvr.getBG()>0.0)
+            table.addCell(dvr.getBGAsString());
+        else
+            table.addCell("");
+            
         table.addCell(dvr.getIns1AsString());
         table.addCell(dvr.getIns2AsString());
         table.addCell(dvr.getCHAsString());
@@ -412,18 +417,18 @@ public class PrintExtendedMonthlyReport extends PrintAbstract // extends PdfPage
             
             if (dv==null)
             {
-            this.setBackground(count, datatable);
-            addEmptyValues(i, datatable);
-            count++;
+                this.setBackground(count, datatable);
+                addEmptyValues(i, datatable);
+                count++;
             }
             else
             {
-            for(int j=0; j<dv.getRowCount(); j++)
-            {
-                this.setBackground(count, datatable);
-                addValues(j, i, dv.getRow(j), datatable);
-                count++;
-            }
+                for(int j=0; j<dv.getRowCount(); j++)
+                {
+                    this.setBackground(count, datatable);
+                    addValues(j, i, dv.getRow(j), datatable);
+                    count++;
+                }
             }
             
         }
@@ -480,14 +485,8 @@ public class PrintExtendedMonthlyReport extends PrintAbstract // extends PdfPage
     @Override
     public String getFileNameRange()
     {
-        return "" + System.currentTimeMillis();
+        return "" + m_mv.getYear() + "_" + m_da.getLeadingZero(m_mv.getMonth(), 2); 
     }
-    
-    
     
 
 }
-
-
-
-

@@ -296,7 +296,9 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
         if (fd.getGroup_id() > 0)
         {
-            this.food_group = m_da.tree_roots.get("" + fd.getFoodType()).m_groups_ht.get("" + fd.getGroup_id());
+            //this.food_group = m_da.tree_roots.get("" + fd.getFoodType()).m_groups_ht.get("" + fd.getGroup_id());
+            
+            this.food_group = m_da.tree_roots.get("" + fd.getFoodType()).findFoodGroup(fd.getFoodType(), fd.getGroup_id());
             this.label_group.setText(this.food_group.getName());
         }
         else
@@ -306,26 +308,28 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         }
 
         // System.out.println(fd.getNutritions());
-
-        StringTokenizer strtok = new StringTokenizer(fd.getNutritions(), ";");
+        StringTokenizer strtok = null;
+        
         list_nutrition.clear();
-
-        while (strtok.hasMoreTokens())
+        
+        if (m_da.isValueSet(fd.getNutritions()))
         {
-            NutritionDataDisplay ndd1 = new NutritionDataDisplay(ic, strtok.nextToken());
-
-            // System.out.println(ndd1.getId());
-
-            ndd1.setNutritionDefinition(this.m_da.getDb().nutrition_defs.get(ndd1.getId()));
-            list_nutrition.add(ndd1);
+            strtok = new StringTokenizer(fd.getNutritions(), ";");
+    
+            while (strtok.hasMoreTokens())
+            {
+                NutritionDataDisplay ndd1 = new NutritionDataDisplay(ic, strtok.nextToken());
+    
+                ndd1.setNutritionDefinition(this.m_da.getDb().nutrition_defs.get(ndd1.getId()));
+                list_nutrition.add(ndd1);
+            }
         }
 
         this.createModel(this.list_nutrition, this.table_1, this.ndd);
 
         this.list_weight.clear();
 
-        if ((fd.getHome_weights() != null) && (!fd.getHome_weights().equals(""))
-                && (!fd.getHome_weights().equals("null")))
+        if (m_da.isValueSet(fd.getHome_weights()))
         {
             strtok = new StringTokenizer(fd.getHome_weights(), ";");
 
