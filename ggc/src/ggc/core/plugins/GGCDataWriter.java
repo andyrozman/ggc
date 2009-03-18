@@ -9,6 +9,7 @@ package ggc.core.plugins; //com.atech.db;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
@@ -120,6 +121,16 @@ public class GGCDataWriter extends DbDataWriterAbstract
                         DayValueH dv = lst.get(i);
                         dv.setPerson_id(DataAccess.getInstance().getCurrentPersonId());
                         db.addHibernate(dv);
+                        
+                        PumpDataExtendedH pde = new PumpDataExtendedH();
+                        pde.setDt_info((dv.getDt_info() * 100));
+                        pde.setType(3); // carefull if this is changed in Pump Tool it will need to be changed
+                        pde.setValue("" + dv.getBg());
+                        pde.setPerson_id(dv.getPerson_id());
+                        pde.setComment(dv.getComment());
+                        pde.setChanged(dv.getChanged());
+                        db.addHibernate(pde);
+                        
                     }
                     else
                     {

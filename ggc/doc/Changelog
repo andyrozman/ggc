@@ -6,6 +6,9 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.4.4
+    * Meter Tool data is now added also into database for pump
+
 0.4.3 (16.3)
     * Dynamic loading of data finished
     * Startup tools changed

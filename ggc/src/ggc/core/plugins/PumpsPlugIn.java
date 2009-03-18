@@ -170,7 +170,7 @@ public class PumpsPlugIn extends PlugInClient
         this.commands_implemented[0] = false;
         this.commands_implemented[1] = false;
         this.commands_implemented[2] = false;
-        this.commands_implemented[3] = false;
+        this.commands_implemented[3] = true;
         this.commands_implemented[4] = true;
         this.commands_implemented[5] = true;
         this.commands_implemented[6] = true;
