@@ -62,6 +62,7 @@ public class MeterManager extends DeviceManager
      */
     public static final int METER_COMPANY_LIFESCAN            = 3;
     
+    
     /**
      * 
      */
