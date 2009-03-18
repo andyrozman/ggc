@@ -3,11 +3,11 @@ package ggc.pump.gui.profile;
 import ggc.pump.data.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
+import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -29,25 +29,25 @@ public class ProfileSelector extends SelectorAbstractDialog
      * @param parent
      * @param da
      */
-    public ProfileSelector(JDialog parent, ATDataAccessAbstract da) 
+    public ProfileSelector(DataAccessPump da, Component parent) //, DataAccessPump da) 
     {
-        super(parent, da, 0, null, true);
+        super(da.getMainParent(), da, 0, null, true);
         da_local = (DataAccessPump)da; 
         this.showDialog();
     }
 
-    /**
-     * Constructor
-     * 
-     * @param parent
-     * @param da
-     */
-    public ProfileSelector(JFrame parent, ATDataAccessAbstract da) 
-    {
-        super(parent, da, 0, null, true);
-        da_local = (DataAccessPump)da; 
-        this.showDialog();
-    }
+//    /**
+//     * Constructor
+//     * 
+//     * @param parent
+//     * @param da
+//     */
+//    public ProfileSelector(JFrame parent, ATDataAccessAbstract da) 
+//    {
+//        super(parent, da, 0, null, true);
+//        da_local = (DataAccessPump)da; 
+//        this.showDialog();
+//    }
     
     
     
@@ -90,7 +90,7 @@ public class ProfileSelector extends SelectorAbstractDialog
     public void initSelectorValuesForType()
     {
         setSelectorObject(new PumpProfile());
-        setSelectorName(String.format(ic.getMessage("SELECTOR_DEVICE"), ic.getMessage("DEVICE_NAME_BIG")));
+        setSelectorName(ic.getMessage("PROFILE_SELECTOR"));
         setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_EDIT|SelectorAbstractDialog.SELECTOR_ACTION_NEW|SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
         this.setColumnSortingEnabled(false);
         this.setHelpEnabled(false);

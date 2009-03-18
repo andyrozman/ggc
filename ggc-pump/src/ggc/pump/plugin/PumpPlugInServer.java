@@ -162,7 +162,8 @@ public class PumpPlugInServer extends PlugInServer
 
             case PumpPlugInServer.COMMAND_PROFILES:
             {
-                new ProfileSelector((JFrame)this.parent, DataAccessPump.getInstance());
+                System.out.println("parent: " + this.parent);
+                new ProfileSelector(DataAccessPump.getInstance(), this.parent);
                 return;
             }
             
