@@ -4,6 +4,7 @@ import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.list.BaseListDialog;
 import ggc.pump.gui.manual.PumpDataDialog;
+import ggc.pump.gui.profile.ProfileSelector;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -159,6 +160,13 @@ public class PumpPlugInServer extends PlugInServer
                 return;
             }
 
+            case PumpPlugInServer.COMMAND_PROFILES:
+            {
+                new ProfileSelector((JFrame)this.parent, DataAccessPump.getInstance());
+                return;
+            }
+            
+            
             case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
             case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
             {
