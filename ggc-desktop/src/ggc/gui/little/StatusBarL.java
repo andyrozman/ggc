@@ -111,7 +111,7 @@ public class StatusBarL extends JPanel implements EventObserverInterface
         add(lblMessage, BorderLayout.WEST);
         add(pan, BorderLayout.EAST);
 
-        da.addObserver(DataAccess.OBSERVABLE_STATUS_TEXT, this);
+        da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
     }
 
 

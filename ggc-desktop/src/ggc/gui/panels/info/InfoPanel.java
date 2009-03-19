@@ -1,13 +1,17 @@
 package ggc.gui.panels.info;
 
 
+import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
 
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Observable;
 
 import javax.swing.JPanel;
+
+import com.atech.misc.refresh.EventObserverInterface;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,10 +40,11 @@ import javax.swing.JPanel;
  */
 
 
-public class InfoPanel extends JPanel
+public class InfoPanel extends JPanel implements EventObserverInterface
 {
     private static final long serialVersionUID = -8288632669830259690L;
     private ArrayList<AbstractInfoPanel> vInfoPanels = new ArrayList<AbstractInfoPanel>();
+    DataAccess m_da = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -60,6 +65,8 @@ public class InfoPanel extends JPanel
         vInfoPanels.add(new StatisticsInfoPanel());
 
         addPanels();
+        
+        m_da.addObserver(DataAccess.OBSERVABLE_PANELS, this);
     }
 
     private void addPanels()
@@ -147,6 +154,22 @@ public class InfoPanel extends JPanel
         
         // TODO
     }
+
+    
+    public void update(Observable obj, Object arg)
+    {
+        if (arg instanceof Integer)
+        {
+            Integer i = (Integer)arg;
+            this.refreshGroup(i.intValue());
+        }
+
+        
+    }
+    
+    
+    
+    
     
     
 
