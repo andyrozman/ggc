@@ -2,6 +2,11 @@
 Changes file for GGC Pump Tool
 ==============================
 
+0.2.2 
+    * Added Bolus Helper to Bolus entry (after redesign of GGC (GGC was split into two seperate projects, GGC Core and
+      GGC Desktop))
+    * Bolus Helper changed so that it produces value in float type (not in integer anymore)
+
 0.2.1
     * Version advanced after, Manual Entry finished
 

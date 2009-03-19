@@ -1,12 +1,16 @@
 package ggc.pump.gui.manual;
 
+import ggc.core.util.DataAccess;
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
+import ggc.shared.bolushelper.BolusHelper;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import com.atech.graphics.components.JDecimalTextField;
+import com.atech.utils.ATSwingUtils;
 
 /**
  * Application: GGC - GNU Gluco Control 
@@ -77,6 +82,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     JRadioButton rb_1, rb_2, rb_3;
     ButtonGroup bg;
     ProfileComponent profile_comp;
+    JButton button_1;
 
     int type = 0;
     int height = 0;
@@ -171,6 +177,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         profile_comp = new ProfileComponent();
         this.add(profile_comp);
 
+        this.button_1 = ATSwingUtils.getButton("", 0, 0, 0, 0, this, ATSwingUtils.FONT_NORMAL, "magic-wand.png", "bolus_helper", this, m_da);
+
     }
 
     /**
@@ -262,6 +270,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         rb_2.setVisible(false);
         rb_3.setVisible(false);
         profile_comp.setVisible(false);
+        this.button_1.setVisible(false);
     }
 
     private void setEmpty()
@@ -573,6 +582,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("bolus");
         addAllItems(this.combo_1, this.m_da.getBolusSubTypes().getDescriptions());
+        
+        this.button_1.setBounds(120, 20, 25, 25);
+        this.button_1.setVisible(true);
+        
 
         this.label_2.setBounds(0, 55, 150, 25);
         this.label_2.setVisible(true);
@@ -1082,6 +1095,49 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             // System.out.println("Basal event: " +
             // this.combo_1.getSelectedIndex());
             setBasalSubType(this.combo_1.getSelectedIndex());
+        }
+        else if (cmd.equals("bolus_helper"))
+        {
+            System.out.println("Bolus Helper"); //Basal event: " +
+            // this.combo_1.getSelectedIndex());
+            //setBasalSubType(this.combo_1.getSelectedIndex());
+            //m_parent.dtc
+            
+            float bg =0.0f;
+            float ch = 0.0f;
+            
+            if (m_parent.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG)))
+            {
+                PumpValuesEntryExt pvex = m_parent.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG));
+                bg = m_da.getFloatValueFromString(pvex.getValue());
+                
+                if (m_da.getBGMeasurmentType()!=DataAccess.BG_MGDL)
+                {
+                    bg = m_da.getBGValueDifferent(DataAccess.BG_MGDL, bg);
+                }
+            }
+
+            
+            if (m_parent.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH)))
+            {
+                PumpValuesEntryExt pvex = m_parent.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
+                ch = m_da.getFloatValueFromString(pvex.getValue());
+            }
+            
+            BolusHelper bh = new BolusHelper(m_parent, 
+                bg, //m_da.getJFormatedTextValueFloat(ftf_bg2), 
+                ch, //m_da.getJFormatedTextValueFloat(this.ftf_ch), 
+                m_parent.dtc.getDateTime());
+
+            if (bh.hasResult())
+            {
+                this.num_tf_1_d2.setValue(bh.getResult());
+                //this.ftf_ins1.setValue(bh.getResult());
+            }
+            
+            
+            
+            
         }
     }
 

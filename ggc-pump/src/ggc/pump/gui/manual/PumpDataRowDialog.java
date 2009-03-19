@@ -156,7 +156,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
     int height = 490;
     
     ArrayList<PumpValuesEntryExt> list_data = new ArrayList<PumpValuesEntryExt>();
-    Hashtable<String,PumpValuesEntryExt> ht_data = new Hashtable<String,PumpValuesEntryExt>();
+    public Hashtable<String,PumpValuesEntryExt> ht_data = new Hashtable<String,PumpValuesEntryExt>();
     PumpAdditionalDataType m_pump_add = new PumpAdditionalDataType();
 
     
