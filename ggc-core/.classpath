@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Atech-Tools"/>
+	<classpathentry excluding="**/.svn/**" kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Meter Tool">
+		<accessrules>
+			<accessrule kind="accessible" pattern="**/icons/**"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Pump Tool"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText-2.0.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SkinLF-6.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PostgreSQL-JDBC-8.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaHelp-2.0.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-collections-2.1.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate-3.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/H2-1.0.69"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/pygmy-0.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PostgreSQL-8.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ggc-web"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
