@@ -657,8 +657,16 @@ public class DataAccess extends ATDataAccessAbstract
     // ******         Observer/Observable                 *****
     // ********************************************************
     
+    /**
+     * Observable: Panels
+     */
     public static final int OBSERVABLE_PANELS = 1;
-    public static final int OBSERVABLE_STATUS_TEXT = 2;
+
+    
+    /**
+     * Observable: Status
+     */
+    public static final int OBSERVABLE_STATUS = 2;
     
     
     
@@ -667,7 +675,7 @@ public class DataAccess extends ATDataAccessAbstract
         observables = new Hashtable<String,EventSource>();
 
         observables.put("" + OBSERVABLE_PANELS, new EventSource());
-        observables.put("" + OBSERVABLE_STATUS_TEXT, new EventSource());
+        observables.put("" + OBSERVABLE_STATUS, new EventSource());
     }
 
     public void startToObserve()

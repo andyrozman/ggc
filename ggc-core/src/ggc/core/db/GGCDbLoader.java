@@ -171,7 +171,7 @@ public class GGCDbLoader extends Thread
 
         //if (!part_start)
         {
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS_TEXT, "DB_NAME=" + db.getHibernateConfiguration().getConnectionName() );
+            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, "DB_NAME=" + db.getHibernateConfiguration().getConnectionName() );
 /*            if (m_bar!=null)
                 m_bar.setDatabaseName(db.getHibernateConfiguration().getConnectionName());
             else
@@ -201,9 +201,9 @@ public class GGCDbLoader extends Thread
             m_da.loadDailySettingsLittle(new GregorianCalendar(), true);
 
 
-        m_da.loadSettingsFromDb();
+        //m_da.loadSettingsFromDb();
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
-        m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS_TEXT, m_da.getI18nControlInstance().getMessage("READY"));
+        m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, m_da.getI18nControlInstance().getMessage("READY"));
 
 //        mf.informationPanel.refreshPanels();
 //        mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
@@ -293,7 +293,7 @@ public class GGCDbLoader extends Thread
         //if (part_start)
         //    return;
 	
-        m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS_TEXT, status);
+        m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, status);
         
         /*
         if (m_bar!=null)

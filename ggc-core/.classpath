@@ -2,14 +2,7 @@
 <classpath>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Atech-Tools"/>
 	<classpathentry excluding="**/.svn/**" kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Meter Tool">
-		<accessrules>
-			<accessrule kind="accessible" pattern="**/icons/**"/>
-		</accessrules>
-	</classpathentry>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Pump Tool"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText-2.0.7"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SkinLF-6.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PostgreSQL-JDBC-8.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaHelp-2.0.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
