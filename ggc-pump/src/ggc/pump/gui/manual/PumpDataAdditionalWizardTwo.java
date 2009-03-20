@@ -4,6 +4,7 @@ import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
+import ggc.shared.fooddesc.FoodDescriptionDialog;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -169,6 +170,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     }
     
     
+    String food_data = null;
+    
+    
     // for edit
     private void loadObject()
     {
@@ -190,8 +194,19 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             this.num_1.setValue(new Float(this.data_object.getValue()));
 //            po.setValue(this.num_1.getValue().toString());
         }
+        else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
+        {
+            food_data = this.data_object.getValue();
+            
+            
+            
+            //System.out.println("Reading food description data failed !");
+            //this.num_1.setValue(new Float(this.data_object.getValue()));
+//            po.setValue(this.num_1.getValue().toString());
+        }
         else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
         {
+            System.out.println("Reading food db data failed !");
             //this.num_1.setValue(new Float(this.data_object.getValue()));
 //            po.setValue(this.num_1.getValue().toString());
         }
@@ -470,6 +485,17 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             
             if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
             {
+                
+                FoodDescriptionDialog td = new FoodDescriptionDialog("", 0.0f, this);
+                
+                if (td.wasAction())
+                {
+                    this.internal_data = td.getResultValuesString();
+                    float f = m_da.getFloatValue(this.internal_data[1]);
+                    this.cb_1.setSelected(f>0);
+                }                
+                
+                /*
                 TransferDialog td = createInstance(); 
                     //m_da.getPlugInServerInstance().getTransferObjects().get(0);
                 
@@ -493,7 +519,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                     this.internal_data = td.getResultValuesString();
                     float f = m_da.getFloatValue(this.internal_data[1]);
                     this.cb_1.setSelected(f>0);
-                }
+                }*/
             }
             else
             {

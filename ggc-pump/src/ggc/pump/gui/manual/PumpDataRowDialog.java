@@ -585,6 +585,14 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
             PumpValuesEntryExt pc = this.list_data.get(this.m_list_data.getSelectedIndex());
             
+            if ((pc.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB) ||
+                (pc.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))
+            {
+                // TODO
+            }
+            
+            
+            
             PumpDataAdditionalWizardTwo pdawo = new PumpDataAdditionalWizardTwo(this, pc); 
             pdawo.setVisible(true);
             
