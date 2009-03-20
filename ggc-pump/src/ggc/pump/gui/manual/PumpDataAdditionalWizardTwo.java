@@ -89,8 +89,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     PumpValuesEntryExt pump_objects_ext[];
     
     PumpValuesEntryExt data_object;
+    PumpValuesEntryExt data_object2;
     private String internal_data[] = null;
-    
+    float food_ch;
     
     // new data
     /**
@@ -162,9 +163,10 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
         ATSwingUtils.initLibrary();
 
+        this.data_object = pc;
+        this.data_object2 = pc2;
+
         init();
-        
-        data_object = pc;
         
         loadObject();
     }
@@ -198,9 +200,22 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         {
             food_data = this.data_object.getValue();
             
+            if (this.data_object2!=null)
+            {
+                food_ch =  m_da.getFloatValueFromString(this.data_object2.getValue());
+                System.out.println("Reading food description: ch=" + food_ch);
+                System.out.println("Reading food description: ch=" + this.data_object2.getValue());
+                if (food_ch >0)
+                {
+                    this.cb_1.setSelected(true);
+                }
+            }
+            else
+                food_ch = 0.0f;
             
+            System.out.println("Reading food description: do2=" + this.data_object2);
             
-            //System.out.println("Reading food description data failed !");
+            System.out.println("Reading food description data failed !");
             //this.num_1.setValue(new Float(this.data_object.getValue()));
 //            po.setValue(this.num_1.getValue().toString());
         }
@@ -486,7 +501,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
             {
                 
-                FoodDescriptionDialog td = new FoodDescriptionDialog("", 0.0f, this);
+                
+                
+                FoodDescriptionDialog td = new FoodDescriptionDialog(this.food_data, food_ch, this);
                 
                 if (td.wasAction())
                 {
