@@ -28,21 +28,13 @@
 package ggc.core.db.tool;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.datalayer.FoodDescription;
-import ggc.core.db.datalayer.FoodGroup;
-import ggc.core.db.datalayer.NutritionDefinition;
-import ggc.core.db.datalayer.NutritionHomeWeightType;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.db.hibernate.DbInfoH;
 import ggc.core.db.hibernate.DoctorTypeH;
 import ggc.core.util.DataAccess;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.util.Hashtable;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -78,7 +70,7 @@ public class InitDb
 
     GGCDb m_db = null;
 
-    Hashtable<String, NutritionHomeWeightType> home_weight_type_list = null;
+    //Hashtable<String, NutritionHomeWeightType> home_weight_type_list = null;
     DataAccess m_da = DataAccess.getInstance();
 
     /**
@@ -215,7 +207,7 @@ public class InitDb
 
     private void insertFoodGroups()
     {
-
+/*
         try
         {
             System.out.println("\nLoading Food Groups (FD_GROUP.txt) (1/dot)");
@@ -246,7 +238,7 @@ public class InitDb
             System.err.println("Error on insertFoodGroups(): " + ex);
             ex.printStackTrace();
         }
-
+*/
     }
 
     private void insertFoodDescription()
@@ -257,7 +249,7 @@ public class InitDb
         // 208 = Energy (kcal)
         // 268 = Energy (kJ)
         // 269 = Sugar (total) (g)
-
+/*
         int i = 0;
 
         try
@@ -307,12 +299,12 @@ public class InitDb
             System.err.println("Error on insertFoodDescription(): " + ex);
             ex.printStackTrace();
         }
-
+*/
     }
 
     private void insertNutritionData()
     {
-
+/*
         int i = 0;
 
         try
@@ -385,7 +377,7 @@ public class InitDb
                  * 268 = Energy (kJ) fd.setEnergy_kJ(value); } else if
                  * (type==269) { // 269 = Sugar (total) fd.setSugar_g(value); }
                  */
-            }
+  /*          }
 
             fd.setNutritions(data.toString());
             m_db.edit(fd);
@@ -396,12 +388,12 @@ public class InitDb
             System.err.println("Error on insertNutritionData(): " + ex);
             ex.printStackTrace();
         }
-
+*/
     }
 
     private void insertNutritionDefintions()
     {
-
+/*
         try
         {
 
@@ -442,14 +434,14 @@ public class InitDb
             System.err.println("Error on insertNutritionDefintions(): " + ex);
             ex.printStackTrace();
         }
-
+*/
     }
 
     private void insertHomeWeightTypes()
     {
 
         // System.out.println("FIX!!!!!");
-
+/*
         Hashtable<String, NutritionHomeWeightType> list = new Hashtable<String, NutritionHomeWeightType>();
 
         try
@@ -506,12 +498,12 @@ public class InitDb
         }
 
         home_weight_type_list = list;
-
+*/
     }
 
     private void insertHomeWeightData()
     {
-
+/*
         int i = 0;
 
         try
@@ -594,34 +586,9 @@ public class InitDb
             System.err.println("Error on insertNutritionData(): " + ex);
             ex.printStackTrace();
         }
-
+*/
     }
 
-    /*
-     * public void insertMeterCompanies() {
-     * 
-     * System.out.println("\nLoading Meter Companies (1/dot)");
-     * 
-     * // id, name, aka_name, www, description
-     * 
-     * String data[] = { "1", "Dummy Meters", null, null, null, "2",
-     * "Unknown Meter Company", null, null, null, "3", "Abbot Diabetes Care",
-     * null, "http://www.abbottdiabetescare.com/", null, "4",
-     * "Bayer Diagnostics", "Ascensia", "http://www.bayercarediabetes.com/",
-     * null, "5", "BD Diabetes", null, "http://www.bddiabetes.com/", null, "6",
-     * "Arkray USA", "Hypoguard", "http://www.arkrayusa.com/", null, "7",
-     * "Lifescan", null, "http://www.lifescan.com/", null, "8", "Prodigy", null,
-     * "http://www.prodigymeter.com/", null, "9", "Roche Diagnostics",
-     * "Accu-Chek", "http://www.accu-chek.com/", null, };
-     * 
-     * for(int i=0; i<data.length; i+=5) { MeterCompanyH mc = new
-     * MeterCompanyH(data[i+1], data[i+2], data[i+3], data[i+4]);
-     * mc.setId(Long.parseLong(data[i]));
-     * 
-     * m_db.addHibernate(mc); System.out.print("."); }
-     * 
-     * }
-     */
 
     private void insertDoctorTypes()
     {
@@ -677,6 +644,7 @@ public class InitDb
     }
 
 
+    @SuppressWarnings("unused")
     private int getInt(String input)
     {
 
@@ -704,6 +672,7 @@ public class InitDb
 
     }*/
 
+    @SuppressWarnings("unused")
     private long getLong(String input)
     {
         if (input.startsWith("~"))
@@ -715,6 +684,7 @@ public class InitDb
             return Long.parseLong(input);
     }
 
+    @SuppressWarnings("unused")
     private float getFloat(String input)
     {
         if (input.startsWith("~"))

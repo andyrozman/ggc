@@ -7,19 +7,12 @@ import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
 import ggc.core.db.datalayer.DailyValue;
-import ggc.core.db.datalayer.FoodDescription;
-import ggc.core.db.datalayer.FoodGroup;
-import ggc.core.db.datalayer.Meal;
-import ggc.core.db.datalayer.MealGroup;
-import ggc.core.db.datalayer.PumpData;
-import ggc.core.db.datalayer.PumpDataExtended;
-import ggc.core.db.datalayer.PumpProfile;
 import ggc.core.db.datalayer.Settings;
 import ggc.core.db.datalayer.SettingsColorScheme;
 import ggc.core.db.tool.DbToolApplicationGGC;
-import ggc.core.nutrition.GGCTreeRoot;
 import ggc.core.plugins.CGMSPlugIn;
 import ggc.core.plugins.MetersPlugIn;
+import ggc.core.plugins.NutriPlugIn;
 import ggc.core.plugins.PumpsPlugIn;
 
 import java.awt.Color;
@@ -31,6 +24,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -47,6 +41,7 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.misc.refresh.EventSource;
+import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.logs.RedirectScreen;
 
@@ -135,7 +130,7 @@ public class DataAccess extends ATDataAccessAbstract
     /**
      * Tree Roots
      */
-    public Hashtable<String, GGCTreeRoot> tree_roots = null;
+    //public Hashtable<String, GGCTreeRoot> tree_roots = null;
 
     // daily and weekly data
     private GregorianCalendar m_date = null, m_dateStart = null;
@@ -214,9 +209,15 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public static final String PLUGIN_CGMS = "CGMSPlugIn";
 
+
+    /**
+     * Plug In - Nutrition Tool
+     */
+    public static final String PLUGIN_NUTRITION = "NutritionPlugIn";
+    
     
     private int current_person_id = 1;
-    NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
+    //NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
     
     /**
      * Developer Version
@@ -252,7 +253,7 @@ public class DataAccess extends ATDataAccessAbstract
         this.initObservable();
         
         //System.out.println("init Special");
-        this.tree_roots = new Hashtable<String, GGCTreeRoot>();
+        //this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
         //System.out.println("config File");
         this.m_configFile = new DbToolApplicationGGC();
@@ -376,8 +377,6 @@ public class DataAccess extends ATDataAccessAbstract
 
     /**
      * Start Db
-     * 
-     * @param bar
      */
     public void startDb() //StatusBar bar)
     {
@@ -504,16 +503,30 @@ public class DataAccess extends ATDataAccessAbstract
     public void loadBackupRestoreCollection()
     {
 
-        BackupRestoreCollection brc = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
-        brc.addNodeChild(new DailyValue(this.m_i18n));
+        BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
+        brc_full.addNodeChild(new DailyValue(this.m_i18n));
 
 
         BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
         brc1.addNodeChild(new Settings(this.m_i18n));
         brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
-        brc.addNodeChild(brc1);
+        brc_full.addNodeChild(brc1);
         
         
+        //for(int i=0; i<)
+        
+        for(Enumeration<String> en = this.plugins.keys(); en.hasMoreElements(); )
+        {
+            PlugInClient pic = this.plugins.get(en.nextElement());
+            
+            BackupRestoreCollection brc = pic.getBackupObjects();
+            
+            if (brc!=null)
+                brc_full.addNodeChild(brc);
+        }
+        
+        
+        /*
         BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
         brc_nut.addNodeChild(new FoodGroup(this.m_i18n));
         brc_nut.addNodeChild(new FoodDescription(this.m_i18n));
@@ -526,9 +539,9 @@ public class DataAccess extends ATDataAccessAbstract
         brc_nut.addNodeChild(new PumpDataExtended(this.m_i18n));
         brc_nut.addNodeChild(new PumpProfile(this.m_i18n));
         brc.addNodeChild(brc_nut);
-
+        */
         
-        this.backup_restore_collection = brc;
+        this.backup_restore_collection = brc_full;
     }
 
     /**
@@ -639,6 +652,9 @@ public class DataAccess extends ATDataAccessAbstract
         // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
 
         addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
+
+        addPlugIn(DataAccess.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
+        
         // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
     }
     
@@ -670,6 +686,9 @@ public class DataAccess extends ATDataAccessAbstract
     
     
     
+    /**
+     * Init Observable
+     */
     public void initObservable()
     {
         observables = new Hashtable<String,EventSource>();
@@ -678,6 +697,9 @@ public class DataAccess extends ATDataAccessAbstract
         observables.put("" + OBSERVABLE_STATUS, new EventSource());
     }
 
+    /**
+     * Start To Observe
+     */
     public void startToObserve()
     {
         /*
@@ -692,16 +714,34 @@ public class DataAccess extends ATDataAccessAbstract
     }
     
     
+    /**
+     * Add Observer 
+     * 
+     * @param observable_id
+     * @param inst
+     */
     public void addObserver(int observable_id, EventObserverInterface inst)
     {
         observables.get("" + observable_id).addObserver(inst);
     }
     
+    /**
+     * Set Change On Event Source
+     * 
+     * @param type
+     * @param value
+     */
     public void setChangeOnEventSource(int type, int value)
     {
         observables.get("" + type).sendChangeNotification(value); 
     }
     
+    /**
+     * Set Change On Event Source
+     * 
+     * @param type
+     * @param value
+     */
     public void setChangeOnEventSource(int type, String value)
     {
         observables.get("" + type).sendChangeNotification(value); 
@@ -1029,11 +1069,11 @@ public class DataAccess extends ATDataAccessAbstract
      * 
      * @return
      */
-    public NutriI18nControl getNutriI18nControl()
+/*    public NutriI18nControl getNutriI18nControl()
     {
         return this.m_nutri_i18n;
     }
-
+*/
     // ********************************************************
     // ****** Look and Feel *****
     // ********************************************************
@@ -1551,16 +1591,68 @@ public class DataAccess extends ATDataAccessAbstract
     
 
     
+    /**
+     * Get Selected Lang Index (will be deprecated) ??!!
+     */
     public int getSelectedLangIndex()
     {
         return 0;
     }
 
     
+    /**
+     * Set Selected Lang Index (will be deprecated) ??!!
+     */
     public void setSelectedLangIndex(int index)
     {
         
     }
+    
+
+    /**
+     * Insulin - Pen/Injection 
+     */
+    public static final int INSULIN_PEN_INJECTION = 1;
+    
+    /**
+     * Insulin - Pump 
+     */
+    public static final int INSULIN_PUMP = 2;
+    
+    /**
+     * @param mode
+     * @param value
+     * @return
+     */
+    public float getCorrectDecimalValueForInsulinFloat(int mode, float value)
+    {
+        // 1, 0.5, 0.1
+        // 1, 0.5, 0.1, 0.05, 0.01, 0.005, 0.001
+        return value;
+    }
+    
+    /**
+     * @param mode
+     * @param value
+     * @return
+     */
+    public String getCorrectDecimalValueForInsulinString(int mode, float value)
+    {
+        // 1, 0.5, 0.1
+        //return value;
+        return null;
+    }
+
+
+    /** 
+     * Load PlugIns
+     */
+    @Override
+    public void loadPlugIns()
+    {
+    }
+    
+    
     
     
 

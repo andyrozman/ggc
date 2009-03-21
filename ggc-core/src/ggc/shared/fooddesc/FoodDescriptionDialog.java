@@ -121,7 +121,8 @@ public class FoodDescriptionDialog extends TransferDialog /*JDialog*/ implements
     /**
      * Constructor
      * 
-     * @param row
+     * @param food_desc 
+     * @param ch_value 
      * @param dialog
      */
     public FoodDescriptionDialog(String food_desc, float ch_value, JDialog dialog)

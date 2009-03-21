@@ -190,8 +190,13 @@ public class GGCDbLoader extends Thread
         db.loadStaticData();
         m_da.setDb(db);
         
+        m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_GENERAL_INFO);
+        
         // 3 - init plugins
         m_da.initPlugIns();
+
+        
+        m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_PLUGINS_ALL);
         
         // 3 - load daily data for display, appointments
         
@@ -234,7 +239,7 @@ public class GGCDbLoader extends Thread
    
 //        if (!part_start)
         {
-        
+     /*   
             // 4 - load doctors data
             // TODO: in version 0.4
            
@@ -250,7 +255,7 @@ public class GGCDbLoader extends Thread
             db.loadMealsDb();
 
             setDbStatus(RefreshInfo.DB_LOADED);
-
+*/
         }
 /*        else
         {

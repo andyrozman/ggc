@@ -63,11 +63,11 @@ public abstract class PrintAbstract extends PdfPageEventHelper
     protected I18nControlAbstract ic = null;
     String name = "";
 
-    BaseFont base_helvetica = null;
-    BaseFont base_times = null;
-    Font text_normal = null;
-    Font text_bold = null;
-    Font text_italic = null;
+    protected BaseFont base_helvetica = null;
+    protected BaseFont base_times = null;
+    protected Font text_normal = null;
+    protected Font text_bold = null;
+    protected Font text_italic = null;
 
     /**
      * Print root must always contain trailing slash, so ../data/print/ is correct, while ../data/print is incorrect.
