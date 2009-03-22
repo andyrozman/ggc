@@ -1,0 +1,159 @@
+Know Bugs:
+
+    - [sf] changes made to "medical data" don't get applied to "Colors & Fonts" until dialog is re-opened
+      A: changes are saved on exit of dialog... I guess we have to change that.
+    - The code relies on there being at least one entry per day; days without entries will be ignored in the date range selection code, resulting
+      in the GlucoValues passed to CourseGraphView.setGlucoValues() containing only one day if there is only one value in the database, even  if
+      a larger range was selected. (The problem lies in GlucoValues.getDayCount(), see FIXME-comment)
+    - Setting a colour for one "color scheme" will change it for the rest, too.
+    - GI/GL not implemented
+	- Printing - files should be generated with logical names not with current time in ms
+	- Printing - abstract class should be used
+	- Meal - Nutrient data should be saved (now its not saved, just generated when opened)
+	- Printing - Foodmenu extended III
+	- Backup/Restore - using one file (*.dbe) doesn't work
+	- Backup/Restore - only one restore can be done, on next restore, we don-t get all files displayed
+	- Meter Tool: - Problem with reading old data
+	- Meter Tool - Configuration - Time fix Combo box to small
+
+NOT A BUG:
+    - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, 
+      depending on preferences.
+      * This is not a bug. It's feature 
+        * It was a bug before the other field was updated when one lost focus
+    - If e.g. the USDA DB is opened, GGC won't react to a "Close" command from the task bar (at least in KDE)
+      A: This must be internal problem with KDE. Dialogs are set to be modal, this works ok with windows
+      A: This is confirmed as KDE problem. Problem is solved with KDE 5 at least I think it is. I couldn't reproduce 
+         it there (on FreeBSD)
+    - this is a general problem whenever a static layout is used, but german strings 
+      tend to be a bit longer that their english counterparts, resulting in a lot of 
+      truncated strings
+      A: We need to discover which labels have problems and make them bigger if 
+      possible. If it can't be done abbrev. must be used. We don't actually use
+      static layout... I use null layout, because most of java's layouts are 
+      unpredictable
+      R: So, how's null layout not java's static layout? I know about their
+      unpredictability (boy, do I!), but they at least adapt sizes to fit the contents
+      A: They are too unpredictable for my test, so we will stay with static for now. If string is too big it will be
+        cut off
+
+LONG LASTING BUGS:
+    - [sf] german translation is somewhat behind schedule
+
+
+Bugs fixed in version X:
+
+
+0.3.10
+    - Daily Food Selector has problem when selecting meals... not all nutrients are displayed
+    - Restore: Browse dialog should open in ../data/export
+    - Restore: Description on first window is little "off" on FreeBSD
+    - When entering BG, CH, insulin data, negative values can be entered. Negative BG gets set to 0 without warning. BTW: they don't get drawn,
+      but that doesn't excuse them being accepted!
+      (We're great! We make it possible for people to puke, squeeze insulin from their fat tissue and even live with no sugar at all in their bloodstream!)
+      A: fixed. We use JDecimalTextField now. If you enter negative value, entry gets invalidated on
+        focus lost and value is set to 0. 
+      
+
+
+0.3.5
+    - I18n TAGS missing: EDIT_FOOD_GROUP
+    - Statistics for Main Screen invalid for BG
+    - Statistics for Daily Value Stats invalid for BG  
+
+0.3.x
+    - when a settings change could not be propagated to the database (sql exception 
+      or whatever), the changes are still applied to GGC, but obviously can't be 
+      loaded from the DB on startup; the behaviour in this case should be as if the 
+      user had selected "Cancel"
+      A: When there is problem with database, program shouldn't even start... This is fixed in new version only
+         requirement is that you use our startup scripts (run_<os_name>), they call special checker that 
+         creates info file, which is read by GGC on start
+    - After data was entered (DailyStatsDialog, etc.), it will be appended to the table instead of being inserted where it belongs.
+      A: This was fixed, at least for DailyStatsDialog
+
+
+0.2.16
+    - GGC Little: meters button is unresponsive
+    - GGC Little: About button is static (problematic when size is changed)
+    - GGCLittle -> (no data in DB) New Entry -> the following message:
+0 year: 200 month: 85 day: 21  hour: 0 min: 0
+Exception in thread "AWT-EventQueue-0" java.lang.ArrayIndexOutOfBoundsException: 84
+    at com.atech.graphics.components.DateTimeComponent.setDateTime(DateTimeComponent.java:332)
+    at ggc.gui.dialogs.DailyRowDialog.setDate(DailyRowDialog.java:285)
+    at ggc.gui.dialogs.DailyRowDialog.initParameters(DailyRowDialog.java:238)
+    at ggc.gui.dialogs.DailyRowDialog.<init>(DailyRowDialog.java:199)
+    at ggc.gui.little.DailyStatsControlsL.actionPerformed(DailyStatsControlsL.java:161)
+    at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1849)
+    at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2169)
+    at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:420)
+    at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:258)
+    at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:236)
+    at java.awt.Component.processMouseEvent(Component.java:5517)
+    at javax.swing.JComponent.processMouseEvent(JComponent.java:3135)
+    at java.awt.Component.processEvent(Component.java:5282)
+    at java.awt.Container.processEvent(Container.java:1966)
+    at java.awt.Component.dispatchEventImpl(Component.java:3984)
+    at java.awt.Container.dispatchEventImpl(Container.java:2024)
+    at java.awt.Component.dispatchEvent(Component.java:3819)
+    at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4212)
+    at java.awt.LightweightDispatcher.processMouseEvent(Container.java:3892)
+    at java.awt.LightweightDispatcher.dispatchEvent(Container.java:3822)
+    at java.awt.Container.dispatchEventImpl(Container.java:2010)
+    at java.awt.Window.dispatchEventImpl(Window.java:1791)
+    at java.awt.Component.dispatchEvent(Component.java:3819)
+    at java.awt.EventQueue.dispatchEvent(EventQueue.java:463)
+    at java.awt.EventDispatchThread.pumpOneEventForHierarchy(EventDispatchThread.java:242)
+    at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:163)
+    at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:157)
+    at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:149)
+    at java.awt.EventDispatchThread.run(EventDispatchThread.java:110)
+
+
+0.2.15.1
+    - Backup without anything selected will cause a ZipException
+    - Slovene translation is done
+
+
+0.2.12:
+    - [sf] changing time in entry will not re-order cells
+    - [sf] Entering plain text in numerical only fields should at least result in a warning (is ignored, and the numerical value is set to 0)
+    - Add Entry -> Edit Food -> Add -> Cancel will still attempt to add something
+
+0.2.9.9:
+    - months not translated !!
+      Andy: fixed
+    - [sf] mmol values are rounded to ints, which does not make sense
+      Andy: all BG values are saved as mg/dl format (in db), so they aren't rounded,
+         they are converted        
+    - [sf] Title for spread graph suggests a lost key in GGC_*.properties
+      Andy: fixed
+    - [sf] "DAILY_CONTROL", "SHOW_DAILY_GRAPH" and "DAILY_VALUES" missing in GGC Little
+      Andy: added
+    - [sf] switching L&F from CDE/Motif to SkinLF doesn't result in settings being saved : can't reproduce, you must 
+           click on OK to save changes... IS THIS STILL THERE? (see sf)
+      Andy: fixed
+    - HbA1c-Frame: "your current HbA1c" is right-aligned, which looks crappy
+      Andy: total change of this dialog.
+
+0.2.x.x:
+    - L&F loading is inconsistent (makes a hardcoded assumption where themepacks are stored) and currently fails
+      on Linux (and probably because of that) -- You need to have files in specified directory,
+      which is ../data/skinlf_themes/ - Andy
+    - at least one undiscovered infinite loop, can't reproduce, happened while the preferences frame was open (found by: developer rumbi)
+      (not sure whether/how this was fixed, but since I haven't seen this in ages, and pretty much everything 
+      has been changed, I guess this was fixed along the way)
+    - infinite loop when trying to display hba1c without data (rumbi): can't reproduce, looks ok. (andy)
+      (same as above)
+
+0.2.9.3
+    - division by zero when displaying graphs without data (RR)
+
+0.2.5.3:
+    - In Preferences->General: changing language also changes selected L&F name, but not class
+    - Changed preferences mostly apply only after restart (names, language)
+    - hba1c of 2.09% with ZERO readings...
+
+0.2.4.2:
+    - graphs axis: labels should start at 0, not 4 (works for mg/dl but not mmol/l)
+      (NOTE: seems to have been a rounding error due to using ints)

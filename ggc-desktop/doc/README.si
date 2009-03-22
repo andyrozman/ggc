@@ -1,0 +1,237 @@
+
+GNU Gluco Control (GGC)
+=======================
+
+1. O PROGRAMU
+=============
+
+Dobrodošli med uporabniki programa GNU Gluco Control (GGC). GGC je odprto-kodna
+java aplikacija, ki je namenjena samokontroli vašega diabetesa. Odprto-kodno
+pomeni, da je aplikacija prosto dostopna, skupaj s izvorno kodo, kar pomeni, da 
+lahko vsak pomaga pri razvoju.
+
+Ker je to odprto-kodna aplikacija, se lahko med delovanjem pojavijo napake (rečemo 
+jim hrošči). Zato se vnaprej opravičujemo... Ker smo razvijalci sami diabetiki, 
+poskušamo narediti ta program najboljši kot je lahko, ampak kot veste, nesreče se 
+dogajajo. Prosim natančno preberite ta dokument, da vidite kako lahko ta program 
+postane boljši in kako lahko vi do tega pripomorete (ne rabite biti razvijalec,
+da pomagate, vsako poročilo o napaki, lahko približa ta produkt k temu, kar želimo
+da postane. 
+
+Če želite malo več pomagati pri razvoju (razvoj, testiranje, prevajanje, dodajanje
+novih naprav), prosim preberite dokument 'How_Can_I_Help.txt'. Vsak razvijalec
+mora nujno prebrati ta isti dokument.
+
+
+2. TRENUTNA RAZLIČICA IN STATUS
+===============================
+
+
+To je različica 0.4 od programa GGC.
+
+V tem trenutku smo pri verziji 0.4, ki je druga javna izdaja tega programa. Če ste 
+že namestili različico 0.3, jo lahko odstranite (če je še niste redno uporabljali) in
+namestite različico 0.4 ali pa namestite nadgradnje (upgrade). V tem primeru boste 
+morali namestiti dve nadgradnjo (0.3.1 in 0.4), natančna navodila so v paketih 
+nadgradnje.
+
+
+Če ste namestili kakšno verzijo pred 0.3 jo boste morali oddstranit. V času od zadnje 
+(nejavne) izdaje je bilo dosti sprememb v podatkovni bazi in v programu samem, kar 
+pomeni, da stare različice niso nadgradljive (če še imate podatke v stari aplikaciji 
+nas kontaktirajte in pomagali vam bomo pri prenosu podatkov).
+
+Nadgradnje so sedaj mogoče, ampak samo na "ročen" način. V tem trenutku je avtomatska 
+nadgradnja še vedno v delu.
+
+V tej različici še vedno lahko uporabljamo samo interno bazo, če pa imate nadpovprečno 
+znanje o računalnikih (beri: če radi eksperimentirate), pa lahko uporabite tudi ostale
+baze (več informacij v datoteki 'How_Can_I_Help.txt') s le malo truda.
+
+Nove glavne izdaje so načrtovane v 6 mesečnih intervalih (tega smo spravili ven skoraj
+pravočasno), kar pomeni da lahko pričakujete različico 0.5 nekje junija 2009.
+
+Manjše spremembe bodo objavljene, ko se bodo funkcionalnosti spremenile v taki meri,
+da je nujno narediti nadgradnjo (večje spremembe v funkcionalnosti in popravki 
+hroščev).
+
+Zaenkrat bo treba vse nadgradnje narediti ročno, kar pomeni, natančno izvedbo 
+vseh korakov opisanih v datoteki 'How To Upgrade.txt', ki bo dodana vsem izdajam
+(tudi v vsaki nadgradnji). 
+
+Verjetno se sprašujete zakaj smo še vedno pri 0.x različicah, če že imamo delujočo
+aplikacijo.... Odgovor je preprost. Postavili smo si nekaj ciljev in dokler, ti cilji
+niso doseženi bomo še vedno v 0.x verzijah, takoj ko pa bodo naši cilji doseženi. 
+Te cilje lahko vidite v Načrtovanih funkcionalostih, kjer so označeni s dvema 
+zvezdicama (**).  
+
+
+
+3. KAJ TRENUTNO LAHKO DELAMO S APLIKACIJO
+=========================================
+
+- Dodajanje podatkov o dozah insulina, vrednosti KS, aktivnosti, vrednosti urina in 
+  komentarji (tukaj gre za predvsem podatke za Pen terapijo)
+- Prikaz grafov (ta del je še vedno v izdelavi - že uporabljamo novo orodje za grafe, ampak 
+  grafi še niso vsi pripravljeni in stestirani
+- Baze podatkov za "štetje OH": USDA baza (ameriška), Uporabniška baza živil in obrokov 
+  (to uporabnik sam sestavi)
+- Izpis poročil (tiskanje): mesečna poročila, ter izpis jedilnikov
+- Mehanizem za nadgradnjo (to zaenkrat še ne dela, ker je potrebno narediti še strežniški 
+  del)
+- Ustvarjanje varnostne kopije baze (in obnovitev)
+- Orodja za merilce (implementacija osnovnega orodja zaključena, sedaj je treba le še dodati
+  več naprav)
+- Bolus Pomočnik in Preprosta nastavitev razmerij
+- Orodje za črpalke: (implementacija ogrodja je v teku - skoraj zaključena in dodano je ročno
+  vpisovanje podatkov, ki je pomemben predkorak, pred avtomatskim branjem podatkov iz črpalk) 
+
+
+
+4. NAČRTOVANE FUNKCIONALNOSTI
+=============================
+
+Različica 0.5
+-------------
+- Db Orodje (za uporabo in namestitev podatkov za ostale baze) (**)
+- Možnost, da več oseb uporablja GGC
+- Dokončanje aplikacije GGC Little, ki je residentni program (se nahaja v spominu) 
+- Nadgradnja programa (strežniški del) (**)
+- Pomoč za program (angleška) - v celoti (**)
+- Dodana funkcionalnost za baze hrane (predvsem runtime nalaganje podatkov)
+- Spremeni in dodaj nove grafe za Injekcijsko/Pen terapijo
+- Razširjenjo nastavljanje razmerij in pomočnik za razmerja
+
+
+Version 0.6
+------------
+- Nadgradnja podatkovne baze
+- GGC Omrežje (zagon večih instanc aplikacije na različnih računalnikih)
+- Synhronizacija (GGC omrežje)
+- Pomoč za tuje jezik (priprava sistema, ne prevodi sami)
+- CGMS orodje: osnovno, integracija
+- Povezave do stvari za Diabetike (spletne strani, forumi, ...)
+- GGC PPC - verzija, ki naj bi delovala na dlančnikih s OS Pocket PC
+- Načrtovalec (dodajanje dogodkov, mišljeno predvsem za vodenje zdravniških pregledov,
+  dodajanje zdravnikov, itd.
+- Medicinske zaloge - kontrola zdravil, ki jih imamo doma
+- Oddaljena baza za jedi
+
+
+
+5. DODATNI PROJEKTI
+====================
+
+V tem trenutku imamo tri dodatne (pod) projekte.
+
+
+DODATEK ZA MERILNIKE
+---------------------
+
+Naloga dodatka za merilnike je branje podatkov iz različnih merilcev. Ta projekt je 
+trenutnu v beta fazi (dodali smo vse načrtovane funkcionalosti, sedaj moramo le še
+vse dodati več naprav).
+Trenutno podprte naprave (verzija 1.0.7):
+ - Bayer/Ascensia: celotna družina (kot je bila v letu 2008)
+ - Roche/Accu-chek: vse naprave, ki so podprte preko Accu-Chek Pix naprave
+ - LifeScan: OT Ultra/2, OT UltraSmart (delna podpora), OT Ultra Mini/Easy
+
+
+DODATEK ZA ČRPALKE
+------------------
+
+To je dodatek za vpis, branje in upravljanje s podatki iz insulinskih črpalk. 
+Projekt je v fazi razvoja in večina ogrodja za branje podatkov je že dokončana. Zaenkrat
+smo dodali Ročno dodajanje podatkov in naslednji korak je pobiranje in evaluiranje
+podatkov iz črpalk. Prve podprte črpalke bodo Rocheve in Minimedove (zaenkrat preko
+CareLink izvozne datoteke) in razvijalci delajo že tudi na podpori za Animas črpalko. 
+
+
+DODATEK ZA CGMS-e
+-----------------
+
+To je dodatek branje podatkov iz CGMS naprav in gledanje teh podatkov. Projekt je še vedno
+v fazi načrtovanja. Predvidoma bo šel iz načrtovanja v razvoj ob koncu leta 2009. 
+Prvi podprti CGMS bo Minimedov preko export datotek iz programa CareLink.
+
+
+
+6. KAKO LAHKO POMAGATE KOT 'NAVADNI' UPORABNIK
+===============================================
+
+Obstaja več načinov kako lahko pomagate. Nekateri zahtevajo, da imate določeno znanje, 
+toda večina ne. Prosim poglejte si dokument 'How_Can_I_Help.txt'. Tam je več
+poglavij in pri vsakem je napisano za koga je namenjeno.
+
+Prvo poglavje je prikazano tukaj (in prevedeno) vsa ostala pa so v dokumentu in v 
+angleščini.
+
+
+---------------------------------------------------
+
+A.) Preverjanje (testiranje) programa in predlogi za nove ideje ali spremembe (namenjeno VSEM) 
+
+
+Obstaja več načinov, da lahko pomagate. Prvi in največji način je preverjanje programa.
+Probajte ga čimbolj aktivno uporabljati in poskušajte razne stvari. Različica 0.3
+se zažene s ukazne vrstice (in ima odprto okno), tako da bodo vse operacije vidne v
+konzoli. Če vidite sporočilo s napako, exception (več vrstic s čudnimi podatki), pomeni, 
+da je šlo nekaj narobe. Napaka se prikazuje na ekranu, hkrati pa se tudi shranjuje
+v dnevnik (v <GGC Koren>\data\log). Za vsak dan se ustvari nova datoteka. Če se je 
+napaka zgodila danes, bo tam datoteka 'GGC.log'. Odprite to datoteko in pojdite na
+konec in poiščite napako, ki se je prej zgodila. Uporabite Zip in shranite datoteko. 
+Zatem naredite naslednje (opcija A ali B):
+
+
+a.) Obiščite spletno stran za poročanje hroščev in vnesite hrošča. Prosim pripnite
+   arhivirano dnevniško datoteko. Spletna stran je (podatki morajo biti vnešeni 
+   v angleščini) http://sourceforge.net/tracker/?group_id=49749&atid=457319
+   Za vpis teh podatkov ne rabite biti član portala sourceforge.net. Če niste član
+   prosim pustite svoj e-mail naslov nekje v poročilu. Čim bolj natančno opišite 
+   kaj ste delali, ko je prišlo do napake in kako se je aplikacija obnašala po 
+   napaki. Prosim tudi da opišete konfiguracijo svojega računalnika (npr.: Intel(R) 
+   Celeron(R) 2000 with 2GB RAM, s operacijskim sistemom Ubuntu Linux, kernel 2.6.1.34, 
+   s Java 1.6.0_06)
+
+b.) Pošljite nam e-pošto (ggc@atech-software.com), s vsemi podatki kot so opisani
+   v a.). Podatke lahko sem pošljete v slovenščini, nemščini ali angleščini.
+
+---
+
+Tudi če vse lepo dela na vašem sistemu vas naprošamo, da nam redno pošiljate dnevnike.
+Vsaki mesec (ali nekaj takega), prosim arhivirajte vaše dnevnike (lahko jih tudi
+zbrišete iz log mape) in jih pošljete na ggc@atech-software.com. 
+
+Mi bomo uporabili posebno orodje, da preverimo vse datorteke in ugotovimo ali je prišlo
+do kakšne napake, ki je niste zasledili in jo bomo poskusili popraviti.
+
+---
+
+Torej program uporabljate že nekaj časa, nekatere stvari delujejo dobro, nekatere 
+malo manj. Če ste našli dele GGC za katere mislite, da bi lahko delovali boljše, nam
+prosim sporočite to. Lahko uporabite email, ali pa uporabite naslednjo spletno
+stran (na tej strani morajo biti podatki vpisani v angleščini):
+http://sourceforge.net/tracker/?group_id=49749&atid=457322
+
+---
+
+Najdene napake bomo probali popraviti čim prej, toda ker sva trenutno na projektu samo
+2 razvijalca (3 ampak 2 aktivna) se lahko zgodi, da  bo trajalo nekaj časa... Veliki
+hrošči bodo popravljeni najprej, manjši kasneje...
+Predlogi za nove funkcionalnosti in izboljšave imajo najmanjšo prioriteto, načrtovane 
+funkcionalnosti večjo.
+
+Mogoče se nam bodo pridružili še novi razvijalci, kar lahko znatno pomaga pri razvoju 
+in popravkih te aplikacije.
+
+
+
+7. ZAKLJUČEK
+=============
+
+Še enkrat se vam zahvaljujemo za uporabo našega programa in upamo, da izpolnjuje 
+vaše želje in potrebe... če pa v tem trenutku še ne, pa mogoče enkrat v prihodnosti.
+
+
+GGC Razvojna ekipa
+

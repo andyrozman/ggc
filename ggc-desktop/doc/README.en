@@ -1,0 +1,234 @@
+
+GNU Gluco Control (GGC)
+=======================
+
+1. ABOUT
+========
+
+Welcome to GNU Gluco Control (GGC). GGC is an open-source java application,
+intended to help you manage your diabetes. Open-source means that the
+application is freely available, together with its source code, which means
+that anybody can help with development.
+
+Since this is open-source, errors (geeks call them bugs) can occur during the
+operation of the application. For this we apologize... Since we are diabetics
+ourselves, we are trying to make this software the best it can be, but as you
+know, accidents happen. Please read through this document to find out how
+this software can become better, with a little help from your side (you don't have
+to be developer to help, each reported problem can help us bring GGC closer to
+perfection).
+
+If you want to help develop or officially test this software, please read the
+companion document 'How_I_Can_Help.txt'. The same document is required reading for
+developers.
+
+
+2. CURRENT VERSION AND STATUS
+=============================
+
+This is version 0.4 of GGC.
+
+At this point we are at version 0.4, which is second public release. If you have
+installed version 0.3, you can either deinstall and install 0.4 or do updates 
+(you will need to apply two of them (0.3.1 and 0.4): instructions are Update package.
+
+If you used any of "preview" versions (before 0.3), you will need to uninstall.
+We made a lot of changes in database and application itself, so you can't update 
+old version (if you already have data in old application contact us, and we will 
+help you migrate it to new version). 
+
+Updates are now possible, but so far only manual updates. We are working on 
+automatic updates, but we are still far from working model.
+
+In this public release you can still only use the internal database. If you have 
+little above average computer knowledge (read 'if you like to dabble'), you can 
+try to make it work with any database (see file 'How_Can_I_Help.txt') with just a 
+little work.
+
+New (major) releases are planned to occur in 6 month intervals (we almost managed
+that one). This means that you can expect release 0.5 somewhere in June 2009.
+
+A minor release will be done, when functionality has been changed in such a way
+that it is beneficial to user to be released (major functionality changes and
+bug fixes)
+
+For now you need to update files manually, which means exactly following the
+instructions supplied with the release (there will be a file called
+'How To Upgrade.txt' supplied with each upgrade release).
+
+You are probably wondering, why are we still in 0.x versions if we already had 
+public release... Answer is simple. We have several goals set, and when this goals 
+are achieved, we will progress to version 1.0. If you look at Planned functionalities 
+you will find several items marked with double asterisks (**), this are required
+functions for 1.0 release.  
+
+
+3. WHAT FUNCTIONALITY IS AVAILABLE
+==================================
+
+- Adding Daily data about Insulin, BG entries, activity, urine, comments
+- Display graphs for this Pen/Injection therapy (new framework, still work in progress)
+- Food databases for "Carb Counting": USDA Nutrition DB, User Nutrition DB
+  and Meals database or foods and CH as free text
+- Printing reports
+- Update mechanism (client side only), this means that until the server side
+  of update is done, you won't be able to update, but as soon as that works
+  you will have the option to update.
+- Backup mechanism (and restore)
+- Bolus Helper and Simple Ratio Settings
+- Meter Tool finished. Now we just have to add more devices.
+- Pump Tool: Framework is work in progress, almost finished. Added is Manual adding of 
+  data which is important pre-step, for actual reading and import from devices
+
+
+
+4. PLANNED FUNCTIONALITY
+========================
+
+Version 0.5
+------------
+- DB Tool (for using other databases and install of initial data)  (**)
+- Multi person instance
+- Finalization of GGC Little, which is used as a resident application for adding
+  new data throughout the day
+- Update mechanism (server side)   (**)
+- Fully write English help files and add help through application (English version so far) (**)
+- Add some functionality to food databases
+- Extended Ratio Settings, Ratio Helper
+- New Graphs for Pen/Injection theraphy
+
+
+Version 0.6
+------------
+- Automatic DB Update
+- GGC Network (running several instances of GGC on several computers)
+- I18n Help Files
+- CGMS Tool: <Basic CGMS support>
+- Synchronization (for GGC network)
+- Links to data about diabetes on internet
+- GGC PPC - the version of the application to be used by the Pocket PC (not all the
+  functionality of the full version will be available)
+- Appointments (adding appointment, adding data from doctor's visit), Doctors
+  management (adding)
+- Medical stock - Listing of everything that patient has, and what he needs to
+  get to handle diabetes (and also any other condition)
+- Remote Food database functionality
+
+
+
+5. SUB-PROJECTS
+===============
+
+Currently there are three sub-projects running.
+
+
+METER-TOOL
+-----------
+
+This is a plug-in for getting data from glucose meters. Currently this project is in
+beta phase (all functionalities finished, now we just need to add more devices). 
+Currently supported devices:
+ - Bayer/Ascensia: whole family
+ - Roche/Accu-chek: all devices supported by Accu-Chek Pix device
+ - LifeScan: OT Ultra/2, OT UltraSmart, OT Ultra Mini/Easy
+Current version of plugin: 1.0.5
+
+PUMP-TOOL
+----------
+
+This is plug-in for entering, retrieving and handling data from Insulin Pumps.
+We have already started with development and most of framework is ready for Pump
+data. For now we have added Manual adding of Pump Data and next step is retrieval
+of data from Pumps. First supported Pumps will be those of Roche and Minimed (at
+first through CareLink export file) and we have some developers also working on 
+Animas.
+
+
+
+CGMS-TOOL
+----------
+
+This is a plug-in for retrieving data from CGMS device and viewing of this data. This
+project is still in the planning phase. The project will move into the development phase
+by end of 2009. The first supported CGMS will be that of Minimed through export file from 
+CareLink.
+
+
+6. HOW CAN I HELP AS REGULAR USER
+==================================
+
+There are several ways you can help. Some ways require you to have some knowledge, 
+but most of them don't. Please take a look at document 'How_Can_I_Help.txt'. There 
+are several chapters and for each you can see for whom it's intended.
+
+First chapter is displayed here (and translated) all other are in the other document
+and in english.
+
+
+---------------------------------------------------
+
+A.) Testing software and give new ideas or propose changes (intended for ALL)
+
+There are several ways you can help. The first and major way is to test software.
+Try to use it and find anything that doesn't work. Version 0.3 will be started from
+the command-line and all actions will also be displayed in the console. If you see
+an error text, exception or e.g. many cryptic lines of classes with numbers, this
+means something went wrong. The error is displayed on your screen, but it is also
+logged to a file (in <GGC_Root>\data\log). There you will find one or more files for
+each day. If an error happened today, there will be a file named 'GGC.log'. You need
+to open it and go to end and try to find the previously displayed errors.
+Zip this file and store it. And do the following (choose option A or B):
+
+a.) Visit the bug reporting site for our project and enter the bug by yourself.
+   Please attach the zipped log. The site is (data should be entered in English):
+   http://sourceforge.net/tracker/?group_id=49749&atid=457319  
+   You don't need to be member at sourceforge to add this information, if you are
+   not please, write your email address somewhere in the error report. Describe
+   exactly what you were doing when the exception occurred and how the problem
+   affected your application. Also please let us know the configuration of your
+   computer (for example: Intel(R) Celeron(R) 2000 with 2GB RAM, running Ubuntu
+   Linux, kernel 2.6.1.34, with Java 1.6.0_06)
+
+b.) Send us an email (ggc@atech-software.com), containing all the data as
+    described in a.).
+
+---
+
+If everything works OK on your system, we still ask you to send us logs. Every month
+or so, please zip all log files (you can remove them from the log directory) and
+send them to ggc@atech-software.com.
+
+We will use some tool to look through all files and see if there was some error
+which has gone undiscovered by you and will try to fix it.
+
+---
+
+So you have been using the software for some time, some things work fine, other not
+so well. If you find parts of GGC, which your think could work better, please let us
+know. If you find that some functionality is missing, again, let us know. You can
+use either email, or you can use the following form (data should be entered in
+English):
+http://sourceforge.net/tracker/?group_id=49749&atid=457322
+
+---
+
+We will try to fix problems as soon as possible, but since there are only two of us
+(three, but only two active) it might take some time... Major bugs will be fixed
+first, then minor ones...
+New functionality proposals have the lowest priority (and planned functionality has
+priority).
+
+Maybe some new developers will now join us and help us with further development of
+this application.
+
+
+
+7. END
+=======
+
+
+Again, thank you for using our software, we hope it fulfills your needs... If not
+yet, hopefully in future.
+
+
+GGC Development Team

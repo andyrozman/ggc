@@ -1,0 +1,287 @@
+
+HOW I CAN HELP WITH GNU Gluco Control
+=====================================
+
+As I said before... this is open source project, which means you can help anywhere you want/can.
+
+There are several chapters please read at least those that concern you.
+
+
+A.) Testing software and give new ideas or propose changes (intended for ALL)
+B.) Adding support for different diabetes hardware (Anybody who wishes to have their hardware supported)
+C.) Translation (if you want to help with translation to your native language)
+D.) Development
+
+
+
+---- 
+
+
+A.) Testing software and give new ideas or propose changes (intended for ALL)
+==============================================================================
+
+There are several ways you can help. The first and major way is to test software.
+Try to use it and find anything that doesn't work. Version 0.3 will be started from
+the command-line and all actions will also be displayed in the console. If you see
+an error text, exception or e.g. many cryptic lines of classes with numbers, this
+means something went wrong. The error is displayed on your screen, but it is also
+logged to a file (in <GGC_Root>\data\log). There you will find one or more files for
+each day. If an error happened today, there will be a file named 'GGC.log'. You need
+to open it and go to end and try to find the previously displayed errors.
+Zip this file and store it. And do the following (choose option A or B):
+
+a.) Visit the bug reporting site for our project and enter the bug by yourself.
+   Please attach the zipped log. The site is (data should be entered in English):
+   http://sourceforge.net/tracker/?group_id=49749&atid=457319  
+   You don't need to be member at sourceforge to add this information, if you are
+   not please, write your email address somewhere in the error report. Describe
+   exactly what you were doing when the exception occurred and how the problem
+   affected your application. Also please let us know the configuration of your
+   computer (for example: Celereon 2000 with 2 Gb Ram, running Ubuntu Linux,
+   kernel 2.4.1.34, with java 1.6_06)
+
+b.) Send us an email (ggc@atech-software.com), with all the data described in A).
+
+---
+
+If everything works OK on your system, we still ask you to send us logs. Every month
+or so, please zip all log files (you can remove them from the log directory) and
+send them to ggc@atech-software.com.
+
+We will use some tool to look through all files and see if there was some error
+which has gone undiscovered by you and will try to fix it.
+
+---
+
+So you have been using the software for some time, some things work fine, other not
+so well. If you find parts of GGC, which your think could work better, please let us
+know. If you find that some functionality is missing, again, let us know. You can
+use either email, or you can use the following form (data should be entered in
+English):
+http://sourceforge.net/tracker/?group_id=49749&atid=457322
+
+---
+
+We will try to fix problems as soon as possible, but since there are only two of us
+(three, but only two active) it might take some time... Major bugs will be fixed
+first, then the minor ones...
+New functionality proposals have the lowest priority (and planned functionality has
+priority).
+
+Maybe some new developers will now join us and help us with further development of
+this application.
+
+
+
+
+B.) Adding support for different diabetes hardware (Anybody who wishes to have their hardware supported)
+==========================================================================================================
+
+Please first take a look at file 'Diabetes_Hardware.txt'. All entries there are planned hardware support. This 
+doesn't mean we don't need help. We will need at least some help with testing.
+
+If your device is not on list, or doesn't have developer name set, then it means there are no immidiate plans. 
+
+For adding support we need protocol (language) that device speaks and computer understands. In best case scenario, 
+we would contact device company and get this data from them, but in most cases they are not really cooperating, so 
+we need to do it with trial and error approach.
+
+In this case you need to post a message on Forum board on sourceforge.net, called Hardware/Device support
+http://sourceforge.net/forum/forum.php?forum_id=813903, that you are willing to help us... What we will need 
+from you is little time. You need to be able to install software on your computer...
+
+What you need to do/have:
+1.) Install original software for device
+2.) You need cable/interface for device
+3.) You need to install software Serial Monitor (it's nor freeware, but you can get Trial version that lasts for
+    two weeks. (http://www.hhdsoftware.com/Products/home/serial-monitor.html)
+
+Serial Monitor will monitor communication between your device and original software. We need to know which 
+commands are sent and what are replies. In most cases this will be enough for adding some support. If 
+communication is encrypted there is no way for adding support.
+
+So you have installed all software needed and next you need to do is, start Serial Monitor and then attach your 
+device. Next step is to start original software and issue command for downloading data. After you are finished
+close both programs and save logs in Serial Monitor. Send us the logs (in forum) or direct.
+
+First part is finished... Now we will do some programming to add support for this device. After some time (it might
+take months), you will get a test software, which you will need to run and then compare data that software will 
+export with data in your device. If everything is OK, support for your device will be finalized in week or two, if 
+not there will be additional testing going on.
+
+
+
+C.) Translation (if you want to help with translation to your native language)
+=================================================================================
+
+If you like our software and want it to be available in your own language you can join our translation 
+team. First you need to do is post message on Forum Translation with name (something like that)  
+(http://sourceforge.net/forum/forum.php?forum_id=813898), 'Translation into Russian'. Please first go 
+through all messages to find if someone is already trying to translate application. If yes, join his/hers
+team, and together you will be finsihed faster...
+
+After few days you will receive several files and tools that will help you with your task... 
+
+Application GGC has several language files (2 for main application and one for each tool) and several
+help files (since help files are not available yet we will ignore them for now).
+
+Text files are ascii text files, which means that your special characters will not be recognized as 
+such. What you need to do is get an editor which supports utf-8 format. After you have it, open files
+you received and save them in UTF-8. After you are finished with translation you need to run 
+application native2ascii, which is part of java development kit, which you need to install. 
+
+Since GGC is in development this files will regulary change. You can either:
+a) wait to get new translation request (this will be sent to all translators, after some bigger 
+   functionality is completed)
+b) install SVN and get all sources from SVN (if you are not registered developer you won't be able to
+   check-in (send your files to us) direcly, but you can receive all files and see if something changed.
+   You will still have to send your translation to us (via forum or direct), but we will add it as
+   soon as we receive it.
+
+In language files there are a lot of keywords, which are all under special groups, each group has a tag 
+number. Each type of language file has different types of tags. This tag number tell you which groups 
+need to be translated first. As for files, main file has pirority (GGC_<lang>), then comes Nutrition 
+file (GGC_Nutrition_<lang>) and then all files from different tools
+
+
+There are two tools to help with development (they are part of atech-tools, so you will get script to
+run them):
+
+1.) I18nCheck <base_lang_name> <default_lang>. This tool will display all keyword from all language files
+    that are present in default_lang (this is always en) and not in all other files. Base lang name is for 
+    example GGC, full name is GGC_<lang>.properties. This will help you find the new words easily.
+    
+2.) I18nTranslationCheck <base_lang_name> <default_lang> <our_lang>. This utility will show which 
+    expressions are not translated yet. If translation and default are same, then there will be some
+    false entries, but most of entries displayed will still be untranslated. To help yourself take a note
+    of how many translations words are same, and subtract them from whole number.
+      
+
+
+D.) Development
+==================
+
+NOTE: For development we use Eclipse environment. We have several ant build files through all of the projects,
+    but this are intended for deployment only, and NOT for development. Deployment is done by one person which 
+    is called Deployment manager (at this time - Andy). In old times, our developers could choose whatever 
+    environment they wanted (so ant was official build environment), but this created huge configuration problems,
+    which needed to be fixed for each new developer. When all of developers (2 at that time) started to use 
+    Eclipse, and when we added sub-projects, problems became even bigger. At that point we decided to go with 
+    official build environment, which is now Eclipse (so ant became little deprecated - we still use it for
+    deployment (when new version is released)). This document was created to help all new developers and so far,
+    we had almost no complaints from new users (when they arise, we usually just extend this document, with 
+    additional data). 
+
+
+If you are developer and would like to help, please follow this instructions to create build environment.
+
+1.) Download full SVN sources from sourceforge.net then download SVN for atech-tools project
+
+2.) Download Eclipse. Eclipse is our official development tool, but you can use any other you wish.
+    I am advising to use Ganymede (Eclipse 3.4). Link http://download.eclipse.org/eclipse/downloads/, 
+    take latest stable build.
+    
+    Install subclipse: (you need to do this step before you go to 3.
+    
+    Go to Help -> Software Updates. Tab Available software, click on add site.
+    Add following site url: http://subclipse.tigris.org/update_1.4.x
+    Wait few seconds that entry is added and file list downloaded. Select Subclipse plugin.
+    
+3.) Create new workspace. Add Libraries. Libraries are stored under ggc-support/eclipse. You need to
+    expand each file. Name of library is name of zip file (not of directory inside). If you add all 
+    libraries, you should be able to just import all projects, without problem.
+    
+    Open Windows->Preferences. Go to group Java->Code style->Formatter. Use Import option and add xml
+    file stored under ggc-support/eclipse.
+    
+4.) Import all projects (atech-tools, ggc, ggc-meter, ggc-pump, ggc-cgm, ggc-plugin_base)
+
+    Use File->Import..., select General->Existing project into workspace and find all upper directories
+    
+    You should have 6 projects. 
+    
+
+5.) Run GGC
+
+    Go to GGC Gluco Control/src/ggc/GGC.java (Right click on it, select Run As...->Java application
+    
+    Copy files from ggc-support/data
+    
+        data
+          |-- db (unpack latest db image)
+          |-- log (create directory)
+          |-- nutrition (unpack file nutrition-SR-xx.zip (take latest))
+          |-- skinlf_themes (copy all files from ggc-support/data/skinlf_themes)
+          
+    Copy ggc-support/data/GGC_Config.properties
+    
+    Change run entry for GGC:
+    - Open run configuration. 
+    - Select tab Arguments. 
+    - Go to working directory. Select other.
+    - Click on Workspace... Select GNU Gluco Control/bin
+    
+6.) Eclipse Preferences: You will have to do this on every project or use Workspace settings
+     Go into Project -> Properties
+     
+     - Java Compiler: 
+          Compiler Compliance Level, set to 1.5
+     
+     - Java -> Compiler -> Javadoc
+         Process Javadoc comments - Checked
+         Malformed javadoc comments - Warning
+            Only consider members as visible as: Public
+            Missing tag descriptions: Ignore
+            
+         Missing javadoc tags: Warning
+            Only consider members as visible as: Public
+
+         Missing javadoc comments: Warning
+            Only consider members as visible as: Public
+
+	We are currently on 1.5 compatibility, so that application is usable on most of systems, which 
+	don't have 1.6 available... We will probably switch to 1.6 at end of 2009.
+	
+	Javadoc. We are trying to start writing documentation and Javadoc is first step towards that.
+	   Old code will be commented with time, mostly be people who created code. All new code needs
+	   to have comments (javadoc and othwerwise). Eclipse will help you with making empty javadoc
+	   comments, and then just fill all the data (upper javadoc wont check if arguments are filled, 
+	   but they should be, since after some time we will enable that function, but for now we haven't 
+	   since enabling javadoc by itself produces a lot of warnings).
+	
+	Comments. If you feel that your code might be hard to understand, please make a comment or two, 
+	   so that other people can understand what you are trying to do. You don't need to comment
+	   simple stuff, just stuff you feel could be hard to understand. 
+    
+
+7.) If you wish to test GGC Meter Tool, GGC Pump tool you will also need to set binaries for rxtx library. If 
+    your development OS is either windows, linux, macos, sparc you are in luck. 
+    
+    Go to rxtx entry, right click on it, select Build Path -> Configure Build path
+    Set Native Library Location
+
+
+8.) If you wish to use any other database you need to have basic knowledge of JDBC
+
+    A) Install database software. I advise PostgreSQL 8.x (drivers were already added)
+    
+    B) If you used any other database, add drivers to Eclipse
+    
+    C) Create database, database user and password
+    
+    D) Change GGC_Config.properties, there is one sample file with several samples for 
+       different databases. Change SELECTED_DB to right number. Add right parameters:
+       database name, user and password
+       
+    E) Now you will need to InitDb:
+       a) Go to file GGC Gluco Control/src/ggc/core/db/tool/InitDb, do with it same as 
+          with step 5 (not everything)
+          
+       b) Open file InitDb and find parameter passWord (String at start of file).
+       
+       c) Add value of parameter from b) as Arguments -> Program arguments
+       
+       d) Run InitDb
+
+
+9.) Now you can start the real work... Good luck...

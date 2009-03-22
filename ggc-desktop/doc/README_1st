@@ -1,0 +1,137 @@
+
+GGC - GNU Gluco Control
+=======================
+
+This are short instructions on how to start the application.
+
+All java programs need special environment to run, it's called Java Runtime Environment (JRE) or 
+Java Development Kit (JDK, it contains JRE). On some OSes we can have problems detecting if this 
+JRE or JDK is installed. Because of this most of software packages, also contain JRE in their 
+install package (we have one windows install package that also contains JRE).
+
+For GGC you need to have at least Java 1.5, but 1.6 is preferred. 
+
+Problem is that this JRE is different for each platform (also for each hardware version of platform),
+so we need to do some things, to make GGC to run.
+You can choose to do one of these things:
+
+1.) Modify system path to include path to your existing JRE installation. 
+    You can check if this is set if you run following command 'java -version'. If you get 
+    'file not found' error then this is not set.
+
+2.) Copy JRE files into jre directory under GGC 
+    Now you have two options here. If you have java already installed on your system (your 
+    browser sometimes install this automatically to handle java applets) you can copy the
+    files from there. Usually they are under C:\Program Files\Java\jre<version> on windows
+    and somewhere under /usr/local/java on linux. You need to copy all files under jre<something>
+    directory to <GGC-Installed>\jre directory.
+    2nd option is to download correct VM from 'USB Release' section. This is file that is meant
+    for installation to USB disks (coming soon). All tested VMs are there, so if you find 
+    VM there you should not have any problems. You need to download VM zip file and extract 
+    certain files. In the archive you will find a directory with the name of the VM (in case of windows,
+    directory is called Windows) under that directory there is jre_<version><OS-tags> directory. 
+    Copy all files under there into GGC\jre directory. If your OSes VM is not there, then you 
+    will have to use the one installed on system. 
+        
+3.) Modify config files  
+    How to modify config files is described in section C.), but please read also through 
+    sections A) and B)  
+
+
+
+A) How to start software
+=========================
+
+1.) Windows
+After install program should run by itself (by clicking on icon), if it doesn't, you will need to 
+troubleshoot. Run cmd.exe (command line shell, search for icon Command Prompt) and run following
+command: run_win.cmd. Error should be written somewhere on screen. 
+In most cases problem is with java path ('java' is not recognized as an internal or external command,
+operable program or batch file). In this case follow instructions under C): 1.
+
+
+2.) Linux
+On linux platform you need to issue following command 'sh run_linux.sh'. If application doesn't start
+see on screen where the problem is. 
+Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
+resolve this)
+
+
+3.) MacOS X
+On MacOS X platform you need to issue following command 'bash run_mac.sh'. If application doesn't
+start see on screen where the problem is. 
+Same as in Windows section (A.1) in most cases problem is with java path (see section C.1. on how to 
+resolve this)
+
+
+4.) Other
+Unsupported, see section C.) 2.
+
+
+
+B) Support for Meters, Pumps and CGMS (serial and serial-usb bridge communication)
+==================================================================================
+
+We added support for Meters and we use special library called RxTX, for access to serial port (or USB
+bridge). 
+
+If you have special OS, which is not supported contact us on: ggc@atech-software.com. This library needs
+special binary part. You need to either find this binary part for RxTX library (someone else might have 
+already made it) or build it yourself (www.rxtx.org has source files, and library is open source).
+
+Binary library files need to be put into lib\native directory. Under that you have separate directories, 
+which are platform short names (linux, win, ...). All supported short names are listed under section D.  
+
+Supported OSes at this time are: Windows (x32, works with x64), Solaris (32/64), Mac OS X, Linux (x32, 
+ia64, x64).
+
+If you have USB device, you should configure USB so, that it will show virtual COM port.
+
+
+
+C) Troubleshooting
+===================
+
+1.) Java Path is not correct
+----------------------------
+
+a) Change path in StartupConfig
+
+Open StartupConfig.properties with your favorite editor. Change JAVA_EXE parameter to point to your java 
+executable (if you have Windows you should enclose path in " ", so that whole path is used. Also if you 
+use \, you should use doubles (\\), like "c:\\Program Files\\Java\\jre_1.5.0_06\\bin\\java.exe". When 
+this file is read single \ are removed.
+
+There is now also another way. You can create separate StartupConfig files for different platforms. Files
+then look like StartupConfig_<platform short name>.properties. This is helpful if you plan to use same 
+installation under several OSes (for example on Multi-OS-Startup machine or USB drive). USB How-to and 
+VMs (Java Virtual Machine for specified OS and needed config files) will be available shortly.
+
+
+b) Change path in startup file (see section D)
+
+Open startup file and change path to java (JAVA_EXE variable), similar to change in D.1.a, but here you 
+must use single \ instead of double (like: "c:\Program Files\Java\jre_1.5.0_06\bin\java.exe")
+
+
+2.) Unsupported OS
+-------------------
+
+If you have reached this section then you have unsupported system. In this case you need to contact us at:
+ggc@atech-software.com. If possible, we will need your help to make your OS supported. Don't worry, it
+won't take long time to make your OS supported. Usually there are just minor changes to do... Bigger problem
+might be creation of binary file for RxTX (see section B.).
+
+
+
+D) Supported platforms
+=======================
+
+Platform    |   Startup file   |  Short name  |  Notes
+-------------------------------------------------------------------
+Windows     |  run_win.cmd     |  win         |
+Linux       |  run_linux.sh    |  linux       | need to have sh installed (usually installed by default)
+Mac         |  run_mac.sh      |  mac         | need to have bash installed (usually installed by default)
+FreeBSD     |  run_freebsd.sh  |  freebsd     | need to have sh installed (installed by default)
+
+If your OS name is not here, please contact us and we will see what we can do.

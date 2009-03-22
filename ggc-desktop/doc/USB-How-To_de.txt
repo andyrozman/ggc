@@ -1,0 +1,84 @@
+*********************************************************************
+**     WARNUNG: Diese Datei ist noch nicht komplett übersetzt!     **
+*********************************************************************
+
+**************************************************
+****  Wie benutze ich GGC von USB-Laufwerken  ****
+**************************************************
+
+GGC ist eine Anwendung die problemlos von USB-Laufwerken aus gestartet werden
+kann. Wir hatten mit früheren Versionen einige Probleme weil die Datenbank, die
+wir benutzten viel Zeit zum Stoppen brauchte. Mittlerweile haben wir eine
+Datenbank (H2) gefunden, die auch auf USB-Laufwerken problemlos funktioniert.
+Eine Beschreibung der meisten Ausdrücke ist in README_1st.de enthalten.
+
+
+[TODO]
+How to prepare/install GGC for/on USB
+=======================================
+
+For application to run on USB, we need to download GVM from GGC site (you need to download 
+only package for OSes, which you plan to use). Each GVM package contains Java Runtime
+Environment for selected OS, startup files for that OS and Rxtx binary (if available). 
+Install GVM first, because when you copy file from GGC, they might have newer startup files.
+
+After install of VM (we will make example with Linux), you will have following tree structure
+
+Root
+  |-- GNU_Gluco_Control
+  |          |- bin
+             |- lib
+                 |- native
+                      |- linux
+                           ...
+             |- java
+                 |- autorun
+                 |- linux
+                
+In java\autorun directory there will be some files, which could be used for autorun from USB 
+on some system. Since this is not needed for running of GGC, you will have to figure how to use 
+it on your own.
+
+After install of all wanted VMs, you can download latest release of GGC (in .zip file)
+and just copy content of archive into GNU_Gluco_Control.
+
+
+How to create GVM
+==================
+
+In case that your OS has no GVM, you might be able to create your own. Use following steps:
+
+1. Read README_1st, there you will find how Startup system works.
+
+2. Create all startup files in \bin directory. If your OS is not supported, you will have to contact us,
+   to do our job (add support into startup java library).
+
+3. Download correct JRE for your OS. You need Java 1.5, but it is prefered to get 1.6 if 
+   available. Copy content to \java\<OS-short-name> directory.
+   
+4. Find binary files for Rxtx 2.1.7 and put them into \lib\native\<OS-short-name>. This file must be
+   architecture specific, if you can find files for all architecture, get them and put them into 
+   subdirectories (for example for windows, if you get x32 and x64, you create directories x32 and
+   x64 and put correct files there. In case of multiple architecture files, leave root empty (and
+   user will then copy correct file by themselves.
+
+5. If your OS supports autorun (when USB inserted), you can create files and put them into \java\autorun
+   directory.
+
+6. Create file GVM_<OS-short-name>.txt and write into it, all notes and also your info, so that your are 
+   credited for work you have done. If you are willing to be supporter for this specific GVM, add 
+   also your email, so that people can contact you.
+
+
+Supported OSes
+==============
+
+Take a look into README_1st for list of all supported OSes.
+
+Not all supported OSes have GVM (most do but not all). On Mac it's very hard to get this
+files, since they are part of system.
+
+
+
+
+GGC Development Team

@@ -1,0 +1,34 @@
+GNU Gluco Control AUTHORS file
+==============================
+
+Current developers:
+--------------------
+
+ Dieter Schultschik   <schultd@users.sourceforge.net>
+     Create basic look of application, whole statistic, and everything that was application.
+ 
+ Aleksander Rozman    <andyrozman@users.sourceforge.net>
+     I18n, Slovene translation, Reworking of whole database concept, added nutritions, major changes in
+     whole GUI, added plugins, working on most of plugins
+     
+ Reinhold Rumberger   <rumbi@users.sourceforge.net>
+     Fixing bugs, extreme testing (especially for linux platform), reworking graphs, German translation
+
+ Tom S.               <ptolomy1977@@users.sourceforge.net>
+     French translation, graphs
+
+
+Not developer anymore:
+-----------------------
+ Stephan Schrader     <sschrade@users.sourceforge.net>
+     Old meter import framework. Code of his is still arround, but unused, we are trying to move some 
+     supported meters into new framework.
+ 
+ 
+ 
+Plugins Developers (detailed information in each plugin, here is just a list)
+=============================================================================
+
+Aleksander Rozman (M,P,C)
+Nate Barish [Innominate227] (P)  [Retired]
+Magnus Odell (P)

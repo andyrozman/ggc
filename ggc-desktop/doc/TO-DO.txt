@@ -1,0 +1,428 @@
+
+****************************************************************
+*****                      TO-DO LIST                      *****
+****************************************************************
+
+This TO-DO list is sorted by several types:
+I. Projects and sub-projects
+II. Sorted by version
+III. Sorted by Levels of priority
+
+
+=========
+
+
+I. PROJECTS AND SUB-PROJECTS
+==============================
+
+GGC Main project
+----------------
+This is main project of GGC. All information about that project is in sections
+II. and III.
+
+
+GGC Translations
+---------------- 
+
+ENGLISH:  Main language
+Status:    100% (520 words in resource file)
+Help:      Help not written yet.
+
+GERMAN:   Translation into german language.
+Status:    ?
+Help:      No help available
+
+SLOVENE:  Translation into Slovenian language.
+Status:    100% 
+Help:      No help available
+
+FRENCH:   Translation into French language.
+Status:    ?
+Help:      No help available
+
+
+
+GGC Meter Tool
+--------------
+  See TO-DO_MeterTool.txt (in svn/trunk/ggc-meter)
+
+
+GGC Pump Tool
+-------------
+  See TO-DO.txt (in svn/trunk/ggc-pumps)
+  !!! Project not started yet. Planned for end of 2nd Q 2009 or maybe before
+
+
+GGC CGMS Tool
+--------------
+  See TO-DO.txt (in svn/trunk/ggc-cgms)
+  !!! Project not started yet. Planned for end of 4th Q 2009 or maybe before
+
+
+
+II. SORTED BY VERSION  (Updated 5.12.2008)
+===========================================
+
+Version 0.4
+------------
+
+Documentation:
+    - How to update
+    - How to USB
+
+* Java Help - Write help pages I.
+            - Load from language jar
+   
+
+Version 0.5
+------------
+
+* Graphs: - New framework
+* Db Tools Integration:  - InitDb [1.0]  
+* Printing: - Food Menu III.
+            - Use abstract class
+            - File generation fix
+* Added functionality for Nutrition Db: 
+    - Import data (selective)
+    - Import Entry
+    - Duplicate
+    - Create Nutrition
+    - Create Home Weight
+    - Column Sorting in meal
+    - Column Sorting in Food
+    - Glycemic data change
+    - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
+* Update (server) [1.0] 
+    - Software updater Server
+    - Db Updater Server
+* Support for multiple persons [1.0] 
+* External foods database
+
+* Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
+
+* Java Help - Write help pages II. (finish EN) [1.0] 
+            - Load from language jar  [1.0] 
+
+
+We plan to change version to 1.0, when all entries specified with [1.0] are finished.
+
+
+Version 0.6
+-------------
+* GGC Little
+* Server Error Resolution (exceptions thrown by application, that help can be found on internet).
+* Activity Manager
+* Synchronization
+* GGC Network
+* Internet data (links for pages, forums, blogs - informational)
+    - AED Inet Group
+    - AED Inet Type
+    - AED Inet Links
+* GGC PPC (??)
+* Appoinmtments Mngr
+    - AED doctor
+    - AED appointment
+* Stocks
+    - AED subtypes
+    - AED stocks
+
+* CGM Tool: <Basic CGM support>
+* GGC Network - Support for multiple instances of GGC and their communication
+* Import of data from SiDiary Desktop application. SiDiary has its sister 
+    applications running on many small devices (PocketPC, Palms, SmartPhones, 
+    Java Phones), and it has import for a lot of Meters and also some pumps...
+
+
+III. SORTED BY LEVELS OF PRIORITY  (not updated !!!)
+=================================
+
+Level 1 (High Priority): 
+----------------------------
+
+
+Level 2 (Medium 1 Priority):
+----------------------------
+
+
+* Import/Export Tool (old data):
+//    o  Export old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
+//    o  Import old data (daily values)
+    o  Db Maintainance GUI
+
+* Add external library for graphs (something with pictures creations, so we can use it in pdfs)
+
+
+Level 3 (Medium 2 Priority):
+----------------------------
+
+* DB TOOL
+    o ???
+    o  Nutrition data Init
+    o  Basic Data Init
+
+
+* Import/Export Tool (for real time):
+    o  Backup
+    o  Restore
+
+
+Level 4 (Medium 3 Priority):
+----------------------------
+
+
+
+
+* Entering daily data: 
+    o  Add CH entry through meals
+    
+* Java Help:
+    o  Integration
+    o  Write English help
+
+
+Level 5 (Low Priority):
+----------------------------
+
+* Appointments/Doctors: 
+    o  Create GUI
+    o  Database entries
+    o  Add/Edit/Delete
+    o  View
+* GGC Little: 
+    o  GUI
+    o  about
+    o  meter import, add/edit should be centered
+* Adding support for mmol/l (now we have only mG/DL):
+    o  graphs
+* Web Links:
+    o  Db
+
+
+
+Level 6 (IN NEAR FUTURE):
+-------------------------
+
+* I18n Language: German (work in progress)
+* I18n Language: Slovenian (work in progress 74% done)
+
+
+* I18n Language: French 
+* I18n Language: Italian
+
+
+
+
+
+
+      
+
+
+
+
+
+===============================================================================
+===============================================================================
+DONE
+===============================================================================
+===============================================================================
+
+* Restore: 
+   - partitial/update
+
+* Selector: 
+    - Double click on item = select and close 
+
+* Graphs with new library
+
+* Update (client)
+    - Update configuration in DA
+
+
+* Error handling (and logger)
+* Printing error display
+* Meter Tool:
+    - integration
+    - GUI
+    - Configuration
+    - GGC Output
+    - Simple configuration
+* Restore data:
+    - GUI
+    - only full restore
+
+
+
+* Smart Insulin Recommendation (Bolus Helper):
+    - Helper 
+    - Calculate ratios
+    - Change ratios
+
+
+* Documentation:
+    - Readme (in all langs.)
+    - How to help
+
+
+
+* Startup
+    - Run GGC
+    - Db Tool
+    - Db Check
+    
+* Added functiuonality for Nutrition Db: 
+    - Export data
+    - Import data (full)
+    - Nutrition Definition [GI_GL] should be added on init
+
+
+* Add Daily Data support for Meals
+* Db Versioning
+* Daily Values - Check values, Double click edit
+* Update (client side): 
+    - Software updater framework
+    - Db Updater framework
+
+
+* Add new daily data: - Check all parameters for validity (internal java checker)
+                      - Enter is OK (Date component)
+                      //- Tab for switching fields
+                      - 0.0 not displayed in table
+                      - double click edit
+
+
+* USDA: - Main panel
+        - Group panel
+
+* User Nutrition:
+    o  Private nutrition database
+
+* Meals: 
+    o  Config
+    o  GUI Tree
+    o  Database
+    o  Add/Edit/Delete
+
+
+* Printing: 
+    o  Data gather - Extended (MonthlyValues)
+    o  Detailed print sheet
+
+
+* HypersonicSQL Test
+* Nutrition: 
+        o  Database
+        o  Import
+* ANT Build
+* Hibernate for Database handling
+        o  Full Hibernate loading
+        o  Entries (day-values)
+        o  Config
+* Adding support for mmol/l (now we have only mG/DL):
+        o  settings
+* Entering daily data: 
+        o  After add close window
+        o  BG Values must be checked so that comma is also supported and 
+           no exception is thrown
+        o  Edit
+        o  Message when no row selected
+* Bug Fixing:
+        o  decimal check, use both , and .
+        o  edit value
+        o  save value
+* Properties: 
+        o  put them into database
+        o  move some of them from config to code (classes for meters)
+        o  Default database 
+        o  Colors as separate table* Configuration:
+        o  low/high BGs
+	o  no error if no configuration present
+* Printing: 
+    o  Data gather (MonthlyValues)
+    o  Simple print sheet
+    o  Print dialog
+* GGC Little: 
+        o  Add/Edit/Delete
+        o  Daily graph
+        o  Show day
+* Configuration
+    o  Temp directory creation on startup   
+    o  New configuration model
+    o  rendering
+    o  colors
+* Look and feel:
+    o  Loading of selected L&F
+* Printing: 
+    o  Use data from configuration (pdf viewer, ...)
+* Configuration:
+    o  display icons on left side and not tree
+    o  printing
+    o  L&F (Config)
+    o  Db Selection 
+    o  Scheme 
+* Nutrition: 
+    o  Db Import
+    o  Config
+    o  View nutrition data in tree
+* Adding support for mmol/l (now we have only mG/DL):
+    o  database (write in database as mg/dl only, and display as what is set)
+* Entering daily data: 
+    o  Time displayed as selectable entry
+    o  Add daily entry must be changed (GUI is very...)
+    o  option in which type we enter
+    o  delete should ask: are you sure?
+* Db Load:
+    o Add levels of loading (1=main(settings, daily stat), 2=Other data(docs,meters,links),3=Nutrition, 4=Finished)
+
+
+* Db:
+    o Private nutrition
+
+* About dialog
+
+- Db Hibernate Redesign !!!
+- About (16.4.-20.4.)
+- Nutrition display in tree
+X   - Configuration: COM
+X   - Printing main
+X   - Enter Daily Data NEW
+X   - rtx COMM API
+X   - Nutrition Display
+
+* Configuration: <moved to meter development tree> 
+    o  Fix setting com port
+
+* Hibernate Db:
+    o  Daily Data        1
+    o  Configuration     1
+    o  Meters            1
+    o  Nutrition         1
+    o  User Nutrition    2
+    o  Meals             3
+    o  Doctors           3
+    o  Appointments      3
+    o  Web Links         2
+
+   - mmol/L support full
+   - Printing extended
+
+* Db Load partitial (progress)
+* Multi person Db
+* Java Help Framework
+* Icons where possible
+
+
+I18N TOOL
+* Check langauge files        
+
+
+STOPED SUB-TASKS
+================
+
+* CONVERT OLD DATA
+    o File
+    o MySQL
+    o HSQL
+
+
+
+
