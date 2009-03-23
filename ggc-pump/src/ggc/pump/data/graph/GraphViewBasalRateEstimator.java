@@ -56,7 +56,6 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
 
     GregorianCalendar gc;
 //    private GlucoValues gluco_values;
-    @SuppressWarnings("unused")
 //    private GlucoValues gluco_values_prev;
     XYSeriesCollection dataset = new XYSeriesCollection();
     //TimeSeriesCollection dataset = new TimeSeriesCollection();

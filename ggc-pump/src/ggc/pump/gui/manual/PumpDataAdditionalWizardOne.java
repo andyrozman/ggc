@@ -72,7 +72,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     
     private Hashtable<String,PumpValuesEntryExt> old_data = null;
     
-    PumpAdditionalDataType add_data;
+    //PumpAdditionalDataType add_data;
     JComboBox cb_type;
 
     
@@ -89,11 +89,11 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
      * @param parent
      * @param pump_data
      */
-    public PumpDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent, PumpAdditionalDataType pump_data)
+   public PumpDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent) //, PumpAdditionalDataType pump_data)
     {
         super(parent, "", true);
 
-        add_data = pump_data;
+        //add_data = pump_data;
         this.old_data = hashtable;
         m_parent = parent;
         init();
@@ -140,7 +140,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         
         
         
-        cb_type = new JComboBox(add_data.createItems(this.old_data));
+        cb_type = new JComboBox(m_da.getAdditionalTypes().createItems(this.old_data));
         cb_type.setBounds(startx+10, 135, 240, 25);
         panel.add(cb_type);
         
@@ -357,7 +357,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         
         this.dispose();
         
-        PumpDataAdditionalWizardTwo padw2 = new PumpDataAdditionalWizardTwo(this, (String)this.cb_type.getSelectedItem(), this.add_data); 
+        PumpDataAdditionalWizardTwo padw2 = new PumpDataAdditionalWizardTwo(this, (String)this.cb_type.getSelectedItem()); //, this.add_data); 
         padw2.setVisible(true);
         
         if (padw2.wasAction())

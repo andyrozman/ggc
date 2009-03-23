@@ -1,24 +1,13 @@
 package ggc.pump.data.graph.bre;
 
 import ggc.core.data.graph.GGCGraphUtil;
-import ggc.pump.data.bre.BREData;
 import ggc.pump.data.bre.BREDataCollection;
 import ggc.pump.util.DataAccessPump;
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.general.AbstractDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.utils.ATechDate;

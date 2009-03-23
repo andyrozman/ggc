@@ -157,7 +157,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
     
     ArrayList<PumpValuesEntryExt> list_data = new ArrayList<PumpValuesEntryExt>();
     public Hashtable<String,PumpValuesEntryExt> ht_data = new Hashtable<String,PumpValuesEntryExt>();
-    PumpAdditionalDataType m_pump_add = new PumpAdditionalDataType();
+    //PumpAdditionalDataType m_pump_add = new PumpAdditionalDataType();
 
     
     ArrayList<PumpValuesEntryExt> delete_list_data = new ArrayList<PumpValuesEntryExt>();
@@ -570,7 +570,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         }
         else if (action.equals("item_add"))
         {
-            PumpDataAdditionalWizardOne pdawo = new PumpDataAdditionalWizardOne(this.ht_data, this, this.m_pump_add); 
+            PumpDataAdditionalWizardOne pdawo = new PumpDataAdditionalWizardOne(this.ht_data, this); //, this.m_pump_add); 
             pdawo.setVisible(true);
             
             processAdditionalData(pdawo);
@@ -592,9 +592,14 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
             {
                 PumpValuesEntryExt pc2 = null;
                 
-                if (this.ht_data.containsKey("" + PumpAdditionalDataType.PUMP_ADD_DATA_CH))
+                System.out.println("ht=" + this.ht_data);
+                System.out.println("hh:" + this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
+                
+                
+                if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH)))
                 {
-                    pc2 = this.ht_data.get("" + PumpAdditionalDataType.PUMP_ADD_DATA_CH);
+                    pc2 = this.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
+                    System.out.println("pc2=" + pc2);
                 }
                 
                 pdawo = new PumpDataAdditionalWizardTwo(this, pc, pc2);

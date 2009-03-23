@@ -890,12 +890,14 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             } break;
 
             case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
+                break;
+                
             default:
+                System.out.println("Load not implemented for this type: " + data.getBaseType());
                 break;
         
         }
 
-        System.out.println("Load not implemented for this type: " + data.getBaseType());
 
     }
 

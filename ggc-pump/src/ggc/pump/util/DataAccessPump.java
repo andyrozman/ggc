@@ -632,6 +632,14 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.special_parameters = new Hashtable<String,String>();
         this.special_parameters.put("BG", "" + this.getBGMeasurmentType());
     }
+
+
+    @Override
+    public void loadPlugIns()
+    {
+        // TODO Auto-generated method stub
+        
+    }
     
     
 }

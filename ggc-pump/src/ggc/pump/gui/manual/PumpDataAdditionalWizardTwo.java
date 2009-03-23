@@ -83,7 +83,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     JButton button_1;
     int width;
     
-    PumpAdditionalDataType m_pump_add; // = new PumpAdditionalDataType();
+    //PumpAdditionalDataType m_pump_add; // = new PumpAdditionalDataType();
 
     boolean was_action = false;
     PumpValuesEntryExt pump_objects_ext[];
@@ -101,15 +101,15 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
      * @param type
      * @param pump_add
      */
-    public PumpDataAdditionalWizardTwo(PumpDataAdditionalWizardOne wiz_one, String type, PumpAdditionalDataType pump_add)
+    public PumpDataAdditionalWizardTwo(PumpDataAdditionalWizardOne wiz_one, String type) //, PumpAdditionalDataType pump_add)
     {
         super(wiz_one, "", true);
 
-        this.m_pump_add = pump_add;
+        //this.m_pump_add = pump_add;
 
         // this.old_data = data;
         m_parent = wiz_one;
-        this.m_type = m_pump_add.getTypeFromDescription(type);
+        this.m_type = m_da.getAdditionalTypes().getTypeFromDescription(type);
 
         ATSwingUtils.initLibrary();
 
@@ -127,7 +127,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         super(dialog, "", true);
 
         // FIXME
-        this.m_pump_add = m_da.getAdditionalTypes();
+        //this.m_pump_add = m_da.getAdditionalTypes();
 
         // this.old_data = data;
         m_parent = dialog;
@@ -155,7 +155,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         super(dialog, "", true);
 
         // FIXME
-        this.m_pump_add = m_da.getAdditionalTypes();
+        //this.m_pump_add = m_da.getAdditionalTypes();
 
         // this.old_data = data;
         m_parent = dialog;
@@ -416,8 +416,6 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
      */
     public void areaFood()
     {
-        
-    
         this.cb_1 =  new JCheckBox();
         this.cb_1.setBounds(startx + 10, 150, 130, 25);
         this.cb_1.addActionListener(this);
@@ -453,9 +451,6 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             l.setText("(" + m_ic.getMessage("FOOD_BY_DESC") + ")");
             button_1.setBounds(startx + 10, 120, 120, 25);
         }
-        
-        
-        
     }
     
     
@@ -465,10 +460,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
      */
     private void areaUnsupported()
     {
-        this.label_1 = new JLabel("Unsuported type : " + this.m_pump_add.getDescriptions()[this.m_type]);
+        this.label_1 = new JLabel("Unsuported type : " + m_da.getAdditionalTypes().getDescriptions()[this.m_type]);
         this.label_1.setBounds(startx, 100, 100, 25);
         this.main_panel.add(this.label_1);
-
     }
 
 

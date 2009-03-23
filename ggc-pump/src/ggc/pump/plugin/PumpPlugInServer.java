@@ -1,8 +1,11 @@
 package ggc.pump.plugin;
 
+import ggc.core.db.datalayer.PumpData;
+import ggc.core.db.datalayer.PumpDataExtended;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.list.BaseListDialog;
+import ggc.pump.data.db.PumpProfile;
 import ggc.pump.gui.manual.PumpDataDialog;
 import ggc.pump.gui.profile.ProfileSelector;
 import ggc.pump.util.DataAccessPump;
@@ -11,7 +14,9 @@ import ggc.pump.util.I18nControl;
 import java.awt.Container;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 
@@ -252,6 +257,34 @@ public class PumpPlugInServer extends PlugInServer
     @Override
     public Object getReturnObject(int ret_obj_id)
     {
+        return null;
+    }
+
+
+    @Override
+    public BackupRestoreCollection getBackupObjects()
+    {
+        BackupRestoreCollection brc = new BackupRestoreCollection("PUMP_TOOL", this.ic);
+        brc.addNodeChild(new PumpData(this.ic));
+        brc.addNodeChild(new PumpDataExtended(this.ic));
+        brc.addNodeChild(new PumpProfile(this.ic));
+
+        return brc;
+    }
+
+
+    @Override
+    public JMenu getPlugInMainMenu()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public JMenu getPlugInPrintMenu()
+    {
+        // TODO Auto-generated method stub
         return null;
     }
     

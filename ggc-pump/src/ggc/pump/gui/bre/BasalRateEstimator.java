@@ -25,7 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
-import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.graphics.graphs.GraphViewerPanel;
 import com.atech.utils.ATSwingUtils;
 
