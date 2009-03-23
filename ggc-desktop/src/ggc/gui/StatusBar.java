@@ -55,8 +55,11 @@ public class StatusBar extends JPanel implements EventObserverInterface
 
     private ImageIcon[] statusIcons = null;
     MainFrame m_frame;
+    
     /**
      * Constructor
+     * 
+     * @param frame 
      */
     public StatusBar(MainFrame frame)
     {

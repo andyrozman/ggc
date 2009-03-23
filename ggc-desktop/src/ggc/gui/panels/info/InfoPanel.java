@@ -147,15 +147,21 @@ public class InfoPanel extends JPanel implements EventObserverInterface
         {
             this.refreshPanels(InfoPanelsIds.INFO_PANEL_HBA1C|InfoPanelsIds.INFO_PANEL_STATISTICS);
         }
-        if (type == RefreshInfo.PANEL_GROUP_GENERAL_INFO)
+        else if (type == RefreshInfo.PANEL_GROUP_GENERAL_INFO)
         {
             this.refreshPanels(InfoPanelsIds.INFO_PANEL_GENERAL);
         }
-        
-        // TODO
+        else if (type == RefreshInfo.PANEL_GROUP_PLUGINS_ALL)
+        {
+            this.refreshPanels(InfoPanelsIds.INFO_PANEL_PLUGINS);
+            this.refreshPanels(InfoPanelsIds.INFO_PANEL_PLUGIN_DEVICES);
+        }
     }
 
     
+    /**
+     * Update (From Ovservable)
+     */
     public void update(Observable obj, Object arg)
     {
         if (arg instanceof Integer)
@@ -163,8 +169,6 @@ public class InfoPanel extends JPanel implements EventObserverInterface
             Integer i = (Integer)arg;
             this.refreshGroup(i.intValue());
         }
-
-        
     }
     
     

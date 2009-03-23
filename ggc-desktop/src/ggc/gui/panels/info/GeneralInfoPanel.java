@@ -149,6 +149,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
      */
     public void doRefresh()
     {
+        refreshInfo();
     }
 
     

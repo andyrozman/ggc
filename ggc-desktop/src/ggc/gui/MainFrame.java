@@ -4,8 +4,6 @@ import ggc.GGC;
 import ggc.core.data.graph.GraphViewSpread;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
-import ggc.core.nutrition.GGCTreeRoot;
-import ggc.core.nutrition.NutritionTreeDialog;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
@@ -17,6 +15,8 @@ import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.graphs.CourseGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
+import ggc.nutri.data.GGCTreeRoot;
+import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.shared.ratio.RatioBaseDialog;
 
 import java.awt.BorderLayout;

@@ -62,6 +62,8 @@ public class StatusBarL extends JPanel implements EventObserverInterface
     
     /**
      * Constructor
+     * 
+     * @param little 
      */
     public StatusBarL(GGCLittle little)
     {

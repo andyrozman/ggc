@@ -45,6 +45,7 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     private JLabel lblMeter;
     private JLabel lblPump;
     private JLabel lblCgms;
+    private JLabel lblNutri;
     //private DataAccess m_da = DataAccess.getInstance();
 
     /**
@@ -66,6 +67,12 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
         
 //        lblPanel.add(new JLabel(" ", JLabel.TRAILING));
 //        lblPanel.add(new JLabel());
+
+        lblPanel.add(new JLabel(m_ic.getMessage("NUTRITION_PLUGIN")+ ":", JLabel.LEADING));
+        lblPanel.add(this.lblNutri = new JLabel("N/A"));
+        
+        lblPanel.add(new JLabel("", JLabel.TRAILING));
+        lblPanel.add(new JLabel());
         
         lblPanel.add(new JLabel(m_ic.getMessage("METERS_PLUGIN") + ":", JLabel.LEADING));
         lblPanel.add(this.lblMeter = new JLabel("N/A"));
@@ -82,6 +89,9 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
         lblPanel.add(new JLabel(m_ic.getMessage("CGMS_PLUGIN")+ ":", JLabel.LEADING));
         lblPanel.add(this.lblCgms = new JLabel("N/A"));
 
+        
+        
+        
 /*        
         add(new JLabel(m_ic.getMessage("METERS_PLUGIN")+":"));
         add(lblMeter);
@@ -93,9 +103,9 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
         
         
         SpringUtilities.makeCompactGrid(lblPanel,
-            5, 2, //rows, cols
-            10, 8,        //initX, initY
-            40, 6);       //xPad, yPad
+            7, 2, //rows, cols
+            10, 3,        //initX, initY  // 8
+            40, 3);       //xPad, yPad    // 6
         
         
         add(lblPanel, BorderLayout.NORTH);
@@ -113,7 +123,7 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
         lblMeter.setText(m_da.getPlugIn(DataAccess.PLUGIN_METERS).getShortStatus());
         lblPump.setText(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).getShortStatus());
         lblCgms.setText(m_da.getPlugIn(DataAccess.PLUGIN_CGMS).getShortStatus());
-        
+        lblNutri.setText(m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).getShortStatus());
         
 //        lblMeter.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_METERS)));
 //        lblPump.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS)));
@@ -137,6 +147,7 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
      */
     public void doRefresh()
     {
+        refreshInfo();
     }
     
     

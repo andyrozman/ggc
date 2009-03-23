@@ -2,11 +2,11 @@ package ggc.gui.dialogs;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
-import ggc.core.nutrition.dialogs.DailyValuesMealSelectorDialog;
-import ggc.core.nutrition.panels.PanelMealSelector;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 import ggc.core.util.I18nControl;
+import ggc.nutri.dialogs.DailyValuesMealSelectorDialog;
+import ggc.nutri.panels.PanelMealSelector;
 import ggc.shared.bolushelper.BolusHelper;
 
 import java.awt.Component;

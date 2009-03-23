@@ -32,13 +32,13 @@ import ggc.core.data.DayValuesData;
 import ggc.core.data.MonthlyValues;
 import ggc.core.print.PrintAbstract;
 import ggc.core.print.PrintExtendedMonthlyReport;
-import ggc.core.print.PrintFoodMenuBase;
-import ggc.core.print.PrintFoodMenuExt1;
-import ggc.core.print.PrintFoodMenuExt2;
-import ggc.core.print.PrintFoodMenuExt3;
 import ggc.core.print.PrintSimpleMonthlyReport;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
+import ggc.nutri.print.PrintFoodMenuBase;
+import ggc.nutri.print.PrintFoodMenuExt1;
+import ggc.nutri.print.PrintFoodMenuExt2;
+import ggc.nutri.print.PrintFoodMenuExt3;
 
 import java.awt.Component;
 import java.awt.Font;

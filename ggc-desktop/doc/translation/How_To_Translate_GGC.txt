@@ -1,0 +1,211 @@
+
+HOW TO TRANSLATE GNU Gluco Control
+==================================
+
+This is much revised editon of translation instructions, which were previously in document 
+How_Can_I_Help.txt. 
+
+Last change: 22/03/2009
+
+
+
+1.) How does Java handle translations? And how does GGC?
+--------------------------------------------------------
+
+In Java translations are written in separate files, each ending with ceratain endings. Usually this
+is done like this: en_US, which means that language is English, and subset is American. We simplified 
+things here in GGC, so that we have just en, which means English translation.
+
+This files are plain ASCII files. Yes, you heard correct. We write translations into ASCII files, or 
+at least we need plain ASCII files as end result. Now here we can go two ways, which are both 
+acceptable. We can write into plain ASCII files, by writing all our characters normally and substituting 
+special characters with unicode ASCII representation. For example my native language (Slovene), has 6 
+special characters, we will look at c with carron now. I can write all text except this special characters,
+but I can substitute them with ASCII Unicode representation, which in my case would be \u010D for small c
+with caron or \u010C for big C with caron. This is probably the harder way, but if you need to replace just
+6 characters also OK way. 
+
+Easier way to translate will be probably to write in your native characters and then later convert file to
+plain ASCII. How to do that we will see later.
+
+   
+
+2.) How to start?
+-----------------
+
+If you like our software and want it to be available in your own language you can join our translation 
+team. First you need to do is post message on Forum Translation with name (something like that)  
+(http://sourceforge.net/forum/forum.php?forum_id=813898), 'Translation into Russian'. Please first go 
+through all messages to find if someone is already trying to translate application. If yes, join his/hers
+team, and together you will be finished faster...
+
+Then contact our team lead telling him you wish to help (you can copy forum post and send it). Forum post
+is mainly for all other translators to see where they can help. His address is 
+andyrozman@users.sourceforge.net. Read this document to the end, where you will find section "What to put 
+into mail for Team lead/Administrator", you will need to decide about some choices on how you will proceed with 
+translation. 
+
+In few days you will receive several files (to translate) and also some tools that will help you with your 
+task... 
+
+
+
+3.) I have files, I have tools what now?
+----------------------------------------
+
+At first you will need to decide how you wish to help us translate. There are two ways.
+
+a.) Offline mode
+In this "mode" you will receive your files to translate and you will send them back regullary (we can determine
+how often later). In addition to that, you will receive each month another package, with "new" translation files.
+This will be english files, which you will need to compare to your translations (with tool 1) and add all new
+keywords, there were added. 
+
+  
+b.) Online mode
+In online mode, you will need to get SVN tree of all sources and you will need to check files regulary, but you 
+will get your changed files (EN) directly from SVN tree. If you plan to help with development this is preffered 
+way. For working in this mode, you will need to either install development environment (see document 
+How_Can_I_Help.txt, section D) or SVN application for managing source files. If you don't plan to help with 
+development you should go with second option. We need to know this to know how to add you (as developers or 
+translators - if we have that option).
+
+
+
+4.) Ok I have everything now, can I start the work?
+---------------------------------------------------
+
+Now that you have everything, you have a last choice to make... One we talked before. You need to decide how 
+you will do your translation.
+
+One note here. Please copy your files into separate directory, don't work from SVN source tree, it will be 
+easier to use tools that way, so you won't have any other language files in the way.
+
+a.) Use just plain ASCII file
+As we said before if your language has special characters you will need to insert them manually, you will need
+to determine which they are... 
+
+b.) Use special native file
+This is preferred way to go, at least, if your language has any special characters (and most do). 
+So what to do:
+
+1. You will get file named something like GGC_<your_country_short_name>.properties (you will get several files 
+   more about that in next section)
+2. Rename file GGC_<your_country_short_name>.properties to GGC_<your_country_short_name>.native.properties
+3. Now you will edit this new file GGC_<your_country_short_name>.native.properties. You need to save this file
+   in UTF-8 codepage, so you need to use editor that supports UTF-8 format.
+4. Send files regulary to us (when to send, see section "When to send our language update")
+
+
+
+5.) Which files do I need to translate?
+---------------------------------------
+
+
+Name Prefix     |  For which part   |  Description
+---------------------------------------------------------------------------------
+GGC             | Base application  |  Should be translated
+GGC_Nutrition   | Nutrition Tool    |  You can translate this, or at least some parts of it
+GGCMeterTool    | Meter Tool        |  You can translate (tool is finished)
+GGCPumpTool     | Pump Tool         |  This is under development (so leave it for last)
+GGCCGMSTool     | CGMS Tool         |  Not available yet
+
+
+
+6.) When to send our language update/when to check-in
+------------------------------------------------------
+
+Let's look at language update if you are in Offline mode. In this case we will determine on when you can 
+send update, since you are working in our spare time, we have no right to tell you when to send updates, 
+but nonetheless, it is nice to know when to be ready for it. We will need to have updates at least 
+before major release (this are planned for every 6 months, so you can plan on major releases being in June 
+and December (this might be postponed a little...)). 
+
+SVN updates. You can make update each day, but not more (if possible)... You don't need to check-in files
+every hour, you just check them in, when you are finished for a day. 
+
+
+
+7.) How to send our language update
+-----------------------------------
+
+a.) plain ASCII file
+Zip all files together and just send them.
+
+b.) Native (UTF-8) file
+Convert *.native.properties files into *.properties files. Zip everything together and send me. For conversion 
+use native2ascii tool (this is part of Java Development Kit - JDK).
+
+
+
+8.) Special tools
+-----------------
+
+1.) I18nCheck <base_lang_name> <default_lang>. This tool will display all keyword from all language files
+    that are present in default_lang (this is always en) and not in all other files. Base lang name is for 
+    example GGC, full name is GGC_<lang>.properties. This will help you find the new words easily.
+    
+2.) I18nTranslationCheck <base_lang_name> <default_lang> <our_lang>. This utility will show which 
+    expressions are not translated yet. If translation and default are same, then there will be some
+    false entries, but most of entries displayed will still be untranslated. To help yourself take a note
+    of how many translations words are same, and subtract them from whole number.
+
+
+
+9.) For of language file (information in head)
+----------------------------------------------
+
+In language files there are a lot of keywords, which are all under special groups, each group has a tag 
+number. Each type of language file has different types of tags. This tag number tell you which groups 
+need to be translated first. 
+
+In head you need to change following things.
+
+#  ###################################################################### 
+#  ###                      <Application Part>                        ###  
+#  ######################################################################
+#  ###          Language: <Name of Language>                          ###
+#  ###          Created by: <Name of Translator and Email>            ###
+#  ###          Last change: <Date of Last change>                    ###
+#  ###          Application Version:  <Version of Application Part>   ###
+#  ###          Version of this file:  <Version of this file>         ###
+#  ###################################################################### 
+
+Next lines should be
+
+#  Status: 
+#     Words:          <Number of words>
+#                            1    2    3      (by sections)
+#     Untranslated:    #     #    #    #      (untranslated words)
+#     Same:            #     #    #    #      (words that are same in your and english language)
+#
+#     Procents translated:   # %              (how many procents need to be translated)
+
+Following two values need to set:
+
+TRANSLATION_CHECK_SAME_WORDS=#       (how many words are same)
+COLLATION_RULES=...                  (this is used for sorting, you need to show in which order letters are 
+                                      sorted, here is example)
+
+(This is for Slovene language)                                      
+COLLATION_RULES=< a,A < b,B < c,C < \u010D,\u010C < d,D < e,E < f,F < g,G < h,H < i,I < j,J < k,K < l,L < m,M < n,N < o,O < p,P < q,Q < r,R < s,S < \u0161,\u0160 < t,T < u,U < v,V < w,W < x,X < y,Y < z,Z < \u017E, \u017D                                       
+
+
+
+10.) What to put into mail for Team lead/Administrator
+-----------------------------------------------------
+
+You don't need to tell us much, but we would need to send following things.
+
+   Which language you are translating:
+   Mode: Offline or Online (if online please specify if you will also help with development)
+   Format of file I will be using: ASCII or native
+   When I will send updates: every month / on demand / before major releases 
+
+
+
+I hope this answers most of your questions, if not, feel free to contact us and we will help you getting 
+everything done. With your help we can make this application even more useful.
+
+
+GGC Development Team
