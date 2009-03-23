@@ -5,6 +5,9 @@ import ggc.cgm.util.I18nControl;
 
 import java.awt.Container;
 
+import javax.swing.JMenu;
+
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 
@@ -195,6 +198,30 @@ public class CGMPlugInServer extends PlugInServer
     @Override
     public Object getReturnObject(int ret_obj_id)
     {
+        return null;
+    }
+
+
+    @Override
+    public BackupRestoreCollection getBackupObjects()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public JMenu getPlugInMainMenu()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public JMenu getPlugInPrintMenu()
+    {
+        // TODO Auto-generated method stub
         return null;
     }
     

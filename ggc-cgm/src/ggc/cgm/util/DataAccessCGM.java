@@ -337,4 +337,12 @@ public class DataAccessCGM extends DataAccessPlugInBase
     }
 
 
+    @Override
+    public void loadPlugIns()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
 }
