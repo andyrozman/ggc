@@ -149,6 +149,17 @@ public class GGCDbNutri extends GGCDb
     // **** DATABASE INIT METHODS ****
     // *************************************************************
 
+    
+    public void loadNutritionDatabase()
+    {
+        this.loadNutritionDbBase();
+        this.loadNutritionDb1();
+        this.loadNutritionDb2();
+        this.loadMealsDb();
+    }
+    
+    
+    
     /**
      * Load Nutrition Db Base
      */

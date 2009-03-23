@@ -58,7 +58,6 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
 
     /**
      * Fill Doucment Body
-     * @see ggc.core.print.PrintFoodMenuAbstract#fillDocumentBody(com.lowagie.text.Document)
      */
     @Override
     public void fillDocumentBody(Document document) throws Exception

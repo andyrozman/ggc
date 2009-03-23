@@ -45,48 +45,11 @@ import com.atech.utils.ATDataAccessAbstract;
 public class NutriPlugInServer extends PlugInServer
 {
 
-    //String plugin_version = "0.1.7.1";
-    
     /**
-     *  Command: Read Pump Data  
+     *  Command: Load Database  
      */
-    public static final int COMMAND_READ_PUMP_DATA = 0;
+    public static final int COMMAND_LOAD_DATABASE = 4;
     
-    /**
-     *  Command: Pumps List  
-     */
-    public static final int COMMAND_PUMPS_LIST = 1;
-    
-    /**
-     *  Command: Configuration  
-     */
-    public static final int COMMAND_CONFIGURATION = 2;
-    
-    /**
-     *  Command: Profiles  
-     */
-    public static final int COMMAND_PROFILES = 3;
-    
-    /**
-     *  Command: Manual Entry 
-     */
-    public static final int COMMAND_MANUAL_ENTRY = 4;
-    
-    /**
-     *  Command: Additional Data  
-     */
-    public static final int COMMAND_ADDITIONAL_DATA = 5;
-    
-    /**
-     *  Command: About  
-     */
-    public static final int COMMAND_ABOUT = 6;
-    
-    
-    /**
-     * Return Object: Selected Device with parameters
-     */
-    public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
     
     
     private String commands[] = { 
@@ -142,6 +105,12 @@ public class NutriPlugInServer extends PlugInServer
     {
         switch(command)
         {
+        
+        case NutriPlugInServer.COMMAND_LOAD_DATABASE:
+        {
+            //this.
+        }
+        
 /*
             case PumpPlugInServer.COMMAND_CONFIGURATION:
             {
