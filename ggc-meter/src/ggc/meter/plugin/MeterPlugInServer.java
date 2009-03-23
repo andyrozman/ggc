@@ -13,8 +13,10 @@ import ggc.plugin.list.BaseListDialog;
 import java.awt.Container;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 
 import com.atech.db.DbDataReaderAbstract;
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
 
 /**
@@ -234,6 +236,30 @@ public class MeterPlugInServer extends DevicePlugInServer
         }
         else
             return null;
+    }
+
+
+    @Override
+    public BackupRestoreCollection getBackupObjects()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public JMenu getPlugInMainMenu()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public JMenu getPlugInPrintMenu()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
     
     

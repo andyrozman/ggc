@@ -412,6 +412,14 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         return "/icons/meters/";
     }
+
+
+    @Override
+    public void loadPlugIns()
+    {
+        // TODO Auto-generated method stub
+        
+    }
     
 
 }
