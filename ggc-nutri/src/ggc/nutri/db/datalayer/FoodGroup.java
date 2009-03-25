@@ -738,7 +738,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      */
     public String getClassName()
     {
-        return "ggc.nutri.db.hibernate.FoodUserGroupH";
+        return "ggc.core.db.hibernate.FoodUserGroupH";
     }
 
     /**

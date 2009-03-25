@@ -148,7 +148,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     /**
      * To String
      * 
-     * @see ggc.nutri.db.hibernate.MealH#toString()
+     * @see ggc.core.db.hibernate.MealH#toString()
      */
     @Override
     public String toString()
@@ -338,7 +338,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
      */
     public String getClassName()
     {
-        return "ggc.nutri.db.hibernate.MealH";
+        return "ggc.core.db.hibernate.MealH";
     }
 
     /**

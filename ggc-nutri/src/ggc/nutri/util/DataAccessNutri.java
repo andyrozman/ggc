@@ -410,18 +410,24 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
         return DataAccess.getInstance().getDb();
     }
+
+    GGCDbNutri db_nutri = null;
     
     public GGCDbNutri getNutriDb()
     {
-        // TODO
-        return null;
+        return db_nutri;
+    }
+
+    
+    public void setNutriDb(GGCDbNutri db)
+    {
+        db_nutri = db;
     }
     
     
     public GGCDbCache getDbCache()
     {
-        // TODO
-        return null;
+        return db_nutri.getDbCache();
     }
 
     @Override

@@ -1,37 +1,6 @@
 package ggc.core.db;
 
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure Java application to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: GGCDbLoader
- *  
- *  Purpose:  This is GGCDb Loader. It help system to load all needed data for 
- *      GGC Database Session.
- *
- *  Author:   andyrozman  {andy@atech-software.com}
- */
-
-
-
+import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
 
@@ -235,6 +204,12 @@ public class GGCDbLoader extends Thread
         }
 */
         setDbStatus(RefreshInfo.DB_BASE_DONE); 
+        
+        
+        m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommand(NutriPlugIn.COMMAND_LOAD_DATABASE);
+        setDbStatus(RefreshInfo.DB_LOADED);
+        
+        //refreshMenus();
         
    
 //        if (!part_start)

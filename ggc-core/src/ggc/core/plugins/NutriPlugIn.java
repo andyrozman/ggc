@@ -81,6 +81,26 @@ public class NutriPlugIn extends PlugInClient
     
     
     /**
+     *  Command: Load Database  
+     */
+    public static final int COMMAND_LOAD_DATABASE = 4;
+    
+    
+    
+    
+    private String commands[] = { 
+                                  "MN_NUTRI_READ_DESC", 
+                                  "MN_NUTRI_LIST_DESC", 
+                                  "MN_NUTRI_CONFIG_DESC",
+                                                               
+                                  "MN_LOAD_DATABASE_DESC", 
+                                  "MN_NUTRI_ABOUT" };
+    
+    
+    
+    
+    
+    /**
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
@@ -185,7 +205,7 @@ public class NutriPlugIn extends PlugInClient
         this.commands_will_be_done[1] = "0.5";
         this.commands_will_be_done[2] = "0.5";
         this.commands_will_be_done[3] = "0.5";
-        this.commands_will_be_done[4] = null;
+        this.commands_will_be_done[4] = "0.5";
         this.commands_will_be_done[5] = null;
         this.commands_will_be_done[6] = null;
         

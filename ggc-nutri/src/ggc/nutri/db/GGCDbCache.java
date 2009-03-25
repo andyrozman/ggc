@@ -169,7 +169,7 @@ public class GGCDbCache
         meals = new Hashtable<String, Hashtable<String, Meal>>();
         meals.put("3", new Hashtable<String, Meal>());
         
-        
+        this.tree_roots = new Hashtable<String, GGCTreeRoot>();
         
         //food_groups_usda = new Hashtable<String, FoodGroup>();
         //foods_usda = new Hashtable<String, FoodDescription>();

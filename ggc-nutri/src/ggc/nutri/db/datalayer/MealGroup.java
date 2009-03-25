@@ -313,7 +313,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     /**
      * To String
      * 
-     * @see ggc.nutri.db.hibernate.MealGroupH#toString()
+     * @see ggc.core.db.hibernate.MealGroupH#toString()
      */
     @Override
     public String toString()
@@ -415,14 +415,14 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        Query q = sess.createQuery("select pst from ggc.nutri.db.hibernate.MealH as pst where pst.meal_group_id="
+        Query q = sess.createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.meal_group_id="
                 + getId());
         int size = q.list().size();
 
         if (size > 0)
             return true;
 
-        q = sess.createQuery("select pst from ggc.nutri.db.hibernate.MealGroupH as pst where pst.parent_id=" + getId());
+        q = sess.createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.parent_id=" + getId());
         size = q.list().size();
 
         if (size > 0)
@@ -553,7 +553,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public String getClassName()
     {
-        return "ggc.nutri.db.hibernate.MealGroupH";
+        return "ggc.core.db.hibernate.MealGroupH";
     }
 
     /**

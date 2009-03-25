@@ -1,19 +1,27 @@
 package ggc.nutri.plugin;
 
+import ggc.core.util.DataAccess;
+import ggc.nutri.data.GGCTreeRoot;
+import ggc.nutri.db.GGCDbNutri;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
+import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.util.DataAccessNutri;
 import ggc.nutri.util.I18nControl;
 
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,7 +50,7 @@ import com.atech.utils.ATDataAccessAbstract;
  */
 
 
-public class NutriPlugInServer extends PlugInServer
+public class NutriPlugInServer extends PlugInServer implements ActionListener
 {
 
     /**
@@ -53,15 +61,12 @@ public class NutriPlugInServer extends PlugInServer
     
     
     private String commands[] = { 
-                                  "MN_PUMPS_READ_DESC", 
-                                  "MN_PUMPS_LIST_DESC", 
-                                  "MN_PUMPS_CONFIG_DESC",
+                                  "MN_NUTRI_READ_DESC", 
+                                  "MN_NUTRI_LIST_DESC", 
+                                  "MN_NUTRI_CONFIG_DESC",
                                                                
-                                  "MN_PUMP_PROFILES_DESC", 
-                                  "MN_PUMPS_MANUAL_ENTRY_DESC",
-                                  "MN_PUMPS_ADDITIONAL_DATA_DESC", 
-                                  
-                                  "MN_PUMPS_ABOUT" };
+                                  "MN_LOAD_DATABASE_DESC", 
+                                  "MN_NUTRI_ABOUT" };
     
     
     //I18nControl ic = I18nControl.getInstance();
@@ -108,6 +113,8 @@ public class NutriPlugInServer extends PlugInServer
         
         case NutriPlugInServer.COMMAND_LOAD_DATABASE:
         {
+            this.loadDb();
+            
             //this.
         }
         
@@ -208,10 +215,23 @@ public class NutriPlugInServer extends PlugInServer
 //        da.initAllObjects();
         da.loadSpecialParameters();
         
+        GGCDbNutri db = new GGCDbNutri(((DataAccess)m_da).getDb());
+        da.setNutriDb(db);
+        
+        
         m_da.loadSpecialParameters();
         //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
         
         //da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
+    }
+    
+    
+    public void loadDb()
+    {
+        //GGCDbNutri db = new GGCDbNutri(((DataAccess)m_da).getDb());
+        //db.loadNutritionDatabase();
+        
+        DataAccessNutri.getInstance().getNutriDb().loadNutritionDatabase();
     }
     
     
@@ -244,8 +264,38 @@ public class NutriPlugInServer extends PlugInServer
     @Override
     public JMenu getPlugInMainMenu()
     {
+        // food menu
+        JMenu menu_food = ATSwingUtils.createMenu("MN_FOOD", null, ic);
+        ATSwingUtils.createMenuItem(menu_food, 
+                                    "MN_NUTRDB_USDB", 
+                                    "MN_NUTRDB_USDB_DESC", 
+                                    "food_nutrition_1", 
+                                    this, null, 
+                                    ic, DataAccessNutri.getInstance(), parent);
+        //.createAction(this.menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
+        menu_food.addSeparator();
+
+        ATSwingUtils.createMenuItem(menu_food, 
+            "MN_NUTRDB_USER", 
+            "MN_NUTRDB_USER_DESC", 
+            "food_nutrition_2", 
+            this, null, 
+            ic, DataAccessNutri.getInstance(), parent);
+        
+//        this.createAction(this.menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
+        menu_food.addSeparator();
+        
+        ATSwingUtils.createMenuItem(menu_food, 
+            "MN_MEALS", 
+            "MN_MEALS_DESC", 
+            "food_meals", 
+            this, null, 
+            ic, DataAccessNutri.getInstance(), parent);
+                
+//        this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
+        
         // TODO Auto-generated method stub
-        return null;
+        return menu_food;
     }
 
 
@@ -254,6 +304,26 @@ public class NutriPlugInServer extends PlugInServer
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+
+    public void actionPerformed(ActionEvent ae)
+    {
+        String command = ae.getActionCommand();
+        
+        if (command.equals("food_nutrition_1"))
+        {
+            new NutritionTreeDialog((JFrame)parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_USDA_NUTRITION);
+        }
+        else if (command.equals("food_nutrition_2"))
+        {
+            new NutritionTreeDialog((JFrame)parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_USER_NUTRITION);
+        }
+        else if (command.equals("food_meals"))
+        {
+            new NutritionTreeDialog((JFrame)parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_MEALS);
+        }
+        
     }
     
     

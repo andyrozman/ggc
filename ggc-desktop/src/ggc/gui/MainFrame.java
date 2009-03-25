@@ -6,6 +6,7 @@ import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
+import ggc.core.util.RefreshInfo;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.AppointmentsDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
@@ -29,7 +30,9 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Observable;
 
 import javax.help.CSH;
 import javax.help.HelpBroker;
@@ -52,6 +55,8 @@ import javax.swing.UIManager;
 
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpContext;
+import com.atech.misc.refresh.EventObserverInterface;
+import com.atech.plugin.PlugInClient;
 import com.atech.update.client.UpdateDialog;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
@@ -82,7 +87,7 @@ import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
  */
 
 
-public class MainFrame extends JFrame
+public class MainFrame extends JFrame implements EventObserverInterface
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
@@ -207,7 +212,7 @@ public class MainFrame extends JFrame
         // System.out.println("MainFrame before creation");
         m_da = DataAccess.createInstance(this);
 
-        // System.out.println("m_da: " + m_da);
+         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  m_da: " + m_da);
 
         m_ic = I18nControl.getInstance();
 
@@ -240,6 +245,9 @@ public class MainFrame extends JFrame
         createMenus();
 
         createToolBar();
+        
+        m_da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
+        
         /*
          * addToolBarButtonWithName("view_daily");
          * addToolBarButtonWithName("view_course");
@@ -321,7 +329,7 @@ public class MainFrame extends JFrame
 
         this.createAction(menu_data_ratio, "MN_RATIO_BASE", "MN_RATIO_BASE_DESC", "ratio_base", null); // null);
         this.createAction(menu_data_ratio, "MN_RATIO_EXTENDED", "MN_RATIO_EXTENDED_DESC", "ratio_extended", null); // null);
-
+/*
         // food menu
         this.menu_food = this.createMenu("MN_FOOD", null);
         this.createAction(this.menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
@@ -329,7 +337,7 @@ public class MainFrame extends JFrame
         this.createAction(this.menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
         this.menu_food.addSeparator();
         this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
-
+*/
         // doctors menu
         this.menu_doctor = this.createMenu("MN_DOCTOR", null);
         this.createAction(this.menu_doctor, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
@@ -412,6 +420,24 @@ public class MainFrame extends JFrame
             this.createAction(this.menu_help, "MN_TEST", "MN_TEST_DESC", "test", null);
         }
 
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
+        for(Enumeration<String> en= m_da.getPlugins().keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            System.out.println("Key=" + key);
+            
+            PlugInClient pic = m_da.getPlugIn(key);
+            
+            if (pic.getPlugInMainMenu()!=null)
+            {
+                this.menuBar.add(pic.getPlugInMainMenu());
+            }
+        }
+        
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
+        
     }
 
     private void createToolBar()
@@ -652,10 +678,10 @@ public class MainFrame extends JFrame
             this.actions.get("report_pdf_extended").setEnabled(false);
 
             // food menu
-            this.menu_food.setEnabled(false);
-            this.actions.get("food_nutrition_1").setEnabled(false);
-            this.actions.get("food_nutrition_2").setEnabled(false);
-            this.actions.get("food_meals").setEnabled(false);
+            //this.menu_food.setEnabled(false);
+            //this.actions.get("food_nutrition_1").setEnabled(false);
+            //this.actions.get("food_nutrition_2").setEnabled(false);
+            //this.actions.get("food_meals").setEnabled(false);
 
             // tools menu
             this.menu_tools.setEnabled(false);
@@ -695,11 +721,12 @@ public class MainFrame extends JFrame
         }
         else if (status == StatusBar.DB_LOADED)
         {
-            // food menu
+/*            // food menu
             this.menu_food.setEnabled(true);
             this.actions.get("food_nutrition_1").setEnabled(true);
             this.actions.get("food_nutrition_2").setEnabled(true);
             this.actions.get("food_meals").setEnabled(true);
+            */
         }
 
         /*
@@ -760,7 +787,7 @@ public class MainFrame extends JFrame
             this.toolbar_items.get("view_freq").setEnabled(false);
             this.toolbar_items.get("view_hba1c").setEnabled(false);
 
-            this.toolbar_items.get("food_meals").setEnabled(false);
+         //   this.toolbar_items.get("food_meals").setEnabled(false);
 
             this.toolbar_items.get("report_pdf_simple").setEnabled(false);
 
@@ -782,7 +809,7 @@ public class MainFrame extends JFrame
         }
         else if (status == StatusBar.DB_LOADED)
         {
-            this.toolbar_items.get("food_meals").setEnabled(true);
+         //   this.toolbar_items.get("food_meals").setEnabled(true);
         }
 
     }
@@ -1205,4 +1232,85 @@ public class MainFrame extends JFrame
         return "MainFrame";
     }
 
+    public void update(Observable obj, Object arg)
+    {
+        if (arg instanceof Integer)
+        {
+            Integer i = (Integer)arg;
+            setMenusByDbLoad(i.intValue());
+            
+            if (i == RefreshInfo.DB_LOADED)
+                refreshMenus();
+        }
+    }
+
+    
+    public void refreshMenus()
+    {
+        System.out.println("Refresh Menus: ");
+        this.menuBar.removeAll();
+        
+        
+        this.menuBar.add(this.menu_file);
+        this.menuBar.add(this.menu_bgs);
+
+        JMenu menu = getPlugInMenu(DataAccess.PLUGIN_NUTRITION);
+        
+        if (menu!=null)
+        {
+            System.out.println("menu: " + menu);
+            this.menuBar.add(menu);
+        }
+            
+        
+        // doctors menu
+        this.menuBar.add(this.menu_doctor);
+
+        // reports menu
+        this.menuBar.add(this.menu_printing); 
+
+        this.menuBar.add(this.menu_meters);
+        this.menuBar.add(this.menu_pumps);
+        this.menuBar.add(this.menu_cgms);
+
+        this.menuBar.add(this.menu_tools);
+        this.menuBar.add(this.menu_help);
+
+        
+        this.setJMenuBar(this.menuBar);
+        
+        /*
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
+        for(Enumeration<String> en= m_da.getPlugins().keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            System.out.println("Key=" + key);
+            
+            PlugInClient pic = m_da.getPlugIn(key);
+            
+            if (pic.getPlugInMainMenu()!=null)
+            {
+                this.menuBar.add(pic.getPlugInMainMenu());
+            }
+        }*/
+        
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
+    }
+    
+
+    public JMenu getPlugInMenu(String name)
+    {
+        PlugInClient pic = m_da.getPlugIn(name);
+        
+        System.out.println("PIC: " + pic + " = " + pic.getPlugInMainMenu());
+        
+        
+        
+        return pic.getPlugInMainMenu();
+    }
+    
+    
+    
 }

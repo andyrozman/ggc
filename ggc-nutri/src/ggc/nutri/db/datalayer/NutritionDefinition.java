@@ -96,7 +96,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     /**
      * To String
      * 
-     * @see ggc.nutri.db.hibernate.NutritionDefinitionH#toString()
+     * @see ggc.core.db.hibernate.NutritionDefinitionH#toString()
      */
     @Override
     public String toString()

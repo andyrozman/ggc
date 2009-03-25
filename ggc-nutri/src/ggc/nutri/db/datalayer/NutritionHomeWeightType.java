@@ -85,7 +85,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     /**
      * To String
      * 
-     * @see ggc.nutri.db.hibernate.NutritionHomeWeightTypeH#toString()
+     * @see ggc.core.db.hibernate.NutritionHomeWeightTypeH#toString()
      */
     @Override
     public String toString()

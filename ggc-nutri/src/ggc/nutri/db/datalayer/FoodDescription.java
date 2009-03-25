@@ -574,7 +574,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
      */
     public String getClassName()
     {
-        return "ggc.nutri.db.hibernate.FoodUserDescriptionH";
+        return "ggc.core.db.hibernate.FoodUserDescriptionH";
     }
 
     /**

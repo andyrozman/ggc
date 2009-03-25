@@ -174,7 +174,7 @@ public class StatusBar extends JPanel implements EventObserverInterface
     public void setDbStatus(int status)
     {
         this.lblLed.setIcon(statusIcons[status]);
-        this.m_frame.setMenusByDbLoad(status);
+        //this.m_frame.setMenusByDbLoad(status);
     }
 
     /**
@@ -193,7 +193,7 @@ public class StatusBar extends JPanel implements EventObserverInterface
      */
     public void update(Observable obj, Object arg)
     {
-        System.out.println("update status");
+       //System.out.println("update status");
         
         if (arg instanceof Integer)
         {

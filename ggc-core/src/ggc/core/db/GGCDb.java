@@ -76,8 +76,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 //    private String m_addId = "";
 
     protected GGCDbConfig hib_config = null;
-
     protected Configuration m_cfg = null;
+    
     private DataAccess m_da;
 
     private int m_loadStatus = 0;
