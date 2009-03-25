@@ -125,7 +125,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
      * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#checkAndExecuteActionEdit()
      */
     @Override
-    public void checkAndExecuteActionEdit()
+    public void checkAndExecuteActionEdit(SelectableInterface si)
     {
     }
 
