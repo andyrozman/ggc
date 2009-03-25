@@ -161,10 +161,12 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
     
     public void loadNutritionDatabase()
     {
+        
+        /*
         this.loadNutritionDbBase();
         this.loadNutritionDb1();
         this.loadNutritionDb2();
-        this.loadMealsDb();
+        this.loadMealsDb();*/
     }
     
     

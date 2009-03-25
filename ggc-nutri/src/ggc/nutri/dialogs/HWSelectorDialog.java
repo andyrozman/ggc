@@ -184,7 +184,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
      * Check and Execute Action: Edit
      */
     @Override
-    public void checkAndExecuteActionEdit()
+    public void checkAndExecuteActionEdit(SelectableInterface si)
     {
         System.out.println("checkAndExecuteActionEdit()");
     }

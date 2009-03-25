@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 
 
@@ -151,7 +152,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
      * Check and Execute Action: Edit
      */
     @Override
-    public void checkAndExecuteActionEdit()
+    public void checkAndExecuteActionEdit(SelectableInterface si)
     {
         System.out.println("checkAndExecuteActionEdit()");
     }
