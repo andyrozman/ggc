@@ -1,5 +1,6 @@
 package ggc.pump.gui.profile;
 
+import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.pump.data.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
@@ -8,11 +9,8 @@ import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.JFrame;
-
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
-import com.atech.utils.ATDataAccessAbstract;
 
 
 
@@ -52,17 +50,31 @@ public class ProfileSelector extends SelectorAbstractDialog
     
     
     @Override
-    public void checkAndExecuteActionEdit()
+    public void checkAndExecuteActionEdit(SelectableInterface si)
     {
-        // TODO Auto-generated method stub
+        ProfileEditor pe = new ProfileEditor(this, (PumpProfileH)si);
+        pe.setVisible(true);
+        
+        if (pe.actionSuccessful())
+        {
+            this.filterEntries();
+        }
         
     }
 
     @Override
     public void checkAndExecuteActionNew()
     {
-        // TODO Auto-generated method stub
+        ProfileEditor pe = new ProfileEditor(this);
+        pe.setVisible(true);
         
+        if (pe.actionSuccessful())
+        {
+            System.out.println("Success: ");
+            this.full.add(new PumpProfile(pe.getResult()));
+            this.filterEntries();
+            System.out.println("Success: " + this.full);
+        }
     }
 
     @Override
@@ -89,10 +101,11 @@ public class ProfileSelector extends SelectorAbstractDialog
     @Override
     public void initSelectorValuesForType()
     {
-        setSelectorObject(new PumpProfile());
+        setSelectorObject(new PumpProfile(DataAccessPump.getInstance().getI18nControlInstance()));
         setSelectorName(ic.getMessage("PROFILE_SELECTOR"));
         setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_EDIT|SelectorAbstractDialog.SELECTOR_ACTION_NEW|SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
         this.setColumnSortingEnabled(false);
+        this.setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_DATE_BOTH);
         this.setHelpEnabled(false);
     }
 
@@ -102,6 +115,8 @@ public class ProfileSelector extends SelectorAbstractDialog
         // TODO Auto-generated method stub
         
     }
+    
+    
     
     
 }

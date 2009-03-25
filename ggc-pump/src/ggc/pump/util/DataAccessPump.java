@@ -640,6 +640,22 @@ public class DataAccessPump extends DataAccessPlugInBase
         // TODO Auto-generated method stub
         
     }
+
+    
+    
+    
+    
+    // configuration settings
+    
+    public float getMaxBasalValue()
+    {
+        return 8.0f;
+    }
+    
+    public float getBasalStep()
+    {
+        return 0.1f;
+    }
     
     
 }

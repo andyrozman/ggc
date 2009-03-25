@@ -126,6 +126,14 @@ public class PumpConsoleTester //extends JFrame
     }
     
 
+    public static void something()
+    {
+        String input = "0-400=0.2";
+        String[] ss = input.split("[-=]");
+        
+        
+        
+    }
 
 
     /**

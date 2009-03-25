@@ -2,6 +2,7 @@ package ggc.pump.data.db;
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.core.db.hibernate.pump.PumpDataH;
+import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.db.PluginDb;
 import ggc.pump.data.PumpValuesEntry;
@@ -238,7 +239,36 @@ public class GGCPumpDb extends PluginDb
     
     public ArrayList<PumpProfile> getProfiles()
     {
-        return new ArrayList<PumpProfile>();
+        
+        log.info("getProfiles() - Run");
+
+        ArrayList<PumpProfile> lst = new ArrayList<PumpProfile>();
+        
+        String sql = "";
+        
+        try
+        {
+            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpProfileH as dv "; 
+            
+            Query q = this.db.getSession().createQuery(sql);
+
+            Iterator<?> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                PumpProfileH pdh = (PumpProfileH) it.next();
+                lst.add(new PumpProfile(pdh));
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.debug("Sql: " + sql);
+            log.error("getProfiles(). Exception: " + ex, ex);
+        }
+
+        return lst;
+        
     }
     
     
