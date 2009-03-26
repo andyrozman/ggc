@@ -14,6 +14,7 @@ import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -548,10 +549,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
                 return this.getName();
     
             case 2:
-                return "" + this.getActive_till();
+                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
     
             default:
-                return "" + this.getActive_from();
+                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
 
         }
     }
@@ -565,10 +566,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
                 return this.getName();
     
             case 2:
-                return "" + this.getActive_till();
+                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
     
             default:
-                return "" + this.getActive_from();
+                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
 
         }
     }

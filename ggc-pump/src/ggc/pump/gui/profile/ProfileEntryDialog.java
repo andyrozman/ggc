@@ -171,13 +171,13 @@ public class ProfileEntryDialog extends JDialog implements ActionListener
         panel.add(sp_amount);
         
 
-        ATSwingUtils.getButton(m_ic.getMessage("OK"), 
+        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 
                                30, 200, 100, 25, panel, 
-                               ATSwingUtils.FONT_NORMAL_BOLD, "ok.png", "ok", this, m_da);
+                               ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
         
-        ATSwingUtils.getButton(m_ic.getMessage("CANCEL"), 
+        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 
                                140, 200, 100, 25, panel, 
-                               ATSwingUtils.FONT_NORMAL_BOLD, "cancel.png", "cancel", this, m_da);
+                               ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
         
         this.help_button = this.m_da.createHelpButtonByBounds(250, 200, 100, 25, this);

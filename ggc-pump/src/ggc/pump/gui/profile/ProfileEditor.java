@@ -118,6 +118,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
      */
     public ProfileEditor(JDialog parent, PumpProfileH prof)
     {
+        super(parent, "", true);
         ATSwingUtils.initLibrary();
         m_ic = m_da.getI18nControlInstance();
         m_profile = prof;
@@ -240,6 +241,8 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         panel_graph.setBounds(30, 200, 500, 300);
         panel_graph.setBackground(new Color(65, 105, 225));
         panel.add(panel_graph);
+        
+        
 
         
         
@@ -261,15 +264,15 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         bt_item_3.setBounds(685, 470, 30, 30);
         panel.add(bt_item_3);
         
-        ATSwingUtils.getButton(m_ic.getMessage("OK"), 
-            630, 80, 100, 25, panel, 
-            ATSwingUtils.FONT_NORMAL_BOLD, "ok.png", "ok", this, m_da);
+        ATSwingUtils.getButton("   " + m_ic.getMessage("OK"), 
+            610, 80, 120, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
 
-        ATSwingUtils.getButton(m_ic.getMessage("CANCEL"), 
-            630, 115, 100, 25, panel, 
-            ATSwingUtils.FONT_NORMAL_BOLD, "cancel.png", "cancel", this, m_da);
+        ATSwingUtils.getButton("   " +m_ic.getMessage("CANCEL"), 
+            610, 115, 120, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
-        this.help_button = this.m_da.createHelpButtonByBounds(630, 150, 100, 25, this);
+        this.help_button = this.m_da.createHelpButtonByBounds(610, 150, 120, 25, this);
         panel.add(this.help_button);
         
         

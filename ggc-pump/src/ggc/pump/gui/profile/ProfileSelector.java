@@ -14,10 +14,18 @@ import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProfileSelector.
+ */
 public class ProfileSelector extends SelectorAbstractDialog
 {
 
     private static final long serialVersionUID = -1061136628528659695L;
+    
+    /** 
+     * The da_local. 
+     */
     DataAccessPump da_local = DataAccessPump.getInstance();
     
     
@@ -49,6 +57,10 @@ public class ProfileSelector extends SelectorAbstractDialog
     
     
     
+   
+    /** 
+     * Check And Execute Action Edit
+     */
     @Override
     public void checkAndExecuteActionEdit(SelectableInterface si)
     {
@@ -62,6 +74,9 @@ public class ProfileSelector extends SelectorAbstractDialog
         
     }
 
+    /** 
+     * Check And Execute Action New
+     */
     @Override
     public void checkAndExecuteActionNew()
     {
@@ -70,34 +85,41 @@ public class ProfileSelector extends SelectorAbstractDialog
         
         if (pe.actionSuccessful())
         {
-            System.out.println("Success: ");
+            //System.out.println("Success: ");
             this.full.add(new PumpProfile(pe.getResult()));
             this.filterEntries();
-            System.out.println("Success: " + this.full);
+            //System.out.println("Success: " + this.full);
         }
     }
 
+    
+    /** 
+     * Check And Execute Action Select
+     */
     @Override
     public void checkAndExecuteActionSelect()
     {
-        // TODO Auto-generated method stub
-        
     }
 
+  
+  
+    /** 
+     * Get Full Data
+     */
     @Override
     public void getFullData()
     {
         da_local = DataAccessPump.getInstance();
-        System.out.println("da_local: " + da_local);
-        System.out.println("da_local.getDb(): " + da_local.getDb());
-        System.out.println("da_local.getDb().getProfiles(): " + da_local.getDb().getProfiles());
-        
-        
         this.full = new ArrayList<SelectableInterface>();
         this.full.addAll((Collection<? extends SelectableInterface>) da_local.getDb().getProfiles());
-        
     }
 
+    
+    
+    
+    /**
+     * Init Selector Values For Type
+     */
     @Override
     public void initSelectorValuesForType()
     {
@@ -107,16 +129,16 @@ public class ProfileSelector extends SelectorAbstractDialog
         this.setColumnSortingEnabled(false);
         this.setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_DATE_BOTH);
         this.setHelpEnabled(false);
+        setNewItemString(ic.getMessage("NEW__PROFILE"));
     }
 
+    /** 
+     * Item State Changed
+     */
     @Override
     public void itemStateChanged(ItemEvent e)
     {
-        // TODO Auto-generated method stub
-        
     }
-    
-    
     
     
 }
