@@ -2,6 +2,15 @@
 Changes file for GGC Pump Tool
 ==============================
 
+0.3.3 
+    * Test version for Profiles done, needs some fixes though, but most of functionality planned is done for now
+
+0.3.2
+    * Profile manager work started
+
+0.3.1
+    * Whole reorganization of all GGC projects, so that all sub projects can now use GGC core 
+
 0.2.2 
     * Added Bolus Helper to Bolus entry (after redesign of GGC (GGC was split into two seperate projects, GGC Core and
       GGC Desktop))

@@ -59,7 +59,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "0.2.1";
+    public static final String PLUGIN_VERSION = "0.3.1";
 
     private static DataAccessPump s_da = null; // This is handle to unique 
 
@@ -317,7 +317,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         I18nControlAbstract ic = this.getI18nControlInstance();
         //this.about_title = ic.getMessage("PUMP_PLUGIN_ABOUT");
-        this.about_image_name = "/icons/about_logo.gif";
+        this.about_image_name = "/icons/pumps_about.jpg";
 
         this.about_plugin_copyright_from = 2008;
         //this.about_plugin_name = ic.getMessage("PUMP_PLUGIN");
@@ -641,6 +641,17 @@ public class DataAccessPump extends DataAccessPlugInBase
         
     }
 
+    /** 
+     * Get About Image Size - Define about image size
+     */
+    public int[] getAboutImageSize()
+    {
+        int[] sz = new int[2];
+        sz[0] = 400;
+        sz[1] = 200;
+        
+        return sz;
+    }
     
     
     
