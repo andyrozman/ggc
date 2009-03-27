@@ -1,8 +1,10 @@
 package ggc.pump.util;
 
+import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.cfg.PumpConfigurationDefinition;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpAlarms;
@@ -106,8 +108,14 @@ public class DataAccessPump extends DataAccessPlugInBase
         
         this.createWebListerContext();
         this.createPlugInAboutContext();
+        this.createConfigurationContext();
         this.createPlugInVersion();
+//        loadDeviceDataHandler();
+//        loadManager();
+//        loadReadingStatuses();
         this.createPlugInDataRetrievalContext();
+        this.createDeviceConfiguration();
+        loadWebLister();
         
     }
     
@@ -412,7 +420,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.weblister_items.add(new BaseListEntry("Sooil", "/pumps/sooil.html", BaseListEntry.STATUS_NOTPLANNED));
         
         
-        this.weblister_title = "Meters List";
+        this.weblister_title = "Pumps List";
         this.weblister_desc = "No Description";
         
         
@@ -544,8 +552,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void createConfigurationContext()
     {
-        // TODO Auto-generated method stub
-        
+        this.device_config_def = new PumpConfigurationDefinition();
     }
 
 
@@ -555,8 +562,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void createDeviceConfiguration()
     {
-        // TODO Auto-generated method stub
-        
+        this.device_config = new DeviceConfiguration(this);
     }
 
 
