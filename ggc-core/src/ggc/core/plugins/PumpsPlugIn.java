@@ -171,7 +171,7 @@ public class PumpsPlugIn extends PlugInClient
 
         this.commands_implemented = new boolean[7];
         this.commands_implemented[0] = false;
-        this.commands_implemented[1] = false;
+        this.commands_implemented[1] = true;
         this.commands_implemented[2] = false;
         this.commands_implemented[3] = true;
         this.commands_implemented[4] = true;
@@ -180,7 +180,7 @@ public class PumpsPlugIn extends PlugInClient
         
         this.commands_will_be_done = new String[7];
         this.commands_will_be_done[0] = "0.5";
-        this.commands_will_be_done[1] = "0.5";
+        this.commands_will_be_done[1] = null;
         this.commands_will_be_done[2] = "0.5";
         this.commands_will_be_done[3] = "0.5";
         this.commands_will_be_done[4] = null;
