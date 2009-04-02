@@ -2,6 +2,11 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.3.1
+    * Changes which resulted from ggc-core beeing separate entity
+    * Some minor changes to Configuration utility as is needed by Pump tools (no timezone fix)
+
+
 0.2.7
     - minor changes to DataAccessPlugInBase, because of Atech Tools changes
     - DeviceValuesEntry now extends StatisticsItem 
