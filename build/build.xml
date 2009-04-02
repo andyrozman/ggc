@@ -5,8 +5,7 @@
     </description>
 
     <!-- Environment properties read from a file ...-->
-    <property file="./GGCBuild.properties"/>
-    <property file="./GGCVersion.properties"/>
+    <property file="../ggc-core/build/GGC_Core_Version.properties"/>
     
 
     <!-- These should *not* be modified on the command line! -->
@@ -23,10 +22,12 @@
         <echo message=""/>
         <echo message="     all = whole GGC"/>
         <echo message="     all_noclean = whole GGC (no clean)"/>
-        <echo message="     ggc = GNU Gluco Control application build (full)"/>
+        <echo message="     ggc_core = GGC Core"/>
+        <echo message="     ggc_desktop = GGC Desktop Applications"/>
         <echo message="     plugins = create all plugins"/>
         <echo message="     plugin_base = create GGC Base Plugin"/>
         <echo message="     plugin_meter = create GGC Meter Tool (needs Base)"/>
+        <echo message="     plugin_nutri = create GGC Nutrition Tool"/>
         <echo message="     plugin_pump = create GGC Pump Tool"/>
         <echo message="     plugin_cgms = create GGC CGMS Plugin"/>
         <echo message="     clean = clean directory"/>
@@ -47,21 +48,33 @@
     <target name="all" depends="clean, all_noclean" description="whole GGC">
     </target>
 
-    <target name="all_noclean" depends="ggc, plugins" description="whole GGC">
+    <target name="all_noclean" depends="ggc_core, ggc_desktop, plugins" description="whole GGC">
     </target>
 	
 	
-    <target name="ggc" description="GNU Gluco Control application build (full)">
+    <target name="ggc_core" description="GNU Gluco Control application build (full)">
     	<echo message=""/>
-    	<echo message="  Start GGC build"/>
+    	<echo message="  Start GGC Core build"/>
       	<echo message=""/>
     	<subant target="deploy">
-    		<fileset dir="../ggc" includes="*/build.xml" />
+    		<fileset dir="../ggc-core" includes="*/build.xml" />
     	</subant>
     </target>
 
-    <target name="plugins" depends="plugin_base, plugin_meter, plugin_pump, plugin_cgms" description="create all plugins">
+
+    <target name="ggc_desktop" description="GNU Gluco Control application build (full)">
+    	<echo message=""/>
+    	<echo message="  Start GGC Desktop Applications build"/>
+      	<echo message=""/>
+    	<subant target="deploy">
+    		<fileset dir="../ggc-desktop" includes="*/build.xml" />
+    	</subant>
     </target>
+
+
+    <target name="plugins" depends="plugin_base, plugin_nutri, plugin_meter, plugin_pump, plugin_cgms" description="create all plugins">
+    </target>
+
 
     <target name="plugin_base" description="create PlugIn Base">
     	<echo message=""/>
@@ -71,6 +84,16 @@
     		<fileset dir="../ggc-plugin_base" includes="*/build.xml" />
     	</subant>
     </target>
+
+    <target name="plugin_nutri" description="create GGC Nutrition Tool (needs Base)">
+    	<echo message=""/>
+    	<echo message="  Start GGC Nutrition Plugin build"/>
+      	<echo message=""/>
+    	<subant target="deploy">
+    		<fileset dir="../ggc-nutri" includes="*/build.xml" />
+    	</subant>
+    </target>
+
 	
     <target name="plugin_meter" description="create GGC Meter Tool (needs Base)">
     	<echo message=""/>
