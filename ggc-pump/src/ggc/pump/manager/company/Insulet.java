@@ -30,6 +30,7 @@
 package ggc.pump.manager.company; 
 
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -59,7 +60,7 @@ import ggc.pump.util.I18nControl;
  */
 
 
-public class Insulet extends AbstractDeviceCompany
+public class Insulet extends AbstractPumpDeviceCompany
 {
 
     
@@ -68,7 +69,8 @@ public class Insulet extends AbstractDeviceCompany
      */
     public Insulet()
     {
-        super(I18nControl.getInstance(), true);
+        super(I18nControl.getInstance(), false);
+        this.addDevice(new GenericPumpDevice(this));
     }
 
 
@@ -79,7 +81,7 @@ public class Insulet extends AbstractDeviceCompany
      */
     public String getName()
     {
-        return "Roche";
+        return "Insulet";
     }
 
     
@@ -90,7 +92,7 @@ public class Insulet extends AbstractDeviceCompany
      */
     public int getCompanyId()
     {
-        return 2;
+        return PumpManager.PUMP_COMPANY_INSULET;
     }
     
     
@@ -101,7 +103,7 @@ public class Insulet extends AbstractDeviceCompany
      */
     public String getDescription()
     {
-       return "ROCHE_DESC"; 
+       return "INSULET_DESC"; 
     }
     
     

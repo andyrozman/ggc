@@ -216,6 +216,7 @@ public class MetersPlugIn extends PlugInClient
     
     private void refreshPanels(int mask)
     {
+        DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
         //MainFrame mf = (MainFrame)parent;
         //mf.informationPanel.refreshGroup(mask);
         //

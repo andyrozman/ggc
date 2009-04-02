@@ -1,8 +1,15 @@
 package ggc.pump.device;
 
+import java.util.Hashtable;
+
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.util.DataAccessPump;
 
+import com.atech.graphics.dialogs.selector.ColumnSorter;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -32,7 +39,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class DummyPump //extends GenericPump //implements MeterInterface
+public class DummyPump extends AbstractPump //implements PumpInterface //extends GenericPump //implements MeterInterface
 {
 
     DataAccessPump m_da = DataAccessPump.getInstance();
@@ -194,6 +201,161 @@ public class DummyPump //extends GenericPump //implements MeterInterface
 
 
 
+
+    /**
+     * Is Device Readable (there are some devices that are not actual devices, but are used to get some
+     * sort of specific device data - in most cases we call them generics, and they don't have ability
+     * to read data)
+     * @return
+     */
+    public boolean isReadableDevice()
+    {
+        return false;
+    }
+
+    public Hashtable<String, Integer> getAlarmMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Hashtable<String, Integer> getBolusMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public DeviceIdentification getDeviceInfo()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Hashtable<String, Integer> getErrorMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Hashtable<String, Integer> getEventMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getMaxMemoryRecords()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public Hashtable<String, Integer> getReportMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void loadPumpSpecificValues()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void dispose()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public String getComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getConnectionPort()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getConnectionProtocol()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public String getDeviceClassName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getDeviceId()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public String getDeviceSpecialComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getIconName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getImplementationStatus()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public String getInstructions()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public boolean hasSpecialProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean isDeviceCommunicating()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public void readConfiguration() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void readDeviceDataPartitial() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void readInfo() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
 
 
 

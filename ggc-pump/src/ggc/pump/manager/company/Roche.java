@@ -1,6 +1,6 @@
 package ggc.pump.manager.company; 
 
-import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -23,14 +23,14 @@ import ggc.pump.util.I18nControl;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      Roche  
+ *  Description:   Pump Company - Roche
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 
-public class Roche extends AbstractDeviceCompany
+public class Roche extends AbstractPumpDeviceCompany
 {
 
     /**
@@ -38,7 +38,15 @@ public class Roche extends AbstractDeviceCompany
      */
     public Roche()
     {
-        super(I18nControl.getInstance(), true);
+        super(I18nControl.getInstance(), false);
+        profile_names = new String[5];
+        
+        for(int i=0; i<5; i++)
+        {
+            profile_names[i] = "" + (i+1);
+        }
+        
+        this.addDevice(new GenericPumpDevice(this));
     }
 
 
@@ -69,7 +77,7 @@ public class Roche extends AbstractDeviceCompany
      */
     public int getCompanyId()
     {
-        return 2;
+        return PumpManager.PUMP_COMPANY_ROCHE;
     }
     
     

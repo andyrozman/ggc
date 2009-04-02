@@ -242,6 +242,8 @@ public class DeviceConfiguration
         
         sb.append("SELECTED_" + this.dcd.getDevicePrefix() + "=" + this.default_device + "\n");
         
+        System.out.println("Device Ebtries: " + this.device_entries);
+        
         for(int i=1; i<21; i++)
         {
             if (this.device_entries.containsKey("" + i))

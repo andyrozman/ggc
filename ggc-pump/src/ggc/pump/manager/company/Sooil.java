@@ -1,6 +1,6 @@
 package ggc.pump.manager.company; 
 
-import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -29,7 +29,7 @@ import ggc.pump.util.I18nControl;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class Sooil extends AbstractDeviceCompany
+public class Sooil extends AbstractPumpDeviceCompany
 {
 
     
@@ -38,7 +38,15 @@ public class Sooil extends AbstractDeviceCompany
      */
     public Sooil()
     {
-        super(I18nControl.getInstance(), true);
+        super(I18nControl.getInstance(), false);
+        profile_names = new String[16];
+  
+        for(int i=0; i<16; i++)
+        {
+            profile_names[i] = "" + (i+1);
+        }
+        
+        this.addDevice(new GenericPumpDevice(this));
     }
 
 
@@ -60,7 +68,7 @@ public class Sooil extends AbstractDeviceCompany
      */
     public int getCompanyId()
     {
-        return 2;
+        return PumpManager.PUMP_COMPANY_SOOIL;
     }
     
     
@@ -71,7 +79,7 @@ public class Sooil extends AbstractDeviceCompany
      */
     public String getDescription()
     {
-       return "ROCHE_DESC"; 
+       return "SOOIL_DESC"; 
     }
     
     

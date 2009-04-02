@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
@@ -135,7 +136,17 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     {
         this.tf_name.setText(this.m_profile.getName());
         this.dtc_from.setDateTime(this.m_profile.getActive_from());
-        this.dtc_till.setDateTime(this.m_profile.getActive_till());
+        
+        if (this.m_profile.getActive_till() <= 0)
+        {
+            this.cb_enabled_till.setSelected(false);
+            this.dtc_till.setDateTimeAsCurrent();
+        }
+        else
+        {
+            this.cb_enabled_till.setSelected(true);
+            this.dtc_till.setDateTime(this.m_profile.getActive_till());
+        }
         this.sp_base.setValue(this.m_profile.getBasal_base());
         this.loadSubEntries(this.m_profile.getBasal_diffs());
     }
@@ -149,6 +160,9 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         {
             list_data.add(new ProfileSubEntry(strtok.nextToken()));
         }
+
+        
+        Collections.sort(list_data);
         
         this.refreshList(1, list_data);
     }
@@ -156,8 +170,13 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     private void save()
     {
         this.m_profile.setName(this.tf_name.getText()); 
-        this.m_profile.setActive_from(this.dtc_from.getDateTime()); 
-        this.m_profile.setActive_till(this.dtc_till.getDateTime()); 
+        this.m_profile.setActive_from(this.dtc_from.getDateTime());
+        
+        if (this.cb_enabled_till.isSelected())
+            this.m_profile.setActive_till(this.dtc_till.getDateTime());
+        else
+            this.m_profile.setActive_till(-1L);
+            
         this.m_profile.setBasal_base(m_da.getFloatValue(this.sp_base.getValue())); 
         this.m_profile.setBasal_diffs(getSubEntries());
         
@@ -203,6 +222,12 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         ATSwingUtils.getLabel(m_ic.getMessage("NAME") + ":", 80, 75, 120, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
         
         tf_name = ATSwingUtils.getTextField("", 190, 75, 120, 25, panel);
+        tf_name.setEditable(false);
+        
+        ATSwingUtils.getButton("   " +m_ic.getMessage("SELECT"), 
+            330, 75, 120, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "cancel.png", "select_profile", this, m_da);
+        
         
         ATSwingUtils.getLabel(m_ic.getMessage("DATE_FROM") + ":", 80, 110, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
 
@@ -378,154 +403,6 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     
     
     
-    /*
-    private void init_v2()
-    {
-        //this.setLayout(null);
-        this.setTitle("Basal Rate Estimator");
-        JLabel label;
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        this.add(panel);
-        
-        ATSwingUtils.getTitleLabel("Basal Rate Estimator", 0, 20, 800, 35, panel, ATSwingUtils.FONT_BIG_BOLD); 
-        
-        ATSwingUtils.getLabel("List of BGs:", 50, 85, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-            
-        lst_bgs = new JList();
-        JScrollPane scr = new JScrollPane(lst_bgs);
-        scr.setBounds(40, 110, 160, 100);
-        panel.add(scr);
-        
-        ATSwingUtils.getLabel("List of Old Basals:", 220, 85, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-
-        this.lst_basals_old = new JList();
-        scr = new JScrollPane(this.lst_basals_old);
-        scr.setBounds(210, 110, 160, 100);
-        panel.add(scr);
-
-        ATSwingUtils.getLabel("List of Ratios:", 390, 85, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-        
-        this.lst_ratios = new JList();
-        scr = new JScrollPane(this.lst_ratios);
-        scr.setBounds(380, 110, 160, 100);
-        panel.add(scr);
-
-        ATSwingUtils.getLabel("List of New Basals:", 50, 280, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-        
-        this.lst_basals_new = new JList();
-        scr = new JScrollPane(this.lst_basals_new);
-        scr.setBounds(40, 310, 160, 240);
-        panel.add(scr);
-        
-        JPanel panel_graph = new JPanel();
-        panel_graph.setBorder(new TitledBorder("Basal Rate Display"));
-        panel_graph.setBounds(210, 220, 560, 320);
-        //panel_graph.setBackground(new Color(0, 191, 255));
-        
-        gv = new GraphViewBasalRateEstimator();
-        
-        GraphViewerPanel gvp = new GraphViewerPanel(gv);
-        gvp.setMinimumSize(new Dimension(550, 280)); // 450, 460
-        gvp.setPreferredSize(gvp.getMinimumSize());
-        panel_graph.add(gvp, BorderLayout.CENTER);
-        panel.add(panel_graph);
-
-        bre_algorithm = new BasalRateEstimatorAlgorithm(gv);
-        
-        ATSwingUtils.getLabel("Date of display: ", 570, 80, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-        
-
-        
-        ATSwingUtils.getLabel("02/02/2009", 690, 80, 200, 25, panel, ATSwingUtils.FONT_NORMAL); 
-        
-        ATSwingUtils.getButton("Change Date", 570, 130, 190, 25, panel, ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
-        
-        JButton b = ATSwingUtils.getButton("Configure Ratios", 570, 170, 190, 25, panel, ATSwingUtils.FONT_NORMAL, null, "change_ratios", this, m_da);
-        b.setEnabled(false);
-
-        //ATSwingUtils.getButton("Algorithm", 570, 250, 190, 25, panel, ATSwingUtils.FONT_NORMAL, null, "algorithm", this, m_da);
-        
-        //ATSwingUtils.getButton("Change Date", 500, 50, 150, 25, panel, ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
-        
-    }
-    */
-    
-    /*
-    private void init_1()
-    {
-        //this.setLayout(null);
-        this.setTitle("Basal Rate Estimator");
-        JLabel label;
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        this.add(panel);
-        
-        ATSwingUtils.getTitleLabel("Basal Rate Estimator", 0, 20, 800, 35, panel, ATSwingUtils.FONT_BIG_BOLD); 
-        
-        ATSwingUtils.getLabel("List of BGs:", 50, 85, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-            
-        lst_bgs = new JList();
-        JScrollPane scr = new JScrollPane(lst_bgs);
-        scr.setBounds(40, 110, 160, 160);
-        panel.add(scr);
-        
-        ATSwingUtils.getLabel("List of Old Basals:", 220, 85, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-
-        this.lst_basals_old = new JList();
-        scr = new JScrollPane(this.lst_basals_old);
-        scr.setBounds(210, 110, 160, 160);
-        panel.add(scr);
-
-        ATSwingUtils.getLabel("List of Ratios:", 390, 85, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-        
-        this.lst_ratios = new JList();
-        scr = new JScrollPane(this.lst_ratios);
-        scr.setBounds(380, 110, 160, 160);
-        panel.add(scr);
-
-        ATSwingUtils.getLabel("List of New Basals:", 50, 280, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-        
-        this.lst_basals_new = new JList();
-        scr = new JScrollPane(this.lst_basals_new);
-        scr.setBounds(40, 310, 160, 240);
-        panel.add(scr);
-        
-        
-        
-        /*
-        JPanel panel_graph = new JPanel();
-        panel_graph.setBorder(new TitledBorder("Basal Rate Display"));
-        panel_graph.setBounds(210, 280, 560, 270);
-        panel_graph.setBackground(new Color(0, 191, 255));
-        
-        gv = new GraphViewBasalRateEstimator();
-        
-        GraphViewerPanel gvp = new GraphViewerPanel(gv);
-        gvp.setMinimumSize(new Dimension(550, 240)); // 450, 460
-        gvp.setPreferredSize(gvp.getMinimumSize());
-        panel_graph.add(gvp, BorderLayout.CENTER);
-        panel.add(panel_graph);
-
-        bre_algorithm = new BasalRateEstimatorAlgorithm(gv);
-*/        
-        
-      /*  
-        
-        ATSwingUtils.getLabel("Date of display: ", 570, 120, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-        ATSwingUtils.getLabel("02/02/2009", 690, 120, 200, 25, panel, ATSwingUtils.FONT_NORMAL); 
-        ATSwingUtils.getButton("Change Date", 570, 170, 190, 25, panel, ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
-        
-        JButton b = ATSwingUtils.getButton("Configure Ratios", 570, 210, 190, 25, panel, ATSwingUtils.FONT_NORMAL, null, "change_ratios", this, m_da);
-        b.setEnabled(false);
-
-        ATSwingUtils.getButton("Algorithm", 570, 250, 190, 25, panel, ATSwingUtils.FONT_NORMAL, null, "algorithm", this, m_da);
-        
-        //ATSwingUtils.getButton("Change Date", 500, 50, 150, 25, panel, ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
-        
-    }*/
     
     
     
@@ -586,7 +463,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             if (ped.actionSuccessful())
             {
                 this.list_data.add(ped.getResult());
-                //Collections.sort(this.list_data);
+                Collections.sort(this.list_data);
                 refreshList(1, this.list_data);
             }
             
@@ -607,7 +484,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             if (ped.actionSuccessful())
             {
                 pse.setValues(ped.getResult());
-                //Collections.sort(this.list_data);
+                Collections.sort(this.list_data);
                 refreshList(1, this.list_data);
             }
         }
@@ -624,7 +501,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             if (ii==JOptionPane.YES_OPTION)
             {
                 this.list_data.remove(this.lst_basals.getSelectedIndex());
-                //Collections.sort(this.list_data);
+                Collections.sort(this.list_data);
                 refreshList(1, this.list_data);
             }
             else
@@ -643,7 +520,14 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             m_da.removeComponent(this);
             this.dispose();
         }
-            
+        else if (action.equals("select_profile"))
+        {
+            ProfileSelectorPump psp = new ProfileSelectorPump(m_da, this);
+            if (psp.wasAction())
+            {
+                this.tf_name.setText(psp.getSelectedObject().toString());
+            }
+        }
         else
             System.out.println(e.getActionCommand() + " is currently not supported.");
     }

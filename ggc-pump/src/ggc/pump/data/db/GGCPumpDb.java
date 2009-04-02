@@ -237,6 +237,11 @@ public class GGCPumpDb extends PluginDb
     }
     
     
+    /**
+     * Get Profiles
+     * 
+     * @return
+     */
     public ArrayList<PumpProfile> getProfiles()
     {
         

@@ -8,6 +8,7 @@ import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.gui.profile.ProfileSelectorPump;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 import ggc.shared.bolushelper.BolusHelper;
@@ -21,7 +22,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -1149,7 +1149,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         private static final long serialVersionUID = 1195430308386555236L;
         JLabel label_1_1, label_2_1;
         JButton button_1;
-        PumpValuesEntryProfile profile = null;
+        //PumpValuesEntryProfile profile = null;
+        String profile;
 
         public ProfileComponent()
         {
@@ -1183,18 +1184,26 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         public void actionPerformed(ActionEvent arg0)
         {
+            ProfileSelectorPump psp = new ProfileSelectorPump(m_da, m_parent);
+            if (psp.wasAction())
+            {
+                label_2_1.setText(psp.getSelectedObject().toString());
+                this.profile = psp.getSelectedObject().toString();
+            }
+/*            
             System.out.println("Profile Selector N/A !!!");
             JOptionPane.showMessageDialog(this, 
                 "Profile functionality will be added at " +
                 "later time (version 0.5), so profile " +
                 "selecttion is currently not possible.", 
                 ic.getMessage("PFORILE"), 
-                JOptionPane.WARNING_MESSAGE);
+                JOptionPane.WARNING_MESSAGE);*/
         }
 
         public boolean isSelected()
         {
-            return (this.profile!=null);
+            return (profile!=null);
+            //return !(label_2_1.getText().equals(ic.getMessage("NOT_SELECTED")));
         }
         
         public boolean isValueSet()
@@ -1205,14 +1214,20 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         public String getValue()
         {
+            /*
             if (this.profile==null)
                 return "0";
             else
                 return "" + this.profile.getId();
+                */
+            return this.profile;
         }
         
         public void setValue(String val)
         {
+            
+            this.profile = val;
+            /*
             long id = m_da.getLongValueFromString(val, 0L);
             
             if (id == 0)
@@ -1225,7 +1240,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 this.profile.setId(id);
                 
                 m_da.getDb().get(this.profile);
-            }
+            }*/
         }
         
         

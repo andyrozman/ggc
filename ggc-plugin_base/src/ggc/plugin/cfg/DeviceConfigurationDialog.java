@@ -103,7 +103,6 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
         m_da.addComponent(this);
 
-        setSize(450,600);
         setTitle(String.format(m_ic.getMessage("DEVICE_CONFIGURATION"), m_ic.getMessage("DEVICE_NAME_BIG")));
         m_da.centerJDialog(this, m_da.getCurrentComponentParent());
 
@@ -257,40 +256,49 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         this.comm_port_comp = new CommunicationPortComponent(m_da, this);
         pan_meter.add(this.comm_port_comp);
         
-
-        // timezone fix panel
-        JPanel pan_tzfix = ATSwingUtils.getPanel(20, 295, 410, 200, null, new TitledBorder(m_ic.getMessage("TIMEZONE_CONFIGURATION")), main_panel); 
+        int start_y = 320;
         
-        ATSwingUtils.getLabel(m_ic.getMessage("SELECT_TIMEZONE_LIST") + ":", 25,25, 450, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
+        if (this.dcd.doesDeviceSupportTimeFix())
+        {
         
-        cb_timezone = ATSwingUtils.getComboBox(DeviceConfigurationDialog.time_zones_vector, 25, 50, 370, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
+            // timezone fix panel
+            JPanel pan_tzfix = ATSwingUtils.getPanel(20, 295, 410, 200, null, new TitledBorder(m_ic.getMessage("TIMEZONE_CONFIGURATION")), main_panel); 
+            
+            ATSwingUtils.getLabel(m_ic.getMessage("SELECT_TIMEZONE_LIST") + ":", 25,25, 450, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
+            
+            cb_timezone = ATSwingUtils.getComboBox(DeviceConfigurationDialog.time_zones_vector, 25, 50, 370, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
+    
+            chb_fix = ATSwingUtils.getCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"), 25, 90, 380, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
+            chb_fix.addChangeListener(this);
+            chb_fix.setSelected(false);
+    
+            String[] changes = { "-1", "0", "+1" }; 
+            
+            ATSwingUtils.getLabel(m_ic.getMessage("WINTERTIME_FIX") + ":", 40,120, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
+            
+            this.cb_winter_fix = ATSwingUtils.getComboBox(changes, 240, 120, 80, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
+            this.cb_winter_fix.setSelectedIndex(1);
+    
+            ATSwingUtils.getLabel(m_ic.getMessage("SUMMERTIME_FIX") + ":", 40, 155, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
+    
+            this.cb_summer_fix = ATSwingUtils.getComboBox(changes, 240, 155, 80, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
+            this.cb_summer_fix.setSelectedIndex(1);
+            
+            start_y = 510;
 
-        chb_fix = ATSwingUtils.getCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"), 25, 90, 380, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
-        chb_fix.addChangeListener(this);
-        chb_fix.setSelected(false);
-
-        String[] changes = { "-1", "0", "+1" }; 
+            enableDisableFix(false);
+        }
         
-        ATSwingUtils.getLabel(m_ic.getMessage("WINTERTIME_FIX") + ":", 40,120, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        this.cb_winter_fix = ATSwingUtils.getComboBox(changes, 240, 120, 80, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
-        this.cb_winter_fix.setSelectedIndex(1);
-
-        ATSwingUtils.getLabel(m_ic.getMessage("SUMMERTIME_FIX") + ":", 40, 155, 200, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
-
-        this.cb_summer_fix = ATSwingUtils.getComboBox(changes, 240, 155, 80, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
-        this.cb_summer_fix.setSelectedIndex(1);
-        
-        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 50, 510, 110, 25, 
+        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 50, start_y, 110, 25, 
                                 main_panel, ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
 
-        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, 510, 110, 25, 
+        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, start_y, 110, 25, 
             main_panel, ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
         
-        help_button = m_da.createHelpButtonByBounds(290, 510, 110, 25, this, ATSwingUtils.FONT_NORMAL); //ATDataAccessAbstract.FONT_NORMAL); 
+        help_button = m_da.createHelpButtonByBounds(290, start_y, 110, 25, this, ATSwingUtils.FONT_NORMAL); //ATDataAccessAbstract.FONT_NORMAL); 
         main_panel.add(help_button);
 
-        enableDisableFix(false);
         
         //this.cb_entry.setSelectedItem(this.first_selected);
         
@@ -303,7 +311,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         {
             this.tf_name.setText("My " + m_ic.getMessage("DEVICE_NAME_BIG") + " #1");
         }
-        
+
+        setSize(450, start_y + 90);
         getContentPane().add(main_panel, null);
     }
 
@@ -585,15 +594,15 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         dce.device_device = this.lbl_device.getText();
         dce.communication_port = this.comm_port_comp.getCommunicationPort();
       
-        if (!dcd.doesDeviceSupportTimeFix())
-            return;
-      
-        dce.ds_area_long = (String)this.cb_timezone.getSelectedItem();
-        dce.ds_area = DeviceConfigurationDialog.time_zones.get((String)this.cb_timezone.getSelectedItem());
-        dce.ds_fix = this.chb_fix.isSelected();
-        
-        dce.ds_summer_change = getNumber((String)this.cb_summer_fix.getSelectedItem()); 
-        dce.ds_winter_change = getNumber((String)this.cb_winter_fix.getSelectedItem()); 
+        if (dcd.doesDeviceSupportTimeFix())
+        {
+            dce.ds_area_long = (String)this.cb_timezone.getSelectedItem();
+            dce.ds_area = DeviceConfigurationDialog.time_zones.get((String)this.cb_timezone.getSelectedItem());
+            dce.ds_fix = this.chb_fix.isSelected();
+            
+            dce.ds_summer_change = getNumber((String)this.cb_summer_fix.getSelectedItem()); 
+            dce.ds_winter_change = getNumber((String)this.cb_winter_fix.getSelectedItem());
+        }
 
         if (this.current_index_object.startsWith(m_ic.getMessage("NEW__")))
         {

@@ -111,7 +111,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.createConfigurationContext();
         this.createPlugInVersion();
 //        loadDeviceDataHandler();
-//        loadManager();
+        loadManager();
 //        loadReadingStatuses();
         this.createPlugInDataRetrievalContext();
         this.createDeviceConfiguration();
@@ -581,6 +581,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void loadManager()
     {
+        this.m_pumpManager = PumpManager.getInstance();
         this.m_manager = this.m_pumpManager;
     }
 

@@ -193,7 +193,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     }
 
 
-    String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
+    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
     
     /** 
      * getColumnName

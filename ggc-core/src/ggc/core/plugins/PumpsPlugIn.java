@@ -172,7 +172,7 @@ public class PumpsPlugIn extends PlugInClient
         this.commands_implemented = new boolean[7];
         this.commands_implemented[0] = false;
         this.commands_implemented[1] = true;
-        this.commands_implemented[2] = false;
+        this.commands_implemented[2] = true;
         this.commands_implemented[3] = true;
         this.commands_implemented[4] = true;
         this.commands_implemented[5] = true;
@@ -229,9 +229,6 @@ public class PumpsPlugIn extends PlugInClient
         else if (command.equals("pumps_config"))
         {
             this.executeCommand(PumpsPlugIn.COMMAND_CONFIGURATION);
-            
-            
-            
             refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
         }
         else if (command.equals("pumps_about"))
@@ -245,6 +242,9 @@ public class PumpsPlugIn extends PlugInClient
 
     }
 
+    
+    
+    
     
     /**
      * Get When Will Be Implemented
@@ -299,10 +299,11 @@ public class PumpsPlugIn extends PlugInClient
     
     private void refreshPanels(int mask)
     {
-//        MainFrame mf = (MainFrame)parent;
-//        mf.informationPanel.refreshGroup(mask);
+        DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
+        //MainFrame mf = (MainFrame)parent;
+        //mf.informationPanel.refreshGroup(mask);
+        //
     }
-    
     
     /**
      * Set Return Data (for getting data from plugin - async)

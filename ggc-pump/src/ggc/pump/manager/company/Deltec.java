@@ -1,6 +1,6 @@
 package ggc.pump.manager.company; 
 
-import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -30,7 +30,7 @@ import ggc.pump.util.I18nControl;
  */
 
 
-public class Deltec extends AbstractDeviceCompany
+public class Deltec extends AbstractPumpDeviceCompany
 {
     
     /**
@@ -38,7 +38,8 @@ public class Deltec extends AbstractDeviceCompany
      */
     public Deltec()
     {
-        super(I18nControl.getInstance(), true);
+        super(I18nControl.getInstance(), false);
+        this.addDevice(new GenericPumpDevice(this));
     }
 
 
@@ -60,7 +61,7 @@ public class Deltec extends AbstractDeviceCompany
      */
     public int getCompanyId()
     {
-        return 2;
+        return PumpManager.PUMP_COMPANY_DELTEC;
     }
     
     
@@ -71,7 +72,7 @@ public class Deltec extends AbstractDeviceCompany
      */
     public String getDescription()
     {
-       return "ROCHE_DESC"; 
+       return "DELTEC_DESC"; 
     }
     
     

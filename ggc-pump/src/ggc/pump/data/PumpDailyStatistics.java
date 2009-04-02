@@ -1,5 +1,6 @@
 package ggc.pump.data;
 
+import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.util.DataAccessPump;
 
@@ -91,6 +92,10 @@ public class PumpDailyStatistics extends StatisticsCollection
         for(int i=0; i<lst.size(); i++)
         {
             PumpValuesEntry pve = lst.get(i);
+            
+            if ((pve.base_type == PumpBaseType.PUMP_DATA_BASAL) && 
+                (pve.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
+                continue;
 
             if ((i+1)==lst.size())
             {

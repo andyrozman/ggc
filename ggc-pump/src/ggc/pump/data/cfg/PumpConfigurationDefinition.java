@@ -57,7 +57,7 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
      */
     public boolean doesDeviceSupportTimeFix()
     {
-        return true;
+        return false;
     }
 
     

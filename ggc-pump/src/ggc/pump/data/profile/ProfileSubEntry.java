@@ -2,10 +2,12 @@ package ggc.pump.data.profile;
 
 import ggc.pump.util.DataAccessPump;
 
+import java.util.Comparator;
+
 import com.atech.utils.ATechDate;
 
 
-public class ProfileSubEntry
+public class ProfileSubEntry implements Comparable<ProfileSubEntry>   // Comparator<ProfileSubEntry>
 {
     public int time_start;
     public int time_end;
@@ -44,6 +46,19 @@ public class ProfileSubEntry
     public String toString()
     {
         return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_start) + " - " + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_end) + " = " + DataAccessPump.Decimal2Format.format(amount);
+    }
+
+    public int compare(ProfileSubEntry pse1, ProfileSubEntry pse2)
+    {
+        if (pse1.time_start == pse2.time_start)
+            return (pse1.time_end - pse2.time_end);
+        else
+            return (pse1.time_start - pse2.time_start);
+    }
+
+    public int compareTo(ProfileSubEntry arg0)
+    {
+        return compare(this, arg0);
     }
     
     

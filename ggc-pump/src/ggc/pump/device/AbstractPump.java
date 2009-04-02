@@ -51,6 +51,8 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     
     protected OutputWriter m_output_writer = null;
     
+    protected String[] profile_names = null;
+    
 
     /**
      * Constructor
@@ -238,10 +240,11 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
-    String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
+    
+    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
     
     /** 
-     * Get Column Name
+     * getColumnName
      */
     public String getColumnName(int num)
     {
@@ -250,26 +253,29 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
 
 
     /** 
-     * Get Column Value
+     * getColumnValue
      */
     public String getColumnValue(int num)
     {
+        System.out.println("num:" + num);
         switch(num)
         {
          
-            case 1:
+            case 2:
                 return this.getName();
                 
-            case 2:
+            case 3:
                 return this.getDeviceCompany().getConnectionSamples();
 
-            case 0:
+            case 1:
             default:    
                 return this.getDeviceCompany().getName();
                 
                 
         }
     }
+    
+    
 
 
     /** 
@@ -371,5 +377,11 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
         return this.pump_company;
     }
 
+    
+    public String[] getProfileNames()
+    {
+        return this.profile_names;
+    }
+    
     
 }

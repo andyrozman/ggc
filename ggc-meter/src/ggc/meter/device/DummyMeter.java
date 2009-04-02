@@ -355,5 +355,17 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
         return false;
     }
 
+
+    
+    /**
+     * Is Device Readable (there are some devices that are not actual devices, but are used to get some
+     * sort of specific device data - in most cases we call them generics, and they don't have ability
+     * to read data)
+     * @return
+     */
+    public boolean isReadableDevice()
+    {
+        return false;
+    }
     
 }

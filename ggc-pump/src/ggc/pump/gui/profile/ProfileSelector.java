@@ -85,13 +85,50 @@ public class ProfileSelector extends SelectorAbstractDialog
         
         if (pe.actionSuccessful())
         {
+            PumpProfileH pr = pe.getResult();
+            
+            PumpProfile pr_other = getOpenProfile();
+            
+            if (pr_other==null)
+            {
+                this.full.add(new PumpProfile(pe.getResult()));
+            }
+            else
+            {
+                if (pr_other.getActive_from() < pr.getActive_from())
+                {
+                    pr_other.setActive_till(pr.getActive_from());
+                }
+                else
+                {
+                    pr.setActive_till(pr_other.getActive_from());
+                }
+
+                this.full.add(new PumpProfile(pr));
+                
+            }
+            
             //System.out.println("Success: ");
-            this.full.add(new PumpProfile(pe.getResult()));
+            //this.full.add(new PumpProfile(pe.getResult()));
             this.filterEntries();
             //System.out.println("Success: " + this.full);
         }
     }
 
+    
+    private PumpProfile getOpenProfile()
+    {
+        for(int i=0; i<this.list.size(); i++)
+        {
+            PumpProfile pp = (PumpProfile)this.list.get(i);
+            
+            if (pp.getActive_till()==-1)
+                return pp;
+        }
+        return null;
+    }
+    
+    
     
     /** 
      * Check And Execute Action Select

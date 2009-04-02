@@ -61,7 +61,21 @@ public class PumpManager extends DeviceManager
      */
     public static final int PUMP_COMPANY_ANIMAS                = 4;
     
+    /**
+     * Pump Company: Animas
+     */
+    public static final int PUMP_COMPANY_DELTEC                = 5;
+
+    /**
+     * Pump Company: Animas
+     */
+    public static final int PUMP_COMPANY_INSULET               = 6;
     
+    
+    /**
+     * Pump Company: Animas
+     */
+    public static final int PUMP_COMPANY_SOOIL                 = 7;
     
     /**
      * Singleton instance
@@ -113,8 +127,12 @@ public class PumpManager extends DeviceManager
     @Override
     public void loadSupportedDevices()
     {
-        // TODO add supported devices
-        //this.supported_devices.addAll(new AscensiaBayer().getDevices());
+        this.supported_devices.addAll(new Animas().getDevices());
+        this.supported_devices.addAll(new Deltec().getDevices());
+        this.supported_devices.addAll(new Insulet().getDevices());
+        this.supported_devices.addAll(new Minimed().getDevices());
+        this.supported_devices.addAll(new Roche().getDevices());
+        this.supported_devices.addAll(new Sooil().getDevices());
     }
 
 

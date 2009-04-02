@@ -2,6 +2,7 @@ package ggc.pump.plugin;
 
 import ggc.core.db.datalayer.PumpData;
 import ggc.core.db.datalayer.PumpDataExtended;
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -257,7 +258,22 @@ public class PumpPlugInServer extends PlugInServer
     @Override
     public Object getReturnObject(int ret_obj_id)
     {
-        return null;
+        if (ret_obj_id == PumpPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
+        {
+            DeviceConfigEntry de = DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance();
+            
+            if (de==null)
+                return DataAccessPump.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+            else
+            {
+                if (m_da.isValueSet(de.communication_port))
+                    return String.format(DataAccessPump.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port);
+                else
+                    return String.format(DataAccessPump.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITHOUT_PORT"), de.device_company + " " + de.device_device);
+            }   
+        }
+        else
+            return null;
     }
 
 

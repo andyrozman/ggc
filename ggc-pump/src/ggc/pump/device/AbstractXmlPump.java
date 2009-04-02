@@ -478,6 +478,16 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
+    /**
+     * Is Device Readable (there are some devices that are not actual devices, but are used to get some
+     * sort of specific device data - in most cases we call them generics, and they don't have ability
+     * to read data)
+     * @return
+     */
+    public boolean isReadableDevice()
+    {
+        return true;
+    }
 
 
 }

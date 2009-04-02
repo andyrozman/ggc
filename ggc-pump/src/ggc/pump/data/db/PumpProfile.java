@@ -59,6 +59,16 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public PumpProfile()
     {
+        this.setId(0L);
+        this.setName("");
+        this.setBasal_base(0.0f);
+        this.setBasal_diffs("");
+        this.setActive_from(0L);
+        this.setActive_till(-1L);
+        this.setExtended("");
+        this.setPerson_id(0);
+        this.setComment("");
+        this.setChanged(0L);
     }
     
     
@@ -549,7 +559,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
                 return this.getName();
     
             case 2:
-                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
+                if (this.getActive_till() <= 0)
+                    return "";
+                else
+                    return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
     
             default:
                 return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
@@ -566,7 +579,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
                 return this.getName();
     
             case 2:
-                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
+                if (this.getActive_till() <= 0)
+                    return "";
+                else
+                    return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
     
             default:
                 return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
