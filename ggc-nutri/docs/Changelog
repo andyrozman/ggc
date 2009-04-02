@@ -1,0 +1,20 @@
+
+Changelog file for GGC Core (GNU Gluco Control) 
+===============================================
+
+Newer entries are on top, older on bottom.
+
+--------------------------------------------------------------------------------------------------
+
+0.4.4.2
+    * Build system for GGC Core
+
+0.4.4.1 (27.3.2009) [andy]
+    * Meter Tool data is now added also into database for pump
+    * Core is now separate project (it is master parent to all other projects)
+    
+
+--------------------------------------------------------------------------------------------------
+
+Old changelog's before separation are in Changelog_old
+
