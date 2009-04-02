@@ -2,6 +2,15 @@
 Changes file for GGC Pump Tool
 ==============================
 
+0.4.1 (1.4.2009)
+    * Profiles editor finished 
+    * added Pump Profile Selector, which is tied to pump you are using (not to active profiles)
+    * Configuration of Pumps enabled
+    * Configuration fixed (time fix disabled)
+    * Web Lister enabled
+    * All pumps description available for weblister
+    * About picture added
+
 0.3.3 
     * Test version for Profiles done, needs some fixes though, but most of functionality planned is done for now
 

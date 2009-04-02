@@ -6,6 +6,12 @@ Development of Pump Tools runs totally independent on GGC project
 
     * Manual adding of pump data (data that will in future be read from pump) (0.5)
     * Adding of additional data (bg measurements, OH intake, Activity...) (0.5)
+    * Profile Editor:
+         - Base stuff
+    
+    * Printing of reports: 
+            - Base report
+            - Extended report
     
     * List of pumps (most of them not all) (0.4)
     * Configuration and graphical interface for integration into GGC (0.5)
@@ -22,12 +28,20 @@ Development of Pump Tools runs totally independent on GGC project
           o Sooil Dana (2010 ?) - current pumps don't have PC support
           o Roche/Disetronic (2009) - got all info
           o Animas (?)  - no reply yet
-          o Smith's Cosmo (?)  - no reply yet
           o Omni Pod (?) - Couldn't send mail... Problem with web ??
+          o Smith's Cosmo (?)  - no reply yet (Cosmo has on 31/03/09 decided to go out of diabetes bussiness, so 
+               we probably won't support it)
 
+Detailed functionalities not done (and need to be):
+===================================================
 
-
-
+ * Profile Editor:
+     * Graphical display of Basal Pattern
+     * Calculate and do warning if Basal pattern missing
+     
+ * Statistics
+     * We currently don't support statistics for Basal, if profile selected
+     
 
 
 
