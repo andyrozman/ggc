@@ -28,17 +28,11 @@
  */
 package ggc.gui.dialogs;
 
-import ggc.core.data.DayValuesData;
 import ggc.core.data.MonthlyValues;
-import ggc.core.print.PrintAbstract;
 import ggc.core.print.PrintExtendedMonthlyReport;
 import ggc.core.print.PrintSimpleMonthlyReport;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
-import ggc.nutri.print.PrintFoodMenuBase;
-import ggc.nutri.print.PrintFoodMenuExt1;
-import ggc.nutri.print.PrintFoodMenuExt2;
-import ggc.nutri.print.PrintFoodMenuExt3;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -163,8 +157,8 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
         if (master_type == PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION)
             init();
-        else
-            initRange();
+        //else
+        //    initRange();
 
         this.cb_template.setSelectedIndex(type - 1);
 
@@ -432,7 +426,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
                     displayPDF(psm.getNameWithPath());
                 }
             }
-            else
+            /*else
             {
 
                 System.out.println(this.dc_from.getDate() + " " + this.dc_to.getDate());
@@ -462,7 +456,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
                 
                 
                 displayPDF(pa.getNameWithPath());
-            }
+            }*/
         }
     }
 

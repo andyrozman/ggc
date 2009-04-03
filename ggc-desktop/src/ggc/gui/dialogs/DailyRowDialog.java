@@ -5,8 +5,6 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 import ggc.core.util.I18nControl;
-import ggc.nutri.dialogs.DailyValuesMealSelectorDialog;
-import ggc.nutri.panels.PanelMealSelector;
 import ggc.shared.bolushelper.BolusHelper;
 
 import java.awt.Component;
@@ -510,6 +508,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         else if (action.equals("edit_food"))
         {
+            // FIXME
+            
+            /*
             DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(m_da, this.m_dailyValuesRow.getMealsIds());
 
             if (dvms.wasAction())
@@ -518,12 +519,14 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 this.ftf_ch.setValue(new Float(dvms.getCHSum().replace(',', '.')));
 
                 updateMealsSet();
-            }
+            }*/
         }
         else if (action.equals("update_ch"))
         {
             if (this.isMealSet())
             {
+                // FIXME
+                /*
                 if (m_da.isValueSet(this.m_dailyValuesRow.getMealsIds()))
                 {
                     PanelMealSelector pms = new PanelMealSelector(this, null, this.m_dailyValuesRow.getMealsIds());
@@ -535,7 +538,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                     String s = pms.getCHSumString();
                     s = s.replace(DataAccess.false_decimal, DataAccess.real_decimal);
                     this.ftf_ch.setValue(m_da.getFloatValue(s)); */
-                }
+                /*}
                 else if (m_da.isValueSet(this.m_dailyValuesRow.getFoodDescriptionCH()))
                 {
                     updateMealsSet();
@@ -545,7 +548,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                     s = s.replace(DataAccess.false_decimal, DataAccess.real_decimal);
 
                     this.ftf_ch.setValue(m_da.getFloatValue(s)); */
-                }
+                //}*/
             }
         }
         else if (action.equals("bolus_helper"))

@@ -5,8 +5,10 @@
     </description>
 
     <!-- Environment properties read from a file ...-->
-    <property file="./GGCBuild.properties"/>
-    <property file="./GGCVersion.properties"/>
+    <property file="../../build/AtechTools.properties"/>
+    <property file="../../ggc-core/build/GGCBuild.properties"/>
+    <property file="./GGC_Desktop_Version.properties"/>
+    <property file="../../ggc-core/build/GGC_Core_Version.properties"/>
     
 
     <!-- These should *not* be modified on the command line! -->
@@ -43,7 +45,8 @@
         <delete dir="${build.dir}/com"/>
         <delete dir="${build.dir}/org"/>
         <delete dir="${build.dir}/icons"/>
-        <delete file="${build.dir}/ggc.jar"/>
+        <delete file="${build.dir}/ggc-main*.jar"/>
+        <delete file="${build.dir}/ggc-little*.jar"/>
     </target>
 
 
@@ -77,6 +80,7 @@
                 <pathelement path="${hibernate_cpath}" />
                 <pathelement path="${utils_cpath}"/>
                 <pathelement path="${classpath.full}"/>
+            	<pathelement path="../../build/deploy_files/ggc-core-${ggc-core.version}.jar"/>
              </classpath>
         </javac>
     </target>
@@ -109,44 +113,7 @@
     </target>
 
 
-    <target name="jar_core"  description="Build GGC Core" depends="make">
-        <jar jarfile="${binary.dir}/ggc-core-${ggc-core.version}.jar"
-             update="false" 
-             index="false"
-             manifest="./manifest_ggc_core.mf">
 
-            <fileset dir="${build.dir}">
-                <include name="ggc/core/**"/>
-                <include name="*.hbm.xml"/>
-                <exclude name="ggc/gui/**"/>
-            </fileset>
-            <fileset dir="${source.dir}">
-                <include name="*.hbm.xml"/>
-            </fileset>
-
-        </jar>
-    </target>
-
-
-    <target name="jar_lang"  description="Build GGC Lang" depends="make">
-        <jar jarfile="${binary.dir}/ggc-lang-${ggc-lang.version}.jar"
-             update="false" 
-             index="false"
-             manifest="./manifest_ggc_core.mf">
-
-            <fileset dir="${build.dir}">
-                <include name="ggc/core/**"/>
-                <include name="GGC_*.properties"/>
-                <include name="*.hbm.xml"/>
-                <exclude name="ggc/core/**"/>
-            </fileset>
-            <fileset dir="${source.dir}/../data">
-                <include name="help/**"/>
-                <exclude name="**_svn/**"/>
-                <exclude name="**/.svn/**"/>
-            </fileset>
-        </jar>
-    </target>
 
 
 
@@ -171,7 +138,7 @@
     </target>
 
 
-    <target name="jars_full" depends="jar_main, jar_little, jar_lang, jar_core">    
+    <target name="jars_full" depends="jar_main, jar_little">    
     </target>
 
 
@@ -179,9 +146,7 @@
     </target>
 
     <target name="deploy" depends="full">
-    	<copy file="${binary.dir}/ggc-core-${ggc-core.version}.jar" todir="../../build/deploy_files/"/>
     	<copy file="${binary.dir}/ggc-main-${ggc-main.version}.jar" todir="../../build/deploy_files/"/>
-    	<copy file="${binary.dir}/ggc-lang-${ggc-lang.version}.jar" todir="../../build/deploy_files/"/>
     	<copy file="${binary.dir}/ggc-little-${ggc-little.version}.jar" todir="../../build/deploy_files/"/>
     </target>
 	

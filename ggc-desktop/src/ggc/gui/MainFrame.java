@@ -16,8 +16,6 @@ import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.graphs.CourseGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
-import ggc.nutri.data.GGCTreeRoot;
-import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.shared.ratio.RatioBaseDialog;
 
 import java.awt.BorderLayout;
@@ -352,10 +350,11 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.createAction(menu_reports, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png");
         this.createAction(menu_reports, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", "print.png");
 
+        /*
         JMenu menu_reports_foodmenu = this.createMenu(this.menu_printing, "MN_FOODMENU", "MN_FOODMENU_DESC");
         this.createAction(menu_reports_foodmenu, "MN_FOODMENU_SIMPLE", "MN_FOODMENU_SIMPLE_DESC", "report_foodmenu_simple", "print.png");
         this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT1", "MN_FOODMENU_EXT1_DESC", "report_foodmenu_ext1", "print.png");
-        this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT2", "MN_FOODMENU_EXT2_DESC", "report_foodmenu_ext2", "print.png");
+        this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT2", "MN_FOODMENU_EXT2_DESC", "report_foodmenu_ext2", "print.png"); */
         // this.createAction(menu_reports_foodmenu, "MN_FOODMENU_EXT3",
         // "MN_FOODMENU_EXT3_DESC", "report_foodmenu_ext3", "print.png");
 
@@ -420,7 +419,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             this.createAction(this.menu_help, "MN_TEST", "MN_TEST_DESC", "test", null);
         }
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         
         for(Enumeration<String> en= m_da.getPlugins().keys(); en.hasMoreElements(); )
         {
@@ -435,7 +434,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
         }
         
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         
         
     }
@@ -1036,7 +1035,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
              * else if (command.equals("hlp_check")) { new
              * VersionChecker().checkForUpdate(); }
              */
-            else if (command.equals("food_nutrition_1"))
+/*            else if (command.equals("food_nutrition_1"))
             {
                 new NutritionTreeDialog(MainFrame.this, m_da, GGCTreeRoot.TREE_USDA_NUTRITION);
             }
@@ -1047,7 +1046,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             else if (command.equals("food_meals"))
             {
                 new NutritionTreeDialog(MainFrame.this, m_da, GGCTreeRoot.TREE_MEALS);
-            }
+            } */
             else if (command.equals("tools_db_backup"))
             {
                 new BackupDialog(MainFrame.this, m_da);
@@ -1065,7 +1064,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 new PrintingDialog(MainFrame.this, 2, PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION);
             }
-            else if (command.equals("report_foodmenu_simple"))
+/*            else if (command.equals("report_foodmenu_simple"))
             {
                 new PrintingDialog(MainFrame.this, 1, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
             }
@@ -1076,7 +1075,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             else if (command.equals("report_foodmenu_ext2"))
             {
                 new PrintingDialog(MainFrame.this, 3, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-            }
+            } */
             /*else if (command.equals("report_foodmenu_ext3"))
             {
                 // disabled for now, until it's implement to fully function
