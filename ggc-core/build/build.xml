@@ -5,8 +5,9 @@
     </description>
 
     <!-- Environment properties read from a file ...-->
+    <property file="../../build/AtechTools.properties"/>
     <property file="./GGCBuild.properties"/>
-    <property file="./GGCVersion.properties"/>
+    <property file="./GGC_Core_Version.properties"/>
     
 
     <!-- These should *not* be modified on the command line! -->
@@ -18,13 +19,13 @@
     
     <target name="build">
         <echo message="   ************************************************* "/>
-        <echo message="   ****                  GGC Build               **** "/>
+        <echo message="   ****              GGC Core Build               **** "/>
         <echo message="   ************************************************* "/>
         <echo message=""/>
         <echo message="     copy = copies all needed files"/>
         <echo message="     clean = clean build dir"/>
         <echo message="     build_ggc (make) = build GGC (recompile classes)"/>
-        <echo message="     jar = create GGC jar"/>
+        <echo message="     jar = create GGC Core jar"/>
         <echo message="     jar_'part' = create specified GGC jar"/>
         <echo message="         available parts are: core, lang, little, main"/>
         <echo message="     jars_full = all jars"/>
@@ -42,8 +43,7 @@
         <delete dir="${build.dir}/ggc"/>
         <delete dir="${build.dir}/com"/>
         <delete dir="${build.dir}/org"/>
-        <delete dir="${build.dir}/icons"/>
-        <delete file="${build.dir}/ggc.jar"/>
+        <delete file="${build.dir}/ggc-core*.jar"/>
     </target>
 
 
@@ -51,14 +51,6 @@
         <copy todir="${build.dir}/" overwrite="true">
             <fileset dir="${source.dir}" casesensitive="no">
                 <include name="GGC_*.properties"/>
-            </fileset>
-        </copy>
-        <mkdir dir="${build.dir}/icons" />
-        <copy todir="${build.dir}/icons" overwrite="true">
-            <fileset dir="${source.dir}/icons" casesensitive="no">
-                <include name="**/*.gif"/>
-                <include name="**/*.jpg"/>
-                <include name="**/*.png"/>
             </fileset>
         </copy>
     </target>
@@ -70,7 +62,6 @@
         <javac srcdir="${source.dir}"
             destdir="${build.dir}"
             includes="ggc/**, org/**, com/**"
-            excludes="ggc/db/DummyHandler.java, ggc/db/HSQLHandler.java, ggc/db/MySQLHandler.java, ggc/db/TextFileHandler.java, ggc/data/meter2/**"
            deprecation="off" debug="true"> <!-- debug="${debug}    DummyHandler.java, ggc/db/HSQLHandler.java, ggc\db\MySQLHandler, ggc/db/TextFileHandler.java"  --> 
             
             <classpath>
@@ -91,29 +82,13 @@
 
 -->
 
-    <target name="jar_main"  description="Build GGC Main GUI jar" depends="make">
-        <jar jarfile="${binary.dir}/ggc-main-${ggc-main.version}.jar"
-             update="false" 
-             index="false"
-             manifest="./manifest_ggc.mf">
-
-            <fileset dir="${build.dir}">
-                <include name="ggc/GGC.class"/>
-                <include name="ggc/gui/**"/>
-                <exclude name="ggc/gui/little/**"/>
-                <include name="icons/*.gif"/>
-                <include name="icons/*.jpg"/>
-                <include name="icons/*.png"/>
-            </fileset>
-        </jar>
-    </target>
 
 
     <target name="jar_core"  description="Build GGC Core" depends="make">
         <jar jarfile="${binary.dir}/ggc-core-${ggc-core.version}.jar"
              update="false" 
              index="false"
-             manifest="./manifest_ggc_core.mf">
+             >
 
             <fileset dir="${build.dir}">
                 <include name="ggc/core/**"/>
@@ -132,7 +107,7 @@
         <jar jarfile="${binary.dir}/ggc-lang-${ggc-lang.version}.jar"
              update="false" 
              index="false"
-             manifest="./manifest_ggc_core.mf">
+             >
 
             <fileset dir="${build.dir}">
                 <include name="ggc/core/**"/>
@@ -142,6 +117,7 @@
             </fileset>
             <fileset dir="${source.dir}/../data">
                 <include name="help/**"/>
+            	<include name="lang/**"/>
                 <exclude name="**_svn/**"/>
                 <exclude name="**/.svn/**"/>
             </fileset>
@@ -150,35 +126,26 @@
 
 
 
-    <target name="jar_little"  description="Build GGC Little" depends="make">
-        <jar jarfile="${binary.dir}/ggc-little-${ggc-little.version}.jar"
-             update="false" 
-             index="false"
-             manifest="./manifest_ggc_little.mf">
-
-            <fileset dir="${build.dir}">
-                <include name="ggc/gui/little/**"/>
-                <include name="ggc/gui/view/**"/>
-                <include name="icons/*.gif"/>
-                <include name="icons/*.jpg"/>
-                <include name="icons/*.png"/>
-            </fileset>
-        </jar>
-    </target>
 
 
     <target name="dev" depends="clean, copy, make">    
     </target>
 
 
-    <target name="jars_full" depends="jar_main, jar_little, jar_lang, jar_core">    
+    <target name="jars_full" depends="jar_core, jar_lang">    
     </target>
 
 
     <target name="full" depends="clean, copy, jars_full">    
     </target>
 
+	
     <target name="deploy" depends="full">
+        <copy file="${binary.dir}/ggc-core-${ggc-core.version}.jar" todir="../../build/deploy_files/"/>
+        <copy file="${binary.dir}/ggc-lang-${ggc-lang.version}.jar" todir="../../build/deploy_files/"/>
+    </target>
+	
+    <target name="deploy_old" depends="full">
     	<copy file="${binary.dir}/ggc-core-${ggc-core.version}.jar" todir="../../build/deploy_files/"/>
     	<copy file="${binary.dir}/ggc-main-${ggc-main.version}.jar" todir="../../build/deploy_files/"/>
     	<copy file="${binary.dir}/ggc-lang-${ggc-lang.version}.jar" todir="../../build/deploy_files/"/>

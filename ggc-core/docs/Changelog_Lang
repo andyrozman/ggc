@@ -1,0 +1,28 @@
+
+Changelog file for GGC Lang (GNU Gluco Control) 
+===============================================
+
+Newer entries are on top, older on bottom.
+
+--------------------------------------------------------------------------------------------------
+
+0.3.4 [~] [Andy]
+    Development
+
+
+0.3.3 [GGC-Core-0.4.3] [Andy]
+    Added some words for panels
+
+
+0.1     -> 0.2.9.8  (created because of help system, which needs to be separate)
+0.2     -> 0.2.9.9  (language files split to main and nutrition)
+0.2.1   -> 0.2.9.10 (keywords added to nutri.en)
+0.2.2   -> 0.2.13.1 (added keywords)
+0.2.3   -> 0.2.13.1 (added keywords)
+0.2.4   ->  0.2.15  (more translation for de added)
+0.2.5   -> 0.2.19
+0.2.6   -> 0.3
+0.2.7   -> 0.3.3
+
+
+    
