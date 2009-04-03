@@ -239,6 +239,11 @@ public class MeterPlugInServer extends DevicePlugInServer
     }
 
 
+    /**
+     * Get Backup Objects (if available)
+     * 
+     * @return
+     */
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
@@ -247,6 +252,15 @@ public class MeterPlugInServer extends DevicePlugInServer
     }
 
 
+    /**
+     * Get PlugIn Main Menu 
+     * 
+     * This is new way to handle everything, previously we used to pass ActionListener items through
+     * plugin framework, but in new way, we will use this one. We just give main application menu,
+     * which contains all items accessible through menus.
+     *  
+     * @return
+     */
     @Override
     public JMenu getPlugInMainMenu()
     {
@@ -254,9 +268,16 @@ public class MeterPlugInServer extends DevicePlugInServer
         return null;
     }
 
-
+    
+    /**
+     * Get PlugIn Print Menus 
+     * 
+     * Since printing is also PlugIn specific we need to add Printing jobs to application.
+     *  
+     * @return
+     */
     @Override
-    public JMenu getPlugInPrintMenu()
+    public JMenu[] getPlugInPrintMenus()
     {
         // TODO Auto-generated method stub
         return null;

@@ -7,21 +7,21 @@
     <!-- Environment properties read from a file ...-->
     <property file="../../ggc-plugin_base/build/GGCPlugInBaseBuild.properties"/>
     <property file="../../ggc-plugin_base/build/GGCPlugInBaseVersion.properties"/>
-    <property file="./GGCPumpToolVersion.properties"/>
+    <property file="./GGCNutriToolVersion.properties"/>
 	
     <!-- These should *not* be modified on the command line! -->
     <property name="build.dir" value="${outdir.dir}/classes"/>
     <property name="deploy.dir" value="${outdir.dir}/deploy"/>
     
-	<property name="jar_file_name" value="ggc-pump_tool" />
-	<property name="jar_file_version" value="${ggc-pump-tool.version}" />
+	<property name="jar_file_name" value="ggc-nutri_tool" />
+	<property name="jar_file_version" value="${ggc-nutri-tool.version}" />
 	
 	
     <!-- Build GGC  -->
     
     <target name="build">
         <echo message="   ************************************************* "/>
-        <echo message="   ****           GGC PlugIn Base Build         **** "/>
+        <echo message="   ****         GGC Nutrition Tool Build        **** "/>
         <echo message="   ************************************************* "/>
         <echo message=""/>
         <echo message="     clean = clean build dir"/>

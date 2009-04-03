@@ -8,6 +8,7 @@ import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
 import ggc.nutri.dialogs.NutritionTreeDialog;
+import ggc.nutri.gui.print.PrintFoodDialog;
 import ggc.nutri.util.DataAccessNutri;
 import ggc.nutri.util.I18nControl;
 
@@ -248,6 +249,11 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     }
 
 
+    /**
+     * Get Backup Objects (if available)
+     * 
+     * @return
+     */
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
@@ -261,6 +267,15 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     }
 
 
+    /**
+     * Get PlugIn Main Menu 
+     * 
+     * This is new way to handle everything, previously we used to pass ActionListener items through
+     * plugin framework, but in new way, we will use this one. We just give main application menu,
+     * which contains all items accessible through menus.
+     *  
+     * @return
+     */
     @Override
     public JMenu getPlugInMainMenu()
     {
@@ -294,19 +309,55 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
                 
 //        this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
         
-        // TODO Auto-generated method stub
         return menu_food;
     }
 
 
+    /**
+     * Get PlugIn Print Menus 
+     * 
+     * Since printing is also PlugIn specific we need to add Printing jobs to application.
+     *  
+     * @return
+     */
     @Override
-    public JMenu getPlugInPrintMenu()
+    public JMenu[] getPlugInPrintMenus()
     {
-        // TODO Auto-generated method stub
-        return null;
+        JMenu menu_reports_foodmenu = ATSwingUtils.createMenu("MN_FOODMENU", "MN_FOODMENU_DESC", ic);
+        
+        ATSwingUtils.createMenuItem(menu_reports_foodmenu, 
+            "MN_FOODMENU_SIMPLE", 
+            "MN_FOODMENU_SIMPLE_DESC", 
+            "report_foodmenu_simple",
+            this, "print.png", 
+            ic, DataAccessNutri.getInstance(), parent);
+        
+        
+        ATSwingUtils.createMenuItem(menu_reports_foodmenu,
+            "MN_FOODMENU_EXT1", 
+            "MN_FOODMENU_EXT1_DESC", 
+            "report_foodmenu_ext1", 
+            this, "print.png", 
+            ic, DataAccessNutri.getInstance(), parent);
+        
+        
+        ATSwingUtils.createMenuItem(menu_reports_foodmenu,
+            "MN_FOODMENU_EXT2", 
+            "MN_FOODMENU_EXT2_DESC", 
+            "report_foodmenu_ext2", 
+            this, "print.png", 
+            ic, DataAccessNutri.getInstance(), parent);
+        
+        JMenu[] mns = new JMenu[1];
+        mns[0] = menu_reports_foodmenu;
+        
+        return mns;
     }
 
 
+    /** 
+     * Action Performed
+     */
     public void actionPerformed(ActionEvent ae)
     {
         String command = ae.getActionCommand();
@@ -323,8 +374,27 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         {
             new NutritionTreeDialog((JFrame)parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_MEALS);
         }
+        else if (command.equals("report_foodmenu_simple"))
+        {
+            new PrintFoodDialog((JFrame)parent, 1, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+        }
+        else if (command.equals("report_foodmenu_ext1"))
+        {
+            new PrintFoodDialog((JFrame)parent, 2, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+        }
+        else if (command.equals("report_foodmenu_ext2"))
+        {
+            new PrintFoodDialog((JFrame)parent, 3, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+        }
+        /*else if (command.equals("report_foodmenu_ext3"))
+        {
+            // disabled for now, until it's implement to fully function
+            new PrintingDialog(MainFrame.this, 4, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+        } */
+        
         
     }
+
     
     
 }

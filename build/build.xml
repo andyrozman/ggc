@@ -48,7 +48,15 @@
     <target name="all" depends="clean, all_noclean" description="whole GGC">
     </target>
 
-    <target name="all_noclean" depends="ggc_core, ggc_desktop, plugins" description="whole GGC">
+    <target name="all_test" depends="all_noclean" description="whole GGC">
+    </target>
+
+
+    <target name="all_noclean" depends="ggc_desktop" description="whole GGC">
+    </target>
+
+
+    <target name="all_noclean_full" depends="ggc_core, ggc_desktop, plugins" description="whole GGC">
     </target>
 	
 	
