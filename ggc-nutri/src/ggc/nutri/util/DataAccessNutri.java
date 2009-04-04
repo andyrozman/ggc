@@ -19,6 +19,7 @@ import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Meter Tool (support for Meter devices)
@@ -59,6 +60,9 @@ public class DataAccessNutri extends DataAccessPlugInBase
 
 
 
+    /**
+     * The m_main.
+     */
     JFrame m_main = null;        
         
         
@@ -84,6 +88,9 @@ public class DataAccessNutri extends DataAccessPlugInBase
         initSpecial();
     } 
 
+    /**
+     * Set Values From Data Access
+     */
     public void setValuesFromDataAccess()
     {
         
@@ -406,30 +413,56 @@ public class DataAccessNutri extends DataAccessPlugInBase
     }
     
 
+    /**
+     * Gets the db.
+     * 
+     * @return the db
+     */
     public GGCDb getDb()
     {
         return DataAccess.getInstance().getDb();
     }
 
+    /**
+     * The db_nutri.
+     */
     GGCDbNutri db_nutri = null;
     
+    /**
+     * Gets the nutri db.
+     * 
+     * @return the nutri db
+     */
     public GGCDbNutri getNutriDb()
     {
         return db_nutri;
     }
 
     
+    /**
+     * Sets the nutri db
+     * 
+     * @param db the new nutri db
+     */
     public void setNutriDb(GGCDbNutri db)
     {
         db_nutri = db;
     }
     
     
+    /**
+     * Gets the db cache
+     * 
+     * @return the db cache
+     */
     public GGCDbCache getDbCache()
     {
         return db_nutri.getDbCache();
     }
 
+    /** 
+     * Load PlugIns
+     */
     @Override
     public void loadPlugIns()
     {

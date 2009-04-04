@@ -29,10 +29,7 @@
 package ggc.nutri.gui.print;
 
 import ggc.core.data.DayValuesData;
-import ggc.core.data.MonthlyValues;
 import ggc.core.print.PrintAbstract;
-import ggc.core.print.PrintExtendedMonthlyReport;
-import ggc.core.print.PrintSimpleMonthlyReport;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 import ggc.nutri.print.PrintFoodMenuBase;
@@ -133,7 +130,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
      */
     public static final int PRINT_DIALOG_RANGE_DAY_OPTION = 2;
 
-    private int master_type = 1;
+//    private int master_type = 1;
 
     /**
      * Constructor 
@@ -159,7 +156,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         gc = new GregorianCalendar();
         setTitle(m_ic.getMessage("PRINTING"));
 
-        this.master_type = master_type;
+//        this.master_type = master_type;
 
         //if (master_type == PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION)
         //    init();
@@ -171,6 +168,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         this.setVisible(true);
     }
 
+    @SuppressWarnings("unused")
     private void init() // throws Exception
     {
 

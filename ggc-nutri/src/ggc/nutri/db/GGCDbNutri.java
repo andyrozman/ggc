@@ -114,7 +114,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
     /**
      * Constructor 
      * 
-     * @param da
+     * @param db 
      */
     public GGCDbNutri(GGCDb db)
     {
@@ -159,6 +159,9 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
     // *************************************************************
 
     
+    /**
+     * Load Nutrition Database
+     */
     public void loadNutritionDatabase()
     {
         
@@ -1598,6 +1601,9 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
     }
 
 
+    /** 
+     * Create Configuration
+     */
     @Override
     public HibernateConfiguration createConfiguration()
     {

@@ -1,7 +1,6 @@
 package ggc.nutri.db.datalayer;
 
 import ggc.core.db.hibernate.NutritionDefinitionH;
-import ggc.core.util.DataAccess;
 import ggc.nutri.util.DataAccessNutri;
 
 import java.util.Comparator;

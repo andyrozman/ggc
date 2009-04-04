@@ -91,23 +91,25 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     {
     	if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_NUTRITION)
     	{
-                setSelectorObject(new NutritionDefinition());
-                setSelectorName(ic.getMessage("SELECTOR_NUTRITION_DEFINITION"));
-                setHelpStringId("ggc.food.user.select.nutrition");
-                setNewItemString(ic.getMessage("NEW_NUTR_DEF"));
-        	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
-        	    this.getDescriptions().put("DESC_1", ic.getMessage("NUTRITION_NAME"));
-        	    setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
+            setSelectorObject(new NutritionDefinition());
+            setSelectorName(ic.getMessage("SELECTOR_NUTRITION_DEFINITION"));
+            setHelpStringId("ggc.food.user.select.nutrition");
+            setNewItemString(ic.getMessage("NEW_NUTR_DEF"));
+            setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
+            this.getDescriptions().put("DESC_1", ic.getMessage("NUTRITION_NAME"));
+            setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
+   	        this.setHelpEnabled(true);
     	}
     	else if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_HOME_WEIGHT)
     	{
-                setSelectorObject(new NutritionHomeWeightType());
-                setSelectorName(ic.getMessage("SELECTOR_HOME_WEIGHT"));
-                setHelpStringId("ggc.food.user.select.home_weight");
-                setNewItemString(ic.getMessage("NEW_HOME_WEIGHT"));
-        	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
-        	    this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));
-        	    setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
+            setSelectorObject(new NutritionHomeWeightType());
+            setSelectorName(ic.getMessage("SELECTOR_HOME_WEIGHT"));
+            setHelpStringId("ggc.food.user.select.home_weight");
+            setNewItemString(ic.getMessage("NEW_HOME_WEIGHT"));
+    	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
+    	    this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));
+    	    setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
+            this.setHelpEnabled(true);
     	}
 	
     }
@@ -137,14 +139,6 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     }
     
     
-    /**
-     * Set Help Context
-     */
-    public void setHelpContext()
-    {
-    	m_da.getHelpContext().getMainHelpBroker().enableHelpOnButton(this.getHelpButton(), this.getHelpId(), null);
-    	m_da.getHelpContext().getMainHelpBroker().enableHelpKey(this.getRootPane(), this.getHelpId(), null);
-    }
     
 
 
@@ -195,6 +189,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     public void itemStateChanged(ItemEvent e)
     {
     }
+
     
     
 }

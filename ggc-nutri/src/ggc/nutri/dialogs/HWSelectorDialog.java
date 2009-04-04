@@ -100,6 +100,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
 	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
 	    this.getDescriptions().put("DESC_1", ic.getMessage("NUTRITION_NAME"));
 	    setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
+	    this.setHelpEnabled(true);
     }
 
      
@@ -124,14 +125,6 @@ public class HWSelectorDialog extends SelectorAbstractDialog
     }
     
     
-    /**
-     * Set Help Context
-     */
-    public void setHelpContext()
-    {
-    	m_da.getHelpContext().getMainHelpBroker().enableHelpOnButton(this.getHelpButton(), this.getHelpId(), null);
-    	m_da.getHelpContext().getMainHelpBroker().enableHelpKey(this.getRootPane(), this.getHelpId(), null);
-    }
     
 
     /**

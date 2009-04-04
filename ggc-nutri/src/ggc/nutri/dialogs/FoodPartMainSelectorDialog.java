@@ -93,7 +93,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param type
      * @param except
      */
@@ -124,7 +123,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param type
      * @param except
      */
@@ -155,7 +153,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param ndd
      */
     public FoodPartMainSelectorDialog(JFrame parent, NutritionDataDisplay ndd)
@@ -181,7 +178,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param ndd
      */
     public FoodPartMainSelectorDialog(JDialog parent, NutritionDataDisplay ndd)
@@ -207,7 +203,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param hwd
      */
     public FoodPartMainSelectorDialog(JDialog parent, HomeWeightDataDisplay hwd)
@@ -237,7 +232,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param hwd
      */
     public FoodPartMainSelectorDialog(JFrame parent, HomeWeightDataDisplay hwd)

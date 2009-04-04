@@ -1,10 +1,10 @@
 package ggc.nutri.dialogs;
 
+import ggc.core.util.DataAccess;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.HomeWeightSpecial;
 import ggc.nutri.db.datalayer.Meal;
-import ggc.core.util.DataAccess;
 import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Font;
@@ -87,7 +87,6 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param meal_id
      */
     public MealSpecialSelectorDialog(JDialog parent, long meal_id)
@@ -110,7 +109,6 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param meal_id
      */
     public MealSpecialSelectorDialog(JFrame parent, long meal_id)
@@ -134,7 +132,6 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param part
      */
     public MealSpecialSelectorDialog(JDialog parent, DailyFoodEntry part)
@@ -159,7 +156,6 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param part
      */
     public MealSpecialSelectorDialog(JFrame parent, DailyFoodEntry part)

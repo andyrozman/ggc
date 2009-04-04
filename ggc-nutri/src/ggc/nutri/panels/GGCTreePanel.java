@@ -43,7 +43,6 @@ public abstract class GGCTreePanel extends EditableAbstractPanel //JPanel implem
      * Constructor
      * 
      * @param is_editable
-     * @param ic
      */
     public GGCTreePanel(boolean is_editable)
     {

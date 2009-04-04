@@ -61,6 +61,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     
     
     
+    @SuppressWarnings("unused")
     private String commands[] = { 
                                   "MN_NUTRI_READ_DESC", 
                                   "MN_NUTRI_LIST_DESC", 
@@ -227,6 +228,9 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     }
     
     
+    /**
+     * Load Db
+     */
     public void loadDb()
     {
         //GGCDbNutri db = new GGCDbNutri(((DataAccess)m_da).getDb());

@@ -62,8 +62,8 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     GGCTreeRoot
- *  Description:  Used for holding tree information for nutrition and meals
+ *  Filename:     GGCDbCache
+ *  Description:  Used for holding information for nutrition and meals
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
@@ -93,6 +93,9 @@ public class GGCDbCache
     GGCDbNutri m_db = null;
     
 
+    /**
+     * Tree Roots
+     */
     public Hashtable<String, GGCTreeRoot> tree_roots = null;
     
     

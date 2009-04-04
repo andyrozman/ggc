@@ -333,7 +333,7 @@ public class TestNutritionData
     private void getKeywords(GGCDb _db)
     {
 
-        ArrayList<FoodDescription> lst = null; //_db.getUSDAFoodDescriptions();
+        ArrayList<FoodDescription> lst = new ArrayList<FoodDescription>(); //_db.getUSDAFoodDescriptions();
         // ArrayList<SelectableInterface> lst = sb.getNutritionHomeWeights();
 
         Hashtable ht = new Hashtable();

@@ -76,7 +76,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param meal_id
      */
     public MealSelectorDialog(JDialog parent, long meal_id)
@@ -101,7 +100,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param meal_id
      */
     public MealSelectorDialog(JFrame parent, long meal_id)
@@ -127,7 +125,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param part
      */
     public MealSelectorDialog(JDialog parent, MealPart part)
@@ -153,7 +150,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
      * Constructor
      * 
      * @param parent 
-     * @param da
      * @param part
      */
     public MealSelectorDialog(JFrame parent, MealPart part)
