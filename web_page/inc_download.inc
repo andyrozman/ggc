@@ -13,6 +13,14 @@ slovene (as is application)).
 <h3>GGC Releases</h3>
 
 
+<h4>Version 0.4 Updates</h4>
+
+<ul>
+<li><a href="http://downloads.sourceforge.net/ggc/GGC_Update_0.4.3.zip?use_mirror=osdn">GGC 0.4.3 Update</a> - This update makes changes
+to HbA1c Dialog, Printing system and Startup system, also there has been change to Nutrition part (we now have dynamic loading of data, 
+so startup is faster).</li>
+</ul>
+
 <h4>Version 0.4</h4>
 
 <ul>
