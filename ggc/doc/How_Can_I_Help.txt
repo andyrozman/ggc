@@ -118,7 +118,7 @@ If you like our software and want it to be available in your own language you ca
 team. First you need to do is post message on Forum Translation with name (something like that)  
 (http://sourceforge.net/forum/forum.php?forum_id=813898), 'Translation into Russian'. Please first go 
 through all messages to find if someone is already trying to translate application. If yes, join his/hers
-team, and together you will be finsihed faster...
+team, and together you will be finished faster...
 
 After few days you will receive several files and tools that will help you with your task... 
 
@@ -126,21 +126,21 @@ Application GGC has several language files (2 for main application and one for e
 help files (since help files are not available yet we will ignore them for now).
 
 Text files are ascii text files, which means that your special characters will not be recognized as 
-such. What you need to do is get an editor which supports utf-8 format. After you have it, open files
+such. What you need to do is get an editor which supports UTF-8 format. After you have it, open files
 you received and save them in UTF-8. After you are finished with translation you need to run 
 application native2ascii, which is part of java development kit, which you need to install. 
 
-Since GGC is in development this files will regulary change. You can either:
+Since GGC is in development these files will regulary change. You can either:
 a) wait to get new translation request (this will be sent to all translators, after some bigger 
    functionality is completed)
 b) install SVN and get all sources from SVN (if you are not registered developer you won't be able to
-   check-in (send your files to us) direcly, but you can receive all files and see if something changed.
+   check-in (send your files to us) directly, but you can receive all files and see if something changed.
    You will still have to send your translation to us (via forum or direct), but we will add it as
    soon as we receive it.
 
 In language files there are a lot of keywords, which are all under special groups, each group has a tag 
 number. Each type of language file has different types of tags. This tag number tell you which groups 
-need to be translated first. As for files, main file has pirority (GGC_<lang>), then comes Nutrition 
+need to be translated first. As for files, main file has priority (GGC_<lang>), then comes Nutrition 
 file (GGC_Nutrition_<lang>) and then all files from different tools
 
 
