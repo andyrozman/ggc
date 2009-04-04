@@ -29,6 +29,7 @@ import com.atech.update.startup.os.OSUtil;
 import com.atech.utils.ATDataAccessAbstract;
 import com.sun.jna.NativeLibrary;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -108,36 +109,117 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 
     // about
     //protected String about_title;
+    /**
+     * The about_image_name.
+     */
     protected String about_image_name;
     //protected String about_plugin_name;
+    /**
+     * The about_plugin_copyright_from.
+     */
     protected int about_plugin_copyright_from;
+    
+    /**
+     * The plugin_libraries.
+     */
     protected ArrayList<LibraryInfoEntry> plugin_libraries;
+    
+    /**
+     * The plugin_developers.
+     */
     protected ArrayList<CreditsGroup> plugin_developers;
+    
+    /**
+     * The plugin_features.
+     */
     protected ArrayList<FeaturesGroup> plugin_features; 
 
     // web lister
+    /**
+     * The web_lister_cfg.
+     */
     protected Hashtable<String,String> web_lister_cfg;
+    
+    /**
+     * The weblister_title.
+     */
     protected String weblister_title;
+    
+    /**
+     * The weblister_desc.
+     */
     protected String weblister_desc;
+    
+    /**
+     * The weblister_items.
+     */
     protected ArrayList<BaseListEntry> weblister_items;
 
     
+    /**
+     * The m_manager.
+     */
     protected DeviceManager m_manager = null;
 
+    /**
+     * The device_config_def.
+     */
     protected DeviceConfigurationDefinition device_config_def;
+    
+    /**
+     * The device_config.
+     */
     protected DeviceConfiguration device_config;
     
     
+    /**
+     * The m_entry_type.
+     */
     protected DeviceValuesEntry m_entry_type;
+    
+    /**
+     * The columns_manual.
+     */
     protected String columns_manual[] = null;
+    
+    /**
+     * The column_widths_manual.
+     */
     protected int column_widths_manual[] = null;
+    
+    /**
+     * The columns_table.
+     */
     protected String columns_table[] = null;
+    
+    /**
+     * The column_widths_table.
+     */
     protected int column_widths_table[] = null;
+    
+    /**
+     * The entry_statuses.
+     */
     protected String[] entry_statuses = null;
+    
+    /**
+     * The reading_statuses.
+     */
     protected String[] reading_statuses = null;
+    
+    /**
+     * The filtering_states.
+     */
     protected String[] filtering_states = null;
     
+    /**
+     * The plugin_server.
+     */
     PlugInServer plugin_server;
+    
+    /**
+     * The m_ddh.
+     */
     protected DeviceDataHandler m_ddh;
     
 
@@ -1015,12 +1097,18 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
  
     
+    /** 
+     * Get Selected Lang Index
+     */
     public int getSelectedLangIndex()
     {
         return 0;
     }
 
     
+    /** 
+     * Set Selected Lang Index
+     */
     public void setSelectedLangIndex(int index)
     {
         

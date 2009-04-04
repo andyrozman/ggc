@@ -122,7 +122,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
 
     /**
      * Check And Execute Action : Edit
-     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#checkAndExecuteActionEdit()
+     * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#checkAndExecuteActionEdit(SelectableInterface)
      */
     @Override
     public void checkAndExecuteActionEdit(SelectableInterface si)

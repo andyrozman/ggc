@@ -5,9 +5,10 @@
     </description>
 
     <!-- Environment properties read from a file ...-->
+    <property file="../../build/AtechTools.properties"/>
     <property file="./GGCPlugInBaseBuild.properties"/>
     <property file="./GGCPlugInBaseVersion.properties"/>
-    <property file="../ggc-core/build/GGC_Core_Version.properties"/>
+    <property file="../../ggc-core/build/GGC_Core_Version.properties"/>
     
 
     <!-- These should *not* be modified on the command line! -->
