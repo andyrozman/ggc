@@ -252,6 +252,8 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
     }
 
+    
+    @SuppressWarnings("unused")
     private void initRange() // throws Exception
     {
 

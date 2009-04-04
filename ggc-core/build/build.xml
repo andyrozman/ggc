@@ -92,6 +92,7 @@
 
             <fileset dir="${build.dir}">
                 <include name="ggc/core/**"/>
+                <include name="ggc/shared/**"/>
                 <include name="*.hbm.xml"/>
                 <exclude name="ggc/gui/**"/>
             </fileset>

@@ -17,5 +17,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ggc-web"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GGC Nutrition Tool"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

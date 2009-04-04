@@ -27,6 +27,7 @@ import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -67,16 +68,50 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     private PumpManager m_pumpManager = null;
 
+    /**
+     * The m_pump_base_type.
+     */
     PumpBaseType m_pump_base_type = null;
+    
+    /**
+     * The m_pump_bolus_type.
+     */
     PumpBolusType m_pump_bolus_type = null;
+    
+    /**
+     * The m_pump_basal_type.
+     */
     PumpBasalSubType m_pump_basal_type = null;
+    
+    /**
+     * The m_pump_report.
+     */
     PumpReport m_pump_report = null;
+    
+    /**
+     * The m_pump_add_type.
+     */
     PumpAdditionalDataType m_pump_add_type = null;
+    
+    /**
+     * The m_pump_alarms.
+     */
     PumpAlarms m_pump_alarms = null;
+    
+    /**
+     * The m_pump_events.
+     */
     PumpEvents m_pump_events = null;
+    
+    /**
+     * The m_pump_errors.
+     */
     PumpErrors m_pump_errors = null;
     //    GGCPumpDb m_db = null;
   
+    /**
+     * The selected_person_id.
+     */
     long selected_person_id = 0;
 
     // ********************************************************
@@ -510,7 +545,14 @@ public class DataAccessPump extends DataAccessPlugInBase
     // ******                   Db                        *****    
     // ********************************************************
     
+    /**
+     * The m_db.
+     */
     GGCPumpDb m_db;
+    
+    /**
+     * The hdb.
+     */
     HibernateDb hdb;
     
     /**
@@ -641,6 +683,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
+    /** 
+     * Load PlugIns
+     */
     @Override
     public void loadPlugIns()
     {
@@ -665,11 +710,21 @@ public class DataAccessPump extends DataAccessPlugInBase
     
     // configuration settings
     
+    /**
+     * Gets the max basal value.
+     * 
+     * @return the max basal value
+     */
     public float getMaxBasalValue()
     {
         return 8.0f;
     }
     
+    /**
+     * Gets the basal step.
+     * 
+     * @return the basal step
+     */
     public float getBasalStep()
     {
         return 0.1f;

@@ -110,7 +110,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     // private JLabel lblTest = new JLabel();
 
-    private JMenu menu_file, menu_bgs, menu_food, menu_doctor, menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_data_graphs, menu_cgms /* , menu_misc */;
+    private JMenu menu_file, menu_bgs, /*menu_food,*/ menu_doctor, menu_printing, menu_tools, menu_help, menu_meters, menu_pumps, menu_data_graphs, menu_cgms /* , menu_misc */;
 
     private Hashtable<String, GGCAction> actions = null;
     private Hashtable<String, GGCAction> toolbar_items = null;
@@ -432,6 +432,21 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 this.menuBar.add(pic.getPlugInMainMenu());
             }
+            
+            if (pic.getPlugInPrintMenus()!=null)
+            {
+                System.out.println("Menus found: ");
+                JMenu[] menus = pic.getPlugInPrintMenus();
+                
+                for(int i=0; i<menus.length; i++)
+                {
+                    this.menu_printing.add(menus[i]);
+                }
+                
+            }
+            else
+                System.out.println("Menus NOT found: ");
+            
         }
         
         //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -1231,6 +1246,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
         return "MainFrame";
     }
 
+    /**
+     * Update
+     */
     public void update(Observable obj, Object arg)
     {
         if (arg instanceof Integer)
@@ -1244,7 +1262,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     }
 
     
-    public void refreshMenus()
+    private void refreshMenus()
     {
         System.out.println("Refresh Menus: ");
         this.menuBar.removeAll();
@@ -1266,8 +1284,52 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.menuBar.add(this.menu_doctor);
 
         // reports menu
+        
+        
+        for(Enumeration<String> en= m_da.getPlugins().keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            //System.out.println("Key=" + key);
+            
+            PlugInClient pic = m_da.getPlugIn(key);
+            
+            if (pic.getPlugInPrintMenus()!=null)
+            {
+                //System.out.println("Menus found: ");
+                JMenu[] menus = pic.getPlugInPrintMenus();
+                
+                for(int i=0; i<menus.length; i++)
+                {
+                    this.menu_printing.add(menus[i]);
+                }
+                
+            }
+            //else
+            //    System.out.println("Menus NOT found: ");
+            
+        }
+        
+        
         this.menuBar.add(this.menu_printing); 
 
+        
+        for(Enumeration<String> en= m_da.getPlugins().keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            
+            if (key.equals(DataAccess.PLUGIN_NUTRITION))
+                continue;
+            
+            PlugInClient pic = m_da.getPlugIn(key);
+            
+            if (pic.getPlugInMainMenu()!=null)
+            {
+                this.menuBar.add(pic.getPlugInMainMenu());
+            }
+        }
+        
+        
+        
         this.menuBar.add(this.menu_meters);
         this.menuBar.add(this.menu_pumps);
         this.menuBar.add(this.menu_cgms);
@@ -1294,19 +1356,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
         }*/
         
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         
     }
     
 
-    public JMenu getPlugInMenu(String name)
+    private JMenu getPlugInMenu(String name)
     {
         PlugInClient pic = m_da.getPlugIn(name);
-        
-        System.out.println("PIC: " + pic + " = " + pic.getPlugInMainMenu());
-        
-        
-        
         return pic.getPlugInMainMenu();
     }
     

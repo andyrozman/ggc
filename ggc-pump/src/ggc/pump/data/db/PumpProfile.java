@@ -16,6 +16,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATechDate;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -51,7 +52,15 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     private static final long serialVersionUID = 4355479385042532802L;
     private boolean selected = false;
+    
+    /**
+     * The ic.
+     */
     I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
+    
+    /**
+     * The backup_mode.
+     */
     boolean backup_mode = false;
 
     /**
@@ -528,12 +537,18 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
 
 
+    /** 
+     * Get Column Count
+     */
     public int getColumnCount()
     {
         return 3;
     }
 
 
+    /** 
+     * Get Column Name
+     */
     public String getColumnName(int num)
     {
         switch (num)
@@ -551,6 +566,9 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     }
 
 
+    /** 
+     * getColumnValue
+     */
     public String getColumnValue(int num)
     {
         switch (num)
@@ -571,6 +589,9 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     }
 
 
+    /** 
+     * getColumnValueObject
+     */
     public Object getColumnValueObject(int num)
     {
         switch (num)
@@ -591,6 +612,9 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     }
 
 
+    /** 
+     * getColumnWidth
+     */
     public int getColumnWidth(int num, int width)
     {
         switch (num)
@@ -606,12 +630,18 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     }
 
 
+    /** 
+     * getItemId
+     */
     public long getItemId()
     {
         return this.getId();
     }
 
 
+    /** 
+     * getShortDescription
+     */
     public String getShortDescription()
     {
         // TODO Auto-generated method stub
@@ -619,18 +649,27 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     }
 
 
+    /** 
+     * isFound
+     */
     public boolean isFound(String text)
     {
         return true;
     }
 
 
+    /** 
+     * isFound
+     */
     public boolean isFound(int value)
     {
         return true;
     }
 
 
+    /** 
+     * isFound
+     */
     public boolean isFound(int from, int till, int state)
     {
         switch(state)
@@ -651,6 +690,9 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
 
 
+    /** 
+     * setSearchContext
+     */
     public void setSearchContext()
     {
         // TODO Auto-generated method stub

@@ -5,9 +5,12 @@
     </description>
 
     <!-- Environment properties read from a file ...-->
+    <property file="../../build/AtechTools.properties"/>
+    <property file="../../ggc-core/build/GGC_Core_Version.properties"/>
     <property file="../../ggc-plugin_base/build/GGCPlugInBaseBuild.properties"/>
     <property file="../../ggc-plugin_base/build/GGCPlugInBaseVersion.properties"/>
     <property file="./GGCMeterToolVersion.properties"/>
+	
 	
     <!-- These should *not* be modified on the command line! -->
     <property name="build.dir" value="${outdir.dir}/classes"/>
@@ -70,6 +73,7 @@
             <classpath>
                 <pathelement path="${classpath.full}" />
                 <pathelement path="../../build/deploy_files/ggc-plugin_base-${ggc-plugin-base.version}.jar" />
+                <pathelement path="../../build/deploy_files/ggc-core-${ggc-core.version}.jar" />
             </classpath>
         </javac>
     </target>

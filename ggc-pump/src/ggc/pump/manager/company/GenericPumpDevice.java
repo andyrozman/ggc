@@ -8,10 +8,49 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.device.AbstractPump;
 
+// TODO: Auto-generated Javadoc
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:      Generic Pump Device  
+ *  Description:   Generic Pump Device used for getting profile names for specified 
+ *                 pump company.
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+
+
 public class GenericPumpDevice extends AbstractPump
 {
+    
+    /**
+     * The apdc.
+     */
     AbstractPumpDeviceCompany apdc;
     
+    /**
+     * Instantiates a new generic pump device.
+     * 
+     * @param apdc the apdc
+     */
     public GenericPumpDevice(AbstractPumpDeviceCompany apdc)
     {
         this.apdc = apdc;
@@ -75,6 +114,9 @@ public class GenericPumpDevice extends AbstractPump
 
 
     
+    /** 
+     * getProfileNames
+     */
     public String[] getProfileNames()
     {
         return this.apdc.getProfileNames();
@@ -82,6 +124,9 @@ public class GenericPumpDevice extends AbstractPump
     
     
     
+    /** 
+     * close
+     */
     public void close() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
@@ -89,6 +134,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getAlarmMappings
+     */
     public Hashtable<String, Integer> getAlarmMappings()
     {
         // TODO Auto-generated method stub
@@ -96,6 +144,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getBolusMappings
+     */
     public Hashtable<String, Integer> getBolusMappings()
     {
         // TODO Auto-generated method stub
@@ -103,6 +154,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getDeviceInfo
+     */
     public DeviceIdentification getDeviceInfo()
     {
         // TODO Auto-generated method stub
@@ -110,6 +164,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getErrorMappings
+     */
     public Hashtable<String, Integer> getErrorMappings()
     {
         // TODO Auto-generated method stub
@@ -117,6 +174,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getEventMappings
+     */
     public Hashtable<String, Integer> getEventMappings()
     {
         // TODO Auto-generated method stub
@@ -124,6 +184,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getMaxMemoryRecords
+     */
     public int getMaxMemoryRecords()
     {
         // TODO Auto-generated method stub
@@ -131,6 +194,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getReportMappings
+     */
     public Hashtable<String, Integer> getReportMappings()
     {
         // TODO Auto-generated method stub
@@ -138,6 +204,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * loadPumpSpecificValues
+     */
     public void loadPumpSpecificValues()
     {
         // TODO Auto-generated method stub
@@ -145,6 +214,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * open
+     */
     public boolean open() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
@@ -152,6 +224,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * dispose
+     */
     public void dispose()
     {
         // TODO Auto-generated method stub
@@ -159,6 +234,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getComment
+     */
     public String getComment()
     {
         // TODO Auto-generated method stub
@@ -166,6 +244,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getDeviceClassName
+     */
     public String getDeviceClassName()
     {
         // TODO Auto-generated method stub
@@ -173,6 +254,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getDeviceId
+     */
     public int getDeviceId()
     {
         // TODO Auto-generated method stub
@@ -180,6 +264,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getDeviceSpecialComment
+     */
     public String getDeviceSpecialComment()
     {
         // TODO Auto-generated method stub
@@ -187,6 +274,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getIconName
+     */
     public String getIconName()
     {
         // TODO Auto-generated method stub
@@ -194,6 +284,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getImplementationStatus
+     */
     public int getImplementationStatus()
     {
         // TODO Auto-generated method stub
@@ -201,6 +294,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * getInstructions
+     */
     public String getInstructions()
     {
         // TODO Auto-generated method stub
@@ -208,6 +304,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * hasSpecialProgressStatus
+     */
     public boolean hasSpecialProgressStatus()
     {
         // TODO Auto-generated method stub
@@ -215,6 +314,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * isDeviceCommunicating
+     */
     public boolean isDeviceCommunicating()
     {
         // TODO Auto-generated method stub
@@ -222,6 +324,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * readConfiguration
+     */
     public void readConfiguration() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
@@ -229,6 +334,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * readDeviceDataFull
+     */
     public void readDeviceDataFull() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
@@ -236,6 +344,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * readDeviceDataPartitial
+     */
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
@@ -243,6 +354,9 @@ public class GenericPumpDevice extends AbstractPump
     }
 
 
+    /** 
+     * readInfo
+     */
     public void readInfo() throws PlugInBaseException
     {
         // TODO Auto-generated method stub

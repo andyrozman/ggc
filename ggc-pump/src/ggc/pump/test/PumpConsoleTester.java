@@ -11,6 +11,7 @@ import java.util.Vector;
 import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -42,6 +43,9 @@ public class PumpConsoleTester //extends JFrame
 {
 
 
+    /**
+     * The thread.
+     */
     TimerThread thread;
     
     /**
@@ -126,10 +130,13 @@ public class PumpConsoleTester //extends JFrame
     }
     
 
+    /**
+     * Something.
+     */
     public static void something()
     {
-        String input = "0-400=0.2";
-        String[] ss = input.split("[-=]");
+        //String input = "0-400=0.2";
+        //String[] ss = input.split("[-=]");
         
         
         
