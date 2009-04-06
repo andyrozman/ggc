@@ -12,7 +12,10 @@ import org.hibernate.Transaction;
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
+import com.atech.graphics.dialogs.selector.ColumnSorter;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,12 +47,18 @@ import com.atech.i18n.I18nControlAbstract;
 
 // TODO: DL
 
-public class PumpProfile extends PumpProfileH implements BackupRestoreObject, DatabaseObjectHibernate
+public class PumpProfile extends PumpProfileH implements BackupRestoreObject, DatabaseObjectHibernate, SelectableInterface
 {
 
     private static final long serialVersionUID = 4355479385042532802L;
     private boolean selected = false;
     I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
+    
+    
+    /**
+     * The backup_mode.
+     */
+    boolean backup_mode = false;
     
 
     /**
@@ -88,6 +97,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     public PumpProfile(I18nControlAbstract ic)
     {
         this.ic = (I18nControl)ic;
+        backup_mode = true;
     }
     
     
@@ -113,7 +123,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public String getName()
     {
-        return this.getTargetName();
+        if (backup_mode)
+            return this.getTargetName();
+        else
+            return super.getName();
     }
 
     /**
@@ -134,7 +147,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public String toString()
     {
-        return this.getTargetName();
+        if (backup_mode)
+            return this.getTargetName();
+        else
+            return "Pump Profile: " + super.toString();
     }
     
 
@@ -506,6 +522,247 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return true;
     }
+ 
+    
+    
+
+    /** 
+     * Get Column Count
+     */
+    public int getColumnCount()
+    {
+        return 3;
+    }
+
+
+    /** 
+     * Get Column Name
+     */
+    public String getColumnName(int num)
+    {
+        switch (num)
+        {
+            case 3:
+                return ic.getMessage("NAME");
+    
+            case 2:
+                return ic.getMessage("TILL");
+    
+            default:
+                return ic.getMessage("FROM");
+
+        }
+    }
+
+
+    /** 
+     * getColumnValue
+     */
+    public String getColumnValue(int num)
+    {
+        switch (num)
+        {
+            case 3:
+                return this.getName();
+    
+            case 2:
+                if (this.getActive_till() <= 0)
+                    return "";
+                else
+                    return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
+    
+            default:
+                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
+
+        }
+    }
+
+
+    /** 
+     * getColumnValueObject
+     */
+    public Object getColumnValueObject(int num)
+    {
+        switch (num)
+        {
+            case 3:
+                return this.getName();
+    
+            case 2:
+                if (this.getActive_till() <= 0)
+                    return "";
+                else
+                    return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
+    
+            default:
+                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
+
+        }
+    }
+
+
+    /** 
+     * getColumnWidth
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        switch (num)
+        {
+            case 3:
+                return (int) (width * 33);
+            case 2:
+                return (int) (width * 33);
+            default:
+                return (int) (width * 33);
+
+        } 
+    }
+
+
+    /** 
+     * getItemId
+     */
+    public long getItemId()
+    {
+        return this.getId();
+    }
+
+
+    /** 
+     * getShortDescription
+     */
+    public String getShortDescription()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    /** 
+     * isFound
+     */
+    public boolean isFound(String text)
+    {
+        return true;
+    }
+
+
+    /** 
+     * isFound
+     */
+    public boolean isFound(int value)
+    {
+        return true;
+    }
+
+
+    /** 
+     * isFound
+     */
+    public boolean isFound(int from, int till, int state)
+    {
+        switch(state)
+        {
+            case 2:
+                return (this.getActive_from() >= (from * 1000)) & (this.getActive_till() <= (till* 1000));
+                
+            case 1:
+                return (this.getActive_from() >= (from * 1000));
+            
+            default:
+                return true;
+                
+        }
+
+    }
+
+
+
+
+    /** 
+     * setSearchContext
+     */
+    public void setSearchContext()
+    {
+        // TODO Auto-generated method stub
+        
+    }
    
+   
+   
+    // ---
+    // --- Column sorting
+    // ---
+
+    private ColumnSorter columnSorter = null;
+
+    /**
+     * setColumnSorter - sets class that will help with column sorting
+     * 
+     * @param cs
+     *            ColumnSorter instance
+     */
+    public void setColumnSorter(ColumnSorter cs)
+    {
+        this.columnSorter = cs;
+    }
+
+    /**
+     * Compares this object with the specified object for order. Returns a
+     * negative integer, zero, or a positive integer as this object is less
+     * than, equal to, or greater than the specified object.
+     * 
+     * <p>
+     * The implementor must ensure <tt>sgn(x.compareTo(y)) ==
+     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>. (This
+     * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
+     * <tt>y.compareTo(x)</tt> throws an exception.)
+     * 
+     * <p>
+     * The implementor must also ensure that the relation is transitive:
+     * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
+     * <tt>x.compareTo(z)&gt;0</tt>.
+     * 
+     * <p>
+     * Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
+     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for all
+     * <tt>z</tt>.
+     * 
+     * <p>
+     * It is strongly recommended, but <i>not</i> strictly required that
+     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>. Generally speaking, any
+     * class that implements the <tt>Comparable</tt> interface and violates this
+     * condition should clearly indicate this fact. The recommended language is
+     * "Note: this class has a natural ordering that is inconsistent with
+     * equals."
+     * 
+     * <p>
+     * In the foregoing description, the notation <tt>sgn(</tt><i>expression</i>
+     * <tt>)</tt> designates the mathematical <i>signum</i> function, which is
+     * defined to return one of <tt>-1</tt>, <tt>0</tt>, or <tt>1</tt> according
+     * to whether the value of <i>expression</i> is negative, zero or positive.
+     * 
+     * @param o
+     *            the object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object is
+     *         less than, equal to, or greater than the specified object.
+     * 
+     * @throws ClassCastException
+     *             if the specified object's type prevents it from being
+     *             compared to this object.
+     */
+    public int compareTo(SelectableInterface o)
+    {
+        /*
+         * if (o instanceof SelectableInterface) { return
+         * this.columnSorter.compareObjects(this, (SelectableInterface)o); }
+         * else throw new ClassCastException();
+         */
+
+        return this.columnSorter.compareObjects(this, o);
+
+    }
+   
+    
     
 }

@@ -1,7 +1,7 @@
 package ggc.pump.gui.profile;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
-import ggc.pump.data.db.PumpProfile;
+import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
 import java.awt.Component;

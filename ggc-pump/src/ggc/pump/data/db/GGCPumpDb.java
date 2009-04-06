@@ -8,6 +8,7 @@ import ggc.plugin.db.PluginDb;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;

@@ -1,13 +1,13 @@
 package ggc.pump.gui.profile;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
-import ggc.pump.data.db.PumpProfile;
 import ggc.pump.data.graph.GraphViewBasalRateEstimator;
 import ggc.pump.data.graph.bre.BREGraphsAbstract;
 import ggc.pump.data.graph.bre.GraphViewBasalRate;
 import ggc.pump.data.graph.bre.GraphViewBasals;
 import ggc.pump.data.graph.bre.GraphViewRatios;
 import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
 import java.awt.BorderLayout;
