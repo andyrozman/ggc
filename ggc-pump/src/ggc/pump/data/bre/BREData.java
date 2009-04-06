@@ -4,16 +4,41 @@ import ggc.pump.util.DataAccessPump;
 
 import com.atech.utils.ATechDate;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BREData.
+ */
 public class BREData 
 {
     
+    /**
+     * The Constant BRE_DATA_NONE.
+     */
     public static final int BRE_DATA_NONE = 0;
+    
+    /**
+     * The Constant BRE_DATA_BG.
+     */
     public static final int BRE_DATA_BG = 1;
+    
+    /**
+     * The Constant BRE_DATA_BASAL_OLD.
+     */
     public static final int BRE_DATA_BASAL_OLD = 2;
+    
+    /**
+     * The Constant BRE_DATA_BASAL_NEW.
+     */
     public static final int BRE_DATA_BASAL_NEW = 3;
 
+    /**
+     * The Constant BRE_DATA_BASAL_RATIO.
+     */
     public static final int BRE_DATA_BASAL_RATIO = 4;
     
+    /**
+     * The Constant BRE_DATA_BASAL_RATIO_GRAPH.
+     */
     public static final int BRE_DATA_BASAL_RATIO_GRAPH = 100;
     
     
@@ -33,12 +58,34 @@ public class BREData
 
   
     
+    /**
+     * The data_type.
+     */
     public int data_type = 0;
+    
+    /**
+     * The time.
+     */
     public int time;
+    
+    /**
+     * The time_end.
+     */
     public int time_end;
+    
+    /**
+     * The value.
+     */
     public float value = 0.0f;
     
     
+    /**
+     * Are we in time range.
+     * 
+     * @param time_q the time_q
+     * 
+     * @return true, if successful
+     */
     public boolean areWeInTimeRange(int time_q)
     {
         if ((time_q >= time) && (time_q <= time_end))
@@ -50,6 +97,9 @@ public class BREData
     
     
     
+    /** 
+     * toString
+     */
     public String toString()
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);

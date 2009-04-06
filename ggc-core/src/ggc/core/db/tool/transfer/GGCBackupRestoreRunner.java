@@ -3,14 +3,18 @@ package ggc.core.db.tool.transfer;
 import ggc.core.util.DataAccess;
 
 import java.io.File;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+
+import javax.swing.JMenu;
 
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreRunner;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.PlugInClient;
 import com.atech.utils.file.PackFiles;
 
 /**
@@ -121,6 +125,23 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         }
         
         
+        for(Enumeration<String> en= da.getPlugins().keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            PlugInClient pic = da.getPlugIn(key);
+            
+            if (pic.isBackupRestoreEnabled())
+            {
+                pic.getBackupRestoreHandler().doBackup(this);
+            }
+        }
+        
+        
+        
+//        DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION).getBackupRestoreHandler().doBackup(this); 
+        
+        /*
+        
         if (isAnyNutritionBackupObjectSelected())
         {
             ExportNutritionDb end = new ExportNutritionDb(this);
@@ -161,7 +182,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
                 // this.done_backup_elements++;
                 // System.out.println("Meals YES");
             }
-        }
+        }*/
 
         zipAndRemoveBackupFiles();
 
@@ -261,7 +282,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         
         if (this.isRestoreObjectSelected("ggc.core.db.hibernate.ColorSchemeH"))
         {
-            System.out.println("in color scheme");
+            //System.out.println("in color scheme");
             this.setTask(ic.getMessage("COLOR_SCHEMES"));
             GGCImporter ge = new GGCImporter(this, this.getRestoreObject("ggc.core.db.hibernate.ColorSchemeH"));
             ge.importData("ggc.core.db.hibernate.ColorSchemeH");
@@ -270,8 +291,28 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         }
         
         
-        //if (isAnyNutritionRestoreObjectSelected())
+//        DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION).getBackupRestoreHandler().doRestore(this);
+  
+        
+        for(Enumeration<String> en= da.getPlugins().keys(); en.hasMoreElements(); )
         {
+            String key = en.nextElement();
+            PlugInClient pic = da.getPlugIn(key);
+            
+            if (pic.isBackupRestoreEnabled())
+            {
+                pic.getBackupRestoreHandler().doRestore(this);
+            }
+        }
+        
+        
+        
+//        m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).getBackupRestoreHandler().doRestore(this); 
+
+        
+        
+        //if (isAnyNutritionRestoreObjectSelected())
+/*        {
             
             if (this.isRestoreObjectSelected("ggc.core.db.hibernate.FoodUserGroupH"))
             {
@@ -317,7 +358,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
                 // this.done_backup_elements++;
             }
             
-        }
+        }*/
 
     }
     

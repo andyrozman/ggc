@@ -8,7 +8,10 @@ import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
 
 import java.io.File;
+import java.util.Enumeration;
 import java.util.Iterator;
+
+import javax.swing.JMenu;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -17,6 +20,7 @@ import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
+import com.atech.plugin.PlugInClient;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,6 +52,8 @@ import com.atech.db.hibernate.transfer.ExportTool;
 public class GGCExporter extends ExportTool implements Runnable
 {
 
+    DataAccess da = DataAccess.getInstance();
+    
     /**
      * Constructor
      * 
@@ -150,18 +156,30 @@ public class GGCExporter extends ExportTool implements Runnable
 
     private BackupRestoreObject getBackupRestoreObject(String class_name)
     {
+        // core
         if (class_name.equals("ggc.core.db.hibernate.DayValueH"))
         {
-            //return new DailyValue();
-            return null;
+            return new DailyValue();
+            //return null;
         }
         else if (class_name.equals("ggc.core.db.hibernate.ColorSchemeH"))
         {
             return new SettingsColorScheme();
         }
-        else
-            return null;
-           
+        
+        
+        for(Enumeration<String> en= da.getPlugins().keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            PlugInClient pic = da.getPlugIn(key);
+            
+            if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(class_name))
+            {
+                return pic.getBackupRestoreHandler().getBackupRestoreObject(class_name);
+            }
+        }
+        
+        return null;
             
     }
     
@@ -178,9 +196,20 @@ public class GGCExporter extends ExportTool implements Runnable
             ColorSchemeH eh = (ColorSchemeH)obj;
             return new SettingsColorScheme(eh);
         }
-        else
-            return null;
-           
+
+        
+        for(Enumeration<String> en= da.getPlugins().keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            PlugInClient pic = da.getPlugIn(key);
+            
+            if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(bro.getBackupClassName()))
+            {
+                return pic.getBackupRestoreHandler().getBackupRestoreObject(obj, bro);
+            }
+        }
+        
+        return null;
             
     }
     
@@ -204,7 +233,9 @@ public class GGCExporter extends ExportTool implements Runnable
      */
     public void exportData(BackupRestoreObject bro)
     {
-        System.out.println("export: first");
+        //System.out.println("export: first");
+        
+        System.out.println("BRO: " + bro);
     
         openFile(this.getRootPath() + bro.getBackupFile() + this.getFileLastPart() + ".dbe");
 
@@ -223,7 +254,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
         while (it.hasNext())
         {
-            System.out.println("export: next");
+            //System.out.println("export: next");
             BackupRestoreObject bt = getBackupRestoreObject(it.next(), bro);
             
             //DayValueH eh = (DayValueH) it.next();

@@ -1,8 +1,8 @@
-package ggc.core.db.datalayer;
+package ggc.pump.db;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
+import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
 
@@ -104,7 +104,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public String getTargetName()
     {
-        return ic.getMessage("PUMP_PROFILE");
+        return I18nControl.getInstance().getMessage("PUMP_PROFILE");
     }
 
     /** 
@@ -360,6 +360,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         sb.append(this.getComment());
         sb.append("|");
         sb.append(this.getChanged());
+        sb.append("\n");
         
         return sb.toString();
     }
@@ -463,8 +464,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public String getBackupClassName()
     {
-        // TODO
-        return "";
+        return "ggc.core.db.hibernate.pump.PumpProfileH";
     }
     
     
@@ -494,7 +494,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public String getObjectUniqueId()
     {
-        return "";
+        return "" + this.getId();
     }
     
     /**
@@ -504,7 +504,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public boolean hasToBeCleaned()
     {
-        return false;
+        return true;
     }
    
     

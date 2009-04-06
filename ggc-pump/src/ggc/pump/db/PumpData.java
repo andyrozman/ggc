@@ -1,8 +1,8 @@
-package ggc.core.db.datalayer;
+package ggc.pump.db;
 
-import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
+import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
 
@@ -44,10 +44,10 @@ import com.atech.i18n.I18nControlAbstract;
 
 // TODO: DL
 
-public class PumpDataExtended extends PumpDataExtendedH implements BackupRestoreObject, DatabaseObjectHibernate
+public class PumpData extends PumpDataH implements BackupRestoreObject, DatabaseObjectHibernate
 {
 
-    private static final long serialVersionUID = 5635575801093325353L;
+    private static final long serialVersionUID = -2783864807987398195L;
     private boolean selected = false;
     I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
     
@@ -55,7 +55,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     /**
      * Constructor
      */
-    public PumpDataExtended()
+    public PumpData()
     {
     }
     
@@ -65,11 +65,12 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      * 
      * @param ch
      */
-    public PumpDataExtended(PumpDataExtendedH ch)
+    public PumpData(PumpDataH ch)
     {
         this.setId(ch.getId());
         this.setDt_info(ch.getDt_info());
-        this.setType(ch.getType());
+        this.setBase_type(ch.getBase_type());
+        this.setSub_type(ch.getSub_type());
         this.setValue(ch.getValue());
         this.setExtended(ch.getExtended());
         this.setPerson_id(ch.getPerson_id());
@@ -83,7 +84,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      * 
      * @param ic
      */
-    public PumpDataExtended(I18nControlAbstract ic)
+    public PumpData(I18nControlAbstract ic)
     {
         this.ic = (I18nControl)ic;
     }
@@ -102,7 +103,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public String getTargetName()
     {
-        return ic.getMessage("PUMP_DATA_EXTENDED");
+        return I18nControl.getInstance().getMessage("PUMP_DATA");
     }
 
     /** 
@@ -121,7 +122,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.pump.PumpDataExtendedH";
+        return "ggc.core.db.hibernate.pump.PumpDataH";
     }
     
 
@@ -191,11 +192,12 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpDataExtendedH ch = new PumpDataExtendedH();
+        PumpDataH ch = new PumpDataH();
 
         ch.setId(this.getId());
         ch.setDt_info(this.getDt_info());
-        ch.setType(this.getType());
+        ch.setBase_type(this.getBase_type());
+        ch.setSub_type(this.getSub_type());
         ch.setValue(this.getValue());
         ch.setExtended(this.getExtended());
         ch.setPerson_id(this.getPerson_id());
@@ -221,7 +223,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
 
         sess.delete(ch);
         tx.commit();
@@ -239,14 +241,14 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public boolean DbEdit(Session sess) throws Exception
     {
-        
         Transaction tx = sess.beginTransaction();
 
-        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
 
         ch.setId(this.getId());
         ch.setDt_info(this.getDt_info());
-        ch.setType(this.getType());
+        ch.setBase_type(this.getBase_type());
+        ch.setSub_type(this.getSub_type());
         ch.setValue(this.getValue());
         ch.setExtended(this.getExtended());
         ch.setPerson_id(this.getPerson_id());
@@ -257,7 +259,6 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         tx.commit();
 
         return true;
-        
     }
 
     
@@ -270,11 +271,12 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public boolean DbGet(Session sess) throws Exception
     {
-        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
 
         this.setId(ch.getId());
         this.setDt_info(ch.getDt_info());
-        this.setType(ch.getType());
+        this.setBase_type(ch.getBase_type());
+        this.setSub_type(ch.getSub_type());
         this.setValue(ch.getValue());
         this.setExtended(ch.getExtended());
         this.setPerson_id(ch.getPerson_id());
@@ -338,7 +340,9 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         sb.append("|");
         sb.append(this.getDt_info());
         sb.append("|");
-        sb.append(this.getType());
+        sb.append(this.getBase_type());
+        sb.append("|");
+        sb.append(this.getSub_type());
         sb.append("|");
         sb.append(this.getValue());
         sb.append("|");
@@ -349,6 +353,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         sb.append(this.getComment());
         sb.append("|");
         sb.append(this.getChanged());
+        sb.append("\n");
 
         return sb.toString();
     }
@@ -374,7 +379,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public String dbExportHeader(int table_version)
     {
-        return "; Columns: id|dt_info|type|value|extended|person_id|comment|changed\n" + 
+        return "; Columns: id|dt_info|base_type|sub_type|value|extended|person_id|comment|changed\n" + 
                "; Table version: " + getTableVersion() + "\n";
     }
     
@@ -420,12 +425,14 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         
         this.setId(da.getLongValueFromString(arr[0]));
         this.setDt_info(da.getLongValueFromString(arr[1]));
-        this.setType(da.getIntValueFromString(arr[2]));
-        this.setValue(arr[3]);
-        this.setExtended(arr[4]);
-        this.setPerson_id(da.getIntValueFromString(arr[5]));
-        this.setComment(arr[6]);
-        this.setChanged(da.getLongValueFromString(arr[7]));
+        this.setBase_type(da.getIntValueFromString(arr[2]));
+        this.setSub_type(da.getIntValueFromString(arr[3]));
+        this.setValue(arr[4]);
+        this.setExtended(arr[5]);
+        this.setPerson_id(da.getIntValueFromString(arr[6]));
+        this.setComment(arr[7]);
+        this.setChanged(da.getLongValueFromString(arr[8]));
+        
     }
     
     
@@ -437,7 +444,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public String getBackupFile()
     {
-        return "PumpDataExtendedH";
+        return "PumpDataH";
     }
     
     /**
@@ -447,10 +454,8 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public String getBackupClassName()
     {
-        return "ggc.core.db.hibernate.pump.PumpDataExtendedH";
+        return "ggc.core.db.hibernate.pump.PumpDataH";
     }
-    
-    
     
     
     /** 
@@ -458,7 +463,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public String getObjectName()
     {
-        return "PumpDataExtended";
+        return "PumpData";
     }
 
     /** 

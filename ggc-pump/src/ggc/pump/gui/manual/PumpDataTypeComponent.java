@@ -435,6 +435,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             return;
         else
             this.sub_type = stype;
+        
+        this.combo_1.setSelectedIndex(stype);
 
         this.num_tf_1_d2.setVisible(false);
         this.num_tf_2_d2.setVisible(false);
@@ -1227,6 +1229,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             
             this.profile = val;
+            label_2_1.setText(this.profile); 
             /*
             long id = m_da.getLongValueFromString(val, 0L);
             

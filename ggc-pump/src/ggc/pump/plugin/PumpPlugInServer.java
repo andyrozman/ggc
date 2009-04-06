@@ -1,12 +1,12 @@
 package ggc.pump.plugin;
 
-import ggc.core.db.datalayer.PumpData;
-import ggc.core.db.datalayer.PumpDataExtended;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.list.BaseListDialog;
 import ggc.pump.data.db.PumpProfile;
+import ggc.pump.db.PumpData;
+import ggc.pump.db.PumpDataExtended;
 import ggc.pump.gui.manual.PumpDataDialog;
 import ggc.pump.gui.profile.ProfileSelector;
 import ggc.pump.util.DataAccessPump;
@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.BackupRestorePlugin;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 
@@ -241,9 +243,10 @@ public class PumpPlugInServer extends PlugInServer
         da.createDb(m_da.getHibernateDb());
         da.initAllObjects();
         da.loadSpecialParameters();
+        this.backup_restore_enabled = true;
         
         m_da.loadSpecialParameters();
-        System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
         
         da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
     }
@@ -285,10 +288,11 @@ public class PumpPlugInServer extends PlugInServer
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
-        BackupRestoreCollection brc = new BackupRestoreCollection("PUMP_TOOL", this.ic);
-        brc.addNodeChild(new PumpData(this.ic));
-        brc.addNodeChild(new PumpDataExtended(this.ic));
-        brc.addNodeChild(new PumpProfile(this.ic));
+        I18nControlAbstract ic_pump = DataAccessPump.getInstance().getI18nControlInstance();
+        BackupRestoreCollection brc = new BackupRestoreCollection("PUMP_TOOL", ic_pump);
+        brc.addNodeChild(new PumpData(ic_pump));
+        brc.addNodeChild(new PumpDataExtended(ic_pump));
+        brc.addNodeChild(new PumpProfile(ic_pump));
 
         return brc;
     }
@@ -324,6 +328,17 @@ public class PumpPlugInServer extends PlugInServer
     {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    
+    /**
+     * Get Backup Restore Handler
+     * 
+     * @return
+     */
+    public BackupRestorePlugin getBackupRestoreHandler()
+    {
+        return new BackupRestorePumpHandler();
     }
     
     

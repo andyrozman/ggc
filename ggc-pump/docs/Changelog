@@ -2,6 +2,12 @@
 Changes file for GGC Pump Tool
 ==============================
 
+0.4.2
+    * Profile selector changes (we use name now for changing last active and last active has now correct value
+         for non-active)
+    * BackupRestoreCollection fixed
+    * Manual adding Fixed for all Basals (edit) and Basal Profiles
+
 0.4.1 (1.4.2009)
     * Profiles editor finished 
     * added Pump Profile Selector, which is tied to pump you are using (not to active profiles)

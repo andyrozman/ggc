@@ -20,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.BackupRestorePlugin;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
@@ -220,7 +222,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         GGCDbNutri db = new GGCDbNutri(((DataAccess)m_da).getDb());
         da.setNutriDb(db);
         
-        
+        this.backup_restore_enabled = true;
         m_da.loadSpecialParameters();
         //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
         
@@ -261,11 +263,12 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
-        BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", this.ic);
-        brc_nut.addNodeChild(new FoodGroup(this.ic));
-        brc_nut.addNodeChild(new FoodDescription(this.ic));
-        brc_nut.addNodeChild(new MealGroup(this.ic));
-        brc_nut.addNodeChild(new Meal(this.ic));
+        I18nControlAbstract ic_loc = DataAccessNutri.getInstance().getI18nControlInstance(); 
+        BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", ic_loc);
+        brc_nut.addNodeChild(new FoodGroup(ic_loc));
+        brc_nut.addNodeChild(new FoodDescription(ic_loc));
+        brc_nut.addNodeChild(new MealGroup(ic_loc));
+        brc_nut.addNodeChild(new Meal(ic_loc));
         
         return brc_nut;
     }
@@ -399,6 +402,16 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         
     }
 
+    
+    /**
+     * Get Backup Restore Handler
+     * 
+     * @return
+     */
+    public BackupRestorePlugin getBackupRestoreHandler()
+    {
+        return new BackupRestoreNutriHandler();
+    }
     
     
 }

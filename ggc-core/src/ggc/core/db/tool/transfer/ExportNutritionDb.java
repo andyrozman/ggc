@@ -208,10 +208,21 @@ public class ExportNutritionDb extends ExportTool
         {
             FoodUserDescriptionH eh = (FoodUserDescriptionH) it.next();
 
+            String nutr = eh.getNutritions();
+            if (nutr==null)
+            {
+                nutr = "";
+            }
+            else
+            {
+                nutr = nutr.replace(",", ".");
+            }
+            
+            
             this.writeToFile(eh.getId() + "|" + eh.getName() + "|"
                     + eh.getName_i18n() + "|" + eh.getGroup_id() + "|"
                     + eh.getRefuse() + "|" + eh.getDescription() + "|"
-                    + eh.getHome_weights() + "|" + eh.getNutritions().replace(",", ".") + "|"
+                    + eh.getHome_weights() + "|" + nutr + "|"
                     + eh.getChanged() + "\n");
 
             count++;

@@ -8,9 +8,11 @@ import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
+import com.atech.utils.ATechDate;
 
 
 
@@ -87,26 +89,44 @@ public class ProfileSelector extends SelectorAbstractDialog
         {
             PumpProfileH pr = pe.getResult();
             
-            PumpProfile pr_other = getOpenProfile();
+            System.out.println("PumpProfile: " + pr);
+            System.out.println("PumpProfile(till=" + pr.getActive_till());
             
-            if (pr_other==null)
+            boolean added = false;
+            
+            if (pr.getActive_till()==-1)
             {
-                this.full.add(new PumpProfile(pe.getResult()));
+                // if this one should be last, we need to close previous last
+                
+                PumpProfile pr_other = getOpenProfile(pr.getName());
+                
+                System.out.println("Other: " + pr_other);
+                
+                if (pr_other!=null)
+                {
+                    if (pr_other.getActive_from() < pr.getActive_from())
+                    {
+                        ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, pr.getActive_from());
+                        at.add(GregorianCalendar.MINUTE, -1);
+                        
+                        pr_other.setActive_till(at.getATDateTimeAsLong());
+                    }
+                    else
+                    {
+                        pr.setActive_till(pr_other.getActive_from());
+                    }
+    
+                    this.full.add(new PumpProfile(pr));
+                    added = true;
+                    
+                }
             }
-            else
-            {
-                if (pr_other.getActive_from() < pr.getActive_from())
-                {
-                    pr_other.setActive_till(pr.getActive_from());
-                }
-                else
-                {
-                    pr.setActive_till(pr_other.getActive_from());
-                }
-
+            
+            
+            if (!added)
                 this.full.add(new PumpProfile(pr));
                 
-            }
+            
             
             //System.out.println("Success: ");
             //this.full.add(new PumpProfile(pe.getResult()));
@@ -116,13 +136,13 @@ public class ProfileSelector extends SelectorAbstractDialog
     }
 
     
-    private PumpProfile getOpenProfile()
+    private PumpProfile getOpenProfile(String name)
     {
-        for(int i=0; i<this.list.size(); i++)
+        for(int i=0; i<this.full.size(); i++)
         {
-            PumpProfile pp = (PumpProfile)this.list.get(i);
+            PumpProfile pp = (PumpProfile)this.full.get(i);
             
-            if (pp.getActive_till()==-1)
+            if ((pp.getActive_till()==-1) && (pp.getName().equals(name))) 
                 return pp;
         }
         return null;

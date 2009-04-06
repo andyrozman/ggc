@@ -544,6 +544,43 @@ public class DataAccess extends ATDataAccessAbstract
         this.backup_restore_collection = brc_full;
     }
 
+    
+    public BackupRestoreCollection getBackupRestoreCollection()
+    {
+        BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
+        brc_full.addNodeChild(new DailyValue(this.m_i18n));
+
+
+        BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
+        brc1.addNodeChild(new Settings(this.m_i18n));
+        brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
+        brc_full.addNodeChild(brc1);
+        
+        
+        //for(int i=0; i<)
+        
+        for(Enumeration<String> en = this.plugins.keys(); en.hasMoreElements(); )
+        {
+            PlugInClient pic = this.plugins.get(en.nextElement());
+            
+            if (pic.isBackupRestoreEnabled())
+                brc_full.addNodeChild(pic.getBackupObjects());
+            
+/*            BackupRestoreCollection brc = pic.getBackupObjects();
+            
+            if (brc!=null)
+                brc_full.addNodeChild(brc); */
+        }
+        
+
+        return brc_full;
+        
+        
+//        return null;
+    }
+    
+    
+    
     /**
      * Load Graph Config Properties
      */
