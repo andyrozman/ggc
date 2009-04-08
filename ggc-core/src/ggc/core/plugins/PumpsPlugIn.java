@@ -5,6 +5,7 @@ import ggc.core.util.RefreshInfo;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -259,6 +260,10 @@ public class PumpsPlugIn extends PlugInClient
     
     private void displayExperimental()
     {
+        
+        if ((new File("../data/tools/PumpTools_debug.txt")).exists())
+            return;
+        
         JOptionPane.showMessageDialog(this.parent, 
             ic.getMessage("PUMP_PLUGIN_EXPERIMENTAL")
 /*            "Pumps Plug-in\n\n" +
