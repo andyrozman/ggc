@@ -1,4 +1,4 @@
-﻿package ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -1430,4 +1430,5 @@ public class Settings
      */
 
 }
+
 

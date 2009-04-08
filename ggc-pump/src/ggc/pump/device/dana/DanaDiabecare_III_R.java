@@ -1,4 +1,4 @@
-﻿package ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
@@ -816,3 +816,4 @@ public class DanaDiabecare_III_R extends SerialProtocol
     }
 
 }
+

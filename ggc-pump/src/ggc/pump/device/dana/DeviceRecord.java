@@ -1,4 +1,4 @@
-﻿package ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 import java.util.GregorianCalendar;
 
@@ -177,3 +177,4 @@ public class DeviceRecord
         return 6;
     }
 }
+

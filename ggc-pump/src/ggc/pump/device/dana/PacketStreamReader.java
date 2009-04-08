@@ -1,4 +1,4 @@
-﻿package ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 
 // TODO: Auto-generated Javadoc
@@ -177,3 +177,4 @@ public class PacketStreamReader
         this.cursor += size;
     }
 }
+

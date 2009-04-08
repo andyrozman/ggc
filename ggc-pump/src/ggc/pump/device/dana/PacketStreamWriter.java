@@ -1,4 +1,4 @@
-﻿package ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,3 +44,4 @@ public class PacketStreamWriter
         this.buffer[this.cursor++] = (byte) (data & 0xff);
     }
 }
+
