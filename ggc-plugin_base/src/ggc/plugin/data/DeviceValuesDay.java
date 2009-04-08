@@ -57,6 +57,21 @@ public class DeviceValuesDay
 	    table = new Hashtable<String,DeviceValuesEntry>();
 	}
 	
+
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
+    public DeviceValuesDay(DataAccessPlugInBase da, GregorianCalendar gc)
+    {
+        this.m_da = da;
+        list = new ArrayList<DeviceValuesEntry>();
+        table = new Hashtable<String,DeviceValuesEntry>();
+        this.gc_today = gc;
+    }
+	
+	
 	
 	/**
 	 * Add Entry
@@ -109,6 +124,17 @@ public class DeviceValuesDay
 	{
 	    this.gc_today = gc;
 	}
+
+	
+    /**
+     * Set Date Time GC
+     * @param gc
+     */
+    public GregorianCalendar getDateTimeGC()
+    {
+        return this.gc_today;
+    }
+	
 	
 	
     /**
