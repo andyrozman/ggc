@@ -2,13 +2,8 @@ package ggc.plugin.data;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-
-import org.jfree.util.Log;
 
 import com.atech.utils.ATechDate;
 
@@ -53,6 +48,8 @@ public class DeviceValuesRange
 	 * Constructor
 	 * 
 	 * @param da
+	 * @param from 
+	 * @param to 
 	 */
 	public DeviceValuesRange(DataAccessPlugInBase da, GregorianCalendar from, GregorianCalendar to)
 	{
@@ -91,7 +88,7 @@ public class DeviceValuesRange
     /**
      * Add Entry
      * 
-     * @param pve DeviceValuesEntry instance (or derivate)
+     * @param dvd DeviceValuesDay instance (or derivate)
      */
     public void addEntry(DeviceValuesDay dvd)
     {
@@ -110,10 +107,46 @@ public class DeviceValuesRange
     }
 	
 
+    /**
+     * Is Day Entry Available
+     * 
+     * @param dt
+     * @return
+     */
     public boolean isDayEntryAvailable(long dt)
     {
         ATechDate atd = new ATechDate(dve.getDateTimeFormat(), dt);
         return (this.hash_table.containsKey(atd.getDateFilenameString()));
+    }
+    
+    /**
+     * Is Entry Available
+     * 
+     * @param dt
+     * @return
+     */
+    public boolean isEntryAvailable(long dt)
+    {
+        if (isDayEntryAvailable(dt))
+        {
+            DeviceValuesDay dvd = getDayEntry(dt); 
+            return dvd.isEntryAvailable(dt);
+        }
+        else
+            return false;
+    }
+    
+    
+    /**
+     * Get Day Entry
+     * 
+     * @param dt
+     * @return
+     */
+    public DeviceValuesDay getDayEntry(long dt)
+    {
+        ATechDate atd = new ATechDate(dve.getDateTimeFormat(), dt);
+        return this.hash_table.get(atd.getDateFilenameString());
     }
     
     

@@ -62,6 +62,7 @@ public class DeviceValuesDay
      * Constructor
      * 
      * @param da
+     * @param gc 
      */
     public DeviceValuesDay(DataAccessPlugInBase da, GregorianCalendar gc)
     {
@@ -128,7 +129,8 @@ public class DeviceValuesDay
 	
     /**
      * Set Date Time GC
-     * @param gc
+     * 
+     * @return 
      */
     public GregorianCalendar getDateTimeGC()
     {
