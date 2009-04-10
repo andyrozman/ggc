@@ -2,8 +2,8 @@ package ggc.pump.print;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
-import ggc.core.data.DayValuesData;
 import ggc.core.util.DataAccess;
+import ggc.plugin.data.DeviceValuesRange;
 
 import java.util.Iterator;
 
@@ -48,9 +48,9 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
      * 
      * @param mv
      */
-    public PrintPumpDataExt(DayValuesData mv)
+    public PrintPumpDataExt(DeviceValuesRange dvr)
     {
-        super(mv);
+        super(dvr);
         //super(mv, DataAccess.getInstance().getNutriI18nControl());
     }
 

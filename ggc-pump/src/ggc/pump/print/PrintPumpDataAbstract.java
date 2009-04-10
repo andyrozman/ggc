@@ -30,8 +30,8 @@ package ggc.pump.print;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
-import ggc.core.data.DayValuesData;
 import ggc.core.print.PrintAbstract;
+import ggc.plugin.data.DeviceValuesRange;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.Iterator;
@@ -72,15 +72,19 @@ import com.lowagie.text.pdf.PdfPTable;
 public abstract class PrintPumpDataAbstract extends PrintAbstract
 {
 
+    DeviceValuesRange m_dvr;
+    
     /**
      * Constructor
      * 
      * @param mv
      */
-    public PrintPumpDataAbstract(DayValuesData mv)
+    public PrintPumpDataAbstract(DeviceValuesRange dvr)
     {
-        super(mv, DataAccessPump.getInstance().getI18nControlInstance());
+        super(DataAccessPump.getInstance().getI18nControlInstance());
 
+        m_dvr = dvr;
+        
         // System.out.println("getNutriControl");
 
         // this.ic = m_da.getNutriI18nControl();

@@ -387,17 +387,29 @@ public class GGCPumpDb extends PluginDb
         // TODO
         
         log.debug("mergeRangePumpData not implemented !!!");
-        /*
+        
         for(int i=0; i<lst_ext.size(); i++)
         {
             PumpValuesEntryExt pvex = lst_ext.get(i);
             
+            DeviceValuesDay dvd;
+            
+            if (dvr.isEntryAvailable(pvex.getDt_info()))
+            {
+                dvd = dvr.getDayEntry(pvex.getDt_info());
+            }
+            else
+            {
+                ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), pvex.getDt_info());
+                dvd = new DeviceValuesDay(m_da, atd.getGregorianCalendar());
+            }
+            
             //System.out.println(pvex.getDt_info());
             
-            if (dV.isEntryAvailable(pvex.getDt_info()))
+            if (dvd.isEntryAvailable(pvex.getDt_info()))
             {
                 
-                PumpValuesEntry pve = (PumpValuesEntry)dV.getEntry(pvex.getDt_info());
+                PumpValuesEntry pve = (PumpValuesEntry)dvd.getEntry(pvex.getDt_info());
                 pve.addAdditionalData(pvex);
             }
             else
@@ -409,10 +421,10 @@ public class GGCPumpDb extends PluginDb
                 
                 pve.addAdditionalData(pvex);
                 
-                dV.addEntry(pve);
+                dvd.addEntry(pve);
             }
         }
-        */
+        
     }
     
     

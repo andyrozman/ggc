@@ -1,15 +1,9 @@
 package ggc.pump.print;
 
-import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
-import ggc.core.data.DayValuesData;
 import ggc.core.util.DataAccess;
+import ggc.plugin.data.DeviceValuesRange;
 
-import java.util.Iterator;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPTable;
 
@@ -48,9 +42,9 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
      * 
      * @param mv
      */
-    public PrintPumpDataBase(DayValuesData mv)
+    public PrintPumpDataBase(DeviceValuesRange dvr)
     {
-        super(mv);
+        super(dvr);
         //super(mv, DataAccess.getInstance().getNutriI18nControl());
     }
 
