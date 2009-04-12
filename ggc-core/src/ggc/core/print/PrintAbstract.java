@@ -84,11 +84,13 @@ public abstract class PrintAbstract extends PdfPageEventHelper
      * @param data
      * @param ic
      */
-    public PrintAbstract(DayValuesData data, I18nControlAbstract ic)
+    public PrintAbstract(DayValuesData data, I18nControlAbstract ic, boolean do_init)
     {
         this.m_data = data;
         this.ic = ic;
-        init();
+        
+        if (do_init)
+            init();
     }
 
     
@@ -107,9 +109,18 @@ public abstract class PrintAbstract extends PdfPageEventHelper
         init();
     }
     
+    /**
+     * Constructor 
+     * 
+     * @param ic
+     */
+    public PrintAbstract(I18nControlAbstract ic)
+    {
+        this.ic = ic;
+        init();
+    }
     
-    
-    private void init()
+    protected void init()
     {
         //name = System.currentTimeMillis();
         createName();

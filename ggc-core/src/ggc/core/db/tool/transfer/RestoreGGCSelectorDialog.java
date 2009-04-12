@@ -82,7 +82,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
      */
     public void cmdNextStep()
     {
-        System.out.println("Res Coll: " + this.m_da.getBackupRestoreCollection());
+        //System.out.println("Res Coll: " + this.m_da.getBackupRestoreCollection());
         RestoreGGCDialog rgd = new RestoreGGCDialog((JFrame)this.my_parent, this.m_da, this.m_da.getBackupRestoreCollection(), this.tf_file.getText());
         rgd.showDialog();
     }

@@ -8,6 +8,7 @@ import ggc.core.util.DataAccess;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Enumeration;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,6 +19,7 @@ import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
+import com.atech.plugin.PlugInClient;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -219,9 +221,19 @@ public class GGCImporter extends ImportTool implements Runnable
        //     ColorSchemeH eh = (ColorSchemeH)obj;
             return new SettingsColorScheme();
         }
-        else
-            return null;
-           
+        
+        for(Enumeration<String> en= m_da.getPlugins().keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            PlugInClient pic = m_da.getPlugIn(key);
+            
+            if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(class_name))
+            {
+                return pic.getBackupRestoreHandler().getBackupRestoreObject(class_name);
+            }
+        }
+        
+        return null;
             
     }
 

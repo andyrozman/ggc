@@ -6,6 +6,9 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.4.6.1 (11.4.2009) [andy]
+    * Fixed backup/restore mechanism (new one (v2) with objects)
+
 0.4.4.2
     * Build system for GGC Core
 

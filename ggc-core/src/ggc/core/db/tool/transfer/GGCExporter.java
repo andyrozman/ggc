@@ -235,7 +235,7 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         //System.out.println("export: first");
         
-        System.out.println("BRO: " + bro);
+        //System.out.println("BRO: " + bro);
     
         openFile(this.getRootPath() + bro.getBackupFile() + this.getFileLastPart() + ".dbe");
 
