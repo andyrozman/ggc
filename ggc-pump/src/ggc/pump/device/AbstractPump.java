@@ -378,6 +378,11 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
     
+    /**
+     * Get Profile Names
+     * 
+     * @return
+     */
     public String[] getProfileNames()
     {
         return this.profile_names;

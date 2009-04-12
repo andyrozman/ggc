@@ -1,7 +1,6 @@
 package ggc.pump.gui.manual;
 
 import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -42,8 +41,8 @@ import com.atech.utils.ATSwingUtils;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpDataAdditionalWizardOne
+ *  Description:  Wizard for adding Additional data (step 1)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -87,7 +86,6 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
      * 
      * @param hashtable
      * @param parent
-     * @param pump_data
      */
    public PumpDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent) //, PumpAdditionalDataType pump_data)
     {

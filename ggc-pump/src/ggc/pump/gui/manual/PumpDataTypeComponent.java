@@ -3,7 +3,6 @@ package ggc.pump.gui.manual;
 import ggc.core.util.DataAccess;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.PumpValuesEntryProfile;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
@@ -1107,17 +1106,17 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             //setBasalSubType(this.combo_1.getSelectedIndex());
             //m_parent.dtc
             
-            float bg =0.0f;
+            float _bg =0.0f;
             float ch = 0.0f;
             
             if (m_parent.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG)))
             {
                 PumpValuesEntryExt pvex = m_parent.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG));
-                bg = m_da.getFloatValueFromString(pvex.getValue());
+                _bg = m_da.getFloatValueFromString(pvex.getValue());
                 
                 if (m_da.getBGMeasurmentType()!=DataAccess.BG_MGDL)
                 {
-                    bg = m_da.getBGValueDifferent(DataAccess.BG_MGDL, bg);
+                    _bg = m_da.getBGValueDifferent(DataAccess.BG_MGDL, _bg);
                 }
             }
 
@@ -1129,7 +1128,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             }
             
             BolusHelper bh = new BolusHelper(m_parent, 
-                bg, //m_da.getJFormatedTextValueFloat(ftf_bg2), 
+                _bg, //m_da.getJFormatedTextValueFloat(ftf_bg2), 
                 ch, //m_da.getJFormatedTextValueFloat(this.ftf_ch), 
                 m_parent.dtc.getDateTime());
 
@@ -1150,7 +1149,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         private static final long serialVersionUID = 1195430308386555236L;
         JLabel label_1_1, label_2_1;
-        JButton button_1;
+        JButton b_button_1;
         //PumpValuesEntryProfile profile = null;
         String profile;
 
@@ -1172,10 +1171,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             label_2_1.setBounds(150, 0, 140, 25);
             this.add(label_2_1);
 
-            button_1 = new JButton("...");
-            button_1.setBounds(300, 0, 25, 25);
-            button_1.addActionListener(this);
-            this.add(button_1);
+            b_button_1 = new JButton("...");
+            b_button_1.setBounds(300, 0, 25, 25);
+            b_button_1.addActionListener(this);
+            this.add(b_button_1);
 
         }
 

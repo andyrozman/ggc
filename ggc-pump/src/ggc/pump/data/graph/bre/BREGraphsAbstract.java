@@ -86,6 +86,12 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
 
 
     
+    /**
+     * Get Time Ms 
+     * 
+     * @param time
+     * @return
+     */
     public long getTimeMs(int time)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
@@ -94,7 +100,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
         
         if (atd.minute == 99)
         {
-            
+            atd.minute = 59;
         }
         
         gcx.set(GregorianCalendar.HOUR_OF_DAY, atd.hour_of_day);
@@ -104,6 +110,11 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     }
 
     
+    /**
+     * Set Data
+     * 
+     * @param data_coll
+     */
     public void setData(BREDataCollection data_coll)
     {
         this.data_coll = data_coll;

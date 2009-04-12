@@ -2,19 +2,47 @@ package ggc.pump.data.bre;
 
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BREDataCollection.
+ */
 public class BREDataCollection //extends ArrayList<BasalRateEstimatorData> 
 {
 
+    /**
+     * The bg.
+     */
     ArrayList<BREData> bg;
+    
+    /**
+     * The basal_old.
+     */
     ArrayList<BREData> basal_old;
+    
+    /**
+     * The basal_new.
+     */
     ArrayList<BREData> basal_new;
     
+    /**
+     * The ratios.
+     */
     ArrayList<RatioData> ratios;
+    
+    /**
+     * The ratios_graph.
+     */
     ArrayList<RatioData> ratios_graph;
     
+    /**
+     * The basal_estimation.
+     */
     ArrayList<BasalEstimationData> basal_estimation;
     
     
+    /**
+     * Instantiates a new bRE data collection.
+     */
     public BREDataCollection()
     {
         bg = new ArrayList<BREData>();
@@ -25,6 +53,13 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         basal_estimation = new ArrayList<BasalEstimationData>();
     }
 
+    
+    /**
+     * Adds the BREData
+     * 
+     * @param type the type
+     * @param data the data
+     */
     public void add(int type, BREData data)
     {
         switch (type)
@@ -52,6 +87,14 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         
     }
     
+    
+    /**
+     * Adds the BREData
+     * 
+     * @param type the type
+     * @param time the time
+     * @param value the value
+     */
     public void add(int type, int time, float value)
     {
         BREData data = new BREData(time, value, type);
@@ -59,6 +102,14 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     }
 
     
+    /**
+     * Adds the BREData
+     * 
+     * @param time_i the time_i
+     * @param ratio_ch_insulin the ratio_ch_insulin
+     * @param ratio_bg_insulin the ratio_bg_insulin
+     * @param ratio_ch_bg the ratio_ch_bg
+     */
     public void add(int time_i, float ratio_ch_insulin, float ratio_bg_insulin, float ratio_ch_bg)
     {
         RatioData data = new RatioData(time_i, ratio_ch_insulin, ratio_bg_insulin, ratio_ch_bg);
@@ -66,6 +117,13 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     }
     
 
+    /**
+     * Gets the data by type
+     * 
+     * @param type the type
+     * 
+     * @return the data by type
+     */
     public ArrayList<BREData> getDataByType(int type)
     {
         switch (type)
@@ -84,6 +142,14 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         
     }
 
+    
+    /**
+     * Gets the ratios collection
+     * 
+     * @param type the type
+     * 
+     * @return the ratios collection
+     */
     public ArrayList<RatioData> getRatiosCollection(int type)
     {
         switch (type)
@@ -100,7 +166,9 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     }
     
     
-    
+    /**
+     * Process ratios
+     */
     public void processRatios()
     {
         
@@ -122,6 +190,9 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     }
 
     
+    /**
+     * Process old basals
+     */
     public void processOldBasals()
     {
         processBasals(this.basal_old);
@@ -143,12 +214,21 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         
     }
 
+    
+    /**
+     * Process new basals
+     */
     public void processNewBasals()
     {
         processBasals(this.basal_new);
     }
     
 
+    /**
+     * Process basals
+     * 
+     * @param list the list
+     */
     public void processBasals(ArrayList<BREData> list)
     {
         
@@ -174,17 +254,25 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     }
     
     
+    /**
+     * Sets the basal estimation data
+     * 
+     * @param data the new basal estimation data
+     */
     public void setBasalEstimationData(ArrayList<BasalEstimationData> data)
     {
         this.basal_estimation = data;
     }
+ 
     
+    /**
+     * Gets the basal estimation data
+     * 
+     * @return the basal estimation data
+     */
     public ArrayList<BasalEstimationData> getBasalEstimationData()
     {
         return this.basal_estimation;
     }
     
-    
-    
 }
-

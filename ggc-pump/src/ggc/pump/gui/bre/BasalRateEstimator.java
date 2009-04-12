@@ -19,7 +19,6 @@ import java.util.Hashtable;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,16 +27,44 @@ import javax.swing.JTabbedPane;
 import com.atech.graphics.graphs.GraphViewerPanel;
 import com.atech.utils.ATSwingUtils;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BasalRateEstimator.
+ */
 public class BasalRateEstimator extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 3285623806907044947L;
+    
+    /**
+     * The m_da.
+     */
     DataAccessPump m_da = DataAccessPump.getInstance();
+    
+    /**
+     * The lst_ratios.
+     */
     JList lst_bgs, lst_basals_old, lst_basals_new, lst_ratios;
     
+    /**
+     * The gv.
+     */
     GraphViewBasalRateEstimator gv;
+    
+    /**
+     * The bre_algorithm.
+     */
     BasalRateEstimatorAlgorithm bre_algorithm;
+    
+    /**
+     * The m_graphs.
+     */
     Hashtable<String, BREGraphsAbstract> m_graphs;
     
+    
+    
+    /**
+     * Instantiates a new basal rate estimator.
+     */
     public BasalRateEstimator()
     {
         ATSwingUtils.initLibrary();
@@ -53,7 +80,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
     {
         //this.setLayout(null);
         this.setTitle("Basal Rate Estimator");
-        JLabel label;
+        //JLabel label;
         
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -190,10 +217,29 @@ public class BasalRateEstimator extends JDialog implements ActionListener
     }
 
     
+    /**
+     * The Constant GRAPH_BOTH_BASAL_RATES.
+     */
     public static final int GRAPH_BOTH_BASAL_RATES = 1;
+    
+    /**
+     * The Constant GRAPH_OLD_RATE.
+     */
     public static final int GRAPH_OLD_RATE = 2;
+    
+    /**
+     * The Constant GRAPH_NEW_RATE.
+     */
     public static final int GRAPH_NEW_RATE = 3;
+    
+    /**
+     * The Constant GRAPH_RATIO.
+     */
     public static final int GRAPH_RATIO = 4;
+    
+    /**
+     * The Constant GRAPH_BASALS.
+     */
     public static final int GRAPH_BASALS = 5;
     
     
@@ -202,23 +248,22 @@ public class BasalRateEstimator extends JDialog implements ActionListener
         
         JPanel panel_graph = new JPanel();
         //panel_graph.setBounds(300, 120, 560, 360);
-        BREGraphsAbstract gv = null;
+        BREGraphsAbstract _gv = null;
         
         if ((type>=1) && (type <=3))
         {
-            gv = new GraphViewBasalRate(type);
+            _gv = new GraphViewBasalRate(type);
         }
         else if (type==4)
         {
-            gv = new GraphViewRatios();
+            _gv = new GraphViewRatios();
         }
         else
         {
-            gv = new GraphViewBasals();
-            
+            _gv = new GraphViewBasals();
         }
         
-        m_graphs.put("" + type, gv);
+        m_graphs.put("" + type, _gv);
         
         GraphViewerPanel gvp = new GraphViewerPanel(gv);
         gvp.setMinimumSize(new Dimension(550, 310)); // 450, 460
@@ -458,6 +503,11 @@ public class BasalRateEstimator extends JDialog implements ActionListener
     }
     
     
+    /**
+     * The main method.
+     * 
+     * @param args the arguments
+     */
     public static void main(String args[])
     {
         BasalRateEstimator bre = new BasalRateEstimator();
@@ -468,6 +518,9 @@ public class BasalRateEstimator extends JDialog implements ActionListener
         
     }
 
+    /** 
+     * actionPerformed
+     */
     public void actionPerformed(ActionEvent e)
     {
         System.out.println(e.getActionCommand() + " is currently not supported.");

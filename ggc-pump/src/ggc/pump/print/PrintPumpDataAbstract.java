@@ -28,19 +28,19 @@ package ggc.pump.print;
  * Author: andyrozman {andy@atech-software.com}
  */
 
-import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
-import ggc.core.print.PrintAbstract;
+import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.pump.util.DataAccessPump;
 
-import java.util.Iterator;
+import java.util.GregorianCalendar;
 
+import com.atech.print.PrintAbstractIText;
+import com.atech.utils.ATechDate;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPTable;
 
 /**
@@ -69,25 +69,25 @@ import com.lowagie.text.pdf.PdfPTable;
  */
 
 
-public abstract class PrintPumpDataAbstract extends PrintAbstract
+public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 {
 
-    DeviceValuesRange m_dvr;
+    protected DeviceValuesRange m_dvr;
+    protected DataAccessPump da_local = null;
     
     /**
      * Constructor
      * 
-     * @param mv
+     * @param dvr 
      */
     public PrintPumpDataAbstract(DeviceValuesRange dvr)
     {
-        super(DataAccessPump.getInstance().getI18nControlInstance());
+        super(DataAccessPump.getInstance().getI18nControlInstance(), false);
 
         m_dvr = dvr;
-        
-        // System.out.println("getNutriControl");
+        da_local = DataAccessPump.getInstance(); 
 
-        // this.ic = m_da.getNutriI18nControl();
+        init();
     }
 
     /**
@@ -99,23 +99,36 @@ public abstract class PrintPumpDataAbstract extends PrintAbstract
     {
         Paragraph p = new Paragraph();
 
-        Font f = new Font(this.base_times, 16, Font.BOLD);
+        Font f = new Font(this.base_times, 14, Font.BOLD);
 
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
-        p.add(new Paragraph(ic.getMessage(getTitleText()) + " [" + this.m_data.getFromAsLocalizedDate() + " - "
-                + this.m_data.getToAsLocalizedDate() + "]", f));
-        // p.add(new Paragraph("May 2006"));
-        p.add(new Paragraph(ic.getMessage("FOR") + " " + m_da.getSettings().getUserName(), new Font(Font.TIMES_ROMAN,
-                12, Font.ITALIC)));
+        p.add(new Paragraph(ic.getMessage(getTitleText()) + " [" + this.getDateString(this.m_dvr.getStartGC()) + " - "
+                + this.getDateString(this.m_dvr.getEndGC()) + "]", f));
+        p.add(new Paragraph(ic.getMessage("FOR") + " " + DataAccess.getInstance().getSettings().getUserName(), new Font(Font.TIMES_ROMAN,
+                10, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
-        // p.add(new Paragraph("", f));
 
         return p;
     }
 
 
+    protected String getDateString(GregorianCalendar gc)
+    {
+        return gc.get(GregorianCalendar.DAY_OF_MONTH) + "." + (gc.get(GregorianCalendar.MONTH) +1 ) + "." + gc.get(GregorianCalendar.YEAR); 
+    }
+    
+    
+    /** 
+     * Get Text Size
+     */
+    public int getTextSize()
+    {
+        return 8;
+    }
+    
+    
     /**
      * Create document body.
      * 
@@ -123,7 +136,9 @@ public abstract class PrintPumpDataAbstract extends PrintAbstract
      * @throws Exception
      */
     @Override
-    public void fillDocumentBody(Document document) throws Exception
+    public abstract void fillDocumentBody(Document document) throws Exception;
+    
+    /*
     {
         Iterator<DailyValues> it = this.m_data.iterator();
 
@@ -165,7 +180,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstract
 //                this.writeEmptyColumnData(datatable);
             }
             else */
-            {
+     /*       {
 
                 for (int i = 0; i < dv.getRowCount(); i++)
                 {
@@ -201,6 +216,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstract
 
                     }
 */
+    /*
                 }
 
                 if (active_day_entry==0)
@@ -219,7 +235,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstract
                                 datatable.addCell(new Phrase("", f));
                             } 
                   */
-
+/*
                 count++;
             }
         }
@@ -229,7 +245,8 @@ public abstract class PrintPumpDataAbstract extends PrintAbstract
         System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
 
     }
-
+*/
+    
     /**
      * Returns data part of filename for printing job, showing which data is being printed
      * 
@@ -238,8 +255,10 @@ public abstract class PrintPumpDataAbstract extends PrintAbstract
     @Override
     public String getFileNameRange()
     {
-        return this.m_data.getRangeBeginObject().getDateFilenameString() + "-"
-                + this.m_data.getRangeEndObject().getDateFilenameString();
+        ATechDate atd1 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), m_dvr.getStartGC());
+        ATechDate atd2 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), m_dvr.getEndGC());
+        
+        return atd1.getDateFilenameString() + "-" + atd2.getDateFilenameString();
     }
     
     

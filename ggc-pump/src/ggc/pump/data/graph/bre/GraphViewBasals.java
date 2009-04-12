@@ -4,7 +4,6 @@ import ggc.pump.data.bre.BREData;
 import ggc.pump.data.bre.BREDataCollection;
 
 import java.awt.Color;
-import java.awt.Paint;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -13,12 +12,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
-import org.jfree.chart.plot.CombinedRangeXYPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYStepAreaRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.general.AbstractDataset;
@@ -307,8 +302,9 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         return m_ic.getMessage("DAILYGRAPHFRAME");
     }
     
-    
-    private JFreeChart createCombinedChartOld() {
+    /*
+    private JFreeChart createCombinedChartOld() 
+    {
 
         // create subplot 1...
         //IntervalXYDataset data1 = createDataset1();
@@ -316,21 +312,11 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
         
         
         XYItemRenderer renderer1 = new XYBarRenderer(0.20);
-        /*renderer1.setToolTipGenerator(
-            new StandardXYItemLabelGenerator(
-                new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.0")
-            )
-        );*/
         XYPlot subplot1 = new XYPlot(dataset_old, new DateAxis("Date"), null, renderer1);
 
         // create subplot 2...
         //XYDataset data2 = createDataset2();
         XYItemRenderer renderer2 = new StandardXYItemRenderer();
-        /*renderer2.setToolTipGenerator(
-            new StandardXYItemLabelGenerator(
-                new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.0")
-            )
-        );*/
         XYPlot subplot2 = new XYPlot(dataset_new, new DateAxis("Date"), null, renderer2);
 
         // create a parent plot...
@@ -345,7 +331,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
                               JFreeChart.DEFAULT_TITLE_FONT, plot, true);
 
     }
-
+*/
     
     
     
@@ -475,6 +461,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
      *
      * @return the combined chart.
      */
+    @SuppressWarnings("deprecation")
     private JFreeChart createCombinedChart() {
 
         xy_step = new XYStepAreaRenderer(XYStepAreaRenderer.AREA);

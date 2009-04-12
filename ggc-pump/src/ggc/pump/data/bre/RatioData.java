@@ -4,13 +4,36 @@ import ggc.pump.util.DataAccessPump;
 
 import com.atech.utils.ATechDate;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RatioData.
+ */
 public class RatioData 
 {
+    
+    /**
+     * The time_start.
+     */
     public int time_start;
+    
+    /**
+     * The time_end.
+     */
     public int time_end;
     
+    /**
+     * The ratio_ch_insulin.
+     */
     public float ratio_ch_insulin = 0.0f;
+    
+    /**
+     * The ratio_bg_insulin.
+     */
     public float ratio_bg_insulin = 0.0f;
+    
+    /**
+     * The ratio_ch_bg.
+     */
     public float ratio_ch_bg = 0.0f;
     
     
@@ -34,6 +57,9 @@ public class RatioData
 
   
     
+    /** 
+     * toString
+     */
     public String toString()
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time_start);

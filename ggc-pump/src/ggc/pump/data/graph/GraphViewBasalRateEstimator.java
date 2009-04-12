@@ -79,8 +79,6 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     
     /**
      * Constructor
-     * 
-     * @param gc 
      */
     public GraphViewBasalRateEstimator()
     {
@@ -212,12 +210,12 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
 
         XYSeries bg = new XYSeries(this.m_ic.getMessage("MEASURED_BASAL_BG"), true, true); //, Hour.class);
         
-        XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); //, Hour.class);
+        //XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); //, Hour.class);
 //        XYSeries ins1Series = new XYSeries(da_local.getSettings().getIns1Name(), true, true); //, Hour.class);
 //        XYSeries ins2Series = new XYSeries(da_local.getSettings().getIns2Name(), true, true); //, Hour.class);
         
         
-        int BGUnit = 1; // AAA da_local.getSettings().getBG_unit();
+        //int BGUnit = 1; // AAA da_local.getSettings().getBG_unit();
         
         ArrayList<BREData> lst = this.data_coll.getDataByType(BREData.BRE_DATA_BG);  
         
@@ -311,9 +309,20 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
 
     GregorianCalendar gcx = new GregorianCalendar();
     
+    /**
+     * Get Time in Ms
+     * 
+     * @param time
+     * @return
+     */
     public long getTimeMs(int time)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
+        
+        if (atd.minute==99)
+        {
+            atd.minute=59;
+        }
         
         gcx.set(GregorianCalendar.HOUR_OF_DAY, atd.hour_of_day);
         gcx.set(GregorianCalendar.MINUTE, atd.minute);
@@ -399,6 +408,11 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     }
 
     
+    /**
+     * Set Data
+     * 
+     * @param data_coll
+     */
     public void setData(BREDataCollection data_coll)
     {
         this.data_coll = data_coll;

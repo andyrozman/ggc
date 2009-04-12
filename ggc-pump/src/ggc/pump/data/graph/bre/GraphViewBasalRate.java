@@ -53,7 +53,6 @@ import com.atech.utils.ATechDate;
 public class GraphViewBasalRate extends BREGraphsAbstract //implements GraphViewInterface, GraphViewDataProcessorInterface 
 {
 
-    @SuppressWarnings("unused")
     XYSeriesCollection dataset = new XYSeriesCollection();
 
     NumberAxis BGAxis;
@@ -71,7 +70,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract //implements GraphView
     /**
      * Constructor
      * 
-     * @param gc 
+     * @param type 
      */
     public GraphViewBasalRate(int type)
     {
@@ -156,10 +155,10 @@ public class GraphViewBasalRate extends BREGraphsAbstract //implements GraphView
         XYSeries calc_basal = new XYSeries(this.m_ic.getMessage("CALCULATED_BASAL"), true, true); //, Hour.class);
         
         
-        XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); //, Hour.class);
+        //XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); //, Hour.class);
         
         
-        int BGUnit = 1; // AAA da_local.getSettings().getBG_unit();
+        //int BGUnit = 1; // AAA da_local.getSettings().getBG_unit();
 
         if ((this.m_type == BasalRateEstimator.GRAPH_OLD_RATE) || (this.m_type == BasalRateEstimator.GRAPH_BOTH_BASAL_RATES))
         {
@@ -210,8 +209,11 @@ public class GraphViewBasalRate extends BREGraphsAbstract //implements GraphView
     }
 
 
-    GregorianCalendar gcx = new GregorianCalendar();
+    //GregorianCalendar gcx = new GregorianCalendar();
     
+    /** 
+     * Get Time in Ms
+     */
     public long getTimeMs(int time)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
@@ -300,6 +302,9 @@ public class GraphViewBasalRate extends BREGraphsAbstract //implements GraphView
     }
 
     
+    /** 
+     * Set Data
+     */
     public void setData(BREDataCollection data_coll)
     {
         this.data_coll = data_coll;

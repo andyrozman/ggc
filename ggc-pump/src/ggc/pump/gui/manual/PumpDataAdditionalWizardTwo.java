@@ -50,8 +50,8 @@ import com.atech.utils.ATSwingUtils;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     PumpDataAdditionalWizardTwo
+ *  Description:  Wizard for adding Additional data (step 2)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -99,7 +99,6 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
      * 
      * @param wiz_one
      * @param type
-     * @param pump_add
      */
     public PumpDataAdditionalWizardTwo(PumpDataAdditionalWizardOne wiz_one, String type) //, PumpAdditionalDataType pump_add)
     {
@@ -900,6 +899,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     }
     
     
+    @SuppressWarnings("unused")
     private TransferDialog createInstance()
     {
         

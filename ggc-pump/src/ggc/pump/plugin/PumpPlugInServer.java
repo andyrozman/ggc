@@ -7,12 +7,15 @@ import ggc.plugin.list.BaseListDialog;
 import ggc.pump.db.PumpData;
 import ggc.pump.db.PumpDataExtended;
 import ggc.pump.db.PumpProfile;
+import ggc.pump.gui.PumpPrintDialog;
 import ggc.pump.gui.manual.PumpDataDialog;
 import ggc.pump.gui.profile.ProfileSelector;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -22,6 +25,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.BackupRestorePlugin;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,7 +54,7 @@ import com.atech.utils.ATDataAccessAbstract;
  */
 
 
-public class PumpPlugInServer extends PlugInServer
+public class PumpPlugInServer extends PlugInServer implements ActionListener
 {
 
     //String plugin_version = "0.1.7.1";
@@ -326,8 +330,51 @@ public class PumpPlugInServer extends PlugInServer
     @Override
     public JMenu[] getPlugInPrintMenus()
     {
-        // TODO Auto-generated method stub
-        return null;
+        I18nControlAbstract icp = DataAccessPump.getInstance().getI18nControlInstance();
+
+        JMenu menu_reports_pump = ATSwingUtils.createMenu("MN_PUMP", "MN_PUMP_PRINT_DESC", icp);
+        
+        ATSwingUtils.createMenuItem(menu_reports_pump, 
+            "MN_PUMP_PRINT_SIMPLE", 
+            "MN_PUMP_PRINT_SIMPLE_DESC", 
+            "report_print_pump_simple",
+            this, "print.png", 
+            icp, DataAccessPump.getInstance(), parent);
+        
+        
+        ATSwingUtils.createMenuItem(menu_reports_pump,
+            "MN_PUMP_PRINT_EXT", 
+            "MN_PUMP_PRINT_EXT_DESC", 
+            "report_print_pump_ext", 
+            this, "print.png", 
+            icp, DataAccessPump.getInstance(), parent);
+        
+        
+        
+        JMenu[] mns = new JMenu[1];
+        mns[0] = menu_reports_pump;
+        
+        return mns;
+    }
+    
+    
+    /** 
+     * Action Performed
+     */
+    public void actionPerformed(ActionEvent ae)
+    {
+        String command = ae.getActionCommand();
+        
+        if (command.equals("report_print_pump_simple"))
+        {
+            new PumpPrintDialog((JFrame)parent, PumpPrintDialog.PUMP_REPORT_SIMPLE);
+        }
+        else if (command.equals("report_print_pump_ext"))
+        {
+            new PumpPrintDialog((JFrame)parent, PumpPrintDialog.PUMP_REPORT_EXTENDED);
+        }
+        
+        
     }
     
     

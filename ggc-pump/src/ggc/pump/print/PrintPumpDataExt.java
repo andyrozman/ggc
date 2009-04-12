@@ -1,15 +1,10 @@
 package ggc.pump.print;
 
-import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesRange;
 
-import java.util.Iterator;
-
 import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPTable;
 
@@ -46,12 +41,11 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     /**
      * Constructor 
      * 
-     * @param mv
+     * @param dvr 
      */
     public PrintPumpDataExt(DeviceValuesRange dvr)
     {
         super(dvr);
-        //super(mv, DataAccess.getInstance().getNutriI18nControl());
     }
 
     
@@ -231,232 +225,6 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
 
     
     
-    /**
-     * @param document
-     * @throws Exception
-     */
-    public void fillDocumentBodyX1(Document document) throws Exception
-    {
-        // TODO Auto-generated method stub
-        
-        System.out.println("Jedilnik");
-        
-        Iterator<DailyValues> it = this.m_data.iterator();
-        
-        int count = 0;
-        
-        Font f =  this.text_normal;  //new Font(this.base_helvetica , 12, Font.NORMAL); // this.base_times
-        
-        PdfPTable datatable = new PdfPTable(6);
-        int headerwidths[] = { 13, 7,
-                               40, 20, 10, 10 
-                                }; // percentage
-        datatable.setWidths(headerwidths);
-        datatable.setWidthPercentage(100); // percentage
-        //datatable.getDefaultCell().setPadding(3);
-        //datatable.getDefaultCell().setBorderWidth(2);
-        
-        datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-        datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); //ALIGN_CENTER);
-        datatable.getDefaultCell().setBorderWidth(1);
-        
-        datatable.addCell(new Phrase(ic.getMessage("DATE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("TIME"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_TYPE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
-        
-//        document.add(datatable);
-        
-        while (it.hasNext())
-        {
-            DailyValues dv = it.next();
-            dv.sort();
-/* v2            
-            PdfPTable data_1 = new PdfPTable(2);
-            
-            int d1_widths[] = { 10, 90 //,
-                                   //40, 20, 10, 10 
-                                    }; // percentage
-            data_1.setWidths(d1_widths);
-            data_1.setWidthPercentage(100); // percentage
-            
-            
-            //datatable.setWidths(headerwidths);
-            //datatable.setWidthPercentage(100); // percentage
-            //datatable.getDefaultCell().setPadding(3);
-            //datatable.getDefaultCell().setBorderWidth(2);
-            
-            data_1.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-            data_1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            data_1.getDefaultCell().setBorderWidth(1);
-            
-*/            
-            
-/*            
-            data_1.addCell(new Phrase(ic.getMessage("DATE"), f));
-            data_1.addCell(new Phrase(ic.getMessage("TIME"), f));
-            data_1.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), f));
-            data_1.addCell(new Phrase(ic.getMessage("PRINT_AMOUNT_TYPE"), f));
-            datatable.addCell(new Phrase(ic.getMessage("PRINT_AMOUNT"), f));
-            datatable.addCell(new Phrase(ic.getMessage("CH"), f));
-*/            
-
-            
-            
-// v2            data_1.addCell(new Phrase(dv.getDateAsString(), f));
-     
-// v2            datatable.addCell(new Phrase(dv.getDateAsString(), f));
-
-            
-            datatable.addCell(new Phrase(dv.getDateAsString(), f));
-            
-            System.out.println("Row count: " + dv.getRowCount());
-            
-            /*
-            if (dv.getRowCount()==0)
-            {
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                continue;
-            } */
-            
-            System.out.println(dv.getDateAsString());
-            
-            int active_day_entry = 0;
-            
-            for(int i=0; i<dv.getRowCount(); i++)
-            {
-
-                
-                
-                DailyValuesRow rw = (DailyValuesRow)dv.getRow(i);
-                
-                if ((rw.getMealsIds()==null) || (rw.getMealsIds().length()==0))
-                    continue;
-
-//                datatable.addCell(new Phrase(dv.getDateAsString(), f));
-                
-                if (active_day_entry>0)
-                {
-                    datatable.addCell(new Phrase("", f));
-                }
-
-                active_day_entry++;
-/*                
-                PdfPTable data_2 = new PdfPTable(2);
-                
-                int d2_widths[] = { 
-                                   10, 90 
-                                    }; // percentage
-                 data_2.setWidths(d2_widths);
-                 //data_2.setWidths(headerwidths);
-                 data_2.setWidthPercentage(90); // percentage
-                //datatable.getDefaultCell().setPadding(3);
-                //datatable.getDefaultCell().setBorderWidth(2);
-                
-                data_2.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-                data_2.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-                data_2.getDefaultCell().setBorderWidth(1);
-                
-                data_2.addCell(new Phrase(rw.getTimeAsString(), f));
-  */              
-                
-                datatable.addCell(new Phrase(rw.getTimeAsString(), f));
-                
-                /*
-                DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true); 
-                
-                
-                for(int j=0; j<mpts.getElementsCount(); j++)
-                {
-                    DailyFoodEntry mp = mpts.getElement(j);
-                    
-
-                    if (j>0)
-                    {
-                        datatable.addCell(new Phrase("", f));
-                        datatable.addCell(new Phrase("", f));
-                    }
-                    
-                    
-                    datatable.addCell(new Phrase(mp.getName(), f));
-                    
-                    
-                    float value = 0.0f;
-
-                    
-                    if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
-                    {
-                        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
-                        value = mp.getMealCH();
-                        
-                    }
-                    else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
-                    {
-                        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), f));
-                        //value = mp.getNutrientValue(205);
-                        value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
-                    }
-                    else
-                    {
-                        datatable.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", f));
-                        value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
-                    }
-                    
-                    
-                   
-                    
-                    datatable.addCell(new Phrase(mp.getAmountSingleDecimalString(), f));
-                    //datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(mp.getNutrientValue(205) * mp.getHomeWeightMultiplier()), f));  // ch
-                    
-                    datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(value), f));  // ch
-                    
-                    // x data_3.completeRow();
-                    
-                    System.out.println("     " + rw.getTimeAsString() + " " + mp);
-                } */
-                
-// v2                data_2.addCell(data_3);
-                // x data_2.completeRow();
-
-             // v2                data_1.addCell(data_2);
-                // x data_1.completeRow();
-                
-                //datatable.addCell(data_2);
-                
-                
-// v2                document.add(data_1);
-
-                
-            }
-
-            
-            if (active_day_entry==0)
-            {
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-            } 
-            
-            
-            
-            count++;
-        }
-
-        
-        document.add(datatable);
-        
-        
-        System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
-        
-        
-        
-    }
     
 
 
@@ -601,15 +369,14 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     }
 
 
-
-    
-    
-    
-    
+    /** 
+     * Fill Document Body
+     */
+    @Override
+    public void fillDocumentBody(Document document) throws Exception
+    {
+        // TODO Auto-generated method stub
+    }
     
     
 }
-
-
-
-

@@ -8,19 +8,40 @@ import ggc.pump.data.graph.bre.BREGraphsAbstract;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BasalRateEstimatorAlgorithm.
+ */
 public class BasalRateEstimatorAlgorithm 
 {
     //GraphViewBasalRateEstimator m_gv;
+    /**
+     * The m_graphs.
+     */
     Hashtable<String, BREGraphsAbstract> m_graphs;
+    
+    /**
+     * The data_collection.
+     */
     BREDataCollection data_collection;
     
     
+    /**
+     * Instantiates a new basal rate estimator algorithm.
+     * 
+     * @param gvs the gvs
+     */
     public BasalRateEstimatorAlgorithm(Hashtable<String, BREGraphsAbstract> gvs)
     {
         this.m_graphs = gvs;
     }
 
     
+    /**
+     * Sets the data.
+     * 
+     * @param data_coll the new data
+     */
     public void setData(BREDataCollection data_coll)
     {
         data_collection = data_coll;
@@ -38,7 +59,14 @@ public class BasalRateEstimatorAlgorithm
     }
     
 
+    /**
+     * The lifetime_insulin.
+     */
     double lifetime_insulin = 4; // 4 hours for fastacting insulin
+    
+    /**
+     * The INTERVAL.
+     */
     int INTERVAL = 15;
     
     

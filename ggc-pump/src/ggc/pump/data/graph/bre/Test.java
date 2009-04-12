@@ -67,7 +67,13 @@ import org.jfree.ui.RefineryUtilities;
  *
  * @author David Gilbert
  */
-public class Test extends ApplicationFrame {
+public class Test extends ApplicationFrame 
+{
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 803652765625722610L;
 
     /**
      * Constructs a new demonstration application.
@@ -140,6 +146,7 @@ public class Test extends ApplicationFrame {
      *
      * @return Series 1.
      */
+    @SuppressWarnings("deprecation")
     private IntervalXYDataset createDataset1() {
 
         // create dataset 1...

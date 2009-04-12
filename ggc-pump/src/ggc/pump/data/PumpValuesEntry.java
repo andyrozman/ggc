@@ -356,7 +356,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
     	    }
     	    case 1: // type
     	    {
-    	        return this.m_da.getPumpBaseTypes().basetype_desc[this.base_type];
+    	        return getBaseTypeString();
     	    }
     	    case 2: // subtype
     	    {
@@ -410,6 +410,18 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
 	{
 	    return this.sub_type;
 	}
+	
+
+    /**
+     * Get Sub Type
+     * 
+     * @return
+     */
+    public String getBaseTypeString()
+    {
+        return this.m_da.getPumpBaseTypes().basetype_desc[this.base_type];
+    }
+
 	
 	
 	/**
@@ -484,6 +496,41 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
 	        return sb.toString();
 	    }
 	}
+
+	
+    /**
+     * Get Additional Display
+     * @return
+     */
+    public String getAdditionalDataPrint()
+    {
+        if (this.additional_data.size()==0)
+            return "";
+        else
+        {
+            StringBuffer sb = new StringBuffer();
+            int i=0;
+            
+            for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
+            {
+                String key = en.nextElement();
+                
+                if (i>0)
+                    sb.append("; ");
+                
+                //sb.append(key + "=" + this.additional_data.get(key).toString());
+                sb.append(this.additional_data.get(key).toString());
+                
+                //if (i%3==0)
+                //    sb.append("\n");
+                
+            }
+            
+            return sb.toString();
+        }
+    }
+	
+	
 	
 	/**
      * Prepare Entry

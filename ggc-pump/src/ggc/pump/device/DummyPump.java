@@ -1,17 +1,15 @@
 package ggc.pump.device;
 
-import java.util.Hashtable;
-
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.util.DataAccessPump;
 
-import com.atech.graphics.dialogs.selector.ColumnSorter;
-import com.atech.graphics.dialogs.selector.SelectableInterface;
+import java.util.Hashtable;
+
 import com.atech.i18n.I18nControlAbstract;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -42,7 +40,14 @@ import com.atech.i18n.I18nControlAbstract;
 public class DummyPump extends AbstractPump //implements PumpInterface //extends GenericPump //implements MeterInterface
 {
 
+    /**
+     * The m_da.
+     */
     DataAccessPump m_da = DataAccessPump.getInstance();
+    
+    /**
+     * The m_ic.
+     */
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     
     
@@ -213,144 +218,216 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
         return false;
     }
 
+    /** 
+     * getAlarmMappings
+     */
     public Hashtable<String, Integer> getAlarmMappings()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getBolusMappings
+     */
     public Hashtable<String, Integer> getBolusMappings()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getDeviceInfo
+     */
     public DeviceIdentification getDeviceInfo()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getErrorMappings
+     */
     public Hashtable<String, Integer> getErrorMappings()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getEventMappings
+     */
     public Hashtable<String, Integer> getEventMappings()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getMaxMemoryRecords
+     */
     public int getMaxMemoryRecords()
     {
         // TODO Auto-generated method stub
         return 0;
     }
 
+    /** 
+     * getReportMappings
+     */
     public Hashtable<String, Integer> getReportMappings()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * loadPumpSpecificValues
+     */
     public void loadPumpSpecificValues()
     {
         // TODO Auto-generated method stub
         
     }
 
+    /** 
+     * dispose
+     */
     public void dispose()
     {
         // TODO Auto-generated method stub
         
     }
 
+    /** 
+     * getComment
+     */
     public String getComment()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getConnectionPort
+     */
     public String getConnectionPort()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getConnectionProtocol
+     */
     public int getConnectionProtocol()
     {
         // TODO Auto-generated method stub
         return 0;
     }
 
+    /** 
+     * getDeviceClassName
+     */
     public String getDeviceClassName()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getDeviceId
+     */
     public int getDeviceId()
     {
         // TODO Auto-generated method stub
         return 0;
     }
 
+    /** 
+     * getDeviceSpecialComment
+     */
     public String getDeviceSpecialComment()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getIconName
+     */
     public String getIconName()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * getImplementationStatus
+     */
     public int getImplementationStatus()
     {
         // TODO Auto-generated method stub
         return 0;
     }
 
+    /** 
+     * getInstructions
+     */
     public String getInstructions()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /** 
+     * hasSpecialProgressStatus
+     */
     public boolean hasSpecialProgressStatus()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
+    /** 
+     * isDeviceCommunicating
+     */
     public boolean isDeviceCommunicating()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
+    /** 
+     * readConfiguration
+     */
     public void readConfiguration() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
         
     }
 
+    /** 
+     * readDeviceDataFull
+     */
     public void readDeviceDataFull() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
         
     }
 
+    /** 
+     * readDeviceDataPartitial
+     */
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
         
     }
 
+    /** 
+     * readInfo
+     */
     public void readInfo() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
