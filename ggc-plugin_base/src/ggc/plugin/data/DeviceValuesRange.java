@@ -150,5 +150,24 @@ public class DeviceValuesRange
     }
     
     
+    /**
+     * Get Start GC
+     * 
+     * @return
+     */
+    public GregorianCalendar getStartGC()
+    {
+        return this.gc_from;
+    }
+    
+    /**
+     * Get End GC
+     * 
+     * @return
+     */
+    public GregorianCalendar getEndGC()
+    {
+        return this.gc_to;
+    }
 	
 }	

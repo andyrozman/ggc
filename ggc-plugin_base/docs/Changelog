@@ -2,6 +2,10 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.3.2 
+    * Added DeviceValuesRange class, which is used for getting data from device for same range (for printing 
+      purposes for now, later probably for graphs too).
+    
 0.3.1
     * Changes which resulted from ggc-core beeing separate entity
     * Some minor changes to Configuration utility as is needed by Pump tools (no timezone fix)
