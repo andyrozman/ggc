@@ -6,6 +6,9 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+1.1.2 (11.4.2009) [andy]
+    * Fixed data loading for print functions
+
 1.1.1 (27.3.2009) [andy]
     * Nutrition is now separate project
     

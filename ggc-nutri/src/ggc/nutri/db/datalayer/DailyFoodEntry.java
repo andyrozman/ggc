@@ -298,12 +298,19 @@ public class DailyFoodEntry // implements SelectableInterface
         if (this.nutrition_food_type == GGCTreeRoot.TREE_MEALS)
         {
             //this.m_meal = m_da.tree_roots.get("3").m_meals_ht.get("" + this.nutrition_food_id);
-            this.m_meal = m_da.getDbCache().tree_roots.get("3").findMeal(3, this.nutrition_food_id);
+            this.m_meal = m_da.getDbCache().findMeal(3, this.nutrition_food_id);
             processMeal(this.m_meal);
         }
         else
         {
-            this.m_food = m_da.getDbCache().tree_roots.get("" + this.nutrition_food_type).findFood(this.nutrition_food_type, this.nutrition_food_id);
+            
+            //System.out.println("m_da: " + m_da);
+            //System.out.println("m_da.getDbCache(): " + m_da.getDbCache());
+            //System.out.println("m_da.getDbCache().tree_roots: " + m_da.getDbCache().tree_roots);
+            //System.out.println("m_da: " + m_da);
+            
+            
+            this.m_food = m_da.getDbCache().findFood(this.nutrition_food_type, this.nutrition_food_id);
             //.m_foods_ht
             //        .get("" + this.nutrition_food_id);
 

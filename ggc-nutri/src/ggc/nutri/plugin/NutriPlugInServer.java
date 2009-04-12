@@ -115,12 +115,10 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         switch(command)
         {
         
-        case NutriPlugInServer.COMMAND_LOAD_DATABASE:
-        {
-            this.loadDb();
-            
-            //this.
-        }
+            case NutriPlugInServer.COMMAND_LOAD_DATABASE:
+            {
+                this.loadDb();
+            } break;
         
 /*
             case PumpPlugInServer.COMMAND_CONFIGURATION:
@@ -238,7 +236,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         //GGCDbNutri db = new GGCDbNutri(((DataAccess)m_da).getDb());
         //db.loadNutritionDatabase();
         
-        DataAccessNutri.getInstance().getNutriDb().loadNutritionDatabase();
+        DataAccessNutri.getInstance().getNutriDb().loadNutritionDbBase();
     }
     
     

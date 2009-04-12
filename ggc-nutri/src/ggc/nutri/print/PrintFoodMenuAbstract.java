@@ -81,7 +81,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
      */
     public PrintFoodMenuAbstract(DayValuesData mv)
     {
-        super(mv, DataAccessNutri.getInstance().getI18nControlInstance());
+        super(mv, DataAccessNutri.getInstance().getI18nControlInstance(), true);
 
         // System.out.println("getNutriControl");
 
