@@ -48,7 +48,7 @@ public class GGC
     /**
      * Version of application
      */
-    public static String s_version = "0.4.5.1"; //3.16";
+    public static String s_version = "0.4.6.1"; //3.16";
     
     
     /**

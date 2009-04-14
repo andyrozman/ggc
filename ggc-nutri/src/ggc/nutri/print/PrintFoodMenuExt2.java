@@ -392,6 +392,24 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
     }
 
 
+    /**
+     * Write Food Description Data
+     * 
+     * @param table
+     * @param dvr
+     * @throws Exception
+     */
+    public void writeFoodDescData(PdfPTable table, DailyValuesRow dvr) throws Exception
+    {
+        table.addCell(new Phrase(dvr.getExtendedValue(DailyValuesRow.EXTENDED_FOOD_DESCRIPTION), this.text_normal));
+        table.addCell(new Phrase(ic.getMessage("DESCRIPTION"), this.text_normal));
+        table.addCell(new Phrase("", this.text_normal));
+
+        table.addCell(new Phrase(dvr.getExtendedValue(DailyValuesRow.EXTENDED_FOOD_CH), this.text_italic));
+        table.addCell(new Phrase(dvr.getIns1AsString(), this.text_italic));
+        table.addCell(new Phrase(dvr.getBGAsString(), this.text_italic));
+    }
+    
 
     /**
      * Returns base filename for printing job, this is just part of end filename (starting part)

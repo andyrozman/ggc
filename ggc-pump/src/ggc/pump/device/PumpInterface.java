@@ -131,5 +131,11 @@ public interface PumpInterface extends DeviceInterface
     public DeviceIdentification getDeviceInfo();
     
 
+    
+    public int getDownloadSupportType();
+    
+    
+    public String getTemporaryBasalTypeDefinition();
+    
 
 }

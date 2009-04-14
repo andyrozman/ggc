@@ -398,6 +398,19 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
     }
 
 
+    /**
+     * Write Food Description Data
+     * 
+     * @param table
+     * @param mp
+     * @throws Exception
+     */
+    public void writeFoodDescData(PdfPTable table, DailyValuesRow mp) throws Exception
+    {
+        writeEmptyColumnData(table);
+    }
+    
+    
 
     /**
      * Returns base filename for printing job, this is just part of end filename (starting part)

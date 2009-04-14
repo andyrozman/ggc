@@ -158,113 +158,53 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
             int active_day_entry = 0;
 
-/*            if (dv.getRowCount() == 0)
-            {
-//                this.writeEmptyColumnData(datatable);
-            }
-            else */
+            for (int i = 0; i < dv.getRowCount(); i++)
             {
 
-                for (int i = 0; i < dv.getRowCount(); i++)
+                DailyValuesRow rw = (DailyValuesRow) dv.getRow(i);
+
+                if ( (!m_da.isValueSet(rw.getMealsIds())) && (!m_da.isValueSet(rw.getExtendedValue(DailyValuesRow.EXTENDED_FOOD_DESCRIPTION))))
+                    continue;
+
+                if (active_day_entry > 0)
                 {
+                    datatable.addCell(new Phrase("", f));
+                }
 
-                    DailyValuesRow rw = (DailyValuesRow) dv.getRow(i);
+                active_day_entry++;
 
-                    if ((rw.getMealsIds() == null) || (rw.getMealsIds().length() == 0))
-                        continue;
+                datatable.addCell(new Phrase(rw.getTimeAsString(), f));
 
-                    if (active_day_entry > 0)
-                    {
-                        datatable.addCell(new Phrase("", f));
-                    }
-
-                    active_day_entry++;
-
-                    datatable.addCell(new Phrase(rw.getTimeAsString(), f));
+                
+                if (m_da.isValueSet(rw.getMealsIds()))
+                {
 
                     DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true);
-
                     writeTogetherData(datatable, rw);
-
-                    /*
-                    datatable.addCell(new Phrase(ic.getMessage("TOGETHER"), this.text_italic));
-                    datatable.addCell(new Phrase("", f));
-                    datatable.addCell(new Phrase("", f));
-
-                    datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
-                    datatable.addCell(new Phrase(rw.getIns1AsString(), this.text_italic));
-                    datatable.addCell(new Phrase(rw.getBGAsString(), this.text_italic));
-                    */
-
+    
+    
                     for (int j = 0; j < mpts.getElementsCount(); j++)
                     {
-
                         DailyFoodEntry mp = mpts.getElement(j);
-
                         this.writeColumnData(datatable, mp);
-
-                        /*
-                        datatable.addCell(new Phrase("", f));
-                        datatable.addCell(new Phrase("", f));
-                        
-                        datatable.addCell(new Phrase(mp.getName(), f));
-                        
-                        
-                        float value = 0.0f;
-                        
-                        if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
-                        {
-                            datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
-                            //value = mp.getNutrientValue(205);
-                            value = mp.getMealCH();
-                            
-                        }
-                        else if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
-                        {
-                            datatable.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), f));
-                            //value = mp.getNutrientValue(205);
-                            value = mp.getNutrientValue(205) * (mp.amount / 100.0f);
-                        }
-                        else
-                        {
-                            datatable.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", f));
-                            value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
-                        }
-                        
-                        
-                        
-                        datatable.addCell(new Phrase(mp.getAmountSingleDecimalString(), f));
-                        datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(value), f));  // ch
-
-                        datatable.addCell(new Phrase("", f));
-                        datatable.addCell(new Phrase("", f));
-                        */
-
-                        // System.out.println("     " + rw.getTimeAsString() +
-                        // " " + mp);
                     }
-
-                }
-
-                if (active_day_entry==0)
-                {
-                    this.writeEmptyColumnData(datatable);
                 }
                 
-                /*            
-                  after together code this part is obsolete
-                            if (active_day_entry==0)
-                            {
-                                datatable.addCell(new Phrase("", f));
-                                datatable.addCell(new Phrase("", f));
-                                datatable.addCell(new Phrase("", f));
-                                datatable.addCell(new Phrase("", f));
-                                datatable.addCell(new Phrase("", f));
-                            } 
-                  */
+                if (m_da.isValueSet(rw.getExtendedValue(DailyValuesRow.EXTENDED_FOOD_DESCRIPTION)))
+                {
+                    //System.out.println("writeFoodDescData: " + rw);
+                    writeFoodDescData(datatable, rw);
+                }
+                
+            } // for
 
-                count++;
+            if (active_day_entry==0)
+            {
+                this.writeEmptyColumnData(datatable);
             }
+
+            count++;
+
         }
 
         document.add(datatable);
@@ -273,6 +213,10 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
     }
 
+    
+    
+    
+    
     /**
      * Returns data part of filename for printing job, showing which data is being printed
      * 
@@ -331,6 +275,17 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
      */
     public abstract void writeColumnData(PdfPTable table, DailyFoodEntry mp) throws Exception;
 
+    
+    /**
+     * Write Food Description Data
+     * 
+     * @param table
+     * @param mp
+     * @throws Exception
+     */
+    public abstract void writeFoodDescData(PdfPTable table, DailyValuesRow mp) throws Exception;
+    
+    
     /**
      * Write empty column data. If there is no data, this is used, to fill empty places.
      * 

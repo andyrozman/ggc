@@ -545,6 +545,9 @@ public class DataAccess extends ATDataAccessAbstract
     }
 
     
+    /** 
+     * Get BackupRestoreCollection
+     */
     public BackupRestoreCollection getBackupRestoreCollection()
     {
         BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);

@@ -109,13 +109,13 @@ public class PumpDailyStatistics extends StatisticsCollection
             {
                 PumpValuesEntry pve2 = lst.get(i+1);
                 
-          //      System.out.println("Hour: " + pve2.getDateTimeObject().hour_of_day + ", hour2=" + pve.getDateTimeObject().hour_of_day);
+                System.out.println("Hour: " + pve2.getDateTimeObject().hour_of_day + ", hour2=" + pve.getDateTimeObject().hour_of_day);
                 
                 int s = pve2.getDateTimeObject().hour_of_day - pve.getDateTimeObject().hour_of_day;
-                float val = m_da.getFloatValueFromString(pve.getValue());
+                float val = da_pump.getFloatValueFromString(pve.getValue());
                 sum += s * val; 
 
-              //  System.out.println("Time diff: " + s + ", val=" + val);
+                System.out.println("Time diff: " + s + ", val=" + val);
             }
             
         }

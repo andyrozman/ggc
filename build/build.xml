@@ -52,7 +52,7 @@
     </target>
 
 
-    <target name="all_noclean" depends="ggc_desktop" description="whole GGC">
+    <target name="all_noclean" depends="ggc_core, ggc_desktop, plugins" description="whole GGC">
     </target>
 
 

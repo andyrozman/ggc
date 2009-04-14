@@ -1,6 +1,7 @@
 package ggc.pump.device;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
@@ -490,4 +491,16 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
+    public String getTemporaryBasalTypeDefinition()
+    {
+        return "TYPE=Unit;STEP=0.1";
+    }
+    
+    
 }

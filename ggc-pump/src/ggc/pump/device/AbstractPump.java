@@ -1,5 +1,6 @@
 package ggc.pump.device;
 
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
@@ -387,6 +388,21 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     {
         return this.profile_names;
     }
+
+    
+    
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
+    public String getTemporaryBasalTypeDefinition()
+    {
+        return "TYPE=Unit;STEP=0.1";
+    }
+    
+    
     
     
 }
