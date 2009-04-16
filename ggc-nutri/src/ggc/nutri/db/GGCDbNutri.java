@@ -120,7 +120,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
     {
         this.hib_config = db.getHibernateConfiguration();
 
-        System.out.println("hib_Config:" + this.hib_config);
+        //System.out.println("hib_Config:" + this.hib_config);
         //this.hib_config.getS
         
         cache_db = new GGCDbCache(this);
@@ -181,6 +181,10 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
     {
         this.loadNutritionDefinitions();
         this.loadHomeWeights();
+        
+        this.loadNutritionDb1();
+        this.loadNutritionDb2();
+        this.loadMealsDb();
     }
 
     /**
