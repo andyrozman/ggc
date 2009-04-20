@@ -477,22 +477,24 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
 	    {
 	        StringBuffer sb = new StringBuffer();
 	        int i=0;
+	        sb.append("<html>");
 	        
 	        for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
 	        {
 	            String key = en.nextElement();
 	            
-	            if (i>0)
-	                sb.append("; ");
+	            //if (i>0)
+	            //    sb.append("; ");
 	            
 	            //sb.append(key + "=" + this.additional_data.get(key).toString());
 	            sb.append(this.additional_data.get(key).toString());
 	            
-	            if (i%3==0)
-	                sb.append("\n");
+	            //if (i%3==0)
+	                sb.append("<br>");
 	            
 	        }
 	        
+	        sb.append("</html>");
 	        return sb.toString();
 	    }
 	}

@@ -4,17 +4,13 @@ TO-DO LIST
 Development of Pump Tools runs totally independent on GGC project
 ==================================================================
 
-    * Manual adding of pump data (data that will in future be read from pump) (0.5)
-    * Adding of additional data (bg measurements, OH intake, Activity...) (0.5)
     * Profile Editor:
-         - Base stuff
+         - Import from some other Profile (data values)
     
     * Printing of reports: 
-            - Base report
-            - Extended report
-    
-    * List of pumps (most of them not all) (0.4)
-    * Configuration and graphical interface for integration into GGC (0.5)
+            - Base report (no foods)
+            - Extended report (foods too)
+        
     
     * Graphs (0.6)
     
@@ -50,6 +46,12 @@ Detailed functionalities not done (and need to be):
 DONE
 
     * Base framework for pumps (0.3)
+    * Profile Editor:
+         - Base stuff
+    * Manual adding of pump data (data that will in future be read from pump) (0.5)
+    * Adding of additional data (bg measurements, OH intake, Activity...) (0.5)
+    * List of pumps (most of them not all) (0.4)
+    * Configuration and graphical interface for integration into GGC (0.5)
 
 
 

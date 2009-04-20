@@ -4,6 +4,8 @@ import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -313,6 +315,72 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 //	    return "PumpValueEntryExt [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
 	}
 
+	/*
+	public String getToolTipText()
+	{
+	    ArrayList<String> lines = new ArrayList<String>();
+	    
+        StringBuffer sb = new StringBuffer();
+        
+        if ((this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB) &&
+            (this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))   
+        {
+            sb.append(DataAccessPump.getInstance().getAdditionalTypes().getTypeDescription(this.getType()));
+            sb.append(": ");
+        
+            if ((this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) ||
+                (this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT) ||
+                (this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_URINE))
+            {
+                sb.append(this.getValue());
+            }
+            else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
+            {
+                if (this.da.m_BG_unit==DataAccessPump.BG_MGDL)
+                    sb.append(this.getValue() + " mg/dL");
+                else
+                {
+                    //System.out.println("Displayed BG: " + da.getDisplayedBGString(this.getValue()));
+                    sb.append(da.getDisplayedBGString(this.getValue()));
+                    //sb.append(this.getValue() + " mmol/L");
+                    sb.append(" mmol/L");
+                    
+                    //da.getBGValueDifferent(DataAccessPump.BG_MGDL, Float.parseFloat(arg0)bg_value)
+                }
+                    
+                //po.setValue(this.num_1.getValue().toString());
+            }
+            else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
+            {
+                sb.append(this.getValue() + " g");
+            }
+        }
+        else
+        {
+            if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
+                sb.append(ic.getMessage("FOOD_SET_DB") + ":  ");
+            else
+                sb.append(ic.getMessage("FOOD_SET_DESC") + ":  ");
+            
+            if ((this.getValue()==null) || (this.getValue().length()==0))
+                sb.append(ic.getMessage("NO"));
+            else
+                sb.append(ic.getMessage("YES"));
+        } 
+        
+
+        
+        
+        
+        return sb.toString();
+	    
+	    
+	    
+	    
+	    return null;
+	}
+	*/
+	
 
     /** 
      * DbAdd
