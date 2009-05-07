@@ -1264,7 +1264,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     
     private void refreshMenus()
     {
-        System.out.println("Refresh Menus: ");
+        //System.out.println("Refresh Menus: ");
         this.menuBar.removeAll();
         
         
@@ -1275,7 +1275,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         
         if (menu!=null)
         {
-            System.out.println("menu: " + menu);
+            //System.out.println("menu: " + menu);
             this.menuBar.add(menu);
         }
             

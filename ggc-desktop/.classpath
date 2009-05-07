@@ -9,14 +9,12 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Pump Tool"/>
 	<classpathentry excluding="**/.svn/**" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText-2.0.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SkinLF-6.7"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaHelp-2.0.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/pygmy-0.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ggc-web"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GGC Nutrition Tool"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaHelp-2.0.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
