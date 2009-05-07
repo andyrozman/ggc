@@ -34,6 +34,7 @@ import javax.swing.SwingUtilities;
 import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
 import com.atech.graphics.calendar.CalendarPane;
+import com.atech.graphics.components.MultiLineTooltipModel;
 import com.atech.help.HelpCapable;
 
 /**
@@ -300,13 +301,21 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             //Implement table cell tool tips.
             public String getToolTipText(MouseEvent e) 
             {
+                //Object source = e.getSource();
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
                 int colIndex = columnAtPoint(p);
                 int realColumnIndex = convertColumnIndexToModel(colIndex);
 
-                tip = (String)getValueAt(rowIndex, realColumnIndex);
+                if (model instanceof MultiLineTooltipModel)
+                {
+                    tip = ((MultiLineTooltipModel)model).getToolTipValue(rowIndex, colIndex);
+                }
+                else
+                {
+                    tip = (String)getValueAt(rowIndex, realColumnIndex);
+                }
 
                 if ((tip!=null) && (tip.length()==0))
                     tip = null;

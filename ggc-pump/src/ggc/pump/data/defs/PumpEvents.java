@@ -52,7 +52,8 @@ public class PumpEvents
                        ic.getMessage("EVENT_DATETIME_SET"),             
                        ic.getMessage("EVENT_DATETIME_CORRECT"),             
                        ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK"),             
-                       ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD"),             
+                       ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD"),
+                       ic.getMessage("EVENT_CARTRIDGE_REWIND")
     };
     
     
@@ -69,6 +70,11 @@ public class PumpEvents
      * Pump Event: Cartridge Changed
      */
     public static final int PUMP_EVENT_CARTRIDGE_CHANGED = 2;
+
+    /**
+     * Pump Event: Cartridge Changed
+     */
+    public static final int PUMP_EVENT_CARTRIDGE_REWIND = 3;
     
     // start / end
 
@@ -130,7 +136,8 @@ public class PumpEvents
         events_mapping.put(ic.getMessage("EVENT_DATETIME_SET"), "40");             
         events_mapping.put(ic.getMessage("EVENT_DATETIME_CORRECT"), "41");            
         events_mapping.put(ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK"), "42");             
-        events_mapping.put(ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD"), "43");             
+        events_mapping.put(ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD"), "43");
+        events_mapping.put(ic.getMessage("EVENT_REWIND_INFUSION_SET"), "3");
     }
     
 
@@ -142,6 +149,7 @@ public class PumpEvents
      */
     public int getTypeFromDescription(String str)
     {
+        // TODO
         String s = "0";
         
         if (this.events_mapping.containsKey(str))

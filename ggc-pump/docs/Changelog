@@ -2,6 +2,11 @@
 Changes file for GGC Pump Tool
 ==============================
 
+0.4.6
+    * Day Table has removed comment column, and now we have added Food column, which together with Additional data
+      column uses MultiLineTooltip (MultiLineTooltipModel)
+    * Import of profile and add Comment
+
 0.4.5
     * Added gcc.pump.print.* classes and implemented PrintPumpDataAbstract and PrintPumpDataBase (this all
       classes implement PrintAbstractIText)

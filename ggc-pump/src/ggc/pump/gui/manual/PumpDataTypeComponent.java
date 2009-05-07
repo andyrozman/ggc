@@ -611,6 +611,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         else
             this.sub_type = stype;
 
+        this.combo_1.setSelectedIndex(stype);
+        
         this.num_tf_1_d2.setVisible(false);
         this.num_tf_2_d2.setVisible(false);
         this.label_3.setVisible(false);
@@ -695,7 +697,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 {
                     case PumpBasalSubType.PUMP_BASAL_VALUE:
                         {
-                            return (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0);
+                            return (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) >= 0);
                         }
          
                     case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:

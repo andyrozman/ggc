@@ -1,11 +1,15 @@
 package ggc.pump.gui.manual;
 
 import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.data.DeviceValuesEntry;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import javax.swing.table.AbstractTableModel;
+
+import com.atech.graphics.components.MultiLineTooltip;
+import com.atech.graphics.components.MultiLineTooltipModel;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -34,7 +38,7 @@ import javax.swing.table.AbstractTableModel;
  */
 
 
-public class PumpDataTableModel extends AbstractTableModel
+public class PumpDataTableModel extends AbstractTableModel implements MultiLineTooltipModel
 {
     
     private static final long serialVersionUID = 412835707138372687L;
@@ -76,7 +80,7 @@ public class PumpDataTableModel extends AbstractTableModel
                                      m_ic.getMessage("SUB_TYPE"),
                                      m_ic.getMessage("VALUE"),
                                      m_ic.getMessage("ADDITIONAL"),
-                                     m_ic.getMessage("COMMENT") };
+                                     m_ic.getMessage("FOOD") };
     
     
     
@@ -254,5 +258,24 @@ public class PumpDataTableModel extends AbstractTableModel
     {
         return false;
     }
+
+    
+    /** 
+     * get ToolTip Value
+     */
+    public String getToolTipValue(int row, int column)
+    {
+        DeviceValuesEntry o = dayData.getRowAt(row);
+        
+        if (o instanceof MultiLineTooltip)
+        {
+            return ((MultiLineTooltip)o).getMultiLineToolTip(column);
+        }
+        else
+        {
+            return (String)o.getColumnValue(column);
+        }
+    }
+    
 
 }

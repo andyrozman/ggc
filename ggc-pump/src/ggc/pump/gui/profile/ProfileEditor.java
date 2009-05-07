@@ -85,7 +85,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     ArrayList<ProfileSubEntry> list_data;
     JCheckBox cb_enabled_till;
     DateTimeComponent dtc_from, dtc_till;
-    JTextField tf_name;
+    JTextField tf_name, tf_com;
     JButton help_button;    
     JDialog parent = null;
     PumpProfileH m_profile;
@@ -149,6 +149,9 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         }
         this.sp_base.setValue(this.m_profile.getBasal_base());
         this.loadSubEntries(this.m_profile.getBasal_diffs());
+        
+        if ((this.m_profile.getComment()!=null) && (!this.m_profile.getComment().equals("null"))) 
+            this.tf_com.setText(this.m_profile.getComment());
     }
     
     private void loadSubEntries(String subs)
@@ -179,6 +182,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             
         this.m_profile.setBasal_base(m_da.getFloatValue(this.sp_base.getValue())); 
         this.m_profile.setBasal_diffs(getSubEntries());
+        this.m_profile.setComment(this.tf_com.getText()); 
         
         PumpProfile pp = new PumpProfile(this.m_profile);
         
@@ -247,6 +251,12 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         dtc_till.setDateTimeAsCurrent();
         dtc_till.setEnabled(false);
         panel.add(dtc_till);
+
+        
+        ATSwingUtils.getLabel(m_ic.getMessage("COMMENT") + ":", 80, 180, 120, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
+
+        tf_com = ATSwingUtils.getTextField("", 190, 180, 240, 25, panel);
+        tf_com.setEditable(true);
         
         
         ATSwingUtils.getLabel(m_ic.getMessage("BASE_BASAL") + ":", 560, 210, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
@@ -263,19 +273,43 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         
         
         JPanel panel_graph = new JPanel();
-        panel_graph.setBounds(30, 200, 500, 300);
+        panel_graph.setBounds(30, 220, 500, 280);
         panel_graph.setBackground(new Color(65, 105, 225));
         panel.add(panel_graph);
         
         
 
         
+        JButton b = null;
         
+        b = ATSwingUtils.getButton("", 
+            575, 470, 30, 30, panel, 
+            ATSwingUtils.FONT_NORMAL, "document_add.png", "item_add", this, m_da);
+        b.setToolTipText(m_ic.getMessage("ADD_BASAL_SUB_ENTRY"));
+        
+        b = ATSwingUtils.getButton("", 
+            615, 470, 30, 30, panel, 
+            ATSwingUtils.FONT_NORMAL, "document_edit.png", "item_edit", this, m_da);
+        b.setToolTipText(m_ic.getMessage("EDIT_BASAL_SUB_ENTRY"));
+        
+        b = ATSwingUtils.getButton("", 
+            655, 470, 30, 30, panel, 
+            ATSwingUtils.FONT_NORMAL, "document_delete.png", "item_delete", this, m_da);
+        b.setToolTipText(m_ic.getMessage("DELETE_BASAL_SUB_ENTRY"));
+
+        
+        b = ATSwingUtils.getButton("", 
+            695, 470, 30, 30, panel, 
+            ATSwingUtils.FONT_NORMAL, "document_exchange.png", "import_profile", this, m_da);
+        b.setToolTipText(m_ic.getMessage("IMPORT_BASAL_SUB_ENTRIES"));
+
+        
+        /*
         JButton bt_item_1 = new JButton(m_da.getImageIcon_22x22("document_add.png", this));
         bt_item_1.setActionCommand("item_add");
         bt_item_1.addActionListener(this);
         bt_item_1.setBounds(585, 470, 30, 30);
-        panel.add(bt_item_1);
+        panel.add(bt_item_1); 
         
         JButton bt_item_2 = new JButton(m_da.getImageIcon_22x22("document_edit.png", this));
         bt_item_2.setActionCommand("item_edit");
@@ -288,16 +322,31 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         bt_item_3.addActionListener(this);
         bt_item_3.setBounds(685, 470, 30, 30);
         panel.add(bt_item_3);
+*/
+        /*
+        JButton bt_item_3 = new JButton(m_da.getImageIcon_22x22("document_delete.png", this));
+        bt_item_3.setActionCommand("item_delete");
+        bt_item_3.addActionListener(this);
+        bt_item_3.setBounds(685, 470, 30, 30);
+        panel.add(bt_item_3);
+        
+        
+        document_exchange.png
+        
+        ATSwingUtils.getButton("   " + m_ic.getMessage("IMPORT"), 
+            570, 445, 160, 22, panel, 
+            ATSwingUtils.FONT_NORMAL, null, "import_profile", this, m_da);
+        */
         
         ATSwingUtils.getButton("   " + m_ic.getMessage("OK"), 
-            610, 80, 120, 25, panel, 
+            610, 75, 120, 25, panel, 
             ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
 
         ATSwingUtils.getButton("   " +m_ic.getMessage("CANCEL"), 
-            610, 115, 120, 25, panel, 
+            610, 110, 120, 25, panel, 
             ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
-        this.help_button = this.m_da.createHelpButtonByBounds(610, 150, 120, 25, this);
+        this.help_button = this.m_da.createHelpButtonByBounds(610, 145, 120, 25, this);
         panel.add(this.help_button);
         
         
@@ -526,6 +575,16 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             if (psp.wasAction())
             {
                 this.tf_name.setText(psp.getSelectedObject().toString());
+            }
+        }
+        else if (action.equals("import_profile"))
+        {
+            ProfileSelector ps = new ProfileSelector(DataAccessPump.getInstance(), this.parent, true);
+            
+            if (ps.wasAction())
+            {
+                PumpProfile p = (PumpProfile)ps.getSelectedObject();
+                loadSubEntries(p.getBasal_diffs());
             }
         }
         else

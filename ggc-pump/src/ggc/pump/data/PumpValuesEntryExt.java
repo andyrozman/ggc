@@ -4,8 +4,6 @@ import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
 
-import java.util.ArrayList;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

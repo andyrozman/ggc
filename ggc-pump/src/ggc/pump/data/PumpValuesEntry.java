@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.ATechDate;
 
@@ -46,7 +47,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObjectHibernate //, StatisticsItem
+public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObjectHibernate, MultiLineTooltip //, StatisticsItem
 //extends PumpDataH implements DatabaseObjectHibernate   // extends PumpValuesEntryAbstract
 {
 
@@ -220,7 +221,12 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
      */
     public String getValue()
     {
-        return this.value;
+        if (this.getSubType()==PumpBaseType.PUMP_DATA_BOLUS)
+        {
+            return this.value;
+        }
+        else
+            return this.value;
     }
     
     
@@ -364,15 +370,15 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
     	    }
     	    case 3: // value
     	    {
-    	        return this.value;
+    	        return this.getValue();
     	    }
     	    case 4: // additional
     	    {
     	        return this.getAdditionalDisplay();
     	    }
-    	    case 5: // comment
+    	    case 5: // food
     	    {
-    	        return this.getComment();
+    	        return this.isFoodSet();
     	    }
 	    }
 	    return "";
@@ -477,28 +483,87 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
 	    {
 	        StringBuffer sb = new StringBuffer();
 	        int i=0;
-	        sb.append("<html>");
+	        //sb.append("<html>");
 	        
 	        for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
 	        {
 	            String key = en.nextElement();
 	            
-	            //if (i>0)
-	            //    sb.append("; ");
+	            if (i>0)
+	                sb.append("; ");
 	            
 	            //sb.append(key + "=" + this.additional_data.get(key).toString());
 	            sb.append(this.additional_data.get(key).toString());
 	            
 	            //if (i%3==0)
-	                sb.append("<br>");
+	            //    sb.append("");
 	            
 	        }
 	        
-	        sb.append("</html>");
+	        //sb.append("</html>");
 	        return sb.toString();
 	    }
 	}
 
+	
+	/**
+	 * Is Food Set
+	 *  
+	 * @return
+	 */
+	public String isFoodSet()
+	{
+	    if ((this.additional_data.containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC])) ||
+	        (this.additional_data.containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB])))
+	    {
+	        return m_da.getI18nControlInstance().getMessage("YES");
+	    }
+	    else
+	    {
+            return m_da.getI18nControlInstance().getMessage("NO");
+	    }
+	}
+	
+
+    /**
+     * Get Additional Display
+     * @return
+     */
+    public String getAdditionalDisplayHTML()
+    {
+        if (this.additional_data.size()==0)
+            return "";
+        else
+        {
+            StringBuffer sb = new StringBuffer();
+            int i=0;
+            sb.append("<html>");
+            
+            for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
+            {
+                String key = en.nextElement();
+                
+                if ((key.equals(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB])) ||
+                    (key.equals(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC])))
+                    continue;
+                
+                if (i>0)
+                    sb.append("<br>");
+                
+                //sb.append(key + "=" + this.additional_data.get(key).toString());
+                sb.append(this.additional_data.get(key).toString());
+                
+                //if (i%3==0)
+                //    sb.append("");
+                
+            }
+            
+            sb.append("</html>");
+            return sb.toString();
+        }
+    }
+	
+	
 	
     /**
      * Get Additional Display
@@ -1137,6 +1202,102 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
      * @return
      */
     public boolean weHaveSpecialActions()
+    {
+        return true;
+    }
+
+
+    /** 
+     * Get MultiLine ToolTip
+     */
+    public String getMultiLineToolTip()
+    {
+        return null;
+    }
+
+
+    /** 
+     * Get MultiLine ToolTip
+     */
+    public String getMultiLineToolTip(int index)
+    {
+        switch(index)
+        {
+            case 0: // time
+            {
+                return this.datetime.getTimeString();
+            }
+            case 1: // type
+            {
+                return getBaseTypeString();
+            }
+            case 2: // subtype
+            {
+                return getSubTypeString();
+            }
+            case 3: // value
+            {
+                return this.getValue();
+            }
+            case 4: // additional
+            {
+                return this.getAdditionalDisplayHTML();
+            }
+            case 5: // comment
+            {
+                return this.getFoodTip();
+            }
+            
+            default:
+                return null;
+                
+        }
+        
+    }
+
+    
+    /*
+    public String getValue()
+    {
+        
+        return null;
+    }*/
+    
+    
+    
+    /**
+     * Get Food Tip
+     * 
+     * @return
+     */
+    public String getFoodTip()
+    {
+        if (this.additional_data.containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]))
+        {
+            String t = this.additional_data.get(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]).getValue();
+            t = t.replace("]", "]<br>");
+            t = t.replace(",", "");
+            
+            return "<html>" + t + "</html>";
+            
+        }
+        else if (this.additional_data.containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB]))
+        {
+            // TODO
+            return "Not implemented yet !";
+        }
+        else
+        {
+            return null;
+        }
+        
+    }
+    
+
+    /** 
+     * Is Indexed (multiline tooltip)
+     */
+    public boolean isIndexed()
     {
         return true;
     }

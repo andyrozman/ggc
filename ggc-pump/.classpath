@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Core"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Plugin Base"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Atech-Tools"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -10,10 +12,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.x"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.1"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/GGC Plugin Base"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate-3.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/GGC Core"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText-2.0.7"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -78,6 +78,24 @@ public class PumpBolusType
      */
     public static final int PUMP_BOLUS_MULTIWAVE = 4;
     
+
+    /**
+     * Pump Bolus: Square (Insulin value through some duration)
+     */
+    public static final int PUMP_BOLUS_SQUARE = 5;
+    
+    
+    /**
+     * Pump Bolus: Dual/Normal
+     */
+    public static final int PUMP_BOLUS_DUAL_NORMAL = 6;
+
+    
+    /**
+     * Pump Bolus: Dual/Square (Insulin value through some duration)
+     */
+    public static final int PUMP_BOLUS_DUAL_SQUARE = 7;
+    
     
     /**
      * Constructor

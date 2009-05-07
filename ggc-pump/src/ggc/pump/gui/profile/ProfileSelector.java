@@ -29,7 +29,7 @@ public class ProfileSelector extends SelectorAbstractDialog
      * The da_local. 
      */
     DataAccessPump da_local = DataAccessPump.getInstance();
-    
+    boolean m_select = false;
     
     /**
      * Constructor
@@ -44,6 +44,25 @@ public class ProfileSelector extends SelectorAbstractDialog
         this.showDialog();
     }
 
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param parent
+     * @param select
+     */
+    public ProfileSelector(DataAccessPump da, Component parent, boolean select) //, DataAccessPump da) 
+    {
+        super(da.getMainParent(), da, 0, null, false);
+        this.m_select = select;
+        da_local = (DataAccessPump)da;
+        init();
+        this.showDialog();
+    }
+    
+    
 //    /**
 //     * Constructor
 //     * 
@@ -156,6 +175,7 @@ public class ProfileSelector extends SelectorAbstractDialog
     @Override
     public void checkAndExecuteActionSelect()
     {
+        
     }
 
   
@@ -182,7 +202,14 @@ public class ProfileSelector extends SelectorAbstractDialog
     {
         setSelectorObject(new PumpProfile(DataAccessPump.getInstance().getI18nControlInstance()));
         setSelectorName(ic.getMessage("PROFILE_SELECTOR"));
-        setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_EDIT|SelectorAbstractDialog.SELECTOR_ACTION_NEW|SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
+        
+        if (this.m_select)
+        {
+            setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_SELECT|SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
+            this.use_generic_select = true;
+        }
+        else
+            setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_EDIT|SelectorAbstractDialog.SELECTOR_ACTION_NEW|SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
         this.setColumnSortingEnabled(false);
         this.setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_DATE_BOTH);
         this.setHelpEnabled(false);

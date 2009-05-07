@@ -3,7 +3,8 @@ package ggc.pump.test;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
-import ggc.pump.device.minimed.MinimedCareLink;
+import ggc.pump.device.minimed.MinimedSPMPump;
+import ggc.pump.util.DataAccessPump;
 
 import java.io.File;
 import java.util.Vector;
@@ -70,7 +71,7 @@ public class PumpConsoleTester //extends JFrame
     	}
     	catch(Exception ex)
     	{
-    	    System.out.println("Tester -> Exception on creation of meter. " + ex);
+    	    System.out.println("Tester -> Exception on creation of Pump. " + ex);
     	    ex.printStackTrace();
     	} 
 
@@ -99,8 +100,11 @@ public class PumpConsoleTester //extends JFrame
      */
     public void startMinimed(String file) throws Exception
     {
-        MinimedCareLink mcl = new MinimedCareLink();
-        mcl.parseExportFile(new File(file));
+        //MinimedCareLink mcl = new MinimedCareLink();
+        //mcl.parseExportFile(new File(file));
+            //MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
+        MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
+        msp.readData();
         
     }
     
