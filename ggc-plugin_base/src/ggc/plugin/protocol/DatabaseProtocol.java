@@ -47,11 +47,32 @@ public abstract class DatabaseProtocol
     protected String db_class_name = null;
     Connection m_connection = null;
     
+    protected String username = null;
+    protected String password = null;
+    
     /**
      * Db Class: MDB Tools for Access databases
      */
     public static final String DB_CLASS_MS_ACCESS_MDB_TOOLS = "mdbtools.jdbc.Driver";
     
+
+    /**
+     * Db Class: Jdbc/ODBC Bridge Databases
+     */
+    public static final String DB_CLASS_MS_ACCESS_JDBC_ODBC_BRIDGE = "sun.jdbc.odbc.JdbcOdbcDriver";
+    
+    
+    /**
+     * Db Jar: MDB Tools JAR URL
+     */
+    public static final String URL_MS_ACCESS_MDB_TOOLS = "mdbtools.jdbc.Driver";
+    
+    /**
+     * Db Jar: Jdbc/ODBC Bridge JAR URL
+     */
+    public static final String URL_MS_ACCESS_JDBC_ODBC_BRIDGE = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=%FILENAME%";
+    
+
     
     /**
      * Constructor
@@ -93,6 +114,21 @@ public abstract class DatabaseProtocol
         this.jdbc_url = _jdbc_url;
     }
 
+    /**
+     * Set JDBC Connection 
+     * @param db_class_name class name for database
+     * @param _jdbc_url full jdbc url, if user and password used, they must be part of url
+     * @param user username
+     * @param pass password
+     */
+    public void setJDBCConnection(String db_class_name, String _jdbc_url, String user, String pass)
+    {
+        this.db_class_name = db_class_name;
+        this.jdbc_url = _jdbc_url;
+        this.username = user;
+        this.password = pass;
+    }
+    
     
     private void createConnection()
     {
@@ -100,11 +136,15 @@ public abstract class DatabaseProtocol
         {
             Class.forName(this.db_class_name);
         
-            this.m_connection = DriverManager.getConnection(this.jdbc_url);
+            if ((username==null) && (this.password==null))
+                this.m_connection = DriverManager.getConnection(this.jdbc_url);
+            else
+                this.m_connection = DriverManager.getConnection(this.jdbc_url, this.username, this.password);
         }
         catch(Exception ex)
         {
             System.out.println("Error creating connection. Ex: " + ex);
+            ex.printStackTrace();
         }
         
         

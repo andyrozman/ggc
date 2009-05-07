@@ -705,18 +705,21 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      */
     public float getBGValueByType(int input_type, int output_type, float bg_value)
     {
-        
+        //System.out.println("BG: " + bg_value);
+        //System.out.println("input: " + input_type + ",output=" + output_type);
         if (input_type==output_type)
             return bg_value;
         else
         {
             if (output_type==DataAccessPlugInBase.BG_MGDL)
             {
-                return bg_value * MGDL_TO_MMOL_FACTOR;
+                //System.out.println("BG-2 [mgDL]: " + bg_value * MGDL_TO_MMOL_FACTOR);
+                return bg_value * MMOL_TO_MGDL_FACTOR;
             }
             else
             {
-                return bg_value * MMOL_TO_MGDL_FACTOR;
+                //System.out.println("BG-2 [mmol]: " + bg_value * MMOL_TO_MGDL_FACTOR);
+                return bg_value * MGDL_TO_MMOL_FACTOR;
             }
         }
 
