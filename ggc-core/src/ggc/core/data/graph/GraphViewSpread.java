@@ -87,7 +87,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
         plot_data.setPlotBG(true);
         //plot_data.setTimeRangeType(PlotData.TIME_RANGE_1_MONTH);
         
-        graph_util = GGCGraphUtil.getInstance();
+        graph_util = GGCGraphUtil.getInstance(da_local);
         //GregorianCalendar gc = new GregorianCalendar();
         //gc.add(GregorianCalendar.MONTH, -1);
         

@@ -14,6 +14,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.Layer;
 
 import com.atech.graphics.graphs.GraphUtil;
+import com.atech.utils.ATDataAccessAbstract;
 
 
 /**
@@ -75,9 +76,9 @@ public class GGCGraphUtil extends GraphUtil
      * Does some basic preparation needed by all graphs. Should be called from
      * all constructors and every subclass.
      */
-    private GGCGraphUtil()
+    private GGCGraphUtil(ATDataAccessAbstract da)
     {
-        super(DataAccess.getInstance());
+        super(da);
 
 
         //getRenderingQuality();
@@ -125,12 +126,13 @@ public class GGCGraphUtil extends GraphUtil
     /**
      * Get Instance (Singelton)
      * 
+     * @param da 
      * @return GGCGraphUtil instance
      */
-    public static GGCGraphUtil getInstance()
+    public static GGCGraphUtil getInstance(ATDataAccessAbstract da)
     {
         if (GGCGraphUtil.s_graph_util==null)
-            GGCGraphUtil.s_graph_util = new GGCGraphUtil();
+            GGCGraphUtil.s_graph_util = new GGCGraphUtil(da);
         
         return GGCGraphUtil.s_graph_util;
     }

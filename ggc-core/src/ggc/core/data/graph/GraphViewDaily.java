@@ -73,8 +73,8 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
     private XYSeriesCollection insBUDataset = new XYSeriesCollection();
     
     
-    GGCGraphUtil graph_util = GGCGraphUtil.getInstance();
     DataAccess da_local = DataAccess.getInstance();
+    GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
     
     
     /**

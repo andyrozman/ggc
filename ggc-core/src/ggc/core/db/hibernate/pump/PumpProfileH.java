@@ -1,12 +1,16 @@
 package ggc.core.db.hibernate.pump;
 
+import ggc.core.db.hibernate.GGCHibernateObject;
+
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class PumpProfileH implements Serializable {
+public class PumpProfileH implements Serializable, GGCHibernateObject
+{
 
     private static final long serialVersionUID = 8212384538572472772L;
 

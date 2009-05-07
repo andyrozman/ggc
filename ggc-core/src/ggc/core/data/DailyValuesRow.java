@@ -112,10 +112,29 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     Float float_instance = new Float(0.0);
 
     
+    /**
+     * Extended Parameter: Activity
+     */
     public static final int EXTENDED_ACTIVITY = 1;
+
+    /**
+     * Extended Parameter: Urine
+     */
     public static final int EXTENDED_URINE = 2;
+
+    /**
+     * Extended Parameter: Food Description
+     */
     public static final int EXTENDED_FOOD_DESCRIPTION = 3;
+    
+    /**
+     * Extended Parameter: Food CH
+     */
     public static final int EXTENDED_FOOD_CH = 4;
+    
+    /**
+     * Extended Parameter: Decimal Part
+     */
     public static final int EXTENDED_DECIMAL_PART = 5;
     
     private static final int EXTENDED_MAX = 5;

@@ -7,8 +7,6 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
-import javax.swing.JMenu;
-
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreRunner;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
@@ -188,6 +186,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
 
     }
 
+    /*
     private boolean isAnyNutritionBackupObjectSelected()
     {
         if ((this.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS"))) ||
@@ -197,7 +196,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             return true;
         else
             return false;
-    }
+    }*/
 
     /*
     private boolean isAnyNutritionRestoreObjectSelected()

@@ -83,6 +83,7 @@ public abstract class PrintAbstract extends PdfPageEventHelper
      * 
      * @param data
      * @param ic
+     * @param do_init 
      */
     public PrintAbstract(DayValuesData data, I18nControlAbstract ic, boolean do_init)
     {
