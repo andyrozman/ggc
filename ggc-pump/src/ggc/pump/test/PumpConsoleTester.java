@@ -1,5 +1,7 @@
 package ggc.pump.test;
 
+import ggc.core.db.GGCDb;
+import ggc.core.util.DataAccess;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
@@ -103,6 +105,32 @@ public class PumpConsoleTester //extends JFrame
         //MinimedCareLink mcl = new MinimedCareLink();
         //mcl.parseExportFile(new File(file));
             //MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
+        
+        DataAccess da = DataAccess.getInstance();
+        
+        GGCDb db = new GGCDb(da);
+        db.initDb();
+        
+        da.setDb(db);
+        
+        
+        
+        DataAccessPump dap = DataAccessPump.getInstance();
+        dap.setHelpContext(da.getHelpContext());
+        //dap.setPlugInServerInstance(this);
+        dap.createDb(da.getHibernateDb());
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+        //this.backup_restore_enabled = true;
+        
+        da.loadSpecialParameters();
+        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        
+        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        
+        
+        
+        
         MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
         msp.readData();
         

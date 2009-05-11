@@ -1113,7 +1113,31 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
             case PumpValuesEntry.INS_DOSES_BOLUS:
             {
                 if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
-                    return m_da.getFloatValueFromString(this.getValue(), 0.0f);
+                {
+                    if (this.getValue().contains(";"))
+                    {
+                        String vals[] = this.getValue().split(";");
+                        
+                        float sum = 0.0f;
+                        
+                        for(int i=0; i<vals.length; i++)
+                        {
+                            if (vals[i].startsWith("AMOUNT"))
+                            {
+                                String ps[] = vals[i].split("=");
+                                
+                                sum += m_da.getFloatValueFromString(ps[1], 0.0f);
+                            }
+                        }
+                        
+                        return sum;
+                    }
+                    else
+                    {
+                        return m_da.getFloatValueFromString(this.getValue(), 0.0f);
+                    }
+                }
+                    
                 else
                     return 0.0f;
             }

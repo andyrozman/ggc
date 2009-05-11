@@ -111,7 +111,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
      */
     public PumpDataDialog(DataAccessPump da, Component parent)
     {
-        super(da.getMainParent(), "DailyStatsDialog", false);
+        super(da.getMainParent(), "DailyStatsDialog", true);
         // setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
 
         setTitle(new GregorianCalendar());

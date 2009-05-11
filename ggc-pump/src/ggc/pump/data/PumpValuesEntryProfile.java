@@ -1,7 +1,12 @@
 package ggc.pump.data;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
+import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.util.DataAccessPump;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.GregorianCalendar;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -44,6 +49,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
+    ArrayList<ProfileSubEntry> sub_entries = new ArrayList<ProfileSubEntry>();  
     
     //public boolean checked = false;
     //public int status = 1; //MeterValuesEntry.
@@ -239,6 +245,56 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 	}
 	
 	
+	/**
+	 * Add Profile Sub Entry
+	 * 
+	 * @param pse
+	 */
+	public void addProfileSubEntry(ProfileSubEntry pse)
+	{
+	    this.sub_entries.add(pse);
+	}
+	
+	public static final int PROCESS_NORMAL = 1;
+	public static final int PROCESS_PUMP = 2;
+	
+	/**
+	 * Process Profile Sub Entry
+	 * 
+	 * @param type
+	 */
+	public void processProfileSubEntries(int type)
+	{
+	    Collections.sort(this.sub_entries);
+	    
+	    if (type==PROCESS_PUMP)
+	    {
+	        for(int i=1; i<this.sub_entries.size(); i++)
+	        {
+	            long dt_end = this.sub_entries.get(i).time_start;
+	            
+	            ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, dt_end);
+	            atd.add(GregorianCalendar.MINUTE, -1);
+	            
+	            this.sub_entries.get(i-1).time_end = (int)atd.getATDateTimeAsLong();
+	        }
+	    }
+
+	    StringBuffer sb = new StringBuffer();
+
+	    for(int i=0; i<this.sub_entries.size(); i++)
+        {
+	        sb.append(this.sub_entries.get(i).getPacked());
+	        sb.append(";");
+        }
+
+	    String s = sb.toString();
+	    s = s.substring(0, s.length()-1);
+	    
+	    
+	    this.setBasal_diffs(s);
+	    
+	}
 	
 	
 	
@@ -248,7 +304,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 	public String toString()
 	{
 	    //OutputUtil o= null;
-	    return "PumpValueEntryProfile [id=" + this.getId() + "]";
+	    return "PumpValueEntryProfile [id=" + this.getId() + "] " + this.getBasal_diffs();
 	}
 
 
@@ -368,7 +424,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public String getObjectName()
     {
-        return "PumpDataExtendedH";
+        return "PumpProfileH";
     }
 
 

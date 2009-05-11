@@ -1,14 +1,7 @@
 package ggc.pump.device.minimed;
 
-import ggc.plugin.protocol.DatabaseProtocol;
-import ggc.plugin.util.DataAccessPlugInBase;
+import java.util.Hashtable;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.Time;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,6 +40,9 @@ public class MinimedSPMData
     public static final int VALUE_DOUBLE = 1;
     public static final int VALUE_INT = 2;
     public static final int VALUE_STRING = 3;
+    public static final int VALUE_PROFILE = 4;
+    
+    public Hashtable<Long,Float> profiles = null;
     
     
     public MinimedSPMData(int _source, int _value_type)
@@ -81,4 +77,30 @@ public class MinimedSPMData
             return null;
     }
 
+    
+    /**
+     * Add Profile 
+     * 
+     * @param time
+     * @param value
+     */
+    public void addProfile(short time, float value)
+    {
+        long dt = 0L;
+        
+        int hour = (int)(time/60);
+        int minute = time - (hour*60);
+        
+        dt = (hour * 100) + minute;
+        
+        if (this.profiles==null)
+        {
+            this.profiles = new Hashtable<Long,Float>();
+        }
+        
+        this.profiles.put(dt, value);
+        
+    }
+    
+    
 }

@@ -1,16 +1,13 @@
 package ggc.pump.device.minimed;
 
 import ggc.core.db.hibernate.pump.PumpDataH;
-import ggc.plugin.protocol.DatabaseProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.PumpValuesEntryProfile;
 import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.util.DataAccessPump;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.Time;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.Enumeration;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,12 +39,15 @@ import org.apache.commons.logging.LogFactory;
 
 public class MinimedSPMPump extends MinimedSPM
 {
-    DataAccessPlugInBase m_da = null; //DataAccessPump.getInstance();
-    int count_unk = 0; 
-    private static Log log = LogFactory.getLog(MinimedSPM.class);
+    //DataAccessPlugInBase m_da = null; //DataAccessPump.getInstance();
+    //int count_unk = 0; 
+    //private static Log log = LogFactory.getLog(MinimedSPM.class);
 
     /**
      * Constructor
+     * 
+     * @param filename 
+     * @param da 
      */
     public MinimedSPMPump(String filename, DataAccessPlugInBase da)
     {
@@ -55,34 +55,79 @@ public class MinimedSPMPump extends MinimedSPM
     }
     
     
+    /** 
+     * Read Data
+     */
     public void readData()
     {
         //this.readDailyTotals();
         //this.readPrimes();
         //readEvents();
         //readAlarms();
-        readBoluses();
+        //readBoluses();
+        
+        // Db Test
+        this.readBasals();
     }
     
     
     
     
+    /** 
+     * Process Data Entry
+     * 
+     * @param data 
+     */
     public void processDataEntry(MinimedSPMData data)
     {
-        if (data.base_type==PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
+        if (data.value_type==MinimedSPMData.VALUE_PROFILE)
         {
+            PumpValuesEntryProfile pvep = new PumpValuesEntryProfile();
+            pvep.setName(data.value_str);
             
+            System.out.println("Data name: " + data.value_str);
+            
+            pvep.setActive_from(data.datetime);
+            
+            
+            for(Enumeration<Long> en = data.profiles.keys(); en.hasMoreElements(); )
+            {
+                ProfileSubEntry pse = new ProfileSubEntry();
+                
+                long key = en.nextElement().longValue();
+                
+                pse.time_start = (int)key;
+                pse.amount = data.profiles.get(key);
+                
+                pvep.addProfileSubEntry(pse);
+            }
+
+            pvep.processProfileSubEntries(PumpValuesEntryProfile.PROCESS_PUMP);
+            
+            System.out.println("P: " + pvep);
+            
+            DataAccessPump.getInstance().getDb().add(pvep);
             
         }
         else
         {
-            PumpDataH pdh = new PumpDataH();
-            pdh.setDt_info(data.datetime);
-            pdh.setBase_type(data.base_type);
-            pdh.setSub_type(data.sub_type);
-
-            pdh.setValue("" + data.getValue());
-            
+        
+            if (data.base_type==PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
+            {
+                
+                
+            }
+            else
+            {
+                PumpDataH pdh = new PumpDataH();
+                pdh.setDt_info(data.datetime);
+                pdh.setBase_type(data.base_type);
+                pdh.setSub_type(data.sub_type);
+    
+                pdh.setValue("" + data.getValue());
+  
+//                DataAccessPump.getInstance().getDb().addHibernate(pdh);
+            }
         }
         
         

@@ -76,6 +76,18 @@ public class PumpEvents
      */
     public static final int PUMP_EVENT_CARTRIDGE_REWIND = 3;
     
+    
+    public static final int PUMP_EVENT_RESERVOIR_LOW = 4;
+    
+    public static final int PUMP_EVENT_RESERVOIR_LOW_DESC = 5;
+    
+    
+    public static final int PUMP_EVENT_SET_TEMPORARY_BASAL_RATE_TYPE = 10;
+    
+
+    public static final int PUMP_EVENT_SET_BASAL_PATTERN = 15;
+    
+    
     // start / end
 
     /**
@@ -97,6 +109,12 @@ public class PumpEvents
      * Pump Event: Power Up
      */
     public static final int PUMP_EVENT_POWER_UP = 23;
+    
+    
+    public static final int PUMP_EVENT_SELF_TEST = 30;
+    
+    
+    public static final int PUMP_EVENT_DOWNLOAD = 31;
     
     
     // date/time
@@ -121,6 +139,21 @@ public class PumpEvents
      */
     public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD = 43;
     
+    
+    public static final int PUMP_EVENT_SET_MAX_BASAL = 50;
+    
+    public static final int PUMP_EVENT_SET_MAX_BOLUS = 51;
+    
+    
+    public static final int PUMP_EVENT_BATERRY_REMOVED = 55;
+    
+    public static final int PUMP_EVENT_BATERRY_REPLACED = 56;
+    
+    public static final int PUMP_EVENT_BATERRY_LOW = 57;
+    
+    public static final int PUMP_EVENT_BATERRY_LOW_DESC = 58;
+
+    public static final int PUMP_EVENT_BG_FROM_METER = 70;
     
     /**
      * Constructor
@@ -169,5 +202,20 @@ public class PumpEvents
         return this.events_desc;
     }
 
+    
+    public boolean hasValue(int type)
+    {
+        switch (type)
+        {
+            case PUMP_EVENT_SET_MAX_BASAL:
+            case PUMP_EVENT_SET_MAX_BOLUS:
+            case PUMP_EVENT_BATERRY_LOW_DESC:
+                return true;
+        
+            default:
+                return false;
+        }
+    }
+    
     
 }
