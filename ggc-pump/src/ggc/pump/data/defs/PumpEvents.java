@@ -77,14 +77,24 @@ public class PumpEvents
     public static final int PUMP_EVENT_CARTRIDGE_REWIND = 3;
     
     
+    /**
+     * Pump Event: Reservoir Low
+     */
     public static final int PUMP_EVENT_RESERVOIR_LOW = 4;
     
+    /**
+     * Pump Event: Reservoir Low
+     */
     public static final int PUMP_EVENT_RESERVOIR_LOW_DESC = 5;
     
-    
+    /**
+     * Pump Event: Temporary Basal Rate, Unit setting (1=%, 0=U)
+     */
     public static final int PUMP_EVENT_SET_TEMPORARY_BASAL_RATE_TYPE = 10;
     
-
+    /**
+     * Pump Event: Basal Pattern Set
+     */
     public static final int PUMP_EVENT_SET_BASAL_PATTERN = 15;
     
     
@@ -110,10 +120,16 @@ public class PumpEvents
      */
     public static final int PUMP_EVENT_POWER_UP = 23;
     
-    
+        
+    /**
+     * Pump Event: Self Test
+     */
     public static final int PUMP_EVENT_SELF_TEST = 30;
+
     
-    
+    /**
+     * Pump Event: Download data
+     */
     public static final int PUMP_EVENT_DOWNLOAD = 31;
     
     
@@ -127,32 +143,45 @@ public class PumpEvents
     /**
      * Pump Event: Date/Time Correct
      */
-    public static final int PUMP_EVENT_DATETIME_CORRECT = 41;
+    public static final int PUMP_EVENT_DATETIME_CORRECTED = 41;
 
-    /**
-     * Pump Event: Date/Time Correct Time Shift Back
-     */
-    public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK = 42;
-
-    /**
-     * Pump Event: Date/Time Correct Time Shift Forward
-     */
-    public static final int PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD = 43;
     
     
+    /**
+     * Pump Event: Set Max Basal
+     */
     public static final int PUMP_EVENT_SET_MAX_BASAL = 50;
     
+    /**
+     * Pump Event: Set Max Bolus
+     */
     public static final int PUMP_EVENT_SET_MAX_BOLUS = 51;
     
     
+    /**
+     * Pump Event: Battery Removed
+     */
     public static final int PUMP_EVENT_BATERRY_REMOVED = 55;
     
+    /**
+     * Pump Event: Battery Replaced
+     */
     public static final int PUMP_EVENT_BATERRY_REPLACED = 56;
     
+    /**
+     * Pump Event: Battery Low
+     */
     public static final int PUMP_EVENT_BATERRY_LOW = 57;
     
+    /**
+     * Pump Event: Battery Low (Desc)
+     */
     public static final int PUMP_EVENT_BATERRY_LOW_DESC = 58;
 
+    
+    /**
+     * Pump Event: BG From Meter
+     */
     public static final int PUMP_EVENT_BG_FROM_METER = 70;
     
     /**
@@ -203,6 +232,11 @@ public class PumpEvents
     }
 
     
+    /**
+     * Shows if this type of event has value associated with it (most don't) 
+     * @param type
+     * @return
+     */
     public boolean hasValue(int type)
     {
         switch (type)

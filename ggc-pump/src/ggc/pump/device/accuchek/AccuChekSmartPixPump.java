@@ -774,8 +774,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         this.event_mappings.put("power down", new Integer(PumpEvents.PUMP_EVENT_POWER_DOWN));
         this.event_mappings.put("power up", new Integer(PumpEvents.PUMP_EVENT_POWER_UP));
         this.event_mappings.put("time / date set", new Integer(PumpEvents.PUMP_EVENT_DATETIME_SET));
-        this.event_mappings.put("time / date corrected", new Integer(PumpEvents.PUMP_EVENT_DATETIME_CORRECT));
-        this.event_mappings.put("time / date set (time shift back)", new Integer(PumpEvents.PUMP_EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK));
+        this.event_mappings.put("time / date corrected", new Integer(PumpEvents.PUMP_EVENT_DATETIME_CORRECTED));
+        this.event_mappings.put("time / date set (time shift back)", PumpEvents.PUMP_EVENT_DATETIME_CORRECTED);
         
         
         this.error_mappings = new Hashtable<String,Integer>();

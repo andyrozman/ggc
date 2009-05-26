@@ -2,6 +2,10 @@
 Changes file for GGC Pump Tool
 ==============================
 
+0.4.7
+    * Started work on Minimed Import (from Solutions Pumps & Meter export file (MS Access *.mmp file))
+    * Minor fix of Multiwave Bolus in Manual input
+
 0.4.6
     * Day Table has removed comment column, and now we have added Food column, which together with Additional data
       column uses MultiLineTooltip (MultiLineTooltipModel)

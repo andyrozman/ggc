@@ -717,8 +717,22 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     public float getMaxBasalValue()
     {
+        // TODO read from pump
         return 8.0f;
     }
+
+    
+    /**
+     * Gets the max bolus value.
+     * 
+     * @return the max bolus value
+     */
+    public float getMaxBolusValue()
+    {
+        // TODO read from pump
+        return 18.0f;
+    }
+
     
     /**
      * Gets the basal step.
@@ -727,8 +741,19 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     public float getBasalStep()
     {
+        // TODO read from pump
         return 0.1f;
     }
     
+    /**
+     * Gets the bolus step.
+     * 
+     * @return the bolus step
+     */
+    public float getBolusStep()
+    {
+        // TODO read from pump
+        return 0.1f;
+    }
     
 }

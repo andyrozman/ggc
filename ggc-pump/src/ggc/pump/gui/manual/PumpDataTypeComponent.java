@@ -1280,17 +1280,20 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     private class SquareBolusComponent extends JPanel
     {
 
-        String[] vals = { "-", "+" };
+        private static final long serialVersionUID = -1888760063675164725L;
+
+//        String[] vals = { "-", "+" };
 
         JSpinner spinner = null;
         JComboBox cb_sign = null;
         JLabel label_1_1, label_2_1;
         
         
+        
         public static final int SQUARE_SINGLE = 1;
         public static final int SQUARE_DUAL = 2;
+        DataAccessPump da = DataAccessPump.getInstance();
         
-
         public SquareBolusComponent()
         {
             super();
@@ -1300,17 +1303,17 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         private void init()
         {
-            label_1_1 = new JLabel(ic.getMessage("TEMPORARY_BASAL_RATE") + ":");
+            label_1_1 = new JLabel(ic.getMessage("SQUARE_VALUE") + ":");
             label_1_1.setBounds(0, 0, 140, 25);
             label_1_1.setFont(m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD));
             this.add(label_1_1);
 
-            cb_sign = new JComboBox(vals);
+  /*          cb_sign = new JComboBox(vals);
             cb_sign.setBounds(200, 0, 50, 25);
-            this.add(cb_sign);
-
+            //this.add(cb_sign);
+*/
             spinner = new JSpinner();
-            spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+            spinner.setModel(new SpinnerNumberModel(0, 0, da.getMaxBolusValue(), da.getBolusStep()));
             spinner.setBounds(260, 0, 50, 25);
             spinner.setValue(100);
             this.add(spinner);

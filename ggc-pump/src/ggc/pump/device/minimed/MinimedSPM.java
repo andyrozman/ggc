@@ -32,9 +32,9 @@ import com.atech.utils.ATechDate;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     MinimedCareLink
- *  Description:  Minimed CareLink "device". This is for importing data from CareLink
- *                export file
+ *  Filename:     MinimedSPM
+ *  Description:  Minimed 'Solution Pumps and Meters' "device". This is for importing data from SMP
+ *                export file (access database with mmp extension)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -575,7 +575,14 @@ public abstract class MinimedSPM extends DatabaseProtocol
         return getDateTime(date, time, 1);
     }
     
+    /**
+     * Datetime in seconds
+     */
     public static final int DATETIME_S = 1;
+
+    /**
+     * Datetime in minutes
+     */
     public static final int DATETIME_MIN = 2;
     
     

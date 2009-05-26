@@ -396,13 +396,22 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
     
-    
+    // type = Unit, Procent
     public String getTemporaryBasalTypeDefinition()
     {
-        return "TYPE=Unit;STEP=0.1";
+        return "TYPE=Procent;STEP=0.1";
     }
     
+    public float getBolusPrecission()
+    {
+        return 0.1f;
+    }
     
+
+    public float getBasalPrecission()
+    {
+        return 0.1f;
+    }
     
     
 }
