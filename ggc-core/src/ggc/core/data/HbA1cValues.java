@@ -43,7 +43,7 @@ public class HbA1cValues
     private int readings;
     private int dayCount;
     private int exp;
-    private int[] ReadingsPerDay;
+    //private int[] ReadingsPerDay;
 
     private Hashtable<String, DailyValues> m_dataTable = null;
 
@@ -56,7 +56,7 @@ public class HbA1cValues
         readings = 0;
         dayCount = 0;
         exp = 0;
-        ReadingsPerDay = new int[25];
+        //ReadingsPerDay = new int[25];
         m_dataTable = new Hashtable<String, DailyValues>();
     }
 
@@ -69,7 +69,7 @@ public class HbA1cValues
     public void addDay(float avgBG, int _readings)
     {
         sumBG += avgBG;
-        ReadingsPerDay[_readings]++;
+        //ReadingsPerDay[_readings]++;
         this.readings += _readings;
         exp += _readings * _readings;
         dayCount++;
