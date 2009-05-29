@@ -6,6 +6,14 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.4.6.5 (28.5.2009) [andy]
+    * FoodDescriptionDialog. Calculation was now changed, we now allow following syntax: [20], [], [2x10] 
+      and [2*10.2], for automatic calculation.
+      
+0.4.6.4 () [andy]
+    * Hba1cValues fixed
+    * Some other changes
+    
 0.4.6.1 (11.4.2009) [andy]
     * Fixed backup/restore mechanism (new one (v2) with objects)
 

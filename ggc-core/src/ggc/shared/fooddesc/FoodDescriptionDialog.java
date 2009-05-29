@@ -355,7 +355,7 @@ public class FoodDescriptionDialog extends TransferDialog /*JDialog*/ implements
         else
         {
             float sum = this.calculationInternal(this.text_area.getText());
-            System.out.println("doing calcualtion: " + sum);
+            //System.out.println("doing calcualtion: " + sum);
             
             this.ftf_ch.setValue(new Float(sum));
         }
@@ -373,19 +373,34 @@ public class FoodDescriptionDialog extends TransferDialog /*JDialog*/ implements
         {
             String t = strtok.nextToken();
             
-            //System.out.println("Token: " + t);
-            
             if (t.indexOf("]")==-1)
                 continue;
                 
             t = t.substring(0, t.indexOf("]"));
-            //System.out.println("Bef: " + t);
             
             t = t.replace(",", "."); //DataAccess.false_decimal, DataAccess.real_decimal);
 
-//            System.out.println("False dec: " + DataAccess.false_decimal + " rwal=" + DataAccess.real_decimal);
+            if (t.length()==0)
+                continue;
+            else if ((t.contains("x")) || (t.contains("*")))
+            {
+                String parts[]= null;
 
-            //System.out.println("Aff: " + t);
+                if (t.contains("*"))
+                    t = t.replace('*', 'x');
+                
+                parts = t.split("x");
+                    
+                sum += (m_da.getFloatValueFromString(parts[0], 0.0f) * m_da.getFloatValueFromString(parts[1], 0.0f));
+            }
+            else
+            {
+                sum += m_da.getFloatValueFromString(t, 0.0f);
+            }
+                
+            
+            /*
+            
             try
             {
                 float f = Float.parseFloat(t);
@@ -396,7 +411,7 @@ public class FoodDescriptionDialog extends TransferDialog /*JDialog*/ implements
             {
                 log.error("Error on parse: [token=" + t + ",exception=" + ex + "]", ex );
                 //System.out.println("Ex: " + ex);
-            }
+            }*/
         }
         
         return sum;
