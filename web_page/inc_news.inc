@@ -3,6 +3,41 @@
 <h2 class="head">News</h2>
 
 
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2009-05-10 14:00</td>
+<td>Translations update</td>
+</tr>
+<tr>
+<td colspan="2">
+We created special document for "How To Translate GGC". See Documentation.
+</td>
+</tr>
+</table> 
+
+
+<br><br>
+
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<tr class="newsheader">
+<td width="150">2009-04-02 21:00</td>
+<td>GGC 0.4.3 Update</td>
+</tr>
+<tr>
+<td colspan="2">
+Update makes changes to HbA1c Dialog, Printing system and Startup system, also there has been change to 
+Nutrition part (we now have dynamic loading of data, so startup is faster).
+</td>
+</tr>
+</table> 
+
+
+<br><br>
+
+
+
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
 <tr class="newsheader">

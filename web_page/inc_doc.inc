@@ -45,6 +45,14 @@ in SVN, but now they will also be here. Some of them are translated, but not all
 <a href="docs/USB-How-To_de.txt">German</a>, 
 <a href="docs/USB-How-To_si.txt">Slovene</a>)
 
+<h3>Translation</h3>
+<a href="docs/How_To_Translate_GGC.txt">How to Translate</a>. Now that GGC updates are comming out regulary, we have to 
+come back to one of most difficult parts - translation. There are no tools in java to help with translations, so we have 
+to make our own. Currently there are two simple tools that can help with translation, but still most of stuff must be 
+done "manually". For this purpose we have here detailed document on how to help with translations. We are trying to create
+tool that will simplify this process, but this might take quite some time. So for now here are dfetailed, step by step 
+instructions. [Added on 10th May 2009]<br>
+
 <br><br><br>
 
 <h2>GGC Meter Tool</h2>

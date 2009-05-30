@@ -38,14 +38,7 @@ you check-in rights.
 <br><br>
 
 <h3 class="header">Translation</h3>
-Do you wish to have GGC in your own language... Nothing easier than that, download application and install it. 
-In file ggc-lang-X.X.jar (bin directory) you will find following two files (GGC_en.properties and 
-GGC_Nutrition_en.properties). Extract them and change en to two letter code for your country. You can start 
-translating this two files. When you have translated something (you don't need to translate everything, but when 
-you have at least 50% translated, let us know and we will add it to application. Next language pack will have
-your changes in it. Please let us know you will start translation in forum 'Translation'. You will be contacted
-by one of our developers, who will send you some tools that will help you with translations.
-
+Translation "protocol" was now revised, so please see Documentation, for more info on how to do translations.
 
 
 <br><br>
