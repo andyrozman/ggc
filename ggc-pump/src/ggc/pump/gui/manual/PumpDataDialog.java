@@ -4,6 +4,7 @@ import ggc.plugin.data.DeviceValuesDay;
 import ggc.pump.data.PumpDailyStatistics;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.db.GGCPumpDb;
+import ggc.pump.data.graph.GraphViewDailyPump;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
@@ -35,6 +36,7 @@ import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
 import com.atech.graphics.calendar.CalendarPane;
 import com.atech.graphics.components.MultiLineTooltipModel;
+import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpCapable;
 
 /**
@@ -644,13 +646,17 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             m_da.removeComponent(this);
             this.close();
         }
-        /*        else if (command.equals("show_daily_graph"))
-                {
-                    DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
-                    dgd.setDailyValues(this.dayData);
-                } */
+        else if (command.equals("show_daily_graph"))
+        {
+            //DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
+            //dgd.setDailyValues(this.dayData);
+            
+            new GraphViewer(new GraphViewDailyPump(this.current_date), m_da, this, true);
+            
+        }
         else
-            System.out.println("DailyStatsDialog:Unknown Action: " + command);
+            System.out.println("PumpDataDialog:Unknown Action: " + command);
+        
 
     }
 

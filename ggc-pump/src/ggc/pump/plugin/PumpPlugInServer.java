@@ -253,6 +253,7 @@ public class PumpPlugInServer extends PlugInServer implements ActionListener
         //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
         
         da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
+        da.setGraphConfigProperties(m_da.getGraphConfigProperties());
     }
     
     
