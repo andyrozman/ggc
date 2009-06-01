@@ -47,7 +47,7 @@ import com.atech.utils.ATDataAccessAbstract;
 public class GGCGraphUtil extends GraphUtil
 {
     private static final long serialVersionUID = -1579716091265096686L;
-    Color backgroundColor = Color.WHITE;
+    public Color backgroundColor = Color.WHITE;
     int BGUnit = DataAccess.BG_MGDL;
     JFreeChart chart;
     GGCProperties settings;  
@@ -147,7 +147,7 @@ public class GGCGraphUtil extends GraphUtil
      * @param plot
      *            The <code>{@link XYPlot}</code> to apply the markers to.
      */
-    void applyMarkers(XYPlot plot)
+    public void applyMarkers(XYPlot plot)
     {
         if (plot == null)
         {
