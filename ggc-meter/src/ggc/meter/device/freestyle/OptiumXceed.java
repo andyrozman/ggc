@@ -10,7 +10,6 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
@@ -302,7 +301,7 @@ public class OptiumXceed extends AbstractSerialMeter
             //write("MEM".getBytes());
             //waitTime(100);
             
-            String line;
+//x            String line;
             
             
             //readInfo();
@@ -418,7 +417,7 @@ private void afterWrite()
 }
     
     
-    public void connectAndExit()
+    private void connectAndExit()
     {
         System.out.println("Error reading data from device !!!");
     }
@@ -659,6 +658,7 @@ private void afterWrite()
     }
     
 
+    @SuppressWarnings("unused")
     private static String months_en[] = { "", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"  };
     
     protected ATechDate getDateTime(String datetime)
@@ -668,7 +668,7 @@ private void afterWrite()
         ATechDate dt = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN);
         
         //dt.day_of_month = Integer.parseInt(datetime.substring(6, 8));
-        String mnth = datetime.substring(0, 3);
+//x        String mnth = datetime.substring(0, 3);
         
         //dt.month = 
         dt.day_of_month = Integer.parseInt(datetime.substring(5, 7));
@@ -826,33 +826,50 @@ private void afterWrite()
   */      
     }
 
+    /**
+     * Maximum of records that device can store
+     */
     public int getMaxMemoryRecords()
     {
         // TODO Auto-generated method stub
         return 450;
     }
 
+    /** 
+     * Get Device ClassName
+     */
     public String getDeviceClassName()
     {
-        // TODO Auto-generated method stub
         return "ggc.meter.device.freestyle.OptiumXceed";
     }
 
+    /**
+     * getDeviceId - Get Device Id 
+     * 
+     * @return id of device within company
+     */
     public int getDeviceId()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
+    /**
+     * getIconName - Get Icon of meter
+     * 
+     * @return icon name
+     */
     public String getIconName()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
+    /**
+     * getName - Get Name of meter. 
+     * 
+     * @return name of meter
+     */
     public String getName()
     {
-        // TODO Auto-generated method stub
         return "Optium Xceed";
     }
     
