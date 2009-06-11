@@ -39,6 +39,7 @@ import pygmy.core.Server;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.help.HelpContext;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.misc.refresh.EventSource;
 import com.atech.plugin.PlugInClient;
@@ -255,6 +256,11 @@ public class DataAccess extends ATDataAccessAbstract
         //System.out.println("init Special");
         //this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
+        // Help Context Init
+        HelpContext hc = new HelpContext("../data/help/GGC.hs");
+        this.setHelpContext(hc);
+        
+        
         //System.out.println("config File");
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
@@ -262,6 +268,7 @@ public class DataAccess extends ATDataAccessAbstract
         //System.out.println("configuratioon manager");
         m_cfgMgr = new ConfigurationManager(this);
 
+        
         //System.out.println("m_settings");
         this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
         
@@ -676,6 +683,9 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public void initPlugIns()
     {
+        
+       
+        
         addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
         // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
 

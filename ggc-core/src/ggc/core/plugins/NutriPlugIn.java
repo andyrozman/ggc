@@ -45,58 +45,57 @@ public class NutriPlugIn extends PlugInClient
 
     
     /**
-     * Command: Read Pump Data
+     * Command: Db USDA Tree
      */
-    public static final int COMMAND_READ_PUMP_DATA = 0;
+    public static final int COMMAND_DB_USDA = 0;
+    
     
     /**
-     * Command: Pump List
+     * Command: Db User Tree
      */
-    public static final int COMMAND_PUMPS_LIST = 1;
+    public static final int COMMAND_DB_USER = 1;
     
     /**
-     * Command: Pump Configuration
+     * Command: Db Meal Tree
      */
-    public static final int COMMAND_CONFIGURATION = 2;
-    
-    /**
-     * Command: Pump Profiles
-     */
-    public static final int COMMAND_PROFILES = 3;
-    
-    /**
-     * Command: Pump Manual Entry
-     */
-    public static final int COMMAND_MANUAL_ENTRY = 4;
-    
-    /**
-     * Command: Pump Additional Data
-     */
-    public static final int COMMAND_ADDITIONAL_DATA = 5;
-    
-    /**
-     * Command: Pump About
-     */
-    public static final int COMMAND_ABOUT = 6;
-    
+    public static final int COMMAND_DB_MEAL = 2;
     
     /**
      *  Command: Load Database  
      */
-    public static final int COMMAND_LOAD_DATABASE = 4;
+    public static final int COMMAND_LOAD_DATABASE = 3;
+    
+    /**
+     * Command: About
+     */
+    public static final int COMMAND_ABOUT = 4;
+    
+    /**
+     * Command: Food Selector
+     */
+    public static final int COMMAND_DB_FOOD_SELECTOR = 5;
+    
+    /**
+     * Command: Recalculate CH
+     */
+    public static final int COMMAND_RECALCULATE_CH = 6;
     
     
     
     
+    
+/*    
     private String commands[] = { 
-                                  "MN_NUTRI_READ_DESC", 
-                                  "MN_NUTRI_LIST_DESC", 
-                                  "MN_NUTRI_CONFIG_DESC",
+                                  "MN_NUTRI_DB_USDA", 
+                                  "MN_NUTRI_DB_USER", 
+                                  "MN_NUTRI_DB_MEAL",
                                                                
                                   "MN_LOAD_DATABASE_DESC", 
-                                  "MN_NUTRI_ABOUT" };
+                                  "MN_NUTRI_ABOUT", 
+                                  "MN_OPEN_DB_SELECTOR", 
+                                  "MN_RECALCULATE_CH};
     
-    
+  */  
     
     
     
@@ -146,7 +145,7 @@ public class NutriPlugIn extends PlugInClient
                 this, 
                 DataAccess.getInstance().getDb() );
             
-            System.out.println("Class done");
+            //System.out.println("Class done");
         }
         catch (Exception ex)
         {
@@ -167,45 +166,34 @@ public class NutriPlugIn extends PlugInClient
 
     
     /**
-     * Read Pumps Data
-     */
-    public void readPumpsData()
-    {
-        //this.featureNotImplemented(commands[0]);
-        this.executeCommand(PumpsPlugIn.COMMAND_READ_PUMP_DATA);
-//        executeCommand(commands[0]);
-    }
-
-    
-    /**
      * Init Plugin
      */
     public void initPlugin()
     {
         this.commands = new String[7];
-        this.commands[0] = "MN_PUMPS_READ_DESC";
-        this.commands[1] = "MN_PUMPS_LIST_DESC";
-        this.commands[2] = "MN_PUMPS_CONFIG_DESC";
-        this.commands[3] = "MN_PUMP_PROFILES_DESC";
-        this.commands[4] = "MN_PUMPS_MANUAL_ENTRY_DESC";
-        this.commands[5] = "MN_PUMPS_ADDITIONAL_DATA_DESC";
-        this.commands[6] = "MN_PUMPS_ABOUT_DESC";
+        this.commands[0] = "MN_NUTRI_DB_USDA";
+        this.commands[1] = "MN_NUTRI_DB_USER";
+        this.commands[2] = "MN_NUTRI_DB_MEAL";
+        this.commands[3] = "MN_LOAD_DATABASE_DESC";
+        this.commands[4] = "MN_NUTRI_ABOUT";
+        this.commands[5] = "MN_OPEN_DB_SELECTOR";
+        this.commands[6] = "MN_RECALCULATE_CH";
 
         this.commands_implemented = new boolean[7];
-        this.commands_implemented[0] = false;
-        this.commands_implemented[1] = false;
-        this.commands_implemented[2] = false;
+        this.commands_implemented[0] = true;
+        this.commands_implemented[1] = true;
+        this.commands_implemented[2] = true;
         this.commands_implemented[3] = true;
         this.commands_implemented[4] = true;
         this.commands_implemented[5] = true;
         this.commands_implemented[6] = true;
         
         this.commands_will_be_done = new String[7];
-        this.commands_will_be_done[0] = "0.5";
-        this.commands_will_be_done[1] = "0.5";
-        this.commands_will_be_done[2] = "0.5";
-        this.commands_will_be_done[3] = "0.5";
-        this.commands_will_be_done[4] = "0.5";
+        this.commands_will_be_done[0] = null;
+        this.commands_will_be_done[1] = null;
+        this.commands_will_be_done[2] = null;
+        this.commands_will_be_done[3] = null;
+        this.commands_will_be_done[4] = null;
         this.commands_will_be_done[5] = null;
         this.commands_will_be_done[6] = null;
         
@@ -218,53 +206,7 @@ public class NutriPlugIn extends PlugInClient
     public void actionPerformed(ActionEvent e)
     {
         String command = e.getActionCommand();
-
-        if (command.equals("pumps_read"))
-        {
-            this.readPumpsData();
-//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
-        }
-        else if (command.equals("pumps_list"))
-        {
-            this.executeCommand(PumpsPlugIn.COMMAND_PUMPS_LIST);
-        }
-        else if (command.equals("pumps_profile"))
-        {
-            this.executeCommand(PumpsPlugIn.COMMAND_PROFILES);
-        }
-        else if (command.equals("pumps_manual_entry"))
-        {
-            if (!DataAccess.getInstance().developer_version)
-                displayExperimental();
-            
-            this.executeCommand(PumpsPlugIn.COMMAND_MANUAL_ENTRY);
-//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
-        }
-        else if (command.equals("pumps_additional_data"))
-        {
-            if (!DataAccess.getInstance().developer_version)
-                displayExperimental();
-
-            this.executeCommand(PumpsPlugIn.COMMAND_ADDITIONAL_DATA);
-//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
-        }
-        else if (command.equals("pumps_config"))
-        {
-            this.executeCommand(PumpsPlugIn.COMMAND_CONFIGURATION);
-            
-            
-            
-            refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
-        }
-        else if (command.equals("pumps_about"))
-        {
-            this.executeCommand(PumpsPlugIn.COMMAND_ABOUT);
-        }
-        else
-        {
-            System.out.println("Wrong command for this plug-in [Pumps]: " + command);
-        }
-
+        System.out.println("Wrong command for this plug-in [Nutri]: " + command);
     }
 
     
@@ -277,32 +219,7 @@ public class NutriPlugIn extends PlugInClient
     {
         return "0.5";
     }
-
     
-    private void displayExperimental()
-    {
-        JOptionPane.showMessageDialog(this.parent, 
-            ic.getMessage("PUMP_PLUGIN_EXPERIMENTAL")
-/*            "Pumps Plug-in\n\n" +
-            "This part is just experimental. We took quite a time\n" +
-            "to work on it and tried to add all needed functions\n" +
-            "and options. We did some testing, but we still need\n" +
-            "to add some functionalities and do more exhaustive\n" +
-            "testing. Therefore this module is marked as experimental\n" +
-            "and may be used for testing only. At this point we also\n" +
-            "don't support backup/restore, so even if data would be\n" +
-            "added succesfully, we have no means to backup it up.\n\n" +
-            "This is required step, before we delve into world of\n" +
-            "automatic data retriveal from actual devices. Once \n" +
-            "this testing is done, we can start with data retrieval.\n\n" +
-            "If you find any problem here, or have any additional\n" +
-            "options/ideas that could be added, don't hesitate to\n" +
-            "contact us on our e-mail address:\n" +
-            "ggc@atech-software.com.\n\n" */
-            , 
-            ic.getMessage("WARNING"), 
-            JOptionPane.WARNING_MESSAGE);
-    }
     
     
     /**
