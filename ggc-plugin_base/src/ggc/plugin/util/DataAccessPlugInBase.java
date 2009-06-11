@@ -1059,7 +1059,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         {
             log.debug("checkNativeLibrary: " + native_dll_file);
             // RXTX
-            //System.out.println("File: " + native_dll_file + "\nPath: " + System.getProperty("java.library.path"));
+            System.out.println("File: " + native_dll_file + "\nPath: " + System.getProperty("java.library.path"));
             NativeLibrary.addSearchPath(native_dll_file, System.getProperty("java.library.path"));
             NativeLibrary.getInstance(native_dll_file);
             
