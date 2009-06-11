@@ -94,11 +94,11 @@ public class HWSelectorDialog extends SelectorAbstractDialog
     public void initSelectorValuesForType()
     {
         setSelectorObject(new HomeWeightSpecial());
-        setSelectorName(ic.getMessage("SELECTOR_NUTRITION_DEFINITION"));
-        setHelpStringId("ggc.food.user.select.nutrition");
+        setSelectorName(ic.getMessage("SELECTOR_HOME_WEIGHT"));
+        setHelpStringId("pages.GGC_Food_User_Select_HomeWeight_Main");
         setNewItemString(ic.getMessage("NEW_NUTR_DEF"));
 	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
-	    this.getDescriptions().put("DESC_1", ic.getMessage("NUTRITION_NAME"));
+	    this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));
 	    setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
 	    this.setHelpEnabled(true);
     }

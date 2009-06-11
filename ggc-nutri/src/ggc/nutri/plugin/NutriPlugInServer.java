@@ -7,8 +7,10 @@ import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
+import ggc.nutri.dialogs.DailyValuesMealSelectorDialog;
 import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.gui.print.PrintFoodDialog;
+import ggc.nutri.panels.PanelMealSelector;
 import ggc.nutri.util.DataAccessNutri;
 import ggc.nutri.util.I18nControl;
 
@@ -16,6 +18,7 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 
@@ -46,8 +49,8 @@ import com.atech.utils.ATSwingUtils;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     NutriPlugInServer  
+ *  Description:  PlugIn Server for Nutrition Plugin
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -57,13 +60,44 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 {
 
     /**
+     * Command: Db USDA Tree
+     */
+    public static final int COMMAND_DB_USDA = 0;
+    
+    
+    /**
+     * Command: Db User Tree
+     */
+    public static final int COMMAND_DB_USER = 1;
+    
+    /**
+     * Command: Db Meal Tree
+     */
+    public static final int COMMAND_DB_MEAL = 2;
+    
+    /**
      *  Command: Load Database  
      */
-    public static final int COMMAND_LOAD_DATABASE = 4;
+    public static final int COMMAND_LOAD_DATABASE = 3;
+    
+    /**
+     * Command: About
+     */
+    public static final int COMMAND_ABOUT = 4;
+    
+    /**
+     * Command: Food Selector
+     */
+    public static final int COMMAND_DB_FOOD_SELECTOR = 5;
+    
+    /**
+     * Command: Recalculate CH
+     */
+    public static final int COMMAND_RECALCULATE_CH = 6;
     
     
     
-    @SuppressWarnings("unused")
+/*    
     private String commands[] = { 
                                   "MN_NUTRI_READ_DESC", 
                                   "MN_NUTRI_LIST_DESC", 
@@ -71,7 +105,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
                                                                
                                   "MN_LOAD_DATABASE_DESC", 
                                   "MN_NUTRI_ABOUT" };
-    
+  */  
     
     //I18nControl ic = I18nControl.getInstance();
     
@@ -400,6 +434,62 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         
     }
 
+    
+    
+    
+
+    /**
+     * Execute Command Dialog Return - This one executes command that starts dialog, with
+     *   dialog as parent, and supply of Object as input data. Input data can be anything
+     *   even ArrayList of data. As returning parameters we get array of Object, or null
+     *   if action was unsuccessful
+     * 
+     * @param dialog parent dialog
+     * @param command command id (specific to plugin)
+     * @param data as Object (can be ArrayList)
+     * 
+     * @return Array of Objects or null
+     */
+    public Object[] executeCommandDialogReturn(JDialog dialog, int command, Object data)
+    {
+        if ((command!=NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR) &&
+                (command!=NutriPlugInServer.COMMAND_RECALCULATE_CH))
+        {
+            System.out.println("ExecuteCommandDialogReturn[" + getName() + "] is not valid for this command: " + command);
+            return null;
+        }
+        else
+        {
+            if (command==NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR)
+            {
+                DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(this.m_da, (String)data);
+
+                if (dvms.wasAction())
+                {
+                    Object[] ret = new Object[2];
+                    ret[0] = dvms.getStringForDb();
+                    ret[1] = dvms.getCHSum().replace(',', '.');
+                    
+                    return ret;
+                }
+                else
+                    return null;
+            }
+            else if (command==NutriPlugInServer.COMMAND_RECALCULATE_CH)
+            {
+                PanelMealSelector pms = new PanelMealSelector(dialog, null, (String)data);
+                
+                Object[] ret = new Object[2];
+                ret[0] = pms.getCHSumString();
+                
+                return ret;
+            }
+            else
+                return null;
+        }
+    }
+    
+    
     
     /**
      * Get Backup Restore Handler

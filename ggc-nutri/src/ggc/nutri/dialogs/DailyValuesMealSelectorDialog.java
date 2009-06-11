@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 
 import com.atech.graphics.dialogs.TransferDialog;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,12 +62,12 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
     /**
      * Constructor
      * 
-     * @param da
+     * @param dataAccessAbstract
      * @param meals_id
      */
-    public DailyValuesMealSelectorDialog(DataAccess da, String meals_id)
+    public DailyValuesMealSelectorDialog(ATDataAccessAbstract dataAccessAbstract, String meals_id)
     {
-        super((JDialog)da.getCurrentComponent());
+        super((JDialog)dataAccessAbstract.getCurrentComponent());
         // super(da.getParent(), "", true);
 
         m_da = DataAccessNutri.getInstance();
