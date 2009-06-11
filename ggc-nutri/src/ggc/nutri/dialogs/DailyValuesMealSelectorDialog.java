@@ -1,6 +1,5 @@
 package ggc.nutri.dialogs;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.panels.PanelMealSelector;
 import ggc.nutri.util.DataAccessNutri;
 
