@@ -492,10 +492,12 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     private void helpInit()
     {
-        HelpContext hc = new HelpContext("../data/help/GGC.hs");
+//        HelpContext hc = new HelpContext("../data/help/GGC.hs");
+//        m_da.setHelpContext(hc);
 
-        m_da.setHelpContext(hc);
-
+        HelpContext hc = m_da.getHelpContext();
+        
+        
         JMenuItem helpItem = new JMenuItem(m_ic.getMessage("HELP") + "...");
         helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
 

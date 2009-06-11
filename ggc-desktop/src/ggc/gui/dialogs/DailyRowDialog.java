@@ -2,6 +2,7 @@ package ggc.gui.dialogs;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
+import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 import ggc.core.util.I18nControl;
@@ -510,6 +511,16 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         {
             // FIXME
             
+            Object[] data = m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommandDialogReturn(this, NutriPlugIn.COMMAND_DB_FOOD_SELECTOR, this.m_dailyValuesRow.getMealsIds());
+            
+            if (data!=null)
+            {
+                this.m_dailyValuesRow.setMealsIds((String)data[0]);
+                this.ftf_ch.setValue(new Float((String)data[1]));
+
+                updateMealsSet();
+            }
+            
             /*
             DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(m_da, this.m_dailyValuesRow.getMealsIds());
 
@@ -526,19 +537,30 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             if (this.isMealSet())
             {
                 // FIXME
-                /*
+                
                 if (m_da.isValueSet(this.m_dailyValuesRow.getMealsIds()))
                 {
+
+                    Object[] data = m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommandDialogReturn(this, NutriPlugIn.COMMAND_RECALCULATE_CH, this.m_dailyValuesRow.getMealsIds());
+                    
+                    if (data!=null)
+                    {
+                        updateMealsSet();
+                        setCh((String)data[0]);
+                    }
+
+                  /*                    
                     PanelMealSelector pms = new PanelMealSelector(this, null, this.m_dailyValuesRow.getMealsIds());
                     
                     updateMealsSet();
                     setCh(pms.getCHSumString());
+                    */
                     
                     /*
                     String s = pms.getCHSumString();
                     s = s.replace(DataAccess.false_decimal, DataAccess.real_decimal);
                     this.ftf_ch.setValue(m_da.getFloatValue(s)); */
-                /*}
+                }
                 else if (m_da.isValueSet(this.m_dailyValuesRow.getFoodDescriptionCH()))
                 {
                     updateMealsSet();
@@ -548,7 +570,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                     s = s.replace(DataAccess.false_decimal, DataAccess.real_decimal);
 
                     this.ftf_ch.setValue(m_da.getFloatValue(s)); */
-                //}*/
+                }
             }
         }
         else if (action.equals("bolus_helper"))

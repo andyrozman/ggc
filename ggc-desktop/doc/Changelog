@@ -1,10 +1,18 @@
 
-Changelog file for GGC Core (GNU Gluco Control) 
-===============================================
+Changelog file for GGC Desktop (GNU Gluco Control) 
+===================================================
 
 Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
+
+0.4.5.2 (current)
+    * change position of initialization of Help Context
+    * DailyRowDialog can now again select foods and recalculate CH (after Nutrition became 
+      plugin this was disabled)
+
+0.4.5.1
+    * ...
 
 0.4.4.2
     * Build system for GGC Core
