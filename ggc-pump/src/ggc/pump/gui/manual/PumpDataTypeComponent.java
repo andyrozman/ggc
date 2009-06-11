@@ -1277,6 +1277,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     
     
+    
     private class SquareBolusComponent extends JPanel
     {
 
@@ -1331,6 +1332,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         public void setType(int type)
         {
+            
             
         }
         

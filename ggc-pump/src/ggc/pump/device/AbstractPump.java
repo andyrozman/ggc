@@ -390,7 +390,9 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
     
-    
+    /** 
+     * Get Download Support Type
+     */
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;

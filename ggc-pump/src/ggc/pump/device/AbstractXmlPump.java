@@ -491,6 +491,9 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
+    /** 
+     * Get Download Support Type
+     */
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
