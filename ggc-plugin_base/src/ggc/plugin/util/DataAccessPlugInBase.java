@@ -222,6 +222,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      * The m_ddh.
      */
     protected DeviceDataHandler m_ddh;
+
+    
+    protected long current_user_id = 0;
     
 
     // ********************************************************
@@ -1129,6 +1132,18 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     {
         return null;
     }
+    
+    
+    public long getCurrentUserId()
+    {
+        return this.current_user_id;
+    }
+    
+    public void setCurrentUserId(long user_id)
+    {
+        this.current_user_id = user_id;
+    }
+    
     
 
 }

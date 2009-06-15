@@ -145,6 +145,27 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         dialogPreInit();
     }
     
+
+    /**
+     * Constructor (for testing GUI)
+     *  
+     * @param da 
+     * @param ddh 
+     */
+    public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceDataHandler ddh, boolean is_debug)
+    {
+        super();
+        
+        this.m_da = da;
+        this.m_ic = da.getI18nControlInstance();
+        
+        this.m_ddh = ddh;
+        //this.mrr = new DeviceReaderRunner(m_da, this.m_ddh.getConfiguredDevice(), this);
+
+        dialogPreInit();
+    }
+    
+    
     
     /*
     public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry mce)
@@ -182,15 +203,18 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
     private void dialogPreInit()
     {
-        setTitle(String.format(m_ic.getMessage("READ_DEVICE_DATA_TITLE"), 
-            this.m_ddh.getConfiguredDevice().device_device, 
-            this.m_ddh.getConfiguredDevice().communication_port));
+        if (m_ddh!=null)
+            setTitle(String.format(m_ic.getMessage("READ_DEVICE_DATA_TITLE"), 
+                this.m_ddh.getConfiguredDevice().device_device, 
+                this.m_ddh.getConfiguredDevice().communication_port));
+            
 
         m_da.addComponent(this);
         
         init();
 
-        this.mrr.start();
+        if (this.mrr!=null)
+            this.mrr.start();
 
         this.setVisible(true);
 
@@ -229,7 +253,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         Font normal = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL);
         Font normal_b = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD);
         
-        setBounds(0, 0, 480, 580);
+        setBounds(0, 0, 480, 680);
         m_da.centerJDialog(this);
         
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -839,6 +863,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public void setOldDataReadingProgress(int value)
     {
     }
+    
+
     
     
     
