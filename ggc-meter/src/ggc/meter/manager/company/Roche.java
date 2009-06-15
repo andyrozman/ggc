@@ -81,7 +81,7 @@ public class Roche extends AbstractDeviceCompany
      */
     public String getName()
     {
-        return "Roche";
+        return "Accu-Chek/Roche";
     }
 
     

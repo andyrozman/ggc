@@ -1,5 +1,8 @@
 package ggc.meter.data.db;
 
+import java.util.Hashtable;
+import java.util.Iterator;
+
 import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.db.PluginDb;
@@ -7,6 +10,7 @@ import ggc.plugin.db.PluginDb;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 
 import com.atech.db.hibernate.HibernateDb;
@@ -72,12 +76,53 @@ public class GGCMeterDb extends PluginDb
         in = (Integer) criteria.list().get(0);
         sum_all = in.intValue();
         
-        log.debug("Meter Data : " + in.intValue());
+        log.debug("Old Meter Data in Db: " + in.intValue());
         
         return sum_all;
     }
     
     
-    
+    /**
+     * Get Meter Values
+     * 
+     * @return
+     */
+    public Hashtable<String,DayValueH> getMeterValues()
+    {
+
+        Hashtable<String,DayValueH> ht = new Hashtable<String,DayValueH>(); 
+        
+        log.info("getMeterValues()");
+
+        try
+        {
+
+            log.debug("getMeterValues() - Process");
+
+            Query q = this.getSession().createQuery(
+                "SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + 
+                "WHERE (dv.bg>0) and person_id=" + m_da.getCurrentUserId() + 
+                " ORDER BY dv.dt_info");
+
+            //System.out.println("Found elements: " + q.list().size());
+            
+            Iterator<?> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                DayValueH gv = (DayValueH)it.next();
+                ht.put("" + gv.getDt_info(), gv);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.error("getMeterValues.Exception: " + ex, ex);
+            ex.printStackTrace();
+        }
+
+        return ht;
+    }
+
     
 }
