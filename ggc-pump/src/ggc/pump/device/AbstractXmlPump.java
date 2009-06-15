@@ -500,6 +500,13 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
     
     
+    /**
+     * Get Temporary Basal Type Definition
+     * "TYPE=Unit;STEP=0.1"
+     * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
+     * 
+     * @return
+     */
     public String getTemporaryBasalTypeDefinition()
     {
         return "TYPE=Unit;STEP=0.1";

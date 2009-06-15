@@ -255,7 +255,14 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 	    this.sub_entries.add(pse);
 	}
 	
+	/**
+	 * Process: Normal
+	 */
 	public static final int PROCESS_NORMAL = 1;
+
+    /**
+     * Process: Pump
+     */
 	public static final int PROCESS_PUMP = 2;
 	
 	/**

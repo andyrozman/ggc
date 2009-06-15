@@ -390,26 +390,44 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
     
-    /** 
-     * Get Download Support Type
+    /**
+     * Get Download Support Type (if device supports downloading data from it)
+     * 
+     * @return
      */
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
     
-    // type = Unit, Procent
+    /**
+     * Get Temporary Basal Type Definition
+     * "TYPE=Unit;STEP=0.1"
+     * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
+     * 
+     * @return
+     */
     public String getTemporaryBasalTypeDefinition()
     {
-        return "TYPE=Procent;STEP=0.1";
+        return "TYPE=Unit;STEP=0.1";
     }
     
+    /**
+     * Get Bolus Precission
+     * 
+     * @return
+     */
     public float getBolusPrecission()
     {
         return 0.1f;
     }
     
 
+    /**
+     * Get Basal Precission
+     * 
+     * @return
+     */
     public float getBasalPrecission()
     {
         return 0.1f;

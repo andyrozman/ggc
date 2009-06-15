@@ -62,7 +62,6 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor //implemen
 
     GregorianCalendar gc;
     //private GlucoValues gluco_values;
-    @SuppressWarnings("unused")
     //private GlucoValues gluco_values_prev;
     XYSeriesCollection dataset = new XYSeriesCollection();
     //TimeSeriesCollection dataset = new TimeSeriesCollection();
@@ -82,6 +81,9 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor //implemen
     
     DataAccess da_core = DataAccess.getInstance();
     
+    /**
+     * Data Loaded
+     */
     public boolean data_loaded = false;
     
     DeviceValuesDay dvd_data; 
@@ -209,12 +211,12 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor //implemen
 */
 
         XYSeries BGSeries = new XYSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), true, true); //, Hour.class);
-        XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); //, Hour.class);
-        XYSeries ins1Series = new XYSeries("Basal insulin", true, true); //, Hour.class);
-        XYSeries ins2Series = new XYSeries("Bolus insulin", true, true); //, Hour.class);
+        //XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); //, Hour.class);
+        //XYSeries ins1Series = new XYSeries("Basal insulin", true, true); //, Hour.class);
+        //XYSeries ins2Series = new XYSeries("Bolus insulin", true, true); //, Hour.class);
         
         
-        int BGUnit = da_local.m_BG_unit;
+        //int BGUnit = da_local.m_BG_unit;
         
         //DailyValuesRow
         

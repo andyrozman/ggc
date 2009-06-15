@@ -18,7 +18,9 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Projections;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.ATechDate;
@@ -63,6 +65,8 @@ public class GGCPumpDb extends PluginDb
     public GGCPumpDb(HibernateDb db)
     {
         super(db);
+        
+        getAllElementsCount();
     }
     
     
@@ -385,6 +389,36 @@ public class GGCPumpDb extends PluginDb
 
         return lst;
         
+    }
+    
+    
+    /**
+     * Get All Elements Count
+     * 
+     * @return
+     */
+    public int getAllElementsCount()
+    {
+        Integer in = null;
+        int sum_all = 0;
+        
+        Criteria criteria = this.getSession().createCriteria(PumpDataH.class);
+        //criteria.add(Restrictions.gt("id", minLogID));
+        criteria.setProjection(Projections.rowCount());
+        in = (Integer) criteria.list().get(0);
+        sum_all = in.intValue();
+        
+        System.out.println("Pump Data : " + in.intValue());
+        
+        criteria = this.getSession().createCriteria(PumpProfileH.class);
+        //criteria.add(Restrictions.gt("id", minLogID));
+        criteria.setProjection(Projections.rowCount());
+        in = (Integer) criteria.list().get(0);
+        sum_all += in.intValue();
+        
+        System.out.println("Pump Profiles : " + in.intValue());
+        
+        return sum_all;
     }
     
     
