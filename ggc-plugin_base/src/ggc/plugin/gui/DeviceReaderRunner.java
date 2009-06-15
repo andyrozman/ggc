@@ -390,4 +390,14 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     }
     
     
+    /**
+     * Set old data reading progress
+     * 
+     * @param value
+     */
+    public void setOldDataReadingProgress(int value)
+    {
+    }
+    
+    
 }

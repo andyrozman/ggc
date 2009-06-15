@@ -158,4 +158,12 @@ public interface OutputWriter
      */
     public abstract void writeLog(int entry_type, String message, Exception ex);
     
+    
+    /**
+     * Set old data reading progress
+     * 
+     * @param value
+     */
+    public abstract void setOldDataReadingProgress(int value);
+    
 }

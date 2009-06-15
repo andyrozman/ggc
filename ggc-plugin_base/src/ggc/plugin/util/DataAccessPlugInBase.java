@@ -4,6 +4,7 @@ import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.manager.DeviceManager;
 import ggc.plugin.output.OutputUtil;
@@ -1118,7 +1119,16 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     }
     
     
-    
+    /**
+     * Get Old Data Reader (instance of OldDataReaderAbstract which can read data already in database -
+     *    for comparison purposes)
+     *     
+     * @return
+     */
+    public OldDataReaderAbstract getOldDataReader()
+    {
+        return null;
+    }
     
 
 }

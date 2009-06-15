@@ -249,5 +249,15 @@ public abstract class AbstractOutputWriter implements OutputWriter
     }
     
   
+    /**
+     * Set old data reading progress
+     * 
+     * @param value
+     */
+    public void setOldDataReadingProgress(int value)
+    {
+    }
+    
+    
 	
 }

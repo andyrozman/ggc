@@ -831,4 +831,15 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     
     
 
+    /**
+     * Set old data reading progress
+     * 
+     * @param value
+     */
+    public void setOldDataReadingProgress(int value)
+    {
+    }
+    
+    
+    
 }
