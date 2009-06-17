@@ -1,11 +1,12 @@
 package ggc.meter.data.db;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-
 import ggc.core.db.hibernate.DayValueH;
+import ggc.meter.data.MeterDataReader;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.db.PluginDb;
+
+import java.util.Hashtable;
+import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -85,15 +86,21 @@ public class GGCMeterDb extends PluginDb
     /**
      * Get Meter Values
      * 
+     * @param mdr MeterDataReader instance for writing progress on reading this data
+     * 
      * @return
      */
-    public Hashtable<String,DayValueH> getMeterValues()
+    public Hashtable<String,DayValueH> getMeterValues(MeterDataReader mdr)
     {
-
+        
         Hashtable<String,DayValueH> ht = new Hashtable<String,DayValueH>(); 
         
         log.info("getMeterValues()");
 
+        //mdr.se
+        
+        mdr.writeStatus(-1);
+        
         try
         {
 
@@ -108,10 +115,16 @@ public class GGCMeterDb extends PluginDb
             
             Iterator<?> it = q.list().iterator();
 
+            int counter = 0;
+            
+            mdr.writeStatus(counter);
+            
             while (it.hasNext())
             {
+                counter++;
                 DayValueH gv = (DayValueH)it.next();
                 ht.put("" + gv.getDt_info(), gv);
+                mdr.writeStatus(counter);
             }
 
         }

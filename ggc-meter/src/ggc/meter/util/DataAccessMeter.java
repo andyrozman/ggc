@@ -2,6 +2,7 @@ package ggc.meter.util;
 
 import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
+import ggc.meter.data.db.GGCMeterDb;
 import ggc.meter.manager.MeterManager;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
@@ -333,6 +334,39 @@ public class DataAccessMeter extends DataAccessPlugInBase
     }
 
 
+    
+    // ********************************************************
+    // ******                   Db                        *****    
+    // ********************************************************
+    
+    /**
+     * The m_db.
+     */
+    GGCMeterDb m_db;
+    
+
+    /**
+     * Create Custom Db
+     * 
+     * This is for plug-in specific database implementation
+     */
+    public void createCustomDb()
+    {
+        this.m_db = new GGCMeterDb(this.hdb);
+    }
+    
+
+    /**
+     * Get Db
+     * 
+     * @return
+     */
+    public GGCMeterDb getDb()
+    {
+        return this.m_db;
+    }
+    
+    
     
     // ********************************************************
     // ******              Configuration                  *****    

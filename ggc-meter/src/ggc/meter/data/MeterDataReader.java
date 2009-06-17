@@ -1,5 +1,10 @@
 package ggc.meter.data;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import ggc.meter.data.db.GGCMeterDb;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -31,7 +36,10 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 public class MeterDataReader extends OldDataReaderAbstract
 {
+    private static Log log = LogFactory.getLog(MeterDataReader.class);
     
+    GGCMeterDb db = null;
+    DataAccessMeter m_da = DataAccessMeter.getInstance();
     
     /**
      * Constructor
@@ -41,6 +49,7 @@ public class MeterDataReader extends OldDataReaderAbstract
     public MeterDataReader(DataAccessPlugInBase da)
     {
         super(da);
+        db = m_da.getDb();
     }
     
     /**
@@ -49,7 +58,7 @@ public class MeterDataReader extends OldDataReaderAbstract
     @Override
     public void getMaxEntries()
     {
-        // TODO Auto-generated method stub
+        db.getAllElementsCount();
     }
 
     /**
@@ -58,10 +67,48 @@ public class MeterDataReader extends OldDataReaderAbstract
     @Override
     public void readOldEntries()
     {
+        db.getMeterValues(this);
         // TODO Auto-generated method stub
     }
     
 
+    /**
+     * Write status of reading
+     * this must be implemebted by all children, since some children will require more reading into database, 
+     * and readings should be handled separately. Working with database is about 40% of progress (with one reading)
+     * 
+     * current_entry: 
+     *   -1 = not started
+     *   0 = db read finished, nothing read
+     *   
+     * 
+     * 
+     * @param current_entry
+     */
+    public void writeStatus(int current_entry)
+    {
+        if (current_entry==-1)
+        {
+            this.m_drr.setOldDataReadingProgress(0);
+            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: 0% not started");
+        }
+        else if (current_entry==0)
+        {
+            this.m_drr.setOldDataReadingProgress(40);
+            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: 40% read from database");
+        }
+        else
+        {
+            int proc = this.getElementProcent(current_entry);
+            
+            float proc_total = ((proc + 40.0f) * 1.0f) / 140.0f;  
+            
+            int proc_total_i = (int)proc_total;
+            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: " + proc_total_i + " %" );
+        }
+    }
+    
+    
 
 }
 

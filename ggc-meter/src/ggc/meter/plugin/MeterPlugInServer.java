@@ -1,5 +1,6 @@
 package ggc.meter.plugin;
 
+import ggc.core.util.DataAccess;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.DevicePlugInServer;
@@ -210,8 +211,14 @@ public class MeterPlugInServer extends DevicePlugInServer
     {
         ic = m_da.getI18nControlInstance();
         I18nControl.getInstance().setLanguage(this.selected_lang);
-        DataAccessMeter.getInstance().addComponent(this.parent);
-        DataAccessMeter.getInstance().setHelpContext(m_da.getHelpContext());
+        
+        DataAccessMeter da = DataAccessMeter.getInstance();
+        
+        da.addComponent(this.parent);
+        da.setHelpContext(m_da.getHelpContext());
+        da.setCurrentUserId(((DataAccess)m_da).current_user_id);
+        da.createDb(m_da.getHibernateDb());
+        
         //DataAccessMeter.getInstance().setBGMeasurmentType(m_da.get)
     }
    

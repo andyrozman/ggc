@@ -10,5 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate-3.1"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Atech-Tools"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GGC Plugin Base"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GGC Core"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

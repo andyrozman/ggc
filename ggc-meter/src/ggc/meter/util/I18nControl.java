@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory; 
+import org.apache.commons.logging.LogFactory;
 
 import com.atech.i18n.I18nControlAbstract;
 
