@@ -93,6 +93,14 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      */
     public int m_BG_unit = BG_MMOL;
 
+    
+    /**
+     * The hdb.
+     */
+    protected HibernateDb hdb;
+    
+    
+    
     private static Log log = LogFactory.getLog(DataAccessPlugInBase.class);
     
     //public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
@@ -801,13 +809,36 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     // ********************************************************
     
     
+    
+    /**
+     * Create Db
+     * 
+     * @param db
+     */
+    public void createDb(HibernateDb db)
+    {
+        this.hdb = db;
+        createCustomDb();
+    }
+
+    
     /** 
      * Get HibernateDb instance (for working with database in plugin)
      */
     public HibernateDb getHibernateDb()
     {
-        return null;
+        return this.hdb;
     }
+    
+    
+    /**
+     * Create Custom Db
+     * 
+     * This is for plug-in specific database implementation
+     */
+    public abstract void createCustomDb();
+    
+    
 
 
     // ********************************************************
@@ -1143,6 +1174,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     {
         this.current_user_id = user_id;
     }
+    
+ 
+    
+    
+    
     
     
 

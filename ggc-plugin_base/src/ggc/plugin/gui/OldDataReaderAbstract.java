@@ -1,11 +1,11 @@
 package ggc.plugin.gui;
 
-import ggc.plugin.cfg.DeviceConfigEntry;
-import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.atech.db.hibernate.HibernateDb;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,12 +43,13 @@ public abstract class OldDataReaderAbstract
 
     private static Log log = LogFactory.getLog(OldDataReaderAbstract.class);
     
-    DeviceReaderRunner m_drr;
+    protected DeviceReaderRunner m_drr;
     
     boolean running = true;
     DataAccessPlugInBase m_da;
     
     protected int all_entries = 0;
+//    protected HibernateDb m_db = null;
     
     
     /**
@@ -60,6 +61,7 @@ public abstract class OldDataReaderAbstract
     {
         //this.m_drr = drr;
         this.m_da = da;
+//        this.m_db = da.getHibernateDb();
     }
     
     
@@ -85,6 +87,8 @@ public abstract class OldDataReaderAbstract
 
     /**
      * Write status of reading
+     * this must be implemebted by all children, since some children will require more reading into database, 
+     * and readings should be handled separately. Working with database is about 40% of progress (with one reading
      * 
      * @param current_entry
      */
@@ -98,6 +102,20 @@ public abstract class OldDataReaderAbstract
         this.m_drr.setOldDataReadingProgress(ee_i);
         log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: " + ee_i );
     }
+    
+
+    public int getElementProcent(int current_entry)
+    {
+        float ee = ((float)current_entry)/(1.0f*this.all_entries);
+        ee *= 100;
+        
+        int ee_i = (int)ee;
+        
+        return ee_i;
+    }
+    
+    
+    
     
     
 }
