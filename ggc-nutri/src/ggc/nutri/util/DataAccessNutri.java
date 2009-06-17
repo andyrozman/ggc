@@ -469,6 +469,13 @@ public class DataAccessNutri extends DataAccessPlugInBase
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public void createCustomDb()
+    {
+        // TODO Auto-generated method stub
+        
+    }
     
     
 }
