@@ -1,5 +1,6 @@
 package ggc.pump.plugin;
 
+import ggc.core.util.DataAccess;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
@@ -247,6 +248,7 @@ public class PumpPlugInServer extends PlugInServer implements ActionListener
         da.createDb(m_da.getHibernateDb());
         da.initAllObjects();
         da.loadSpecialParameters();
+        da.setCurrentUserId(((DataAccess)m_da).current_user_id);
         this.backup_restore_enabled = true;
         
         m_da.loadSpecialParameters();

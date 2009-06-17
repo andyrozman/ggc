@@ -20,7 +20,6 @@ import ggc.pump.manager.PumpManager;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsEntry;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesEntry;
@@ -113,7 +112,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * The selected_person_id.
      */
-    long selected_person_id = 0;
+    //long selected_person_id = 0;
 
     // ********************************************************
     // ******      Constructors and Access methods        *****
@@ -551,20 +550,15 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     GGCPumpDb m_db;
     
+
     /**
-     * The hdb.
-     */
-    HibernateDb hdb;
-    
-    /**
-     * Create Db
+     * Create Custom Db
      * 
-     * @param db
+     * This is for plug-in specific database implementation
      */
-    public void createDb(HibernateDb db)
+    public void createCustomDb()
     {
-        this.m_db = new GGCPumpDb(db);
-        this.hdb = db;
+        this.m_db = new GGCPumpDb(this.hdb);
     }
     
 
@@ -579,14 +573,12 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
+
     
-    /**
-     * Get Hibernate Db
-     */
-    public HibernateDb getHibernateDb()
-    {
-        return this.hdb;
-    }
+    
+    
+    
+    
 
     
     /**
@@ -655,7 +647,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      * 
      * @return
      */
-    public long getSelectedPersonId()
+/*    public long getSelectedPersonId()
     {
         return this.selected_person_id;
     }
@@ -666,11 +658,11 @@ public class DataAccessPump extends DataAccessPlugInBase
      * 
      * @param id 
      */
-    public void setSelectedPersonId(long id)
+/*    public void setSelectedPersonId(long id)
     {
         this.selected_person_id = id;
     }
-    
+  */  
     
     /**
      * Load Special Parameters

@@ -97,7 +97,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
         this.sub_type = 0;
         this.value = "";
         this.extended = "";
-        this.person_id = m_da.getSelectedPersonId();
+        this.person_id = m_da.getCurrentUserId();
         this.comment = "";
         
 	}
@@ -118,7 +118,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
         this.sub_type = 0;
         this.value = "";
         this.extended = "";
-        this.person_id = m_da.getSelectedPersonId();
+        this.person_id = m_da.getCurrentUserId();
         this.comment = "";
     }
 
