@@ -247,6 +247,17 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public void writeLog(int entry_type, String message, Exception ex)
     {
     }
+ 
+    
+    /**
+     * Can old data reading be initiated (if module in current running mode supports this, this is
+     * intended mostly for usage outside GGC)
+     * 
+     * @param value
+     */
+    public void canOldDataReadingBeInitiated(boolean value)
+    {
+    }
     
   
     /**

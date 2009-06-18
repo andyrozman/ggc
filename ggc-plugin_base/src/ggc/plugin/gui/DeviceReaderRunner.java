@@ -92,6 +92,30 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
             String lg = "";
             try
             {
+
+                lg = "Trying to reading old data from GGC...";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
+
+                OldDataReaderAbstract odra = m_da.getOldDataReader();
+                
+                if (odra!=null)
+                {
+                    odra.setDeviceReadRunner(this);
+                    odra.readOldEntries();
+                    lg = "Reading of old data finished !";
+                    log.debug(lg);
+                    writeLog(LogEntryType.DEBUG, lg);
+                }
+                else
+                {
+                    lg = "Reading unsucessful !";
+                    this.canOldDataReadingBeInitiated(false);
+                    log.warn(lg);
+                    writeLog(LogEntryType.WARNING, lg);
+                }
+                
+                
                 lg = "Creating instance [name=" + this.configured_meter.name + ",company=" + this.configured_meter.device_company + ",device=" + this.configured_meter.device_device + ",comm_port=" + this.configured_meter.communication_port + "]";
                 log.debug(lg);
                 writeLog(LogEntryType.DEBUG, lg);
@@ -397,6 +421,20 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void setOldDataReadingProgress(int value)
     {
+        this.dialog.setOldDataReadingProgress(value);
+    }
+
+
+
+    /**
+     * Can old data reading be initiated (if module in current running mode supports this, this is
+     * intended mostly for usage outside GGC)
+     * 
+     * @param value
+     */
+    public void canOldDataReadingBeInitiated(boolean value)
+    {
+        this.dialog.canOldDataReadingBeInitiated(value);
     }
     
     

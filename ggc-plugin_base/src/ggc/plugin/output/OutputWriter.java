@@ -157,6 +157,15 @@ public interface OutputWriter
      * @param ex
      */
     public abstract void writeLog(int entry_type, String message, Exception ex);
+
+    
+    /**
+     * Can old data reading be initiated (if module in current running mode supports this, this is
+     * intended mostly for usage outside GGC)
+     * 
+     * @param value
+     */
+    public abstract void canOldDataReadingBeInitiated(boolean value);
     
     
     /**

@@ -77,6 +77,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * 
      */
     public JProgressBar progress = null;
+    private JProgressBar progress_old = null;
 
     private DeviceValuesTableModel model = null;
     private DeviceValuesTable table = null;
@@ -151,6 +152,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      *  
      * @param da 
      * @param ddh 
+     * @param is_debug 
      */
     public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceDataHandler ddh, boolean is_debug)
     {
@@ -297,20 +299,34 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         panel.add(lbl_comment);
         
         
-        // meter status
+        // reading old data
+        label = new JLabel(m_ic.getMessage("READING_OLD_DATA") + ":");
+        label.setBounds(30, 420, 100, 25);  // 420
+        label.setFont(normal_b);
+        panel.add(label);
+        
+        this.progress_old = new JProgressBar();
+        this.progress_old.setBounds(30, 450, 410, 20);  // 450
+        this.progress_old.setStringPainted(true);
+        // this.progress.setIndeterminate(true);
+        panel.add(this.progress_old);
+        
+        
+        
+        // device status
         label = new JLabel(m_ic.getMessage("ACTION") + ":");
-        label.setBounds(30, 415, 100, 25);
+        label.setBounds(30, 520, 100, 25);  // 420
         label.setFont(normal_b);
         panel.add(label);
 
         lbl_status = new JLabel(m_ic.getMessage("READY"));
-        lbl_status.setBounds(110, 415, 330, 25);
+        lbl_status.setBounds(110, 520, 330, 25);  // 420
         //lbl_status.setBorder(new LineBorder(Color.red));
         lbl_status.setFont(normal);
         panel.add(lbl_status);
 
         this.progress = new JProgressBar();
-        this.progress.setBounds(30, 450, 410, 20);
+        this.progress.setBounds(30, 550, 410, 20);  // 450
         this.progress.setStringPainted(true);
         // this.progress.setIndeterminate(true);
         panel.add(this.progress);
@@ -861,6 +877,17 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * @param value
      */
     public void setOldDataReadingProgress(int value)
+    {
+    }
+
+
+    /**
+     * Can old data reading be initiated (if module in current running mode supports this, this is
+     * intended mostly for usage outside GGC)
+     * 
+     * @param value
+     */
+    public void canOldDataReadingBeInitiated(boolean value)
     {
     }
     
