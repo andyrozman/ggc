@@ -63,25 +63,15 @@ GGC CGMS Tool
 II. SORTED BY VERSION  (Updated 5.12.2008)
 ===========================================
 
-Version 0.4
-------------
-
-Documentation:
-    - How to update
-    - How to USB
-
-* Java Help - Write help pages I.
-            - Load from language jar
    
 
 Version 0.5
 ------------
 
-* Graphs: - New framework
+* Graphs: 
+     x New framework
+     - Graphs
 * Db Tools Integration:  - InitDb [1.0]  
-* Printing: - Food Menu III.
-            - Use abstract class
-            - File generation fix
 * Added functionality for Nutrition Db: 
     - Import data (selective)
     - Import Entry
@@ -102,6 +92,11 @@ Version 0.5
 
 * Java Help - Write help pages II. (finish EN) [1.0] 
             - Load from language jar  [1.0] 
+
+Bugs:
+* Nutrition Db in DataAccess fix (works ok, just outside confines of framework) - 5
+
+
 
 
 We plan to change version to 1.0, when all entries specified with [1.0] are finished.
@@ -225,6 +220,19 @@ Level 6 (IN NEAR FUTURE):
 DONE
 ===============================================================================
 ===============================================================================
+
+Documentation:
+    - How to update
+    - How to USB
+
+* Java Help - Write help pages I.
+            - Load from language jar
+
+
+* Printing: - Food Menu III.
+            - Use abstract class
+            - File generation fix
+
 
 * Restore: 
    - partitial/update
