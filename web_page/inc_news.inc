@@ -3,7 +3,32 @@
 <h2 class="head">News</h2>
 
 
-<table cellpadding="3" cellspacing="0" align="center" width="100%" class="container">
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
+<td width="150">2009-06-18 14:00</td>
+<td>Next release update</td>
+</tr>
+<tr>
+<td colspan="2">
+Since we didn't reach any of "special" goals we decided to postpone 0.5 release till end of year 
+(probably till December). This doesn't mean that you won't get any updates, but there will be just
+minor updates (0.4.x), which don't require database changes.<br>
+Next minor update is planned for start of July and it will contain much revised Pump Tool with possible
+support for reading data from some devices.<br>
+We are most actively working now on Pump Tool and we also started Translation Tool subproject which 
+is intended for people willing to translate this software. So far translation is messy and not 
+really intended for non-developers, but this will change with this new tool, which will come out
+arround September 2009 and will simplify translation.
+</td>
+</tr>
+</table> 
+
+
+<br><br>
+
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
 <td width="150">2009-05-10 14:00</td>
 <td>Translations update</td>

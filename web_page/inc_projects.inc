@@ -133,5 +133,26 @@ in which functionality will be available (it may become available sooner, but it
 </ul>
 
 
+<br>
 
+<h3 class="header">Translation Tool</h3>
+This is separate project from GGC, but it will also be used for GGC. Since GGC has evolved into different sub-projects
+we now have several language files and almost impossible task to update them. Current instruction on how to do
+translation are not intended for normal (end) users, since they require quite extensive knowledge of source control 
+and development tools. Because of this, we created this sub-project, which will now, that we have somehow working 
+version of GGC available, get little bit of priority. We plan to have working version by end of summer (somewhere in 
+September). <br>
+
+
+<h3 class="header">Db Tool</h3>
+This is also one of separate tools, but this one is intended for all end users, who want to use GGC with database
+other than internal. This will help you setup GGC with your favorite database, with little problems (you will need
+to create database and users manually, but tool will help you with setting up GGC with your running database, as well
+as with install of tables and startup data.<br>
+Usage of external database can bring some good advantages. First we have a low level type of backup in case that 
+something goes wrong and as second we can use data entered (or read from devices) with our own software or even some
+worksheet software for creating nifty reports.<br>
+Tool is planned to be "shipped" together with next major release.<br>
+
+<br>
 </blockquote>
