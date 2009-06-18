@@ -347,4 +347,17 @@ public class DataAccessCGM extends DataAccessPlugInBase
     }
 
 
+    /**
+     * Create Custom Db
+     * 
+     * This is for plug-in specific database implementation
+     */
+    @Override
+    public void createCustomDb()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
 }
