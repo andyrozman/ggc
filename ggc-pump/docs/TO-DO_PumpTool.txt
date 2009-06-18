@@ -4,12 +4,6 @@ TO-DO LIST
 Development of Pump Tools runs totally independent on GGC project
 ==================================================================
 
-    * Profile Editor:
-         - Import from some other Profile (data values)
-    
-    * Printing of reports: 
-            - Base report (no foods)
-            - Extended report (foods too)
         
     
     * Graphs (0.6)
@@ -27,6 +21,10 @@ Development of Pump Tools runs totally independent on GGC project
           o Omni Pod (?) - Couldn't send mail... Problem with web ??
           o Smith's Cosmo (?)  - no reply yet (Cosmo has on 31/03/09 decided to go out of diabetes bussiness, so 
                we probably won't support it)
+
+
+
+
 
 Detailed functionalities not done (and need to be):
 ===================================================
@@ -53,6 +51,12 @@ DONE
     * List of pumps (most of them not all) (0.4)
     * Configuration and graphical interface for integration into GGC (0.5)
 
+    * Profile Editor:
+         - Import from some other Profile (data values)
+    
+    * Printing of reports: 
+            - Base report (no foods)
+            - Extended report (foods too)
 
 
 

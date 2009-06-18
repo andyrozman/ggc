@@ -10,6 +10,9 @@ our people, when they deem it necessary).
 - Bolus subtype is not selected on edit [0.4.2]
 - we have 2 comments now. One with base entry and other as Extended entry. We should really loose one of them. I 
   will remove one with base type in GUI, also same for table [0.4.2]
+- Food Db selector
+- Daily Graph implement and fix
+-..........
  
 
  
