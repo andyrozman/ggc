@@ -38,6 +38,7 @@ import javax.swing.event.ChangeListener;
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
+import com.atech.plugin.PlugInClient;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -509,8 +510,24 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         else if (action.equals("edit_food"))
         {
-            // FIXME
+            PlugInClient pc = DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION);
             
+            if (pc.isActiveWarning(true, this))
+            {
+                Object[] data = pc.executeCommandDialogReturn(this, NutriPlugIn.COMMAND_DB_FOOD_SELECTOR, this.m_dailyValuesRow.getMealsIds());
+                
+                if (data!=null)
+                {
+                    this.m_dailyValuesRow.setMealsIds((String)data[0]);
+                    this.ftf_ch.setValue(new Float((String)data[1]));
+
+                    updateMealsSet();
+                }
+            }
+            
+            
+            
+            /*
             Object[] data = m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommandDialogReturn(this, NutriPlugIn.COMMAND_DB_FOOD_SELECTOR, this.m_dailyValuesRow.getMealsIds());
             
             if (data!=null)
@@ -519,7 +536,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 this.ftf_ch.setValue(new Float((String)data[1]));
 
                 updateMealsSet();
-            }
+            }*/
             
             /*
             DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(m_da, this.m_dailyValuesRow.getMealsIds());
@@ -541,12 +558,17 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 if (m_da.isValueSet(this.m_dailyValuesRow.getMealsIds()))
                 {
 
-                    Object[] data = m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommandDialogReturn(this, NutriPlugIn.COMMAND_RECALCULATE_CH, this.m_dailyValuesRow.getMealsIds());
+                    PlugInClient pc = DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION);
                     
-                    if (data!=null)
+                    if (pc.isActiveWarning(true, this))
                     {
-                        updateMealsSet();
-                        setCh((String)data[0]);
+                        Object[] data = pc.executeCommandDialogReturn(this, NutriPlugIn.COMMAND_RECALCULATE_CH, this.m_dailyValuesRow.getMealsIds());
+                        
+                        if (data!=null)
+                        {
+                            updateMealsSet();
+                            setCh((String)data[0]);
+                        }
                     }
 
                   /*                    
@@ -575,7 +597,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         else if (action.equals("bolus_helper"))
         {
-            BolusHelper bh = new BolusHelper(this, m_da.getJFormatedTextValueFloat(ftf_bg2), m_da.getJFormatedTextValueFloat(this.ftf_ch), this.dtc.getDateTime());
+            BolusHelper bh = new BolusHelper(this, m_da.getJFormatedTextValueFloat(ftf_bg2), m_da.getJFormatedTextValueFloat(this.ftf_ch), this.dtc.getDateTime(), 1);
 
             if (bh.hasResult())
             {

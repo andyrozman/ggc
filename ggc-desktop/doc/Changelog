@@ -6,7 +6,10 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
-0.4.5.2 (current)
+0.4.5.3 (current)
+    * DailyRowDialog food selection is fixed
+
+0.4.5.2 
     * change position of initialization of Help Context
     * DailyRowDialog can now again select foods and recalculate CH (after Nutrition became 
       plugin this was disabled)
