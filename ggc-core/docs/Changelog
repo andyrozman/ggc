@@ -8,6 +8,7 @@ Newer entries are on top, older on bottom.
 
 0.4.8.1 (current)
     * Bolus Helper fixed
+    * Plugin Clients fixed
 
 0.4.7.1 (12.6.2009)
     * changed HelpContext Init (problem with some plugins)
