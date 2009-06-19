@@ -1,5 +1,7 @@
 package ggc.pump.gui.manual;
 
+import ggc.core.plugins.NutriPlugIn;
+import ggc.core.util.DataAccess;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
@@ -28,6 +30,7 @@ import javax.swing.JTextField;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.TransferDialog;
 import com.atech.help.HelpCapable;
+import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -202,25 +205,51 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             if (this.data_object2!=null)
             {
                 food_ch =  m_da.getFloatValueFromString(this.data_object2.getValue());
-                System.out.println("Reading food description: ch=" + food_ch);
-                System.out.println("Reading food description: ch=" + this.data_object2.getValue());
+                //System.out.println("Reading food description: ch=" + food_ch);
+                //System.out.println("Reading food description: ch=" + this.data_object2.getValue());
                 if (food_ch >0)
                 {
                     this.cb_1.setSelected(true);
                 }
+                this.num_1.setText("" + food_ch);
             }
             else
                 food_ch = 0.0f;
             
-            System.out.println("Reading food description: do2=" + this.data_object2);
+            //System.out.println("Reading food description: do2=" + this.data_object2);
             
-            System.out.println("Reading food description data failed !");
+            //System.out.println("Reading food description data failed !");
             //this.num_1.setValue(new Float(this.data_object.getValue()));
 //            po.setValue(this.num_1.getValue().toString());
         }
         else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
         {
-            System.out.println("Reading food db data failed !");
+//            System.out.println("Reading food db data !");
+            
+            food_data = this.data_object.getValue();
+            
+            if (this.data_object2!=null)
+            {
+                System.out.println("data!=NULL !");
+                food_ch =  m_da.getFloatValueFromString(this.data_object2.getValue());
+                //System.out.println("Reading food description: ch=" + food_ch);
+                //System.out.println("Reading food description: ch=" + this.data_object2.getValue());
+                if (food_ch >0)
+                {
+                    this.cb_1.setSelected(true);
+                }
+                this.num_1.setText("" + food_ch);
+            }
+            else
+            {
+                System.out.println("data NULL !");
+                food_ch = 0.0f;
+                this.num_1.setText("" + food_ch);
+            }
+            
+            
+            
+//            System.out.println("Reading food db data failed !");
             //this.num_1.setValue(new Float(this.data_object.getValue()));
 //            po.setValue(this.num_1.getValue().toString());
         }
@@ -494,8 +523,6 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
             {
                 
-                
-                
                 FoodDescriptionDialog td = new FoodDescriptionDialog(this.food_data, food_ch, this);
                 
                 if (td.wasAction())
@@ -503,6 +530,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                     this.internal_data = td.getResultValuesString();
                     float f = m_da.getFloatValue(this.internal_data[1]);
                     this.cb_1.setSelected(f>0);
+                    
+                    this.num_1.setText("" + f);
                 }                
                 
                 /*
@@ -533,13 +562,27 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
             else
             {
-                JOptionPane.showMessageDialog(this, 
-                    m_ic.getMessage("FUNCTIONALITY_FOOD_DB_NA"), 
-                    m_ic.getMessage("WARNING"), 
-                    JOptionPane.WARNING_MESSAGE);
-
+                PlugInClient pc = DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION);
                 
-                
+                if (pc.isActiveWarning(true, this))
+                {
+                    Object[] data = pc.executeCommandDialogReturn(this, NutriPlugIn.COMMAND_DB_FOOD_SELECTOR, this.food_data);
+                    
+                    if (data!=null)
+                    {
+                        food_data = (String)data[0];
+                        food_ch = new Float((String)data[1]);
+                        
+                        //float f = m_da.getFloatValue(this.internal_data[1]);
+                        this.cb_1.setSelected(food_ch>0);                        
+                        
+                        this.internal_data = new String[2];
+                        this.internal_data[0] = food_data;
+                        this.internal_data[1] = (String)data[1];
+                        
+                        this.num_1.setText((String)data[1]);
+                    }
+                }
             }
             
         }

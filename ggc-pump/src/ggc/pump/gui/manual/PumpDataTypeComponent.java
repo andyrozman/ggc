@@ -1159,7 +1159,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             BolusHelper bh = new BolusHelper(m_parent, 
                 _bg, //m_da.getJFormatedTextValueFloat(ftf_bg2), 
                 ch, //m_da.getJFormatedTextValueFloat(this.ftf_ch), 
-                m_parent.dtc.getDateTime());
+                m_parent.dtc.getDateTime(), 2);
 
             if (bh.hasResult())
             {
