@@ -61,29 +61,49 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
     /**
      * Constructor
      * 
-     * @param dataAccessAbstract
+     * @param da
      * @param meals_id
      */
-    public DailyValuesMealSelectorDialog(ATDataAccessAbstract dataAccessAbstract, String meals_id)
+    public DailyValuesMealSelectorDialog(ATDataAccessAbstract da, String meals_id)
     {
-        super((JDialog)dataAccessAbstract.getCurrentComponent());
-        // super(da.getParent(), "", true);
+        super((JDialog)da.getCurrentComponent());
 
         m_da = DataAccessNutri.getInstance();
         ic = m_da.getI18nControlInstance();
-
-        this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR_DAILY"));
-        // this.input_id = meal_id;
-
-        this.setBounds(160, 100, 550, 500);
         this.meals_ids = meals_id;
         init();
 
         this.setVisible(true);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param dialog 
+     * @param meals_id
+     */
+    public DailyValuesMealSelectorDialog(ATDataAccessAbstract da, JDialog dialog, String meals_id)
+    {
+        super(dialog);
+
+        m_da = DataAccessNutri.getInstance();
+        ic = m_da.getI18nControlInstance();
+        this.meals_ids = meals_id;
+        init();
+
+        this.setVisible(true);
+    }
+    
+     
+    
+    
+    
+    
     private void init()
     {
+        this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR_DAILY"));
+        this.setBounds(160, 100, 550, 500);
         this.panel_meal_selector = new PanelMealSelector(this, this, this.meals_ids);
         this.add(this.panel_meal_selector, null);
     }

@@ -6,6 +6,9 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+1.2.1 (current)
+    * Extended Food Selector (with plugin active check)
+
 1.2 (10.6.2009) [andy]
     * Given ability to call Food Selector and Recalculation of CH (change in plugin functionality)
     * Minor cosmetic changes in NutriPlugInServer 

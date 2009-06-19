@@ -462,7 +462,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         {
             if (command==NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR)
             {
-                DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(this.m_da, (String)data);
+                DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(this.m_da, dialog, (String)data);
 
                 if (dvms.wasAction())
                 {
