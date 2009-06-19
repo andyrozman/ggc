@@ -135,13 +135,13 @@ public class PumpsPlugIn extends PlugInClient
 
     
     /**
-     * Get Name 
+     * Get Name Base (untranslated)
      * 
      * @return name of plugin
      */
-    public String getName()
+    public String getNameBase()
     {
-        return ic.getMessage("PUMPS_PLUGIN");
+        return "PUMPS_PLUGIN";
     }
 
     

@@ -126,8 +126,9 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable,
      * @param bg
      * @param ch
      * @param time
+     * @param time_format 1 = min, 2 = s
      */
-    public BolusHelper(JDialog dialog, float bg, float ch, long time)
+    public BolusHelper(JDialog dialog, float bg, float ch, long time, int time_format)
     {
         super(dialog, "", true);
         //m_parent = dialog;
@@ -136,6 +137,11 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable,
         this.curr_ch = ch;
         this.time = time;
 
+        if (time_format==2)
+        {
+            this.time /= 100;
+        }
+        
         this.init();
         this.readRatios();
         this.calculateInsulin();

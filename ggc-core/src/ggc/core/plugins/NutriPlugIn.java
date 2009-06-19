@@ -1,13 +1,11 @@
 package ggc.core.plugins;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
@@ -155,13 +153,13 @@ public class NutriPlugIn extends PlugInClient
 
     
     /**
-     * Get Name 
+     * Get Name Base (untranslated)
      * 
      * @return name of plugin
      */
-    public String getName()
+    public String getNameBase()
     {
-        return ic.getMessage("NUTRITION_PLUGIN");
+        return "NUTRITION_PLUGIN";
     }
 
     
@@ -236,6 +234,7 @@ public class NutriPlugIn extends PlugInClient
     }
 
     
+    @SuppressWarnings("unused")
     private void refreshPanels(int mask)
     {
 //        MainFrame mf = (MainFrame)parent;

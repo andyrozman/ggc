@@ -96,13 +96,13 @@ public class CGMSPlugIn extends PlugInClient
 
     
     /**
-     * Get Name 
+     * Get Name Base (untranslated)
      * 
      * @return name of plugin
      */
-    public String getName()
+    public String getNameBase()
     {
-        return ic.getMessage("CGMS_PLUGIN");
+        return "CGMS_PLUGIN";
     }
 
     
