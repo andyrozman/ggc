@@ -481,6 +481,15 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
         // TODO Auto-generated method stub
     }
+
+    
+    /**
+     * Create Old Data Reader
+     */
+    public void createOldDataReader()
+    {
+    }
+    
     
     
 }
