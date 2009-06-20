@@ -233,6 +233,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
 
     
     protected long current_user_id = 0;
+
+    
+    protected OldDataReaderAbstract m_old_data_reader = null;
     
 
     // ********************************************************
@@ -1154,6 +1157,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
     
     /**
+     * Create Old Data Reader
+     */
+    public abstract void createOldDataReader();
+    
+    /**
      * Get Old Data Reader (instance of OldDataReaderAbstract which can read data already in database -
      *    for comparison purposes)
      *     
@@ -1161,15 +1169,25 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      */
     public OldDataReaderAbstract getOldDataReader()
     {
-        return null;
+        return this.m_old_data_reader;
     }
     
     
+    /**
+     * Get Current User Id
+     * 
+     * @return
+     */
     public long getCurrentUserId()
     {
         return this.current_user_id;
     }
     
+    /**
+     * Set Current User Id
+     * 
+     * @param user_id
+     */
     public void setCurrentUserId(long user_id)
     {
         this.current_user_id = user_id;

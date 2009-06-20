@@ -187,7 +187,8 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public boolean isOldDataReadingFinished()
     {
-        return this.m_reader.isFinished();
+        //return this.m_reader.isFinished();
+        return true;
     }
     
     

@@ -255,7 +255,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         Font normal = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL);
         Font normal_b = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD);
         
-        setBounds(0, 0, 480, 680);
+        setBounds(0, 0, 480, 660);
         m_da.centerJDialog(this);
         
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -301,7 +301,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         
         // reading old data
         label = new JLabel(m_ic.getMessage("READING_OLD_DATA") + ":");
-        label.setBounds(30, 420, 100, 25);  // 420
+        label.setBounds(30, 425, 250, 25);  // 420
         label.setFont(normal_b);
         panel.add(label);
         
@@ -315,34 +315,34 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         
         // device status
         label = new JLabel(m_ic.getMessage("ACTION") + ":");
-        label.setBounds(30, 520, 100, 25);  // 420
+        label.setBounds(30, 490, 100, 25);  // 420
         label.setFont(normal_b);
         panel.add(label);
 
         lbl_status = new JLabel(m_ic.getMessage("READY"));
-        lbl_status.setBounds(110, 520, 330, 25);  // 420
+        lbl_status.setBounds(110, 490, 330, 25);  // 420
         //lbl_status.setBorder(new LineBorder(Color.red));
         lbl_status.setFont(normal);
         panel.add(lbl_status);
 
         this.progress = new JProgressBar();
-        this.progress.setBounds(30, 550, 410, 20);  // 450
+        this.progress.setBounds(30, 520, 410, 20);  // 450
         this.progress.setStringPainted(true);
         // this.progress.setIndeterminate(true);
         panel.add(this.progress);
 
         bt_break = new JButton(m_ic.getMessage("BREAK_COMMUNICATION"));
-        bt_break.setBounds(150, 490, 170, 25);
+        bt_break.setBounds(150, 570, 170, 25);
         // bt_break.setEnabled(this.m_mim.isStatusOK());
         bt_break.setActionCommand("break_communication");
         bt_break.addActionListener(this);
         panel.add(bt_break);
 
-        help_button = m_da.createHelpButtonByBounds(30, 490, 110, 25, this);
+        help_button = m_da.createHelpButtonByBounds(30, 570, 110, 25, this);
         panel.add(help_button);
 
         bt_close = new JButton(m_ic.getMessage("CLOSE"));
-        bt_close.setBounds(330, 490, 110, 25);
+        bt_close.setBounds(330, 570, 110, 25);
         bt_close.setEnabled(false);
         bt_close.setActionCommand("close");
         bt_close.addActionListener(this);
@@ -878,6 +878,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void setOldDataReadingProgress(int value)
     {
+        this.progress_old.setValue(value);
     }
 
 

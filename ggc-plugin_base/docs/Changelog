@@ -2,6 +2,13 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.4.0
+    * Changed reading of old data in reading classes
+    * Framework changed, each plugin can (must) have it's own instance of Db, with which it handles all db
+      data
+
+0.3.3
+
 0.3.2 
     * Added DeviceValuesRange class, which is used for getting data from device for same range (for printing 
       purposes for now, later probably for graphs too).

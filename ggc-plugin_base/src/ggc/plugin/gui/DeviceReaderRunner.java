@@ -101,8 +101,9 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 
                 if (odra!=null)
                 {
+                    
                     odra.setDeviceReadRunner(this);
-                    odra.readOldEntries();
+                    m_da.getDeviceDataHandler().setDeviceData(odra.readOldEntries());
                     lg = "Reading of old data finished !";
                     log.debug(lg);
                     writeLog(LogEntryType.DEBUG, lg);
@@ -164,7 +165,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
             {
                 this.setStatus(AbstractOutputWriter.STATUS_READER_ERROR);
                 //System.out.println("Exception: " + ex);
-                //ex.printStackTrace();
+                ex.printStackTrace();
                 //log.error("MeterReaderRunner:Exception:" + ex, ex);
                 lg = "DeviceReaderRunner:Exception:" + ex;
                 log.error(lg, ex);

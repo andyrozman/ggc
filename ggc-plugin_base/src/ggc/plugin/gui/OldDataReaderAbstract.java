@@ -2,10 +2,10 @@ package ggc.plugin.gui;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.util.Hashtable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.atech.db.hibernate.HibernateDb;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -65,6 +65,11 @@ public abstract class OldDataReaderAbstract
     }
     
     
+    /**
+     * Set DeviceReaderRunner instance
+     * 
+     * @param drr
+     */
     public void setDeviceReadRunner(DeviceReaderRunner drr)
     {
         this.m_drr = drr;
@@ -80,9 +85,11 @@ public abstract class OldDataReaderAbstract
 
     
     /**
-     * Read Old entries
+     * Read Old entries (data is returned in form of Hashtable<String,Object>. What is stored there will depend
+     * from plugin to plugin)
+     * @return 
      */
-    public abstract void readOldEntries();
+    public abstract Hashtable<String, Object> readOldEntries();
     
 
     /**
@@ -94,6 +101,9 @@ public abstract class OldDataReaderAbstract
      */
     public void writeStatus(int current_entry)
     {
+        //System.out.println("Progress: " + current_entry + "/" + this.all_entries + " = ");
+        
+        
         float ee = ((float)current_entry)/(1.0f*this.all_entries);
         ee *= 100;
         
@@ -101,15 +111,22 @@ public abstract class OldDataReaderAbstract
         
         this.m_drr.setOldDataReadingProgress(ee_i);
         log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: " + ee_i );
+        //System.out.println("Progress: " + current_entry + "/" + this.all_entries + " = " + ee_i);
     }
     
 
+    /**
+     * Get Element Procent (this determines procent of reading by comparing data to full set)
+     * @param current_entry
+     * @return
+     */
     public int getElementProcent(int current_entry)
     {
         float ee = ((float)current_entry)/(1.0f*this.all_entries);
-        ee *= 100;
+        ee *= 100.0f;
         
         int ee_i = (int)ee;
+        //System.out.println("Element Progress: " + current_entry + "/" + this.all_entries + " = " + ee_i);
         
         return ee_i;
     }
