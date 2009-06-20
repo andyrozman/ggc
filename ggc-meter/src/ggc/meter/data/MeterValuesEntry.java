@@ -77,6 +77,22 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	{
 	    super();
 	}
+
+	
+    /**
+     * Constructor
+     * @param dv 
+     */
+    public MeterValuesEntry(DayValueH dv)
+    {
+        super();
+        this.datetime = new ATechDate(this.getDateTimeFormat(), dv.getDt_info());
+        this.bg_original = "" + dv.getBg();
+        this.bg_unit = DataAccessMeter.BG_MGDL;
+        this.entry_object = dv;
+        this.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;
+    }
+	
 	
     /**
      * Set DateTime Object (ATechDate)

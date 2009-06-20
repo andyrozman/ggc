@@ -12,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
 
 import com.atech.db.hibernate.HibernateDb;
@@ -57,7 +58,7 @@ public class GGCMeterDb extends PluginDb
     {
         super(db);
         
-        getAllElementsCount();
+        //getAllElementsCount();
     }
     
     
@@ -69,17 +70,29 @@ public class GGCMeterDb extends PluginDb
      */
     public int getAllElementsCount()
     {
-        Integer in = null;
-        int sum_all = 0;
-        
-        Criteria criteria = this.getSession().createCriteria(DayValueH.class);
-        criteria.setProjection(Projections.rowCount());
-        in = (Integer) criteria.list().get(0);
-        sum_all = in.intValue();
-        
-        log.debug("Old Meter Data in Db: " + in.intValue());
-        
-        return sum_all;
+        try
+        {
+            Integer in = null;
+            int sum_all = 0;
+            
+            Criteria criteria = this.getSession().createCriteria(DayValueH.class);
+            criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
+            criteria.add(Expression.gt("bg", 0));
+            //criteria.createCriteria("person_id", (int)m_da.getCurrentUserId());
+            criteria.setProjection(Projections.rowCount());
+            in = (Integer) criteria.list().get(0);
+            sum_all = in.intValue();
+            
+            log.debug("Old Meter Data in Db: " + in.intValue());
+            
+            return sum_all;
+        }
+        catch(Exception ex)
+        {
+            log.error("getAllElementsCount: " + ex, ex);
+            ex.printStackTrace();
+            return 0;
+        }
     }
     
     
@@ -90,10 +103,10 @@ public class GGCMeterDb extends PluginDb
      * 
      * @return
      */
-    public Hashtable<String,DayValueH> getMeterValues(MeterDataReader mdr)
+    public Hashtable<String,Object> getMeterValues(MeterDataReader mdr)
     {
-        
-        Hashtable<String,DayValueH> ht = new Hashtable<String,DayValueH>(); 
+        //Hashtable<String,DayValueH>
+        Hashtable<String,Object> ht = new Hashtable<String,Object>(); 
         
         log.info("getMeterValues()");
 

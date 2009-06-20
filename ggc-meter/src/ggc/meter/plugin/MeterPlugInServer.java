@@ -6,7 +6,6 @@ import ggc.meter.util.I18nControl;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
-import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -16,7 +15,6 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 
-import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
 
@@ -128,9 +126,10 @@ public class MeterPlugInServer extends DevicePlugInServer
         {
             case MeterPlugInServer.COMMAND_READ_METER_DATA:
                 {
-                    DbDataReaderAbstract reader = (DbDataReaderAbstract)obj_data; 
-                    DeviceDataHandler ddh = m_da_local.getDeviceDataHandler();
-                    ddh.setDbDataReader(reader);
+                    // TODO: Remove this 
+                    //DbDataReaderAbstract reader = (DbDataReaderAbstract)obj_data; 
+                    //DeviceDataHandler ddh = m_da_local.getDeviceDataHandler();
+                    //ddh.setDbDataReader(reader);
                     
                     //new MeterInstructionsDialog(reader, this);
                     new DeviceInstructionsDialog(m_da_local, /*reader,*/ this);

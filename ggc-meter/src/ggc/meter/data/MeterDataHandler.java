@@ -1,5 +1,6 @@
 package ggc.meter.data;
 
+import ggc.core.db.hibernate.DayValueH;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -8,7 +9,7 @@ import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *  Plug-in:       Meter Tool (support for Meter devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -91,9 +92,20 @@ public class MeterDataHandler extends DeviceDataHandler
     @Override
     public void setDeviceData(Hashtable<String, ?> data)
     {
-        old_data = (Hashtable<String,MeterValuesEntry>)data;
-//        System.out.println("Old data: " + old_data);
+        if ((data==null) || (data.size()==0))
+        {
+            //System.out.println("NO Old data: " + old_data);
+            old_data = new Hashtable<String,DayValueH>();
+        }
+        else
+        {
+            old_data = (Hashtable<String,DayValueH>)data;
+            //System.out.println("Old data: " + old_data);
+        }
     }
 
+    
+    
+    
     
 }	

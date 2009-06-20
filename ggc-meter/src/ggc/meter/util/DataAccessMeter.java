@@ -1,6 +1,7 @@
 package ggc.meter.util;
 
 import ggc.meter.data.MeterDataHandler;
+import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
 import ggc.meter.data.db.GGCMeterDb;
 import ggc.meter.manager.MeterManager;
@@ -52,7 +53,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.0.7";
+    public static final String PLUGIN_VERSION = "1.1.0";
     
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
@@ -102,6 +103,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         loadReadingStatuses();
         createPlugInDataRetrievalContext();
         loadWebLister();
+        createOldDataReader();
     }
     
     
@@ -458,4 +460,14 @@ public class DataAccessMeter extends DataAccessPlugInBase
     }
     
 
+    /**
+     * Create Old Data Reader
+     */
+    public void createOldDataReader()
+    {
+        this.m_old_data_reader = new MeterDataReader(this);
+    }
+    
+    
+    
 }

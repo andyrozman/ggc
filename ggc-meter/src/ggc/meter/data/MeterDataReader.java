@@ -1,12 +1,13 @@
 package ggc.meter.data;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.meter.data.db.GGCMeterDb;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.gui.OldDataReaderAbstract;
-import ggc.plugin.util.DataAccessPlugInBase;
+
+import java.util.Hashtable;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,17 +40,20 @@ public class MeterDataReader extends OldDataReaderAbstract
     private static Log log = LogFactory.getLog(MeterDataReader.class);
     
     GGCMeterDb db = null;
-    DataAccessMeter m_da = DataAccessMeter.getInstance();
+    DataAccessMeter m_da = null;
     
     /**
      * Constructor
      * 
      * @param da
      */
-    public MeterDataReader(DataAccessPlugInBase da)
+    public MeterDataReader(DataAccessMeter da)
     {
         super(da);
-        db = m_da.getDb();
+        m_da = da;
+        //db = m_da.getDb();
+        
+        //System.out.println("db: " )
     }
     
     /**
@@ -58,16 +62,17 @@ public class MeterDataReader extends OldDataReaderAbstract
     @Override
     public void getMaxEntries()
     {
-        db.getAllElementsCount();
+        db = m_da.getDb();
+        this.all_entries = db.getAllElementsCount();
     }
 
     /**
      * Read Old entries
      */
     @Override
-    public void readOldEntries()
+    public Hashtable<String, Object> readOldEntries()
     {
-        db.getMeterValues(this);
+        return db.getMeterValues(this);
         // TODO Auto-generated method stub
     }
     
@@ -96,15 +101,24 @@ public class MeterDataReader extends OldDataReaderAbstract
         {
             this.m_drr.setOldDataReadingProgress(40);
             log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: 40% read from database");
+            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: Started to sort through data (progress will not be displayed)");
         }
         else
         {
             int proc = this.getElementProcent(current_entry);
             
-            float proc_total = ((proc + 40.0f) * 1.0f) / 140.0f;  
-            
+            float proc_total = ((((proc* 1.0f) + 40.0f) ) / 140.0f) * 100.0f;  
             int proc_total_i = (int)proc_total;
-            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: " + proc_total_i + " %" );
+
+//            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: " + proc_total_i + " %" );
+            this.m_drr.setOldDataReadingProgress(proc_total_i);
+            
+            try
+            {
+                Thread.sleep(1);
+            }
+            catch(InterruptedException ex) {}
+            
         }
     }
     
