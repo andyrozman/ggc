@@ -171,10 +171,12 @@ public class MetersPlugIn extends PlugInClient
         }
         else
         {
-            GGCDataReader greader = new GGCDataReader(DataAccess.getInstance().getDb(), GGCDataReader.DATA_METER);
+            m_server.executeCommand(command);
+            // TODO
+/*            GGCDataReader greader = new GGCDataReader(DataAccess.getInstance().getDb(), GGCDataReader.DATA_METER);
             greader.start();
             
-            m_server.executeCommand(command, greader);
+            m_server.executeCommand(command, greader); */
         }
         
     }
