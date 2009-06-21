@@ -360,4 +360,12 @@ public class DataAccessCGM extends DataAccessPlugInBase
     }
 
 
+    /**
+     * Create Old Data Reader
+     */
+    public void createOldDataReader()
+    {
+    }
+    
+    
 }
