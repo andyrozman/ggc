@@ -1,5 +1,7 @@
 package ggc.pump.data;
 
+import java.util.Hashtable;
+
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -57,9 +59,10 @@ public class PumpDataReader extends OldDataReaderAbstract
      * Read Old entries
      */
     @Override
-    public void readOldEntries()
+    public Hashtable<String, Object> readOldEntries()
     {
         // TODO Auto-generated method stub
+        return null;
     }
     
 

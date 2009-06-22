@@ -1,7 +1,6 @@
 package ggc.pump.util;
 
 import ggc.plugin.cfg.DeviceConfiguration;
-import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
@@ -750,17 +749,13 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
     
-    /**
-     * Get Old Data Reader (instance of OldDataReaderAbstract which can read data already in database -
-     *    for comparison purposes)
-     *     
-     * @return
-     */
-    public OldDataReaderAbstract getOldDataReader()
-    {
-        return null;
-    }
     
+    /**
+     * Create Old Data Reader
+     */
+    public void createOldDataReader()
+    {
+    }
    
     
 }

@@ -68,8 +68,8 @@ public class PumpConsoleTester //extends JFrame
         
     	try
     	{
-    	    //startRoche(portName);
-    	    startMinimed("./dta/CareLink-Export-1213803114904.csv");
+    	    startRoche(portName);
+    	    //startMinimed("./dta/CareLink-Export-1213803114904.csv");
     	}
     	catch(Exception ex)
     	{
@@ -89,8 +89,20 @@ public class PumpConsoleTester //extends JFrame
      */
     public void startRoche(String portName) throws Exception
     {
+        DataAccessPump dap = DataAccessPump.getInstance();
+        //dap.setHelpContext(da.getHelpContext());
+        //dap.setPlugInServerInstance(this);
+        //dap.createDb(da.getHibernateDb());
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+        //this.backup_restore_enabled = true;
+        
+        //da.loadSpecialParameters();
+        
+        
+        
         AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
-        acs.processXml(new File("I2034162.XML"));
+        acs.processXml(new File("../test/I0014072.XML"));
     }
     
     

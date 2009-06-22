@@ -80,6 +80,19 @@ public class PumpBasalSubType
 
     
     /**
+     * Pump Basal: Temporary Basal Rate Ended
+     */
+    public static final int PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED = 6;
+    
+
+    /**
+     * Pump Basal: Temporary Basal Rate Ended
+     */
+    public static final int PUMP_BASAL_TEMPORARY_BASAL_RATE_CANCELED = 7;
+    
+    
+    
+    /**
      * Constructor
      */
     public PumpBasalSubType()

@@ -44,8 +44,8 @@ public class PumpBolusType
      */
     public String[] bolus_desc = { ic.getMessage("SELECT_BOLUS_TYPE"),
                        ic.getMessage("BOLUS_STANDARD"),             
-                       ic.getMessage("BOLUS_SCROLL"),             
-                       ic.getMessage("BOLUS_EXTENDED"),             
+                       ic.getMessage("BOLUS_AUDIO"),             
+                       ic.getMessage("BOLUS_SQUARE"),             
                        ic.getMessage("BOLUS_MULTIWAVE"),             
     };
     
@@ -66,12 +66,12 @@ public class PumpBolusType
     /**
      * Pump Bolus: Scrool
      */
-    public static final int PUMP_BOLUS_SCROLL = 2;
+    public static final int PUMP_BOLUS_AUDIO_SCROLL = 2;
 
     /**
-     * Pump Bolus: Extended
+     * Pump Bolus: Square (Insulin value through some duration)
      */
-    public static final int PUMP_BOLUS_EXTENDED = 3;
+    public static final int PUMP_BOLUS_SQUARE = 3;
 
     /**
      * Pump Bolus: Multiwave
@@ -79,10 +79,6 @@ public class PumpBolusType
     public static final int PUMP_BOLUS_MULTIWAVE = 4;
     
 
-    /**
-     * Pump Bolus: Square (Insulin value through some duration)
-     */
-    public static final int PUMP_BOLUS_SQUARE = 5;
     
     
     /**
@@ -103,8 +99,8 @@ public class PumpBolusType
     public PumpBolusType()
     {
         this.bolus_mapping.put(ic.getMessage("BOLUS_STANDARD"), "1");             
-        this.bolus_mapping.put(ic.getMessage("BOLUS_SCROLL"), "2");             
-        this.bolus_mapping.put(ic.getMessage("BOLUS_EXTENDED"), "3");             
+        this.bolus_mapping.put(ic.getMessage("BOLUS_AUDIO"), "2");             
+        this.bolus_mapping.put(ic.getMessage("BOLUS_SQUARE"), "3");             
         this.bolus_mapping.put(ic.getMessage("BOLUS_MULTIWAVE"), "4");             
     }
     

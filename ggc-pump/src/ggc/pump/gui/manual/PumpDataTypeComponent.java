@@ -630,7 +630,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         switch (this.sub_type)
         {
         case PumpBolusType.PUMP_BOLUS_STANDARD:
-        case PumpBolusType.PUMP_BOLUS_SCROLL:
+        case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
             {
                 this.label_2.setBounds(0, 90, 150, 25);
                 this.text_1.setBounds(150, 90, 180, 25);
@@ -644,7 +644,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 this.setHeight(115);
             } break;
             
-        case PumpBolusType.PUMP_BOLUS_EXTENDED:
+        case PumpBolusType.PUMP_BOLUS_SQUARE:
             {
                 this.label_2.setBounds(0, 90, 150, 25);
                 this.text_1.setBounds(150, 90, 180, 25);
@@ -756,8 +756,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 switch(this.sub_type)
                 {
                     case PumpBolusType.PUMP_BOLUS_STANDARD:
-                    case PumpBolusType.PUMP_BOLUS_SCROLL:
-                    case PumpBolusType.PUMP_BOLUS_EXTENDED:
+                    case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
+                    case PumpBolusType.PUMP_BOLUS_SQUARE:
                         {
                             return (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0);
                         } 
@@ -875,14 +875,21 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 switch(this.sub_type)
                 {
                     case PumpBolusType.PUMP_BOLUS_STANDARD:
-                    case PumpBolusType.PUMP_BOLUS_SCROLL:
-                    case PumpBolusType.PUMP_BOLUS_EXTENDED:
+                    case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
                         {
                             this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(data.getValue()));
                         } break;
+
+                    case PumpBolusType.PUMP_BOLUS_SQUARE:
+                        {
+                            
+                        } break;
+                        
                         
                     case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
                         {
+                            
+                            
                             String s[] = this.getParsedValues(data.getValue());
                             //String s[] = data.getValue().split(regex)
                             this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(s[0]));
@@ -997,15 +1004,25 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                switch(this.sub_type)
                {
                    case PumpBolusType.PUMP_BOLUS_STANDARD:
-                   case PumpBolusType.PUMP_BOLUS_SCROLL:
-                   case PumpBolusType.PUMP_BOLUS_EXTENDED:
+                   case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
                        {
                            pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
                            
                        } break;
                        
+                   case PumpBolusType.PUMP_BOLUS_SQUARE:
+                       {
+                           // pve.setValue("AMOUNT_SQUARE=" + amount + ";DURATION=" + e);
+
+                       } break;
+                       
                    case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
                        {
+                           /*pve.setValue(String.format("AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s", 
+                               str[0], 
+                               str[2], 
+                               str[3])); */
+                           
                            pve.setValue("AMOUNT_1=" + this.num_tf_1_d2.getCurrentValue() +
                                         ";AMOUNT_2=" + this.num_tf_2_d2.getCurrentValue());
                            
@@ -1278,6 +1295,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     
     
     
+    @SuppressWarnings("unused")
     private class SquareBolusComponent extends JPanel
     {
 

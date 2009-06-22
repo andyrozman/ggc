@@ -450,6 +450,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
 	    }
 	    else if (this.base_type==PumpBaseType.PUMP_DATA_REPORT)
 	    {
+	        // TODO remove
+	        //System.out.println("m_da: " + m_da);
+            //System.out.println("reportTypes: " + m_da.getPumpReportTypes());
+            //System.out.println("reportTypes.descriptions: " + m_da.getPumpReportTypes().getDescriptions());
+	        
             return m_da.getPumpReportTypes().getDescriptions()[this.sub_type];
 	    }
         else if (this.base_type==PumpBaseType.PUMP_DATA_ALARM)
