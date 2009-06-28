@@ -238,7 +238,14 @@ public class MeterPlugInServer extends DevicePlugInServer
             if (de==null)
                 return m_da_local.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
             else
-                return String.format(m_da_local.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port); 
+            {
+                if (de.device_device.equals(m_da_local.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
+                {
+                    return m_da_local.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                }
+                else
+                    return String.format(m_da_local.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port);
+            }
         }
         else
             return null;

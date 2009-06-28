@@ -3,6 +3,7 @@ package ggc.meter.device;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
@@ -487,5 +488,17 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
         return true;
     }
+
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_YES;
+    }
+    
     
 }

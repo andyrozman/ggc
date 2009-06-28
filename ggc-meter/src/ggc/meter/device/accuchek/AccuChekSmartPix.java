@@ -320,7 +320,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
                         public boolean accept(File file)
                         {
                             return ((file.getName().toUpperCase().contains(".XML")) &&
-                                    (file.getName().startsWith("G")));
+                                    (file.getName().startsWith(getFirstLetterForReport())));
                         }}
                     );
                     
@@ -363,6 +363,16 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     public void test()
     {
     }
+    
+    
+    
+    /**
+     * Letter with which report starts (I for insulin pumps, G for glucose meters)
+     * 
+     * @return
+     */
+    public abstract String getFirstLetterForReport();
+    
     
     
     /**

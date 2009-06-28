@@ -3,11 +3,10 @@ package ggc.meter.data;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
-import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.output.OutputUtil;
 
 import java.util.ArrayList;
@@ -43,10 +42,10 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
 {
 
     private static final long serialVersionUID = 7198690314603156531L;
-    private I18nControl m_ic = I18nControl.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();
 
-    private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
-                                     m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
+//    private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
+//                                     m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
     
     /**
@@ -69,35 +68,19 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
         return 5;
     }
 
+
+    
     /**
-     * Is Boolean
+     * Get Checkable Column (one column if checkable, all others are non-editable)
      * 
-     * @param column column index
-     * @return true if column type is boolean
+     * @return
      */
-    public boolean isBoolean(int column)
+    public int getCheckableColumn()
     {
-        if (column == 4)
-            return true;
-        else
-            return false;
+        return 4;
     }
-
-    /**
-     * Is Editable Column
-     * 
-     * @param column column index
-     * @return true if column is editable
-     */
-    public boolean isEditableColumn(int column)
-    {
-        if (column == 4)
-            return true;
-        else
-            return false;
-
-    }
-
+    
+    
     /**
      * Get Column Width
      * 
@@ -125,7 +108,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
      * @param status
      * @return
      */
-    public boolean shouldBeDisplayed(int status)
+    /*public boolean shouldBeDisplayed(int status)
     {
         //System.out.println("Should be displayed: " + status);
         switch (this.current_filter)
@@ -155,7 +138,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
         }
         return false;
 
-    }
+    }*/
 
 
     /**
@@ -205,13 +188,16 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
         this.fireTableDataChanged();
     }
 */
+
+    
+
     
     /**
      * Process Device Value Entry
      * 
      * @param mve DeviceValuesEntry instance
      */
-    public void processDeviceValueEntry(DeviceValuesEntry mve)
+    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
     {
 //        System.out.println("processMeterValuesEntry");
         if (this.m_ddh.hasOldData())
@@ -227,7 +213,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
             {
 //                System.out.println("not Contains");
                 mve.setStatus(DeviceValuesEntry.STATUS_NEW);
-                mve.object_status = MeterValuesEntry.OBJECT_STATUS_NEW;
+                mve.setObjectStatus(MeterValuesEntry.OBJECT_STATUS_NEW);
             }
             else
             {
@@ -304,11 +290,11 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
      * 
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
-    @Override
+    /*@Override
     public String getColumnName(int column)
     {
         return column_names[column];
-    }
+    }*/
 
     /**
      * Get Column Class
@@ -389,6 +375,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
     {
         return new ArrayList<DayValueH>();
     }
+
 
   
 

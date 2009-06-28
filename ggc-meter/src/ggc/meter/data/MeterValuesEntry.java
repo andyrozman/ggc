@@ -324,7 +324,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	/**
 	 * Get Data As String (for non-db exports)
 	 */
-    @Override
+    
     public String getDataAsString()
     {
         switch(output_type)
@@ -492,6 +492,23 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     {
         return false;
     }
+
+
+    /**
+     * Get Table Column Value (in case that we need special display values for download data table, this method 
+     * can be used, if it's the same as getColumnValue, we can just call that one. 
+     * 
+     * @param index
+     * @return
+     */
+    public Object getTableColumnValue(int index)
+    {
+        return this.getColumnValue(index);
+    }
+
+
+
+
     
 	
 }	

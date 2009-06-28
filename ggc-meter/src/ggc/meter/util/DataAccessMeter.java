@@ -53,7 +53,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.1.0";
+    public static final String PLUGIN_VERSION = "1.1.1";
     
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
@@ -411,6 +411,21 @@ public class DataAccessMeter extends DataAccessPlugInBase
         entry_statuses[1] = m_i18n.getMessage("NEW");
         entry_statuses[2] = m_i18n.getMessage("CHANGED");
         entry_statuses[3] = m_i18n.getMessage("OLD");
+        
+        this.columns_table = new String[5];
+        this.columns_table[0] = m_i18n.getMessage("DATETIME"); 
+        this.columns_table[1] = m_i18n.getMessage("BG_MMOLL");
+        this.columns_table[2] = m_i18n.getMessage("BG_MGDL");
+        this.columns_table[3] = m_i18n.getMessage("STATUS");
+        this.columns_table[4] = m_i18n.getMessage("");
+        
+        this.column_widths_table = new int[5];
+        this.column_widths_table[0] = 100;
+        this.column_widths_table[1] = 50;
+        this.column_widths_table[2] = 50;
+        this.column_widths_table[3] = 50;
+        this.column_widths_table[4] = 50;
+        
     }
 
 

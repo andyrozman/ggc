@@ -239,6 +239,18 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     }
 
     
+    /**
+     * Letter with which report starts (I for insulin pumps, G for glucose meters)
+     * 
+     * @return
+     */
+    public String getFirstLetterForReport()
+    {
+        return "G";
+    }
+    
+    
+    
     private void getMeterDeviceInfo()
     {
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
