@@ -115,6 +115,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
     //JFrame m_main = null;        
         
+    /**
+     * Yes/No Option
+     */
+    public static String[] yes_no_option = null;
 
     // about
     //protected String about_title;
@@ -220,6 +224,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
      * The filtering_states.
      */
     protected String[] filtering_states = null;
+    
+    
+    protected boolean data_download_screen_wide = false;
     
     /**
      * The plugin_server.
@@ -873,7 +880,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
     
     /**
-     * Create About Context for plugin
+     * Create PlugIn Data Retrieval Context for plugin
      */
     public abstract void createPlugInDataRetrievalContext();
     
@@ -1195,9 +1202,32 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
  
     
+    /**
+     * Is Data Download Screen Wide
+     * 
+     * @return
+     */
+    public boolean isDataDownloadSceenWide()
+    {
+        return this.data_download_screen_wide;
+    }
     
     
-    
+ 
+    /**
+     * Yes/No option
+     * 
+     * @param val
+     * @return
+     */
+    public String getYesNoOption(boolean val)
+    {
+        if (val)
+            return DataAccessPlugInBase.yes_no_option[1];
+        else
+            return DataAccessPlugInBase.yes_no_option[0];
+                                                     
+    }
     
 
 }

@@ -1,6 +1,7 @@
 package ggc.plugin.manager;
 
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -462,5 +463,17 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     {
         return false;
     }
+    
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
     
 }

@@ -41,8 +41,8 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
 {
 
     private static final long serialVersionUID = -6542265335372702616L;
-    protected ArrayList<DeviceValuesEntry> dl_data;
-    protected ArrayList<DeviceValuesEntry> displayed_dl_data;
+    protected ArrayList<DeviceValuesEntryInterface> dl_data;
+    protected ArrayList<DeviceValuesEntryInterface> displayed_dl_data;
     protected DeviceDataHandler m_ddh = null;
     protected int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
     protected DataAccessPlugInBase m_da;
@@ -58,8 +58,8 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     {
         this.m_ddh = ddh;
         this.m_da = da;
-        this.displayed_dl_data = new ArrayList<DeviceValuesEntry>();
-        this.dl_data = new ArrayList<DeviceValuesEntry>();
+        this.displayed_dl_data = new ArrayList<DeviceValuesEntryInterface>();
+        this.dl_data = new ArrayList<DeviceValuesEntryInterface>();
         // this.dayData = dayData;
         fireTableChanged(null);
         // dayData.addGlucoValueEventListener(this);
@@ -85,9 +85,10 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      */
     public int getColumnCount()
     {
-        return 5;
+        return m_da.getColumnsWidthTable().length;
     }
 
+    
     /**
      * Is Boolean
      * 
@@ -96,12 +97,13 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      */
     public boolean isBoolean(int column)
     {
-        if (column == 4)
+        if (column == this.getCheckableColumn())
             return true;
         else
             return false;
     }
 
+    
     /**
      * Is Editable Column
      * 
@@ -110,14 +112,29 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      */
     public boolean isEditableColumn(int column)
     {
-        // TODO
-        if (column == 4)
+        if (column == this.getCheckableColumn())
             return true;
         else
             return false;
-
     }
 
+    
+    /** 
+     * Set Value At
+     */
+    public void setValueAt(Object aValue, int row, int column)
+    {
+        if (this.getCheckableColumn()==column)
+        {
+            Boolean b = (Boolean) aValue;
+            this.displayed_dl_data.get(row).setChecked(b.booleanValue());
+        }
+        //System.out.println("set Value: rw=" + row + ",column=" + column + ",value=" + aValue);
+        // dayData.setValueAt(aValue, row, column);
+        // fireTableChanged(null);
+    }
+    
+    
     /**
      * Get Column Width
      * 
@@ -127,17 +144,10 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      */
     public int getColumnWidth(int column, int width)
     {
-        // TODO
-        if (column == 0)
-        {
-            return 100; // third column is bigger
-        }
-        else
-        {
-            return 50;
-        }
-
+        return m_da.getColumnsWidthTable()[column] * width;
     }
+
+
 
     /**
      * Select All
@@ -182,7 +192,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
         
         for(int i=0; i< this.dl_data.size(); i++)
         {
-            DeviceValuesEntry mve = this.dl_data.get(i);
+            DeviceValuesEntryInterface mve = this.dl_data.get(i);
             
             if (shouldBeDisplayed(mve.getStatus()))
             {
@@ -194,14 +204,45 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
         
     }
     
-    
+
     /**
      * Should be displayed filter
      * 
      * @param status
      * @return
      */
-    public abstract boolean shouldBeDisplayed(int status);
+    public boolean shouldBeDisplayed(int status)
+    {
+        switch (this.current_filter)
+        {
+            case DeviceDisplayDataDialog.FILTER_ALL:
+                return true;
+                
+            case DeviceDisplayDataDialog.FILTER_NEW:
+                return (status == DeviceValuesEntryInterface.STATUS_NEW);
+    
+            case DeviceDisplayDataDialog.FILTER_CHANGED:
+                return (status == DeviceValuesEntryInterface.STATUS_CHANGED);
+                
+            case DeviceDisplayDataDialog.FILTER_EXISTING:
+                return (status == DeviceValuesEntryInterface.STATUS_OLD);
+                
+            case DeviceDisplayDataDialog.FILTER_UNKNOWN:
+                return (status == DeviceValuesEntryInterface.STATUS_UNKNOWN);
+                
+            case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
+                return ((status == DeviceValuesEntryInterface.STATUS_NEW) ||
+                        (status == DeviceValuesEntryInterface.STATUS_CHANGED));
+                
+            case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
+                return (status != DeviceValuesEntryInterface.STATUS_OLD);
+        }
+        return false;
+
+    }
+    
+    
+    
 
     
     /**
@@ -211,7 +252,10 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      */
     public int getRowCount()
     {
-        return this.displayed_dl_data.size();
+        if (this.displayed_dl_data==null)
+            return 0;
+        else
+            return this.displayed_dl_data.size();
     }
 
     
@@ -219,15 +263,26 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      * Get Value At
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
-    public abstract Object getValueAt(int row, int column);
+    public Object getValueAt(int row, int column)
+    {
+        return this.displayed_dl_data.get(row).getTableColumnValue(column);
+    }
 
-
+    
+    /**
+     * Get Checkable Column (one column if checkable, all others are non-editable)
+     * 
+     * @return
+     */
+    public abstract int getCheckableColumn();
+    
+    
     /**
      * Add Entry
      * 
      * @param mve DeviceValuesEntry instance
      */
-    public void addEntry(DeviceValuesEntry mve)
+    public void addEntry(DeviceValuesEntryInterface mve)
     {
         processDeviceValueEntry(mve);
         this.dl_data.add(mve);
@@ -245,7 +300,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      * 
      * @param mve DeviceValuesEntry instance
      */
-    public abstract void processDeviceValueEntry(DeviceValuesEntry mve);
+    public abstract void processDeviceValueEntry(DeviceValuesEntryInterface mve);
     
     
     /**
@@ -264,19 +319,18 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
         
         for(int i=0; i<this.dl_data.size(); i++)
         {
-            DeviceValuesEntry mve = this.dl_data.get(i);
+            DeviceValuesEntryInterface mve = this.dl_data.get(i);
             
             if (!mve.getChecked())
                 continue;
             
             mve.prepareEntry();
             
-            if (mve.object_status==DeviceValuesEntry.OBJECT_STATUS_NEW)
+            if (mve.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW)
             {
-                //addToArray(ht.get("ADD").addAll(mve.getDbObjects());
                 addToArray(ht.get("ADD"), mve.getDbObjects());
             }
-            else if (mve.object_status==DeviceValuesEntry.OBJECT_STATUS_EDIT)
+            else if (mve.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_EDIT)
             {
                 addToArray(ht.get("EDIT"), mve.getDbObjects());
             }
@@ -292,6 +346,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      * @return
      */
     public abstract ArrayList<? extends GGCHibernateObject> getEmptyArrayList();
+    
     
     /**
      * Add To Array 
@@ -336,15 +391,16 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      * 
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
-    @Override
     public boolean isCellEditable(int row, int col)
     {
-        if (col == 4)
+        if (col == this.getCheckableColumn())
             return true;
         else
             return false;
     }
 
  
+    
+    
 
 }

@@ -26,7 +26,7 @@ package ggc.plugin.output;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class OutputWriterData 
+public interface OutputWriterData 
 {
     
     /**

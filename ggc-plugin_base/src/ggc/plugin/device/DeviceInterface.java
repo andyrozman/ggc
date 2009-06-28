@@ -294,7 +294,6 @@ public interface DeviceInterface extends SelectableInterface
     public AbstractDeviceCompany getDeviceCompany();
 
     
-    
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
@@ -303,4 +302,12 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean isReadableDevice();
 
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType();
+    
 }

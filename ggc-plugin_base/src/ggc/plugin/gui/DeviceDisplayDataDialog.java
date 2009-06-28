@@ -1,7 +1,7 @@
 package ggc.plugin.gui;
 
 import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTable;
 import ggc.plugin.data.DeviceValuesTableModel;
 import ggc.plugin.device.DeviceIdentification;
@@ -248,14 +248,20 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        panel.setSize(600, 600);
+        panel.setSize(700, 600);
 
         JLabel label;
  
+        int wide_add = 0;
+
+        if (m_da.isDataDownloadSceenWide())
+            wide_add = 200; 
+        
         Font normal = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL);
         Font normal_b = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD);
         
-        setBounds(0, 0, 480, 660);
+        setBounds(0, 0, 480+wide_add, 660);
+
         m_da.centerJDialog(this);
         
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -275,7 +281,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         tabPane = new JTabbedPane();
         tabPane.add(m_ic.getMessage("DATA"), this.createTablePanel(this.table));
         tabPane.add(m_ic.getMessage("LOG"), sp);
-        tabPane.setBounds(30, 15, 410, 250);
+        tabPane.setBounds(30, 15, 410+wide_add, 250); // 410
         panel.add(tabPane);
 
         // Info
@@ -294,7 +300,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
                              // getInformation(""));
 
         lbl_comment = new JLabel("");
-        lbl_comment.setBounds(30, 270, 410, 25);
+        lbl_comment.setBounds(30, 270, 410+wide_add, 25);
         lbl_comment.setFont(normal);
         panel.add(lbl_comment);
         
@@ -306,7 +312,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         panel.add(label);
         
         this.progress_old = new JProgressBar();
-        this.progress_old.setBounds(30, 450, 410, 20);  // 450
+        this.progress_old.setBounds(30, 450, 410+wide_add, 20);  // 450
         this.progress_old.setStringPainted(true);
         // this.progress.setIndeterminate(true);
         panel.add(this.progress_old);
@@ -326,13 +332,13 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         panel.add(lbl_status);
 
         this.progress = new JProgressBar();
-        this.progress.setBounds(30, 520, 410, 20);  // 450
+        this.progress.setBounds(30, 520, 410+wide_add, 20);  // 450
         this.progress.setStringPainted(true);
         // this.progress.setIndeterminate(true);
         panel.add(this.progress);
 
         bt_break = new JButton(m_ic.getMessage("BREAK_COMMUNICATION"));
-        bt_break.setBounds(150, 570, 170, 25);
+        bt_break.setBounds(150+wide_add, 570, 170, 25);
         // bt_break.setEnabled(this.m_mim.isStatusOK());
         bt_break.setActionCommand("break_communication");
         bt_break.addActionListener(this);
@@ -342,14 +348,14 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         panel.add(help_button);
 
         bt_close = new JButton(m_ic.getMessage("CLOSE"));
-        bt_close.setBounds(330, 570, 110, 25);
+        bt_close.setBounds(330+wide_add, 570, 110, 25);
         bt_close.setEnabled(false);
         bt_close.setActionCommand("close");
         bt_close.addActionListener(this);
         panel.add(bt_close);
 
         bt_import = new JButton(m_ic.getMessage("EXPORT_DATA"));
-        bt_import.setBounds(270, 300, 170, 25);  // 270
+        bt_import.setBounds(270+wide_add, 300, 170, 25);  // 270
         bt_import.setActionCommand("export_data");
         bt_import.addActionListener(this);
         bt_import.setEnabled(false);
@@ -458,13 +464,13 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         // toolBar.add(addRowAction);
         // toolBar.add(deleteRowAction);
 
-        int[] cw = { 110, 80, 70, 80, 30 };
+        //int[] cw = { 110, 80, 70, 80, 30 };
 
         TableColumn column = null;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < this.m_da.getColumnsWidthTable().length; i++)
         {
             column = table_in.getColumnModel().getColumn(i);
-            column.setPreferredWidth(cw[i]);
+            column.setPreferredWidth(this.m_da.getColumnsWidthTable()[i]);
         }
 
         JPanel container = new JPanel(new BorderLayout());
@@ -812,7 +818,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public void writeData(OutputWriterData data)
     {
         count++;
-        this.model.addEntry((DeviceValuesEntry)data);
+        this.model.addEntry((DeviceValuesEntryInterface)data);
     }
 
     

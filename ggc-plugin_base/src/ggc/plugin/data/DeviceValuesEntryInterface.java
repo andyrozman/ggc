@@ -1,9 +1,12 @@
 package ggc.plugin.data;
 
 import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.plugin.output.OutputWriterData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
+import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.ATechDate;
 
 
@@ -38,12 +41,12 @@ import com.atech.utils.ATechDate;
 //This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
-public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  //extends OutputWriterData implements Comparator<DeviceValuesEntry>, Comparable<DeviceValuesEntry>, StatisticsItem
+public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(OutputWriter,*/ Comparator<DeviceValuesEntry>, Comparable<DeviceValuesEntry>, StatisticsItem
 {
-	protected boolean checked = false;
-	protected int status = 1; 
-    protected int output_type = 0;
-    protected boolean is_bg = false;
+	//public boolean checked = false;
+	//public int status = 1; 
+    //public int output_type = 0;
+    //public boolean is_bg = false;
 	
 	
 	
@@ -87,7 +90,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
     /**
      * Object status
      */
-    public int object_status = 0;
+    //public int object_status = 0;
     
     /*
 	private static String entry_statuses[] = 
@@ -110,12 +113,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
     };
 	
 	
-	/**
-	 * Constructor
-	 */
-	public DeviceValuesEntry()
-	{
-	}
+	
 	
 	
 	/**
@@ -158,16 +156,23 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
 	 */
 	public abstract Object getColumnValue(int index);
 	
+
+    /**
+     * Get Table Column Value (in case that we need special display values for download data table, this method 
+     * can be used, if it's the same as getColumnValue, we can just call that one. 
+     * 
+     * @param index
+     * @return
+     */
+    public abstract Object getTableColumnValue(int index);
+	
 	
 	/**
 	 * Get Checked 
 	 * 
 	 * @return true if element is checked
 	 */
-	public boolean getChecked()
-	{
-	    return this.checked;
-	}
+	public boolean getChecked();
 
 	
     /**
@@ -175,10 +180,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      * 
      * @param check true if element is checked
      */
-    public void setChecked(boolean check)
-    {
-        this.checked = check;
-    }
+    public void setChecked(boolean check);
 	
 	
 	/**
@@ -186,10 +188,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
 	 * 
 	 * @return status
 	 */
-	public int getStatus()
-	{
-	    return this.status;
-	}
+	public int getStatus();
 	
 	
     /**
@@ -197,10 +196,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      * 
      * @param status_in
      */
-    public void setStatus(int status_in)
-    {
-        this.status = status_in;
-    }
+    public void setStatus(int status_in);
     
 	
 	/**
@@ -225,22 +221,16 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
 	 * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
 	 */
 	
-    public void setOutputType(int type)
-    {
-	    this.output_type = type;
-    }
+    public void setOutputType(int type);
 	
 	
     /**
      * Is Data BG
+     * @return 
      * 
      * @see ggc.plugin.output.OutputWriterData#isDataBG()
      */
-    
-    public boolean isDataBG()
-    {
-        return this.is_bg; 
-    }
+    public boolean isDataBG();
 
 
     /**
@@ -248,20 +238,14 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compare(DeviceValuesEntry d1, DeviceValuesEntry d2)
-    {
-        return (int)(d1.getDateTime()-d2.getDateTime());
-    }
+    public int compare(DeviceValuesEntry d1, DeviceValuesEntry d2);
 
     /**
      * Comparator method, for sorting objects
      * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(DeviceValuesEntry d2)
-    {
-        return (int)(this.getDateTime()-d2.getDateTime());
-    }
+    public int compareTo(DeviceValuesEntry d2);
     
 	
     /**
@@ -269,10 +253,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      * 
      * @param status
      */
-    public void setObjectStatus(int status)
-    {
-        this.object_status = status;
-    }
+    public void setObjectStatus(int status);
     
     
     /**
@@ -280,11 +261,14 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      * 
      * @return
      */
-    public int getObjectStatus()
-    {
-        return this.object_status;
-    }
+    public int getObjectStatus();
     
     
+    /**
+     * Get Special Id
+     * 
+     * @return
+     */
+    public String getSpecialId();
     
 }	

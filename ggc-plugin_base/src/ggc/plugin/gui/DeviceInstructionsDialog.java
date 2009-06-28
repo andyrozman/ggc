@@ -115,6 +115,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         super();
 
         this.m_da = da;
+        System.out.println("m_da: " + m_da);
+        
         this.m_ic = da.getI18nControlInstance();
         
         this.m_ddh = m_da.getDeviceDataHandler();

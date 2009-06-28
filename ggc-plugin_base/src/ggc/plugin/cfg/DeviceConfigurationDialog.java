@@ -141,6 +141,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         DeviceConfiguration dc = m_da.getDeviceConfiguration();
         dc.setNewConfigData(data);
         dc.setSelectedDeviceFromConfigurator(this.current_index_object);
+        //dc.setSelectedDevice(this.cb_entry.getSelectedIndex()+1);
+        
+        System.out.println("Index: " + (this.cb_entry.getSelectedItem()));
         
         dc.writeConfigData();
     }
@@ -184,8 +187,6 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     private Object[] getComboEntriesFromConfiguration()
     {
         ArrayList<String> lst = new ArrayList<String>();
-        
-        //System.out.println("Data: " + this.data);
         
         String new_entry = null;
         
@@ -309,7 +310,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
         if (this.current_entry==null)
         {
-            this.tf_name.setText("My " + m_ic.getMessage("DEVICE_NAME_BIG") + " #1");
+            this.tf_name.setText(m_ic.getMessage("MY__") + " " + m_ic.getMessage("DEVICE_NAME_BIG") + " #1");
         }
 
         setSize(450, start_y + 90);
@@ -610,6 +611,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             this.data.put(en_num, dce);
             
             resetComboBox();
+            this.cb_entry.setSelectedIndex(m_da.getIntValueFromString(en_num)-1);
         }
         else
         {
@@ -677,8 +679,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (en.startsWith(m_ic.getMessage("NEW__")))
         {
             String en_num = en.substring(en.indexOf("[")+1, en.indexOf("]"));
-            //System.out.println("NEW Entry");
-            this.tf_name.setText("My meter" + " #" + en_num);
+            this.tf_name.setText(m_ic.getMessage("MY__") + " " + m_ic.getMessage("DEVICE_NAME_BIG") + " #" + en_num);
             resetEntry();
         }
         else

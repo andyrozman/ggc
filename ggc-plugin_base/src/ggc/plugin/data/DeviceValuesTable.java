@@ -168,7 +168,7 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
         //toolBar.add(deleteRowAction);
 
         TableColumn column = null;
-        for (int i = 0; i < 5; i++) 
+        for (int i = 0; i < m_da.getColumnsWidthTable().length; i++) 
         {
             column = table.getColumnModel().getColumn(i);
             

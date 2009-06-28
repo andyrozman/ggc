@@ -2,6 +2,13 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.4.1
+    * major changes in DeviceValuesTableModel, which are used on all sub projects
+    * fixed configuration, now if new device is added it is also selected
+    * "My Device" is now correctly translated for all sub projects
+    * Download context is being changed, so that now we can have wide display 
+    
+
 0.4.0
     * Changed reading of old data in reading classes
     * Framework changed, each plugin can (must) have it's own instance of Db, with which it handles all db
