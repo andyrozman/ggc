@@ -4,6 +4,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
@@ -237,12 +238,14 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
      */
     public int getColumnCount()
     {
-        return 3;
+        return 5;
     }
 
 
     
-    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
+    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION"), ic.getMessage("DEVICE_DOWNLOAD"), ic.getMessage("DEVICE_SETTINGS") }; 
+    float device_columns_width[] = { 0.3f, 0.2f, 0.3f, 0.1f, 0.1f };
+    
     
     /** 
      * getColumnName
@@ -258,21 +261,31 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
      */
     public String getColumnValue(int num)
     {
-        System.out.println("num:" + num);
+        //System.out.println("Num: " + num);
         switch(num)
         {
-         
+            case 1:
+                return this.getDeviceCompany().getName();
+
             case 2:
                 return this.getName();
                 
             case 3:
                 return this.getDeviceCompany().getConnectionSamples();
 
-            case 1:
-            default:    
-                return this.getDeviceCompany().getName();
+            case 4:
+                if (this.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
+                    return DataAccessPump.getInstance().getYesNoOption(true);
+                else
+                    return DataAccessPump.getInstance().getYesNoOption(false);
+                
+            case 5:
+                //return "Bo/Ba/Tbr";
+                return DataAccessPump.getInstance().getYesNoOption(false);
                 
                 
+            default:                 
+                return "N/A: " + num;
         }
     }
     
@@ -288,13 +301,14 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
+    
+    
     /** 
      * Get Column Width
      */
     public int getColumnWidth(int num, int width)
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int)(this.device_columns_width[num-1] * width);
     }
 
 
@@ -431,6 +445,28 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     public float getBasalPrecission()
     {
         return 0.1f;
+    }
+
+    
+    /**
+     * Are Pump Settings Set
+     * 
+     * @return
+     */
+    public boolean arePumpSettingsSet()
+    {
+        return false;
+    }
+    
+    
+    /**
+     * How Many Months Of Data Stored
+     * 
+     * @return
+     */
+    public int howManyMonthsOfDataStored()
+    {
+        return 6;
     }
     
     

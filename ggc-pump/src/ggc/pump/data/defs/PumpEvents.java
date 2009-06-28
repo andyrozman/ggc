@@ -42,7 +42,7 @@ public class PumpEvents
     /**
      * Events Description
      */
-    public String[] events_desc = { ic.getMessage("SELECT_SUBTYPE"),
+    /*public String[] events_desc = { ic.getMessage("SELECT_SUBTYPE"),
                        ic.getMessage("EVENT_PRIME_INFUSION_SET"),             
                        ic.getMessage("EVENT_CARTRIDGE_CHANGED"),             
                        ic.getMessage("EVENT_BASAL_RUN"),             
@@ -54,8 +54,9 @@ public class PumpEvents
                        ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK"),             
                        ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD"),
                        ic.getMessage("EVENT_CARTRIDGE_REWIND")
-    };
+    };*/
     
+    Hashtable<Integer,String> events_desc = new Hashtable<Integer,String>(); 
     
     Hashtable<String,String> events_mapping = new Hashtable<String,String>(); 
     
@@ -86,6 +87,7 @@ public class PumpEvents
      * Pump Event: Reservoir Low
      */
     public static final int PUMP_EVENT_RESERVOIR_LOW_DESC = 5;
+    
     
     /**
      * Pump Event: Temporary Basal Rate, Unit setting (1=%, 0=U)
@@ -189,17 +191,47 @@ public class PumpEvents
      */
     public PumpEvents()
     {
-        events_mapping.put(ic.getMessage("EVENT_PRIME_INFUSION_SET"), "1");             
-        events_mapping.put(ic.getMessage("EVENT_CARTRIDGE_CHANGED"),  "2");            
-        events_mapping.put(ic.getMessage("EVENT_BASAL_RUN"), "20");             
-        events_mapping.put(ic.getMessage("EVENT_BASAL_STOP"), "21");             
-        events_mapping.put(ic.getMessage("EVENT_POWER_DOWN"), "22");             
-        events_mapping.put(ic.getMessage("EVENT_POWER_UP"), "23");             
-        events_mapping.put(ic.getMessage("EVENT_DATETIME_SET"), "40");             
-        events_mapping.put(ic.getMessage("EVENT_DATETIME_CORRECT"), "41");            
-        events_mapping.put(ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK"), "42");             
-        events_mapping.put(ic.getMessage("EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD"), "43");
-        events_mapping.put(ic.getMessage("EVENT_REWIND_INFUSION_SET"), "3");
+        setEventDesc(PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET, "EVENT_PRIME_INFUSION_SET");
+        setEventDesc(PumpEvents.PUMP_EVENT_CARTRIDGE_CHANGED, "EVENT_CARTRIDGE_CHANGED");     
+        setEventDesc(PumpEvents.PUMP_EVENT_CARTRIDGE_REWIND, "EVENT_REWIND_INFUSION_SET");
+        setEventDesc(PumpEvents.PUMP_EVENT_RESERVOIR_LOW, "EVENT_RESERVOIR_LOW");
+        setEventDesc(PumpEvents.PUMP_EVENT_RESERVOIR_LOW_DESC, "EVENT_RESERVOIR_LOW_DESC");
+        setEventDesc(PumpEvents.PUMP_EVENT_SET_TEMPORARY_BASAL_RATE_TYPE, "EVENT_SET_TEMPORARY_BASAL_RATE_TYPE");
+        setEventDesc(PumpEvents.PUMP_EVENT_SET_BASAL_PATTERN, "EVENT_SET_BASAL_PATTERN");
+        
+        setEventDesc(PumpEvents.PUMP_EVENT_BASAL_RUN, "EVENT_BASAL_RUN");
+        setEventDesc(PumpEvents.PUMP_EVENT_BASAL_STOP, "EVENT_BASAL_STOP");
+        setEventDesc(PumpEvents.PUMP_EVENT_POWER_DOWN, "EVENT_POWER_DOWN");
+        setEventDesc(PumpEvents.PUMP_EVENT_POWER_UP, "EVENT_POWER_UP");
+        
+        setEventDesc(PumpEvents.PUMP_EVENT_SELF_TEST, "EVENT_SELF_TEST");
+        setEventDesc(PumpEvents.PUMP_EVENT_DOWNLOAD, "EVENT_DOWNLOAD");
+        
+        setEventDesc(PumpEvents.PUMP_EVENT_DATETIME_SET, "EVENT_DATETIME_SET");
+        setEventDesc(PumpEvents.PUMP_EVENT_DATETIME_CORRECTED, "EVENT_DATETIME_CORRECT");
+        
+        setEventDesc(PumpEvents.PUMP_EVENT_SET_MAX_BASAL, "EVENT_SET_MAX_BASAL");
+        setEventDesc(PumpEvents.PUMP_EVENT_SET_MAX_BOLUS, "EVENT_SET_MAX_BOLUS");
+
+        setEventDesc(PumpEvents.PUMP_EVENT_BATERRY_REMOVED, "EVENT_BATERRY_REMOVED");
+        setEventDesc(PumpEvents.PUMP_EVENT_BATERRY_REPLACED, "EVENT_BATERRY_REPLACED");
+        setEventDesc(PumpEvents.PUMP_EVENT_BATERRY_LOW, "EVENT_BATERRY_LOW");
+        setEventDesc(PumpEvents.PUMP_EVENT_BATERRY_LOW_DESC, "EVENT_BATERRY_LOW_DESC");
+
+        setEventDesc(PumpEvents.PUMP_EVENT_BG_FROM_METER, "EVENT_BG_FROM_METER");
+        // EVENT_SET_MAX_BASAL, EVENT_SET_MAX_BOLUS
+        // EVENT_BATERRY_REMOVED, EVENT_BATERRY_REPLACED, EVENT_BATERRY_LOW, EVENT_BATERRY_LOW_DESC, EVENT_BG_FROM_METER
+
+        // EVENT_RESERVOIR_LOW, EVENT_RESERVOIR_LOW_DESC, EVENT_SET_TEMPORARY_BASAL_RATE_TYPE, EVENT_SET_BASAL_PATTERN
+     // EVENT_SELF_TEST, EVENT_DOWNLOAD
+        
+    }
+    
+    
+    private void setEventDesc(int type, String desc)
+    {
+        this.events_mapping.put(ic.getMessage(desc), "" + type);
+        this.events_desc.put(type, ic.getMessage(desc));
     }
     
 
@@ -226,11 +258,24 @@ public class PumpEvents
      * 
      * @return array of strings with description
      */
-    public String[] getDescriptions()
+    public Hashtable<Integer,String> getDescriptions()
     {
         return this.events_desc;
     }
 
+
+    /**
+     * Get Description For Type
+     * 
+     * @param type 
+     * @return String description of event
+     */
+    public String getDescriptionForType(int type)
+    {
+        return this.events_desc.get(type);
+    }
+    
+    
     
     /**
      * Shows if this type of event has value associated with it (most don't) 

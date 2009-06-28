@@ -1,6 +1,8 @@
 package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.data.PumpValuesEntry;
@@ -24,6 +26,8 @@ import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
+
+import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -81,6 +85,11 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      */
     public static final int PUMP_ACCUCHEK_SPIRIT         = 20004;
     
+    /**
+     * Pump: AccuChek Spirit
+     */
+    public static final int PUMP_ACCUCHEK_COMBO          = 20005;
+
     
     //private int bg_unit = OutputUtil.BG_MGDL;
     
@@ -104,6 +113,18 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         super();
         loadPumpSpecificValues();
     }
+
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp 
+     */
+    public AccuChekSmartPixPump(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
+    }
+    
     
     /**
      * Constructor
@@ -115,6 +136,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     {
         super(drive_letter, writer); 
         loadPumpSpecificValues();
+        m_da = DataAccessPump.getInstance();
     }
     
     
@@ -170,9 +192,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             this.output_writer.writeDeviceIdentification();
   */          
             //readData();
+
+            getPixDeviceInfo();
+            getPumpDeviceInfo();
+
+            this.output_writer.writeDeviceIdentification();
             
-            //readPumpData();
-            this.readPumpDataTest();
+            readPumpData();
+            //this.readPumpDataTest();
             
             System.out.println("Reading done");
             
@@ -201,6 +228,18 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
     */
 
+    
+    /**
+     * Letter with which report starts (I for insulin pumps, G for glucose meters)
+     * 
+     * @return
+     */
+    public String getFirstLetterForReport()
+    {
+        return "I";
+    }
+    
+    
     
     /**
      * Get Pix Device Info 
@@ -268,45 +307,66 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         
 //        <DEVICE  Name="Performa" SN="50003006" 
         //Dt="2008-05-13" Tm="10:12" BGUnit="mmol/L"/>
-        
     }
 
     
     @SuppressWarnings("unused")
     private void readPumpProfiles()
     {
-        
+        // TODO    
     }
     
-    // TODO
     
-    @SuppressWarnings("unused")
     private void readPumpData()
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
 
         System.out.println(" -- Basals --");
         list.addAll(getBasals());
+        System.out.println("Basals: " + list.size());
+        
         System.out.println(" -- Boluses --");
         list.addAll(getBoluses());
+        System.out.println("Boluses: " + list.size());
+
         System.out.println(" -- Events --");
         list.addAll(getEvents());
-  
+        System.out.println("Events: " + list.size());
+
+        System.out.println(" -- Basals (run 2) --");
+        list.addAll(getSpecificElements2("BASAL"));
+        System.out.println("Basals2: " + list.size());
+        
+        if (first_basal !=null)
+            list.add(first_basal);
+        
+        /*
+        for(int i=0; i<list.size(); i++)
+        {
+            this.output_writer.writeData(list.get(i));
+        }
+        */
+
+        
         
         // postprocess entries (profile), 
         
     }
 
     
+    @SuppressWarnings("unused")
     private void readPumpDataTest()
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
         
-        System.out.println(" -- Basals --");
-        list.addAll(getBasals());
+        //System.out.println(" -- Basals --");
+        //list.addAll(getBasals());
         
         
-        getSpecificElements2("BASAL");
+        list.addAll(getSpecificElements2("BASAL"));
+        
+        if (first_basal !=null)
+            list.add(first_basal);
         
     }
     
@@ -353,7 +413,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     {
         List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/" + element);
         ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
-        @SuppressWarnings("unused")
         boolean add = false;
         
         for(int i=0; i<lst.size(); i++)
@@ -361,8 +420,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             Element el = (Element)lst.get(i);
             
             PumpValuesEntry pve = new PumpValuesEntry();
-            // TODO fix
-//            pve.setDt_info(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
+            pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
 
             add = false;
             
@@ -378,8 +436,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             {
                 add = this.resolveBolus(pve, el);
             }
+        
             
-            lst_out.add(pve);
+            if (add)
+            {
+                // testing only
+                this.output_writer.writeData(pve);
+
+                lst_out.add(pve);
+            }
         }
         
         return lst_out;
@@ -392,7 +457,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     {
         List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/" + element);
         ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
-        @SuppressWarnings("unused")
         boolean add = false;
         
         for(int i=0; i<lst.size(); i++)
@@ -400,14 +464,17 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             Element el = (Element)lst.get(i);
             
             PumpValuesEntry pve = new PumpValuesEntry();
-            // TODO fix
-//            pve.setDt_info(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
+            pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
 
-            add = false;
-            
             add = this.resolveBasalProfile(pve, el);                
             
-            lst_out.add(pve);
+            if (add)
+            {
+                // testing only
+                this.output_writer.writeData(pve);
+
+                lst_out.add(pve);
+            }
         }
         
         return lst_out;
@@ -492,75 +559,21 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             if (!isSet(profile))
             {
-                log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
-            }
-            return false;
-/*            
-            int type = 0;
-
-            if (isSet(tbrdec))
-                type = 1;
-            else if (isSet(tbrinc))
-                type = 2;
-            else if ((!isSet(tbrdec)) || (!isSet(tbrinc)))
-                type = 3;
-            
-            //pve.setProfile(el.attributeValue("profile"));
-
-            if (type==0)
-            {
-                
-                // TODO fix
-
-//                pve.setSub_type(PumpBasalSubType.PUMP_BASAL_VALUE);
-                pve.setValue(el.attributeValue("cbrf"));
-                System.out.println("Basal Unknown Type=1 [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
-            }
-            else if (type==3)
-            {
-                //System.out.println("Basal Unknown Type=3 [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
-                return false;
-            }
-            else
-            {
-                String procs = "";
-                
-                if (type==1)
+                if ((!isSet(tbrdec)) && (!isSet(tbrinc)) && (cbrf.equals("0.00")))
                 {
-                    // TODO Fix
-                    //pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_DECREMENT);
-                    procs = el.attributeValue("TBRdec"); 
                 }
                 else
-                {
-                    // TODO Fix
-                    //pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_INCREMENT);
-                    procs = el.attributeValue("TBRinc"); 
-                }
-            
-                // inc or dec is '110 %'
-                procs = procs.substring(0, procs.indexOf(" "));
-                procs = procs.trim();
-                
-                pve.setValue("VALUE=" + el.attributeValue("cbrf") + ";INC_DEC=" + procs);
-
-                System.out.println("Basal Unknown Type=2 [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
-                
+                    log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
             }
-            
-            
-            
-//            System.out.println("Undefined Basal [cbrf=" + cbrf + "]");
-  */
-            
+            return false;
             
         }
-        
-        //return true;
         
     }
     
 
+    PumpValuesEntry first_basal = null;
+    
     private boolean resolveBasalProfile(PumpValuesEntry pve, Element el)
     {
         String remark = el.attributeValue("remark");
@@ -578,39 +591,73 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             // all that are special should be removed, all other are checked over events
             if (remark.contains("changed"))
             {
-                System.out.println("Basal Changed Unknown [remark=" + remark + "]");
-                return true;
+                // TODO: Changed profile
+//                System.out.println("Basal Changed Unknown [remark=" + remark + "]");
+                //System.out.println("Basal Rate Changed [datetime=" + pve.getDateTimeObject() + ",remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                
+                return false;
             }
             else
             {
-                if (this.getEventMappings().containsKey(remark))
-                {
-                    return false;
-                }
-                else if (this.getBasalMappings().containsKey(remark))
+                if ((this.getEventMappings().containsKey(remark)) ||
+                    (this.getBasalMappings().containsKey(remark)))
                 {
                     return false;
                 }
                 else
                 {
                     if (remark.contains(" - "))
-                        System.out.println("Unknown Profile Event. [remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
-
-                    return true;
+                    {
+                        pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
+                        pve.setSubType(PumpBasalSubType.PUMP_BASAL_PROFILE);
+                        pve.setValue(remark.substring(remark.indexOf(" - ")+ 3));
+//                        System.out.println("Profile changed: " + remark.substring(remark.indexOf(" - ")+ 3));
+//                        System.out.println("Unknown Profile Event. [remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                        return true;
+                    }
+                    else
+                        return false;
                 }
             }
             
-            //System.out.println("Remark:" + remark);
         }
         else
         {
             if (!isSet(profile))
             {
-                log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                //System.out.println("tbrdec=" + isSet(tbrdec) + "tbrinc=" + isSet(tbrinc));
+
+                if ((!isSet(tbrdec)) && (!isSet(tbrinc)) && (cbrf.equals("0.00")))
+                {
+                    //System.out.println("tbrdec=" + isSet(tbrdec) + "tbrinc=" + isSet(tbrinc));
+                    return false;
+                }
+                else
+                {
+                    log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                    return false;
+                }
             }
-            
-            
-            return true;
+            else
+            {
+                // profile used
+                pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
+                pve.setSubType(PumpBasalSubType.PUMP_BASAL_PROFILE);
+                pve.setValue(profile);
+                
+                first_basal = pve;
+
+                //log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                
+                if (pve.getDateTimeObject().getTimeString().equals("00:00:00"))
+                {
+                    //System.out.println("Profile used: " + pve.getValue());
+                    first_basal = null;
+                    return true;
+                }
+                else
+                    return false;
+            }
         }        
     }
     
@@ -674,7 +721,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
                 }
                 else
                 {
-                    System.out.println("Undefined Bolus type");
+                    //System.out.println("Undefined Bolus type");
                     log.error("AccuChekSmartPixPump: Unknown Bolus Type [" + type +"]");
                 }
                 
@@ -770,7 +817,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         }
         
         //pve.setEntryType(PumpDataType.PUMP_DATA_EVENT);
-     
+        
+        
         return true;
         
     }
@@ -869,9 +917,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      * @param time
      * @return
      */
-    @SuppressWarnings("unused")
-    private long getDateTime(String date, String time)
+    private ATechDate getDateTime(String date, String time)
     {
+        //System.out.println("m_da: " + m_da);
+        
         String o = m_da.replaceExpression(date, "-", "");
         
         if ((time==null) || (time.length()==0))
@@ -885,7 +934,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         
         o += "00"; // seconds
         
-        return Long.parseLong(o);
+        
+        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, Long.parseLong(o));
         
         
     }
@@ -936,7 +986,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      */
     public void loadPumpSpecificValues()
     {
-        m_da = DataAccessPump.getInstance();
+        //m_da = DataAccessPump.getInstance();
         
         // alarm mappings
         this.alarm_mappings = new Hashtable<String,Integer>();
@@ -1039,7 +1089,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
     
 
-    /**
+   /**
      * Get Basal Mappings - Map pump specific basal to Pump Tool specific 
      *     event codes
      * @return
@@ -1058,6 +1108,40 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     public Hashtable<String,Integer> getReportMappings()
     {
         return this.report_mappings;
+    }
+    
+ 
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_YES;
+    }
+
+    
+    /**
+     * Are Pump Settings Set
+     * 
+     * @return
+     */
+    public boolean arePumpSettingsSet()
+    {
+        return false;
+    }
+    
+    
+    /**
+     * How Many Months Of Data Stored
+     * 
+     * @return
+     */
+    public int howManyMonthsOfDataStored()
+    {
+        return 6;
     }
     
     

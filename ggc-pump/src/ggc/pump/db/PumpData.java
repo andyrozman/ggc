@@ -2,6 +2,8 @@ package ggc.pump.db;
 
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.core.util.DataAccess;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
@@ -78,6 +80,24 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         this.setChanged(ch.getChanged());
     }
 
+    /**
+     * Constructor
+     * 
+     * @param pve
+     */
+    public PumpData(PumpValuesEntry pve)
+    {
+        this.setId(0L);
+        this.setDt_info(pve.getDateTime());
+        this.setBase_type(pve.getBaseType());
+        this.setSub_type(pve.getSubType());
+        this.setValue(pve.getValue());
+        this.setExtended("");
+        this.setPerson_id((int)DataAccessPump.getInstance().getCurrentUserId());
+        this.setComment(pve.getComment());
+        this.setChanged(System.currentTimeMillis());
+    }
+    
     
     /**
      * Constructor

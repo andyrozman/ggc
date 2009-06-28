@@ -5,6 +5,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
+import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
@@ -338,14 +339,16 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
      */
     public int getColumnCount()
     {
-        return 3;
+        return 5;
     }
 
 
-    String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
+    
+    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION"), ic.getMessage("DEVICE_DOWNLOAD"), ic.getMessage("DEVICE_SETTINGS") }; 
+    float device_columns_width[] = { 0.3f, 0.2f, 0.3f, 0.1f, 0.1f };
     
     /** 
-     * Get Column Name
+     * getColumnName
      */
     public String getColumnName(int num)
     {
@@ -353,25 +356,35 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     }
 
 
-    /**
-     * Get Column Value
+    /** 
+     * getColumnValue
      */
     public String getColumnValue(int num)
     {
+        //System.out.println("Num: " + num);
         switch(num)
         {
-         
+            case 1:
+                return this.getDeviceCompany().getName();
+
             case 2:
                 return this.getName();
                 
             case 3:
                 return this.getDeviceCompany().getConnectionSamples();
 
-            case 1:
-            default:    
-                return this.getDeviceCompany().getName();
+            case 4:
+                if (this.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
+                    return DataAccessPump.getInstance().getYesNoOption(true);
+                else
+                    return DataAccessPump.getInstance().getYesNoOption(false);
+                
+            case 5:
+                return DataAccessPump.getInstance().getYesNoOption(false);
                 
                 
+            default:                 
+                return "N/A: " + num;
         }
     }
 
@@ -384,15 +397,14 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         return this.getColumnValue(num);
     }
 
-
-    /**
+    /** 
      * Get Column Width
      */
     public int getColumnWidth(int num, int width)
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int)(this.device_columns_width[num-1] * width);
     }
+
 
 
     /** 

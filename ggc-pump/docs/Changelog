@@ -2,10 +2,18 @@
 Changes file for GGC Pump Tool
 ==============================
 
+0.5.1 (current)
+    * Work on Accu-chek pump import
+    * Fixed Events, Basals and Boluses
+    * Working on download of Pump data, testing with Roche implementation
+    * major changes in PumpValuesTableModel (and also on its parent)
+
+
 0.4.8 (current)
     * Added food db adding from Nutritional plugin
     * Fixed small time problem with BolusHelper
     * Started work on reading old data
+
 
 0.4.7
     * Started work on Minimed Import (from Solutions Pumps & Meter export file (MS Access *.mmp file))

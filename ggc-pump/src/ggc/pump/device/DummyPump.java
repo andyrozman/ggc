@@ -66,6 +66,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
      */
     public DummyPump(OutputWriter ow)
     {
+        super(ow);
         //super(ow);
     }
     

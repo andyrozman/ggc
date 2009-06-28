@@ -1,8 +1,13 @@
 package ggc.pump.data;
 
+import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
+
+import java.util.ArrayList;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -38,7 +43,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryAbstract, DatabaseObjectHibernate 
+public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValuesEntryInterface,   /*PumpValuesEntryAbstract,*/ DatabaseObjectHibernate 
 {
 
     private static final long serialVersionUID = 2300422547257308019L;
@@ -537,8 +542,186 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
             changed = true;
         }
     }
+
+
+    public int compare(DeviceValuesEntry d1, DeviceValuesEntry d2)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public int compareTo(DeviceValuesEntry d2)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public boolean getChecked()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public Object getColumnValue(int index)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public long getDateTime()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public int getDateTimeFormat()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public ArrayList<? extends GGCHibernateObject> getDbObjects()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public int getObjectStatus()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public int getStatus()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public Object getTableColumnValue(int index)
+    {
+        
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean isDataBG()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public void setChecked(boolean check)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void setDateTimeObject(ATechDate dt)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void setObjectStatus(int status)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void setOutputType(int type)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void setStatus(int status_in)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public String getDataAsString()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public int getMaxStatisticsObject()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public int getStatisticsAction(int index)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public float getValueForItem(int index)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public boolean isSpecialAction(int index)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean weHaveSpecialActions()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
     
     
+    /**
+     * Get Special Id
+     * 
+     * @return
+     */
+    public String getSpecialId()
+    {
+        return "";
+    }
+
+
+    public int compare(DeviceValuesEntryInterface d1, DeviceValuesEntryInterface d2)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public int compareTo(DeviceValuesEntryInterface d2)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
     
     
 }	

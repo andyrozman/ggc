@@ -47,7 +47,9 @@ public class PumpBasalSubType
                        ic.getMessage("BASAL_PROFILE"),             
                        ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"),             
                        ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"),             
-                       ic.getMessage("BASAL_PUMP_STATUS"),             
+                       ic.getMessage("BASAL_PUMP_STATUS"),
+                       ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"),
+                       ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED")
     };
     
     
@@ -101,7 +103,9 @@ public class PumpBasalSubType
         this.basal_mapping.put(ic.getMessage("BASAL_PROFILE"), "2");             
         this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"), "3");             
         this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"), "4");             
-        this.basal_mapping.put(ic.getMessage("BASAL_ON_OFF"), "5");             
+        this.basal_mapping.put(ic.getMessage("BASAL_ON_OFF"), "5");
+        this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"), "6");
+        this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED"), "7");
     }
     
     

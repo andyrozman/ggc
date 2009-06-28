@@ -1,9 +1,7 @@
-package ggc.pump.device.dana;
+package ggc.pump.device.deltec;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
-import ggc.pump.device.animas.AnimasPump;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -25,22 +23,19 @@ import ggc.pump.device.animas.AnimasPump;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     DanaDiabecare_IIS  
- *  Description:  Dana Diabecare II/S device implementation (just settings) 
+ *  Filename:     DeltecCosmo1700  
+ *  Description:  Deltec Cosmo 1700 implementation (just for settings)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
-public class DanaDiabecare_IIS extends DanaDiabecare_II
+public class DeltecCosmo1700 extends DeltecPump
 {
-
 
     /**
      * Constructor 
      */
-    public DanaDiabecare_IIS()
+    public DeltecCosmo1700()
     {
         super();
     }
@@ -49,21 +44,15 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
     /**
      * Constructor 
      * 
-     * @param params 
+     * @param drive_letter 
      * @param writer 
      */
-    public DanaDiabecare_IIS(String params, OutputWriter writer)
+    public DeltecCosmo1700(String drive_letter, OutputWriter writer)
     {
-        super();
-        //super(params, writer);
+        super(drive_letter, writer);
     }
     
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-    
-    
+
     /**
      * getName - Get Name of meter. 
      * 
@@ -71,10 +60,10 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      */
     public String getName()
     {
-        return "Diabcare II S";
+        return "Cosmo 1700";
     }
-    
-    
+
+
     
     /**
      * getIconName - Get Icon of meter
@@ -83,11 +72,10 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      */
     public String getIconName()
     {
-//        return "da_dc_IIS.jpg";
         return "no_device.gif";
     }
     
-    
+
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
@@ -96,9 +84,9 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      */
     public int getDeviceId()
     {
-        return DanaPump.PUMP_DANA_DIABECARE_IIS;
+        return DeltecPump.PUMP_DELTEC_COSMO_1700;
     }
-    
+
     
     /**
      * getInstructions - get instructions for device
@@ -108,7 +96,7 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_DANA_IIS";
+        return "INSTRUCTIONS_DELTEC_COSMO_1700";
     }
     
     /**
@@ -130,7 +118,7 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      */
     public int getImplementationStatus() 
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
     
     
@@ -141,22 +129,17 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      */
     public String getDeviceClassName()
     {
-        return "ggc.pump.device.dana.DanaDiabcare_IIS";
+        return "ggc.pump.device.deltec.DeltecCosmo1700";
     }
-    
-    
-    
-    
+
+
     /** 
      * Get Max Memory Records
      */
     public int getMaxMemoryRecords()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
-    
-    
     
 }
 

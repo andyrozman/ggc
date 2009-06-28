@@ -1,8 +1,12 @@
 package ggc.pump.util;
 
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.PumpDataHandler;
+import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.cfg.PumpConfigurationDefinition;
 import ggc.pump.data.db.GGCPumpDb;
@@ -14,10 +18,12 @@ import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
+import ggc.pump.device.PumpInterface;
 import ggc.pump.manager.PumpManager;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 import com.atech.graphics.components.about.CreditsEntry;
 import com.atech.graphics.components.about.CreditsGroup;
@@ -25,6 +31,7 @@ import com.atech.graphics.components.about.FeaturesEntry;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.misc.converter.DecimalHandler;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -108,6 +115,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     PumpErrors m_pump_errors = null;
     //    GGCPumpDb m_db = null;
   
+    
+    DecimalHandler dec_handler = new DecimalHandler(3);
+    
     /**
      * The selected_person_id.
      */
@@ -144,11 +154,12 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.createPlugInAboutContext();
         this.createConfigurationContext();
         this.createPlugInVersion();
-//        loadDeviceDataHandler();
+        loadDeviceDataHandler();
         loadManager();
-//        loadReadingStatuses();
+        loadReadingStatuses();
         this.createPlugInDataRetrievalContext();
         this.createDeviceConfiguration();
+        this.createOldDataReader();
         loadWebLister();
         
     }
@@ -401,6 +412,8 @@ public class DataAccessPump extends DataAccessPlugInBase
         fg.addFeaturesEntry(new FeaturesEntry("Manual data entry (also additional data entry)"));
 //        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
         fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+        fg.addFeaturesEntry(new FeaturesEntry("List of pumps"));
+        fg.addFeaturesEntry(new FeaturesEntry("Profiles (partitial)"));
         
         lst_features.add(fg);
         
@@ -416,7 +429,6 @@ public class DataAccessPump extends DataAccessPlugInBase
         fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
         //fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration) [Ready]"));
         fg.addFeaturesEntry(new FeaturesEntry("Configuration [Ready]"));
-        fg.addFeaturesEntry(new FeaturesEntry("List of pumps [Ready]"));
         fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
         fg.addFeaturesEntry(new FeaturesEntry("Profiles"));
         fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
@@ -606,7 +618,48 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void createPlugInDataRetrievalContext()
     {
+        
+        if (DataAccessPlugInBase.yes_no_option==null)
+        {
+            //I18nControl ic = I18nControl.getInstance();
+            //System.out.println("Ic: " + ic);
+            yes_no_option = new String[2];
+            yes_no_option[0] = m_i18n.getMessage("NO");
+            yes_no_option[1] = m_i18n.getMessage("YES");
+            
+            System.out.println("Yes: " + m_i18n.getMessage("YES"));
+            
+        }
+        
         m_entry_type = new PumpValuesEntry(true);
+        
+        entry_statuses = new String[4];
+        entry_statuses[0] = m_i18n.getMessage("UNKNOWN");
+        entry_statuses[1] = m_i18n.getMessage("NEW");
+        entry_statuses[2] = m_i18n.getMessage("CHANGED");
+        entry_statuses[3] = m_i18n.getMessage("OLD");
+        
+        this.data_download_screen_wide = true;
+        
+        this.columns_table = new String[7];
+        this.columns_table[0] = m_i18n.getMessage("DATETIME"); 
+        this.columns_table[1] = m_i18n.getMessage("ENTRY_TYPE");
+        this.columns_table[2] = m_i18n.getMessage("BASE_TYPE");
+        this.columns_table[3] = m_i18n.getMessage("SUB_TYPE");
+        this.columns_table[4] = m_i18n.getMessage("VALUE");
+        this.columns_table[5] = m_i18n.getMessage("STATUS");
+        this.columns_table[6] = m_i18n.getMessage("");
+        
+        this.column_widths_table = new int[7];
+        this.column_widths_table[0] = 100;
+        this.column_widths_table[1] = 30;
+        this.column_widths_table[2] = 50;
+        this.column_widths_table[3] = 50;
+        this.column_widths_table[4] = 105;   // value
+        this.column_widths_table[5] = 40;
+        this.column_widths_table[6] = 25;
+        
+        // 25, 10, 20
     }
 
     /**
@@ -626,7 +679,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void loadDeviceDataHandler()
     {
-        // TODO Auto-generated method stub
+        this.m_ddh = new PumpDataHandler(this);
     }
 
     /**
@@ -748,6 +801,15 @@ public class DataAccessPump extends DataAccessPlugInBase
         return 0.1f;
     }
 
+    /**
+     * Get Bolus Precision
+     * 
+     * @return
+     */
+    public int getBolusPrecision()
+    {
+        return 1;
+    }
     
     
     /**
@@ -755,7 +817,102 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     public void createOldDataReader()
     {
+        this.m_old_data_reader = new PumpDataReader(this);
     }
-   
+
+    
+    /**
+     * Get Formated Bolus Value
+     * 
+     * @param val
+     * @return
+     */
+    public String getFormatedBolusValue(float val)
+    {
+        return this.dec_handler.getDecimalAsString(val, this.getBolusPrecision());
+    }
+
+    /**
+     * Get Decimal Handler
+     * 
+     * @return
+     */
+    public DecimalHandler getDecimalHandler()
+    {
+        return this.dec_handler;
+    }
+    
+    
+    /**
+     * Get Parsed Values
+     * 
+     * @param val
+     * @return
+     */
+    public String[] getParsedValues(String val)
+    {
+        ArrayList<String> lst = new ArrayList<String>();
+        
+        StringTokenizer strtok = new StringTokenizer(val, ";");
+        
+        while(strtok.hasMoreTokens())
+        {
+            String tk = strtok.nextToken();
+            lst.add(tk.substring(tk.indexOf("=")+1));
+        }
+        
+        String ia[] = new String[lst.size()];
+        return lst.toArray(ia);
+    }
+    
+    
+    
+    /**
+     * Get Download Status For Selected Device
+     *   0 = No status
+     *   1 = Device not selected
+     *   2 = Device doesn't support Download
+     *   
+     *  10 = Download OK
+     * 
+     * @return
+     */
+    public int getDownloadStatus()
+    {
+        
+        PumpInterface pi = getSelectedDeviceInstance();
+        
+        if (pi==null)
+            return 1;
+        else
+        {
+            if (pi.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
+                return 10;
+            else
+                return 2;
+        }
+        
+    }
+    
+
+    /**
+     * Get Selected Device Instance
+     * 
+     * @return
+     */
+    public PumpInterface getSelectedDeviceInstance()
+    {
+        DeviceConfigEntry dce = getDeviceConfiguration().getSelectedDeviceInstance();
+        
+        if (dce==null)
+            return null;
+        else
+        {
+            return (PumpInterface)this.getManager().getCompany(dce.device_company).getDevice(dce.device_device);
+        }
+    }
+    
+    
+    
     
 }

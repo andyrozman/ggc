@@ -69,7 +69,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public String getName()
     {
-        return "Comfort";
+        return "Combo";
     }
 
 
@@ -81,7 +81,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public String getIconName()
     {
-        return "ac_comfort.jpg";
+        return "ac_combo.jpg";
     }
     
 
@@ -93,7 +93,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public int getDeviceId()
     {
-        return AccuChekSmartPixPump.PUMP_ACCUCHEK_SPIRIT;
+        return AccuChekSmartPixPump.PUMP_ACCUCHEK_COMBO;
     }
 
     
@@ -105,7 +105,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ACCUCHEK_COMFORT";
+        return "INSTRUCTIONS_ACCUCHEK_COMBO";
     }
     
     /**
@@ -159,7 +159,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.accuchek.AccuChekComfort";
+        return "ggc.meter.device.accuchek.AccuChekCombo";
     }
 
 

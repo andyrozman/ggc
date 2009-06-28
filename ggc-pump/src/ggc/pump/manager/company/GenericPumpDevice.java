@@ -364,4 +364,15 @@ public class GenericPumpDevice extends AbstractPump
     }
 
     
+    /**
+     * How Many Months Of Data Stored
+     * 
+     * @return
+     */
+    public int howManyMonthsOfDataStored()
+    {
+        return 6;
+    }
+    
+    
 }

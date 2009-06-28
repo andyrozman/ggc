@@ -1,5 +1,6 @@
 package ggc.pump.manager.company; 
 
+import ggc.pump.device.accuchek.AccuChekSpirit;
 import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
@@ -47,6 +48,7 @@ public class Roche extends AbstractPumpDeviceCompany
         }
         
         this.addDevice(new GenericPumpDevice(this));
+        this.addDevice(new AccuChekSpirit(this));
     }
 
 
@@ -66,7 +68,7 @@ public class Roche extends AbstractPumpDeviceCompany
      */
     public String getName()
     {
-        return "Roche";
+        return "Accu-Chek (Roche)";
     }
 
     

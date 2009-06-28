@@ -990,6 +990,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         catch (Exception ex)
         {
             System.out.println("Ex:" + ex);
+            ex.printStackTrace();
             return null;
         }
         

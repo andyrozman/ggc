@@ -1,9 +1,11 @@
 package ggc.pump.plugin;
 
 import ggc.core.util.DataAccess;
+import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
+import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
 import ggc.pump.db.PumpData;
 import ggc.pump.db.PumpDataExtended;
@@ -24,7 +26,6 @@ import javax.swing.JMenu;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.BackupRestorePlugin;
-import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
@@ -55,7 +56,7 @@ import com.atech.utils.ATSwingUtils;
  */
 
 
-public class PumpPlugInServer extends PlugInServer implements ActionListener
+public class PumpPlugInServer extends DevicePlugInServer implements ActionListener
 {
 
     //String plugin_version = "0.1.7.1";
@@ -113,6 +114,7 @@ public class PumpPlugInServer extends PlugInServer implements ActionListener
                                   
                                   "MN_PUMPS_ABOUT" };
     
+    private DataAccessPump da_local = null;
     
     
     /**
@@ -121,6 +123,7 @@ public class PumpPlugInServer extends PlugInServer implements ActionListener
     public PumpPlugInServer()
     {
         super();
+        da_local = DataAccessPump.getInstance();
     }
     
     
@@ -134,7 +137,8 @@ public class PumpPlugInServer extends PlugInServer implements ActionListener
     public PumpPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
         super(cont, selected_lang, da);
-        DataAccessPump.getInstance().addComponent(cont);
+        da_local = DataAccessPump.getInstance();
+        da_local.addComponent(cont);
         //DataAccessPump.getInstance().setPlugInServerInstance(this);
         //DataAccessPump.getInstance().m
     }
@@ -175,8 +179,14 @@ public class PumpPlugInServer extends PlugInServer implements ActionListener
 
             case PumpPlugInServer.COMMAND_PROFILES:
             {
-                System.out.println("parent: " + this.parent);
+                //System.out.println("parent: " + this.parent);
                 new ProfileSelector(DataAccessPump.getInstance(), this.parent);
+                return;
+            }
+            
+            case PumpPlugInServer.COMMAND_READ_PUMP_DATA:
+            {
+                new DeviceInstructionsDialog(DataAccessPump.getInstance(), this);
                 return;
             }
             
@@ -278,16 +288,27 @@ public class PumpPlugInServer extends PlugInServer implements ActionListener
                 return DataAccessPump.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
             else
             {
-                if (m_da.isValueSet(de.communication_port))
-                    return String.format(DataAccessPump.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port);
+
+                if (de.device_device.equals(DataAccessPump.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
+                {
+                    return DataAccessPump.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                }
                 else
-                    return String.format(DataAccessPump.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITHOUT_PORT"), de.device_company + " " + de.device_device);
+                {
+                    if (m_da.isValueSet(de.communication_port))
+                        return String.format(DataAccessPump.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port);
+                    else
+                        return String.format(DataAccessPump.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITHOUT_PORT"), de.device_company + " " + de.device_device);
+                }
             }   
         }
         else
             return null;
     }
 
+    
+    
+    
 
     /**
      * Get Backup Objects (if available)

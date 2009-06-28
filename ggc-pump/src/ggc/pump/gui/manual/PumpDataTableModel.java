@@ -112,7 +112,7 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
     public void setDailyValues(DeviceValuesDay dayData)
     {
         this.dayData = dayData;
-        this.dayData.sort(new PumpValuesEntry());
+        //this.dayData.sort(new PumpValuesEntry());
         
         
         //System.out.println("DayData: " + dayData.getRowCount()); //.getRowCount());

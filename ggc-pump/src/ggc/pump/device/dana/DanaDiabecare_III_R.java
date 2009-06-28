@@ -1,5 +1,7 @@
 package ggc.pump.device.dana;
 
+import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
@@ -30,7 +32,7 @@ import org.apache.commons.logging.LogFactory;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     PumpErrors  
+ *  Filename:     DanaDiabecare_III  
  *  Description:  Dana Diabecare R/III device implementation 
  * 
  *  Author: Andy {andy@atech-software.com}
@@ -40,8 +42,126 @@ import org.apache.commons.logging.LogFactory;
 
 // TODO: Auto-generated Javadoc
 // OLD Implementation
-public class DanaDiabecare_III_R extends SerialProtocol
+public class DanaDiabecare_III_R extends SerialProtocol //extends DanaPump //implements SerialProtocol
 {
+
+
+    /**
+     * Constructor 
+     */
+    public DanaDiabecare_III_R()
+    {
+        super();
+    }
+    
+    
+    /**
+     * Constructor 
+     * 
+     * @param params 
+     * @param writer 
+     */
+    public DanaDiabecare_III_R(String params, OutputWriter writer)
+    {
+        super();
+        //super(params, writer);
+    }
+    
+    
+    
+    /**
+     * getName - Get Name of meter. 
+     * 
+     * @return name of meter
+     */
+    public String getName()
+    {
+        return "Diabcare III R";
+    }
+    
+    
+    
+    /**
+     * getIconName - Get Icon of meter
+     * 
+     * @return icon name
+     */
+    public String getIconName()
+    {
+//        return "da_dc_IIIR.jpg";
+        return "no_device.gif";
+    }
+    
+    
+    /**
+     * getDeviceId - Get Device Id, within MgrCompany class 
+     * Should be implemented by device class.
+     * 
+     * @return id of device within company
+     */
+    public int getDeviceId()
+    {
+        return DanaPump.PUMP_DANA_DIABECARE_III_R;
+    }
+    
+    
+    /**
+     * getInstructions - get instructions for device
+     * Should be implemented by meter class.
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return "INSTRUCTIONS_DANA_III_R";
+    }
+    
+    /**
+     * getComment - Get Comment for device 
+     * 
+     * @return comment or null
+     */
+    public String getComment()
+    {
+        return null;
+    }
+    
+    
+    /**
+     * getImplementationStatus - Get Implementation Status 
+     * 
+     * @return implementation status as number
+     * @see ggc.plugin.manager.DeviceImplementationStatus
+     */
+    public int getImplementationStatus() 
+    {
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+    }
+    
+    
+    /**
+     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
+     * 
+     * @return class name as string
+     */
+    public String getDeviceClassName()
+    {
+        return "ggc.pump.device.dana.DanaDiabcare_III_R";
+    }
+    
+    
+    
+    
+    /** 
+     * Get Max Memory Records
+     */
+    public int getMaxMemoryRecords()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
     private static Log logger = LogFactory.getLog(DanaDiabecare_III_R.class);
 
     @SuppressWarnings("unused")
@@ -262,7 +382,7 @@ public class DanaDiabecare_III_R extends SerialProtocol
         super();
 
         this.portName = portName;
-        this.setCommunicationSettings(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE, 0, 0);
+      //xa        this.setCommunicationSettings(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE, 0, 0);
 
         /*
          * this.serialPort.ReadBufferSize = sett.serialReadBufferSize;
@@ -274,7 +394,7 @@ public class DanaDiabecare_III_R extends SerialProtocol
         try
         {
             this.portName = portName;
-            this.setPort(portName);
+//xa            this.setPort(portName);
             // .serialPort = new SerialPort(portName);
             // this.logger = Logger.getInstance("SYNC[" + portName + "]");
             logger.debug("SyncManager()");
@@ -331,7 +451,7 @@ public class DanaDiabecare_III_R extends SerialProtocol
      * 
      * @throws Exception the exception
      */
-    public void getDeviceInfo() throws Exception
+    public void getDeviceInfor() throws Exception
     {
         try
         {

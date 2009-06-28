@@ -3,8 +3,12 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.output.OutputWriterType;
 import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.db.PumpData;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
@@ -12,11 +16,14 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.components.MultiLineTooltip;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.ATechDate;
 
@@ -50,10 +57,11 @@ import com.atech.utils.ATechDate;
 public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObjectHibernate, MultiLineTooltip //, StatisticsItem
 //extends PumpDataH implements DatabaseObjectHibernate   // extends PumpValuesEntryAbstract
 {
-
+    private static Log log = LogFactory.getLog(PumpValuesEntry.class);
     private static final long serialVersionUID = -2047203215269156938L;
 
     DataAccessPump m_da = null; //DataAccessPump.getInstance();
+    I18nControlAbstract m_ic = null;
 	
 	// pump
     long id;
@@ -81,6 +89,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
      */
     public PumpValuesEntry(boolean tr)
     {
+        //m_da = DataAccessPump.getInstance();
+        //m_ic = m_da.getI18nControlInstance();
     }
 
 	
@@ -90,6 +100,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
 	public PumpValuesEntry()
 	{
         m_da = DataAccessPump.getInstance();
+        m_ic = m_da.getI18nControlInstance();
         
         this.id = 0L;
         this.datetime = new ATechDate(this.getDateTimeFormat(), new GregorianCalendar());
@@ -111,6 +122,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
     public PumpValuesEntry(int base_type)
     {
         m_da = DataAccessPump.getInstance();
+        m_ic = m_da.getI18nControlInstance();
 
         this.id = 0L;
         this.datetime = new ATechDate(this.getDateTimeFormat(), new GregorianCalendar());
@@ -131,6 +143,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
 	public PumpValuesEntry(PumpDataH pdh)
 	{
         m_da = DataAccessPump.getInstance();
+        m_ic = m_da.getI18nControlInstance();
 
         //this.entry_object = pdh;
 	    this.id = pdh.getId();
@@ -370,7 +383,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
     	    }
     	    case 3: // value
     	    {
-    	        return this.getValue();
+    	        //return this.getValue();
+    	        return getValuePrint();
     	    }
     	    case 4: // additional
     	    {
@@ -467,7 +481,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
         }
         else if (this.base_type==PumpBaseType.PUMP_DATA_EVENT)
         {
-            return m_da.getPumpEventTypes().getDescriptions()[this.sub_type];
+            return m_da.getPumpEventTypes().getDescriptionForType(this.sub_type);
         }
 	    else 
 	    {
@@ -569,9 +583,125 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
     }
 	
 	
+    /**
+     * Get Value HTML
+     * 
+     * @return
+     */
+    public String getValueHTML()
+    {
+        StringBuffer sb = new StringBuffer();
+        
+        sb.append("<html>");
+
+        if (this.base_type==PumpBaseType.PUMP_DATA_BASAL)
+        {
+            if (this.sub_type==PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE)
+            {
+                String s[] = m_da.getParsedValues(this.value);
+                sb.append(String.format("%s: %s<br>%s: %s", 
+                              m_ic.getMessage("DURATION"),
+                              s[0],
+                              m_ic.getMessage("AMOUNT"),
+                              s[1]));
+            }
+            else
+                sb.append(this.getValue());
+                
+        }
+        else if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
+        {
+            if (this.sub_type==PumpBolusType.PUMP_BOLUS_SQUARE)
+            {
+                String s[] = m_da.getParsedValues(this.getValue());
+                sb.append(String.format("%s: %s<br>%s: %s", 
+                              m_ic.getMessage("SQUARE_AMOUNT"),
+                              s[0],
+                              m_ic.getMessage("DURATION"),
+                              s[1]));
+            }
+            else if (this.sub_type==PumpBolusType.PUMP_BOLUS_MULTIWAVE)
+            {
+                String s[] = m_da.getParsedValues(this.getValue());
+                sb.append(String.format("%s: %s<br>%s: %s<br>%s: %s", 
+                              m_ic.getMessage("IMMEDIATE_AMOUNT"),
+                              s[0],
+                              m_ic.getMessage("SQUARE_AMOUNT"),
+                              s[1],
+                              m_ic.getMessage("DURATION"),
+                              s[2]));
+            }
+            else
+                sb.append(this.getValue());
+        }
+        else
+            sb.append(this.getValue());
+            
+        sb.append("</html>");
+        return sb.toString();
+    }
+
+    
+    /**
+     * Get Value Print
+     * 
+     * @return
+     */
+    public String getValuePrint()
+    {
+        StringBuffer sb = new StringBuffer();
+        
+        if (this.base_type==PumpBaseType.PUMP_DATA_BASAL)
+        {
+            if (this.sub_type==PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE)
+            {
+                String s[] = m_da.getParsedValues(this.value);
+                sb.append(String.format("%s: %s, %s: %s", 
+                              m_ic.getMessage("DURATION"),
+                              s[0],
+                              m_ic.getMessage("AMOUNT"),
+                              s[1]));
+            }
+            else
+                sb.append(this.getValue());
+                
+        }
+        else if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
+        {
+            if (this.sub_type==PumpBolusType.PUMP_BOLUS_SQUARE)
+            {
+                String s[] = m_da.getParsedValues(this.value);
+                sb.append(String.format("%s: %s, %s: %s", 
+                              m_ic.getMessage("SQUARE_AMOUNT"),
+                              s[0],
+                              m_ic.getMessage("DURATION"),
+                              s[1]));
+            }
+            else if (this.sub_type==PumpBolusType.PUMP_BOLUS_MULTIWAVE)
+            {
+                String s[] = m_da.getParsedValues(this.value);
+                sb.append(String.format("%s: %s, %s: %s, %s: %s", 
+                              m_ic.getMessage("IMMEDIATE_AMOUNT"),
+                              s[0],
+                              m_ic.getMessage("SQUARE_AMOUNT"),
+                              s[1],
+                              m_ic.getMessage("DURATION"),
+                              s[2]));
+            }
+            else
+                sb.append(this.getValue());
+        }
+        else
+            sb.append(this.getValue());
+            
+        return sb.toString();
+    }
+    
+    
 	
     /**
      * Get Additional Display
+     * 
      * @return
      */
     public String getAdditionalDataPrint()
@@ -892,11 +1022,38 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
     /**
      * Get Data As String
      */
-    @Override
+    
     public String getDataAsString()
     {
-        // TODO Auto-generated method stub
-        return null;
+        switch(output_type)
+        {
+            case OutputWriterType.DUMMY:
+                return "";
+                
+            case OutputWriterType.CONSOLE:
+            case OutputWriterType.FILE:
+                
+                return this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString() + ", Sub Type=" + this.getSubTypeString() + ", Comment=" + this.getComment();
+                
+            case OutputWriterType.GGC_FILE_EXPORT:
+            {
+                PumpData pd = new PumpData(this);
+                try
+                {
+                    return pd.dbExport();
+                }
+                catch(Exception ex)
+                {
+                    log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
+                    return "Value could not be decoded for export!";
+                }
+            }
+                
+        
+            default:
+                return "Value is undefined";
+        
+        }
     }
 
     /**
@@ -1266,7 +1423,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
             }
             case 3: // value
             {
-                return this.getValue();
+                return this.getValueHTML();
             }
             case 4: // additional
             {
@@ -1330,5 +1487,59 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
     {
         return true;
     }
+
+    /**
+     * Get Table Column Value (in case that we need special display values for download data table, this method 
+     * can be used, if it's the same as getColumnValue, we can just call that one. 
+     * 
+     * @param column
+     * @return
+     */
+    public Object getTableColumnValue(int column)
+    {
+        switch (column)
+        {
+            case 0:
+                return getDateTimeObject().getDateTimeString();
+
+            case 1:
+                return m_ic.getMessage("BASE_TYPE_SH");
+
+            case 2:
+                return this.getBaseTypeString();
+
+            case 3:
+                return this.getSubTypeString();
+
+            case 4:
+                return this.getValuePrint();
+                
+            case 5:
+                return this.getStatus();
+            
+            case 6:
+                return new Boolean(getChecked());
+
+            default:
+                return "";
+        }
+        
+    }
  	
+    
+    
+    /**
+     * Get Special Id
+     * 
+     * @return
+     */
+    public String getSpecialId()
+    {
+        return "";
+    }
+
+    
+    
+    
+    
 }

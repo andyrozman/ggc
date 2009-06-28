@@ -15,6 +15,8 @@ import ggc.shared.bolushelper.BolusHelper;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 import javax.swing.ButtonGroup;
@@ -75,6 +77,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     public static final int TYPE_ADDITIONAL_DATA = 9;
     */
     TemporaryBasalRateComponent tbr_cmp = null;
+    SquareBolusComponent bolus_sq = null;
     JLabel label_1, label_2, label_3, label_4;
     JTextField text_1, text_2;
     JComboBox combo_1, combo_2;
@@ -185,6 +188,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         this.button_1 = ATSwingUtils.getButton("", 0, 0, 0, 0, this, ATSwingUtils.FONT_NORMAL, "magic-wand.png", "bolus_helper", this, m_da);
 
+        this.bolus_sq = new SquareBolusComponent();
+        this.add(this.bolus_sq);
+        
+        
     }
 
     /**
@@ -278,6 +285,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         profile_comp.setVisible(false);
         this.button_1.setVisible(false);
         this.tc_1.setVisible(false);
+        this.bolus_sq.setVisible(false);
     }
 
     private void setEmpty()
@@ -591,6 +599,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("bolus");
         addAllItems(this.combo_1, this.m_da.getBolusSubTypes().getDescriptions());
+        this.combo_1.setSelectedIndex(1);
         
         this.button_1.setBounds(120, 20, 25, 25);
         this.button_1.setVisible(true);
@@ -646,15 +655,20 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             
         case PumpBolusType.PUMP_BOLUS_SQUARE:
             {
+                // TODO
                 this.label_2.setBounds(0, 90, 150, 25);
-                this.text_1.setBounds(150, 90, 180, 25);
+                this.text_1.setBounds(110, 90, 220, 25);
 
-                this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                this.num_tf_1_d2.setVisible(true);
-                this.label_3.setBounds(0, 55, 150, 25);
-                this.label_3.setText(ic.getMessage("AMOUNT") + ":");
-                this.label_3.setVisible(true);
+                //this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                //this.num_tf_1_d2.setVisible(true);
+                //this.label_3.setBounds(0, 55, 150, 25);
+                //this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                //this.label_3.setVisible(true);
 
+                this.bolus_sq.setBounds(0, 55, 200, 25);
+                this.bolus_sq.setType(SquareBolusComponent.SQUARE_SINGLE);
+                this.bolus_sq.setVisible(true);
+                
                 this.setHeight(115);
             }
             break;
@@ -667,17 +681,20 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 this.num_tf_1_d2.setBounds(150, 55, 180, 25);
                 this.num_tf_1_d2.setVisible(true);
                 this.label_3.setBounds(0, 55, 150, 25);
-                this.label_3.setText(ic.getMessage("AMOUNT_MW_1") + ":");
+                this.label_3.setText(ic.getMessage("IMMEDIATE_AMOUNT") + ":");
                 this.label_3.setVisible(true);
 
                 // 90
-                this.label_4.setText(ic.getMessage("AMOUNT_MW_2") + ":");
+                /*this.label_4.setText(ic.getMessage("AMOUNT_MW_2") + ":");
                 label_4.setBounds(0, 90, 150, 25);
                 this.label_4.setVisible(true);
                 this.num_tf_2_d2.setBounds(150, 90, 180, 25);
-                this.num_tf_2_d2.setVisible(true);
-
+                this.num_tf_2_d2.setVisible(true); */
                 //this.tc_1.setVisible(false);
+                
+                this.bolus_sq.setBounds(0, 90, 200, 25);
+                this.bolus_sq.setType(SquareBolusComponent.SQUARE_DUAL);
+                this.bolus_sq.setVisible(true);
                 
                 
                 this.setHeight(150);
@@ -757,15 +774,19 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 {
                     case PumpBolusType.PUMP_BOLUS_STANDARD:
                     case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
+                        {
+                            return (this.num_tf_1_d2.getText().length() > 0);
+                            //return (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0);
+                        } 
                     case PumpBolusType.PUMP_BOLUS_SQUARE:
                         {
-                            return (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0);
+                            return this.bolus_sq.isValueSet();
                         } 
                         
                     case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
                         {
                             return ((m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0) &&
-                                    (m_da.getFloatValue(this.num_tf_2_d2.getCurrentValue()) > 0));
+                                    (this.bolus_sq.isValueSet()));
                         } 
                         
                     default:
@@ -882,7 +903,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
                     case PumpBolusType.PUMP_BOLUS_SQUARE:
                         {
-                            
+                            this.bolus_sq.setValue(data.getValue());
                         } break;
                         
                         
@@ -893,7 +914,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                             String s[] = this.getParsedValues(data.getValue());
                             //String s[] = data.getValue().split(regex)
                             this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(s[0]));
-                            this.num_tf_2_d2.setValue(m_da.getFloatValueFromString(s[1]));
+                            //this.num_tf_2_d2.setValue(m_da.getFloatValueFromString(s[1]));
+                            this.bolus_sq.setValue(data.getValue());
                             
                         } break;
                         
@@ -907,6 +929,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             } break;
 
             case PumpBaseType.PUMP_DATA_EVENT:
+            {
+                this.combo_1.setSelectedItem(data.getSubTypeString());
+            } break;
             case PumpBaseType.PUMP_DATA_ALARM:
             case PumpBaseType.PUMP_DATA_ERROR:
             {
@@ -1012,6 +1037,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                        
                    case PumpBolusType.PUMP_BOLUS_SQUARE:
                        {
+                           pve.setValue(this.bolus_sq.getValue());
                            // pve.setValue("AMOUNT_SQUARE=" + amount + ";DURATION=" + e);
 
                        } break;
@@ -1023,8 +1049,12 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                                str[2], 
                                str[3])); */
                            
-                           pve.setValue("AMOUNT_1=" + this.num_tf_1_d2.getCurrentValue() +
-                                        ";AMOUNT_2=" + this.num_tf_2_d2.getCurrentValue());
+                           //pve.setValue("AMOUNT_1=" + this.num_tf_1_d2.getCurrentValue() +
+                           //             ";AMOUNT_2=" + this.num_tf_2_d2.getCurrentValue());
+
+                           pve.setValue("IMMEDIATE_AMOUNT=" + this.num_tf_1_d2.getCurrentValue() + ";"+
+                                        this.bolus_sq.getValue());
+                           
                            
                        } break;
                        
@@ -1038,6 +1068,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
            } break;
 
            case PumpBaseType.PUMP_DATA_EVENT:
+           {
+               pve.setSubType(m_da.getPumpEventTypes().getTypeFromDescription((String)this.combo_1.getSelectedItem()));
+           } break;
+           
            case PumpBaseType.PUMP_DATA_ALARM:
            case PumpBaseType.PUMP_DATA_ERROR:
            {
@@ -1095,6 +1129,19 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         }
     }
 
+    
+    private void addAllItems(JComboBox cb, Hashtable<Integer,String> ht)
+    {
+        cb.removeAllItems();
+
+        for(Enumeration<Integer> en=ht.keys(); en.hasMoreElements(); )
+        {
+            Integer i = en.nextElement();
+            cb.addItem(ht.get(i));
+        }
+    }
+    
+    
     /**
      * Set Height
      * 
@@ -1294,8 +1341,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     
     
-    
-    @SuppressWarnings("unused")
+    /**
+     *  Square Bolus Component - Component used for setting Square Bolus   
+     */
     private class SquareBolusComponent extends JPanel
     {
 
@@ -1304,54 +1352,53 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 //        String[] vals = { "-", "+" };
 
         JSpinner spinner = null;
-        JComboBox cb_sign = null;
+        //JComboBox cb_sign = null;
         JLabel label_1_1, label_2_1;
-        
-        
+        TimeComponent cmp_time = null;
+        int m_type = 0;
         
         public static final int SQUARE_SINGLE = 1;
         public static final int SQUARE_DUAL = 2;
         DataAccessPump da = DataAccessPump.getInstance();
         
+        
         public SquareBolusComponent()
         {
             super();
+            ATSwingUtils.initLibrary();
             this.setLayout(null);
             this.init();
         }
 
         private void init()
         {
-            label_1_1 = new JLabel(ic.getMessage("SQUARE_VALUE") + ":");
-            label_1_1.setBounds(0, 0, 140, 25);
-            label_1_1.setFont(m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD));
+            label_1_1 = ATSwingUtils.getLabel(ic.getMessage("SQUARE_AMOUNT") + ":", 
+                                              0, 0, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD); 
             this.add(label_1_1);
 
-  /*          cb_sign = new JComboBox(vals);
-            cb_sign.setBounds(200, 0, 50, 25);
-            //this.add(cb_sign);
-*/
             spinner = new JSpinner();
-            spinner.setModel(new SpinnerNumberModel(0, 0, da.getMaxBolusValue(), da.getBolusStep()));
-            spinner.setBounds(260, 0, 50, 25);
-            spinner.setValue(100);
+            spinner.setModel(new SpinnerNumberModel(0.0f, 0.0f, da.getMaxBolusValue(), da.getBolusStep()));
+            spinner.setBounds(110, 0, 50, 25);
+            spinner.setValue(0.1f);
             this.add(spinner);
 
-            label_2_1 = new JLabel(ic.getMessage("DURATION") + ":");
-            label_2_1.setBounds(320, 0, 120, 25);
+            label_2_1 = ATSwingUtils.getLabel(ic.getMessage("DURATION_SHORT") + ":", 
+                                              175, 0, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
             this.add(label_2_1);
             
+            cmp_time = new TimeComponent();
+            cmp_time.setBounds(245, 0, 50, 25);
+            this.add(cmp_time);
             
-
         }
 
         
         
-        
-        public void setType(int type)
+        // Type: 1 = AMOUNT_SQUARE=%s;DURATION=%s
+        //       2 = AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s
+        public void setType(int type_in)
         {
-            
-            
+            this.m_type = type_in;
         }
         
         
@@ -1362,14 +1409,54 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         
         public String getValue()
         {
-            System.out.println("getValue not implemented");
-            return null;
+            return String.format("AMOUNT_SQUARE=%s;DURATION=%s", 
+                "" + m_da.getFormatedBolusValue(((Double)this.spinner.getValue()).floatValue()),
+                this.cmp_time.getTimeString());
+            
+            
+            
+            //System.out.println("getValue not implemented");
+            //return null;
             
         }
         
         public void setValue(String val)
         {
-            System.out.println("setValue not implemented");
+            String s[] = getParsedValues(val);
+            
+            if (m_type==SquareBolusComponent.SQUARE_SINGLE)
+            {
+                this.spinner.setValue(m_da.getFloatValueFromString(s[0], 0.0f));
+                this.setTime(s[1]);
+            }
+            else
+            {
+                this.spinner.setValue(m_da.getFloatValueFromString(s[1], 0.0f));
+                
+                if (s.length>2)
+                    this.setTime(s[2]);
+                else
+                    this.cmp_time.setTime(0);
+            }
+            
+            //String s[] = data.getValue().split(regex)
+            //this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(s[0]));
+            //this.num_tf_2_d2.setValue(m_da.getFloatValueFromString(s[1]));
+            
+            //System.out.println("setValue not implemented");
+        }
+        
+        
+        private void setTime(String val)
+        {
+            String s1, s2;
+            
+            s1 = val.substring(0, val.indexOf(":"));
+            s2 = val.substring(val.indexOf(":")+1);
+            
+            int tm = (m_da.getIntValueFromString(s1, 0) * 100) + m_da.getIntValueFromString(s2, 0);
+            
+            this.cmp_time.setTime(tm);
         }
         
 

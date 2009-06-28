@@ -3,6 +3,7 @@ package ggc.pump.device.accuchek;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.device.AbstractXmlPump;
@@ -60,6 +61,17 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     {
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp 
+     */
+    public AccuChekSmartPix(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
+    
     
     /**
      * Constructor 
@@ -181,11 +193,54 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
 
 
 
-
     /** 
      * Read Device Data Full
      */
     public void readDeviceDataFull() throws PlugInBaseException
+    {
+        // write preliminary device identification, based on class
+        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        
+        di.company = "Accu-Chek";
+        di.device_selected = "SmartPix Device Reader";
+        
+        di.device_identified = "Accu-Chek " + this.getName() + " [not identified]";
+
+        this.output_writer.writeDeviceIdentification();
+        
+
+                    /*
+                    File f1 = new File("..\drv + "\\REPORT\\XML");
+                    
+                    File[] fls = f1.listFiles(new FileFilter()
+                    {
+
+                        public boolean accept(File file)
+                        {
+                            return ((file.getName().toUpperCase().contains(".XML")) &&
+                                    (file.getName().startsWith("G")));
+                        }}
+                    );*/
+                    
+                    processXml(new File("../test/I0014072.XML"));
+
+                    this.output_writer.setSpecialProgress(100);
+                    this.output_writer.setSubStatus(null);
+                    
+                    return;
+                    
+            
+        
+    }
+    
+    
+
+    /** 
+     * Read Device Data Full
+     * 
+     * @throws PlugInBaseException 
+     */
+    public void readDeviceDataFull_x() throws PlugInBaseException
     {
         // write preliminary device identification, based on class
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
@@ -306,7 +361,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
                         public boolean accept(File file)
                         {
                             return ((file.getName().toUpperCase().contains(".XML")) &&
-                                    (file.getName().startsWith("G")));
+                                    (file.getName().startsWith(getFirstLetterForReport())));
                         }}
                     );
                     
@@ -341,6 +396,13 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
         //System.out.println("We got out !!!!");
     }
     
+    
+    /**
+     * Letter with which report starts (I for insulin pumps, G for glucose meters)
+     * 
+     * @return
+     */
+    public abstract String getFirstLetterForReport();
     
     
     

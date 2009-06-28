@@ -131,15 +131,6 @@ public interface PumpInterface extends DeviceInterface
     public DeviceIdentification getDeviceInfo();
     
 
-    
-    /**
-     * Get Download Support Type (if device supports downloading data from it)
-     * 
-     * @return
-     */
-    public int getDownloadSupportType();
-    
-    
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -150,4 +141,23 @@ public interface PumpInterface extends DeviceInterface
     public String getTemporaryBasalTypeDefinition();
     
 
+    
+    /**
+     * Are Pump Settings Set
+     * 
+     * @return
+     */
+    public boolean arePumpSettingsSet();
+    
+    
+    
+    /**
+     * How Many Months Of Data Stored
+     * 
+     * @return
+     */
+    public int howManyMonthsOfDataStored();
+    
+    
+    
 }

@@ -67,7 +67,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
      */
     public String getName()
     {
-        return "Comfort";
+        return "D-Tron";
     }
 
 
@@ -79,7 +79,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
      */
     public String getIconName()
     {
-        return "ac_comfort.jpg";
+        return "ac_dtron.jpg";
     }
     
 
@@ -104,7 +104,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ACCUCHEK_COMFORT";
+        return "INSTRUCTIONS_ACCUCHEK_DTRON";
     }
     
     /**
@@ -158,7 +158,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.accuchek.AccuChekComfort";
+        return "ggc.meter.device.accuchek.AccuChekDTron";
     }
 
     
@@ -178,5 +178,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
     {
     }
 
+    
+    
     
 }

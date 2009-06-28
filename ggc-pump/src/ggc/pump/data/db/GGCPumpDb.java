@@ -6,20 +6,24 @@ import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.db.PluginDb;
+import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.db.PumpProfile;
+import ggc.pump.device.PumpInterface;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
 
 import com.atech.db.hibernate.HibernateDb;
@@ -66,7 +70,7 @@ public class GGCPumpDb extends PluginDb
     {
         super(db);
         
-        getAllElementsCount();
+        //getAllElementsCount();
     }
     
     
@@ -402,16 +406,34 @@ public class GGCPumpDb extends PluginDb
         Integer in = null;
         int sum_all = 0;
         
+        PumpInterface pe = m_da.getSelectedDeviceInstance();
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.add(GregorianCalendar.MONTH, (-1) * pe.howManyMonthsOfDataStored());
+        
+        long dt_from = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY) * 10000;
+        
+        
         Criteria criteria = this.getSession().createCriteria(PumpDataH.class);
-        //criteria.add(Restrictions.gt("id", minLogID));
+        criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
+        criteria.add(Expression.ge("dt_info", dt_from));
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
         sum_all = in.intValue();
-        
+
         System.out.println("Pump Data : " + in.intValue());
+
+        criteria = this.getSession().createCriteria(PumpDataExtendedH.class);
+        criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
+        criteria.add(Expression.ge("dt_info", dt_from));
+        //criteria.add(Restrictions.gt("id", minLogID));
+        criteria.setProjection(Projections.rowCount());
+        in = (Integer) criteria.list().get(0);
+        sum_all += in.intValue();
+        
         
         criteria = this.getSession().createCriteria(PumpProfileH.class);
-        //criteria.add(Restrictions.gt("id", minLogID));
+        criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
+        criteria.add(Expression.ge("active_from", dt_from));
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
         sum_all += in.intValue();
@@ -419,6 +441,110 @@ public class GGCPumpDb extends PluginDb
         System.out.println("Pump Profiles : " + in.intValue());
         
         return sum_all;
+    }
+    
+    
+    public Hashtable<String, Object> getPumpValues(PumpDataReader pdr)
+    {
+
+        String sql = "";
+
+        PumpInterface pe = m_da.getSelectedDeviceInstance();
+        
+        
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.add(GregorianCalendar.MONTH, (-1) * pe.howManyMonthsOfDataStored());
+        
+        Hashtable<String, Object> dt = new Hashtable<String, Object>(); 
+        
+        long dt_from = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
+
+        String id = "";
+        
+        try
+        {
+            int counter = 0;
+            
+            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataH as dv " + "WHERE dv.dt_info >=  " + dt_from  /* atd.getDateString() */
+            + "000000 and dv.person_id=" + m_da.getCurrentUserId() + " ORDER BY dv.dt_info ";
+            
+            Query q = this.db.getSession().createQuery(sql);
+
+            Iterator<?> it = q.list().iterator();
+            
+            pdr.writeStatus(-1);
+            id = "PD_%s_%s_%s";
+            
+            while (it.hasNext())
+            {
+                counter++;
+                
+                PumpDataH pdh = (PumpDataH)it.next();
+                
+                dt.put(String.format(id, 
+                                     pdh.getDt_info(),
+                                     pdh.getBase_type(),
+                                     pdh.getSub_type()) , pdh);
+                
+                pdr.writeStatus(counter);
+            }
+            
+            
+            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + 
+                  "WHERE dv.dt_info >=  " + dt_from + "000000 and dv.person_id=" + m_da.getCurrentUserId() + " ORDER BY dv.dt_info ";
+
+            q = this.db.getSession().createQuery(sql);
+
+            it = q.list().iterator();
+            
+            pdr.writeStatus(-1);
+            id = "PE_%s_%s";
+
+            while (it.hasNext())
+            {
+                counter++;
+
+                PumpDataExtendedH pdh = (PumpDataExtendedH) it.next();
+                  
+                dt.put(String.format(id, 
+                    pdh.getDt_info(),
+                    pdh.getType()) , pdh);
+
+                pdr.writeStatus(counter);
+            }
+            
+            
+            sql = "SELECT dv from ggc.core.db.hibernate.pump.PumpProfileH as dv " +
+            	  "WHERE dv.active_from >= " + dt_from + " and dv.person_id=" + m_da.getCurrentUserId() + 
+            	  " ORDER BY dv.active_from "; 
+            
+            q = this.db.getSession().createQuery(sql);
+
+            it = q.list().iterator();
+
+            pdr.writeStatus(-1);
+            id = "PP_%s";
+            
+            while (it.hasNext())
+            {
+                counter++;
+
+                PumpProfileH pdh = (PumpProfileH) it.next();
+                  
+                dt.put(String.format(id, 
+                    pdh.getActive_from()) , pdh);
+
+                pdr.writeStatus(counter);
+            }
+            
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception on getPumpValues: " + ex);
+            log.error("Exception on getPumpValues.\nsql:"+ sql + "\nEx: " + ex, ex);
+        }
+        
+        return dt;
     }
     
     

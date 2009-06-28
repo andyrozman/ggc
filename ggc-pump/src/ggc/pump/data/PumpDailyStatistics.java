@@ -71,7 +71,8 @@ public class PumpDailyStatistics extends StatisticsCollection
             setBGValue(PumpValuesEntry.BG_MAX);
         }
         
-        setValue(PumpValuesEntry.BG_STD_DEV, (this.getValueInternal(PumpValuesEntry.BG_AVG) - this.getValueInternal(PumpValuesEntry.BG_MIN))); 
+        
+        setValue(PumpValuesEntry.BG_STD_DEV, getStandardDeviation()); 
         
         ArrayList<PumpValuesEntry> lst = new ArrayList<PumpValuesEntry>();
         
@@ -109,13 +110,13 @@ public class PumpDailyStatistics extends StatisticsCollection
             {
                 PumpValuesEntry pve2 = lst.get(i+1);
                 
-                System.out.println("Hour: " + pve2.getDateTimeObject().hour_of_day + ", hour2=" + pve.getDateTimeObject().hour_of_day);
+                //System.out.println("Hour: " + pve2.getDateTimeObject().hour_of_day + ", hour2=" + pve.getDateTimeObject().hour_of_day);
                 
                 int s = pve2.getDateTimeObject().hour_of_day - pve.getDateTimeObject().hour_of_day;
                 float val = da_pump.getFloatValueFromString(pve.getValue());
                 sum += s * val; 
 
-                System.out.println("Time diff: " + s + ", val=" + val);
+                //System.out.println("Time diff: " + s + ", val=" + val);
             }
             
         }
@@ -152,6 +153,21 @@ public class PumpDailyStatistics extends StatisticsCollection
         
         this.special_processed = true;
     }
+    
+    
+    private float getStandardDeviation()
+    {
+        float f = this.getValueInternal(PumpValuesEntry.BG_AVG) - this.getValueInternal(PumpValuesEntry.BG_MIN);
+
+        if (f < 0)
+        {
+            setValue(PumpValuesEntry.BG_MIN, 0.0f);
+            return 0.0f;
+        }
+        else
+            return f;
+    }
+    
     
     
     private void setBGValue(int index)

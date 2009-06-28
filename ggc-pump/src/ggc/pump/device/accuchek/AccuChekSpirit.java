@@ -2,6 +2,7 @@ package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -55,8 +56,18 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public AccuChekSpirit(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
+    
     //************************************************
-    //***      Meter Identification Methods        ***
+    //***       Pump Identification Methods        ***
     //************************************************
 
 
@@ -67,7 +78,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public String getName()
     {
-        return "Comfort";
+        return "Spirit";
     }
 
 
@@ -79,7 +90,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public String getIconName()
     {
-        return "ac_comfort.jpg";
+        return "ac_spirit.jpg";
     }
     
 
@@ -103,7 +114,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ACCUCHEK_COMFORT";
+        return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
     
     /**
@@ -157,7 +168,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.accuchek.AccuChekComfort";
+        return "ggc.pump.device.accuchek.AccuChekSpirit";
     }
 
 
