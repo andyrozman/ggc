@@ -5,10 +5,8 @@ import ggc.core.util.RefreshInfo;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.File;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
@@ -130,6 +128,7 @@ public class PumpsPlugIn extends PlugInClient
         catch (Exception ex)
         {
             System.out.println("Ex:" + ex);
+            ex.printStackTrace();
         }
     }
 
@@ -171,7 +170,7 @@ public class PumpsPlugIn extends PlugInClient
         this.commands[6] = "MN_PUMPS_ABOUT_DESC";
 
         this.commands_implemented = new boolean[7];
-        this.commands_implemented[0] = false;
+        this.commands_implemented[0] = true;
         this.commands_implemented[1] = true;
         this.commands_implemented[2] = true;
         this.commands_implemented[3] = true;
@@ -213,16 +212,16 @@ public class PumpsPlugIn extends PlugInClient
         }
         else if (command.equals("pumps_manual_entry"))
         {
-            if (!DataAccess.getInstance().developer_version)
-                displayExperimental();
+            //if (!DataAccess.getInstance().developer_version)
+            //    displayExperimental();
             
             this.executeCommand(PumpsPlugIn.COMMAND_MANUAL_ENTRY);
 //            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("pumps_additional_data"))
         {
-            if (!DataAccess.getInstance().developer_version)
-                displayExperimental();
+            //if (!DataAccess.getInstance().developer_version)
+            //    displayExperimental();
 
             this.executeCommand(PumpsPlugIn.COMMAND_ADDITIONAL_DATA);
 //            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
@@ -258,7 +257,7 @@ public class PumpsPlugIn extends PlugInClient
     }
 
     
-    private void displayExperimental()
+/*    private void displayExperimental()
     {
         
         if ((new File("../data/tools/PumpTools_debug.txt")).exists())
@@ -266,26 +265,10 @@ public class PumpsPlugIn extends PlugInClient
         
         JOptionPane.showMessageDialog(this.parent, 
             ic.getMessage("PUMP_PLUGIN_EXPERIMENTAL")
-/*            "Pumps Plug-in\n\n" +
-            "This part is just experimental. We took quite a time\n" +
-            "to work on it and tried to add all needed functions\n" +
-            "and options. We did some testing, but we still need\n" +
-            "to add some functionalities and do more exhaustive\n" +
-            "testing. Therefore this module is marked as experimental\n" +
-            "and may be used for testing only. At this point we also\n" +
-            "don't support backup/restore, so even if data would be\n" +
-            "added succesfully, we have no means to backup it up.\n\n" +
-            "This is required step, before we delve into world of\n" +
-            "automatic data retriveal from actual devices. Once \n" +
-            "this testing is done, we can start with data retrieval.\n\n" +
-            "If you find any problem here, or have any additional\n" +
-            "options/ideas that could be added, don't hesitate to\n" +
-            "contact us on our e-mail address:\n" +
-            "ggc@atech-software.com.\n\n" */
             , 
             ic.getMessage("WARNING"), 
             JOptionPane.WARNING_MESSAGE);
-    }
+    } */
     
     
     /**
