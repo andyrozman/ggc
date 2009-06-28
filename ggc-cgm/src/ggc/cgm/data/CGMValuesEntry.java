@@ -263,7 +263,7 @@ public class CGMValuesEntry extends DeviceValuesEntry
      * 
      * @see ggc.plugin.output.OutputWriterData#getDataAsString()
      */
-    @Override
+    
     public String getDataAsString()
     {
         // TODO Auto-generated method stub
@@ -339,6 +339,20 @@ public class CGMValuesEntry extends DeviceValuesEntry
     public boolean weHaveSpecialActions()
     {
         return false;
+    }
+
+
+
+    /**
+     * Get Table Column Value (in case that we need special display values for download data table, this method 
+     * can be used, if it's the same as getColumnValue, we can just call that one. 
+     * 
+     * @param index
+     * @return
+     */
+    public Object getTableColumnValue(int index)
+    {
+        return null;
     }
     
     

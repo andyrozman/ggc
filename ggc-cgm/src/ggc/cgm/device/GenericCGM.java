@@ -1,6 +1,7 @@
 package ggc.cgm.device;
 
 import ggc.cgm.util.I18nControl;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -504,6 +505,14 @@ public class GenericCGM implements CGMInterface
     public boolean isReadableDevice()
     {
         return false;
+    }
+
+    /** 
+     * Get Download Support Type
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
     
 }

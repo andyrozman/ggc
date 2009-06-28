@@ -1,12 +1,10 @@
 package ggc.cgm.data;
 
 import ggc.cgm.util.DataAccessCGM;
-import ggc.cgm.util.I18nControl;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
-import ggc.plugin.gui.DeviceDisplayDataDialog;
 
 import java.util.ArrayList;
 
@@ -43,12 +41,12 @@ public class CGMValuesTableModel extends DeviceValuesTableModel
 
     private static final long serialVersionUID = 2881771615052748327L;
 
-    private I18nControl m_ic = I18nControl.getInstance();
+//    private I18nControl m_ic = I18nControl.getInstance();
 
-    int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
+//    int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
 
-    private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
-                                     m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
+//    private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
+//                                     m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
     /**
      * Constructor
@@ -84,235 +82,15 @@ public class CGMValuesTableModel extends DeviceValuesTableModel
             return false;
     }
 
-    /**
-     * Is Editable Column
-     * 
-     * @param column column index
-     * @return true if column is editable
-     */
-    public boolean isEditableColumn(int column)
-    {
-        if (column == 4)
-            return true;
-        else
-            return false;
-
-    }
+    
 
     
-    /**
-     * Get Column Width
-     * 
-     * @param column column index
-     * @param width width for column
-     * @return calculated size of column
-     */
-    public int getColumnWidth(int column, int width)
-    {
-        if (column == 0)
-        {
-            return 100; // third column is bigger
-        }
-        else
-        {
-            return 50;
-        }
-
-    }
+   
 
 
-    /**
-     * Should be displayed filter
-     * 
-     * @param status
-     * @return
-     */    
-    public boolean shouldBeDisplayed(int status)
-    {
-        
-/*        
-        switch (this.current_filter)
-        {
-            case MeterDisplayDataDialog.FILTER_ALL:
-                return true;
-                
-            case MeterDisplayDataDialog.FILTER_NEW:
-                return (status == MeterValuesEntry.STATUS_NEW);
-    
-            case MeterDisplayDataDialog.FILTER_CHANGED:
-                return (status == MeterValuesEntry.STATUS_CHANGED);
-                
-            case MeterDisplayDataDialog.FILTER_EXISTING:
-                return (status == MeterValuesEntry.STATUS_OLD);
-                
-            case MeterDisplayDataDialog.FILTER_UNKNOWN:
-                return (status == MeterValuesEntry.STATUS_UNKNOWN);
-                
-            case MeterDisplayDataDialog.FILTER_NEW_CHANGED:
-                return ((status == MeterValuesEntry.STATUS_NEW) ||
-                        (status == MeterValuesEntry.STATUS_CHANGED));
-                
-            case MeterDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
-                return (status != MeterValuesEntry.STATUS_OLD);
-        }
-        return false;
-*/
-        return true;
-    }
-
-
-    /**
-     * Get Value At
-     * 
-     * @see javax.swing.table.TableModel#getValueAt(int, int)
-     */
-    public Object getValueAt(int row, int column)
-    {
-        CGMValuesEntry mve = (CGMValuesEntry)this.displayed_dl_data.get(row);
-
-        switch (column)
-        {
-        case 0:
-            return mve.getDateTimeObject().getDateTimeString();
-
-        case 1:
-            //return mve.getBGValue(DataAccessCGM.BG_MMOL);
-
-        case 2:
-            //return mve.getBGValue(DataAccessCGM.BG_MGDL);
-
-        case 3:
-            return new Integer(mve.getStatus());
-
-        case 4:
-            return new Boolean(mve.getChecked());
-
-        default:
-            return "";
-        }
-
-        // Object o = dayData.getValueAt(row, column);
-        /*
-         * if (o != null && column == 0) { SimpleDateFormat sdf = new
-         * SimpleDateFormat("dd.MM.yyyy HH:mm"); return sdf.format(o); }
-         * 
-         * return o;
-         */
-    }
-
-
-    /*
-    public void processMeterValuesEntry(MeterValuesEntry mve)
-    {
-        //System.out.println("processMeterValuesEntry");
-        if (old_data!=null)
-        {
-            //System.out.println("oldData != null");
-            long dt = mve.getDateTime().getATDateTimeAsLong();
-            
-            //System.out.println("Dt='" + dt + "'");
-            
-            //System.out.println("Found: " + old_data.containsKey("" + dt));
-            
-            
-            if (!old_data.containsKey("" + dt))
-            {
-            //    System.out.println("not Contains");
-                mve.status = MeterValuesEntry.STATUS_NEW;
-                mve.object_status = MeterValuesEntry.OBJECT_STATUS_NEW;
-            }
-            else
-            {
-                
-             //   System.out.println("Found !!!");
-                
-                DayValueH gvh = old_data.get("" + dt);
-                  
-                int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
-                
-                //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
-                if (gvh.getBg()==vl)
-                {
-                    mve.status = MeterValuesEntry.STATUS_OLD;
-                    mve.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;
-                }
-                else
-                {
-                    mve.status = MeterValuesEntry.STATUS_CHANGED;
-                    mve.object_status = MeterValuesEntry.OBJECT_STATUS_EDIT;
-                    mve.entry_object = gvh;
-                    
-                    //System.out.println("Changed: " + gvh.getId());
-                    
-                }
-                    
-                //gvh.getBg()
-            }
-        }
-        else
-        {
-            System.out.println("oldData == null");
-
-            mve.status = MeterValuesEntry.STATUS_NEW;
-        }
-    }
-    */
-    
-    
-    
-    /**
-     * Get Column Name
-     * 
-     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
-     */    
-    @Override
-    public String getColumnName(int column)
-    {
-        return column_names[column];
-    }
 
     
-    /**
-     * Get Column Class
-     * 
-     * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-     */
-    @Override
-    public Class<?> getColumnClass(int c)
-    {
-        Object o = getValueAt(0, c);
-        if (o != null)
-            return o.getClass();
-        else
-            return null;
-        // return getValueAt(0,c).getClass();
-    }
 
-    /**
-     * Is Cell Editable
-     * 
-     * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
-     */    
-    @Override
-    public boolean isCellEditable(int row, int col)
-    {
-        if (col == 4)
-            return true;
-        else
-            return false;
-    }
-
-    /**
-     * Set Value At
-     * 
-     * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
-     */    
-    @Override
-    public void setValueAt(Object aValue, int row, int column)
-    {
-        Boolean b = (Boolean) aValue;
-        this.displayed_dl_data.get(row).setChecked(b.booleanValue());
-    }
 
 
     /**
@@ -345,9 +123,18 @@ public class CGMValuesTableModel extends DeviceValuesTableModel
      * @param mve DeviceValuesEntry instance
      */
     @Override
-    public void processDeviceValueEntry(DeviceValuesEntry mve)
+    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
     {
         // TODO Auto-generated method stub
+    }
+
+    /** 
+     * Get Checkable Column
+     */
+    @Override
+    public int getCheckableColumn()
+    {
+        return 4;
     }
    
 }
