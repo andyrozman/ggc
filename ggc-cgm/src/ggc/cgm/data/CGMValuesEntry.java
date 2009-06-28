@@ -354,7 +354,17 @@ public class CGMValuesEntry extends DeviceValuesEntry
     {
         return null;
     }
+
     
+    /**
+     * Get Special Id
+     * 
+     * @return
+     */
+    public String getSpecialId()
+    {
+        return "";
+    }
     
 	
 }	
