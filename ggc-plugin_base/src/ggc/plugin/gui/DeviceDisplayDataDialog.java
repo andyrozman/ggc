@@ -293,7 +293,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         ta_info = new JTextArea();
         
         JScrollPane sp3 = new JScrollPane(ta_info);
-        sp3.setBounds(30, 340, 410, 60);
+        sp3.setBounds(30, 340, 410+wide_add, 80);
         panel.add(sp3);
 
         ta_info.setText(""); // this.meter_interface.getDeviceInfo().

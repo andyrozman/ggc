@@ -179,7 +179,8 @@ public interface DeviceInterface extends SelectableInterface
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
-     * information (most dumps do). 
+     * information (most dumps do).
+     *  
      * @throws PlugInBaseException
      */
     void readInfo() throws PlugInBaseException;
@@ -199,6 +200,7 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
+     *    
      * @return true is progress status is special
      */
     public boolean hasSpecialProgressStatus();
@@ -298,6 +300,7 @@ public interface DeviceInterface extends SelectableInterface
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
      * to read data)
+     * 
      * @return
      */
     public boolean isReadableDevice();

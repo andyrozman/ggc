@@ -5,6 +5,7 @@ import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 
 import javax.swing.table.AbstractTableModel;
@@ -199,6 +200,8 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
                 this.displayed_dl_data.add(mve);
             }
         }
+
+        Collections.sort(displayed_dl_data);
         
         this.fireTableDataChanged();
         
@@ -290,6 +293,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
         if (this.shouldBeDisplayed(mve.getStatus()))
         {
             this.displayed_dl_data.add(mve);
+            Collections.sort(displayed_dl_data);
         }
         this.fireTableDataChanged();
     }
@@ -338,6 +342,40 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
         
         return ht;
     }
+
+    
+    
+    /**
+     * Export Checked Data
+     */
+    public void exportCheckedData()
+    {
+        
+        for(int i=0; i<this.dl_data.size(); i++)
+        {
+            DeviceValuesEntryInterface mve = this.dl_data.get(i);
+            
+            if (!mve.getChecked())
+                continue;
+            
+            // TODO
+            
+            mve.prepareEntry();
+            
+            if (mve.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW)
+            {
+                //addToArray(ht.get("ADD"), mve.getDbObjects());
+            }
+            else if (mve.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_EDIT)
+            {
+                //addToArray(ht.get("EDIT"), mve.getDbObjects());
+            }
+        }
+        
+        //return ht;
+    }
+    
+    
     
     
     /**

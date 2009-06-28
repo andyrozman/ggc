@@ -266,4 +266,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     }
     
     
+    //public abstract 
+    
+    
 }	

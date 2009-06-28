@@ -4,6 +4,8 @@ import ggc.core.db.hibernate.GGCHibernateObject;
 
 import java.util.ArrayList;
 
+import org.hibernate.Session;
+
 import com.atech.utils.ATechDate;
 
 
@@ -248,7 +250,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compare(DeviceValuesEntry d1, DeviceValuesEntry d2)
+    public int compare(DeviceValuesEntryInterface d1, DeviceValuesEntryInterface d2)
     {
         return (int)(d1.getDateTime()-d2.getDateTime());
     }
@@ -258,7 +260,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(DeviceValuesEntry d2)
+    public int compareTo(DeviceValuesEntryInterface d2)
     {
         return (int)(this.getDateTime()-d2.getDateTime());
     }
@@ -284,6 +286,11 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
     {
         return this.object_status;
     }
+    
+    
+
+    
+    
     
     
     
