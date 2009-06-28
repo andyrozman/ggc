@@ -507,7 +507,15 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     }
 
 
-
+    /**
+     * Get Special Id
+     * 
+     * @return
+     */
+    public String getSpecialId()
+    {
+        return "";
+    }
 
     
 	
