@@ -8,6 +8,8 @@ import ggc.plugin.output.OutputUtil;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import org.hibernate.Session;
+
 import com.atech.utils.ATechDate;
 
 /**
@@ -364,6 +366,122 @@ public class CGMValuesEntry extends DeviceValuesEntry
     public String getSpecialId()
     {
         return "";
+    }
+  
+    
+    
+    /**
+     * getObjectUniqueId - get id of object
+     * @return unique object id
+     */
+    public String getObjectUniqueId()
+    {
+        return "";
+    }
+    
+    
+    /**
+     * DbAdd - Add this object to database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return id in type of String
+     */
+    public String DbAdd(Session sess) throws Exception
+    {
+        return "";
+    }
+
+
+    /**
+     * DbEdit - Edit this object in database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
+     */
+    public boolean DbEdit(Session sess) throws Exception
+    {
+        return false;
+    }
+
+
+    /**
+     * DbDelete - Delete this object in database
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
+     */
+    public boolean DbDelete(Session sess) throws Exception
+    {
+        return false;
+    }
+
+
+    /**
+     * DbHasChildren - Shows if this entry has any children object, this is needed for delete
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
+     */
+    public boolean DbHasChildren(Session sess) throws Exception
+    {
+        return false;
+    }
+
+
+    /**
+     * DbGet - Loads this object. Id must be set.
+     * 
+     * @param sess Hibernate Session object
+     * @throws Exception (HibernateException) with error
+     * @return true if action done or Exception if not
+     */
+    public boolean DbGet(Session sess) throws Exception
+    {
+        return false;
+    }
+    
+
+    /**
+     * getObjectName - returns name of DatabaseObject
+     * 
+     * @return name of object (not Hibernate object)
+     */
+    public String getObjectName()
+    {
+        return "";
+    }
+
+
+    /**
+     * isDebugMode - returns debug mode of object
+     * 
+     * @return true if object in debug mode
+     */
+    public boolean isDebugMode()
+    {
+        return false;
+    }
+
+
+
+    /**
+     * getAction - returns action that should be done on object
+     *    0 = no action
+     *    1 = add action
+     *    2 = edit action
+     *    3 = delete action
+     *    This is used mainly for objects, contained in lists and dialogs, used for 
+     *    processing by higher classes (classes calling selectors, wizards, etc...
+     * 
+     * @return number of action
+     */
+    public int getAction()
+    {
+        return 0;
     }
     
 	
