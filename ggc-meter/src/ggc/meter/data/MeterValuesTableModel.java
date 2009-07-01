@@ -7,7 +7,6 @@ import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
-import ggc.plugin.output.OutputUtil;
 
 import java.util.ArrayList;
 
@@ -197,9 +196,56 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
      * 
      * @param mve DeviceValuesEntry instance
      */
+    @SuppressWarnings("deprecation")
     public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
     {
-//        System.out.println("processMeterValuesEntry");
+        
+        if (this.m_ddh.hasOldData())
+        {
+            if (!this.m_ddh.getOldData().containsKey("" + mve.getSpecialId()))
+            {
+                mve.setStatus(DeviceValuesEntry.STATUS_NEW);
+                mve.setObjectStatus(MeterValuesEntry.OBJECT_STATUS_NEW);
+            }
+            else
+            {
+                MeterValuesEntry mve2 = (MeterValuesEntry)mve; 
+
+                MeterValuesEntry mve_old = (MeterValuesEntry)this.m_ddh.getOldData().get(mve2.getSpecialId());
+                
+                //DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" + dt);
+                  
+                //int vl = Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));
+                
+                //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
+                if (mve_old.getBgValue().equals(mve2.getBgValue()))
+                {
+                    mve2.setStatus(MeterValuesEntry.STATUS_OLD);
+                    mve2.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;
+                }
+                else
+                {
+                    mve2.setStatus(MeterValuesEntry.STATUS_CHANGED);
+                    mve2.object_status = MeterValuesEntry.OBJECT_STATUS_EDIT;
+                    mve2.entry_object = mve_old.getHibernateObject();
+                    
+                    //System.out.println("Changed: " + gvh.getId());
+                    
+                }
+                    
+                //gvh.getBg()
+            }
+        }
+        else
+        {
+//            System.out.println("oldData == null");
+            mve.setStatus(MeterValuesEntry.STATUS_NEW);
+        }
+        
+        
+        
+        
+/*        
         if (this.m_ddh.hasOldData())
         {
 //            System.out.println("oldData != null");
@@ -250,6 +296,9 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
 //            System.out.println("oldData == null");
             mve.setStatus(MeterValuesEntry.STATUS_NEW);
         }
+        */
+        
+        
     }
     
     /*

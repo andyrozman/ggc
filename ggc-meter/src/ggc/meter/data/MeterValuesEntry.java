@@ -285,6 +285,21 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             this.entry_object.setComment(createComment());
 	    }
 	}
+
+	
+	
+	/**
+	 * This is used just for compliance with old Meter code. This method is deprecated, but since Meter Tool
+	 * is still not fully switched over to Framework v2, we need this method.
+	 *  
+	 * @deprecated
+	 * @return
+	 */
+	public DayValueH getHibernateObject()
+	{
+	    return this.entry_object;
+	}
+	
 	
 	/*
 	public DayValueH getDbObject()

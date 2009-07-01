@@ -2,6 +2,7 @@ package ggc.meter.data;
 
 import ggc.meter.data.db.GGCMeterDb;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.gui.OldDataReaderAbstract;
 
 import java.util.Hashtable;
@@ -70,7 +71,7 @@ public class MeterDataReader extends OldDataReaderAbstract
      * Read Old entries
      */
     @Override
-    public Hashtable<String, Object> readOldEntries()
+    public Hashtable<String, DeviceValuesEntryInterface> readOldEntries()
     {
         return db.getMeterValues(this);
         // TODO Auto-generated method stub

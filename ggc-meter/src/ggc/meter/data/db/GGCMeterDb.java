@@ -2,7 +2,9 @@ package ggc.meter.data.db;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.data.MeterDataReader;
+import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.db.PluginDb;
 
 import java.util.Hashtable;
@@ -103,10 +105,10 @@ public class GGCMeterDb extends PluginDb
      * 
      * @return
      */
-    public Hashtable<String,Object> getMeterValues(MeterDataReader mdr)
+    public Hashtable<String,DeviceValuesEntryInterface> getMeterValues(MeterDataReader mdr)
     {
         //Hashtable<String,DayValueH>
-        Hashtable<String,Object> ht = new Hashtable<String,Object>(); 
+        Hashtable<String,DeviceValuesEntryInterface> ht = new Hashtable<String,DeviceValuesEntryInterface>(); 
         
         log.info("getMeterValues()");
 
@@ -135,8 +137,11 @@ public class GGCMeterDb extends PluginDb
             while (it.hasNext())
             {
                 counter++;
-                DayValueH gv = (DayValueH)it.next();
-                ht.put("" + gv.getDt_info(), gv);
+                //DayValueH gv = (DayValueH)it.next();
+                
+                MeterValuesEntry mve = new MeterValuesEntry((DayValueH)it.next());
+                
+                ht.put("" + mve.getSpecialId(), mve);
                 mdr.writeStatus(counter);
             }
 
