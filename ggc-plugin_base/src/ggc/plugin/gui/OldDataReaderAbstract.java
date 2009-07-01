@@ -1,5 +1,6 @@
 package ggc.plugin.gui;
 
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.Hashtable;
@@ -89,7 +90,7 @@ public abstract class OldDataReaderAbstract
      * from plugin to plugin)
      * @return 
      */
-    public abstract Hashtable<String, Object> readOldEntries();
+    public abstract Hashtable<String, DeviceValuesEntryInterface> readOldEntries();
     
 
     /**

@@ -5,10 +5,14 @@ import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataReadingFinishedInterface;
+import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.StatusReporterInterface;
 
 
@@ -172,7 +176,59 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     /**
      * Execute export to Database
      */
-    public abstract void executeExportDb();
+    public void executeExportDb()
+    {
+        HibernateDb db = m_da.getHibernateDb();
+        
+        Hashtable<String, ArrayList<DatabaseObjectHibernate>> ll = this.m_model.getCheckedDOHObjects();
+        
+        float full_count = 0.0f;
+        
+        full_count += ll.get("ADD").size();
+        full_count += ll.get("EDIT").size();
+        
+        
+        System.out.println("Full count: " + full_count);
+        
+        int count = 0;
+        
+        
+        for(Enumeration<String> en = ll.keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            
+            boolean add = false;
+            
+            if (key.equals("ADD"))
+                add = true;
+            
+            ArrayList<DatabaseObjectHibernate> list = ll.get(key);
+            
+            for(int i=0; i<list.size(); i++)
+            {
+                if (add)
+                    db.add(list.get(i));
+                else
+                    db.edit(list.get(i));
+                
+                count++;
+                
+                float f = (count*(1.0f)) / full_count;
+                f *= 100.0f;
+                
+                int proc = (int)f;
+                
+                if (proc==100)
+                    proc = 99;
+                
+                System.out.println("Procents: " + proc);
+                
+            }
+            
+        }
+
+        this.setStatus(100);
+    }
     
     
     /**

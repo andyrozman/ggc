@@ -4,8 +4,6 @@ import ggc.core.db.hibernate.GGCHibernateObject;
 
 import java.util.ArrayList;
 
-import org.hibernate.Session;
-
 import com.atech.utils.ATechDate;
 
 

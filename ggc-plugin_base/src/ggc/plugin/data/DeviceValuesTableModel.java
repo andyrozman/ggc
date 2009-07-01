@@ -10,6 +10,8 @@ import java.util.Hashtable;
 
 import javax.swing.table.AbstractTableModel;
 
+import com.atech.db.hibernate.DatabaseObjectHibernate;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -438,7 +440,55 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     }
 
  
-    
+    /**
+     * Get Checked DOH (DatabaseObjectHibernate) objects. This are packed in Hashtable, with keys ADD and EDIT
+     * which contain list with DatabaseObjectHibernate objects.
+     * 
+     * @return
+     */
+    public Hashtable<String, ArrayList<DatabaseObjectHibernate>> getCheckedDOHObjects()
+    {
+        Hashtable<String, ArrayList<DatabaseObjectHibernate>> table = new Hashtable<String, ArrayList<DatabaseObjectHibernate>>();
+        
+        ArrayList<DatabaseObjectHibernate> list_add = new ArrayList<DatabaseObjectHibernate>();
+        ArrayList<DatabaseObjectHibernate> list_edit = new ArrayList<DatabaseObjectHibernate>();
+        
+        System.out.println("getCheckedDOHObjects()");
+        
+        
+        for(int i=0; i<this.displayed_dl_data.size(); i++)
+        {
+             
+            if (this.displayed_dl_data.get(i).getChecked())
+            {
+                DeviceValuesEntryInterface dvei = this.displayed_dl_data.get(i); 
+                //list.add((DatabaseObjectHibernate)this.displayed_dl_data.get(i));
+                
+                System.out.println("Checked: " + dvei);
+            
+                if (dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW)
+                {
+                    System.out.println("Checked[add]: " + dvei);
+                    list_add.add((DatabaseObjectHibernate)dvei);
+                }
+                else if (dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_EDIT)
+                {
+                    System.out.println("Checked[edit]: " + dvei);
+                    list_edit.add((DatabaseObjectHibernate)dvei);
+                }
+            
+            }
+        }
+
+        
+        
+        
+        table.put("ADD", list_add);
+        table.put("EDIT", list_edit);
+        
+        return table;
+    }
+
     
 
 }
