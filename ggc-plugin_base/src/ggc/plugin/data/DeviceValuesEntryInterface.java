@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
-import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.ATechDate;
 
 
@@ -42,7 +41,11 @@ import com.atech.utils.ATechDate;
 //This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
-public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(OutputWriter,*/ Comparator<DeviceValuesEntryInterface>, Comparable<DeviceValuesEntryInterface>, StatisticsItem, DatabaseObjectHibernate
+public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(OutputWriter,*/ 
+                                                    Comparator<DeviceValuesEntryInterface>, 
+                                                    Comparable<DeviceValuesEntryInterface>, 
+                                                    //StatisticsItem, 
+                                                    DatabaseObjectHibernate
 {
 	//public boolean checked = false;
 	//public int status = 1; 
@@ -214,6 +217,20 @@ public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(Outp
 	public abstract ArrayList<? extends GGCHibernateObject> getDbObjects();
 	
 	
+	/**
+	 * Get DeviceValuesEntry Name
+	 * 
+	 * @return
+	 */
+	public abstract String getDVEName();
+	
+	
+	/**
+	 * Get Value of object
+	 * 
+	 * @return
+	 */
+	public abstract String getValue();
 	
 	
 	/**

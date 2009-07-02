@@ -1,6 +1,7 @@
 package ggc.plugin.data;
 
 import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.plugin.util.DeviceValuesEntryUtil;
 
 import java.util.ArrayList;
 
@@ -117,15 +118,41 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
 	{
 	}
 	
+
+    /**
+     * Prepare Entry
+     */
+    public abstract void prepareEntry();
+    
+    
+    /**
+     * Get Db Objects
+     * 
+     * @return ArrayList of elements extending GGCHibernateObject
+     */
+    public abstract ArrayList<? extends GGCHibernateObject> getDbObjects();
+	
+	
+	
+	
 	
 	/**
-	 * Get DateTime (long)
+	 * Get Column Value
 	 * 
+	 * @param index
 	 * @return
 	 */
-	public abstract long getDateTime();
+	public abstract Object getColumnValue(int index);
 	
-	
+
+    /**
+     * Get DateTime (long)
+     * 
+     * @return
+     */
+    public abstract long getDateTime();
+    
+    
     /**
      * Set DateTime Object (ATechDate)
      * 
@@ -142,21 +169,12 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
     public abstract ATechDate getDateTimeObject();
     
 
-	/**
-	 * Get DateTime format
-	 * 
-	 * @return format of date time (precission)
-	 */
-	public abstract int getDateTimeFormat();
-	
-	
-	/**
-	 * Get Column Value
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public abstract Object getColumnValue(int index);
+    /**
+     * Get DateTime format
+     * 
+     * @return format of date time (precission)
+     */
+    public abstract int getDateTimeFormat();
 	
 	
 	/**
@@ -204,22 +222,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
     
 	
 	/**
-	 * Prepare Entry
-	 */
-	public abstract void prepareEntry();
-	
-	
-	/**
-	 * Get Db Objects
-	 * 
-	 * @return ArrayList of elements extending GGCHibernateObject
-	 */
-	public abstract ArrayList<? extends GGCHibernateObject> getDbObjects();
-	
-	
-	
-	
-	/**
 	 * Set Output Type
 	 * 
 	 * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
@@ -250,7 +252,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      */
     public int compare(DeviceValuesEntryInterface d1, DeviceValuesEntryInterface d2)
     {
-        return (int)(d1.getDateTime()-d2.getDateTime());
+        return DeviceValuesEntryUtil.compare(d1, d2);
     }
 
     /**
@@ -260,7 +262,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface  /
      */
     public int compareTo(DeviceValuesEntryInterface d2)
     {
-        return (int)(this.getDateTime()-d2.getDateTime());
+        return DeviceValuesEntryUtil.compare(this, d2);
     }
     
 	
