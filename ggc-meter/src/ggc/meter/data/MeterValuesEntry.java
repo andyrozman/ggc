@@ -649,6 +649,29 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     {
         return 0;
     }
+
+    
+
+    /**
+     * Get DeviceValuesEntry Name
+     * 
+     * @return
+     */
+    public String getDVEName()
+    {
+        return "MeterValuesEntry";
+    }
+
+
+    /**
+     * Get Value of object
+     * 
+     * @return
+     */
+    public String getValue()
+    {
+        return this.getBgValue();
+    }
     
     
     
