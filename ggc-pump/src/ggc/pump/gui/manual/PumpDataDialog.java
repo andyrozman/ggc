@@ -1,6 +1,7 @@
 package ggc.pump.gui.manual;
 
 import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.data.DeviceValuesEntry;
 import ggc.pump.data.PumpDailyStatistics;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.db.GGCPumpDb;
@@ -18,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
@@ -157,11 +159,26 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         model.setDailyValues(dayData); //setDailyValues(dayData);
         //ArrayList al = new ArrayList();
         //Collections.s
-        stats.processFullCollection(dayData.getList());
+        stats.processFullCollection(getDataList(dayData.getList()));
         updateLabels();
         
         this.model.fireTableChanged(null);
     }
+    
+    
+    private ArrayList<PumpValuesEntry> getDataList(ArrayList<DeviceValuesEntry> list_in)
+    {
+        ArrayList<PumpValuesEntry> lst = new ArrayList<PumpValuesEntry>();
+        
+        for(int i=0; i<list_in.size(); i++)
+        {
+            lst.add((PumpValuesEntry)list_in.get(i));
+        }
+        
+        return lst;
+        
+    }
+    
     
     
     /**
@@ -277,7 +294,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         // TODO
         dayData = m_da.getDb().getDailyPumpValues(this.current_date);
         dayData.sort();
-        stats.processFullCollection(dayData.getList());
+        stats.processFullCollection(this.getDataList(dayData.getList()));
         updateLabels();
         
         model = new PumpDataTableModel(dayData);

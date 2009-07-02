@@ -244,7 +244,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     /**
      * Get Pix Device Info 
      */
-    @SuppressWarnings("unused")
     private void getPixDeviceInfo()
     {
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
@@ -279,7 +278,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
-    @SuppressWarnings("unused")
     private void getPumpDeviceInfo()
     {
         DeviceIdentification di = this.output_writer.getDeviceIdentification();

@@ -3,7 +3,6 @@ package ggc.pump.device.dana;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
 import java.util.GregorianCalendar;

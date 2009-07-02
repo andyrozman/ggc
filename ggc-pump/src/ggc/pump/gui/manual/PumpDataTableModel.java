@@ -2,7 +2,6 @@ package ggc.pump.gui.manual;
 
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
-import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
 

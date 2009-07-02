@@ -1,5 +1,6 @@
 package ggc.pump.data;
 
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.util.DataAccessPump;
@@ -68,7 +69,7 @@ public class PumpDataReader extends OldDataReaderAbstract
      * Read Old entries
      */
     @Override
-    public Hashtable<String, Object> readOldEntries()
+    public Hashtable<String, DeviceValuesEntryInterface> readOldEntries()
     {
         return db.getPumpValues(this);
     }

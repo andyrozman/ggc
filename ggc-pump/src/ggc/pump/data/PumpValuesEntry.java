@@ -21,9 +21,9 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.misc.statistics.StatisticsItem;
 import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.ATechDate;
 
@@ -54,7 +54,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObjectHibernate, MultiLineTooltip //, StatisticsItem
+public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineTooltip, StatisticsItem 
 //extends PumpDataH implements DatabaseObjectHibernate   // extends PumpValuesEntryAbstract
 {
     private static Log log = LogFactory.getLog(PumpValuesEntry.class);
@@ -1535,11 +1535,31 @@ public class PumpValuesEntry extends DeviceValuesEntry implements DatabaseObject
      */
     public String getSpecialId()
     {
-        return "";
+        return "PD_" + this.datetime.getATDateTimeAsLong() + "_" + this.base_type + "_" + this.sub_type;
     }
 
     
-    
+    /**
+     * Get DeviceValuesEntry Name
+     * 
+     * @return
+     */
+    public String getDVEName()
+    {
+        return "PumpValuesEntry";
+    }
+
+
+    /**
+     * Get Value of object
+     * 
+     * @return
+     */
+/*    public String getValue()
+    {
+        return null;
+    }
+  */ 
     
     
 }

@@ -1,6 +1,9 @@
 package ggc.pump.data;
 
+import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpProfileH;
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.util.DataAccessPump;
 
@@ -11,7 +14,6 @@ import java.util.GregorianCalendar;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATechDate;
 
@@ -42,7 +44,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEntryAbstract, DatabaseObjectHibernate 
+public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValuesEntryInterface //PumpValuesEntryAbstract, DatabaseObjectHibernate 
 {
 
     private static final long serialVersionUID = 7772340503037499446L;
@@ -50,6 +52,14 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     I18nControlAbstract ic = da.getI18nControlInstance();
 
     ArrayList<ProfileSubEntry> sub_entries = new ArrayList<ProfileSubEntry>();  
+    
+    
+    private int status = 0;
+    private int object_status = 0;
+    private boolean checked = false;
+    private int output_type = 0;
+    
+    
     
     //public boolean checked = false;
     //public int status = 1; //MeterValuesEntry.
@@ -152,8 +162,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public ATechDate getDateTimeObject()
     {
-        return null;
-        //return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getDt_info());
+        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_from());
     }
 	
 	
@@ -455,8 +464,234 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     }
     
     boolean changed = false;
-	
+
+
+
+
+
+    public Object getColumnValue(int index)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+
+
+    public ArrayList<? extends GGCHibernateObject> getDbObjects()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+    public Object getTableColumnValue(int index)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public String getDataAsString()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+    /**
+     * Get Special Id
+     * 
+     * @return
+     */
+    public String getSpecialId()
+    {
+        // TODO
+        //return "PP_" + this.datetime.getATDateTimeAsLong() + "_" + this.base_type + "_" + this.sub_type;
+        return null;
+    }
+
     
+    /**
+     * Get DeviceValuesEntry Name
+     * 
+     * @return
+     */
+    public String getDVEName()
+    {
+        return "PumpValuesEntryProfile";
+    }
+
+
+    /**
+     * Get Value of object
+     * 
+     * @return
+     */
+    public String getValue()
+    {
+        return null;
+    }
+ 
+    
+    /**
+     * Get DateTime (long)
+     * 
+     * @return
+     */
+    public long getDateTime()
+    {
+        return this.getActive_from();
+    }
+    
+    
+    /**
+     * Set DateTime Object (ATechDate)
+     * 
+     * @param dt ATechDate instance
+     */
+    public void setDateTimeObject(ATechDate dt)
+    {
+    }
+    
+    
+    
+
+    /**
+     * Get DateTime format
+     * 
+     * @return format of date time (precission)
+     */
+    public int getDateTimeFormat()
+    {
+        return ATechDate.FORMAT_DATE_AND_TIME_S;
+    }
+    
+    
+    /**
+     * Get Checked 
+     * 
+     * @return true if element is checked
+     */
+    public boolean getChecked()
+    {
+        return this.checked;
+    }
+
+    
+    /**
+     * Set Checked
+     * 
+     * @param check true if element is checked
+     */
+    public void setChecked(boolean check)
+    {
+        this.checked = check;
+    }
+    
+    
+    /**
+     * Get Status
+     * 
+     * @return status
+     */
+    public int getStatus()
+    {
+        return this.status;
+    }
+    
+    
+    /**
+     * Set Status
+     * 
+     * @param status_in
+     */
+    public void setStatus(int status_in)
+    {
+        this.status = status_in;
+    }
+    
+    
+    /**
+     * Set Output Type
+     * 
+     * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
+     */
+    
+    public void setOutputType(int type)
+    {
+        this.output_type = type;
+    }
+    
+    
+    /**
+     * Is Data BG
+     * 
+     * @see ggc.plugin.output.OutputWriterData#isDataBG()
+     */
+    
+    public boolean isDataBG()
+    {
+        return false; 
+    }
+
+
+    /**
+     * Comparator method, for sorting objects
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compare(DeviceValuesEntryInterface d1, DeviceValuesEntryInterface d2)
+    {
+        return DeviceValuesEntryUtil.compare(d1, d2);
+    }
+
+    /**
+     * Comparator method, for sorting objects
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(DeviceValuesEntryInterface d2)
+    {
+        return DeviceValuesEntryUtil.compare(this, d2);
+    }
+    
+    
+    /**
+     * Set Object status
+     * 
+     * @param status
+     */
+    public void setObjectStatus(int status)
+    {
+        this.object_status = status;
+    }
+    
+    
+    /**
+     * Get Object Status
+     * 
+     * @return
+     */
+    public int getObjectStatus()
+    {
+        return this.object_status;
+    }
     
     
 }	

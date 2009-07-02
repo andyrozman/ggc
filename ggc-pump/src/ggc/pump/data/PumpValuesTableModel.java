@@ -3,14 +3,13 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-
-import com.atech.db.hibernate.DatabaseObjectHibernate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -197,6 +196,13 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     {
         System.out.println("processDeviceValuesEntry: Pump");
         
+        //dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW
+        
+        mve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
+        
+        
+        
+        
         /*
         //System.out.println("processMeterValuesEntry");
         if (old_data!=null)
@@ -254,4 +260,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     }
     
 
+    
+    
+    
 }

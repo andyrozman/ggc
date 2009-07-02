@@ -2,7 +2,6 @@ package ggc.pump.device.dana;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
-import ggc.pump.device.animas.AnimasPump;
 
 
 /**

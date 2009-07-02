@@ -4,11 +4,13 @@ import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.db.PluginDb;
 import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.PumpValuesEntryProfile;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.db.PumpProfile;
 import ggc.pump.device.PumpInterface;
@@ -444,7 +446,12 @@ public class GGCPumpDb extends PluginDb
     }
     
     
-    public Hashtable<String, Object> getPumpValues(PumpDataReader pdr)
+    /**
+     * Get Pump Values
+     * @param pdr
+     * @return
+     */
+    public Hashtable<String, DeviceValuesEntryInterface> getPumpValues(PumpDataReader pdr)
     {
 
         String sql = "";
@@ -455,11 +462,11 @@ public class GGCPumpDb extends PluginDb
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(GregorianCalendar.MONTH, (-1) * pe.howManyMonthsOfDataStored());
         
-        Hashtable<String, Object> dt = new Hashtable<String, Object>(); 
+        Hashtable<String, DeviceValuesEntryInterface> dt = new Hashtable<String, DeviceValuesEntryInterface>(); 
         
         long dt_from = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
 
-        String id = "";
+        //String id = "";
         
         try
         {
@@ -473,18 +480,21 @@ public class GGCPumpDb extends PluginDb
             Iterator<?> it = q.list().iterator();
             
             pdr.writeStatus(-1);
-            id = "PD_%s_%s_%s";
+            //id = "PD_%s_%s_%s";
             
             while (it.hasNext())
             {
                 counter++;
                 
-                PumpDataH pdh = (PumpDataH)it.next();
+                PumpValuesEntry pve = new PumpValuesEntry((PumpDataH)it.next());
+                //PumpDataH pdh = (PumpDataH)it.next();
                 
-                dt.put(String.format(id, 
+                dt.put(pve.getSpecialId(), pve);
+                /*    
+                    String.format(id, 
                                      pdh.getDt_info(),
                                      pdh.getBase_type(),
-                                     pdh.getSub_type()) , pdh);
+                                     pdh.getSub_type()) , pdh); */
                 
                 pdr.writeStatus(counter);
             }
@@ -498,17 +508,20 @@ public class GGCPumpDb extends PluginDb
             it = q.list().iterator();
             
             pdr.writeStatus(-1);
-            id = "PE_%s_%s";
+            //id = "PE_%s_%s";
 
             while (it.hasNext())
             {
                 counter++;
 
-                PumpDataExtendedH pdh = (PumpDataExtendedH) it.next();
+                PumpValuesEntryExt pvex = new PumpValuesEntryExt((PumpDataExtendedH) it.next());
+                /*PumpDataExtendedH pdh = (PumpDataExtendedH) it.next();
                   
                 dt.put(String.format(id, 
                     pdh.getDt_info(),
-                    pdh.getType()) , pdh);
+                    pdh.getType()) , pdh); */
+                
+                dt.put(pvex.getSpecialId(), pvex);
 
                 pdr.writeStatus(counter);
             }
@@ -523,17 +536,22 @@ public class GGCPumpDb extends PluginDb
             it = q.list().iterator();
 
             pdr.writeStatus(-1);
-            id = "PP_%s";
+            //id = "PP_%s";
             
             while (it.hasNext())
             {
                 counter++;
 
+                PumpValuesEntryProfile pvep = new PumpValuesEntryProfile((PumpProfileH) it.next());
+                
+                /*
                 PumpProfileH pdh = (PumpProfileH) it.next();
                   
                 dt.put(String.format(id, 
-                    pdh.getActive_from()) , pdh);
+                    pdh.getActive_from()) , pdh); */
 
+                dt.put(pvep.getSpecialId(), pvep);
+                
                 pdr.writeStatus(counter);
             }
             

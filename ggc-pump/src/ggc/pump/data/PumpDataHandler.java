@@ -56,11 +56,11 @@ public class PumpDataHandler extends DeviceDataHandler
      * 
      * @see ggc.plugin.data.DeviceDataHandler#executeExportDb()
      */
-    public void executeExportDb()
+   /* public void executeExportDb()
     {
         //System.out.println("Checked entries: " + this.getDeviceValuesTableModel().getCheckedEntries());
         this.m_server.setReturnData(this.getDeviceValuesTableModel().getCheckedEntries(), this);
-    }
+    }*/
     
     
     /**
