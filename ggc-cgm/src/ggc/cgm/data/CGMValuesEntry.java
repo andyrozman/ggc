@@ -483,6 +483,30 @@ public class CGMValuesEntry extends DeviceValuesEntry
     {
         return 0;
     }
+
+    
+    /**
+     * Get DeviceValuesEntry Name
+     * 
+     * @return
+     */
+    public String getDVEName()
+    {
+        return "CGMValuesEntry";
+    }
+
+
+    /**
+     * Get Value of object
+     * 
+     * @return
+     */
+    public String getValue()
+    {
+        // TODO
+        return null;
+    }
+    
     
 	
 }	
