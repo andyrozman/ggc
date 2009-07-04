@@ -1,8 +1,7 @@
-package ggc.pump.device.accuchek;
+package ggc.pump.device.minimed;
 
-import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -25,20 +24,19 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     AccuChekSpirit  
- *  Description:  Accu Chek Spirit Pump Implementation
+ *  Filename:     Minimed554_Veo  
+ *  Description:  Minimed 554/754 Veo implementation (just settings)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class AccuChekSpirit extends AccuChekSmartPixPump
+public class Minimed554_Veo extends MinimedPump
 {
 
     /**
      * Constructor 
      */
-    public AccuChekSpirit()
+    public Minimed554_Veo()
     {
         super();
     }
@@ -50,26 +48,12 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      * @param drive_letter 
      * @param writer 
      */
-    public AccuChekSpirit(String drive_letter, OutputWriter writer)
+    public Minimed554_Veo(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
     }
     
     
-    /**
-     * Constructor
-     * 
-     * @param cmp
-     */
-    public AccuChekSpirit(AbstractDeviceCompany cmp)
-    {
-        this.setDeviceCompany(cmp);
-    }
-    
-    //************************************************
-    //***       Pump Identification Methods        ***
-    //************************************************
-
 
     /**
      * getName - Get Name of meter. 
@@ -78,7 +62,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public String getName()
     {
-        return "Spirit";
+        return "Minimed 554/754 Veo";
     }
 
 
@@ -90,7 +74,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public String getIconName()
     {
-        return "ac_spirit.jpg";
+        return "mm_554_veo.jpg";
     }
     
 
@@ -102,7 +86,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public int getDeviceId()
     {
-        return AccuChekSmartPixPump.PUMP_ACCUCHEK_SPIRIT;
+        return MinimedPump.PUMP_MINIMED_554_754_VEO;
     }
 
     
@@ -114,7 +98,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
+        return "INSTRUCTIONS_MINIMED_554";
     }
     
     /**
@@ -136,28 +120,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public int getImplementationStatus() 
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
-    }
-    
-    
-    /**
-     * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
-     * 
-     * @return number
-     */
-    public int getMaxMemoryRecords()
-    {
-        return 100;
-    }
-    
-    
-    /**
-     * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
-     * @return number of elements
-     */
-    public int getNrOfElementsFor1s()
-    {
-        return 10;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
     
     
@@ -168,26 +131,39 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public String getDeviceClassName()
     {
-        return "ggc.pump.device.accuchek.AccuChekSpirit";
+        return "ggc.pump.device.minimed.Minimed554_Veo";
     }
 
 
-    /**
-     * Open
+    /** 
+     * Get Max Memory Records
      */
-    public boolean open() throws PlugInBaseException
+    public int getMaxMemoryRecords()
     {
-        return true;
+        return 0;
+    }
+ 
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
     
-
+    
     /**
-     * Close
+     * How Many Months Of Data Stored
+     * 
+     * @return
      */
-    public void close() throws PlugInBaseException
+    public int howManyMonthsOfDataStored()
     {
+        return -1;
     }
-
+    
     
     /**
      * Get Temporary Basal Type Definition
@@ -236,5 +212,5 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         return false;
     }
     
-    
+        
 }

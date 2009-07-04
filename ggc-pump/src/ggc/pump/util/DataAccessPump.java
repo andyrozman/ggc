@@ -1,8 +1,6 @@
 package ggc.pump.util;
 
-import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfiguration;
-import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpDataHandler;
@@ -18,7 +16,6 @@ import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
-import ggc.pump.device.PumpInterface;
 import ggc.pump.manager.PumpManager;
 
 import java.util.ArrayList;
@@ -867,50 +864,6 @@ public class DataAccessPump extends DataAccessPlugInBase
     
     
     
-    /**
-     * Get Download Status For Selected Device
-     *   0 = No status
-     *   1 = Device not selected
-     *   2 = Device doesn't support Download
-     *   
-     *  10 = Download OK
-     * 
-     * @return
-     */
-    public int getDownloadStatus()
-    {
-        
-        PumpInterface pi = getSelectedDeviceInstance();
-        
-        if (pi==null)
-            return 1;
-        else
-        {
-            if (pi.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
-                return 10;
-            else
-                return 2;
-        }
-        
-    }
-    
-
-    /**
-     * Get Selected Device Instance
-     * 
-     * @return
-     */
-    public PumpInterface getSelectedDeviceInstance()
-    {
-        DeviceConfigEntry dce = getDeviceConfiguration().getSelectedDeviceInstance();
-        
-        if (dce==null)
-            return null;
-        else
-        {
-            return (PumpInterface)this.getManager().getCompany(dce.device_company).getDevice(dce.device_device);
-        }
-    }
     
     
     

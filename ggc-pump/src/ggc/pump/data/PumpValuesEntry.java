@@ -147,6 +147,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 
         //this.entry_object = pdh;
 	    this.id = pdh.getId();
+	    this.old_id = pdh.getId();
         this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
         this.base_type = pdh.getBase_type();
         this.sub_type = pdh.getSub_type();
@@ -234,11 +235,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
      */
     public String getValue()
     {
-        if (this.getSubType()==PumpBaseType.PUMP_DATA_BOLUS)
+        /*if (this.getSubType()==PumpBaseType.PUMP_DATA_BOLUS)
         {
             return this.value;
         }
-        else
+        else */
             return this.value;
     }
     
@@ -878,10 +879,13 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
     public boolean DbEdit(Session sess) throws Exception
     {
         Transaction tx = sess.beginTransaction();
+        //System.out.println("id: " + old_id);
+        PumpDataH pdh = (PumpDataH)sess.get(PumpDataH.class, new Long(this.old_id));
         
-        PumpDataH pdh = (PumpDataH)sess.get(PumpDataH.class, new Long(this.id));
+        //System.out.println("PumpDataH: " + pdh);
         
-        pdh.setId(this.id);
+        
+        pdh.setId(this.old_id);
         pdh.setDt_info(this.datetime.getATDateTimeAsLong()); 
         pdh.setBase_type(this.base_type); 
         pdh.setSub_type(this.sub_type);
@@ -1073,11 +1077,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
      * 
      * @return
      */
-    public long getId()
+/*    public long getId()
     {
         return this.id;
     }
-    
+  */  
     
     /**
      * Get Comment
@@ -1553,13 +1557,39 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
     /**
      * Get Value of object
      * 
-     * @return
+     * 
      */
 /*    public String getValue()
     {
         return null;
     }
   */ 
+    
+ 
+    
+    long old_id;
+    
+    /**
+     * Set Id (this is used for changing old objects in framework v2)
+     * 
+     * @param id_in
+     */
+    public void setId(long id_in)
+    {
+        this.old_id = id_in;
+    }
+    
+    
+    /**
+     * Get Id (this is used for changing old objects in framework v2)
+     * 
+     * @return id of old object
+     */
+    public long getId()
+    {
+        return this.old_id;
+    }
+    
     
     
 }

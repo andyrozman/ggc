@@ -135,15 +135,31 @@ public interface PumpInterface extends DeviceInterface
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
      * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
+     * "TYPE=Both;STEP_UNIT=0.1;STEP=10;MIN=0;MAX=200"
      * 
      * @return
      */
     public String getTemporaryBasalTypeDefinition();
     
-
     
     /**
-     * Are Pump Settings Set
+     * Get Bolus Step (precission)
+     * 
+     * @return
+     */
+    public float getBolusStep();
+    
+    
+    /**
+     * Get Basal Step (precission)
+     * 
+     * @return
+     */
+    public float getBasalStep();
+    
+    
+    /**
+     * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */

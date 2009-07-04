@@ -408,7 +408,7 @@ public class GGCPumpDb extends PluginDb
         Integer in = null;
         int sum_all = 0;
         
-        PumpInterface pe = m_da.getSelectedDeviceInstance();
+        PumpInterface pe = (PumpInterface)m_da.getSelectedDeviceInstance();
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(GregorianCalendar.MONTH, (-1) * pe.howManyMonthsOfDataStored());
         
@@ -432,6 +432,7 @@ public class GGCPumpDb extends PluginDb
         in = (Integer) criteria.list().get(0);
         sum_all += in.intValue();
         
+        System.out.println("Pump Extended Data : " + in.intValue());
         
         criteria = this.getSession().createCriteria(PumpProfileH.class);
         criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
@@ -456,7 +457,7 @@ public class GGCPumpDb extends PluginDb
 
         String sql = "";
 
-        PumpInterface pe = m_da.getSelectedDeviceInstance();
+        PumpInterface pe = (PumpInterface)m_da.getSelectedDeviceInstance();
         
         
         GregorianCalendar gc = new GregorianCalendar();
@@ -554,6 +555,9 @@ public class GGCPumpDb extends PluginDb
                 
                 pdr.writeStatus(counter);
             }
+            
+            pdr.finishReading();   
+            //pdr.writeStatus(counter);
             
         }
         catch(Exception ex)

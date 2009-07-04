@@ -468,7 +468,12 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
 
 
 
-
+    /**
+     * Get Column Value
+     * 
+     * @param index
+     * @return
+     */
     public Object getColumnValue(int index)
     {
         // TODO Auto-generated method stub
@@ -476,10 +481,11 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
     }
 
 
-
-
-
-
+    /**
+     * Get Db Objects
+     * 
+     * @return ArrayList of elements extending GGCHibernateObject
+     */
     public ArrayList<? extends GGCHibernateObject> getDbObjects()
     {
         // TODO Auto-generated method stub
@@ -487,31 +493,30 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
     }
 
 
-
-
+    /**
+     * Get Table Column Value (in case that we need special display values for download data table, this method 
+     * can be used, if it's the same as getColumnValue, we can just call that one. 
+     * 
+     * @param index
+     * @return
+     */
     public Object getTableColumnValue(int index)
     {
+        
         // TODO Auto-generated method stub
         return null;
     }
 
 
-
-
-
-
-
-
-
-
-
-
+    /** 
+     * Get Data As String (for export)
+     */
     public String getDataAsString()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
+    
 
 
     /**
@@ -640,6 +645,17 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
     
     
     /**
+     * Get Output Type
+     * 
+     * @return
+     */
+    public int getOutputType()
+    {
+        return this.output_type;
+    }
+    
+    
+    /**
      * Is Data BG
      * 
      * @see ggc.plugin.output.OutputWriterData#isDataBG()
@@ -691,6 +707,30 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
     public int getObjectStatus()
     {
         return this.object_status;
+    }
+
+    
+    long old_id;
+    
+    /**
+     * Set Old Id (this is used for changing old objects in framework v2)
+     * 
+     * @param id_in
+     */
+    public void setOldId(long id_in)
+    {
+        this.old_id = id_in;
+    }
+    
+    
+    /**
+     * Get Old Id (this is used for changing old objects in framework v2)
+     * 
+     * @return id of old object
+     */
+    public long getOldId()
+    {
+        return this.old_id;
     }
     
     

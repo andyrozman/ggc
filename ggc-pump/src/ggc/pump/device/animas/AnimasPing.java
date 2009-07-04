@@ -1,5 +1,6 @@
 package ggc.pump.device.animas;
 
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 
@@ -72,7 +73,7 @@ public class AnimasPing extends AnimasPump
      */
     public String getIconName()
     {
-        return "an_ir2020.jpg";
+        return "an_ping.jpg";
     }
     
 
@@ -140,6 +141,78 @@ public class AnimasPing extends AnimasPump
     {
         return 0;
     }
+    
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
+    /**
+     * How Many Months Of Data Stored
+     * 
+     * @return
+     */
+    public int howManyMonthsOfDataStored()
+    {
+        return -1;
+    }
+    
+    
+    /**
+     * Get Temporary Basal Type Definition
+     * "TYPE=Unit;STEP=0.1"
+     * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
+     * "TYPE=Both;STEP_UNIT=0.1;STEP=10;MIN=0;MAX=200"
+     * 
+     * @return
+     */
+    public String getTemporaryBasalTypeDefinition()
+    {
+        //return "TYPE=Unit;STEP=0.1";
+        return null;
+    }
+    
+    
+    /**
+     * Get Bolus Step (precission)
+     * 
+     * @return
+     */
+    public float getBolusStep()
+    {
+        return 0.1f;
+    }
+    
+    
+    /**
+     * Get Basal Step (precission)
+     * 
+     * @return
+     */
+    public float getBasalStep()
+    {
+        return 0.1f;
+    }
+    
+    
+    /**
+     * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
+     * 
+     * @return
+     */
+    public boolean arePumpSettingsSet()
+    {
+        return false;
+    }
+
+    
     
 }
 

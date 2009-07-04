@@ -104,6 +104,19 @@ public class PumpDataHandler extends DeviceDataHandler
         }
     }
 
+
+
+
+    /** 
+     * Set Reading Finished
+     */
+    public void setReadingFinished()
+    {
+        
+        // TODO Auto-generated method stub
+        
+    }
+
     
     
     

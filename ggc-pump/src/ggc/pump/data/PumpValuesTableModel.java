@@ -1,15 +1,11 @@
 package ggc.pump.data;
 
-import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,9 +48,9 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
  //   ArrayList<PumpValuesEntry> dl_data;
  //   ArrayList<PumpValuesEntry> displayed_dl_data;
     
-    Hashtable<String,DayValueH> old_data = null;
+    //Hashtable<String,DayValueH> old_data = null;
 
-    Hashtable<String,Object> old_data_v2 = null;
+    //Hashtable<String,Object> old_data_v2 = null;
 
 
     /**
@@ -157,12 +153,12 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
      * 
      * @param data
      */
-    public void setOldValues(Hashtable<String,DayValueH> data)
+/*    public void setOldValues(Hashtable<String,DayValueH> data)
     {
         this.old_data = data;
         //System.out.println(this.old_data);
         //System.out.println(this.old_data.keys());
-    }
+    }*/
 
     /**
      * Add To Array 
@@ -191,7 +187,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
      * 
      * @param mve DeviceValuesEntry instance
      */
-    @Override
+/*    @Override
     public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
     {
         System.out.println("processDeviceValuesEntry: Pump");
@@ -257,7 +253,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
         }*/
         
         
-    }
+  //  }
     
 
     

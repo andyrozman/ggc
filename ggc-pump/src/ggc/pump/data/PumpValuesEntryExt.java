@@ -2,7 +2,6 @@ package ggc.pump.data;
 
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
-import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.defs.PumpAdditionalDataType;
@@ -436,16 +435,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
     }
 
 
-
-
-
-    public Object getColumnValue(int index)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
     /**
      * Get DateTime (long)
      * 
@@ -467,24 +456,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
     }
 
 
-    public ArrayList<? extends GGCHibernateObject> getDbObjects()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-
-
-
-
-    public Object getTableColumnValue(int index)
-    {
-        
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 
 
 
@@ -502,32 +473,54 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
 
 
 
-
-
-
-
-    public String getDataAsString()
+    /**
+     * Get Column Value
+     * 
+     * @param index
+     * @return
+     */
+    public Object getColumnValue(int index)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
 
-    
-    //---
-    //---   Statistics data (mostly unused)
-    //---
-    
-    
+    /**
+     * Get Db Objects
+     * 
+     * @return ArrayList of elements extending GGCHibernateObject
+     */
+    public ArrayList<? extends GGCHibernateObject> getDbObjects()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 
+    /**
+     * Get Table Column Value (in case that we need special display values for download data table, this method 
+     * can be used, if it's the same as getColumnValue, we can just call that one. 
+     * 
+     * @param index
+     * @return
+     */
+    public Object getTableColumnValue(int index)
+    {
+        
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 
-
-  
-    
-    
-    
+    /** 
+     * Get Data As String (for export)
+     */
+    public String getDataAsString()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     
     /**
@@ -537,9 +530,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
      */
     public String getSpecialId()
     {
-        // TODO
-        //return "PE_" + this.datetime.getATDateTimeAsLong() + "_" + this.base_type + "_" + this.sub_type;
-        return null;
+        return "PE_" + this.getDt_info() + "_" + this.getType();
     }
 
     
@@ -559,11 +550,12 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
      * 
      * @return
      */
-    public String getValue()
+/*    public String getValue()
     {
+        return this.get
         return null;
     }
-
+*/
     
     
     /**
@@ -677,6 +669,28 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
     }
     
     
+    long old_id;
+    
+    /**
+     * Set Old Id (this is used for changing old objects in framework v2)
+     * 
+     * @param id_in
+     */
+    public void setOldId(long id_in)
+    {
+        this.old_id = id_in;
+    }
+    
+    
+    /**
+     * Get Old Id (this is used for changing old objects in framework v2)
+     * 
+     * @return id of old object
+     */
+    public long getOldId()
+    {
+        return this.old_id;
+    }
     
     
 }	

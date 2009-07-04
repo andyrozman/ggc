@@ -24,8 +24,8 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     AccuChekSpirit  
- *  Description:  Accu Chek Spirit Pump Implementation
+ *  Filename:     AccuChekCombo  
+ *  Description:  Accu Chek Combo Pump Implementation
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -178,5 +178,54 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     public void close() throws PlugInBaseException
     {
     }
+ 
+    
+    /**
+     * Get Temporary Basal Type Definition
+     * "TYPE=Unit;STEP=0.1"
+     * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
+     * "TYPE=Both;STEP_UNIT=0.1;STEP=10;MIN=0;MAX=200"
+     * 
+     * @return
+     */
+    public String getTemporaryBasalTypeDefinition()
+    {
+        //return "TYPE=Unit;STEP=0.1";
+        return null;
+    }
+    
+    
+    /**
+     * Get Bolus Step (precission)
+     * 
+     * @return
+     */
+    public float getBolusStep()
+    {
+        return 0.1f;
+    }
+    
+    
+    /**
+     * Get Basal Step (precission)
+     * 
+     * @return
+     */
+    public float getBasalStep()
+    {
+        return 0.1f;
+    }
+    
+    
+    /**
+     * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
+     * 
+     * @return
+     */
+    public boolean arePumpSettingsSet()
+    {
+        return false;
+    }
+    
     
 }

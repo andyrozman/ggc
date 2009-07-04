@@ -3,6 +3,7 @@ package ggc.pump.device.minimed;
 import java.util.Hashtable;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
@@ -58,7 +59,7 @@ public abstract class MinimedPump extends AbstractPump
     /**
      * Pump Minimed x54/Veo
      */
-    public static final int PUMP_MINIMED_x54_VEO  = 10004;
+    public static final int PUMP_MINIMED_554_754_VEO  = 10004;
     
     
     /**
@@ -331,5 +332,30 @@ public abstract class MinimedPump extends AbstractPump
         return false;
     }
 
+    
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
+    /**
+     * How Many Months Of Data Stored
+     * 
+     * @return
+     */
+    public int howManyMonthsOfDataStored()
+    {
+        return -1;
+    }
+    
+    
+    
     
 }

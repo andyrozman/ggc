@@ -3,6 +3,7 @@ package ggc.pump.device.animas;
 import java.util.Hashtable;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
@@ -329,5 +330,30 @@ public abstract class AnimasPump extends AbstractPump
     {
         return false;
     }
+   
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
+    /**
+     * How Many Months Of Data Stored
+     * 
+     * @return
+     */
+    public int howManyMonthsOfDataStored()
+    {
+        return -1;
+    }
+    
+    
+    
     
 }
