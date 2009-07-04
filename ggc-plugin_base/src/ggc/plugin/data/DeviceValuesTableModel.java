@@ -186,6 +186,8 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      */
     public void setFilter(int filter)
     {
+        System.out.println("Set FILTER !!!!!!!!!!!!!!!!!!!!!! " + filter);
+        
         if (this.current_filter==filter)
             return;
         
@@ -304,14 +306,51 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     /**
      * Process Device Value Entry
      * 
-     * @param mve DeviceValuesEntry instance
+     * @param dve DeviceValuesEntryInterface instance
      */
-    public abstract void processDeviceValueEntry(DeviceValuesEntryInterface mve);
+    public void processDeviceValueEntry(DeviceValuesEntryInterface dve)
+    {
+        
+        if (this.m_ddh.hasOldData())
+        {
+            if (!this.m_ddh.getOldData().containsKey("" + dve.getSpecialId()))
+            {
+                dve.setStatus(DeviceValuesEntryInterface.STATUS_NEW);
+                dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_NEW);
+            }
+            else
+            {
+                
+                DeviceValuesEntryInterface dve_old = (DeviceValuesEntryInterface)this.m_ddh.getOldData().get(dve.getSpecialId());
+                
+                if (dve_old.getValue().equals(dve.getValue()))
+                {
+                    dve.setStatus(DeviceValuesEntryInterface.STATUS_OLD);
+                    dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_OLD);
+                    dve.setId(dve_old.getId());
+                }
+                else
+                {
+                    dve.setStatus(DeviceValuesEntryInterface.STATUS_CHANGED);
+                    dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_EDIT);
+                    //dve.entry_object = mve_old.getHibernateObject();
+                    dve.setId(dve_old.getId());
+                }
+            }
+        }
+        else
+        {
+            dve.setStatus(DeviceValuesEntryInterface.STATUS_NEW);
+            dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_NEW);
+        }
+        
+    }
     
     
     /**
      * Get Checked Entries
      * 
+     * @deprecated this was used by framework v1
      * @return Hashtable<String,ArrayList<?>>
      */
     public Hashtable<String,ArrayList<?>> getCheckedEntries()
@@ -349,6 +388,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     
     /**
      * Export Checked Data
+     * @deprecated this was used by framework v1
      */
     public void exportCheckedData()
     {
@@ -383,6 +423,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     /**
      * Get Empty ArrayList
      * 
+     * @deprecated this was used by framework v1
      * @return
      */
     public abstract ArrayList<? extends GGCHibernateObject> getEmptyArrayList();
@@ -391,6 +432,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     /**
      * Add To Array 
      * 
+     * @deprecated this was used by framework v1
      * @param lst
      * @param source
      */
@@ -464,16 +506,16 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
                 DeviceValuesEntryInterface dvei = this.displayed_dl_data.get(i); 
                 //list.add((DatabaseObjectHibernate)this.displayed_dl_data.get(i));
                 
-                System.out.println("Checked: " + dvei);
+                //System.out.println("Checked: " + dvei);
             
                 if (dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW)
                 {
-                    System.out.println("Checked[add]: " + dvei);
+                    //System.out.println("Checked[add]: " + dvei);
                     list_add.add((DatabaseObjectHibernate)dvei);
                 }
                 else if (dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_EDIT)
                 {
-                    System.out.println("Checked[edit]: " + dvei);
+                    //System.out.println("Checked[edit]: " + dvei);
                     list_edit.add((DatabaseObjectHibernate)dvei);
                 }
             

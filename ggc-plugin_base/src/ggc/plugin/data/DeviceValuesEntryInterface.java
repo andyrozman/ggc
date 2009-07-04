@@ -252,6 +252,22 @@ public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(Outp
 
 
     /**
+     * Set Old Id (this is used for changing old objects in framework v2)
+     * 
+     * @param id_in
+     */
+    public void setId(long id_in);
+    
+    
+    /**
+     * Get Id (this is used for changing old objects in framework v2)
+     * 
+     * @return id of old object
+     */
+    public long getId();
+    
+    
+    /**
      * Comparator method, for sorting objects
      * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)

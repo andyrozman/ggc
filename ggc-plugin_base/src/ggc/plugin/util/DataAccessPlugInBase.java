@@ -1,9 +1,12 @@
 package ggc.plugin.util;
 
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.manager.DeviceManager;
@@ -1228,6 +1231,56 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
             return DataAccessPlugInBase.yes_no_option[0];
                                                      
     }
+ 
+    
+    
+    /**
+     * Get Download Status For Selected Device
+     *   0 = No status
+     *   1 = Device not selected
+     *   2 = Device doesn't support Download
+     *   
+     *  10 = Download OK
+     * 
+     * @return
+     */
+    public int getDownloadStatus()
+    {
+        
+        DeviceInterface pi = getSelectedDeviceInstance();
+        
+        if (pi==null)
+            return 1;
+        else
+        {
+            if (pi.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
+                return 10;
+            else
+                return 2;
+        }
+        
+    }
+    
+
+    /**
+     * Get Selected Device Instance
+     * 
+     * @return
+     */
+    public DeviceInterface getSelectedDeviceInstance()
+    {
+        DeviceConfigEntry dce = getDeviceConfiguration().getSelectedDeviceInstance();
+        
+        if (dce==null)
+            return null;
+        else
+        {
+            return (DeviceInterface)this.getManager().getCompany(dce.device_company).getDevice(dce.device_device);
+        }
+    }
+    
+    
+    
     
 
 }

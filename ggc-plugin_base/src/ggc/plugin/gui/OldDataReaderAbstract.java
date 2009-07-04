@@ -51,7 +51,7 @@ public abstract class OldDataReaderAbstract
     
     protected int all_entries = 0;
 //    protected HibernateDb m_db = null;
-    
+    protected int cur_entry = 0;
     
     /**
      * Constructor
@@ -128,12 +128,22 @@ public abstract class OldDataReaderAbstract
         
         int ee_i = (int)ee;
         //System.out.println("Element Progress: " + current_entry + "/" + this.all_entries + " = " + ee_i);
-        
+        cur_entry = current_entry;
         return ee_i;
     }
     
     
-    
+    /**
+     * Finish reading
+     */
+    public void finishReading()
+    {
+        if (cur_entry!=this.all_entries)
+        {
+            log.warn("It seems that not all data was read (" + this.cur_entry + "/" + this.all_entries + ")");
+            this.m_drr.setOldDataReadingProgress(100);
+        }
+    }
     
     
 }

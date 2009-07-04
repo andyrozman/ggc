@@ -107,8 +107,8 @@ public abstract class DeviceManager
         
         if (cmp==null)
         {
-            System.out.println("Company not found !");
-            System.out.println("companies_nt: " + this.companies_ht);
+            //System.out.println("Company not found !");
+            //System.out.println("companies_nt: " + this.companies_ht);
             return null;
         }
         

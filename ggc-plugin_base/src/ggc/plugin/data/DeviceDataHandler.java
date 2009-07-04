@@ -222,12 +222,16 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
                     proc = 99;
                 
                 System.out.println("Procents: " + proc);
+        
+                this.setStatus(proc);
                 
             }
             
         }
 
         this.setStatus(100);
+        this.export_dialog.setReadingFinished();
+        //this.export_dialog.setStatus(100);
     }
     
     

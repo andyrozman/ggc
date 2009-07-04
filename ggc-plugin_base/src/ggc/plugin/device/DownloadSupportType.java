@@ -43,4 +43,12 @@ public class DownloadSupportType
      * DownloadSupportType: Download not supported by device
      */
     public static final int DOWNLOAD_SUPPORT_NA_DEVICE = 2;
+
+
+    /**
+     * DownloadSupportType: Download not supported by device
+     */
+    public static final int DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE = 3;
+
+
 }

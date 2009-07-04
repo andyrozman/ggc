@@ -62,6 +62,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     private JButton bt_close, bt_start, help_button;
     JLabel lbl_status;
     DeviceDataHandler m_ddh;
+    boolean reading_finsihed = false;
     
     
     
@@ -106,10 +107,15 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     private void setStart()
     {
         this.started = true;
+        this.bt_close.setEnabled(false);
         this.m_ddh.executeExport(this);
         //this.server.setReturnData(this.meter_data, this);
-        this.bt_close.setEnabled(false);
         this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_EXPORTING"));
+/*        
+        if ((!this.isVisible()) && (reading_finsihed))
+        {
+            this.bt_close.setEnabled(true);
+        } */
     }
     
     
@@ -248,12 +254,36 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         if (this.progress!=null)
             this.progress.setValue(status);
         
+        System.out.println("setStatus: " + status);
+        
         if (status==100)
         {
+            System.out.println("setStatusXXXX: " + status);
             bt_close.setEnabled(true);
             this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_FINISHED"));
+            bt_close.setEnabled(true);
             this.action = true;
         }
+    }
+    
+    
+    /**
+     * Set reading finsihed
+     */
+    public void setReadingFinished()
+    {
+        setCloseEnabled(true);
+    }
+
+    
+    /**
+     * Set Close Enabled
+     * 
+     * @param cls
+     */
+    public void setCloseEnabled(boolean cls)
+    {
+        bt_close.setEnabled(cls);
     }
     
     

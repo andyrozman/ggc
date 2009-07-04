@@ -4,6 +4,7 @@ import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -124,6 +125,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         //this.m_ddh.setDbDataReader(reader);
         this.checkReading(this.m_ddh.isOldDataReadingFinished());
         this.m_ddh.setReadingFinishedObject(this);
+        m_da.addComponent(this);
         
         //this.reading_old_done = this.m_ddh.isOldDataReadingFinished();
         //this.checkReading(status)
@@ -136,6 +138,28 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
             return;
         }
         
+        if (this.device_interface.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE)
+        {
+            String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_DOWNLOAD_SUPPORT"), 
+                         this.configured_device.device_device,
+                         this.configured_device.device_company);
+            JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), msg, m_ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        else if (this.device_interface.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_SUPPORT_NO)
+        {
+            String msg = String.format(m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_BY_GGC"), 
+                this.configured_device.device_device,
+                this.configured_device.device_company);
+            JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), msg, m_ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        else if (this.device_interface.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE)
+        {
+            JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_GENERIC"), 
+                                          m_ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         //m_da.addContainer(server.)
         
         
@@ -166,7 +190,9 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         
         this.device_interface = mi;
         
-        return true;
+        return (this.device_interface!=null);
+        
+        //return true;
     }
     
     
@@ -233,8 +259,6 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
     protected void init()
     {
-        m_da.addComponent(this);
-
         ATSwingUtils.initLibrary();
         
         setTitle(String.format(m_ic.getMessage("CONFIGURED_DEVICE_INSTRUCTIONS"), m_ic.getMessage("DEVICE_NAME_BIG")));
