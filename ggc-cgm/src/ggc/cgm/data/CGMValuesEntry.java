@@ -507,6 +507,30 @@ public class CGMValuesEntry extends DeviceValuesEntry
         return null;
     }
     
+   
+    long old_id;
+    
+    /**
+     * Set Old Id (this is used for changing old objects in framework v2)
+     * 
+     * @param id_in
+     */
+    public void setId(long id_in)
+    {
+        this.old_id = id_in;
+    }
+    
+    
+    /**
+     * Get Old Id (this is used for changing old objects in framework v2)
+     * 
+     * @return id of old object
+     */
+    public long getId()
+    {
+        return this.old_id;
+    }
+    
     
 	
 }	
