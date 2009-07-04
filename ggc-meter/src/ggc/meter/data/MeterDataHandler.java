@@ -56,6 +56,7 @@ public class MeterDataHandler extends DeviceDataHandler
      * 
      * @see ggc.plugin.data.DeviceDataHandler#executeExportDb()
      */
+    @SuppressWarnings("deprecation")
     public void executeExportDb()
     {
         //System.out.println("Checked entries: " + this.getDeviceValuesTableModel().getCheckedEntries());
@@ -102,6 +103,18 @@ public class MeterDataHandler extends DeviceDataHandler
             old_data = (Hashtable<String,DayValueH>)data;
             //System.out.println("Old data: " + old_data);
         }
+    }
+
+
+
+
+    /** 
+     * Set Reading Finished
+     */
+    public void setReadingFinished()
+    {
+        // TODO Auto-generated method stub
+        
     }
 
     
