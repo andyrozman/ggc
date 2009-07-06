@@ -2,6 +2,7 @@ package ggc.pump.device.dana;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -55,6 +56,17 @@ public class DanaDiabecare_II extends DanaPump
     {
         super();
         //super(params, writer);
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public DanaDiabecare_II(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
     }
     
     

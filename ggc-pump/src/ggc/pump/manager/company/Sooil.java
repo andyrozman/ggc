@@ -1,5 +1,8 @@
 package ggc.pump.manager.company; 
 
+import ggc.pump.device.dana.DanaDiabecare_II;
+import ggc.pump.device.dana.DanaDiabecare_III_R;
+import ggc.pump.device.dana.DanaDiabecare_IIS;
 import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
@@ -46,7 +49,10 @@ public class Sooil extends AbstractPumpDeviceCompany
             profile_names[i] = "" + (i+1);
         }
         
-        this.addDevice(new GenericPumpDevice(this));
+        //this.addDevice(new GenericPumpDevice(this));
+        this.addDevice(new DanaDiabecare_II(this));
+        this.addDevice(new DanaDiabecare_IIS(this));
+        this.addDevice(new DanaDiabecare_III_R(this));
     }
 
 

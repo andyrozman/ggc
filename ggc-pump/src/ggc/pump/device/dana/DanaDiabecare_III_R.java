@@ -1,12 +1,15 @@
 package ggc.pump.device.dana;
 
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.SerialProtocol;
+import ggc.pump.device.AbstractSerialPump;
 import gnu.io.SerialPortEvent;
 
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,7 +45,7 @@ import org.apache.commons.logging.LogFactory;
 
 // TODO: Auto-generated Javadoc
 // OLD Implementation
-public class DanaDiabecare_III_R extends SerialProtocol //extends DanaPump //implements SerialProtocol
+public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //extends DanaPump //implements SerialProtocol
 {
 
 
@@ -65,6 +68,17 @@ public class DanaDiabecare_III_R extends SerialProtocol //extends DanaPump //imp
     {
         super();
         //super(params, writer);
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public DanaDiabecare_III_R(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
     }
     
     
@@ -1031,6 +1045,90 @@ public class DanaDiabecare_III_R extends SerialProtocol //extends DanaPump //imp
     public boolean arePumpSettingsSet()
     {
         return false;
+    }
+
+
+    public Hashtable<String, Integer> getAlarmMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public Hashtable<String, Integer> getBolusMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public Hashtable<String, Integer> getErrorMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public Hashtable<String, Integer> getEventMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public Hashtable<String, Integer> getReportMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public void loadPumpSpecificValues()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public String getDeviceSpecialComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean hasSpecialProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public void readConfiguration() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void readDeviceDataPartitial() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void readInfo() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
     }
     
     

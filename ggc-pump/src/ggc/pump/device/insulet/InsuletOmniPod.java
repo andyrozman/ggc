@@ -2,6 +2,7 @@ package ggc.pump.device.insulet;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -51,6 +52,17 @@ public class InsuletOmniPod extends InsuletPump
     public InsuletOmniPod(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public InsuletOmniPod(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
     }
     
     

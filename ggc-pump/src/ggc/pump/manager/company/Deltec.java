@@ -1,5 +1,7 @@
 package ggc.pump.manager.company; 
 
+import ggc.pump.device.deltec.DeltecCosmo1700;
+import ggc.pump.device.deltec.DeltecCosmo1800;
 import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
@@ -39,7 +41,9 @@ public class Deltec extends AbstractPumpDeviceCompany
     public Deltec()
     {
         super(I18nControl.getInstance(), false);
-        this.addDevice(new GenericPumpDevice(this));
+        //this.addDevice(new GenericPumpDevice(this));
+        this.addDevice(new DeltecCosmo1700(this));
+        this.addDevice(new DeltecCosmo1800(this));
     }
 
 

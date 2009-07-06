@@ -345,7 +345,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
 
     
     String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION"), ic.getMessage("DEVICE_DOWNLOAD"), ic.getMessage("DEVICE_SETTINGS") }; 
-    float device_columns_width[] = { 0.3f, 0.2f, 0.3f, 0.1f, 0.1f };
+    float device_columns_width[] = { 0.3f, 0.3f, 0.3f, 0.05f, 0.05f };
     
     /** 
      * getColumnName

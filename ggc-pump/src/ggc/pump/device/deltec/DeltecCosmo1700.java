@@ -2,6 +2,7 @@ package ggc.pump.device.deltec;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -54,6 +55,17 @@ public class DeltecCosmo1700 extends DeltecPump
     }
     
 
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public DeltecCosmo1700(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
+    
+    
     /**
      * getName - Get Name of meter. 
      * 

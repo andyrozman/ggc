@@ -2,6 +2,7 @@ package ggc.pump.device.deltec;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -51,6 +52,17 @@ public class DeltecCosmo1800 extends DeltecPump
     public DeltecCosmo1800(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public DeltecCosmo1800(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
     }
     
 
