@@ -2,6 +2,7 @@ package ggc.pump.device.animas;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -54,10 +55,15 @@ public class AnimasIR2020 extends AnimasPump
     }
     
     
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public AnimasIR2020(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
 
     /**
      * getName - Get Name of meter. 

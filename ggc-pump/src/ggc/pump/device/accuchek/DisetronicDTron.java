@@ -2,6 +2,7 @@ package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -52,6 +53,17 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     public DisetronicDTron(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public DisetronicDTron(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
     }
     
     

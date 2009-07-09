@@ -2,6 +2,7 @@ package ggc.pump.device.animas;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -56,10 +57,15 @@ public class AnimasIR1250 extends AnimasPump
         super(params, writer);
     }
     
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public AnimasIR1250(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
 
 
     /**

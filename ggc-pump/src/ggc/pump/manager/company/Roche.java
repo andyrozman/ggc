@@ -1,6 +1,9 @@
 package ggc.pump.manager.company; 
 
+import ggc.pump.device.accuchek.AccuChekCombo;
+import ggc.pump.device.accuchek.AccuChekDTron;
 import ggc.pump.device.accuchek.AccuChekSpirit;
+import ggc.pump.device.accuchek.DisetronicDTron;
 import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
@@ -47,8 +50,11 @@ public class Roche extends AbstractPumpDeviceCompany
             profile_names[i] = "" + (i+1);
         }
         
-        this.addDevice(new GenericPumpDevice(this));
+        //this.addDevice(new GenericPumpDevice(this));
+        this.addDevice(new DisetronicDTron(this));
+        this.addDevice(new AccuChekDTron(this));
         this.addDevice(new AccuChekSpirit(this));
+        this.addDevice(new AccuChekCombo(this));
     }
 
 

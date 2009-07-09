@@ -2,6 +2,7 @@ package ggc.pump.device.minimed;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -53,6 +54,16 @@ public class Minimed522 extends MinimedPump
         super(drive_letter, writer);
     }
     
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public Minimed522(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
     
 
     /**

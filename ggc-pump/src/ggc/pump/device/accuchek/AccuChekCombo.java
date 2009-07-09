@@ -2,6 +2,7 @@ package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -56,10 +57,15 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         super(drive_letter, writer);
     }
     
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public AccuChekCombo(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
+    }
 
 
     /**

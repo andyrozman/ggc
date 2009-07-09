@@ -1,5 +1,9 @@
 package ggc.pump.manager.company; 
 
+import ggc.pump.device.minimed.Minimed508;
+import ggc.pump.device.minimed.Minimed512;
+import ggc.pump.device.minimed.Minimed522;
+import ggc.pump.device.minimed.Minimed554_Veo;
 import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
@@ -45,7 +49,11 @@ public class Minimed extends AbstractPumpDeviceCompany
         profile_names[1] = "Pattern A";
         profile_names[2] = "Pattern B";
         
-        this.addDevice(new GenericPumpDevice(this));
+        //this.addDevice(new GenericPumpDevice(this));
+        this.addDevice(new Minimed508(this));
+        this.addDevice(new Minimed512(this));
+        this.addDevice(new Minimed522(this));
+        this.addDevice(new Minimed554_Veo(this));
 
     }
 

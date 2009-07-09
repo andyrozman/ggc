@@ -2,6 +2,7 @@ package ggc.pump.device.animas;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -51,6 +52,17 @@ public class AnimasPing extends AnimasPump
     public AnimasPing(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public AnimasPing(AbstractDeviceCompany cmp)
+    {
+        this.setDeviceCompany(cmp);
     }
     
     

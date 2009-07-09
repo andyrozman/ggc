@@ -1,5 +1,9 @@
 package ggc.pump.manager.company; 
 
+import ggc.pump.device.animas.AnimasIR1200;
+import ggc.pump.device.animas.AnimasIR1250;
+import ggc.pump.device.animas.AnimasIR2020;
+import ggc.pump.device.animas.AnimasPing;
 import ggc.pump.manager.PumpManager;
 import ggc.pump.util.I18nControl;
 
@@ -41,7 +45,12 @@ public class Animas extends AbstractPumpDeviceCompany
     {
         super(I18nControl.getInstance(), false);
         
-        this.addDevice(new GenericPumpDevice(this));
+        //this.addDevice(new GenericPumpDevice(this));
+        this.addDevice(new AnimasIR1200(this));
+        this.addDevice(new AnimasIR1250(this));
+        this.addDevice(new AnimasIR2020(this));
+        this.addDevice(new AnimasPing(this));
+        
     }
 
 
