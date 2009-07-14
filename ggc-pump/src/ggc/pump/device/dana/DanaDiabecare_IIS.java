@@ -67,7 +67,7 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      */
     public DanaDiabecare_IIS(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

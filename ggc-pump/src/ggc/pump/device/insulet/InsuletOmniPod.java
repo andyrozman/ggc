@@ -62,7 +62,7 @@ public class InsuletOmniPod extends InsuletPump
      */
     public InsuletOmniPod(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

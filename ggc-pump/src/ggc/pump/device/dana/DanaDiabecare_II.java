@@ -66,7 +66,7 @@ public class DanaDiabecare_II extends DanaPump
      */
     public DanaDiabecare_II(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

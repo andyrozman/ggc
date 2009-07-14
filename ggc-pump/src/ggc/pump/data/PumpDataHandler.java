@@ -78,7 +78,7 @@ public class PumpDataHandler extends DeviceDataHandler
      */
     public void createDeviceValuesTableModel()
     {
-        this.m_model = new PumpValuesTableModel(this);
+        this.m_model = new PumpValuesTableModel(this, m_da.getSourceDevice());
     }
 
 

@@ -58,6 +58,19 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         super();
     }
 
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public AbstractXmlPump(AbstractDeviceCompany cmp)
+    {
+        super();
+        this.setDeviceCompany(cmp);
+        this.setPumpType(cmp.getName(), getName());
+    }
+    
+    
     
     boolean can_read_data = false; 
 	boolean can_read_partitial_data = false;
@@ -97,9 +110,13 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         di.company = group;
         di.device_selected = device;
         
-        this.output_writer.setDeviceIdentification(di);
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
         //this.output_writer.
         //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        
+        this.device_source_name = group + " " + device;
+        
     }
     
     
@@ -522,6 +539,19 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     public String getTemporaryBasalTypeDefinition()
     {
         return "TYPE=Unit;STEP=0.1";
+    }
+    
+   
+    String device_source_name;
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName()
+    {
+        return device_source_name;
     }
     
     

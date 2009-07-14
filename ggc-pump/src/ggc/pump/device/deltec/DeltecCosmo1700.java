@@ -62,7 +62,7 @@ public class DeltecCosmo1700 extends DeltecPump
      */
     public DeltecCosmo1700(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

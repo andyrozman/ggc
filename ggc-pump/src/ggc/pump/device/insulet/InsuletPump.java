@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.device.AbstractPump;
 
@@ -63,8 +64,20 @@ public abstract class InsuletPump extends AbstractPump
      */
     public InsuletPump(String params, OutputWriter writer)
     {
-        super(); //params, writer);
+        super(params, writer);
     }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public InsuletPump(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
+    }
+    
     
     
     //************************************************

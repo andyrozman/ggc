@@ -6,6 +6,7 @@ import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.device.AbstractPump;
 
@@ -81,6 +82,17 @@ public abstract class MinimedPump extends AbstractPump
     {
         super(); //params, writer);
     }
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public MinimedPump(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
+    }
+    
     
     
     //************************************************

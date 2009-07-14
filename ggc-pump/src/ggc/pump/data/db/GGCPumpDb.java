@@ -166,6 +166,11 @@ public class GGCPumpDb extends PluginDb
             ArrayList<PumpValuesEntryExt> lst_ext = getRangePumpValuesExtended(from, to);
             mergeRangePumpData(dvr, lst_ext);
             
+            
+//            ArrayList<PumpValuesEntryExt> lst_ext = getDailyPumpValuesExtended(gc);
+//            mergeDailyPumpData(dV, lst_ext);
+            
+            
         }
         catch (Exception ex)
         {
@@ -323,29 +328,39 @@ public class GGCPumpDb extends PluginDb
      */
     public void mergeRangePumpData(DeviceValuesRange dvr, ArrayList<PumpValuesEntryExt> lst_ext)
     {
+        
+        // FIXME
+        
         for(int i=0; i<lst_ext.size(); i++)
         {
             PumpValuesEntryExt pvex = lst_ext.get(i);
             
             DeviceValuesDay dvd;
             
-            if (dvr.isEntryAvailable(pvex.getDt_info()))
+            if (dvr.isDayEntryAvailable(pvex.getDt_info()))
             {
+                //System.out.println("DeviceValuesDay Found");
                 dvd = dvr.getDayEntry(pvex.getDt_info());
             }
             else
             {
-                ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), pvex.getDt_info());
+                //System.out.println("DeviceValuesDay Created");
+                ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pvex.getDt_info());
                 dvd = new DeviceValuesDay(m_da, atd.getGregorianCalendar());
+                dvr.addEntry(dvd);
             }
             
             if (dvd.isEntryAvailable(pvex.getDt_info()))
             {
+                //System.out.println("PumpValuesEntry Found");
+                
                 PumpValuesEntry pve = (PumpValuesEntry)dvd.getEntry(pvex.getDt_info());
                 pve.addAdditionalData(pvex);
             }
             else
             {
+                //System.out.println("PumpValuesEntry Created");
+
                 PumpValuesEntry pve = new PumpValuesEntry();
                 pve.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pvex.getDt_info()));
                 pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);

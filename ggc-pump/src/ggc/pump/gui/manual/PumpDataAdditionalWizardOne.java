@@ -349,7 +349,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     private void cmdOk()
     {
         // TODO: 
-        System.out.println("wizard_1 [ok]");
+        //System.out.println("wizard_1 [ok]");
         m_da.removeComponent(this);
 
         

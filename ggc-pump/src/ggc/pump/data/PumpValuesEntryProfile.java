@@ -339,7 +339,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
         pd.setBasal_diffs(this.getBasal_diffs());
         pd.setActive_from(this.getActive_from());
         pd.setActive_till(this.getActive_till());
-        pd.setExtended(this.getExtended());
+        pd.setExtended("SOURCE=" + this.source);
         pd.setPerson_id(this.getPerson_id());
         pd.setComment(this.getComment());
         pd.setChanged(System.currentTimeMillis());
@@ -734,4 +734,27 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
     }
     
     
+    String source;
+    
+    /**
+     * Set Source
+     * 
+     * @param src
+     */
+    public void setSource(String src)
+    {
+        this.source = src;
+        
+    }
+    
+    /**
+     * Get Source 
+     * 
+     * @return
+     */
+    public String getSource()
+    {
+        return this.source;
+    }
+     
 }	

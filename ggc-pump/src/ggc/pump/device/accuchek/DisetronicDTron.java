@@ -63,7 +63,7 @@ public class DisetronicDTron extends AccuChekSmartPixPump
      */
     public DisetronicDTron(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

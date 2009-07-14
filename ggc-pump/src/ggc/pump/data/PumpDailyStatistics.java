@@ -93,10 +93,13 @@ public class PumpDailyStatistics extends StatisticsCollection
         for(int i=0; i<lst.size(); i++)
         {
             PumpValuesEntry pve = lst.get(i);
-            
-            if ((pve.base_type == PumpBaseType.PUMP_DATA_BASAL) && 
-                (pve.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
+         
+            if (isCurrentlyIgnoredEntry(pve))
                 continue;
+            
+//            if ((pve.base_type == PumpBaseType.PUMP_DATA_BASAL) && 
+//                (pve.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
+//                continue;
 
             if ((i+1)==lst.size())
             {
@@ -109,8 +112,18 @@ public class PumpDailyStatistics extends StatisticsCollection
             else
             {
                 PumpValuesEntry pve2 = lst.get(i+1);
+
+                if (isCurrentlyIgnoredEntry(pve2))
+                    continue;
+                
+//                if ((pve2.base_type == PumpBaseType.PUMP_DATA_BASAL) && 
+//                    (pve2.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
+//                      continue;
+                
                 
                 //System.out.println("Hour: " + pve2.getDateTimeObject().hour_of_day + ", hour2=" + pve.getDateTimeObject().hour_of_day);
+
+                //System.out.println("pve2: " + pve2.getBaseTypeString() + pve2.getSubTypeString());
                 
                 int s = pve2.getDateTimeObject().hour_of_day - pve.getDateTimeObject().hour_of_day;
                 float val = da_pump.getFloatValueFromString(pve.getValue());
@@ -153,6 +166,18 @@ public class PumpDailyStatistics extends StatisticsCollection
         
         this.special_processed = true;
     }
+    
+    
+    private boolean isCurrentlyIgnoredEntry(PumpValuesEntry pve)
+    {
+        if (pve.base_type == PumpBaseType.PUMP_DATA_BASAL)
+        {
+            return (pve.sub_type!=PumpBasalSubType.PUMP_BASAL_VALUE);
+        }
+        else
+            return false;
+    }
+    
     
     
     private float getStandardDeviation()

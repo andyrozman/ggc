@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.device.AbstractPump;
 
@@ -75,6 +76,18 @@ public abstract class DanaPump extends AbstractPump
     {
         super(); //params, writer);
     }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public DanaPump(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
+    }
+
     
     
     //************************************************

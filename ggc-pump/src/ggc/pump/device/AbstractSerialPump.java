@@ -78,6 +78,44 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public AbstractSerialPump(AbstractDeviceCompany cmp)
+    {
+        super();
+        this.setDeviceCompany(cmp);
+        this.setPumpType(cmp.getName(), getName());
+    }
+    
+    
+    
+    /**
+     * Set Pump Type
+     * 
+     * @param group
+     * @param device
+     */
+    public void setPumpType(String group, String device)
+    {
+        this.device_name = device;
+        
+        DeviceIdentification di = new DeviceIdentification(ic);
+        di.company = group;
+        di.device_selected = device;
+        
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
+        //this.output_writer.
+        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        
+        this.device_source_name = group + " " + device;
+        
+    }
+    
+    
     
 //	this.m_device_index = device_index;
     
@@ -547,4 +585,18 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
         return true;
     }
 
+    
+    String device_source_name;
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName()
+    {
+        return device_source_name;
+    }
+    
+    
 }

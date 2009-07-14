@@ -1,5 +1,6 @@
 package ggc.pump.device;
 
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -54,7 +55,9 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     protected OutputWriter m_output_writer = null;
     
     protected String[] profile_names = null;
-    
+    protected String device_name;
+    protected OutputWriter output_writer;
+    protected String parameter;
 
     /**
      * Constructor
@@ -62,6 +65,20 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     public AbstractPump()
     {
         super();
+    }
+
+    
+    /**
+     * Constructor
+     * 
+     * @param param 
+     * @param ow
+     */
+    public AbstractPump(String param, OutputWriter ow)
+    {
+        super();
+        this.m_output_writer = ow;
+        this.parameter = param;
     }
     
     
@@ -77,6 +94,43 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     }
 
 
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public AbstractPump(AbstractDeviceCompany cmp)
+    {
+        super();
+        this.setDeviceCompany(cmp);
+        this.setPumpType(cmp.getName(), getName());
+    }
+    
+    
+    
+    /**
+     * Set Pump Type
+     * 
+     * @param group
+     * @param device
+     */
+    public void setPumpType(String group, String device)
+    {
+        this.device_name = device;
+        
+        DeviceIdentification di = new DeviceIdentification(ic);
+        di.company = group;
+        di.device_selected = device;
+        
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
+        //this.output_writer.
+        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        
+        this.device_source_name = group + " " + device;
+        
+    }
+    
     
     
     boolean can_read_data = false; 
@@ -469,5 +523,16 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
         return 6;
     }
     
+    String device_source_name;
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName()
+    {
+        return device_source_name;
+    }
     
 }

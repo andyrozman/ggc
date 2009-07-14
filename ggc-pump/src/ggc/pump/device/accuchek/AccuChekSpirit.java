@@ -63,7 +63,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public AccuChekSpirit(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     //************************************************

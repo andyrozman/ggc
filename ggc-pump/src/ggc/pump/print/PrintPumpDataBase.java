@@ -148,7 +148,7 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
                     datatable.addCell(new Phrase(pve.getBaseTypeString(), f));
                     datatable.addCell(new Phrase(pve.getSubTypeString(), f));
                     datatable.addCell(new Phrase(pve.getValue(), f));
-                    datatable.addCell(new Phrase(pve.getAdditionalDataPrint(), f));
+                    datatable.addCell(new Phrase(pve.getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES), f));
                 }
                 
             }

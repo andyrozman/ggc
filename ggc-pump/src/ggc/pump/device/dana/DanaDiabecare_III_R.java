@@ -78,7 +78,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
      */
     public DanaDiabecare_III_R(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     
@@ -1048,6 +1048,10 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    /**
+     * Map pump specific alarms to PumpTool specific alarm codes
+     * @return
+     */
     public Hashtable<String, Integer> getAlarmMappings()
     {
         // TODO Auto-generated method stub
@@ -1055,6 +1059,11 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    /**
+     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
+     *     event codes
+     * @return
+     */
     public Hashtable<String, Integer> getBolusMappings()
     {
         // TODO Auto-generated method stub
@@ -1062,6 +1071,11 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    /**
+     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
+     *     event codes
+     * @return
+     */
     public Hashtable<String, Integer> getErrorMappings()
     {
         // TODO Auto-generated method stub
@@ -1069,6 +1083,10 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    /**
+     * Map pump specific events to PumpTool specific event codes
+     * @return
+     */
     public Hashtable<String, Integer> getEventMappings()
     {
         // TODO Auto-generated method stub
@@ -1076,6 +1094,11 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    /**
+     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
+     *     event codes
+     * @return
+     */
     public Hashtable<String, Integer> getReportMappings()
     {
         // TODO Auto-generated method stub
@@ -1083,6 +1106,10 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    /**
+     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
+     *      create, AlarmMappings and EventMappings and any other pump constants.
+     */
     public void loadPumpSpecificValues()
     {
         // TODO Auto-generated method stub
@@ -1090,6 +1117,11 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    /**
+     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
+     *    special comment about device (for example pix device, doesn't display anything till the end, which
+     *    would be nice if user knew. 
+     */
     public String getDeviceSpecialComment()
     {
         // TODO Auto-generated method stub
@@ -1097,38 +1129,55 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    /**
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     *    normal progress status, but with some special devices we calculate progress through other means.
+     *    
+     * @return true is progress status is special
+     */
     public boolean hasSpecialProgressStatus()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
 
+    /** 
+     * This is method for reading configuration
+     * 
+     * @throws PlugInBaseException
+     */
     public void readConfiguration() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /** 
+     * Read Device Data Full
+     * 
+     * @throws PlugInBaseException 
+     */
     public void readDeviceDataFull() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * here. Reading can be done directly here, or event can be used to read data.
+     */
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
 
 
+    /**
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do).
+     *  
+     * @throws PlugInBaseException
+     */
     public void readInfo() throws PlugInBaseException
     {
-        // TODO Auto-generated method stub
-        
     }
     
     

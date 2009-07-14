@@ -137,6 +137,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         super(drive_letter, writer); 
         loadPumpSpecificValues();
         m_da = DataAccessPump.getInstance();
+        this.setPumpType("Accu-Chek/Roche", this.getName());
     }
     
     
@@ -417,7 +418,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             Element el = (Element)lst.get(i);
             
-            PumpValuesEntry pve = new PumpValuesEntry();
+            PumpValuesEntry pve = new PumpValuesEntry(this.getDeviceSourceName());
             pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
 
             add = false;
@@ -461,7 +462,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             Element el = (Element)lst.get(i);
             
-            PumpValuesEntry pve = new PumpValuesEntry();
+            PumpValuesEntry pve = new PumpValuesEntry(this.getDeviceSourceName());
             pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
 
             add = this.resolveBasalProfile(pve, el);                

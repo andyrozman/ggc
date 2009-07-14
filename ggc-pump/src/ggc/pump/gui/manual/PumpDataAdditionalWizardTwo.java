@@ -530,7 +530,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                     float f = m_da.getFloatValue(this.internal_data[1]);
                     this.cb_1.setSelected(f>0);
                     
-                    this.num_1.setText("" + f);
+                    // FIXME
+                    //this.num_1.setText("" + f);
                 }                
                 
                 /*
@@ -661,12 +662,12 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
             if (this.internal_data==null)
             {
-                PumpValuesEntryExt po = new PumpValuesEntryExt();
+                PumpValuesEntryExt po = new PumpValuesEntryExt("Pump Manual");
                 po.setType(this.m_type);
                 po.setValue("");
                 this.pump_objects_ext[0] = po;
 
-                po = new PumpValuesEntryExt();
+                po = new PumpValuesEntryExt("Pump Manual");
                 po.setType(PumpAdditionalDataType.PUMP_ADD_DATA_CH);
                 po.setValue("0");
                 this.pump_objects_ext[1] = po;
@@ -674,12 +675,12 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
             else
             {
-                PumpValuesEntryExt po = new PumpValuesEntryExt();
+                PumpValuesEntryExt po = new PumpValuesEntryExt("Pump Manual");
                 po.setType(this.m_type);
                 po.setValue(this.internal_data[0]);
                 this.pump_objects_ext[0] = po;
 
-                po = new PumpValuesEntryExt();
+                po = new PumpValuesEntryExt("Pump Manual");
                 po.setType(PumpAdditionalDataType.PUMP_ADD_DATA_CH);
                 po.setValue(this.internal_data[1]);
                 this.pump_objects_ext[1] = po;
@@ -694,7 +695,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         {
             this.pump_objects_ext = new PumpValuesEntryExt[1];
         
-            PumpValuesEntryExt po = new PumpValuesEntryExt();
+            PumpValuesEntryExt po = new PumpValuesEntryExt("Pump Manual");
             po.setType(this.m_type);
     
             if ((this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) || 

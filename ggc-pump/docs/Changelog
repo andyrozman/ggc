@@ -2,6 +2,21 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.0.2 (current)
+
+1.0.1 [10.7.2009]
+    * required base plugin is now 0.4.1 (framework v2)
+    * All basic functionalities are implemented (Download, List, About)
+    * Framework implementation is v2, with some v1 elements (very few), which will be replaced soon
+    * Added special functionalities: Graphs, Printing. Currently only Daily graph is available, but it's 
+      still under construction
+    * Roche implementation is finished concerning basic functionality, only problem we currently have is
+      basal patterns history. SmartPix doesn't show exact history of BP. We will try to make this work, 
+      but until SmartPix is extended/fixed so long code won't be 100%, which means possible losss of some 
+      BP history.
+    * MultiWave entry and Square are finished
+
+
 0.5.1 (current)
     * Work on Accu-chek pump import
     * Fixed Events, Basals and Boluses

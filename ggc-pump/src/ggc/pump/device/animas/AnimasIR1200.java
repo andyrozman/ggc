@@ -62,7 +62,7 @@ public class AnimasIR1200 extends AnimasPump
      */
     public AnimasIR1200(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
 

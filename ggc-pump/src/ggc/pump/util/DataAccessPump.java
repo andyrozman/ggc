@@ -65,7 +65,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "0.4.6";
+    public static final String PLUGIN_VERSION = "1.0.1";
 
     private static DataAccessPump s_da = null; // This is handle to unique 
 
@@ -404,30 +404,31 @@ public class DataAccessPump extends DataAccessPlugInBase
 
         
         FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Base Pump Tools Framework (partitial)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Base Pump Tools Framework"));
         fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
-        fg.addFeaturesEntry(new FeaturesEntry("Manual data entry (also additional data entry)"));
-//        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+        fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
+        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
         fg.addFeaturesEntry(new FeaturesEntry("List of pumps"));
+        fg.addFeaturesEntry(new FeaturesEntry("Manual data entry (also additional data entry)"));
         fg.addFeaturesEntry(new FeaturesEntry("Profiles (partitial)"));
+        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
         
         lst_features.add(fg);
         
         
-//        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
-//        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer"));
+        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
 //        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
 //        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
         
-//        lst_features.add(fg);
+        lst_features.add(fg);
         
         
         fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
         //fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration) [Ready]"));
-        fg.addFeaturesEntry(new FeaturesEntry("Configuration [Ready]"));
-        fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
-        fg.addFeaturesEntry(new FeaturesEntry("Profiles"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Configuration [Ready]"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Profiles"));
         fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
         
         lst_features.add(fg);
@@ -435,7 +436,8 @@ public class DataAccessPump extends DataAccessPlugInBase
         
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
         fg.addFeaturesEntry(new FeaturesEntry("Minimed (in 2009)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Roche (in 2009)"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Roche (in 2009)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Dana (in 2009/2010)"));
         
         lst_features.add(fg);
         
@@ -624,7 +626,7 @@ public class DataAccessPump extends DataAccessPlugInBase
             yes_no_option[0] = m_i18n.getMessage("NO");
             yes_no_option[1] = m_i18n.getMessage("YES");
             
-            System.out.println("Yes: " + m_i18n.getMessage("YES"));
+            //System.out.println("Yes: " + m_i18n.getMessage("YES"));
             
         }
         

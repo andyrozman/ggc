@@ -208,7 +208,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
         if (this.m_dailyValuesRow == null)
         {
-            this.m_dailyValuesRow = new PumpValuesEntry();
+            this.m_dailyValuesRow = new PumpValuesEntry("Pump Manual");
         }
 
         this.setVisible(true);
@@ -566,14 +566,14 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
             {
                 PumpValuesEntryExt pc2 = null;
                 
-                System.out.println("ht=" + this.ht_data);
-                System.out.println("hh:" + this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
+                //System.out.println("ht=" + this.ht_data);
+                //System.out.println("hh:" + this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
                 
                 
                 if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH)))
                 {
                     pc2 = this.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
-                    System.out.println("pc2=" + pc2);
+                    //System.out.println("pc2=" + pc2);
                 }
                 
                 pdawo = new PumpDataAdditionalWizardTwo(this, pc, pc2);
@@ -614,7 +614,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         {
             this.pdtc.setType(this.cb_entry_type.getSelectedIndex());
             this.realignComponents();
-            System.out.println("Event changes: " + this.cb_entry_type.getSelectedIndex());
+            //System.out.println("Event changes: " + this.cb_entry_type.getSelectedIndex());
         }
 /*        else if (action.equals("edit_food"))
         {
@@ -791,7 +791,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
             (this.cb_entry_type.getSelectedIndex()!=0))
         {
             if (this.m_dailyValuesRow==null)
-                this.m_dailyValuesRow = new PumpValuesEntry();
+                this.m_dailyValuesRow = new PumpValuesEntry("Pump Manual");
             
             this.m_dailyValuesRow.setDateTimeObject(this.dtc.getDateTimeObject());
             this.pdtc.saveData(m_dailyValuesRow);
@@ -814,6 +814,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         {
             PumpValuesEntryExt ext = this.list_data.get(i);
             ext.setDt_info(dt);
+            // FIXME
             m_da.getDb().commit(ext);
 
             this.was_action = true;

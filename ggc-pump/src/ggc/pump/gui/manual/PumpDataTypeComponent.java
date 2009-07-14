@@ -286,6 +286,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.button_1.setVisible(false);
         this.tc_1.setVisible(false);
         this.bolus_sq.setVisible(false);
+        
+        this.repaint();
     }
 
     private void setEmpty()
@@ -599,7 +601,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("bolus");
         addAllItems(this.combo_1, this.m_da.getBolusSubTypes().getDescriptions());
-        this.combo_1.setSelectedIndex(1);
+        //this.combo_1.setSelectedIndex(1);
         
         this.button_1.setBounds(120, 20, 25, 25);
         this.button_1.setVisible(true);
@@ -612,7 +614,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.text_1.setBounds(150, 55, 180, 25);
         this.text_1.setVisible(true);
 
-        this.setHeight(85);
+        this.setBolusSubType(PumpBolusType.PUMP_BOLUS_STANDARD);
+        //this.setHeight(85);
 
     }
 
@@ -635,6 +638,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.label_3.setVisible(false);
         this.label_4.setVisible(false);
         this.tc_1.setVisible(false);
+        this.bolus_sq.setVisible(false);
 
         switch (this.sub_type)
         {
@@ -644,6 +648,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 this.label_2.setBounds(0, 90, 150, 25);
                 this.text_1.setBounds(150, 90, 180, 25);
 
+                //this.text_1.setVisible(true);
+                //this.label_2.setVisible(true);
+                
                 this.num_tf_1_d2.setBounds(150, 55, 180, 25);
                 this.num_tf_1_d2.setVisible(true);
                 this.label_3.setBounds(0, 55, 150, 25);
@@ -1410,7 +1417,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         public String getValue()
         {
             return String.format("AMOUNT_SQUARE=%s;DURATION=%s", 
-                "" + m_da.getFormatedBolusValue(((Double)this.spinner.getValue()).floatValue()),
+                "" + m_da.getFormatedBolusValue(m_da.getFloatValue(this.spinner.getValue())),
                 this.cmp_time.getTimeString());
             
             
@@ -1464,6 +1471,18 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             return true;
         }
+
+        public void setVisible(boolean vis)
+        {
+            //System.out.println("SquareBolusCompo: setVisible" + vis);
+            super.setVisible(vis);
+            
+            spinner.setVisible(vis);
+            label_1_1.setVisible(vis);
+            label_2_1.setVisible(vis);
+            cmp_time.setVisible(vis);
+        }
+        
         
     }
     

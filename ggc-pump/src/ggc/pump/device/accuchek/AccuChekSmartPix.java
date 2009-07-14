@@ -69,7 +69,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
      */
     public AccuChekSmartPix(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     
@@ -192,11 +192,29 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     
 
 
+    /** 
+     * Read Device Data Full
+     * @throws PlugInBaseException 
+     */
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
+        // FIXME
+        // debug mode, will be removed when implementation is finished
+
+        if (new File("..\\data\\debug_roche.txt").exists())
+            this.readDeviceDataFull_Debug();
+        else
+            this.readDeviceDataFull_Real();
+    }
+    
+    
+    
 
     /** 
      * Read Device Data Full
+     * @throws PlugInBaseException 
      */
-    public void readDeviceDataFull() throws PlugInBaseException
+    public void readDeviceDataFull_Debug() throws PlugInBaseException
     {
         // write preliminary device identification, based on class
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
@@ -209,27 +227,13 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
         this.output_writer.writeDeviceIdentification();
         
 
-                    /*
-                    File f1 = new File("..\drv + "\\REPORT\\XML");
-                    
-                    File[] fls = f1.listFiles(new FileFilter()
-                    {
+            // debug mode, will be removed when implementation is finished
+            processXml(new File("../test/I0014072.XML"));
 
-                        public boolean accept(File file)
-                        {
-                            return ((file.getName().toUpperCase().contains(".XML")) &&
-                                    (file.getName().startsWith("G")));
-                        }}
-                    );*/
-                    
-                    processXml(new File("../test/I0014072.XML"));
-
-                    this.output_writer.setSpecialProgress(100);
-                    this.output_writer.setSubStatus(null);
-                    
-                    return;
-                    
-            
+        this.output_writer.setSpecialProgress(100);
+        this.output_writer.setSubStatus(null);
+        
+        return;
         
     }
     
@@ -240,7 +244,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
      * 
      * @throws PlugInBaseException 
      */
-    public void readDeviceDataFull_x() throws PlugInBaseException
+    public void readDeviceDataFull_Real() throws PlugInBaseException
     {
         // write preliminary device identification, based on class
         DeviceIdentification di = this.output_writer.getDeviceIdentification();

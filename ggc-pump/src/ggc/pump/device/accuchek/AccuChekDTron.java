@@ -62,7 +62,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
      */
     public AccuChekDTron(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
 
 

@@ -62,7 +62,7 @@ public class Minimed512 extends MinimedPump
      */
     public Minimed512(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
 

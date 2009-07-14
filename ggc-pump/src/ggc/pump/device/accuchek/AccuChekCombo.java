@@ -64,7 +64,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public AccuChekCombo(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
 
 

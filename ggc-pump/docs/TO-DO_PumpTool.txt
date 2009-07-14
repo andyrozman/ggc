@@ -8,11 +8,6 @@ Development of Pump Tools runs totally independent on GGC project
     
     * Graphs (0.6)
     
-    * Communication framework for pumps (interface that all pumps will use) (later)
-    * Output types:
-          o Console and file output (0.5)
-          o GGC Db Output (for manual import) (0.5)
-          o GGC Output (GUI integration) (0.5) 
     * Specific pump models import implementations:
           o MiniMed (2009 ?)  - protocol not public (use minimed's web tool)
           o Sooil Dana (2010 ?) - current pumps don't have PC support
@@ -43,6 +38,11 @@ Detailed functionalities not done (and need to be):
 ===============================================================================
 DONE
 
+    * Output types:
+          o Console and file output (0.5)
+          o GGC Db Output (for manual import) (0.5)
+          o GGC Output (GUI integration) (0.5) 
+    * Communication framework for pumps (interface that all pumps will use) (later)
     * Base framework for pumps (0.3)
     * Profile Editor:
          - Base stuff

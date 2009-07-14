@@ -62,7 +62,7 @@ public class AnimasIR2020 extends AnimasPump
      */
     public AnimasIR2020(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
 
     /**

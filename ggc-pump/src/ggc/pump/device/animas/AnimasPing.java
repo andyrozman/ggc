@@ -62,7 +62,7 @@ public class AnimasPing extends AnimasPump
      */
     public AnimasPing(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

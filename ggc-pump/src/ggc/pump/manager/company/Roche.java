@@ -74,7 +74,7 @@ public class Roche extends AbstractPumpDeviceCompany
      */
     public String getName()
     {
-        return "Accu-Chek (Roche)";
+        return "Accu-Chek/Roche";
     }
 
     

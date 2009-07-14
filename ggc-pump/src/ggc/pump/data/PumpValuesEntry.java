@@ -74,6 +74,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 	long person_id;
 	String comment;
 	long changed;
+	String source;
 
 
 	private Hashtable<String,String> params;
@@ -99,6 +100,17 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 	 */
 	public PumpValuesEntry()
 	{
+	    this((String)null);
+	}
+
+	
+    /**
+     * Constructor 
+     * 
+     * @param src 
+     */
+    public PumpValuesEntry(String src)
+    {
         m_da = DataAccessPump.getInstance();
         m_ic = m_da.getI18nControlInstance();
         
@@ -110,9 +122,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
         this.extended = "";
         this.person_id = m_da.getCurrentUserId();
         this.comment = "";
+        this.source = src;
         
-	}
-
+    }
+	
+	
 
     /**
      * Constructor
@@ -615,22 +629,49 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
             if (this.sub_type==PumpBolusType.PUMP_BOLUS_SQUARE)
             {
                 String s[] = m_da.getParsedValues(this.getValue());
-                sb.append(String.format("%s: %s<br>%s: %s", 
-                              m_ic.getMessage("SQUARE_AMOUNT"),
-                              s[0],
-                              m_ic.getMessage("DURATION"),
-                              s[1]));
+                
+                if (s.length==1)
+                {
+                    // old format
+                    sb.append(String.format("%s: %s<br>%s: %s", 
+                        m_ic.getMessage("SQUARE_AMOUNT"),
+                        s[0],
+                        m_ic.getMessage("DURATION"),
+                        "??"));
+                }
+                else
+                {
+                    sb.append(String.format("%s: %s<br>%s: %s", 
+                                  m_ic.getMessage("SQUARE_AMOUNT"),
+                                  s[0],
+                                  m_ic.getMessage("DURATION"),
+                                  s[1]));
+                }
             }
             else if (this.sub_type==PumpBolusType.PUMP_BOLUS_MULTIWAVE)
             {
                 String s[] = m_da.getParsedValues(this.getValue());
-                sb.append(String.format("%s: %s<br>%s: %s<br>%s: %s", 
-                              m_ic.getMessage("IMMEDIATE_AMOUNT"),
-                              s[0],
-                              m_ic.getMessage("SQUARE_AMOUNT"),
-                              s[1],
-                              m_ic.getMessage("DURATION"),
-                              s[2]));
+                if (s.length==2)
+                {
+                    // old format
+                    sb.append(String.format("%s: %s<br>%s: %s<br>%s: %s", 
+                        m_ic.getMessage("IMMEDIATE_AMOUNT"),
+                        s[0],
+                        m_ic.getMessage("SQUARE_AMOUNT"),
+                        s[1],
+                        m_ic.getMessage("DURATION"),
+                        "??"));
+                }
+                else
+                {
+                    sb.append(String.format("%s: %s<br>%s: %s<br>%s: %s", 
+                                  m_ic.getMessage("IMMEDIATE_AMOUNT"),
+                                  s[0],
+                                  m_ic.getMessage("SQUARE_AMOUNT"),
+                                  s[1],
+                                  m_ic.getMessage("DURATION"),
+                                  s[2]));
+                }
             }
             else
                 sb.append(this.getValue());
@@ -671,23 +712,51 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
         {
             if (this.sub_type==PumpBolusType.PUMP_BOLUS_SQUARE)
             {
+                
                 String s[] = m_da.getParsedValues(this.value);
-                sb.append(String.format("%s: %s, %s: %s", 
-                              m_ic.getMessage("SQUARE_AMOUNT"),
-                              s[0],
-                              m_ic.getMessage("DURATION"),
-                              s[1]));
+                
+                if (s.length==1)
+                {
+                    // old format
+                    sb.append(String.format("%s: %s, %s: %s", 
+                                  m_ic.getMessage("SQUARE_AMOUNT"),
+                                  s[0],
+                                  m_ic.getMessage("DURATION"),
+                                  "??"));
+                }
+                else 
+                {
+                    sb.append(String.format("%s: %s, %s: %s", 
+                                  m_ic.getMessage("SQUARE_AMOUNT"),
+                                  s[0],
+                                  m_ic.getMessage("DURATION"),
+                                  s[1]));
+                }
             }
             else if (this.sub_type==PumpBolusType.PUMP_BOLUS_MULTIWAVE)
             {
                 String s[] = m_da.getParsedValues(this.value);
-                sb.append(String.format("%s: %s, %s: %s, %s: %s", 
-                              m_ic.getMessage("IMMEDIATE_AMOUNT"),
-                              s[0],
-                              m_ic.getMessage("SQUARE_AMOUNT"),
-                              s[1],
-                              m_ic.getMessage("DURATION"),
-                              s[2]));
+                if (s.length==2)
+                {
+                    // old format
+                    sb.append(String.format("%s: %s, %s: %s, %s: %s", 
+                        m_ic.getMessage("IMMEDIATE_AMOUNT"),
+                        s[0],
+                        m_ic.getMessage("SQUARE_AMOUNT"),
+                        s[1],
+                        m_ic.getMessage("DURATION"),
+                        "??"));
+                }
+                else
+                {
+                    sb.append(String.format("%s: %s, %s: %s, %s: %s", 
+                                  m_ic.getMessage("IMMEDIATE_AMOUNT"),
+                                  s[0],
+                                  m_ic.getMessage("SQUARE_AMOUNT"),
+                                  s[1],
+                                  m_ic.getMessage("DURATION"),
+                                  s[2]));
+                }
             }
             else
                 sb.append(this.getValue());
@@ -699,13 +768,25 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
     }
     
     
+    /**
+     * Print Additional: All Entries (without food data, just info that food is present)
+     */
+    public static final int PRINT_ADDITIONAL_ALL_ENTRIES = 1;
+
+    
+    /**
+     * Print Additional: All Entries (with food data)
+     */
+    public static final int PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD = 2;
+    
 	
     /**
      * Get Additional Display
      * 
+     * @param type 
      * @return
      */
-    public String getAdditionalDataPrint()
+    public String getAdditionalDataPrint(int type)
     {
         if (this.additional_data.size()==0)
             return "";
@@ -713,6 +794,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
         {
             StringBuffer sb = new StringBuffer();
             int i=0;
+            
+            String food_key = null;
             
             for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
             {
@@ -722,12 +805,46 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
                     sb.append("; ");
                 
                 //sb.append(key + "=" + this.additional_data.get(key).toString());
-                sb.append(this.additional_data.get(key).toString());
+                
+                if (type==PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD)
+                {
+                    
+                    if ((key.equals(m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))) ||
+                        (key.equals(m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB))))
+                    {
+                       food_key = key; 
+                    }
+                    else
+                        sb.append(this.additional_data.get(key).toString());
+                    
+                    
+                }
+                else
+                    sb.append(this.additional_data.get(key).toString());
                 
                 //if (i%3==0)
                 //    sb.append("\n");
                 
             }
+
+            
+            
+            if ((food_key!=null) && (food_key.length()>0))
+            {
+                
+                if (food_key.equals(m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)))
+                {
+                    PumpValuesEntryExt pvee = this.additional_data.get(food_key);
+                    sb.append("\n" + m_ic.getMessage("FOOD_DESC_PRINT") + ": " + pvee.getValue());
+                }
+                else if (food_key.equals(m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)))
+                {
+                    //PumpValuesEntryExt pvee = this.additional_data.get(food_key);
+                    sb.append("\n" + m_ic.getMessage("FOOD_DB_PRINT") + ": " + m_ic.getMessage("FOOD_DESC_PRINT_NOT_YET"));
+                }
+            }
+            
+            
             
             return sb.toString();
         }
@@ -736,7 +853,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 	
 	
 	/**
-     * Prepare Entry
+     * Prepare Entry [PlugIn Framework v1] 
      */
 	public void prepareEntry()
 	{
@@ -767,7 +884,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 	
 	
     /**
-     * Get Db Objects
+     * Get Db Objects [PlugIn Framework v1]
      * 
      * @return ArrayList of elements extending GGCHibernateObject
      */
@@ -835,7 +952,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
         pdh.setBase_type(this.base_type); 
         pdh.setSub_type(this.sub_type);
         pdh.setValue(this.value);
-        pdh.setExtended(this.extended); 
+        //pdh.setExtended(this.extended);
+        pdh.setExtended("SOURCE=" + this.source);
         pdh.setPerson_id((int)this.person_id); 
         pdh.setComment(this.comment); 
         pdh.setChanged(System.currentTimeMillis());
@@ -1590,6 +1708,40 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
         return this.old_id;
     }
     
+    
+    
+    /**
+     * Set Source
+     * 
+     * @param src
+     */
+    public void setSource(String src)
+    {
+        this.source = src;
+        
+    }
+    
+    /**
+     * Get Source 
+     * 
+     * @return
+     */
+    public String getSource()
+    {
+        return this.source;
+    }
+    
+    
+    
+    /**
+     * Get Additional Data Count
+     * 
+     * @return
+     */
+    public int getAdditionalDataCount()
+    {
+        return this.additional_data.size();
+    }
     
     
 }

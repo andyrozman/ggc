@@ -103,9 +103,22 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
      */
     public PumpValuesEntryExt()
     {
+        this((String)null);
         //m_pump_add = new PumpAdditionalDataType();
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param src 
+     */
+    public PumpValuesEntryExt(String src)
+    {
+        this.source = src;
+        //m_pump_add = new PumpAdditionalDataType();
+    }
+    
     
     /**
      * Constructor
@@ -289,7 +302,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
         ch.setDt_info(this.getDt_info());
         ch.setType(this.getType());
         ch.setValue(this.getValue());
-        ch.setExtended(this.getExtended());
+        ch.setExtended("SOURCE=" + this.source);
         ch.setPerson_id(this.getPerson_id());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
@@ -692,5 +705,28 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
         return this.old_id;
     }
     
+    String source;
+    
+    /**
+     * Set Source
+     * 
+     * @param src
+     */
+    public void setSource(String src)
+    {
+        this.source = src;
+        
+    }
+    
+    /**
+     * Get Source 
+     * 
+     * @return
+     */
+    public String getSource()
+    {
+        return this.source;
+    }
+     
     
 }	

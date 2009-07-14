@@ -4,7 +4,9 @@ import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.pump.data.PumpDailyStatistics;
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.db.GGCPumpDb;
+import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.graph.GraphViewDailyPump;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.I18nControl;
@@ -20,7 +22,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -626,7 +630,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             }
 */
         }
-        /*else if (command.equals("delete_row"))
+        else if (command.equals("delete_row"))
         {
             if (table.getSelectedRow() == -1)
             {
@@ -635,6 +639,81 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                 return;
             }
 
+            //DeviceValuesEntryInterface dei = this.dayData.getRowAt(table.getSelectedRow()); 
+
+            int option_selected = JOptionPane.showOptionDialog(this, m_ic.getMessage("ARE_YOU_SURE_DELETE"), m_ic
+                .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+            m_da.options_yes_no, JOptionPane.YES_OPTION);
+
+            if (option_selected == JOptionPane.YES_OPTION)
+            {
+            
+                int idx = table.getSelectedRow();
+                PumpValuesEntry pve = (PumpValuesEntry)this.dayData.getRowAt(idx);
+                
+                boolean refresh = false;
+                
+                if (pve.getBaseType()==PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
+                {
+                    refresh = deleteAdditionalDataCheck(pve, idx); //, false);
+                    
+                    if (refresh)
+                    {
+                        this.dayData.removeEntry(idx);
+                        refreshData();
+                    }
+                }
+                else
+                {
+
+                    if (pve.getAdditionalDataCount()>0)
+                    {
+                        refresh = deleteAdditionalDataCheck(pve, idx); //, false);
+    
+                        if (refresh)
+                        {
+                            m_db.delete(pve);
+    
+                            this.dayData.removeEntry(idx);
+                            refreshData();
+                        }
+                    }
+                    else
+                    {
+                        m_db.delete(pve);
+                        
+                        this.dayData.removeEntry(idx);
+                        refreshData();
+                    }
+                    
+/*                    int option_selected_yy = JOptionPane.showOptionDialog(this, m_ic.getMessage("DELETE_MANY_ADDITIONAL_DATA"), m_ic
+                        .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    m_da.options_yes_no, JOptionPane.YES_OPTION);
+                    
+                    if (option_selected_yy == JOptionPane.YES_OPTION)
+                    {
+                        refresh = deleteAdditionalDataCheck(pve, idx, true);
+                        
+                        if (refresh)
+                        {
+                            m_db.delete(pve);
+
+                            this.dayData.removeEntry(idx);
+                            refreshData();
+                        }
+                    }
+  */                  
+                    
+                    //System.out.println("Delete PVE not implemented.");
+                }
+                
+//                refreshData();
+            }
+            
+            //if (dei.getObjectName().equals(""))
+            
+            
+            /*
             int option_selected = JOptionPane.showOptionDialog(this, m_ic.getMessage("ARE_YOU_SURE_DELETE_ROW"), m_ic
                     .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 m_da.options_yes_no, JOptionPane.YES_OPTION);
@@ -656,8 +735,8 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             {
                 System.out.println("DailyStatsDialog:Action:Delete Row: " + ex);
                 log.error("Action::Delete Row::Exception: " + ex, ex);
-            }
-        } */
+            }*/
+        } 
         else if (command.equals("close"))
         {
             m_da.removeComponent(this);
@@ -677,6 +756,62 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     }
 
+    
+    private boolean deleteAdditionalDataCheck(PumpValuesEntry pve, int index) // .., boolean delete)
+    {
+        boolean delete = false;
+        
+        if (pve.getAdditionalDataCount()>1)
+        {
+            //System.out.println("Too many additional data elements...");
+            //boolean deleted = false;
+            
+            //if (!delete)
+            {
+                int option_selected_yy = JOptionPane.showOptionDialog(this, m_ic.getMessage("DELETE_MANY_ADDITIONAL_DATA"), m_ic
+                    .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                m_da.options_yes_no, JOptionPane.YES_OPTION);
+
+                if (option_selected_yy == JOptionPane.YES_OPTION)
+                {
+                    delete = true;
+                }
+            }
+            
+            if (delete)
+            {
+                deleteAdditionalData(pve);
+                //this.dayData.removeEntry(index);
+                //refreshData();
+            }
+     
+            return delete;
+        }
+        else
+        {
+            deleteAdditionalData(pve);
+            //this.dayData.removeEntry(index);
+            //refreshData();
+            
+            return true;
+        }
+        
+        
+    }
+    
+    
+    private void deleteAdditionalData(PumpValuesEntry pve)
+    {
+        Hashtable<String,PumpValuesEntryExt> add_data = pve.getAdditionalData();
+        
+        for(Enumeration<String> en=add_data.keys(); en.hasMoreElements(); )
+        {
+            PumpValuesEntryExt pvee = add_data.get(en.nextElement());
+            m_db.delete(pvee);
+        }
+        
+    }
+    
     
     
     private void editEntry(boolean check)

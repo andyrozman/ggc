@@ -2,9 +2,16 @@ package ggc.pump.print;
 
 import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
+import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesRange;
+import ggc.pump.data.PumpValuesEntry;
 
+import java.util.GregorianCalendar;
+
+import com.atech.utils.ATechDate;
 import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPTable;
 
@@ -39,8 +46,8 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
    
     
     /**
-     * Constructor 
-     * 
+     * Constructor
+     *  
      * @param dvr 
      */
     public PrintPumpDataExt(DeviceValuesRange dvr)
@@ -74,156 +81,93 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
 
     
     
-    
-    
-
-    
-
-
-/*
+    /**
+     * Create document body.
+     * 
+     * @param document
+     * @throws Exception
+     */
+    @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        // TODO Auto-generated method stub
-        
-        System.out.println("Jedilnik");
-        
-        Iterator<DailyValues> it = this.m_data.iterator();
-        
-        int count = 0;
-        
-        Font f =  this.text_normal;  //new Font(this.base_helvetica , 12, Font.NORMAL); // this.base_times
-        
-        PdfPTable datatable = new PdfPTable(6);
-        int headerwidths[] = { 13, 7,
-                               40, 20, 10, 10 
-                                }; // percentage
-        datatable.setWidths(headerwidths);
+        //Iterator<DailyValues> it = this.m_data.iterator();
+
+        //int count = 0;
+
+        Font f = this.text_normal; // new Font(this.base_helvetica , 12,
+                                   // Font.NORMAL); // this.base_times
+
+        PdfPTable datatable = new PdfPTable(getTableColumnsCount());
+        datatable.setWidths(getTableColumnWidths());
         datatable.setWidthPercentage(100); // percentage
-        
+
         datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-        datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); //ALIGN_CENTER);
+        datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); // ALIGN_CENTER);
         datatable.getDefaultCell().setBorderWidth(1);
-        
+
         datatable.addCell(new Phrase(ic.getMessage("DATE"), this.text_bold));
         datatable.addCell(new Phrase(ic.getMessage("TIME"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_TYPE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("BASE_TYPE"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("SUB_TYPE"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("VALUE_SHORT"), this.text_bold));
+        datatable.addCell(new Phrase(ic.getMessage("OTHER_DATA_FOOD"), this.text_bold));
         
-//        document.add(datatable);
-        
-        while (it.hasNext())
-        {
-            DailyValues dv = it.next();
-            dv.sort();
-            
+        //writeAdditionalHeader(datatable);
 
-            datatable.addCell(new Phrase(dv.getDateAsString(), f));
+        GregorianCalendar gc_end = m_dvr.getEndGC();
+        gc_end.add(GregorianCalendar.DAY_OF_MONTH, 1);
+        
+        GregorianCalendar gc_current = m_dvr.getStartGC(); 
+        
+        
+        do 
+        {
             
-            System.out.println("Row count: " + dv.getRowCount());
-            System.out.println(dv.getDateAsString());
-            
-            int active_day_entry = 0;
-            
-            for(int i=0; i<dv.getRowCount(); i++)
+            ATechDate atd = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), gc_current);
+
+            if (m_dvr.isDayEntryAvailable(atd.getATDateTimeAsLong()))
             {
                 
-                DailyValuesRow rw = (DailyValuesRow)dv.getRow(i);
+                DeviceValuesDay dvd = m_dvr.getDayEntry(atd.getATDateTimeAsLong());
                 
-                if ((rw.getMealsIds()==null) || (rw.getMealsIds().length()==0))
-                    continue;
-
+                // FIXME fix this
+                datatable.addCell(new Phrase(atd.getDateString(), f));
                 
-                if (active_day_entry>0)
+                
+                for(int i=0; i<dvd.getList().size(); i++)
                 {
-                    datatable.addCell(new Phrase("", f));
-                }
 
-                active_day_entry++;
-                
-                datatable.addCell(new Phrase(rw.getTimeAsString(), f));
-                
-                DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true); 
+                    PumpValuesEntry pve = (PumpValuesEntry)dvd.getList().get(i);
 
-                
-                datatable.addCell(new Phrase(ic.getMessage("TOGETHER"), this.text_italic));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
-                
-                
-                
-                
-                for(int j=0; j<mpts.getElementsCount(); j++)
-                {
-                    DailyFoodEntry mp = mpts.getElement(j);
-                    
-//                    if (j>0)
-                    {
+                    ATechDate atdx = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), pve.getDateTime());
+      
+                    if (i!=0)
                         datatable.addCell(new Phrase("", f));
-                        datatable.addCell(new Phrase("", f));
-                    }
                     
-                    
-                    datatable.addCell(new Phrase(mp.getName(), f));
-                    
-                    
-                    float value = 0.0f;
-                    
-                    if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
-                    {
-                        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
-                        //value = mp.getNutrientValue(205);
-                        value = mp.getMealCH();
-                        
-                    }
-                    else if (mp.amount_type==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
-                    {
-                        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), f));
-                        //value = mp.getNutrientValue(205);
-                        value = mp.getNutrientValue(205) * (mp.amount / 100.0f);
-                    }
-                    else
-                    {
-                        datatable.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", f));
-                        value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
-                    }
-                    
-                   
-                    
-                    datatable.addCell(new Phrase(mp.getAmountSingleDecimalString(), f));
-                    datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(value), f));  // ch
-                    
-                    System.out.println("     " + rw.getTimeAsString() + " " + mp);
+                    datatable.addCell(new Phrase(atdx.getTimeString(), f));
+                    datatable.addCell(new Phrase(pve.getBaseTypeString(), f));
+                    datatable.addCell(new Phrase(pve.getSubTypeString(), f));
+                    datatable.addCell(new Phrase(pve.getValuePrint(), f));
+                    datatable.addCell(new Phrase(pve.getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD), f));
                 }
                 
             }
-
-            
-            if (active_day_entry==0)
+            else
             {
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase("", f));
-            } 
+                datatable.addCell(new Phrase(atd.getDateString(), f));
+                this.writeEmptyColumnData(datatable);
+            }
             
-            
-            
-            count++;
-        }
 
-        
+            gc_current.add(GregorianCalendar.DAY_OF_MONTH, 1);
+            
+        } while (gc_current.before(gc_end) );
+
         document.add(datatable);
-        
-        
-        System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
-    }
-*/
 
-    
+        //System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
+
+    }
     
     
 
@@ -236,8 +180,8 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     @Override
     public int[] getTableColumnWidths()
     {
-        int headerwidths[] = { 13, 7,
-                               40, 20, 10, 10 
+        int headerwidths[] = { 9, 7,
+                               10, 10, 12, 52 
                                 }; // percentage
         return headerwidths;
     }
@@ -262,7 +206,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     @Override
     public String getTitleText()
     {
-        return "FOOD_MENU_BASE";
+        return "PUMP_DATA_EXT";
     }
 
 
@@ -276,7 +220,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     @Override
     public void writeAdditionalHeader(PdfPTable table) throws Exception
     {
-        table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+        //table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
     }
 
 
@@ -365,18 +309,12 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     @Override
     public String getFileNameBase()
     {
-        return "FoodMenuBase";
+        return "PumpDataExt";
     }
 
 
-    /** 
-     * Fill Document Body
-     */
-    @Override
-    public void fillDocumentBody(Document document) throws Exception
-    {
-        // TODO Auto-generated method stub
-    }
+    
+    
     
     
 }

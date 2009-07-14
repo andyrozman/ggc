@@ -62,7 +62,7 @@ public class Minimed554_Veo extends MinimedPump
      */
     public Minimed554_Veo(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
 
