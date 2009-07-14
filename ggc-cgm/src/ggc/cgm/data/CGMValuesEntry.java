@@ -532,5 +532,28 @@ public class CGMValuesEntry extends DeviceValuesEntry
     }
     
     
+    String source;
+    
+    /**
+     * Set Source
+     * 
+     * @param src
+     */
+    public void setSource(String src)
+    {
+        this.source = src;
+        
+    }
+    
+    /**
+     * Get Source 
+     * 
+     * @return
+     */
+    public String getSource()
+    {
+        return this.source;
+    }
+     
 	
 }	

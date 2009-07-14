@@ -52,10 +52,11 @@ public class CGMValuesTableModel extends DeviceValuesTableModel
      * Constructor
      * 
      * @param ddh DeviceDataHandler instance
+     * @param source 
      */
-    public CGMValuesTableModel(DeviceDataHandler ddh)
+    public CGMValuesTableModel(DeviceDataHandler ddh, String source)
     {
-        super(DataAccessCGM.getInstance(), ddh);
+        super(DataAccessCGM.getInstance(), ddh, source);
     }
 
     /**
