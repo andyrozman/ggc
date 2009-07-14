@@ -295,7 +295,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
-        I18nControlAbstract ic_loc = DataAccessNutri.getInstance().getI18nControlInstance(); 
+        I18nControlAbstract ic_loc = ggc.nutri.util.I18nControl.getInstance(); 
         BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", ic_loc);
         brc_nut.addNodeChild(new FoodGroup(ic_loc));
         brc_nut.addNodeChild(new FoodDescription(ic_loc));

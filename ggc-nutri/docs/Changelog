@@ -8,6 +8,8 @@ Newer entries are on top, older on bottom.
 
 1.2.1 (current)
     * Extended Food Selector (with plugin active check)
+    * required base plugin is now 0.4.1 (framework v2)
+    * this plugin already uses some of v2 features 
 
 1.2 (10.6.2009) [andy]
     * Given ability to call Food Selector and Recalculation of CH (change in plugin functionality)

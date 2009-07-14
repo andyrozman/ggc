@@ -53,7 +53,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.2";
+    public static final String PLUGIN_VERSION = "1.2.1";
     
     private static DataAccessNutri s_da = null; // This is handle to unique 
 
