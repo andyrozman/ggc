@@ -128,6 +128,7 @@ public class GGCDataWriter extends DbDataWriterAbstract
                         pde.setValue("" + dv.getBg());
                         pde.setPerson_id(dv.getPerson_id());
                         pde.setComment(dv.getComment());
+                        pde.setExtended(dv.getExtended());
                         pde.setChanged(dv.getChanged());
                         db.addHibernate(pde);
                         
