@@ -48,18 +48,18 @@ public class GGC
     /**
      * Version of application
      */
-    public static String s_version = "0.4.6.4"; //3.16";
+    //public static String s_version = "0.4.6.4"; //3.16";
     
     
     /**
      * Full Version
      */
-    public static String full_version = "v" + s_version;
+    public static String full_version = "v" + DataAccess.CORE_VERSION;
     
     /**
      * Version Date 
      */
-    public static String version_date = "15th March 2009";
+    //public static String version_date = "15th March 2009";
 
     /**
      * Checks if Db is correct version
