@@ -305,4 +305,21 @@ public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(Outp
      */
     public String getSpecialId();
     
+    
+    /**
+     * Set Source
+     * 
+     * @param src
+     */
+    public void setSource(String src);
+
+    
+    /**
+     * Get Source 
+     * 
+     * @return
+     */
+    public String getSource();
+    
+    
 }	

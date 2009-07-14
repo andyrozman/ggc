@@ -313,4 +313,13 @@ public interface DeviceInterface extends SelectableInterface
      */
     public int getDownloadSupportType();
     
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName();
+    
+    
 }

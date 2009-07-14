@@ -1281,6 +1281,17 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     
     
     
+    /**
+     * Get Source Device
+     * 
+     * @return
+     */
+    public String getSourceDevice()
+    {
+        return getSelectedDeviceInstance().getDeviceSourceName();
+    }
+    
+    
     
 
 }

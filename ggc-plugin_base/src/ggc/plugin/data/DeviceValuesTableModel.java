@@ -49,20 +49,22 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
     protected DeviceDataHandler m_ddh = null;
     protected int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
     protected DataAccessPlugInBase m_da;
-
+    protected String device_source;
 
     /**
      * Constructor
      * 
      * @param da
      * @param ddh
+     * @param source 
      */
-    public DeviceValuesTableModel(DataAccessPlugInBase da, DeviceDataHandler ddh)
+    public DeviceValuesTableModel(DataAccessPlugInBase da, DeviceDataHandler ddh, String source)
     {
         this.m_ddh = ddh;
         this.m_da = da;
         this.displayed_dl_data = new ArrayList<DeviceValuesEntryInterface>();
         this.dl_data = new ArrayList<DeviceValuesEntryInterface>();
+        this.device_source = source;
         // this.dayData = dayData;
         fireTableChanged(null);
         // dayData.addGlucoValueEventListener(this);
@@ -186,7 +188,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
      */
     public void setFilter(int filter)
     {
-        System.out.println("Set FILTER !!!!!!!!!!!!!!!!!!!!!! " + filter);
+        //System.out.println("Set FILTER !!!!!!!!!!!!!!!!!!!!!! " + filter);
         
         if (this.current_filter==filter)
             return;

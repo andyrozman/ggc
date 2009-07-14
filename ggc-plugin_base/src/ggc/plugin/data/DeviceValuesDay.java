@@ -82,6 +82,7 @@ public class DeviceValuesDay
 	public void addEntry(DeviceValuesEntry pve)
 	{
 	    this.list.add(pve);
+	    this.sort();
 	    
 	    ATechDate atd = new ATechDate(pve.getDateTimeFormat(), pve.getDateTime());
 	    
@@ -91,6 +92,26 @@ public class DeviceValuesDay
 	    }
 	    
 	}
+	
+	/**
+	 * Remove Entry
+	 * 
+	 * @param index
+	 */
+	public void removeEntry(int index)
+	{
+	    DeviceValuesEntryInterface dvei = this.list.get(index);
+        this.list.remove(index);
+        
+        ATechDate atd = new ATechDate(dvei.getDateTimeFormat(), dvei.getDateTime());
+        
+        if (!this.table.containsKey(atd.getTimeString()))
+        {
+            this.table.remove(dvei);
+        }
+	    
+	}
+	
 	
 	/**
 	 * Is Entry Available

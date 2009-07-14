@@ -439,4 +439,29 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     }
     
     
+    String device_source;
+    
+    /**
+     * Set Device Source
+     * 
+     * @param dev
+     */
+    public void setDeviceSource(String dev)
+    {
+        this.device_source = dev;
+    }
+    
+    
+    /**
+     * Set Device Source
+     * 
+     * @return 
+     */
+    public String getDeviceSource()
+    {
+        return this.device_source;
+    }
+    
+    
+    
 }

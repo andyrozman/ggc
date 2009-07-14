@@ -175,4 +175,21 @@ public interface OutputWriter
      */
     public abstract void setOldDataReadingProgress(int value);
     
+    
+    
+    /**
+     * Set Device Source
+     * 
+     * @param dev
+     */
+    public abstract void setDeviceSource(String dev);
+    
+    
+    /**
+     * Set Device Source
+     * 
+     * @return 
+     */
+    public abstract String getDeviceSource();
+    
 }

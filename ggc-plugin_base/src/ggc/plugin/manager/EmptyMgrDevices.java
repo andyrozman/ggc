@@ -474,6 +474,19 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
+
+
+    String device_source_name;
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName()
+    {
+        return device_source_name;
+    }
     
     
 }
