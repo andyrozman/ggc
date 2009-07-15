@@ -79,7 +79,7 @@ public class MeterDataHandler extends DeviceDataHandler
      */
     public void createDeviceValuesTableModel()
     {
-        this.m_model = new MeterValuesTableModel(this);
+        this.m_model = new MeterValuesTableModel(this, m_da.getSourceDevice());
     }
 
 

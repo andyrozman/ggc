@@ -1,6 +1,5 @@
 package ggc.meter.device;
 
-import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
@@ -67,7 +66,9 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
      */
     public AbstractXmlMeter(AbstractDeviceCompany cmp)
     {
+        super();
         this.setDeviceCompany(cmp);
+        this.setMeterType(cmp.getName(), getName());
     }
     
     
@@ -117,13 +118,16 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification(DataAccessMeter.getInstance().getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(ic);
         di.company = group;
         di.device_selected = device;
         
-        this.output_writer.setDeviceIdentification(di);
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
         //this.output_writer.
     	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        
+        this.device_source_name = group + " " + device;
     }
     
     /**
@@ -449,6 +453,19 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_YES;
+    }
+    
+    
+    String device_source_name;
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName()
+    {
+        return device_source_name;
     }
     
     

@@ -51,10 +51,11 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
      * Constructor
      * 
      * @param ddh DeviceDataHandler instance
+     * @param source 
      */
-    public MeterValuesTableModel(DeviceDataHandler ddh)
+    public MeterValuesTableModel(DeviceDataHandler ddh, String source)
     {
-        super(DataAccessMeter.getInstance(), ddh);
+        super(DataAccessMeter.getInstance(), ddh, source);
     }
 
     /**
@@ -211,14 +212,17 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
             {
                 MeterValuesEntry mve2 = (MeterValuesEntry)mve; 
 
-                MeterValuesEntry mve_old = (MeterValuesEntry)this.m_ddh.getOldData().get(mve2.getSpecialId());
+                MeterValuesEntry mve_old = (MeterValuesEntry)this.m_ddh.getOldData().get(mve.getSpecialId());
                 
                 //DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" + dt);
                   
                 //int vl = Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));
                 
+                //System.out.println(mve_old.getDateTimeObject() + "=" + mve_old.getValue());
+                //System.out.println(mve2.getDateTimeObject() + "=" + mve2.getValue());
+                
                 //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
-                if (mve_old.getBgValue().equals(mve2.getBgValue()))
+                if (mve_old.getValue().equals(mve2.getValue()))
                 {
                     mve2.setStatus(MeterValuesEntry.STATUS_OLD);
                     mve2.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;

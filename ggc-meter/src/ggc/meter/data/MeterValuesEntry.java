@@ -56,6 +56,8 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	
 	private String bg_original = null;
 	private OutputUtil util = OutputUtil.getInstance();
+	private String value_db = null;
+	
 	
     /**
      * Entry object
@@ -89,6 +91,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     {
         super();
         this.datetime = new ATechDate(this.getDateTimeFormat(), dv.getDt_info());
+        this.value_db = "" + dv.getBg();
         this.bg_original = "" + dv.getBg();
         this.bg_unit = DataAccessMeter.BG_MGDL;
         this.entry_object = dv;
@@ -181,6 +184,17 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	public void setBgValue(String value)
 	{
 		this.bg_str = value;
+		
+		// set value_db for comparing values, v2
+		if (this.bg_unit==OutputUtil.BG_MGDL)
+		{
+		    this.value_db = value;
+		}
+		else
+		{
+		    this.value_db = "" + ((int)this.util.getBGValueDifferent(OutputUtil.BG_MMOL, Float.parseFloat(value)));
+		}
+		
 		
 		if (this.bg_original==null)
 		    this.setDisplayableBGValue(value);
@@ -282,6 +296,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
 	        this.entry_object.setDt_info(this.getDateTime());
             this.entry_object.setChanged(System.currentTimeMillis());
+            this.entry_object.setExtended("SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
             this.entry_object.setComment(createComment());
 	    }
 	}
@@ -531,7 +546,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
      */
     public String getSpecialId()
     {
-        return "";
+        return "MVE_" + this.datetime.getATDateTimeAsLong();
     }
 
     
@@ -670,7 +685,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
      */
     public String getValue()
     {
-        return this.getBgValue();
+        return this.value_db;
     }
     
     
@@ -697,5 +712,29 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         return this.old_id;
     }
     
+    
+    String source;
+    
+    /**
+     * Set Source
+     * 
+     * @param src
+     */
+    public void setSource(String src)
+    {
+        this.source = src;
+        
+    }
+    
+    /**
+     * Get Source 
+     * 
+     * @return
+     */
+    public String getSource()
+    {
+        return this.source;
+    }
+     
     
 }	

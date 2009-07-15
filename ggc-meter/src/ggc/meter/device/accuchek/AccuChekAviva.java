@@ -50,7 +50,7 @@ public class AccuChekAviva extends AccuChekSmartPixMeter
      */
     public AccuChekAviva(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

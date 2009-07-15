@@ -5,6 +5,7 @@ import ggc.meter.device.AbstractXmlMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
 
@@ -78,6 +79,18 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
         }
         
     }
+
+    
+    /**
+     * Constructor
+     * 
+     * @param cmp 
+     */
+    public AccuChekSmartPix(AbstractDeviceCompany cmp)
+    {
+        super(cmp);
+    }
+    
     
     
     /** 

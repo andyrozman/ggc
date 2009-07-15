@@ -49,7 +49,7 @@ public class AccuChekSensor extends AccuChekSmartPixMeter
      */
     public AccuChekSensor(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

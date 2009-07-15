@@ -131,7 +131,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
      */
     public AccuChekSmartPixMeter(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

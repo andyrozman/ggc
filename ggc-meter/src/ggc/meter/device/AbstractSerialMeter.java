@@ -66,7 +66,9 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
      */
     public AbstractSerialMeter(AbstractDeviceCompany cmp)
     {
+        super();
         this.setDeviceCompany(cmp);
+        this.setMeterType(cmp.getName(), getName());
     }
     
     
@@ -125,23 +127,25 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     }
 
     /**
-     * Set meter type
+     * Set Meter type
      * 
      * @param group
      * @param device
      */
     public void setMeterType(String group, String device)
     {
-        //this.device_name = device;
-
-        DeviceIdentification di = new DeviceIdentification(DataAccessMeter.getInstance().getI18nControlInstance());
+//        this.device_name = device;
+        
+        DeviceIdentification di = new DeviceIdentification(ic);
         di.company = group;
         di.device_selected = device;
-
-        this.output_writer.setDeviceIdentification(di);
-        // this.output_writer.
-        // this.device_instance =
-        // MeterManager.getInstance().getMeterDevice(group, device);
+        
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
+        //this.output_writer.
+        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        
+        this.device_source_name = group + " " + device;
     }
 
 
@@ -499,6 +503,19 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
         return DownloadSupportType.DOWNLOAD_YES;
     }
+    
+    String device_source_name;
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName()
+    {
+        return device_source_name;
+    }
+    
     
     
 }

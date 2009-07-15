@@ -115,8 +115,10 @@ public class MeterPlugInServer extends DevicePlugInServer
 
     
     /**
-     * Execute Command on Server Side
+     * Execute Command on Server Side [PlugIn Framework v1]
      * 
+     * @deprecated this framework v1 functionality and should be removed, and instead menus should be created from
+     *             within plugin
      * @param command
      */
     @Override
@@ -203,15 +205,16 @@ public class MeterPlugInServer extends DevicePlugInServer
 
     
     /**
-     * Init PlugIn which needs to be implemented 
+     * Init PlugIn which needs to be implemented [PlugIn Framework v1/v2] 
      */
     @Override
     public void initPlugIn()
     {
-        ic = m_da.getI18nControlInstance();
+//        ic = m_da.getI18nControlInstance();
         I18nControl.getInstance().setLanguage(this.selected_lang);
         
         DataAccessMeter da = DataAccessMeter.getInstance();
+        ic = da.getI18nControlInstance();
         
         da.addComponent(this.parent);
         da.setHelpContext(m_da.getHelpContext());
@@ -223,7 +226,7 @@ public class MeterPlugInServer extends DevicePlugInServer
    
     
     /**
-     * Get Return Object
+     * Get Return Object [PlugIn Framework v1/v2]
      * 
      * @param ret_obj_id
      * @return
@@ -253,20 +256,20 @@ public class MeterPlugInServer extends DevicePlugInServer
 
 
     /**
-     * Get Backup Objects (if available)
+     * Get Backup Objects (if available) [PlugIn Framework v2]
      * 
      * @return
      */
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
-        // TODO Auto-generated method stub
+        // this plugin has no backup objects
         return null;
     }
 
 
     /**
-     * Get PlugIn Main Menu 
+     * Get PlugIn Main Menu [PlugIn Framework v2]
      * 
      * This is new way to handle everything, previously we used to pass ActionListener items through
      * plugin framework, but in new way, we will use this one. We just give main application menu,
@@ -277,13 +280,14 @@ public class MeterPlugInServer extends DevicePlugInServer
     @Override
     public JMenu getPlugInMainMenu()
     {
+        // FIXME: v2 needs to be implemented
         // TODO Auto-generated method stub
         return null;
     }
 
     
     /**
-     * Get PlugIn Print Menus 
+     * Get PlugIn Print Menus [PlugIn Framework v2] 
      * 
      * Since printing is also PlugIn specific we need to add Printing jobs to application.
      *  
@@ -292,7 +296,7 @@ public class MeterPlugInServer extends DevicePlugInServer
     @Override
     public JMenu[] getPlugInPrintMenus()
     {
-        // TODO Auto-generated method stub
+        // there are no print menus for this plugin
         return null;
     }
     

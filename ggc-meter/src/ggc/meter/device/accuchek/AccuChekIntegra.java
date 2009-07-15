@@ -50,7 +50,7 @@ public class AccuChekIntegra extends AccuChekSmartPixMeter
      */
     public AccuChekIntegra(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

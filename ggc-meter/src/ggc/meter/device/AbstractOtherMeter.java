@@ -48,6 +48,7 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     AbstractDeviceCompany meter_company = null;
     
     String connection_port = "";
+    String device_source_name;
     
     DataAccessMeter m_da = DataAccessMeter.getInstance();
     
@@ -59,6 +60,19 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     {
         super();
     }
+    
+    
+    /**
+     * Constructor
+     * @param cmp
+     */
+    public AbstractOtherMeter(AbstractDeviceCompany cmp)
+    {
+        super();
+        this.setDeviceCompany(cmp);
+        this.setMeterType(cmp.getName(), getName());
+    }
+    
 
     
     boolean can_read_data = false; 
@@ -93,6 +107,8 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     
     
     /**
+     * Set Meter type
+     * 
      * @param group
      * @param device
      */
@@ -100,13 +116,16 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification(DataAccessMeter.getInstance().getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(ic);
         di.company = group;
         di.device_selected = device;
         
-        this.output_writer.setDeviceIdentification(di);
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
         //this.output_writer.
-    	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        
+        this.device_source_name = group + " " + device;
     }
     
     /**

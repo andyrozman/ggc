@@ -1,12 +1,11 @@
 package ggc.meter.device;
 
 
-import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.util.I18nControl;
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-
-import java.util.ArrayList;
+import ggc.plugin.output.OutputWriter;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -46,8 +45,8 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
 
     protected int m_status = 0;
     protected I18nControl ic = I18nControl.getInstance();
-
-    protected ArrayList<MeterValuesEntry> data = null;
+    protected OutputWriter output_writer;
+    //protected ArrayList<MeterValuesEntry> data = null;
     
 
     /**
@@ -59,6 +58,20 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     }
 
 
+    /**
+     * Constructor
+     * @param cmp
+     */
+    public AbstractMeter(AbstractDeviceCompany cmp)
+    {
+        super();
+        this.setDeviceCompany(cmp);
+        this.setMeterType(cmp.getName(), getName());
+    }
+    
+    
+    
+    
     boolean can_read_data = false; 
     boolean can_read_partitial_data = false;
     boolean can_clear_data = false;
@@ -100,6 +113,27 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     }
     
     
+    /**
+     * Set Meter type
+     * 
+     * @param group
+     * @param device
+     */
+    public void setMeterType(String group, String device)
+    {
+        //this.device_name = device;
+        
+        DeviceIdentification di = new DeviceIdentification(ic);
+        di.company = group;
+        di.device_selected = device;
+        
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
+        //this.output_writer.
+        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        
+        this.device_source_name = group + " " + device;
+    }
 
 
 
@@ -337,6 +371,18 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_YES;
+    }
+
+    String device_source_name;
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName()
+    {
+        return device_source_name;
     }
     
     

@@ -4,6 +4,7 @@ import ggc.meter.device.ascensia.AscensiaBreeze;
 import ggc.meter.device.ascensia.AscensiaBreeze2;
 import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.ascensia.AscensiaContourLink;
+import ggc.meter.device.ascensia.AscensiaContourTest;
 import ggc.meter.device.ascensia.AscensiaDEX;
 import ggc.meter.device.ascensia.AscensiaEliteXL;
 import ggc.meter.util.I18nControl;
@@ -53,6 +54,7 @@ public class AscensiaBayer extends AbstractDeviceCompany
         this.addDevice(new AscensiaBreeze2(this));
         this.addDevice(new AscensiaContour(this));
         this.addDevice(new AscensiaContourLink(this));
+        this.addDevice(new AscensiaContourTest(this));
         
         //System.out.println(this.devices_vector);
     }    

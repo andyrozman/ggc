@@ -114,11 +114,11 @@ public class MeterDataReader extends OldDataReaderAbstract
 //            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: " + proc_total_i + " %" );
             this.m_drr.setOldDataReadingProgress(proc_total_i);
             
-            try
+            /*try
             {
                 Thread.sleep(1);
             }
-            catch(InterruptedException ex) {}
+            catch(InterruptedException ex) {} */
             
         }
     }

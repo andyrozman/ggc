@@ -49,7 +49,7 @@ public class AccuChekAdvantage extends AccuChekSmartPixMeter
      */
     public AccuChekAdvantage(AbstractDeviceCompany cmp)
     {
-        this.setDeviceCompany(cmp);
+        super(cmp);
     }
     
     

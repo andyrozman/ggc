@@ -9,6 +9,9 @@ import ggc.plugin.protocol.SerialProtocol;
 
 import java.util.Vector;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
 
@@ -42,6 +45,9 @@ import com.atech.utils.TimerThread;
 public class MeterConsoleTester 
 {
 
+    private static Log logDevice = LogFactory.getLog("deviceLogger");
+    private static Log logDeviceCat = LogFactory.getLog("deviceLogger");
+    
     TimerThread thread;
     
     /**
@@ -69,7 +75,10 @@ public class MeterConsoleTester
     	    //startAscensia(portName);
     	    //this.startOneTouchUltra(portName);
     	    
-    	    this.startOneTouchEasy(portName);
+    	    // this.startOneTouchEasy(portName);
+    	    
+    	    testLogger();
+    	    
     	    
     	    //startAccuChekAviva();
     	    
@@ -259,5 +268,25 @@ public class MeterConsoleTester
     }
 
 
+    /**
+     * test Logger
+     */
+    public void testLogger()
+    {
+        logDevice.debug("debug message");
+        logDevice.error("error message");
+        logDevice.info("info message");
+        logDevice.warn("warn message");
+        logDevice.fatal("fatal message");
+        
+        
+        
+        logDeviceCat.debug("debug message");
+        logDeviceCat.error("error message");
+        
+    }
+    
+    
+    
 
 }
