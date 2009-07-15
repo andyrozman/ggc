@@ -328,7 +328,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
         try 
         {
             //this.output_writer.writeLog(LogEntryType.INFO, "AbstractSerialMeter::open()");
-            System.out.println("SerialProtocol: open() - open");
+            //System.out.println("SerialProtocol: open() - open");
             serialPort = (SerialPort)portIdentifier.open("ggc", (int)timeOut);
         
             
