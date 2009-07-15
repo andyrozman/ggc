@@ -13,6 +13,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ggc-web"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/log4j-1.2.15"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GGC Nutrition Tool"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaHelp-2.0.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
