@@ -6,7 +6,9 @@ import ggc.core.util.I18nControl;
 import ggc.gui.panels.prefs.AbstractPrefOptionsPanel;
 import ggc.gui.panels.prefs.PrefFontsAndColorPane;
 import ggc.gui.panels.prefs.PrefGeneralPane;
+import ggc.gui.panels.prefs.PrefLanguagePane;
 import ggc.gui.panels.prefs.PrefMedicalDataPane;
+import ggc.gui.panels.prefs.PrefModePane;
 import ggc.gui.panels.prefs.PrefPrintingPane;
 import ggc.gui.panels.prefs.PrefRenderingQualityPane;
 
@@ -77,12 +79,14 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
      * Config types
      */
     public String config_types[] = { 
+        m_ic.getMessage("MODE"),                            
     	m_ic.getMessage("GENERAL"),
     	m_ic.getMessage("MEDICAL_DATA"),
     	m_ic.getMessage("COLORS_AND_FONTS"),
     	m_ic.getMessage("RENDERING_QUALITY"),
     //	m_ic.getMessage("METER_CONFIGURATION"),
-    	m_ic.getMessage("PRINTING")
+    	m_ic.getMessage("PRINTING"),
+        m_ic.getMessage("LANGUAGE")
     };
 
 
@@ -107,7 +111,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         setTitle(m_ic.getMessage("PREFERENCES"));
         m_da.centerJDialog(this, da.getMainParent());
 
-        help_button = m_da.createHelpButtonBySize(100, 25, this);
+        help_button = m_da.createHelpButtonBySize(120, 25, this);
         createPanels();
 
         init();
@@ -254,12 +258,14 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 
 
     //private int PANEL_MAIN = 0;
-    private int PANEL_GENERAL = 0;
-    private int PANEL_MEDICAL_DATA = 1;
-    private int PANEL_COLORS = 2;
-    private int PANEL_RENDERING = 3;
-    private int PANEL_PRINTING = 4;
-//    private int PANEL_METER = 4;
+    private int PANEL_MODE = 0;
+    private int PANEL_GENERAL = 1;
+    private int PANEL_MEDICAL_DATA = 2;
+    private int PANEL_COLORS = 3;
+    private int PANEL_RENDERING = 4;
+    private int PANEL_PRINTING = 5;
+    private int PANEL_LANGUAGE = 6;
+    //    private int PANEL_METER = 4;
 
     /**
      * Create Panels 
@@ -273,11 +279,13 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         panel_id = new Hashtable<String, String>();
 
         //addPanel(m_ic.getMessage("PREFERENCES"), this.PANEL_MAIN, new PrefMainPane());
+        addPanel(m_ic.getMessage("MODE"), PANEL_MODE, new PrefModePane(this));
         addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane(this));
         addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane(this));
         addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new PrefFontsAndColorPane(this));
         addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane(this));
         addPanel(m_ic.getMessage("PRINTING"), PANEL_PRINTING, new PrefPrintingPane(this));
+        addPanel(m_ic.getMessage("LANGUAGE"), PANEL_LANGUAGE, new PrefLanguagePane(this));
 //        addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane(this));
     }
 

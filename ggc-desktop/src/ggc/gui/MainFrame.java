@@ -210,7 +210,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         // System.out.println("MainFrame before creation");
         m_da = DataAccess.createInstance(this);
 
-         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  m_da: " + m_da);
+         //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  m_da: " + m_da);
 
         m_ic = I18nControl.getInstance();
 
