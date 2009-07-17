@@ -93,7 +93,7 @@ public class I18nControl extends I18nControlAbstract
     	    if (tempLang != null)
     	        this.selected_language = tempLang;
     	    
-    	    System.out.println("selected language: " + this.selected_language);
+    	    //System.out.println("selected language: " + this.selected_language);
     	}
     	catch(Exception ex)
     	{

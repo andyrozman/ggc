@@ -612,12 +612,14 @@ public class DataAccess extends ATDataAccessAbstract
 
     private void loadIcons()
     {
-        config_icons = new ImageIcon[6];
-        config_icons[0] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
-        config_icons[1] = new ImageIcon(getImage("/icons/cfg_medical.png", m_main));
-        config_icons[2] = new ImageIcon(getImage("/icons/cfg_colors.png", m_main));
-        config_icons[3] = new ImageIcon(getImage("/icons/cfg_render.png", m_main));
-        config_icons[4] = new ImageIcon(getImage("/icons/cfg_print.png", m_main));
+        config_icons = new ImageIcon[7];
+        config_icons[0] = new ImageIcon(getImage("/icons/cfg_mode.png", m_main));
+        config_icons[1] = new ImageIcon(getImage("/icons/cfg_general.png", m_main));
+        config_icons[2] = new ImageIcon(getImage("/icons/cfg_medical.png", m_main));
+        config_icons[3] = new ImageIcon(getImage("/icons/cfg_colors.png", m_main));
+        config_icons[4] = new ImageIcon(getImage("/icons/cfg_render.png", m_main));
+        config_icons[5] = new ImageIcon(getImage("/icons/cfg_print.png", m_main));
+        config_icons[6] = new ImageIcon(getImage("/icons/cfg_lang.png", m_main));
         // config_icons[4] = new ImageIcon(getImage("/icons/cfg_meter.png",
         // m_main));
 

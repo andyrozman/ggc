@@ -43,6 +43,10 @@ public class ConfigurationManager
     private boolean changed = false;
 
 
+    
+    
+    
+    
 
     private String cfg_string[] = 
     {
@@ -56,7 +60,12 @@ public class ConfigurationManager
         "PRINT_PDF_VIEWER_PATH", "",
         "PRINT_EMPTY_VALUE", "",
         "SELECTED_COLOR_SCHEME", "Default Scheme",
-        "TIMEZONE", ""
+        "TIMEZONE", "",
+        "SW_MODE_DESC", "PEN_INJECTION_MODE",
+        "PEN_BASAL_PRECISSION", "1",
+        "PEN_BOLUS_PRECISSION", "1",
+        "PUMP_BASAL_PRECISSION", "0.1",
+        "PUMP_BOLUS_PRECISSION", "0.1"
     };
 
     private String cfg_int[] = 
@@ -72,7 +81,9 @@ public class ConfigurationManager
         "RENDER_FRACTIONAL_METRICS", "0",
         "PRINT_LUNCH_START_TIME", "1100",
         "PRINT_DINNER_START_TIME", "1800",
-        "PRINT_NIGHT_START_TIME", "2100"
+        "PRINT_NIGHT_START_TIME", "2100",
+        "SW_MODE", "0",
+        "PUMP_TBR_TYPE", "0"
     };
 
 
@@ -87,7 +98,17 @@ public class ConfigurationManager
         "BG2_TARGET_LOW", "4.4f",
         "BG2_TARGET_HIGH", "14.0f",
         "RATIO_CH_INSULIN", "0.0f",
-        "RATIO_BG_INSULIN", "0.0f"
+        "RATIO_BG_INSULIN", "0.0f",
+        "PEN_MAX_BASAL", "80.0f",
+        "PEN_MAX_BOLUS", "40.0f", 
+        "PUMP_MAX_BASAL", "80.0f",
+        "PUMP_MAX_BOLUS", "20.0f",
+        "PUMP_UNIT_MIN", "0.0f",
+        "PUMP_UNIT_MAX", "40.0f", 
+        "PUMP_UNIT_STEP", "0.1f", 
+        "PUMP_PROC_MIN", "0.0f", 
+        "PUMP_PROC_MAX", "200.0f",
+        "PUMP_PROC_STEP", "5.0f"
     };
 
     private String cfg_boolean[] = 
@@ -319,14 +340,7 @@ public class ConfigurationManager
         {
             Settings s = this.cfg_values.get(key);
 
-            try
-            {
-                return Float.parseFloat(s.getValue());
-            }
-            catch (Exception ex)
-            {
-                s_logger.warn("Invalid value for key=" + key + " found. It should be float.");
-            }
+            return m_da.getFloatValueFromString(s.getValue(), 0.0f);
         }
 
         return 0.0f;
