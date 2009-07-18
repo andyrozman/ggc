@@ -17,6 +17,7 @@ import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.graphs.CourseGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
 import ggc.shared.ratio.RatioBaseDialog;
+import ggc.shared.ratio.RatioCalculatorDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -1142,13 +1143,19 @@ public class MainFrame extends JFrame implements EventObserverInterface
                 
                 
                 // spread graph
-                new GraphViewer(new GraphViewSpread(), m_da);
+                //new GraphViewer(new GraphViewSpread(), m_da);
                 
                 
                 /*
                 // graph course
                 new GraphViewer(new GraphViewCourse(), m_da);
                 */
+                
+                // ratio calculator
+                @SuppressWarnings("unused")
+                RatioCalculatorDialog rcd = new RatioCalculatorDialog(MainFrame.this);
+
+                
                 
                 
              /*   

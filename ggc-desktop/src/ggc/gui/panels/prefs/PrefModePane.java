@@ -390,32 +390,10 @@ public class PrefModePane extends AbstractPrefOptionsPanel implements HelpCapabl
         //num_fields[PUMP_PROC_MAX] = config_manager.getFloatValue("PUMP_PROC_MAX"), 
         
         
-/*        
-        
-        
-        
-        private final static int PEN_BASAL_PRECISSION = 0;
-        private final static int PEN_BOLUS_PRECISSION = 1;
-        
-        private final static int PUMP_BASAL_PRECISSION = 2;
-        private final static int PUMP_BOLUS_PRECISSION = 3;
-        
-        private final static int PUMP_TBR_TYPE = 4;
-  */      
 
         
         
         
-        
-        
-        //config_manager.getFloatValue("PUMP_PROC_MAX")
-        
-        /*
-        settings.setUserName(fieldUserName.getText());
-        settings.setLanguage(langBox.getSelectedItem().toString());
-
-        this.m_dbc.setSelectedDatabaseIndex(this.cb_database.getSelectedIndex());
-        this.m_dbc.setSelectedLF(this.cb_lf_type.getSelectedIndex(), this.tf_lf.getText());*/
     }
 
     

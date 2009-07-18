@@ -6,8 +6,15 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
-0.4.5.3 (current)
+0.4.6.1 (current)
+
+0.4.5.3 (18.7.2009) [Andy] 
     * DailyRowDialog food selection is fixed
+    * Configuration changes: Mode, Language
+    * DailyRowDialog has JSpinner for insulins now, and they use precisions for insulin types, and 
+      numbers can also be decimal
+    * DailyValuesRow was also changed a little. All extended values are now in array instead of
+      special variables
 
 0.4.5.2 
     * change position of initialization of Help Context
