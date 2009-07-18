@@ -147,11 +147,12 @@ public class DailyStatsTableModel extends AbstractTableModel
     @Override
     public String getColumnName(int column)
     {
+        /*
         if (column == 2)
             return m_da.getSettings().getIns1Abbr();
         if (column == 3)
             return m_da.getSettings().getIns2Abbr();
-
+*/
         return dayData.getColumnName(column);
     }
 

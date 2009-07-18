@@ -44,6 +44,7 @@ import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.misc.refresh.EventSource;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.Rounding;
 import com.atech.utils.logs.RedirectScreen;
 
 /**
@@ -1694,12 +1695,12 @@ public class DataAccess extends ATDataAccessAbstract
     /**
      * Insulin - Pen/Injection 
      */
-    public static final int INSULIN_PEN_INJECTION = 1;
+    public static final int INSULIN_PEN_INJECTION = 0;
     
     /**
      * Insulin - Pump 
      */
-    public static final int INSULIN_PUMP = 2;
+    public static final int INSULIN_PUMP = 1;
     
     /**
      * @param mode
@@ -1734,6 +1735,155 @@ public class DataAccess extends ATDataAccessAbstract
     {
     }
     
+
+    /**
+     * Insulin Dose: Basal
+     */
+    public static final int INSULIN_DOSE_BASAL = 1;
+    
+    /**
+     * Insulin Dose: Bolus
+     */
+    public static final int INSULIN_DOSE_BOLUS = 2;
+    
+    
+    /**
+     * Get Insulin Precision
+     * 
+     * @param mode
+     * @param type
+     * @return
+     */
+    public float getInsulinPrecision(int mode, int type)
+    {
+        if (mode==INSULIN_PEN_INJECTION)
+        {
+            if (type==INSULIN_DOSE_BASAL)
+            {
+                return this.m_cfgMgr.getFloatValue("PEN_BASAL_PRECISSION");
+            }
+            else
+            {
+                return this.m_cfgMgr.getFloatValue("PEN_BOLUS_PRECISSION");
+            }
+        }
+        else
+        {
+            if (type==INSULIN_DOSE_BASAL)
+            {
+                return this.m_cfgMgr.getFloatValue("PUMP_BASAL_PRECISSION");
+            }
+            else
+            {
+                return this.m_cfgMgr.getFloatValue("PUMP_BOLUS_PRECISSION");
+            }
+        }
+        
+    }
+    
+
+    /**
+     * Get Insulin Precision String
+     * 
+     * @param mode
+     * @param type
+     * @return
+     */
+    public String getInsulinPrecisionString(int mode, int type)
+    {
+        if (mode==INSULIN_PEN_INJECTION)
+        {
+            if (type==INSULIN_DOSE_BASAL)
+            {
+                return this.m_cfgMgr.getStringValue("PEN_BASAL_PRECISSION");
+            }
+            else
+            {
+                return this.m_cfgMgr.getStringValue("PEN_BOLUS_PRECISSION");
+            }
+        }
+        else
+        {
+            if (type==INSULIN_DOSE_BASAL)
+            {
+                return this.m_cfgMgr.getStringValue("PUMP_BASAL_PRECISSION");
+            }
+            else
+            {
+                return this.m_cfgMgr.getStringValue("PUMP_BOLUS_PRECISSION");
+            }
+        }
+        
+    }
+    
+    
+    
+    /**
+     * Reformat Insulin Amount To CorrectValue
+     * 
+     * @param mode
+     * @param type
+     * @param input_val
+     * @return
+     */
+    public double reformatInsulinAmountToCorrectValue(int mode, int type, float input_val)
+    {
+        String prec = getInsulinPrecisionString(mode, type);
+        
+        //System.out.println("Precision: " + prec);
+        
+        return Rounding.specialRounding(input_val, prec);
+    }
+    
+    
+    /**
+     * Reformat Insulin Amount To CorrectValue String
+     * 
+     * @param mode
+     * @param type
+     * @param input_val
+     * @return
+     */
+    public String reformatInsulinAmountToCorrectValueString(int mode, int type, float input_val)
+    {
+        String prec = getInsulinPrecisionString(mode, type);
+        return Rounding.specialRoundingString(input_val, prec);
+    }
+    
+    
+    /**
+     * Get Max Values
+     * 
+     * @param mode
+     * @param type
+     * @return
+     */
+    public float getMaxValues(int mode, int type)
+    {
+        if (mode==INSULIN_PEN_INJECTION)
+        {
+            if (type==INSULIN_DOSE_BASAL)
+            {
+                return this.m_cfgMgr.getFloatValue("PEN_MAX_BASAL");
+            }
+            else
+            {
+                return this.m_cfgMgr.getFloatValue("PEN_MAX_BOLUS");
+            }
+        }
+        else
+        {
+            if (type==INSULIN_DOSE_BASAL)
+            {
+                return this.m_cfgMgr.getFloatValue("PUMP_MAX_BASAL");
+            }
+            else
+            {
+                return this.m_cfgMgr.getFloatValue("PUMP_MAX_BOLUS");
+            }
+        }
+        
+    }
     
     
     

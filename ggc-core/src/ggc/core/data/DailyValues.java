@@ -80,9 +80,9 @@ public class DailyValues implements Serializable
     private String[] column_names = { 
                         m_ic.getMessage("DATE_TIME"),
                         m_ic.getMessage("BG"),
-                        m_ic.getMessage("INS_1"),
-                        m_ic.getMessage("INS_2"),
-                        m_ic.getMessage("BU"),
+                        m_ic.getMessage("BOLUS_INSULIN_SHORT"),
+                        m_ic.getMessage("BASAL_INSULIN_SHORT"),
+                        m_ic.getMessage("CH"),
                         m_ic.getMessage("ACTIVITY"),
                         m_ic.getMessage("URINE"),
                         m_ic.getMessage("COMMENT") };
