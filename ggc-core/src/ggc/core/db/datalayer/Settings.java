@@ -180,6 +180,8 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
 
         tx.commit();
 
+        this.setId(id.longValue());
+        
         return "" + id.longValue();
 
     }

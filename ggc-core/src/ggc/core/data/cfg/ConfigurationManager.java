@@ -65,7 +65,9 @@ public class ConfigurationManager
         "PEN_BASAL_PRECISSION", "1",
         "PEN_BOLUS_PRECISSION", "1",
         "PUMP_BASAL_PRECISSION", "0.1",
-        "PUMP_BOLUS_PRECISSION", "0.1"
+        "PUMP_BOLUS_PRECISSION", "0.1",
+        "INS_CARB_RULE", "RULE_500",
+        "SENSITIVITY_RULE", "RULE_1800"
     };
 
     private String cfg_int[] = 
@@ -83,7 +85,7 @@ public class ConfigurationManager
         "PRINT_DINNER_START_TIME", "1800",
         "PRINT_NIGHT_START_TIME", "2100",
         "SW_MODE", "0",
-        "PUMP_TBR_TYPE", "0"
+        "PUMP_TBR_TYPE", "0",
     };
 
 
@@ -108,7 +110,8 @@ public class ConfigurationManager
         "PUMP_UNIT_STEP", "0.1f", 
         "PUMP_PROC_MIN", "0.0f", 
         "PUMP_PROC_MAX", "200.0f",
-        "PUMP_PROC_STEP", "5.0f"
+        "PUMP_PROC_STEP", "5.0f",
+        "LAST_TDD", "0.0f"
     };
 
     private String cfg_boolean[] = 
@@ -130,6 +133,7 @@ public class ConfigurationManager
     public ConfigurationManager(DataAccess da)
     {
         this.m_da = da;
+        //checkConfiguration()
     }
 
 
@@ -137,13 +141,13 @@ public class ConfigurationManager
      * Check Configuration
      * 
      * @param values
+     * @param db 
      */
-    public void checkConfiguration(Hashtable<String,Settings> values)
+    public void checkConfiguration(Hashtable<String,Settings> values, GGCDb db)
     {
 
         this.cfg_values = values;
 
-        //XXX: The following is pretty ugly code; better to store arrays in another array and use foreach loop?
         for (int j=1; j<5; j++)
         {
             String[] arr = null;
@@ -170,7 +174,7 @@ public class ConfigurationManager
             {
                 if (!values.containsKey(arr[i]))
                 {
-                    addNewValue(arr[i], arr[i+1], j);
+                    addNewValue(arr[i], arr[i+1], j, db);
                 }
             }
 
@@ -180,7 +184,7 @@ public class ConfigurationManager
 
     }
 
-    private void addNewValue(String name, String def_value, int type)
+    private void addNewValue(String name, String def_value, int type, GGCDb db)
     {
         //System.out.println("addNewValue:: name=" + name);
 
@@ -191,7 +195,9 @@ public class ConfigurationManager
         s.setType(type);
         s.setValue(def_value);
         s.setPerson_id(m_da.getCurrentPersonId());
-        s.setElementAdded();
+        //s.setElementAdded();
+        
+        db.add(s);
 
         this.cfg_values.put(name, s);   
 

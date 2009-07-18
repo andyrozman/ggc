@@ -1,35 +1,27 @@
 package ggc.shared.ratio;
 
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
+import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.text.NumberFormat;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
-import com.atech.graphics.components.DateTimeComponent;
+import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,111 +48,56 @@ import com.atech.help.HelpCapable;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class RatioCalculatorDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
+public class RatioCalculatorDialog extends JDialog implements ActionListener, HelpCapable, ItemListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1240982985415603758L;
+    
+    
+    
+    JComboBox cb_type;
+    JDecimalTextField dtf_tdd;
+    JLabel db_data_status, lb_ins_carb, lb_ins_bg, lb_ch_bg;
+    JPanel[] panels;
     JComboBox cb_time_range, cb_icarb_rule, cb_sens_rule;
+    int selected_type = 0;
+    JButton[] buttons;
+    JButton help_button = null;
     
-
-    /** 
-     * focusGained
-     */
-    public void focusGained(FocusEvent arg0)
-    {
-    }
-
-
-    boolean in_action = false;
-    
-    /** 
-     * focusLost
-     */
-    public void focusLost(FocusEvent ev)
-    {
-	if (in_action)
-	    return;
-	
-	in_action = true;
-	
-	//JFormattedTextField targ = (JFormattedTextField)ev. 
-	
-	if (ev.getSource().equals(this.ftf_bg1))
-	{
-	    //System.out.println("focus lost: bg1");
-	    int val = m_da.getJFormatedTextValueInt(ftf_bg1);
-	    float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
-	    this.ftf_bg2.setValue(new Float(v_2));
-	}
-	else if (ev.getSource().equals(this.ftf_bg2))
-	{
-	    //System.out.println("focus lost: bg2");
-	    float val = m_da.getJFormatedTextValueFloat(ftf_bg2);
-	    int v_2 = (int)m_da.getBGValueDifferent(DataAccess.BG_MMOL, val);
-	    this.ftf_bg1.setValue(new Integer(v_2));
-	}
-	else
-	    System.out.println("focus lost: unknown");
-	    
-	
-	in_action = false;
-    }
-
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    
+    int[] carb_rule = { 500, 450, 300 };
+    int[] sens_rule = { 1800, 1500};
+
+    String[] carb_rule_desc = { "RULE_500", "RULE_450", "RULE_300" };
+    String[] sens_rule_desc = { "RULE_1800", "RULE_1500" };
+    
+    private boolean m_action_done = false;
+
+    float[] result = null;
+    
+//    boolean in_action = false;
+    
+
     //private GGCProperties props = m_da.getSettings();
 
-    private boolean m_actionDone = false;
-
-    //private long last_change = 0;
-
-//    static AddRowFrame singleton = null;
+  //  private boolean m_action_done = false;
 
 
 
-    JTextField DateField, TimeField, /*BGField, Ins1Field, Ins2Field, BUField,*/
-            ActField, CommentField, UrineField;
-
-    JComboBox cob_bg_type; //= new JComboBox();
-
-    JFormattedTextField ftf_ins1, ftf_ins2, ftf_bg1, ftf_ch, ftf_bg2;
-    //JTextFieldFormatted 
-    
 
     JLabel label_title = new JLabel();
-    JLabel label_food;
-    JCheckBox cb_food_set;
 
-    DateTimeComponent dtc;
-
-    JButton AddButton;
-
-    String sDate = null;
-
-    DailyValues dV = null;
-    DailyValuesRow m_dailyValuesRow = null;
-
-    NumberFormat bg_displayFormat, bg_editFormat;
-    
-    JComponent components[] = new JComponent[9];
-
-    Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
-    boolean debug = true;
-    JButton help_button = null;
-    JPanel main_panel = null;
-
+//    boolean debug = true;
+//    JPanel main_panel = null;
 
     
-    private boolean m_add_action = true;
-    private Container m_parent = null;
+    //private Container m_parent = null;
 
 
-    
+    ConfigurationManager config_manager = null;
 
     /**
      * Constructor
@@ -171,11 +108,35 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
     {
         super(dialog, "", true);
         
-        m_parent = dialog;
+        //m_parent = dialog;
 
         setTitle(m_ic.getMessage("RATIO_CALCULATOR"));
         label_title.setText(m_ic.getMessage("RATIO_CALCULATOR"));
+        this.config_manager = m_da.getConfigurationManager();
 
+        init();
+        
+        this.setVisible(true);
+
+    }
+
+
+
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     */
+    public RatioCalculatorDialog(JDialog dialog) 
+    {
+        super(dialog, "", true);
+        
+        //m_parent = dialog;
+
+        setTitle(m_ic.getMessage("RATIO_CALCULATOR"));
+        label_title.setText(m_ic.getMessage("RATIO_CALCULATOR"));
+        this.config_manager = m_da.getConfigurationManager();
+        
         init();
         
         this.setVisible(true);
@@ -188,449 +149,177 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
 
 
 
-/*
-    private void setDate()
-    {
-        //System.out.println("Date: " + sDate);
-
-        StringTokenizer strtok = new StringTokenizer(sDate, ".");
-
-        String day = strtok.nextToken();
-        String month = strtok.nextToken();
-        String year = strtok.nextToken();
-
-        String dt = year + m_da.getLeadingZero(month,2) + m_da.getLeadingZero(day,2) + "0000";
-        
-        System.out.println("sDate: " + sDate);
-
-        this.dtc.setDateTime(Long.parseLong(dt));
-
-    }
-*/
-
-    @SuppressWarnings("unused")
-    private void load()
-    {
-        this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
-
-        if (m_dailyValuesRow.getBG()>0)
-        {
-            this.ftf_bg1.setValue(new Integer((int)m_dailyValuesRow.getBGRaw()));
-	    this.ftf_bg2.setValue(new Float(m_da.getBGValueDifferent(DataAccess.BG_MGDL, m_dailyValuesRow.getBGRaw())));
-        }
-        
-        this.ftf_ins1.setValue(new Integer((int)this.m_dailyValuesRow.getIns1()));
-        this.ftf_ins2.setValue(new Integer((int)this.m_dailyValuesRow.getIns2()));
-        this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
-
-        ActField.setText(this.m_dailyValuesRow.getActivity());
-        UrineField.setText(this.m_dailyValuesRow.getUrine());
-
-        this.cb_food_set.setEnabled(false);
-        this.cb_food_set.setSelected(this.m_dailyValuesRow.areMealsSet());
-        this.cb_food_set.setEnabled(true);
-
-        CommentField.setText(this.m_dailyValuesRow.getComment());
-
-    }
-
-    /*
-    private void save()
-    {
-
-    }
-*/
-
     private void init()
     {
-        int x = 0;
-        int y = 0;
-        int width = 400;
-        int height = 500;
+        int width = 500;
+        int height = 625;
 
+        ATSwingUtils.initLibrary();
+        
+        m_da.addComponent(this);
+        
+        /*
         Rectangle bnd = m_parent.getBounds();
 
         x = (bnd.width/2) + bnd.x - (width/2);
         y = (bnd.height/2) + bnd.y - (height/2);
         
         this.setBounds(x, y, width, height);
-
+*/
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
         panel.setLayout(null);
 
-        main_panel = panel;
+        //main_panel = panel;
         
         this.getContentPane().add(panel);
 
         label_title.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(JLabel.CENTER);
-        label_title.setBounds(0, 15, 400, 35);
+        label_title.setBounds(0, 15, width, 35);
         panel.add(label_title);
 
-        JLabel l = new JLabel(m_ic.getMessage("RATIO_TIME_SELECT_DESC"));
-        l.setBounds(30, 70, 330, 80);
-        panel.add(l);
         
-        addLabel(m_ic.getMessage("SELECT_RANGE") + ":", 165, panel);
+        //JPanel p1 = new JPanel();
+        //p1.setBounds(arg0)
         
-        Object o[] = { m_ic.getMessage("1_WEEK"), m_ic.getMessage("2_WEEKS"), m_ic.getMessage("3_WEEKS"), m_ic.getMessage("1_MONTH")  };
         
+        JPanel p1 = ATSwingUtils.getPanel(30, 70, 430, 55, null, new TitledBorder(m_ic.getMessage("TYPE_SOURCE_DATA")), panel);
+        
+        ATSwingUtils.getLabel(m_ic.getMessage("TYPE_SOURCE_DATA") + ":", 20, 20, 150, 25, p1);
+        
+        String[] src_data = {
+             m_ic.getMessage("TYPE_SOURCE_MANUAL"), 
+             m_ic.getMessage("TYPE_SOURCE_DB") 
+        };
+        
+        cb_type = ATSwingUtils.getComboBox(src_data, 180, 20, 130, 25, p1, ATSwingUtils.FONT_NORMAL);
+        cb_type.setActionCommand("cb_type");
+        cb_type.addItemListener(this);
+
+        panels = new JPanel[5];
+        
+        // manual entry
+        JPanel p2 = ATSwingUtils.getPanel(30, 130, 430, 55, null, new TitledBorder(m_ic.getMessage("TYPE_SOURCE_MANUAL")), panel);
+        
+        ATSwingUtils.getLabel(m_ic.getMessage("TDD_FOR_CALCULATION") + ":", 20, 20, 250, 25, p2);
+        dtf_tdd = ATSwingUtils.getNumericTextField(4, 1, this.config_manager.getFloatValue("LAST_TDD"), 290, 20, 60, 25, p2); 
+        p2.setVisible(true);
+        panels[0] = p2;
+
+        int startx = 185;
+        
+        // db entry
+        JPanel p3 = ATSwingUtils.getPanel(30, 130, 430, 170, null, new TitledBorder(m_ic.getMessage("TYPE_SOURCE_DB")), panel);
+        ATSwingUtils.getLabel(m_ic.getMessage("RATIO_TIME_SELECT_DESC"), 20, 20, 400, 75, p3, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getLabel(m_ic.getMessage("SELECT_RANGE") + ":", 20, 100, 150, 25, p3);
+        String range_el[] = { m_ic.getMessage("1_WEEK"), m_ic.getMessage("2_WEEKS"), m_ic.getMessage("3_WEEKS"), m_ic.getMessage("1_MONTH")  };
+        cb_time_range = ATSwingUtils.getComboBox(range_el, 180, 100, 120, 25, p3, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getLabel(m_ic.getMessage("DB_DATA_STATUS") + ":", 20, 130, 150, 25, p3);
+        db_data_status = ATSwingUtils.getLabel(m_ic.getMessage("DB_DATA_NOT_READY"), 180, 130, 150, 25, p3);
+        ATSwingUtils.getButton(m_ic.getMessage("GET_DATA"), 280, 130, 120, 25, 
+            p3, ATSwingUtils.FONT_NORMAL, null, "get_db_data", this, m_da);
+        
+        p3.setVisible(false);
+        panels[1] = p3;
+        //int startx = 300;
+
+        
+        JPanel p4 = ATSwingUtils.getPanel(30, startx+5, 430, 60, null, new TitledBorder(m_ic.getMessage("INSULIN_CARB_RATIO")), panel);
+        ATSwingUtils.getLabel(m_ic.getMessage("SELECT_RULE") + ":", 20, 20, 160, 25, p4, ATSwingUtils.FONT_NORMAL);
         Object o1[] = { m_ic.getMessage("RULE_500"), m_ic.getMessage("RULE_450"), m_ic.getMessage("RULE_300") };
+        cb_icarb_rule = ATSwingUtils.getComboBox(o1, 150, 20, 250, 25, p4, ATSwingUtils.FONT_NORMAL);
+        cb_icarb_rule.setSelectedItem(m_ic.getMessage(this.config_manager.getStringValue("INS_CARB_RULE")));
+        panels[2] = p4;
+        
 
+        JPanel p5 = ATSwingUtils.getPanel(30, startx+70, 430, 60, null, new TitledBorder(m_ic.getMessage("SENSITIVITY_FACTOR")), panel);
+        ATSwingUtils.getLabel(m_ic.getMessage("SELECT_RULE") + ":", 20, 20, 160, 25, p5, ATSwingUtils.FONT_NORMAL);
         Object o2[] = { m_ic.getMessage("RULE_1800"), m_ic.getMessage("RULE_1500")};
-        
-        this.cb_time_range = new JComboBox(o);
-        this.cb_time_range.setBounds(180, 160, 140, 25);
-        panel.add(this.cb_time_range);
-
-        
-        addComponent(l = new JLabel(m_ic.getMessage("INSULIN_CARB_RATIO") ), 30, 210, 150, panel);
-        l.setFont(this.f_bold);
-        
-        addLabel(m_ic.getMessage("SELECT_RULE") + ":", 240, panel);
-
-        
-        this.cb_icarb_rule = new JComboBox(o1);
-        this.cb_icarb_rule.setBounds(140, 240, 210, 25);
-        panel.add(this.cb_icarb_rule);
+        cb_sens_rule = ATSwingUtils.getComboBox(o2, 150, 20, 250, 25, p5, ATSwingUtils.FONT_NORMAL);
+        cb_sens_rule.setSelectedItem(m_ic.getMessage(this.config_manager.getStringValue("SENSITIVITY_RULE")));
+        panels[3] = p5;
         
         
-        addLabel(m_ic.getMessage("1_UNIT_INSULIN") + ":", 270, panel);
+        JPanel p6 = ATSwingUtils.getPanel(30, startx+135, 430, 110, null, new TitledBorder(m_ic.getMessage("CALCULATION")), panel);
         
-        addComponent(l = new JLabel(m_ic.getMessage("SENSITIVITY_FACTOR") ), 30, 300, 150, panel);
-        l.setFont(this.f_bold);
+        ATSwingUtils.getLabel(m_ic.getMessage("INSULIN_CARB_RATIO") + ":", 20, 20, 160, 25, p6, ATSwingUtils.FONT_NORMAL);
+        
+        lb_ins_carb = ATSwingUtils.getLabel(String.format(m_ic.getMessage("INS_CH_RATIO_PROC"), DataAccess.getFloatAsString(0.0f, 2)), 
+                        130, 20, 160, 25, p6, ATSwingUtils.FONT_NORMAL);        
+        
+        ATSwingUtils.getLabel(m_ic.getMessage("INS_BG_RATIO") + ":", 20, 45, 160, 25, p6, ATSwingUtils.FONT_NORMAL);
+        
+        lb_ins_bg = ATSwingUtils.getLabel(
+                        String.format(m_ic.getMessage("INS_BG_RATIO_PROC"), DataAccess.getFloatAsString(0.0f, 2), m_da.getBGMeasurmentTypeString()), 
+                        130, 45, 300, 25, p6, ATSwingUtils.FONT_NORMAL);        
 
         
-        addLabel(m_ic.getMessage("SELECT_RULE") + ":", 340, panel);
-
-        this.cb_sens_rule = new JComboBox(o2);
-        this.cb_sens_rule.setBounds(140, 340, 210, 25);
-        panel.add(this.cb_sens_rule);
+        ATSwingUtils.getLabel(m_ic.getMessage("CH_BG_RATIO") + ":", 20, 70, 160, 25, p6, ATSwingUtils.FONT_NORMAL);
+        
+        lb_ch_bg = ATSwingUtils.getLabel(
+                        String.format(m_ic.getMessage("CH_BG_RATIO_PROC"), m_da.getBGMeasurmentTypeString(), DataAccess.getFloatAsString(0.0f, 1)), 
+                        130, 70, 300, 25, p6, ATSwingUtils.FONT_NORMAL);        
         
         
-        addLabel(m_ic.getMessage("1_UNIT_INSULIN") + ":", 390, panel);
+        ATSwingUtils.getButton("" , 
+            390, 20, 30, 30, p6, ATSwingUtils.FONT_NORMAL, 
+            "calculator.png", 
+            "calculate", this, m_da);
+
+        panels[4] = p6;
         
-        //addLabel(m_ic.getMessage("SELECT_DATE") + ":", 78, panel);
-        //addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
-        //addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
-        //addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 198, panel);
-        //addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 228, panel);
-        //addLabel(m_ic.getMessage("CH_LONG") + ":", 258, panel);
-        //addLabel(m_ic.getMessage("FOOD") + ":", 288, panel);
-        //addLabel(m_ic.getMessage("URINE") + ":", 318, panel);
-        //addLabel(m_ic.getMessage("ACTIVITY") + ":", 348, panel);
-        //addLabel(m_ic.getMessage("COMMENT") + ":", 378, panel);
+        buttons = new JButton[3];
         
-//        addLabel("mg/dL", 140, 138, panel);
-//        addLabel("mmol/L", 140, 168, panel);
+        buttons[0] = ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 
+            40, startx + 255, 130, 25, panel, ATSwingUtils.FONT_NORMAL, 
+            "ok.png", 
+            "ok", this, m_da);
+
+        buttons[1] = ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 
+            180, startx + 255, 130, 25, panel, ATSwingUtils.FONT_NORMAL, 
+            "cancel.png", 
+            "cancel", this, m_da);
         
-        /*
-        this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5);
-        dtc.setBounds(140, 75, 100, 35);
-        panel.add(dtc);
-
-        this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 55, 25, panel);
-        this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25, panel);
-        
-        this.ftf_ins1 = getTextField(2, 0, new Integer(0), 140, 198, 55, 25, panel);
-        this.ftf_ins2 = getTextField(2, 0, new Integer(0), 140, 228, 55, 25, panel);
-        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, 258, 55, 25, panel);
-
-        this.ftf_bg1.addFocusListener(this);
-        this.ftf_bg2.addFocusListener(this);
-        
-        //this.ftf_bg1.addKeyListener(this);
-        //this.ftf_bg2.addKeyListener(this);
-
-
-        this.ftf_bg2.addKeyListener(new KeyListener()
-        {
-
-	    public void keyPressed(KeyEvent arg0) { }
-	    public void keyTyped(KeyEvent arg0) { }
-
-	    
-	    public void keyReleased(KeyEvent ke)
-	    {
-		if (ke.getKeyCode()==KeyEvent.VK_PERIOD)
-		{
-		    JFormattedTextField tf = (JFormattedTextField)ke.getSource();
-		    String s = tf.getText();
-		    s = s.replace('.', ',');
-		    tf.setText(s);
-		}
-	    }
-
-            
-        });
-        
-
-        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 120, 290, 200, panel);
-        addComponent(UrineField = new JTextField(), 120, 318, 240, panel);
-        addComponent(ActField = new JTextField(), 120, 348, 240, panel);
-        addComponent(CommentField = new JTextField(), 120, 378, 240, panel);
-*/
-
-/*                
-        this.cob_bg_type.setSelectedIndex(props.getBG_unit()-1);
-        cob_bg_type.addItemListener(new ItemListener(){
-                /**
-                 * Invoked when an item has been selected or deselected by the user.
-                 * The code written for this method performs the operations
-                 * that need to occur when an item is selected (or deselected).
-                 */
-  /*              public void itemStateChanged(ItemEvent e)
-                {
-                    try
-                    {
-                        long now = System.currentTimeMillis();
-                        //System.out.println("last=" + last_change + ",now=" + now);
-
-                        if ((now - last_change) < 500) 
-                        {
-                            return;
-                        }
-
-                        last_change = now;
-
-                        int prev = 0;
-
-                        if (cob_bg_type.getSelectedIndex()==1)
-                        {
-                            prev = 1;
-                        }
-                        else
-                            prev = 2;
-
-                        String s = ftf_bg.getText();
-                        s = s.replace(',', '.');
-                        
-                        float v = 0.0f;
-                        
-                        if (!s.equals(""))
-                        {
-                            v = Float.parseFloat(s);
-                        }
-                        
-                        //float v = Float.parseFloat(s);
-                        	//BGField.getText());
-
-                        //System.out.println("Item state vhanged: value_old=" + v + ", value_new=" + m_da.getBGValueDifferent(prev, v));
-
-                        setBGTextField();
-                        //setBGElementSettings();
-                        
-                        if (prev==2)
-                        {
-                            //ftf_bg.setText("" + (int)m_da.getBGValueDifferent(prev, v));
-                            ftf_bg.setValue(new Integer((int)m_da.getBGValueDifferent(prev, v)));
-                            //BGField.setText("" + (int)m_da.getBGValueDifferent(prev, v));
-                        }
-                        else
-                            ftf_bg.setValue(new Float(m_da.getBGValueDifferent(prev, v)));
-                            //ftf_bg.setText("" + m_da.getBGValueDifferent(prev, v));
-//                            BGField.setText("" + m_da.getBGValueDifferent(prev, v));
-                        
-                        //fixDecimals();
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.println("Error with change of BG Value: " + ex);
-                    }
-                }
-                });
-*/
-        
-
-/*
-        String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
-                                    "edit_food", m_ic.getMessage("EDIT_FOOD"),
-                                    "ok", m_ic.getMessage("OK"),
-                                    "cancel", m_ic.getMessage("CANCEL"),
-  //                                  "help", m_ic.getMessage("HELP")
-        };
-
-        String button_icon[] = {
-        	null,
-        	null,
-        	"ok.png",
-        	"cancel.png"
-        };
-        
-        int button_coord[] = { 210, 228, 140, 1, 
-                               210, 258, 140, 1,
-                               30, 420, 110, 1,
-                               145, 420, 110, 1,
-//                               250, 390, 80, 0
-        }; */
-/*
-        JButton button;
-        //int j=0;
-        for (int i=0, j=0, k=0; i<button_coord.length; i+=4, j+=2, k++)
-        {
-            button = new JButton("   " + button_command[j+1]);
-            button.setActionCommand(button_command[j]);
-            //button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-            button.addActionListener(this);
-
-            if (button_icon[k]!=null)
-            {
-        	button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
-            }
-            
-            
-            if (button_coord[i+3]==0)
-            {
-                button.setEnabled(false);
-            }
-
-            if (k<=1)
-        	addComponent(button, button_coord[i], button_coord[i+1], button_coord[i+2], panel);
-            else
-        	addComponent(button, button_coord[i], button_coord[i+1], button_coord[i+2], 25, false, panel);
-            
-            
-        }
-  */      
-        
-        help_button = m_da.createHelpButtonByBounds(260, 420, 110, 25, this);
-
+        help_button = m_da.createHelpButtonByBounds(320, startx + 255, 130, 25, this);
+        buttons[2] = help_button;
         panel.add(help_button);
 
         m_da.enableHelp(this);
         
-    }
-
-    
-    
-    
-    
-    
-
-    /*
-    public void setBGTextField()
-    {
-	int digs = 0;
-
-	if (m_da.getBGMeasurmentType()==DataAccess.BG_MMOL)
-	{
-	    digs = 1;
-	}
-	
-	bg_displayFormat = NumberFormat.getNumberInstance();
-	bg_displayFormat.setMinimumFractionDigits(digs);
-	bg_displayFormat.setMaximumFractionDigits(digs);
-	
-	bg_editFormat = NumberFormat.getNumberInstance();        
-	bg_editFormat.setMinimumFractionDigits(digs);
-	bg_editFormat.setMaximumFractionDigits(digs);
-    
-	
-	this.ftf_bg = new JFormattedTextField(
-            new DefaultFormatterFactory(
-                    new NumberFormatter(bg_displayFormat),
-                    new NumberFormatter(bg_displayFormat),
-                    new NumberFormatter(bg_editFormat)));
-		
-	
-	/*
-	MaskFormatter mask = null;
-	     try {
-	            //
-	            // Create a MaskFormatter for accepting phone number, the # symbol accept
-	            // only a number. We can also set the empty value with a place holder
-	            // character.
-	            //
-	            mask = new MaskFormatter("##,#");
-	            mask.setPlaceholderCharacter('_');
-	        } 
-	     catch (ParseException e) 
-	        {
-	            e.printStackTrace();
-	        }
-	
-
-		this.ftf_bg = new JFormattedTextField(mask);
-*/
-	        
-//    ftf.setValue(value);
-    //if (columns != 0)
-    //    ftf.setColumns(columns);
-/*	this.ftf_bg.setBounds(140, 138, 55, 25);
-	this.ftf_bg.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
-	main_panel.add(this.ftf_bg);
-    
-	//setBGElementSettings();
-	
-	//return ftf;
-	
-    }
-*/    
-    
-    /*
-    protected void setBGElementSettings()
-    {
-	
-	if (m_da.getBGMeasurmentType()==DataAccess.BG_MGDL)
-	{
-	    bg_displayFormat.setMinimumFractionDigits(0);
-	    bg_displayFormat.setMaximumFractionDigits(0);
-	    bg_editFormat.setMinimumFractionDigits(0);
-	    bg_editFormat.setMaximumFractionDigits(0);
-	    
-	    //this.ftf_bg.setFormatterFactory(new MaskFormatter("###"));
-	    //this.ftf_bg.set
-	    
-	    //bg_displayFormat.setRoundingMode();
-	    //new RoundingMode();
-	}
-	else
-	{
-	    bg_displayFormat.setMinimumFractionDigits(1);
-	    bg_displayFormat.setMaximumFractionDigits(1);
-	    bg_editFormat.setMinimumFractionDigits(1);
-	    bg_editFormat.setMaximumFractionDigits(1);
-	    
-	} 
-    }
-    */
-
-    
-    private void addLabel(String text, int posY, JPanel parent)
-    {
-        JLabel label = new JLabel(text);
-        label.setBounds(30, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        //a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
         
-    }
-
-    /*
-    private void addLabel(String text, int posX, int posY, JPanel parent)
-    {
-        JLabel label = new JLabel(text);
-        label.setBounds(posX, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        //a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
         
-    }*/
-    
-    
-    private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
-    {
-        addComponent(comp, posX, posY, width, 23, true, parent);
+        /*
+        this.cb_icarb_rule = new JComboBox(o1);
+        this.cb_icarb_rule.setBounds(140, 240, 210, 25);
+        panel.add(this.cb_icarb_rule); */
+        
+        
+        //addLabel(m_ic.getMessage("1_UNIT_INSULIN") + ":", 270, panel);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        this.setBounds(0, 0, width, (startx+215 + 110) );
+        m_da.centerJDialog(this);
     }
 
     
-    private void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
-    {
-        comp.setBounds(posX, posY, width, height);
-        comp.addKeyListener(this);
-        parent.add(comp);
-    }
+    
+    
+    
+
+  
+    
+   
+    
+    
+  
     
 
 
@@ -644,125 +333,127 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
         if (action.equals("cancel"))
         {
             this.dispose();
+            m_da.removeComponent(this);
         }
         else if (action.equals("ok"))
         {
-            cmdOk();
+            if (result==null)
+            {
+                ATSwingUtils.showWarningDialog(this, "RATIOS_NOT_DONE", m_ic);
+                return;
+            }
+            else
+            {
+                this.m_action_done = true;
+                m_da.removeComponent(this);
+                this.dispose();
+            }
+        }
+        else if (action.equals("calculate"))
+        {
+            calculate();
         }
         else
             System.out.println("RatioDialog::unknown command: " + action);
 
     }
 
-/*
-    String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
-            "edit_food", m_ic.getMessage("EDIT_FOOD"),
-            "ok", m_ic.getMessage("OK"),
-            "cancel", m_ic.getMessage("CANCEL"),
-//                                  "help", m_ic.getMessage("HELP")
-    
-  */  
-    
-    
-    private void cmdOk()
+
+    /**
+     * Check Data Ready
+     * 
+     * @return
+     */
+    public boolean checkDataReady()
     {
-        // to-do
-        if (this.m_add_action) 
+        if (this.selected_type==0)
         {
-            // add
-
-
-            if (debug)
-                System.out.println("dV: " + dV);
-
-
-            //this.m_dailyValuesRow = new DailyValuesRow();
-
-            this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime()); 
-
-//            if (isFieldSet(BGField.getText()))
-            
-            float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
-            
-            if (f>0.0)
+            if (m_da.getFloatValue(this.dtf_tdd.getValue())<=0)
             {
-                //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, f);
-        	this.m_dailyValuesRow.setBG(1, f);
+                
+                ATSwingUtils.showErrorDialog(this, "TDD_MUST_BE_GREATER_THAN_ZERO", m_ic);
+                return false;
             }
-
-            
-            this.m_dailyValuesRow.setIns1(m_da.getJFormatedTextValueInt(this.ftf_ins1));
-            this.m_dailyValuesRow.setIns2(m_da.getJFormatedTextValueInt(this.ftf_ins2));
-//        	    checkDecimalFields(Ins1Field.getText()));
-//            this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
-            //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
-            this.m_dailyValuesRow.setCH(m_da.getJFormatedTextValueFloat(this.ftf_ch));
-            this.m_dailyValuesRow.setActivity(ActField.getText());
-            this.m_dailyValuesRow.setUrine(UrineField.getText());
-            this.m_dailyValuesRow.setComment(CommentField.getText());
-            //this.m_dailyValuesRow.setMealIdsList(null);
-
-            dV.addRow(this.m_dailyValuesRow);
-            /*
-            dV.setNewRow(new DailyValuesRow(this.dtc.getDateTime(),
-                    checkDecimalFields(BGField.getText()), 
-                    checkDecimalFields(Ins1Field.getText()), 
-                    checkDecimalFields(Ins2Field.getText()), 
-                    checkDecimalFields(BUField.getText()), 
-                    ActField.getText(),
-                    UrineField.getText(),
-                    CommentField.getText(), 
-                    null));  // List of ids
-            //mod.fireTableChanged(null);
-            //clearFields();
-            */
-            this.m_actionDone = true;
-            this.dispose();
+            else
+                return true;
         }
         else
         {
-
-            // edit
-            this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
-
-
-            float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
-            
-            if (f>0.0)
+            // FIXME not implemented
+        }
+        return false;
+    }
+    
+    
+    private void calculate()
+    {
+        if (checkDataReady())
+        {
+            if (this.selected_type==0)
             {
-                //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, f);
-        	this.m_dailyValuesRow.setBG(1, f);
+                calculate(m_da.getFloatValue(this.dtf_tdd.getValue()));
             }
-            
-/*            
-            float f = m_da.getJFormatedTextValueFloat(ftf_bg);
-            
-            if (f>0.0)
-                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, f);
-  */          
-//            if (isFieldSet(BGField.getText()))
-//                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, checkDecimalFields(BGField.getText()));
+            else
+            {
+                ATSwingUtils.showErrorDialog(this, "RATIO_CALCULATOR_NOT_IMPLEMENTED", m_ic);
+                // FIXME not implemented
+            }
+        }
+    }
+    
+    
+    
+    private void calculate(float tdd)
+    {
+        
+        result = new float[3];
+        
+        float carb_r = carb_rule[cb_icarb_rule.getSelectedIndex()];
+        
+        result[0] = carb_r / tdd;
 
-            this.m_dailyValuesRow.setIns1(m_da.getJFormatedTextValueInt(this.ftf_ins1));
-            this.m_dailyValuesRow.setIns2(m_da.getJFormatedTextValueInt(this.ftf_ins2));
-            
-//            this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText()));
-//            this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText())); 
-            this.m_dailyValuesRow.setCH(m_da.getJFormatedTextValueFloat(this.ftf_ch));
-//            this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()));
-            this.m_dailyValuesRow.setActivity(ActField.getText());
-            this.m_dailyValuesRow.setUrine(UrineField.getText());
-            this.m_dailyValuesRow.setComment(CommentField.getText());
-            //this.m_dailyValuesRow.setMealIdsList(null);
+        
+        float sens_r = sens_rule[cb_sens_rule.getSelectedIndex()];
+        
+        
+        if (m_da.getBGMeasurmentType()==DataAccess.BG_MMOL)
+        {
+            sens_r = sens_r / 18.0f;
+        }
+        
+        result[1] = sens_r / tdd;
+        result[2] = result[0] / result[1];
 
-            //mod.fireTableChanged(null);
-            //clearFields();
-            this.m_actionDone = true;
-            this.dispose();
+
+        lb_ins_carb.setText(String.format(m_ic.getMessage("INS_CH_RATIO_PROC"), DataAccess.getFloatAsString(result[0], 2)));
+
+        lb_ins_bg.setText(String.format(m_ic.getMessage("INS_BG_RATIO_PROC"), DataAccess.getFloatAsString(result[1], 2), m_da.getBGMeasurmentTypeString())); 
+
+        lb_ch_bg.setText(String.format(m_ic.getMessage("CH_BG_RATIO_PROC"), m_da.getBGMeasurmentTypeString(), DataAccess.getFloatAsString(result[2], 1))); 
+        
+        this.config_manager.setFloatValue("LAST_TDD", tdd);
+        this.config_manager.setStringValue("INS_CARB_RULE", getBaseStringEntry(this.carb_rule_desc, (String)this.cb_icarb_rule.getSelectedItem(), "RULE_500"));
+        this.config_manager.setStringValue("SENSITIVITY_RULE", getBaseStringEntry(this.sens_rule_desc, (String)this.cb_sens_rule.getSelectedItem(), "RULE_1800"));
+        
+        this.config_manager.saveConfig();
+    }
+    
+
+    private String getBaseStringEntry(String[] array, String current, String default_value)
+    {
+        for(int i=0; i<array.length; i++)
+        {
+            String p = m_ic.getMessage(array[i]);
+            
+            if (p.equals(current))
+                return array[i];
         }
 
+        return default_value;
+        
     }
-
+    
+    
 /*
     private boolean isFieldSet(String text)
     {
@@ -779,77 +470,28 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
      */
     public boolean actionSuccesful()
     {
-        return m_actionDone;
+        return this.m_action_done;
     }
 
 
     /**
-     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+     * Get Results
+     * 
+     * @return array of floats
      */
-    public void keyTyped(KeyEvent e) {}
-    
-    /**
-     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-     */
-    public void keyPressed(KeyEvent e) {}
-
-    /**
-     * Invoked when a key has been released.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key released event.
-     */
-    public void keyReleased(KeyEvent e)
+    public float[] getResults()
     {
-
-        if (e.getKeyCode() == KeyEvent.VK_ENTER)
-        {
-            cmdOk();
-        }
-
-        /*
-        int change = 0;
-
-        if ((e.getKeyCode() == KeyEvent.VK_LEFT)) // || (e.getKeyCode() == KeyEvent.VK_TAB)
-            change = -1;
-        else if ((e.getKeyCode() == KeyEvent.VK_RIGHT) || (e.getKeyCode() == KeyEvent.VK_TAB))
-            change = 1;
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN)
-            change = 2;
-        else if (e.getKeyCode() == KeyEvent.VK_UP)
-            change = -2;
-
-
-        if (change==0)
-            return;
-
-        JComponent cmp = (JComponent)e.getComponent();
-	
-        int search = 0;
-
-        for (int i=0; i<9; i++)
-        {
-            if (components[i].equals(cmp))
-            {
-                search = i;
-                break;
-            }
-        }
-
-        int newres = search+change;
-        
-        if (newres<0)
-        {
-            newres = 8+newres;
-        }
-        else if (newres>8)
-        {
-            newres = newres-8;
-        }
-
-        components[newres].requestFocus();
-        */
+        return this.result;
     }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /*
     private void fixDecimals()
     {
@@ -916,6 +558,73 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, Ke
     {
         return "pages.GGC_BG_Daily_Add";
     }
+
+
+
+    /** 
+     * itemStateChanged
+     */
+    public void itemStateChanged(ItemEvent ie)
+    {
+        JComboBox cb = (JComboBox)ie.getSource();
+        
+        if (cb.getActionCommand().equals("cb_type"))
+        {
+            setEntryType(cb_type.getSelectedIndex());
+        }
+        
+        
+        //String source = ie.getSource();
+        
+    }
+    
+    
+    private void setEntryType(int type)
+    {
+        if (this.selected_type==type)
+            return;
+        
+        this.selected_type=type;
+
+        int current = 0;
+        
+        if (type==0)
+        {
+            panels[0].setVisible(true);
+            panels[1].setVisible(false);
+            current = 185;
+        }
+        else
+        {
+            panels[1].setVisible(true);
+            panels[0].setVisible(false);
+            current = 300;
+        }
+
+        int yx[] = { 5, 70, 135 };
+        
+        
+        for(int i=2, j=0; i<panels.length; i++, j++)
+        {
+            Rectangle r = panels[i].getBounds();
+            r.y = current + yx[j];
+            panels[i].setBounds(r);
+        }
+        
+        for(int j=0; j<buttons.length; j++)
+        {
+            Rectangle r = buttons[j].getBounds();
+            r.y = current + 255;
+            buttons[j].setBounds(r);
+        }
+        
+        this.setBounds(0, 0, 500, (current+215 + 110) );
+        m_da.centerJDialog(this);
+        
+    }
+    
+    
+    
     
     
     

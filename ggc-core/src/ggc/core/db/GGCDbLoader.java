@@ -257,6 +257,10 @@ public class GGCDbLoader extends Thread
 //            db.loadImplementedMeterData();
         }
 */
+        
+        
+        m_da.runAfterDbLoad();
+        
     	long dif = System.currentTimeMillis() - start_time;
 
     	//System.out.println("We needed "  + (dif/1000) + " seconds to startup.");

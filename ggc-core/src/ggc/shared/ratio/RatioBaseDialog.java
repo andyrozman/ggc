@@ -178,8 +178,8 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
      */
     private void load()
     {
-        this.dtf_ch_ins.setValue(new Float(this.m_da.getSettings().getRatio_CH_Insulin()));
-        this.dtf_ins_bg.setValue(new Float(this.m_da.getSettings().getRatio_BG_Insulin()));
+        this.dtf_ch_ins.setValue(this.m_da.getSettings().getRatio_CH_Insulin());
+        this.dtf_ins_bg.setValue(this.m_da.getSettings().getRatio_BG_Insulin());
         calculateRatio(RATIO_BG_CH);
     }
 
@@ -245,6 +245,11 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
         dtf_bg_ch.addFocusListener(this);
         dtf_bg_ch.addKeyListener(this);
 
+
+        ATSwingUtils.getButton("" , 
+            30, 220, 30, 30, panel, ATSwingUtils.FONT_NORMAL, 
+            "calculator.png", 
+            "calculator", this, m_da);
         
         ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 
                                30, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
@@ -319,13 +324,13 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
             if (checkSet(v2,v1))
             {
                 float v4 = v1/v2;
-//                System.out.println("calculate Ratio [type=" + type + ",check=2,1;value=" + v4);
+                //System.out.println("calculate Ratio [type=" + type + ",check=2,1;value=" + v4);
                 this.dtf_bg_ch.setValue(new Float(v4));
             }
             else if (checkSet(v2,v3))
             {
                 float v4 = v2*v3;
-//                System.out.println("calculate Ratio [type=" + type + ",check=2,3;value=" + v4);
+                //System.out.println("calculate Ratio [type=" + type + ",check=2,3;value=" + v4);
                 this.dtf_ch_ins.setValue(new Float(v4));
             }
 //            else
@@ -333,16 +338,16 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
         }
         else
         {
-            if (checkSet(v3,v1))
+            if (checkSet(v1,v2))
             {
-                float v4 = v1/v3;
-//                System.out.println("calculate Ratio [type=" + type + ",check=3,1;value=" + v4);
-                this.dtf_ins_bg.setValue(new Float(v4));
+                float v4 = v1/v2;
+                //System.out.println("calculate Ratio [type=" + type + ",check=3,1;value=" + v4);
+                this.dtf_bg_ch.setValue(v4);
             }
             else if (checkSet(v3,v2))
             {
                 float v4 = v2*v3;
-//                System.out.println("calculate Ratio [type=" + type + ",check=3,2;value=" + v4);
+                //System.out.println("calculate Ratio [type=" + type + ",check=3,2;value=" + v4);
                 this.dtf_ch_ins.setValue(new Float(v4));
             }
 //            else
@@ -396,6 +401,19 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
                     m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
             }
             
+        }
+        else if (action.equals("calculator"))
+        {
+            RatioCalculatorDialog rcd = new RatioCalculatorDialog(this);
+
+            if (rcd.actionSuccesful())
+            {
+                float[] res = rcd.getResults();
+                
+                this.dtf_ch_ins.setValue(res[0]);
+                this.dtf_ins_bg.setValue(res[1]);
+                this.dtf_bg_ch.setValue(res[2]);
+            }
         }
         else
             System.out.println("RatioBaseDialog::unknown command: " + action);

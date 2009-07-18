@@ -697,7 +697,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
                 table.put(eh.getKey(), new Settings(eh));
             }
 
-            m_da.getConfigurationManager().checkConfiguration(table);
+            m_da.getConfigurationManager().checkConfiguration(table, this);
         }
         catch (Exception ex)
         {

@@ -173,7 +173,7 @@ public class DataAccess extends ATDataAccessAbstract
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
      */
-    public int m_BG_unit = BG_MGDL;
+//    public int m_BG_unit = BG_MGDL;
 
     private String[] availableLanguages = { "English", "Deutsch", "Slovenski", "Fran\u00e7ais" };
   
@@ -189,7 +189,7 @@ public class DataAccess extends ATDataAccessAbstract
     /**
      * BG Units
      */
-    public String[] bg_units = { "mg/dl", "mmol/l" };
+    public String[] bg_units = { "", "mg/dl", "mmol/l" };
 
 //    public Hashtable<String, String> timeZones;
 
@@ -304,6 +304,16 @@ public class DataAccess extends ATDataAccessAbstract
         */
         
     }    
+
+    
+    /**
+     * Run After Db Load
+     */
+    public void runAfterDbLoad()
+    {
+        loadSpecialParameters();        
+    }
+    
     
     // Method: getInstance
     // Author: Andy
@@ -891,9 +901,22 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public int getBGMeasurmentType()
     {
-        return this.m_BG_unit;
+        return this.m_settings.getBG_unit();
     }
 
+    //String[] bg_types = { "", "mg/dL", "mmol/L"};
+    
+    /**
+     * Get Measurment Type
+     * 
+     * @return
+     */
+    public String getBGMeasurmentTypeString()
+    {
+        return this.bg_units[getBGMeasurmentType()];
+    }
+    
+    
     /**
      * Set Measurment Type
      * 
@@ -901,7 +924,8 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public void setBGMeasurmentType(int type)
     {
-        this.m_BG_unit = type;
+        
+        //this.m_BG_unit = type;
     }
 
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
@@ -919,7 +943,7 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public float getDisplayedBG(float dbValue)
     {
-        switch (this.m_BG_unit)
+        switch (this.getBGMeasurmentType())
         {
         case BG_MMOL:
             // this POS should return a float rounded to 3 decimal places,
@@ -940,7 +964,7 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public float getBGValue(float bg_value)
     {
-        switch (this.m_BG_unit)
+        switch (this.getBGMeasurmentType())
         {
         case BG_MMOL:
             return (bg_value * MGDL_TO_MMOL_FACTOR);
@@ -1631,6 +1655,7 @@ public class DataAccess extends ATDataAccessAbstract
     {
         this.special_parameters = new Hashtable<String,String>();
         this.special_parameters.put("BG", "" + this.m_settings.getBG_unit());
+        //this.m_BG_unit = this.m_settings.getBG_unit();
     }
 
 
