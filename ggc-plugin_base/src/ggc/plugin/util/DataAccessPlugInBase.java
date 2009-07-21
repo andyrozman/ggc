@@ -1,5 +1,6 @@
 package ggc.plugin.util;
 
+import ggc.core.data.cfg.ConfigurationManager;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
@@ -103,6 +104,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     protected HibernateDb hdb;
     
     
+    protected ConfigurationManager config_manager;
     
     private static Log log = LogFactory.getLog(DataAccessPlugInBase.class);
     
@@ -1291,6 +1293,28 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         return getSelectedDeviceInstance().getDeviceSourceName();
     }
     
+ 
+    
+    /**
+     * Get Configuration Manager
+     * 
+     * @return
+     */
+    public ConfigurationManager getConfigurationManager()
+    {
+        return this.config_manager;
+    }
+    
+    
+    /**
+     * Set Configuration Manager
+     * 
+     * @param conf_mgr
+     */
+    public void setConfigurationManager(ConfigurationManager conf_mgr)
+    {
+        this.config_manager = conf_mgr;
+    }
     
     
 
