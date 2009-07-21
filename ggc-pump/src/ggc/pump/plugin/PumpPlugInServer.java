@@ -261,6 +261,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         da.initAllObjects();
         da.loadSpecialParameters();
         da.setCurrentUserId(((DataAccess)m_da).current_user_id);
+        da.setConfigurationManager(((DataAccess)m_da).getConfigurationManager());
         this.backup_restore_enabled = true;
         
         m_da.loadSpecialParameters();
