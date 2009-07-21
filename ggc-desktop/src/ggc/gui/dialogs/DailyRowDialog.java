@@ -897,28 +897,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     }
 
-    /*
-     * private void fixDecimals() { if (m_da.isEmptyOrUnset(BGField.getText()))
-     * return;
-     * 
-     * String s = BGField.getText().trim().replace(",", ".");
-     * 
-     * if (this.cob_bg_type.getSelectedIndex()==1) { try {
-     * 
-     * //System.out.println(s);
-     * 
-     * float f = Float.parseFloat(s); String ss =
-     * DataAccess.MmolDecimalFormat.format(f); ss = ss.replace(",", ".");
-     * this.BGField.setText(ss); } catch(Exception ex) {
-     * System.out.println("fixDecimals: " + ex); } } //MmolDecimalFormat }
-     */
-    /*
-        public String checkDecimalFields(String field)
-        {
-            field = field.replace(',', '.');
-            return field;
-        }
-    */
+   
+   
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
