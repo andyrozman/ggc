@@ -11,12 +11,15 @@ import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
 
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,10 +48,11 @@ import com.atech.utils.ATDataAccessAbstract;
  */
 
 
-public class MeterPlugInServer extends DevicePlugInServer
+public class MeterPlugInServer extends DevicePlugInServer implements ActionListener
 {
     
     DataAccessMeter m_da_local = DataAccessMeter.getInstance();
+    //I18nControlAbstract ic_main = m_da.getI18nControlInstance();
     
     /**
      *  Command: Read Meter Data  
@@ -109,6 +113,7 @@ public class MeterPlugInServer extends DevicePlugInServer
     {
         super(cont, selected_lang, da);
         //m_da_local = DataAccessMeter.getInstance();
+        //ic_main = da.getI18nControlInstance();
         m_da_local.addComponent(cont);
     }
     
@@ -134,7 +139,7 @@ public class MeterPlugInServer extends DevicePlugInServer
                     //ddh.setDbDataReader(reader);
                     
                     //new MeterInstructionsDialog(reader, this);
-                    new DeviceInstructionsDialog(m_da_local, /*reader,*/ this);
+                    new DeviceInstructionsDialog(this.parent, m_da_local, /*reader,*/ this);
                     return;
                 }
 
@@ -210,11 +215,11 @@ public class MeterPlugInServer extends DevicePlugInServer
     @Override
     public void initPlugIn()
     {
-//        ic = m_da.getI18nControlInstance();
+        ic = m_da.getI18nControlInstance();
         I18nControl.getInstance().setLanguage(this.selected_lang);
         
         DataAccessMeter da = DataAccessMeter.getInstance();
-        ic = da.getI18nControlInstance();
+//        ic = da.getI18nControlInstance();
         
         da.addComponent(this.parent);
         da.setHelpContext(m_da.getHelpContext());
@@ -280,9 +285,47 @@ public class MeterPlugInServer extends DevicePlugInServer
     @Override
     public JMenu getPlugInMainMenu()
     {
-        // FIXME: v2 needs to be implemented
-        // TODO Auto-generated method stub
-        return null;
+
+        JMenu menu_meter = ATSwingUtils.createMenu("MN_METERS", null, ic);
+        
+        ATSwingUtils.createMenuItem(menu_meter, 
+            "MN_METERS_READ", 
+            "MN_METERS_READ_DESC", 
+            "meters_read", 
+            this, null, 
+            ic, DataAccessMeter.getInstance(), parent);
+        
+        menu_meter.addSeparator();
+        
+        ATSwingUtils.createMenuItem(menu_meter, 
+            "MN_METERS_LIST", 
+            "MN_METERS_LIST_DESC", 
+            "meters_list", 
+            this, null, 
+            ic, DataAccessMeter.getInstance(), parent);
+        
+        menu_meter.addSeparator();
+        
+        ATSwingUtils.createMenuItem(menu_meter, 
+            "MN_METERS_CONFIG", 
+            "MN_METERS_CONFIG_DESC", 
+            "meters_config", 
+            this, null, 
+            ic, DataAccessMeter.getInstance(), parent);
+        
+        menu_meter.addSeparator();
+        
+        ATSwingUtils.createMenuItem(menu_meter, 
+            "MN_METERS_ABOUT", 
+            "MN_METERS_ABOUT_DESC", 
+            "meters_about", 
+            this, null, 
+            ic, DataAccessMeter.getInstance(), parent);
+        
+        System.out.println("MenuMeter Plugin");
+        
+        
+        return menu_meter;
     }
 
     
@@ -298,6 +341,37 @@ public class MeterPlugInServer extends DevicePlugInServer
     {
         // there are no print menus for this plugin
         return null;
+    }
+
+
+    /**
+     * Action Performed 
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent ae)
+    {
+        String command = ae.getActionCommand();
+        
+        if (command.equals("meters_read"))
+        {
+            new DeviceInstructionsDialog(this.parent, m_da_local, this);
+        }
+        else if (command.equals("meters_list"))
+        {
+            new BaseListDialog((JFrame)parent, m_da_local);
+        }
+        else if (command.equals("meters_about"))
+        {
+            new AboutBaseDialog((JFrame)parent, m_da_local);
+        }
+        else if (command.equals("meters_config"))
+        {
+            new DeviceConfigurationDialog((JFrame)parent, m_da_local);
+        }
+        else
+            System.out.println("MeterPlugInServer::Unknown Command: " + command);
+            
     }
     
     
