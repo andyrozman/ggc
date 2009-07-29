@@ -270,7 +270,8 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         // read sw version and sw creation date
         
         //System.out.println("PC-> read sw version and sw creation date");
-        String read_sw_ver_create = "02" + "09" + "00" + "05" + "0D" + "02" + "03" + "DA" + "71";
+        String read_sw_ver_create = getCommand(OneTouchMeter2.COMMAND_READ_SW_VERSION_AND_CREATE); 
+            //"02" + "09" + "00" + "05" + "0D" + "02" + "03" + "DA" + "71";
 
         this.output_writer.setSubStatus(ic.getMessage("READING_SW_VERSION"));
         
@@ -299,9 +300,12 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         
         //System.out.println("PC-> read serial nr");
 
-        String read_serial_nr = "02" + "12" + "00" + "05" + // STX Len Link
+        String read_serial_nr = getCommand(OneTouchMeter2.COMMAND_READ_SERIAL_NUMBER);
+            
+            /*
+            "02" + "12" + "00" + "05" + // STX Len Link
         "0B" + "02" + "00" + "00" + "00" + "00" + "84" + "6A" + "E8" + "73" + "00" +  // CM1-CM12
-        "03" + "9B" + "EA"; // ETX CRC-L CRC-H
+        "03" + "9B" + "EA"; // ETX CRC-L CRC-H */
         
         write(hex_utils.reconvert(read_serial_nr));
         
@@ -319,6 +323,27 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         
         return true;
     }
+    
+
+    /**
+     * Command: Read Software Version And Create
+     */
+    public static final int COMMAND_READ_SW_VERSION_AND_CREATE = 1;
+    
+    /**
+     * Command: Read Serial Number
+     */
+    public static final int COMMAND_READ_SERIAL_NUMBER = 2;
+    
+    
+    
+    /**
+     * Get Command
+     * 
+     * @param command
+     * @return
+     */
+    public abstract String getCommand(int command);
     
     
     private void cmdDisconnectAcknowledge() throws IOException

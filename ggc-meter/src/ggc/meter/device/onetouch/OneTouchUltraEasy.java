@@ -153,4 +153,32 @@ public class OneTouchUltraEasy extends OneTouchMeter2
         return "Ultra Easy";
     }
 
+    /**
+     * Get Command
+     * 
+     * @param command
+     * @return
+     */
+    @Override
+    public String getCommand(int command)
+    {
+        switch(command)
+        {
+            case OneTouchMeter2.COMMAND_READ_SW_VERSION_AND_CREATE:
+                return "02" + "09" + "00" + "05" + "0D" + "02" + "03" + "DA" + "71";
+
+            case OneTouchMeter2.COMMAND_READ_SERIAL_NUMBER:    
+                return "02" + "12" + "00" + "05" + // STX Len Link
+                "0B" + "02" + "00" + "00" + "00" + "00" + "84" + "6A" + "E8" + "73" + "00" +  // CM1-CM12
+                "03" + "9B" + "EA"; // ETX CRC-L CRC-H
+                
+            default:
+                return "";
+        }
+        
+    }
+    
+    
+    
+    
 }

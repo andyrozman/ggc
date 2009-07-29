@@ -31,7 +31,7 @@ import ggc.plugin.output.OutputWriter;
 
 
 // in works
-public class OneTouchSelect extends OneTouchMeter
+public class OneTouchSelect extends OneTouchMeter2
 {
 
     // Not implemented
@@ -140,6 +140,33 @@ public class OneTouchSelect extends OneTouchMeter
     public String getShortName()
     {
         return "Select";
+    }
+
+
+    /**
+     * Get Command
+     * 
+     * @param command
+     * @return
+     */
+    @Override
+    public String getCommand(int command)
+    {
+        switch(command)
+        {
+            case OneTouchMeter2.COMMAND_READ_SW_VERSION_AND_CREATE:
+                return "02" + "09" + "00" + "05" + "0D" + "02" + "03" + "E8" + "42";
+
+            case OneTouchMeter2.COMMAND_READ_SERIAL_NUMBER:    
+                return "02" + "12" + "00" + "05" + // STX Len Link
+                "0B" + "02" + "00" + "00" + "00" + "00" + "00" + "00" + "00" + "00" + "00" +  // CM1-CM12
+                "03" + "19" + "E7"; // ETX CRC-L CRC-H
+                
+                
+            default:
+                return "";
+        }
+        
     }
 
 }
