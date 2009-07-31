@@ -84,7 +84,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1,0));
         
-        m_da.centerJDialog(this);
+        m_da.centerJDialog(this, parent);
         
         //this.pop.s
         //add(pop);

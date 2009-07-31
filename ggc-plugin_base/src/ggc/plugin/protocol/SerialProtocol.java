@@ -173,6 +173,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     {
         try
         {
+            System.out.println("port: " + port);
             portIdentifier = CommPortIdentifier.getPortIdentifier(port);
             port_name = port;
         }

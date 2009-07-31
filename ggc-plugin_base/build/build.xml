@@ -70,6 +70,7 @@
            deprecation="off" debug="true">  
             <classpath>
                 <pathelement path="${classpath.full}" />
+            	<pathelement path="../../build/deploy_files/ggc-core-${ggc-core.version}.jar"/>
             </classpath>
         </javac>
     </target>

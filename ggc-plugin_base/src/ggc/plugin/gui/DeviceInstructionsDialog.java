@@ -10,6 +10,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -81,9 +82,10 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     /**
      * Constructor (for standalone start)
      * 
+     * @param parent 
      * @param da 
      */
-    public DeviceInstructionsDialog(DataAccessPlugInBase da)
+    public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da)
     {
         super();
         this.m_da = da;
@@ -101,22 +103,26 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
         init();
 
+        m_da.centerJDialog(this, parent);
+        this.setResizable(false);
         this.setVisible(true);
+        
     }
 
     
     /**
      * Constructor
+
      * @param da 
-     * 
+     * @param parent 
      * @param server
      */
-    public DeviceInstructionsDialog(DataAccessPlugInBase da, /*DbDataReaderAbstract reader,*/ DevicePlugInServer server)
+    public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da, /*DbDataReaderAbstract reader,*/ DevicePlugInServer server)
     {
         super();
 
         this.m_da = da;
-        System.out.println("m_da: " + m_da);
+        //System.out.println("m_da: " + m_da);
         
         this.m_ic = da.getI18nControlInstance();
         
@@ -167,6 +173,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         //this.server = server;
         init();
 
+        m_da.centerJDialog(this, parent);
+        this.setResizable(false);
         this.setVisible(true);
     }
     
