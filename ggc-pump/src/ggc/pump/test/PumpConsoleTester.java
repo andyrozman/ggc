@@ -5,6 +5,7 @@ import ggc.core.util.DataAccess;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
+import ggc.pump.device.dana.DanaDiabecare_III_R;
 import ggc.pump.device.minimed.MinimedSPMPump;
 import ggc.pump.util.DataAccessPump;
 
@@ -68,7 +69,8 @@ public class PumpConsoleTester //extends JFrame
         
     	try
     	{
-    	    startRoche(portName);
+    	    //startRoche(portName);
+    	    startDana(portName);
     	    //startMinimed("./dta/CareLink-Export-1213803114904.csv");
     	}
     	catch(Exception ex)
@@ -79,6 +81,15 @@ public class PumpConsoleTester //extends JFrame
 
     }
 
+    
+    
+    public void startDana(String portname) throws Exception
+    {
+        DanaDiabecare_III_R dana = new DanaDiabecare_III_R("COM15", new ConsoleOutputWriter());
+        dana.readDeviceDataFull();
+    }
+    
+    
 
 
     /**

@@ -423,7 +423,6 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         
         JPanel panel_graph = new JPanel();
         //panel_graph.setBounds(300, 120, 560, 360);
-        @SuppressWarnings("hiding")
         BREGraphsAbstract gv = null;
         
         if ((type>=1) && (type <=3))

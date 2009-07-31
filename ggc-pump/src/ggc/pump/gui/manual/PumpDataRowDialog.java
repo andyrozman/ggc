@@ -771,8 +771,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
     private void deleteAddItem(PumpValuesEntryExt oe)
     {
+        m_da.getDb().delete(oe); //.add(this.m_dailyValuesRow);
         this.list_data.remove(oe);
-        this.ht_data.remove(oe);
+        this.ht_data.remove(m_da.getAdditionalTypes().getTypeDescription(oe.getType()));
     }
     
     

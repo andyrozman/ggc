@@ -219,6 +219,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
      */
     public void setSerialPort(String port)
     {
+        System.out.println("port (ASP): " + port);
+        
     	this.serial_port = port;
     	
     	try

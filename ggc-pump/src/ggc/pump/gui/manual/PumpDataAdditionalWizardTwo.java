@@ -210,7 +210,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                 {
                     this.cb_1.setSelected(true);
                 }
-                this.num_1.setText("" + food_ch);
+                //this.num_1.setText("" + food_ch);
             }
             else
                 food_ch = 0.0f;
@@ -237,7 +237,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                 {
                     this.cb_1.setSelected(true);
                 }
-                this.num_1.setText("" + food_ch);
+                //this.num_1.setText("" + food_ch);
             }
             else
             {
@@ -468,7 +468,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         {
             this.cb_1.setText("  " + m_ic.getMessage("IS_FOOD_SET"));
             ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx + 20, 108, 100, 25, main_panel);
-            this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
+            //this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
             l.setText("(" + m_ic.getMessage("FOOD_FROM_DB") + ")");
         }
         else 
@@ -580,7 +580,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                         this.internal_data[0] = food_data;
                         this.internal_data[1] = (String)data[1];
                         
-                        this.num_1.setText((String)data[1]);
+                        //this.num_1.setText((String)data[1]);
                     }
                 }
             }

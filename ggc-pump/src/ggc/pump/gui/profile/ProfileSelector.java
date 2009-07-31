@@ -41,6 +41,10 @@ public class ProfileSelector extends SelectorAbstractDialog
     {
         super(da.getMainParent(), da, 0, null, true);
         da_local = (DataAccessPump)da; 
+        
+        m_da.centerJDialog(this, parent);
+        this.setResizable(false);
+        
         this.showDialog();
     }
 
@@ -59,6 +63,10 @@ public class ProfileSelector extends SelectorAbstractDialog
         this.m_select = select;
         da_local = (DataAccessPump)da;
         init();
+        
+        m_da.centerJDialog(this, parent);
+        this.setResizable(false);
+        
         this.showDialog();
     }
     
@@ -119,7 +127,7 @@ public class ProfileSelector extends SelectorAbstractDialog
                 
                 PumpProfile pr_other = getOpenProfile(pr.getName());
                 
-                System.out.println("Other: " + pr_other);
+//                System.out.println("Other: " + pr_other);
                 
                 if (pr_other!=null)
                 {

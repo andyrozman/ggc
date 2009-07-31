@@ -5,7 +5,10 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.AbstractSerialPump;
+import ggc.pump.manager.company.Sooil;
+import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
 import java.util.GregorianCalendar;
@@ -48,6 +51,9 @@ import org.apache.commons.logging.LogFactory;
 public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //extends DanaPump //implements SerialProtocol
 {
 
+    
+    
+    
 
     /**
      * Constructor 
@@ -64,11 +70,11 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
      * @param params 
      * @param writer 
      */
-    public DanaDiabecare_III_R(String params, OutputWriter writer)
+/*    public DanaDiabecare_III_R(String params, OutputWriter writer)
     {
         super();
         //super(params, writer);
-    }
+    } */
     
     
     /**
@@ -176,6 +182,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     }
 
 
+    private static Log log = LogFactory.getLog(DanaDiabecare_III_R.class);
     private static Log logger = LogFactory.getLog(DanaDiabecare_III_R.class);
 
     @SuppressWarnings("unused")
@@ -390,12 +397,65 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
      * Instantiates a new dana diabecare_ ii i_ r.
      * 
      * @param portName the port name
+     * @param ow 
      */
-    public DanaDiabecare_III_R(String portName)
+    public DanaDiabecare_III_R(String portName, OutputWriter writer)
     {
+        
+        super(); //DataAccessPump.getInstance()); 
+
+        // communcation settings for this meter(s)
+        this.setCommunicationSettings( 
+                  19200,
+                  SerialPort.DATABITS_8, 
+                  SerialPort.STOPBITS_1, 
+                  SerialPort.PARITY_NONE,
+                  SerialPort.FLOWCONTROL_NONE,
+                  SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT|SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+                
+        // output writer, this is how data is returned (for testing new devices, we can use Consol
+        this.output_writer = writer; 
+        //this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+
+        // set meter type (this will be deprecated in future, but it's needed for now
+        this.setPumpType("Sooil (Dana)", this.getName());
+
+        // set device company (needed for now, will also be deprecated)
+        this.setDeviceCompany(new Sooil());
+        
+
+        // settting serial port in com library
+        try
+        {
+            this.setSerialPort(portName);
+    
+            if (!open())
+            {
+                //this.m_status = 1;
+                return;
+            }
+            
+            this.output_writer.writeHeader();
+
+            //this.serialPort.notifyOnOutputEmpty(true);  // notify on empty for stopping
+            //this.serialPort.notifyOnBreakInterrupt(true); // notify on break interrupt for stopping
+            
+            
+        }
+        catch(Exception ex)
+        {
+            log.error("Exception on create:" + ex, ex);
+            //System.out.println("AscensiaMeter -> Exception on create: " + ex);
+            //ex.printStackTrace();
+        }
+        
+        
+/*        
+        
         super();
 
         this.portName = portName;
+        this.output_writer = ow;
       //xa        this.setCommunicationSettings(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE, 0, 0);
 
         /*
@@ -404,7 +464,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
          * this.serialPort.WriteBufferSize = sett.serialWriteBufferSize;
          * this.serialPort.WriteTimeout = sett.serialWriteTimeout;
          */
-
+/*
         try
         {
             this.portName = portName;
@@ -415,9 +475,10 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
         }
         catch (Exception ex)
         {
+            
             // throw new Exception("SyncManager(" + portName + ")" +
             // ex.getMessage());
-        }
+        } */
     }
 
     /*
@@ -630,6 +691,166 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
         }
     }
 
+    
+    
+    private void getDeviceData(int param) throws Exception
+    {
+        try
+        {
+            byte[] buffer = new byte[0x100];
+            //int num = 0;
+            logger.debug("getDeviceInfo(" + param + "):Start");
+            switch (param)
+            {
+            case COMMAND_BOLUS:
+                this.writeData(SYNC_QUERY_BOLUS);
+                break;
+
+            case COMMAND_BASAL:
+                this.writeData(SYNC_QUERY_BASAL);
+                break;
+
+            case COMMAND_GENER:
+                this.writeData(SYNC_QUERY_GENER);
+                break;
+
+            case COMMAND_CARBO:
+                this.writeData(SYNC_QUERY_CARBO);
+                break;
+
+            case COMMAND_MAX:
+                this.writeData(SYNC_QUERY_MAX);
+                break;
+
+            case COMMAND_BASAL_PROFILE:
+                this.writeData(SYNC_QUERY_BASAL_PROFILE);
+                break;
+
+            case COMMAND_SHIPPING:
+                this.writeData(SYNC_QUERY_SHIPPING);
+                break;
+
+            case COMMAND_PWM:
+                this.writeData(SYNC_QUERY_PWM);
+                break;
+
+            case COMMAND_GLUCOMODE:
+                this.writeData(SYNC_QUERY_GLUCOMODE);
+                break;
+            }
+            DanaUtil.delaySync();
+            /*num =*/ this.readData(buffer);
+            PacketStreamReader reader = new PacketStreamReader(buffer);
+
+            switch (param)
+            {
+            case COMMAND_BOLUS:
+                sett.bolus0 = reader.getInt();
+                sett.bolus1 = reader.getInt();
+                sett.bolus2 = reader.getInt();
+                sett.bolus3 = reader.getInt();
+                
+                System.out.println("Bolus0: " + sett.bolus0);
+                System.out.println("Bolus1: " + sett.bolus1);
+                System.out.println("Bolus2: " + sett.bolus2);
+                System.out.println("Bolus3: " + sett.bolus3);
+                
+                
+                break;
+
+            case COMMAND_BASAL:
+                sett.basal0 = reader.getInt();
+                sett.basal1 = reader.getInt();
+                sett.basal2 = reader.getInt();
+                sett.basal3 = reader.getInt();
+                sett.basal4 = reader.getInt();
+                sett.basal5 = reader.getInt();
+                sett.basal6 = reader.getInt();
+                sett.basal7 = reader.getInt();
+                sett.basal8 = reader.getInt();
+                sett.basal9 = reader.getInt();
+                sett.basal10 = reader.getInt();
+                sett.basal11 = reader.getInt();
+                sett.basal12 = reader.getInt();
+                sett.basal13 = reader.getInt();
+                sett.basal14 = reader.getInt();
+                sett.basal15 = reader.getInt();
+                sett.basal16 = reader.getInt();
+                sett.basal17 = reader.getInt();
+                sett.basal18 = reader.getInt();
+                sett.basal19 = reader.getInt();
+                sett.basal20 = reader.getInt();
+                sett.basal21 = reader.getInt();
+                sett.basal22 = reader.getInt();
+                sett.basal23 = reader.getInt();
+
+                System.out.println("Basal0: " + sett.basal0);
+                System.out.println("Basal1: " + sett.basal1);
+                System.out.println("Basal2: " + sett.basal2);
+                System.out.println("Basal3: " + sett.basal3);
+                
+                
+                break;
+
+            case COMMAND_GENER:
+                sett.basalIncrement = reader.getByte();
+                sett.bolusIncrement = reader.getByte();
+                sett.bolusPreset = reader.getByte();
+                sett.bolusAlarm = reader.getByte();
+                sett.bolusBlock = reader.getByte();
+                sett.basalUnit = reader.getByte();
+                break;
+
+            case COMMAND_CARBO:
+                sett.carboCIR = reader.getInt();
+                sett.carboCF = reader.getInt();
+                sett.carboAI = reader.getInt();
+                sett.carboTG = reader.getInt();
+                sett.carboAIDR = reader.getByte();
+                break;
+
+            case COMMAND_MAX:
+                sett.maxBolusRate = reader.getInt();
+                sett.maxBasalRate = reader.getInt();
+                sett.maxDailyRate = reader.getInt();
+                break;
+
+            case COMMAND_SHIPPING:
+                sett.serialNo = reader.getString(10);
+                try
+                {
+                    // sett.shippingDate = new DateTime(reader.getByte() +
+                    // 0x7d0, reader.getByte(), reader.getByte());
+                }
+                catch (Exception exception)
+                {
+                    // sett.shippingDate = DateTime.MinValue;
+                    logger.error(exception.getMessage());
+                }
+                sett.shippingCountry = reader.getAscii(3);
+                break;
+
+            case COMMAND_GLUCOMODE:
+                sett.glucoseUnit = reader.getByte();
+                sett.easyMode = reader.getByte();
+                
+                System.out.println("Glucose Unit: " + sett.glucoseUnit);
+                System.out.println("easyMode: " + sett.easyMode);
+                
+                
+                break;
+            }
+            DanaUtil.delaySync();
+            logger.debug("getDeviceInfo(" + param + "):End");
+        }
+        catch (Exception ex2)
+        {
+            throw new Exception("sync(" + param + ")" + ex2.getMessage());
+        }
+    }
+    
+    
+    
     /**
      * Gets the device record.
      * 
@@ -774,7 +995,11 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
              * this.serialPort.WriteTimeout = sett.serialWriteTimeout;
              * this.serialPort.Open();
              */
-            super.open();
+            if (!super.open())
+            {
+                return false;
+            }
+                    
 
             DanaUtil.delaySyncOpen();
             /*int num =*/ this.readData(buffer);
@@ -818,7 +1043,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
 
             if (this.read(buffer, 0, 4) == 0)
             {
-                throw new Exception("No more data");
+                //throw new Exception("No more data");
             }
 
             num = buffer[2] - 1;
@@ -1158,6 +1383,24 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
      */
     public void readDeviceDataFull() throws PlugInBaseException
     {
+        try
+        {
+            this.connect();
+            this.getDeviceData(DanaDiabecare_III_R.COMMAND_BOLUS);
+            this.getDeviceData(DanaDiabecare_III_R.COMMAND_BASAL_PROFILE);
+            //this.getDeviceInfo(DanaDiabecare_III_R.COMMAND_BASAL);
+            //this.getDeviceInfo(DanaDiabecare_III_R.COMMAND_GENER);
+            //this.getDeviceInfo(DanaDiabecare_III_R.COMMAND_CARBO);
+            //this.getDeviceInfo(DanaDiabecare_III_R.COMMAND_MAX);
+            //this.getDeviceInfo(DanaDiabecare_III_R.COMMAND_SHIPPING);
+            this.getDeviceData(DanaDiabecare_III_R.COMMAND_GLUCOMODE);
+        }
+        catch(Exception ex)
+        {
+            log.error("readDeviceDataFull: " + ex, ex);
+        }
+        
+        
     }
 
 

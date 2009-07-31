@@ -157,7 +157,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     {
         switch(command)
         {
-
+/*
             case PumpPlugInServer.COMMAND_CONFIGURATION:
             {
                 new DeviceConfigurationDialog((JFrame)this.parent, DataAccessPump.getInstance());
@@ -197,7 +197,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
                 new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
                 return;
             } 
-            
+  */          
             default:
             {
                 this.featureNotImplemented(commands[command]);
@@ -342,8 +342,88 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public JMenu getPlugInMainMenu()
     {
+        
+        JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, ic);
+        
+        ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMPS_READ", 
+            "MN_PUMPS_READ_DESC", 
+            "pumps_read", 
+            this, null, 
+            ic, DataAccessPump.getInstance(), parent);
+
+        menu_pump.addSeparator();
+        
+        ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMPS_MANUAL_ENTRY", 
+            "MN_PUMPS_MANUAL_ENTRY_DESC", 
+            "pumps_manual_entry", 
+            this, null, 
+            ic, DataAccessPump.getInstance(), parent);
+
+        
+        ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMPS_ADDITIONAL_DATA", 
+            "MN_PUMPS_ADDITIONAL_DATA_DESC", 
+            "pumps_additional_data", 
+            this, null, 
+            ic, DataAccessPump.getInstance(), parent);
+        
+
+        ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMP_PROFILES", 
+            "MN_PUMP_PROFILES_DESC", 
+            "pumps_profile", 
+            this, null, 
+            ic, DataAccessPump.getInstance(), parent);
+        
+        menu_pump.addSeparator();
+
+        ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMPS_LIST", 
+            "MN_PUMPS_LIST_DESC", 
+            "pumps_list", 
+            this, null, 
+            ic, DataAccessPump.getInstance(), parent);
+        
+        menu_pump.addSeparator();
+        
+        ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMPS_CONFIG", 
+            "MN_PUMPS_CONFIG_DESC", 
+            "pumps_config", 
+            this, null, 
+            ic, DataAccessPump.getInstance(), parent);
+
+        menu_pump.addSeparator();
+        
+        ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMPS_ABOUT", 
+            "MN_PUMPS_ABOUT_DESC", 
+            "pumps_about", 
+            this, null, 
+            ic, DataAccessPump.getInstance(), parent);
+        
+        
+        
+//        this.menu_pumps = this.createMenu("MN_PUMPS", null);
+//        this.createAction(menu_pumps, "MN_PUMP_PROFILES", "MN_PUMP_PROFILES_DESC", "pumps_profile", null);
+//        this.menu_pumps.addSeparator();
+//        this.createAction(menu_pumps, "MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry", null);
+//        this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
+//        this.createAction(menu_pumps, "MN_PUMPS_ADDITIONAL_DATA", "MN_PUMPS_ADDITIONAL_DATA_DESC", "pumps_additional_data", null);
+/*        this.menu_pumps.addSeparator();
+        this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
+        this.menu_pumps.addSeparator();
+        this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
+        this.menu_pumps.addSeparator();
+        this.createAction(menu_pumps, "MN_PUMPS_ABOUT", "MN_PUMPS_ABOUT_DESC", "pumps_about", null);
+  */      
+        
+        
+        
         // TODO Auto-generated method stub
-        return null;
+        return menu_pump;
     }
 
     
@@ -400,8 +480,34 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         {
             new PumpPrintDialog((JFrame)parent, PumpPrintDialog.PUMP_REPORT_EXTENDED);
         }
-        
-        
+        else if (command.equals("pumps_read"))
+        {
+            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this);
+        }
+        else if ((command.equals("pumps_manual_entry")) ||
+                 (command.equals("pumps_additional_data")))
+        {
+            new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
+        }
+        else if (command.equals("pumps_profile"))
+        {
+            new ProfileSelector(DataAccessPump.getInstance(), this.parent);
+        }
+        else if (command.equals("pumps_list"))
+        {
+            new BaseListDialog((JFrame)this.parent, DataAccessPump.getInstance());
+        }
+        else if (command.equals("pumps_config"))
+        {
+            new DeviceConfigurationDialog((JFrame)this.parent, DataAccessPump.getInstance());
+        }
+        else if (command.equals("pumps_about"))
+        {
+            new AboutBaseDialog((JFrame)this.parent, DataAccessPump.getInstance());
+        }
+        else
+            System.out.println("PumpPlugInServer::Unknown Command: " + command);
+
     }
     
     
