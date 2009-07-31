@@ -223,6 +223,13 @@ public class DataAccess extends ATDataAccessAbstract
     public static final String PLUGIN_NUTRITION = "NutritionPlugIn";
     
     
+    public static final int GGC_MODE_PEN_INJECTION = 0;
+    
+    
+    public static final int GGC_MODE_PUMP = 1;
+    
+    
+    
     private int current_person_id = 1;
     //NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
     
@@ -437,6 +444,36 @@ public class DataAccess extends ATDataAccessAbstract
         this.m_db = db;
     }
 
+
+    
+    public boolean isPenInjectionMode()
+    {
+        return (getSoftwareMode()==GGC_MODE_PEN_INJECTION);
+    }
+    
+    
+    public boolean isPumpMode()
+    {
+        return (getSoftwareMode()==GGC_MODE_PUMP);
+    }
+    
+    
+    public int getSoftwareMode()
+    {
+        System.out.println("Sw Mode: " + this.m_cfgMgr.getIntValue("SW_MODE"));
+        
+        
+        return this.m_cfgMgr.getIntValue("SW_MODE");
+    }
+    
+    public String getSoftwareModeDescription()
+    {
+        System.out.println("Sw Mode Desc: " + this.m_cfgMgr.getStringValue("SW_MODE_DESC"));
+
+        return this.m_cfgMgr.getStringValue("SW_MODE_DESC");
+    }
+    
+    
     // ********************************************************
     // ****** Static Methods *****
     // ********************************************************

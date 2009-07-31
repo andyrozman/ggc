@@ -134,8 +134,11 @@ public class MetersPlugIn extends PlugInClient
         catch (Exception ex)
         {
             this.installed = false;
+            ex.printStackTrace();
         }
 
+        System.out.println("Installed [" + this.getNameBase() + ": " + this.installed);
+        
     }
 
     
