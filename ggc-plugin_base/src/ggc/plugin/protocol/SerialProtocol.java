@@ -53,7 +53,45 @@ import com.atech.i18n.I18nControlAbstract;
 
 public abstract class SerialProtocol implements SerialPortEventListener //implements MeterInterface, SerialPortEventListener //, Runnable
 {
-
+    /**
+     * How many ms do we pause after each character is sent
+     */
+    protected int character_pause = 1;
+    
+    /**
+     * How many ms do we pause after each command is sent
+     */
+    protected int command_pause = 1;
+    
+    
+    
+    /**
+     * Ascii Code: Enquiry (0x05)
+     */
+    public static final byte ASCII_ENQ = 0x05;
+    
+    /**
+     * Ascii Code: Acknowledge (0x06)
+     */
+    public static final byte ASCII_ACK = 0x06;
+    
+    
+    /**
+     * Ascii Code: Bot Acknowledged (0x15)
+     */
+    public static final byte ASCII_NAK = 0x15;
+    
+    /**
+     * Ascii Code: End of Text (0x04)
+     */
+    public static final byte ASCII_EOT = 0x04;
+    
+    /**
+     * Ascii Code: Start of Text (0x02)
+     */
+    public static final byte ASCII_STX = 0x02;
+    
+    
     private static Log log = LogFactory.getLog("ProtocolLog");
     
     protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
@@ -70,6 +108,14 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     protected long startTime = System.currentTimeMillis();
     protected long timeOut = 50000;
 
+    int baudrate;
+    int databits;
+    int stopbits;
+    int parity;
+    int flow_control;
+    protected int event_type;
+    
+    
     /**
      * Serial Event: None 
      */
@@ -96,14 +142,6 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     public static final int SERIAL_EVENT_ALL = 7;
     
     
-    
-    int baudrate;
-    int databits;
-    int stopbits;
-    int parity;
-    int flow_control;
-    protected int event_type;
-
 
     /**
      * Constructor 
@@ -589,10 +627,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 	    char c = '\uFFFF';
 	    boolean flag = false;
 	    StringBuffer stringbuffer = new StringBuffer("");
-	    //Contract.pre(m_serialPortLocal != null, "m_serialPortLocal is null.");
-	    //Contract.pre(m_serialPortLocal.isOpen(), "m_serialPortLocal is not open.");
-	    //checkForSerialIOHalted();
-	    //MedicalDevice.Util.sleepMS(m_ioDelay);
+
 	    int j;
 	    do
 	    {
@@ -604,10 +639,8 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 	        if(i == 13 && c == '\n')
 	            flag = true;
 	    } while(j != -1 && !flag);
-	    //long l = System.currentTimeMillis() - m_startTimeMS;
-	    //MedicalDevice.logInfoHigh(this, "readLine(" + l + "MS): read <" + stringbuffer + ">");
-	    //m_startTimeMS = System.currentTimeMillis();
-	    return new String(stringbuffer);
+	    
+	    return stringbuffer.toString();
     }
     
 
@@ -697,6 +730,125 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     {
     	portOutputStream.write(b, off, len);
     }
+    
+    
+    
+    // FIXME
+    
+    
+    protected void sendMessageToMeter(String msg) throws Exception
+    {
+        writeCommand(SerialProtocol.ASCII_STX); // 0x02
+        writeCommand(msg);
+        readByteTimed();
+        writeCommand(SerialProtocol.ASCII_EOT); // 0x04
+        readByteTimed();
+        writeCommand(SerialProtocol.ASCII_ACK); // 0x06
+    }
+    
+    
+    
+    protected String readMessageFromMeter() throws Exception
+    {
+        String bt_line = readLine();
+        commandAfterRead();
+        
+        return bt_line;
+    }
+
+    
+    protected int readByteTimed() throws Exception
+    {
+        for(int r = 0; r++ < 100;)
+        {
+            waitTime(1);
+
+            int iBuf = read();
+            
+            if(iBuf == -1)
+            {
+                waitTime(1);
+            } 
+            else
+            {
+                //addDebug(iBuf, D_RD);
+                return iBuf;
+            }
+        }
+    
+        //addDebug(0, D_TO);
+        return -1;
+    }
+    
+    
+    
+    /**
+     * Wait for x ms
+     * @param time
+     */
+    public void waitTime(long time)
+    {
+        try
+        {
+            Thread.sleep(time);
+
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+    
+    
+    
+    protected void writeCommand(int c) throws Exception
+    {
+        write(c);
+        waitTime(character_pause);
+    }
+    
+
+    
+    protected void writeCommand(String line) throws IOException, InterruptedException
+    {
+        for(int c = 0; c < line.length(); c++)
+        {
+            write(line.charAt(c));
+            waitTime(character_pause);
+        }
+    
+        waitTime(command_pause);
+    }
+    
+/*    
+    public static final byte ASCII_ENQ = 0x05;
+    
+    public static final byte ASCII_ACK = 0x06;
+    
+    
+    public static final byte ASCII_NAK = 0x15;
+    
+    public static final byte ASCII_EOT = 0x04;
+    
+    public static final byte ASCII_STX = 0x02;
+  */  
+    protected void commandAfterRead() throws Exception
+    {
+        writeCommand(SerialProtocol.ASCII_ACK); // 0x06
+        readByteTimed();
+        writeCommand(SerialProtocol.ASCII_ENQ); // 0x05
+        readByteTimed();
+    }
+
+    
+    protected void commandAfterWrite() throws Exception
+    {
+        readByteTimed();
+        writeCommand(SerialProtocol.ASCII_EOT); // 0x04
+        readByteTimed();
+        writeCommand(SerialProtocol.ASCII_ACK); // 0x06
+    }
+    
+    
     
     
     /**
