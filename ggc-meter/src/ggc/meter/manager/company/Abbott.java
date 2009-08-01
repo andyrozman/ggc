@@ -1,7 +1,8 @@
 package ggc.meter.manager.company; 
 
-import ggc.meter.device.freestyle.Freestyle;
-import ggc.meter.device.freestyle.OptiumXceed;
+import ggc.meter.device.abbott.Freestyle;
+import ggc.meter.device.abbott.OptiumXceed;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -66,7 +67,7 @@ public class Abbott extends AbstractDeviceCompany
      */
     public int getCompanyId()
     {
-        return 4;
+        return MeterDevicesIds.COMPANY_ABBOTT;
     }
     
     

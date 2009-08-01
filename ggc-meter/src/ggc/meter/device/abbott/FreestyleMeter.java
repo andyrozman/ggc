@@ -1,4 +1,4 @@
-package ggc.meter.device.freestyle;
+package ggc.meter.device.abbott;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;

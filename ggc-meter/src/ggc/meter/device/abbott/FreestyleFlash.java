@@ -1,4 +1,4 @@
-package ggc.meter.device.freestyle;
+package ggc.meter.device.abbott;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;

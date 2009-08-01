@@ -1,8 +1,8 @@
-package ggc.meter.device.freestyle;
+package ggc.meter.device.abbott;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.Abbott;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
@@ -13,15 +13,10 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
-import gnu.io.UnsupportedCommOperationException;
 
-import java.io.IOException;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.StringTokenizer;
 
 import com.atech.utils.ATechDate;
 import com.atech.utils.TimeZoneUtil;
@@ -59,53 +54,20 @@ import com.atech.utils.TimeZoneUtil;
 
 public class OptiumXceed extends AbstractSerialMeter
 {
-    int characterPause = 1;
-    int commandPause = 1;
     
     
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE                 = 40001;
-    
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE_LITE            = 40002;
-    
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE_FREEDOM         = 40003;
-    
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE_FREEDOM_LITE    = 40004;
-    
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE_FLASH           = 40005;
-    
-    /**
-     * 
-     */
-    public static final int METER_PRECISION_XTRA            = 40006;
     
     
-    private static Log log = LogFactory.getLog(FreestyleMeter.class);
+//    private static Log log = LogFactory.getLog(OptiumXceed.class);
 
     
     
     protected boolean device_running = true;
-    //protected ArrayList<MeterValuesEntry> data = null;
-//    protected OutputWriter m_output_writer;
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     //public int meter_type = 20000;
     private int entries_max = 0;
     private int entries_current = 0;
-    private int reading_status = 0;
+//    private int reading_status = 0;
     
     //private int info_tokens;
     //private String date_order;
@@ -196,6 +158,9 @@ public class OptiumXceed extends AbstractSerialMeter
     }
 
 
+   // public static final byte ENQ = 0x05;
+    
+    
     
     
     /** 
@@ -234,102 +199,29 @@ public class OptiumXceed extends AbstractSerialMeter
         try
         {
             
-            write("READ STATUS\r".getBytes());
-            waitTime(1);
-            //tr.pause(1);
-            write("c\rREAD STATUS\r".getBytes());
-            //tr.pause(1);
-            waitTime(1);
-            write("c\r".getBytes());
-            waitTime(1);
+            readInfo();
             
-            write(5);
-            //readByte();
-            //readByte();
-            int bt = readByte();
+            String data_back;            
+
+            this.sendMessageToMeter("1GET_EVENTS\00348\r\n");
             
-            System.out.println("Status: " + bt);
-            write(2);
-            write("1ID\003C1\r\n".getBytes());
-            String bt_line;
-            
-            afterWrite();
-            bt_line = readLine();
-            System.out.println("ID: " + bt_line);
-//            readStringUntil("\n");
-            afterRead();
-            writeCmd(2);
-            writeCmd("1GET_METER\003F0\r\n");
-            afterWrite();
-            //String inline = readStringUntil(newline);
-            String inline = readLine();
-            System.out.println("Get meter: " + inline);
-            if(inline == null || inline.charAt(0) == 0)
-                connectAndExit();
-            afterRead();
-//x            checkDate(parseDate(inline.substring(2)));
-            writeCmd(2);
-            writeCmd("1GET_EVENTS");
-            writeCmd(3);
-            writeCmd("48\r\n");
-            afterWrite();
-//x            setReadPause();
-//x            super.display.initUpTo();
-            for(inline = readLine() /*readStringUntil(newline)*/; inline.indexOf("END_OF_DATA") == -1;)
+            for(data_back = readLine(); data_back.indexOf("END_OF_DATA") == -1;)
             {
-//x                if(prepare(inline))
-// x                   super.display.incrementCount();
-// x               Trace _tmp4 = tr;
-// x               tr.trace(Trace.DETAIL1, "Record = " + inline);
-                System.out.println("L1: " + inline);
-                writeCmd(6);
-                inline = readLine(); //readStringUntil(newline);
-                //System.out.println("L2: " +inline);
-                if(inline == null)
+                processDataLine(data_back);
+                writeCommand(6);
+            
+                data_back = readLine(); 
+
+                if(data_back == null)
                 {
-                    
+                    endReading();
                     break;
                 }
-//                    super.display.lostAndExit();
             }
 
-            writeCmd(6);
-            readByte();
+            writeCommand(6);
+            readByteTimed();
             
-            
-            
-            //write("MEM".getBytes());
-            //waitTime(100);
-            
-//x            String line;
-            
-            
-            //readInfo();
-
-            
-            
-            /*
-            while((line=this.readLine())==null)
-            {
-                System.out.println("Serial Number1: " + line);
-            }*/
-            
-            //System.out.println("Serial Number2: " + line);
-            //System.out.println("Serial Number: " + this.readLine());
-            //System.out.println("Serial Number: " + this.readLine());
-            
-            
-            
-         /*
-            while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
-            {
-                //xa processBGData(line);
-                System.out.println(line);
-                if (line==null)
-                    break;
-                
-            }
-           */ 
             this.output_writer.setSpecialProgress(100);
             this.output_writer.setSubStatus(null);
         
@@ -346,164 +238,201 @@ public class OptiumXceed extends AbstractSerialMeter
             this.output_writer.endOutput();
         }
         
-        //this.output_writer.setStatus(100);
-        System.out.println("Reading finsihed");
+        System.out.println("Reading finished !");
         
     }
 
     
-    protected int readByte()
-    throws IOException, InterruptedException
-{
-    for(int r = 0; r++ < 100;)
+    private boolean startMessageToMeter() throws Exception
     {
-        waitTime(1);
-        int iBuf = read();
-        if(iBuf == -1)
+        boolean done=false;
+        int status;
+        
+        write(SerialProtocol.ASCII_ENQ);
+        
+        do
         {
-            waitTime(1);
-        } else
+            
+            
+            status = readByteTimed();
+            
+            //System.out.println("Status: " + status);
+
+            if (status == SerialProtocol.ASCII_ENQ)
+            {
+                write(SerialProtocol.ASCII_ACK);
+            }
+            else if (status == SerialProtocol.ASCII_ACK)
+            {
+                return true;
+            }
+            else if (status == 2) 
+            {
+                this.readLine();
+                //System.out.println(this.readLine());
+                commandAfterRead();
+                return true;
+            }
+            else if ((status == 4))
+            {
+                //write(SerialProtocol.ASCII_ACK);
+                commandAfterRead();
+                return true;
+            }
+            else if ((status == SerialProtocol.ASCII_NAK) || (status == 0))
+            {
+                endReading();
+                return false;
+            }
+            
+        } while (done!=true);
+        
+        
+        return false;
+    }
+    
+/*
+    private void endMessageToMeter() throws Exception
+    {
+        
+        int status = readByte();
+
+        if (status == SerialProtocol.ASCII_ACK)
         {
-            //addDebug(iBuf, D_RD);
-            return iBuf;
+            //write(SerialProtocol.ASCII_EOT);
         }
+        
+        write(SerialProtocol.ASCII_EOT);
+        
     }
+  */  
+    
+    
+    
 
-    //addDebug(0, D_TO);
-    return -1;
-}
     
     
-    protected void writeCmd(int c)
-    throws IOException, InterruptedException
-{
-    //addDebug(c, D_WR);
-    write(c);
-    waitTime(characterPause);
-}
     
     
-    protected void writeCmd(String line)
-    throws IOException, InterruptedException
-{
-    for(int c = 0; c < line.length(); c++)
+    
+    
+    
+    
+    private void processDataLine(String line)
     {
-        //addDebug(line.charAt(c), D_WR);
-        write(line.charAt(c));
-        waitTime(characterPause);
+        
+        String[] data = m_da.splitString(line, "\t");
+        
+        if (!data[1].equals("1"))
+            return;
+        
+        
+        String type_id = data[0].substring(1);
+        
+        boolean is_BG = false;
+        
+        if (type_id.equals("01"))
+        {
+            //System.out.println("BG record: ");
+            is_BG = true;
+        }
+        else if (type_id.equals("04"))
+        {
+            //System.out.println("Urine record: ");
+            is_BG = false;
+        }
+        else
+        {
+            this.entries_current++;
+            readingEntryStatus();
+            
+            //System.out.println("Unknown type: " + type_id);
+            return;
+        }
+            
+//        ATechDate atd = getDateTime(data[2], data[3]);
+        
+        if (is_BG)
+            addBGData(data[4], getDateTime(data[2], data[3]));
+        else
+            addUrineData(data[4], getDateTime(data[2], data[3]));
+        
+        
+        
+        
+//        System.out.println("ATd: " + atd);
+        
+        
+        //System.out.println("Data[0]: " + data[0].substring(1));
+        
+//        System.out.println("L: " + line);
+        
+        StringTokenizer strtok = new StringTokenizer(line, "\t");
+        
+        while(strtok.hasMoreTokens())
+        {
+            //System.out.println("token: " + strtok.nextToken());
+            strtok.nextToken();
+        }
+        
+        
+        
+        
+        //System.out.println("Tabs: " + line.contains("\t"));
+        
+        
     }
+    
 
-    waitTime(commandPause);
-}
+    private String[] processId(String line)
+    {
+        
+        //System.out.println("LL: " + line);
+        
+        StringTokenizer strtok = new StringTokenizer(line, "\t");
+        
+        strtok.nextToken();
+        
+        String o = strtok.nextToken();
+        
+        strtok = new StringTokenizer(o, " ");
+        
+        String[] ids = new String[2];
+        ids[0] = strtok.nextToken();
+        ids[1] = strtok.nextToken();
+     
+        return ids;
+        
+    }
     
     
     
-    private void afterRead()
-    throws PortInUseException, UnsupportedCommOperationException, IOException, InterruptedException
-{
-    writeCmd(6);
-    readByte();
-    writeCmd(5);
-    readByte();
-}
-
-private void afterWrite()
-    throws PortInUseException, UnsupportedCommOperationException, IOException, InterruptedException
-{
-    readByte();
-    writeCmd(4);
-    readByte();
-    writeCmd(6);
-}
+    
+    private void endReading()
+    {
+        this.output_writer.setSubStatus(null);
+        this.output_writer.endOutput();
+        System.out.println("Reading finished prematurely !");
+    }
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     private void connectAndExit()
     {
         System.out.println("Error reading data from device !!!");
-    }
+    }*/
     
     
     
 
-
-    /** 
-     * readDeviceDataFull
-     */
-    public void readDeviceDataFullxxxx()
-    {
-        
-        try
-        {
-            
-            write("READ STATUS\r".getBytes());
-            waitTime(1000);
-            //tr.pause(1);
-            write("c\rREAD STATUS\r".getBytes());
-            //tr.pause(1);
-            waitTime(1000);
-            write("c\r".getBytes());
-            waitTime(1000);
-            
-            write(5);
-            //readByte();
-            //readByte();
-            read();
-            write(2);
-            write("1ID\003C1\r\n".getBytes());
-            
-            
-            //write("MEM".getBytes());
-            //waitTime(100);
-            
-            String line;
-            
-            
-            //readInfo();
-
-            
-            
-            /*
-            while((line=this.readLine())==null)
-            {
-                System.out.println("Serial Number1: " + line);
-            }*/
-            
-            //System.out.println("Serial Number2: " + line);
-            //System.out.println("Serial Number: " + this.readLine());
-            //System.out.println("Serial Number: " + this.readLine());
-            
-            
-            
-         
-            while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
-            {
-                //xa processBGData(line);
-                System.out.println(line);
-                if (line==null)
-                    break;
-                
-            }
-            
-            this.output_writer.setSpecialProgress(100);
-            this.output_writer.setSubStatus(null);
-        
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Exception: " + ex);
-            ex.printStackTrace();
-            
-        }
-        
-        if (this.isDeviceFinished())
-        {
-        	this.output_writer.endOutput();
-        }
-        
-        //this.output_writer.setStatus(100);
-        System.out.println("Reading finsihed");
-        
-    }
 
     private boolean isDeviceFinished()
     {
@@ -543,31 +472,58 @@ private void afterWrite()
         {
             this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
             this.output_writer.setSpecialProgress(1);
-    
+
+            if (!this.startMessageToMeter())
+                return;
+            
+            String data_back;
+            
+            this.sendMessageToMeter("1ID\003C1\r\n");
+            data_back = readMessageFromMeter();
+            //System.out.println("ID: " + data_back);
+            
+            String[] ids = this.processId(data_back);
+            
+            
+            this.sendMessageToMeter("1GET_METER\003F0\r\n");
+            data_back = readMessageFromMeter();
+            System.out.println("Get meter: " + data_back);
+            
+            
+            if  ((data_back == null) || (data_back.charAt(0) == 0))
+            {
+                endReading();
+            }
+            
             // first we read device identification data
             DeviceIdentification di = this.output_writer.getDeviceIdentification();
             
-            di.device_serial_number = this.readLineDebug();
+            di.device_serial_number = ids[0]; //this.readLineDebug();
             this.output_writer.setSpecialProgress(2);
-            di.device_hardware_version = this.readLineDebug();
+            di.device_hardware_version = ids[1]; //this.readLineDebug();
             this.output_writer.setSpecialProgress(3);
-            this.readLineDebug();
+            //this.readLineDebug();
             this.output_writer.setSpecialProgress(4);
-            this.entries_max = Integer.parseInt(this.readLineDebug());
+            this.entries_max = this.getMaxMemoryRecords(); //   Integer.parseInt(this.readLineDebug());
             
             
             this.output_writer.setDeviceIdentification(di);
             this.output_writer.writeDeviceIdentification();
-            this.output_writer.setSpecialProgress(5);
+      
+           this.output_writer.setSpecialProgress(5);
+           
+           
+           
         }
-        catch(IOException ex)
+        catch(Exception ex)
         {
             throw new PlugInBaseException(ex);
         }
     
     }
     
-    
+
+    /*
     protected String readLineDebug() throws IOException
     {
         String rdl = this.readLine();
@@ -575,10 +531,10 @@ private void afterWrite()
         log.debug(rdl);
         
         return rdl;
-    }
+    }*/
     
     
-    
+    /*
     private boolean isDeviceStopped(String vals)
     {
     	if ((vals == null) ||
@@ -589,45 +545,26 @@ private void afterWrite()
     	
         return false;
     }
-    
+    */
     
     
     
     /**
-     * Process BG Data
+     * Add BG Data
      * 
-     * @param entry
+     * @param data 
+     * @param adt 
      */
-    public void processBGData(String entry)
+    public void addBGData(String data, ATechDate adt)
     {
-        if ((entry==null) || (entry.length()==0))
+        if ((data==null) || (data.length()==0))
             return;
-        
-        if (entry.contains("END"))
-        {
-            this.device_running = false;
-            this.output_writer.setReadingStop();
-            return;
-        }
-        
+
         MeterValuesEntry mve = new MeterValuesEntry();
         mve.setBgUnit(OutputUtil.BG_MGDL);
         
-        //227  Oct  11 2006 01:38 17 0x00
-        String BGString = entry.substring(0,5);
-        
-        if (BGString.contains("HI"))
-        {
-            mve.setBgValue("500");
-            mve.addParameter("RESULT", "High");
-        }
-        else
-        {
-            mve.setBgValue("" + BGString.trim());
-        }
-        
-        String timeString = entry.substring(5,23);
-        mve.setDateTimeObject(getDateTime(timeString));
+        mve.setBgValue("" + m_da.getIntValueFromString(data));
+        mve.setDateTimeObject(adt);
         
         this.output_writer.writeData(mve);
         this.entries_current++;
@@ -636,6 +573,34 @@ private void afterWrite()
         
         
         
+    /**
+     * Add Urine Data
+     * 
+     * @param data 
+     * @param adt 
+     * 
+     */
+    public void addUrineData(String data, ATechDate adt)
+    {
+        if ((data==null) || (data.length()==0))
+            return;
+
+        MeterValuesEntry mve = new MeterValuesEntry();
+        //mve.setBgUnit(OutputUtil.BG_MGDL);
+  
+        //System.out.println("Ur: " + m_da.getBGValueByType(DataAccessMeter.BG_MGDL, DataAccessMeter.BG_MMOL, data));
+        
+        
+        mve.setDateTimeObject(adt);
+        mve.setSpecialEntry(MeterValuesEntry.SPECIAL_ENTRY_URINE_MMOLL, 
+                            DataAccessMeter.Decimal1Format.format(m_da.getBGValueByType(DataAccessMeter.BG_MGDL, DataAccessMeter.BG_MMOL, data)));
+        
+//        mve.setBgValue("" + m_da.getIntValueFromString(data));
+        
+        this.output_writer.writeData(mve);
+        this.entries_current++;
+        readingEntryStatus();
+    }
     
     
     
@@ -661,42 +626,20 @@ private void afterWrite()
     @SuppressWarnings("unused")
     private static String months_en[] = { "", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"  };
     
-    protected ATechDate getDateTime(String datetime)
+    protected ATechDate getDateTime(String date, String time)
     {
+        
+        long dt = m_da.getLongValueFromString(date) * 10000L;
+        
+        String tm = m_da.replaceExpression(time, ":", "");
+        
+        dt += m_da.getLongValueFromString(tm);
+        
         // "mm/dd/yy","hh:mm:30 "
         // Oct  11 2006 01:38
-        ATechDate dt = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN);
+        ATechDate adt = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt);
         
-        //dt.day_of_month = Integer.parseInt(datetime.substring(6, 8));
-//x        String mnth = datetime.substring(0, 3);
-        
-        //dt.month = 
-        dt.day_of_month = Integer.parseInt(datetime.substring(5, 7));
-        dt.year = Integer.parseInt(datetime.substring(8, 12));
-        dt.hour_of_day = Integer.parseInt(datetime.substring(13, 15));
-        dt.minute = Integer.parseInt(datetime.substring(16, 18));
-        /*
-        for(int i=0; i<FreestyleMeter.months_en.length; i++)
-        {
-            if (mnth.equals(FreestyleMeter.months_en[i]))
-            {
-                dt.month = i;
-                break;
-            }
-            
-        }*/
-        
-        return dt;
-        
-        /*
-        System.out.println("Month: '" + datetime.substring(0, 3) + "'");
-        System.out.println("Day: '" + datetime.substring(5, 7)+ "'");
-        System.out.println("Year: '" + datetime.substring(8, 12)+ "'");
-                        
-        System.out.println("Hour: '" + datetime.substring(13, 15)+ "'");
-        System.out.println("Year: '" + datetime.substring(16, 18)+ "'");
-        
-        */
+        return adt;
         
         
     }
@@ -791,40 +734,10 @@ private void afterWrite()
      */
     public int getCompanyId()
     {
-        return MeterManager.METER_COMPANY_ABBOTT;
+        return MeterDevicesIds.COMPANY_ABBOTT;
     }
     
     
-    /**
-     * @param args
-     */
-    public static void main(String args[])
-    {
-        /*
-        //Oct  11 2006 01:38
-        
-        Freestyle fm = new Freestyle();
-        
-        ATechDate atd = fm.getDateTime("Oct  11 2006 01:38");
-        
-        System.out.println(atd.getDateString() + " " + atd.getTimeString());
-        */
-/*
-        Freestyle fm = new Freestyle();
-        fm.output_writer = new ConsoleOutputWriter();
-        
-        String data[] = { "093  May  30 2005 00:46 16 0x01",
-                          "105  May  30 2005 00:42 16 0x00",
-                          "085  May  29 2005 23:52 16 0x00",
-                          "073  May  29 2005 21:13 16 0x00",
-                          "091  May  29 2005 21:11 16 0x01"  };
-        
-        for(int i=0; i<data.length; i++)
-        {
-            fm.processBGData(data[i]);
-        }
-  */      
-    }
 
     /**
      * Maximum of records that device can store
@@ -840,7 +753,7 @@ private void afterWrite()
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.freestyle.OptiumXceed";
+        return "ggc.meter.device.abbott.OptiumXceed";
     }
 
     /**
@@ -850,9 +763,10 @@ private void afterWrite()
      */
     public int getDeviceId()
     {
-        return 0;
+        return MeterDevicesIds.METER_ABBOTT_OPTIUM_XCEED;
     }
 
+    
     /**
      * getIconName - Get Icon of meter
      * 

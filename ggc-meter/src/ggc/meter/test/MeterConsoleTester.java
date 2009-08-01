@@ -1,5 +1,6 @@
 package ggc.meter.test;
 
+import ggc.meter.device.abbott.OptiumXceed;
 import ggc.meter.device.accuchek.AccuChekAviva;
 import ggc.meter.device.ascensia.AscensiaContour;
 import ggc.meter.device.onetouch.OneTouchUltra;
@@ -76,8 +77,9 @@ public class MeterConsoleTester
     	    //this.startOneTouchUltra(portName);
     	    
     	    // this.startOneTouchEasy(portName);
+    	    startOptiumXceed(portName);
     	    
-    	    testLogger();
+    	    //testLogger();
     	    
     	    
     	    //startAccuChekAviva();
@@ -202,6 +204,24 @@ public class MeterConsoleTester
     }
     
 
+    /**
+     * OT Easy Testing
+     * @param portName
+     * @throws Exception
+     */
+    public void startOptiumXceed(String portName) throws Exception
+    {
+        
+        ConsoleOutputWriter cow = new ConsoleOutputWriter();
+        
+        displaySerialPorts();
+        
+        OptiumXceed otu = new OptiumXceed(portName, cow);
+        otu.readDeviceDataFull();
+    }
+    
+    
+    
     
     /**
      * Display Serial Ports
@@ -240,7 +260,7 @@ public class MeterConsoleTester
 	{
 	    
 	    if (args.length == 0)
-	        new MeterConsoleTester("/dev/ttyUSB0"); //COM5");
+	        new MeterConsoleTester("COM9"); //"/dev/ttyUSB0"); //COM5");
 	    else
 	        new MeterConsoleTester(args[0]);
 
@@ -258,6 +278,8 @@ public class MeterConsoleTester
 	    catch(Exception ex)
 	    {
 	    }*/
+	    
+	    System.exit(0);
 
 	}
 	catch(Exception ex)

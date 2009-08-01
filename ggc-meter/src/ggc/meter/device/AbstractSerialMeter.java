@@ -260,21 +260,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
 
     
-    /**
-     * Wait for x ms
-     * @param time
-     */
-    public void waitTime(long time)
-    {
-        try
-        {
-            Thread.sleep(time);
-
-        }
-        catch (Exception ex)
-        {
-        }
-    }
 
     
     protected void deviceDisconnected()

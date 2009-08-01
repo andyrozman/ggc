@@ -74,6 +74,24 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     };*/
 	
 	
+    
+    /**
+     * Special Entry (if it is)
+     */
+    public boolean special_entry = false;
+
+    /**
+     * Special Entry Id
+     */
+    public int special_entry_id = -1;
+
+    /**
+     * Special Entry Value
+     */
+    public String special_entry_value = null;
+    
+    
+    
 	/**
 	 * Constructor
 	 */
@@ -250,6 +268,57 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	    }
 	    
 	}
+
+	
+	/**
+	 * Special Entry: Urine - Ketones (mmol/L)
+	 */
+	public static final int SPECIAL_ENTRY_URINE_MMOLL = 1;
+
+    /**
+     * Special Entry: Urine - Ketones (mmol/L)
+     */
+	public static final int SPECIAL_ENTRY_URINE_MGDL = 2;
+	
+	
+	/**
+	 * Set Special Entry
+	 * 
+	 * @param type
+	 * @param value
+	 */
+	public void setSpecialEntry(int type, String value)
+	{
+	    this.special_entry = true;
+	    this.special_entry_id = type;
+	    this.special_entry_value = value;
+	}
+	
+	
+	String special_entry_tags[] = { "", "URINE", "URINE" };
+    String special_entry_units[] = { "", " mmol/L", " mg/dL" };  // this are not required, if your special 
+                                                                 // entry has no unit, leave this empty
+	
+	/**
+	 * Get Special Entry DbEntry
+	 * @return
+	 */
+	public String getSpecialEntryDbEntry()
+	{
+	    StringBuffer sb = new StringBuffer();
+	    
+	    
+	    sb.append(this.special_entry_tags[this.special_entry_id]);
+	    sb.append("=");
+	    sb.append(this.special_entry_value);
+        sb.append(this.special_entry_units[this.special_entry_id]);
+	    
+	    return sb.toString();
+	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -283,7 +352,11 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	        return;
 	    else if (this.object_status == MeterValuesEntry.OBJECT_STATUS_EDIT)
 	    {
-	        this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+	        if (this.special_entry)
+	            this.entry_object.setExtended(this.getSpecialEntryDbEntry());
+	        else
+	            this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+	        
 	        this.entry_object.setChanged(System.currentTimeMillis());
 	        this.entry_object.setComment(createComment());
 	    }
@@ -293,10 +366,21 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	        this.entry_object.setIns1(0);
             this.entry_object.setIns2(0);
             this.entry_object.setCh(0.0f);
-            this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+            
+            if (this.special_entry)
+                this.entry_object.setExtended(this.getSpecialEntryDbEntry()+";" + "SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+            else
+            {
+                this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+                this.entry_object.setExtended("SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+            }
+            
+            
+            
+            //this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
 	        this.entry_object.setDt_info(this.getDateTime());
             this.entry_object.setChanged(System.currentTimeMillis());
-            this.entry_object.setExtended("SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+            //this.entry_object.setExtended("SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
             this.entry_object.setComment(createComment());
 	    }
 	}
@@ -366,7 +450,12 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
                 
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                return this.getDateTimeObject().getDateTimeString() + " = " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
+            {
+                if (this.special_entry)
+                    return this.getDateTimeObject().getDateTimeString() + "  Special: " + this.getSpecialEntryDbEntry();
+                else
+                    return this.getDateTimeObject().getDateTimeString() + "  BG: " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
+            }
                 
             case OutputWriterType.GGC_FILE_EXPORT:
             {
@@ -399,7 +488,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
                     System.out.println(mve.getDateTime().getDateTimeString() + " = " + mve.getBgValue() + " " + this.out_util.getBGTypeName(mve.getBgUnit()) + " Params: " + parameters );
                 */
                 return "0|" + this.getDateTime() + "|" + val + 
-                            "|0.0|0.0|0.0|null|null|1|MTI;" + parameters + "|" + System.currentTimeMillis();
+                            "|0.0|0.0|0.0|null|" + this.getSpecialEntryDbEntry() + "|1|" + parameters + "|" + System.currentTimeMillis();
                 
             }
                 
