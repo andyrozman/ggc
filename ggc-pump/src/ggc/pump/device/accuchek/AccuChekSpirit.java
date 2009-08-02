@@ -4,6 +4,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -102,7 +103,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public int getDeviceId()
     {
-        return AccuChekSmartPixPump.PUMP_ACCUCHEK_SPIRIT;
+        return PumpDevicesIds.PUMP_ACCUCHEK_SPIRIT;
     }
 
     

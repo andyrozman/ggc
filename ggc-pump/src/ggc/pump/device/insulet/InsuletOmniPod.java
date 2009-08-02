@@ -4,6 +4,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -102,7 +103,7 @@ public class InsuletOmniPod extends InsuletPump
      */
     public int getDeviceId()
     {
-        return InsuletPump.PUMP_INSULET_OMNIPOD;
+        return PumpDevicesIds.PUMP_INSULET_OMNIPOD;
     }
 
     

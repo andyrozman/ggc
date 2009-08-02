@@ -4,6 +4,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -97,7 +98,7 @@ public class Minimed522 extends MinimedPump
      */
     public int getDeviceId()
     {
-        return MinimedPump.PUMP_MINIMED_522_722;
+        return PumpDevicesIds.PUMP_MINIMED_522_722;
     }
 
     

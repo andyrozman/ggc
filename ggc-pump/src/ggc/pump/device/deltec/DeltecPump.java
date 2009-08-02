@@ -41,16 +41,6 @@ import ggc.pump.device.AbstractPump;
 public abstract class DeltecPump extends AbstractPump
 {
 
-    /**
-     * Deltec - Cosmo 1700
-     */
-    public static final int PUMP_DELTEC_COSMO_1700  = 50001;
-
-    
-    /**
-     * Deltec - Cosmo 1700
-     */
-    public static final int PUMP_DELTEC_COSMO_1800  = 50002;
     
     
     /**

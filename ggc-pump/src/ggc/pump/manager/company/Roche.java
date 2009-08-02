@@ -4,7 +4,7 @@ import ggc.pump.device.accuchek.AccuChekCombo;
 import ggc.pump.device.accuchek.AccuChekDTron;
 import ggc.pump.device.accuchek.AccuChekSpirit;
 import ggc.pump.device.accuchek.DisetronicDTron;
-import ggc.pump.manager.PumpManager;
+import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -85,7 +85,7 @@ public class Roche extends AbstractPumpDeviceCompany
      */
     public int getCompanyId()
     {
-        return PumpManager.PUMP_COMPANY_ROCHE;
+        return PumpDevicesIds.COMPANY_ROCHE;
     }
     
     

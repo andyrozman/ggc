@@ -83,6 +83,11 @@ public class PumpConsoleTester //extends JFrame
 
     
     
+    /**
+     * Start Dana - For testing implementation of Dana Pump
+     * @param portname
+     * @throws Exception
+     */
     public void startDana(String portname) throws Exception
     {
         DanaDiabecare_III_R dana = new DanaDiabecare_III_R("COM15", new ConsoleOutputWriter());

@@ -42,25 +42,6 @@ import ggc.pump.device.AbstractPump;
 public abstract class MinimedPump extends AbstractPump
 {
 
-    /**
-     * Pump Minimed 508
-     */
-    public static final int PUMP_MINIMED_508      = 10001;
-
-    /**
-     * Pump Minimed 512/712
-     */
-    public static final int PUMP_MINIMED_512_712  = 10002;
-
-    /**
-     * Pump Minimed 522/722
-     */
-    public static final int PUMP_MINIMED_522_722  = 10003;
-
-    /**
-     * Pump Minimed x54/Veo
-     */
-    public static final int PUMP_MINIMED_554_754_VEO  = 10004;
     
     
     /**

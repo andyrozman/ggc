@@ -4,6 +4,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.manager.PumpDevicesIds;
 
 
 /**
@@ -107,7 +108,7 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      */
     public int getDeviceId()
     {
-        return DanaPump.PUMP_DANA_DIABECARE_IIS;
+        return PumpDevicesIds.PUMP_DANA_DIABECARE_IIS;
     }
     
     

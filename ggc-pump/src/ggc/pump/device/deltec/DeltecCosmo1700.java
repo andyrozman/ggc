@@ -4,6 +4,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -97,7 +98,7 @@ public class DeltecCosmo1700 extends DeltecPump
      */
     public int getDeviceId()
     {
-        return DeltecPump.PUMP_DELTEC_COSMO_1700;
+        return PumpDevicesIds.PUMP_DELTEC_COSMO_1700;
     }
 
     

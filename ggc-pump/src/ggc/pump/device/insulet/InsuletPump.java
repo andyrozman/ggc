@@ -41,10 +41,6 @@ import ggc.pump.device.AbstractPump;
 public abstract class InsuletPump extends AbstractPump
 {
 
-    /**
-     * Pump Insulet: OmniPod
-     */
-    public static final int PUMP_INSULET_OMNIPOD  = 60001;
     
     
     /**

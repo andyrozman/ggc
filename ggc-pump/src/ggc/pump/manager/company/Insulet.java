@@ -1,7 +1,7 @@
 package ggc.pump.manager.company; 
 
 import ggc.pump.device.insulet.InsuletOmniPod;
-import ggc.pump.manager.PumpManager;
+import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -64,7 +64,7 @@ public class Insulet extends AbstractPumpDeviceCompany
      */
     public int getCompanyId()
     {
-        return PumpManager.PUMP_COMPANY_INSULET;
+        return PumpDevicesIds.COMPANY_INSULET;
     }
     
     

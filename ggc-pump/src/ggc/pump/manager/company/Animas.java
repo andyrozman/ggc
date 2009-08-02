@@ -4,7 +4,7 @@ import ggc.pump.device.animas.AnimasIR1200;
 import ggc.pump.device.animas.AnimasIR1250;
 import ggc.pump.device.animas.AnimasIR2020;
 import ggc.pump.device.animas.AnimasPing;
-import ggc.pump.manager.PumpManager;
+import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -72,7 +72,7 @@ public class Animas extends AbstractPumpDeviceCompany
      */
     public int getCompanyId()
     {
-        return PumpManager.PUMP_COMPANY_ANIMAS;
+        return PumpDevicesIds.COMPANY_ANIMAS;
     }
     
     

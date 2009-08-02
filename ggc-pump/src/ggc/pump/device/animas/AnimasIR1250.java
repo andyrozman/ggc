@@ -4,6 +4,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -99,7 +100,7 @@ public class AnimasIR1250 extends AnimasPump
      */
     public int getDeviceId()
     {
-        return AnimasPump.PUMP_ANIMAS_IR_1250;
+        return PumpDevicesIds.PUMP_ANIMAS_IR_1250;
     }
 
     

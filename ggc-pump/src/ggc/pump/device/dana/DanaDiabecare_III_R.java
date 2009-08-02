@@ -7,6 +7,7 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.AbstractSerialPump;
+import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.manager.company.Sooil;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
@@ -120,7 +121,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
      */
     public int getDeviceId()
     {
-        return DanaPump.PUMP_DANA_DIABECARE_III_R;
+        return PumpDevicesIds.PUMP_DANA_DIABECARE_III_R;
     }
     
     
@@ -397,7 +398,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
      * Instantiates a new dana diabecare_ ii i_ r.
      * 
      * @param portName the port name
-     * @param ow 
+     * @param writer 
      */
     public DanaDiabecare_III_R(String portName, OutputWriter writer)
     {
@@ -558,7 +559,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     {
         try
         {
-            byte[] buffer = new byte[0x100];
+            //byte[] buffer = new byte[0x100];
             //int num = 0;
             logger.debug("getDeviceInfo(" + param + "):Start");
             switch (param)
@@ -600,9 +601,17 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
                 break;
             }
             DanaUtil.delaySync();
-            /*num =*/ this.readData(buffer);
+            /*num =*/ //this.readData(buffer);
+            
+            
+            System.out.println(this.readLine());
+            
+            
+            /*
             PacketStreamReader reader = new PacketStreamReader(buffer);
 
+            
+            
             switch (param)
             {
             case COMMAND_BOLUS:
@@ -682,6 +691,8 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
                 sett.easyMode = reader.getByte();
                 break;
             }
+            */
+            
             DanaUtil.delaySync();
             logger.debug("getDeviceInfo(" + param + "):End");
         }
@@ -697,7 +708,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
     {
         try
         {
-            byte[] buffer = new byte[0x100];
+            //byte[] buffer = new byte[0x100];
             //int num = 0;
             logger.debug("getDeviceInfo(" + param + "):Start");
             switch (param)
@@ -739,7 +750,14 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
                 break;
             }
             DanaUtil.delaySync();
-            /*num =*/ this.readData(buffer);
+            
+            
+            System.out.println(this.readLine());
+
+            
+            /*num =*/ 
+            /*
+            this.readData(buffer);
             PacketStreamReader reader = new PacketStreamReader(buffer);
 
             switch (param)
@@ -839,7 +857,7 @@ public class DanaDiabecare_III_R extends AbstractSerialPump //SerialProtocol //e
                 
                 
                 break;
-            }
+            }*/
             DanaUtil.delaySync();
             logger.debug("getDeviceInfo(" + param + "):End");
         }

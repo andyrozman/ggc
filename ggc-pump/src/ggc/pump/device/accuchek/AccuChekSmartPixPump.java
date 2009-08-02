@@ -13,7 +13,7 @@ import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
-import ggc.pump.manager.PumpManager;
+import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.DataAccessPump;
 
 import java.io.File;
@@ -65,30 +65,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
 
     
     
-    /**
-     * Roche SmartPix Device
-     */
-    public static final int ROCHE_SMARTPIX_DEVICE        = 20001;
-    
-    /**
-     * Pump: Disetronic DTron
-     */
-    public static final int PUMP_DISETRONIC_D_TRON       = 20002;
-    
-    /**
-     * Pump: AccuChek DTron
-     */
-    public static final int PUMP_ACCUCHEK_D_TRON         = 20003;
-    
-    /**
-     * Pump: AccuChek Spirit
-     */
-    public static final int PUMP_ACCUCHEK_SPIRIT         = 20004;
-    
-    /**
-     * Pump: AccuChek Spirit
-     */
-    public static final int PUMP_ACCUCHEK_COMBO          = 20005;
 
     
     //private int bg_unit = OutputUtil.BG_MGDL;
@@ -148,9 +124,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      * 
      * @return id of meter within company
      */
-    public int getMeterId()
+    public int getDeviceId()
     {
-        return AccuChekSmartPixPump.ROCHE_SMARTPIX_DEVICE;
+        return PumpDevicesIds.ROCHE_SMARTPIX_DEVICE;
     }
 
     
@@ -163,7 +139,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      */
     public int getCompanyId()
     {
-        return PumpManager.PUMP_COMPANY_ROCHE;
+        return PumpDevicesIds.COMPANY_ROCHE;
     }
     
     

@@ -6,6 +6,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.device.AbstractPump;
+import ggc.pump.manager.PumpDevicesIds;
 
 import java.util.Hashtable;
 
@@ -111,8 +112,7 @@ public abstract class EZManagerDb extends AbstractPump
      */
     public int getCompanyId()
     {
-        // TODO: im not to sure what this is supposed to be -Nate
-        return 0;
+        return PumpDevicesIds.COMPANY_ANIMAS;
     }
 
     /**
@@ -190,7 +190,7 @@ public abstract class EZManagerDb extends AbstractPump
      */
     public int getMaxMemoryRecords()
     {
-        return Integer.MAX_VALUE;
+        return -1;
     }
 
 

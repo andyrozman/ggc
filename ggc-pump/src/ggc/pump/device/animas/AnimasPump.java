@@ -42,25 +42,6 @@ import ggc.pump.device.AbstractPump;
 public abstract class AnimasPump extends AbstractPump
 {
 
-    /**
-     * Pump Animas IR 1200
-     */
-    public static final int PUMP_ANIMAS_IR_1200 = 40001;
-
-    /**
-     * Pump Animas IR 1250
-     */
-    public static final int PUMP_ANIMAS_IR_1250 = 40002;
-    
-    /**
-     * Pump Animas IR 2020
-     */
-    public static final int PUMP_ANIMAS_IR_2020 = 40003;
-    
-    /**
-     * Pump Animas Ping
-     */
-    public static final int PUMP_ANIMAS_PING    = 40004;
     
     
     /**

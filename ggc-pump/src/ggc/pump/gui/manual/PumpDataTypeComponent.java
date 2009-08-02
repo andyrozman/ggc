@@ -35,7 +35,6 @@ import javax.swing.SpinnerNumberModel;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.components.TimeComponent;
 import com.atech.utils.ATSwingUtils;
-import com.atech.utils.Rounding;
 
 /**
  * Application: GGC - GNU Gluco Control 

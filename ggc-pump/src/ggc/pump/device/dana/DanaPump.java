@@ -41,20 +41,6 @@ import ggc.pump.device.AbstractPump;
 public abstract class DanaPump extends AbstractPump
 {
 
-    /**
-     * Dana Diabecare II
-     */
-    public static final int PUMP_DANA_DIABECARE_II  = 70001;
-
-    /**
-     * Dana Diabecare II S
-     */
-    public static final int PUMP_DANA_DIABECARE_IIS = 70002;
-    
-    /**
-     * Dana Diabecare III R
-     */
-    public static final int PUMP_DANA_DIABECARE_III_R = 70003;
     
     
     /**

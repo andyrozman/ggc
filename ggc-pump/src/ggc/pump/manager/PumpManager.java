@@ -39,43 +39,6 @@ public class PumpManager extends DeviceManager
 {
 
     
-    /**
-     * Pump Company: Minimed
-     */
-    public static final int PUMP_COMPANY_MINIMED              = 1;
-    
-
-    /**
-     * Pump Company: Roche
-     */
-    public static final int PUMP_COMPANY_ROCHE                 = 2;
-
-    /**
-     * Pump Company: Disetronic
-     */
-    public static final int PUMP_COMPANY_DISETRONIC            = 3;
-    
-
-    /**
-     * Pump Company: Animas
-     */
-    public static final int PUMP_COMPANY_ANIMAS                = 4;
-    
-    /**
-     * Pump Company: Animas
-     */
-    public static final int PUMP_COMPANY_DELTEC                = 5;
-
-    /**
-     * Pump Company: Animas
-     */
-    public static final int PUMP_COMPANY_INSULET               = 6;
-    
-    
-    /**
-     * Pump Company: Animas
-     */
-    public static final int PUMP_COMPANY_SOOIL                 = 7;
     
     /**
      * Singleton instance

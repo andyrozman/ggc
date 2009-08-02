@@ -4,7 +4,7 @@ import ggc.pump.device.minimed.Minimed508;
 import ggc.pump.device.minimed.Minimed512;
 import ggc.pump.device.minimed.Minimed522;
 import ggc.pump.device.minimed.Minimed554_Veo;
-import ggc.pump.manager.PumpManager;
+import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -77,7 +77,7 @@ public class Minimed extends AbstractPumpDeviceCompany
      */
     public int getCompanyId()
     {
-        return PumpManager.PUMP_COMPANY_MINIMED;
+        return PumpDevicesIds.COMPANY_MINIMED;
     }
     
     

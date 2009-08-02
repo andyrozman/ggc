@@ -4,6 +4,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -97,7 +98,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
      */
     public int getDeviceId()
     {
-        return AccuChekSmartPixPump.PUMP_ACCUCHEK_D_TRON;
+        return PumpDevicesIds.PUMP_ACCUCHEK_D_TRON;
     }
 
     

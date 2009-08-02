@@ -423,23 +423,23 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         
         JPanel panel_graph = new JPanel();
         //panel_graph.setBounds(300, 120, 560, 360);
-        BREGraphsAbstract gv = null;
+        BREGraphsAbstract gva = null;
         
         if ((type>=1) && (type <=3))
         {
-            gv = new GraphViewBasalRate(type);
+            gva = new GraphViewBasalRate(type);
         }
         else if (type==4)
         {
-            gv = new GraphViewRatios();
+            gva = new GraphViewRatios();
         }
         else
         {
-            gv = new GraphViewBasals();
+            gva = new GraphViewBasals();
             
         }
         
-        m_graphs.put("" + type, gv);
+        m_graphs.put("" + type, gva);
         
         GraphViewerPanel gvp = new GraphViewerPanel(gv);
         gvp.setMinimumSize(new Dimension(550, 310)); // 450, 460

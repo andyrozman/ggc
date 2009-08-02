@@ -2,7 +2,7 @@ package ggc.pump.manager.company;
 
 import ggc.pump.device.deltec.DeltecCosmo1700;
 import ggc.pump.device.deltec.DeltecCosmo1800;
-import ggc.pump.manager.PumpManager;
+import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -65,7 +65,7 @@ public class Deltec extends AbstractPumpDeviceCompany
      */
     public int getCompanyId()
     {
-        return PumpManager.PUMP_COMPANY_DELTEC;
+        return PumpDevicesIds.COMPANY_DELTEC;
     }
     
     

@@ -3,7 +3,7 @@ package ggc.pump.manager.company;
 import ggc.pump.device.dana.DanaDiabecare_II;
 import ggc.pump.device.dana.DanaDiabecare_III_R;
 import ggc.pump.device.dana.DanaDiabecare_IIS;
-import ggc.pump.manager.PumpManager;
+import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.I18nControl;
 
 /**
@@ -74,7 +74,7 @@ public class Sooil extends AbstractPumpDeviceCompany
      */
     public int getCompanyId()
     {
-        return PumpManager.PUMP_COMPANY_SOOIL;
+        return PumpDevicesIds.COMPANY_SOOIL;
     }
     
     
