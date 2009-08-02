@@ -1,0 +1,1 @@
+Maximal size for picture is 250 x 350

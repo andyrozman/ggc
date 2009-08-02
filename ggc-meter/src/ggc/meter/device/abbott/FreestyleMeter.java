@@ -2,7 +2,7 @@ package ggc.meter.device.abbott;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.Abbott;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
@@ -60,35 +60,6 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 {
     
     
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE                 = 40001;
-    
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE_LITE            = 40002;
-    
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE_FREEDOM         = 40003;
-    
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE_FREEDOM_LITE    = 40004;
-    
-    /**
-     * 
-     */
-    public static final int METER_FREESTYLE_FLASH           = 40005;
-    
-    /**
-     * 
-     */
-    public static final int METER_PRECISION_XTRA            = 40006;
     
     
     private static Log log = LogFactory.getLog(FreestyleMeter.class);
@@ -572,7 +543,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
      */
     public int getCompanyId()
     {
-        return MeterManager.METER_COMPANY_ABBOTT;
+        return MeterDevicesIds.COMPANY_ABBOTT;
     }
     
     

@@ -31,16 +31,196 @@ package ggc.meter.manager;
 public class MeterDevicesIds
 {
 
+    /**
+     * Meter Company: Ascensia (Bayer)
+     */
+    public static final int COMPANY_ASCENSIA            = 1;
     
     
+    /**
+     * Meter Company: Roche (Accu-Chek)
+     */
+    public static final int COMPANY_ROCHE               = 2;
     
-    /** * */
-    public static final int COMPANY_ABBOTT = 4;
+    
+    /**
+     * Meter Company: LifeScan (actually is J&J)
+     */
+    public static final int COMPANY_LIFESCAN            = 3;
+    
+    
+    /**
+     * 
+     */
+    public static final int COMPANY_ABBOTT              = 4;
+    
+    
+    /**
+     * 
+     */
+    public static final int COMPANY_MENARINI            = 5;
+    
     
     
     
     /**
-     * Abbott Devices (FreeStyle and 
+     * Meter: Ascensia/Bayer Elite XL
+     */
+    public static final int METER_ASCENSIA_ELITE_XL     = 10001;
+    
+    /**
+     * Meter: Ascensia/Bayer Dex
+     */
+    public static final int METER_ASCENSIA_DEX          = 10002;
+    
+    /**
+     * Meter: Ascensia/Bayer Breeze
+     */
+    public static final int METER_ASCENSIA_BREEZE       = 10003;
+    
+    /**
+     * Meter: Ascensia/Bayer Contour
+     */
+    public static final int METER_ASCENSIA_CONTOUR      = 10004;
+    
+    /**
+     * Meter: Ascensia/Bayer Breeze 2
+     */
+    public static final int METER_ASCENSIA_BREEZE2      = 10005;
+    
+    /**
+     * Meter: Ascensia/Bayer Contour Link
+     */
+    public static final int METER_ASCENSIA_CONTOUR_LINK = 10006;
+    
+    
+    
+    
+    /**
+     * Meter Device: SmartPix
+     */
+    public static final int METER_ROCHE_SMARTPIX_DEVICE   = 20001;
+    
+    /**
+     * Meter Device: Accu Chek Active
+     */
+    public static final int METER_ACCUCHEK_ACTIVE         = 20002;
+    
+    /**
+     * Meter Device: Accu Chek Advantage
+     */
+    public static final int METER_ACCUCHEK_ADVANTAGE      = 20003;
+    
+    /**
+     * Meter Device: Accu Chek Aviva
+     */
+    public static final int METER_ACCUCHEK_AVIVA          = 20004;
+    
+    /**
+     * Meter Device: Accu Chek Comfort
+     */
+    public static final int METER_ACCUCHEK_COMFORT        = 20005;
+    
+    /**
+     * Meter Device: Accu Chek Compact
+     */
+    public static final int METER_ACCUCHEK_COMPACT        = 20006;
+    
+    /**
+     * Meter Device: Accu Chek Compact Plus
+     */
+    public static final int METER_ACCUCHEK_COMPACT_PLUS   = 20007;
+    
+    /**
+     * Meter Device: Accu Chek Go
+     */
+    public static final int METER_ACCUCHEK_GO             = 20008;
+    
+    /**
+     * Meter Device: Accu Chek Integra
+     */
+    public static final int METER_ACCUCHEK_INTEGRA        = 20009;
+    
+    /**
+     * Meter Device: Accu Chek Performa
+     */
+    public static final int METER_ACCUCHEK_PERFORMA       = 20010;
+    
+    /**
+     * Meter Device: Accu Chek Sensor
+     */
+    public static final int METER_ACCUCHEK_SENSOR         = 20011;
+    
+    
+    
+    
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA      = 30001;
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_2    = 30002;  // NP
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRASMART = 30003;  // NI
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRALINK  = 30004;  // NI  NP
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_SELECT     = 30005;  // NI  NP
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_INDUO                = 30006;  // NI
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_BASIC      = 30007;  // NI
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_SURESTEP   = 30008;  // NI
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_FASTTAKE   = 30009;  // NI
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_PROFILE    = 30010;  
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_II         = 30011;  // NI
+
+    
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_MINI = 30012;  // NI NP
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY = 30013;  // NI NP
+    
+    /**
+     * 
+     */
+    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_SMART    = 30014;  // NI
+    
+    
+    
+    
+    
+    
+    /**
+     * Abbott Devices (FreeStyle and Medisense) 
      */
     
     /** * */
@@ -57,6 +237,11 @@ public class MeterDevicesIds
     public static final int METER_ABBOTT_PRECISION_XTRA            = 40006; // Not tested yet
     /** * */
     public static final int METER_ABBOTT_OPTIUM_XCEED              = 40007; // Not tested yet
+    
+
+    
+    /** * */
+    public static final int METER_MENARINI_GLUCOFIX_MIO            = 50001; // Not tested yet
     
     
 }

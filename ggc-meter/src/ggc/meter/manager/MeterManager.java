@@ -45,28 +45,6 @@ public class MeterManager extends DeviceManager
 {
     
     
-    /**
-     * Meter Company: Ascensia
-     */
-    public static final int METER_COMPANY_ASCENSIA            = 1;
-    
-    
-    /**
-     * Meter Company: Roche
-     */
-    public static final int METER_COMPANY_ROCHE               = 2;
-    
-    
-    /**
-     * 
-     */
-    public static final int METER_COMPANY_LIFESCAN            = 3;
-    
-    
-    /**
-     * 
-     */
-    public static final int METER_COMPANY_ABBOTT              = 4;
     
     
     /**

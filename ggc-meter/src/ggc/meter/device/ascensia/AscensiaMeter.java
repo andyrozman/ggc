@@ -3,7 +3,7 @@ package ggc.meter.device.ascensia;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.AscensiaBayer;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
@@ -67,35 +67,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 {
 
     
-    /**
-     * Meter: Elite XL
-     */
-    public static final int METER_ASCENSIA_ELITE_XL     = 10001;
-    
-    /**
-     * Meter: Dex
-     */
-    public static final int METER_ASCENSIA_DEX          = 10002;
-    
-    /**
-     * Meter: Breeze
-     */
-    public static final int METER_ASCENSIA_BREEZE       = 10003;
-    
-    /**
-     * Meter: Contour
-     */
-    public static final int METER_ASCENSIA_CONTOUR      = 10004;
-    
-    /**
-     * Meter: Breeze 2
-     */
-    public static final int METER_ASCENSIA_BREEZE2      = 10005;
-    
-    /**
-     * Meter: Contour Link
-     */
-    public static final int METER_ASCENSIA_CONTOUR_LINK = 10006;
     
     
     protected I18nControl ic = I18nControl.getInstance();
@@ -724,7 +695,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      */
     public int getCompanyId()
     {
-        return MeterManager.METER_COMPANY_ASCENSIA;
+        return MeterDevicesIds.COMPANY_ASCENSIA;
     }
     
 

@@ -2,7 +2,7 @@ package ggc.meter.device.onetouch;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
@@ -185,7 +185,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
      */
     public int getCompanyId()
     {
-        return MeterManager.METER_COMPANY_LIFESCAN;
+        return MeterDevicesIds.COMPANY_LIFESCAN;
     }
     
     
@@ -205,7 +205,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
      */
     public int getDeviceId()
     {
-        return OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRASMART;
+        return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRASMART;
     }
 
     /**

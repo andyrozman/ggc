@@ -1,5 +1,6 @@
 package ggc.meter.device.onetouch;
 
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
@@ -93,7 +94,7 @@ public class OneTouchInDuo extends OneTouchMeter
      */
     public int getDeviceId()
     {
-        return OneTouchMeter.METER_LIFESCAN_INDUO;
+        return MeterDevicesIds.METER_LIFESCAN_INDUO;
     }
 
     

@@ -1,17 +1,14 @@
 package ggc.meter.device.ascensia;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.StringTokenizer;
-
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.AscensiaBayer;
 import ggc.meter.util.DataAccessMeter;
 import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
@@ -20,6 +17,10 @@ import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -696,7 +697,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
      */
     public int getCompanyId()
     {
-        return MeterManager.METER_COMPANY_ASCENSIA;
+        return MeterDevicesIds.COMPANY_ASCENSIA;
     }
     
     
@@ -737,7 +738,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
      */
     public int getDeviceId()
     {
-        return AscensiaMeter.METER_ASCENSIA_CONTOUR;
+        return MeterDevicesIds.METER_ASCENSIA_CONTOUR;
     }
     
     
@@ -770,7 +771,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
      */
     public int getImplementationStatus() 
     {
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
 
 

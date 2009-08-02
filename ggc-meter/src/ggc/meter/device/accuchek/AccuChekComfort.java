@@ -1,5 +1,6 @@
 package ggc.meter.device.accuchek;
 
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -102,7 +103,7 @@ public class AccuChekComfort extends AccuChekSmartPixMeter
      */
     public int getDeviceId()
     {
-        return AccuChekSmartPixMeter.METER_ACCUCHEK_COMFORT;
+        return MeterDevicesIds.METER_ACCUCHEK_COMFORT;
     }
 
     

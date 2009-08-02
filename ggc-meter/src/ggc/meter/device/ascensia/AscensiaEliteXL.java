@@ -1,5 +1,7 @@
 package ggc.meter.device.ascensia;
 
+import ggc.meter.manager.MeterDevicesIds;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 
@@ -100,7 +102,7 @@ public class AscensiaEliteXL extends AscensiaMeter
      */
     public int getDeviceId()
     {
-        return AscensiaMeter.METER_ASCENSIA_ELITE_XL;
+        return MeterDevicesIds.METER_ASCENSIA_ELITE_XL;
     }
     
     
@@ -133,7 +135,7 @@ public class AscensiaEliteXL extends AscensiaMeter
      */
     public int getImplementationStatus() 
     {
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
     
     

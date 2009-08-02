@@ -2,7 +2,7 @@ package ggc.meter.device.onetouch;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
@@ -56,60 +56,6 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 {
     
     
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA      = 30001;
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_2    = 30002;  // NP
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRASMART = 30003;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRALINK  = 30004;  // NI  NP
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_SELECT     = 30005;  // NI  NP
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_INDUO                = 30006;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_BASIC      = 30007;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_SURESTEP   = 30008;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_FASTTAKE   = 30009;  // NI
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_PROFILE    = 30010;  
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_II         = 30011;  // NI
-    
-    // these have different protocol and are extended from OneTouchMeter2
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_MINI = 30050;  // NI NP
-    /**
-     * 
-     */
-    public static final int METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY = 30050;  // NI NP
     
     
     
@@ -197,7 +143,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             //ex.printStackTrace();
         }
         
-        if (this.getDeviceId()==OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA)
+        if (this.getDeviceId()==MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA)
         {
             this.info_tokens = 3;
             this.date_order = "MDY";
@@ -440,7 +386,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         this.output_writer.setSpecialProgress(2);
 
         
-        if (this.getDeviceId()!=OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA)
+        if (this.getDeviceId()!=MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA)
         {
             //'P nnn,"MeterSN","ENGL. ","M.D.Y. ","AM/PM","MG/DL","!min","!max" cksm' 
             //"M.D.Y. " or "D.M.Y. "
@@ -917,7 +863,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      */
     public int getCompanyId()
     {
-        return MeterManager.METER_COMPANY_LIFESCAN;
+        return MeterDevicesIds.COMPANY_LIFESCAN;
     }
     
     

@@ -2,7 +2,7 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.manager.MeterManager;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
@@ -54,60 +54,6 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     //OutputWriter output_writer = null;
 
     
-    /**
-     * Meter Device: SmartPix
-     */
-    public static final int METER_ROCHE_SMARTPIX_DEVICE   = 20001;
-    
-    /**
-     * Meter Device: Accu Chek Active
-     */
-    public static final int METER_ACCUCHEK_ACTIVE         = 20002;
-    
-    /**
-     * Meter Device: Accu Chek Advantage
-     */
-    public static final int METER_ACCUCHEK_ADVANTAGE      = 20003;
-    
-    /**
-     * Meter Device: Accu Chek Aviva
-     */
-    public static final int METER_ACCUCHEK_AVIVA          = 20004;
-    
-    /**
-     * Meter Device: Accu Chek Comfort
-     */
-    public static final int METER_ACCUCHEK_COMFORT        = 20005;
-    
-    /**
-     * Meter Device: Accu Chek Compact
-     */
-    public static final int METER_ACCUCHEK_COMPACT        = 20006;
-    
-    /**
-     * Meter Device: Accu Chek Compact Plus
-     */
-    public static final int METER_ACCUCHEK_COMPACT_PLUS   = 20007;
-    
-    /**
-     * Meter Device: Accu Chek Go
-     */
-    public static final int METER_ACCUCHEK_GO             = 20008;
-    
-    /**
-     * Meter Device: Accu Chek Integra
-     */
-    public static final int METER_ACCUCHEK_INTEGRA        = 20009;
-    
-    /**
-     * Meter Device: Accu Chek Performa
-     */
-    public static final int METER_ACCUCHEK_PERFORMA       = 20010;
-    
-    /**
-     * Meter Device: Accu Chek Sensor
-     */
-    public static final int METER_ACCUCHEK_SENSOR         = 20011;
     
     
     private int bg_unit = OutputUtil.BG_MGDL;
@@ -156,7 +102,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
      */
     public int getMeterId()
     {
-        return AccuChekSmartPixMeter.METER_ROCHE_SMARTPIX_DEVICE;
+        return MeterDevicesIds.METER_ROCHE_SMARTPIX_DEVICE;
     }
 
     
@@ -167,7 +113,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
      */
     public int getCompanyId()
     {
-        return MeterManager.METER_COMPANY_ROCHE;
+        return MeterDevicesIds.COMPANY_ROCHE;
     }
     
     

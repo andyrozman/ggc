@@ -1,5 +1,6 @@
 package ggc.meter.device.onetouch;
 
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
@@ -94,7 +95,7 @@ public class OneTouchSureStep extends OneTouchMeter
      */
     public int getDeviceId()
     {
-        return OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_SURESTEP;
+        return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_SURESTEP;
     }
 
     

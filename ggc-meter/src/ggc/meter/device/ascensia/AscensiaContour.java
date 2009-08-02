@@ -1,5 +1,7 @@
 package ggc.meter.device.ascensia;
 
+import ggc.meter.manager.MeterDevicesIds;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import gnu.io.SerialPortEventListener;
@@ -102,7 +104,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
      */
     public int getDeviceId()
     {
-        return AscensiaMeter.METER_ASCENSIA_CONTOUR;
+        return MeterDevicesIds.METER_ASCENSIA_CONTOUR;
     }
     
     
@@ -135,7 +137,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
      */
     public int getImplementationStatus() 
     {
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
 
 

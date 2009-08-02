@@ -1,5 +1,7 @@
 package ggc.meter.device.ascensia;
 
+import ggc.meter.manager.MeterDevicesIds;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
@@ -101,7 +103,7 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
      */
     public int getDeviceId()
     {
-        return AscensiaMeter.METER_ASCENSIA_BREEZE2;
+        return MeterDevicesIds.METER_ASCENSIA_BREEZE2;
     }
 
     
@@ -144,7 +146,7 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
      */
     public int getImplementationStatus() 
     {
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
 
     

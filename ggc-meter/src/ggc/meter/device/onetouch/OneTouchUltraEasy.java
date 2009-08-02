@@ -1,5 +1,6 @@
 package ggc.meter.device.onetouch;
 
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
@@ -108,7 +109,7 @@ public class OneTouchUltraEasy extends OneTouchMeter2
      */
     public int getDeviceId()
     {
-        return OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY;
+        return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY;
     }
 
     
@@ -119,8 +120,7 @@ public class OneTouchUltraEasy extends OneTouchMeter2
      */
     public String getIconName()
     {
-        // TODO fill in
-        return null;
+        return "ls_ot_ultra_mini.jpg";
     }
 
     

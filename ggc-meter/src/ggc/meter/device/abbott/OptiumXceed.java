@@ -162,32 +162,6 @@ public class OptiumXceed extends AbstractSerialMeter
     
     
     
-    
-    /** 
-     * getComment
-     */
-    public String getComment()
-    {
-        return null;
-    }
-
-
-    // DO
-    /** 
-     * getImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
-    }
-
-    /** 
-     * getInstructions
-     */
-    public String getInstructions()
-    {
-        return null;
-    }
 
    
     /** 
@@ -195,7 +169,7 @@ public class OptiumXceed extends AbstractSerialMeter
      */
     public void readDeviceDataFull()
     {
-        System.out.println("readDeviceDataFull()");
+        //System.out.println("readDeviceDataFull()");
         try
         {
             
@@ -487,7 +461,7 @@ public class OptiumXceed extends AbstractSerialMeter
             
             this.sendMessageToMeter("1GET_METER\003F0\r\n");
             data_back = readMessageFromMeter();
-            System.out.println("Get meter: " + data_back);
+            //System.out.println("Get meter: " + data_back);
             
             
             if  ((data_back == null) || (data_back.charAt(0) == 0))
@@ -635,12 +609,7 @@ public class OptiumXceed extends AbstractSerialMeter
         
         dt += m_da.getLongValueFromString(tm);
         
-        // "mm/dd/yy","hh:mm:30 "
-        // Oct  11 2006 01:38
-        ATechDate adt = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt);
-        
-        return adt;
-        
+        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt);
         
     }
 
@@ -744,7 +713,6 @@ public class OptiumXceed extends AbstractSerialMeter
      */
     public int getMaxMemoryRecords()
     {
-        // TODO Auto-generated method stub
         return 450;
     }
 
@@ -774,7 +742,7 @@ public class OptiumXceed extends AbstractSerialMeter
      */
     public String getIconName()
     {
-        return null;
+        return "ab_optium_xceed.jpg";
     }
 
     /**
@@ -786,7 +754,33 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         return "Optium Xceed";
     }
+
     
+    
+    /** 
+     * getComment
+     */
+    public String getComment()
+    {
+        return null;
+    }
+
+
+    /** 
+     * getImplementationStatus
+     */
+    public int getImplementationStatus()
+    {
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+    }
+
+    /** 
+     * getInstructions
+     */
+    public String getInstructions()
+    {
+        return "INSTRUCTIONS_ABBOTT_OPTIUMXCEED";
+    }
     
     
 }

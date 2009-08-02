@@ -1,5 +1,6 @@
 package ggc.meter.device.abbott;
 
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -34,7 +35,7 @@ import org.apache.commons.logging.LogFactory;
  */
 
 
-public class PrecisionXtra extends FreestyleMeter
+public class PrecisionXtra extends OptiumXceed
 {
 
     @SuppressWarnings("unused")
@@ -74,20 +75,13 @@ public class PrecisionXtra extends FreestyleMeter
     
     
 
-    /**
-     * Maximum of records that device can store
-     */
-    public int getMaxMemoryRecords()
-    {
-        return 0;
-    }
 
     /** 
      * Get Device ClassName
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.freestyle.PrecisionXtra";
+        return "ggc.meter.device.abbott.PrecisionXtra";
     }
 
     /**
@@ -97,7 +91,7 @@ public class PrecisionXtra extends FreestyleMeter
      */
     public int getDeviceId()
     {
-        return FreestyleMeter.METER_PRECISION_XTRA;
+        return MeterDevicesIds.METER_ABBOTT_PRECISION_XTRA;
     }
 
     /**
@@ -128,7 +122,7 @@ public class PrecisionXtra extends FreestyleMeter
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ABBOTT_PRECISION_XTRA";
+        return "INSTRUCTIONS_ABBOTT_OPTIUMXCEED";
     }
     
 
@@ -151,7 +145,7 @@ public class PrecisionXtra extends FreestyleMeter
      */
     public int getImplementationStatus() 
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
     
     
