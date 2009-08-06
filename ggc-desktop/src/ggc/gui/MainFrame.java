@@ -230,13 +230,15 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.actions = new Hashtable<String, GGCAction>();
         MainFrame.developer_version = developer_version;
 
-        /*
+        
         String title_full = "GGC - GNU Gluco Control (" + GGC.full_version + ")";
 
         if (developer_version)
             title_full += " - Developer edition";
-        */
-        //setTitle(title_full);
+        
+        setTitle(title_full);
+        
+        
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
@@ -248,6 +250,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
         // menu_file, menu_bgs, menu_food, menu_doctor, menu_reports,
         // menu_tools, menu_help;
 
+        //setTitle("");
+        
         this.setSoftwareMode();
         
         createMenus();
@@ -341,6 +345,11 @@ public class MainFrame extends JFrame implements EventObserverInterface
     
     
     
+    /**
+     * Get Software Mode
+     * 
+     * @return
+     */
     public String getSoftwareMode()
     {
         return " [" + m_ic.getMessage(m_da.getSoftwareModeDescription()) + "]";
@@ -577,7 +586,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
         toolbar_pump.addSeparator(d);
         this.createToolbarAction("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png", MainFrame.TOOLBAR_PUMP);
         toolbar_pump.addSeparator(d);
-/*
+
+        
+        this.createToolbarAction("MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry", "calendar.png", MainFrame.TOOLBAR_PUMP);
+        this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png", MainFrame.TOOLBAR_PUMP);
+        toolbar_pump.addSeparator(d);
+        
+        
+        /*
         this.createToolbarAction("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png");
         this.createToolbarAction("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png");
         this.createToolbarAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png");
@@ -588,7 +604,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.createToolbarAction("MN_MEALS", "MN_MEALS_DESC", "food_meals", "food.png", MainFrame.TOOLBAR_PUMP);
         toolbar_pump.addSeparator(d);
 
-  //      this.createToolbarAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png");
+        this.createToolbarAction("MN_PUMP_PRINT_EXT", "MN_PUMP_PRINT_EXT_DESC", "report_print_pump_ext", "print.png", MainFrame.TOOLBAR_PUMP);
         toolbar_pump.addSeparator(d);
 
         this.createToolbarAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png", MainFrame.TOOLBAR_PUMP);
@@ -1134,13 +1150,17 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 m_da.getPlugIn(DataAccess.PLUGIN_METERS).actionPerformed(e);
             }
-            else if (command.startsWith("pumps_"))
+            else if ((command.startsWith("pumps_")) || (command.startsWith("report_print_pump")))
             {
                 m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).actionPerformed(e);
             }
             else if (command.startsWith("cgms_"))
             {
                 m_da.getPlugIn(DataAccess.PLUGIN_CGMS).actionPerformed(e);
+            }
+            else if (command.startsWith("food_"))
+            {
+                m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).actionPerformed(e);
             }
             else if (command.equals("file_quit"))
             {
@@ -1412,16 +1432,21 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
         if (arg instanceof Integer)
         {
+            Integer i = (Integer)arg;
+
             if (!title_set)
             {
-                title_set = true;
-                this.setSoftwareMode();
+                if (i>=RefreshInfo.PANEL_GROUP_GENERAL_INFO)
+                {
+                    title_set = true;
+                    this.setSoftwareMode();
+                }
             }
             
-            Integer i = (Integer)arg;
+            //Integer i = (Integer)arg;
             setMenusByDbLoad(i.intValue());
             
-            this.setSoftwareMode();
+            //this.setSoftwareMode();
             //this.setTitle();
             
             if (i == RefreshInfo.DB_LOADED)

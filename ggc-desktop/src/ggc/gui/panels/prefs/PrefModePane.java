@@ -66,16 +66,18 @@ public class PrefModePane extends AbstractPrefOptionsPanel implements HelpCapabl
     private final static int PUMP_PROC_STEP = 9;
     
     
+    
     private final static int SW_MODE = 0;
     
-    private final static int PEN_BASAL_PRECISSION = 0;
-    private final static int PEN_BOLUS_PRECISSION = 1;
+    private final static int PEN_BASAL_PRECISSION = 1;
+    private final static int PEN_BOLUS_PRECISSION = 2;
     
-    private final static int PUMP_BASAL_PRECISSION = 2;
-    private final static int PUMP_BOLUS_PRECISSION = 3;
+    private final static int PUMP_BASAL_PRECISSION = 3;
+    private final static int PUMP_BOLUS_PRECISSION = 4;
     
-    private final static int PUMP_TBR_TYPE = 4;
+    private final static int PUMP_TBR_TYPE = 5;
 
+    
     
     ConfigurationManager config_manager;
     
@@ -100,7 +102,7 @@ public class PrefModePane extends AbstractPrefOptionsPanel implements HelpCapabl
         this.setLayout(null);
 
         num_fields = new JDecimalTextField[10];
-        cb_fields = new JComboBox[5];
+        cb_fields = new JComboBox[6];
         
         // application mode
 
@@ -371,6 +373,10 @@ public class PrefModePane extends AbstractPrefOptionsPanel implements HelpCapabl
         config_manager.setFloatValue("PEN_MAX_BOLUS", m_da.getFloatValue(num_fields[PEN_MAX_BOLUS].getValue())); 
         config_manager.setFloatValue("PUMP_MAX_BASAL", m_da.getFloatValue(num_fields[PUMP_MAX_BASAL].getValue())); 
         config_manager.setFloatValue("PUMP_MAX_BOLUS", m_da.getFloatValue(num_fields[PUMP_MAX_BOLUS].getValue())); 
+
+        
+        System.out.println("Mode: " + cb_fields[SW_MODE].getSelectedIndex());
+        
         
         
         config_manager.setIntValue("SW_MODE", cb_fields[SW_MODE].getSelectedIndex()); 
@@ -380,6 +386,8 @@ public class PrefModePane extends AbstractPrefOptionsPanel implements HelpCapabl
         else
             config_manager.setStringValue("SW_MODE_DESC", "PUMP_MODE");
             
+        
+       
         config_manager.setStringValue("PEN_BASAL_PRECISSION", (String)cb_fields[PEN_BASAL_PRECISSION].getSelectedItem());
         config_manager.setStringValue("PEN_BOLUS_PRECISSION", (String)cb_fields[PEN_BOLUS_PRECISSION].getSelectedItem());
         config_manager.setStringValue("PUMP_BASAL_PRECISSION", (String)cb_fields[PUMP_BASAL_PRECISSION].getSelectedItem());
