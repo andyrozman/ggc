@@ -1,7 +1,6 @@
 package ggc.core.plugins;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -195,8 +194,10 @@ public class PumpsPlugIn extends PlugInClient
      */
     public void actionPerformed(ActionEvent e)
     {
-        String command = e.getActionCommand();
-
+        this.m_server.actionPerformed(e);
+        
+  //      String command = e.getActionCommand();
+/*
         if (command.equals("pumps_read"))
         {
             this.readPumpsData();
@@ -239,7 +240,7 @@ public class PumpsPlugIn extends PlugInClient
         {
             System.out.println("Wrong command for this plug-in [Pumps]: " + command);
         }
-
+*/
     }
 
     
@@ -285,6 +286,7 @@ public class PumpsPlugIn extends PlugInClient
     }
 
     
+    @SuppressWarnings("unused")
     private void refreshPanels(int mask)
     {
         DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);

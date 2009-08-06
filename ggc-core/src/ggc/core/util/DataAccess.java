@@ -81,7 +81,7 @@ public class DataAccess extends ATDataAccessAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.4.8";
+    public static String CORE_VERSION = "0.4.9";
     
     /**
      * Current Db Version
@@ -223,9 +223,15 @@ public class DataAccess extends ATDataAccessAbstract
     public static final String PLUGIN_NUTRITION = "NutritionPlugIn";
     
     
+    /**
+     * GGC Mode: Pen/Injection
+     */
     public static final int GGC_MODE_PEN_INJECTION = 0;
     
     
+    /**
+     * GGC Mode: Pump
+     */
     public static final int GGC_MODE_PUMP = 1;
     
     
@@ -446,29 +452,47 @@ public class DataAccess extends ATDataAccessAbstract
 
 
     
+    /**
+     * Is Pen/Injection Mode
+     * 
+     * @return
+     */
     public boolean isPenInjectionMode()
     {
         return (getSoftwareMode()==GGC_MODE_PEN_INJECTION);
     }
     
     
+    /**
+     * Is Pump Mode
+     * 
+     * @return
+     */
     public boolean isPumpMode()
     {
         return (getSoftwareMode()==GGC_MODE_PUMP);
     }
     
     
+    /**
+     * Get Software Mode
+     * 
+     * @return
+     */
     public int getSoftwareMode()
     {
-        System.out.println("Sw Mode: " + this.m_cfgMgr.getIntValue("SW_MODE"));
-        
-        
+        //System.out.println("Sw Mode: " + this.m_cfgMgr.getIntValue("SW_MODE"));
         return this.m_cfgMgr.getIntValue("SW_MODE");
     }
     
+    /**
+     * Get Software Mode Description
+     * 
+     * @return
+     */
     public String getSoftwareModeDescription()
     {
-        System.out.println("Sw Mode Desc: " + this.m_cfgMgr.getStringValue("SW_MODE_DESC"));
+        //System.out.println("Sw Mode Desc: " + this.m_cfgMgr.getStringValue("SW_MODE_DESC"));
 
         return this.m_cfgMgr.getStringValue("SW_MODE_DESC");
     }

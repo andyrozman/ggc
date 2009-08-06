@@ -357,6 +357,7 @@ public class ImportDacioDb extends ImportTool
         public int id;
         public String value;
 
+        @SuppressWarnings("unused")
         public int compare(DacioDbData ddd1, DacioDbData ddd2)
         {
             if (ddd1.id < ddd2.id)

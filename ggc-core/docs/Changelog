@@ -6,12 +6,17 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
-0.4.8.1 (current)
+0.4.10 [current]
+
+
+0.4.9 [8.8.2009] - Release
     * Added entries to ConfigurationManager about Mode configuration and about Ratio Calculator
     * Extending DataAccess to get access to Basal/Bolus precission and Step data
     * Ratio Calculator is finished mostly (we need some more data statistics data to finish this)
     * BolusHelper has new label, showing value that is correctly rounded and new parameter describing from where 
       it's called
+    * Toolbars are working correctly now, with few more buttons displayed, there are still few more problems
+      to deal with, but software switch mostly works.
 
 0.4.8 [10.7.2009]
     * Bolus Helper fixed

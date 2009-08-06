@@ -203,8 +203,9 @@ public class NutriPlugIn extends PlugInClient
      */
     public void actionPerformed(ActionEvent e)
     {
-        String command = e.getActionCommand();
-        System.out.println("Wrong command for this plug-in [Nutri]: " + command);
+        this.m_server.actionPerformed(e);
+        //String command = e.getActionCommand();
+        //System.out.println("Wrong command for this plug-in [Nutri]: " + command);
     }
 
     

@@ -302,7 +302,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
             //System.out.println("difference: " + cu);
             
             float cu_fix = cu / m_da.getJFormatedTextValueFloat(this.ftf_bg_ins);
-            this.lbl_correction.setText(DataAccess.Decimal1Format.format(cu_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
+            this.lbl_correction.setText(DataAccess.Decimal2Format.format(cu_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
             
             sum = cu_fix;
         }
@@ -315,7 +315,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         if (this.curr_ch>0)
         {
             float ch_fix = this.curr_ch / m_da.getJFormatedTextValueFloat(this.ftf_ch_ins);
-            this.lbl_carb_dose.setText(DataAccess.Decimal1Format.format(ch_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
+            this.lbl_carb_dose.setText(DataAccess.Decimal2Format.format(ch_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
             
             sum += ch_fix;
         }
@@ -324,7 +324,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
             this.lbl_carb_dose.setText(m_ic.getMessage("NO_CARBS_DEFINED"));
         }
         
-        this.lbl_together.setText(DataAccess.Decimal1Format.format(sum) + "  " + m_ic.getMessage("UNIT_SHORT"));
+        this.lbl_together.setText(DataAccess.Decimal2Format.format(sum) + "  " + m_ic.getMessage("UNIT_SHORT"));
         
         //this.calc_insulin = sum; //Math.round(sum);
         
