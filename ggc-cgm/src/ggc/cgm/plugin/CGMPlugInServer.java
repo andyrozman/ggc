@@ -4,6 +4,7 @@ import ggc.cgm.util.DataAccessCGM;
 import ggc.cgm.util.I18nControl;
 
 import java.awt.Container;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JMenu;
 
@@ -244,6 +245,17 @@ public class CGMPlugInServer extends PlugInServer
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+
+    /** 
+     * actionPerformed
+     */
+    @Override
+    public void actionPerformed(ActionEvent ae)
+    {
+        // TODO Auto-generated method stub
+        
     }
     
     
