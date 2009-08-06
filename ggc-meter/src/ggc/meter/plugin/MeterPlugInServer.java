@@ -322,7 +322,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
             this, null, 
             ic, DataAccessMeter.getInstance(), parent);
         
-        System.out.println("MenuMeter Plugin");
+        //System.out.println("MenuMeter Plugin");
         
         
         return menu_meter;
