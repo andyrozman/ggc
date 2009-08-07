@@ -2,7 +2,12 @@
 Changes file for GGC Pump Tool
 ==============================
 
-1.0.2 (current)
+1.0.3 (current)
+
+1.0.2 [6.8.2009] 
+    * Started tinkering with Dana device and BlueTooth connection
+    * Plugin changed fully to v2 framework, all menus are now created directly in plugin
+    * Separate class that now holds all device/company variables
 
 1.0.1 [10.7.2009]
     * required base plugin is now 0.4.1 (framework v2)

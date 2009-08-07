@@ -462,11 +462,11 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.weblister_items.add(new BaseListEntry("Insulet", "/pumps/insulet.html", BaseListEntry.STATUS_NOTPLANNED));
         this.weblister_items.add(new BaseListEntry("Minimed", "/pumps/minimed.html", BaseListEntry.STATUS_IMPLEMENTING));
         this.weblister_items.add(new BaseListEntry("Roche", "/pumps/roche.html", BaseListEntry.STATUS_IMPLEMENTING));
-        this.weblister_items.add(new BaseListEntry("Sooil", "/pumps/sooil.html", BaseListEntry.STATUS_NOTPLANNED));
+        this.weblister_items.add(new BaseListEntry("Sooil", "/pumps/sooil.html", BaseListEntry.STATUS_IMPLEMENTING));
         
         
-        this.weblister_title = "Pumps List";
-        this.weblister_desc = "No Description";
+        this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
+        this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
         
         
 //        public BaseListEntry(String name, String page, int status)
