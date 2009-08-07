@@ -1,7 +1,15 @@
 
 Changes file for GGC Meter Tool
 ===============================
-1.1.4 [current]
+1.1.5 [current]
+
+1.1.4 [6.8.2009]
+    * Added support for Abbott Optium Xceed and Precission Xtra
+    * framework was extended so that now we can also write/read other data, display still needs to be done
+    * Some of Plugin changed to v2 framework, all menus are now created directly in plugin
+    * Separate class that now holds all device/company variables
+    * required plugin_base version 0.4.2
+     
 
 1.1.3 [29.7.2009]
     * Added support for OT Select device
