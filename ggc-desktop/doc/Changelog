@@ -5,8 +5,13 @@ Changelog file for GGC Desktop (GNU Gluco Control)
 Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
+0.4.7.1 (current)
 
-0.4.6.1 (current)
+0.4.6.1 [6.8.2009] 
+    * Toolbars are working correctly now, with few more buttons displayed, there are still few more problems
+      to deal with, but software switch mostly works.
+    * Sw mode switching now almost works, need to do Statistics, and reload when changed in config
+
 
 0.4.5.3 (18.7.2009) [Andy] 
     * DailyRowDialog food selection is fixed
