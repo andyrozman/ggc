@@ -2,7 +2,10 @@
 Changes file for GGC Plug-In Base
 ==================================
 
-0.4.2 current
+0.4.3 current
+
+0.4.2 [6.8.2009] Andy
+    * Minor changes in data classes, for better meter data handling
 
 0.4.1 [10.7.2009] Andy
     * major changes in DeviceValuesTableModel, which are used on all sub projects
