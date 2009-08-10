@@ -3,6 +3,8 @@ Changes file for GGC Plug-In Base
 ==================================
 
 0.4.3 current
+    * Added BlueToothProtocol class (uses BT over serial, but using IBM javax.comm library)
+    * Added DeviceValuesWriter and DeviceTempValues (writer is used to "write" temp values into real classes)
 
 0.4.2 [6.8.2009] Andy
     * Minor changes in data classes, for better meter data handling
