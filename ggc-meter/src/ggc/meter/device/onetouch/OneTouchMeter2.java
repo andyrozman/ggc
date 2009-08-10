@@ -218,7 +218,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
             write(hex_utils.reconvert(rec_bef + "F5" + "01" + rec_af));
             
             reta = this.readLineBytes();
-            reta = getByteSubArray(reta, 6+5, 3, 2);
+            reta = hex_utils.getByteSubArray(reta, 6+5, 3, 2);
             
             //this.showByteArray(reta);
             
@@ -495,22 +495,22 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         //String els = tryToConvert(reta, 6+5, 3, true);
         
         //reta = getByteSubArray(reta, 6+5, 3, 2);
-        this.showByteArrayHex(reta);
+        hex_utils.showByteArrayHex(reta);
         
-        byte[] dt_bg = this.getByteSubArray(reta, 6+5, 3, 8);
+        byte[] dt_bg = hex_utils.getByteSubArray(reta, 6+5, 3, 8);
         
-        int bg_val = Integer.parseInt(this.getCorrectHexValue(dt_bg[7]) +
-        		this.getCorrectHexValue(dt_bg[6]) +
-        		this.getCorrectHexValue(dt_bg[5]) +
-        		this.getCorrectHexValue(dt_bg[4])
+        int bg_val = Integer.parseInt(hex_utils.getCorrectHexValue(dt_bg[7]) +
+            hex_utils.getCorrectHexValue(dt_bg[6]) +
+            hex_utils.getCorrectHexValue(dt_bg[5]) +
+            hex_utils.getCorrectHexValue(dt_bg[4])
         		, 16);
         
-        System.out.println("BG: " + bg_val + " -> " + m_da.getBGValueDifferent(DataAccessMeter.BG_MGDL, bg_val));
+        //System.out.println("BG: " + bg_val + " -> " + m_da.getBGValueDifferent(DataAccessMeter.BG_MGDL, bg_val));
         
-        long dt_val = Integer.parseInt(this.getCorrectHexValue(dt_bg[3]) +
-        		this.getCorrectHexValue(dt_bg[2]) +
-        		this.getCorrectHexValue(dt_bg[1]) +
-        		this.getCorrectHexValue(dt_bg[0])
+        long dt_val = Integer.parseInt(hex_utils.getCorrectHexValue(dt_bg[3]) +
+            hex_utils.getCorrectHexValue(dt_bg[2]) +
+            hex_utils.getCorrectHexValue(dt_bg[1]) +
+            hex_utils.getCorrectHexValue(dt_bg[0])
         		, 16);
         
         GregorianCalendar gc = new GregorianCalendar();
@@ -545,26 +545,6 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     }
     
     
-    private String getCorrectHexValue(byte inp)
-    {
-    	String hx = Integer.toHexString((char)inp);
-    	
-    	if (hx.length()==0)
-    		return "00";
-    	else if (hx.length()==1)
-    		return "0" + hx;
-    	else if (hx.length()==2)
-    		return hx;
-    	else if (hx.length()==4)
-    		return hx.substring(2);
-    	else
-    		System.out.println("HEX ERROR !!!!!!!!!!!!!!!!");
-    	
-        //System.out.print(Integer.toHexString((char)arr[i]) + " ");
-
-    	
-    	return null;
-    }
     
     
     boolean debug_crc = false;
@@ -658,33 +638,8 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     }
     
     
-    @SuppressWarnings("unused")
-    private void showByteArray(byte[] arr)
-    {
-        System.out.println("Byte array: ");
-        
-        for(int i=0; i<arr.length; i++)
-        {
-            System.out.print(arr[i] + " ");
-        }
-        
-    }
     
 
-    private void showByteArrayHex(byte[] arr)
-    {
-        System.out.print("Byte array: ");
-        
-        for(int i=0; i<arr.length; i++)
-        {
-        	System.out.print(getCorrectHexValue(arr[i]) + " ");
-        	//getCorrectHexValue(arr[i]);
-            //System.out.print(Integer.toHexString((char)arr[i]) + " ");
-        }
-        
-        System.out.print("\n");
-        
-    }
     
     
     private String tryToConvert(byte[] arr, int start, int end, boolean display)
@@ -713,28 +668,6 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     }*/
 
     
-    private byte[] getByteSubArray(byte[] arr, int start, int end, int length)
-    {
-        //System.out.println();
-        //StringBuilder sb = new StringBuilder();
-        byte[] arr_out = new byte[length];
-        int j=0;
-        
-        for(int i=start; i<(arr.length-end); i++)
-        {
-            arr_out[j] = arr[i];
-            //System.out.print(arr[i] + " ");
-            //sb.append((char)arr[i]);
-            j++;
-        }
-        
-        //String ret = sb.toString();
-        
-        //if (display)
-        //    System.out.println(ret);
-        
-        return arr_out;
-    }
     
     
  

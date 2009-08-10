@@ -106,6 +106,7 @@ public class MeterManager extends DeviceManager
         this.supported_devices.addAll(new Roche().getDevices());
         this.supported_devices.addAll(new LifeScan().getDevices());
         this.supported_devices.addAll(new Abbott().getDevices());
+        this.supported_devices.addAll(new Menarini().getDevices());
     }
     
 

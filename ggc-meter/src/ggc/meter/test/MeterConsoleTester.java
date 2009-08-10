@@ -3,6 +3,7 @@ package ggc.meter.test;
 import ggc.meter.device.abbott.OptiumXceed;
 import ggc.meter.device.accuchek.AccuChekAviva;
 import ggc.meter.device.ascensia.AscensiaContour;
+import ggc.meter.device.menarini.GlucofixMio;
 import ggc.meter.device.onetouch.OneTouchUltra;
 import ggc.meter.device.onetouch.OneTouchUltraEasy;
 import ggc.plugin.output.ConsoleOutputWriter;
@@ -77,7 +78,8 @@ public class MeterConsoleTester
     	    //this.startOneTouchUltra(portName);
     	    
     	    // this.startOneTouchEasy(portName);
-    	    startOptiumXceed(portName);
+    	    //startOptiumXceed(portName);
+    	    this.startMenarini(portName);
     	    
     	    //testLogger();
     	    
@@ -218,6 +220,34 @@ public class MeterConsoleTester
         
         OptiumXceed otu = new OptiumXceed(portName, cow);
         otu.readDeviceDataFull();
+    }
+    
+
+    
+    /**
+     * OT Ultra testing
+     * 
+     * @param portName
+     * @throws Exception
+     */
+    public void startMenarini(String portName) throws Exception
+    {
+        
+        ConsoleOutputWriter cow = new ConsoleOutputWriter();
+        
+//a        thread.addJob(cow.getOutputUtil());
+        
+        
+        
+        displaySerialPorts();
+        
+        GlucofixMio otu = new GlucofixMio("COM16", cow);
+        
+        otu.readDeviceDataFull();
+        
+        //m_meter = new OneTouchUltra(portName, cow);
+        //otu.readDeviceDataFull(); 
+
     }
     
     

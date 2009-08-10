@@ -18,6 +18,9 @@ import gnu.io.SerialPortEvent;
 
 import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.utils.ATechDate;
 import com.atech.utils.TimeZoneUtil;
 
@@ -47,31 +50,14 @@ import com.atech.utils.TimeZoneUtil;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-// while basic OT ascii protocol is implemented this file is still unclean and we are waiting to get 
-// more of old protocols, before we do finishing touches...
-// so far we are also missing few pictures and ALL instructions for meters
-
 public class OptiumXceed extends AbstractSerialMeter
 {
     
-    
-    
-    
-//    private static Log log = LogFactory.getLog(OptiumXceed.class);
-
-    
-    
+    private static Log log = LogFactory.getLog(OptiumXceed.class);
     protected boolean device_running = true;
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
-    //public int meter_type = 20000;
     private int entries_max = 0;
     private int entries_current = 0;
-//    private int reading_status = 0;
-    
-    //private int info_tokens;
-    //private String date_order;
-    
     
     
     /**
@@ -139,21 +125,10 @@ public class OptiumXceed extends AbstractSerialMeter
         }
         catch(Exception ex)
         {
-            //log.error("")
-            //System.out.println("OneTouchMeter: Error connecting !\nException: " + ex);
-            //ex.printStackTrace();
+            log.error("OptiumXceed: Error connecting !\nException: " + ex, ex);
+            System.out.println("OptiumXceed: Error connecting !\nException: " + ex);
         }
         
-        /*
-        if (this.getDeviceId()==OneTouchMeter.METER_LIFESCAN_ONE_TOUCH_ULTRA)
-        {
-            this.info_tokens = 3;
-            this.date_order = "MDY";
-        }
-        else
-        {
-            this.info_tokens = 8;
-        }*/
         
     }
 
@@ -212,7 +187,7 @@ public class OptiumXceed extends AbstractSerialMeter
             this.output_writer.endOutput();
         }
         
-        System.out.println("Reading finished !");
+        //System.out.println("Reading finished !");
         
     }
 
@@ -230,8 +205,6 @@ public class OptiumXceed extends AbstractSerialMeter
             
             status = readByteTimed();
             
-            //System.out.println("Status: " + status);
-
             if (status == SerialProtocol.ASCII_ENQ)
             {
                 write(SerialProtocol.ASCII_ACK);
@@ -243,13 +216,11 @@ public class OptiumXceed extends AbstractSerialMeter
             else if (status == 2) 
             {
                 this.readLine();
-                //System.out.println(this.readLine());
                 commandAfterRead();
                 return true;
             }
             else if ((status == 4))
             {
-                //write(SerialProtocol.ASCII_ACK);
                 commandAfterRead();
                 return true;
             }
@@ -264,31 +235,6 @@ public class OptiumXceed extends AbstractSerialMeter
         
         return false;
     }
-    
-/*
-    private void endMessageToMeter() throws Exception
-    {
-        
-        int status = readByte();
-
-        if (status == SerialProtocol.ASCII_ACK)
-        {
-            //write(SerialProtocol.ASCII_EOT);
-        }
-        
-        write(SerialProtocol.ASCII_EOT);
-        
-    }
-  */  
-    
-    
-    
-
-    
-    
-    
-    
-    
     
     
     
@@ -307,12 +253,10 @@ public class OptiumXceed extends AbstractSerialMeter
         
         if (type_id.equals("01"))
         {
-            //System.out.println("BG record: ");
             is_BG = true;
         }
         else if (type_id.equals("04"))
         {
-            //System.out.println("Urine record: ");
             is_BG = false;
         }
         else
@@ -320,40 +264,20 @@ public class OptiumXceed extends AbstractSerialMeter
             this.entries_current++;
             readingEntryStatus();
             
-            //System.out.println("Unknown type: " + type_id);
             return;
         }
             
-//        ATechDate atd = getDateTime(data[2], data[3]);
-        
         if (is_BG)
             addBGData(data[4], getDateTime(data[2], data[3]));
         else
             addUrineData(data[4], getDateTime(data[2], data[3]));
         
-        
-        
-        
-//        System.out.println("ATd: " + atd);
-        
-        
-        //System.out.println("Data[0]: " + data[0].substring(1));
-        
-//        System.out.println("L: " + line);
-        
         StringTokenizer strtok = new StringTokenizer(line, "\t");
         
         while(strtok.hasMoreTokens())
         {
-            //System.out.println("token: " + strtok.nextToken());
             strtok.nextToken();
         }
-        
-        
-        
-        
-        //System.out.println("Tabs: " + line.contains("\t"));
-        
         
     }
     
@@ -386,28 +310,11 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         this.output_writer.setSubStatus(null);
         this.output_writer.endOutput();
+        this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
         System.out.println("Reading finished prematurely !");
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    private void connectAndExit()
-    {
-        System.out.println("Error reading data from device !!!");
-    }*/
-    
-    
-    
-
-
     private boolean isDeviceFinished()
     {
     	return (this.entries_current==this.entries_max);
@@ -497,31 +404,6 @@ public class OptiumXceed extends AbstractSerialMeter
     }
     
 
-    /*
-    protected String readLineDebug() throws IOException
-    {
-        String rdl = this.readLine();
-        
-        log.debug(rdl);
-        
-        return rdl;
-    }*/
-    
-    
-    /*
-    private boolean isDeviceStopped(String vals)
-    {
-    	if ((vals == null) ||
-    	    ((this.reading_status==1) && (vals.length()==0)) ||
-            (!this.device_running) ||
-            (this.output_writer.isReadingStopped()))
-    		return true;
-    	
-        return false;
-    }
-    */
-    
-    
     
     /**
      * Add BG Data
@@ -560,10 +442,6 @@ public class OptiumXceed extends AbstractSerialMeter
             return;
 
         MeterValuesEntry mve = new MeterValuesEntry();
-        //mve.setBgUnit(OutputUtil.BG_MGDL);
-  
-        //System.out.println("Ur: " + m_da.getBGValueByType(DataAccessMeter.BG_MGDL, DataAccessMeter.BG_MMOL, data));
-        
         
         mve.setDateTimeObject(adt);
         mve.setSpecialEntry(MeterValuesEntry.SPECIAL_ENTRY_URINE_MMOLL, 
@@ -587,30 +465,13 @@ public class OptiumXceed extends AbstractSerialMeter
     }
     
     
-    
-    
-    
-    protected String getParameterValue(String val)
-    {
-        String d = val.substring(1, val.length()-1);
-        return d.trim();
-    }
-    
-
-    @SuppressWarnings("unused")
-    private static String months_en[] = { "", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"  };
-    
     protected ATechDate getDateTime(String date, String time)
     {
-        
         long dt = m_da.getLongValueFromString(date) * 10000L;
-        
         String tm = m_da.replaceExpression(time, ":", "");
-        
         dt += m_da.getLongValueFromString(tm);
         
-        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt);
-        
+        return tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt));
     }
 
     
@@ -619,11 +480,7 @@ public class OptiumXceed extends AbstractSerialMeter
     private void readingEntryStatus()
     {
         float proc_read = ((this.entries_current*1.0f)  / this.entries_max);
-        
         float proc_total = 5 + (95 * proc_read);
-        
-        //System.out.println("proc_read: " + proc_read + ", proc_total: " + proc_total);
-        
         this.output_writer.setSpecialProgress((int)proc_total); //.setSubStatus(sub_status)
     }
     
@@ -637,17 +494,6 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         return true;
     }    
-    
-    
-    
-    /**
-     * Returns short name for meter (for example OT Ultra, would return "Ultra")
-     * 
-     * @return short name of meter
-     */
-    //public abstract String getShortName();
-    
-    
     
     
     
@@ -774,6 +620,7 @@ public class OptiumXceed extends AbstractSerialMeter
         return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
 
+    
     /** 
      * getInstructions
      */
