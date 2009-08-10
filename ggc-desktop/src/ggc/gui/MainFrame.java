@@ -2,6 +2,7 @@ package ggc.gui;
 
 import ggc.GGC;
 import ggc.core.data.graph.GraphViewSpread;
+import ggc.core.db.GGCDbLoader;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.util.DataAccess;
@@ -120,7 +121,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     private Hashtable<String, GGCAction> toolbar_pen_items = null;
     private Hashtable<String, GGCAction> toolbar_pump_items = null;
     
-    private int current_toolbar = 1;
+    private int current_toolbar = -1;
 
     /*
      * private GGCAction ac_file_quit, // file ac_bgs_daily, ac_rep_simple,
@@ -304,7 +305,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     
     private void setSoftwareMode()
     {
-        //System.out.println("SW: " + m_da.getSoftwareMode());
+        System.out.println("SW: " + m_da.getSoftwareMode());
         
         if (m_da.getSoftwareMode()==-1)
             return;
@@ -320,18 +321,20 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         if (m_da.isPumpMode())
         {
-            if (this.current_toolbar==MainFrame.TOOLBAR_PEN_INJECTION)
+            if (this.current_toolbar!=MainFrame.TOOLBAR_PUMP)
             {
                 this.current_toolbar=MainFrame.TOOLBAR_PUMP;
-                getContentPane().remove(toolbar_pen); 
+                getContentPane().remove(toolbar_pen);
+                getContentPane().remove(toolbar_pump); 
                 getContentPane().add(toolbar_pump, BorderLayout.NORTH);
             }
         }
         else
         {
-            if (this.current_toolbar==MainFrame.TOOLBAR_PUMP)
+            if (this.current_toolbar!=MainFrame.TOOLBAR_PEN_INJECTION)
             {
                 this.current_toolbar=MainFrame.TOOLBAR_PEN_INJECTION;
+                getContentPane().remove(toolbar_pen);
                 getContentPane().remove(toolbar_pump); 
                 getContentPane().add(toolbar_pen, BorderLayout.NORTH);
             }
@@ -1430,6 +1433,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
      */
     public void update(Observable obj, Object arg)
     {
+        System.out.println("update");
         if (arg instanceof Integer)
         {
             Integer i = (Integer)arg;
@@ -1446,7 +1450,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
             //Integer i = (Integer)arg;
             setMenusByDbLoad(i.intValue());
             
-            //this.setSoftwareMode();
+            if (m_da.getDbLoadingStatus() >= GGCDbLoader.DB_DATA_BASE);
+                this.setSoftwareMode();
             //this.setTitle();
             
             if (i == RefreshInfo.DB_LOADED)
