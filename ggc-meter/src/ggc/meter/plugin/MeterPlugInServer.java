@@ -139,7 +139,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
                     //ddh.setDbDataReader(reader);
                     
                     //new MeterInstructionsDialog(reader, this);
-                    new DeviceInstructionsDialog(this.parent, m_da_local, /*reader,*/ this);
+                    new DeviceInstructionsDialog(this.parent, m_da_local, /*reader,*/ this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
                     return;
                 }
 
@@ -355,7 +355,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         
         if (command.equals("meters_read"))
         {
-            new DeviceInstructionsDialog(this.parent, m_da_local, this);
+            new DeviceInstructionsDialog(this.parent, m_da_local, this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
         }
         else if (command.equals("meters_list"))
         {
