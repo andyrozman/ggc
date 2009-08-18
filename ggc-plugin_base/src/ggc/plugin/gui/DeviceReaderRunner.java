@@ -12,6 +12,7 @@ import ggc.plugin.util.LogEntryType;
 
 import java.lang.reflect.Constructor;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
@@ -59,8 +60,11 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     boolean special_status = false;
 
 
-    DeviceConfigEntry configured_meter;
-    DeviceDisplayDataDialog dialog;
+    DeviceConfigEntry configured_device;
+    DeviceDisplayDataDialog dialog_data;
+    DeviceDisplayConfigDialog dialog_config;
+    int continuing_type = 0;
+    
 
     boolean running = true;
     DataAccessPlugInBase m_da;
@@ -69,16 +73,31 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      * Constructor
      * 
      * @param da 
-     * @param configured_meter
+     * @param _configured_device
      * @param dialog
      */
-    public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry configured_meter, DeviceDisplayDataDialog dialog)
+    public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry _configured_device, DeviceDisplayDataDialog dialog)
     {
         this.m_da = da;
-        this.configured_meter = configured_meter;
-        this.dialog = dialog;
+        this.configured_device = _configured_device;
+        this.continuing_type = DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA;
+        this.dialog_data = dialog;
     }
     
+    /**
+     * Constructor
+     * 
+     * @param da 
+     * @param _configured_device
+     * @param dialog
+     */
+    public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry _configured_device, DeviceDisplayConfigDialog dialog)
+    {
+        this.m_da = da;
+        this.configured_device = _configured_device;
+        this.continuing_type = DeviceInstructionsDialog.CONTINUING_TYPE_READ_CONFIGURATION;
+        this.dialog_config = dialog;
+    }
     
     
     /** 
@@ -93,40 +112,45 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
             try
             {
 
-                lg = "Trying to reading old data from GGC...";
-                log.debug(lg);
-                writeLog(LogEntryType.DEBUG, lg);
-
-                OldDataReaderAbstract odra = m_da.getOldDataReader();
                 
-                if (odra!=null)
+                
+                if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
                 {
-                    
-                    odra.setDeviceReadRunner(this);
-                    m_da.getDeviceDataHandler().setDeviceData(odra.readOldEntries());
-                    lg = "Reading of old data finished !";
+                    lg = "Trying to reading old data from GGC...";
                     log.debug(lg);
                     writeLog(LogEntryType.DEBUG, lg);
-                }
-                else
-                {
-                    lg = "Reading unsucessful !";
-                    this.canOldDataReadingBeInitiated(false);
-                    log.warn(lg);
-                    writeLog(LogEntryType.WARNING, lg);
+    
+                    OldDataReaderAbstract odra = m_da.getOldDataReader();
+                    
+                    if (odra!=null)
+                    {
+                        
+                        odra.setDeviceReadRunner(this);
+                        m_da.getDeviceDataHandler().setDeviceData(odra.readOldEntries());
+                        lg = "Reading of old data finished !";
+                        log.debug(lg);
+                        writeLog(LogEntryType.DEBUG, lg);
+                    }
+                    else
+                    {
+                        lg = "Reading unsucessful !";
+                        this.canOldDataReadingBeInitiated(false);
+                        log.warn(lg);
+                        writeLog(LogEntryType.WARNING, lg);
+                    }
                 }
                 
                 
-                lg = "Creating instance [name=" + this.configured_meter.name + ",company=" + this.configured_meter.device_company + ",device=" + this.configured_meter.device_device + ",comm_port=" + this.configured_meter.communication_port + "]";
+                lg = "Creating instance [name=" + this.configured_device.name + ",company=" + this.configured_device.device_company + ",device=" + this.configured_device.device_device + ",comm_port=" + this.configured_device.communication_port + "]";
                 log.debug(lg);
                 writeLog(LogEntryType.DEBUG, lg);
                 
-                String className = m_da.getManager().getDeviceClassName(this.configured_meter.device_company, this.configured_meter.device_device); 
+                String className = m_da.getManager().getDeviceClassName(this.configured_device.device_company, this.configured_device.device_device); 
                 
                 Class<?> c = Class.forName(className);
                 
                 Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class);
-                this.m_mi = (DeviceInterface)cnst.newInstance(this.configured_meter.communication_port, this);
+                this.m_mi = (DeviceInterface)cnst.newInstance(this.configured_device.communication_port, this);
                 this.setDeviceComment(this.m_mi.getDeviceSpecialComment());
                 this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
                 
@@ -141,7 +165,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 {
                     this.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
                     
-                    JOptionPane.showMessageDialog(dialog, 
+                    JOptionPane.showMessageDialog(this.getDialog(), 
                                  m_da.getI18nControlInstance().getMessage("ERROR_CONTACTING_DEVICE"), 
                                  m_da.getI18nControlInstance().getMessage("ERROR"), 
                                  JOptionPane.ERROR_MESSAGE);
@@ -149,13 +173,25 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                     return;
                 }
                 
-                
-                lg = "Start reading of data";
-                log.debug(lg);
-                writeLog(LogEntryType.DEBUG, lg);
-                
-                this.m_mi.readDeviceDataFull();
 
+                if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+                {
+                    lg = "Start reading of data";
+                    log.debug(lg);
+                    writeLog(LogEntryType.DEBUG, lg);
+                    
+                    this.m_mi.readDeviceDataFull();
+                    
+                }
+                else
+                {
+                    lg = "Start reading of configuration";
+                    log.debug(lg);
+                    writeLog(LogEntryType.DEBUG, lg);
+                    
+                    this.m_mi.readConfiguration();
+                }
+                
                 running = false;
                 
                 this.m_mi.dispose();
@@ -178,7 +214,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                     
                     String[] dta = m_da.getUnsatisfiedLinkData(ex);
                     
-                    JOptionPane.showMessageDialog(this.dialog,
+                    JOptionPane.showMessageDialog(this.getDialog(),
                         String.format(ic.getMessage("NO_BINARY_PART_FOUND"), dta[0], dta[2], dta[1]),
                         ic.getMessage("ERROR") + ": " + dta[0], 
                         JOptionPane.ERROR_MESSAGE, 
@@ -200,6 +236,20 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     }
 
     
+    /**
+     * Get Dialog 
+     * 
+     * @return
+     */
+    public JDialog getDialog()
+    {
+        if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+            return this.dialog_data;
+        else
+            return this.dialog_config;
+    }
+    
+    
 
     
     /**
@@ -213,15 +263,18 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
         {
             count++;
             
-            float f = ((count  * 1.0f)/this.dialog.output_util.getMaxMemoryRecords()) * 100.0f;
+            float f = ((count  * 1.0f)/getOutputUtil().getMaxMemoryRecords()) * 100.0f;
             
             //int i = (int)((count/500) * 100);
             //System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
             
-            dialog.progress.setValue((int)f);
+            if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+                this.dialog_data.progress.setValue((int)f);
+            else
+                this.dialog_config.progress.setValue((int)f);
         }
         
-        this.dialog.writeData(data);
+        getOutputWriter().writeData(data);
     }
 
 
@@ -233,7 +286,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void writeLog(int entry_type, String message)
     {
-        this.dialog.writeLog(entry_type, message);
+        getOutputWriter().writeLog(entry_type, message);
     }
 
 
@@ -246,7 +299,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void writeLog(int entry_type, String message, Exception ex)
     {
-        this.dialog.writeLog(entry_type, message, ex);
+        getOutputWriter().writeLog(entry_type, message, ex);
     }
     
     
@@ -263,7 +316,10 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public DeviceIdentification getDeviceIdentification()
     {
-        return this.dialog.device_ident;
+        if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+            return this.dialog_data.device_ident;
+        else
+            return this.dialog_config.device_ident;
     }
 
 
@@ -272,7 +328,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public OutputUtil getOutputUtil()
     {
-        return this.dialog.output_util;
+        return getOutputWriter().getOutputUtil();
     }
 
 
@@ -289,7 +345,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void setBGOutputType(int bg_type)
     {
-        this.dialog.output_util.setOutputBGType(bg_type);
+        getOutputUtil().setOutputBGType(bg_type);
     }
 
 
@@ -298,9 +354,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void setDeviceIdentification(DeviceIdentification di)
     {
-        this.dialog.setDeviceIdentification(di);
-        // TODO Auto-generated method stub
-        
+        getOutputWriter().setDeviceIdentification(di);
     }
 
     /**
@@ -310,7 +364,10 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void setDeviceComment(String com)
     {
-        this.dialog.setDeviceComment(com);
+        if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+            this.dialog_data.setDeviceComment(com);
+        else
+            this.dialog_config.setDeviceComment(com);
     }
     
     int count = 0;
@@ -326,7 +383,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     public void setSpecialProgress(int value)
     {
         //System.out.println("Runner: Special progres: " + value);
-        this.dialog.setSpecialProgress(value);
+        getOutputWriter().setSpecialProgress(value);
     }
     
     
@@ -336,7 +393,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     public void setSubStatus(String sub_status)
     {
         //System.out.println("Runner: Sub Status: " + sub_status);
-        this.dialog.setSubStatus(sub_status);
+        getOutputWriter().setSubStatus(sub_status);
     }
     
     
@@ -345,7 +402,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public String getSubStatus()
     {
-        return this.dialog.getSubStatus();
+        return getOutputWriter().getSubStatus();
     }
     
     
@@ -354,7 +411,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void setReadingStop()
     {
-        this.dialog.setReadingStop();
+        getOutputWriter().setReadingStop();
     }
     
     /**
@@ -362,7 +419,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public boolean isReadingStopped()
     {
-        return this.dialog.isReadingStopped();
+        return getOutputWriter().isReadingStopped();
     }
     
     
@@ -374,7 +431,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void setStatus(int status)
     {
-        this.dialog.setStatus(status);
+        getOutputWriter().setStatus(status);
     }
     
     
@@ -383,7 +440,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public int getStatus()
     {
-        return this.dialog.getStatus();
+        return getOutputWriter().getStatus();
     }
     
 
@@ -392,7 +449,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void writeDeviceIdentification()
     {
-        this.dialog.writeDeviceIdentification();
+        getOutputWriter().writeDeviceIdentification();
     }
 
 
@@ -422,7 +479,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void setOldDataReadingProgress(int value)
     {
-        this.dialog.setOldDataReadingProgress(value);
+        getOutputWriter().setOldDataReadingProgress(value);
     }
 
 
@@ -435,7 +492,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void canOldDataReadingBeInitiated(boolean value)
     {
-        this.dialog.canOldDataReadingBeInitiated(value);
+        getOutputWriter().canOldDataReadingBeInitiated(value);
     }
     
     
@@ -461,6 +518,18 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     {
         return this.device_source;
     }
+    
+    
+    /**
+     * Get OutputWriter
+     * 
+     * @return
+     */
+    public OutputWriter getOutputWriter()
+    {
+        return (OutputWriter)getDialog();
+    }
+    
     
     
     

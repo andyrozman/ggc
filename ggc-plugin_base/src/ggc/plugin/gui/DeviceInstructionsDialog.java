@@ -77,15 +77,27 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     //JFrame parentMy;
     //DbDataReaderAbstract reader;
     //DevicePlugInServer server;
+    int continuing_type = CONTINUING_TYPE_READ_DATA;
 
-
+    /**
+     * Continuing Type: Read Data
+     */
+    public static final int CONTINUING_TYPE_READ_DATA = 1;
+    
+    /**
+     * Continuing Type: Read Configuration
+     */
+    public static final int CONTINUING_TYPE_READ_CONFIGURATION = 2;
+    
+    
     /**
      * Constructor (for standalone start)
      * 
      * @param parent 
      * @param da 
+     * @param continued_type 
      */
-    public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da)
+    public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da, int continued_type)
     {
         super();
         this.m_da = da;
@@ -116,8 +128,9 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      * @param da 
      * @param parent 
      * @param server
+     * @param continued_type 
      */
-    public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da, /*DbDataReaderAbstract reader,*/ DevicePlugInServer server)
+    public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da, DevicePlugInServer server, int continued_type)
     {
         super();
 
