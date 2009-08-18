@@ -73,6 +73,32 @@ public class GGCDbLoader extends Thread
     
     
     /**
+     * Db Status: Not started
+     */
+    public static final int DB_NOT_STARTED = 0;
+    
+    /**
+     * Db Status: Init done
+     */
+    public static final int DB_INIT_DONE = 1;
+    
+    /**
+     * Db Status: Base data loaded
+     */
+    public static final int DB_DATA_BASE = 2;
+    
+    /**
+     * Db Status: Data from plugins loaded
+     */
+    public static final int DB_DATA_PLUGINS = 3;
+    
+    /**
+     * Db Status: Db Initialization done - Load completed
+     */
+    public static final int DB_INIT_FINISHED = 4;
+    
+    
+    /**
      * Constructor
      * 
      * @param da
@@ -151,6 +177,7 @@ public class GGCDbLoader extends Thread
         db.initDb();
 
         setDbStatus(RefreshInfo.DB_INIT_DONE); 
+        m_da.setDbLoadingStatus(GGCDbLoader.DB_INIT_DONE);
 
         
         // 2 - load configuration
@@ -158,8 +185,10 @@ public class GGCDbLoader extends Thread
         db.loadConfigData();
         db.loadStaticData();
         m_da.setDb(db);
+        m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_BASE);
         
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_GENERAL_INFO);
+
         
         // 3 - init plugins
         m_da.initPlugIns();
@@ -167,7 +196,7 @@ public class GGCDbLoader extends Thread
         
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_PLUGINS_ALL);
         
-        // 3 - load daily data for display, appointments
+        // 4 - load daily data for display, appointments
         
         if (m_da.getParent()!=null)
             m_da.loadDailySettings(new GregorianCalendar(), true);
@@ -206,7 +235,10 @@ public class GGCDbLoader extends Thread
         setDbStatus(RefreshInfo.DB_BASE_DONE); 
         
         
+        // 5 - Load plugin data
+        
         m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommand(NutriPlugIn.COMMAND_LOAD_DATABASE);
+        m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_PLUGINS);
         setDbStatus(RefreshInfo.DB_LOADED);
         
         //refreshMenus();
@@ -258,7 +290,7 @@ public class GGCDbLoader extends Thread
         }
 */
         
-        
+        m_da.setDbLoadingStatus(GGCDbLoader.DB_INIT_FINISHED);
         m_da.runAfterDbLoad();
         
     	long dif = System.currentTimeMillis() - start_time;
@@ -276,22 +308,9 @@ public class GGCDbLoader extends Thread
     {
         //if (part_start)
         //    return;
+//        m_da.setDbLoadingStatus(status);
 	
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, status);
-        
-        /*
-        if (m_bar!=null)
-        {
-            m_bar.setDbStatus(status);
-            ((MainFrame)m_da.getMainParent()).setMenusByDbLoad(status);
-        }
-        else
-        {
-            m_barL.setDbStatus(status);
-            
-            // TODO: version 0.4, when fixing GGC Little
-            //setMenusByDbLoad(int status)
-        }*/
     }
 
 
