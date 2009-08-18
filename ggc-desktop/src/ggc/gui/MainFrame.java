@@ -305,7 +305,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     
     private void setSoftwareMode()
     {
-        System.out.println("SW: " + m_da.getSoftwareMode());
+        //System.out.println("SW: " + m_da.getSoftwareMode());
         
         if (m_da.getSoftwareMode()==-1)
             return;
@@ -1433,7 +1433,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
      */
     public void update(Observable obj, Object arg)
     {
-        System.out.println("update");
+        //System.out.println("update");
         if (arg instanceof Integer)
         {
             Integer i = (Integer)arg;
