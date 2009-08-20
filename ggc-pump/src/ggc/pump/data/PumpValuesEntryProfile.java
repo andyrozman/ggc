@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATechDate;
 
@@ -44,7 +45,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValuesEntryInterface //PumpValuesEntryAbstract, DatabaseObjectHibernate 
+public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEntryInterface , DatabaseObjectHibernate 
 {
 
     private static final long serialVersionUID = 7772340503037499446L;
@@ -502,9 +503,32 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
      */
     public Object getTableColumnValue(int index)
     {
-        
-        // TODO Auto-generated method stub
-        return null;
+        switch (index)
+        {
+            case 0:
+                return getDateTimeObject().getDateTimeString();
+
+            case 1:
+                return ic.getMessage("EXT_TYPE_SH");
+
+            case 2:
+                return ""; //da.getAdditionalTypes().getTypeDescription(this.getType());
+
+            case 3:
+                return ""; 
+
+            case 4:
+                return this.getValue();
+                
+            case 5:
+                return this.getStatus();
+            
+            case 6:
+                return new Boolean(getChecked());
+
+            default:
+                return "";
+        }
     }
 
 
@@ -526,9 +550,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
      */
     public String getSpecialId()
     {
-        // TODO
-        //return "PP_" + this.datetime.getATDateTimeAsLong() + "_" + this.base_type + "_" + this.sub_type;
-        return null;
+        return "PP_" + this.getActive_from() + "_" + this.getName();
     }
 
     
@@ -755,6 +777,48 @@ public class PumpValuesEntryProfile extends PumpProfileH implements DeviceValues
     public String getSource()
     {
         return this.source;
+    }
+
+
+    public int getMultiLineTooltipType()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public boolean hasMultiLineToolTip()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public void setMultiLineTooltipType(int multilineTooltipType)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public String getMultiLineToolTip()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public String getMultiLineToolTip(int index)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean isIndexed()
+    {
+        // TODO Auto-generated method stub
+        return false;
     }
      
 }	

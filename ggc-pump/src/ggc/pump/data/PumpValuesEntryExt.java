@@ -3,6 +3,8 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.output.OutputWriterData;
+import ggc.plugin.output.OutputWriterType;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
@@ -43,7 +45,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValuesEntryInterface,   /*PumpValuesEntryAbstract,*/ DatabaseObjectHibernate 
+public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface,   /*PumpValuesEntryAbstract,*/ DatabaseObjectHibernate 
 {
 
     private static final long serialVersionUID = 2300422547257308019L;
@@ -54,7 +56,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
     private int status = 0;
     private int object_status = 0;
     private boolean checked = false;
-    @SuppressWarnings("unused")
     private int output_type = 0;
     
     
@@ -520,20 +521,36 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
      */
     public Object getTableColumnValue(int index)
     {
+        switch (index)
+        {
+            case 0:
+                return getDateTimeObject().getDateTimeString();
+
+            case 1:
+                return ic.getMessage("EXT_TYPE_SH");
+
+            case 2:
+                return da.getAdditionalTypes().getTypeDescription(this.getType());
+
+            case 3:
+                return ""; 
+
+            case 4:
+                return this.getValue();
+                
+            case 5:
+                return this.getStatus();
+            
+            case 6:
+                return new Boolean(getChecked());
+
+            default:
+                return "";
+        }
         
-        // TODO Auto-generated method stub
-        return null;
     }
 
 
-    /** 
-     * Get Data As String (for export)
-     */
-    public String getDataAsString()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     
     /**
@@ -728,5 +745,99 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements DeviceValue
         return this.source;
     }
      
+
+    /**
+     * Get Type Description
+     * 
+     * @return
+     */
+    public String getTypeDesc()
+    {
+        return DataAccessPump.getInstance().getAdditionalTypes().getTypeDescription(this.getType());
+    }
+    
+    
+    
+    /**
+     * Get Data As String
+     */
+    public String getDataAsString()
+    {
+        
+        switch(output_type)
+        {
+            case OutputWriterType.DUMMY:
+                return "";
+                
+            case OutputWriterType.CONSOLE:
+            case OutputWriterType.FILE:
+                return this.getDateTimeObject().getDateTimeString() + ":  Extended Type=" + this.getTypeDesc() + ", Value=" + this.getValue() + ", Comment=" + this.getComment();
+                
+            case OutputWriterType.GGC_FILE_EXPORT:
+            {
+                /*
+                PumpData pd = new PumpData(this);
+                try
+                {
+                    return pd.dbExport();
+                }
+                catch(Exception ex)
+                {
+                    log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
+                    return "Value could not be decoded for export!";
+                }*/
+            }
+                
+        
+            default:
+                return "Value is undefined";
+        
+        }
+    }
+
+
+
+
+    public boolean hasMultiLineToolTip()
+    {
+        return true;
+    }
+
+
+
+
+    public String getMultiLineToolTip()
+    {
+        return "";
+    }
+
+
+    public String getMultiLineToolTip(int index)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean isIndexed()
+    {
+        return true;
+    }
+
+
+    public int getMultiLineTooltipType()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public void setMultiLineTooltipType(int multilineTooltipType)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    
     
 }	

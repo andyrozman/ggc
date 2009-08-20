@@ -4,15 +4,11 @@ import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import ggc.pump.device.accuchek.AccuChekSpirit;
 import ggc.pump.device.dana.DanaDiabecare_III_R;
-import ggc.pump.device.minimed.MinimedSPMPump;
 import ggc.pump.util.DataAccessPump;
 
-import java.io.File;
 import java.util.Vector;
 
-import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
 
 // TODO: Auto-generated Javadoc
@@ -43,7 +39,7 @@ import com.atech.utils.TimerThread;
  */
 
 
-public class PumpConsoleTester //extends JFrame
+public class DanaPumpTester //extends JFrame
 {
 
 
@@ -57,21 +53,12 @@ public class PumpConsoleTester //extends JFrame
      * 
      * @param portName
      */
-    public PumpConsoleTester(String portName)
+    public DanaPumpTester(String portName)
     {
     	
-    	TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
-    	
-		tzu.setTimeZone("Europe/Prague");
-		tzu.setWinterTimeChange(0);
-		tzu.setSummerTimeChange(0);
-    	
-        
     	try
     	{
-    	    //startRoche(portName);
     	    startDana(portName);
-    	    //startMinimed("./dta/CareLink-Export-1213803114904.csv");
     	}
     	catch(Exception ex)
     	{
@@ -90,8 +77,13 @@ public class PumpConsoleTester //extends JFrame
      */
     public void startDana(String portname) throws Exception
     {
+        DataAccessPump dap = DataAccessPump.getInstance();
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+        
+        
         DanaDiabecare_III_R dana = new DanaDiabecare_III_R("COM29", new ConsoleOutputWriter());
-        dana.readDeviceDataFull();
+        dana.readConfiguration();
     }
     
     
@@ -117,8 +109,8 @@ public class PumpConsoleTester //extends JFrame
         
         
         
-        AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
-        acs.processXml(new File("../test/I0014072.XML"));
+        //AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
+        //acs.processXml(new File("../test/I0014072.XML"));
     }
     
     
@@ -151,7 +143,7 @@ public class PumpConsoleTester //extends JFrame
         dap.loadSpecialParameters();
         //this.backup_restore_enabled = true;
         
-        da.loadSpecialParameters();
+//        da.loadSpecialParameters();
         //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
         
         dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
@@ -159,8 +151,8 @@ public class PumpConsoleTester //extends JFrame
         
         
         
-        MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
-        msp.readData();
+     //   MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
+     //   msp.readData();
         
     }
     
@@ -212,7 +204,7 @@ public class PumpConsoleTester //extends JFrame
     {
     	try
     	{
-    	    new PumpConsoleTester(args[0]);
+    	    new DanaPumpTester(args[0]);
     
     
     	}

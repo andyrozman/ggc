@@ -1,5 +1,7 @@
 package ggc.pump.data;
 
+import ggc.plugin.data.DeviceValuesEntryInterface;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -27,7 +29,8 @@ package ggc.pump.data;
  */
 
 
-public interface PumpValuesEntryAbstract 
+public interface PumpValuesEntryInterface extends DeviceValuesEntryInterface
 {
-	
+    
+    
 }	

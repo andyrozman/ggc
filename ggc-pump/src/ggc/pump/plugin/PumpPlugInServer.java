@@ -482,7 +482,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         }
         else if (command.equals("pumps_read"))
         {
-            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this);
+            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
         }
         else if ((command.equals("pumps_manual_entry")) ||
                  (command.equals("pumps_additional_data")))

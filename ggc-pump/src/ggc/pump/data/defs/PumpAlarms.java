@@ -42,7 +42,8 @@ public class PumpAlarms
     /**
      * Alarm Descriptions
      */
-    public String[] alarms_desc = { ic.getMessage("SELECT_SUBTYPE"),
+    private String[] alarms_desc = {  
+                       ic.getMessage("ALARM_UNKNOWN"),
                        ic.getMessage("ALARM_CARTRIDGE_LOW"),             
                        ic.getMessage("ALARM_BATTERY_LOW"),             
                        ic.getMessage("ALARM_REVIEW_DATETIME"),             
@@ -53,9 +54,28 @@ public class PumpAlarms
                        ic.getMessage("ALARM_BOLUS_CANCELED"),             
     };
     
+
+    private String[] alarms_desc_comp = {  
+                                     ic.getMessage("SELECT_SUBTYPE"),
+                                     ic.getMessage("ALARM_CARTRIDGE_LOW"),             
+                                     ic.getMessage("ALARM_BATTERY_LOW"),             
+                                     ic.getMessage("ALARM_REVIEW_DATETIME"),             
+                                     ic.getMessage("ALARM_ALARM_CLOCK"),             
+                                     ic.getMessage("ALARM_PUMP_TIMER"),             
+                                     ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),             
+                                     ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),             
+                                     ic.getMessage("ALARM_BOLUS_CANCELED"),             
+                  };
+    
+    
     
     Hashtable<String,String> alarms_mapping = new Hashtable<String,String>(); 
     
+
+    /**
+     * Pump Alarm: Cartridge Low
+     */
+    public final static int PUMP_ALARM_UNKNOWN = 0;
     
     
     /**
@@ -105,6 +125,7 @@ public class PumpAlarms
      */
     public PumpAlarms()
     {
+        alarms_mapping.put(ic.getMessage("ALARM_UNKNOWN"), "0");             
         alarms_mapping.put(ic.getMessage("ALARM_CARTRIDGE_LOW"), "1");             
         alarms_mapping.put(ic.getMessage("ALARM_BATTERY_LOW"), "2");             
         alarms_mapping.put(ic.getMessage("ALARM_REVIEW_DATETIME"), "3");             
@@ -128,6 +149,8 @@ public class PumpAlarms
         
         if (this.alarms_mapping.containsKey(str))
             s = this.alarms_mapping.get(str);
+        else
+            s = "0";
         
         return Integer.parseInt(s);
     }
@@ -139,7 +162,20 @@ public class PumpAlarms
      */
     public String[] getDescriptions()
     {
-        return this.alarms_desc;
+        return alarms_desc_comp;
+    }
+    
+    
+    /**
+     * Get Description by ID
+     * 
+     * @param id
+     * @return
+     */
+    public String getDescriptionByID(int id)
+    {
+        //System.out.println("getDescriptionByID [" + id + "]: " + this.alarms_desc[id]); 
+        return this.alarms_desc[id];
     }
     
     

@@ -3,12 +3,12 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.output.OutputWriterData;
 import ggc.plugin.output.OutputWriterType;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
-import ggc.pump.db.PumpData;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
@@ -21,7 +21,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.misc.statistics.StatisticsObject;
@@ -54,9 +53,11 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineTooltip, StatisticsItem 
+public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem, PumpValuesEntryInterface
 //extends PumpDataH implements DatabaseObjectHibernate   // extends PumpValuesEntryAbstract
 {
+    
+    @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(PumpValuesEntry.class);
     private static final long serialVersionUID = -2047203215269156938L;
 
@@ -75,6 +76,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 	String comment;
 	long changed;
 	String source;
+    int multiline_tooltip_type = 1;
 
 
 	private Hashtable<String,String> params;
@@ -466,6 +468,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 	 */
 	public String getSubTypeString()
 	{
+	    //System.out.println("getSubTypeString [" + this.sub_type + "]");
+	    
+	    
 	    if (this.sub_type==0)
 	        return "";
 	    
@@ -488,11 +493,12 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 	    }
         else if (this.base_type==PumpBaseType.PUMP_DATA_ALARM)
         {
-            return m_da.getPumpAlarmTypes().getDescriptions()[this.sub_type];
+            //System.out.println("PumpAlarmTypes: " + m_da.getPumpAlarmTypes());
+            return m_da.getPumpAlarmTypes().getDescriptionByID(this.sub_type);
         }
         else if (this.base_type==PumpBaseType.PUMP_DATA_ERROR)
         {
-            return m_da.getPumpErrorTypes().getDescriptions()[this.sub_type];
+            return m_da.getPumpErrorTypes().getDescriptionByID(this.sub_type);
         }
         else if (this.base_type==PumpBaseType.PUMP_DATA_EVENT)
         {
@@ -724,7 +730,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
                                   m_ic.getMessage("DURATION"),
                                   "??"));
                 }
-                else 
+                else if (s.length==2) 
                 {
                     sb.append(String.format("%s: %s, %s: %s", 
                                   m_ic.getMessage("SQUARE_AMOUNT"),
@@ -732,6 +738,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
                                   m_ic.getMessage("DURATION"),
                                   s[1]));
                 }
+                else
+                {
+                    sb.append(this.getValue());
+                }
+
             }
             else if (this.sub_type==PumpBolusType.PUMP_BOLUS_MULTIWAVE)
             {
@@ -747,7 +758,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
                         m_ic.getMessage("DURATION"),
                         "??"));
                 }
-                else
+                else if (s.length==3)
                 {
                     sb.append(String.format("%s: %s, %s: %s, %s: %s", 
                                   m_ic.getMessage("IMMEDIATE_AMOUNT"),
@@ -756,6 +767,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
                                   s[1],
                                   m_ic.getMessage("DURATION"),
                                   s[2]));
+                }
+                else
+                {
+                    sb.append(this.getValue());
                 }
             }
             else
@@ -930,7 +945,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
 	{
 	    //OutputUtil o= null;
 	    //return "PumpValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]";
-	    return "PumpValuesEntry [date/time=" + this.datetime  + " ?????? ]";
+	    return "PumpValuesEntry [date/time=" + this.datetime  + ", base_type=" + this.getBaseTypeString() + ", sub_type=" + this.getSubTypeString() + ", value=" + this.getValue() + "]";
 	}
 
 
@@ -1144,7 +1159,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
     /**
      * Get Data As String
      */
-    
     public String getDataAsString()
     {
         switch(output_type)
@@ -1154,11 +1168,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
                 
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                
-                return this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString() + ", Sub Type=" + this.getSubTypeString() + ", Comment=" + this.getComment();
+                return this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString() + ", Sub Type=" + this.getSubTypeString() + ", Value=" + this.getValue() + ", Comment=" + this.getComment();
                 
             case OutputWriterType.GGC_FILE_EXPORT:
             {
+                /*
                 PumpData pd = new PumpData(this);
                 try
                 {
@@ -1168,7 +1182,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
                 {
                     log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
                     return "Value could not be decoded for export!";
-                }
+                }*/
             }
                 
         
@@ -1686,6 +1700,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
  
     
     long old_id;
+
     
     /**
      * Set Id (this is used for changing old objects in framework v2)
@@ -1709,7 +1724,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
     }
     
     
-    
     /**
      * Set Source
      * 
@@ -1720,6 +1734,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
         this.source = src;
         
     }
+    
     
     /**
      * Get Source 
@@ -1732,7 +1747,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
     }
     
     
-    
     /**
      * Get Additional Data Count
      * 
@@ -1742,6 +1756,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements MultiLineToolt
     {
         return this.additional_data.size();
     }
+    
     
     
 }
