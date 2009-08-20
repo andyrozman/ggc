@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -24,6 +25,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+
+import com.atech.graphics.components.MultiLineTooltipModel;
 
 
 /**
@@ -148,6 +151,43 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
         });
     }
 
+    
+    public String getToolTipText(MouseEvent e) 
+    {
+        //Object source = e.getSource();
+        String tip = null;
+        java.awt.Point p = e.getPoint();
+        int rowIndex = rowAtPoint(p);
+        int colIndex = columnAtPoint(p);
+        int realColumnIndex = convertColumnIndexToModel(colIndex);
+
+        
+        
+        
+        if (model instanceof MultiLineTooltipModel)
+        {
+            tip = ((MultiLineTooltipModel)model).getToolTipValue(rowIndex, colIndex);
+        }
+        else
+        {
+            Object o = getValueAt(rowIndex, realColumnIndex);
+            
+            if (o instanceof String)
+            {
+                tip = (String)getValueAt(rowIndex, realColumnIndex);
+            }
+            else
+                tip = o.toString();
+        }
+
+        if ((tip!=null) && (tip.length()==0))
+            tip = null;
+        
+        return tip;
+    }
+    
+    
+    
     /**
      * Create Values Table
      * 

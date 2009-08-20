@@ -53,7 +53,7 @@ public class ConnectionProtocols
     /**
      * Protocol: Bluetooth
      */
-    public static final int PROTOCOL_BLUETOOTH = 4;
+    public static final int PROTOCOL_BLUETOOTH_SERIAL = 4;
     
     /**
      * Protocol: File Import
@@ -73,7 +73,7 @@ public class ConnectionProtocols
                              "PROT_SERIAL_BRIDGE",
                              "PROT_SERIAL_USB",
                              "PROT_MASS_STORAGE_XML",
-                             "PROT_BLUE_TOOTH",
+                             "PROT_BLUETOOTH_SERIAL",
                              "PROT_FILE_IMPORT",
                              "PROT_DATABASE"
                            };

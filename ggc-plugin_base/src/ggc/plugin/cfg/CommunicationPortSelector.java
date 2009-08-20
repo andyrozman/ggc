@@ -1,5 +1,6 @@
 package ggc.plugin.cfg;
 
+import ggc.plugin.protocol.BlueToothProtocol;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -203,6 +204,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
+            case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
                 {
                     return initList();
                 }
@@ -264,6 +266,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
+            case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
                 {
                     return (this.data_list.getSelectedIndex()>-1);
                 }
@@ -286,6 +289,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
+            case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
                 {
                     return ((String)this.data_list.getSelectedValue());
                 }
@@ -311,6 +315,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             {
                 return "SELECT_MASS_STORAGE_DRIVE";
             }
+            case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
                 {
                     return "SELECT_SERIAL_PORT";
@@ -334,6 +339,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
+            case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
                 {
                     return "SELECT_ITEM_OR_CANCEL"; 
                 }
@@ -374,6 +380,20 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             }
             
             return drives;
+        }
+        else if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL)
+        {
+            try
+            {
+                return BlueToothProtocol.getAllAvailablePortsString();
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Exception: " + ex);
+                return new Vector<String>();
+            }
+            
+            
         }
         else
             return null;

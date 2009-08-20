@@ -129,7 +129,8 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
         }
         else*/ 
         if ((m_type==ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE) ||
-            (m_type==ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML))
+            (m_type==ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML) ||
+            (m_type==ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL))
         {
             CommunicationPortSelector cps = new CommunicationPortSelector(this.parent, m_da, this.m_type);
             if (cps.wasAction())
@@ -174,6 +175,13 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
                 this.bt_select.setEnabled(true);
             } break;
             
+            case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
+            {
+                label.setText(m_ic.getMessage("SERIAL_PORT") + ":");
+                setCommunicationPort("");
+                this.bt_select.setEnabled(true);
+            } break;
+
             
             default:
             {

@@ -11,6 +11,8 @@ import java.util.Hashtable;
 import javax.swing.table.AbstractTableModel;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.graphics.components.MultiLineTooltip;
+import com.atech.graphics.components.MultiLineTooltipModel;
 
 
 /**
@@ -40,7 +42,7 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
  */
 
 
-public abstract class DeviceValuesTableModel extends AbstractTableModel 
+public abstract class DeviceValuesTableModel extends AbstractTableModel implements MultiLineTooltipModel 
 {
 
     private static final long serialVersionUID = -6542265335372702616L;
@@ -533,6 +535,31 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel
         return table;
     }
 
+    
+    
+    /** 
+     * get ToolTip Value
+     * 
+     * @param row 
+     * @param column 
+     * @return 
+     */
+    public String getToolTipValue(int row, int column)
+    {
+        DeviceValuesEntryInterface o = displayed_dl_data.get(row);
+        
+        if (o.hasMultiLineToolTip())
+        {
+            return ((MultiLineTooltip)o).getMultiLineToolTip(column);
+        }
+        else
+        {
+            return (String)o.getTableColumnValue(column);
+        }
+    }
+    
+    
+    
     
 
 }

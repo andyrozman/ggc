@@ -4,7 +4,8 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -105,7 +106,7 @@ public class DeviceConfiguration
         {
             try
             {
-                Hashtable<String,String> cfg = m_da.loadPropertyFile(this.config_file.getPath());
+                Hashtable<String,String> cfg = m_da.loadPropertyFile(this.config_file.getPath(), "UTF8");
                 
                 if (cfg.containsKey("SELECTED_" + dev_prefix))
                 {
@@ -242,7 +243,7 @@ public class DeviceConfiguration
         
         sb.append("SELECTED_" + this.dcd.getDevicePrefix() + "=" + this.default_device + "\n");
         
-        System.out.println("Device Ebtries: " + this.device_entries);
+        //System.out.println("Device Ebtries: " + this.device_entries);
         
         for(int i=1; i<21; i++)
         {
@@ -262,7 +263,7 @@ public class DeviceConfiguration
         
         try
         {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(this.dcd.getDevicesConfigurationFile()));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(this.dcd.getDevicesConfigurationFile())),"UTF8"));
             bw.write(sb.toString());
             bw.flush();
             bw.close();
@@ -289,7 +290,7 @@ public class DeviceConfiguration
             if (!this.config_file.exists())
                 this.config_file.createNewFile();
             
-            BufferedWriter bw = new BufferedWriter(new FileWriter(this.config_file));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(this.config_file),"UTF8")); 
             
             bw.write(this.config_text);
             bw.flush();

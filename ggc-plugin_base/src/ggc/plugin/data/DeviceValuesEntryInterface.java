@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.utils.ATechDate;
 
 
@@ -45,7 +46,8 @@ public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(Outp
                                                     Comparator<DeviceValuesEntryInterface>, 
                                                     Comparable<DeviceValuesEntryInterface>, 
                                                     //StatisticsItem, 
-                                                    DatabaseObjectHibernate
+                                                    DatabaseObjectHibernate,
+                                                    MultiLineTooltip
 {
 	//public boolean checked = false;
 	//public int status = 1; 
@@ -320,6 +322,29 @@ public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(Outp
      * @return
      */
     public String getSource();
+    
+    
+    /**
+     * Has MultiLine Tooltip
+     * 
+     * @return
+     */
+    public boolean hasMultiLineToolTip();
+    
+    
+    /**
+     * Set MultiLine Tooltip Type
+     * 
+     * @param _multiline_tooltip_type
+     */
+    public void setMultiLineTooltipType(int _multiline_tooltip_type);
+
+    /**
+     * Get MultiLine Tooltip Type
+     * @return 
+     */
+    public int getMultiLineTooltipType();
+    
     
     
 }	

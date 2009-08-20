@@ -46,6 +46,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
 	protected int status = 1; 
     protected int output_type = 0;
     protected boolean is_bg = false;
+    private int multiline_tooltip_type = 1;
 	
 	
 	
@@ -290,8 +291,71 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     
     
 
+    /**
+     * Has MultiLine Tooltip
+     * 
+     * @return
+     */
+    public boolean hasMultiLineToolTip()
+    {
+        return false;
+    }
     
     
+    /**
+     * Set MultiLine Tooltip Type
+     * 
+     * @param _multiline_tooltip_type
+     */
+    public void setMultiLineTooltipType(int _multiline_tooltip_type)
+    {
+        this.multiline_tooltip_type = _multiline_tooltip_type;
+    }
+
+    
+    /**
+     * Get MultiLine Tooltip Type
+     * @return 
+     */
+    public int getMultiLineTooltipType()
+    {
+        return this.multiline_tooltip_type;
+    }
+    
+    
+    /**
+     * Checks if is indexed.
+     * 
+     * @return true, if is indexed
+     */
+    public boolean isIndexed()
+    {
+        return false;
+    }
+
+    
+    /**
+     * Gets the multi line tool tip.
+     * 
+     * @return the multi line tool tip
+     */
+    public String getMultiLineToolTip()
+    {
+        return "";
+    }
+
+    
+    /**
+     * Gets the multi line tool tip.
+     * 
+     * @param index the index
+     * 
+     * @return the multi line tool tip
+     */
+    public String getMultiLineToolTip(int index)
+    {
+        return "";
+    }
     
     
     

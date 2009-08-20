@@ -1070,7 +1070,7 @@ public abstract class BlueToothProtocol implements SerialPortEventListener //imp
      */
     public int getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE;
+        return ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL;
     }
     
 
