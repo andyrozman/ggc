@@ -528,5 +528,13 @@ public class GenericCGM implements CGMInterface
         return device_source_name;
     }
     
+    /** 
+     * Get Download SupportType Configuration
+     */
+    public int getDownloadSupportTypeConfiguration()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
     
 }
