@@ -502,5 +502,14 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     }
     
     
+    /** 
+     * Get Download SupportType Configuration
+     */
+    public int getDownloadSupportTypeConfiguration()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
     
 }

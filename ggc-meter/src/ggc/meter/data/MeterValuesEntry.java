@@ -262,6 +262,16 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             }
             else
             {
+                System.out.println("util: " + this.util);
+                System.out.println("bg_org: " + this.bg_original);
+                
+                if (this.bg_original==null)
+                {
+                    // FIXME
+                    System.out.println("special: " + this.getSpecialEntryDbEntry());
+                }
+                
+                
                 return DataAccessMeter.Decimal1Format.format((this.util.getBGValueDifferent(OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
             }
 	        

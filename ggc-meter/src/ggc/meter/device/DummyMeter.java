@@ -2,6 +2,7 @@ package ggc.meter.device;
 
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.protocol.ConnectionProtocols;
 
@@ -367,5 +368,15 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return false;
     }
+    
+    
+    /** 
+     * Get Download SupportType Configuration
+     */
+    public int getDownloadSupportTypeConfiguration()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
     
 }

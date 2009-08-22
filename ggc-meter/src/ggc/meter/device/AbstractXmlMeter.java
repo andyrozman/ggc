@@ -469,4 +469,13 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
     
     
+    /** 
+     * Get Download SupportType Configuration
+     */
+    public int getDownloadSupportTypeConfiguration()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
 }

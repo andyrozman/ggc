@@ -241,42 +241,52 @@ public class OptiumXceed extends AbstractSerialMeter
     private void processDataLine(String line)
     {
         
-        String[] data = m_da.splitString(line, "\t");
-        
-        if (!data[1].equals("1"))
+        if ((line==null) || (line.trim().length()==0))
             return;
         
-        
-        String type_id = data[0].substring(1);
-        
-        boolean is_BG = false;
-        
-        if (type_id.equals("01"))
+        try
         {
-            is_BG = true;
-        }
-        else if (type_id.equals("04"))
-        {
-            is_BG = false;
-        }
-        else
-        {
-            this.entries_current++;
-            readingEntryStatus();
+            String[] data = m_da.splitString(line, "\t");
             
-            return;
-        }
+            if (!data[1].equals("1"))
+                return;
             
-        if (is_BG)
-            addBGData(data[4], getDateTime(data[2], data[3]));
-        else
-            addUrineData(data[4], getDateTime(data[2], data[3]));
-        
-        StringTokenizer strtok = new StringTokenizer(line, "\t");
-        
-        while(strtok.hasMoreTokens())
+            
+            String type_id = data[0].substring(1);
+            
+            boolean is_BG = false;
+            
+            if (type_id.equals("01"))
+            {
+                is_BG = true;
+            }
+            else if (type_id.equals("04"))
+            {
+                is_BG = false;
+            }
+            else
+            {
+                this.entries_current++;
+                readingEntryStatus();
+                
+                return;
+            }
+                
+            if (is_BG)
+                addBGData(data[4], getDateTime(data[2], data[3]));
+            else
+                addUrineData(data[4], getDateTime(data[2], data[3]));
+            
+            StringTokenizer strtok = new StringTokenizer(line, "\t");
+            
+            while(strtok.hasMoreTokens())
+            {
+                strtok.nextToken();
+            }
+        }
+        catch (Exception ex)
         {
-            strtok.nextToken();
+            log.error("Exception on parse: " + ex + "\nData: " + line, ex);
         }
         
     }
