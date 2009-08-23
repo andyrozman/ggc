@@ -554,7 +554,10 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         }
         else
         {
-            return (String)o.getTableColumnValue(column);
+            if (o.getTableColumnValue(column) instanceof String)
+                return (String)o.getTableColumnValue(column);
+            else
+                return o.getTableColumnValue(column).toString();
         }
     }
     

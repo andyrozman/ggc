@@ -80,8 +80,8 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
         m_da = da;
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         
-        this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
-        this.setDefaultRenderer(Integer.class, new StatusCellRenderer());
+        this.setDefaultRenderer(Boolean.class, new CheckCellRenderer_DVT());
+        this.setDefaultRenderer(Integer.class, new StatusCellRenderer_DVT());
 
         this.setColumnSelectionAllowed(false);
         this.setRowSelectionAllowed(false);
@@ -92,16 +92,17 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
      *  Constructor
      *  
      * @param da 
-     * @param model 
+     * @param _model 
      */
-    public DeviceValuesTable(DataAccessPlugInBase da, DeviceValuesTableModel model)
+    public DeviceValuesTable(DataAccessPlugInBase da, DeviceValuesTableModel _model)
     {
-        super(model);
+        super(_model);
         m_da = da;
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        this.model = _model;
 
-        this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
-        this.setDefaultRenderer(Integer.class, new StatusCellRenderer());
+        this.setDefaultRenderer(Boolean.class, new CheckCellRenderer_DVT());
+        this.setDefaultRenderer(Integer.class, new StatusCellRenderer_DVT());
     }
 
     /**
@@ -164,9 +165,6 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
         int colIndex = columnAtPoint(p);
         int realColumnIndex = convertColumnIndexToModel(colIndex);
 
-        
-        
-        
         if (model instanceof MultiLineTooltipModel)
         {
             tip = ((MultiLineTooltipModel)model).getToolTipValue(rowIndex, colIndex);
@@ -268,12 +266,12 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
 
     
     
-    class CheckCellRenderer extends JCheckBox implements TableCellRenderer
+    class CheckCellRenderer_DVT extends JCheckBox implements TableCellRenderer
     {
         private static final long serialVersionUID = 85335249214288876L;
         protected Border m_noFocusBorder;
 
-        public CheckCellRenderer()
+        public CheckCellRenderer_DVT()
         {
             super();
             m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
@@ -300,12 +298,12 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
         }
     }
 
-    class StatusCellRenderer extends JLabel implements TableCellRenderer
+    class StatusCellRenderer_DVT extends JLabel implements TableCellRenderer
     {
         private static final long serialVersionUID = 829555164320310454L;
         protected Border m_noFocusBorder;
 
-        public StatusCellRenderer()
+        public StatusCellRenderer_DVT()
         {
             super();
             m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
