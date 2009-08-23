@@ -3,7 +3,6 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.output.OutputWriterData;
 import ggc.plugin.output.OutputWriterType;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.defs.PumpAdditionalDataType;
@@ -798,44 +797,62 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
 
 
+    /** 
+     * Has MultiLine ToolTip
+     */
     public boolean hasMultiLineToolTip()
     {
         return true;
     }
 
 
-
-
+    /** 
+     * Get MultiLine ToolTip
+     */
     public String getMultiLineToolTip()
     {
         return "";
     }
 
 
+    /** 
+     * Get MultiLine ToolTip
+     */
     public String getMultiLineToolTip(int index)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "" + this.getTableColumnValue(index);
     }
 
-
+    
+    /** 
+     * Is Indexed (multiline tooltip)
+     */
     public boolean isIndexed()
     {
         return true;
     }
 
 
-    public int getMultiLineTooltipType()
+    int multiline_tooltip_type = 1;
+    
+    /**
+     * Set MultiLine Tooltip Type
+     * 
+     * @param _multiline_tooltip_type
+     */
+    public void setMultiLineTooltipType(int _multiline_tooltip_type)
     {
-        // TODO Auto-generated method stub
-        return 0;
+        this.multiline_tooltip_type = _multiline_tooltip_type;
     }
 
-
-    public void setMultiLineTooltipType(int multilineTooltipType)
+    
+    /**
+     * Get MultiLine Tooltip Type
+     * @return 
+     */
+    public int getMultiLineTooltipType()
     {
-        // TODO Auto-generated method stub
-        
+        return this.multiline_tooltip_type;
     }
     
     

@@ -82,7 +82,7 @@ public class DanaPumpTester //extends JFrame
         dap.loadSpecialParameters();
         
         
-        DanaDiabecare_III_R dana = new DanaDiabecare_III_R("COM29", new ConsoleOutputWriter());
+        DanaDiabecare_III_R dana = new DanaDiabecare_III_R("COM14", new ConsoleOutputWriter());
         dana.readConfiguration();
     }
     

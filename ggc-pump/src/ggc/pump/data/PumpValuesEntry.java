@@ -3,7 +3,6 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.output.OutputWriterData;
 import ggc.plugin.output.OutputWriterType;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBasalSubType;
@@ -494,10 +493,14 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         else if (this.base_type==PumpBaseType.PUMP_DATA_ALARM)
         {
             //System.out.println("PumpAlarmTypes: " + m_da.getPumpAlarmTypes());
+            
+            
+            //System.out.println("Alarm: " + this.sub_type);
             return m_da.getPumpAlarmTypes().getDescriptionByID(this.sub_type);
         }
         else if (this.base_type==PumpBaseType.PUMP_DATA_ERROR)
         {
+            //System.out.println("Error: " + this.sub_type);
             return m_da.getPumpErrorTypes().getDescriptionByID(this.sub_type);
         }
         else if (this.base_type==PumpBaseType.PUMP_DATA_EVENT)

@@ -10,11 +10,13 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.data.PumpTempValues;
+import ggc.pump.data.PumpValuesEntryConfig;
 import ggc.pump.data.PumpValuesEntryProfile;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpAlarms;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.data.defs.PumpConfiguration;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
@@ -63,19 +65,20 @@ import com.atech.utils.HexUtils;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
-// TODO: Auto-generated Javadoc
-// OLD Implementation
-public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol //extends DanaPump //implements SerialProtocol
+public class DanaDiabecare_III_R extends AbstractBlueToothPump 
 {
 
-    
     HexUtils hex_utils = new HexUtils();
     private static Log log = LogFactory.getLog(DanaDiabecare_III_R.class);
     private boolean device_communicating = true;
     int entries_current = 0;
     int entries_max = 100;    
+    byte[] check_response =  { 0x7e, 0x7e, (byte)0xf2 };
+    int error_count = 0;
+    int glucose_mode = 1;
+    int current_basal_profile = 1;
+    boolean config_mode = false;
+    
     
     /**
      * Command: Connect
@@ -101,24 +104,33 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
     public static byte[] COMMAND_BASAL_PATTERN = new byte[] { 50, 2 };
     
 
-    
-    
-    
-    public static byte[] SYNC_QUERY_BASAL_PROFILE = new byte[] { 50, 6 };
-    
-    public static byte[] SYNC_QUERY_BOLUS = new byte[] { 50, 1 };
 
-    public static byte[] SYNC_QUERY_CARBO = new byte[] { 50, 4 };
+    /**
+     * Command: General Settings
+     */
+    public static byte[] COMMAND_SETT_GENER = new byte[] { 50, 3 };
     
-    public static byte[] SYNC_QUERY_GENER = new byte[] { 50, 3 };
+    /**
+     * Command: Max Values Settings
+     */
+    public static byte[] COMMAND_SETT_MAX = new byte[] { 50, 5 };
+
+    /**
+     * Command: Bolus Helper Settings
+     */
+    public static byte[] COMMAND_SETT_BOLUS_HELPER = new byte[] { 50, 4 };
     
-    public static byte[] SYNC_QUERY_GLUCOMODE = new byte[] { 50, 9 };
+    /**
+     * Command: GlucoMode Settings
+     */
+    public static byte[] COMMAND_SETT_GLUCOMODE = new byte[] { 50, 9 };
     
-    public static byte[] SYNC_QUERY_MAX = new byte[] { 50, 5 };
     
-    public static byte[] SYNC_QUERY_PWM = new byte[] { 50, 8 };
     
-    public static byte[] SYNC_QUERY_SHIPPING = new byte[] { 50, 7 };
+//    public static byte[] SYNC_QUERY_BASAL_PROFILE = new byte[] { 50, 6 };
+//    public static byte[] SYNC_QUERY_BOLUS = new byte[] { 50, 1 };
+//    public static byte[] SYNC_QUERY_PWM = new byte[] { 50, 8 };
+    
     
     
     
@@ -245,6 +257,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
         
         loadPumpSpecificValues();
         
+        this.m_ic = DataAccessPump.getInstance().getI18nControlInstance();
+
+        this.error_count = 0;
         
         // output writer, this is how data is returned (for testing new devices, we can use Consol
         this.output_writer = writer; 
@@ -477,6 +492,14 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
                 
                 hex_utils.readByteArray(buffer);
                 
+                
+                if (!this.checkIfValid(buffer))
+                {
+                    this.incrementError();
+                    //return;
+                }
+                
+                
                 ATechDate atd = getDateTime(hex_utils.getByteFromArray(7),  
                     hex_utils.getByteFromArray(8), // m
                     hex_utils.getByteFromArray(9), // d
@@ -654,30 +677,23 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
         int num = 0;
         try
         {
-            //logger.debug("readData:Start");
-
             if (this.read(buffer, 0, 4) == 0)
             {
-                //throw new Exception("No more data");
             }
 
             num = buffer[2] - 1;
-            //logger.debug("Receieve length: " + num);
             this.read(buffer, 4, num + 4);
             int v = this.createCRC(buffer, 3, num + 1);
-            //logger.debug("Created CRC: " + DanaUtil.toHexString(v));
             byte num4 = (byte) ((v >> 8) & 0xff);
             byte num5 = (byte) (v & 0xff);
             if ((buffer[4 + num] != num4) || (buffer[(4 + num) + 1] != num5))
             {
             }
-            //ogger.debug("readData:End");
-            //System.out.print(".");
             
         }
-        catch (Exception exception)
+        catch (Exception ex)
         {
-            throw exception;
+            log.error("readData(). Exception: " + ex, ex);
         }
         return num;
     }
@@ -756,6 +772,17 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
     {
         return DownloadSupportType.DOWNLOAD_YES;
     }
+    
+    /**
+     * Get Download Support Type for Configuration
+     * 
+     * @return
+     */
+    public int getDownloadSupportTypeConfiguration()
+    {
+        return DownloadSupportType.DOWNLOAD_YES;
+    }
+
     
     
     /**
@@ -888,11 +915,6 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
         alarm_map = new Hashtable<String, Integer>();
         alarm_map.put("17030", PumpAlarms.PUMP_ALARM_BATTERY_LOW);
         alarm_map.put("26410", PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW);
-        
-        
-        
-        
-        
     }
 
 
@@ -903,7 +925,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
      */
     public String getDeviceSpecialComment()
     {
-        return null;
+        return "";
     }
 
 
@@ -915,7 +937,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
      */
     public boolean hasSpecialProgressStatus()
     {
-        return false;
+        return true;
     }
 
 
@@ -928,6 +950,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
     {
         try
         {
+            config_mode = true;
 
             this.open();
             
@@ -936,71 +959,27 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
 
             this.connect();
             
-            //this.getDeviceRecord(COMMAND_RECORD_BOLUS, false);
-
-//            waitTime(1000);
- //           this.readLine();
-
-  // TODO
+            getDeviceConfiguration(COMMAND_SETT_GENER);
+            this.readingEntryStatus(25);
+            getDeviceConfiguration(COMMAND_SETT_MAX);
+            this.readingEntryStatus(50);
+            getDeviceConfiguration(COMMAND_SETT_GLUCOMODE);
+            this.readingEntryStatus(75);
+            getDeviceConfiguration(COMMAND_SETT_BOLUS_HELPER);            
+            this.readingEntryStatus(100);
             
-            // DOING
-            getDeviceConfiguration(SYNC_QUERY_GENER);
-
-            
-            // DONE
-            
-            // NOT DONE (FALSE)
- //           getDeviceConfiguration(this.SYNC_QUERY_BASAL_PROFILE);
-//            getDeviceConfiguration(this.SYNC_QUERY_BOLUS);
-            
-            
-            
-            /*
-            switch (param)
-            {
-
-
-            case COMMAND_GENER:
-                this.writeData(SYNC_QUERY_GENER);
-                break;
-
-            case COMMAND_CARBO:
-                this.writeData(SYNC_QUERY_CARBO);
-                break;
-
-            case COMMAND_MAX:
-                this.writeData(SYNC_QUERY_MAX);
-                break;
-
-            //case COMMAND_BASAL_PROFILE:
-            //    this.writeData(SYNC_QUERY_BASAL_PROFILE);
-            //    break;
-
-            case COMMAND_SHIPPING:
-                this.writeData(SYNC_QUERY_SHIPPING);
-                break;
-
-            case COMMAND_PWM:
-                this.writeData(SYNC_QUERY_PWM);
-                break;
-
-            case COMMAND_GLUCOMODE:
-                this.writeData(SYNC_QUERY_GLUCOMODE);
-                break;
-            }*/
-            
-            
-            
+            this.output_writer.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
+            this.output_writer.endOutput();
         }
         catch(Exception ex)
         {
-            System.out.println("Ex: " + ex);
+            log.error("ReadConfiguration(). Exception: " + ex, ex);
         }
         finally 
         {
             try
             {
-                if (this.device_communicating)
+//                if (this.device_communicating)
                 {
                     disconnect();
                     this.close();
@@ -1011,6 +990,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
                 log.error("readDeviceDataFull.disconnect(): " + exx, exx);
             }
             
+            config_mode = false;
         }
         
         
@@ -1039,8 +1019,11 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
 
             this.connect();
             
+            this.readingEntryStatus(2);
             this.getDeviceRecord(COMMAND_RECORD_BOLUS, false);
+            this.readingEntryStatus(4);
             this.getDeviceRecord(COMMAND_RECORD_BOLUS, false);
+            this.readingEntryStatus(6);
 
             waitTime(1000);
             this.readLine();
@@ -1080,7 +1063,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
         {
             try
             {
-                if (this.device_communicating)
+  //              if (this.device_communicating)
                 {
                     disconnect();
                     this.close();
@@ -1125,7 +1108,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
             byte[] buffer = new byte[0x200];
             log.debug("readInfo() - Start");
 
-            this.readingEntryStatus(2);
+            this.readingEntryStatus(7);
             
             this.writeData(COMMAND_SHIPPING);  // 50, 7
             waitTime(1000);
@@ -1136,7 +1119,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
             
             if (!checkIfValid(buffer))
             {
-                setDeviceStopped();
+                //setDeviceStopped();
+                this.incrementError();
                 return;
             }
             
@@ -1158,7 +1142,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
             System.out.println("Country: " + cnt);
             */
             
-            this.readingEntryStatus(5);
+            this.readingEntryStatus(9);
 
             this.output_writer.writeDeviceIdentification();
             
@@ -1175,18 +1159,23 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
         
     }
     
-    byte[] val =  { 0x7e, 0x7e, (byte)0xf2 };
     
     
     private boolean checkIfValid(byte[] arr)
     {
-        if ((arr[0]==val[0]) && (arr[1]==val[1]) && (arr[3]==val[2]))
+        if ((arr[0]==check_response[0]) && (arr[1]==check_response[1]) && (arr[3]==check_response[2]))
             return true;
         else
             return false;
-        
-        
     }
+
+    
+    private void incrementError()
+    {
+        this.error_count++;
+        this.output_writer.setSubStatus(String.format(m_ic.getMessage("ERROR_COUNT"), "" + this.error_count));
+    }
+    
     
     private void readProfiles()
     {
@@ -1197,6 +1186,10 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
             //int num = 0;
             log.debug("getProfiles() :Start");
 
+            
+            getDeviceConfiguration(COMMAND_SETT_GENER);
+            
+            
             this.writeData(COMMAND_BASAL_PATTERN);
             waitTime(200);
             
@@ -1205,7 +1198,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
             
             if (!checkIfValid(buffer))
             {
-                this.setDeviceStopped();
+                this.incrementError();
+                //this.setDeviceStopped();
                 return;
             }
             
@@ -1214,6 +1208,11 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
             //float[] all_data = new float[24];
             
             PumpValuesEntryProfile pvep = new PumpValuesEntryProfile();
+            pvep.setName("" + this.current_basal_profile);
+            
+            ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, new GregorianCalendar());
+            pvep.setActive_from(atd.getATDateTimeAsLong());
+            pvep.setActive_till(atd.getATDateTimeAsLong());
             
             for(int i=0; i<24; i++)
             {
@@ -1227,7 +1226,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
                 
                 pvep.addProfileSubEntry(pse);
             }
-
+            pvep.endEntry();
+            
             this.output_writer.writeData(pvep);
             
             waitTime(200);
@@ -1242,18 +1242,18 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
             log.debug("getProfiles() :End");
         }
         
-        
-        
     }
     
     
     
     private void readingEntryStatus(int cur_ent)
     {
-        this.entries_current = cur_ent;
-        float proc_read = ((this.entries_current*1.0f)  / this.entries_max);
-        float proc_total = 6 + (94 * proc_read);
-        this.output_writer.setSpecialProgress((int)proc_total); //.setSubStatus(sub_status)
+        //this.entries_current = cur_ent;
+//        float proc_read = ((this.entries_current*1.0f)  / this.entries_max);
+//        float proc_total = 6 + (94 * proc_read);
+//        this.output_writer.setSpecialProgress((int)proc_total); //.setSubStatus(sub_status)
+        this.output_writer.setSpecialProgress(cur_ent); //.setSubStatus(sub_status)
+        
     }
     
     
@@ -1319,6 +1319,11 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
                 //s("CodeTypeAlarm: found. Code: " + code);
                 return this.alarm_map.get("" + code);
             }
+            else
+            {
+                log.info("DanaDiabecare_III_R: Unknown Alarm [type=" + type + ", code=" + code + "]" );
+                return PumpAlarms.PUMP_ALARM_UNKNOWN;
+            }
         }
         else
         {
@@ -1327,10 +1332,13 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
                 //s("CodeTypeAlarm: found. Code: " + code);
                 return this.error_map.get("" + code);
             }
+            else
+            {
+                log.info("DanaDiabecare_III_R: Unknown Error [type=" + type + ", code=" + code + "]" );
+                return PumpErrors.PUMP_ERROR_UNKNOWN_ERROR;
+            }
             
         }
-        
-        return 0;
         
         
     }
@@ -1369,7 +1377,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
     }
     
     
-    private void getDeviceConfiguration(byte[] cmd) throws Exception
+    private void getDeviceConfiguration(byte[] cmd) //throws Exception
     {
         
         String param = "";
@@ -1377,252 +1385,103 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump //SerialProtocol 
         try
         {
             byte[] buffer = new byte[0x100];
-            //int num = 0;
             log.debug("getDeviceInfo(" + param + "):Start");
-            
-            
-            
-            /*
-            switch (param)
-            {
-            case COMMAND_BOLUS:
-                this.writeData(SYNC_QUERY_BOLUS);
-                break;
-
-            case COMMAND_BASAL_PROFILE:
-                this.writeData(SYNC_QUERY_BASAL);
-                break;
-
-            case COMMAND_GENER:
-                this.writeData(SYNC_QUERY_GENER);
-                break;
-
-            case COMMAND_CARBO:
-                this.writeData(SYNC_QUERY_CARBO);
-                break;
-
-            case COMMAND_MAX:
-                this.writeData(SYNC_QUERY_MAX);
-                break;
-
-            //case COMMAND_BASAL_PROFILE:
-            //    this.writeData(SYNC_QUERY_BASAL_PROFILE);
-            //    break;
-
-            case COMMAND_SHIPPING:
-                this.writeData(SYNC_QUERY_SHIPPING);
-                break;
-
-            case COMMAND_PWM:
-                this.writeData(SYNC_QUERY_PWM);
-                break;
-
-            case COMMAND_GLUCOMODE:
-                this.writeData(SYNC_QUERY_GLUCOMODE);
-                break;
-            }
-            waitTime(200);
-            
-            
-            //System.out.println(this.readLine());
-
-            
-            /*num =*/ 
-
-            // TODO
             
             this.writeData(cmd);
             //waitTime(200);
             
             this.readData(buffer);
             
-            
-            hex_utils.showByteArray(buffer);
-            System.out.println();
-            
-            hex_utils.showByteArrayHex(buffer);
-            
-            PacketStreamReader reader = new PacketStreamReader(buffer);
             hex_utils.readByteArray(buffer);
-            
-            
-            if (cmd==this.SYNC_QUERY_BOLUS)
-            {
-                System.out.println("Bolus0: " + reader.getInt());
-                System.out.println("Bolus1: " + reader.getInt());
-                System.out.println("Bolus2: " + reader.getInt());
-                System.out.println("Bolus3: " + reader.getInt());
-                
 
-                System.out.println(hex_utils.getIntFromArray(6));
-                System.out.println(hex_utils.getIntFromArray(8));
-                System.out.println(hex_utils.getIntFromArray(10));
-                System.out.println(hex_utils.getIntFromArray(12));
-                //System.out.println(hex_utils.getIntFromArray(14));
-            }
-            else if (cmd==this.SYNC_QUERY_GENER)
+            if (!checkIfValid(buffer))
             {
-                System.out.println("Basal Increment: " + reader.getByte());
-                System.out.println("Bolus Increment: " +reader.getByte());
-                System.out.println("Bolus Preset: " +reader.getByte());
-                System.out.println("Bolus Alarm: " +reader.getByte());
-                System.out.println("Bolus Block: " +reader.getByte());
-                System.out.println("Basal Unit: " +reader.getByte());
-                System.out.println("Basal Profile: " +reader.getByte());
-                
-                writeConfiguration("PCFG_BASAL_INCREMENT", "" + (hex_utils.getByteFromArray(6)/100.0f) );
-                writeConfiguration("PCFG_BOLUS_INCREMENT", "" + (hex_utils.getByteFromArray(7)/100.0f) );
-                writeConfiguration("PCFG_BOLUS_PRESET", "" + getTrueOrFalse(hex_utils.getByteFromArray(8)) );
-                writeConfiguration("PCFG_BOLUS_ALARM", "" + (hex_utils.getByteFromArray(9)));
-                writeConfiguration("PCFG_BOLUS_BLOCK", "" + hex_utils.getByteFromArray(10));
+                this.incrementError();
+                return;
+            }
+            
+            if (cmd==COMMAND_SETT_GENER)
+            {
+                writeConfiguration("PCFG_BASAL_INCREMENT", "" + (hex_utils.getByteFromArray(6)/100.0f), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN );
+                writeConfiguration("PCFG_BOLUS_INCREMENT", "" + (hex_utils.getByteFromArray(7)/100.0f), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN );
+                writeConfiguration("PCFG_BOLUS_PRESET", "" + getTrueOrFalse(hex_utils.getByteFromArray(8)), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN );
+                writeConfiguration("PCFG_BOLUS_ALARM", "" + (hex_utils.getByteFromArray(9)), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
+                writeConfiguration("PCFG_BOLUS_BLOCK", "" + hex_utils.getByteFromArray(10), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
                 
                 if (hex_utils.getByteFromArray(11)==0)
-                    writeConfiguration("PCFG_BASAL_UNIT", "UNIT_PER_HOUR");
+                    writeConfiguration("PCFG_BASAL_UNIT", m_ic.getMessage("UNIT_PER_HOUR"), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
                 else
-                    writeConfiguration("PCFG_BASAL_UNIT", "UNIT_PER_DAY");
+                    writeConfiguration("PCFG_BASAL_UNIT", m_ic.getMessage("UNIT_PER_DAY"), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
                 
                 // PROFILE = 12
+                this.current_basal_profile = (hex_utils.getByteFromArray(12) + 1);
+                
             }
-            
-            
-//            PacketStreamReader reader = new PacketStreamReader(buffer);
-
-            /*
-            switch (param)
+            else if (cmd==COMMAND_SETT_MAX)
             {
-            case COMMAND_BOLUS:
-                sett.bolus0 = reader.getInt();
-                sett.bolus1 = reader.getInt();
-                sett.bolus2 = reader.getInt();
-                sett.bolus3 = reader.getInt();
-                
-                System.out.println("Bolus0: " + sett.bolus0);
-                System.out.println("Bolus1: " + sett.bolus1);
-                System.out.println("Bolus2: " + sett.bolus2);
-                System.out.println("Bolus3: " + sett.bolus3);
-                
-                
-                break;
-
-            case COMMAND_BASAL_PROFILE:
-                sett.basal0 = reader.getInt();
-                sett.basal1 = reader.getInt();
-                sett.basal2 = reader.getInt();
-                sett.basal3 = reader.getInt();
-                sett.basal4 = reader.getInt();
-                sett.basal5 = reader.getInt();
-                sett.basal6 = reader.getInt();
-                sett.basal7 = reader.getInt();
-                sett.basal8 = reader.getInt();
-                sett.basal9 = reader.getInt();
-                sett.basal10 = reader.getInt();
-                sett.basal11 = reader.getInt();
-                sett.basal12 = reader.getInt();
-                sett.basal13 = reader.getInt();
-                sett.basal14 = reader.getInt();
-                sett.basal15 = reader.getInt();
-                sett.basal16 = reader.getInt();
-                sett.basal17 = reader.getInt();
-                sett.basal18 = reader.getInt();
-                sett.basal19 = reader.getInt();
-                sett.basal20 = reader.getInt();
-                sett.basal21 = reader.getInt();
-                sett.basal22 = reader.getInt();
-                sett.basal23 = reader.getInt();
-
-                System.out.println("Basal0: " + sett.basal0);
-                System.out.println("Basal1: " + sett.basal1);
-                System.out.println("Basal2: " + sett.basal2);
-                System.out.println("Basal3: " + sett.basal3);
-                System.out.println("Basal4: " + sett.basal4);
-                System.out.println("Basal5: " + sett.basal5);
-                System.out.println("Basal6: " + sett.basal6);
-                System.out.println("Basal7: " + sett.basal7);
-                System.out.println("Basal8: " + sett.basal8);
-                System.out.println("Basal9: " + sett.basal9);
-                System.out.println("Basal10: " + sett.basal10);
-                System.out.println("Basal11: " + sett.basal11);
-                System.out.println("Basal12: " + sett.basal12);
-                System.out.println("Basal13: " + sett.basal13);
-                System.out.println("Basal14: " + sett.basal14);
-                System.out.println("Basal15: " + sett.basal15);
-                
-                
-                break;
-
-            case COMMAND_GENER:
-                sett.basalIncrement = reader.getByte();
-                sett.bolusIncrement = reader.getByte();
-                sett.bolusPreset = reader.getByte();
-                sett.bolusAlarm = reader.getByte();
-                sett.bolusBlock = reader.getByte();
-                sett.basalUnit = reader.getByte();
-                break;
-
-            case COMMAND_CARBO:
-                sett.carboCIR = reader.getInt();
-                sett.carboCF = reader.getInt();
-                sett.carboAI = reader.getInt();
-                sett.carboTG = reader.getInt();
-                sett.carboAIDR = reader.getByte();
-                break;
-
-            case COMMAND_MAX:
-                sett.maxBolusRate = reader.getInt();
-                sett.maxBasalRate = reader.getInt();
-                sett.maxDailyRate = reader.getInt();
-                break;
-
-            case COMMAND_SHIPPING:
-                sett.serialNo = reader.getString(10);
-                try
-                {
-                    // sett.shippingDate = new DateTime(reader.getByte() +
-                    // 0x7d0, reader.getByte(), reader.getByte());
-                }
-                catch (Exception exception)
-                {
-                    // sett.shippingDate = DateTime.MinValue;
-                    log.error(exception.getMessage());
-                }
-                sett.shippingCountry = reader.getAscii(3);
-                break;
-
-            case COMMAND_GLUCOMODE:
-                sett.glucoseUnit = reader.getByte();
-                sett.easyMode = reader.getByte();
-                
-                System.out.println("Glucose Unit: " + sett.glucoseUnit);
-                System.out.println("easyMode: " + sett.easyMode);
-                
-                
-                break;
+                writeConfiguration("PCFG_MAX_BOLUS", "" + (hex_utils.getIntFromArray(6)/100.0f) , PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
+                writeConfiguration("PCFG_MAX_BASAL", "" + (hex_utils.getIntFromArray(8)/100.0f), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN );
+                writeConfiguration("PCFG_MAX_DAILY", "" + (hex_utils.getIntFromArray(10)/100.0f) , PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
             }
-            */
-            
-            
+            else if (cmd==COMMAND_SETT_GLUCOMODE)
+            {
+                if (hex_utils.getByteFromArray(6)==1)
+                    writeConfiguration("PCFG_GLUCOSE_UNIT", m_ic.getMessage("UNIT_MMOLL"), PumpConfiguration.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE );
+                else
+                    writeConfiguration("PCFG_GLUCOSE_UNIT", m_ic.getMessage("UNIT_MGDL"), PumpConfiguration.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE );
+                    
+                writeConfiguration("PCFG_EASY_MODE", "" + getTrueOrFalse(hex_utils.getByteFromArray(8)), PumpConfiguration.PUMP_CONFIG_GROUP_GENERAL );
+            }
+            else if (cmd==COMMAND_SETT_BOLUS_HELPER)
+            {
+                
+                if (glucose_mode==0)
+                {
+                    writeConfiguration("PCFG_CH_INS_RATIO", "" + DataAccessPump.Decimal0Format.format((hex_utils.getIntFromArray(6))), PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER ); 
+                    writeConfiguration("PCFG_BG_INS_RATIO", "" + DataAccessPump.Decimal0Format.format((hex_utils.getIntFromArray(8))), PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER ); 
+                    writeConfiguration("PCFG_TARGET_BG", "" + DataAccessPump.Decimal0Format.format((hex_utils.getIntFromArray(12))), PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER ); 
+                    
+                }
+                else
+                {
+                    writeConfiguration("PCFG_CH_INS_RATIO", "" + DataAccessPump.Decimal0Format.format((hex_utils.getIntFromArray(6)/ 100.0f)), PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER ); 
+                    writeConfiguration("PCFG_BG_INS_RATIO", "" + DataAccessPump.Decimal0Format.format((hex_utils.getIntFromArray(8)/ 100.0f)), PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER ); 
+                    writeConfiguration("PCFG_TARGET_BG", "" + DataAccessPump.Decimal0Format.format((hex_utils.getIntFromArray(12)/ 100.0f)), PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER ); 
+                }
+                
+                writeConfiguration("PCFG_ACTIVE_INSULIN_RATE", "" + DataAccessPump.Decimal0Format.format((hex_utils.getIntFromArray(10)/ 100.0f)), PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER ); 
+                writeConfiguration("PCFG_ACTIVE_INSULIN_DECREMENT_RATIO", "" + (hex_utils.getByteFromArray(14) *5), PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER ); 
+                
+            }
+
             waitTime(200);
             log.debug("getDeviceInfo(" + param + "):End");
         }
-        catch (Exception ex2)
+        catch (Exception ex)
         {
-            throw new Exception("sync(" + param + ")" + ex2.getMessage());
+            log.error("getDeviceConfiguration(). Exception: " + ex, ex);
         }
     }
     
     
-    public void writeConfiguration(String key, String value)
+    private void writeConfiguration(String key, String value, int config_group)
     {
-        System.out.println(key + " = " + value);
+        if (!config_mode)
+            return;
+        
+        PumpValuesEntryConfig pvec = new PumpValuesEntryConfig(m_ic.getMessage(key), value, config_group);
+        this.output_writer.writeData(pvec);
+        
+        //System.out.println(m_ic.getMessage(key) + " = " + value);
     }
     
     
-    public String getTrueOrFalse(byte val)
+    private String getTrueOrFalse(byte val)
     {
         if (val==0)
-            return "FALSE";
+            return m_ic.getMessage("FALSE");
         else
-            return "TRUE";
+            return m_ic.getMessage("TRUE");
     }
     
     

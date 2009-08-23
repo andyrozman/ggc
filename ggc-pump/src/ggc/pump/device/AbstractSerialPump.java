@@ -601,4 +601,13 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
     
     
+    /** 
+     * Get Download SupportType Configuration
+     */
+    public int getDownloadSupportTypeConfiguration()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
 }

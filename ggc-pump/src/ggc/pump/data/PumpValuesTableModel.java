@@ -45,13 +45,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
 
 
- //   ArrayList<PumpValuesEntry> dl_data;
- //   ArrayList<PumpValuesEntry> displayed_dl_data;
-    
-    //Hashtable<String,DayValueH> old_data = null;
-
-    //Hashtable<String,Object> old_data_v2 = null;
-
+ 
 
     /**
      * Constructor
@@ -149,17 +143,6 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
 
 
 
-    /**
-     * Set Old Value
-     * 
-     * @param data
-     */
-/*    public void setOldValues(Hashtable<String,DayValueH> data)
-    {
-        this.old_data = data;
-        //System.out.println(this.old_data);
-        //System.out.println(this.old_data.keys());
-    }*/
 
     /**
      * Add To Array 

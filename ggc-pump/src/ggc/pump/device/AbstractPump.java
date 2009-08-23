@@ -535,4 +535,13 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
         return device_source_name;
     }
     
+    /** 
+     * Get Download SupportType Configuration
+     */
+    public int getDownloadSupportTypeConfiguration()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
 }

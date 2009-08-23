@@ -578,7 +578,8 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         }
         else if (action.equals("import_profile"))
         {
-            ProfileSelector ps = new ProfileSelector(DataAccessPump.getInstance(), this.parent, true);
+            // this.parent -> this
+            ProfileSelector ps = new ProfileSelector(DataAccessPump.getInstance(), this, true);
             
             if (ps.wasAction())
             {

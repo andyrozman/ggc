@@ -346,9 +346,16 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, ic);
         
         ATSwingUtils.createMenuItem(menu_pump, 
-            "MN_PUMPS_READ", 
-            "MN_PUMPS_READ_DESC", 
+            "MN_PUMPS_READ_DATA", 
+            "MN_PUMPS_READ_DATA_DESC", 
             "pumps_read", 
+            this, null, 
+            ic, DataAccessPump.getInstance(), parent);
+
+        ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMPS_READ_CONFIG", 
+            "MN_PUMPS_READ_CONFIG_DESC", 
+            "pumps_read_config", 
             this, null, 
             ic, DataAccessPump.getInstance(), parent);
 
@@ -483,6 +490,10 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         else if (command.equals("pumps_read"))
         {
             new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+        }
+        else if (command.equals("pumps_read_config"))
+        {
+            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_CONFIGURATION);
         }
         else if ((command.equals("pumps_manual_entry")) ||
                  (command.equals("pumps_additional_data")))

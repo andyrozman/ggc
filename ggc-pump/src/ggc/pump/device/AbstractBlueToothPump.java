@@ -604,4 +604,13 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     }
     
     
+    /** 
+     * Get Download SupportType Configuration
+     */
+    public int getDownloadSupportTypeConfiguration()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
+    
 }
