@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,7 +33,6 @@ import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumn;
 
-import com.atech.graphics.components.MultiLineTooltipModel;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 

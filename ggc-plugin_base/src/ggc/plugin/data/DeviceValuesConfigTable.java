@@ -4,26 +4,19 @@ package ggc.plugin.data;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import com.atech.graphics.components.MultiLineTooltipModel;
@@ -61,10 +54,10 @@ import com.atech.graphics.components.MultiLineTooltipModel;
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
 
-public class DeviceValuesTable extends JTable //implements TableModelListener
+public class DeviceValuesConfigTable extends JTable //implements TableModelListener
 {
 
-    private static final long serialVersionUID = -278868328278678493L;
+    private static final long serialVersionUID = 4105030567099843263L;
     protected DeviceValuesTableModel model = null;
 	protected DataAccessPlugInBase m_da;
 
@@ -74,14 +67,14 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
      *  
      * @param da 
      */
-    public DeviceValuesTable(DataAccessPlugInBase da)
+    public DeviceValuesConfigTable(DataAccessPlugInBase da)
     {
         super();
         m_da = da;
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         
-        this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
-        this.setDefaultRenderer(Integer.class, new StatusCellRenderer());
+        //this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
+        //this.setDefaultRenderer(Integer.class, new StatusCellRenderer());
 
         this.setColumnSelectionAllowed(false);
         this.setRowSelectionAllowed(false);
@@ -94,14 +87,14 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
      * @param da 
      * @param model 
      */
-    public DeviceValuesTable(DataAccessPlugInBase da, DeviceValuesTableModel model)
+    public DeviceValuesConfigTable(DataAccessPlugInBase da, DeviceValuesConfigTableModel model)
     {
         super(model);
         m_da = da;
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
-        this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
-        this.setDefaultRenderer(Integer.class, new StatusCellRenderer());
+        //this.setDefaultRenderer(Boolean.class, new CheckCellRenderer());
+        //this.setDefaultRenderer(Integer.class, new StatusCellRenderer());
     }
 
     /**
@@ -265,78 +258,6 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     */
     
     
-
-    
-    
-    class CheckCellRenderer extends JCheckBox implements TableCellRenderer
-    {
-        private static final long serialVersionUID = 85335249214288876L;
-        protected Border m_noFocusBorder;
-
-        public CheckCellRenderer()
-        {
-            super();
-            m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
-            setOpaque(true);
-            setBorder(m_noFocusBorder);
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column)
-        {
-            if (value instanceof Boolean)
-            {
-                Boolean b = (Boolean) value;
-                setSelected(b.booleanValue());
-            }
-
-            setBackground(isSelected && !hasFocus ? table.getSelectionBackground() : table.getBackground());
-            setForeground(isSelected && !hasFocus ? table.getSelectionForeground() : table.getForeground());
-
-            setFont(table.getFont());
-            setBorder(hasFocus ? UIManager.getBorder("Table.focusCellHighlightBorder") : m_noFocusBorder);
-
-            return this;
-        }
-    }
-
-    class StatusCellRenderer extends JLabel implements TableCellRenderer
-    {
-        private static final long serialVersionUID = 829555164320310454L;
-        protected Border m_noFocusBorder;
-
-        public StatusCellRenderer()
-        {
-            super();
-            m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
-            setOpaque(true);
-            setBorder(m_noFocusBorder);
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column)
-        {
-
-            int status;
-            if (value instanceof Integer)
-            {
-                Integer i = (Integer) value;
-                // setSelected(b.booleanValue());
-                status = i.intValue();
-                
-                setText(m_da.getEntryStatuses()[status]);
-                setIcon(m_da.getImageIcon(DeviceValuesEntry.entry_status_icons[status], 8, 8, this));
-            }
-
-            setBackground(isSelected && !hasFocus ? table.getSelectionBackground() : table.getBackground());
-            setForeground(isSelected && !hasFocus ? table.getSelectionForeground() : table.getForeground());
-
-            setFont(table.getFont());
-            setBorder(hasFocus ? UIManager.getBorder("Table.focusCellHighlightBorder") : m_noFocusBorder);
-
-            return this;
-        }
-    }
     
     
     
