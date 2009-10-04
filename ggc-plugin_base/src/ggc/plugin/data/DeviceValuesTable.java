@@ -6,7 +6,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JCheckBox;
@@ -22,7 +21,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -98,9 +96,11 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     {
         super(_model);
         m_da = da;
-        this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        //this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         this.model = _model;
 
+        setColumnsWidth(this);
+        
         this.setDefaultRenderer(Boolean.class, new CheckCellRenderer_DVT());
         this.setDefaultRenderer(Integer.class, new StatusCellRenderer_DVT());
     }
@@ -110,17 +110,22 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
      * 
      * @see javax.swing.JTable#createDefaultTableHeader()
      */
-    @Override
+/*    @Override
     protected JTableHeader createDefaultTableHeader()
     {
         JTableHeader header = super.createDefaultTableHeader();
 
         //header.setPreferredSize(new Dimension(100, 20));
         header.setFont(header.getFont().deriveFont(12.0f).deriveFont(Font.BOLD));
+        //header.setBackground(Color.blue.brighter());
+        //header.setBackground(Color.red);
 
+        //header.setForeground(Color.white.darker());
+        //header.setOpaque(true);
+        
         return header;
     }
-
+*/
     /**
      * Set Model
      * @param model
@@ -188,6 +193,23 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     }
     
     
+    /**
+     * Set Columns Width
+     * 
+     * @param dvt
+     */
+    public void setColumnsWidth(DeviceValuesTable dvt)
+    {
+        TableColumn column = null;
+        for (int i = 0; i < model.getColumnCount(); i++) 
+        {
+            column = dvt.getColumnModel().getColumn(i);
+            column.setPreferredWidth(model.getColumnWidth(i, 222));
+        }        
+        
+    }
+    
+    
     
     /**
      * Create Values Table
@@ -208,23 +230,7 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
         //toolBar.add(addRowAction);
         //toolBar.add(deleteRowAction);
 
-        TableColumn column = null;
-        for (int i = 0; i < m_da.getColumnsWidthTable().length; i++) 
-        {
-            column = table.getColumnModel().getColumn(i);
-            
-            column.setPreferredWidth(m_da.getColumnsWidthTable()[i]);
-            
-            /*
-            if (i == 0) 
-            {
-                column.setPreferredWidth(100); //third column is bigger
-            } 
-            else 
-            {
-                column.setPreferredWidth(50);
-            }*/
-        }        
+        setColumnsWidth(table);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(toolBar, "North");
@@ -277,6 +283,8 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
             m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
             setOpaque(true);
             setBorder(m_noFocusBorder);
+            this.setHorizontalAlignment(JCheckBox.CENTER);
+            //this.set
         }
 
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,

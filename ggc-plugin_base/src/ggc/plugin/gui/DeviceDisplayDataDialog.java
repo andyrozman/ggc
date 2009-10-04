@@ -31,7 +31,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.table.TableColumn;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
@@ -466,13 +465,16 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         //int[] cw = { 110, 80, 70, 80, 30 };
 
+/*        
+  
+        // removed 
         TableColumn column = null;
         for (int i = 0; i < this.m_da.getColumnsWidthTable().length; i++)
         {
             column = table_in.getColumnModel().getColumn(i);
             column.setPreferredWidth(this.m_da.getColumnsWidthTable()[i]);
         }
-
+*/
         JPanel container = new JPanel(new BorderLayout());
         container.add(toolBar, "North");
         container.add(scroller, "Center");

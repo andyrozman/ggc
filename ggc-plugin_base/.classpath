@@ -13,5 +13,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jna-3.0.9"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/IBMComm-Win"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/IBMComm"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
