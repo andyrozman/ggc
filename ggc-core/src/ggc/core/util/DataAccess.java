@@ -270,6 +270,7 @@ public class DataAccess extends ATDataAccessAbstract
     @Override
     public void initSpecial()
     {
+        doTest();
         this.initObservable();
         
         //System.out.println("init Special");
@@ -1946,6 +1947,39 @@ public class DataAccess extends ATDataAccessAbstract
         
     }
     
+    /**
+     * For misc tests
+     */
+    public void doTest()
+    {
+        
+        /*
+        //ColorUIResource cui = (ColorUIResource) UIManager.getLookAndFeel()
+        //.getDefaults().get("textText");        
+        
+        
+        UIDefaults dd = UIManager.getLookAndFeel().getDefaults();
+        
+        System.out.println(dd);
+        
+        for(Enumeration en = dd.keys(); en.hasMoreElements(); )
+        {
+            String key = (String)en.nextElement();
+            
+            if (key.contains("Table"))
+                System.out.println(key);
+        }
+        
+        //ComponentUI cui = dd.getUI(new JTable());
+        
+        Color c = dd.getColor("TableHeader.background");
+        c = Color.blue;
+        
+        
+   
+        
+        */
+    }
     
     
 
