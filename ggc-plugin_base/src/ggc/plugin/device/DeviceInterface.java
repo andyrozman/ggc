@@ -3,6 +3,7 @@ package ggc.plugin.device;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.utils.file.FileReaderContext;
 
 
 /**
@@ -329,5 +330,22 @@ public interface DeviceInterface extends SelectableInterface
      */
     public String getDeviceSourceName();
     
+
+    /**
+     * Does this device support file download. Some devices have their native software, which offers export 
+     * into some files (usually CSV files or even XML). We sometimes add support to download from such
+     * files, and in some cases this is only download supported. 
+     *  
+     * @return
+     */
+    public boolean isFileDownloadSupported();
+    
+    
+    /**
+     * Get File Download Types as FileReaderContext. 
+     * 
+     * @return
+     */
+    public FileReaderContext[] getFileDownloadTypes();
     
 }
