@@ -69,8 +69,8 @@ public class PumpConsoleTester //extends JFrame
         
     	try
     	{
-    	    //startRoche(portName);
-    	    startDana(portName);
+    	    startRoche(portName);
+    	    //startDana(portName);
     	    //startMinimed("./dta/CareLink-Export-1213803114904.csv");
     	}
     	catch(Exception ex)
@@ -118,7 +118,13 @@ public class PumpConsoleTester //extends JFrame
         
         
         AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
-        acs.processXml(new File("../test/I0014072.XML"));
+        //acs.processXml(new File("../test/I0014072.XML"));
+        acs.processXml(new File("../test/I0026117.XML"));
+        acs.test();
+        
+        //AccuChekSmartPixPump pp = (AccuChekSmartPixPump)acs;
+        //pp.test();
+        
     }
     
     

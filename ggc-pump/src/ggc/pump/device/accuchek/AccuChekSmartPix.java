@@ -228,8 +228,9 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
         
 
             // debug mode, will be removed when implementation is finished
-            processXml(new File("../test/I0014072.XML"));
-
+            //processXml(new File("../test/I0014072.XML"));
+        processXml(new File("../test/I0026117.XML"));
+            
         this.output_writer.setSpecialProgress(100);
         this.output_writer.setSubStatus(null);
         

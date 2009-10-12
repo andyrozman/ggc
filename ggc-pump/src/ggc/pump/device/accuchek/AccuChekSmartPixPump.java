@@ -120,9 +120,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     
     
     /**
-     * getMeterId - Get Meter Id, within Meter Company class 
+     * getDeviceId - Get Meter Id, within Meter Company class 
      * 
-     * @return id of meter within company
+     * @return id of device within company
      */
     public int getDeviceId()
     {
@@ -338,7 +338,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         //list.addAll(getBasals());
         
         
-        list.addAll(getSpecificElements2("BASAL"));
+        list.addAll(getProfileElements());
         
         if (first_basal !=null)
             list.add(first_basal);
@@ -365,6 +365,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         return getSpecificElements("EVENT", AccuChekSmartPixPump.TAG_EVENT);
     }
 
+    
+    /** 
+     * test
+     */
+    public void test()
+    {
+        readPumpDataTest();
+    }
     
     
     /**
@@ -452,10 +460,43 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             }
         }
         
+        System.out.println("Profiles: " + lst_out.size());
+        
         return lst_out;
         
     }
     
+    
+    private ArrayList<PumpValuesEntry> getProfileElements()
+    {
+        List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/BASAL"); // + element);
+        ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
+        boolean add = false;
+        
+        for(int i=0; i<lst.size(); i++)
+        {
+            Element el = (Element)lst.get(i);
+            
+            PumpValuesEntry pve = new PumpValuesEntry(this.getDeviceSourceName());
+            pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
+
+            add = this.resolveBasalProfilePatterns(pve, el);                
+            
+            if (add)
+            {
+                // testing only
+//                this.output_writer.writeData(pve);
+
+                lst_out.add(pve);
+            }
+        }
+        
+        System.out.println("Profiles patterns: " + lst_out.size());
+        
+        return lst_out;
+        
+    }
+
     
     
     private boolean resolveBasalBase(PumpValuesEntry pve, Element el)
@@ -466,8 +507,13 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         String cbrf = el.attributeValue("cbrf");
         String profile = el.attributeValue("profile");
         
+        System.out.println(el);
+        
         if ((isSet(tbrdec)) || (isSet(tbrinc)))
         {
+            if ((remark==null) || (remark.trim().length()==0))
+                return false;
+                
             pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
             pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE);
             
@@ -637,6 +683,109 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
     
     
+    private boolean resolveBasalProfilePatterns(PumpValuesEntry pve, Element el)
+    {
+        // TODO
+        String remark = el.attributeValue("remark");
+        String tbrdec = el.attributeValue("TBRdec");
+        String tbrinc = el.attributeValue("TBRinc");
+        String cbrf = el.attributeValue("cbrf");
+        String profile = el.attributeValue("profile");
+        
+        if ((isSet(tbrdec)) || (isSet(tbrinc)))
+        {
+            return false;
+        }
+        else //if (isSet(remark))
+        {
+            if (isSet(remark))
+            {
+                if ((!remark.contains("TBR")) && (!remark.contains("Run")) && (!remark.contains("Stop")) && (!remark.contains("power"))   
+                        )
+                {
+                    System.out.println(pve.getDateTimeObject().toString() + ",value=" + cbrf + ", profile=" + profile+",remark=" + remark);
+                }
+            }
+            else
+                System.out.println(pve.getDateTimeObject().toString() + ",value=" + cbrf + ", profile=" + profile);
+
+            return true;
+        }
+            
+/*            
+            // all that are special should be removed, all other are checked over events
+            if (remark.contains("changed"))
+            {
+                // TODO: Changed profile
+//                System.out.println("Basal Changed Unknown [remark=" + remark + "]");
+                //System.out.println("Basal Rate Changed [datetime=" + pve.getDateTimeObject() + ",remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                
+                return false;
+            }
+            else
+            {
+                if ((this.getEventMappings().containsKey(remark)) ||
+                    (this.getBasalMappings().containsKey(remark)))
+                {
+                    return false;
+                }
+                else
+                {
+                    if (remark.contains(" - "))
+                    {
+                        pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
+                        pve.setSubType(PumpBasalSubType.PUMP_BASAL_PROFILE);
+                        pve.setValue(remark.substring(remark.indexOf(" - ")+ 3));
+//                        System.out.println("Profile changed: " + remark.substring(remark.indexOf(" - ")+ 3));
+//                        System.out.println("Unknown Profile Event. [remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            }
+            
+        }
+        else
+        {
+            if (!isSet(profile))
+            {
+                //System.out.println("tbrdec=" + isSet(tbrdec) + "tbrinc=" + isSet(tbrinc));
+
+                if ((!isSet(tbrdec)) && (!isSet(tbrinc)) && (cbrf.equals("0.00")))
+                {
+                    //System.out.println("tbrdec=" + isSet(tbrdec) + "tbrinc=" + isSet(tbrinc));
+                    return false;
+                }
+                else
+                {
+                    log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                    return false;
+                }
+            }
+            else
+            {
+                // profile used
+                pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
+                pve.setSubType(PumpBasalSubType.PUMP_BASAL_PROFILE);
+                pve.setValue(profile);
+                
+                first_basal = pve;
+
+                //log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                
+                if (pve.getDateTimeObject().getTimeString().equals("00:00:00"))
+                {
+                    //System.out.println("Profile used: " + pve.getValue());
+                    first_basal = null;
+                    return true;
+                }
+                else
+                    return false;
+            }
+        } */
+            
+    }
     
 
     private boolean resolveBolus(PumpValuesEntry pve, Element el)

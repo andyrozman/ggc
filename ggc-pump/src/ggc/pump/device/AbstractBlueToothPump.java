@@ -13,6 +13,7 @@ import javax.comm.SerialPortEvent;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -314,6 +315,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         
         this.serialPort.removeEventListener();
         this.serialPort.close();
+        this.serialPort = null;
     }
 
 
@@ -610,6 +612,30 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     public int getDownloadSupportTypeConfiguration()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+
+    
+    /**
+     * Does this device support file download. Some devices have their native software, which offers export 
+     * into some files (usually CSV files or even XML). We sometimes add support to download from such
+     * files, and in some cases this is only download supported. 
+     *  
+     * @return
+     */
+    public boolean isFileDownloadSupported()
+    {
+        return false;
+    }
+    
+    
+    /**
+     * Get File Download Types as FileReaderContext. 
+     * 
+     * @return
+     */
+    public FileReaderContext[] getFileDownloadTypes()
+    {
+        return null;
     }
     
     

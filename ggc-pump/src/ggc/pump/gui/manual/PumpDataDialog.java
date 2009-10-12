@@ -110,30 +110,44 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
     GGCPumpDb m_db = null;
 
     GregorianCalendar current_date;
+
+    Component parent = null;
     
     /**
      * Constructor
      * 
      * @param da
-     * @param parent
+     * @param _parent
      */
-    public PumpDataDialog(DataAccessPump da, Component parent)
+    public PumpDataDialog(DataAccessPump da, JDialog _parent)
     {
-        super(da.getMainParent(), "DailyStatsDialog", true);
-        // setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
+        super(_parent, "", true);
 
-        setTitle(new GregorianCalendar());
         this.m_da = da;
-        this.m_db = m_da.getDb();
-        stats = new PumpDailyStatistics();        
-        m_da.addComponent(this);
-
-        setSize(700, 470);
-        m_da.centerJDialog(this, parent);
+        this.parent = _parent;
 
         init();
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param _parent
+     */
+    public PumpDataDialog(DataAccessPump da, JFrame _parent)
+    {
+        super(_parent, "", true);
+
+        this.m_da = da;
+        this.parent = _parent;
+
+        init();
+    }
+    
+    
+    
     /**
      * Set Title
      * 
@@ -202,6 +216,16 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     private void init()
     {
+
+        setTitle(new GregorianCalendar());
+        this.m_db = m_da.getDb();
+        stats = new PumpDailyStatistics();        
+        m_da.addComponent(this);
+
+        setSize(700, 470);
+        m_da.centerJDialog(this, parent);
+        
+        
         // setBounds(150, 150, 550, 500);
 
         // Panel for Insulin Stats
