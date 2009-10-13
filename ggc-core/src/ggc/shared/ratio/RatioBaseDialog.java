@@ -1,30 +1,23 @@
 package ggc.shared.ratio;
 
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.NumberFormat;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.atech.graphics.components.DateTimeComponent;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
 import com.atech.utils.ATSwingUtils;
@@ -62,86 +55,27 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
 {
 
     private static final long serialVersionUID = -1240982985415603758L;
-//    JComboBox cb_time_range, cb_icarb_rule, cb_sens_rule;
     JDecimalTextField dtf_ch_ins, dtf_ins_bg, dtf_bg_ch;
     
 
-    /** 
-     * focusGained
-     */
-    public void focusGained(FocusEvent arg0)
-    {
-    }
 
 
     boolean in_action = false;
     
-    /** 
-     * focusLost
-     */
-    public void focusLost(FocusEvent ev)
-    {
-//        System.out.println("focus lost [" + in_action + "]");
-
-        if (in_action)
-            return;
-
-//        System.out.println("focus lost [" + in_action + "]");
-	
-        in_action = true;
-        
-        calculateRatio(ev.getSource());
-        
-        in_action = false;
-//        System.out.println("focus lost [" + in_action + "]");
-        
-    }
-
+    
+    
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
-    //private GGCProperties props = m_da.getSettings();
 
     private boolean m_actionDone = false;
 
-    //private long last_change = 0;
-
-//    static AddRowFrame singleton = null;
-
-
-
-    
-    
-
     JLabel label_title = new JLabel();
-    JLabel label_food;
-    JCheckBox cb_food_set;
 
-    DateTimeComponent dtc;
-
-    JButton AddButton;
-
-    String sDate = null;
-
-    DailyValues dV = null;
-    DailyValuesRow m_dailyValuesRow = null;
-
-    NumberFormat bg_displayFormat, bg_editFormat;
-    
-    JComponent components[] = new JComponent[9];
-
-    Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = true;
     JButton help_button = null;
     JPanel main_panel = null;
-
-
-    
-    //private boolean m_add_action = true;
-    //private Container m_parent = null;
-
-
+    RatioEntry ratio_entry = null;
     
 
     /**
@@ -163,15 +97,30 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
 
     }
 
-
-
-
-
-
-
-
     
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     * @param re 
+     */
+    public RatioBaseDialog(JFrame dialog, RatioEntry re) 
+    {
+        super(dialog, "", true);
+        
+        //m_parent = dialog;
+        m_da.addComponent(this);
 
+        init();
+        load();
+        
+        this.setVisible(true);
+
+    }
+    
+    
+    
+    
 
     /**
      * Load data
@@ -495,6 +444,29 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
 
     }
 
+
+    /** 
+     * Focus Lost
+     */
+    public void focusLost(FocusEvent fe)
+    {
+        if (in_action)
+            return;
+
+        in_action = true;
+        calculateRatio(fe.getSource());
+        in_action = false;
+    }
+
+    
+    /** 
+     * Focus Gained
+     */
+    public void focusGained(FocusEvent fe)
+    {
+    }
+    
+    
     
     
     // ****************************************************************

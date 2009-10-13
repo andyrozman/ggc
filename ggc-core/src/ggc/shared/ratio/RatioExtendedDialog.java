@@ -28,32 +28,34 @@
  */
 package ggc.shared.ratio;
 
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumnModel;
 
+import com.atech.graphics.components.ATTableData;
+import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.help.HelpCapable;
 
@@ -89,8 +91,9 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
     private static final long serialVersionUID = -1240982985415603758L;
     JComboBox cb_time_range, cb_icarb_rule, cb_sens_rule;
+    ArrayList<RatioEntry> list_ratios = new ArrayList<RatioEntry>(); 
+    RatioEntryDisplay red = null;
     
-
     /** 
      * focusGained
      */
@@ -161,16 +164,16 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
     DateTimeComponent dtc;
 
-    JButton AddButton;
+    //JButton AddButton;
 
-    String sDate = null;
+    //String sDate = null;
 
-    DailyValues dV = null;
-    DailyValuesRow m_dailyValuesRow = null;
+    //DailyValues dV = null;
+    //DailyValuesRow m_dailyValuesRow = null;
 
-    NumberFormat bg_displayFormat, bg_editFormat;
+    //NumberFormat bg_displayFormat, bg_editFormat;
     
-    JComponent components[] = new JComponent[9];
+    //JComponent components[] = new JComponent[9];
 
     Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
     Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
@@ -181,7 +184,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
 
     
-    private boolean m_add_action = true;
+    //private boolean m_add_action = true;
     private Container m_parent = null;
 
 
@@ -198,8 +201,8 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         
         m_parent = dialog;
 
-        setTitle(m_ic.getMessage("RATIO_CALCULATOR"));
-        label_title.setText(m_ic.getMessage("RATIO_CALCULATOR"));
+        setTitle(m_ic.getMessage("RATIO_EXTENDED"));
+        label_title.setText(m_ic.getMessage("RATIO_EXTENDED"));
 
         init();
         
@@ -221,6 +224,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
      */
     public void load()
     {
+        /*
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
 
         if (m_dailyValuesRow.getBG()>0)
@@ -241,7 +245,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         this.cb_food_set.setEnabled(true);
 
         CommentField.setText(this.m_dailyValuesRow.getComment());
-
+        */
     }
 
     /*
@@ -253,20 +257,14 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
     private void init()
     {
-        int x = 0;
-        int y = 0;
-        int width = 400;
-        int height = 500;
-
-        Rectangle bnd = m_parent.getBounds();
-
-        x = (bnd.width/2) + bnd.x - (width/2);
-        y = (bnd.height/2) + bnd.y - (height/2);
+        red = new RatioEntryDisplay(m_ic);
         
-        this.setBounds(x, y, width, height);
+        this.setBounds(0, 0, 500, 500);
 
+        m_da.centerJDialog(this, m_parent);
+        
         JPanel panel = new JPanel();
-        panel.setBounds(0, 0, width, height);
+        panel.setBounds(0, 0, 500, 500);
         panel.setLayout(null);
 
         main_panel = panel;
@@ -278,48 +276,23 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
 
-        JLabel l = new JLabel(m_ic.getMessage("RATIO_TIME_SELECT_DESC"));
-        l.setBounds(30, 70, 330, 80);
-        panel.add(l);
+  
         
-        addLabel(m_ic.getMessage("SELECT_RANGE") + ":", 165, panel);
-        
-        Object o[] = { m_ic.getMessage("1_WEEK"), m_ic.getMessage("2_WEEKS"), m_ic.getMessage("3_WEEKS"), m_ic.getMessage("1_MONTH")  };
-        
-        Object o1[] = { m_ic.getMessage("RULE_500"), m_ic.getMessage("RULE_450"), m_ic.getMessage("RULE_300") };
-
-        Object o2[] = { m_ic.getMessage("RULE_1800"), m_ic.getMessage("RULE_1500")};
-        
-        this.cb_time_range = new JComboBox(o);
-        this.cb_time_range.setBounds(180, 160, 140, 25);
-        panel.add(this.cb_time_range);
 
         
-        addComponent(l = new JLabel(m_ic.getMessage("INSULIN_CARB_RATIO") ), 30, 210, 150, panel);
-        l.setFont(this.f_bold);
-        
-        addLabel(m_ic.getMessage("SELECT_RULE") + ":", 240, panel);
+        JTable table_1 = new JTable();
 
-        
-        this.cb_icarb_rule = new JComboBox(o1);
-        this.cb_icarb_rule.setBounds(140, 240, 210, 25);
-        panel.add(this.cb_icarb_rule);
-        
-        
-        addLabel(m_ic.getMessage("1_UNIT_INSULIN") + ":", 270, panel);
-        
-        addComponent(l = new JLabel(m_ic.getMessage("SENSITIVITY_FACTOR") ), 30, 300, 150, panel);
-        l.setFont(this.f_bold);
+        this.createModel(this.list_ratios, table_1, this.red);
 
-        
-        addLabel(m_ic.getMessage("SELECT_RULE") + ":", 340, panel);
+        table_1.setRowSelectionAllowed(true);
+        table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table_1.setDoubleBuffered(true);
 
-        this.cb_sens_rule = new JComboBox(o2);
-        this.cb_sens_rule.setBounds(140, 340, 210, 25);
-        panel.add(this.cb_sens_rule);
+        JScrollPane scroll_1 = new JScrollPane(table_1);
+        scroll_1.setBounds(30, 305, 460, 160);
+        panel.add(scroll_1, null); //, ZeroLayout.DYNAMIC);
+        //scroll_1.repaint();        
         
-        
-        addLabel(m_ic.getMessage("1_UNIT_INSULIN") + ":", 390, panel);
         
         //addLabel(m_ic.getMessage("SELECT_DATE") + ":", 78, panel);
         //addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
@@ -514,124 +487,29 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
     
     
-    
-    
-    
-
-    /*
-    public void setBGTextField()
+    private void createModel(ArrayList<?> lst, JTable table, ATTableData object)
     {
-	int digs = 0;
+        ATTableModel model = new ATTableModel(lst, object);
+        table.setModel(model);
 
-	if (m_da.getBGMeasurmentType()==DataAccess.BG_MMOL)
-	{
-	    digs = 1;
-	}
-	
-	bg_displayFormat = NumberFormat.getNumberInstance();
-	bg_displayFormat.setMinimumFractionDigits(digs);
-	bg_displayFormat.setMaximumFractionDigits(digs);
-	
-	bg_editFormat = NumberFormat.getNumberInstance();        
-	bg_editFormat.setMinimumFractionDigits(digs);
-	bg_editFormat.setMaximumFractionDigits(digs);
-    
-	
-	this.ftf_bg = new JFormattedTextField(
-            new DefaultFormatterFactory(
-                    new NumberFormatter(bg_displayFormat),
-                    new NumberFormatter(bg_displayFormat),
-                    new NumberFormatter(bg_editFormat)));
-		
-	
-	/*
-	MaskFormatter mask = null;
-	     try {
-	            //
-	            // Create a MaskFormatter for accepting phone number, the # symbol accept
-	            // only a number. We can also set the empty value with a place holder
-	            // character.
-	            //
-	            mask = new MaskFormatter("##,#");
-	            mask.setPlaceholderCharacter('_');
-	        } 
-	     catch (ParseException e) 
-	        {
-	            e.printStackTrace();
-	        }
-	
+        // int twidth2 = this.getWidth()-50;
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        TableColumnModel cm2 = table.getColumnModel();
 
-		this.ftf_bg = new JFormattedTextField(mask);
-*/
-	        
-//    ftf.setValue(value);
-    //if (columns != 0)
-    //    ftf.setColumns(columns);
-/*	this.ftf_bg.setBounds(140, 138, 55, 25);
-	this.ftf_bg.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
-	main_panel.add(this.ftf_bg);
-    
-	//setBGElementSettings();
-	
-	//return ftf;
-	
-    }
-*/    
-    
-    /*
-    protected void setBGElementSettings()
-    {
-	
-	if (m_da.getBGMeasurmentType()==DataAccess.BG_MGDL)
-	{
-	    bg_displayFormat.setMinimumFractionDigits(0);
-	    bg_displayFormat.setMaximumFractionDigits(0);
-	    bg_editFormat.setMinimumFractionDigits(0);
-	    bg_editFormat.setMaximumFractionDigits(0);
-	    
-	    //this.ftf_bg.setFormatterFactory(new MaskFormatter("###"));
-	    //this.ftf_bg.set
-	    
-	    //bg_displayFormat.setRoundingMode();
-	    //new RoundingMode();
-	}
-	else
-	{
-	    bg_displayFormat.setMinimumFractionDigits(1);
-	    bg_displayFormat.setMaximumFractionDigits(1);
-	    bg_editFormat.setMinimumFractionDigits(1);
-	    bg_editFormat.setMaximumFractionDigits(1);
-	    
-	} 
-    }
-    */
+        for (int i = 0; i < object.getColumnsCount(); i++)
+        {
+            cm2.getColumn(i).setHeaderValue(object.getColumnHeader(i));
+            cm2.getColumn(i).setPreferredWidth(object.getColumnWidth(i, 430));
+        }
 
-    private void addLabel(String text, int posY, JPanel parent)
-    {
-        JLabel label = new JLabel(text);
-        label.setBounds(30, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        //a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
-        
-    }
-
-    
-    
-    
-    private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
-    {
-        addComponent(comp, posX, posY, width, 23, true, parent);
-    }
-
-    
-    private void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
-    {
-        comp.setBounds(posX, posY, width, height);
-        //comp.addKeyListener(this);
-        parent.add(comp);
     }
     
+    
+    
+
+    
+    
+   
 
 
     /**
@@ -667,7 +545,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     private void cmdOk()
     {
         // to-do
-        if (this.m_add_action) 
+/*        if (this.m_add_action) 
         {
             // add
 
@@ -703,19 +581,6 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
             //this.m_dailyValuesRow.setMealIdsList(null);
 
             dV.addRow(this.m_dailyValuesRow);
-            /*
-            dV.setNewRow(new DailyValuesRow(this.dtc.getDateTime(),
-                    checkDecimalFields(BGField.getText()), 
-                    checkDecimalFields(Ins1Field.getText()), 
-                    checkDecimalFields(Ins2Field.getText()), 
-                    checkDecimalFields(BUField.getText()), 
-                    ActField.getText(),
-                    UrineField.getText(),
-                    CommentField.getText(), 
-                    null));  // List of ids
-            //mod.fireTableChanged(null);
-            //clearFields();
-            */
             this.m_actionDone = true;
             this.dispose();
         }
@@ -734,12 +599,6 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         	this.m_dailyValuesRow.setBG(1, f);
             }
             
-/*            
-            float f = m_da.getJFormatedTextValueFloat(ftf_bg);
-            
-            if (f>0.0)
-                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, f);
-  */          
 //            if (isFieldSet(BGField.getText()))
 //                this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1, checkDecimalFields(BGField.getText()));
 
@@ -760,23 +619,11 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
             this.m_actionDone = true;
             this.dispose();
         }
-
+*/
     }
 
 
-    /**
-     * Is Field Set
-     * 
-     * @param text
-     * @return
-     */
-    public boolean isFieldSet(String text)
-    {
-    	if ((text == null) || (text.trim().length()==0))
-    	    return false;
-    	else
-    	    return true;
-    }
+ 
     
     /**
      * Was Action Successful
@@ -789,17 +636,6 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     }
 
 
-
-
-    /**
-     * @param field
-     * @return
-     */
-    public String checkDecimalFields(String field)
-    {
-        field = field.replace(',', '.');
-        return field;
-    }
 
 
     
