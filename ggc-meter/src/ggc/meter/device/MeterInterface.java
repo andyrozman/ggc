@@ -79,5 +79,25 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
     public DeviceIdentification getDeviceInfo();
     
     
+    /**
+     * Meter Interface - Simple (for normal meter devices, which store only BG data)
+     */
+    public static final int METER_INTERFACE_SIMPLE =1;
+
+    /**
+     * Meter Interface - Extended (for meter devices, which store more then just BG data)
+     */
+    public static final int METER_INTERFACE_EXTENDED =2;
+    
+    
+    /**
+     * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
+     *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
+     *    ... - OT Smart, etc), this devices require more extended data display. 
+     * @return
+     */
+    public int getInterfaceTypeForMeter();
+    
+    
     
 }

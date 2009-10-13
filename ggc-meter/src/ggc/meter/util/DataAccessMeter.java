@@ -4,6 +4,7 @@ import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
 import ggc.meter.data.db.GGCMeterDb;
+import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
@@ -483,6 +484,21 @@ public class DataAccessMeter extends DataAccessPlugInBase
         this.m_old_data_reader = new MeterDataReader(this);
     }
     
+
+    /**
+     * Is Data Download Screen Wide
+     * 
+     * @return
+     */
+    public boolean isDataDownloadSceenWide()
+    {
+        MeterInterface mi = (MeterInterface)this.getSelectedDeviceInstance();
+        
+        if (mi.getInterfaceTypeForMeter()==MeterInterface.METER_INTERFACE_SIMPLE)
+            return false;
+        else
+            return true;
+    }    
     
     
 }

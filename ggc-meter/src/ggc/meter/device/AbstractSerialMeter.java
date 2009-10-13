@@ -13,6 +13,7 @@ import gnu.io.SerialPortEvent;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -510,6 +511,39 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
     
+    /**
+     * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
+     *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
+     *    ... - OT Smart, etc), this devices require more extended data display. 
+     * @return
+     */
+    public int getInterfaceTypeForMeter()
+    {
+        return MeterInterface.METER_INTERFACE_SIMPLE;
+    }
+
+    /**
+     * Does this device support file download. Some devices have their native software, which offers export 
+     * into some files (usually CSV files or even XML). We sometimes add support to download from such
+     * files, and in some cases this is only download supported. 
+     *  
+     * @return
+     */
+    public boolean isFileDownloadSupported()
+    {
+        return false;
+    }
+    
+    
+    /**
+     * Get File Download Types as FileReaderContext. 
+     * 
+     * @return
+     */
+    public FileReaderContext[] getFileDownloadTypes()
+    {
+        return null;
+    }
     
     
 }

@@ -12,6 +12,7 @@ import java.util.Hashtable;
 
 import org.hibernate.Session;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATechDate;
 
 
@@ -45,6 +46,7 @@ import com.atech.utils.ATechDate;
 public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterData
 {
 	DataAccessMeter da = DataAccessMeter.getInstance();
+	I18nControlAbstract m_ic = da.getI18nControlInstance();
 	private ATechDate datetime;
 	private String bg_str;
 	private int bg_unit;
@@ -57,6 +59,9 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	private String bg_original = null;
 	private OutputUtil util = OutputUtil.getInstance();
 	private String value_db = null;
+	
+	private float bg_mmolL;
+	private int bg_mgdL;
 	
 	
     /**
@@ -207,13 +212,18 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 		if (this.bg_unit==OutputUtil.BG_MGDL)
 		{
 		    this.value_db = value;
+	        bg_mgdL = Integer.parseInt(this.value_db);
+	        bg_mmolL = (float)this.util.getBGValueDifferent(OutputUtil.BG_MGDL, (float)bg_mgdL);
 		}
 		else
 		{
 		    this.value_db = "" + ((int)this.util.getBGValueDifferent(OutputUtil.BG_MMOL, Float.parseFloat(value)));
+		
+		    bg_mmolL = Integer.parseInt(value);
+            bg_mgdL = (int)this.util.getBGValueDifferent(OutputUtil.BG_MMOL, bg_mmolL);
+		
 		}
-		
-		
+
 		if (this.bg_original==null)
 		    this.setDisplayableBGValue(value);
 	}
@@ -526,17 +536,75 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     /**
      * Get Column Value
      * 
-     * @param index
+     * @param column
      * @return
      */
     @Override
-    public Object getColumnValue(int index)
+    public Object getColumnValue(int column)
     {
-        // TODO Auto-generated method stub
-        return null;
+        if (!da.isDataDownloadSceenWide())
+            return this.getColumnValueBase(column); 
+        else
+            return this.getColumnValueExtended(column);
     }
 
 
+        
+    private Object getColumnValueBase(int column)
+    {
+        switch (column)
+        {
+            case 0:
+                return this.getDateTimeObject().getDateTimeString();
+    
+            case 1:
+                return this.bg_mgdL; //mve.getBGValue(DataAccessMeter.BG_MMOL);
+    
+            case 2:
+                return this.bg_mmolL; //mve.getBGValue(DataAccessMeter.BG_MGDL);
+    
+            case 3:
+                return new Integer(this.getStatus());
+    
+            case 4:
+                return new Boolean(this.getChecked());
+    
+            default:
+                return "";
+        }
+    }
+        
+    
+    private Object getColumnValueExtended(int column)
+    {
+        switch (column)
+        {
+            case 0:
+                return getDateTimeObject().getDateTimeString();
+
+            case 1:
+                return this.getExtendedTypeDescription();
+
+            case 2:
+                // value
+                return this.getExtendedTypeValue();
+
+            case 3:
+                return this.getStatus();
+            
+            case 4:
+                return new Boolean(getChecked());
+
+            default:
+                return "";
+        }
+    }
+    
+    
+    
+        
+        
+        
     /**
      * Get DateTime format
      * 
@@ -835,5 +903,33 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         return this.source;
     }
      
+    
+    /**
+     * Get Extended Type Description (if we use extended interface, this is type description)
+     * 
+     * @return
+     */
+    public String getExtendedTypeDescription()
+    {
+        if (this.special_entry)
+            return m_ic.getMessage(this.special_entry_tags[this.special_entry_id]);
+        else
+            return m_ic.getMessage("BG");
+    }
+    
+    /**
+     * Get Extended Type Value (if we use extended interface, this is value)
+     * 
+     * @return
+     */
+    public String getExtendedTypeValue()
+    {
+        if (this.special_entry)
+            return this.special_entry_value + " " + this.special_entry_units[this.special_entry_id];
+        else
+            return this.bg_mgdL + " mg/dL (" + DataAccessMeter.Decimal1Format.format(this.bg_mmolL) + " mmol/L)";
+    }
+    
+    
     
 }	

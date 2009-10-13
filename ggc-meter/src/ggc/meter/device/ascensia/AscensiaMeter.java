@@ -211,6 +211,10 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
             ex.printStackTrace();
             
         }
+        finally
+        {
+            super.close();
+        }
         
         
     }

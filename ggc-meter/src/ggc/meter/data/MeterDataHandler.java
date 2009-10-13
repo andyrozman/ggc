@@ -1,7 +1,9 @@
 package ggc.meter.data;
 
 import ggc.core.db.hibernate.DayValueH;
+import ggc.meter.device.MeterInterface;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValuesTableModel;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.Hashtable;
@@ -36,7 +38,7 @@ import java.util.Hashtable;
 public class MeterDataHandler extends DeviceDataHandler
 {
 
-
+    MeterValuesExtTableModel m_model2;
     
     /**
      * Constructor
@@ -59,8 +61,14 @@ public class MeterDataHandler extends DeviceDataHandler
     @SuppressWarnings("deprecation")
     public void executeExportDb()
     {
+        
+        // TODO Fix
         //System.out.println("Checked entries: " + this.getDeviceValuesTableModel().getCheckedEntries());
         this.m_server.setReturnData(this.getDeviceValuesTableModel().getCheckedEntries(), this);
+        
+        
+        
+        
     }
     
     
@@ -80,9 +88,34 @@ public class MeterDataHandler extends DeviceDataHandler
     public void createDeviceValuesTableModel()
     {
         this.m_model = new MeterValuesTableModel(this, m_da.getSourceDevice());
+        this.m_model2 = new MeterValuesExtTableModel(this, m_da.getSourceDevice());
     }
 
 
+    
+    /**
+     * Get Device Values Table Model (for this tool we override main method)
+     * 
+     * @return DeviceValuesTableModel instance (or derivate thereof)
+     */
+    public DeviceValuesTableModel getDeviceValuesTableModel()
+    {
+        if (m_model==null)
+            createDeviceValuesTableModel();
+        
+        MeterInterface mi = (MeterInterface)m_da.getSelectedDeviceInstance();
+        
+        System.out.println("getDeviceValuesTableModel(): " + mi.getInterfaceTypeForMeter() );
+        
+        if (mi.getInterfaceTypeForMeter()==MeterInterface.METER_INTERFACE_SIMPLE)
+            return m_model;
+        else
+            return m_model2;
+    }
+    
+    
+    
+    
 
     /**
      * Set Device Data

@@ -9,6 +9,7 @@ import ggc.plugin.output.OutputWriter;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.utils.file.FileReaderContext;
 
 
 /**
@@ -383,6 +384,42 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     public String getDeviceSourceName()
     {
         return device_source_name;
+    }
+    
+    
+    /**
+     * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
+     *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
+     *    ... - OT Smart, etc), this devices require more extended data display. 
+     * @return
+     */
+    public int getInterfaceTypeForMeter()
+    {
+        return MeterInterface.METER_INTERFACE_SIMPLE;
+    }
+    
+    
+    /**
+     * Does this device support file download. Some devices have their native software, which offers export 
+     * into some files (usually CSV files or even XML). We sometimes add support to download from such
+     * files, and in some cases this is only download supported. 
+     *  
+     * @return
+     */
+    public boolean isFileDownloadSupported()
+    {
+        return false;
+    }
+    
+    
+    /**
+     * Get File Download Types as FileReaderContext. 
+     * 
+     * @return
+     */
+    public FileReaderContext[] getFileDownloadTypes()
+    {
+        return null;
     }
     
     

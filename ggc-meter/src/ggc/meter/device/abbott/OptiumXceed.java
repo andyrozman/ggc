@@ -2,6 +2,7 @@ package ggc.meter.device.abbott;
 
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
+import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.Abbott;
 import ggc.meter.util.DataAccessMeter;
@@ -154,6 +155,8 @@ public class OptiumXceed extends AbstractSerialMeter
 
             this.sendMessageToMeter("1GET_EVENTS\00348\r\n");
             
+            this.output_writer.setSubStatus(m_ic.getMessage("PIX_READING"));
+            
             for(data_back = readLine(); data_back.indexOf("END_OF_DATA") == -1;)
             {
                 processDataLine(data_back);
@@ -166,6 +169,10 @@ public class OptiumXceed extends AbstractSerialMeter
                     endReading();
                     break;
                 }
+                
+                if (this.output_writer.isReadingStopped())
+                    break;
+                
             }
 
             writeCommand(6);
@@ -173,7 +180,13 @@ public class OptiumXceed extends AbstractSerialMeter
             
             this.output_writer.setSpecialProgress(100);
             this.output_writer.setSubStatus(null);
-        
+
+            if (this.isDeviceFinished())
+            {
+                this.output_writer.endOutput();
+            }
+            
+            
         }
         catch(Exception ex)
         {
@@ -181,11 +194,11 @@ public class OptiumXceed extends AbstractSerialMeter
             ex.printStackTrace();
             
         }
-        
-        if (this.isDeviceFinished())
+        finally
         {
-            this.output_writer.endOutput();
+            this.close();
         }
+        
         
         //System.out.println("Reading finished !");
         
@@ -247,10 +260,11 @@ public class OptiumXceed extends AbstractSerialMeter
         try
         {
             String[] data = m_da.splitString(line, "\t");
+
+            
             
             if (!data[1].equals("1"))
                 return;
-            
             
             String type_id = data[0].substring(1);
             
@@ -637,6 +651,18 @@ public class OptiumXceed extends AbstractSerialMeter
     public String getInstructions()
     {
         return "INSTRUCTIONS_ABBOTT_OPTIUMXCEED";
+    }
+ 
+    
+    /**
+     * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
+     *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
+     *    ... - OT Smart, etc), this devices require more extended data display. 
+     * @return
+     */
+    public int getInterfaceTypeForMeter()
+    {
+        return MeterInterface.METER_INTERFACE_EXTENDED;
     }
     
     
