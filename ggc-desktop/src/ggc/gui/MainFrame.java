@@ -19,6 +19,7 @@ import ggc.gui.dialogs.graphs.CourseGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
 import ggc.shared.ratio.RatioBaseDialog;
 import ggc.shared.ratio.RatioCalculatorDialog;
+import ggc.shared.ratio.RatioExtendedDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -1219,6 +1220,17 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 new RatioBaseDialog(MainFrame.this);
             }
+            else if (command.equals("ratio_extended"))
+            {
+                if (MainFrame.developer_version)
+                {
+                    new RatioExtendedDialog(MainFrame.this);
+                }
+                else
+                    featureNotImplemented(command, "0.5");
+                
+            }
+            
             /*
              * else if (command.equals("hlp_check")) { new
              * VersionChecker().checkForUpdate(); }
@@ -1295,7 +1307,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else // if ((command.equals("report_pdf_extended")) ||
             if ((command.equals("file_login")) ||
-                (command.equals("ratio_extended")) ||
                 (command.equals("report_foodmenu_ext3")) ||
                 (command.equals("file_logout")))
             {
