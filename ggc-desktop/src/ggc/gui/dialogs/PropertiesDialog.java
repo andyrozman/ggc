@@ -156,12 +156,12 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     };
 
 */
-	list = new JList(config_types); //m_da.config_types);
+	list = new JList(config_types); 
 	list.addListSelectionListener(this);
 	ConfigCellRenderer renderer = new ConfigCellRenderer();
 	renderer.setPreferredSize(new Dimension(100, 75));
 	list.setCellRenderer(renderer);
-
+	list.setSelectedIndex(0);
 
 
 
