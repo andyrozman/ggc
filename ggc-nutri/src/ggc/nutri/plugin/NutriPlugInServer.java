@@ -241,8 +241,6 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         ic = m_da.getI18nControlInstance();
         I18nControl.getInstance().setLanguage(this.selected_lang);
         
-        //System.out.println("initPlugIn");
-        
         DataAccessNutri da = DataAccessNutri.getInstance();
         da.addComponent(this.parent);
         da.setHelpContext(this.m_da.getHelpContext());
@@ -251,8 +249,8 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 //        da.initAllObjects();
         da.loadSpecialParameters();
         
-        GGCDbNutri db = new GGCDbNutri(((DataAccess)m_da).getDb());
-        da.setNutriDb(db);
+        GGCDbNutri _db = new GGCDbNutri(((DataAccess)m_da).getDb());
+        da.setNutriDb(_db);
         
         this.backup_restore_enabled = true;
         m_da.loadSpecialParameters();
@@ -267,9 +265,6 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      */
     public void loadDb()
     {
-        //GGCDbNutri db = new GGCDbNutri(((DataAccess)m_da).getDb());
-        //db.loadNutritionDatabase();
-        
         DataAccessNutri.getInstance().getNutriDb().loadNutritionDbBase();
     }
     
