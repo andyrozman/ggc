@@ -77,6 +77,18 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     
     
     /**
+     * This is action that needs to be done, after read data.
+     */
+    public static final int RETURN_ACTION_READ_DATA = 1;
+    
+    
+    /**
+     * This is action that needs to be done, after config
+     */
+    public static final int RETURN_ACTION_CONFIG = 2;
+    
+    
+    /**
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
@@ -356,6 +368,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         if (command.equals("meters_read"))
         {
             new DeviceInstructionsDialog(this.parent, m_da_local, this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+            this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("meters_list"))
         {
@@ -368,6 +381,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         else if (command.equals("meters_config"))
         {
             new DeviceConfigurationDialog((JFrame)parent, m_da_local);
+            this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_CONFIG);
         }
         else
             System.out.println("MeterPlugInServer::Unknown Command: " + command);

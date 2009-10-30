@@ -1,8 +1,13 @@
 
 Changes file for GGC Meter Tool
 ===============================
-1.1.5 [current]
+
+
+1.1.5 [30.10.2009]
     * Added support for Menarini Glucofix Mio meter
+    * Started working on Framework v2 and Non simple import of meter data
+    * Finished GUI for custom Meter import 
+    * Added additional data to Meter import (left is data transfer to other dbs)
 
 
 1.1.4 [6.8.2009]

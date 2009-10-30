@@ -2,6 +2,7 @@ package ggc.meter.data;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.core.util.DataAccess;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputUtil;
@@ -219,7 +220,8 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 		{
 		    this.value_db = "" + ((int)this.util.getBGValueDifferent(OutputUtil.BG_MMOL, Float.parseFloat(value)));
 		
-		    bg_mmolL = Integer.parseInt(value);
+		    //DataAccess.getInstance().
+		    bg_mmolL = Float.parseFloat((DataAccess.Decimal1Format.format( (Float.parseFloat(value.replace(",", "."))) )).replace(",", "."));
             bg_mgdL = (int)this.util.getBGValueDifferent(OutputUtil.BG_MMOL, bg_mmolL);
 		
 		}
