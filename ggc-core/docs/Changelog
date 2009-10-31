@@ -6,8 +6,8 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
-0.4.10 [current]
-
+0.4.10 [30.10.2009]
+    * Started working on Extended Ratio
 
 0.4.9 [6.8.2009] - Release
     * Added entries to ConfigurationManager about Mode configuration and about Ratio Calculator

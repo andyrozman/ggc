@@ -1,7 +1,5 @@
 package ggc.shared.ratio;
 
-import ggc.core.util.DataAccess;
-
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
 

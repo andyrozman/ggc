@@ -81,7 +81,7 @@ public class DataAccess extends ATDataAccessAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.4.9";
+    public static String CORE_VERSION = "0.4.10";
     
     /**
      * Current Db Version

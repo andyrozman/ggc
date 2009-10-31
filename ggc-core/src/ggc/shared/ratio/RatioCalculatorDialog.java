@@ -556,7 +556,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Daily_Add";
+        return "pages.GGC_Ratio_Calculator";
     }
 
 

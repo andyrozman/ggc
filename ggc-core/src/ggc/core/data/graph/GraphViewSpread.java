@@ -115,7 +115,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_HbA1c";
+        return "pages.GGC_BG_Graph_Spread";
     }
 
     /**
@@ -174,14 +174,14 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
         
         if ((gc_from==null) || (!m_da.compareGregorianCalendars(DataAccess.GC_COMPARE_DAY, gc_from, this.plot_data.getDateRangeData().getRangeFrom())))
         {
-            System.out.println("From changed");
+            System.out.println("From changed: " + this.plot_data.getDateRangeData().getRangeFrom());
             gc_from = this.plot_data.getDateRangeData().getRangeFrom();
             changed = true;
         }
         
         if ((gc_to==null) || (!m_da.compareGregorianCalendars(DataAccess.GC_COMPARE_DAY, gc_to, this.plot_data.getDateRangeData().getRangeTo())))
         {
-            System.out.println("To changed");
+            System.out.println("To changed: " + this.plot_data.getDateRangeData().getRangeTo());
             gc_to = this.plot_data.getDateRangeData().getRangeTo();
             changed = true;
         }

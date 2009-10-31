@@ -1,6 +1,7 @@
 package ggc.core.plugins;
 
 import ggc.core.util.DataAccess;
+import ggc.core.util.RefreshInfo;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -40,7 +41,6 @@ import com.atech.plugin.PlugInServer;
 
 public class PumpsPlugIn extends PlugInClient
 {
-
     
     /**
      * Command: Read Pump Data
@@ -84,6 +84,18 @@ public class PumpsPlugIn extends PlugInClient
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
 
     
+    /**
+     * This is action that needs to be done, after read data.
+     */
+    public static final int RETURN_ACTION_READ_DATA = 1;
+    
+    
+    /**
+     * This is action that needs to be done, after config
+     */
+    public static final int RETURN_ACTION_CONFIG = 2;
+    
+    
     DataAccess m_da = DataAccess.getInstance();
     
     
@@ -126,7 +138,7 @@ public class PumpsPlugIn extends PlugInClient
         }
         catch (Exception ex)
         {
-            System.out.println("Ex:" + ex);
+            System.out.println("PumpsPlugIn::Exception:" + ex);
             ex.printStackTrace();
         }
     }
@@ -258,20 +270,6 @@ public class PumpsPlugIn extends PlugInClient
     }
 
     
-/*    private void displayExperimental()
-    {
-        
-        if ((new File("../data/tools/PumpTools_debug.txt")).exists())
-            return;
-        
-        JOptionPane.showMessageDialog(this.parent, 
-            ic.getMessage("PUMP_PLUGIN_EXPERIMENTAL")
-            , 
-            ic.getMessage("WARNING"), 
-            JOptionPane.WARNING_MESSAGE);
-    } */
-    
-    
     /**
      * Get Short Status
      * 
@@ -286,13 +284,9 @@ public class PumpsPlugIn extends PlugInClient
     }
 
     
-    @SuppressWarnings("unused")
     private void refreshPanels(int mask)
     {
         DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
-        //MainFrame mf = (MainFrame)parent;
-        //mf.informationPanel.refreshGroup(mask);
-        //
     }
     
     /**
@@ -305,4 +299,27 @@ public class PumpsPlugIn extends PlugInClient
     {
     }
 
+    
+    /**
+     * This is method which can be used by server side to do certain action. Mainly this will be used
+     * to run refreshes and such actions. This needs to be implemented by Client side, if you wish to use
+     * it.
+     * 
+     * @param action_type
+     */
+    public void executeReturnAction(int action_type)
+    {
+        
+        if (action_type == PumpsPlugIn.RETURN_ACTION_READ_DATA)
+        {
+            refreshPanels(RefreshInfo.PANEL_GROUP_ALL_DATA);
+        }
+        else if (action_type == PumpsPlugIn.RETURN_ACTION_CONFIG)
+        {
+            refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
+        }
+        
+    }
+    
+    
 }

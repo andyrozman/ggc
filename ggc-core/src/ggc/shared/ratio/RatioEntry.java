@@ -1,5 +1,9 @@
 package ggc.shared.ratio;
 
+/**
+ * @author Andy
+ *
+ */
 public class RatioEntry
 {
     int from;
