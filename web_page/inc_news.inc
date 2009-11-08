@@ -5,6 +5,24 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
+<td width="150">2009-11-08 21:45</td>
+<td>GGC Update 0.4.10.1</td>
+</tr>
+<tr>
+<td colspan="2">
+As one of users noticed, there was minor/major problem in configuration. There was problem with 
+configuration of Unit for Blood Glucose. It wouldn't be a problem for old users, but it is/was for 
+for new users. This is now fixed. If you are old user (and don't plan to change BG unit) you don't 
+need to apply it. 
+</td>
+</tr>
+</table> 
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
 <td width="150">2009-10-31 22:45</td>
 <td>GGC Update 0.4.10</td>
 </tr>

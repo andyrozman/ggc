@@ -15,6 +15,16 @@ slovene (as is application)).
 
 <h4>Version 0.4 Updates</h4>
 
+
+<ul>
+<li><a href="http://downloads.sourceforge.net/ggc/GGC_Update_0.4.10.1.zip?use_mirror=osdn">GGC 0.4.10.1 Update</a> - 
+This is minor fix, for configuration (there was problem with setting BG unit, which might be problematic for new
+users). Old users don't need to install this (unless they want to change BG Unit).
+</li>
+</ul>
+
+
+
 <ul>
 <li><a href="http://downloads.sourceforge.net/ggc/GGC_Update_0.4.10.zip?use_mirror=osdn">GGC 0.4.10 Update</a> - This update makes changes
 to main application (application mode), and some bug fixes on all parts. Most changes were done on Pump Tool (added devices, 
