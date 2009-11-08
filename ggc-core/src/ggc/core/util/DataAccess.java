@@ -81,7 +81,7 @@ public class DataAccess extends ATDataAccessAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.4.10";
+    public static String CORE_VERSION = "0.4.10.1";
     
     /**
      * Current Db Version
@@ -192,6 +192,12 @@ public class DataAccess extends ATDataAccessAbstract
      */
     public String[] bg_units = { "", "mg/dl", "mmol/l" };
 
+    
+    /**
+     * BG Units for configuration
+     */
+    public String[] bg_units_config = { "mg/dl", "mmol/l" };
+    
 //    public Hashtable<String, String> timeZones;
 
     //public ArrayList<Container> parents_list;
