@@ -131,8 +131,15 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
         JPanel d = new JPanel(new GridLayout(0, 2));
         d.setBorder(new TitledBorder(m_ic.getMessage("BLOOD_GLUCOSE_UNIT_SETTING")));
         d.add(new JLabel(m_ic.getMessage("BG_UNIT") + ":"));
-        d.add(cbUnit = new JComboBox(m_da.bg_units));
-        cbUnit.setSelectedIndex(settings.getBG_unit() - 1);
+        d.add(cbUnit = new JComboBox(m_da.bg_units_config));
+        
+        if (settings.getBG_unit()<=2)
+            cbUnit.setSelectedIndex(settings.getBG_unit()-1);
+        else
+            cbUnit.setSelectedIndex(0);
+            
+        //d.add(cbUnit = new JComboBox(m_da.bg_units));
+        //cbUnit.setSelectedIndex(settings.getBG_unit() - 1);
 
         Box i = Box.createVerticalBox();
         i.add(a);
@@ -171,7 +178,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
         settings.setBG2_TargetLow(m_da.getFloatValue(fieldTargetLowBG2.getText()));
 
         // unit
-        settings.setBG_unit(cbUnit.getSelectedIndex() + 1);
+        settings.setBG_unit(cbUnit.getSelectedIndex()+ 1);
 
     }
 
