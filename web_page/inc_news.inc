@@ -5,6 +5,42 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
+<td width="150">2009-10-31 22:45</td>
+<td>GGC Update 0.4.10</td>
+</tr>
+<tr>
+<td colspan="2">
+I am again only one developing so this update is little late. We plan to have another release by end 
+of year, but since I am only developer at this time (we need more people, so if you know java or have
+ideas, please contact us), development is just slowly progressing...<br>
+We fixed some bugs in this update, and implemented application mode (either pump or pen/injection), 
+which changes toolbar and display different statistics (not working yet for pump mode). A lot of work 
+was done on Pump Tool, we have added some devices (Dana fully, Roche partitialy) and also changed 
+some stuff on manual entry (TBRs, Food entries, fixed Bolus Helper). 
+</td>
+</tr>
+</table> 
+
+<br><br>
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
+<td width="150">2009-10-31 22:45</td>
+<td>Translation Tool update</td>
+</tr>
+<tr>
+<td colspan="2">
+Translation Tool is in works, we are currently working on next "internal" version. It should be finished
+and ready for all end-users who wish to translate our software in their own language soon. Plan is to 
+release it sometime in November or in start of December.
+</td>
+</tr>
+</table> 
+
+<br><br>
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
 <td width="150">2009-06-18 14:00</td>
 <td>Next release update</td>
 </tr>
