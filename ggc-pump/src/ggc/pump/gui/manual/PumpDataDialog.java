@@ -288,57 +288,31 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         JPanel dayHeader = new JPanel();
         dayHeader.setLayout(new BorderLayout());
           
-                  JPanel dayCalendar = new JPanel();
-                  dayCalendar.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("DATE")+":"));
-                  
-                  calPane = new CalendarPane(this.m_da); 
-                  calPane.addCalendarListener(new CalendarListener() 
-                  { 
-                      public void dateHasChanged(CalendarEvent e) 
-                      {
-                          setTitle(e.getNewCalendar());
-                          //current_date = e.getNewCalendar();
-                          //GregorianCalendar gc = e.getNewCalendar();
-                  
-                         //dayData = m_da.getDb().getDailyPumpValues(gc);
-                         //model.setDailyValues(dayData); //setDailyValues(dayData);
-                          refreshData();
-                      }
-                  });
+        JPanel dayCalendar = new JPanel();
+        dayCalendar.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("DATE")+":"));
+  
+        calPane = new CalendarPane(this.m_da); 
+        calPane.addCalendarListener(new CalendarListener() 
+        { 
+            public void dateHasChanged(CalendarEvent e) 
+            {
+                setTitle(e.getNewCalendar());
+                refreshData();
+            }
+        });
+ 
+        calPane.setBounds(10, 10, 300, 200); 
+        dayCalendar.add(calPane);
+  
+        dayHeader.add(dayCalendar, BorderLayout.WEST);
+        dayHeader.add(dayStats, BorderLayout.CENTER);
                  
-                  //saveButton.setEnabled(false); updateLabels(); setTitle(gc);
-//x                  getTableModel().fireTableChanged(null); //x
-//                  dailyGraphWindow.setDailyValues(dayData);
-                  
-                  //DailyGraphFrame.setDailyValues(dayData); } });
-                  
-                  calPane.setBounds(10, 10, 300, 200); 
-                  dayCalendar.add(calPane);
-                  
-                  
-                  dayHeader.add(dayCalendar, BorderLayout.WEST);
-                  dayHeader.add(dayStats, BorderLayout.CENTER);
-                 
-        // TODO
         dayData = m_da.getDb().getDailyPumpValues(this.current_date);
         dayData.sort();
         stats.processFullCollection(this.getDataList(dayData.getList()));
         updateLabels();
         
         model = new PumpDataTableModel(dayData);
-        
-/*        model.addTableModelListener(new TableModelListener()
-        {
-            public void tableChanged(TableModelEvent e)
-            {
-                // dailyGraphWindow.repaint();
-                // DailyGraphFrame.repaint(); //.redraw();
-                updateLabels();
-                // saveButton.setEnabled(true);
-            }
-        }); */
-        //table = new JTable(model = new model);
-        
         
         table = new JTable(model)
         {
@@ -372,46 +346,22 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             
         };
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-
-        // MouseAdapter ma = new MouseAdapter();
-
-        table.addMouseListener(new MouseAdapter()
+        
+        table.addMouseListener(new MouseAdapter() 
         {
-            @Override
             public void mouseClicked(MouseEvent e)
             {
                 if ((SwingUtilities.isLeftMouseButton(e)) && (e.getClickCount() == 2))
                 {
                     editEntry(false);
-
-                    /*
-                     // TODO: fix
-                                        // System.out.println("mouse 2x clicked");
-
-                                        DailyValuesRow dvr = dayData.getRowAt(table.getSelectedRow());
-
-                                        DailyRowDialog aRF = new DailyRowDialog(dvr, getThisParent());
-
-                                        if (aRF.actionSuccesful())
-                                        {
-                                            m_db.saveDayStats(dayData);
-                                            dayData.sort();
-                                            getTableModel().fireTableChanged(null);
-                                        }
-                                        
-
-                     */
-
                 }
             }
 
         });
-        // MouseListener ml = new MouseListener();
-
-        
         
         resultsPane = new JScrollPane(table);
-
+        //resultsPane.getViewport().addMouseListener(ma);
+        //resultsPane.getViewport().setBackground(table.getBackground()); 
         
         @SuppressWarnings("unused")
         DeviceValuesDay pvd = new DeviceValuesDay(DataAccessPump.getInstance());
@@ -606,53 +556,10 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             {
                 refreshData();
             }
-            
-            
-            /*
-            SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-
-            DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
-
-            if (aRF.actionSuccesful())
-            {
-                m_db.saveDayStats(dayData);
-                dayData.sort();
-                this.model.fireTableChanged(null);
-            }*/
         }
         else if (command.equals("edit_row"))
         {
             this.editEntry(true);
-            
-/*            
-            // SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-            // EditRowFrame eRF = EditRowFrame.getInstance(model, dayData,
-            // sf.format(calPane.getSelectedDate()));
-            // aRF.show();
-
-            if (table.getSelectedRow() == -1)
-            {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            //System.out.println("FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!");
-            
-            // TODO: Fix this
-            PumpValuesEntry dvr = (PumpValuesEntry) dayData.getRowAt(table.getSelectedRow());
-
-            PumpDataRowDialog aRF = new PumpDataRowDialog(dvr, this);
-            
-            
-            if (aRF.wasAction())
-            {
-                System.out.println("Save not done !!!!");
-                
-                //m_db.saveDayStats(dayData);
-                //dayData.sort();
-                //this.model.fireTableChanged(null);
-            }
-*/
         }
         else if (command.equals("delete_row"))
         {
@@ -710,56 +617,10 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                         refreshData();
                     }
                     
-/*                    int option_selected_yy = JOptionPane.showOptionDialog(this, m_ic.getMessage("DELETE_MANY_ADDITIONAL_DATA"), m_ic
-                        .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    m_da.options_yes_no, JOptionPane.YES_OPTION);
-                    
-                    if (option_selected_yy == JOptionPane.YES_OPTION)
-                    {
-                        refresh = deleteAdditionalDataCheck(pve, idx, true);
-                        
-                        if (refresh)
-                        {
-                            m_db.delete(pve);
-
-                            this.dayData.removeEntry(idx);
-                            refreshData();
-                        }
-                    }
-  */                  
-                    
-                    //System.out.println("Delete PVE not implemented.");
                 }
                 
-//                refreshData();
             }
             
-            //if (dei.getObjectName().equals(""))
-            
-            
-            /*
-            int option_selected = JOptionPane.showOptionDialog(this, m_ic.getMessage("ARE_YOU_SURE_DELETE_ROW"), m_ic
-                    .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                m_da.options_yes_no, JOptionPane.YES_OPTION);
-
-            if (option_selected == JOptionPane.NO_OPTION)
-            {
-                // System.out.println("Option NO was here!");
-                return;
-            }
-            // System.out.println("Option YES was here!");
-
-            try
-            {
-                dayData.deleteRow(table.getSelectedRow());
-                model.fireTableChanged(null);
-                m_db.saveDayStats(dayData);
-            }
-            catch (Exception ex)
-            {
-                System.out.println("DailyStatsDialog:Action:Delete Row: " + ex);
-                log.error("Action::Delete Row::Exception: " + ex, ex);
-            }*/
         } 
         else if (command.equals("close"))
         {
@@ -768,15 +629,10 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         }
         else if (command.equals("show_daily_graph"))
         {
-            //DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
-            //dgd.setDailyValues(this.dayData);
-            
             new GraphViewer(new GraphViewDailyPump(this.current_date), m_da, this, true);
-            
         }
         else
             System.out.println("PumpDataDialog:Unknown Action: " + command);
-        
 
     }
 
@@ -787,10 +643,6 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         
         if (pve.getAdditionalDataCount()>1)
         {
-            //System.out.println("Too many additional data elements...");
-            //boolean deleted = false;
-            
-            //if (!delete)
             {
                 int option_selected_yy = JOptionPane.showOptionDialog(this, m_ic.getMessage("DELETE_MANY_ADDITIONAL_DATA"), m_ic
                     .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
@@ -805,8 +657,6 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             if (delete)
             {
                 deleteAdditionalData(pve);
-                //this.dayData.removeEntry(index);
-                //refreshData();
             }
      
             return delete;
@@ -814,8 +664,6 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         else
         {
             deleteAdditionalData(pve);
-            //this.dayData.removeEntry(index);
-            //refreshData();
             
             return true;
         }
@@ -854,10 +702,6 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         
         if (aRF.wasAction())
         {
-            //System.out.println("Save not done !!!!");
-            
-            //m_db.saveDayStats(dayData);
-            //dayData.sort();
             refreshData();
         }
         
@@ -892,24 +736,5 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         return "pages.GGC_PumpTool_Daily_View";
     }
 
-    
-    
-    /**
-     * Startup Test Method
-     * @param args
-     */
-    public static void main(String[] args)
-    {
-        JFrame frame = new JFrame();
-        frame.setBounds(150, 100, 800, 400);
-        
-        DataAccessPump dap = DataAccessPump.getInstance(); 
-        
-        
-        new PumpDataDialog(dap, frame);
-    }
-    
-    
-    
     
 }

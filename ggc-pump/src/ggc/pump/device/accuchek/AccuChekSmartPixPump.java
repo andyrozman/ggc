@@ -329,7 +329,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
-    @SuppressWarnings("unused")
     private void readPumpDataTest()
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();

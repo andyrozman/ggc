@@ -2,7 +2,11 @@
 Changes file for GGC Pump Tool
 ==============================
 
-1.0.3 (current)
+1.0.3 [30.10.2009] 
+    * Finished Dana import
+    * TBR fixed
+    * Minor fixes in manual data entry
+    * Continuing support for Roche (still working on profiles) 
 
 1.0.2 [6.8.2009] 
     * Started tinkering with Dana device and BlueTooth connection

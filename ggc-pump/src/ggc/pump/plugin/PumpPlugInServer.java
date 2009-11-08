@@ -95,6 +95,19 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
      *  Command: About  
      */
     public static final int COMMAND_ABOUT = 6;
+
+    
+    /**
+     * This is action that needs to be done, after read data.
+     */
+    public static final int RETURN_ACTION_READ_DATA = 1;
+    
+    
+    /**
+     * This is action that needs to be done, after config
+     */
+    public static final int RETURN_ACTION_CONFIG = 2;
+    
     
     
     /**
@@ -490,6 +503,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         else if (command.equals("pumps_read"))
         {
             new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+            this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("pumps_read_config"))
         {
@@ -499,6 +513,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
                  (command.equals("pumps_additional_data")))
         {
             new PumpDataDialog(DataAccessPump.getInstance(), (JFrame)this.parent);
+            this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("pumps_profile"))
         {
@@ -511,6 +526,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         else if (command.equals("pumps_config"))
         {
             new DeviceConfigurationDialog((JFrame)this.parent, DataAccessPump.getInstance());
+            this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_CONFIG);
         }
         else if (command.equals("pumps_about"))
         {

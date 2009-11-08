@@ -204,53 +204,38 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             if (this.data_object2!=null)
             {
                 food_ch =  m_da.getFloatValueFromString(this.data_object2.getValue());
-                //System.out.println("Reading food description: ch=" + food_ch);
-                //System.out.println("Reading food description: ch=" + this.data_object2.getValue());
                 if (food_ch >0)
                 {
                     this.cb_1.setSelected(true);
                 }
-                //this.num_1.setText("" + food_ch);
             }
             else
                 food_ch = 0.0f;
+
+            this.num_1.setText(DataAccess.getFloatAsString(food_ch, 2));
             
-            //System.out.println("Reading food description: do2=" + this.data_object2);
-            
-            //System.out.println("Reading food description data failed !");
-            //this.num_1.setValue(new Float(this.data_object.getValue()));
-//            po.setValue(this.num_1.getValue().toString());
         }
         else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
         {
-//            System.out.println("Reading food db data !");
-            
             food_data = this.data_object.getValue();
             
             if (this.data_object2!=null)
             {
-                System.out.println("data!=NULL !");
                 food_ch =  m_da.getFloatValueFromString(this.data_object2.getValue());
-                //System.out.println("Reading food description: ch=" + food_ch);
-                //System.out.println("Reading food description: ch=" + this.data_object2.getValue());
+
                 if (food_ch >0)
                 {
                     this.cb_1.setSelected(true);
                 }
-                //this.num_1.setText("" + food_ch);
             }
             else
             {
-                System.out.println("data NULL !");
                 food_ch = 0.0f;
                 this.num_1.setText("" + food_ch);
             }
             
+            this.num_1.setText(DataAccess.getFloatAsString(food_ch, 2));
             
-            
-//            System.out.println("Reading food db data failed !");
-            //this.num_1.setValue(new Float(this.data_object.getValue()));
-//            po.setValue(this.num_1.getValue().toString());
         }
         else
             System.out.println("Load for this type is not implemented !!!");
@@ -283,16 +268,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
         setTitle(m_ic.getMessage("ADD_PARAMETER2"));
 
-        // JLabel label = new JLabel(m_ic.getMessage("SELECT_ADDITONAL_DATA"));
-        // label.setBounds(30, 100, 250, 25);
-        // label.setFont(f_bold);
-        // panel.add(label);
-
-        /*        
-                JComboBox cb_type = new JComboBox(createItems());
-                cb_type.setBounds(30, 135, 240, 25);
-                panel.add(cb_type);
-          */
+     
 
         String button_command[] = { "cancel", m_ic.getMessage("CANCEL"), "ok", m_ic.getMessage("OK"),
         // "help", m_ic.getMessage("HELP")
@@ -443,19 +419,24 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
      */
     public void areaFood()
     {
+        // TODO
+        
         this.cb_1 =  new JCheckBox();
-        this.cb_1.setBounds(startx + 10, 150, 130, 25);
+        this.cb_1.setBounds(startx + 10, 140, 200, 25);
         this.cb_1.addActionListener(this);
         this.cb_1.setActionCommand("check");
+        //this.cb_1.setEnabled(false);
         this.main_panel.add(this.cb_1);
 
         JLabel l = ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", 0, 60, width, 35, main_panel, ATSwingUtils.FONT_NORMAL_BOLD_P2);
         l.setHorizontalAlignment(JLabel.CENTER);
         //label_title = ATSwingUtils.getTitleLabel(m_ic.getMessage("ADD_PARAMETER2"), 0, 35, width, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
 
+        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
+        this.num_1.setEditable(false);
         
         button_1 = ATSwingUtils.getButton(m_ic.getMessage("SET"), 
-            startx + 140, 150, 120, 25, 
+            startx, 175, 120, 25,
             this.main_panel, 
             ATSwingUtils.FONT_NORMAL, 
             null, 
@@ -463,20 +444,20 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             this, 
             m_da);
 
+        ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx + 10, 110, 100, 25, main_panel);
         
         if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
         {
             this.cb_1.setText("  " + m_ic.getMessage("IS_FOOD_SET"));
-            ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx + 20, 108, 100, 25, main_panel);
+//            ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx + 20, 108, 100, 25, main_panel);
             //this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
             l.setText("(" + m_ic.getMessage("FOOD_FROM_DB") + ")");
         }
         else 
         {
             this.cb_1.setText("  " + m_ic.getMessage("IS_FOOD_AND_CH_SET"));
-            this.cb_1.setBounds(startx + 10, 150, 200, 25);
             l.setText("(" + m_ic.getMessage("FOOD_BY_DESC") + ")");
-            button_1.setBounds(startx + 10, 120, 120, 25);
+            //button_1.setBounds(startx, 175, 120, 25);
         }
     }
     
@@ -515,6 +496,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         else if (action.equals("check"))
         {
             System.out.println("check 1");
+            this.cb_1.setSelected(!this.cb_1.isSelected());
         }
         else if (action.equals("food_desc"))
         {
@@ -530,35 +512,11 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                     float f = m_da.getFloatValue(this.internal_data[1]);
                     this.cb_1.setSelected(f>0);
                     
-                    // FIXME
-                    //this.num_1.setText("" + f);
+                    food_data = (String)this.internal_data[0];
+                    food_ch = f;
+                    this.num_1.setText(DataAccess.getFloatAsString(food_ch, 2));
                 }                
                 
-                /*
-                TransferDialog td = createInstance(); 
-                    //m_da.getPlugInServerInstance().getTransferObjects().get(0);
-                
-                if (td==null)
-                {
-                    System.out.println("Instance failed to create!!");
-                    return;
-                }
-                
-                Object[] objs = td.getEmptyInputParameters();
-                objs[0] = this;
-                objs[1] = m_da;
-                objs[2] = "";
-                objs[3] = "";
-                
-                td.setInputParameters(objs);
-                td.showDialog(true); //.setVisible(true);
-                
-                if (td.wasAction())
-                {
-                    this.internal_data = td.getResultValuesString();
-                    float f = m_da.getFloatValue(this.internal_data[1]);
-                    this.cb_1.setSelected(f>0);
-                }*/
             }
             else
             {
@@ -580,45 +538,13 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                         this.internal_data[0] = food_data;
                         this.internal_data[1] = (String)data[1];
                         
-                        //this.num_1.setText((String)data[1]);
+                        this.num_1.setText(DataAccess.getFloatAsString(food_ch, 2));
                     }
                 }
             }
             
         }
-        /*        else if (action.equals("edit_food"))
-                {
-                    
-                    DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(
-                            m_da, this.m_dailyValuesRow.getMealsIds());
-
-                    if (dvms.wasAction())
-                    {
-                        this.m_dailyValuesRow.setMealsIds(dvms.getStringForDb());
-                        this.ftf_ch.setValue(new Float(dvms.getCHSum()
-                                .replace(',', '.')));
-
-                        if (!dvms.getStringForDb().equals(""))
-                        {
-                            this.cb_food_set.setSelected(true);
-                        }
-                }
-                else if (action.equals("update_ch"))
-                {
-                    PanelMealSelector pms = new PanelMealSelector(this, null,
-                            this.m_dailyValuesRow.getMealsIds());
-                    this.ftf_ch.setValue(new Float(pms.getCHSumString().replace(',',
-                            '.')));
-                }
-                else if (action.equals("bolus_helper"))
-                {
-                    BolusHelper bh = new BolusHelper(this, m_da.getJFormatedTextValueFloat(ftf_bg2), m_da.getJFormatedTextValueFloat(this.ftf_ch), this.dtc.getDateTime());
-                    
-                    if (bh.hasResult())
-                    {
-                        this.ftf_ins1.setValue(bh.getResult());
-                    }
-                } */
+        
         else
             System.out.println("PumpDataAdditionalWizardTwo::unknown command: " + action);
 

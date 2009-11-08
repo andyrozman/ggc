@@ -301,7 +301,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
             }
             
             int st = readStatusFromConfig(drv);
-            
+            System.out.println("Status: " + st);
             if (st==1)
             {
                 this.writeStatus("PIX_UNRECOVERABLE_ERROR");
@@ -351,14 +351,19 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
             }
             else if (st>99)
             {
-                if (st==101)
+                if ((st==101) || (st==102))
                 {
                     this.writeStatus("PIX_FINISHED_REPORT_READY");
-                    //System.out.println("Finished reading. Report ready." );
+                    System.out.println("Finished reading. Report ready." );
                     this.output_writer.setSpecialProgress(95);
 
                     
+                    System.out.println("drv: " + drv);
+                    
                     File f1 = new File(drv + "\\REPORT\\XML");
+                    
+                    System.out.println("f1: " + f1);
+                    
                     
                     File[] fls = f1.listFiles(new FileFilter()
                     {
@@ -370,6 +375,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
                         }}
                     );
                     
+                    System.out.println("fls: " + fls);
                     
                     //processXml(fls[0]);
                     processXml(fls[0]);

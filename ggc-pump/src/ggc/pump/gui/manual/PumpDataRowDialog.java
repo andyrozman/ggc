@@ -10,9 +10,10 @@ import ggc.pump.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
@@ -21,7 +22,6 @@ import java.util.StringTokenizer;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -29,6 +29,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.help.HelpCapable;
@@ -61,82 +62,45 @@ import com.atech.utils.ATSwingUtils;
  */
 
 
-// fix this
-
 public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyListener,*/ HelpCapable
 {
 
     private static final long serialVersionUID = 8280477836138077888L;
 
-
-    
-    
     private I18nControl m_ic = I18nControl.getInstance();
     private DataAccessPump m_da = DataAccessPump.getInstance();
-//x    private GGCProperties props = m_da.getSettings();
-
-    //private boolean m_actionDone = false;
-
-    // private long last_change = 0;
-
-    // static AddRowFrame singleton = null;
-
-    //JTextField DateField, TimeField, /* BGField, Ins1Field, Ins2Field, BUField, */
-    //ActField, CommentField, UrineField;
-
-
-      
-//    JFormattedTextField ftf_ins1, ftf_ins2, ftf_bg1, ftf_ch, ftf_bg2;
-    // JTextFieldFormatted
 
     JLabel label_title = new JLabel();
-    JLabel label_food;
-    JCheckBox cb_food_set;
-
     JButton bt_item_1, bt_item_2, bt_item_3, bt_cancel, bt_ok; 
     JLabel lbl_add;
     JComboBox cb_entry_type;    
     JScrollPane scr_list;
-    PumpDataTypeComponent pdtc;
-    
-    DateTimeComponent dtc;
+    JButton help_button = null;
+    JPanel main_panel = null;
+    JList m_list_data = null;
+    Container m_parent = null;
 
-    //JButton AddButton;
+    PumpDataTypeComponent pdtc;
+    DateTimeComponent dtc;
 
     String sDate = null;
 
     DeviceValuesDay dV = null;
     PumpValuesEntry m_dailyValuesRow = null;
 
-//    NumberFormat bg_displayFormat, bg_editFormat;
-//    JComponent components[] = new JComponent[9];
-
-    Font f_normal = m_da.getFont(DataAccessPump.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD);
     boolean in_process;
-    boolean debug = true;
-    JButton help_button = null;
-    JPanel main_panel = null;
-    private JList m_list_data = null;
-
-    @SuppressWarnings("unused")
-    private boolean m_add_action = true;
-    private Container m_parent = null;
     
     int width = 400;
     int height = 490;
     
     ArrayList<PumpValuesEntryExt> list_data = new ArrayList<PumpValuesEntryExt>();
+    ArrayList<PumpValuesEntryExt> delete_list_data = new ArrayList<PumpValuesEntryExt>();
+
     /**
      * Data (Hashtable)
      */
     public Hashtable<String,PumpValuesEntryExt> ht_data = new Hashtable<String,PumpValuesEntryExt>();
-    //PumpAdditionalDataType m_pump_add = new PumpAdditionalDataType();
 
-    
-    ArrayList<PumpValuesEntryExt> delete_list_data = new ArrayList<PumpValuesEntryExt>();
-    
-    
 
     /**
      * Constructor
@@ -152,14 +116,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         m_parent = dialog;
         initParameters(ndV, nDate);
     }
-/*
-    public PumpDataRowDialog(PumpValuesDay ndV, String nDate, JFrame frame)
-    {
-        super(frame, "", true);
-        m_parent = frame;
-        initParameters(ndV, nDate);
-    }
-*/
+
     /**
      * Constructor
      * 
@@ -172,14 +129,6 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         m_parent = dialog;
         initParameters(ndr);
     }
-/*
-    public PumpDataRowDialog(PumpValuesEntry ndr, JFrame frame)
-    {
-        super(frame, "", true);
-        m_parent = frame;
-        initParameters(ndr);
-    }
-*/
     
     /**
      * Init Parameters
@@ -189,19 +138,11 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
      */
     public void initParameters(DeviceValuesDay ndV, String nDate)
     {
-        // if (add)
         setTitle(m_ic.getMessage("ADD_ROW"));
         label_title.setText(m_ic.getMessage("ADD_ROW"));
 
-        // else
-        // setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
-
-        //System.out.println(props.getBG_unit());
-
         sDate = nDate;
         dV = ndV;
-        this.m_add_action = true;
-        // mod = m;
         init();
         setDate();
         // load();
@@ -226,12 +167,10 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
 //x        sDate = ndr.getDateAsString();
         this.m_dailyValuesRow = ndr;
-        this.m_add_action = false;
 
         init();
         load();
 
-        //System.out.println("Add data: " + this.m_dailyValuesRow.getAdditionalData().size());
         
         if (this.m_dailyValuesRow.getAdditionalData().size()>0)
         {
@@ -311,26 +250,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         this.pdtc.loadData(this.m_dailyValuesRow);
     }
 
-    /*
-     * private void save() {
-     * 
-     * }
-     */
 
     private void init()
     {
-/*        int x = 0;
-        int y = 0;
-        int width = 400;
-        int height = 550;
-
-        Rectangle bnd = m_parent.getBounds();
-
-        x = (bnd.width / 2) + bnd.x - (width / 2);
-        y = (bnd.height / 2) + bnd.y - (height / 2);
-
-        this.setBounds(x, y, width, height);
-*/
         
         ATSwingUtils.initLibrary();
         
@@ -354,36 +276,12 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
         ATSwingUtils.getLabel(m_ic.getMessage("DATE") + ":", 30, 78, 100, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
         ATSwingUtils.getLabel(m_ic.getMessage("TIME") + ":", 30, 108, 100, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-        
-//        addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
-//        addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
-
-        
-        //        addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
-/*        addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 198,
-                panel);
-        addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 228,
-                panel); */
-
-//        addLabel(m_ic.getMessage("INS_1") + ":", 198, panel);
-//        addLabel(m_ic.getMessage("INS_2") + ":", 228, panel);
-        
-//        addLabel(m_ic.getMessage("CH_LONG") + ":", 258, panel);
-//        addLabel(m_ic.getMessage("FOOD") + ":", 288, panel);
-//        addLabel(m_ic.getMessage("URINE") + ":", 318, panel);
-//        addLabel(m_ic.getMessage("ACTIVITY") + ":", 348, panel);
-//        addLabel(m_ic.getMessage("COMMENT") + ":", 378, panel);
-
-//        addLabel("mg/dL", 140, 138, panel);
-//        addLabel("mmol/L", 140, 168, panel);
 
         this.dtc = new DateTimeComponent(this.m_da, DateTimeComponent.ALIGN_VERTICAL, 5, DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 
         ATSwingUtils.getLabel(m_ic.getMessage("ENTRY_TYPE") + ":", 30, 150, 100, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-        
-//        addLabel(m_ic.getMessage("ENTRY_TYPE") + ":", 150, panel);
         
         pdtc = new PumpDataTypeComponent(this, 175);
         pdtc.setType(PumpBaseType.PUMP_DATA_NONE);
@@ -396,22 +294,22 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         panel.add(cb_entry_type);
         
         
-        
-        
-        
         int sy = 175 + 20;
         
         lbl_add = ATSwingUtils.getLabel(m_ic.getMessage("ADDITIONAL_DATA") + ":", 30, sy, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
- 
-            
-/*            
-            new JLabel(m_ic.getMessage("ADDITONAL_DATA") + ":");
-        lbl_add.setBounds(30, sy, 200, 25);
-        panel.add(lbl_add);
-  */      
         
         // list
         this.m_list_data = new JList();
+        this.m_list_data.addMouseListener(new MouseAdapter() 
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                if ((SwingUtilities.isLeftMouseButton(e)) && (e.getClickCount() == 2))
+                {
+                    itemEdit();
+                }
+            }
+        });
         
         this.scr_list = new JScrollPane(this.m_list_data);
         this.scr_list.setBounds(30, sy+25, 290, 150);
@@ -557,36 +455,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
                 return;
             }
 
-            PumpValuesEntryExt pc = this.list_data.get(this.m_list_data.getSelectedIndex());
-            
-            PumpDataAdditionalWizardTwo pdawo;
-            
-            if ((pc.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB) ||
-                (pc.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))
-            {
-                PumpValuesEntryExt pc2 = null;
-                
-                //System.out.println("ht=" + this.ht_data);
-                //System.out.println("hh:" + this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
-                
-                
-                if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH)))
-                {
-                    pc2 = this.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
-                    //System.out.println("pc2=" + pc2);
-                }
-                
-                pdawo = new PumpDataAdditionalWizardTwo(this, pc, pc2);
-            }
-            else
-            {
-                pdawo = new PumpDataAdditionalWizardTwo(this, pc);
-            }
-            
-            pdawo.setVisible(true);
-            
-            processAdditionalData(pdawo);
-            
+            itemEdit();
         }
         else if (action.equals("item_delete"))
         {
@@ -654,6 +523,42 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
     }
 
+    
+    private void itemEdit()
+    {
+        PumpValuesEntryExt pc = this.list_data.get(this.m_list_data.getSelectedIndex());
+        
+        PumpDataAdditionalWizardTwo pdawo;
+        
+        if ((pc.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB) ||
+            (pc.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))
+        {
+            PumpValuesEntryExt pc2 = null;
+            
+            //System.out.println("ht=" + this.ht_data);
+            //System.out.println("hh:" + this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
+            
+            
+            if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH)))
+            {
+                pc2 = this.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
+                //System.out.println("pc2=" + pc2);
+            }
+            
+            pdawo = new PumpDataAdditionalWizardTwo(this, pc, pc2);
+        }
+        else
+        {
+            pdawo = new PumpDataAdditionalWizardTwo(this, pc);
+        }
+        
+        pdawo.setVisible(true);
+        
+        processAdditionalData(pdawo);
+        
+    }
+    
+    
 
     private void warningNotSet()
     {
