@@ -1,6 +1,5 @@
 package ggc.cgm.manager.company; 
 
-import ggc.cgm.util.I18nControl;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -40,13 +39,9 @@ public class Minimed extends AbstractDeviceCompany
      */
     public Minimed()
     {
-        super(I18nControl.getInstance());
+        super(false);
     }
 
-
-
-    
-    
     
     //********************************************************
     //***      Meter Company Identification Methods        ***

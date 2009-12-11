@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.i18n.mgr.LanguageManager;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -58,9 +59,9 @@ public class DataAccessCGM extends DataAccessPlugInBase
      *  method.<br><br>
      *
      */
-    private DataAccessCGM()
+    private DataAccessCGM(LanguageManager lm)
     {
-    	super(I18nControl.getInstance());
+        super(lm, new GGCCGMICRunner());
     } 
 
     
@@ -84,11 +85,25 @@ public class DataAccessCGM extends DataAccessPlugInBase
      */
     public static DataAccessCGM getInstance()
     {
-        if (s_da == null)
-            s_da = new DataAccessCGM();
+        //if (s_da == null)
+        //    s_da = new DataAccessCGM();
         return s_da;
     }
 
+    
+    /**
+     * Create Instance
+     * 
+     * @param lm
+     * @return
+     */
+    public static DataAccessCGM createInstance(LanguageManager lm)
+    {
+        if (s_da == null)
+            s_da = new DataAccessCGM(lm);
+        return s_da;
+    }
+     
 
     //  Method:       deleteInstance
     /**

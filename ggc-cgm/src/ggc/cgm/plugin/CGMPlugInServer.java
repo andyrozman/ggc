@@ -1,7 +1,6 @@
 package ggc.cgm.plugin;
 
 import ggc.cgm.util.DataAccessCGM;
-import ggc.cgm.util.I18nControl;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -186,7 +185,8 @@ public class CGMPlugInServer extends PlugInServer
     public void initPlugIn()
     {
         ic = m_da.getI18nControlInstance();
-        I18nControl.getInstance().setLanguage(this.selected_lang);
+        //I18nControl.getInstance().setLanguage(this.selected_lang);
+        
         DataAccessCGM.getInstance().addComponent(this.parent);
     }
 

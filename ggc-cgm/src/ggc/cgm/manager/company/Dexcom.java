@@ -1,6 +1,5 @@
 package ggc.cgm.manager.company; 
 
-import ggc.cgm.util.I18nControl;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 /**
@@ -38,7 +37,7 @@ public class Dexcom extends AbstractDeviceCompany
      */
     public Dexcom()
     {
-        super(I18nControl.getInstance());
+        super(false);
     }    
     
     //********************************************************
@@ -106,7 +105,7 @@ public class Dexcom extends AbstractDeviceCompany
      */
     public String getConnectionSamples()
     {
-        return m_ic.getMessage("SERIAL_PORTS");  //"Serial Ports: COM2,...";
+        return "SERIAL_PORTS";  //"Serial Ports: COM2,...";
     }
     
 }

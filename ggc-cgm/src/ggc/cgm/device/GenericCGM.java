@@ -1,12 +1,13 @@
 package ggc.cgm.device;
 
-import ggc.cgm.util.I18nControl;
+import ggc.cgm.util.DataAccessCGM;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.FileReaderContext;
 
 /**
@@ -39,7 +40,7 @@ import com.atech.utils.file.FileReaderContext;
 public class GenericCGM implements CGMInterface
 {
 
-    protected I18nControl ic = I18nControl.getInstance();
+    protected I18nControlAbstract ic = DataAccessCGM.getInstance().getI18nControlInstance();
 
 
     /**
