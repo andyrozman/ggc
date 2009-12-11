@@ -2,7 +2,6 @@ package ggc.meter.manager.company;
 
 import ggc.meter.device.menarini.GlucofixMio;
 import ggc.meter.manager.MeterDevicesIds;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -41,7 +40,7 @@ public class Menarini extends AbstractDeviceCompany
      */
     public Menarini()
     {
-        super(I18nControl.getInstance());
+        super();
         
         this.addDevice(new GlucofixMio(this));
         

@@ -6,7 +6,6 @@ import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.AscensiaBayer;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -69,7 +68,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     
     
     
-    protected I18nControl ic = I18nControl.getInstance();
+    //protected I18nControl ic = I18nControl.getInstance();
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     private static Log log = LogFactory.getLog(AscensiaMeter.class);

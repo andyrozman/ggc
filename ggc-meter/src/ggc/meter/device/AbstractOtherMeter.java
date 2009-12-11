@@ -2,13 +2,13 @@ package ggc.meter.device;
 
 
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +40,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements MeterInterface, SelectableInterface
 {
 
-    protected I18nControl ic = I18nControl.getInstance();
+    protected I18nControlAbstract ic = DataAccessMeter.getInstance().getI18nControlInstance();
 
     protected String device_name = "Undefined";
     protected OutputWriter output_writer;
@@ -116,7 +116,7 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification(ic);
+        DeviceIdentification di = new DeviceIdentification();
         di.company = group;
         di.device_selected = device;
         

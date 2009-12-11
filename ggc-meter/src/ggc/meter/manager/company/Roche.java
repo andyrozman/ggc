@@ -10,7 +10,6 @@ import ggc.meter.device.accuchek.AccuChekGo;
 import ggc.meter.device.accuchek.AccuChekIntegra;
 import ggc.meter.device.accuchek.AccuChekPerforma;
 import ggc.meter.device.accuchek.AccuChekSensor;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -49,7 +48,7 @@ public class Roche extends AbstractDeviceCompany
      */
     public Roche()
     {
-        super(I18nControl.getInstance());
+        super();
         
         //this.addDevice(new AccuChekSmartPix());
         this.addDevice(new AccuChekActive(this));
@@ -116,7 +115,7 @@ public class Roche extends AbstractDeviceCompany
      */
     public int getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
     
   
@@ -141,7 +140,7 @@ public class Roche extends AbstractDeviceCompany
      */
     public String getConnectionSamples()
     {
-        return m_ic.getMessage("MASS_STORAGE");  //"Serial Ports: COM2,...";
+        return "MASS_STORAGE";  //"Serial Ports: COM2,...";
     }
     
     

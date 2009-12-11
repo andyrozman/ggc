@@ -1,7 +1,6 @@
 package ggc.meter.device;
 
 
-import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -45,7 +44,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     AbstractDeviceCompany meter_company;
 
     protected int m_status = 0;
-    protected I18nControl ic = I18nControl.getInstance();
+    //protected I18nControlAbstract ic = DataAccessMeter.getInstance().getI18nControlInstance();
     protected OutputWriter output_writer;
     //protected ArrayList<MeterValuesEntry> data = null;
     
@@ -124,7 +123,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     {
         //this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification(ic);
+        DeviceIdentification di = new DeviceIdentification();
         di.company = group;
         di.device_selected = device;
         
@@ -229,7 +228,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     }
 
 
-    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
+    String device_columns[] = { "DEVICE_COMPANY", "DEVICE_DEVICE", "DEVICE_CONNECTION" }; 
     
     /** 
      * getColumnName

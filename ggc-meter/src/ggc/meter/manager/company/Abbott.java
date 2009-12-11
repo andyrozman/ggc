@@ -3,7 +3,6 @@ package ggc.meter.manager.company;
 import ggc.meter.device.abbott.Freestyle;
 import ggc.meter.device.abbott.OptiumXceed;
 import ggc.meter.manager.MeterDevicesIds;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -42,7 +41,7 @@ public class Abbott extends AbstractDeviceCompany
      */
     public Abbott()
     {
-        super(I18nControl.getInstance());
+        super();
         
         addDevice(new Freestyle(this));
         addDevice(new OptiumXceed(this));

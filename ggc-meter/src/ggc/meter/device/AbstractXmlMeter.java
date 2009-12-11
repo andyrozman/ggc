@@ -1,6 +1,6 @@
 package ggc.meter.device;
 
-import ggc.meter.util.I18nControl;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
@@ -10,6 +10,7 @@ import ggc.plugin.protocol.XmlProtocol;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.FileReaderContext;
 
 /**
@@ -42,7 +43,7 @@ import com.atech.utils.file.FileReaderContext;
 public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInterface, SelectableInterface
 {
 
-    protected I18nControl ic = I18nControl.getInstance();
+    protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
 
     protected String device_name = "Undefined";
     protected OutputWriter output_writer;
@@ -58,6 +59,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     public AbstractXmlMeter()
     {
         super();
+        ic = DataAccessMeter.getInstance().getI18nControlInstance();
     }
 
 
@@ -119,7 +121,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification(ic);
+        DeviceIdentification di = new DeviceIdentification();
         di.company = group;
         di.device_selected = device;
         
@@ -285,14 +287,31 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     }
 
 
-    String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
+    float device_columns_width[] = { 0.33f, 0.33f, 0.33f };
+    String device_columns[] = null;
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
+        if (device_columns==null)
+        {
+            this.device_columns = new String[3];
+            device_columns[0] = ic.getMessage("DEVICE_COMPANY");
+            device_columns[1] = ic.getMessage("DEVICE_DEVICE");
+            device_columns[2] = ic.getMessage("DEVICE_CONNECTION");
+        }
+        
         return device_columns[num-1];
+    }
+
+    /** 
+     * Get Column Width
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        return (int)(this.device_columns_width[num-1] * width);
     }
 
 
@@ -330,15 +349,6 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
         return this.getColumnValue(num);
     }
 
-
-    /** 
-     * getColumnWidth
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
 
 
     /** 

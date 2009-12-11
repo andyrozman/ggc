@@ -5,7 +5,6 @@ import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.Menarini;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -54,7 +53,7 @@ import com.atech.utils.TimeZoneUtil;
 public class GlucofixMio extends AbstractSerialMeter
 {
 
-    protected I18nControl ic = I18nControl.getInstance();
+    //protected I18nControl ic = I18nControl.getInstance();
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     private static Log log = LogFactory.getLog(GlucofixMio.class);

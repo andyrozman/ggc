@@ -20,6 +20,7 @@ import com.atech.graphics.components.about.FeaturesEntry;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.mgr.LanguageManager;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -80,9 +81,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
      *  method.<br><br>
      *
      */
-    private DataAccessMeter(JFrame frame)
+    private DataAccessMeter(JFrame frame, LanguageManager lm)
     {
-    	super(I18nControl.getInstance());
+    	super(lm, new GGCMeterICRunner());
         this.m_main = frame;
         initSpecial();
     } 
@@ -121,12 +122,24 @@ public class DataAccessMeter extends DataAccessPlugInBase
      */
     public static DataAccessMeter getInstance()
     {
-        if (s_da == null)
-            s_da = new DataAccessMeter(null);
+        //if (s_da == null)
+        //    s_da = new DataAccessMeter(null);
         return s_da;
     }
 
 
+    /**
+     * Create Instance
+     * 
+     * @param lm
+     * @return
+     */
+    public static DataAccessMeter createInstance(LanguageManager lm)
+    {
+        if (s_da == null)
+            s_da = new DataAccessMeter(null, lm);
+        return s_da;
+    }
  
     
 /*    

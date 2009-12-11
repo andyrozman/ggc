@@ -2,7 +2,6 @@ package ggc.meter.plugin;
 
 import ggc.core.util.DataAccess;
 import ggc.meter.util.DataAccessMeter;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
@@ -18,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -51,7 +50,7 @@ import com.atech.utils.ATSwingUtils;
 public class MeterPlugInServer extends DevicePlugInServer implements ActionListener
 {
     
-    DataAccessMeter m_da_local = DataAccessMeter.getInstance();
+    DataAccessMeter da_local; // = DataAccessMeter.getInstance();
     //I18nControlAbstract ic_main = m_da.getI18nControlInstance();
     
     /**
@@ -121,12 +120,13 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
      * @param selected_lang
      * @param da
      */
-    public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
+    public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessLMAbstract da)
     {
         super(cont, selected_lang, da);
-        //m_da_local = DataAccessMeter.getInstance();
+        
+        da_local = DataAccessMeter.createInstance(da.getLanguageManager());
         //ic_main = da.getI18nControlInstance();
-        m_da_local.addComponent(cont);
+        da_local.addComponent(cont);
     }
     
 
@@ -151,19 +151,19 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
                     //ddh.setDbDataReader(reader);
                     
                     //new MeterInstructionsDialog(reader, this);
-                    new DeviceInstructionsDialog(this.parent, m_da_local, /*reader,*/ this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+                    new DeviceInstructionsDialog(this.parent, da_local, /*reader,*/ this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
                     return;
                 }
 
             case MeterPlugInServer.COMMAND_METERS_LIST:
                 {
-                    new BaseListDialog((JFrame)parent, m_da_local);
+                    new BaseListDialog((JFrame)parent, da_local);
                     return;
                 }
             
             case MeterPlugInServer.COMMAND_ABOUT:
                 {
-                    new AboutBaseDialog((JFrame)parent, m_da_local);
+                    new AboutBaseDialog((JFrame)parent, da_local);
                     return;
                 }
             
@@ -171,7 +171,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
                 {
                     //m_da.listComponents();
                     //new SimpleConfigurationDialog(this.m_da);
-                    new DeviceConfigurationDialog((JFrame)parent, m_da_local);
+                    new DeviceConfigurationDialog((JFrame)parent, da_local);
                     return;
                 }
             
@@ -228,15 +228,17 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     public void initPlugIn()
     {
         ic = m_da.getI18nControlInstance();
-        I18nControl.getInstance().setLanguage(this.selected_lang);
+        //I18nControl.getInstance().setLanguage(this.selected_lang);
         
-        DataAccessMeter da = DataAccessMeter.getInstance();
+        da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        
+        //DataAccessMeter da = DataAccessMeter.getInstance();
 //        ic = da.getI18nControlInstance();
         
-        da.addComponent(this.parent);
-        da.setHelpContext(m_da.getHelpContext());
-        da.setCurrentUserId(((DataAccess)m_da).current_user_id);
-        da.createDb(m_da.getHibernateDb());
+        da_local.addComponent(this.parent);
+        da_local.setHelpContext(m_da.getHelpContext());
+        da_local.setCurrentUserId(((DataAccess)m_da).current_user_id);
+        da_local.createDb(m_da.getHibernateDb());
         
         //DataAccessMeter.getInstance().setBGMeasurmentType(m_da.get)
     }
@@ -253,18 +255,18 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     {
         if (ret_obj_id == MeterPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
         {
-            DeviceConfigEntry de = m_da_local.getDeviceConfiguration().getSelectedDeviceInstance();
+            DeviceConfigEntry de = DataAccessMeter.getInstance().getDeviceConfiguration().getSelectedDeviceInstance();
             
             if (de==null)
-                return m_da_local.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
             else
             {
-                if (de.device_device.equals(m_da_local.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
+                if (de.device_device.equals(DataAccessMeter.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
                 {
-                    return m_da_local.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                    return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
                 }
                 else
-                    return String.format(m_da_local.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port);
+                    return String.format(DataAccessMeter.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port);
             }
         }
         else
@@ -367,20 +369,20 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         
         if (command.equals("meters_read"))
         {
-            new DeviceInstructionsDialog(this.parent, m_da_local, this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+            new DeviceInstructionsDialog(this.parent, da_local, this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
             this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("meters_list"))
         {
-            new BaseListDialog((JFrame)parent, m_da_local);
+            new BaseListDialog((JFrame)parent, da_local);
         }
         else if (command.equals("meters_about"))
         {
-            new AboutBaseDialog((JFrame)parent, m_da_local);
+            new AboutBaseDialog((JFrame)parent, da_local);
         }
         else if (command.equals("meters_config"))
         {
-            new DeviceConfigurationDialog((JFrame)parent, m_da_local);
+            new DeviceConfigurationDialog((JFrame)parent, da_local);
             this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_CONFIG);
         }
         else

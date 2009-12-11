@@ -7,7 +7,6 @@ import ggc.meter.device.ascensia.AscensiaContourLink;
 import ggc.meter.device.ascensia.AscensiaContourTest;
 import ggc.meter.device.ascensia.AscensiaDEX;
 import ggc.meter.device.ascensia.AscensiaEliteXL;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -46,7 +45,7 @@ public class AscensiaBayer extends AbstractDeviceCompany
      */
     public AscensiaBayer()
     {
-        super(I18nControl.getInstance());
+        super();
         
         this.addDevice(new AscensiaEliteXL(this));
         this.addDevice(new AscensiaDEX(this));
@@ -106,7 +105,7 @@ public class AscensiaBayer extends AbstractDeviceCompany
      */
     public int getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
     
 
@@ -131,7 +130,7 @@ public class AscensiaBayer extends AbstractDeviceCompany
      */
     public String getConnectionSamples()
     {
-        return m_ic.getMessage("SERIAL_PORTS");  //"Serial Ports: COM2,...";
+        return "SERIAL_PORTS";  //"Serial Ports: COM2,...";
     }
     
 }

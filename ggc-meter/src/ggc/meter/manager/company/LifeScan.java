@@ -3,11 +3,9 @@ package ggc.meter.manager.company;
 import ggc.meter.device.onetouch.OneTouchProfile;
 import ggc.meter.device.onetouch.OneTouchSelect;
 import ggc.meter.device.onetouch.OneTouchUltra;
-import ggc.meter.device.onetouch.OneTouchUltra2;
 import ggc.meter.device.onetouch.OneTouchUltraEasy;
 import ggc.meter.device.onetouch.OneTouchUltraMini;
 import ggc.meter.device.onetouch.OneTouchUltraSmart;
-import ggc.meter.util.I18nControl;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -46,7 +44,7 @@ public class LifeScan extends AbstractDeviceCompany
      */
     public LifeScan()
     {
-        super(I18nControl.getInstance());
+        super();
         
         this.addDevice(new OneTouchUltra(this));
         this.addDevice(new OneTouchProfile(this));
@@ -55,7 +53,7 @@ public class LifeScan extends AbstractDeviceCompany
         this.addDevice(new OneTouchUltraSmart(this));
         this.addDevice(new OneTouchSelect(this));
         
-        this.addDevice(new OneTouchUltra2(this));
+        //this.addDevice(new OneTouchUltra2(this));
     }
 
 
@@ -135,7 +133,7 @@ public class LifeScan extends AbstractDeviceCompany
      */
     public String getConnectionSamples()
     {
-        return m_ic.getMessage("SERIAL_PORTS");  //"Serial Ports: COM2,...";
+        return "SERIAL_PORTS";  //"Serial Ports: COM2,...";
     }
     
     
