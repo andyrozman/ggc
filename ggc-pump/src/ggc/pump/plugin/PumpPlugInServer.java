@@ -14,7 +14,6 @@ import ggc.pump.gui.PumpPrintDialog;
 import ggc.pump.gui.manual.PumpDataDialog;
 import ggc.pump.gui.profile.ProfileSelector;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -26,7 +25,7 @@ import javax.swing.JMenu;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.BackupRestorePlugin;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -136,7 +135,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     public PumpPlugInServer()
     {
         super();
-        da_local = DataAccessPump.getInstance();
+        //da_local = DataAccessPump.getInstance();
     }
     
     
@@ -147,10 +146,10 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
      * @param selected_lang
      * @param da
      */
-    public PumpPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
+    public PumpPlugInServer(Container cont, String selected_lang, ATDataAccessLMAbstract da)
     {
         super(cont, selected_lang, da);
-        da_local = DataAccessPump.getInstance();
+        da_local = DataAccessPump.createInstance(da.getLanguageManager());
         da_local.addComponent(cont);
         //DataAccessPump.getInstance().setPlugInServerInstance(this);
         //DataAccessPump.getInstance().m
@@ -262,26 +261,26 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     public void initPlugIn()
     {
         ic = m_da.getI18nControlInstance();
-        I18nControl.getInstance().setLanguage(this.selected_lang);
+        //I18nControl.getInstance().setLanguage(this.selected_lang);
         
         //System.out.println("initPlugIn");
-        
-        DataAccessPump da = DataAccessPump.getInstance();
-        da.addComponent(this.parent);
-        da.setHelpContext(this.m_da.getHelpContext());
-        da.setPlugInServerInstance(this);
-        da.createDb(m_da.getHibernateDb());
-        da.initAllObjects();
-        da.loadSpecialParameters();
-        da.setCurrentUserId(((DataAccess)m_da).current_user_id);
-        da.setConfigurationManager(((DataAccess)m_da).getConfigurationManager());
+        da_local = DataAccessPump.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        //da_local = DataAccessPump.createInstance(da_parent..getL).getInstance();
+        da_local.addComponent(this.parent);
+        da_local.setHelpContext(this.m_da.getHelpContext());
+        da_local.setPlugInServerInstance(this);
+        da_local.createDb(m_da.getHibernateDb());
+        da_local.initAllObjects();
+        da_local.loadSpecialParameters();
+        da_local.setCurrentUserId(((DataAccess)m_da).current_user_id);
+        da_local.setConfigurationManager(((DataAccess)m_da).getConfigurationManager());
         this.backup_restore_enabled = true;
         
         m_da.loadSpecialParameters();
         //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
         
-        da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
-        da.setGraphConfigProperties(m_da.getGraphConfigProperties());
+        da_local.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
+        da_local.setGraphConfigProperties(m_da.getGraphConfigProperties());
     }
     
     

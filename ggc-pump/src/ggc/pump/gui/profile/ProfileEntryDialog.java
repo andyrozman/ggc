@@ -2,7 +2,6 @@ package ggc.pump.gui.profile;
 
 import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -16,6 +15,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import com.atech.graphics.components.TimeComponent;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -48,8 +48,8 @@ public class ProfileEntryDialog extends JDialog implements ActionListener
 {
 
     private static final long serialVersionUID = -6972977617367401931L;
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccessPump m_da = DataAccessPump.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     private boolean m_action_done = false;
     JButton help_button;

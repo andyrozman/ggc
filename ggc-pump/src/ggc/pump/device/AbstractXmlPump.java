@@ -6,10 +6,10 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.FileReaderContext;
 
 /**
@@ -42,7 +42,7 @@ import com.atech.utils.file.FileReaderContext;
 public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterface, SelectableInterface
 {
 
-    protected I18nControl ic = I18nControl.getInstance();
+    protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
 
     protected String device_name = "Undefined";
     protected OutputWriter output_writer;
@@ -57,6 +57,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     public AbstractXmlPump()
     {
         super();
+        ic = DataAccessPump.getInstance().getI18nControlInstance();
     }
 
     /**
@@ -67,6 +68,12 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     public AbstractXmlPump(AbstractDeviceCompany cmp)
     {
         super();
+        
+        //System.out.println("Da: " + DataAccessPump.getInstance());
+        //System.out.println("Ic: " + DataAccessPump.getInstance().getI18nControlInstance());
+        
+        
+        //ic = DataAccessPump.getInstance().getI18nControlInstance();
         this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
@@ -107,7 +114,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification(ic);
+        DeviceIdentification di = new DeviceIdentification();
         di.company = group;
         di.device_selected = device;
         
@@ -362,14 +369,24 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
 
 
     
-    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION"), ic.getMessage("DEVICE_DOWNLOAD"), ic.getMessage("DEVICE_SETTINGS") }; 
-    float device_columns_width[] = { 0.3f, 0.3f, 0.3f, 0.05f, 0.05f };
+    float device_columns_width[] = { 0.25f, 0.25f, 0.3f, 0.1f, 0.1f };
+    String device_columns[] = null;
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
+        if (device_columns==null)
+        {
+            this.device_columns = new String[5];
+            device_columns[0] = ic.getMessage("DEVICE_COMPANY");
+            device_columns[1] = ic.getMessage("DEVICE_DEVICE");
+            device_columns[2] = ic.getMessage("DEVICE_CONNECTION");
+            device_columns[3] = ic.getMessage("DEVICE_DOWNLOAD");
+            device_columns[4] = ic.getMessage("DEVICE_SETTINGS");
+        }
+        
         return device_columns[num-1];
     }
 

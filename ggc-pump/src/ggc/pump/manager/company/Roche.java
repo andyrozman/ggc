@@ -5,7 +5,6 @@ import ggc.pump.device.accuchek.AccuChekDTron;
 import ggc.pump.device.accuchek.AccuChekSpirit;
 import ggc.pump.device.accuchek.DisetronicDTron;
 import ggc.pump.manager.PumpDevicesIds;
-import ggc.pump.util.I18nControl;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,7 +41,7 @@ public class Roche extends AbstractPumpDeviceCompany
      */
     public Roche()
     {
-        super(I18nControl.getInstance(), false);
+        super(false);
         profile_names = new String[5];
         
         for(int i=0; i<5; i++)

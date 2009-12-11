@@ -9,7 +9,6 @@ import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.graph.GraphViewDailyPump;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -44,6 +43,7 @@ import com.atech.graphics.calendar.CalendarPane;
 import com.atech.graphics.components.MultiLineTooltipModel;
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -82,9 +82,10 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
      * 
      */
     private static final long serialVersionUID = -4403053763073221824L;
-    private I18nControl m_ic = I18nControl.getInstance();
-    private DataAccessPump m_da = null; // DataAccess.getInstance();
+    private DataAccessPump m_da = DataAccessPump.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
+    
     PumpDataTableModel model = null;
     JScrollPane resultsPane;
 

@@ -7,11 +7,11 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 import gnu.io.SerialPortEvent;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.FileReaderContext;
 
 /**
@@ -45,7 +45,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 {
 
     protected int m_status = 0;
-    protected I18nControl ic = I18nControl.getInstance();
+    protected I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
 
     protected String m_info = "";
     protected int m_time_difference = 0;
@@ -103,7 +103,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification(ic);
+        DeviceIdentification di = new DeviceIdentification();
         di.company = group;
         di.device_selected = device;
         

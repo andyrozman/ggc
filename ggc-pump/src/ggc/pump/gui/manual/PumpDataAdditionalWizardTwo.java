@@ -5,7 +5,6 @@ import ggc.core.util.DataAccess;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 import ggc.shared.fooddesc.FoodDescriptionDialog;
 
 import java.awt.Component;
@@ -29,6 +28,7 @@ import javax.swing.JTextField;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.TransferDialog;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATSwingUtils;
 
@@ -65,8 +65,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     private static final long serialVersionUID = 6600123145384610341L;
 
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccessPump m_da = DataAccessPump.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     JLabel label_title = new JLabel();
     Font f_normal = m_da.getFont(DataAccessPump.FONT_NORMAL);
     Font f_bold = m_da.getFont(DataAccessPump.FONT_NORMAL);

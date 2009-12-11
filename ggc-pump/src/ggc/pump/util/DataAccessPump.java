@@ -28,6 +28,7 @@ import com.atech.graphics.components.about.FeaturesEntry;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.mgr.LanguageManager;
 import com.atech.misc.converter.DecimalHandler;
 
 // TODO: Auto-generated Javadoc
@@ -132,9 +133,9 @@ public class DataAccessPump extends DataAccessPlugInBase
      *  method.<br><br>
      *
      */
-    private DataAccessPump()
+    private DataAccessPump(LanguageManager lm)
     {
-    	super(I18nControl.getInstance());
+    	super(lm, new GGCPumpICRunner());
     } 
 
     
@@ -174,12 +175,25 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     public static DataAccessPump getInstance()
     {
-        if (s_da == null)
-            s_da = new DataAccessPump();
+        //if (s_da == null)
+        //    s_da = new DataAccessPump();
         return s_da;
     }
 
 
+    /**
+     * Create Instance
+     *  
+     * @param lm
+     * @return
+     */
+    public static DataAccessPump createInstance(LanguageManager lm)
+    {
+        if (s_da == null)
+            s_da = new DataAccessPump(lm);
+        return s_da;
+    }
+    
  
     
     /**

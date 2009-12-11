@@ -10,7 +10,6 @@ import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.gui.profile.ProfileSelectorPump;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 import ggc.shared.bolushelper.BolusHelper;
 
 import java.awt.event.ActionEvent;
@@ -34,6 +33,7 @@ import javax.swing.SpinnerNumberModel;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.components.TimeComponent;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -104,9 +104,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     PumpDataRowDialog m_parent = null;
 
-    I18nControl ic = I18nControl.getInstance();
-    
-    DataAccessPump m_da = DataAccessPump.getInstance();
+    private DataAccessPump m_da = DataAccessPump.getInstance();
+    private I18nControlAbstract ic = m_da.getI18nControlInstance();
 
     private Object[] type_items = { ic.getMessage("SELECT_ITEM"), 
                                     ic.getMessage("BASAL_DOSE"), 

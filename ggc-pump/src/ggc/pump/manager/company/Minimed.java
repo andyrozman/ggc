@@ -5,7 +5,6 @@ import ggc.pump.device.minimed.Minimed512;
 import ggc.pump.device.minimed.Minimed522;
 import ggc.pump.device.minimed.Minimed554_Veo;
 import ggc.pump.manager.PumpDevicesIds;
-import ggc.pump.util.I18nControl;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,7 +41,7 @@ public class Minimed extends AbstractPumpDeviceCompany
      */
     public Minimed()
     {
-        super(I18nControl.getInstance(), false);
+        super(false);
         
         profile_names = new String[3];
         profile_names[0] = "Standard";

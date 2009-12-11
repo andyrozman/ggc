@@ -3,7 +3,6 @@ package ggc.pump.manager.company;
 import ggc.pump.device.deltec.DeltecCosmo1700;
 import ggc.pump.device.deltec.DeltecCosmo1800;
 import ggc.pump.manager.PumpDevicesIds;
-import ggc.pump.util.I18nControl;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +39,7 @@ public class Deltec extends AbstractPumpDeviceCompany
      */
     public Deltec()
     {
-        super(I18nControl.getInstance(), false);
+        super(false);
         //this.addDevice(new GenericPumpDevice(this));
         this.addDevice(new DeltecCosmo1700(this));
         this.addDevice(new DeltecCosmo1800(this));

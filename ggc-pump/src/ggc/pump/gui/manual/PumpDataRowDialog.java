@@ -6,7 +6,6 @@ import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -33,6 +32,7 @@ import javax.swing.SwingUtilities;
 
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -67,8 +67,8 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
     private static final long serialVersionUID = 8280477836138077888L;
 
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccessPump m_da = DataAccessPump.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     JLabel label_title = new JLabel();
     JButton bt_item_1, bt_item_2, bt_item_3, bt_cancel, bt_ok; 

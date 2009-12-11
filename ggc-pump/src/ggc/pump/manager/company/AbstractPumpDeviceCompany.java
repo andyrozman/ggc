@@ -2,8 +2,6 @@ package ggc.pump.manager.company;
 
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
-import com.atech.i18n.I18nControlAbstract;
-
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,9 +22,9 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
      * @param ic the ic
      * @param value the value
      */
-    public AbstractPumpDeviceCompany(I18nControlAbstract ic, boolean value)
+    public AbstractPumpDeviceCompany(boolean value)
     {
-        super(ic, value);
+        super(value);
     }
     
     

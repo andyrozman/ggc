@@ -4,7 +4,6 @@ import ggc.pump.device.dana.DanaDiabecare_II;
 import ggc.pump.device.dana.DanaDiabecare_III_R;
 import ggc.pump.device.dana.DanaDiabecare_IIS;
 import ggc.pump.manager.PumpDevicesIds;
-import ggc.pump.util.I18nControl;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,7 +40,7 @@ public class Sooil extends AbstractPumpDeviceCompany
      */
     public Sooil()
     {
-        super(I18nControl.getInstance(), false);
+        super(false);
         profile_names = new String[16];
   
         for(int i=0; i<16; i++)

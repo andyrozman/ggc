@@ -8,10 +8,11 @@ import ggc.core.db.tool.transfer.GGCImporter;
 import ggc.pump.db.PumpData;
 import ggc.pump.db.PumpDataExtended;
 import ggc.pump.db.PumpProfile;
-import ggc.pump.util.I18nControl;
+import ggc.pump.util.DataAccessPump;
 
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreRunner;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.BackupRestorePlugin;
 
 /**
@@ -45,7 +46,7 @@ import com.atech.plugin.BackupRestorePlugin;
 public class BackupRestorePumpHandler extends BackupRestorePlugin
 {
 
-    I18nControl ic = I18nControl.getInstance();
+    I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
     
     private String[] object_desc = {
         ic.getMessage("PUMP_DATA"),
@@ -68,7 +69,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
      */
     public BackupRestorePumpHandler()
     {
-        ic = I18nControl.getInstance();
+        //ic = I18nControl.getInstance();
     }
     
 

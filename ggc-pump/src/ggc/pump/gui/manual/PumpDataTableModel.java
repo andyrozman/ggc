@@ -3,12 +3,12 @@ package ggc.pump.gui.manual;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import javax.swing.table.AbstractTableModel;
 
 import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.graphics.components.MultiLineTooltipModel;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,8 +44,8 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
 
     DeviceValuesDay dayData;
     
-    DataAccessPump m_da = DataAccessPump.getInstance();
-    I18nControl m_ic = I18nControl.getInstance(); 
+    private DataAccessPump m_da = DataAccessPump.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     /*
     Object objects[] = 

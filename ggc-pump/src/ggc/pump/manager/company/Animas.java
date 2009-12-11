@@ -5,7 +5,6 @@ import ggc.pump.device.animas.AnimasIR1250;
 import ggc.pump.device.animas.AnimasIR2020;
 import ggc.pump.device.animas.AnimasPing;
 import ggc.pump.manager.PumpDevicesIds;
-import ggc.pump.util.I18nControl;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,8 +42,8 @@ public class Animas extends AbstractPumpDeviceCompany
      */
     public Animas()
     {
-        super(I18nControl.getInstance(), false);
-        
+        //super(DataAccessPump.getInstance().getI18nControlInstance(), false);
+        super(false);
         //this.addDevice(new GenericPumpDevice(this));
         this.addDevice(new AnimasIR1200(this));
         this.addDevice(new AnimasIR1250(this));

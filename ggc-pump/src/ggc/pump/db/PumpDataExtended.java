@@ -2,7 +2,7 @@ package ggc.pump.db;
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.core.util.DataAccess;
-import ggc.pump.util.I18nControl;
+import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
 
     private static final long serialVersionUID = 5635575801093325353L;
     private boolean selected = false;
-    I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
+    I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
     
 
     /**
@@ -81,11 +81,11 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     /**
      * Constructor
      * 
-     * @param ic
+     * @param _ic
      */
-    public PumpDataExtended(I18nControlAbstract ic)
+    public PumpDataExtended(I18nControlAbstract _ic)
     {
-        this.ic = (I18nControl)ic;
+        this.ic = _ic;
     }
     
     
@@ -102,7 +102,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public String getTargetName()
     {
-        return I18nControl.getInstance().getMessage("PUMP_DATA_EXTENDED");
+        return DataAccessPump.getInstance().getI18nControlInstance().getMessage("PUMP_DATA_EXTENDED");
     }
 
     /** 

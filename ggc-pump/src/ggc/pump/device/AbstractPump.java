@@ -6,12 +6,12 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.util.ArrayList;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.FileReaderContext;
 
 /**
@@ -47,7 +47,7 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     AbstractDeviceCompany pump_company;
 
     protected int m_status = 0;
-    protected I18nControl ic = I18nControl.getInstance();
+    protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
 
     protected String m_info = "";
     protected int m_time_difference = 0;
@@ -66,6 +66,7 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     public AbstractPump()
     {
         super();
+        ic = DataAccessPump.getInstance().getI18nControlInstance();
     }
 
     
@@ -78,6 +79,7 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     public AbstractPump(String param, OutputWriter ow)
     {
         super();
+        ic = DataAccessPump.getInstance().getI18nControlInstance();
         this.m_output_writer = ow;
         this.parameter = param;
     }
@@ -119,7 +121,7 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification(ic);
+        DeviceIdentification di = new DeviceIdentification();
         di.company = group;
         di.device_selected = device;
         
@@ -298,15 +300,25 @@ public abstract class AbstractPump implements PumpInterface, SelectableInterface
 
 
     
-    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION"), ic.getMessage("DEVICE_DOWNLOAD"), ic.getMessage("DEVICE_SETTINGS") }; 
+
     float device_columns_width[] = { 0.25f, 0.25f, 0.3f, 0.1f, 0.1f };
-    
+    String device_columns[] = null;
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
+        if (device_columns==null)
+        {
+            this.device_columns = new String[5];
+            device_columns[0] = ic.getMessage("DEVICE_COMPANY");
+            device_columns[1] = ic.getMessage("DEVICE_DEVICE");
+            device_columns[2] = ic.getMessage("DEVICE_CONNECTION");
+            device_columns[3] = ic.getMessage("DEVICE_DOWNLOAD");
+            device_columns[4] = ic.getMessage("DEVICE_SETTINGS");
+        }
+        
         return device_columns[num-1];
     }
 

@@ -144,7 +144,7 @@ public abstract class EZManagerDb extends AbstractPump
      */
     public DeviceIdentification getDeviceInfo()
     {
-        DeviceIdentification toRet = new DeviceIdentification(ic);  
+        DeviceIdentification toRet = new DeviceIdentification();  
         toRet.company = "Animas";
         toRet.device_family = "n/a";
         toRet.device_hardware_version = "n/a";

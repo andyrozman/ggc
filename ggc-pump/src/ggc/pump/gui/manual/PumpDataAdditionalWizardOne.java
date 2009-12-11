@@ -2,7 +2,6 @@ package ggc.pump.gui.manual;
 
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.util.DataAccessPump;
-import ggc.pump.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -19,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -54,7 +54,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 {
 
     private static final long serialVersionUID = -5592188365225021329L;
-    private I18nControl m_ic = I18nControl.getInstance();
+    private I18nControlAbstract m_ic = DataAccessPump.getInstance().getI18nControlInstance();
     private DataAccessPump m_da = DataAccessPump.getInstance();
 
 

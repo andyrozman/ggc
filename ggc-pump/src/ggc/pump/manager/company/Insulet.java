@@ -2,7 +2,6 @@ package ggc.pump.manager.company;
 
 import ggc.pump.device.insulet.InsuletOmniPod;
 import ggc.pump.manager.PumpDevicesIds;
-import ggc.pump.util.I18nControl;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +39,7 @@ public class Insulet extends AbstractPumpDeviceCompany
      */
     public Insulet()
     {
-        super(I18nControl.getInstance(), false);
+        super(false);
         //this.addDevice(new GenericPumpDevice(this));
         this.addDevice(new InsuletOmniPod(this));
     }
