@@ -28,10 +28,11 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
-import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.I18nControlRunner;
+import com.atech.i18n.mgr.LanguageManager;
 import com.atech.plugin.PlugInServer;
 import com.atech.update.startup.os.OSUtil;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.sun.jna.NativeLibrary;
 
 // TODO: Auto-generated Javadoc
@@ -63,7 +64,7 @@ import com.sun.jna.NativeLibrary;
  */
 
 
-public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
+public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 {
     
     /**
@@ -257,15 +258,17 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
     //   Constructor:  DataAccessMeter
     /**
      *
-     *  This is DataAccessMeter constructor; Since classes use Singleton Pattern,
+     *  This is DataAccessPlugInBase constructor; Since classes use Singleton Pattern,
      *  constructor is protected and can be accessed only with getInstance() 
      *  method.<br><br>
-     *  @param i18n I18nControlAbstract instance
+     *  
+     *  @param lm language manager 
+     *  @param icr i18n control runner
      *
      */
-    public DataAccessPlugInBase(I18nControlAbstract i18n)
+    public DataAccessPlugInBase(LanguageManager lm, I18nControlRunner icr)
     {
-    	super(i18n); //I18nControl.getInstance());
+    	super(lm, icr); //I18nControl.getInstance());
 
         initSpecial();
     } 
@@ -1316,6 +1319,16 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAbstract
         this.config_manager = conf_mgr;
     }
     
+ 
+    /**
+     * Get Max Decimals that will be used by DecimalHandler
+     * 
+     * @return
+     */
+    public int getMaxDecimalsUsedByDecimalHandler()
+    {
+        return 2;
+    }
     
 
 }

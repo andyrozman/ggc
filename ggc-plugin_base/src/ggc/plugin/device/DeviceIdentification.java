@@ -1,5 +1,7 @@
 package ggc.plugin.device;
 
+import ggc.core.util.DataAccess;
+
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -65,16 +67,28 @@ public class DeviceIdentification
      */
     public String device_serial_number = null;
     
-    I18nControlAbstract m_ic;
+    //DataAccessPlugInBase da
+    
+    //I18nControlAbstract m_ic;
     
     /**
      * Constructor 
      * 
      * @param ic
      */
-    public DeviceIdentification(I18nControlAbstract ic)
+/*    public DeviceIdentification(I18nControlAbstract ic)
     {
         this.m_ic = ic;
+    }
+  */  
+
+    /**
+     * Constructor 
+     * 
+     * @param ic
+     */
+    public DeviceIdentification()
+    {
     }
     
     
@@ -87,6 +101,7 @@ public class DeviceIdentification
     public String getInformation(String prefix)
     {
         StringBuffer sb = new StringBuffer();
+        I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
         
         sb.append(prefix);
         sb.append(" " + m_ic.getMessage("DEVICE_NAME_BIG") + " Company: " + this.company);
@@ -118,6 +133,7 @@ public class DeviceIdentification
     public String getShortInformation()
     {
         StringBuffer sb = new StringBuffer();
+        I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
         
         sb.append(this.company);
         sb.append(" - " + this.device_selected);

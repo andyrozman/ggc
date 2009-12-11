@@ -35,8 +35,6 @@ import ggc.plugin.manager.EmptyMgrDevices;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import com.atech.i18n.I18nControlAbstract;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -67,7 +65,7 @@ import com.atech.i18n.I18nControlAbstract;
 public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //, SelectableInterface
 {
 
-    protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
+    //protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
     
     protected String id = "";
     protected String name = "";
@@ -83,9 +81,9 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      * 
      * @param ic
      */
-    public AbstractDeviceCompany(I18nControlAbstract ic)
+    public AbstractDeviceCompany(/*I18nControlAbstract ic*/)
     {
-        this.m_ic = ic;
+        //this.m_ic = ic;
     }
     
 
@@ -95,9 +93,9 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      * @param ic
      * @param empty
      */
-    public AbstractDeviceCompany(I18nControlAbstract ic, boolean empty)
+    public AbstractDeviceCompany(boolean empty)
     {
-        this(ic);
+        this();
         
         if (empty==true)
         {
