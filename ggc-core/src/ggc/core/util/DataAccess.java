@@ -40,10 +40,11 @@ import pygmy.core.Server;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.help.HelpContext;
+import com.atech.i18n.mgr.LanguageManager;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.misc.refresh.EventSource;
 import com.atech.plugin.PlugInClient;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.Rounding;
 import com.atech.utils.logs.RedirectScreen;
 
@@ -75,7 +76,8 @@ import com.atech.utils.logs.RedirectScreen;
  */
 
 
-public class DataAccess extends ATDataAccessAbstract
+public class DataAccess extends ATDataAccessLMAbstract 
+//ATDataAccessAbstract
 {
 
     /**
@@ -265,7 +267,7 @@ public class DataAccess extends ATDataAccessAbstract
      */
     private DataAccess()
     {
-        super(I18nControl.getInstance());
+        super(new LanguageManager(new GGCLanguageManagerRunner()), new GGCCoreICRunner());
         initSpecial();
     }
 
@@ -783,7 +785,7 @@ public class DataAccess extends ATDataAccessAbstract
         ppi.setTransferObjects(lst);
         */
         //addPlugIn(DataAccess.PLUGIN_PUMPS, ppi);
-        addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this));
         
         // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
 
@@ -1987,6 +1989,17 @@ public class DataAccess extends ATDataAccessAbstract
         */
     }
     
+
+    
+    /**
+     * Get Max Decimals that will be used by DecimalHandler
+     * 
+     * @return
+     */
+    public int getMaxDecimalsUsedByDecimalHandler()
+    {
+        return 2;
+    }
     
 
 }

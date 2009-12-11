@@ -963,7 +963,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
      */
     public void setBG(int type, String val)
     {
-        if (m_da.isEmptyOrUnset(val))
+        if (DataAccess.isEmptyOrUnset(val))
         {
             setBG(0);
             return;
@@ -1077,7 +1077,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
      */
     public void setIns1(String val)
     {
-        if (!m_da.isEmptyOrUnset(val))
+        if (!DataAccess.isEmptyOrUnset(val))
             setIns1(m_da.getIntValue(val));
     }
 
@@ -1123,7 +1123,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
      */
     public void setIns2(String val)
     {
-        if (! m_da.isEmptyOrUnset(val))
+        if (! DataAccess.isEmptyOrUnset(val))
         {
             setIns2(m_da.getIntValue(val));
         }

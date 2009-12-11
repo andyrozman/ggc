@@ -2,7 +2,6 @@ package ggc.shared.ratio;
 
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Rectangle;
@@ -21,6 +20,7 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -64,8 +64,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
     JButton[] buttons;
     JButton help_button = null;
     
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     
     int[] carb_rule = { 500, 450, 300 };
     int[] sens_rule = { 1800, 1500};

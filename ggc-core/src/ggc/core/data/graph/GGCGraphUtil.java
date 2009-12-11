@@ -3,7 +3,6 @@ package ggc.core.data.graph;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
-import ggc.core.util.I18nControl;
 
 import java.awt.Color;
 
@@ -64,7 +63,8 @@ public class GGCGraphUtil extends GraphUtil
     float BGDiff = maxBG - minBG;
     //RenderingHints renderingHints;
 
-    I18nControl translator = I18nControl.getInstance();
+    //private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
+    
     String unitLabel = "mg/dl";
     
     DataAccess m_da_local;

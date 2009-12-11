@@ -33,7 +33,7 @@ package ggc.core.print;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.MonthlyValues;
-import ggc.core.util.I18nControl;
+import ggc.core.util.DataAccess;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
@@ -78,7 +78,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstract // extends PdfPage
      */
     public PrintExtendedMonthlyReport(MonthlyValues mv)
     {
-        super(mv, I18nControl.getInstance());
+        super(mv, DataAccess.getInstance().getI18nControlInstance());
         
         /*
         m_mv = mv;

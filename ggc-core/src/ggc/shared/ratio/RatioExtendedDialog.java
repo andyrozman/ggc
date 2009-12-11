@@ -29,7 +29,6 @@
 package ggc.shared.ratio;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -58,6 +57,7 @@ import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -137,8 +137,8 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 	in_action = false;
     }
 
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     //private GGCProperties props = m_da.getSettings();
 
     private boolean m_actionDone = false;

@@ -1,7 +1,6 @@
 package ggc.shared.bolushelper;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 import com.atech.utils.ATechDate;
 
@@ -67,9 +67,8 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
 
     boolean in_action = false;
 
-
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     private boolean m_actionDone = false;
 
     JFormattedTextField ftf_ch_ins, ftf_bg_ins;

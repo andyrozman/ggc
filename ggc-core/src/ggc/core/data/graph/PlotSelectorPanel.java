@@ -2,7 +2,6 @@ package ggc.core.data.graph;
 
 import ggc.core.data.PlotData;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.GridLayout;
 
@@ -11,6 +10,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,7 +46,8 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
     private static final long serialVersionUID = 6420234465982434157L;
     PlotSelectorData data = new PlotSelectorData();
     DataAccess dataAccessInstance = DataAccess.getInstance();
-    I18nControl translator = I18nControl.getInstance();
+    //I18nControl translator = I18nControl.getInstance();
+    private I18nControlAbstract translator = dataAccessInstance.getI18nControlInstance();
 
     JCheckBox BGBox = new JCheckBox();
     JCheckBox BGDayAvgBox = new JCheckBox();

@@ -33,12 +33,12 @@ package ggc.core.data;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATechDate;
 
 /**
@@ -75,7 +75,7 @@ public class DailyValues implements Serializable
 
     private static final long serialVersionUID = -375771912636631298L;
     private boolean debug = false;
-    private I18nControl m_ic = I18nControl.getInstance();
+    private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
 
     private String[] column_names = { 
                         m_ic.getMessage("DATE_TIME"),

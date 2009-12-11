@@ -1,7 +1,6 @@
 package ggc.shared.ratio;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -20,6 +19,7 @@ import javax.swing.JPanel;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 
@@ -64,8 +64,8 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
     
     
     
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     private boolean m_actionDone = false;
 

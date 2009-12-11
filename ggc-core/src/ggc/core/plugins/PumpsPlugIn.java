@@ -12,6 +12,7 @@ import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.plugin.PlugInServer;
+import com.atech.utils.ATDataAccessLMAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -110,6 +111,19 @@ public class PumpsPlugIn extends PlugInClient
         super((JFrame)parent, ic);
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param parent
+     * @param da
+     */
+    public PumpsPlugIn(Component parent, ATDataAccessLMAbstract da)
+    {
+        super((JFrame)parent, da);
+    }
+    
+    
     /**
      * Constructor
      */

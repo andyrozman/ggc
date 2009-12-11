@@ -1,7 +1,6 @@
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.SettingsH;
-import ggc.core.util.I18nControl;
 
 import java.util.ArrayList;
 
@@ -75,7 +74,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
      */
     public Settings(I18nControlAbstract ic)
     {
-        this.ic = (I18nControl) ic;
+        this.ic = ic;
         this.backup_object = true;
     }
 

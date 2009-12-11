@@ -1,7 +1,6 @@
 package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.DayValueH;
-import ggc.core.util.I18nControl;
 
 import java.util.ArrayList;
 
@@ -48,7 +47,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
 
 
     private boolean selected = false;
-    I18nControl ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
+    I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
     
 
     /**
@@ -76,7 +75,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public DailyValue(I18nControlAbstract ic)
     {
-        this.ic = (I18nControl)ic;
+        this.ic = ic;
     }
     
     

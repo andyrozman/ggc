@@ -1,10 +1,11 @@
 package ggc.core.data;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,8 +37,8 @@ import java.util.Hashtable;
 public class HbA1cValues
 {
 
-    private I18nControl m_ic = I18nControl.getInstance();
     DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     private float sumBG;
     private int readings;

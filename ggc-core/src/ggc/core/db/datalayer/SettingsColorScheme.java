@@ -2,7 +2,6 @@ package ggc.core.db.datalayer;
 
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.util.ArrayList;
 
@@ -70,7 +69,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public SettingsColorScheme(I18nControlAbstract ic)
     {
-        this.ic = (I18nControl) ic;
+        this.ic = ic;
         this.backup_object = true;
     }
 

@@ -30,7 +30,7 @@ package ggc.core.print;
 
 
 import ggc.core.data.MonthlyValues;
-import ggc.core.util.I18nControl;
+import ggc.core.util.DataAccess;
 
 import java.awt.Color;
 
@@ -86,7 +86,7 @@ public class PrintSimpleMonthlyReport extends PrintAbstract //   extends PdfPage
      */
     public PrintSimpleMonthlyReport(MonthlyValues mv)
     {
-        super(mv, I18nControl.getInstance());
+        super(mv, DataAccess.getInstance().getI18nControlInstance());
     }
     
     
