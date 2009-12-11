@@ -30,7 +30,6 @@ package ggc.gui.dialogs.graphs;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.graph.DataPlotSelectorPanel;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.gui.graphs.FrequencyGraphView;
 
 import java.awt.BorderLayout;
@@ -46,6 +45,7 @@ import javax.swing.JPanel;
 
 import com.atech.graphics.calendar.DateRangeSelectionPanel;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -79,8 +79,8 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
      * 
      */
     private static final long serialVersionUID = 7116976481780328914L;
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = null;
+    private I18nControlAbstract m_ic = null;
 
     private FrequencyGraphView fGV;
     JButton help_button = null;
@@ -99,6 +99,7 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
         setTitle(m_ic.getMessage("FREQGRAPHFRAME") + " [" + m_ic.getMessage("NOT_WORKING_100PRO") + "]");
 
         this.m_da = da;
+        this.m_ic = da.getI18nControlInstance();
         /*
          * Rectangle rec = parent.getBounds(); int x = rec.x + (rec.width/2);
          * int y = rec.y + (rec.height/2);

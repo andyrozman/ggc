@@ -2,7 +2,6 @@ package ggc;
 
 import ggc.core.db.GGCDbConfig;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.gui.MainFrame;
 
 import java.awt.Dimension;
@@ -70,7 +69,7 @@ public class GGC
     {
         GGCDbConfig conf = new GGCDbConfig(true);
 
-        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), I18nControl.getInstance());
+        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), DataAccess.getInstance().getI18nControlInstance());
 
         if (dcr.canApplicationStart())
         {

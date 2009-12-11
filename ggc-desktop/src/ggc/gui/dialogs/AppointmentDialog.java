@@ -1,7 +1,6 @@
 package ggc.gui.dialogs;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -20,6 +19,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,8 +53,8 @@ public class AppointmentDialog extends JDialog implements ActionListener
 {
 
     private static final long serialVersionUID = -1721590187912615702L;
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     //private boolean m_actionDone = false;
 

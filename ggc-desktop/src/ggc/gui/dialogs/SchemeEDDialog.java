@@ -1,7 +1,6 @@
 package ggc.gui.dialogs;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -46,8 +47,8 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
 {
 
     private static final long serialVersionUID = 5602610719366564987L;
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     private boolean m_actionDone = false;
     private int m_selected_action = 0;

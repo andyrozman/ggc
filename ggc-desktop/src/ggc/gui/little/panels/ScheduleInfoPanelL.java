@@ -1,6 +1,5 @@
 package ggc.gui.little.panels;
 
-import ggc.core.util.I18nControl;
 import ggc.gui.panels.info.AbstractInfoPanel;
 import ggc.gui.panels.info.InfoPanelsIds;
 
@@ -44,7 +43,7 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
      */
     public ScheduleInfoPanelL()
     {
-        super(I18nControl.getInstance().getMessage("SCHEDULE"));
+        super("SCHEDULE");
         setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();

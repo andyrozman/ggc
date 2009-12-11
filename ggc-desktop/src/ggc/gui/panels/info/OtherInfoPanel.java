@@ -1,7 +1,5 @@
 package ggc.gui.panels.info;
 
-import ggc.core.util.I18nControl;
-
 import java.awt.GridLayout;
 
 /**
@@ -44,7 +42,7 @@ public class OtherInfoPanel extends AbstractInfoPanel
      */
     public OtherInfoPanel(AbstractInfoPanel p1, AbstractInfoPanel p2)
     {
-        super(I18nControl.getInstance().getMessage("OTHER_INFO"), false);
+        super("OTHER_INFO", false);
         setLayout(new GridLayout(2, 0));
         
         this.panel_1 = p1;

@@ -1,7 +1,6 @@
 package ggc.gui;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.refresh.EventObserverInterface;
 
 /**
@@ -46,12 +46,11 @@ public class StatusBar extends JPanel implements EventObserverInterface
 {
     private static final long serialVersionUID = 1184879736050179885L;
 
-    I18nControl m_ic = I18nControl.getInstance();
-
     private JLabel lblMessage = null;
     private JLabel lblLed = null;
     private JLabel lblName = null;
     DataAccess da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = da.getI18nControlInstance();
 
     private ImageIcon[] statusIcons = null;
     MainFrame m_frame;

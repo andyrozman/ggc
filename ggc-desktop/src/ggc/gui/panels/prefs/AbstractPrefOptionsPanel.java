@@ -1,9 +1,8 @@
 package ggc.gui.panels.prefs;
 
-import ggc.gui.dialogs.PropertiesDialog;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
-import ggc.core.util.I18nControl;
+import ggc.gui.dialogs.PropertiesDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,8 +48,8 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
 {
 
     private static final long serialVersionUID = 6154601886618634718L;
-    protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccess m_da = DataAccess.getInstance();
+    protected I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     protected GGCProperties settings = m_da.getSettings();
     protected boolean changed = false;
     PropertiesDialog parent;

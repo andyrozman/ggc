@@ -3,7 +3,6 @@ package ggc.gui.dialogs.graphs;
 
 import ggc.core.data.HbA1cValues;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.gui.graphs.HbA1cView;
 
 import java.awt.BorderLayout;
@@ -23,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,7 +57,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 
     JButton help_button;
 
-    private I18nControl m_ic = I18nControl.getInstance();
+    private I18nControlAbstract m_ic = null;
 
     // private static HbA1cFrame singleton = null;
     private HbA1cView hbView;
@@ -80,6 +80,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
     {
         super(da.getMainParent(), "HbA1c", false);
         this.m_da = da;
+        this.m_ic = da.getI18nControlInstance();
 // init
         // hbValues = this.m_da.getHbA1c(new GregorianCalendar());
         hbValues = this.m_da.getDb().getHbA1c(new GregorianCalendar(), false);

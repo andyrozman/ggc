@@ -32,7 +32,6 @@ import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
-import ggc.core.util.I18nControl;
 
 import java.awt.Container;
 import java.awt.Font;
@@ -52,6 +51,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.DateTimeComponent;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -85,8 +85,8 @@ public class DoctorDialog extends JDialog implements ActionListener
 
 
     private static final long serialVersionUID = -8276157027834968535L;
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     private GGCProperties props = m_da.getSettings();
 
     private boolean m_actionDone = false;

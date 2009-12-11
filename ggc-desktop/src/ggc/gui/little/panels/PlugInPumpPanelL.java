@@ -1,6 +1,5 @@
 package ggc.gui.little.panels;
 
-import ggc.core.util.I18nControl;
 import ggc.gui.panels.info.AbstractInfoPanel;
 import ggc.gui.panels.info.InfoPanelsIds;
 
@@ -38,14 +37,14 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
 {
     
     private static final long serialVersionUID = 2496714983251707250L;
-    private I18nControl ic = I18nControl.getInstance();
+    //private I18nControl ic = I18nControl.getInstance();
     
     /**
      * Constructor
      */
     public PlugInPumpPanelL()
     {
-        super(I18nControl.getInstance().getMessage("PUMPS_PLUGIN"));
+        super("PUMPS_PLUGIN");
         setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();
@@ -54,7 +53,7 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
     private void init()
     {
     	String text = "<html><body>"; 
-    	text += String.format(ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
+    	text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
     	text += "</body></html>";
 	
         add(new JLabel(text));

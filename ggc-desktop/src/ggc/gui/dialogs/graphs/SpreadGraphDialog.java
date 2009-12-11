@@ -30,7 +30,6 @@ package ggc.gui.dialogs.graphs;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.graph.DataPlotSelectorPanel;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.gui.graphs.SpreadGraphView;
 
 import java.awt.BorderLayout;
@@ -48,6 +47,7 @@ import javax.swing.JPanel;
 
 import com.atech.graphics.calendar.DateRangeSelectionPanel;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -84,9 +84,9 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
 
     private JButton help_button = null;
 
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
-
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
+    
     private SpreadGraphView sGV;
     // private static SpreadGraphFrame singleton = null;
 

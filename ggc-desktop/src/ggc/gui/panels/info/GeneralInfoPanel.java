@@ -1,7 +1,6 @@
 package ggc.gui.panels.info;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.GridLayout;
 
@@ -53,7 +52,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
      */
     public GeneralInfoPanel()
     {
-        super(I18nControl.getInstance().getMessage("GENERAL_INFORMATION")+":");
+        super("GENERAL_INFORMATION");
         init();
         refreshInfo();
     }

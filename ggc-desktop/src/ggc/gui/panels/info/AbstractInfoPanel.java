@@ -1,12 +1,12 @@
 package ggc.gui.panels.info;
 
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,8 +38,8 @@ import javax.swing.border.TitledBorder;
 public abstract class AbstractInfoPanel extends JPanel
 {
     private static final long serialVersionUID = -1104646965456304940L;
-    protected I18nControl m_ic = I18nControl.getInstance();
     protected DataAccess m_da = DataAccess.getInstance();
+    protected I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     protected boolean first_refresh = true;
 
     
@@ -57,7 +57,7 @@ public abstract class AbstractInfoPanel extends JPanel
     public AbstractInfoPanel(String title)
     {
         super();
-        setBorder(BorderFactory.createTitledBorder(title));
+        setBorder(BorderFactory.createTitledBorder(this.m_ic.getMessage(title) + ":"));
         setOpaque(false);
     }
 
@@ -72,7 +72,7 @@ public abstract class AbstractInfoPanel extends JPanel
     {
         super();
         if (border)
-            setBorder(BorderFactory.createTitledBorder(title));
+            setBorder(BorderFactory.createTitledBorder(this.m_ic.getMessage(title) + ":"));
         setOpaque(false);
     }
     

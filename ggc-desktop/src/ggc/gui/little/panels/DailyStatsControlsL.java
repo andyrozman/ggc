@@ -1,7 +1,7 @@
 package ggc.gui.little.panels;
 
 import ggc.core.data.DailyValues;
-import ggc.core.util.I18nControl;
+import ggc.core.util.DataAccess;
 import ggc.gui.dialogs.DailyRowDialog;
 import ggc.gui.dialogs.graphs.DailyGraphDialog;
 import ggc.gui.little.GGCLittle;
@@ -55,6 +55,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     JButton[] buttons = new JButton[4];
     MainLittlePanel m_mlp;
     GregorianCalendar m_gc = null;
+    //private I18nControlAbstract m_ic = DataAm_da.getI18nControlInstance();
 
     /**
      * Constructor
@@ -74,7 +75,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     {
 
         this.setLayout(new GridLayout(2,2));
-        setBorder(BorderFactory.createTitledBorder(I18nControl.getInstance().getMessage("DAILY_CONTROL")+":"));
+        setBorder(BorderFactory.createTitledBorder(DataAccess.getInstance().getI18nControlInstance().getMessage("DAILY_CONTROL")+":"));
 
         Dimension dim = new Dimension(120, 20);
 

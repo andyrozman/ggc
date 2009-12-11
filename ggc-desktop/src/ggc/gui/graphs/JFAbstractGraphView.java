@@ -3,7 +3,6 @@ package ggc.gui.graphs;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
-import ggc.core.util.I18nControl;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +17,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.Layer;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,7 +62,7 @@ public abstract class JFAbstractGraphView extends JPanel
     float BGDiff = maxBG - minBG;
     RenderingHints renderingHints;
 
-    I18nControl translator = I18nControl.getInstance();
+    I18nControlAbstract translator = dataAccessInst.getI18nControlInstance();
     String unitLabel = "mg/dl";
 
     /**

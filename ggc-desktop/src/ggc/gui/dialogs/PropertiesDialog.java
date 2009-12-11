@@ -2,7 +2,6 @@ package ggc.gui.dialogs;
 
 import ggc.core.data.cfg.ConfigCellRenderer;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.gui.panels.prefs.AbstractPrefOptionsPanel;
 import ggc.gui.panels.prefs.PrefFontsAndColorPane;
 import ggc.gui.panels.prefs.PrefGeneralPane;
@@ -30,6 +29,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,8 +61,8 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
 {
 
     private static final long serialVersionUID = -5813992933782713913L;
-    private I18nControl m_ic = I18nControl.getInstance();        
     private DataAccess m_da; // = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
 
     private JList list = null;
     private JPanel prefPane;

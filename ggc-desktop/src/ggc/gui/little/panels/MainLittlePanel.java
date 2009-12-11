@@ -1,7 +1,7 @@
 package ggc.gui.little.panels;
 
 
-import ggc.core.util.I18nControl;
+import ggc.core.util.DataAccess;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.panels.info.AbstractInfoPanel;
 
@@ -10,6 +10,8 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -63,7 +65,7 @@ public class MainLittlePanel extends JPanel
     
     
     private JTabbedPane tabbedPane = null;
-    private I18nControl ic = I18nControl.getInstance();
+    private I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
 
 
     /**

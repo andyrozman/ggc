@@ -1,6 +1,5 @@
 package ggc.gui.little.panels;
 
-import ggc.core.util.I18nControl;
 import ggc.gui.panels.info.AbstractInfoPanel;
 import ggc.gui.panels.info.InfoPanelsIds;
 
@@ -43,7 +42,7 @@ public class StocksInfoPanelL extends AbstractInfoPanel
      */
     public StocksInfoPanelL()
     {
-        super(I18nControl.getInstance().getMessage("STOCKS"));
+        super("STOCKS");
         setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();

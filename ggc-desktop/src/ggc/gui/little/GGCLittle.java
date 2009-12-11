@@ -32,7 +32,6 @@ package ggc.gui.little;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.DailyRowDialog;
 import ggc.gui.dialogs.graphs.DailyGraphDialog;
@@ -73,6 +72,7 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 import com.atech.help.HelpContext;
+import com.atech.i18n.I18nControlAbstract;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
 /**
@@ -106,7 +106,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 {
 
     private static final long serialVersionUID = -7744922647111948669L;
-    private I18nControl m_ic = I18nControl.getInstance();
+    private I18nControlAbstract m_ic = null; //I18nControl.getInstance();
     private DataAccess m_da = null;
     private GGCDb m_db = null;
 
@@ -185,7 +185,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     public GGCLittle(boolean developer_version)
     {
         m_da = DataAccess.createInstance(this);
-        m_ic = I18nControl.getInstance();
+        m_ic = m_da.getI18nControlInstance();
         m_db = m_da.getDb();
 
         this.actions = new Hashtable<String, GGCAction>();

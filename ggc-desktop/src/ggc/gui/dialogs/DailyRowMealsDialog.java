@@ -2,7 +2,6 @@ package ggc.gui.dialogs;
 
 import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -25,6 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.TransferDialog;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
@@ -60,7 +60,7 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
     private static final long serialVersionUID = 6763016271693781911L;
 
     private static Log log = LogFactory.getLog(DailyRowMealsDialog.class);
-    private I18nControl m_ic = I18nControl.getInstance();
+    private I18nControlAbstract m_ic = null;
     //private DataAccess m_da = DataAccess.getInstance();
 //    private GGCProperties props = m_da.getSettings();
 
@@ -107,6 +107,7 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
 
         parent = dialog;
         this.m_da = DataAccess.getInstance();
+        this.m_ic = m_da.getI18nControlInstance();
         //m_parent = dialog;
         this.m_dailyValuesRow = row;
         

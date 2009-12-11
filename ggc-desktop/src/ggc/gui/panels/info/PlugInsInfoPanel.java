@@ -1,7 +1,6 @@
 package ggc.gui.panels.info;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -53,7 +52,7 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
      */
     public PlugInsInfoPanel()
     {
-        super(I18nControl.getInstance().getMessage("PLUGINS"));
+        super("PLUGINS");
         init();
         refreshInfo();
     }

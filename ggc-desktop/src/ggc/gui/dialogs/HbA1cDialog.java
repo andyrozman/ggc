@@ -3,7 +3,6 @@ package ggc.gui.dialogs;
 import ggc.core.data.HbA1cValues;
 import ggc.core.data.graph.GraphViewHbA1c;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -22,6 +21,7 @@ import javax.swing.JPanel;
 
 import com.atech.graphics.graphs.GraphViewerPanel;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 
 /**
@@ -62,8 +62,8 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
     private JLabel lblReadings;
     private JLabel lblReadingsPerDay;
 
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = null;
+    private I18nControlAbstract m_ic = null;
     GraphViewHbA1c gv; // = new GraphViewHbA1c();
     private HbA1cValues hbValues;
 
@@ -76,6 +76,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
     {
         super(da.getMainParent(), "HbA1c", true);
         this.m_da = da;
+        this.m_ic = da.getI18nControlInstance();
         
         gv = new GraphViewHbA1c();
         this.hbValues = gv.getDataObject();

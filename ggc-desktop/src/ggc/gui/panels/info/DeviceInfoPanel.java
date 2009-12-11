@@ -1,7 +1,6 @@
 package ggc.gui.panels.info;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -54,7 +53,7 @@ public class DeviceInfoPanel extends AbstractInfoPanel
      */
     public DeviceInfoPanel()
     {
-        super(I18nControl.getInstance().getMessage("DEVICES_USED"));
+        super(DataAccess.getInstance().getI18nControlInstance().getMessage("DEVICES_USED"));
         init();
         refreshInfo();
     }

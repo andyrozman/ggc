@@ -32,7 +32,6 @@ import ggc.core.data.MonthlyValues;
 import ggc.core.print.PrintExtendedMonthlyReport;
 import ggc.core.print.PrintSimpleMonthlyReport;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -53,6 +52,7 @@ import javax.swing.SwingConstants;
 
 import com.atech.graphics.components.DateComponent;
 import com.atech.graphics.dialogs.ActionExceptionCatchDialog;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -91,8 +91,8 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     
     
     private static final long serialVersionUID = 2693207247071685559L;
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     private boolean m_actionDone = false;
 
@@ -545,7 +545,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
      */
     public static void displayPDFExternal(String name)
     {
-        I18nControl ic = I18nControl.getInstance();
+        I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
 
         File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
 

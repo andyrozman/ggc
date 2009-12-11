@@ -6,15 +6,16 @@ import ggc.core.db.GGCDbLoader;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.core.util.RefreshInfo;
 import ggc.gui.dialogs.AboutGGCDialog;
 import ggc.gui.dialogs.AppointmentsDialog;
 import ggc.gui.dialogs.DailyStatsDialog;
 import ggc.gui.dialogs.DoctorsDialog;
+import ggc.gui.dialogs.GUIListDialog;
 import ggc.gui.dialogs.HbA1cDialog;
 import ggc.gui.dialogs.PrintingDialog;
 import ggc.gui.dialogs.PropertiesDialog;
+import ggc.gui.dialogs.defs.StockListDef;
 import ggc.gui.dialogs.graphs.CourseGraphDialog;
 import ggc.gui.panels.info.InfoPanel;
 import ggc.shared.ratio.RatioBaseDialog;
@@ -56,6 +57,7 @@ import javax.swing.UIManager;
 
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpContext;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.plugin.PlugInClient;
 import com.atech.update.client.UpdateDialog;
@@ -93,7 +95,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     private static final long serialVersionUID = -8971779470148201332L;
 
-    private I18nControl m_ic = null;
+    private I18nControlAbstract m_ic = null;
     
     /**
      * Skin Look and Feel
@@ -221,7 +223,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
          //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  m_da: " + m_da);
 
-        m_ic = I18nControl.getInstance();
+        m_ic = m_da.getI18nControlInstance();
 
         m_da.addComponent(this);
         
@@ -1312,11 +1314,26 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 featureNotImplemented(command, "0.5");
             }
-            else if ((command.equals("misc_synchronize")) ||
-                     (command.equals("doc_stocks"))) 
+            else if (command.equals("misc_synchronize")) //||
+                     //(command.equals("doc_stocks"))) 
             {
                 featureNotImplemented(command, "0.6");
             }
+            else if (command.equals("doc_stocks"))
+            {
+                if (MainFrame.developer_version)
+                {
+                    new GUIListDialog(MainFrame.this, new StockListDef());
+                }
+                else
+                    featureNotImplemented(command, "0.5");
+                
+                
+                
+            }
+            
+            
+            
             else if ((command.equals("test")))
             {
                 

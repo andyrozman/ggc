@@ -2,7 +2,6 @@ package ggc.gui.panels.info;
 
 import ggc.core.data.HbA1cValues;
 import ggc.core.db.GGCDb;
-import ggc.core.util.I18nControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -56,7 +55,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
      */
     public HbA1cInfoPanel()
     {
-        super(I18nControl.getInstance().getMessage("HBA1C"));
+        super("HBA1C");
         init();
         refreshInfo();
     }

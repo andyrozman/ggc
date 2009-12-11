@@ -28,13 +28,15 @@
 package ggc.gui.dialogs.graphs;
 
 import ggc.core.data.DailyValues;
-import ggc.core.util.I18nControl;
+import ggc.core.util.DataAccess;
 import ggc.gui.graphs.DailyGraphView;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+
+import com.atech.i18n.I18nControlAbstract;
 
 // FIX
 
@@ -71,8 +73,8 @@ public class DailyGraphDialog extends JDialog
      * 
      */
     private static final long serialVersionUID = 2490681813475803663L;
-    private I18nControl m_ic = I18nControl.getInstance();
     private DailyGraphView dGV = null;
+    private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
 
     /**
      * Constructor

@@ -1,6 +1,5 @@
 package ggc.gui.little.panels;
 
-import ggc.core.util.I18nControl;
 import ggc.gui.panels.info.AbstractInfoPanel;
 import ggc.gui.panels.info.InfoPanelsIds;
 
@@ -45,7 +44,7 @@ public class PlugInMeterPanelL extends AbstractInfoPanel
      */
     public PlugInMeterPanelL()
     {
-        super(I18nControl.getInstance().getMessage("METERS_PLUGIN"));
+        super("METERS_PLUGIN");
         setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();

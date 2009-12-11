@@ -1,9 +1,8 @@
 package ggc.gui.panels.info;
 
-import ggc.core.util.I18nControl;
+import java.awt.GridLayout;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,7 +40,7 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
      */
     public ScheduleInfoPanel()
     {
-        super(I18nControl.getInstance().getMessage("SCHEDULE"));
+        super("SCHEDULE");
         setLayout(new GridLayout(0, 2));
         init();
         refreshInfo();

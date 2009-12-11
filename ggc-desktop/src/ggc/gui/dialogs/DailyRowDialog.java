@@ -4,7 +4,6 @@ import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.shared.bolushelper.BolusHelper;
 
 import java.awt.Component;
@@ -38,6 +37,7 @@ import javax.swing.event.ChangeListener;
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATSwingUtils;
 
@@ -75,8 +75,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private static final long serialVersionUID = 6763016271693781911L;
 
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     //private GGCProperties props = m_da.getSettings();
 
     private boolean m_actionDone = false;

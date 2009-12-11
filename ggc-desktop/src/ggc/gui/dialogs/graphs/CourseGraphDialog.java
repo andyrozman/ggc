@@ -30,7 +30,6 @@ package ggc.gui.dialogs.graphs;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.graph.DataPlotSelectorPanel;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.gui.graphs.CourseGraphView;
 
 import java.awt.BorderLayout;
@@ -46,6 +45,7 @@ import javax.swing.JPanel;
 
 import com.atech.graphics.calendar.DateRangeSelectionPanel;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -80,8 +80,8 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
      * 
      */
     private static final long serialVersionUID = 8111521124871307877L;
-    private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = null;
+    private I18nControlAbstract m_ic = null;
 
     private CourseGraphView cGV;
 
@@ -99,6 +99,7 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
         setTitle(m_ic.getMessage("COURSE_GRAPH") + " [" + m_ic.getMessage("NOT_WORKING_100PRO") + "]");
 
         this.m_da = da;
+        this.m_ic = da.getI18nControlInstance();
 
         setSize(700, 550);
         m_da.centerJDialog(this, da.getMainParent());

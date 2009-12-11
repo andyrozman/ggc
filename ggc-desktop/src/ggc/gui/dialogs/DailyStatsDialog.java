@@ -35,7 +35,6 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.data.graph.GraphViewDaily;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.core.util.RefreshInfo;
 
 import java.awt.BorderLayout;
@@ -72,6 +71,7 @@ import com.atech.graphics.calendar.CalendarListener;
 import com.atech.graphics.calendar.CalendarPane;
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application: GGC - GNU Gluco Control
@@ -106,8 +106,9 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
     private static Log log = LogFactory.getLog(DailyStatsDialog.class);
 
-    private I18nControl m_ic = I18nControl.getInstance();
+    //private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = null; // DataAccess.getInstance();
+    private I18nControlAbstract m_ic = null;
 
     DailyStatsTableModel model = null;
     JScrollPane resultsPane;
