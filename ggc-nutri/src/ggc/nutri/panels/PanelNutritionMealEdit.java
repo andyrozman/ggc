@@ -1,6 +1,5 @@
 package ggc.nutri.panels;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.data.MealNutritionsComparator;
 import ggc.nutri.data.MealPartsComparator;
 import ggc.nutri.db.datalayer.Meal;
@@ -13,6 +12,7 @@ import ggc.nutri.dialogs.NutritionGroupDialog;
 import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.display.MealNutritionsDisplay;
 import ggc.nutri.display.MealPartsDisplay;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -111,9 +111,9 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         this.mpd = new MealPartsDisplay(ic);
         this.mnd = new MealNutritionsDisplay(ic);
 
-        font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_big = m_da.getFont(DataAccessNutri.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
 
         createPanel();
     }
@@ -847,7 +847,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
     {
         System.out.println("hasChangedEntry [old=" + old_value + ",new=" + new_value + "]");
 
-        if ((m_da.isEmptyOrUnset(old_value)) || (!old_value.equals(new_value)))
+        if ((DataAccessNutri.isEmptyOrUnset(old_value)) || (!old_value.equals(new_value)))
             return true;
         else
             return false;

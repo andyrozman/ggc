@@ -1,12 +1,13 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.core.util.DataAccess;
-import ggc.nutri.util.I18nControl;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,9 +37,9 @@ import java.util.StringTokenizer;
 public class MealParts // implements SelectableInterface
 {
 
-    I18nControl ic = I18nControl.getInstance();
     //private boolean debug = false;
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccessNutri m_da = DataAccessNutri.getInstance();
+    I18nControlAbstract ic = m_da.getI18nControlInstance();
     GlycemicNutrients glyc_nutr = null;
     boolean root_entry = false;
     ArrayList<MealPart> entries = null;

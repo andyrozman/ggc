@@ -1,6 +1,5 @@
 package ggc.nutri.dialogs;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.HomeWeightSpecial;
@@ -240,8 +239,8 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         wt_types_2 = new String[1];
         wt_types_2[0] = ic.getMessage("AMOUNT_LBL");
 
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);

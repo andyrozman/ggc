@@ -2,10 +2,10 @@ package ggc.nutri.panels;
 
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
-import ggc.core.util.DataAccess;
 import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.display.HomeWeightDataDisplay;
 import ggc.nutri.display.NutritionDataDisplay;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -90,9 +90,9 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         this.hwd = new HomeWeightDataDisplay(ic);
         this.ndd = new NutritionDataDisplay(ic);
 
-        font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_big = m_da.getFont(DataAccessNutri.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
 
         createPanel();
 

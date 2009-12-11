@@ -15,7 +15,6 @@ import ggc.core.db.hibernate.MealGroupH;
 import ggc.core.db.hibernate.MealH;
 import ggc.core.db.hibernate.NutritionDefinitionH;
 import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
-import ggc.core.util.DataAccess;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.data.GGCTreeRootDyn;
 import ggc.nutri.db.datalayer.FoodDescription;
@@ -24,6 +23,7 @@ import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
 import ggc.nutri.db.datalayer.NutritionDefinition;
 import ggc.nutri.db.datalayer.NutritionHomeWeightType;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 //    private String m_errorDesc = "";
 //    private String m_addId = "";
 
-    private DataAccess m_da;
+    private DataAccessNutri m_da;
 
     private int m_loadStatus = 0;
 

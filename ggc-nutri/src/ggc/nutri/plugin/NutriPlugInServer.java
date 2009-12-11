@@ -12,7 +12,6 @@ import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.gui.print.PrintFoodDialog;
 import ggc.nutri.panels.PanelMealSelector;
 import ggc.nutri.util.DataAccessNutri;
-import ggc.nutri.util.I18nControl;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -26,7 +25,7 @@ import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.BackupRestorePlugin;
 import com.atech.plugin.PlugInServer;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -116,6 +115,8 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     public NutriPlugInServer()
     {
         super();
+        DataAccessNutri.createInstance(DataAccess.getInstance().getLanguageManager());
+        DataAccessNutri.getInstance().addComponent(DataAccess.getInstance().getMainParent());
     }
     
     
@@ -126,9 +127,11 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      * @param selected_lang
      * @param da
      */
-    public NutriPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
+    public NutriPlugInServer(Container cont, String selected_lang, ATDataAccessLMAbstract da)
     {
         super(cont, selected_lang, da);
+        
+        DataAccessNutri.createInstance(da.getLanguageManager());
         DataAccessNutri.getInstance().addComponent(cont);
         //DataAccessPump.getInstance().setPlugInServerInstance(this);
         //DataAccessPump.getInstance().m
@@ -239,7 +242,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     public void initPlugIn()
     {
         ic = m_da.getI18nControlInstance();
-        I18nControl.getInstance().setLanguage(this.selected_lang);
+        //I18nControl.getInstance().setLanguage(this.selected_lang);
         
         DataAccessNutri da = DataAccessNutri.getInstance();
         da.addComponent(this.parent);
@@ -265,6 +268,10 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      */
     public void loadDb()
     {
+        System.out.println("loadDb");
+        System.out.println("loadDb: da: " + DataAccessNutri.getInstance());
+        System.out.println("loadDb: db:"  + DataAccessNutri.getInstance().getNutriDb());
+        
         DataAccessNutri.getInstance().getNutriDb().loadNutritionDbBase();
     }
     
@@ -290,7 +297,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
-        I18nControlAbstract ic_loc = ggc.nutri.util.I18nControl.getInstance(); 
+        I18nControlAbstract ic_loc = DataAccessNutri.getInstance().getI18nControlInstance(); 
         BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", ic_loc);
         brc_nut.addNodeChild(new FoodGroup(ic_loc));
         brc_nut.addNodeChild(new FoodDescription(ic_loc));

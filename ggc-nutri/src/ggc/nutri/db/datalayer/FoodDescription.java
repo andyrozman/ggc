@@ -2,7 +2,7 @@ package ggc.nutri.db.datalayer;
 
 import ggc.core.db.hibernate.FoodDescriptionH;
 import ggc.core.db.hibernate.FoodUserDescriptionH;
-import ggc.core.util.DataAccess;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     private long id;
 
     boolean selected = false;
-    I18nControlAbstract ic = null; // DataAccess.getInstance().
+    I18nControlAbstract ic = null; // DataAccessNutri.getInstance().
     // getI18nControlInstance();
     boolean food_empty = false;
 
@@ -76,7 +76,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     public FoodDescription(boolean food_empty)
     {
         this.food_empty = food_empty;
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        ic = DataAccessNutri.getInstance().getI18nControlInstance();
     }
 
     /**
@@ -93,7 +93,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             this.m_food_desc2 = new FoodUserDescriptionH();
 
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        ic = DataAccessNutri.getInstance().getI18nControlInstance();
 
         /**
          * this.setId(0); this.setFood_group_id(0); this.setName("");
@@ -112,7 +112,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         this.m_food_desc1 = ch;
         this.type = 1;
 
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        ic = DataAccessNutri.getInstance().getI18nControlInstance();
         /**
          * this.setId(ch.getId()); this.setFood_group_id(ch.getFood_group_id());
          * this.setName(ch.getName()); this.setI18n_name(ch.getI18n_name()); //
@@ -137,7 +137,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         this.m_food_desc2 = ch;
         this.type = 2;
 
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        ic = DataAccessNutri.getInstance().getI18nControlInstance();
     }
 
     /**

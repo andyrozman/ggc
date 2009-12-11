@@ -3,7 +3,6 @@ package ggc.nutri.dialogs;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealPart;
-import ggc.core.util.DataAccess;
 import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Font;
@@ -211,8 +210,8 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         type[1] = ic.getMessage("USER_NUTRITION");
         type[2] = ic.getMessage("MEAL");
 
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);

@@ -1,6 +1,5 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.util.DataAccessNutri;
 
 import java.util.Enumeration;
@@ -48,7 +47,7 @@ public class MealNutrition
     private String component_id;
     private float amount_sum = 0.0f;
 
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccessNutri m_da = DataAccessNutri.getInstance();
 
 
     /**
@@ -276,7 +275,7 @@ public class MealNutrition
 /*
     private void loadMealPart()
     {
-        // DataAccess.getInstance().getDb().getMeals();
+        // DataAccessNutri.getInstance().getDb().getMeals();
 
     }
 */

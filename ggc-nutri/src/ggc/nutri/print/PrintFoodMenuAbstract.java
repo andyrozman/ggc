@@ -73,7 +73,6 @@ import com.lowagie.text.pdf.PdfPTable;
 
 public abstract class PrintFoodMenuAbstract extends PrintAbstract
 {
-
     /**
      * Constructor
      * 
@@ -214,6 +213,19 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
     }
 
     
+
+    /**
+     * Get Formated Value (String correctly formated from float value)
+     * 
+     * @param value
+     * @param dec_places
+     * @return
+     */
+    public String getFormatedValue(float value, int dec_places)
+    {
+        return m_da.getDecimalHandler().getDecimalAsString(value, dec_places);  // ch
+        
+    }
     
     
     

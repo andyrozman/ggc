@@ -5,7 +5,6 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
-import ggc.core.util.DataAccess;
 
 import java.util.Iterator;
 
@@ -158,7 +157,7 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
                 datatable.addCell(new Phrase(ic.getMessage("TOGETHER"), this.text_italic));
                 datatable.addCell(new Phrase("", f));
                 datatable.addCell(new Phrase("", f));
-                datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
+                datatable.addCell(new Phrase(this.getFormatedValue(rw.getCH(), 2), this.text_italic));
                 datatable.addCell(new Phrase(rw.getIns1AsString(), this.text_italic));
                 datatable.addCell(new Phrase(rw.getBGAsString(), this.text_italic));
                 
@@ -201,14 +200,14 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
                     }
                     else
                     {
-                        datatable.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", f));
+                        datatable.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + this.getFormatedValue((mp.getHomeWeightMultiplier() * 100), 0) + " g)", f));
                         value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
                     }
                     
                    
                     
                     datatable.addCell(new Phrase(mp.getAmountSingleDecimalString(), f));
-                    datatable.addCell(new Phrase(DataAccess.Decimal2Format.format(value), f));  // ch
+                    datatable.addCell(new Phrase(this.getFormatedValue(value, 2), f));  // ch
 
                     datatable.addCell(new Phrase("", f));
                     datatable.addCell(new Phrase("", f));
@@ -339,12 +338,12 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
         }
         else
         {
-            table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", this.text_normal));
+            table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + this.getFormatedValue(mp.getHomeWeightMultiplier() * 100, 0) + " g)", this.text_normal));
             value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
         }
         
         table.addCell(new Phrase(mp.getAmountSingleDecimalString(), this.text_normal));
-        table.addCell(new Phrase(DataAccess.Decimal2Format.format(value), this.text_normal));  // ch
+        table.addCell(new Phrase(this.getFormatedValue(value, 2), this.text_normal));  // ch
         
         table.addCell(new Phrase("", this.text_normal));  // ins
         table.addCell(new Phrase("", this.text_normal));  // bg
@@ -386,7 +385,7 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
         table.addCell(new Phrase("", this.text_normal));
         table.addCell(new Phrase("", this.text_normal));
 
-        table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
+        table.addCell(new Phrase(this.getFormatedValue(rw.getCH(), 2), this.text_italic));
         table.addCell(new Phrase(rw.getIns1AsString(), this.text_italic));
         table.addCell(new Phrase(rw.getBGAsString(), this.text_italic));
     }

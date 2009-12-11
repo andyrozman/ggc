@@ -1,11 +1,11 @@
 package ggc.nutri.panels;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.MealGroup;
 import ggc.nutri.dialogs.NutritionGroupDialog;
 import ggc.nutri.dialogs.NutritionTreeDialog;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -85,9 +85,9 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
         m_dialog = dia;
 
-        font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_big = m_da.getFont(DataAccessNutri.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
 
         createPanel();
 

@@ -161,7 +161,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 /*    public GGCTreeRoot(int type, boolean dev)
     {
         m_type = type;
-        this.m_db = DataAccess.getInstance().getDb();
+        this.m_db = DataAccessNutri.getInstance().getDb();
 
         if (!dev)
         {

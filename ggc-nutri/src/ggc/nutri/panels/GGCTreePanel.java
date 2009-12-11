@@ -1,9 +1,9 @@
 package ggc.nutri.panels;
 
 import ggc.nutri.util.DataAccessNutri;
-import ggc.nutri.util.I18nControl;
 
 import com.atech.graphics.components.EditableAbstractPanel;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,7 +36,7 @@ public abstract class GGCTreePanel extends EditableAbstractPanel //JPanel implem
 
     private static final long serialVersionUID = 1537683351864737939L;
     protected DataAccessNutri m_da = null;
-    protected I18nControl m_ic = null;
+    protected I18nControlAbstract m_ic = null;
 
     
     /**

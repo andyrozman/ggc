@@ -1,7 +1,7 @@
 package ggc.nutri.db.datalayer;
 
 import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
-import ggc.nutri.util.I18nControl;
+import ggc.nutri.util.DataAccessNutri;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,7 +45,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 {
 
     private static final long serialVersionUID = -2073935312018845795L;
-    I18nControl ic = I18nControl.getInstance();
+    I18nControlAbstract ic = DataAccessNutri.getInstance().getI18nControlInstance();
 
     private boolean debug = false;
     String text_idx;

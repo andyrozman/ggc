@@ -1,7 +1,6 @@
 package ggc.nutri.display;
 
 import ggc.nutri.db.datalayer.NutritionDefinition;
-import ggc.core.util.DataAccess;
 import ggc.nutri.util.DataAccessNutri;
 
 import com.atech.graphics.components.ATTableData;
@@ -166,11 +165,11 @@ public class NutritionDataDisplay extends ATTableData
     public float getAmount()
     {
 
-        // return DataAccess.getFloatAsString(this.value, this.decimal_places);
+        // return DataAccessNutri.getFloatAsString(this.value, this.decimal_places);
         float f = 0.0f;
         try
         {
-            f = Float.parseFloat(this.value.replace(DataAccess.false_decimal, DataAccess.real_decimal));
+            f = Float.parseFloat(this.value.replace(DataAccessNutri.false_decimal, DataAccessNutri.real_decimal));
         }
         catch (Exception ex)
         {
@@ -197,7 +196,7 @@ public class NutritionDataDisplay extends ATTableData
      */
     public void setAmount(float amount)
     {
-        this.value = DataAccess.getFloatAsString(amount, this.decimal_places);
+        this.value = DataAccessNutri.getInstance().getDecimalHandler().getDecimalAsString(amount, Integer.parseInt(this.decimal_places));
     }
 
     /**

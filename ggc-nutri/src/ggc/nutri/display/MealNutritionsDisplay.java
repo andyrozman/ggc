@@ -2,7 +2,7 @@ package ggc.nutri.display;
 
 import ggc.nutri.db.datalayer.MealNutrition;
 import ggc.nutri.db.datalayer.NutritionDefinition;
-import ggc.core.util.DataAccess;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.util.Comparator;
 
@@ -117,7 +117,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     public String getValue()
     {
         float fl = Float.parseFloat(this.value);
-        return DataAccess.getFloatAsString(fl, this.decimal_places);
+        return DataAccessNutri.getInstance().getDecimalHandler().getDecimalAsString(fl, Integer.parseInt(this.decimal_places));
     }
 
     

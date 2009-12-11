@@ -1,9 +1,11 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.nutri.util.I18nControl;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -32,8 +34,8 @@ import java.util.Hashtable;
 
 public class GlycemicNutrients
 {
-    I18nControl ic = I18nControl.getInstance();
-//    DataAccess m_da = DataAccess.getInstance();
+    DataAccessNutri m_da = DataAccessNutri.getInstance();
+    I18nControlAbstract ic = m_da.getI18nControlInstance();
     Hashtable<String, ArrayList<MealNutrition>> gly_nutrients;
     
     // old

@@ -1,6 +1,5 @@
 package ggc.nutri.dialogs;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.display.HomeWeightDataDisplay;
 import ggc.nutri.display.NutritionDataDisplay;
 import ggc.nutri.util.DataAccessNutri;
@@ -309,8 +308,8 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
          * ic.getMessage("MEAL");
          */
 
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);

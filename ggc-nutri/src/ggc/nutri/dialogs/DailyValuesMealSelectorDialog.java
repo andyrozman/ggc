@@ -321,7 +321,7 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
     /*
     public static void main(String[] args)
     {
-        new DailyValuesMealSelectorDialog(DataAccess.getInstance(), null);
+        new DailyValuesMealSelectorDialog(DataAccessNutri.getInstance(), null);
     }*/
 
 }

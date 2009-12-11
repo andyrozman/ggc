@@ -2,7 +2,6 @@ package ggc.nutri.db.datalayer;
 
 import ggc.core.db.hibernate.FoodGroupH;
 import ggc.core.db.hibernate.FoodUserGroupH;
-import ggc.core.util.DataAccess;
 import ggc.nutri.db.GGCDbCache;
 import ggc.nutri.util.DataAccessNutri;
 
@@ -84,7 +83,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 
     
     boolean empty = false;
-    I18nControlAbstract ic = null; // DataAccess.getInstance().
+    I18nControlAbstract ic = null; // DataAccessNutri.getInstance().
 
     // getI18nControlInstance();
 
@@ -108,7 +107,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      */
     public FoodGroup(int type)
     {
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        ic = DataAccessNutri.getInstance().getI18nControlInstance();
         group_type = type;
 
         if (type == 1)

@@ -1,7 +1,6 @@
 package ggc.nutri.display;
 
 import ggc.nutri.db.datalayer.NutritionHomeWeightType;
-import ggc.nutri.util.I18nControl;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
@@ -40,7 +39,7 @@ public class HomeWeightDataDisplay extends ATTableData
     private float amount = 1.0f;
     // private String value;
     private float weight;
-    private I18nControl nic;
+    private I18nControlAbstract nic;
 
     /**
      * Constructor
@@ -51,7 +50,7 @@ public class HomeWeightDataDisplay extends ATTableData
     {
         super(ic);
 
-        nic = (I18nControl) ic;
+        nic = ic;
     }
 
     /**
@@ -63,7 +62,7 @@ public class HomeWeightDataDisplay extends ATTableData
     public HomeWeightDataDisplay(I18nControlAbstract ic, String full)
     {
         super(ic);
-        nic = (I18nControl) ic;
+        nic = ic;
 
         int index = full.indexOf("=");
         this.id = full.substring(0, index);
@@ -100,7 +99,7 @@ public class HomeWeightDataDisplay extends ATTableData
     public HomeWeightDataDisplay(I18nControlAbstract ic, NutritionHomeWeightType def, float amount, float weight)
     {
         super(ic);
-        nic = (I18nControl) ic;
+        nic = ic;
 
         this.id = "" + def.getId();
         this.setHomeWeightDefinition(def.getResolvedName()); //.getName());
@@ -185,7 +184,7 @@ public class HomeWeightDataDisplay extends ATTableData
     {
         return this.amount;
         /*
-         * //return DataAccess.getFloatAsString(this.value,
+         * //return DataAccessNutri.getFloatAsString(this.value,
          * this.decimal_places); float f = 0.0f; try { f =
          * Float.parseFloat(this.value.replace(',', '.')); } catch(Exception ex)
          * { System.out.println("Float parse ex: " + ex); }
@@ -201,7 +200,7 @@ public class HomeWeightDataDisplay extends ATTableData
      */
     public void setAmount(float val)
     {
-        this.amount = val; // .value = DataAccess.getFloatAsString(val,
+        this.amount = val; // .value = DataAccessNutri.getFloatAsString(val,
                            // this.decimal_places);
     }
 

@@ -1,6 +1,5 @@
 package ggc.nutri.panels;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 import ggc.nutri.db.datalayer.MealNutrition;
@@ -113,9 +112,9 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         this.dfed = new DailyFoodEntryDisplay(ic);
         this.mnd = new MealNutritionsDisplay(ic);
 
-        font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_big = m_da.getFont(DataAccessNutri.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
 
         this.meals_ids = meals_ids;
 

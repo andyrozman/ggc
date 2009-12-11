@@ -1,7 +1,6 @@
 package ggc.nutri.db.datalayer;
 
 import ggc.core.db.hibernate.MealGroupH;
-import ggc.core.util.DataAccess;
 import ggc.nutri.db.GGCDbCache;
 import ggc.nutri.util.DataAccessNutri;
 
@@ -51,7 +50,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     private boolean debug = false;
     private int object_load_status = 0;
     boolean selected = false;
-    I18nControlAbstract ic = null; // DataAccess.getInstance().
+    I18nControlAbstract ic = null; // DataAccessNutri.getInstance().
     boolean meal_empty = false;
 
     
@@ -101,7 +100,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     public MealGroup(boolean meal_empty)
     {
         this.meal_empty = meal_empty;
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        ic = DataAccessNutri.getInstance().getI18nControlInstance();
     }
 
     /**
@@ -109,7 +108,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public MealGroup()
     {
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        ic = DataAccessNutri.getInstance().getI18nControlInstance();
         this.setId(0);
         this.setName("");
         this.setDescription("");
@@ -124,7 +123,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public MealGroup(MealGroupH ch)
     {
-        ic = DataAccess.getInstance().getI18nControlInstance();
+        ic = DataAccessNutri.getInstance().getI18nControlInstance();
         this.setId(ch.getId());
         this.setName(ch.getName());
         this.setDescription(ch.getDescription());

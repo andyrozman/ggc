@@ -1,10 +1,10 @@
 package ggc.nutri.db.datalayer;
 
 import ggc.nutri.util.DataAccessNutri;
-import ggc.nutri.util.I18nControl;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -34,9 +34,8 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 public class HomeWeightSpecial implements SelectableInterface
 {
-
-    I18nControl ic = I18nControl.getInstance();
     DataAccessNutri m_da = DataAccessNutri.getInstance();
+    I18nControlAbstract ic = m_da.getI18nControlInstance();
 
     private boolean debug = false;
     String text_idx;

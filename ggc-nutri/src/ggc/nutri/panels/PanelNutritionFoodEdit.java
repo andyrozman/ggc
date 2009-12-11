@@ -1,6 +1,5 @@
 package ggc.nutri.panels;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.data.HomeWeightComparator;
 import ggc.nutri.data.NutritionsComparator;
 import ggc.nutri.db.datalayer.FoodDescription;
@@ -12,6 +11,7 @@ import ggc.nutri.dialogs.NutritionGroupDialog;
 import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.display.HomeWeightDataDisplay;
 import ggc.nutri.display.NutritionDataDisplay;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -109,9 +109,9 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.hwd = new HomeWeightDataDisplay(ic);
         this.ndd = new NutritionDataDisplay(ic);
 
-        font_big = m_da.getFont(DataAccess.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_big = m_da.getFont(DataAccessNutri.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
 
         createPanel();
 
@@ -760,7 +760,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
     private boolean hasChangedEntry(String old_value, String new_value)
     {
-        if ((m_da.isEmptyOrUnset(old_value)) || (!old_value.equals(new_value)))
+        if ((DataAccessNutri.isEmptyOrUnset(old_value)) || (!old_value.equals(new_value)))
             return true;
         else
             return false;

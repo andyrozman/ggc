@@ -7,11 +7,11 @@ import ggc.core.db.hibernate.FoodUserGroupH;
 import ggc.core.db.hibernate.MealGroupH;
 import ggc.core.db.hibernate.MealH;
 import ggc.core.db.tool.transfer.BackupDialog;
-import ggc.core.util.DataAccess;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -55,7 +55,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 public class TestNutritionData
 {
-    private DataAccess m_da = null;
+    private DataAccessNutri m_da = null;
     private GGCDb db = null;
 
     /**
@@ -63,11 +63,11 @@ public class TestNutritionData
      */
     public TestNutritionData()
     {
-        m_da = DataAccess.getInstance();
-        db = new GGCDb(m_da);
+        m_da = DataAccessNutri.getInstance();
+        /*db = new GGCDb(m_da);
         db.initDb();
         m_da.setDb(db);
-
+*/
         createTree();
     }
 
@@ -127,7 +127,7 @@ public class TestNutritionData
         // null);
 
         // Meal selector for DailyValues
-        DailyValuesMealSelectorDialog dl = new DailyValuesMealSelectorDialog(DataAccess.getInstance(), null);
+        DailyValuesMealSelectorDialog dl = new DailyValuesMealSelectorDialog(DataAccessNutri.getInstance(), null);
 
         if (dl.wasAction())
         {
@@ -145,7 +145,7 @@ public class TestNutritionData
      */
     public TestNutritionData(boolean i1, boolean i2)
     {
-        m_da = DataAccess.getInstance();
+        m_da = DataAccessNutri.getInstance();
         String inp = "396|Solata, glavnata|SOLATA,_GLAVNATA|7|0.0|||203=1,30;204=0,20;205=2,80;208=15;268=63|0";
         String line = m_da.replaceExpression(inp, "||", "| |");
 

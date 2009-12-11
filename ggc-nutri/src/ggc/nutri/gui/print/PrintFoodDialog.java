@@ -31,11 +31,11 @@ package ggc.nutri.gui.print;
 import ggc.core.data.DayValuesData;
 import ggc.core.print.PrintAbstract;
 import ggc.core.util.DataAccess;
-import ggc.core.util.I18nControl;
 import ggc.nutri.print.PrintFoodMenuBase;
 import ggc.nutri.print.PrintFoodMenuExt1;
 import ggc.nutri.print.PrintFoodMenuExt2;
 import ggc.nutri.print.PrintFoodMenuExt3;
+import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -56,6 +56,7 @@ import javax.swing.SwingConstants;
 
 import com.atech.graphics.components.DateComponent;
 import com.atech.graphics.dialogs.ActionExceptionCatchDialog;
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -94,8 +95,8 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
     
     
     private static final long serialVersionUID = 2693207247071685559L;
-    private I18nControl m_ic = I18nControl.getInstance();
-    private DataAccess m_da = DataAccess.getInstance();
+    private DataAccessNutri m_da = DataAccessNutri.getInstance();
+    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     private boolean m_actionDone = false;
 
@@ -142,7 +143,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
     public PrintFoodDialog(JFrame frame, int type, int master_type) // throws
                                                                    // Exception
     {
-        super(DataAccess.getInstance(), "printing_dialog");
+        super(DataAccessNutri.getInstance(), "printing_dialog");
         // super(frame, "", true);
         /*
          * Rectangle rec = frame.getBounds(); int x = rec.x + (rec.width / 2);
@@ -150,8 +151,8 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
          */
         this.setLayout(null);
 
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-        font_normal_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
+        font_normal_bold = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
 
         gc = new GregorianCalendar();
         setTitle(m_ic.getMessage("PRINTING"));
@@ -184,7 +185,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
-        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setFont(m_da.getFont(DataAccessNutri.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 350, 35);
         panel.add(label);
@@ -227,7 +228,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         panel.add(sl_month);
 
         JButton button = new JButton("   " + m_ic.getMessage("OK"));
-        // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        // button.setFont(m_da.getFont(DataAccessNutri.FONT_NORMAL));
         button.setActionCommand("ok");
         button.addActionListener(this);
         button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
@@ -235,7 +236,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         panel.add(button);
 
         button = new JButton("   " + m_ic.getMessage("CANCEL"));
-        // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        // button.setFont(m_da.getFont(DataAccessNutri.FONT_NORMAL));
         button.setActionCommand("cancel");
         button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         button.addActionListener(this);
@@ -249,7 +250,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
 
         /*
          * new JButton(m_ic.getMessage("CANCEL"));
-         * button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+         * button.setFont(m_da.getFont(DataAccessNutri.FONT_NORMAL));
          * button.setActionCommand("cancel"); button.addActionListener(this);
          * button.setBounds(190, 240, 110, 25); panel.add(button);
          */
@@ -269,7 +270,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
-        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setFont(m_da.getFont(DataAccessNutri.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 350, 35);
         panel.add(label);
@@ -323,7 +324,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         panel.add(dc_to);
 
         JButton button = new JButton("   " + m_ic.getMessage("OK"));
-        // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        // button.setFont(m_da.getFont(DataAccessNutri.FONT_NORMAL));
         button.setActionCommand("ok");
         button.addActionListener(this);
         button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
@@ -331,7 +332,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         panel.add(button);
 
         button = new JButton("   " + m_ic.getMessage("CANCEL"));
-        // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        // button.setFont(m_da.getFont(DataAccessNutri.FONT_NORMAL));
         button.setActionCommand("cancel");
         button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         button.addActionListener(this);
@@ -345,7 +346,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
 
         /*
          * new JButton(m_ic.getMessage("CANCEL"));
-         * button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+         * button.setFont(m_da.getFont(DataAccessNutri.FONT_NORMAL));
          * button.setActionCommand("cancel"); button.addActionListener(this);
          * button.setBounds(190, 240, 110, 25); panel.add(button);
          */
@@ -482,7 +483,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
         //File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
         File file = new File(name);
 
-        String pdf_viewer = m_da.getSettings().getPdfVieverPath().replace('\\', '/');
+        String pdf_viewer = DataAccess.getInstance().getSettings().getPdfVieverPath().replace('\\', '/');
         //String file_path = fl.getAbsolutePath().replace('\\', '/');
 
         this.setErrorMessages(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"), m_ic
@@ -547,7 +548,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
      */
     public static void displayPDFExternal(String name)
     {
-        I18nControl ic = I18nControl.getInstance();
+        I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
 
         File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
 

@@ -1,14 +1,14 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.core.util.DataAccess;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.util.DataAccessNutri;
-import ggc.nutri.util.I18nControl;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
+
+import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,12 +38,11 @@ import java.util.StringTokenizer;
 
 public class DailyFoodEntry // implements SelectableInterface
 {
-
-    I18nControl ic = I18nControl.getInstance();
-
     private boolean debug = false;
     String text_idx;
     DataAccessNutri m_da = DataAccessNutri.getInstance();
+    I18nControlAbstract ic = m_da.getI18nControlInstance();
+    
     GlycemicNutrients glyc_nutr = null;
 
     boolean root_entry = false;
@@ -356,7 +355,7 @@ public class DailyFoodEntry // implements SelectableInterface
 
     private void createId()
     {
-        this.component_id = DataAccess.getInstance().getNewComponentId();
+        this.component_id = DataAccessNutri.getInstance().getNewComponentId();
     }
 
     /**
@@ -500,7 +499,7 @@ public class DailyFoodEntry // implements SelectableInterface
      */
     public String getAmountString()
     {
-        return DataAccess.Decimal2Format.format(this.amount);
+        return DataAccessNutri.Decimal2Format.format(this.amount);
     }
 
     /**
@@ -510,7 +509,7 @@ public class DailyFoodEntry // implements SelectableInterface
      */
     public String getAmountSingleDecimalString()
     {
-        return DataAccess.Decimal1Format.format(this.amount);
+        return DataAccessNutri.Decimal1Format.format(this.amount);
     }
     
     
@@ -999,7 +998,7 @@ public class DailyFoodEntry // implements SelectableInterface
         {
             if (lst.get(i).getId()==_id)
                 return lst.get(i).getAmount();
-                //return DataAccess.Decimal2Format.format(lst.get(i).getAmount());
+                //return DataAccessNutri.Decimal2Format.format(lst.get(i).getAmount());
         }
         
         return 0.0f; 

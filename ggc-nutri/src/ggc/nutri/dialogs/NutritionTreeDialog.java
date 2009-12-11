@@ -1,7 +1,5 @@
 package ggc.nutri.dialogs;
 
-import ggc.core.db.GGCDb;
-import ggc.core.util.DataAccess;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.data.NutritionTreeModel;
 import ggc.nutri.db.datalayer.FoodDescription;
@@ -714,7 +712,7 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
      */
     public static void main(String args[])
     {
-        DataAccess da = DataAccess.getInstance();
+/*        DataAccessNutri da = DataAccessNutri.getInstance();
 
         GGCDb db = new GGCDb(da);
         db.initDb();
@@ -731,20 +729,20 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
         // db.loadMealsDb();
 
         // db.initDb();
-        // DataAccess da = DataAccess.getInstance();
+        // DataAccess da = DataAccessNutri.getInstance();
 
         // GGCDbLoader loader = new GGCDbLoader(da);
         // loader.start();
 
         // makeFakeData();
 
-        
+/*        
          JFrame fr = new JFrame(); //fr.setBounds(0,0,640,480);
          fr.setVisible(true); //da.setParent(fr);
          
         // da.m_nutrition_treeroot = new GGCTreeRoot(1);
         /* NutritionTreeDialog ntd = */
-        new NutritionTreeDialog(fr, da, GGCTreeRoot.TREE_MEALS);
+  //      new NutritionTreeDialog(fr, da, GGCTreeRoot.TREE_MEALS);
 
     }
 

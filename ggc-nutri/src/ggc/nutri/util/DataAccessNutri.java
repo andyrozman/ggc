@@ -1,7 +1,6 @@
 package ggc.nutri.util;
 
 import ggc.core.db.GGCDb;
-import ggc.core.util.DataAccess;
 import ggc.nutri.db.GGCDbCache;
 import ggc.nutri.db.GGCDbNutri;
 import ggc.plugin.cfg.DeviceConfiguration;
@@ -18,6 +17,7 @@ import com.atech.graphics.components.about.FeaturesEntry;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.mgr.LanguageManager;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -81,9 +81,9 @@ public class DataAccessNutri extends DataAccessPlugInBase
      *  method.<br><br>
      *
      */
-    private DataAccessNutri(JFrame frame)
+    private DataAccessNutri(JFrame frame, LanguageManager lm)
     {
-    	super(I18nControl.getInstance());
+    	super(lm, new GGCNutriICRunner());
         this.m_main = frame;
         initSpecial();
     } 
@@ -128,12 +128,24 @@ public class DataAccessNutri extends DataAccessPlugInBase
      */
     public static DataAccessNutri getInstance()
     {
-        if (s_da == null)
-            s_da = new DataAccessNutri(null);
+        //if (s_da == null)
+        //    s_da = new DataAccessNutri(null);
         return s_da;
     }
 
 
+    /**
+     * Create Instance 
+     * 
+     * @param lm
+     * @return
+     */
+    public static DataAccessNutri createInstance(LanguageManager lm)
+    {
+        if (s_da == null)
+            s_da = new DataAccessNutri(null, lm);
+        return s_da;
+    }
  
     
 /*    
@@ -420,7 +432,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
      */
     public GGCDb getDb()
     {
-        return DataAccess.getInstance().getDb();
+        return DataAccessNutri.getInstance().getDb();
     }
 
     /**
