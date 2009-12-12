@@ -1,33 +1,33 @@
 /**
  * 
  */
-package ggc.meter.device.pseudo;
+package ggc.pump.device.animas;
+
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.device.AbstractPump;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.atech.utils.ATechDate;
 
-import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.device.AbstractMeter;
-import ggc.meter.device.DeviceIdentification;
-import ggc.meter.device.MeterException;
-import ggc.meter.output.OutputWriter;
-import ggc.meter.protocol.ConnectionProtocols;
-
 
 /**
  * @author innominate
  *
  */
-public class EZManagerDBMeter extends AbstractMeter
+public class EZManagerDBMeter extends AbstractPump
 {
     
     private OutputWriter m_writer;
@@ -49,7 +49,7 @@ public class EZManagerDBMeter extends AbstractMeter
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    public void close() throws MeterException
+    public void close() throws PlugInBaseException
     {
         //dont need to do anything here
         return;
@@ -169,7 +169,7 @@ public class EZManagerDBMeter extends AbstractMeter
      * Used for opening connection with device.
      * @return boolean - if connection established
      */
-    public boolean open() throws MeterException
+    public boolean open() throws PlugInBaseException
     {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -192,7 +192,7 @@ public class EZManagerDBMeter extends AbstractMeter
      * 
      * @throws MeterExceptions
      */
-    public void readConfiguration() throws MeterException
+    public void readConfiguration() throws PlugInBaseException
     {
     }
 
@@ -200,9 +200,9 @@ public class EZManagerDBMeter extends AbstractMeter
      * This is method for reading data from device. All reading from actual device should be done from here.
      * Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataFull() throws MeterException
+    public void readDeviceDataFull() throws PlugInBaseException
     {
-        ArrayList<MeterValuesEntry> data = getDataFull();
+        ArrayList<PumpValuesEntry> data = getDataFull();
         
         if (data == null)
         {
@@ -211,9 +211,9 @@ public class EZManagerDBMeter extends AbstractMeter
         else
         {
         
-            for (MeterValuesEntry entry : data)
+            for (PumpValuesEntry entry : data)
             {
-                m_writer.writeBGData(entry);
+                //m_writer.writeBGData(entry);
             }
         }
     }
@@ -222,7 +222,7 @@ public class EZManagerDBMeter extends AbstractMeter
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
      */
-    public void readDeviceDataPartitial() throws MeterException
+    public void readDeviceDataPartitial() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
 
@@ -233,7 +233,7 @@ public class EZManagerDBMeter extends AbstractMeter
      * information (most dumps do). 
      * @throws MeterExceptions
      */
-    public void readInfo() throws MeterException
+    public void readInfo() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
 
@@ -261,7 +261,7 @@ public class EZManagerDBMeter extends AbstractMeter
      * getDataFull - get all data from Meter
      * This data should be read from meter, and is used in Meter GUI
      */
-    public ArrayList<MeterValuesEntry> getDataFull() //throws MeterException
+    public ArrayList<PumpValuesEntry> getDataFull() //throws MeterException
     {
         if (m_fileName == null)
         {
@@ -269,7 +269,7 @@ public class EZManagerDBMeter extends AbstractMeter
             {
                 open();
             }
-            catch(MeterException e)
+            catch(PlugInBaseException e)
             {
                 return null;
             }
@@ -278,7 +278,7 @@ public class EZManagerDBMeter extends AbstractMeter
         
         
         
-        ArrayList<MeterValuesEntry> toRet = new ArrayList<MeterValuesEntry>();
+        ArrayList<PumpValuesEntry> toRet = new ArrayList<PumpValuesEntry>();
         
         try {
             Class.forName("mdbtools.jdbc.Driver");
@@ -308,9 +308,9 @@ public class EZManagerDBMeter extends AbstractMeter
               
               ATechDate date = new ATechDate(dateTime);              
               
-              MeterValuesEntry newEntry = new MeterValuesEntry();
-              newEntry.setBgValue(bg);
-              newEntry.setDateTime(date);
+              PumpValuesEntry newEntry = new PumpValuesEntry();
+              //newEntry.setBgValue(bg);
+              //newEntry.setDateTime(date);
               
               toRet.add(newEntry);
                       
@@ -331,9 +331,107 @@ public class EZManagerDBMeter extends AbstractMeter
      * getData - get data for specified time
      * This data should be read from meter and preprocessed, and is used in Meter GUI
      */
-    public ArrayList<MeterValuesEntry> getData(int from, int to) //throws MeterException
+    public ArrayList<PumpValuesEntry> getData(int from, int to) //throws MeterException
     {
         return null;
+    }
+
+
+    public Hashtable<String, Integer> getAlarmMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public float getBasalStep()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public Hashtable<String, Integer> getBolusMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public float getBolusStep()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public Hashtable<String, Integer> getErrorMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public Hashtable<String, Integer> getEventMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public Hashtable<String, Integer> getReportMappings()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public void loadPumpSpecificValues()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void dispose()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public int getDeviceId()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public String getDeviceSpecialComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean hasSpecialProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean isDeviceCommunicating()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean isReadableDevice()
+    {
+        // TODO Auto-generated method stub
+        return false;
     }
 
     
