@@ -3,22 +3,26 @@ package ggc.gui.dialogs.defs;
 import ggc.core.db.hibernate.DoctorH;
 import ggc.core.util.DataAccess;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import com.atech.help.HelpCapable;
+import com.atech.utils.ATSwingUtils;
 
 public class StockListDef extends GUIListDefAbstract 
 {
     
+    public StockListDef()
+    {
+        init();
+    }
+    
 
     @Override
-    public void doTableAction(int action)
+    public void doTableAction(String action)
     {
         System.out.println(this.getDefName() + " has not implemented action " + action);
     }
@@ -75,17 +79,36 @@ public class StockListDef extends GUIListDefAbstract
         return "STOCKS_LIST";
     }
 
-    @Override
-    public boolean hasFilter()
-    {
-        return false;
-    }
+   
 
     @Override
     public void init()
     {
         this.ic = DataAccess.getInstance().getI18nControlInstance();
         this.translation_root = "STOCKS";
+        //this.filter_enabled = true;
+        
+        this.filter_type = GUIListDefAbstract.FILTER_COMBO_AND_TEXT;
+        //this.filter_text = ic.getMessage("FILTER") + ":";
+        
+        String s1[] = { ic.getMessage("STATUS_USED") + ":",
+                        ic.getMessage("DESCRIPTION") + ":"};
+        this.filter_texts = s1;
+        
+        String s[] = { ic.getMessage("FILTER_ACTIVE"),
+                       ic.getMessage("FILTER_ACTIVE_1_MONTH_USED"),
+                       ic.getMessage("FILTER_ACTIVE_2_MONTH_USED"),
+                       ic.getMessage("FILTER_ACTIVE_3-6_MONTH_USED"),
+                       ic.getMessage("FILTER_ACTIVE_6M_MONTH_USED"),
+                       ic.getMessage("FILTER_ALL")
+                       };
+        
+        this.filter_options = s;
+        
+        this.button_defs = new ArrayList<ButtonDef>();
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add", "STOCKS_TABLE_ADD_DESC", "table_add.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit", "STOCKS_TABLE_EDIT_DESC", "table_edit.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("VIEW"), "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
         
     }
 
@@ -96,9 +119,9 @@ public class StockListDef extends GUIListDefAbstract
     }
 
     @Override
-    public Rectangle getTableSize()
+    public Rectangle getTableSize(int pos_y)
     {
-        return new Rectangle(20, 0, 350, 350);
+        return new Rectangle(40, pos_y, 380, 250);
     }
 
     @Override
@@ -106,6 +129,29 @@ public class StockListDef extends GUIListDefAbstract
     {
         return new Dimension(600, 500);
     }
+
+
+    @Override
+    public void setFilterCombo(String val)
+    {
+        // TODO Auto-generated method stub
+        System.out.println("Combo changed to: " + val);
+        
+    }
+
+
+    @Override
+    public void setFilterText(String val)
+    {
+        // TODO Auto-generated method stub
+        System.out.println("Text Box changed to: " + val);
+        
+    }
+
+    
+    
+
+    
 
 
 }

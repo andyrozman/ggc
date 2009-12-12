@@ -161,11 +161,12 @@ run them):
 D.) Development
 ==================
 
-NOTE: For development we use Eclipse environment. We have several ant build files through all of the projects,
-    but this are intended for deployment only, and NOT for development. Deployment is done by one person which 
-    is called Deployment manager (at this time - Andy). In old times, our developers could choose whatever 
-    environment they wanted (so ant was official build environment), but this created huge configuration problems,
-    which needed to be fixed for each new developer. When all of developers (2 at that time) started to use 
+NOTE: For development we use Eclipse environment. We have several ant build files through all 
+    of the projects, but this are intended for deployment only, and NOT for development. 
+    Deployment is done by one person which is called Deployment manager (at this time - Andy). 
+    In old times, our developers could choose whatever environment they wanted (so ant was 
+    official build environment), but this created huge configuration problems, which needed to 
+    be fixed for each new developer. When all of developers (2 at that time) started to use 
     Eclipse, and when we added sub-projects, problems became even bigger. At that point we decided to go with 
     official build environment, which is now Eclipse (so ant became little deprecated - we still use it for
     deployment (when new version is released)). This document was created to help all new developers and so far,
@@ -173,13 +174,14 @@ NOTE: For development we use Eclipse environment. We have several ant build file
     additional data). 
 
 
-If you are developer and would like to help, please follow this instructions to create build environment.
+If you are developer and would like to help, please follow this instructions to create build 
+environment.
 
 1.) Download full SVN sources from sourceforge.net then download SVN for atech-tools project
 
-2.) Download Eclipse. Eclipse is our official development tool, but you can use any other you wish.
-    I am advising to use Ganymede (Eclipse 3.4). Link http://download.eclipse.org/eclipse/downloads/, 
-    take latest stable build.
+2.) Download Eclipse. Eclipse is our official development tool, but you can use any other you 
+    wish. I am advising to use Galileo (Eclipse 3.5). Link 
+    http://download.eclipse.org/eclipse/downloads/, take latest stable build.
     
     Install subclipse: (you need to do this step before you go to 3.
     
@@ -190,6 +192,17 @@ If you are developer and would like to help, please follow this instructions to 
 3.) Create new workspace. Add Libraries. Libraries are stored under ggc-support/eclipse. You need to
     expand each file. Name of library is name of zip file (not of directory inside). If you add all 
     libraries, you should be able to just import all projects, without problem.
+
+    Since this task (Adding Libraried) is quite lengthy one, here is a shortcut. 
+      a.) Extract all files in ggc-support, into some root directory
+      b.) Open ggc-support/eclipse_add.txt, replace 'D\:/java/libs' with you root directory
+      c.) Select and copy content of whole file, open file 
+          <workspace>\.metadata\.plugins\org.eclipse.core.runtime\.settings\org.eclipse.jdt.core.prefs
+          Paste copied content
+      d.) You will probably have to recheck all libraries using native files (rxtx)
+
+    Note: IBMComm - this one runs only on windows and linux and its used for BlueTooth Connections
+                just for one device so far (Pumps -> Dana pump)
     
     Open Windows->Preferences. Go to group Java->Code style->Formatter. Use Import option and add xml
     file stored under ggc-support/eclipse.
@@ -240,7 +253,12 @@ If you are developer and would like to help, please follow this instructions to 
             Only consider members as visible as: Public
 
 	We are currently on 1.5 compatibility, so that application is usable on most of systems, which 
-	don't have 1.6 available... We will probably switch to 1.6 at end of 2009.
+	don't have 1.6 available... 
+        NOTE: Officialy java 1.5 is not supported by Sun anymore. Since we would like older systems
+              to be able to use GGC, we will stay with 1.5 for a while longer (at least till end of 2010),
+              Sun has options to allow you to get older version of java. In worst case contact us
+              at ggc@atech-software.com, and we will try to supply you with it. Sometimes setting 
+              target to 1.5 is not enough.
 	
 	Javadoc. We are trying to start writing documentation and Javadoc is first step towards that.
 	   Old code will be commented with time, mostly be people who created code. All new code needs

@@ -96,6 +96,7 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
     public CourseGraphDialog(DataAccess da)
     {
         super(da.getMainParent(), "Course Graph", true);
+        m_ic = da.getI18nControlInstance();
         setTitle(m_ic.getMessage("COURSE_GRAPH") + " [" + m_ic.getMessage("NOT_WORKING_100PRO") + "]");
 
         this.m_da = da;

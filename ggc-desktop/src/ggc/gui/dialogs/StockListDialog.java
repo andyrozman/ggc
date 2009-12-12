@@ -1,5 +1,3 @@
-
-
 /*
  *  GGC - GNU Gluco Control
  *
@@ -32,16 +30,11 @@ package ggc.gui.dialogs;
 
 import ggc.core.db.hibernate.DoctorH;
 import ggc.core.util.DataAccess;
-import ggc.gui.dialogs.defs.ButtonDef;
-import ggc.gui.dialogs.defs.GUIListDefAbstract;
 
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -52,18 +45,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.Document;
 
-import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -94,9 +81,10 @@ import com.atech.utils.ATSwingUtils;
 
 // list of stocks and all entry
 
-public class GUIListDialog extends JDialog implements ActionListener, HelpCapable, ItemListener, DocumentListener
+public class StockListDialog extends JDialog implements ActionListener
 {
 
+    private static final long serialVersionUID = 5357938989788436466L;
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
@@ -107,13 +95,9 @@ public class GUIListDialog extends JDialog implements ActionListener, HelpCapabl
     private JTable t_stocks = null;
 //x    private String[] schemes_names = null;
 
-    private String sel_combo = null;
-    
-    
     GregorianCalendar gc = null;
-    GUIListDefAbstract definition;
-    JTextField tf_filter;
-    
+    JSpinner sl_year = null, sl_month = null;
+
     /**
      * Filter Type
      */
@@ -128,7 +112,7 @@ public class GUIListDialog extends JDialog implements ActionListener, HelpCapabl
     private ArrayList<DoctorH> active_list = new ArrayList<DoctorH>();
     
     
-    JButton help_button;
+    
     Font font_normal, font_normal_bold;
 
 
@@ -137,18 +121,22 @@ public class GUIListDialog extends JDialog implements ActionListener, HelpCapabl
      * 
      * @param frame
      */
-    public GUIListDialog(JFrame frame, GUIListDefAbstract def) 
+    public StockListDialog(JFrame frame) 
     {
         super(frame, "", true);
 
-        this.definition = def;
-        
-        this.setSize(this.definition.getWindowSize());
-        m_da.centerJDialog(this, frame);
-        
-//        setBounds(x-175, y-150, 450, 380);
+        Rectangle rec = frame.getBounds();
+        int x = rec.x + (rec.width/2);
+        int y = rec.y + (rec.height/2);
+
+        setBounds(x-175, y-150, 450, 380);
         this.setLayout(null);
 
+        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_normal_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
+
+        gc = new GregorianCalendar();
+        
         init();
 
         this.list_full = new ArrayList<DoctorH>();
@@ -164,10 +152,8 @@ public class GUIListDialog extends JDialog implements ActionListener, HelpCapabl
     private void init() 
     {
 
-        ATSwingUtils.initLibrary();
-        
         JPanel panel = new JPanel();
-        panel.setBounds(0, 0, this.getWidth(), this.getHeight());
+        panel.setBounds(0, 0, 450, 350);
         panel.setLayout(null);
     
         this.getContentPane().add(panel);
@@ -175,58 +161,22 @@ public class GUIListDialog extends JDialog implements ActionListener, HelpCapabl
         JLabel label = new JLabel(m_ic.getMessage("STOCKS_LIST"));
         label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setBounds(0, 20, this.getWidth(), 35);
+        label.setBounds(0, 20, 450, 35);
         panel.add(label);
         
-        int y = 80;
-        
-        if (this.definition.hasFilter())
-        {
-            
-            ATSwingUtils.getLabel(this.definition.getFilterTexts()[0], 
-                40, y, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-            
-            JComboBox cb = ATSwingUtils.getComboBox(this.definition.getFilterOptions(), 
-                200, y, 220, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-            
-            sel_combo = this.definition.getFilterOptions()[0];
-            cb.addItemListener(this);
-
-            
-            if (this.definition.getFilterType()==GUIListDefAbstract.FILTER_COMBO_AND_TEXT)
-            {
-                y += 30;
-                
-                ATSwingUtils.getLabel(this.definition.getFilterTexts()[1], 
-                    40, y, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-                
-                tf_filter = ATSwingUtils.getTextField("", 200, y, 220, 25, panel);
-                
-                
-                Document styledDoc = tf_filter.getDocument();
-                AbstractDocument doc = (AbstractDocument)styledDoc;
-                doc.addDocumentListener(this);
-                
-                
-                
-            }
-            
     
-            /*
-            label = new JLabel(m_ic.getMessage("FILTER") + ":" );
-            label.setFont(this.font_normal_bold);
-            label.setBounds(40, 75, 100, 25);
-            panel.add(label);*/
+        label = new JLabel(m_ic.getMessage("FILTER") + ":" );
+        label.setFont(this.font_normal_bold);
+        label.setBounds(40, 75, 100, 25);
+        panel.add(label);
         
-        /*
-            cb_template = new JComboBox(filter_types);
-            cb_template.setFont(this.font_normal);
-            cb_template.setBounds(120, 75, 80, 25);
-            panel.add(cb_template); */
-        }
+        
+        
+        cb_template = new JComboBox(filter_types);
+        cb_template.setFont(this.font_normal);
+        cb_template.setBounds(120, 75, 80, 25);
+        panel.add(cb_template);
             
-        
-        
         this.t_stocks = new JTable(new AbstractTableModel()
             {
 
@@ -267,41 +217,38 @@ public class GUIListDialog extends JDialog implements ActionListener, HelpCapabl
                 
             })  ;  
         
-        Rectangle r = this.definition.getTableSize(y + 40);
-        
         JScrollPane scp = new JScrollPane(this.t_stocks);
-        scp.setBounds(r);
+        scp.setBounds(40, 120, 290, 200);
         panel.add(scp);
             
+        String[] names = {
+            m_ic.getMessage("ADD"),
+            m_ic.getMessage("EDIT"),
+            m_ic.getMessage("CLOSE"),
+        };
 
-        int pos_x = r.x + r.width + 20; 
-        int pos_y = r.y;
+        String[] cmds = {
+            m_ic.getMessage("add"),
+            m_ic.getMessage("edit"),
+            m_ic.getMessage("close"),
+        };
         
-        int pic_size[] = {22,22};
         
-        for(int i=0; i<this.definition.getButtonDefinitions().size(); i++)
+        int[] coords = {
+            120, 150, 220, 
+        };
+        
+        JButton button;
+        
+        for(int i=0; i<coords.length; i++)
         {
-            ButtonDef bd = this.definition.getButtonDefinitions().get(i);
-            
-            JButton b = ATSwingUtils.getButton("   " + bd.text, 
-                pos_x, pos_y + (i *40), 120, 30, panel, 
-                ATSwingUtils.FONT_NORMAL , bd.icon_name, bd.action, 
-                this, m_da, pic_size);
-            b.setHorizontalAlignment(JButton.LEFT);
+            button = new JButton(names[i]);
+            button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+            button.setActionCommand(cmds[i]);
+            button.addActionListener(this);
+            button.setBounds(340, coords[i], 80, 25);
+            panel.add(button);
         }
-        
-        
-        JButton b = ATSwingUtils.getButton("   " + m_ic.getMessage("CLOSE"), 
-            pos_x, r.y + r.height + 20, 120, 30, panel, 
-            ATSwingUtils.FONT_NORMAL , "exit.png", "close", 
-            this, m_da, pic_size);
-        b.setHorizontalAlignment(JButton.LEFT);
-        
-        help_button = m_da.createHelpButtonByBounds(pos_x - 120 - 20, r.y + r.height + 20, 120, 30, 
-                                                    panel, ATSwingUtils.FONT_NORMAL);
-        help_button.setHorizontalAlignment(JButton.LEFT);
-        panel.add(help_button);
-        
         
 
     }
@@ -323,67 +270,17 @@ public class GUIListDialog extends JDialog implements ActionListener, HelpCapabl
         {
             this.dispose();
         }
+        else if (action.equals("add"))
+        {
+            System.out.println("Add not implemented");
+        }
+        else if (action.equals("edit"))
+        {
+            System.out.println("Edit not implemented");
+        }
         else
-        {
-            this.definition.doTableAction(action);
-        }
+            System.out.println("DoctorsDialog: Unknown command: " + action);
 
-    }
-
-
-
-    public Component getComponent()
-    {
-        return this;
-    }
-
-
-
-    public JButton getHelpButton()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-
-    public String getHelpId()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-
-    public void itemStateChanged(ItemEvent e)
-    {
-        String s = (String)e.getItem();
-        
-        if (!s.equals(sel_combo))
-        {
-            sel_combo = s;
-            this.definition.setFilterCombo(s);
-        }
-    }
-
-
-
-    public void changedUpdate(DocumentEvent e)
-    {
-    }
-
-
-
-    public void insertUpdate(DocumentEvent e)
-    {
-        this.definition.setFilterText(this.tf_filter.getText());
-    }
-
-
-
-    public void removeUpdate(DocumentEvent e)
-    {
-        this.definition.setFilterText(this.tf_filter.getText());
     }
 
 

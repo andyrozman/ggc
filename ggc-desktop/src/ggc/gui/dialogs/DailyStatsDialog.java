@@ -148,9 +148,10 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         
         da.addComponent(this);
         
-        setTitle(this.current_gc);
         this.m_da = da;
         this.m_db = m_da.getDb();
+        this.m_ic = da.getI18nControlInstance();
+        setTitle(this.current_gc);
 
         setSize(700, 470);
         m_da.centerJDialog(this, m_da.getMainParent());
