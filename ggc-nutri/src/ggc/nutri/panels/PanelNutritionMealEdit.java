@@ -876,7 +876,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
             this.meal.setNutritions(this.temp_nutritions);
             this.meal.setGroup_id(this.meal_group.getId());
 
-            this.m_da.getDb().add(this.meal);
+            this.m_da.getNutriDb().add(this.meal);
             this.was_saved = true;
 
             addMeal2Tree(this.meal);
@@ -897,7 +897,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
             this.meal.setNutritions(this.temp_nutritions);
             this.meal.setGroup_id(this.meal_group.getId());
 
-            this.m_da.getDb().edit(this.meal);
+            this.m_da.getNutriDb().edit(this.meal);
             this.was_saved = true;
 
             if (prev_group_id != this.meal.getGroup_id())

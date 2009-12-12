@@ -432,7 +432,8 @@ public class DataAccessNutri extends DataAccessPlugInBase
      */
     public GGCDb getDb()
     {
-        return DataAccessNutri.getInstance().getDb();
+        //return DataAccessNutri.getInstance().getDb();
+        return null;
     }
 
     /**

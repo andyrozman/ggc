@@ -536,7 +536,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
                 fg.setName(tf_name.getText().trim());
                 fg.setName_i18n(this.tf_name_i18n_key.getText());
 
-                this.m_da.getDb().add(fg);
+                this.m_da.getNutriDb().add(fg);
                 this.was_saved = true;
 
 //                System.out.println(fg.getLongDescription());
@@ -552,7 +552,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
                 fg.setName(tf_name.getText().trim());
                 fg.setName_i18n(this.tf_name_i18n_key.getText());
 
-                this.m_da.getDb().add(fg);
+                this.m_da.getNutriDb().add(fg);
                 this.was_saved = true;
 
                 //System.out.println(fg.getLongDescription());
@@ -576,7 +576,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
                 this.food_group.setName(tf_name.getText().trim());
                 this.food_group.setName_i18n(this.tf_name_i18n_key.getText());
 
-                this.m_da.getDb().edit(this.food_group);
+                this.m_da.getNutriDb().edit(this.food_group);
 
                 if (prev_parent_id != this.food_group.getParentId())
                 {
@@ -594,7 +594,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
                 this.meal_group.setName(tf_name.getText().trim());
                 this.meal_group.setName_i18n(this.tf_name_i18n_key.getText());
 
-                this.m_da.getDb().edit(this.meal_group);
+                this.m_da.getNutriDb().edit(this.meal_group);
 
                 if (prev_parent_id != this.meal_group.getParent_id())
                 {

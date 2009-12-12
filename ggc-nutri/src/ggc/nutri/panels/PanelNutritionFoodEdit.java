@@ -783,7 +783,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
             this.food.setHome_weights(this.temp_home_weight);
             this.food.setGroup_id(this.food_group.getId());
 
-            this.m_da.getDb().add(this.food);
+            this.m_da.getNutriDb().add(this.food);
             this.was_saved = true;
 
             addFood2Tree(this.food);
@@ -802,7 +802,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
             this.food.setHome_weights(this.temp_home_weight);
             this.food.setGroup_id(this.food_group.getId());
 
-            this.m_da.getDb().edit(this.food);
+            this.m_da.getNutriDb().edit(this.food);
             this.was_saved = true;
 
             if (prev_group_id != this.food.getGroup_id())
