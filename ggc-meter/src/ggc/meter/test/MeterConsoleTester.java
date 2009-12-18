@@ -152,7 +152,9 @@ public class MeterConsoleTester
     {
         try
         {
-            AccuChekAviva acv = new AccuChekAviva();
+            ConsoleOutputWriter ow = new ConsoleOutputWriter();
+            
+            AccuChekAviva acv = new AccuChekAviva("g:", ow);
             acv.readDeviceDataFull();
         }
         catch(Exception ex)

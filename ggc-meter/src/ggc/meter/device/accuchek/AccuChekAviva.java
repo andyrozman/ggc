@@ -37,15 +37,6 @@ public class AccuChekAviva extends AccuChekSmartPixMeter
     
     /**
      * Constructor
-     */
-    public AccuChekAviva()
-    {
-        super();
-    }
-    
-    
-    /**
-     * Constructor
      * 
      * @param cmp
      */

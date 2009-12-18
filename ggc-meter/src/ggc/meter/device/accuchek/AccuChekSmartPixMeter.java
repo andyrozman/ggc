@@ -63,15 +63,6 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     
     /**
      * Constructor
-     */
-    public AccuChekSmartPixMeter()
-    {
-        super();
-    }
-    
-    
-    /**
-     * Constructor
      * 
      * @param cmp
      */

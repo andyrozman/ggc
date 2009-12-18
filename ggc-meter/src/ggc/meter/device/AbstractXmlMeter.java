@@ -10,7 +10,6 @@ import ggc.plugin.protocol.XmlProtocol;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.FileReaderContext;
 
 /**
@@ -43,10 +42,9 @@ import com.atech.utils.file.FileReaderContext;
 public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInterface, SelectableInterface
 {
 
-    protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
 
     protected String device_name = "Undefined";
-    protected OutputWriter output_writer;
+    //protected OutputWriter output_writer;
     
     AbstractDeviceCompany meter_company = null;
     
@@ -56,10 +54,10 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     /**
      * Constructor
      */
-    public AbstractXmlMeter()
+    public AbstractXmlMeter(OutputWriter ow)
     {
-        super();
-        ic = DataAccessMeter.getInstance().getI18nControlInstance();
+        super(DataAccessMeter.getInstance(), ow);
+        //ic = DataAccessMeter.getInstance().getI18nControlInstance();
     }
 
 
@@ -69,7 +67,8 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
      */
     public AbstractXmlMeter(AbstractDeviceCompany cmp)
     {
-        super();
+        super(DataAccessMeter.getInstance());
+        //ic = DataAccessMeter.getInstance().getI18nControlInstance();
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
@@ -273,7 +272,6 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
      */
     public int compareTo(SelectableInterface o)
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 

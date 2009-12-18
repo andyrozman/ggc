@@ -35,13 +35,6 @@ import ggc.plugin.output.OutputWriter;
 public class AccuChekActive extends AccuChekSmartPixMeter
 {
     
-    /**
-     * Constructor
-     */
-    public AccuChekActive()
-    {
-        super();
-    }
     
     /**
      * Constructor

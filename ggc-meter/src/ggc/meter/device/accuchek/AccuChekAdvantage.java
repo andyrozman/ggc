@@ -37,14 +37,6 @@ public class AccuChekAdvantage extends AccuChekSmartPixMeter
     
     /**
      * Constructor
-     */
-    public AccuChekAdvantage()
-    {
-        super();
-    }
-
-    /**
-     * Constructor
      * 
      * @param cmp
      */

@@ -37,15 +37,6 @@ public class AccuChekCompact extends AccuChekSmartPixMeter
     
     /**
      * Constructor
-     */
-    public AccuChekCompact()
-    {
-        super();
-    }
-
-    
-    /**
-     * Constructor
      * 
      * @param cmp
      */

@@ -37,14 +37,6 @@ public class AccuChekSensor extends AccuChekSmartPixMeter
     
     /**
      * Constructor
-     */
-    public AccuChekSensor()
-    {
-        super();
-    }
-
-    /**
-     * Constructor
      * 
      * @param cmp
      */

@@ -37,14 +37,6 @@ public class AccuChekGo extends AccuChekSmartPixMeter
     
     /**
      * Constructor
-     */
-    public AccuChekGo()
-    {
-        super();
-    }
-    
-    /**
-     * Constructor
      * 
      * @param cmp
      */

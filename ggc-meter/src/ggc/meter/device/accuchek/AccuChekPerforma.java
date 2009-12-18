@@ -37,14 +37,6 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
     
     /**
      * Constructor
-     */
-    public AccuChekPerforma()
-    {
-        super();
-    }
-    
-    /**
-     * Constructor
      * 
      * @param cmp
      */

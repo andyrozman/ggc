@@ -37,15 +37,6 @@ public class AccuChekComfort extends AccuChekSmartPixMeter
     
     /**
      * Constructor
-     */
-    public AccuChekComfort()
-    {
-        super();
-    }
-    
-    
-    /**
-     * Constructor
      * 
      * @param cmp
      */

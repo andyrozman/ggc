@@ -48,9 +48,9 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     /**
      * Constructor
      */
-    public AccuChekSmartPix()
+    /*public AccuChekSmartPix()
     {
-    }
+    }*/
 
     
     /**
@@ -61,6 +61,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
      */
     public AccuChekSmartPix(String drive_letter, OutputWriter writer)
     {
+        super(writer);
         this.setConnectionPort(drive_letter);
         this.output_writer = writer; 
         this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
