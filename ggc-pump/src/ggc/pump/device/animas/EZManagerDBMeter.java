@@ -20,8 +20,6 @@ import java.util.Hashtable;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.atech.utils.ATechDate;
-
 
 /**
  * @author innominate
@@ -30,6 +28,7 @@ import com.atech.utils.ATechDate;
 public class EZManagerDBMeter extends AbstractPump
 {
     
+    @SuppressWarnings("unused")
     private OutputWriter m_writer;
     
     private String m_fileName;
@@ -210,11 +209,11 @@ public class EZManagerDBMeter extends AbstractPump
         }
         else
         {
-        
+        /*
             for (PumpValuesEntry entry : data)
             {
                 //m_writer.writeBGData(entry);
-            }
+            }*/
         }
     }
 
@@ -289,7 +288,7 @@ public class EZManagerDBMeter extends AbstractPump
             ResultSet bgVals = bgValsStatement.executeQuery();
             while (bgVals.next())
             {         
-              String bg = bgVals.getString("bg");
+// x              String bg = bgVals.getString("bg");
               
               int day = Integer.parseInt( bgVals.getString("day") );
               int month = Integer.parseInt( bgVals.getString("month") );
@@ -306,7 +305,7 @@ public class EZManagerDBMeter extends AbstractPump
               dateTime += hours*100L;
               dateTime += mins;
               
-              ATechDate date = new ATechDate(dateTime);              
+//              ATechDate date = new ATechDate(dateTime);              
               
               PumpValuesEntry newEntry = new PumpValuesEntry();
               //newEntry.setBgValue(bg);

@@ -348,12 +348,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         panel.add(bt_cancel);
 
         help_button = m_da.createHelpButtonByBounds(260, sy + 205, 110, 25, this);
-
         panel.add(help_button);
-
         
-        
-//s        m_da.enableHelp(this);
+        m_da.enableHelp(this);
 
     }
 
@@ -777,8 +774,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
      */
     public String getHelpId()
     {
-        // FIXME 
-        return "pages.GGC_BG_Daily_Add";
+        return "PumpTool_Data_AddEdit";
     }
 
     

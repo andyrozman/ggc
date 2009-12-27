@@ -36,14 +36,6 @@ import ggc.pump.manager.PumpDevicesIds;
 public class AccuChekDTron extends AccuChekSmartPixPump
 {
     
-    /**
-     * Constructor
-     */
-    public AccuChekDTron()
-    {
-        super();
-    }
-    
     
     /**
      * Constructor

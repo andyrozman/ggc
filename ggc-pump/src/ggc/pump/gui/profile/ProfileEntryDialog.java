@@ -15,6 +15,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import com.atech.graphics.components.TimeComponent;
+import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
@@ -44,7 +45,7 @@ import com.atech.utils.ATSwingUtils;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class ProfileEntryDialog extends JDialog implements ActionListener
+public class ProfileEntryDialog extends JDialog implements ActionListener, HelpCapable
 {
 
     private static final long serialVersionUID = -6972977617367401931L;
@@ -182,7 +183,8 @@ public class ProfileEntryDialog extends JDialog implements ActionListener
         
         this.help_button = this.m_da.createHelpButtonByBounds(250, 200, 100, 25, this);
         panel.add(this.help_button);
-        
+
+        m_da.enableHelp(this);
 
 /*
         String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
@@ -299,8 +301,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        // FIXME
-        return "";
+        return "PumpTool_Profile_Entry_Editor";
     }
     
     

@@ -38,14 +38,6 @@ import ggc.pump.manager.PumpDevicesIds;
 public class AccuChekCombo extends AccuChekSmartPixPump
 {
 
-    /**
-     * Constructor 
-     */
-    public AccuChekCombo()
-    {
-        super();
-    }
-    
     
     /**
      * Constructor 

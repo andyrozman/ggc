@@ -168,7 +168,8 @@ public class ProfileSelectorPump extends SelectorAbstractDialog
         setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL|SelectorAbstractDialog.SELECTOR_ACTION_SELECT);
         this.setColumnSortingEnabled(false);
         this.setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
-        this.setHelpEnabled(false);
+        this.setHelpStringId("PumpTool_Profile_Type_Selector");
+        this.setHelpEnabled(true);
         use_generic_select = true;
         //setNewItemString(ic.getMessage("NEW__PROFILE"));
     }

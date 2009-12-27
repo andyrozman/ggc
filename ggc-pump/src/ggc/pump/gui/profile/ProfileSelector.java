@@ -220,7 +220,8 @@ public class ProfileSelector extends SelectorAbstractDialog
             setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_EDIT|SelectorAbstractDialog.SELECTOR_ACTION_NEW|SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
         this.setColumnSortingEnabled(false);
         this.setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_DATE_BOTH);
-        this.setHelpEnabled(false);
+        this.setHelpStringId("PumpTool_Profile_Selector");
+        this.setHelpEnabled(true);
         setNewItemString(ic.getMessage("NEW__PROFILE"));
     }
 

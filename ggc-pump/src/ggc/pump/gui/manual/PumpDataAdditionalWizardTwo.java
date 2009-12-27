@@ -314,7 +314,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         help_button = m_da.createHelpButtonByBounds(startx + 140, 195, 120, 25, this);
         panel.add(help_button);
 
-        // m_da.enableHelp(this);
+        m_da.enableHelp(this);
 
         initType();
 
@@ -771,7 +771,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
      */
     public String getHelpId()
     {
-        return "pages.GGC_Pump_Add_Parameter_Wizard1";
+        return "PumpTool_Data_Additional_2";
     }
 
     

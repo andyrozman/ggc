@@ -63,7 +63,7 @@ public class PumpPrintDialog extends PrintDialogRange
      */
     public PumpPrintDialog(JFrame frame, int type)
     {
-        super(frame, type, DataAccessPump.getInstance(), false);
+        super(frame, type, DataAccessPump.getInstance(), true);
     }
     
 
@@ -73,8 +73,7 @@ public class PumpPrintDialog extends PrintDialogRange
     @Override
     public String getHelpId()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "PumpTool_Print";
     }
 
     

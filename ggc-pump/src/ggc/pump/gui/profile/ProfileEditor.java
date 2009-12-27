@@ -349,6 +349,8 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         this.help_button = this.m_da.createHelpButtonByBounds(610, 145, 120, 25, this);
         panel.add(this.help_button);
         
+        m_da.enableHelp(this);
+
         
         //---
         //--- Graphs
@@ -659,8 +661,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
      */
     public String getHelpId()
     {
-        // FIXME
-        return "";
+        return "PumpTool_Profile_Editor";
     }
     
     

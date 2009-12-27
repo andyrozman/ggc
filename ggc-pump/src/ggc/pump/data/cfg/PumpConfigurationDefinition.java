@@ -101,7 +101,7 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
      */
     public String getHelpPrefix()
     {
-        return "pages.PumpTool_";
+        return "PumpTool_";
     }
     
     

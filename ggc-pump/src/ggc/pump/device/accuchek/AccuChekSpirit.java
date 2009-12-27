@@ -36,14 +36,6 @@ import ggc.pump.manager.PumpDevicesIds;
 public class AccuChekSpirit extends AccuChekSmartPixPump
 {
 
-    /**
-     * Constructor 
-     */
-    public AccuChekSpirit()
-    {
-        super();
-    }
-    
     
     /**
      * Constructor 

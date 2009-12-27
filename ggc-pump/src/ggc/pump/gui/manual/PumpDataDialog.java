@@ -442,7 +442,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
         //updateLabels();
         // TODO re-enable
-        // m_da.enableHelp(this);
+        m_da.enableHelp(this);
 
         setVisible(true);
     }
@@ -734,7 +734,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
      */
     public String getHelpId()
     {
-        return "pages.GGC_PumpTool_Daily_View";
+        return "PumpTool_Data_Overview";
     }
 
     

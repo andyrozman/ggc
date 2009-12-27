@@ -51,16 +51,6 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     
     
     
-
-    //AccuChekSmartPixProcessor xml_processor = null;
-    
-    /**
-     * Constructor 
-     */
-    public AccuChekSmartPix()
-    {
-    }
-
     
     /**
      * Constructor
@@ -81,6 +71,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
      */
     public AccuChekSmartPix(String drive_letter, OutputWriter writer)
     {
+        super(writer);
         this.setConnectionPort(drive_letter);
         this.output_writer = writer; 
         this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());

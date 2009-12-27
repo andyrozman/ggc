@@ -9,7 +9,6 @@ import ggc.pump.util.DataAccessPump;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.FileReaderContext;
 
 /**
@@ -42,10 +41,10 @@ import com.atech.utils.file.FileReaderContext;
 public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterface, SelectableInterface
 {
 
-    protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
+    //protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
 
     protected String device_name = "Undefined";
-    protected OutputWriter output_writer;
+    //protected OutputWriter output_writer;
     
     AbstractDeviceCompany pump_company = null;
     
@@ -54,12 +53,24 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     /**
      * Constructor
      */
-    public AbstractXmlPump()
+    /*public AbstractXmlPump()
     {
-        super();
+        super(DataAccessPump.getInstance());
         ic = DataAccessPump.getInstance().getI18nControlInstance();
-    }
+    }*/
 
+    
+    
+    /**
+     * Constructor
+     */
+    public AbstractXmlPump(OutputWriter ow)
+    {
+        super(DataAccessPump.getInstance(), ow);
+        //ic = DataAccessMeter.getInstance().getI18nControlInstance();
+    }
+    
+    
     /**
      * Constructor
      * 
@@ -67,7 +78,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
      */
     public AbstractXmlPump(AbstractDeviceCompany cmp)
     {
-        super();
+        super(DataAccessPump.getInstance());        
         
         //System.out.println("Da: " + DataAccessPump.getInstance());
         //System.out.println("Ic: " + DataAccessPump.getInstance().getI18nControlInstance());

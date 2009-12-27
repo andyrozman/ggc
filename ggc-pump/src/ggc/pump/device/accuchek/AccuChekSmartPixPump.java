@@ -84,11 +84,11 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     /**
      * Constructor
      */
-    public AccuChekSmartPixPump()
+   /* public AccuChekSmartPixPump()
     {
         super();
         loadPumpSpecificValues();
-    }
+    }*/
 
     
     /**
