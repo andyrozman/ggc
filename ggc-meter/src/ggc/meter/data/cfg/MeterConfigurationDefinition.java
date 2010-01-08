@@ -96,7 +96,7 @@ public class MeterConfigurationDefinition implements DeviceConfigurationDefiniti
      */
     public String getHelpPrefix()
     {
-        return "pages.MeterTool_";
+        return "MeterTool_";
     }
     
 
