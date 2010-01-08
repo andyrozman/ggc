@@ -50,6 +50,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
     public RestoreGGCSelectorDialog(JDialog parent, ATDataAccessAbstract da)
     {
         super(parent, da);
+        this.enableHelp("GGC_Tools_Restore_File_Selector");
     }
 
     /**
@@ -61,6 +62,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
     public RestoreGGCSelectorDialog(JFrame parent, ATDataAccessAbstract da)
     {
         super(parent, da);
+        this.enableHelp("GGC_Tools_Restore_File_Selector");
     }
 
 
@@ -84,6 +86,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
     {
         //System.out.println("Res Coll: " + this.m_da.getBackupRestoreCollection());
         RestoreGGCDialog rgd = new RestoreGGCDialog((JFrame)this.my_parent, this.m_da, this.m_da.getBackupRestoreCollection(), this.tf_file.getText());
+        rgd.enableHelp("GGC_Tools_Restore");
         rgd.showDialog();
     }
     

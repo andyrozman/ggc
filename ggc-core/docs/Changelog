@@ -5,6 +5,15 @@ Changelog file for GGC Core (GNU Gluco Control)
 Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
+
+0.4.14
+    * Bug fixing
+
+
+0.4.13 [17.12.2009]
+    * Fixed both graphs (Course and Spread)
+    * Started working on Help Ids
+
 0.4.12 [11.12.2009]
     * Working on Stocks, Doctors and Appointment core elements
 

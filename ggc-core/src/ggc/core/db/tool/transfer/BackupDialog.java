@@ -60,7 +60,7 @@ public class BackupDialog extends BackupRestoreDialog
     public BackupDialog(JFrame parent, ATDataAccessAbstract da /*, BackupRestoreCollection br_coll*/)
     {
     	super(parent, da, da.getBackupRestoreCollection());
-    	enableHelp("pages.GGC_Tools_Backup");
+    	enableHelp("GGC_Tools_Backup");
     	showDialog();
     }
     

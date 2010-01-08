@@ -121,7 +121,7 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
         {
             this.gluco_values = new GlucoValues(this.gc, (GregorianCalendar)this.gc.clone(), true);
             
-            System.out.println("Gluco Values: " + this.gluco_values.getDailyValuesRowsCount());
+            //System.out.println("Gluco Values: " + this.gluco_values.getDailyValuesRowsCount());
             
             GregorianCalendar gc_prev = (GregorianCalendar)this.gc.clone();
             gc_prev.add(GregorianCalendar.DAY_OF_YEAR, -1);

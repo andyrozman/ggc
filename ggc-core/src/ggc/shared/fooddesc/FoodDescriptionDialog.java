@@ -496,7 +496,7 @@ public class FoodDescriptionDialog extends TransferDialog /*JDialog*/ implements
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Daily_Add_Food_Desc";
+        return "GGC_Tools_FoodDescription";
     }
 
 

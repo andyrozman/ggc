@@ -31,10 +31,18 @@ import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.db.hibernate.DbInfoH;
 import ggc.core.db.hibernate.DoctorTypeH;
+import ggc.core.db.hibernate.FoodDescriptionH;
+import ggc.core.db.hibernate.FoodGroupH;
+import ggc.core.db.hibernate.NutritionDefinitionH;
+import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
 import ggc.core.util.DataAccess;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.util.Hashtable;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -70,9 +78,13 @@ public class InitDb
 
     GGCDb m_db = null;
 
-    //Hashtable<String, NutritionHomeWeightType> home_weight_type_list = null;
+    Hashtable<String, NutritionHomeWeightTypeH> home_weight_type_list = null;
     DataAccess m_da = DataAccess.getInstance();
 
+    
+    Hashtable<Long,FoodDescriptionH> lst_food_desc = new Hashtable<Long,FoodDescriptionH>(); 
+    
+    
     /**
      * Password for Init
      */
@@ -146,15 +158,16 @@ public class InitDb
         System.out.println(" Missing settings...");
 
         /*
-         * SettingsMainH seti = new
-         * SettingsMainH(I18nControl.getInstance().getMessage("UNNAMED_USER"),
-         * "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 2,
-         * 60.0f, 200.0f, 80.0f, 120.0f, 3.0f, 20.0f, 4.4f, 14.0f, 2,
-         * "blueMetalthemepack.zip", 0, 0, 0, 0, 0, 0, 0, "", 1100, 1800, 2100,
-         * "0", "Default Scheme"); seti.setId(1);
-         * 
-         * m_db.addHibernate(seti);
-         */
+         SettingsH seti = new
+         SettingsH(m_da.getI18nControlInstance().getMessage("UNNAMED_USER"),
+         "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 2,
+         60.0f, 200.0f, 80.0f, 120.0f, 3.0f, 20.0f, 4.4f, 14.0f, 2,
+         "blueMetalthemepack.zip", 0, 0, 0, 0, 0, 0, 0, "", 1100, 1800, 2100,
+         "0", "Default Scheme" ); 
+         seti.setId(1);
+         
+         m_db.addHibernate(seti); */
+        
 
         ColorSchemeH colors = new ColorSchemeH("Default Scheme", 0, -65485, -6750208, -163654, -81409, -1184275,
                 -16724788, -6710785, -16776961, -6711040, -16724941);
@@ -207,7 +220,7 @@ public class InitDb
 
     private void insertFoodGroups()
     {
-/*
+
         try
         {
             System.out.println("\nLoading Food Groups (FD_GROUP.txt) (1/dot)");
@@ -219,7 +232,7 @@ public class InitDb
             {
                 StringTokenizer strtok = new StringTokenizer(line, "^");
 
-                FoodGroup fg = new FoodGroup(1);
+                FoodGroupH fg = new FoodGroupH();
                 fg.setId(getInt(strtok.nextToken()));
 
                 String st = getString(strtok.nextToken()); // name
@@ -228,7 +241,7 @@ public class InitDb
                 fg.setName_i18n(m_da.makeI18nKeyword(st));
                 fg.setDescription(st);
 
-                m_db.add(fg);
+                m_db.addHibernate(fg);
                 System.out.print(".");
             }
 
@@ -238,7 +251,7 @@ public class InitDb
             System.err.println("Error on insertFoodGroups(): " + ex);
             ex.printStackTrace();
         }
-*/
+
     }
 
     private void insertFoodDescription()
@@ -249,7 +262,7 @@ public class InitDb
         // 208 = Energy (kcal)
         // 268 = Energy (kJ)
         // 269 = Sugar (total) (g)
-/*
+
         int i = 0;
 
         try
@@ -269,7 +282,7 @@ public class InitDb
                     line = line + "0.0";
 
                 StringTokenizer strtok = new StringTokenizer(line, "^");
-                FoodDescription fd = new FoodDescription(1);
+                FoodDescriptionH fd = new FoodDescriptionH();
 
                 fd.setId(getLong(strtok.nextToken())); // NDB_No
                 fd.setGroup_id(getInt(strtok.nextToken())); // FdGrp_Cd
@@ -283,7 +296,10 @@ public class InitDb
 
                 fd.setRefuse(getFloat(strtok.nextToken())); // Refuse
 
-                m_db.add(fd);
+                m_db.addHibernate(fd);
+                
+                this.lst_food_desc.put(fd.getId(), fd);
+                
                 // m_db.addHibernate(fd.getHibernateObject());
 
                 if (i % 100 == 0)
@@ -299,12 +315,12 @@ public class InitDb
             System.err.println("Error on insertFoodDescription(): " + ex);
             ex.printStackTrace();
         }
-*/
+
     }
 
     private void insertNutritionData()
     {
-/*
+
         int i = 0;
 
         try
@@ -316,7 +332,7 @@ public class InitDb
             String line = null;
 
             long id = -1;
-            FoodDescription fd = null;
+            FoodDescriptionH fd = null;
 
             StringBuffer data = new StringBuffer();
 
@@ -342,13 +358,13 @@ public class InitDb
                     if (id != -1)
                     {
                         fd.setNutritions(data.toString());
-                        m_db.edit(fd);
+                        m_db.editHibernate(fd);
                     }
 
                     id = id_2;
-                    fd = new FoodDescription(1);
-                    fd.setId(id);
-                    m_db.get(fd);
+                    fd = this.getFoodDescription(id);
+                    //fd.setId(id);
+                    //m_db.get(fd);
                     data.delete(0, data.length());
 
                     if (i % 100 == 0)
@@ -377,10 +393,10 @@ public class InitDb
                  * 268 = Energy (kJ) fd.setEnergy_kJ(value); } else if
                  * (type==269) { // 269 = Sugar (total) fd.setSugar_g(value); }
                  */
-  /*          }
+            }
 
             fd.setNutritions(data.toString());
-            m_db.edit(fd);
+            m_db.editHibernate(fd);
 
         }
         catch (Exception ex)
@@ -388,12 +404,20 @@ public class InitDb
             System.err.println("Error on insertNutritionData(): " + ex);
             ex.printStackTrace();
         }
-*/
+
     }
 
+
+    public FoodDescriptionH getFoodDescription(long _id)
+    {
+        return this.lst_food_desc.get(_id);
+    }
+            
+            
+            
     private void insertNutritionDefintions()
     {
-/*
+
         try
         {
 
@@ -413,7 +437,7 @@ public class InitDb
 
                 StringTokenizer strtok = new StringTokenizer(line, "^");
 
-                NutritionDefinition fnd = new NutritionDefinition();
+                NutritionDefinitionH fnd = new NutritionDefinitionH();
 
                 fnd.setId(getLong(strtok.nextToken()));
                 fnd.setWeight_unit(getString(strtok.nextToken()));
@@ -421,7 +445,7 @@ public class InitDb
                 fnd.setName(getString(strtok.nextToken()));
                 fnd.setDecimal_places(getString(strtok.nextToken()));
 
-                m_db.add(fnd);
+                m_db.addHibernate(fnd);
 
                 if (i % 10 == 0)
                     System.out.print(".");
@@ -434,15 +458,15 @@ public class InitDb
             System.err.println("Error on insertNutritionDefintions(): " + ex);
             ex.printStackTrace();
         }
-*/
+
     }
 
     private void insertHomeWeightTypes()
     {
 
         // System.out.println("FIX!!!!!");
-/*
-        Hashtable<String, NutritionHomeWeightType> list = new Hashtable<String, NutritionHomeWeightType>();
+
+        Hashtable<String, NutritionHomeWeightTypeH> list = new Hashtable<String, NutritionHomeWeightTypeH>();
 
         try
         {
@@ -479,10 +503,10 @@ public class InitDb
                 if (list.containsKey(name))
                     continue;
 
-                NutritionHomeWeightType fhwt = new NutritionHomeWeightType();
+                NutritionHomeWeightTypeH fhwt = new NutritionHomeWeightTypeH();
                 fhwt.setName(full_name);
 
-                m_db.add(fhwt);
+                m_db.addHibernate(fhwt);
                 list.put(name, fhwt);
 
                 if (i % 200 == 0)
@@ -498,12 +522,12 @@ public class InitDb
         }
 
         home_weight_type_list = list;
-*/
+
     }
 
     private void insertHomeWeightData()
     {
-/*
+
         int i = 0;
 
         try
@@ -515,7 +539,7 @@ public class InitDb
             String line = null;
 
             long id = -1;
-            FoodDescription fd = null;
+            FoodDescriptionH fd = null;
 
             StringBuffer data = new StringBuffer();
 
@@ -535,13 +559,13 @@ public class InitDb
                     if (id != -1)
                     {
                         fd.setHome_weights(data.toString());
-                        m_db.edit(fd);
+                        m_db.editHibernate(fd);
                     }
 
                     id = id_2;
-                    fd = new FoodDescription(1);
-                    fd.setId(id);
-                    m_db.get(fd);
+                    fd = this.getFoodDescription(id);
+                    //fd.setId(id);
+                    //m_db.get(fd);
                     data.delete(0, data.length());
 
                     if (i % 100 == 0)
@@ -578,7 +602,7 @@ public class InitDb
             }
 
             fd.setHome_weights(data.toString());
-            m_db.edit(fd);
+            m_db.editHibernate(fd);
 
         }
         catch (Exception ex)
@@ -586,7 +610,7 @@ public class InitDb
             System.err.println("Error on insertNutritionData(): " + ex);
             ex.printStackTrace();
         }
-*/
+
     }
 
 
@@ -644,7 +668,6 @@ public class InitDb
     }
 
 
-    @SuppressWarnings("unused")
     private int getInt(String input)
     {
 
@@ -672,7 +695,6 @@ public class InitDb
 
     }*/
 
-    @SuppressWarnings("unused")
     private long getLong(String input)
     {
         if (input.startsWith("~"))
@@ -684,7 +706,6 @@ public class InitDb
             return Long.parseLong(input);
     }
 
-    @SuppressWarnings("unused")
     private float getFloat(String input)
     {
         if (input.startsWith("~"))

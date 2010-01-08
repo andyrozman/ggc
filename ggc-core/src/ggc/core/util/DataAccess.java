@@ -83,7 +83,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.4.10.1";
+    public static String CORE_VERSION = "0.4.14.1";
     
     /**
      * Current Db Version
@@ -285,7 +285,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         //this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
         // Help Context Init
-        HelpContext hc = new HelpContext("../data/help/GGC.hs");
+        HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
         this.setHelpContext(hc);
         
         

@@ -12,7 +12,7 @@
    <tocitem text="Daily ">
     <tocitem text="Daily Entries View " target="pages.GGC_BG_Daily_View"/>
     <tocitem text="Daily Entries Add " target="pages.GGC_BG_Daily_Add"/>
-    <tocitem text="Bolus Helper " target="pages.GGC_BG_BolusHelper"/>
+    <tocitem text="Food by Description" target="GGC_PenInj_FoodDescription"/>
     <tocitem text="Meals, Foods Selector" target="pages.GGC_MFS_Daily_Selector"/>
     <tocitem text="Meals, Foods Parts Selector" target="pages.GGC_MFS_Item_Selector"/>
    </tocitem>
@@ -64,44 +64,66 @@
   </tocitem>
   
   <tocitem text="Printing ">
-   <tocitem text="Data Printing " target="pages.GGC_Print_Selector"/>
-   <tocitem text="Food Menu Printing " target="pages.GGC_Print_Selector_2"/>
+   <tocitem text="Pen/Injection Data" target="GGC_PenInj_Print"/>
+   <tocitem text="Food Data" target="GGC_Food_Print"/>
+   <tocitem text="Pump Data" target="PumpTool_Print"/>
   </tocitem>
 
-  <tocitem text="Preferences ">
-   <tocitem text="General " target="pages.GGC_Prefs_General"/>
-   <tocitem text="Medical Data " target="pages.GGC_Prefs_MedicalData"/>
-   <tocitem text="Colors &amp; Fonts " target="pages.GGC_Prefs_Colors_Fonts"/>
-   <tocitem text="Rendering Quality " target="pages.GGC_Prefs_Rendering"/>
-   <tocitem text="Printing " target="pages.GGC_Prefs_Printing"/>
+  <tocitem text="Preferences">
+   <tocitem text="Mode" target="GGC_Prefs_Mode"/>
+   <tocitem text="General" target="GGC_Prefs_General"/>
+   <tocitem text="Medical Data" target="GGC_Prefs_MedicalData"/>
+   <tocitem text="Colors &amp; Fonts" target="GGC_Prefs_Colors_Fonts"/>
+   <tocitem text="Rendering Quality" target="GGC_Prefs_Rendering"/>
+   <tocitem text="Printing" target="GGC_Prefs_Printing"/>
+   <tocitem text="Language" target="GGC_Prefs_Language"/>
   </tocitem>
 
   <tocitem text="Tools ">
-   <tocitem text="Update " target="pages.GGC_Tools_Update"/>
-   <tocitem text="Backup " target="pages.GGC_Tools_Backup"/>
-   <tocitem text="Restore File Selector" target="pages.GGC_Tools_Restore_File_Selector"/>
-   <tocitem text="Restore " target="pages.GGC_Tools_Restore"/>
+   <tocitem text="Backup" target="GGC_Tools_Backup"/>
+   <tocitem text="Restore File Selector" target="GGC_Tools_Restore_File_Selector"/>
+   <tocitem text="Restore" target="GGC_Tools_Restore"/>
+   <tocitem text="Update" target="GGC_Tools_Update"/>
+   <tocitem text="Bolus Helper" target="GGC_Tools_BolusHelper"/>
   </tocitem>
 
 
   <tocitem text="Plug-ins ">
 
 	  <tocitem text="Meter Tool">
-	     <tocitem text="Read Instruction" target="pages.MeterTool_Read_Instruction"/>
-	     <tocitem text="Reading View" target="pages.MeterTool_Reading_View"/>
-	     <tocitem text="Export Data" target="pages.MeterTool_Export_Data"/>
-	     <tocitem text="Configuration " target="pages.MeterTool_Configuration"/>
-	     <tocitem text="Configuration - Port Selector" target="pages.MeterTool_Configuration_PortSelector"/>
-	     <tocitem text="List" target="pages.MeterTool_List"/>
+	     <tocitem text="Read Instruction" target="MeterTool_Read_Instruction"/>
+	     <tocitem text="Reading View" target="MeterTool_Reading_View"/>
+	     <tocitem text="Export Data" target="MeterTool_Export_Data"/>
+	     <tocitem text="Configuration " target="MeterTool_Configuration"/>
+	     <tocitem text="Configuration - Port Selector" target="MeterTool_Configuration_PortSelector"/>
+	     <tocitem text="List" target="MeterTool_List"/>
 	  </tocitem>
 
 	  <tocitem text="Pump Tool">
-	     <tocitem text="Read Instruction" target="pages.PumpTool_Read_Instruction"/>
-	     <tocitem text="Reading View" target="pages.PumpTool_Reading_View"/>
-	     <tocitem text="Export Data" target="pages.PumpTool_Export_Data"/>
-	     <tocitem text="Configuration " target="pages.PumpTool_Configuration"/>
-	     <tocitem text="Configuration - Port Selector" target="pages.PumpTool_Configuration_PortSelector"/>
-	     <tocitem text="List" target="pages.PumpTool_List"/>
+	     <tocitem text="Read Instruction" target="PumpTool_Read_Instruction"/>
+	     <tocitem text="Reading View" target="PumpTool_Reading_View"/>
+	     <tocitem text="Export Data" target="PumpTool_Export_Data"/>
+	     <tocitem text="Configuration " target="PumpTool_Configuration"/>
+	     <tocitem text="Configuration - Port Selector" target="PumpTool_Configuration_PortSelector"/>
+	     <tocitem text="List" target="PumpTool_List"/>
+
+		   <tocitem text="Pump Data (Manual)">
+		    <tocitem text="Pump Data Overview" target="PumpTool_Data_Overview"/>
+		    <tocitem text="Pump Data Add/Edit" target="PumpTool_Data_AddEdit"/>
+		    <tocitem text="Add Additional Data 1" target="PumpTool_Data_Additional_1"/>
+		    <tocitem text="Add Additional Data 2" target="PumpTool_Data_Additional_2"/>
+
+   	 		<tocitem text="Bolus Helper" target="GGC_Tools_BolusHelper"/>
+    		<tocitem text="Food by Description" target="GGC_Tools_FoodDescription"/>
+
+		    <tocitem text="Profile Selector" target="PumpTool_Profile_Selector"/>
+		    <tocitem text="Profile Editor" target="PumpTool_Profile_Editor"/>
+		    
+		    <tocitem text="Profile Type Selector" target="PumpTool_Profile_Type_Selector"/>
+		    <tocitem text="Profile Entry Editor" target="PumpTool_Profile_Entry_Editor"/>
+		    
+		   </tocitem>
+
 	     
 		   <tocitem text="HbA1c ">
 		    <tocitem text="HbA1c View " target="pages.GGC_BG_HbA1c"/>
@@ -117,12 +139,12 @@
 
 
 	  <tocitem text="CGMS Tool">
-	     <tocitem text="Read Instruction" target="pages.CGMSTool_Read_Instruction"/>
-	     <tocitem text="Reading View" target="pages.CGMSTool_Reading_View"/>
-	     <tocitem text="Export Data" target="pages.CGMSTool_Export_Data"/>
-	     <tocitem text="Configuration " target="pages.CGMSTool_Configuration"/>
-	     <tocitem text="Configuration - Port Selector" target="pages.CGMSTool_Configuration_PortSelector"/>
-	     <tocitem text="List" target="pages.CGMSTool_List"/>
+	     <tocitem text="Read Instruction" target="CGMSTool_Read_Instruction"/>
+	     <tocitem text="Reading View" target="CGMSTool_Reading_View"/>
+	     <tocitem text="Export Data" target="CGMSTool_Export_Data"/>
+	     <tocitem text="Configuration " target="CGMSTool_Configuration"/>
+	     <tocitem text="Configuration - Port Selector" target="CGMSTool_Configuration_PortSelector"/>
+	     <tocitem text="List" target="CGMSTool_List"/>
 	  </tocitem>
 
 

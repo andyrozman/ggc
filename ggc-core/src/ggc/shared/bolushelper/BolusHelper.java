@@ -440,7 +440,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Bolus_Helper";
+        return "GGC_Tools_BolusHelper";
     }
 
 }

@@ -524,4 +524,39 @@ public class PlotSelectorData implements Cloneable //, ReadablePlotData
     {
         return super.clone();
     }
+    
+    public String toString()
+    {
+        
+        return "PlotSelectorData [" +
+        "bg=" +  plotBG +
+        ", bg_day_avg=" + plotBGDayAvg +
+        ", bg_reads=" + plotBGReadings +
+
+        ", chs=" + plotCH +
+        ", ch_day_avg=" + plotCHDayAvg +
+        ", ch_sum=" + plotCHSum +
+
+        ", bg_reads=" + plotIns1 +
+        ", ins1_day_avg=" + plotIns1DayAvg +
+        ", ins1_sum=" + plotIns1Sum +
+
+        ", ins2=" + plotIns2 +
+        ", ins2_day_avg=" + plotIns2DayAvg +
+        ", ins2_sum=" + plotIns2Sum +
+
+        ", ins_all=" + plotInsTotal +
+        ", ins_all_day_avg=" + plotInsTotalDayAvg +
+        ", ins_all_sum=" + plotInsTotalSum + 
+
+        ", ins_per_ch=" + plotInsPerCH +
+        ", meals=" + plotMeals + "]";
+        
+        
+        
+        
+        
+    }
+    
+    
 }

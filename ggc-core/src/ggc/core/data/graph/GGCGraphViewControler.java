@@ -66,7 +66,7 @@ import com.atech.graphics.graphs.GraphViewInterface;
  */
 
 
-public class GGCGraphViewControler extends AbstractGraphViewControler  
+public class GGCGraphViewControler extends AbstractGraphViewControler   
 {
 
     private static final long serialVersionUID = 8111521124871307877L;
@@ -129,6 +129,7 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
                     | DataPlotSelectorPanel.INS1_MASK | DataPlotSelectorPanel.INS2_MASK
                     | DataPlotSelectorPanel.INS_TOTAL_MASK);
             //cGV.setData(selectionPanel.getPlotData());
+            selectionPanel.setSelectionMode(PlotSelectorPanel.SELECTION_MODE_MULTIPLE);
         }
         else if (this.graph_type==GGCGraphViewControler.GRAPH_SPREAD)
         {
@@ -191,6 +192,9 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
     {
         PlotSelectorData psd = this.selectionPanel.getPlotData();
         psd.setDateRangeData(this.dRS.getDateRangeData());
+
+        System.out.println("runDraw: dataRange: " + this.dRS.getDateRangeData().toString());
+
         
         System.out.println("runDraw: " + psd.isPlotBG());
         
