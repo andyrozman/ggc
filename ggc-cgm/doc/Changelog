@@ -2,6 +2,16 @@
 Changes file for GGC CGM Tool
 ==============================
 
+0.3 (16.1.2010) - Andy
+    * List implemented
+
+0.2
+    * About Dialog implemented
+
+0.1 
+    * Framework implementation
+
+
 0.0.3
     * Startup work on Minimed files import
     

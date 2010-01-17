@@ -1,4 +1,4 @@
-package ggc.cgms.device.freestyle;
+package ggc.cgms.device.minimed;
 
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.device.DownloadSupportType;
@@ -26,19 +26,18 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     InsuletOmniPod  
- *  Description:  Insulet OmniPod implementation (just settings)
+ *  Filename:     MiniMedCGMSGold  
+ *  Description:  MiniMed CGMS Gold implementation (just settings)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
-public class FreestyleNavigator extends FreestyleCGMS
+public class MiniMedCGMSGold extends MiniMedCGMS
 {
 
     /**
      * Constructor 
      */
-    public FreestyleNavigator()
+    public MiniMedCGMSGold()
     {
         super();
     }
@@ -50,7 +49,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      * @param drive_letter 
      * @param writer 
      */
-    public FreestyleNavigator(String drive_letter, OutputWriter writer)
+    public MiniMedCGMSGold(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
     }
@@ -61,7 +60,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      * 
      * @param cmp
      */
-    public FreestyleNavigator(AbstractDeviceCompany cmp)
+    public MiniMedCGMSGold(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
@@ -79,7 +78,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getName()
     {
-        return "Freestyle Navigator";
+        return "Minimed CGMS Gold";
     }
 
 
@@ -91,7 +90,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getIconName()
     {
-        return "ab_navigator.jpg";
+        return "mm_cgms_gold.jpg";
     }
     
 
@@ -103,7 +102,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public int getDeviceId()
     {
-        return CGMSDevicesIds.CGMS_FREESTYLE_NAVIGATOR;
+        return CGMSDevicesIds.CGMS_MINIMED_GOLD;
     }
 
     
@@ -148,7 +147,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getDeviceClassName()
     {
-        return "ggc.cgms.device.freestyle.FreestyleNavigator";
+        return "ggc.cgms.device.minimed.MiniMedCGMSGold";
     }
 
 
@@ -181,6 +180,7 @@ public class FreestyleNavigator extends FreestyleCGMS
     {
         return -1;
     }
+    
     
     
 }

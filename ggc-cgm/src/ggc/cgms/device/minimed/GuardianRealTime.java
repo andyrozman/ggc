@@ -1,4 +1,4 @@
-package ggc.cgms.device.freestyle;
+package ggc.cgms.device.minimed;
 
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.device.DownloadSupportType;
@@ -26,19 +26,19 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     InsuletOmniPod  
- *  Description:  Insulet OmniPod implementation (just settings)
+ *  Filename:     GuardianRealTime  
+ *  Description:  Guardian RealTime implementation (just settings)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class FreestyleNavigator extends FreestyleCGMS
+public class GuardianRealTime extends MiniMedCGMS
 {
 
     /**
      * Constructor 
      */
-    public FreestyleNavigator()
+    public GuardianRealTime()
     {
         super();
     }
@@ -50,7 +50,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      * @param drive_letter 
      * @param writer 
      */
-    public FreestyleNavigator(String drive_letter, OutputWriter writer)
+    public GuardianRealTime(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
     }
@@ -61,7 +61,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      * 
      * @param cmp
      */
-    public FreestyleNavigator(AbstractDeviceCompany cmp)
+    public GuardianRealTime(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
@@ -79,7 +79,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getName()
     {
-        return "Freestyle Navigator";
+        return "Guardian RealTime";
     }
 
 
@@ -91,7 +91,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getIconName()
     {
-        return "ab_navigator.jpg";
+        return "mm_guardian_rt.jpg";
     }
     
 
@@ -103,7 +103,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public int getDeviceId()
     {
-        return CGMSDevicesIds.CGMS_FREESTYLE_NAVIGATOR;
+        return CGMSDevicesIds.CGMS_GUARDIAN_REALTIME;
     }
 
     
@@ -148,7 +148,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getDeviceClassName()
     {
-        return "ggc.cgms.device.freestyle.FreestyleNavigator";
+        return "ggc.cgms.device.minimed.GuardianRealTime";
     }
 
 

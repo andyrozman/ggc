@@ -1,4 +1,4 @@
-package ggc.cgms.device.freestyle;
+package ggc.cgms.device.dexcom;
 
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.device.DownloadSupportType;
@@ -26,19 +26,19 @@ import ggc.plugin.output.OutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     InsuletOmniPod  
- *  Description:  Insulet OmniPod implementation (just settings)
+ *  Filename:     Dexcom 7 Plus  
+ *  Description:  Dexcom 7 Plus implementation (just settings)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class FreestyleNavigator extends FreestyleCGMS
+public class DexcomSevenPlus extends DexcomCGMS
 {
 
     /**
      * Constructor 
      */
-    public FreestyleNavigator()
+    public DexcomSevenPlus()
     {
         super();
     }
@@ -50,7 +50,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      * @param drive_letter 
      * @param writer 
      */
-    public FreestyleNavigator(String drive_letter, OutputWriter writer)
+    public DexcomSevenPlus(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
     }
@@ -61,7 +61,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      * 
      * @param cmp
      */
-    public FreestyleNavigator(AbstractDeviceCompany cmp)
+    public DexcomSevenPlus(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
@@ -79,7 +79,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getName()
     {
-        return "Freestyle Navigator";
+        return "Dexcom 7 Plus";
     }
 
 
@@ -91,7 +91,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getIconName()
     {
-        return "ab_navigator.jpg";
+        return "dx_dexcom7.jpg";
     }
     
 
@@ -103,7 +103,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public int getDeviceId()
     {
-        return CGMSDevicesIds.CGMS_FREESTYLE_NAVIGATOR;
+        return CGMSDevicesIds.CGMS_DEXCOM_7_PLUS;
     }
 
     
@@ -116,6 +116,7 @@ public class FreestyleNavigator extends FreestyleCGMS
     public String getInstructions()
     {
         return "INSTRUCTIONS_NO_INFO";
+//        return "INSTRUCTIONS_DEXCOM_7_PLUS";
     }
     
     /**
@@ -148,7 +149,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public String getDeviceClassName()
     {
-        return "ggc.cgms.device.freestyle.FreestyleNavigator";
+        return "ggc.cgms.device.dexcom.DexcomSevenPlus";
     }
 
 
@@ -182,5 +183,52 @@ public class FreestyleNavigator extends FreestyleCGMS
         return -1;
     }
     
+    
+    /**
+     * Get Temporary Basal Type Definition
+     * "TYPE=Unit;STEP=0.1"
+     * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
+     * "TYPE=Both;STEP_UNIT=0.1;STEP=10;MIN=0;MAX=200"
+     * 
+     * @return
+     */
+    public String getTemporaryBasalTypeDefinition()
+    {
+        //return "TYPE=Unit;STEP=0.1";
+        return null;
+    }
+    
+    
+    /**
+     * Get Bolus Step (precission)
+     * 
+     * @return
+     */
+    public float getBolusStep()
+    {
+        return 0.1f;
+    }
+    
+    
+    /**
+     * Get Basal Step (precission)
+     * 
+     * @return
+     */
+    public float getBasalStep()
+    {
+        return 0.1f;
+    }
+    
+    
+    /**
+     * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
+     * 
+     * @return
+     */
+    public boolean arePumpSettingsSet()
+    {
+        return false;
+    }
     
 }

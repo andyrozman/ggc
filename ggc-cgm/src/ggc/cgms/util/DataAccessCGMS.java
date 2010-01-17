@@ -1,12 +1,22 @@
 package ggc.cgms.util;
 
+import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.manager.CGMSManager;
+import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.graphics.components.about.CreditsEntry;
+import com.atech.graphics.components.about.CreditsGroup;
+import com.atech.graphics.components.about.FeaturesEntry;
+import com.atech.graphics.components.about.FeaturesGroup;
+import com.atech.graphics.components.about.LibraryInfoEntry;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.mgr.LanguageManager;
 
 /**
@@ -39,6 +49,10 @@ import com.atech.i18n.mgr.LanguageManager;
 public class DataAccessCGMS extends DataAccessPlugInBase
 {
 
+    /**
+     * PlugIn Version
+     */
+    public static final String PLUGIN_VERSION = "0.1.1";
 
 
     private static DataAccessCGMS s_da = null; // This is handle to unique 
@@ -70,9 +84,19 @@ public class DataAccessCGMS extends DataAccessPlugInBase
      */
     public void initSpecial()
     {
-        this.loadFonts();
-
         checkPrerequisites();
+        
+        this.createWebListerContext();
+        this.createPlugInAboutContext();
+        this.createConfigurationContext();
+        this.createPlugInVersion();
+        loadDeviceDataHandler();
+        //loadManager();
+        loadReadingStatuses();
+        this.createPlugInDataRetrievalContext();
+        this.createDeviceConfiguration();
+        this.createOldDataReader();
+        loadWebLister();        
     }
     
     
@@ -249,7 +273,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public void createConfigurationContext()
     {
         // TODO Auto-generated method stub
-        
+        this.device_config_def = new CGMSConfigurationDefinition(); 
     }
 
     /**
@@ -272,7 +296,93 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void createPlugInAboutContext()
     {
-        // TODO Auto-generated method stub
+        I18nControlAbstract ic = this.getI18nControlInstance();
+        //this.about_title = ic.getMessage("PUMP_PLUGIN_ABOUT");
+        this.about_image_name = "/icons/cgms_about.jpg";
+
+        this.about_plugin_copyright_from = 2009;
+        //this.about_plugin_name = ic.getMessage("PUMP_PLUGIN");
+        
+        
+        // libraries
+        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
+        
+        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.3.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
+        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache", "Helper methods for java.lang library"));
+        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache", "Logger and all around wrapper for logging utilities"));
+        lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD", "Framework for Xml manipulation"));
+        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
+        lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document", "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
+
+        this.plugin_libraries = lst_libs;
+
+        // developers and other credits
+        ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
+
+        CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
+        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework, About, Outputs")); // and support for Ascensia & Roche devices"));
+        lst_credits.add(cg);
+
+        //cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
+        //cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
+        //lst_credits.add(cg);
+                
+        this.plugin_developers = lst_credits;
+
+        
+        // features
+        ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
+
+        
+        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Base Pump Tools Framework"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+        //fg.addFeaturesEntry(new FeaturesEntry("List of pumps"));
+        //fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+        
+        lst_features.add(fg);
+        
+        
+        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Dana (only works on Windows and Linux)"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
+//        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
+        
+        lst_features.add(fg);
+        
+        
+        fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Base CGMS Tools Framework"));
+        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
+        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+        fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
+        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+        fg.addFeaturesEntry(new FeaturesEntry("List of CGMS"));
+        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+
+        
+        //fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration) [Ready]"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Configuration [Ready]"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Profiles"));
+        fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
+        
+        lst_features.add(fg);
+
+        
+        fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Minimed RealTime (??)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Dexcom 7 (??)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Freestyle Navigator (??)"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Dana (in 2009/2010)"));
+        
+        lst_features.add(fg);
+        
+        
+        this.plugin_features = lst_features;
     }
 
     
@@ -287,7 +397,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public void createPlugInVersion()
     {
         // TODO Auto-generated method stub
-        
+        this.plugin_version = DataAccessCGMS.PLUGIN_VERSION;
     }
 
     
@@ -301,7 +411,17 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void createWebListerContext()
     {
-        // TODO Auto-generated method stub
+        //this.loadWebLister();
+        
+        //I18nControlAbstract ic = getI18nControlInstance();
+        
+        this.weblister_items = new ArrayList<BaseListEntry>();
+        this.weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html", BaseListEntry.STATUS_PLANNED));
+        this.weblister_items.add(new BaseListEntry("Dexcom", "/cgms/dexcom.html", BaseListEntry.STATUS_PLANNED));
+        this.weblister_items.add(new BaseListEntry("Minimed", "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));
+
+        this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
+        this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
         
     }
 
@@ -347,8 +467,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public String getDeviceImagesRoot()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "/icons/cgms/";
     }
 
 
@@ -381,6 +500,32 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public void createOldDataReader()
     {
     }
+
+    
+    /**
+     * Load Special Parameters
+     * 
+     * @see com.atech.utils.ATDataAccessAbstract#loadSpecialParameters()
+     */
+    public void loadSpecialParameters()
+    {
+        this.special_parameters = new Hashtable<String,String>();
+        this.special_parameters.put("BG", "" + this.getBGMeasurmentType());
+    }
+
+    
+    
+    /** 
+     * Get About Image Size - Define about image size
+     */
+    public int[] getAboutImageSize()
+    {
+        int[] sz = new int[2];
+        sz[0] = 400;
+        sz[1] = 203;
+        
+        return sz;
+    }    
     
     
 }
