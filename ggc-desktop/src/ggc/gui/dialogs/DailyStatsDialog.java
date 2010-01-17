@@ -577,7 +577,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Daily_View";
+        return "GGC_BG_Daily_View";
     }
 
 }

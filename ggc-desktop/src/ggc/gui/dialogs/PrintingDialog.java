@@ -646,7 +646,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
      */
     public String getHelpId()
     {
-        return "pages.GGC_Print_Selector";
+        return "GGC_PenInj_Print";
     }
 
     /**

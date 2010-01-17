@@ -5,6 +5,7 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.shared.bolushelper.BolusHelper;
+import ggc.shared.fooddesc.FoodDescriptionDialog;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -640,7 +641,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         else if (action.equals("food_desc"))
         {
-            new DailyRowMealsDialog(this.m_dailyValuesRow, this);
+            new FoodDescriptionDialog(this.m_dailyValuesRow, this);
             updateMealsSet();
             setCh(this.m_dailyValuesRow.getFoodDescriptionCH());
         }
@@ -924,7 +925,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Daily_Add";
+        return "GGC_BG_Daily_Add";
     }
 
     

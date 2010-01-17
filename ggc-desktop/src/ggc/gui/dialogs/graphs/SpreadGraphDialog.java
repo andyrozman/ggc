@@ -219,7 +219,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Graph_Spread";
+        return "GGC_BG_Graph_Spread";
     }
 
 }

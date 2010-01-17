@@ -317,7 +317,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
      */
     public String getHelpId()
     {
-        return "pages.GGC_Prefs_General";
+        return "GGC_Prefs_General";
     }
 
 }

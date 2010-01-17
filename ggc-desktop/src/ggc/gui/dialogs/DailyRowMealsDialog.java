@@ -53,6 +53,7 @@ import com.atech.utils.ATSwingUtils;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
+// DEPRECATED
 
 public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements ActionListener, HelpCapable
 {
@@ -451,7 +452,7 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Daily_Add_Food_Desc";
+        return "GGC_BG_Daily_Add_Food_Desc";
     }
 
 

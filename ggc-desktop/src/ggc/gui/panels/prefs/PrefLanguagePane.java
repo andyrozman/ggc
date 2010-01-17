@@ -211,7 +211,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
      */
     public String getHelpId()
     {
-        return "pages.GGC_Prefs_General";
+        return "GGC_Prefs_Language";
     }
 
 }

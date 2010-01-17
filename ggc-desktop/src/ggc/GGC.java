@@ -90,15 +90,22 @@ public class GGC
     public static void main(String[] args)
     {
 
-        if (!GGC.isDbOk())
-            return;
+        
 
         boolean dev = false;
 
         if (args.length > 0)
             dev = true;
 
-        DataAccess.deleteInstance();
+        
+        if (!dev)
+        {
+            if (!GGC.isDbOk())
+                return;            
+
+            DataAccess.deleteInstance();
+        }
+        
 
         s_theApp = new GGC();
         s_theApp.init(dev);

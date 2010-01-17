@@ -223,7 +223,7 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Graph_Frequency";
+        return "GGC_BG_Graph_Frequency";
     }
 
 }

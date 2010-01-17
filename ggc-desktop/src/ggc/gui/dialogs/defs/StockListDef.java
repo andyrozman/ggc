@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import com.atech.utils.ATSwingUtils;
+import com.atech.graphics.dialogs.ButtonDef;
+import com.atech.graphics.dialogs.GUIListDefAbstract;
 
 public class StockListDef extends GUIListDefAbstract 
 {
+    
+    private ArrayList<DoctorH> active_list= null;
+    //private ArrayList<DoctorH> full_list= null;
     
     public StockListDef()
     {
@@ -35,6 +39,7 @@ public class StockListDef extends GUIListDefAbstract
         this.table = new JTable(new AbstractTableModel()
         {
 
+            private static final long serialVersionUID = -9188128586566579737L;
 
             public int getColumnCount()
             {
@@ -103,7 +108,7 @@ public class StockListDef extends GUIListDefAbstract
                        ic.getMessage("FILTER_ALL")
                        };
         
-        this.filter_options = s;
+        this.filter_options_combo1 = s;
         
         this.button_defs = new ArrayList<ButtonDef>();
         this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add", "STOCKS_TABLE_ADD_DESC", "table_add.png"));
@@ -146,6 +151,12 @@ public class StockListDef extends GUIListDefAbstract
         // TODO Auto-generated method stub
         System.out.println("Text Box changed to: " + val);
         
+    }
+
+
+    @Override
+    public void setFilterCombo_2(String val)
+    {
     }
 
     

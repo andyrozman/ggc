@@ -207,7 +207,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
      */
     public String getHelpId()
     {
-        return "pages.GGC_Prefs_MedicalData";
+        return "GGC_Prefs_MedicalData";
     }
 
 }

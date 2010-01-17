@@ -545,7 +545,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
      */
     public String getHelpId()
     {
-        return "pages.GGC_Prefs_Colors_Fonts";
+        return "GGC_Prefs_Colors_Fonts";
     }
 
 }

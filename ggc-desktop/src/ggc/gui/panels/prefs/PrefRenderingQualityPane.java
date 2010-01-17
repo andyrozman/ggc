@@ -227,7 +227,7 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
      */
     public String getHelpId()
     {
-        return "pages.GGC_Prefs_Rendering";
+        return "GGC_Prefs_Rendering";
     }
 
 }

@@ -282,7 +282,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
      */
     public String getHelpId()
     {
-        return "pages.GGC_Prefs_Printing";
+        return "GGC_Prefs_Printing";
     }
 
 }

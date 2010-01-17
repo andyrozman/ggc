@@ -213,7 +213,7 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Graph_Course";
+        return "GGC_BG_Graph_Course";
     }
 
 }

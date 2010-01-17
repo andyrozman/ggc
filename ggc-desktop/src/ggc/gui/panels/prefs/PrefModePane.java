@@ -431,7 +431,7 @@ public class PrefModePane extends AbstractPrefOptionsPanel implements HelpCapabl
      */
     public String getHelpId()
     {
-        return "pages.GGC_Prefs_General";
+        return "GGC_Prefs_Mode";
     }
 
 }

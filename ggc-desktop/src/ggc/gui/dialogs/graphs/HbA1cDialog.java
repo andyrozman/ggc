@@ -281,7 +281,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_HbA1c";
+        return "GGC_BG_HbA1c";
     }
 
 }

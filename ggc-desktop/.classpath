@@ -9,6 +9,7 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Pump Tool"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC CGM Tool"/>
 	<classpathentry excluding="**/.svn/**" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SkinLF-6.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
