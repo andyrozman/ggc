@@ -88,7 +88,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract //implements GraphView
      */
     public String getHelpId()
     {
-        return null; //"pages.GGC_BG_HbA1c";
+        return null; 
     }
 
     

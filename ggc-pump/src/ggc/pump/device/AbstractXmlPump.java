@@ -67,7 +67,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     public AbstractXmlPump(OutputWriter ow)
     {
         super(DataAccessPump.getInstance(), ow);
-        //ic = DataAccessMeter.getInstance().getI18nControlInstance();
+        //ic = m_da.getI18nControlInstance();
     }
     
     
@@ -79,6 +79,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     public AbstractXmlPump(AbstractDeviceCompany cmp)
     {
         super(DataAccessPump.getInstance());        
+        //ic = m_da.getI18nControlInstance();
         
         //System.out.println("Da: " + DataAccessPump.getInstance());
         //System.out.println("Ic: " + DataAccessPump.getInstance().getI18nControlInstance());

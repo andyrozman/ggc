@@ -62,6 +62,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     public AbstractSerialPump()
     {
         super();
+        m_da = DataAccessPump.getInstance();
+        ic = m_da.getI18nControlInstance();
     }
 
     
@@ -76,6 +78,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     public AbstractSerialPump(int i2, int i3, int i4, int i5)
     {
         super();
+        //m_da = DataAccessPump.getInstance();
+        //ic = m_da.getI18nControlInstance();
     }
     
     
@@ -87,6 +91,9 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     public AbstractSerialPump(AbstractDeviceCompany cmp)
     {
         super();
+        //m_da = DataAccessPump.getInstance();
+        //ic = m_da.getI18nControlInstance();
+
         this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }

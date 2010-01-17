@@ -95,7 +95,7 @@ public class GraphViewBasals extends BREGraphsAbstract //implements GraphViewInt
      */
     public String getHelpId()
     {
-        return null; //"pages.GGC_BG_HbA1c";
+        return null; 
     }
 
     

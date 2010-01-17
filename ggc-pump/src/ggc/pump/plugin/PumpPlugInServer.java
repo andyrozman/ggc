@@ -60,6 +60,9 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
 
     //String plugin_version = "0.1.7.1";
     
+    I18nControlAbstract ic_local = null;
+    
+    
     /**
      *  Command: Read Pump Data  
      */
@@ -266,6 +269,12 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         //System.out.println("initPlugIn");
         da_local = DataAccessPump.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
         //da_local = DataAccessPump.createInstance(da_parent..getL).getInstance();
+        
+        da_local.loadManager();
+        
+        ic_local = da_local.getI18nControlInstance();
+        da_local.setParentI18nControlInstance(ic);
+        
         da_local.addComponent(this.parent);
         da_local.setHelpContext(this.m_da.getHelpContext());
         da_local.setPlugInServerInstance(this);
@@ -295,6 +304,11 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     {
         if (ret_obj_id == PumpPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
         {
+            //System.out.println("m_da: " + DataAccessPump.getInstance());
+            //System.out.println("m_da: getDeviceConfiguration: " + DataAccessPump.getInstance().getDeviceConfiguration());
+            //System.out.println("m_da: getSelectedDevice: " + DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance());
+            
+            
             DeviceConfigEntry de = DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance();
             
             if (de==null)
@@ -355,21 +369,21 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     public JMenu getPlugInMainMenu()
     {
         
-        JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, ic);
+        JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, ic_local);
         
         ATSwingUtils.createMenuItem(menu_pump, 
             "MN_PUMPS_READ_DATA", 
             "MN_PUMPS_READ_DATA_DESC", 
             "pumps_read", 
             this, null, 
-            ic, DataAccessPump.getInstance(), parent);
+            ic_local, DataAccessPump.getInstance(), parent);
 
         ATSwingUtils.createMenuItem(menu_pump, 
             "MN_PUMPS_READ_CONFIG", 
             "MN_PUMPS_READ_CONFIG_DESC", 
             "pumps_read_config", 
             this, null, 
-            ic, DataAccessPump.getInstance(), parent);
+            ic_local, DataAccessPump.getInstance(), parent);
 
         menu_pump.addSeparator();
         
@@ -378,7 +392,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             "MN_PUMPS_MANUAL_ENTRY_DESC", 
             "pumps_manual_entry", 
             this, null, 
-            ic, DataAccessPump.getInstance(), parent);
+            ic_local, DataAccessPump.getInstance(), parent);
 
         
         ATSwingUtils.createMenuItem(menu_pump, 
@@ -386,7 +400,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             "MN_PUMPS_ADDITIONAL_DATA_DESC", 
             "pumps_additional_data", 
             this, null, 
-            ic, DataAccessPump.getInstance(), parent);
+            ic_local, DataAccessPump.getInstance(), parent);
         
 
         ATSwingUtils.createMenuItem(menu_pump, 
@@ -394,7 +408,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             "MN_PUMP_PROFILES_DESC", 
             "pumps_profile", 
             this, null, 
-            ic, DataAccessPump.getInstance(), parent);
+            ic_local, DataAccessPump.getInstance(), parent);
         
         menu_pump.addSeparator();
 
@@ -403,7 +417,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             "MN_PUMPS_LIST_DESC", 
             "pumps_list", 
             this, null, 
-            ic, DataAccessPump.getInstance(), parent);
+            ic_local, DataAccessPump.getInstance(), parent);
         
         menu_pump.addSeparator();
         
@@ -412,7 +426,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             "MN_PUMPS_CONFIG_DESC", 
             "pumps_config", 
             this, null, 
-            ic, DataAccessPump.getInstance(), parent);
+            ic_local, DataAccessPump.getInstance(), parent);
 
         menu_pump.addSeparator();
         
@@ -421,27 +435,8 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             "MN_PUMPS_ABOUT_DESC", 
             "pumps_about", 
             this, null, 
-            ic, DataAccessPump.getInstance(), parent);
+            ic_local, DataAccessPump.getInstance(), parent);
         
-        
-        
-//        this.menu_pumps = this.createMenu("MN_PUMPS", null);
-//        this.createAction(menu_pumps, "MN_PUMP_PROFILES", "MN_PUMP_PROFILES_DESC", "pumps_profile", null);
-//        this.menu_pumps.addSeparator();
-//        this.createAction(menu_pumps, "MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry", null);
-//        this.createAction(menu_pumps, "MN_PUMPS_READ", "MN_PUMPS_READ_DESC", "pumps_read", null);
-//        this.createAction(menu_pumps, "MN_PUMPS_ADDITIONAL_DATA", "MN_PUMPS_ADDITIONAL_DATA_DESC", "pumps_additional_data", null);
-/*        this.menu_pumps.addSeparator();
-        this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", null);
-        this.menu_pumps.addSeparator();
-        this.createAction(menu_pumps, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
-        this.menu_pumps.addSeparator();
-        this.createAction(menu_pumps, "MN_PUMPS_ABOUT", "MN_PUMPS_ABOUT_DESC", "pumps_about", null);
-  */      
-        
-        
-        
-        // TODO Auto-generated method stub
         return menu_pump;
     }
 

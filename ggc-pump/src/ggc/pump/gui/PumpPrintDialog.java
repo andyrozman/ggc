@@ -125,9 +125,17 @@ public class PumpPrintDialog extends PrintDialogRange
         
         
         
-        displayPDF(pa.getNameWithPath());
+        displayPDF(pa.getRelativeNameWithPath());
         
         
+    }
+
+
+    @Override
+    public String getPdfViewerParameters()
+    {
+        // FIXME
+        return "";
     }
     
 }

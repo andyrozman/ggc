@@ -63,7 +63,8 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     public AbstractBlueToothPump()
     {
         super();
-        ic = DataAccessPump.getInstance().getI18nControlInstance();
+        m_da = DataAccessPump.getInstance();
+        ic = m_da.getI18nControlInstance();
     }
 
     
@@ -78,7 +79,8 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     public AbstractBlueToothPump(int i2, int i3, int i4, int i5)
     {
         super();
-        ic = DataAccessPump.getInstance().getI18nControlInstance();
+        //m_da = DataAccessPump.getInstance();
+        //ic = m_da.getI18nControlInstance();
     }
     
     
@@ -90,6 +92,9 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     public AbstractBlueToothPump(AbstractDeviceCompany cmp)
     {
         super();
+        //m_da = DataAccessPump.getInstance();
+        //ic = m_da.getI18nControlInstance();
+
         this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
@@ -131,7 +136,6 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
      */
     public void serialEvent(SerialPortEvent event)
     {
-    	
     }
 
     /**

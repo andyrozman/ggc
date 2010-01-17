@@ -109,7 +109,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor //implemen
      */
     public String getHelpId()
     {
-        return null; //"pages.GGC_BG_HbA1c";
+        return null; 
     }
 
     

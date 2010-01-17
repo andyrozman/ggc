@@ -153,7 +153,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.createConfigurationContext();
         this.createPlugInVersion();
         loadDeviceDataHandler();
-        loadManager();
+        //loadManager();
         loadReadingStatuses();
         this.createPlugInDataRetrievalContext();
         this.createDeviceConfiguration();
@@ -379,6 +379,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     public void createPlugInAboutContext()
     {
+        
         I18nControlAbstract ic = this.getI18nControlInstance();
         //this.about_title = ic.getMessage("PUMP_PLUGIN_ABOUT");
         this.about_image_name = "/icons/pumps_about.jpg";
@@ -390,7 +391,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         // libraries
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
         
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
+        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.3.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
         lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache", "Helper methods for java.lang library"));
         lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache", "Logger and all around wrapper for logging utilities"));
         lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD", "Framework for Xml manipulation"));
@@ -432,7 +433,8 @@ public class DataAccessPump extends DataAccessPlugInBase
         
         
         fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Dana (only works on Windows and Linux)"));
 //        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
 //        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
         
@@ -442,21 +444,22 @@ public class DataAccessPump extends DataAccessPlugInBase
         fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
         //fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration) [Ready]"));
         //fg.addFeaturesEntry(new FeaturesEntry("Configuration [Ready]"));
-        //fg.addFeaturesEntry(new FeaturesEntry("Profiles"));
+        fg.addFeaturesEntry(new FeaturesEntry("Profiles (graphical edit)"));
         fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
         
         lst_features.add(fg);
 
         
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Minimed (in 2009)"));
-        //fg.addFeaturesEntry(new FeaturesEntry("Roche (in 2009)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Dana (in 2009/2010)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Minimed (in 2010)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Roche (in 2010)"));
+        //fg.addFeaturesEntry(new FeaturesEntry("Dana (in 2009/2010)"));
         
         lst_features.add(fg);
         
         
         this.plugin_features = lst_features;
+        
         
     }
     
