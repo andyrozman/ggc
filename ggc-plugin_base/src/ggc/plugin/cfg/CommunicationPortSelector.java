@@ -379,6 +379,35 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
                 drives.add(fls[i].toString());
             }
             
+            if (!System.getProperty("os.name").contains("Win"))
+            {
+                // non windows system, will load data from /mnt and /media and /Volumes
+                String[] rts = { "/mnt", "/media", "/Volumes" };
+                
+                for(int i=0; i<rts.length; i++)
+                {
+                    File f = new File(rts[i]);
+                    
+                    if (f.exists())
+                    {
+                        File[] f2 = f.listFiles();
+                        
+                        for(int j=0; j<f2.length; j++)
+                        {
+                            if (f2[j].isDirectory())
+                            {
+                                drives.add(f2[j].toString());
+                            }
+                        }
+                    }
+                }
+                
+                
+                
+            }
+            
+            
+            
             return drives;
         }
         else if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL)

@@ -28,6 +28,7 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.I18nControlRunner;
 import com.atech.i18n.mgr.LanguageManager;
 import com.atech.plugin.PlugInServer;
@@ -233,6 +234,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     
     
     protected boolean data_download_screen_wide = false;
+
     
     /**
      * The plugin_server.
@@ -249,6 +251,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     
     protected OldDataReaderAbstract m_old_data_reader = null;
+
+    
+    protected I18nControlAbstract m_parent_i18n = null;    
     
 
     // ********************************************************
@@ -1328,6 +1333,27 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public int getMaxDecimalsUsedByDecimalHandler()
     {
         return 2;
+    }
+ 
+    /**
+     * Get Parent I18nControl Instance. This will be used where translation will be taken 
+     * from parent (Core). For example in printing.
+     * 
+     * @return
+     */
+    public I18nControlAbstract getParentI18nControlInstance()
+    {
+        return this.m_parent_i18n;
+    }
+    
+    /**
+     * Set Parent I18nControl Instance. This will be used where translation will be taken 
+     * from parent (Core). For example in printing.
+     * 
+     */
+    public void setParentI18nControlInstance(I18nControlAbstract ic)
+    {
+        this.m_parent_i18n = ic;
     }
     
 

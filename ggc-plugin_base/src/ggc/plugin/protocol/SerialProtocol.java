@@ -1,6 +1,7 @@
 package ggc.plugin.protocol;
 
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -94,9 +95,10 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     private static Log log = LogFactory.getLog("ProtocolLog");
     
-    protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
     protected DataAccessPlugInBase m_da = null; //DataAccessMeter.getInstance();
 
+    protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
+    protected OutputWriter output_writer;
 
     protected boolean isPortOpen = false;
     protected SerialPort serialPort = null;
@@ -162,7 +164,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     public SerialProtocol(DataAccessPlugInBase da)
     {
         this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
+        this.ic = da.getI18nControlInstance();
     }
 
     

@@ -348,4 +348,10 @@ public interface DeviceInterface extends SelectableInterface
      */
     public FileReaderContext[] getFileDownloadTypes();
     
+    
+    
+    
+    
+    
+    
 }

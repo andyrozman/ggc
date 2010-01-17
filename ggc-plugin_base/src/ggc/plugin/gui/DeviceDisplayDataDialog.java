@@ -541,7 +541,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         
         
         else
-            System.out.println("MeterDisplayDataDialog::Unknown command: " + action);
+            System.out.println("DeviceDisplayDataDialog::Unknown command: " + action);
 
     }
 

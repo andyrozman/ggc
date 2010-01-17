@@ -59,6 +59,7 @@ public abstract class XmlProtocol
     public XmlProtocol(DataAccessPlugInBase da)
     {
         this(da, null);
+        ic = da.getI18nControlInstance();
     }
 
     /**
@@ -70,7 +71,7 @@ public abstract class XmlProtocol
     public XmlProtocol(DataAccessPlugInBase da, OutputWriter ow)
     {
         this.m_da = da;
-        this.ic = m_da.getI18nControlInstance();
+        ic = da.getI18nControlInstance();
         this.output_writer = ow;
     }
 
