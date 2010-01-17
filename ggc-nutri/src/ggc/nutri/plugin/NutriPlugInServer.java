@@ -248,6 +248,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         da.addComponent(this.parent);
         da.setHelpContext(this.m_da.getHelpContext());
         da.setPlugInServerInstance(this);
+        da.setParentI18nControlInstance(ic);
 //        da.createDb(m_da.getHibernateDb());
 //        da.initAllObjects();
         da.loadSpecialParameters();
@@ -268,10 +269,6 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      */
     public void loadDb()
     {
-        System.out.println("loadDb");
-        System.out.println("loadDb: da: " + DataAccessNutri.getInstance());
-        System.out.println("loadDb: db:"  + DataAccessNutri.getInstance().getNutriDb());
-        
         DataAccessNutri.getInstance().getNutriDb().loadNutritionDbBase();
     }
     
@@ -417,15 +414,15 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         }
         else if (command.equals("report_foodmenu_simple"))
         {
-            new PrintFoodDialog((JFrame)parent, 1, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            new PrintFoodDialog((JFrame)parent, 1); //, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
         }
         else if (command.equals("report_foodmenu_ext1"))
         {
-            new PrintFoodDialog((JFrame)parent, 2, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            new PrintFoodDialog((JFrame)parent, 2); //, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
         }
         else if (command.equals("report_foodmenu_ext2"))
         {
-            new PrintFoodDialog((JFrame)parent, 3, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            new PrintFoodDialog((JFrame)parent, 3); //, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
         }
         /*else if (command.equals("report_foodmenu_ext3"))
         {

@@ -1324,7 +1324,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
         try
         {
             Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + from
+                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + from
                         + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
 
             Iterator it = q.list().iterator();

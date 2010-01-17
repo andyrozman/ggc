@@ -37,26 +37,13 @@ import ggc.nutri.print.PrintFoodMenuExt2;
 import ggc.nutri.print.PrintFoodMenuExt3;
 import ggc.nutri.util.DataAccessNutri;
 
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
 
-import com.atech.graphics.components.DateComponent;
-import com.atech.graphics.dialogs.ActionExceptionCatchDialog;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.print.PrintDialogRange;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -85,7 +72,9 @@ import com.atech.i18n.I18nControlAbstract;
 
 // fix this
 
-public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
+public class PrintFoodDialog extends PrintDialogRange 
+
+//ActionExceptionCatchDialog // extends
 // JDialog
 // implements
 // ActionListener
@@ -94,9 +83,14 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
 
     
     
+    private static final long serialVersionUID = -7482208504803865975L;
+
+    private I18nControlAbstract ic = DataAccessNutri.getInstance().getParentI18nControlInstance();
+    
+    /*
     private static final long serialVersionUID = 2693207247071685559L;
     private DataAccessNutri m_da = DataAccessNutri.getInstance();
-    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
+    private I18nControlAbstract m_ic = m_da.getParentI18nControlInstance();
 
     private boolean m_actionDone = false;
 
@@ -112,10 +106,10 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
 
     private String[] report_types_1 = { m_ic.getMessage("SIMPLE_MONTHLY_REPORT"),
                                       m_ic.getMessage("EXTENDED_MONTHLY_REPORT") };
-
-    private String[] report_types_2 = { m_ic.getMessage("FOOD_MENU_BASE"),
-                                       m_ic.getMessage("FOOD_MENU_EXT_I"),
-                                       m_ic.getMessage("FOOD_MENU_EXT_II"),
+*/
+    private String[] report_types_2 = { ic.getMessage("FOOD_MENU_BASE"),
+                                       ic.getMessage("FOOD_MENU_EXT_I"),
+                                       ic.getMessage("FOOD_MENU_EXT_II"),
 //                                       m_ic.getMessage("FOOD_MENU_EXT_III")
                                        };
 
@@ -133,6 +127,19 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
 
 //    private int master_type = 1;
 
+    
+    /**
+     * Constructor
+     * 
+     * @param frame
+     * @param type
+     */
+    public PrintFoodDialog(JFrame frame, int type)
+    {
+        super(frame, type, DataAccessNutri.getInstance(),  DataAccessNutri.getInstance().getParentI18nControlInstance(), true);
+    }
+    
+    
     /**
      * Constructor 
      * 
@@ -140,15 +147,11 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
      * @param type
      * @param master_type
      */
-    public PrintFoodDialog(JFrame frame, int type, int master_type) // throws
+/*    public PrintFoodDialog(JFrame frame, int type, int master_type) // throws
                                                                    // Exception
     {
         super(DataAccessNutri.getInstance(), "printing_dialog");
         // super(frame, "", true);
-        /*
-         * Rectangle rec = frame.getBounds(); int x = rec.x + (rec.width / 2);
-         * int y = rec.y + (rec.height / 2);
-         */
         this.setLayout(null);
 
         font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
@@ -168,9 +171,10 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
 
         this.setVisible(true);
     }
-
-    @SuppressWarnings("unused")
-    private void init() // throws Exception
+*/
+    
+    
+  /*  private void init() // throws Exception
     {
 
         setSize(350, 320);
@@ -255,8 +259,9 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
          * button.setBounds(190, 240, 110, 25); panel.add(button);
          */
 
-    }
+    //}
 
+    /*
     private void initRange() // throws Exception
     {
 
@@ -304,7 +309,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
          * sl_month.setFont(this.font_normal); sl_month.setBounds(120, 185, 40,
          * 25); panel.add(sl_month);
          */
-
+/*
         label = new JLabel(m_ic.getMessage("SELECT_STARTING_RANGE") + ":");
         label.setFont(this.font_normal_bold);
         label.setBounds(40, 155, 180, 25);
@@ -351,119 +356,9 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
          * button.setBounds(190, 240, 110, 25); panel.add(button);
          */
 
-    }
+  //  }
 
-    /*
-     * Invoked when an action occurs.
-     */
-    /*
-     * public void actionPerformed(ActionEvent e) { String action =
-     * e.getActionCommand();
-     * 
-     * if (action.equals("cancel")) { m_actionDone = false; this.dispose(); }
-     * else if (action.equals("ok")) { int yr =
-     * ((Integer)sl_year.getValue()).intValue(); int mnth =
-     * ((Integer)sl_month.getValue()).intValue();
-     * 
-     * 
-     * MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
-     * 
-     * if (this.cb_template.getSelectedIndex()==0) { PrintSimpleMonthlyReport
-     * psm = new PrintSimpleMonthlyReport(mv); displayPDF(psm.getName());
-     * 
-     * } else { PrintExtendedMonthlyReport psm = new
-     * PrintExtendedMonthlyReport(mv); displayPDF(psm.getName()); }
-     * 
-     * 
-     * / if (this.tfName.getText().trim().equals("")) {
-     * JOptionPane.showMessageDialog(this, m_ic.getMessage("TYPE_NAME_BEFORE"),
-     * m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE); return; }
-     * m_actionDone = true;
-     */
-    /*
-     * this.dispose(); } else
-     * System.out.println("PrintingDialog: Unknown command: " + action);
-     * 
-     * }
-     */
 
-    /**
-     * performAction
-     */
-    @Override
-    public void performAction(ActionEvent e) throws Exception
-    {
-        String action = e.getActionCommand();
-        if (action.equals("cancel"))
-        {
-            m_actionDone = false;
-            this.dispose();
-        }
-        else if (action.equals("ok"))
-        {
-/*
-            if (this.master_type == PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION)
-            {
-                int yr = ((Integer) sl_year.getValue()).intValue();
-                int mnth = ((Integer) sl_month.getValue()).intValue();
-
-                //ATechDate at = new ATechDate(0, mnth, yr, 0, 0, ATechDate.FORMAT_DATE_ONLY);
-                
-                MonthlyValues mv = m_da.getDb().getMonthlyValues(yr, mnth);
-
-                
-                
-                //DayValuesData ddv = m_da.getDb().getDayValuesData(0, 0);
-                
-                
-                this.dispose();
-
-                if (this.cb_template.getSelectedIndex() == 0)
-                {
-                    PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
-                    
-                    displayPDF(psm.getNameWithPath());
-
-                }
-                else
-                {
-                    PrintExtendedMonthlyReport psm = new PrintExtendedMonthlyReport(mv);
-                    displayPDF(psm.getNameWithPath());
-                }
-            }
-            else */
-            {
-
-                System.out.println(this.dc_from.getDate() + " " + this.dc_to.getDate());
-                
-                DayValuesData dvd = m_da.getDb().getDayValuesData(this.dc_from.getDate(), this.dc_to.getDate()); //.getMonthlyValues(yr, mnth);
-                
-                
-                PrintAbstract pa = null;
-                
-                if (this.cb_template.getSelectedIndex() == 0)
-                {
-                    pa = new PrintFoodMenuBase(dvd);
-                }
-                else if (this.cb_template.getSelectedIndex() == 1)
-                {
-                    pa = new PrintFoodMenuExt1(dvd);
-                }
-                else if (this.cb_template.getSelectedIndex() == 2)
-                {
-                    pa = new PrintFoodMenuExt2(dvd);
-                }
-                else if (this.cb_template.getSelectedIndex() == 3)
-                {
-                    pa = new PrintFoodMenuExt3(dvd);
-                }
-                
-                
-                
-                displayPDF(pa.getNameWithPath());
-            }
-        }
-    }
 
     /**
      * Display PDF
@@ -471,7 +366,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
      * @param name name must be full path to file name (not just name as it was in previous versions)
      * @throws Exception
      */
-    public void displayPDF(String name) throws Exception
+/*    public void displayPDF(String name) throws Exception
     {
         //Thread.sleep(2000);
         
@@ -515,7 +410,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
             {
                 //System.out.println("Non-Windows found");
                 Runtime.getRuntime().exec(
-                    acr.getAbsoluteFile() + " " + file.getAbsolutePath() );
+                    acr.getAbsoluteFile() + " \"" + file.getAbsolutePath() + "\"");
 //                Runtime.getRuntime().exec(
 //                    acr.getAbsoluteFile() + " " + fl.getAbsolutePath() + File.separator + name);
             }
@@ -524,7 +419,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
             Runtime.getRuntime().exec(
                 acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\""); */
             //System.out.println(pdf_viewer + " " + file_path + File.separator + name);
-            System.out.println(pdf_viewer + " " + file.getAbsolutePath());
+/*            System.out.println(pdf_viewer + " \"" + file.getAbsolutePath() + "\"");
         }
         catch (RuntimeException ex)
         {
@@ -540,7 +435,7 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
 
         }
     }
-
+*/
     /**
      * Display PDF External (static method)
      * 
@@ -593,72 +488,120 @@ public class PrintFoodDialog extends ActionExceptionCatchDialog // extends
     }
 
     
-    /**
-     * Was Action Successful
-     * 
-     * @return true if action was successful (dialog closed with OK)
-     */
-    public boolean actionSuccessful()
-    {
-        return m_actionDone;
-    }
-
-    
-    /**
-     * Get Action Results
-     * 
-     * @return String array of results
-     */
-    public String[] getActionResults()
-    {
-        String[] res = new String[3];
-
-        if (m_actionDone)
-            res[0] = "1";
-        else
-            res[0] = "0";
-
-        res[1] = this.tfName.getText();
-        res[2] = this.cb_template.getSelectedItem().toString();
-
-        return res;
-    }
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    /**
-     * getComponent - get component to which to attach help context
-     */
-    public Component getComponent()
-    {
-        return this.getRootPane();
-    }
 
-    /**
-     * getHelpButton - get Help button
-     */
-    public JButton getHelpButton()
-    {
-        return this.help_button;
-    }
+    
 
     /**
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-        return "pages.GGC_Print_Selector";
+        return "GGC_Food_Print";
     }
 
+
+    @Override
+    public String[] getReportTypes()
+    {
+        if (this.report_types_2==null)
+        {
+            report_types_2 = new String[3]; 
+            report_types_2[0] = m_ic.getMessage("FOOD_MENU_BASE");
+            report_types_2[1] = m_ic.getMessage("FOOD_MENU_EXT_I");
+            report_types_2[2] = m_ic.getMessage("FOOD_MENU_EXT_II");
+            
+            /*
+            { ic.getMessage("FOOD_MENU_BASE"),
+                                                ic.getMessage("FOOD_MENU_EXT_I"),
+                                                ic.getMessage("FOOD_MENU_EXT_II"),
+//                                                m_ic.getMessage("FOOD_MENU_EXT_III")
+                                                };
+            */
+            
+            
+            
+        }
+        
+        
+        
+        System.out.println("rep_types: " + this.report_types_2 );
+        
+        return report_types_2;
+    }
+
+    @Override
+    public void startPrintingAction() throws Exception
+    {
+        System.out.println(this.dc_from.getDate() + " " + this.dc_to.getDate());
+        
+        DataAccessNutri da = (DataAccessNutri)m_da;
+        
+        
+        System.out.println("da: " + da);
+        System.out.println("da.getDb: " + da.getDb());
+        
+        DayValuesData dvd = da.getNutriDb().getDayValuesData(this.dc_from.getDate(), this.dc_to.getDate()); //.getMonthlyValues(yr, mnth);
+        
+        
+        PrintAbstract pa = null;
+        
+        if (this.cb_template.getSelectedIndex() == 0)
+        {
+            pa = new PrintFoodMenuBase(dvd);
+        }
+        else if (this.cb_template.getSelectedIndex() == 1)
+        {
+            pa = new PrintFoodMenuExt1(dvd);
+        }
+        else if (this.cb_template.getSelectedIndex() == 2)
+        {
+            pa = new PrintFoodMenuExt2(dvd);
+        }
+        else if (this.cb_template.getSelectedIndex() == 3)
+        {
+            pa = new PrintFoodMenuExt3(dvd);
+        }
+        
+        
+        displayPDF(pa.getNameWithPath());
+        
+    }
+
+    
     /**
-     * getObject
+     * We have Secondary Type choice 
+     * 
+     * @return
+     */
+    public boolean weHaveSecondaryType()
+    {
+        return false;
+    }
+    
+    
+    
+    /**
+     * Get Pdf Viewer (path to software)
+     * 
+     * @return
      */
     @Override
-    public Object getObject()
+    public String getPdfViewer()
     {
-        return this;
+        return DataAccess.getInstance().getSettings().getPdfVieverPath().replace('\\', '/');
     }
-
+    
+    @Override
+    public String getPdfViewerParameters()
+    {
+        // FIXME
+        return "";
+    }    
+    
+    
 }
