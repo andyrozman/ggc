@@ -101,7 +101,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         createConfigurationContext();
         createPlugInVersion();
         loadDeviceDataHandler();
-        loadManager();
+        //loadManager();
         loadReadingStatuses();
         createPlugInDataRetrievalContext();
         loadWebLister();

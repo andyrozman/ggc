@@ -155,7 +155,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
             this.sendMessageToMeter("1GET_EVENTS\00348\r\n");
             
-            this.output_writer.setSubStatus(m_ic.getMessage("PIX_READING"));
+            this.output_writer.setSubStatus(ic.getMessage("PIX_READING"));
             
             for(data_back = readLine(); data_back.indexOf("END_OF_DATA") == -1;)
             {

@@ -227,10 +227,13 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     @Override
     public void initPlugIn()
     {
-        ic = m_da.getI18nControlInstance();
         //I18nControl.getInstance().setLanguage(this.selected_lang);
         
         da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        ic = da_local.getI18nControlInstance();
+        
+        
+        da_local.loadManager();
         
         //DataAccessMeter da = DataAccessMeter.getInstance();
 //        ic = da.getI18nControlInstance();

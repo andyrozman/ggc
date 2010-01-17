@@ -6,13 +6,11 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPortEvent;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.file.FileReaderContext;
 
 /**
@@ -45,8 +43,8 @@ import com.atech.utils.file.FileReaderContext;
 public abstract class AbstractSerialMeter extends SerialProtocol implements MeterInterface, SelectableInterface
 {
 
-    protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
-    protected OutputWriter output_writer;
+    //protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
+    //protected OutputWriter output_writer;
     AbstractDeviceCompany device_company = null;
     protected int m_status = 0;
     protected boolean communication_established = false;
