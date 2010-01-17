@@ -97,7 +97,7 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
      */
     public String getHelpId()
     {
-        return null; //"pages.GGC_BG_HbA1c";
+        return "GGC_BG_Graph_Daily";
     }
 
     

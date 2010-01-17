@@ -87,7 +87,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_HbA1c";
+        return "GGC_BG_HbA1c";
     }
 
     /**

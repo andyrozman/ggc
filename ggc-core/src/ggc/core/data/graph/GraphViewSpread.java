@@ -94,7 +94,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Graph_Spread";
+        return "GGC_BG_Graph_Spread";
     }
 
     /**

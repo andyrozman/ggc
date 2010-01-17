@@ -109,7 +109,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Graph_Course";
+        return "GGC_BG_Graph_Course";
     }
 
     /**

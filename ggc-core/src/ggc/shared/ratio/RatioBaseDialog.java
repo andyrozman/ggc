@@ -494,7 +494,7 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
      */
     public String getHelpId()
     {
-        return "pages.GGC_Ratio_Base";
+        return "GGC_Ratio_Base";
     }
     
     

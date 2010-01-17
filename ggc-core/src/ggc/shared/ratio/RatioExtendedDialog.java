@@ -666,7 +666,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
      */
     public String getHelpId()
     {
-        return "pages.GGC_BG_Daily_Add";
+        return "GGC_Ratio_Extended";
     }
     
     

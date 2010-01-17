@@ -1,5 +1,6 @@
 package ggc.core.plugins;
 
+import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
 
 import java.awt.Component;
@@ -10,6 +11,7 @@ import javax.swing.JFrame;
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
+import com.atech.plugin.PlugInServer;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -92,6 +94,27 @@ public class CGMSPlugIn extends PlugInClient
      */
     public void checkIfInstalled()
     {
+        
+        try
+        {
+            Class<?> c = Class.forName("ggc.cgms.plugin.CGMSPlugInServer");
+
+            this.m_server = (PlugInServer) c.newInstance();
+            installed = true;
+            
+            this.m_server.init(this.parent, 
+                DataAccess.getInstance().getI18nControlInstance().getSelectedLangauge(), 
+                DataAccess.getInstance(), 
+                this, 
+                DataAccess.getInstance().getDb() );
+        }
+        catch (Exception ex)
+        {
+            System.out.println("CGMSPlugInServer::Exception:" + ex);
+            ex.printStackTrace();
+        }
+        
+        
     }
 
     
@@ -124,10 +147,10 @@ public class CGMSPlugIn extends PlugInClient
         this.commands_implemented[3] = false;
 
         this.commands_will_be_done = new String[4];
-        this.commands_will_be_done[0] = "0.5";
-        this.commands_will_be_done[1] = "0.5";
-        this.commands_will_be_done[2] = "0.5";
-        this.commands_will_be_done[3] = "0.5";
+        this.commands_will_be_done[0] = "0.6";
+        this.commands_will_be_done[1] = "0.6";
+        this.commands_will_be_done[2] = "0.6";
+        this.commands_will_be_done[3] = "0.6";
 
     }
 
@@ -196,7 +219,10 @@ public class CGMSPlugIn extends PlugInClient
      */
     public String getShortStatus()
     {
-        return String.format(ic.getMessage("STATUS_NOT_AVAILABLE"), "0.6");
+        if (this.m_server != null)
+            return String.format(ic.getMessage("STATUS_INSTALLED"), this.m_server.getVersion());
+        else
+            return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
     private void refreshPanels(int mask)

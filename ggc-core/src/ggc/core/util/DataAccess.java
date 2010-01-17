@@ -771,8 +771,9 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public void initPlugIns()
     {
-        
+        log.debug("init Plugins");
        
+        log.debug("init Plugins: Meter Tool");
         
         addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
         // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
@@ -785,12 +786,18 @@ public class DataAccess extends ATDataAccessLMAbstract
         ppi.setTransferObjects(lst);
         */
         //addPlugIn(DataAccess.PLUGIN_PUMPS, ppi);
+
+        log.debug("init Plugins: Pumps Tool");
+        
         addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this));
         
         // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
 
+        log.debug("init Plugins: CGMS Tool");
+        
         addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
 
+        log.debug("init Plugins: Nutrition Tool");
         addPlugIn(DataAccess.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
         
         // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
