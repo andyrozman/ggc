@@ -2,9 +2,11 @@
 Changes file for GGC Plug-In Base
 ==================================
 
-0.4.4 current
+0.4.4 [24.1.2010]
     * Added reading of configuration possibility. Added GUI classes, reading classes and special method in DeviceInterface
       which is for checking if device supports reading of configuration (most don't)
+    * Added class PlugInDeviceUtil
+    * Changed DownloadSupportType to BITMASK
 
 0.4.3 [22.8.2009]
     * Added BlueToothProtocol class (uses BT over serial, but using IBM javax.comm library)

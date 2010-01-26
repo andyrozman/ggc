@@ -143,7 +143,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         dc.setSelectedDeviceFromConfigurator(this.current_index_object);
         //dc.setSelectedDevice(this.cb_entry.getSelectedIndex()+1);
         
-        System.out.println("Index: " + (this.cb_entry.getSelectedItem()));
+        //System.out.println("Index: " + (this.cb_entry.getSelectedItem()));
         
         dc.writeConfigData();
     }

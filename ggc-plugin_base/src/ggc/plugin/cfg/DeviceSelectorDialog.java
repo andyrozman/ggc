@@ -77,6 +77,11 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
         if (this.dcd == null)
             this.dcd = ((DataAccessPlugInBase)m_da).getDeviceConfigurationDefinition();
         
+        System.out.println("CGMS DeviceConfigurationDefinition:");
+        System.out.println("dcd: " + this.dcd);
+        System.out.println("supported devices: " + this.dcd.getSupportedDevices());
+        
+        
         return this.dcd;
     }
     
@@ -105,6 +110,10 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     {
         this.full = new ArrayList<SelectableInterface>();
         this.full.addAll((Collection<? extends SelectableInterface>) this.getDeviceConfigurationDefinition().getSupportedDevices());
+        
+        
+        System.out.println("Counter: " + this.full.size());
+        
     }
     
     

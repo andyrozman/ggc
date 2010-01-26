@@ -1,4 +1,4 @@
-/*
+/**
  *  GGC - GNU Gluco Control
  *
  *  A pure java app to help you manage your diabetes.
@@ -19,11 +19,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Filename: MeterManager.java
- *  Purpose:  This class contains all definitions for Meters. This includes:
- *        meter names, classes that handle meter and all other relevant data.
+ *  Filename: AbstractDeviceCompany.java
+ *  Purpose:  This is class for defining company.
  *
- *  Author:   andyrozman
+ *  Author: Andy {andy@atech-software.com}
  */
 
 
@@ -74,7 +73,14 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
     Hashtable<String,DeviceInterface> devices = new Hashtable<String,DeviceInterface>();
     Vector<DeviceInterface> devices_vector = new Vector<DeviceInterface>();
     
-
+    protected int company_id = 0;
+    protected String company_name = "";
+    protected String company_description = "";
+    protected int company_implementation_status = 0;
+    protected String company_short_name = "";
+    
+    
+    
     
     /**
      * Constructor
@@ -101,6 +107,24 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
         {
             this.devices_vector.add(new EmptyMgrDevices());
         }
+    }
+
+    
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param empty
+     */
+    public AbstractDeviceCompany(boolean empty, int company_id_, String company_name, String short_company_name, String company_desc, int implementation_status)
+    {
+        this(empty);
+        
+        this.company_id = company_id_;
+        this.company_name = company_name;
+        this.company_short_name = short_company_name;
+        this.company_implementation_status = implementation_status;
+        this.company_description = company_desc; 
     }
     
     
@@ -142,13 +166,6 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
     }
     
     
-    /**
-     * Get Name
-     * 
-     * @see ggc.plugin.manager.company.DeviceCompanyInterface#getName()
-     */
-    public abstract String getName();
-    
     
     /**
      * To String
@@ -184,6 +201,70 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
     {
         return "";
     }
+    
+    
+    /**
+     * getName - Get Name of company. 
+     * 
+     * @see ggc.plugin.manager.company.DeviceCompanyInterface#getName()
+     * @return name of device
+     */
+    public String getName()
+    {
+        return this.company_name;
+    }
+
+
+    /**
+     * getName - Get Name of company. 
+     * 
+     * @see ggc.plugin.manager.company.DeviceCompanyInterface#getName()
+     * @return name of device
+     */
+    public String getShortName()
+    {
+        if (this.company_short_name.length()==0)
+            return this.getName();
+        else
+            return this.company_short_name;
+    }
+    
+    
+    
+    /**
+     * getCompanyId - Get Company Id 
+     * 
+     * @return id of company
+     */
+    public int getCompanyId()
+    {
+        return this.company_id;
+    }
+    
+    
+    /**
+     * getInstructions - get instructions for device
+     * 
+     * @return instructions for reading data 
+     */
+    public String getDescription()
+    {
+       return this.company_description; 
+    }
+    
+    
+    
+    /**
+     * getImplementationStatus - Get Implementation status 
+     * 
+     * @return implementation status as number
+     * @see ggc.plugin.manager.DeviceImplementationStatus
+     */
+    public int getImplementationStatus()
+    {
+        return this.company_implementation_status;
+    }
+    
     
     
     

@@ -7,7 +7,6 @@ import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.manager.DeviceManager;
@@ -99,6 +98,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public int m_BG_unit = BG_MMOL;
 
+    
+    private PlugInDeviceUtil plugin_device_util = null;
+    
     
     /**
      * The hdb.
@@ -1250,7 +1252,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      *   1 = Device not selected
      *   2 = Device doesn't support Download
      *   
-     *  10 = Download OK
+     *  10 = Download from device supported
+     *  11 = Download from fileexport supported
+     *  12 = 10 + 11
      * 
      * @return
      */
@@ -1263,10 +1267,14 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
             return 1;
         else
         {
+            return pi.getDownloadSupportType();
+            
+            /*
             if (pi.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
                 return 10;
             else
                 return 2;
+                */
         }
         
     }
@@ -1355,6 +1363,16 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         this.m_parent_i18n = ic;
     }
+    
+    
+    public PlugInDeviceUtil getPluginDeviceUtil()
+    {
+        if (plugin_device_util==null)
+            plugin_device_util = new PlugInDeviceUtil(this);
+        
+        return this.plugin_device_util;
+    }
+    
     
 
 }
