@@ -225,11 +225,36 @@ public class CGMSPlugIn extends PlugInClient
             return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
+    
+    
     private void refreshPanels(int mask)
     {
-        //MainFrame mf = (MainFrame)parent;
-        //mf.informationPanel.refreshGroup(mask);
+        DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
     }
+    
+
+    
+    /**
+     * This is method which can be used by server side to do certain action. Mainly this will be used
+     * to run refreshes and such actions. This needs to be implemented by Client side, if you wish to use
+     * it.
+     * 
+     * @param action_type
+     */
+    public void executeReturnAction(int action_type)
+    {
+        
+        if (action_type == PumpsPlugIn.RETURN_ACTION_READ_DATA)
+        {
+            refreshPanels(RefreshInfo.PANEL_GROUP_ALL_DATA);
+        }
+        else if (action_type == PumpsPlugIn.RETURN_ACTION_CONFIG)
+        {
+            refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
+        }
+        
+    }
+    
     
     
     /**
