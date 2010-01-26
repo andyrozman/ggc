@@ -2,6 +2,7 @@ package ggc.cgms.util;
 
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.manager.CGMSManager;
+import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -52,12 +53,12 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "0.1.1";
+    public static final String PLUGIN_VERSION = "0.3.1";
 
 
     private static DataAccessCGMS s_da = null; // This is handle to unique 
 
-    private CGMSManager m_device_manager = null;
+    private CGMSManager m_cgms_manager = null;
 
         
         
@@ -96,7 +97,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         this.createPlugInDataRetrievalContext();
         this.createDeviceConfiguration();
         this.createOldDataReader();
-        loadWebLister();        
+        loadWebLister();
+        
     }
     
     
@@ -182,7 +184,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
      */
     public CGMSManager getCGMManager()
     {
-        return this.m_device_manager;
+        return this.m_cgms_manager;
     }
 
 
@@ -282,7 +284,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void createDeviceConfiguration()
     {
-        // TODO Auto-generated method stub
+        this.device_config = new DeviceConfiguration(this);
     }
 
     
@@ -443,8 +445,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void loadManager()
     {
-        // TODO Auto-generated method stub
-        
+        this.m_cgms_manager = CGMSManager.getInstance();
+        this.m_manager = this.m_cgms_manager;
     }
 
     

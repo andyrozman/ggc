@@ -56,14 +56,16 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     protected String device_name;
     protected OutputWriter output_writer;
     protected String parameter;
-
+    protected DataAccessCGMS m_da;
+    
     /**
      * Constructor
      */
     public AbstractCGMS()
     {
         super();
-        ic = DataAccessCGMS.getInstance().getI18nControlInstance();
+        m_da = DataAccessCGMS.getInstance();
+        ic = m_da.getI18nControlInstance();
     }
 
     
@@ -76,7 +78,8 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     public AbstractCGMS(String param, OutputWriter ow)
     {
         super();
-        ic = DataAccessCGMS.getInstance().getI18nControlInstance();
+        m_da = DataAccessCGMS.getInstance();
+        ic = m_da.getI18nControlInstance();
         this.m_output_writer = ow;
         this.parameter = param;
     }
@@ -90,6 +93,8 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     public AbstractCGMS(OutputWriter ow)
     {
         super();
+        m_da = DataAccessCGMS.getInstance();
+        ic = m_da.getI18nControlInstance();
         this.m_output_writer = ow;
     }
 
@@ -102,6 +107,8 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     public AbstractCGMS(AbstractDeviceCompany cmp)
     {
         super();
+        m_da = DataAccessCGMS.getInstance();
+        ic = m_da.getI18nControlInstance();
         this.setDeviceCompany(cmp);
         this.setCGMSType(cmp.getName(), getName());
     }
@@ -287,43 +294,63 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     }
 
 
+    
     /** 
      * Get Column Count
      */
     public int getColumnCount()
     {
-        return 5;
+        return m_da.getPluginDeviceUtil().getColumnCount();
     }
-
-
     
-
-    float device_columns_width[] = { 0.25f, 0.25f, 0.3f, 0.1f, 0.1f };
-    String device_columns[] = null;
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
-        if (device_columns==null)
-        {
-            this.device_columns = new String[5];
-            device_columns[0] = ic.getMessage("DEVICE_COMPANY");
-            device_columns[1] = ic.getMessage("DEVICE_DEVICE");
-            device_columns[2] = ic.getMessage("DEVICE_CONNECTION");
-            device_columns[3] = ic.getMessage("DEVICE_DOWNLOAD");
-            device_columns[4] = ic.getMessage("DEVICE_SETTINGS");
-        }
-        
-        return device_columns[num-1];
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+    }    
+    
+    
+    /** 
+     * Get Column Width
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
     }
+    
+    
+    
 
+
+    
+    
+    /** 
+     * getColumnValue - get Value of column, for configuration
+     */
+    public String getColumnValue(int num)
+    {
+        
+        try
+        {
+            return m_da.getPluginDeviceUtil().getColumnValue(num, this);
+        }
+        catch(Exception ex)
+        {
+            System.out.println("column: [name=" + this.getName() + ", id=" + num);
+            return "";
+            
+        }
+    }
+    
+    
 
     /** 
      * getColumnValue
      */
-    public String getColumnValue(int num)
+/*    public String getColumnValue(int num)
     {
         //System.out.println("Num: " + num);
         switch(num)
@@ -352,7 +379,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
                 return "N/A: " + num;
         }
     }
-    
+  */  
     
 
 
@@ -367,13 +394,6 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
 
     
     
-    /** 
-     * Get Column Width
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        return (int)(this.device_columns_width[num-1] * width);
-    }
 
 
     /** 

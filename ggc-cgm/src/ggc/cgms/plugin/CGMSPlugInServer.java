@@ -2,6 +2,7 @@ package ggc.cgms.plugin;
 
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.DataAccess;
+import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -50,7 +51,7 @@ import com.atech.utils.ATSwingUtils;
 public class CGMSPlugInServer extends PlugInServer implements ActionListener
 {
 
-    private String cgm_tool_version = "0.1.1";
+    //private String cgm_tool_version = "0.1.1";
     
     I18nControlAbstract ic_local = null;
     
@@ -79,6 +80,20 @@ public class CGMSPlugInServer extends PlugInServer implements ActionListener
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
+    
+
+    
+    /**
+     * This is action that needs to be done, after read data.
+     */
+    public static final int RETURN_ACTION_READ_DATA = 1;
+    
+    
+    /**
+     * This is action that needs to be done, after config
+     */
+    public static final int RETURN_ACTION_CONFIG = 2;
+    
     
     
     private String commands[] = {
@@ -176,7 +191,7 @@ public class CGMSPlugInServer extends PlugInServer implements ActionListener
     @Override
     public String getVersion()
     {
-        return this.cgm_tool_version;
+        return DataAccessCGMS.PLUGIN_VERSION;
     }
 
     /**
@@ -234,7 +249,33 @@ public class CGMSPlugInServer extends PlugInServer implements ActionListener
     @Override
     public Object getReturnObject(int ret_obj_id)
     {
-        return null;
+        
+        if (ret_obj_id == CGMSPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
+        {
+            DataAccessCGMS da = DataAccessCGMS.getInstance();
+            DeviceConfigEntry de = da.getDeviceConfiguration().getSelectedDeviceInstance();
+            
+            if (de==null)
+                return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+            else
+            {
+
+                if (de.device_device.equals(da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
+                {
+                    return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                }
+                else
+                {
+                    if (m_da.isValueSet(de.communication_port))
+                        return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device + " [" + de.device_company + "]", de.communication_port);
+                    else
+                        return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITHOUT_PORT"), de.device_device + " [" + de.device_company + "]");
+                }
+            }   
+        }
+        else
+            return null;
+        
     }
 
 
@@ -337,7 +378,7 @@ public class CGMSPlugInServer extends PlugInServer implements ActionListener
         else if (command.equals("cgms_config"))
         {
             new DeviceConfigurationDialog((JFrame)this.parent, DataAccessCGMS.getInstance());
-//            this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_CONFIG);
+            this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_CONFIG);
         }
         else if (command.equals("cgms_about"))
         {

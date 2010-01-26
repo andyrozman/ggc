@@ -1,5 +1,9 @@
 package ggc.cgms.manager.company; 
 
+import ggc.cgms.device.minimed.GuardianRealTime;
+import ggc.cgms.device.minimed.MiniMedCGMSGold;
+import ggc.cgms.device.minimed.MiniMedRealTime;
+import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -39,60 +43,16 @@ public class Minimed extends AbstractDeviceCompany
      */
     public Minimed()
     {
-        super(false);
+        super(false,                            // empty devices
+            CGMSDevicesIds.COMPANY_MINIMED,     // company_id
+            "MiniMed",                          // company name (full)
+            "MiniMed",                          // short company name
+            "MINIMED_DESC",                     // company description
+            DeviceImplementationStatus.IMPLEMENTATION_PLANNED);  // implementation status
+        
+        this.addDevice(new MiniMedCGMSGold(this));
+        this.addDevice(new GuardianRealTime(this));
+        this.addDevice(new MiniMedRealTime(this));
     }
-
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "Home Diagnostic";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 8;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "HOMEDIAGNOSTIC_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
-    }
-    
-    
     
 }

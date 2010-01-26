@@ -29,7 +29,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     CGMConfigurationDefinition
+ *  Filename:     CGMSConfigurationDefinition
  *  Description:  Definition for CGMS configurator
  * 
  *  Author: Andy {andy@atech-software.com}
@@ -56,7 +56,7 @@ public class CGMSConfigurationDefinition implements DeviceConfigurationDefinitio
      */
     public boolean doesDeviceSupportTimeFix()
     {
-        return true;
+        return false;
     }
 
     /**

@@ -3,6 +3,7 @@ package ggc.cgms.device;
 
 
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.device.PlugInBaseException;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -33,7 +34,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class DummyCGMS extends GenericCGMS //implements MeterInterface
+public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInterface
 {
 
     DataAccessCGMS m_da = DataAccessCGMS.getInstance();
@@ -86,6 +87,118 @@ public class DummyCGMS extends GenericCGMS //implements MeterInterface
     public int getDeviceId()
     {
         return 0;
+    }
+
+
+    public void dispose()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public String getComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public String getConnectionPort()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public int getConnectionProtocol()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public String getDeviceClassName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public String getDeviceSpecialComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public String getIconName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public int getImplementationStatus()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public String getInstructions()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public boolean hasSpecialProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean isDeviceCommunicating()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean isReadableDevice()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public void readConfiguration() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void readDeviceDataPartitial() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void readInfo() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 

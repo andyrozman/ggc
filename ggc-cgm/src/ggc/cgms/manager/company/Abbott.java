@@ -1,5 +1,7 @@
 package ggc.cgms.manager.company; 
 
+import ggc.cgms.device.freestyle.FreestyleNavigator;
+import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -39,64 +41,15 @@ public class Abbott extends AbstractDeviceCompany
      */
     public Abbott()
     {
-        super(false);
+        super(false,                            // empty devices
+            CGMSDevicesIds.COMPANY_ABBOTT,      // company_id
+            "Abbott",                           // company name (full)
+            "Abbott",                           // short company name
+            "ABBOTT_DESC",                      // company description
+            DeviceImplementationStatus.IMPLEMENTATION_PLANNED);  // implementation status
+        
+        this.addDevice(new FreestyleNavigator(this));
     }
-
-
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "Abbott";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 4;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "ABBOTT_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
-    }
-    
     
     
 }

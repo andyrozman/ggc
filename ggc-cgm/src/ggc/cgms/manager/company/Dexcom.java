@@ -1,5 +1,9 @@
 package ggc.cgms.manager.company; 
 
+import ggc.cgms.device.dexcom.DexcomSeven;
+import ggc.cgms.device.dexcom.DexcomSevenPlus;
+import ggc.cgms.manager.CGMSDevicesIds;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 /**
@@ -37,75 +41,16 @@ public class Dexcom extends AbstractDeviceCompany
      */
     public Dexcom()
     {
-        super(false);
+        super(false,                            // empty devices
+            CGMSDevicesIds.COMPANY_DEXCOM,      // company_id
+            "Dexcom",                           // company name (full)
+            "Dexcom",                           // short company name
+            "DEXCOM_DESC",                      // company description
+            DeviceImplementationStatus.IMPLEMENTATION_PLANNED);  // implementation status
+        
+        this.addDevice(new DexcomSeven(this));
+        this.addDevice(new DexcomSevenPlus(this));
     }    
     
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "Ascensia/Bayer";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 1;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "ASCENSIA_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return 0;
-    }
-    
-
-    /** 
-     * Get Connection Sample
-     */
-    public String getConnectionSample()
-    {
-        return "COM9";
-    }
-    
-    
-    /** 
-     * Get Connection Samples
-     */
-    public String getConnectionSamples()
-    {
-        return "SERIAL_PORTS";  //"Serial Ports: COM2,...";
-    }
     
 }

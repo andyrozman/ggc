@@ -1,5 +1,8 @@
 package ggc.cgms.manager; 
 
+import ggc.cgms.manager.company.Abbott;
+import ggc.cgms.manager.company.Dexcom;
+import ggc.cgms.manager.company.Minimed;
 import ggc.plugin.manager.DeviceManager;
 
 
@@ -35,26 +38,6 @@ public class CGMSManager extends DeviceManager
     
     
     /**
-     * CGMS Company: Minimed
-     */
-    public static final int CGMS_COMPANY_MINIMED              = 1;
-    
-
-    /**
-     * CGMS Company: Roche
-     */
-    public static final int CGMS_COMPANY_ABBOTT               = 2;
-
-    
-    /**
-     * CGMS Company: Disetronic
-     */
-    public static final int CGMS_COMPANY_DEXCOM               = 3;
-    
-
-    
-    
-    /**
      * Singelton instance
      */
     public static CGMSManager s_manager = null;
@@ -87,7 +70,11 @@ public class CGMSManager extends DeviceManager
      */
     public void loadSupportedDevices()
     {
-        // TODO: Added supported devices
+        addDeviceCompany(new Abbott());
+        addDeviceCompany(new Dexcom());
+        addDeviceCompany(new Minimed());
+        
+        System.out.println("!!! CGMS Companies: " + this.companies.size());
     }
     
     
@@ -97,7 +84,11 @@ public class CGMSManager extends DeviceManager
     @Override
     public void loadDeviceCompanies()
     {
-        // TODO: Load devices companies
+        this.supported_devices.addAll(new Abbott().getDevices());
+        this.supported_devices.addAll(new Dexcom().getDevices());
+        this.supported_devices.addAll(new Minimed().getDevices());
+
+        System.out.println("!!! CGMS Devices: " + this.supported_devices.size());
     }
     
 
