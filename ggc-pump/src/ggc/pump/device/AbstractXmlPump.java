@@ -370,43 +370,50 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         return 0;
     }
 
-
+    
     /** 
      * Get Column Count
      */
     public int getColumnCount()
     {
-        return 5;
+        return m_da.getPluginDeviceUtil().getColumnCount();
     }
-
-
     
-    float device_columns_width[] = { 0.25f, 0.25f, 0.3f, 0.1f, 0.1f };
-    String device_columns[] = null;
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
-        if (device_columns==null)
-        {
-            this.device_columns = new String[5];
-            device_columns[0] = ic.getMessage("DEVICE_COMPANY");
-            device_columns[1] = ic.getMessage("DEVICE_DEVICE");
-            device_columns[2] = ic.getMessage("DEVICE_CONNECTION");
-            device_columns[3] = ic.getMessage("DEVICE_DOWNLOAD");
-            device_columns[4] = ic.getMessage("DEVICE_SETTINGS");
-        }
-        
-        return device_columns[num-1];
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+    }    
+    
+    
+    /** 
+     * Get Column Width
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
     }
+    
+    
+    
 
+    
+    /** 
+     * getColumnValue - get Value of column, for configuration
+     */
+    public String getColumnValue(int num)
+    {
+        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
+    }
+    
 
     /** 
      * getColumnValue
      */
-    public String getColumnValue(int num)
+/*    public String getColumnValue(int num)
     {
         //System.out.println("Num: " + num);
         switch(num)
@@ -434,7 +441,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
                 return "N/A: " + num;
         }
     }
-
+*/
 
     /** 
      * Get Column Value Object
@@ -444,13 +451,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         return this.getColumnValue(num);
     }
 
-    /** 
-     * Get Column Width
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        return (int)(this.device_columns_width[num-1] * width);
-    }
 
 
 

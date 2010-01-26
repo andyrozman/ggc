@@ -1,6 +1,7 @@
 package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -675,5 +676,18 @@ public abstract class AccuChekSmartPix extends AbstractXmlPump //mlProtocol //im
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
     }
+ 
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+    }
+    
+    
     
 }

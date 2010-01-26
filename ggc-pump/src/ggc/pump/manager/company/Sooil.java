@@ -1,5 +1,6 @@
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.dana.DanaDiabecare_II;
 import ggc.pump.device.dana.DanaDiabecare_III_R;
 import ggc.pump.device.dana.DanaDiabecare_IIS;
@@ -40,66 +41,30 @@ public class Sooil extends AbstractPumpDeviceCompany
      */
     public Sooil()
     {
-        super(false);
-        profile_names = new String[16];
-  
-        for(int i=0; i<16; i++)
-        {
-            profile_names[i] = "" + (i+1);
-        }
+        super(PumpDevicesIds.COMPANY_SOOIL,     // company_id
+            "Sooil (Dana)",                     // company name (full)
+            "Dana",                             // short company name
+            "SOOIL_DESC",                       // company description
+            DeviceImplementationStatus.IMPLEMENTATION_DONE);  // implementation status
         
-        //this.addDevice(new GenericPumpDevice(this));
         this.addDevice(new DanaDiabecare_II(this));
         this.addDevice(new DanaDiabecare_IIS(this));
         this.addDevice(new DanaDiabecare_III_R(this));
     }
 
-
-    /**
-     * getName - Get Name of pump company. 
-     * 
-     * @return name of pump company
-     */
-    public String getName()
-    {
-        return "Sooil (Dana)";
-    }
-
     
     /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
+     * Init Profile Names (for Profile Editor)
      */
-    public int getCompanyId()
+    public void initProfileNames()
     {
-        return PumpDevicesIds.COMPANY_SOOIL;
+        profile_names = new String[16];
+        
+        for(int i=0; i<16; i++)
+        {
+            profile_names[i] = "" + (i+1);
+        }
     }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "SOOIL_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return 0;
-    }
-    
     
     
 }

@@ -2,6 +2,8 @@ package ggc.pump.test;
 
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
+import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
@@ -12,6 +14,7 @@ import ggc.pump.util.DataAccessPump;
 import java.io.File;
 import java.util.Vector;
 
+import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
 
@@ -72,6 +75,7 @@ public class PumpConsoleTester //extends JFrame
     	    startRoche(portName);
     	    //startDana(portName);
     	    //startMinimed("./dta/CareLink-Export-1213803114904.csv");
+    	    test();
     	}
     	catch(Exception ex)
     	{
@@ -81,6 +85,23 @@ public class PumpConsoleTester //extends JFrame
 
     }
 
+    
+    public void test()
+    {
+        int num = 56;
+        
+        if ((num & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+        {
+            System.out.println("DOWNLOAD_DEVICE");
+        }
+        
+        
+        
+        
+        
+    }
+    
+    
     
     
     /**
@@ -105,7 +126,7 @@ public class PumpConsoleTester //extends JFrame
      */
     public void startRoche(String portName) throws Exception
     {
-        DataAccessPump dap = DataAccessPump.getInstance();
+        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
         //dap.setHelpContext(da.getHelpContext());
         //dap.setPlugInServerInstance(this);
         //dap.createDb(da.getHibernateDb());
@@ -119,7 +140,9 @@ public class PumpConsoleTester //extends JFrame
         
         AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
         //acs.processXml(new File("../test/I0014072.XML"));
-        acs.processXml(new File("../test/I0026117.XML"));
+        acs.processXml(new File("../test/i0026117.xml"));
+            
+        //"../test/I0026117.XML"));
         acs.test();
         
         //AccuChekSmartPixPump pp = (AccuChekSmartPixPump)acs;
@@ -218,8 +241,10 @@ public class PumpConsoleTester //extends JFrame
     {
     	try
     	{
-    	    new PumpConsoleTester(args[0]);
-    
+    	    if (args.length==0)
+    	        new PumpConsoleTester("");
+    	    else
+                new PumpConsoleTester(args[0]);
     
     	}
     	catch(Exception ex)

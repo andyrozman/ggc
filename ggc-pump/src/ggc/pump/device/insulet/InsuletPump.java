@@ -3,6 +3,7 @@ package ggc.pump.device.insulet;
 import java.util.Hashtable;
 
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -321,6 +322,17 @@ public abstract class InsuletPump extends AbstractPump
         return false;
     }
 
+
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+    }
+    
     
     
 }

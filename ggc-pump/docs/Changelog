@@ -2,6 +2,13 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.0.4
+    * PluginBase changed
+    * I18n Changed
+    * Company context changed
+    * Device Selector is now global and uses PlugInDeviceUtil
+    * Continuning work on Roche Pumps - Profiles 
+
 1.0.3 [30.10.2009] 
     * Finished Dana import
     * TBR fixed

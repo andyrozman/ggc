@@ -1,5 +1,6 @@
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.deltec.DeltecCosmo1700;
 import ggc.pump.device.deltec.DeltecCosmo1800;
 import ggc.pump.manager.PumpDevicesIds;
@@ -39,58 +40,24 @@ public class Deltec extends AbstractPumpDeviceCompany
      */
     public Deltec()
     {
-        super(false);
-        //this.addDevice(new GenericPumpDevice(this));
+        super(                                  // empty devices
+            PumpDevicesIds.COMPANY_DELTEC,      // company_id
+            "Deltec",                           // company name (full)
+            "Deltec",                           // short company name
+            "DELTEC_DESC",                      // company description
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE);  // implementation status
+        
         this.addDevice(new DeltecCosmo1700(this));
         this.addDevice(new DeltecCosmo1800(this));
     }
-
-
-    /**
-     * getName - Get Name of pump company. 
-     * 
-     * @return name of pump company
-     */
-    public String getName()
-    {
-        return "Deltec";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return PumpDevicesIds.COMPANY_DELTEC;
-    }
     
     
     /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
+     * Init Profile Names (for Profile Editor)
      */
-    public String getDescription()
+    public void initProfileNames()
     {
-       return "DELTEC_DESC"; 
     }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return 0;
-    }
-    
     
     
 }

@@ -433,30 +433,50 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     }
 
 
+    
     /** 
      * Get Column Count
      */
     public int getColumnCount()
     {
-        return 5;
+        return m_da.getPluginDeviceUtil().getColumnCount();
     }
-
-    String device_columns[] = { ic.getMessage("DEVICE_COMPANY"), ic.getMessage("DEVICE_DEVICE"), ic.getMessage("DEVICE_CONNECTION"), ic.getMessage("DEVICE_DOWNLOAD"), ic.getMessage("DEVICE_SETTINGS") }; 
-    float device_columns_width[] = { 0.3f, 0.3f, 0.3f, 0.05f, 0.05f };
+    
     
     /** 
-     * Get Column Name
+     * getColumnName
      */
     public String getColumnName(int num)
     {
-        return device_columns[num-1];
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+    }    
+    
+    
+    /** 
+     * Get Column Width
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
     }
-
+    
+    
+    
+    
+    /** 
+     * getColumnValue - get Value of column, for configuration
+     */
+    public String getColumnValue(int num)
+    {
+        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
+    }
+    
+    
 
     /**
      * Get Column Value
      */
-    public String getColumnValue(int num)
+/*    public String getColumnValue(int num)
     {
         switch(num)
         {
@@ -483,7 +503,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
                 return "N/A: " + num;
         }
     }
-
+*/
 
     /** 
      * Get Column Value Object
@@ -493,14 +513,6 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
         return this.getColumnValue(num);
     }
 
-
-    /** 
-     * Get Column Width
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        return (int)(this.device_columns_width[num-1] * width);
-    }
 
 
     /** 

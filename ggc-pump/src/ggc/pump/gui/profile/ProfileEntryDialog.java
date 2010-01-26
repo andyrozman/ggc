@@ -1,6 +1,7 @@
 package ggc.pump.gui.profile;
 
 import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.util.DataAccessPump;
 
 import java.awt.Component;
@@ -72,7 +73,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         ATSwingUtils.initLibrary();
         //initParameters(ndV,nDate);
         
-        m_pse = new ProfileSubEntry();
+        m_pse = new ProfileSubPattern();
         init();
     }
 

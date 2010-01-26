@@ -7,6 +7,7 @@ import ggc.pump.data.graph.bre.GraphViewBasalRate;
 import ggc.pump.data.graph.bre.GraphViewBasals;
 import ggc.pump.data.graph.bre.GraphViewRatios;
 import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
@@ -161,7 +162,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         
         while (strtok.hasMoreTokens())
         {
-            list_data.add(new ProfileSubEntry(strtok.nextToken()));
+            list_data.add(new ProfileSubPattern(strtok.nextToken()));
         }
 
         

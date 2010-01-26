@@ -1,5 +1,6 @@
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.minimed.Minimed508;
 import ggc.pump.device.minimed.Minimed512;
 import ggc.pump.device.minimed.Minimed522;
@@ -41,68 +42,29 @@ public class Minimed extends AbstractPumpDeviceCompany
      */
     public Minimed()
     {
-        super(false);
+        super(PumpDevicesIds.COMPANY_MINIMED,       // company_id
+            "Minimed",                              // company name (full)
+            "Minimed",                              // short company name
+            "MINIMED_DESC",                         // company description
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE);  // implementation status
         
-        profile_names = new String[3];
-        profile_names[0] = "Standard";
-        profile_names[1] = "Pattern A";
-        profile_names[2] = "Pattern B";
-        
-        //this.addDevice(new GenericPumpDevice(this));
         this.addDevice(new Minimed508(this));
         this.addDevice(new Minimed512(this));
         this.addDevice(new Minimed522(this));
         this.addDevice(new Minimed554_Veo(this));
-
     }
-
 
 
     /**
-     * getName - Get Name of pump company. 
-     * 
-     * @return name of pump company
+     * Init Profile Names (for Profile Editor)
      */
-    public String getName()
+    public void initProfileNames()
     {
-        return "Minimed";
+        profile_names = new String[3];
+        profile_names[0] = "Standard";
+        profile_names[1] = "Pattern A";
+        profile_names[2] = "Pattern B";
     }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return PumpDevicesIds.COMPANY_MINIMED;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "MINIMED_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return 0;
-    }
-    
     
     
 }

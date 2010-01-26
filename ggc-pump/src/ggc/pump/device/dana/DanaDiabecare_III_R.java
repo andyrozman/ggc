@@ -20,7 +20,7 @@ import ggc.pump.data.defs.PumpConfiguration;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
-import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.device.AbstractBlueToothPump;
 import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.manager.company.Sooil;
@@ -763,6 +763,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     
     
+
     /**
      * Get Download Support Type
      * 
@@ -770,19 +771,20 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_YES;
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE + DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE;
     }
+    
     
     /**
      * Get Download Support Type for Configuration
      * 
      * @return
      */
-    public int getDownloadSupportTypeConfiguration()
+/*    public int getDownloadSupportTypeConfiguration()
     {
         return DownloadSupportType.DOWNLOAD_YES;
     }
-
+*/
     
     
     /**
@@ -1216,7 +1218,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             
             for(int i=0; i<24; i++)
             {
-                ProfileSubEntry pse = new ProfileSubEntry();
+                ProfileSubPattern pse = new ProfileSubPattern();
                 pse.time_start = i *100;
                 pse.time_end = pse.time_start + 59;
                 pse.amount = (this.hex_utils.getIntFromArray(6 + (i*2)) / 100.0f);

@@ -4,7 +4,7 @@ import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntryProfile;
 import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.Enumeration;
@@ -92,7 +92,7 @@ public class MinimedSPMPump extends MinimedSPM
             
             for(Enumeration<Long> en = data.profiles.keys(); en.hasMoreElements(); )
             {
-                ProfileSubEntry pse = new ProfileSubEntry();
+                ProfileSubPattern pse = new ProfileSubPattern();
                 
                 long key = en.nextElement().longValue();
                 

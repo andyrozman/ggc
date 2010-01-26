@@ -1,5 +1,6 @@
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.insulet.InsuletOmniPod;
 import ggc.pump.manager.PumpDevicesIds;
 
@@ -32,64 +33,27 @@ import ggc.pump.manager.PumpDevicesIds;
 
 public class Insulet extends AbstractPumpDeviceCompany
 {
-
     
     /**
      * Constructor
      */
     public Insulet()
     {
-        super(false);
-        //this.addDevice(new GenericPumpDevice(this));
+        super(PumpDevicesIds.COMPANY_INSULET,       // company_id
+            "Insulet",                              // company name (full)
+            "Insulet",                              // short company name
+            "INSULET_DESC",                         // company description
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE);  // implementation status
+        
         this.addDevice(new InsuletOmniPod(this));
     }
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "Insulet";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return PumpDevicesIds.COMPANY_INSULET;
-    }
     
     
     /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
+     * Init Profile Names (for Profile Editor)
      */
-    public String getDescription()
+    public void initProfileNames()
     {
-       return "INSULET_DESC"; 
     }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return 0;
-    }
-    
-    
     
 }

@@ -13,6 +13,10 @@ import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
+import ggc.pump.data.profile.Profile;
+import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.data.profile.ProfileSubOther;
+import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.DataAccessPump;
 
@@ -285,14 +289,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
-    @SuppressWarnings("unused")
-    private void readPumpProfiles()
-    {
-        // TODO    
-    }
     
     
     private void readPumpData()
+    {
+        System.out.println("READ PUMP DATA:   N/A");
+    }
+    
+    @SuppressWarnings("unused")
+    private void readPumpData_old()
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
 
@@ -308,10 +313,11 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         list.addAll(getEvents());
         System.out.println("Events: " + list.size());
 
+        /*
         System.out.println(" -- Basals (run 2) --");
         list.addAll(getSpecificElements2("BASAL"));
         System.out.println("Basals2: " + list.size());
-        
+        */
         if (first_basal !=null)
             list.add(first_basal);
         
@@ -329,6 +335,86 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
+    /**
+     * Main method for reading Profile Pattern/Event entries
+     */
+    private void readPumpProfiles()
+    {
+        System.out.println("readPumpProfiles()");
+
+        @SuppressWarnings("unused")
+        Hashtable<Integer,Hashtable<Long,Profile>> full_data = new Hashtable<Integer,Hashtable<Long,Profile>>();
+        
+        // 1. read initial
+        System.out.println("readPumpProfiles() - STEP 1    N/A");
+ 
+        // FIXME
+        // FIXME
+        
+        // 2. read all basal entries (we don't sort them now, we just put them all together, also events)
+        
+        System.out.println("readPumpProfiles() - STEP 2 - Reading profile data");
+        
+        
+        List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/BASAL" );
+        //ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
+        //boolean add = false;
+        
+        
+        Hashtable<Long,Profile> profiles_raw = new Hashtable<Long,Profile>(); 
+        
+        
+        for(int i=0; i<lst.size(); i++)
+        {
+            Element el = (Element)lst.get(i);
+            
+            ProfileSubEntry pse = this.resolveBasalProfilePatterns(el);
+
+            if (pse==null)
+                continue;
+            
+            long dt_current = this.getDateFromDT(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")).getATDateTimeAsLong()); 
+            
+            if (profiles_raw.containsKey(dt_current))
+            {
+                profiles_raw.get(dt_current).add(pse);
+            }
+            else
+            {
+                Profile p = new Profile();
+                p.date_at = dt_current;
+                p.add(pse);
+                
+                profiles_raw.put(dt_current, p);
+            }
+
+            
+            /*
+            if 
+            
+            
+            if (add)
+            {
+                // testing only
+                this.output_writer.writeData(pve);
+
+                lst_out.add(pve);
+            }*/
+        }
+        
+        
+        // 3. sort profile_entries into different profiles and patterns 
+        System.out.println("readPumpProfiles() - STEP 3    N/A");
+        
+        
+        System.out.println("Profiles: " + profiles_raw.size());
+        
+        
+    }
+    
+    
+    
+    /*
     private void readPumpDataTest()
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
@@ -342,7 +428,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         if (first_basal !=null)
             list.add(first_basal);
         
-    }
+    }*/
     
     
     
@@ -370,7 +456,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      */
     public void test()
     {
-        readPumpDataTest();
+        //readPumpDataTest();
+        readPumpProfiles();
     }
     
     
@@ -434,12 +521,16 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
     
 
-    
+    /*
     private ArrayList<PumpValuesEntry> getSpecificElements2(String element)
     {
         List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/" + element);
         ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
         boolean add = false;
+        
+        
+        Hashtable<Long,Profile> lst_spec = new Hashtable<Long,Profile>(); 
+        
         
         for(int i=0; i<lst.size(); i++)
         {
@@ -463,9 +554,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         
         return lst_out;
         
-    }
+    }*/
     
-    
+    /*
     private ArrayList<PumpValuesEntry> getProfileElements()
     {
         List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/BASAL"); // + element);
@@ -479,7 +570,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             PumpValuesEntry pve = new PumpValuesEntry(this.getDeviceSourceName());
             pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
 
-            add = this.resolveBasalProfilePatterns(pve, el);                
+//            add = this.resolveBasalProfilePatterns(pve, el);                
             
             if (add)
             {
@@ -494,7 +585,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         
         return lst_out;
         
-    }
+    }*/
 
     
     
@@ -594,8 +685,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
 
     PumpValuesEntry first_basal = null;
     
+    /*
     private boolean resolveBasalProfile(PumpValuesEntry pve, Element el)
     {
+        
         String remark = el.attributeValue("remark");
         String tbrdec = el.attributeValue("TBRdec");
         String tbrinc = el.attributeValue("TBRinc");
@@ -611,7 +704,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             // all that are special should be removed, all other are checked over events
             if (remark.contains("changed"))
             {
-                // TODO: Changed profile
+                // TOO: Changed profile
 //                System.out.println("Basal Changed Unknown [remark=" + remark + "]");
                 //System.out.println("Basal Rate Changed [datetime=" + pve.getDateTimeObject() + ",remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
                 
@@ -680,10 +773,19 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             }
         }        
     }
+    */
     
     
-    private boolean resolveBasalProfilePatterns(PumpValuesEntry pve, Element el)
+    
+    private ProfileSubEntry resolveBasalProfilePatterns(/*PumpValuesEntry pve,*/ Element el)
     {
+        
+        
+        
+        //pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
+        
+        long dt = this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")).getATDateTimeAsLong();
+        
         // TODO
         String remark = el.attributeValue("remark");
         String tbrdec = el.attributeValue("TBRdec");
@@ -691,12 +793,66 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         String cbrf = el.attributeValue("cbrf");
         String profile = el.attributeValue("profile");
         
-        if ((isSet(tbrdec)) || (isSet(tbrinc)))
+        /*if ((isSet(tbrdec)) || (isSet(tbrinc)))
         {
-            return false;
+            //System.out.println("TBR");
+            //System.out.println("" + el);
+            return null;
         }
-        else //if (isSet(remark))
+        else*/ 
+        
+        if (isSet(remark))
         {
+            // all that are special should be removed, all other are checked over events
+            if (remark.contains("changed"))
+            {
+                
+                ProfileSubOther pso = new ProfileSubOther();
+                
+                pso.time_event = dt; 
+                pso.event_type = ProfileSubOther.EVENT_PATTERN_CHANGED; 
+                pso.profile_id = profile;
+                
+                String chh = remark.substring(remark.indexOf("changed") + "changed".length());
+                chh = chh.trim();
+                
+                pso.profile_id = chh;
+                
+                //System.out.println("Profile changed : " + chh);
+                
+                // TODO: Changed profile
+                //System.out.println("Basal Changed Unknown [remark=" + remark + "]");
+                //System.out.println("Basal Rate Changed [datetime=" + pve.getDateTimeObject() + ",remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                
+                return pso;
+            } 
+        }
+        else
+        {
+            
+            if ((isSet(tbrdec)) || (isSet(tbrinc)))
+            {
+                return null;
+            }
+            else
+            {
+                //System.out.println("" + el);
+                ProfileSubPattern psp = new ProfileSubPattern();
+                
+                psp.dt_start = dt;
+                psp.profile_id = profile;
+                psp.amount = Float.parseFloat(cbrf); 
+                
+                return psp;
+                
+            }
+            
+            
+            //System.out.println("non TBR");
+
+            //System.out.println("" + el);
+            
+            /*
             if (isSet(remark))
             {
                 if ((!remark.contains("TBR")) && (!remark.contains("Run")) && (!remark.contains("Stop")) && (!remark.contains("power"))   
@@ -707,9 +863,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             }
             else
                 System.out.println(pve.getDateTimeObject().toString() + ",value=" + cbrf + ", profile=" + profile);
-
-            return true;
+*/
+            //return null;
         }
+        return null;
             
 /*            
             // all that are special should be removed, all other are checked over events
@@ -783,10 +940,13 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
                     return false;
             }
         } */
-            
+    
+        //return null;
+        
     }
     
 
+    
     private boolean resolveBolus(PumpValuesEntry pve, Element el)
     {
         String type = el.attributeValue("type");
@@ -1062,6 +1222,28 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         
         
     }
+
+    
+    public long getDateFromDT(long inp)
+    {
+        return (long)(inp/1000000);
+    }
+    
+    
+    
+    @SuppressWarnings("unused")
+    private long getDate(String date)
+    {
+        //System.out.println("m_da: " + m_da);
+        String o = m_da.replaceExpression(date, "-", "");
+        
+        ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_ONLY, Long.parseLong(o));
+        
+        return at.getATDateTimeAsLong();
+    }
+    
+    
+    
     
 /*
     public void setMeterCompany(AbstractMeterCompany company)
@@ -1234,7 +1416,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
     
  
-    
     /**
      * Get Download Support Type
      * 
@@ -1242,9 +1423,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_YES;
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
-
+    
     
     /**
      * Are Pump Settings Set

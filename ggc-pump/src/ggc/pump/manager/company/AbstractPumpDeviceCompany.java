@@ -25,7 +25,23 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
     public AbstractPumpDeviceCompany(boolean value)
     {
         super(value);
+        this.initProfileNames();
     }
+    
+    
+    public AbstractPumpDeviceCompany(int company_id_, String company_name, String short_company_name, String company_desc, int implementation_status)
+    {
+        super(false, company_id_, company_name, short_company_name, company_desc, implementation_status);
+        this.initProfileNames();
+    }
+    
+    
+    /**
+     * Init Profile Names (for Profile Editor)
+     */
+    public abstract void initProfileNames();
+    
+    
     
     
     /**

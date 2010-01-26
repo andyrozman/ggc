@@ -9,8 +9,16 @@ import com.atech.utils.ATechDate;
 /**
  * The Class ProfileSubEntry.
  */
-public class ProfileSubEntry implements Comparable<ProfileSubEntry>   // Comparator<ProfileSubEntry>
+public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>   // Comparator<ProfileSubEntry>
 {
+    
+    public static final int PROFILE_SUB_PATTERN = 1;
+    
+    public static final int PROFILE_SUB_EVENT = 2;
+    
+    
+    public String profile_id = "";
+
     
     /**
      * The time_start.
@@ -107,6 +115,10 @@ public class ProfileSubEntry implements Comparable<ProfileSubEntry>   // Compara
     {
         return compare(this, arg0);
     }
+    
+    
+    
+    public abstract int getType();
     
     
 }

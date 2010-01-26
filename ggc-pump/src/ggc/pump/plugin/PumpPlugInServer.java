@@ -4,6 +4,7 @@ import ggc.core.util.DataAccess;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -21,6 +22,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
@@ -308,24 +310,24 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             //System.out.println("m_da: getDeviceConfiguration: " + DataAccessPump.getInstance().getDeviceConfiguration());
             //System.out.println("m_da: getSelectedDevice: " + DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance());
             
-            
-            DeviceConfigEntry de = DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance();
+            DataAccessPump da = DataAccessPump.getInstance();
+            DeviceConfigEntry de = da.getDeviceConfiguration().getSelectedDeviceInstance();
             
             if (de==null)
-                return DataAccessPump.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
             else
             {
 
-                if (de.device_device.equals(DataAccessPump.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
+                if (de.device_device.equals(da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
                 {
-                    return DataAccessPump.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                    return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
                 }
                 else
                 {
                     if (m_da.isValueSet(de.communication_port))
-                        return String.format(DataAccessPump.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port);
+                        return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device + " [" + de.device_company + "]", de.communication_port);
                     else
-                        return String.format(DataAccessPump.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITHOUT_PORT"), de.device_company + " " + de.device_device);
+                        return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITHOUT_PORT"), de.device_device + " [" + de.device_company + "]");
                 }
             }   
         }
@@ -370,21 +372,60 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     {
         
         JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, ic_local);
+
         
-        ATSwingUtils.createMenuItem(menu_pump, 
+        
+        
+        //DeviceConfigEntry de = DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance();
+        
+        
+        //DataAccessPump.getInstance().getDe
+        
+        JMenuItem menu = ATSwingUtils.createMenuItem(menu_pump, 
             "MN_PUMPS_READ_DATA", 
             "MN_PUMPS_READ_DATA_DESC", 
             "pumps_read", 
             this, null, 
             ic_local, DataAccessPump.getInstance(), parent);
-
-        ATSwingUtils.createMenuItem(menu_pump, 
+        
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+            menu.setEnabled(true);
+        else
+            menu.setEnabled(false);
+        
+        
+        
+        ///if de==null || de.
+        
+        
+        menu = ATSwingUtils.createMenuItem(menu_pump, 
             "MN_PUMPS_READ_CONFIG", 
             "MN_PUMPS_READ_CONFIG_DESC", 
             "pumps_read_config", 
             this, null, 
             ic_local, DataAccessPump.getInstance(), parent);
 
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE)
+            menu.setEnabled(true);
+        else
+            menu.setEnabled(false);
+        
+        
+        menu = ATSwingUtils.createMenuItem(menu_pump, 
+            "MN_PUMPS_READ_FILE", 
+            "MN_PUMPS_READ_FILE_DESC", 
+            "pumps_read_file", 
+            this, null, 
+            ic_local, DataAccessPump.getInstance(), parent);
+
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
+            menu.setEnabled(true);
+        else
+            menu.setEnabled(false);
+        
+        // TODO remove when enabled
+        menu.setEnabled(false);
+        
         menu_pump.addSeparator();
         
         ATSwingUtils.createMenuItem(menu_pump, 

@@ -79,6 +79,8 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     public AbstractBlueToothPump(int i2, int i3, int i4, int i5)
     {
         super();
+        m_da = DataAccessPump.getInstance();
+        ic = m_da.getI18nControlInstance();
         //m_da = DataAccessPump.getInstance();
         //ic = m_da.getI18nControlInstance();
     }
@@ -92,6 +94,8 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     public AbstractBlueToothPump(AbstractDeviceCompany cmp)
     {
         super();
+        m_da = DataAccessPump.getInstance();
+        ic = m_da.getI18nControlInstance();
         //m_da = DataAccessPump.getInstance();
         //ic = m_da.getI18nControlInstance();
 
@@ -436,22 +440,46 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     }
 
 
+    
     /** 
      * Get Column Count
      */
     public int getColumnCount()
     {
-        return 5;
+        return m_da.getPluginDeviceUtil().getColumnCount();
     }
-
-    float device_columns_width[] = { 0.25f, 0.25f, 0.3f, 0.1f, 0.1f };
-    String device_columns[] = null;
+    
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+    }    
+    
+    
+    /** 
+     * Get Column Width
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
+    }
+    
+    
+    
+    
+    
+    
+    /** 
+     * getColumnName
+     */
+/*    public String getColumnName(int num)
+    {
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+        
+        /*
         if (device_columns==null)
         {
             this.device_columns = new String[5];
@@ -463,13 +491,42 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         }
         
         return device_columns[num-1];
+        */
+  //  }
+
+
+    /** 
+     * getColumnValue - get Value of column, for configuration
+     */
+    public String getColumnValue(int num)
+    {
+        try
+        {
+            return m_da.getPluginDeviceUtil().getColumnValue(num, this);
+        }
+        catch(Exception ex)
+        {
+            System.out.println("m_Da: " + m_da);
+            System.out.println("m_da.getPluginDeviceUtil(): " + m_da.getPluginDeviceUtil());
+            //System.out.println("m_Da: " + m_da);
+            
+            //return m_da.getPluginDeviceUtil().getColumnValue(num, this);
+            
+            
+            System.out.println("this.getName(): " + this.getName() + " column: " + num);
+            ex.printStackTrace();
+            return "";
+        }
     }
+    
 
-
+    
+    
+    
     /**
      * Get Column Value
      */
-    public String getColumnValue(int num)
+/*    public String getColumnValue(int num)
     {
         switch(num)
         {
@@ -496,7 +553,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
                 return "N/A: " + num;
         }
     }
-
+*/
 
     /** 
      * Get Column Value Object
@@ -510,10 +567,10 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     /** 
      * Get Column Width
      */
-    public int getColumnWidth(int num, int width)
+/*    public int getColumnWidth(int num, int width)
     {
         return (int)(this.device_columns_width[num-1] * width);
-    }
+    }*/
 
 
     /** 

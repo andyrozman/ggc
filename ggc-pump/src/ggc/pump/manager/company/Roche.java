@@ -1,5 +1,6 @@
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.accuchek.AccuChekCombo;
 import ggc.pump.device.accuchek.AccuChekDTron;
 import ggc.pump.device.accuchek.AccuChekSpirit;
@@ -41,15 +42,12 @@ public class Roche extends AbstractPumpDeviceCompany
      */
     public Roche()
     {
-        super(false);
-        profile_names = new String[5];
+        super(PumpDevicesIds.COMPANY_ROCHE,         // company_id
+            "Accu-Chek/Roche",                      // company name (full)
+            "Roche",                                // short company name
+            "ROCHE_DESC",                           // company description
+            DeviceImplementationStatus.IMPLEMENTATION_TESTING);  // implementation status
         
-        for(int i=0; i<5; i++)
-        {
-            profile_names[i] = "" + (i+1);
-        }
-        
-        //this.addDevice(new GenericPumpDevice(this));
         this.addDevice(new DisetronicDTron(this));
         this.addDevice(new AccuChekDTron(this));
         this.addDevice(new AccuChekSpirit(this));
@@ -57,60 +55,17 @@ public class Roche extends AbstractPumpDeviceCompany
     }
 
 
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
     /**
-     * getName - Get Name of pump company. 
-     * 
-     * @return name of pump company
+     * Init Profile Names (for Profile Editor)
      */
-    public String getName()
+    public void initProfileNames()
     {
-        return "Accu-Chek/Roche";
+        profile_names = new String[5];
+        
+        for(int i=0; i<5; i++)
+        {
+            profile_names[i] = "" + (i+1);
+        }
     }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return PumpDevicesIds.COMPANY_ROCHE;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "ROCHE_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return 0;
-    }
-    
-    
     
 }

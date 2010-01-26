@@ -1,5 +1,6 @@
 package ggc.pump.manager.company; 
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.animas.AnimasIR1200;
 import ggc.pump.device.animas.AnimasIR1250;
 import ggc.pump.device.animas.AnimasIR2020;
@@ -42,62 +43,25 @@ public class Animas extends AbstractPumpDeviceCompany
      */
     public Animas()
     {
-        //super(DataAccessPump.getInstance().getI18nControlInstance(), false);
-        super(false);
-        //this.addDevice(new GenericPumpDevice(this));
+        super(PumpDevicesIds.COMPANY_ANIMAS,        // company_id
+            "Animas",                               // company name (full)
+            "Animas",                               // short company name
+            "ANIMAS_DESC",                          // company description
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE);  // implementation status
+        
         this.addDevice(new AnimasIR1200(this));
         this.addDevice(new AnimasIR1250(this));
         this.addDevice(new AnimasIR2020(this));
         this.addDevice(new AnimasPing(this));
-        
-    }
-
-
-    /**
-     * getName - Get Name of pump company. 
-     * 
-     * @return name of pump company
-     */
-    public String getName()
-    {
-        return "Animas";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return PumpDevicesIds.COMPANY_ANIMAS;
     }
     
     
     /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
+     * Init Profile Names (for Profile Editor)
      */
-    public String getDescription()
+    public void initProfileNames()
     {
-       return "ANIMAS_DESC"; 
     }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return 0;
-    }
-    
     
     
 }
