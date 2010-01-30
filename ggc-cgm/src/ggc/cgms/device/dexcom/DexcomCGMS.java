@@ -323,6 +323,34 @@ public abstract class DexcomCGMS extends AbstractCGMS
 
     
     
+    
+    
+    public static long getDateFromString(String val)
+    {
+        //2007-03-23 13:13:29.010
+        
+        val = val.substring(0, val.indexOf("."));
+        val = val.replace(" ", "");
+        val = val.replace("-", "");
+        val = val.replace(":", "");
+        
+        //System.out.println("" + val);
+        
+        return Long.parseLong(val);
+    }
+    
+    
+    public static int getTimeFromString(String val)
+    {
+        val = val.substring(val.indexOf(" ") + 1, val.indexOf("."));
+        //val = val.replace(" ", "");
+        //val = val.replace("-", "");
+        val = val.replace(":", "");
+        
+        return Integer.parseInt(val);
+    }
+
+    
 }
 
 

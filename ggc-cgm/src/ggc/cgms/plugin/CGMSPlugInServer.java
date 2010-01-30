@@ -1,5 +1,6 @@
 package ggc.cgms.plugin;
 
+import ggc.cgms.gui.viewer.CGMSDataDialog;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.DataAccess;
 import ggc.plugin.cfg.DeviceConfigEntry;
@@ -324,6 +325,15 @@ public class CGMSPlugInServer extends PlugInServer implements ActionListener
             ic_local, DataAccessCGMS.getInstance(), parent);
 
         menu_cgms.addSeparator();
+
+        ATSwingUtils.createMenuItem(menu_cgms, 
+            "MN_CGMS_VIEW_DATA", 
+            "MN_CGMS_VIEW_DATA_DESC", 
+            "cgms_view_data", 
+            this, null, 
+            ic_local, DataAccessCGMS.getInstance(), parent);
+        
+        menu_cgms.addSeparator();
         
         ATSwingUtils.createMenuItem(menu_cgms, 
             "MN_CGMS_CONFIG", 
@@ -383,6 +393,10 @@ public class CGMSPlugInServer extends PlugInServer implements ActionListener
         else if (command.equals("cgms_about"))
         {
             new AboutBaseDialog((JFrame)this.parent, DataAccessCGMS.getInstance());
+        }
+        else if (command.equals("cgms_view_data"))  
+        {
+            new CGMSDataDialog(DataAccessCGMS.getInstance(), (JFrame)this.parent);
         }
         else
             System.out.println("CGMSPluginServer::Unknown Command: " + command);

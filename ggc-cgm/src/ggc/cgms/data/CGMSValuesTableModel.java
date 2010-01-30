@@ -7,6 +7,10 @@ import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+
+import com.atech.utils.ATechDate;
 
 
 /**
@@ -57,6 +61,8 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     public CGMSValuesTableModel(DeviceDataHandler ddh, String source)
     {
         super(DataAccessCGMS.getInstance(), ddh, source);
+        htable = new Hashtable<String, CGMSValuesEntry>();
+
     }
 
     /**
@@ -84,15 +90,106 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     }
 
     
-
     
-   
+    // protected ArrayList<DeviceValuesEntryInterface> dl_data;
 
-
-
+    Hashtable<String, CGMSValuesEntry> htable = null;
+    String old_key = null;
+    CGMSValuesEntry current_main = null;
     
+    /**
+     * Add Entry
+     * 
+     * @param mve DeviceValuesEntry instance
+     */
+    public void addEntry(DeviceValuesEntryInterface mve)
+    {
+        CGMSValuesSubEntry se = (CGMSValuesSubEntry)mve;
+  
+        String key = se.date + "_" + se.type;
+        
+        if (old_key == null)
+        {
+            old_key = key;
+            this.current_main = new CGMSValuesEntry();
+        }
+        
+        if (!old_key.equals(key))
+        {
+            processDeviceValueEntry(this.current_main);
+            this.dl_data.add(this.current_main);
+            
+            if (this.shouldBeDisplayed(this.current_main.getStatus()))
+            {
+                this.displayed_dl_data.add(this.current_main);
+                Collections.sort(displayed_dl_data);
+            }
+            this.fireTableDataChanged();
+
+            this.current_main = new CGMSValuesEntry();
+        }
+        
+        
+        if (current_main.isEmpty())
+        {
+            //CGMSValuesEntry cve = new CGMSValuesEntry();
+            this.current_main.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, se.datetime));
+            this.current_main.setEmpty(false);
+            this.current_main.setType(se.type);
+            //this.htable.put(key, cve);
+            this.current_main.addSubEntry(se);
+            
+            this.htable.put(key, this.current_main);
+        }
+        else
+        {
+            this.current_main.addSubEntry(se);
+        }
+        
+        
+        
+        /*
+        if (this.htable.containsKey(key))
+        {
+            this.htable.get(key).addSubEntry(se);
+        }
+        else
+        {
+            CGMSValuesEntry cve = new CGMSValuesEntry();
+            cve.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, se.datetime));
+            cve.addSubEntry(se);
+            this.htable.put(key, cve);
+        }*/
+        
+        //if se.
+        
+        //getDate(se.datetime);
+        
+        System.out.println("HTable: " + htable.size());
+        
+        
+        /*
+        
+        System.out.println(".");
+        processDeviceValueEntry(mve);
+        this.dl_data.add(mve);
+        
+        if (this.shouldBeDisplayed(mve.getStatus()))
+        {
+            this.displayed_dl_data.add(mve);
+            Collections.sort(displayed_dl_data);
+        }
+        this.fireTableDataChanged();
+        */
+    }
 
 
+    public void finishReading()
+    {
+        
+    }
+    
+    
 
     /**
      * Add To Array 

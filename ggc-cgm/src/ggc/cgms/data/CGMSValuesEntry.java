@@ -3,13 +3,13 @@ package ggc.cgms.data;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.output.OutputUtil;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.hibernate.Session;
 
+import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.ATechDate;
 
 /**
@@ -43,21 +43,26 @@ import com.atech.utils.ATechDate;
 //This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
-public class CGMSValuesEntry extends DeviceValuesEntry
+public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 {
 	DataAccessCGMS da = DataAccessCGMS.getInstance();
 	
 	// pump 
 	long datetime;
-	int base_type;
-	int sub_type;
-	String value;
-	String profile;
+	
+	int type;
+	//int base_type;
+	//int sub_type;
+	//String value;
+	//String profile;
 	
 	// old
-	String bg_str;
+	//String bg_str;
 	int bg_unit;
 	//public
+	
+	boolean empty = true;
+	
 	
 	private Hashtable<String,String> params;
 	//private static I18nControl ic = I18nControl.getInstance(); 
@@ -65,7 +70,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry
 	//private String bg_original = null;
 	//private OutputUtil util = OutputUtil.getInstance();
 	
-	
+	ArrayList<CGMSValuesSubEntry> list = null;
     
     //private DayValueH entry_object = null;
     
@@ -78,6 +83,9 @@ public class CGMSValuesEntry extends DeviceValuesEntry
 	public CGMSValuesEntry()
 	{
 	    super();
+	    
+	    list = new ArrayList<CGMSValuesSubEntry>();
+	    
 	}
 	
 	
@@ -105,11 +113,24 @@ public class CGMSValuesEntry extends DeviceValuesEntry
     }
 	
 	
+    
+    public void addSubEntry(CGMSValuesSubEntry subentry)
+    {
+        this.list.add(subentry);
+    }
+    
+    
+    
+	public void setEmpty(boolean empty_)
+	{
+	    this.empty = empty_;
+	}
 	
 	
-	
-	
-	
+	public boolean isEmpty()
+	{
+	    return this.empty;
+	}
 	
 	/**
 	 * Add Parameter
@@ -187,7 +208,16 @@ public class CGMSValuesEntry extends DeviceValuesEntry
 	}
 	
 	
+	public void setType(int type_)
+	{
+	    this.type = type_;
+	}
 	
+	
+    public int getType()
+    {
+        return this.type;
+    }
 	
 	
 	/**
@@ -201,11 +231,11 @@ public class CGMSValuesEntry extends DeviceValuesEntry
 	    
 	    if ((p==null) || (p.trim().length()==0))
 	    {
-	        return "MTI";
+	        return null;
+	        //return "MTI";
 	    }
 	    else
-	        return "MTI;" + p;
-	    
+	        return p;
 	    
 	}
 	
@@ -217,7 +247,9 @@ public class CGMSValuesEntry extends DeviceValuesEntry
 	public String toString()
 	{
 	    //OutputUtil o= null;
-	    return "CGMValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
+	    //return "CGMValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
+
+	    return "CGMValuesEntry [date/time=" + this.datetime  + ",reading" + this.list.size() + "type=" + type +  "]";
 	}
 
 	

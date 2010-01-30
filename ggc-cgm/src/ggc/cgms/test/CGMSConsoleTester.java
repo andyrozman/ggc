@@ -1,9 +1,13 @@
 package ggc.cgms.test;
 
+import ggc.cgms.device.dexcom.FRC_DexcomXml_DM3;
 import ggc.cgms.device.minimed.MinimedCareLink;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.util.GGCLanguageManagerRunner;
 
 import java.io.File;
 
+import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
 
@@ -58,7 +62,9 @@ public class CGMSConsoleTester //extends JFrame
 	    
     	try
     	{
-    	    this.startMiniMed("");
+    	    startDexcom();
+    	    
+    	    //this.startMiniMed("");
     	    //startAscensia(portName);
     	    //this.startOneTouchUltra(portName);
     	    
@@ -91,9 +97,22 @@ public class CGMSConsoleTester //extends JFrame
     }
 
 
+    private void startDexcom()
+    {
+        DataAccessCGMS dap = DataAccessCGMS.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+        //dap.initAllObjects();
+        dap.loadSpecialParameters();
+     
+        //FRC_DexcomTxt_DM3 dt = new FRC_DexcomTxt_DM3(dap);
+        //dt.readFile("../test/DexDM3SampleExport.txt");
+        
+        FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(dap);
+        dt1.readFile("../test/DexDM3SampleExport.xml");
+        
+    }
     
     
-    
+    @SuppressWarnings("unused")
     private void startMiniMed(String portName) throws Exception
     {
         

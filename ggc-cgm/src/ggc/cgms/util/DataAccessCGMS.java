@@ -1,6 +1,8 @@
 package ggc.cgms.util;
 
+import ggc.cgms.data.CGMSDataHandler;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
+import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.manager.CGMSManager;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
@@ -11,7 +13,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
-import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsEntry;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesEntry;
@@ -252,15 +253,32 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // ********************************************************
 
 
-    /** 
-     * Get HibernateDb instance (for working with database in plugin)
+    GGC_CGMSDb m_db;
+    
+    
+    
+    /**
+     * Create Custom Db
+     * 
+     * This is for plug-in specific database implementation
      */
-    @Override
-    public HibernateDb getHibernateDb()
+    public void createCustomDb()
     {
-        // TODO Auto-generated method stub
-        return null;
+        this.m_db = new GGC_CGMSDb(this.hdb);
     }
+    
+
+    /**
+     * Get Db
+     * 
+     * @return
+     */
+    public GGC_CGMSDb getDb()
+    {
+        return this.m_db;
+    }
+    
+    
 
     
     // ********************************************************
@@ -456,8 +474,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void loadDeviceDataHandler()
     {
-        // TODO Auto-generated method stub
-        
+        this.m_ddh = new CGMSDataHandler(this);
     }
 
     /**
@@ -483,17 +500,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     }
 
 
-    /**
-     * Create Custom Db
-     * 
-     * This is for plug-in specific database implementation
-     */
-    @Override
-    public void createCustomDb()
-    {
-        // TODO Auto-generated method stub
-        
-    }
 
 
     /**
