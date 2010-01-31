@@ -1,6 +1,9 @@
 package ggc.core.db.hibernate.cgm;
 
+import ggc.core.db.hibernate.GGCHibernateObject;
+
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -8,7 +11,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * @author Hibernate CodeGenerator
  */
-public class CGMDataH implements Serializable
+public class CGMDataH implements Serializable, GGCHibernateObject
 {
 
     private static final long serialVersionUID = 1926001888869758766L;
