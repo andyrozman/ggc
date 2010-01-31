@@ -327,7 +327,6 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
             if (value instanceof Integer)
             {
                 Integer i = (Integer) value;
-                // setSelected(b.booleanValue());
                 status = i.intValue();
                 
                 setText(m_da.getEntryStatuses()[status]);

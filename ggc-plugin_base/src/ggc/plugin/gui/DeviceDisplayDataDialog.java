@@ -90,6 +90,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     JButton help_button;
     DeviceDataHandler m_ddh;
     
+    boolean indeterminate = false;
     
     /*
     public String statuses[] =  
@@ -229,7 +230,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void setSpecialProgress(int value)
     {
-        this.progress.setValue(value);
+        if (!this.indeterminate)
+            this.progress.setValue(value);
     }
     
     
@@ -244,6 +246,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     {
         model = this.m_ddh.getDeviceValuesTableModel();
         model.clearData();
+        
+        //System.out.println("Model: " + model);
         
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -537,9 +541,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
             }
             
         }
-        
-        
-        
         else
             System.out.println("DeviceDisplayDataDialog::Unknown command: " + action);
 
@@ -551,6 +552,11 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public void endOutput()
     {
         //System.out.println("endOutput()");
+        if (this.indeterminate)
+        {
+            this.progress.setIndeterminate(false);
+            this.progress.setValue(100);
+        }
     }
 
     DeviceIdentification device_ident;
@@ -927,6 +933,19 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public String getDeviceSource()
     {
         return this.device_source;
+    }
+
+
+    /**
+     * setIndeterminateProgress - if we cannot trace progress, we set this and JProgressBar will go
+     *    into indeterminate mode
+     */
+    public void setIndeterminateProgress()
+    {
+        indeterminate = true;
+        this.progress.setIndeterminate(true);
+        //this.progress.setString(null);
+        this.progress.setStringPainted(false);
     }
     
     

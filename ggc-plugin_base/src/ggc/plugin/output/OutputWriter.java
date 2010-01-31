@@ -141,6 +141,15 @@ public interface OutputWriter
      */
     public abstract void setSpecialProgress(int value);
     
+    
+    /**
+     * setIndeterminateProgress - if we cannot trace progress, we set this and JProgressBar will go
+     *    into indeterminate mode
+     */
+    public abstract void setIndeterminateProgress();
+    
+    
+    
     /**
      * Write log entry
      * 

@@ -68,6 +68,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
 
     boolean running = true;
     DataAccessPlugInBase m_da;
+    boolean reading_started = false;
     
     /**
      * Constructor
@@ -106,8 +107,23 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     public void run()
     {
 
+        //while (running_started)
+        
+        
         while(running)
         {
+            
+            //if (reading_started)
+            {
+                
+            
+                try
+                {
+                Thread.sleep(2000);
+                }
+                catch(Exception ex) {}
+                
+            
             String lg = "";
             try
             {
@@ -160,6 +176,11 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
             
                 this.special_status = this.m_mi.hasSpecialProgressStatus();
 
+                if (this.m_mi.hasIndeterminateProgressStatus())
+                {
+                    setIndeterminateProgress();
+                }
+                
                 // check if device online (open succesful)
                 if (!this.m_mi.isDeviceCommunicating())
                 {
@@ -231,10 +252,26 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
             writeLog(LogEntryType.DEBUG, lg);
             
             
+            
+            }  // reading_started
+            /*else
+            {
+                // if we havent started reading we pause every second
+                try
+                {
+                Thread.sleep(1000);
+                }
+                catch(Exception ex) {}
+            }*/
+            
+            
         }  // while
 
     }
 
+    
+    
+    
     
     /**
      * Get Dialog 
@@ -528,6 +565,11 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     public OutputWriter getOutputWriter()
     {
         return (OutputWriter)getDialog();
+    }
+
+    public void setIndeterminateProgress()
+    {
+        getOutputWriter().setIndeterminateProgress();
     }
     
     

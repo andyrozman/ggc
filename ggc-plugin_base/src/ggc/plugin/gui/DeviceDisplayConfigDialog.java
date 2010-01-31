@@ -819,6 +819,15 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         return this.device_source;
     }
     
+
+    /**
+     * setIndeterminateProgress - if we cannot trace progress, we set this and JProgressBar will go
+     *    into indeterminate mode
+     */
+    public void setIndeterminateProgress()
+    {
+    }
+    
     
     
 }

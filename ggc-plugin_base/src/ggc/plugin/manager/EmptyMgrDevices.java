@@ -523,6 +523,15 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     }
     
     
+    /**
+     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
+     *     left to right side, without displaying progress.
+     * @return
+     */
+    public boolean hasIndeterminateProgressStatus()
+    {
+        return false;
+    }
     
     
     

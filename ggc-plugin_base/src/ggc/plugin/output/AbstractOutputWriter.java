@@ -294,4 +294,13 @@ public abstract class AbstractOutputWriter implements OutputWriter
     }
     
 	
+    /**
+     * setIndeterminateProgress - if we cannot trace progress, we set this and JProgressBar will go
+     *    into indeterminate mode
+     */
+    public void setIndeterminateProgress()
+    {
+    }
+    
+    
 }
