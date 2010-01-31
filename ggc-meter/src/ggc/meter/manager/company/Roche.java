@@ -8,8 +8,10 @@ import ggc.meter.device.accuchek.AccuChekCompact;
 import ggc.meter.device.accuchek.AccuChekCompactPlus;
 import ggc.meter.device.accuchek.AccuChekGo;
 import ggc.meter.device.accuchek.AccuChekIntegra;
+import ggc.meter.device.accuchek.AccuChekNano;
 import ggc.meter.device.accuchek.AccuChekPerforma;
 import ggc.meter.device.accuchek.AccuChekSensor;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -48,7 +50,12 @@ public class Roche extends AbstractDeviceCompany
      */
     public Roche()
     {
-        super();
+        super(false,                            // empty devices
+            MeterDevicesIds.COMPANY_ROCHE,      // company_id
+            "Accu-Chek/Roche",                  // company name (full)
+            "Roche",                            // short company name
+            "ROCHE_DESC",                       // company description
+            DeviceImplementationStatus.IMPLEMENTATION_DONE);  // implementation status
         
         //this.addDevice(new AccuChekSmartPix());
         this.addDevice(new AccuChekActive(this));
@@ -61,88 +68,8 @@ public class Roche extends AbstractDeviceCompany
         this.addDevice(new AccuChekIntegra(this));
         this.addDevice(new AccuChekPerforma(this));
         this.addDevice(new AccuChekSensor(this));
+        this.addDevice(new AccuChekNano(this));
     }
-
-
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "Accu-Chek/Roche";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 2;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "ROCHE_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
-    }
-    
-  
-    /**
-     * Get Connection Sample - This will display sample of connection parameter, for example on Serial
-     * devices this is COMx. On other OSes there are of course other parameters, but COMx parameter is
-     * "known" serial parameter and will be known to all people.
-     * 
-     * @return
-     */
-    public String getConnectionSample()
-    {
-        return "G:";
-    }
-    
-    
-    /**
-     * Get Connection Samples - This is I18N keyword, which needs to be added to language file. For Serial 
-     * devices this is SERIAL_PORTS.
-     * 
-     * @return
-     */
-    public String getConnectionSamples()
-    {
-        return "MASS_STORAGE";  //"Serial Ports: COM2,...";
-    }
-    
     
     
 }

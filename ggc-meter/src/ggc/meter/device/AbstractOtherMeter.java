@@ -40,7 +40,6 @@ import com.atech.i18n.I18nControlAbstract;
 public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements MeterInterface, SelectableInterface
 {
 
-    protected I18nControlAbstract ic = DataAccessMeter.getInstance().getI18nControlInstance();
 
     protected String device_name = "Undefined";
     protected OutputWriter output_writer;
@@ -50,7 +49,8 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     String connection_port = "";
     String device_source_name;
     
-    DataAccessMeter m_da = DataAccessMeter.getInstance();
+    protected DataAccessMeter m_da = null;
+    protected I18nControlAbstract ic = null;
     
 
     /**
@@ -59,6 +59,8 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     public AbstractOtherMeter()
     {
         super();
+        m_da = DataAccessMeter.getInstance();
+        ic = m_da.getI18nControlInstance();
     }
     
     
@@ -69,6 +71,8 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     public AbstractOtherMeter(AbstractDeviceCompany cmp)
     {
         super();
+        m_da = DataAccessMeter.getInstance();
+        ic = m_da.getI18nControlInstance();
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
@@ -308,48 +312,45 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
         return 0;
     }
 
-
+    
+    
     /** 
-     * getColumnCount
+     * Get Column Count
      */
     public int getColumnCount()
     {
-        return 3;
+        return m_da.getPluginDeviceUtil().getColumnCount();
     }
-
-
-    String device_columns[] = { ic.getMessage("METER_COMPANY"), ic.getMessage("METER_DEVICE"), ic.getMessage("DEVICE_CONNECTION") }; 
+    
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
-        return device_columns[num-1];
-    }
-
-
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+    }    
+    
+    
     /** 
-     * getColumnValue
+     * Get Column Width
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
+    }
+    
+    
+    /** 
+     * getColumnValue - get Value of column, for configuration
      */
     public String getColumnValue(int num)
     {
-        switch(num)
-        {
-         
-            case 2:
-                return this.getName();
-                
-            case 3:
-                return this.getDeviceCompany().getConnectionSamples();
-
-            case 1:
-            default:    
-                return this.getDeviceCompany().getName();
-                
-                
-        }
+        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
     }
+    
+    
+    
 
 
     /** 
@@ -358,16 +359,6 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     public Object getColumnValueObject(int num)
     {
         return this.getColumnValue(num);
-    }
-
-
-    /** 
-     * getColumnWidth
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        // TODO Auto-generated method stub
-        return 0;
     }
 
 
@@ -465,4 +456,16 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
         return false;
     }
 
+    
+    /**
+     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
+     *     left to right side, without displaying progress.
+     * @return
+     */
+    public boolean hasIndeterminateProgressStatus()
+    {
+        return false;
+    }
+    
+    
 }

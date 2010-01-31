@@ -50,15 +50,63 @@ public class MeterDevicesIds
     
     
     /**
-     * 
+     * Meter Company: Abbott
      */
     public static final int COMPANY_ABBOTT              = 4;
     
     
     /**
-     * 
+     * Meter Company: Menarini
      */
     public static final int COMPANY_MENARINI            = 5;
+    
+
+    /**
+     * Meter Company: Diabetic Supply Of Suncoast
+     * 
+     */
+    public static final int COMPANY_DIABETIC_SUPPLY_OF_SUNCOAST            = 6;
+    
+    
+    /**
+     * Meter Company: Hipoguard
+     * 
+     */
+    public static final int COMPANY_HIPOGUARD            = 7;
+    
+    
+    
+    /**
+     * Meter Company: Home Diagnostics
+     * 
+     */
+    public static final int COMPANY_HOME_DIAGNOSTICS     = 8;
+
+    /**
+     * Meter Company: Prodigy
+     * 
+     */
+    public static final int COMPANY_PRODIGY              = 9;
+
+    /**
+     * Meter Company: Sanvita
+     * 
+     */
+    public static final int COMPANY_SANVITA              = 10;
+
+    /**
+     * Meter Company: US Diagnostics
+     * 
+     */
+    public static final int COMPANY_US_DIAGNOSTICS       = 11;
+
+    /**
+     * Meter Company: Wavesense
+     * 
+     */
+    public static final int COMPANY_WAVESENSE            = 12;
+
+    
     
     
     
@@ -152,6 +200,10 @@ public class MeterDevicesIds
     public static final int METER_ACCUCHEK_SENSOR         = 20011;
     
     
+    /**
+     * Meter Device: Accu Chek Nano
+     */
+    public static final int METER_ACCUCHEK_NANO           = 20012;
     
     
     /**

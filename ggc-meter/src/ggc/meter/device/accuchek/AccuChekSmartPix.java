@@ -656,4 +656,5 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
     }
     
     
+    
 }

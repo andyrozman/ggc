@@ -6,6 +6,7 @@ import ggc.meter.device.onetouch.OneTouchUltra;
 import ggc.meter.device.onetouch.OneTouchUltraEasy;
 import ggc.meter.device.onetouch.OneTouchUltraMini;
 import ggc.meter.device.onetouch.OneTouchUltraSmart;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -35,7 +36,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class LifeScan extends AbstractDeviceCompany
 {
 
@@ -44,7 +44,12 @@ public class LifeScan extends AbstractDeviceCompany
      */
     public LifeScan()
     {
-        super();
+        super(false,                            // empty devices
+            MeterDevicesIds.COMPANY_LIFESCAN,   // company_id
+            "LifeScan/One Touch/J&J",           // company name (full)
+            "LifeScan",                         // short company name
+            "LIFESCAN_DESC",                    // company description
+            DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL);  // implementation status
         
         this.addDevice(new OneTouchUltra(this));
         this.addDevice(new OneTouchProfile(this));
@@ -55,87 +60,6 @@ public class LifeScan extends AbstractDeviceCompany
         
         //this.addDevice(new OneTouchUltra2(this));
     }
-
-
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "LifeScan";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 3;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "LIFESCAN_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_PLANNED;
-    }
-    
-
-    /**
-     * Get Connection Sample - This will display sample of connection parameter, for example on Serial
-     * devices this is COMx. On other OSes there are of course other parameters, but COMx parameter is
-     * "known" serial parameter and will be known to all people.
-     * 
-     * @return
-     */
-    public String getConnectionSample()
-    {
-        return "COM9";
-    }
-    
-    
-    /**
-     * Get Connection Samples - This is I18N keyword, which needs to be added to language file. For Serial 
-     * devices this is SERIAL_PORTS.
-     * 
-     * @return
-     */
-    public String getConnectionSamples()
-    {
-        return "SERIAL_PORTS";  //"Serial Ports: COM2,...";
-    }
-    
     
     
 }

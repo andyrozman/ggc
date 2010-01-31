@@ -2,6 +2,13 @@
 Changes file for GGC Meter Tool
 ===============================
 
+1.1.6 [24.1.2010]
+    * Minor changes to code, because of changes in PlugInBase
+    * I18n Changed
+    * Company context changed
+    * Device Selector is now global and uses PlugInDeviceUtil
+    * Added Aviva Nano
+
 
 1.1.5 [30.10.2009]
     * Added support for Menarini Glucofix Mio meter

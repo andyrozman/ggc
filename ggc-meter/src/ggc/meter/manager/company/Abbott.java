@@ -41,58 +41,16 @@ public class Abbott extends AbstractDeviceCompany
      */
     public Abbott()
     {
-        super();
+        super(false,                            // empty devices
+            MeterDevicesIds.COMPANY_ABBOTT,     // company_id
+            "Abbott",                           // company name (full)
+            "Abbott",                           // short company name
+            "ABBOTT_DESC",                      // company description
+            DeviceImplementationStatus.IMPLEMENTATION_PLANNED);  // implementation status
         
         addDevice(new Freestyle(this));
         addDevice(new OptiumXceed(this));
     }
-
-    
-    /**
-     * getName - Get Name of meter company. 
-     * 
-     * @return name of pump company
-     */
-    public String getName()
-    {
-        return "Abbott";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return MeterDevicesIds.COMPANY_ABBOTT;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "ABBOTT_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
-    }
-    
     
     
 }

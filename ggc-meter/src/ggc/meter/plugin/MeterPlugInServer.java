@@ -232,7 +232,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
         ic = da_local.getI18nControlInstance();
         
-        
+        da_local.setParentI18nControlInstance(m_da.getI18nControlInstance());
         da_local.loadManager();
         
         //DataAccessMeter da = DataAccessMeter.getInstance();
@@ -258,19 +258,27 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     {
         if (ret_obj_id == MeterPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
         {
-            DeviceConfigEntry de = DataAccessMeter.getInstance().getDeviceConfiguration().getSelectedDeviceInstance();
+            DataAccessMeter da = DataAccessMeter.getInstance();
+            DeviceConfigEntry de = da.getDeviceConfiguration().getSelectedDeviceInstance();
             
             if (de==null)
-                return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
             else
             {
-                if (de.device_device.equals(DataAccessMeter.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
+
+                if (de.device_device.equals(da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED")))
                 {
-                    return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
+                    return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
                 }
                 else
-                    return String.format(DataAccessMeter.getInstance().getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device, de.communication_port);
-            }
+                {
+                    if (m_da.isValueSet(de.communication_port))
+                        return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device + " [" + de.device_company + "]", de.communication_port);
+                    else
+                        return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITHOUT_PORT"), de.device_device + " [" + de.device_company + "]");
+                }
+            }   
+            
         }
         else
             return null;

@@ -57,7 +57,8 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     public AbstractXmlMeter(OutputWriter ow)
     {
         super(DataAccessMeter.getInstance(), ow);
-        //ic = DataAccessMeter.getInstance().getI18nControlInstance();
+        m_da = DataAccessMeter.getInstance();
+        ic = m_da.getI18nControlInstance();
     }
 
 
@@ -68,7 +69,8 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     public AbstractXmlMeter(AbstractDeviceCompany cmp)
     {
         super(DataAccessMeter.getInstance());
-        //ic = DataAccessMeter.getInstance().getI18nControlInstance();
+        m_da = DataAccessMeter.getInstance();
+        ic = m_da.getI18nControlInstance();
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
@@ -277,67 +279,40 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
 
 
     /** 
-     * getColumnCount
+     * Get Column Count
      */
     public int getColumnCount()
     {
-        return 3;
+        return m_da.getPluginDeviceUtil().getColumnCount();
     }
-
-
-    float device_columns_width[] = { 0.33f, 0.33f, 0.33f };
-    String device_columns[] = null;
+    
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
-        if (device_columns==null)
-        {
-            this.device_columns = new String[3];
-            device_columns[0] = ic.getMessage("DEVICE_COMPANY");
-            device_columns[1] = ic.getMessage("DEVICE_DEVICE");
-            device_columns[2] = ic.getMessage("DEVICE_CONNECTION");
-        }
-        
-        return device_columns[num-1];
-    }
-
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+    }    
+    
+    
     /** 
      * Get Column Width
      */
     public int getColumnWidth(int num, int width)
     {
-        return (int)(this.device_columns_width[num-1] * width);
+        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
     }
-
-
+    
+    
     /** 
-     * getColumnValue
+     * getColumnValue - get Value of column, for configuration
      */
     public String getColumnValue(int num)
     {
-        switch(num)
-        {
-         
-            case 2:
-                return this.getName();
-                
-            case 3:
-                return this.getDeviceCompany().getConnectionSamples();
-
-            case 1:
-            default: 
-            {
-                //System.out.println("name: " + this.getName());
-                return this.getDeviceCompany().getName();
-            }
-                
-                
-        }
+        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
     }
-
+    
 
     /** 
      * getColumnValueObject
@@ -461,7 +436,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_YES;
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
     }
     
     
@@ -521,5 +496,17 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         return null;
     }
+    
+    
+    /**
+     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
+     *     left to right side, without displaying progress.
+     * @return
+     */
+    public boolean hasIndeterminateProgressStatus()
+    {
+        return false;
+    }
+    
     
 }

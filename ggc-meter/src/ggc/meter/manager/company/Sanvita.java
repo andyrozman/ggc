@@ -1,5 +1,6 @@
 package ggc.meter.manager.company; 
 
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -39,7 +40,12 @@ public class Sanvita extends AbstractDeviceCompany
      */
     public Sanvita()
     {
-        super(true);
+        super(true,                             // empty devices
+            MeterDevicesIds.COMPANY_SANVITA,    // company_id
+            "Sanvita",                           // company name (full)
+            "Sanvita",                           // short company name
+            "SANVITA_DESC",                      // company description
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED);  // implementation status
     }
 
 

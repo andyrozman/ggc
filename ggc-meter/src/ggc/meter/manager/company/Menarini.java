@@ -40,64 +40,14 @@ public class Menarini extends AbstractDeviceCompany
      */
     public Menarini()
     {
-        super();
+        super(false,                            // empty devices
+            MeterDevicesIds.COMPANY_MENARINI,   // company_id
+            "Menarini",                         // company name (full)
+            "Menarini",                         // short company name
+            "MENARINI_DESC",                      // company description
+            DeviceImplementationStatus.IMPLEMENTATION_TESTING);  // implementation status
         
         this.addDevice(new GlucofixMio(this));
-        
     }
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "Menarini";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return MeterDevicesIds.COMPANY_MENARINI;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "MENARINI_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
-    }
-    
-    
     
 }

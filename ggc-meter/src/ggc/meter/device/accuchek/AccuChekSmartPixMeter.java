@@ -4,6 +4,7 @@ package ggc.meter.device.accuchek;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -281,6 +282,17 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     public int getConnectionProtocol()
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
+    }
+    
+ 
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
     
     

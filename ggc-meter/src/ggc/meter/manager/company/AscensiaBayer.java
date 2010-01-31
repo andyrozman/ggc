@@ -7,6 +7,7 @@ import ggc.meter.device.ascensia.AscensiaContourLink;
 import ggc.meter.device.ascensia.AscensiaContourTest;
 import ggc.meter.device.ascensia.AscensiaDEX;
 import ggc.meter.device.ascensia.AscensiaEliteXL;
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -45,7 +46,12 @@ public class AscensiaBayer extends AbstractDeviceCompany
      */
     public AscensiaBayer()
     {
-        super();
+        super(false,                                // empty devices
+            MeterDevicesIds.COMPANY_ASCENSIA,       // company_id
+            "Ascensia/Bayer",                       // company name (full)
+            "Ascensia",                             // short company name
+            "ASCENSIA_DESC",                        // company description
+            DeviceImplementationStatus.IMPLEMENTATION_DONE);  // implementation status
         
         this.addDevice(new AscensiaEliteXL(this));
         this.addDevice(new AscensiaDEX(this));
@@ -54,83 +60,6 @@ public class AscensiaBayer extends AbstractDeviceCompany
         this.addDevice(new AscensiaContour(this));
         this.addDevice(new AscensiaContourLink(this));
         this.addDevice(new AscensiaContourTest(this));
-        
-        //System.out.println(this.devices_vector);
     }    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "Ascensia/Bayer";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 1;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "ASCENSIA_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
-    }
-    
-
-    /**
-     * Get Connection Sample - This will display sample of connection parameter, for example on Serial
-     * devices this is COMx. On other OSes there are of course other parameters, but COMx parameter is
-     * "known" serial parameter and will be known to all people.
-     * 
-     * @return
-     */
-    public String getConnectionSample()
-    {
-        return "COM9";
-    }
-
-    
-    /**
-     * Get Connection Samples - This is I18N keyword, which needs to be added to language file. For Serial 
-     * devices this is SERIAL_PORTS.
-     * 
-     * @return
-     */
-    public String getConnectionSamples()
-    {
-        return "SERIAL_PORTS";  //"Serial Ports: COM2,...";
-    }
     
 }

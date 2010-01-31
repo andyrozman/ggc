@@ -55,7 +55,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.1.3";
+    public static final String PLUGIN_VERSION = "1.1.6";
     
     private static DataAccessMeter s_da = null; // This is handle to unique 
 

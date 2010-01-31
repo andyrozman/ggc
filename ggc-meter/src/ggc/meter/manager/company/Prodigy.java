@@ -1,5 +1,6 @@
 package ggc.meter.manager.company; 
 
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -29,7 +30,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Prodigy extends AbstractDeviceCompany
 {
 
@@ -38,60 +38,12 @@ public class Prodigy extends AbstractDeviceCompany
      */
     public Prodigy()
     {
-        super(true);
+        super(true,                             // empty devices
+            MeterDevicesIds.COMPANY_ABBOTT,     // company_id
+            "Prodigy",                           // company name (full)
+            "Prodigy",                           // short company name
+            "PRODIGY_DESC",                      // company description
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED);  // implementation status
     }
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
-
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "Prodigy";
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 9;
-    }
-    
-    
-    /**
-     * getInstructions - get instructions for device
-     * 
-     * @return instructions for reading data 
-     */
-    public String getDescription()
-    {
-       return "PRODIGY_DESC"; 
-    }
-    
-    
-    
-    /**
-     * getImplementationStatus - Get Implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
-    }
-    
-    
     
 }

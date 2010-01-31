@@ -1,6 +1,7 @@
 package ggc.meter.device;
 
 
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -47,7 +48,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     //protected I18nControlAbstract ic = DataAccessMeter.getInstance().getI18nControlInstance();
     protected OutputWriter output_writer;
     //protected ArrayList<MeterValuesEntry> data = null;
-    
+    protected DataAccessMeter m_da = null;
 
     /**
      * Constructor
@@ -55,6 +56,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     public AbstractMeter()
     {
         super();
+        m_da = DataAccessMeter.getInstance();
     }
 
 
@@ -65,6 +67,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     public AbstractMeter(AbstractDeviceCompany cmp)
     {
         super();
+        m_da = DataAccessMeter.getInstance();
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
@@ -218,48 +221,45 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
         return 0;
     }
 
-
+    
     /** 
-     * getColumnCount
+     * Get Column Count
      */
     public int getColumnCount()
     {
-        return 3;
+        return m_da.getPluginDeviceUtil().getColumnCount();
     }
-
-
-    String device_columns[] = { "DEVICE_COMPANY", "DEVICE_DEVICE", "DEVICE_CONNECTION" }; 
+    
     
     /** 
      * getColumnName
      */
     public String getColumnName(int num)
     {
-        return device_columns[num-1];
-    }
-
-
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+    }    
+    
+    
     /** 
-     * getColumnValue
+     * Get Column Width
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
+    }
+    
+    
+    /** 
+     * getColumnValue - get Value of column, for configuration
      */
     public String getColumnValue(int num)
     {
-        switch(num)
-        {
-         
-            case 1:
-                return this.getName();
-                
-            case 2:
-                return this.getDeviceCompany().getConnectionSamples();
-
-            case 0:
-            default:    
-                return this.getDeviceCompany().getName();
-                
-                
-        }
+        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
     }
+    
+
+//    String device_columns[] = { "DEVICE_COMPANY", "DEVICE_DEVICE", "DEVICE_CONNECTION" }; 
+    
 
 
     /** 
@@ -271,14 +271,6 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
     }
 
 
-    /** 
-     * getColumnWidth
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
 
 
     /** 
@@ -370,7 +362,7 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_YES;
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
 
     String device_source_name;
@@ -421,5 +413,15 @@ public abstract class AbstractMeter implements MeterInterface, SelectableInterfa
         return null;
     }
     
+
+    /**
+     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
+     *     left to right side, without displaying progress.
+     * @return
+     */
+    public boolean hasIndeterminateProgressStatus()
+    {
+        return false;
+    }
     
 }

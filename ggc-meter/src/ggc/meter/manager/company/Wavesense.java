@@ -1,5 +1,6 @@
 package ggc.meter.manager.company; 
 
+import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -39,7 +40,12 @@ public class Wavesense extends AbstractDeviceCompany
      */
     public Wavesense()
     {
-        super(true);
+        super(true,                                 // empty devices
+            MeterDevicesIds.COMPANY_WAVESENSE,      // company_id
+            "Wave Sense",                           // company name (full)
+            "Wave Sense",                           // short company name
+            "WAVESENSE_DESC",                       // company description
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED);  // implementation status
     }
 
 
