@@ -3,9 +3,11 @@ package ggc.cgms.plugin;
 import ggc.cgms.gui.viewer.CGMSDataDialog;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.DataAccess;
+import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.gui.AboutBaseDialog;
+import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
 
 import java.awt.Container;
@@ -17,7 +19,6 @@ import javax.swing.JMenu;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
@@ -49,7 +50,7 @@ import com.atech.utils.ATSwingUtils;
  */
 
 
-public class CGMSPlugInServer extends PlugInServer implements ActionListener
+public class CGMSPlugInServer extends DevicePlugInServer implements ActionListener
 {
 
     //private String cgm_tool_version = "0.1.1";
@@ -378,10 +379,14 @@ public class CGMSPlugInServer extends PlugInServer implements ActionListener
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        // TODO Auto-generated method stub
         String command = ae.getActionCommand();
         
-        if (command.equals("cgms_list"))
+        if (command.equals("cgms_read"))
+        {
+            new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+            this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
+        }
+        else if (command.equals("cgms_list"))
         {
             new BaseListDialog((JFrame)this.parent, DataAccessCGMS.getInstance());
         }

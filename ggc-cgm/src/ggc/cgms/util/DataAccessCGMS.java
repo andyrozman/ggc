@@ -1,6 +1,7 @@
 package ggc.cgms.util;
 
 import ggc.cgms.data.CGMSDataHandler;
+import ggc.cgms.data.CGMSValuesEntry;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.manager.CGMSManager;
@@ -54,14 +55,14 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "0.3.1";
+    public static final String PLUGIN_VERSION = "0.4.3";
 
 
     private static DataAccessCGMS s_da = null; // This is handle to unique 
 
     private CGMSManager m_cgms_manager = null;
 
-        
+    public static String[] value_types = null;
         
 
     // ********************************************************
@@ -331,8 +332,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache", "Helper methods for java.lang library"));
         lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache", "Logger and all around wrapper for logging utilities"));
         lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD", "Framework for Xml manipulation"));
-        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
-        lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document", "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
+        //lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
+        //lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document", "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
 
         this.plugin_libraries = lst_libs;
 
@@ -453,6 +454,53 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public void createPlugInDataRetrievalContext()
     {
         // TODO Auto-generated method stub
+        
+        
+        if (DataAccessPlugInBase.yes_no_option==null)
+        {
+            //I18nControl ic = I18nControl.getInstance();
+            //System.out.println("Ic: " + ic);
+            yes_no_option = new String[2];
+            yes_no_option[0] = m_i18n.getMessage("NO");
+            yes_no_option[1] = m_i18n.getMessage("YES");
+            
+            //System.out.println("Yes: " + m_i18n.getMessage("YES"));
+            
+        }
+        
+        m_entry_type = new CGMSValuesEntry();
+
+        
+        entry_statuses = new String[4];
+        entry_statuses[0] = m_i18n.getMessage("UNKNOWN");
+        entry_statuses[1] = m_i18n.getMessage("NEW");
+        entry_statuses[2] = m_i18n.getMessage("CHANGED");
+        entry_statuses[3] = m_i18n.getMessage("OLD");
+        
+        this.data_download_screen_wide = false;
+        
+        this.columns_table = new String[5];
+        this.columns_table[0] = m_i18n.getMessage("DATETIME"); 
+        this.columns_table[1] = m_i18n.getMessage("ENTRY_TYPE");
+        //this.columns_table[2] = m_i18n.getMessage("BASE_TYPE");
+        this.columns_table[2] = m_i18n.getMessage("READINGS");
+        //this.columns_table[4] = m_i18n.getMessage("VALUE");
+        this.columns_table[3] = m_i18n.getMessage("STATUS");
+        this.columns_table[4] = m_i18n.getMessage("");
+        
+        this.column_widths_table = new int[5];
+        this.column_widths_table[0] = 110;
+        this.column_widths_table[1] = 150;
+        this.column_widths_table[2] = 60;
+        this.column_widths_table[3] = 50;
+        this.column_widths_table[4] = 110;   // value
+        //this.column_widths_table[5] = 40;
+        //this.column_widths_table[6] = 25;
+        
+        DataAccessCGMS.value_types = new String[3];
+        DataAccessCGMS.value_types[0] = "";
+        DataAccessCGMS.value_types[1] = m_i18n.getMessage("CGMS_READINGS");
+        DataAccessCGMS.value_types[2] = m_i18n.getMessage("CALIBRATION_READINGS");
         
     }
 

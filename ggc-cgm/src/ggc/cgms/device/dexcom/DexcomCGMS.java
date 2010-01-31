@@ -305,7 +305,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
      */
     public boolean isDeviceCommunicating()
     {
-        return false;
+        return true;
     }
 
 
@@ -325,7 +325,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     
     
     
-    public static long getDateFromString(String val)
+    public static long getDateTimeFromString(String val)
     {
         //2007-03-23 13:13:29.010
         

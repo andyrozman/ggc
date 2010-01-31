@@ -3,6 +3,7 @@ package ggc.cgms.data;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
 
@@ -83,7 +84,7 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
      */
     public boolean isBoolean(int column)
     {
-        if (column == 4)
+        if (column == this.getCheckableColumn())
             return true;
         else
             return false;
@@ -97,6 +98,8 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     String old_key = null;
     CGMSValuesEntry current_main = null;
     
+    int i = 0;
+    
     /**
      * Add Entry
      * 
@@ -104,6 +107,9 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
      */
     public void addEntry(DeviceValuesEntryInterface mve)
     {
+        //if (i>5)
+        //    return;
+        
         CGMSValuesSubEntry se = (CGMSValuesSubEntry)mve;
   
         String key = se.date + "_" + se.type;
@@ -127,6 +133,8 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
             this.fireTableDataChanged();
 
             this.current_main = new CGMSValuesEntry();
+            
+            i++;
         }
         
         
@@ -134,10 +142,14 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
         {
             //CGMSValuesEntry cve = new CGMSValuesEntry();
             this.current_main.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, se.datetime));
+            this.current_main.setDate(se.date);
+            
             this.current_main.setEmpty(false);
             this.current_main.setType(se.type);
             //this.htable.put(key, cve);
             this.current_main.addSubEntry(se);
+            
+            old_key = key;
             
             this.htable.put(key, this.current_main);
         }
@@ -186,7 +198,15 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
 
     public void finishReading()
     {
+        processDeviceValueEntry(this.current_main);
+        this.dl_data.add(this.current_main);
         
+        if (this.shouldBeDisplayed(this.current_main.getStatus()))
+        {
+            this.displayed_dl_data.add(this.current_main);
+            Collections.sort(displayed_dl_data);
+        }
+        this.fireTableDataChanged();
     }
     
     
@@ -211,8 +231,7 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     @Override
     public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<GGCHibernateObject>();
     }
 
     /**
@@ -223,6 +242,7 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     @Override
     public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
     {
+        mve.setStatus(DeviceValuesEntry.STATUS_NEW);
         // TODO Auto-generated method stub
     }
 
@@ -232,7 +252,7 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     @Override
     public int getCheckableColumn()
     {
-        return 4;
+        return 3;
     }
    
 }

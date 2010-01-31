@@ -151,7 +151,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
             {
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
-                sub.setDateTime(DexcomCGMS.getDateFromString(tmp_time));
+                sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
                 sub.type = CGMSValuesSubEntry.CGMS_BG_READING;
                 sub.value = Integer.parseInt(atts.getValue(2));
   
@@ -161,7 +161,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
             {
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
-                sub.setDateTime(DexcomCGMS.getDateFromString(tmp_time));
+                sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
                 sub.type = CGMSValuesSubEntry.METER_CALIBRATION_READING;
                 sub.value = Integer.parseInt(atts.getValue(2));
 

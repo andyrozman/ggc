@@ -76,7 +76,7 @@ public class CGMSDataTableModel extends AbstractTableModel implements MultiLineT
     private String[] column_names = { 
                                      m_ic.getMessage("TIME"),
                                      m_ic.getMessage("ENTRY_TYPE"),
-                                     m_ic.getMessage("VALUE"),
+                                     m_ic.getMessage("READINGS"),
                                      m_ic.getMessage("COMMENT")
                                       };
     

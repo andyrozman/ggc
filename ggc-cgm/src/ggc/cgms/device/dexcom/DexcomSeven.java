@@ -2,6 +2,7 @@ package ggc.cgms.device.dexcom;
 
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -91,7 +92,7 @@ public class DexcomSeven extends DexcomCGMS
      */
     public String getIconName()
     {
-        return "dx_decom7.jpg";
+        return "dx_dexcom7.jpg";
     }
     
 
@@ -168,7 +169,7 @@ public class DexcomSeven extends DexcomCGMS
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
     }
     
     
@@ -181,6 +182,30 @@ public class DexcomSeven extends DexcomCGMS
     {
         return -1;
     }
+    
+    
+    
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
+        
+        FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(this.m_da);
+        dt1.readFile("../test/DexDM3SampleExport.xml");
+        
+        
+        
+    }
+ 
+    
+    
+    /**
+     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
+     *     left to right side, without displaying progress.
+     * @return
+     */
+    public boolean hasIndeterminateProgressStatus()
+    {
+        return true;
+    }    
     
     
 }

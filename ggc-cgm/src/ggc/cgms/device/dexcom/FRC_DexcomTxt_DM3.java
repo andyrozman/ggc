@@ -130,8 +130,10 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
         {
             CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
             tmp_time = strtok.nextToken();
-            sub.datetime = DexcomCGMS.getDateFromString(tmp_time);
-            sub.time = DexcomCGMS.getTimeFromString(tmp_time);
+            //sub.setDate(DexcomCGMS.getDateFromString(tmp_time));
+            //sub.datetime = DexcomCGMS.getDateFromString(tmp_time);
+            //sub.time = DexcomCGMS.getTimeFromString(tmp_time);
+            sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
             sub.type = CGMSValuesSubEntry.CGMS_BG_READING;
             strtok.nextToken();
             sub.value = Integer.parseInt(strtok.nextToken());
@@ -141,8 +143,9 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
             {
                 sub = new CGMSValuesSubEntry(); 
                 tmp_time = strtok.nextToken();
-                sub.datetime = DexcomCGMS.getDateFromString(tmp_time);
-                sub.time = DexcomCGMS.getTimeFromString(tmp_time);
+                sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
+                //sub.datetime = DexcomCGMS.getDateFromString(tmp_time);
+                //sub.time = DexcomCGMS.getTimeFromString(tmp_time);
                 sub.type = CGMSValuesSubEntry.METER_CALIBRATION_READING;
                 strtok.nextToken();
                 sub.value = Integer.parseInt(strtok.nextToken());

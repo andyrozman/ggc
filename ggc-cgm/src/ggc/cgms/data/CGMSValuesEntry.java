@@ -50,6 +50,9 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	// pump 
 	long datetime;
 	
+	long date;
+	ATechDate date_obj = null;
+	
 	int type;
 	//int base_type;
 	//int sub_type;
@@ -58,7 +61,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	
 	// old
 	//String bg_str;
-	int bg_unit;
+	//int bg_unit;
 	//public
 	
 	boolean empty = true;
@@ -74,7 +77,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     
     //private DayValueH entry_object = null;
     
-	
+	//ATechDate datetime_obj;
 	
 	
 	/**
@@ -83,11 +86,17 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	public CGMSValuesEntry()
 	{
 	    super();
-	    
 	    list = new ArrayList<CGMSValuesSubEntry>();
-	    
 	}
 	
+	
+	
+	public void setDate(long dt)
+	{
+	    this.date = dt;
+	    this.date_obj = new ATechDate(ATechDate.FORMAT_DATE_ONLY, dt);
+	    this.datetime = dt;
+	}
 	
 	
 	
@@ -262,8 +271,36 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     @Override
     public Object getColumnValue(int index)
     {
-        // TODO Auto-generated method stub
-        return null;
+        switch(index)
+        {
+        /*
+            case 0: // time
+            {
+                return this.datetime.getTimeString();
+            }
+            case 1: // type
+            {
+                return getBaseTypeString();
+            }
+            case 2: // subtype
+            {
+                return getSubTypeString();
+            }
+            case 3: // value
+            {
+                //return this.getValue();
+                return getValuePrint();
+            }
+            case 4: // additional
+            {
+                return this.getAdditionalDisplay();
+            }
+            case 5: // food
+            {
+                return this.isFoodSet();
+            }*/
+        }
+        return "N/A";
     }
 
     
@@ -275,7 +312,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     @Override
     public int getDateTimeFormat()
     {
-        return 0;
+        return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
 
     
@@ -386,7 +423,27 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public Object getTableColumnValue(int index)
     {
-        return null;
+        switch (index)
+        {
+            case 0:
+                return this.date_obj.getDateString();
+
+            case 1:
+                return DataAccessCGMS.value_types[this.type]; //m_ic.getMessage("BASE_TYPE_SH");
+
+            case 2:
+                return "" + this.list.size(); //this.getBaseTypeString();
+
+            case 3:
+                return new Boolean(getChecked());
+                
+            case 4:
+                return this.getStatus();
+            
+            default:
+                return "";
+        }
+        
     }
 
     
