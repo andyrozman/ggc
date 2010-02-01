@@ -186,7 +186,7 @@ environment.
     Install subclipse: (you need to do this step before you go to 3.
     
     Go to Help -> Software Updates. Tab Available software, click on add site.
-    Add following site url: http://subclipse.tigris.org/update_1.4.x
+    Add following site url: http://subclipse.tigris.org/update_1.6.x
     Wait few seconds that entry is added and file list downloaded. Select Subclipse plugin.
     
 3.) Create new workspace. Add Libraries. Libraries are stored under ggc-support/eclipse. You need to
@@ -207,16 +207,25 @@ environment.
     Open Windows->Preferences. Go to group Java->Code style->Formatter. Use Import option and add xml
     file stored under ggc-support/eclipse.
     
-4.) Import all projects (atech-tools, ggc, ggc-meter, ggc-pump, ggc-cgm, ggc-plugin_base)
+4.) a.) ATech-Tools
+         * On workspace (Left window) do Import...
+         * use General->Existing projects into workspace
+         * In Select root directory, select <AtechToolsRoot>/trunk/java           
 
-    Use File->Import..., select General->Existing project into workspace and find all upper directories
-    
-    You should have 6 projects. 
+    b.) GGC 
+         * On workspace (Left window) do Import...
+         * use General->Existing projects into workspace
+         * In Select root directory, select <GGC>/trunk           
+      
+    Import all projects except "GGC Web Page"  (ggc-core, ggc-desktop, ggc-meter, ggc-pump, ggc-cgm, ggc-plugin_base, ggc-nutri)
+
+
+    You should have 8 projects. 
     
 
 5.) Run GGC
 
-    Go to GGC Gluco Control/src/ggc/GGC.java (Right click on it, select Run As...->Java application
+    Go to GGC Gluco Control/src/ggc-desktop/GGC.java (Right click on it, select Run As...->Java application
     
     Copy files from ggc-support/data
     
@@ -228,7 +237,7 @@ environment.
           
     Copy ggc-support/data/GGC_Config.properties
     
-    Change run entry for GGC:
+    Change run entry for GGC-Desktop:
     - Open run configuration. 
     - Select tab Arguments. 
     - Go to working directory. Select other.
