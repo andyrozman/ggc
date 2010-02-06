@@ -277,6 +277,10 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         ic_local = da_local.getI18nControlInstance();
         da_local.setParentI18nControlInstance(ic);
         
+        
+        System.out.println(da_local.getI18nControlInstance().toString());
+        
+        
         da_local.addComponent(this.parent);
         da_local.setHelpContext(this.m_da.getHelpContext());
         da_local.setPlugInServerInstance(this);
