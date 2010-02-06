@@ -43,6 +43,8 @@ public class DeviceValuesDay
 	private Hashtable<String,DeviceValuesEntry> table = null;
 	DataAccessPlugInBase m_da;
 	GregorianCalendar gc_today;
+	boolean m_use_index = false; // we can index files for easy access, but this might not work
+	                             // for each instance of this object
 
 	
 	/**
@@ -52,9 +54,7 @@ public class DeviceValuesDay
 	 */
 	public DeviceValuesDay(DataAccessPlugInBase da)
 	{
-	    this.m_da = da;
-	    list = new ArrayList<DeviceValuesEntry>();
-	    table = new Hashtable<String,DeviceValuesEntry>();
+	    this(da, null, true);
 	}
 	
 
@@ -66,13 +66,33 @@ public class DeviceValuesDay
      */
     public DeviceValuesDay(DataAccessPlugInBase da, GregorianCalendar gc)
     {
+        this(da, gc, true);
+    }
+	
+
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param gc 
+     */
+    public DeviceValuesDay(DataAccessPlugInBase da, GregorianCalendar gc, boolean use_index)
+    {
         this.m_da = da;
         list = new ArrayList<DeviceValuesEntry>();
         table = new Hashtable<String,DeviceValuesEntry>();
         this.gc_today = gc;
+        this.m_use_index = use_index;
     }
-	
-	
+    
+    
+    
+    public void addList(ArrayList<?  extends DeviceValuesEntry> lst)
+    {
+        this.list.addAll(lst);
+        this.sort();
+    }
+    
 	
 	/**
 	 * Add Entry
@@ -83,12 +103,15 @@ public class DeviceValuesDay
 	{
 	    this.list.add(pve);
 	    this.sort();
-	    
-	    ATechDate atd = new ATechDate(pve.getDateTimeFormat(), pve.getDateTime());
-	    
-	    if (!this.table.containsKey(atd.getTimeString()))
+	 
+	    if (this.m_use_index)
 	    {
-	        this.table.put(atd.getTimeString(), pve);
+    	    ATechDate atd = new ATechDate(pve.getDateTimeFormat(), pve.getDateTime());
+    	    
+    	    if (!this.table.containsKey(atd.getTimeString()))
+    	    {
+    	        this.table.put(atd.getTimeString(), pve);
+    	    }
 	    }
 	    
 	}
@@ -102,12 +125,15 @@ public class DeviceValuesDay
 	{
 	    DeviceValuesEntryInterface dvei = this.list.get(index);
         this.list.remove(index);
-        
-        ATechDate atd = new ATechDate(dvei.getDateTimeFormat(), dvei.getDateTime());
-        
-        if (!this.table.containsKey(atd.getTimeString()))
+
+        if (this.m_use_index)
         {
-            this.table.remove(dvei);
+            ATechDate atd = new ATechDate(dvei.getDateTimeFormat(), dvei.getDateTime());
+            
+            if (!this.table.containsKey(atd.getTimeString()))
+            {
+                this.table.remove(dvei);
+            }
         }
 	    
 	}
@@ -121,6 +147,9 @@ public class DeviceValuesDay
 	 */
 	public boolean isEntryAvailable(long datetime)
 	{
+	    if (!this.m_use_index)
+	        return false;
+
 	    ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), datetime);
 	    return this.table.containsKey(atd.getTimeString());
 	}
@@ -133,6 +162,9 @@ public class DeviceValuesDay
 	 */
 	public DeviceValuesEntry getEntry(long dt)
 	{
+        if (!this.m_use_index)
+            return null;
+
         ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), dt);
         return this.table.get(atd.getTimeString());
 	}

@@ -514,19 +514,22 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
             
                 if (dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW)
                 {
-                    //System.out.println("Checked[add]: " + dvei);
+                    System.out.println("Checked[add]: " + dvei);
                     list_add.add((DatabaseObjectHibernate)dvei);
                 }
                 else if (dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_EDIT)
                 {
-                    //System.out.println("Checked[edit]: " + dvei);
+                    System.out.println("Checked[edit]: " + dvei);
                     list_edit.add((DatabaseObjectHibernate)dvei);
                 }
+                else
+                    System.out.println("Checked[" + dvei.getObjectStatus() + "]: " + dvei);
+                    
             
             }
         }
 
-        
+        System.out.println("To: Add: " + list_add.size() + ", Edit: " + list_edit.size());
         
         
         table.put("ADD", list_add);

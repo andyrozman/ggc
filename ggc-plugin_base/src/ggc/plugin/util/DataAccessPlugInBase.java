@@ -67,6 +67,9 @@ import com.sun.jna.NativeLibrary;
 public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 {
     
+    
+    protected I18nControlPlugin i18n_plugin = null;
+    
     /**
      * Plugin Version
      */
@@ -277,6 +280,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
     	super(lm, icr); //I18nControl.getInstance());
 
+    	this.i18n_plugin = new I18nControlPlugin(lm, icr);
         initSpecial();
     } 
 
@@ -1008,27 +1012,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public void loadReadingStatuses()
     {
-        reading_statuses = new String[7];
-        
-        reading_statuses[0] = m_i18n.getMessage("STATUS_NONE");
-        reading_statuses[1] = m_i18n.getMessage("STATUS_READY");
-        reading_statuses[2] = m_i18n.getMessage("STATUS_DOWNLOADING");
-        reading_statuses[3] = m_i18n.getMessage("STATUS_STOPPED_DEVICE");
-        reading_statuses[4] = m_i18n.getMessage("STATUS_STOPPED_USER");
-        reading_statuses[5] = m_i18n.getMessage("STATUS_DOWNLOAD_FINISHED");
-        reading_statuses[6] = String.format(m_i18n.getMessage("STATUS_READER_ERROR"), m_i18n.getMessage("DEVICE_NAME_BIG"));
-
-        
-        this.filtering_states = new String[7];
-        
-        filtering_states[0] = m_i18n.getMessage("FILTER_ALL"); 
-        filtering_states[1] = m_i18n.getMessage("FILTER_NEW");
-        filtering_states[2] = m_i18n.getMessage("FILTER_CHANGED"); 
-        filtering_states[3] = m_i18n.getMessage("FILTER_EXISTING");
-        filtering_states[4] = m_i18n.getMessage("FILTER_UNKNOWN");
-        filtering_states[5] = m_i18n.getMessage("FILTER_NEW_CHANGED");
-        filtering_states[6] = m_i18n.getMessage("FILTER_ALL_BUT_EXISTING");
-        
+         
         
     }
     
@@ -1372,6 +1356,79 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         
         return this.plugin_device_util;
     }
+ 
+    
+    public I18nControlPlugin getI18nControlInstance()
+    {
+        if (this.i18n_plugin==null)
+        {
+            this.i18n_plugin = new I18nControlPlugin(this.lang_mgr, this.m_icr); 
+        }
+        
+        return this.i18n_plugin;
+    }
+    
+ 
+    public void loadBasePluginTranslations()
+    {
+        
+        yes_no_option = new String[2];
+        yes_no_option[0] = this.getI18nControlInstance().getMessage("NO");
+        yes_no_option[1] = this.i18n_plugin.getMessage("YES");
+            
+        entry_statuses = new String[4];
+        entry_statuses[0] = this.i18n_plugin.getMessage("UNKNOWN");
+        entry_statuses[1] = this.i18n_plugin.getMessage("NEW");
+        entry_statuses[2] = this.i18n_plugin.getMessage("CHANGED");
+        entry_statuses[3] = this.i18n_plugin.getMessage("OLD");
+        
+        // months
+        months[0] = i18n_plugin.getMessage("JANUARY");
+        months[1] = i18n_plugin.getMessage("FEBRUARY");
+        months[2] = i18n_plugin.getMessage("MARCH");
+        months[3] = i18n_plugin.getMessage("APRIL");
+        months[4] = i18n_plugin.getMessage("MAY");
+        months[5] = i18n_plugin.getMessage("JUNE");
+        months[6] = i18n_plugin.getMessage("JULY");
+        months[7] = i18n_plugin.getMessage("AUGUST");
+        months[8] = i18n_plugin.getMessage("SEPTEMBER");
+        months[9] = i18n_plugin.getMessage("OCTOBER");
+        months[10] = i18n_plugin.getMessage("NOVEMBER");
+        months[11] = i18n_plugin.getMessage("DECEMBER");
+
+        // days
+        days[0] = i18n_plugin.getMessage("MONDAY");
+        days[1] = i18n_plugin.getMessage("TUESDAY");
+        days[2] = i18n_plugin.getMessage("WEDNESDAY");
+        days[3] = i18n_plugin.getMessage("THURSDAY");
+        days[4] = i18n_plugin.getMessage("FRIDAY");
+        days[5] = i18n_plugin.getMessage("SATURDAY");
+        days[6] = i18n_plugin.getMessage("SUNDAY");
+
+        
+       reading_statuses = new String[7];
+        
+        reading_statuses[0] = i18n_plugin.getMessage("STATUS_NONE");
+        reading_statuses[1] = i18n_plugin.getMessage("STATUS_READY");
+        reading_statuses[2] = i18n_plugin.getMessage("STATUS_DOWNLOADING");
+        reading_statuses[3] = i18n_plugin.getMessage("STATUS_STOPPED_DEVICE");
+        reading_statuses[4] = i18n_plugin.getMessage("STATUS_STOPPED_USER");
+        reading_statuses[5] = i18n_plugin.getMessage("STATUS_DOWNLOAD_FINISHED");
+        reading_statuses[6] = String.format(i18n_plugin.getMessage("STATUS_READER_ERROR"), i18n_plugin.getMessage("DEVICE_NAME_BIG"));
+
+        
+        this.filtering_states = new String[7];
+        
+        filtering_states[0] = i18n_plugin.getMessage("FILTER_ALL"); 
+        filtering_states[1] = i18n_plugin.getMessage("FILTER_NEW");
+        filtering_states[2] = i18n_plugin.getMessage("FILTER_CHANGED"); 
+        filtering_states[3] = i18n_plugin.getMessage("FILTER_EXISTING");
+        filtering_states[4] = i18n_plugin.getMessage("FILTER_UNKNOWN");
+        filtering_states[5] = i18n_plugin.getMessage("FILTER_NEW_CHANGED");
+        filtering_states[6] = i18n_plugin.getMessage("FILTER_ALL_BUT_EXISTING");
+        
+    }
+    
     
     
 
