@@ -4,8 +4,11 @@ import ggc.cgms.device.dexcom.FRC_DexcomXml_DM3;
 import ggc.cgms.device.minimed.MinimedCareLink;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.plugin.gui.file.ImportFileSelectorPanel;
 
 import java.io.File;
+
+import javax.swing.JDialog;
 
 import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimeZoneUtil;
@@ -62,7 +65,10 @@ public class CGMSConsoleTester //extends JFrame
 	    
     	try
     	{
-    	    startDexcom();
+//    	    startDexcom();
+    		
+    		startFileSelector();
+    		
     	    
     	    //this.startMiniMed("");
     	    //startAscensia(portName);
@@ -134,6 +140,23 @@ public class CGMSConsoleTester //extends JFrame
 */
     }
     
+    
+    public void startFileSelector()
+    {
+        DataAccessCGMS dap = DataAccessCGMS.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+        //dap.initAllObjects();
+        dap.loadSpecialParameters();
+
+    	
+    	JDialog d = new JDialog();
+		//MultipleFileSelectorPanel p = new MultipleFileSelectorPanel(dap, d);
+		ImportFileSelectorPanel p = new ImportFileSelectorPanel(dap, d, null);
+    	
+		d.getContentPane().add(p);
+		
+		d.setBounds(20, 20, p.getMinSize()[0], p.getMinSize()[1]);
+		d.setVisible(true);
+    }
     
 
 
