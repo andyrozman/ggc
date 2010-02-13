@@ -6,6 +6,12 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.4.16
+    * CGMS Plugin added and database files changed (from hibernate.cgm.* to  hibernate.cgms.*) 
+
+0.4.15
+    * PlugIn system changed 
+
 0.4.14
     * Bug fixing
 

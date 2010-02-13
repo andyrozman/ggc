@@ -67,7 +67,11 @@ public class ConfigurationManager
         "PUMP_BASAL_PRECISSION", "0.1",
         "PUMP_BOLUS_PRECISSION", "0.1",
         "INS_CARB_RULE", "RULE_500",
-        "SENSITIVITY_RULE", "RULE_1800"
+        "SENSITIVITY_RULE", "RULE_1800",
+        "PUMP_INSULIN", "",
+        "PRINT_PDF_VIEWER_PARAMETERS", "",
+        "INS3_NAME", "Insulin 3",
+        "INS3_ABBR", "Ins3"
     };
 
     private String cfg_int[] = 

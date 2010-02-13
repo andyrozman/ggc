@@ -607,6 +607,75 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setStringValue("INS2_NAME", value);
     }
     
+
+    /**
+     * Get Insulin 3 Abbreviation
+     * 
+     * @return
+     */
+    public String getIns3Abbr()
+    {
+        return this.m_cfg_mgr.getStringValue("INS3_ABBR");
+    }
+
+    
+    /**
+     * Set Insulin 3 Abbreviation
+     * 
+     * @param value 
+     */
+    public void setIns3Abbr(String value)
+    {
+        this.m_cfg_mgr.setStringValue("INS3_ABBR", value);
+    }
+    
+    
+    /**
+     * Get Insulin 3 Name
+     * 
+     * @return
+     */
+    public String getIns3Name()
+    {
+        return this.m_cfg_mgr.getStringValue("INS3_NAME");
+    }
+    
+
+    /**
+     * Set Insulin 3 Name
+     * 
+     * @param value 
+     */
+    public void setIns3Name(String value)
+    {
+        this.m_cfg_mgr.setStringValue("INS3_NAME", value);
+    }
+    
+    
+    
+    
+    /**
+     * Get Pump Insulin Name
+     * 
+     * @return
+     */
+    public String getPumpInsulin()
+    {
+        return this.m_cfg_mgr.getStringValue("PUMP_INSULIN");
+    }
+    
+
+    /**
+     * Set Pump Insulin Name
+     * 
+     * @param value 
+     */
+    public void setPumpInsulin(String value)
+    {
+        this.m_cfg_mgr.setStringValue("PUMP_INSULIN", value);
+    }
+    
+    
     
     // ---
     // --- Graphs
@@ -859,6 +928,29 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("PRINT_PDF_VIEWER_PATH", value);
     }
+
+    
+    /**
+     * Get PDF Viewer Path
+     * 
+     * @return
+     */
+    public String getPdfVieverParameters()
+    {
+        return this.m_cfg_mgr.getStringValue("PRINT_PDF_VIEWER_PARAMETERS");
+    }
+
+    
+    /**
+     * Set PDF Viewer Path
+     * 
+     * @param value 
+     */
+    public void setPdfVieverParameters(String value)
+    {
+        this.m_cfg_mgr.setStringValue("PRINT_PDF_VIEWER_PARAMETERS", value);
+    }
+    
     
 
     /**

@@ -142,13 +142,15 @@ public class PumpsPlugIn extends PlugInClient
             Class<?> c = Class.forName("ggc.pump.plugin.PumpPlugInServer");
 
             this.m_server = (PlugInServer) c.newInstance();
-            installed = true;
+            
             
             this.m_server.init(this.parent, 
                 DataAccess.getInstance().getI18nControlInstance().getSelectedLangauge(), 
                 DataAccess.getInstance(), 
                 this, 
                 DataAccess.getInstance().getDb() );
+            
+            installed = true;
         }
         catch (Exception ex)
         {
