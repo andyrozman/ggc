@@ -215,6 +215,8 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
      */
     public void readDeviceDataFull() throws PlugInBaseException
     {
+        System.out.println("readDeviceDataFull");
+        
         // write preliminary device identification, based on class
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
@@ -228,7 +230,12 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
         // start working
         String drv = this.getConnectionPort();
         String cmd = drv + "\\TRG\\";
+        
+        cmd = m_da.pathResolver(cmd);
 
+        System.out.println("Cmd: " + cmd);
+        
+        
         this.writeStatus("PIX_ABORT_AUTOSCAN");
         
         //System.out.println("Abort auto scan");
@@ -237,10 +244,15 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
         
         // abort auto scan
         File f = new File(cmd + "TRG09.PNG");
-        f.setLastModified(System.currentTimeMillis());
+        System.out.println("TRG09: " +  f.exists());
+        
+//        f.setLastModified(System.currentTimeMillis());
+        writeToFile(f);
+        
         
         f = new File(cmd + "TRG03.PNG");
-        f.setLastModified(System.currentTimeMillis());
+        writeToFile(f);
+//        f.setLastModified(System.currentTimeMillis());
         
 
         //this.writeStatus("PIX_READING");
@@ -248,10 +260,12 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
         
         // read device  
         f = new File(cmd + "TRG09.PNG");
-        f.setLastModified(System.currentTimeMillis());
+        writeToFile(f);
+//      f.setLastModified(System.currentTimeMillis());
         
         f = new File(cmd + "TRG00.PNG");
-        f.setLastModified(System.currentTimeMillis());
+        writeToFile(f);
+//      f.setLastModified(System.currentTimeMillis());
         
         boolean found = false;
         sleep(2000);
@@ -269,6 +283,8 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
             }
             
             int st = readStatusFromConfig(drv);
+            
+            System.out.println("Status: " + st);
             
             if (st==1)
             {
@@ -309,24 +325,24 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
                 this.output_writer.setSpecialProgress(pro_calc);
 
             }
-            else if (st==20)
+            /*else if (st==20)
             {
                 this.writeStatus("PIX_DEVICE_NOT_FOUND");
                 this.output_writer.setSpecialProgress(100);
 
                 //System.out.println("Unrecoverable error - Aborting");
                 return;
-            }
-            else if (st>99)
+            }*/
+            else if ((st>99) || (st==20))
             {
-                if (st==101)
+                if ((st==101) || (st==20))
                 {
                     this.writeStatus("PIX_FINISHED_REPORT_READY");
                     //System.out.println("Finished reading. Report ready." );
                     this.output_writer.setSpecialProgress(95);
 
                     
-                    File f1 = new File(drv + "\\REPORT\\XML");
+                    File f1 = new File(m_da.pathResolver(drv + "\\REPORT\\XML"));
                     
                     File[] fls = f1.listFiles(new FileFilter()
                     {
@@ -367,6 +383,24 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
         //this.output_writer.setSubStatus(null);
         
         //System.out.println("We got out !!!!");
+    }
+    
+    
+    private void writeToFile(File file)
+    {
+        try
+        {
+        //BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        //bw.newLine();
+            
+            BufferedReader bw = new BufferedReader(new FileReader(file));
+            bw.readLine();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Problem writing to file: " + ex);
+        }
+        
     }
     
     
@@ -496,8 +530,9 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
             //boolean error_found = false;
             //boolean image_found = false;
             
+            System.out.println("Scan path: " + m_da.pathResolver(drive + "\\REPORT\\SCAN.HTM"));
             
-            BufferedReader br = new BufferedReader(new FileReader(new File(drive + "\\REPORT\\SCAN.HTM")));
+            BufferedReader br = new BufferedReader(new FileReader(new File(m_da.pathResolver(drive + "\\REPORT\\SCAN.HTM"))));
             
             String line = "";
             
@@ -514,7 +549,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
                 }
                 else if (line.contains("img/"))
                 {
-                    //System.out.println("Image: " + line);
+                    System.out.println("Image: " + line);
                     if (line.contains("Scanning.gif"))
                     {
                         this.writeStatus("PIX_SCANNING");
@@ -545,7 +580,7 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
                 }
                 else if (line.contains("ReportPresent "))
                 {
-                    //System.out.println("L: " + line);
+                    System.out.println("L: " + line);
                     
                     if (line.contains("parent.BgReportPresent = "))
                     {
@@ -562,6 +597,9 @@ public abstract class AccuChekSmartPix extends AbstractXmlMeter //mlProtocol //i
                         reports[2] = getBooleanStatus(line);
                         rep_count++;
                     }
+                    
+                    
+               
                     
                     if (rep_count==3)
                     {

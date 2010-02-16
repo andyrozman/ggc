@@ -420,18 +420,15 @@ public class DataAccessMeter extends DataAccessPlugInBase
     @Override
     public void createPlugInDataRetrievalContext()
     {
-        entry_statuses = new String[4];
-        entry_statuses[0] = m_i18n.getMessage("UNKNOWN");
-        entry_statuses[1] = m_i18n.getMessage("NEW");
-        entry_statuses[2] = m_i18n.getMessage("CHANGED");
-        entry_statuses[3] = m_i18n.getMessage("OLD");
+        
+        loadBasePluginTranslations();
         
         this.columns_table = new String[5];
-        this.columns_table[0] = m_i18n.getMessage("DATETIME"); 
-        this.columns_table[1] = m_i18n.getMessage("BG_MMOLL");
-        this.columns_table[2] = m_i18n.getMessage("BG_MGDL");
-        this.columns_table[3] = m_i18n.getMessage("STATUS");
-        this.columns_table[4] = m_i18n.getMessage("");
+        this.columns_table[0] = this.i18n_plugin.getMessage("DATETIME"); 
+        this.columns_table[1] = this.i18n_plugin.getMessage("BG_MMOLL");
+        this.columns_table[2] = this.i18n_plugin.getMessage("BG_MGDL");
+        this.columns_table[3] = this.i18n_plugin.getMessage("STATUS");
+        this.columns_table[4] = ""; //this.i18n_plugin.getMessage("");
         
         this.column_widths_table = new int[5];
         this.column_widths_table[0] = 100;

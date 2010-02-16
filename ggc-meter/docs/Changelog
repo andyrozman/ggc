@@ -2,6 +2,9 @@
 Changes file for GGC Meter Tool
 ===============================
 
+1.1.7 [15.2.2010]
+    * Minor dependency changes
+
 1.1.6 [24.1.2010]
     * Minor changes to code, because of changes in PlugInBase
     * I18n Changed

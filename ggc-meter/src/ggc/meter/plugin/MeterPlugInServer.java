@@ -5,6 +5,7 @@ import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
+import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -151,7 +152,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
                     //ddh.setDbDataReader(reader);
                     
                     //new MeterInstructionsDialog(reader, this);
-                    new DeviceInstructionsDialog(this.parent, da_local, /*reader,*/ this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+                    new DeviceInstructionsDialog(this.parent, da_local, /*reader,*/ this, DeviceDataHandler.TRANSFER_READ_DATA);
                     return;
                 }
 
@@ -380,7 +381,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         
         if (command.equals("meters_read"))
         {
-            new DeviceInstructionsDialog(this.parent, da_local, this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+            new DeviceInstructionsDialog(this.parent, da_local, this, DeviceDataHandler.TRANSFER_READ_DATA);
             this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("meters_list"))
