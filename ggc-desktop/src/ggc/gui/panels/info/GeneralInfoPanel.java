@@ -1,5 +1,6 @@
 package ggc.gui.panels.info;
 
+
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 
