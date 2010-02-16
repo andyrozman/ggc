@@ -4,6 +4,7 @@ import ggc.nutri.display.HomeWeightDataDisplay;
 import ggc.nutri.display.NutritionDataDisplay;
 import ggc.nutri.util.DataAccessNutri;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +22,9 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
 
 
 /**
@@ -49,7 +52,7 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class FoodPartMainSelectorDialog extends JDialog implements ActionListener, KeyListener
+public class FoodPartMainSelectorDialog extends JDialog implements ActionListener, KeyListener, HelpCapable
 {
 
     private static final long serialVersionUID = -1193693566584753748L;
@@ -57,7 +60,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     JComboBox cb_type;
     JLabel label_item, label_item_type, label_item_desc;
     Font font_normal, font_normal_b;
-    JButton button_select;
+    JButton button_select, help_button;
     JPanel panel2;
 
     private DataAccessNutri m_da = null;
@@ -280,6 +283,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
         int button_y;
         int panel_height;
         String panel_title;
@@ -441,15 +445,24 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
              */
         }
 
-        /*
-         * percentDisplayFormat = NumberFormat.getPercentInstance();
-         * percentDisplayFormat.setMinimumFractionDigits(2); percentEditFormat =
-         * NumberFormat.getNumberInstance();
-         * percentEditFormat.setMinimumFractionDigits(2);
-         */
+        
 
-        // amountField.addPropertyChangeListener("value", this);
+        
+        
+        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 20, button_y, 110, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, 
+            m_da);
+        
+        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 135, button_y, 110, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, 
+            m_da);
+        
 
+        help_button = m_da.createHelpIconByBounds(250, button_y, 25, 25, panel, ATSwingUtils.FONT_NORMAL);
+        panel.add(help_button);
+        
+       /* 
+        
         JButton button = new JButton(ic.getMessage("OK"));
         button.setActionCommand("ok");
         button.setBounds(65, button_y, 80, 25);
@@ -461,9 +474,15 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         button.setBounds(160, button_y, 80, 25);
         button.addActionListener(this);
         panel.add(button);
-
+*/
+        
+        
+        
+        
         this.add(panel, null);
 
+        m_da.enableHelp(this);
+        
         loadTypeSpecific();
     }
 
@@ -654,6 +673,27 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         {
             cmdOk();
         }
+    }
+
+
+    public Component getComponent()
+    {
+        return this;
+    }
+
+
+    public JButton getHelpButton()
+    {
+        return this.help_button;
+    }
+
+
+    public String getHelpId()
+    {
+        if (this.selector_type == FoodPartMainSelectorDialog.SELECTOR_HOME_WEIGHT)
+            return "GGC_Food_User_Select_HomeWeight_Main";
+        else
+            return "GGC_Food_User_Select_Nutrition_Main";
     }
 
 }

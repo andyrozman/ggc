@@ -227,6 +227,11 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         scroll_2.repaint();
         scroll_2.updateUI();
 
+        this.help_button = m_da.createHelpIconByBounds(470, 10, 35, 35, this);
+        this.add(help_button);
+        
+        m_da.enableHelp(this);
+        
         return;
     }
 
@@ -699,4 +704,12 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
      * prev_group_id).removeChild(meal); }
      */
 
+    
+    public String getHelpId()
+    {
+        return "GGC_Food_Meal_Meal_View";
+    }
+    
+    
+    
 }

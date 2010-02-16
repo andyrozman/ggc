@@ -1,5 +1,6 @@
 package ggc.nutri.panels;
 
+import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.dialogs.NutritionTreeDialog;
@@ -256,6 +257,12 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         scroll_2.repaint();
         scroll_2.updateUI();
 
+        this.help_button = m_da.createHelpIconByBounds(470, 10, 35, 35, this);
+        this.add(help_button);
+        
+        m_da.enableHelp(this);
+        
+        
         return;
     }
 
@@ -411,4 +418,16 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         return false;
     }
 
+    
+    
+    public String getHelpId()
+    {
+        if (this.m_dialog.getType()==GGCTreeRoot.TREE_USDA_NUTRITION)
+            return "GGC_Food_USDA_View";
+        else
+            return "GGC_Food_User_Food_View";
+    }
+    
+    
+    
 }

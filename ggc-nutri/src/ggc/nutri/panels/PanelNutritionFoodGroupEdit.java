@@ -188,7 +188,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         this.add(button_select, null);
 
         button = new JButton();
-        button.setBounds(470, 15, 32, 32);
+        button.setBounds(440, 10, 35, 35);
         button.setAlignmentX(JButton.CENTER_ALIGNMENT);
         button.setAlignmentY(JButton.CENTER_ALIGNMENT);
         button.setIcon(m_da.getImageIcon("disk_blue.png", 26, 26, this));
@@ -204,6 +204,12 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
         createKeyWord();
 
+        this.help_button = m_da.createHelpIconByBounds(480, 10, 35, 35, this);
+        this.add(help_button);
+        
+        m_da.enableHelp(this);
+        
+        
         return;
     }
 
@@ -685,4 +691,16 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     }
 
+    
+    
+    public String getHelpId()
+    {
+        if (this.m_dialog.getType()==GGCTreeRoot.TREE_USER_NUTRITION)
+            return "GGC_Food_User_Group_Edit";
+        else
+            return "GGC_Food_Meal_Group_Edit";
+    }
+    
+    
+    
 }

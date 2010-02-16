@@ -4,6 +4,7 @@ import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.data.NutritionGroupModel;
 import ggc.nutri.util.DataAccessNutri;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,7 +20,9 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
 
+import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,7 +50,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class NutritionGroupDialog extends JDialog implements TreeSelectionListener, ActionListener
+public class NutritionGroupDialog extends JDialog implements TreeSelectionListener, ActionListener, HelpCapable
 {
 
     private static final long serialVersionUID = 3610528674361903899L;
@@ -56,6 +59,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
 
     private JTree tree;
     JTextField tf_selected;
+    JButton help_button = null;
     Object action_object = null;
 
     /**
@@ -131,7 +135,8 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
     
     private void init()
     {
-	
+        ATSwingUtils.initLibrary();
+        
         this.setLayout(null);
 
         JPanel panel = new JPanel();
@@ -147,7 +152,22 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         tf_selected.setBounds(30, 100, 230, 25);
         tf_selected.setEditable(false);
         panel.add(tf_selected);
+
+
+        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 150, 10, 110, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "ok.png", "select", this, 
+            m_da);
         
+        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 150, 40, 110, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, 
+            m_da);
+        
+
+        help_button = m_da.createHelpButtonByBounds(150, 70, 110, 25, panel, ATSwingUtils.FONT_NORMAL);
+        panel.add(help_button);
+        
+        
+       /* 
         JButton button = new JButton(ic.getMessage("OK"));
         button.setActionCommand("select");
         button.setBounds(180, 30, 80, 25);
@@ -159,7 +179,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         button.setBounds(180, 60, 80, 25);
         button.addActionListener(this);
         panel.add(button);
-        		
+        */		
         //Create a tree that allows one selection at a time.
         tree = new JTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -170,6 +190,8 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         JScrollPane treeView = new JScrollPane(tree);
         treeView.setBounds(30, 150, 230, 140);
 
+        m_da.enableHelp(this);
+        
         this.add(panel, null);
         this.add(treeView, null);
 	
@@ -258,6 +280,29 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
     	{
     	    this.dispose();
     	}
+    }
+
+
+    public Component getComponent()
+    {
+        return this;
+    }
+
+
+    public JButton getHelpButton()
+    {
+        return this.help_button;
+    }
+
+
+    public String getHelpId()
+    {
+        if (this.getType()==NutritionGroupDialog.GROUP_FOODS)
+            return "GGC_Food_User_Group_View";
+        else if (this.getType()==NutritionGroupDialog.GROUP_MEALS)
+            return "GGC_Food_Meal_Group_View"; 
+        else
+            return null;
     }
     
 }

@@ -6,6 +6,7 @@ import ggc.nutri.db.datalayer.HomeWeightSpecial;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.util.DataAccessNutri;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import com.atech.graphics.components.JDecimalTextField;
+import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -52,7 +54,7 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class MealSpecialSelectorDialog extends JDialog implements ActionListener, ItemListener, KeyListener
+public class MealSpecialSelectorDialog extends JDialog implements ActionListener, ItemListener, KeyListener, HelpCapable
 {
 
     private static final long serialVersionUID = 3869683885823162849L;
@@ -64,7 +66,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     JLabel label_item, label_item_type, label_amount;
     JLabel label_home_weight, label_home_weight_item;
     Font font_normal, font_normal_b;
-    JButton button_select, button_hw_select;
+    JButton button_select, button_hw_select, help_button;
     JPanel panel3, amount_panel;
     JDecimalTextField amountField;
 
@@ -377,6 +379,8 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
          */
 
         // amountField.addPropertyChangeListener("value", this);
+        
+        
         JButton button = new JButton("   " + ic.getMessage("OK"));
         button.setActionCommand("ok");
         button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
@@ -395,11 +399,13 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
         this.buttons.put("cancel", button);
 
-        button = m_da.createHelpButtonByBounds(150, 430, 115, 25, this);
-        panel.add(button);
+        help_button = m_da.createHelpButtonByBounds(150, 430, 115, 25, this);
+        panel.add(help_button);
 
         this.buttons.put("help", button);
 
+        m_da.enableHelp(this);
+        
         this.add(panel, null);
     }
 
@@ -761,6 +767,24 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
      * keyTyped
      */
     public void keyTyped(KeyEvent ke) { }
+
+
+    public Component getComponent()
+    {
+        return this;
+    }
+
+
+    public JButton getHelpButton()
+    {
+        return this.help_button;
+    }
+
+
+    public String getHelpId()
+    {
+        return "GGC_MFS_Item_Selector";
+    }
     
     
 }

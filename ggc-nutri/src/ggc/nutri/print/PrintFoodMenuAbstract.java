@@ -31,9 +31,9 @@ package ggc.nutri.print;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
+import ggc.core.print.PrintAbstract;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
-import ggc.core.print.PrintAbstract;
 import ggc.nutri.util.DataAccessNutri;
 
 import java.util.Iterator;
@@ -73,6 +73,7 @@ import com.lowagie.text.pdf.PdfPTable;
 
 public abstract class PrintFoodMenuAbstract extends PrintAbstract
 {
+    
     /**
      * Constructor
      * 
@@ -82,6 +83,9 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
     {
         super(mv, DataAccessNutri.getInstance().getParentI18nControlInstance(), true);
 
+        
+        //this.mv =  mv;
+        //this.m_da_core = null;  
         // System.out.println("getNutriControl");
 
         // this.ic = m_da.getNutriI18nControl();

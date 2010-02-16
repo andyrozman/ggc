@@ -67,7 +67,7 @@ import javax.swing.tree.TreePath;
 public class NutritionGroupModel implements TreeModel 
 {
 
-    private boolean m_debug = true;
+    private boolean m_debug = false;
     private Vector<TreeModelListener> treeModelListeners = new Vector<TreeModelListener>();
     private GGCTreeRoot rootObj = null;
 

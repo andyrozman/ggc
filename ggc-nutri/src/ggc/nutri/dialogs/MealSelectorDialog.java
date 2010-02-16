@@ -5,6 +5,7 @@ import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealPart;
 import ggc.nutri.util.DataAccessNutri;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,9 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import com.atech.graphics.components.JDecimalTextField;
+import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,7 +53,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class MealSelectorDialog extends JDialog implements ActionListener, KeyListener
+public class MealSelectorDialog extends JDialog implements ActionListener, KeyListener, HelpCapable
 {
 
     private static final long serialVersionUID = -3830583899901022717L;
@@ -69,7 +72,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     long input_id = 0L;
     String[] type;
     MealPart meal_part;
-
+    JButton help_button;
     
     /**
      * Constructor
@@ -310,17 +313,20 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
          * ); panel3.add(amountField);
          */
 
-        JButton button = new JButton(ic.getMessage("OK"));
-        button.setActionCommand("ok");
-        button.setBounds(65, 387, 80, 25);
-        button.addActionListener(this);
-        panel.add(button, null);
+        
+        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 20, 387, 110, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, 
+            m_da);
+        
+        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 135, 387, 110, 25, panel, 
+            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, 
+            m_da);
+        
 
-        button = new JButton(ic.getMessage("CANCEL"));
-        button.setActionCommand("cancel");
-        button.setBounds(160, 387, 80, 25);
-        button.addActionListener(this);
-        panel.add(button);
+        help_button = m_da.createHelpIconByBounds(250, 387, 25, 25, panel, ATSwingUtils.FONT_NORMAL);
+        panel.add(help_button);
+        
+        m_da.enableHelp(this);
 
         this.add(panel, null);
     }
@@ -470,6 +476,21 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
      */
     public void keyTyped(KeyEvent arg0)
     {
+    }
+
+    public Component getComponent()
+    {
+        return this;
+    }
+
+    public JButton getHelpButton()
+    {
+        return this.help_button;
+    }
+
+    public String getHelpId()
+    {
+        return "GGC_Food_Meal_Select_FoodParts";
     }
     
     

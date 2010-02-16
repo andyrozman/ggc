@@ -25,7 +25,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,6 +40,7 @@ import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.components.EditableAbstractPanel;
 import com.atech.graphics.layout.ZeroLayout;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -120,6 +120,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
     private void createPanel()
     {
+        ATSwingUtils.initLibrary();
 
         this.setSize(520, 560);
         this.setLayout(new ZeroLayout(this.getSize()));
@@ -144,7 +145,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         tf_name.addKeyListener(new KeyListener()
         {
 
-            /*
+            /**
              * keyReleased() Creates I18n keyword and gets translation
              * 
              * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
@@ -154,13 +155,8 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
                 createKeyWord();
             }
 
-            public void keyPressed(KeyEvent e)
-            {
-            }
-
-            public void keyTyped(KeyEvent e)
-            {
-            }
+            public void keyPressed(KeyEvent e) { }
+            public void keyTyped(KeyEvent e) { }
 
         });
 
@@ -266,27 +262,20 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
         scroll_1.updateUI();
 
-        this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_add.gif", this)));
-        this.button.addActionListener(this);
-        this.button.setActionCommand("add_meal");
-        this.button.setToolTipText(ic.getMessage("MEAL_FOOD_ADD_DESC"));
-        this.button.setBounds(370, 275, 32, 32);
-        this.add(button, null);
-
-        this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_edit.gif", this)));
-        this.button.addActionListener(this);
-        this.button.setActionCommand("edit_meal");
-        this.button.setToolTipText(ic.getMessage("MEAL_FOOD_EDIT_DESC"));
-        this.button.setBounds(410, 275, 32, 32);
-        this.add(button, null);
-
-        this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_delete.gif", this)));
-        this.button.addActionListener(this);
-        this.button.setActionCommand("remove_meal");
-        this.button.setToolTipText(ic.getMessage("MEAL_FOOD_DELETE_DESC"));
-        this.button.setBounds(450, 275, 32, 32);
-        this.add(button, null);
-
+        
+        ATSwingUtils.getIconButton(380, 280, 32, 32, 
+            ic.getMessage("MEAL_FOOD_ADD_DESC"), "food_add.gif", 27, 27, 
+            "add_meal", this, this, m_da);
+        
+        ATSwingUtils.getIconButton(415, 280, 32, 32, 
+            ic.getMessage("MEAL_FOOD_EDIT_DESC"), "food_edit.gif", 27, 27, 
+            "edit_meal", this, this, m_da);
+        
+        ATSwingUtils.getIconButton(450, 280, 32, 32, 
+            ic.getMessage("MEAL_FOOD_DELETE_DESC"), "food_delete.gif", 27, 27, 
+            "edit_meal", this, this, m_da);
+        
+        
         // home weight
 
         label = new JLabel(ic.getMessage("AVAILABLE_NUTRITIONS") + ":");
@@ -309,16 +298,15 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         scroll_2.repaint();
         scroll_2.updateUI();
 
+
+        ATSwingUtils.getIconButton(445, 10, 32, 32, 
+            "", "disk_blue.png", 27, 27, 
+            "save", this, this, m_da);
         
-        button = new JButton();
-        button.setBounds(470, 5, 32, 32);
-        button.setAlignmentX(JButton.CENTER_ALIGNMENT);
-        button.setAlignmentY(JButton.CENTER_ALIGNMENT);
-        button.setIcon(m_da.getImageIcon("disk_blue.png", 26, 26, this));
-        button.addActionListener(this);
-        button.setActionCommand("save");
-        this.add(button, null);
+        this.help_button = m_da.createHelpIconByBounds(480, 10, 32, 32, this);
+        this.add(help_button);
         
+        m_da.enableHelp(this);
         
         return;
     }
@@ -925,4 +913,12 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         //m_da.tree_roots.get("3").m_meal_groups_ht.get("" + prev_group_id).removeChild(_meal);
     }
 
+    
+    public String getHelpId()
+    {
+        return "GGC_Food_Meal_Meal_Edit";
+    }
+    
+    
+    
 }

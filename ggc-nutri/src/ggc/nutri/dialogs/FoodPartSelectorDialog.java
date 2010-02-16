@@ -93,7 +93,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     	{
             setSelectorObject(new NutritionDefinition());
             setSelectorName(ic.getMessage("SELECTOR_NUTRITION_DEFINITION"));
-            setHelpStringId("ggc.food.user.select.nutrition");
+            setHelpStringId("GGC_Food_User_Select_Nutrition");
             setNewItemString(ic.getMessage("NEW_NUTR_DEF"));
             setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
             this.getDescriptions().put("DESC_1", ic.getMessage("NUTRITION_NAME"));
@@ -104,7 +104,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     	{
             setSelectorObject(new NutritionHomeWeightType());
             setSelectorName(ic.getMessage("SELECTOR_HOME_WEIGHT"));
-            setHelpStringId("ggc.food.user.select.home_weight");
+            setHelpStringId("GGC_Food_User_Select_HomeWeight");
             setNewItemString(ic.getMessage("NEW_HOME_WEIGHT"));
     	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
     	    this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));

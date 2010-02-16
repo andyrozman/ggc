@@ -1,8 +1,13 @@
 package ggc.nutri.panels;
 
+import java.awt.Component;
+
 import ggc.nutri.util.DataAccessNutri;
 
+import javax.swing.JButton;
+
 import com.atech.graphics.components.EditableAbstractPanel;
+import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -31,12 +36,13 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public abstract class GGCTreePanel extends EditableAbstractPanel //JPanel implements EditablePanel
+public abstract class GGCTreePanel extends EditableAbstractPanel implements HelpCapable //JPanel implements EditablePanel
 {
 
     private static final long serialVersionUID = 1537683351864737939L;
     protected DataAccessNutri m_da = null;
     protected I18nControlAbstract m_ic = null;
+    protected JButton help_button = null;
 
     
     /**
@@ -59,5 +65,20 @@ public abstract class GGCTreePanel extends EditableAbstractPanel //JPanel implem
     {
 	
     }
+    
+    
+    public Component getComponent()
+    {
+        return this;
+    }
+
+
+
+    public JButton getHelpButton()
+    {
+        return this.help_button;
+    }
+
+    
     
 }

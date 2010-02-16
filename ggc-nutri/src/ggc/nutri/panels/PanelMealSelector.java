@@ -9,6 +9,7 @@ import ggc.nutri.display.DailyFoodEntryDisplay;
 import ggc.nutri.display.MealNutritionsDisplay;
 import ggc.nutri.util.DataAccessNutri;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +33,7 @@ import javax.swing.table.TableColumnModel;
 import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.layout.ZeroLayout;
+import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -60,7 +62,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class PanelMealSelector extends /* GGCTreePanel */JPanel implements ActionListener
+public class PanelMealSelector extends /* GGCTreePanel */JPanel implements ActionListener, HelpCapable
 {
 
     private static final long serialVersionUID = 568309027874088901L;
@@ -70,7 +72,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
     Font font_big, font_normal, font_normal_b;
     JLabel label, label_refuse, label_name, label_name_i18n;
     JLabel label_title;
-    JButton button, button_select;
+    JButton button, button_select, help_button;
     JTextField tf_name, tf_name_i18n, tf_name_i18n_key, tf_group;
     JTextArea jta_desc;
     JTable table_1, table_2 = null;
@@ -310,9 +312,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         button1.addActionListener(this.action_listener);
         this.add(button1);
 
-        button1 = m_da.createHelpButtonByBounds(380, 410, 110, 25, this);
-        this.add(button1);
+        this.help_button = m_da.createHelpButtonByBounds(380, 410, 110, 25, this);
+        this.add(this.help_button);
 
+        m_da.enableHelp(this);
+        
         return;
     }
 
@@ -367,7 +371,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         {
             MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_dialog, 0L);
 
-            System.out.println(mssd.getDailyFoodEntry());
+            //System.out.println(mssd.getDailyFoodEntry());
             
             DailyFoodEntryDisplay _dfed = new DailyFoodEntryDisplay(ic, mssd.getDailyFoodEntry());
 
@@ -769,6 +773,21 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
             }
         }
 
+    }
+
+    public Component getComponent()
+    {
+        return this;
+    }
+
+    public JButton getHelpButton()
+    {
+        return help_button;
+    }
+
+    public String getHelpId()
+    {
+        return "GGC_MFS_Daily_Selector";
     }
 
     /*

@@ -3,11 +3,14 @@ package ggc.nutri.panels;
 import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.util.DataAccessNutri;
 
+import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import com.atech.help.HelpCapable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -34,14 +37,14 @@ import javax.swing.SwingConstants;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class PanelNutritionMain extends GGCTreePanel
+public class PanelNutritionMain extends GGCTreePanel implements HelpCapable
 {
 
     private static final long serialVersionUID = -8242508108941080163L;
 
     Font font_big, font_normal, font_normal_b;
     JLabel label;
-    JButton button;
+    JButton button, help_button;
 
     NutritionTreeDialog m_dialog = null;
 
@@ -51,6 +54,15 @@ public class PanelNutritionMain extends GGCTreePanel
 	    "USER_NUTRITION_DATABASE",
 	    "MEALS_DATABASE"
     };
+    
+    
+    String[] help_ids = {
+        "",
+        "GGC_Food_USDA_Main",
+        "GGC_Food_User_Main",
+        "GGC_Food_Meal_Main"
+    };
+    
     
 
     /**
@@ -76,7 +88,7 @@ public class PanelNutritionMain extends GGCTreePanel
 
     private void createPanel()
     {
-        this.setSize(460, 520);
+        this.setSize(550, 520);
         this.setLayout(null);
 
         Font fnt_18 = new Font("Times New Roman", Font.PLAIN, 14);
@@ -96,6 +108,12 @@ public class PanelNutritionMain extends GGCTreePanel
         label.setFont(fnt_18); 
         this.add(label, null);
 
+        
+        this.help_button = m_da.createHelpIconByBounds(470, 10, 35, 35, this);
+        this.add(help_button);
+        
+        m_da.enableHelp(this);
+        
         return;
     }
 
@@ -140,7 +158,7 @@ public class PanelNutritionMain extends GGCTreePanel
      */
     public boolean hasDataChanged()
     {
-	return false;
+        return false;
     }
 
 
@@ -152,7 +170,28 @@ public class PanelNutritionMain extends GGCTreePanel
      */
     public boolean saveData()
     {
-	return false;
+        return false;
+    }
+
+
+
+    public Component getComponent()
+    {
+        return this.m_dialog;
+    }
+
+
+
+    public JButton getHelpButton()
+    {
+        return this.help_button;
+    }
+
+
+
+    public String getHelpId()
+    {
+        return this.help_ids[this.m_dialog.getType()];
     }
     
     

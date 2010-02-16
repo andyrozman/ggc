@@ -78,7 +78,7 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
 
     private void createPanel()
     {
-        this.setSize(420, 460);
+        this.setSize(520, 460);
         this.setLayout(null);
 
         Font fnt_14_bold = new Font("Times New Roman", Font.BOLD, 14);
@@ -133,6 +133,13 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
         label_parent.setBounds(60, 380, 300, 25);
         label_parent.setFont(fnt_14); 
         this.add(label_parent, null);
+        
+        
+        this.help_button = m_da.createHelpIconByBounds(470, 10, 35, 35, this);
+        this.add(help_button);
+        
+        m_da.enableHelp(this);
+        
         
         return;
     }
@@ -241,6 +248,16 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
         return false;
     }
 
+    
+    public String getHelpId()
+    {
+        if (this.m_dialog.getType()==GGCTreeRoot.TREE_USDA_NUTRITION)
+            return "GGC_Food_USDA_Group";
+        else
+            return "GGC_Food_User_Group_View";
+            
+    }
+    
     
 
 }
