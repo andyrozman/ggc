@@ -1,42 +1,12 @@
 package ggc.core.data;
 
-
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure Java application to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DailyValues
- *  Purpose:  This file is data file for storing DailyValues, it stores all data for
- *      a day. 
- *
- *  Author:   tscherno
- *  Author:   andyrozman  {andy@atech-software.com}
-*/
-
-
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATechDate;
@@ -88,7 +58,9 @@ public class DailyValues implements Serializable
                         m_ic.getMessage("COMMENT") };
 
     ArrayList<DailyValuesRow> dataRows = new ArrayList<DailyValuesRow>();
-
+    Hashtable<String,String> day_count = new Hashtable<String,String>(); 
+    
+    
     long date = 0;
     boolean bHasChangedValues = false;
     boolean bOnlyInsert = true;
@@ -97,11 +69,16 @@ public class DailyValues implements Serializable
     float sumIns1 = 0;
     float sumIns2 = 0;
     float sumBE = 0;
-
+    float sum_basal = 0.0f;
+    float sum_bolus = 0.0f;
+    
     int counterBG = 0;
     int counterBE = 0;
     int counterIns1 = 0;
     int counterIns2 = 0;
+    int count_basal = 0;
+    int count_bolus = 0;
+    
 
     float highestBG = 0;
     float lowestBG = Float.MAX_VALUE;
@@ -137,27 +114,9 @@ public class DailyValues implements Serializable
      */
     public void setDate(long date)
     {
-        //this.date = new Date(date);
         this.date = date;
     }
 
-    /*
-    public void setDate(Date date)
-    {
-        this.date = date;
-    }*/
-
-    /*
-    public void saveDay()
-    {
-        //dbH.saveDayStats(this);
-    }*/
-
-    /*
-    public void setNewRow(DailyValuesRow dVR)
-    {
-        addRow(dVR);
-    }*/
 
     /**
      * Set Std Dev
@@ -169,54 +128,6 @@ public class DailyValues implements Serializable
     }
     
 
-/*    public void setNewRow(DailyValuesRow dVR, boolean _tru)
-    {
-	
-        this.date = dVR.getDate();
-        long time = dVR.getDateTime();
-        int size = dataRows.size();
-        changed = true;
-
-        //addRight:
-
-        //if (time != null && dVR.getDateTime() != null) 
-        {
-            bHasChangedValues = true;
-            //insert in the right place...
-            //System.err.println(size + "");
-            if (size <= 0)
-                dataRows.add(dVR);
-            else 
-            {
-        		int i = 0;
-        		boolean added = false;
-        
-                for ( ; i < size; i++)
-        		{
-                    if (this.getRow(i).getDateTime() < time) 
-        		    {
-                        dataRows.add(i, dVR);
-                        added = true;
-                        break;
-                    }
-        		}
-
-        		if (!added)
-        		{
-        		    dataRows.add(i, dVR);
-        		}
-                //dataRows.add(i, dVR);
-            }
-        }
-    
-        bOnlyInsert = false;
-
-        refreshStatData();
-
-    }
-*/
-
-
     /**
      * Add Row
      * 
@@ -226,56 +137,16 @@ public class DailyValues implements Serializable
     {
         dataRows.add(dVR);
         this.sort();
-
-        /*
-        this.date = dVR.getDate();
-    	long time = dVR.getDateTime();
-    	int size = dataRows.size();
-    	changed = true;
     
-    	if (size <= 0)
-    	{
-    	    dataRows.add(dVR);
-    	}
-    	else 
-    	{
-    
-    	    // TODO: sorting
-    	    
-    	    int i = 0;
-    	    boolean added = false;
-    
-    	    for ( ; i < size; i++)
-    	    {
-        		if (this.getRow(i).getDateTime() > time) 
-        		{
-        		    dataRows.add(i, dVR);
-        		    added = true;
-        		    break;
-        		}
-    	    }
-    
-    	    if (!added)
-    	        dataRows.add(i, dVR);
-    
-    	}*/
-    
+        if (!this.day_count.contains(dVR.getDateDString()))
+        {
+            this.day_count.put(dVR.getDateDString(), "");
+            System.out.println(" Day count: " + this.day_count.size());
+        }
+        
     	bOnlyInsert = false;
     	refreshStatData();
-
     }
-
-
-
-    
-
-
-/*
-    public DailyValuesRow getRowAt(int i)
-    {
-        return getRow(i);
-    }
-*/
 
 
     /**
@@ -294,19 +165,8 @@ public class DailyValues implements Serializable
     
     	    if (dVR.hasHibernateObject())
     	    {
-                /*
-        		if (deleteList==null)
-        		    deleteList = new ArrayList<DayValueH>();
-        
-        		deleteList.add(dVR.getHibernateObject()); 
-        		this.changed = true;
-                */
-
                 // problem on delete
                 DataAccess.getInstance().getDb().deleteHibernate(dVR.getHibernateObject());
-                //DailyValueH dvh = dVR.getHibernateObject();
-                
-
     	    }
     
         } 
@@ -331,11 +191,15 @@ public class DailyValues implements Serializable
     	sumIns1 = 0.0f;
     	sumIns2 = 0.0f;
     	sumBE = 0.0f;
+    	sum_bolus = 0.0f;
+    	sum_basal = 0.0f;
     
     	counterBG = 0;
     	counterBE = 0;
     	counterIns1 = 0;
     	counterIns2 = 0;
+        count_bolus = 0;
+    	count_basal = 0;
     
     	highestBG = 0.0f;
     	lowestBG = Float.MAX_VALUE;
@@ -362,15 +226,22 @@ public class DailyValues implements Serializable
     
     	    sumIns1 += dvr.getIns1();
     	    if (dvr.getIns1() != 0)
-    		counterIns1++;
+    	        counterIns1++;
     
     	    sumIns2 += dvr.getIns2();
     	    if (dvr.getIns2() != 0)
-    		counterIns2++;
+    	        counterIns2++;
     
     	    sumBE += dvr.getCH();
     	    if (dvr.getCH() != 0)
-    		counterBE++;
+    	        counterBE++;
+    	    
+    	    sum_basal += dvr.getBasalInsulin();
+    	    count_basal += dvr.getBasalInsulinCount();
+    	    
+            sum_bolus += dvr.getBolusInsulin();
+    	    count_bolus += dvr.getBolusInsulinCount();
+    	    
     	}
 
     	if (debug)
@@ -395,15 +266,14 @@ public class DailyValues implements Serializable
      */
     public boolean hasChanged()
     {
-        //return bHasChangedValues;
     	if (changed)
     	    return true;
     	else
     	{
     	    for(int i=0; i<this.getRowCount(); i++)
     	    {
-    		if (getChanged(i))
-    		    return true;
+        		if (getChanged(i))
+        		    return true;
     	    }
     
     	    return false;
@@ -485,78 +355,6 @@ public class DailyValues implements Serializable
         return getRow(row).getValueAt(column);
     }
 
-    /*
-    public void setValueAt(Object aValue, int row, int column)
-    {
-        DailyValuesRow dVR = getRow(row);
-
-	/*
-        if (column > 0 && column < 5) {
-            float oldVal = ((Float)dVR.getValueAt(column)).floatValue();
-            float newVal = ((Float)aValue).floatValue();
-            switch (column) {
-                case 1:
-                    sumBG -= oldVal - newVal;
-                    if (oldVal != 0)
-                        counterBG--;
-                    if (newVal != 0)
-                        counterBG++;
-                    break;
-                case 2:
-                    sumIns1 -= oldVal - newVal;
-                    if (oldVal != 0)
-                        counterIns1--;
-                    if (newVal != 0)
-                        counterIns1++;
-                    break;
-                case 3:
-                    sumIns2 -= oldVal - newVal;
-                    if (oldVal != 0)
-                        counterIns2--;
-                    if (newVal != 0)
-                        counterIns2++;
-                    break;
-                case 4:
-                    sumBE -= oldVal - newVal;
-                    if (oldVal != 0)
-                        counterBE--;
-                    if (newVal != 0)
-                        counterBE++;
-            }
-        } */
-/*
-        refreshStatData();
-        dVR.setValueAt(aValue, column);
-
-	/*
-        highestBG = 0;
-        lowestBG = Float.MAX_VALUE;
-        for (int j = 0; j < dataRows.size(); j++) {
-            dVR = (DailyValuesRow)dataRows.elementAt(j);
-            highestBG = Math.max(dVR.getBG(), highestBG);
-            lowestBG = Math.min(dVR.getBG(), lowestBG);
-        }*/
-/*
-        bHasChangedValues = true;
-        bOnlyInsert = false;
-    }
-*/
-    
-    /**
-     * Set IsNew
-     * 
-     * @param b
-     */
-    public void setIsNew(boolean b)
-    {
-        bOnlyInsert = b;
-    }
-
-/*    public boolean onlyInsert()
-    {
-        return bOnlyInsert;
-    }
-*/
     
     /**
      * Get Day And Month As String
@@ -565,14 +363,13 @@ public class DailyValues implements Serializable
      */
     public String getDayAndMonthAsString()
     {
-//        return getDateAsLocalizedString();
-        
         int day, month;
         day = (int) (date % 100);
         month = ((int) (date % 10000))/100;
         return String.format("%1$02d.%2$02d.", day, month); 
     }
 
+    
     /**
      * Get Date
      * 
@@ -583,7 +380,6 @@ public class DailyValues implements Serializable
         return date;
     }
 
-    
 
     /**
      * Get Date As Localized String
@@ -599,7 +395,6 @@ public class DailyValues implements Serializable
     }
     
     
-    
     /**
      * Get Date As String
      * 
@@ -608,58 +403,8 @@ public class DailyValues implements Serializable
     public String getDateAsString()
     {
         return getDateAsLocalizedString();
-        /*
-        int day, month, year;
-        day = (int) (date % 100);
-        month = ((int) (date % 10000))/100;
-        year = (int) (date / 10000);
-        return String.format("%1$04d-%2$02d-%3$02d", year, month, day); */
     }
 
-
-    /*
-    public long getDateTimeAt(int row)
-    {
-        return getRow(row).getDateTime();
-    }
-
-
-    public Date getDateTimeAsDateAt(int row)
-    {
-        return getRow(row).getDateTimeAsDate();
-    }
-/*
-    public String getDateTimeAsTimeStringAt(int row)
-    {
-	return getRow(row).getD.getDateTimeAsTime();
-    }
-    */
-
-    /*
-    public String getDateTimeAsTimeStringAt(int row)
-    {
-	return getRow(row).getDateTimeAsTime();
-    }
-
-
-    public String getDateTimeAsStringAt(int row)
-    {
-        DailyValuesRow dv = getRow(row);
-        return dv.getDateAsString() + " " + dv.getTimeAsString();
-    }
-
-
-    public int getDateD(int row)
-    {
-        return getRow(row).getDateD();
-    }
-
-
-    public int getDateT(int row)
-    {
-        return getRow(row).getDateT();
-    }
-*/
     
     /**
      * Get Changed
@@ -672,43 +417,6 @@ public class DailyValues implements Serializable
         return getRow(row).hasChanged();
     }
 
-/*
-    public float getBGAt(int row)
-    {
-        return getRow(row).getBG();
-    }
-
-    public float getIns1At(int row)
-    {
-        return getRow(row).getIns1();
-    }
-
-    public float getIns2At(int row)
-    {
-        return getRow(row).getIns2();
-    }
-
-    public float getCHAt(int row)
-    {
-        return getRow(row).getCH();
-    }
-
-    public String getActivityAt(int row)
-    {
-        return getRow(row).getActivity();
-    }
-
-    public String getUrineAt(int row)
-    {
-        return getRow(row).getUrine();
-    }
-
-
-    public String getCommentAt(int row)
-    {
-        return getRow(row).getComment();
-    }
-*/
 
     /**
      * Get Column Name
@@ -768,6 +476,7 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+    
     /**
      * Get Average Ins 2
      * 
@@ -781,6 +490,7 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+    
     /**
      * Get Average Ins
      * 
@@ -794,6 +504,50 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+    
+    /**
+     * Get Average Bolus
+     * 
+     * @return
+     */
+    public float getAvgBolus()
+    {
+        if (count_bolus != 0)
+            return this.sum_bolus / this.count_bolus;
+        else
+            return 0.0f;
+    }
+    
+
+    
+    /**
+     * Get Average Basal
+     * 
+     * @return
+     */
+    public float getAvgBasal()
+    {
+        if (count_basal != 0)
+            return this.sum_basal / this.count_basal;
+        else
+            return 0.0f;
+    }
+    
+    
+    /**
+     * Get Average Basal
+     * 
+     * @return
+     */
+    public float getAvgBasalBolus()
+    {
+        if ((count_basal + count_bolus) != 0)
+            return ((this.sum_basal + this.sum_bolus) / (count_basal + count_bolus));
+        else
+            return 0.0f;
+    }
+    
+    
     /**
      * Get Average CH
      * 
@@ -807,6 +561,7 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+    
     /**
      * Get Sum BG
      * 
@@ -817,6 +572,7 @@ public class DailyValues implements Serializable
         return sumBG;
     }
 
+    
     /**
      * Get Sum Ins 1
      * 
@@ -827,6 +583,7 @@ public class DailyValues implements Serializable
         return sumIns1;
     }
 
+    
     /**
      * Get Sum Ins 2
      * 
@@ -837,6 +594,7 @@ public class DailyValues implements Serializable
         return sumIns2;
     }
 
+    
     /**
      * Get Sum Ins
      * 
@@ -847,6 +605,40 @@ public class DailyValues implements Serializable
         return sumIns1 + sumIns2;
     }
 
+    
+    /**
+     * Get Sum Basal
+     * 
+     * @return
+     */
+    public float getSumBasal()
+    {
+        return this.sum_basal;
+    }
+    
+
+    /**
+     * Get Sum Bolus
+     * 
+     * @return
+     */
+    public float getSumBolus()
+    {
+        return this.sum_bolus;
+    }
+    
+    
+    /**
+     * Get Sum Basal
+     * 
+     * @return
+     */
+    public float getSumBasalBolus()
+    {
+        return this.sum_basal + this.sum_bolus; 
+    }
+    
+    
     /**
      * Get Sum CH
      * 
@@ -857,6 +649,7 @@ public class DailyValues implements Serializable
         return sumBE;
     }
 
+    
     /**
      * Get Count of BG
      * 
@@ -867,6 +660,7 @@ public class DailyValues implements Serializable
         return counterBG;
     }
 
+    
     /**
      * Get Count of Ins 1
      * 
@@ -877,6 +671,7 @@ public class DailyValues implements Serializable
         return counterIns1;
     }
 
+    
     /**
      * Get Count of Ins 2
      * 
@@ -887,6 +682,7 @@ public class DailyValues implements Serializable
         return counterIns2;
     }
 
+    
     /**
      * Get Count of Ins
      * 
@@ -897,6 +693,40 @@ public class DailyValues implements Serializable
         return counterIns1 + counterIns2;
     }
 
+    
+    /**
+     * Get Count of Basal
+     * 
+     * @return
+     */
+    public int getBasalCount()
+    {
+        return this.count_basal;
+    }
+    
+
+    /**
+     * Get Count of Bolus
+     * 
+     * @return
+     */
+    public int getBolusCount()
+    {
+        return this.count_bolus;
+    }
+    
+
+    /**
+     * Get Count of Bolus
+     * 
+     * @return
+     */
+    public int getBasalBolusCount()
+    {
+        return this.count_bolus + this.count_basal;
+    }
+    
+    
     /**
      * Get Count of CH
      * 
@@ -907,6 +737,7 @@ public class DailyValues implements Serializable
         return counterBE;
     }
 
+    
     /**
      * Get Highest BG
      * 
@@ -920,6 +751,7 @@ public class DailyValues implements Serializable
             return m_da.getBGValueDifferent(DataAccess.BG_MGDL, highestBG);
     }
 
+    
     /**
      * Get Lowest BG
      * 
@@ -927,8 +759,6 @@ public class DailyValues implements Serializable
      */
     public float getLowestBG()
     {
-
-        
         if (lowestBG != Float.MAX_VALUE)
         {
             if (m_da.getBGMeasurmentType()==DataAccess.BG_MGDL)
@@ -938,14 +768,9 @@ public class DailyValues implements Serializable
         }
         else
             return 0;
-        
-        /*
-        if (lowestBG != Float.MAX_VALUE)
-            return lowestBG;
-        else
-            return 0; */
     }
 
+    
     /**
      * Get Std Dev
      * 
@@ -970,29 +795,6 @@ public class DailyValues implements Serializable
             return 0;
     }
 
-/*
-    public int getDateD()
-    {
-	
-	String dat = "";
-
-	dat += date.getYear() + 1900;
-	dat += getLeadingZero(date.getMonth() + 1, 2);
-	dat += getLeadingZero(date.getDate(), 2);
-
-	return Integer.parseInt(dat);
-
-    }
-*/
-/*
-    public int getDateT()
-    {
-	
-	return date.getHours()*100 + date.getMinutes();
-	
-    }
-*/
-
     
     /**
      * Sort 
@@ -1001,7 +803,6 @@ public class DailyValues implements Serializable
     {
         Collections.sort(this.dataRows);
     }
-    
 
 
 }

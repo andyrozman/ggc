@@ -83,7 +83,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.4.14.1";
+    public static String CORE_VERSION = "0.4.17";
     
     /**
      * Current Db Version

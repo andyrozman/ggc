@@ -6,6 +6,16 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.4.17 [14.2.2010]
+    * Statistics fixed for Pen Mode (Bolus, Basal)
+    * Changed configuration for insulins for Pens
+    * Added Insulin 3
+    * Changed GUI for enabling one or more insulins (max 3)
+    * Changed General settings Info
+    * Printing problem fixed for all plugins
+    * PlugInBase: We added extra I18n to PluginBase, so that now we have additonal translation file
+      and translation files for all other plugins are much smaller
+
 0.4.16
     * CGMS Plugin added and database files changed (from hibernate.cgm.* to  hibernate.cgms.*) 
 

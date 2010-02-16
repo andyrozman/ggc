@@ -219,7 +219,7 @@ public class GlucoValues //extends DailyValues
 
             dV.addRow(dRow);
             dV.setDate(dRow.getDateTime());
-            dV.setIsNew(true);
+            //dV.setIsNew(true);
             dayValues.add(dV);
 
             // X GlucoValueEvent event = new GlucoValueEvent(this,

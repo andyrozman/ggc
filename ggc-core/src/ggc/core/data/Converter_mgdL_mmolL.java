@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ggc.core.data;
 
 import com.atech.misc.converter.ATechConverter;

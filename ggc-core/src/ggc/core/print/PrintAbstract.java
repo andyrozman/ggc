@@ -174,6 +174,7 @@ public abstract class PrintAbstract extends PdfPageEventHelper
      */
     public String getRelativeNameWithPath()
     {
+        System.out.println("Rel: " + print_root + getName());
         return print_root + getName();
     }
     
@@ -208,6 +209,8 @@ public abstract class PrintAbstract extends PdfPageEventHelper
                 break;
             }
         }
+        
+        System.out.println("Name: " + name);
         
     }
     

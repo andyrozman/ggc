@@ -565,6 +565,28 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     
     
     /**
+     * Get Insulin 1 Type
+     * 
+     * @return
+     */
+    public int getIns1Type()
+    {
+        return this.m_cfg_mgr.getIntValue("INS1_TYPE");
+    }
+    
+
+    /**
+     * Set Insulin 1 Type
+     * 
+     * @return
+     */
+    public void setIns1Type(int ins)
+    {
+        this.m_cfg_mgr.setIntValue("INS1_TYPE", ins);
+    }
+    
+    
+    /**
      * Get Insulin 2 Abbreviation
      * 
      * @return
@@ -606,6 +628,28 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("INS2_NAME", value);
     }
+
+
+    /**
+     * Get Insulin 2 Type
+     * 
+     * @return
+     */
+    public int getIns2Type()
+    {
+        return this.m_cfg_mgr.getIntValue("INS2_TYPE");
+    }
+
+    
+    /**
+     * Set Insulin 2 Type
+     * 
+     * @return
+     */
+    public void setIns2Type(int ins)
+    {
+        this.m_cfg_mgr.setIntValue("INS2_TYPE", ins);
+    }
     
 
     /**
@@ -639,7 +683,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getStringValue("INS3_NAME");
     }
-    
+
 
     /**
      * Set Insulin 3 Name
@@ -652,6 +696,27 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     }
     
     
+    /**
+     * Get Insulin 3 Type
+     * 
+     * @return
+     */
+    public int getIns3Type()
+    {
+        return this.m_cfg_mgr.getIntValue("INS3_TYPE");
+    }
+    
+    
+    /**
+     * Set Insulin 3 Type
+     * 
+     * @return
+     */
+    public void setIns3Type(int ins)
+    {
+        this.m_cfg_mgr.setIntValue("INS3_TYPE", ins);
+    }
+
     
     
     /**

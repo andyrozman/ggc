@@ -90,6 +90,9 @@ public class ConfigurationManager
         "PRINT_NIGHT_START_TIME", "2100",
         "SW_MODE", "0",
         "PUMP_TBR_TYPE", "0",
+        "INS1_TYPE", "2",  // 0 - Not enabled, 1=Basal, 2=Bolus
+        "INS2_TYPE", "1",
+        "INS3_TYPE", "0"
     };
 
 
