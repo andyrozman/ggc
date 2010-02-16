@@ -3,7 +3,6 @@ package ggc.cgms.data;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
 
@@ -46,12 +45,6 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
 
     private static final long serialVersionUID = 2881771615052748327L;
 
-//    private I18nControl m_ic = I18nControl.getInstance();
-
-//    int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
-
-//    private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
-//                                     m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
     /**
      * Constructor
@@ -71,10 +64,10 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
      * 
      * @see ggc.plugin.data.DeviceValuesTableModel#getColumnCount()
      */
-    public int getColumnCount()
+    /*public int getColumnCount()
     {
         return 5;
-    }
+    }*/
 
     /**
      * Is Boolean
@@ -82,14 +75,14 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
      * @param column column index
      * @return true if column type is boolean
      */
-    public boolean isBoolean(int column)
+/*    public boolean isBoolean(int column)
     {
         if (column == this.getCheckableColumn())
             return true;
         else
             return false;
     }
-
+*/
     
     
     // protected ArrayList<DeviceValuesEntryInterface> dl_data;
@@ -177,7 +170,7 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
         
         //getDate(se.datetime);
         
-        System.out.println("HTable: " + htable.size());
+        //System.out.println("HTable: " + htable.size());
         
         
         /*
@@ -211,6 +204,30 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     
     
 
+
+    /**
+     * Process Device Value Entry
+     * 
+     * @param mve DeviceValuesEntry instance
+     */
+/*    @Override
+    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
+    {
+        mve.setStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
+        // TODO Auto-generated method stub
+    }
+*/
+    
+    /** 
+     * Get Checkable Column
+     */
+    @Override
+    public int getCheckableColumn()
+    {
+        return 3;
+    }
+
+
     /**
      * Add To Array 
      * 
@@ -220,7 +237,6 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     @Override
     public void addToArray(ArrayList<?> lst, ArrayList<?> source)
     {
-        // TODO Auto-generated method stub
     }
 
     /**
@@ -232,27 +248,6 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
     {
         return new ArrayList<GGCHibernateObject>();
-    }
-
-    /**
-     * Process Device Value Entry
-     * 
-     * @param mve DeviceValuesEntry instance
-     */
-    @Override
-    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
-    {
-        mve.setStatus(DeviceValuesEntry.STATUS_NEW);
-        // TODO Auto-generated method stub
-    }
-
-    /** 
-     * Get Checkable Column
-     */
-    @Override
-    public int getCheckableColumn()
-    {
-        return 3;
     }
    
 }

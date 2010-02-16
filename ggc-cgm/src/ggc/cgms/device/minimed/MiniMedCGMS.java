@@ -321,6 +321,14 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return false;
     }
 
+
+    
+    /**
+     * Load File Contexts - Load file contexts that device supports
+     */
+    public void loadFileContexts()
+    {
+    }
     
     
 }

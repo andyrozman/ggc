@@ -126,7 +126,7 @@ public class DexcomSeven extends DexcomCGMS
      */
     public String getComment()
     {
-        return null;
+        return "";
     }
     
     
@@ -138,7 +138,7 @@ public class DexcomSeven extends DexcomCGMS
      */
     public int getImplementationStatus() 
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
     
     
@@ -169,7 +169,7 @@ public class DexcomSeven extends DexcomCGMS
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
     
     

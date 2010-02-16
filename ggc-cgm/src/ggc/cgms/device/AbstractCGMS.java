@@ -57,6 +57,8 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     protected OutputWriter output_writer;
     protected String parameter;
     protected DataAccessCGMS m_da;
+    protected FileReaderContext[] file_contexts = null;
+    
     
     /**
      * Constructor
@@ -66,6 +68,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
         super();
         m_da = DataAccessCGMS.getInstance();
         ic = m_da.getI18nControlInstance();
+        loadFileContexts();
     }
 
     
@@ -82,6 +85,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
         ic = m_da.getI18nControlInstance();
         this.m_output_writer = ow;
         this.parameter = param;
+        loadFileContexts();
     }
     
     
@@ -96,6 +100,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
         m_da = DataAccessCGMS.getInstance();
         ic = m_da.getI18nControlInstance();
         this.m_output_writer = ow;
+        loadFileContexts();
     }
 
 
@@ -111,6 +116,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
         ic = m_da.getI18nControlInstance();
         this.setDeviceCompany(cmp);
         this.setCGMSType(cmp.getName(), getName());
+        loadFileContexts();
     }
     
     
@@ -489,51 +495,6 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
     
-    /**
-     * Get Temporary Basal Type Definition
-     * "TYPE=Unit;STEP=0.1"
-     * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
-     * 
-     * @return
-     */
-    public String getTemporaryBasalTypeDefinition()
-    {
-        return "TYPE=Unit;STEP=0.1";
-    }
-
-    
-    /**
-     * Get Bolus Precission
-     * 
-     * @return
-     */
-    public float getBolusPrecission()
-    {
-        return 0.1f;
-    }
-    
-
-    /**
-     * Get Basal Precission
-     * 
-     * @return
-     */
-    public float getBasalPrecission()
-    {
-        return 0.1f;
-    }
-
-    
-    /**
-     * Are Pump Settings Set
-     * 
-     * @return
-     */
-    public boolean arePumpSettingsSet()
-    {
-        return false;
-    }
-    
     
     /**
      * How Many Months Of Data Stored
@@ -586,7 +547,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
      */
     public FileReaderContext[] getFileDownloadTypes()
     {
-        return null;
+        return this.file_contexts;
     }
 
     
@@ -599,6 +560,12 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     {
         return false;
     }
+    
+
+    /**
+     * Load File Contexts - Load file contexts that device supports
+     */
+    public abstract void loadFileContexts();
     
     
 }

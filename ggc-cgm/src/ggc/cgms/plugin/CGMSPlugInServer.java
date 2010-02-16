@@ -6,6 +6,7 @@ import ggc.core.util.DataAccess;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
+import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -216,7 +217,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         ic = m_da.getI18nControlInstance();
         //I18nControl.getInstance().setLanguage(this.selected_lang);
         DataAccessCGMS da_local = DataAccessCGMS.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
-        
+       
         da_local.loadManager();
         
         ic_local = da_local.getI18nControlInstance();
@@ -315,6 +316,14 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
             "cgms_read", 
             this, null, 
             ic_local, DataAccessCGMS.getInstance(), parent);
+
+        ATSwingUtils.createMenuItem(menu_cgms, 
+            "MN_CGMS_READ_FILE", 
+            "MN_CGMS_READ_FILE_DESC", 
+            "cgms_read_file", 
+            this, null, 
+            ic_local, DataAccessCGMS.getInstance(), parent);
+        
         
         menu_cgms.addSeparator();
 
@@ -383,7 +392,12 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         
         if (command.equals("cgms_read"))
         {
-            new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+            new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this, DeviceDataHandler.TRANSFER_READ_DATA);
+            this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
+        }
+        else if (command.equals("cgms_read_file"))
+        {
+            new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this, DeviceDataHandler.TRANSFER_READ_FILE);
             this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("cgms_list"))

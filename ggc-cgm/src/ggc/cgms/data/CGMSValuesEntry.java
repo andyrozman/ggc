@@ -2,12 +2,19 @@ package ggc.cgms.data;
 
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.output.OutputWriterType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
+import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.ATechDate;
@@ -46,38 +53,22 @@ import com.atech.utils.ATechDate;
 public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 {
 	DataAccessCGMS da = DataAccessCGMS.getInstance();
-	
-	// pump 
+    private static Log log = LogFactory.getLog(CGMSValuesEntry.class);
+
+	long id;
+
 	long datetime;
-	
 	long date;
 	ATechDate date_obj = null;
 	
 	int type;
-	//int base_type;
-	//int sub_type;
-	//String value;
-	//String profile;
-	
-	// old
-	//String bg_str;
-	//int bg_unit;
-	//public
-	
+
 	boolean empty = true;
 	
-	
 	private Hashtable<String,String> params;
-	//private static I18nControl ic = I18nControl.getInstance(); 
-	
-	//private String bg_original = null;
-	//private OutputUtil util = OutputUtil.getInstance();
-	
 	ArrayList<CGMSValuesSubEntry> list = null;
-    
-    //private DayValueH entry_object = null;
-    
-	//ATechDate datetime_obj;
+	String extended = "";
+	int person_id = 0;
 	
 	
 	/**
@@ -87,7 +78,25 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	{
 	    super();
 	    list = new ArrayList<CGMSValuesSubEntry>();
+	    //this.person_id = (int)this.da.getCurrentUserId();
 	}
+	
+
+    /**
+     * Constructor
+     */
+    public CGMSValuesEntry(CGMSDataH pdh)
+    {
+        super();
+        list = new ArrayList<CGMSValuesSubEntry>();
+        this.id = pdh.getId();
+        this.datetime = pdh.getDt_info();
+        this.type = pdh.getBase_type();
+        loadExtended(pdh.getExtended());
+        this.person_id = pdh.getPerson_id();
+    }
+	
+	
 	
 	
 	
@@ -126,6 +135,12 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public void addSubEntry(CGMSValuesSubEntry subentry)
     {
         this.list.add(subentry);
+    }
+    
+    
+    public ArrayList<CGMSValuesSubEntry> getSubEntryList()
+    {
+        return this.list;
     }
     
     
@@ -188,7 +203,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	
 	
 	/**
-	 * Prepare Entry
+	 * Prepare Entry [Framework v1]
 	 * 
 	 * @see ggc.plugin.data.DeviceValuesEntry#prepareEntry()
 	 */
@@ -255,10 +270,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	 */
 	public String toString()
 	{
-	    //OutputUtil o= null;
-	    //return "CGMValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
-
-	    return "CGMValuesEntry [date/time=" + this.datetime  + ",reading" + this.list.size() + "type=" + type +  "]";
+	    return "CGMSValuesEntry [date/time=" + this.datetime  + ",readings=" + this.list.size() + "type=" + type +  "]";
 	}
 
 	
@@ -320,11 +332,11 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      * Get Db Objects
      * 
      * @return ArrayList of elements extending GGCHibernateObject
+     * @deprecated
      */
     @Override
     public ArrayList<? extends GGCHibernateObject> getDbObjects()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -337,8 +349,35 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     
     public String getDataAsString()
     {
-        // TODO Auto-generated method stub
-        return null;
+        switch(output_type)
+        {
+            case OutputWriterType.DUMMY:
+                return "";
+                
+            case OutputWriterType.CONSOLE:
+            case OutputWriterType.FILE:
+                return this.getDateTimeObject().getDateTimeString() + ":  Type=" + this.type + ", Count=" + this.list.size() ;
+                
+            case OutputWriterType.GGC_FILE_EXPORT:
+            {
+                /*
+                PumpData pd = new PumpData(this);
+                try
+                {
+                    return pd.dbExport();
+                }
+                catch(Exception ex)
+                {
+                    log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
+                    return "Value could not be decoded for export!";
+                }*/
+            }
+                
+        
+            default:
+                return "Value is undefined";
+        
+        }
     }
 
 
@@ -350,7 +389,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     @Override
     public void setDateTimeObject(ATechDate dt)
     {
-        // TODO Auto-generated method stub
+        this.datetime = dt.getATDateTimeAsLong();
     }
 
     
@@ -454,7 +493,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getSpecialId()
     {
-        return "";
+        return "CD_" + this.datetime+ "_" + this.type;
     }
   
     
@@ -465,7 +504,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getObjectUniqueId()
     {
-        return "";
+        return "" + this.datetime;
     }
     
     
@@ -478,7 +517,26 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String DbAdd(Session sess) throws Exception
     {
-        return "";
+        this.person_id = (int)this.da.getCurrentUserId();
+        
+        Transaction tx = sess.beginTransaction();
+        
+        CGMSDataH pdh = new CGMSDataH();
+        
+        pdh.setId(this.id);
+        pdh.setDt_info(this.datetime); 
+        pdh.setBase_type(this.type); 
+        pdh.setExtended(extended = this.saveExtended());
+        pdh.setPerson_id(this.person_id); 
+        pdh.setChanged(System.currentTimeMillis());
+
+        Long _id = (Long)sess.save(pdh);
+        tx.commit();
+
+        pdh.setId(_id.longValue());
+        this.id  = _id.longValue();
+        
+        return ""+_id.longValue();
     }
 
 
@@ -491,7 +549,23 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public boolean DbEdit(Session sess) throws Exception
     {
-        return false;
+        this.person_id = (int)this.da.getCurrentUserId();
+
+        Transaction tx = sess.beginTransaction();
+        //System.out.println("id: " + old_id);
+        CGMSDataH pdh = (CGMSDataH)sess.get(CGMSDataH.class, new Long(this.id));
+        
+        pdh.setId(this.id);
+        pdh.setDt_info(this.datetime); 
+        pdh.setBase_type(this.type); 
+        pdh.setExtended(this.extended = saveExtended()); 
+        pdh.setPerson_id(this.person_id); 
+        pdh.setChanged(System.currentTimeMillis());
+
+        sess.update(pdh);
+        tx.commit();
+
+        return true;
     }
 
 
@@ -504,7 +578,13 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public boolean DbDelete(Session sess) throws Exception
     {
-        return false;
+        Transaction tx = sess.beginTransaction();
+
+        CGMSDataH pdh = (CGMSDataH)sess.get(CGMSDataH.class, new Long(this.id));
+        sess.delete(pdh);
+        tx.commit();
+
+        return true;
     }
 
 
@@ -530,7 +610,16 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public boolean DbGet(Session sess) throws Exception
     {
-        return false;
+        
+        CGMSDataH pdh = (CGMSDataH)sess.get(CGMSDataH.class, new Long(this.id));
+        
+        this.id = pdh.getId();
+        this.datetime = pdh.getDt_info();
+        this.type = pdh.getBase_type();
+        loadExtended(pdh.getExtended());
+        this.person_id = pdh.getPerson_id();
+        
+        return true;
     }
     
 
@@ -541,7 +630,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getObjectName()
     {
-        return "";
+        return "CGMValuesEntry";
     }
 
 
@@ -592,7 +681,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getValue()
     {
-        // TODO
         return null;
     }
     
@@ -645,4 +733,63 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
      
 	
+    private String saveExtended()
+    {
+        Collections.sort(this.list);
+        
+        StringBuffer sb = new StringBuffer("DATA=");
+        
+        for(int i=0; i<this.list.size(); i++)
+        {
+            sb.append(this.list.get(i).getSubEntryValue());
+            sb.append(";");
+        }
+        
+        sb.substring(0, sb.length()-1);
+        
+        sb.append("#$#SOURCE=");
+        sb.append(this.list.get(0).getSource());
+        
+        return sb.toString();
+    }
+    
+    
+    private void loadExtended(String entry)
+    {
+        this.extended = entry;
+        
+        StringTokenizer strtok = new StringTokenizer(entry, "#$#");
+        
+        while (strtok.hasMoreTokens())
+        {
+            String tok = strtok.nextToken();
+            
+            if (tok.startsWith("DATA="))
+            {
+                tok = tok.substring(5);
+                
+                
+                StringTokenizer strtok2 = new StringTokenizer(tok, ";");
+                
+                while (strtok2.hasMoreTokens())
+                {
+                    CGMSValuesSubEntry cvse = new CGMSValuesSubEntry(strtok2.nextToken(), this.type);
+                    this.list.add(cvse);
+                }
+                
+                
+                //System.out.println("tok data: " + tok);
+            }
+            else if (tok.startsWith("SOURCE="))
+            {
+                tok = tok.substring(7);
+                System.out.println("tok src: " + tok);
+            }
+            else
+                log.warn("Unknown token with extended data: " + tok);
+                
+        }
+        
+    }
+    
 }	

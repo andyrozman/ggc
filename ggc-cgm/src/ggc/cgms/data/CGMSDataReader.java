@@ -61,9 +61,9 @@ public class CGMSDataReader extends OldDataReaderAbstract
     @Override
     public void getMaxEntries()
     {
-        DataAccessCGMS.notImplemented("CGMSDataReader::getMaxEntries()");
-        //db = m_da.getDb();
-        //this.all_entries = db.getAllElementsCount();
+        //DataAccessCGMS.notImplemented("CGMSDataReader::getMaxEntries()");
+        db = m_da.getDb();
+        this.all_entries = db.getAllElementsCount();
     }
 
     /**
@@ -72,8 +72,9 @@ public class CGMSDataReader extends OldDataReaderAbstract
     @Override
     public Hashtable<String, DeviceValuesEntryInterface> readOldEntries()
     {
-        DataAccessCGMS.notImplemented("CGMSDataReader::readOldEntries()");
-        return null;
+        return db.getCGMSValues(this);
+//        DataAccessCGMS.notImplemented("CGMSDataReader::readOldEntries()");
+//        return null;
         //return db.getPumpValues(this);
     }
     

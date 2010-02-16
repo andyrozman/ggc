@@ -7,7 +7,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 
-import java.util.Hashtable;
+import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -76,10 +76,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     
     
     
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
+  
 
 
     
@@ -179,69 +176,6 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return null;
     }
   
-
-    /**
-     * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
-     *     alarm codes
-     * @return
-     */
-    public Hashtable<String, Integer> getAlarmMappings()
-    {
-        return null;
-    }
-
-
-    /**
-     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getBolusMappings()
-    {
-        return null;
-    }
-
-
-    /**
-     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getErrorMappings()
-    {
-        return null;
-    }
-
-
-    /**
-     * Get Event Mappings - Map pump specific events to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getEventMappings()
-    {
-        return null;
-    }
-
-    
-    /**
-     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getReportMappings()
-    {
-        return null;
-    }
-
-
-    /**
-     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
-     *      create, AlarmMappings and EventMappings and any other pump constants.
-     */
-    public void loadPumpSpecificValues()
-    {
-    }
 
 
     /** 
@@ -350,6 +284,19 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return Integer.parseInt(val);
     }
 
+    
+    /**
+     * Load File Contexts - Load file contexts that device supports
+     */
+    public void loadFileContexts()
+    {
+//        System.out.println("loadFileContexts");
+        this.file_contexts = new FileReaderContext[2];
+        this.file_contexts[0] = new FRC_DexcomXml_DM3(m_da);
+        this.file_contexts[1] = new FRC_DexcomTxt_DM3(m_da);
+    }
+    
+    
     
 }
 

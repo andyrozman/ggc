@@ -63,7 +63,9 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     private CGMSManager m_cgms_manager = null;
 
     public static String[] value_types = null;
-        
+    public static String[] value_type = null;
+
+    
 
     // ********************************************************
     // ******      Constructors and Access methods        *****    
@@ -453,40 +455,18 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void createPlugInDataRetrievalContext()
     {
-        // TODO Auto-generated method stub
-        
-        
-        if (DataAccessPlugInBase.yes_no_option==null)
-        {
-            //I18nControl ic = I18nControl.getInstance();
-            //System.out.println("Ic: " + ic);
-            yes_no_option = new String[2];
-            yes_no_option[0] = m_i18n.getMessage("NO");
-            yes_no_option[1] = m_i18n.getMessage("YES");
-            
-            //System.out.println("Yes: " + m_i18n.getMessage("YES"));
-            
-        }
+        loadBasePluginTranslations();
         
         m_entry_type = new CGMSValuesEntry();
 
-        
-        entry_statuses = new String[4];
-        entry_statuses[0] = m_i18n.getMessage("UNKNOWN");
-        entry_statuses[1] = m_i18n.getMessage("NEW");
-        entry_statuses[2] = m_i18n.getMessage("CHANGED");
-        entry_statuses[3] = m_i18n.getMessage("OLD");
-        
         this.data_download_screen_wide = false;
         
         this.columns_table = new String[5];
-        this.columns_table[0] = m_i18n.getMessage("DATETIME"); 
-        this.columns_table[1] = m_i18n.getMessage("ENTRY_TYPE");
-        //this.columns_table[2] = m_i18n.getMessage("BASE_TYPE");
-        this.columns_table[2] = m_i18n.getMessage("READINGS");
-        //this.columns_table[4] = m_i18n.getMessage("VALUE");
-        this.columns_table[3] = m_i18n.getMessage("STATUS");
-        this.columns_table[4] = m_i18n.getMessage("");
+        this.columns_table[0] = this.i18n_plugin.getMessage("DATETIME"); 
+        this.columns_table[1] = this.i18n_plugin.getMessage("ENTRY_TYPE");
+        this.columns_table[2] = this.i18n_plugin.getMessage("READING");
+        this.columns_table[3] = this.i18n_plugin.getMessage("STATUS");
+        this.columns_table[4] = "";
         
         this.column_widths_table = new int[5];
         this.column_widths_table[0] = 110;
@@ -499,8 +479,14 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         
         DataAccessCGMS.value_types = new String[3];
         DataAccessCGMS.value_types[0] = "";
-        DataAccessCGMS.value_types[1] = m_i18n.getMessage("CGMS_READINGS");
-        DataAccessCGMS.value_types[2] = m_i18n.getMessage("CALIBRATION_READINGS");
+        DataAccessCGMS.value_types[1] = this.i18n_plugin.getMessage("CGMS_READINGS");
+        DataAccessCGMS.value_types[2] = this.i18n_plugin.getMessage("CALIBRATION_READINGS");
+
+        
+        DataAccessCGMS.value_type = new String[3];
+        DataAccessCGMS.value_type[0] = "";
+        DataAccessCGMS.value_type[1] = this.i18n_plugin.getMessage("CGMS_READING");
+        DataAccessCGMS.value_type[2] = this.i18n_plugin.getMessage("CALIBRATION_READINGS");
         
     }
 
@@ -544,7 +530,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void loadPlugIns()
     {
-        // TODO Auto-generated method stub
     }
 
 
@@ -555,6 +540,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
      */
     public void createOldDataReader()
     {
+        //this.m_old_data_reader = new CGMSDataReader(this);
     }
 
     

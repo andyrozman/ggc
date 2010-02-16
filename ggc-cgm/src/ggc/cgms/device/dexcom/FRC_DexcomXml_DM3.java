@@ -5,9 +5,12 @@ import ggc.cgms.data.CGMSValuesTableModel;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -32,25 +35,27 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
 
     public String getFileDescription() 
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "DM3 Dexcom Software Export";
     }
 
+    public String getFullFileDescription()
+    {
+        return "DM3 Dexcom Software Export (XML)";
+    }
+    
+    
     public JPanel getFileDownloadPanel()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public String getFileExtension()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return ".xml";
     }
 
     public boolean hasSpecialSelectorDialog()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -79,6 +84,14 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
         }
 
     }
+
+    
+    public String toString()
+    {
+        return this.getFullFileDescription();
+    }
+    
+    
     
     private class MyContentHandler implements  ContentHandler, DeclHandler, LexicalHandler  //DefaultHandler,
     {
@@ -178,4 +191,38 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
     }
     
 
+    
+    
+    public FileFilter getFileFilter()
+    {
+        
+        return new FileFilter() 
+        {
+
+            @Override
+            public boolean accept(File f)
+            {
+                if (f.isDirectory())
+                    return true;
+                
+                return (f.getName().toLowerCase().endsWith(getFileExtension()));
+            }
+
+            @Override
+            public String getDescription()
+            {
+                return getFileDescription() + " (*" + getFileExtension() + ")";
+            }
+            
+        };
+        
+        
+    }
+
+    
+    public void goToNextDialog(JDialog currentDialog)
+    {
+    }
+    
+    
 }

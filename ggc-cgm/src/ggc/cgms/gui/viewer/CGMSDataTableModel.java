@@ -76,10 +76,10 @@ public class CGMSDataTableModel extends AbstractTableModel implements MultiLineT
     private String[] column_names = { 
                                      m_ic.getMessage("TIME"),
                                      m_ic.getMessage("ENTRY_TYPE"),
-                                     m_ic.getMessage("READINGS"),
+                                     m_ic.getMessage("READING"),
                                      m_ic.getMessage("COMMENT")
                                       };
-    
+  
     
     
     /**
@@ -122,13 +122,13 @@ public class CGMSDataTableModel extends AbstractTableModel implements MultiLineT
     /**
      * Get Column Count
      */
-    public int getColumnCount()
+    /*public int getColumnCount()
     {
         //if (dayData == null)
         //    return 0;
 
         return this.column_names.length;
-    }
+    }*/
 
     /**
      * Get Row Count
@@ -273,6 +273,13 @@ public class CGMSDataTableModel extends AbstractTableModel implements MultiLineT
         {
             return (String)o.getColumnValue(column);
         }
+    }
+
+    public int getColumnCount()
+    {
+        return this.column_names.length;
+        // TODO Auto-generated method stub
+        //return 0;
     }
     
 

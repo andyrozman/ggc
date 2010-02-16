@@ -1,15 +1,19 @@
 package ggc.cgms.device.dexcom;
 
 import ggc.cgms.data.CGMSValuesSubEntry;
+import ggc.cgms.data.CGMSValuesTableModel;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 
 import com.atech.utils.file.FileReaderContext;
 
@@ -17,35 +21,36 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
 {
 
     ArrayList<CGMSValuesSubEntry> list = new ArrayList<CGMSValuesSubEntry>();
-    
+    CGMSValuesTableModel cvtm = null;
     
     public FRC_DexcomTxt_DM3(DataAccessPlugInBase da)
     {
         super(da);
-        // TODO Auto-generated constructor stub
     }
 
     public String getFileDescription()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "DM3 Dexcom Software Export";
     }
 
     public JPanel getFileDownloadPanel()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public String getFileExtension()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return ".txt";
     }
 
+    public String getFullFileDescription()
+    {
+        return "DM3 Dexcom Software Export (TXT)";
+    }
+    
+    
     public boolean hasSpecialSelectorDialog()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -53,18 +58,16 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
     {
         try
         {
+            cvtm = (CGMSValuesTableModel)m_da.getDeviceDataHandler().getDeviceValuesTableModel();
+            
             BufferedReader br = new BufferedReader(new FileReader(filename));
             
             String line = null;
             
             while ((line=br.readLine()) != null)
             {
-                //System.out.println(line);
-                
                 processLine(line);
-                
             }
-            
         
         }
         catch (Exception ex)
@@ -73,13 +76,19 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
         }
         System.out.println("i = " + i + " lisr: " + list.size());
         
-        // TODO Auto-generated method stub
-
     }
     
     
     int i = 0;
     String tmp_time;
+    
+    
+    public void addEntry(CGMSValuesSubEntry entry)
+    {
+        this.list.add(entry);
+        this.cvtm.addEntry(entry); 
+    }
+    
     
     private void processLine(String line)
     {
@@ -137,7 +146,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
             sub.type = CGMSValuesSubEntry.CGMS_BG_READING;
             strtok.nextToken();
             sub.value = Integer.parseInt(strtok.nextToken());
-            this.list.add(sub);
+            addEntry(sub);
             
             if (read_type==2)
             {
@@ -149,36 +158,55 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
                 sub.type = CGMSValuesSubEntry.METER_CALIBRATION_READING;
                 strtok.nextToken();
                 sub.value = Integer.parseInt(strtok.nextToken());
-                this.list.add(sub);
+                addEntry(sub);
                 
-                System.out.println("" + sub);
+                //System.out.println("" + sub);
             }
             
         }
         
         
-        
-        
-        
-        
-        
-        
-        /*
-        while(strtok.hasMoreTokens())
-        {
-            System.out.print(strtok.nextToken() + " | ");
-        }
-        System.out.println(); */
         i++;
         
+    }
+
+    public FileFilter getFileFilter()
+    {
+        
+        return new FileFilter() 
+        {
+
+            @Override
+            public boolean accept(File f)
+            {
+                if (f.isDirectory())
+                    return true;
+                
+                return (f.getName().toLowerCase().endsWith(getFileExtension()));
+            }
+
+            @Override
+            public String getDescription()
+            {
+                return getFileDescription() + " (" + getFileExtension() + ")";
+            }
+            
+        };
         
         
+    }
+
+    public void goToNextDialog(JDialog currentDialog)
+    {
     }
     
     
     
     
-    
+    public String toString()
+    {
+        return this.getFullFileDescription();
+    }
     
     
     

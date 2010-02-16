@@ -4,11 +4,8 @@ import ggc.cgms.device.dexcom.FRC_DexcomXml_DM3;
 import ggc.cgms.device.minimed.MinimedCareLink;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.GGCLanguageManagerRunner;
-import ggc.plugin.gui.file.ImportFileSelectorPanel;
 
 import java.io.File;
-
-import javax.swing.JDialog;
 
 import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimeZoneUtil;
@@ -43,7 +40,7 @@ import com.atech.utils.TimerThread;
 
 public class CGMSConsoleTester //extends JFrame
 {
-	
+    
     TimerThread thread;
     
     /**
@@ -52,57 +49,59 @@ public class CGMSConsoleTester //extends JFrame
      */
     public CGMSConsoleTester(String portName)
     {
-    	
-    	TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
-    	
-		tzu.setTimeZone("Europe/Prague");
-		tzu.setWinterTimeChange(0);
-		tzu.setSummerTimeChange(+1);
-    	
         
-		//thread = new TimerThread();
-	    //thread.start();
-	    
-    	try
-    	{
-//    	    startDexcom();
-    		
-    		startFileSelector();
-    		
-    	    
-    	    //this.startMiniMed("");
-    	    //startAscensia(portName);
-    	    //this.startOneTouchUltra(portName);
-    	    
-    	    
-    	    
-    	    /*
-    		//GGCFileOutputWriter gfo = new GGCFileOutputWriter();
-    	    ConsoleOutputWriter cow = new ConsoleOutputWriter();
-    		
-//    		thread.addJob(gfo.getOutputUtil());
-    		
-    		displaySerialPorts();
-    		
-/*    		
-    		m_meter = new AscensiaContour(portName, gfo);
-    	    m_meter.setPort(portName);
-    	    m_meter.loadInitialData();
+        TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
+        
+        tzu.setTimeZone("Europe/Prague");
+        tzu.setWinterTimeChange(0);
+        tzu.setSummerTimeChange(+1);
+        
+        
+        //thread = new TimerThread();
+        //thread.start();
+        
+        try
+        {
+//          startDexcom();
+            
+            startFileSelector();
+            
+            
+            //this.startMiniMed("");
+            //startAscensia(portName);
+            //this.startOneTouchUltra(portName);
+            
+            
+            
+            /*
+            //GGCFileOutputWriter gfo = new GGCFileOutputWriter();
+            ConsoleOutputWriter cow = new ConsoleOutputWriter();
+            
+//          thread.addJob(gfo.getOutputUtil());
+            
+            displaySerialPorts();
+            
+/*          
+            m_meter = new AscensiaContour(portName, gfo);
+            m_meter.setPort(portName);
+            m_meter.loadInitialData();
   */
-    		
-    //		m_meter = new OneTouchUltra(portName, cow);
-    	//	m_meter.loadInitialData();
-    		
-    	}
-    	catch(Exception ex)
-    	{
-    	    System.out.println("Tester -> Exception on creation of meter. " + ex);
-    	    ex.printStackTrace();
-    	} 
+            
+    //      m_meter = new OneTouchUltra(portName, cow);
+        //  m_meter.loadInitialData();
+            
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Tester -> Exception on creation of meter. " + ex);
+            ex.printStackTrace();
+        } 
 
     }
 
+    
 
+    @SuppressWarnings("unused")
     private void startDexcom()
     {
         DataAccessCGMS dap = DataAccessCGMS.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
@@ -147,15 +146,15 @@ public class CGMSConsoleTester //extends JFrame
         //dap.initAllObjects();
         dap.loadSpecialParameters();
 
-    	
-    	JDialog d = new JDialog();
-		//MultipleFileSelectorPanel p = new MultipleFileSelectorPanel(dap, d);
-		ImportFileSelectorPanel p = new ImportFileSelectorPanel(dap, d, null);
-    	
-		d.getContentPane().add(p);
-		
-		d.setBounds(20, 20, p.getMinSize()[0], p.getMinSize()[1]);
-		d.setVisible(true);
+        
+        //JDialog d = new JDialog();
+        //MultipleFileSelectorPanel p = new MultipleFileSelectorPanel(dap, d);
+        //ImportFileSelectorPanel p = new ImportFileSelectorPanel(dap, d, null, new FRC_DexcomTxt_DM3(dap));
+        
+        //d.getContentPane().add(p);
+        
+        //d.setBounds(20, 20, p.getMinSize()[0], p.getMinSize()[1]);
+        //d.setVisible(true);
     }
     
 
@@ -166,35 +165,35 @@ public class CGMSConsoleTester //extends JFrame
      */
     public static void main(String args[])
     {
-	try
-	{
-	    
-	    if (args.length == 0)
-	        new CGMSConsoleTester("");
-	    else
-	        new CGMSConsoleTester(args[0]);
+    try
+    {
+        
+        if (args.length == 0)
+            new CGMSConsoleTester("");
+        else
+            new CGMSConsoleTester(args[0]);
 
-	    /*
-	    AscensiaMeter am = new AscensiaMeter();
-	    am.setPort("COM1");
-	    am.open();
+        /*
+        AscensiaMeter am = new AscensiaMeter();
+        am.setPort("COM1");
+        am.open();
 
-	    try
-	    {
-		Thread.sleep(2000);
-		am.test();
+        try
+        {
+        Thread.sleep(2000);
+        am.test();
 
-	    }
-	    catch(Exception ex)
-	    {
-	    }*/
+        }
+        catch(Exception ex)
+        {
+        }*/
 
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Error:" + ex);
-	    ex.printStackTrace();
-	}
+    }
+    catch(Exception ex)
+    {
+        System.out.println("Error:" + ex);
+        ex.printStackTrace();
+    }
     }
 
 

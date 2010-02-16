@@ -1,7 +1,7 @@
 package ggc.cgms.gui.viewer;
 
 import ggc.cgms.data.CGMSDailyStatistics;
-import ggc.cgms.data.CGMSValuesEntry;
+import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.data.DeviceValuesDay;
@@ -182,13 +182,13 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
     }
     
     
-    private ArrayList<CGMSValuesEntry> getDataList(ArrayList<DeviceValuesEntry> list_in)
+    private ArrayList<CGMSValuesSubEntry> getDataList(ArrayList<DeviceValuesEntry> list_in)
     {
-        ArrayList<CGMSValuesEntry> lst = new ArrayList<CGMSValuesEntry>();
+        ArrayList<CGMSValuesSubEntry> lst = new ArrayList<CGMSValuesSubEntry>();
         
         for(int i=0; i<list_in.size(); i++)
         {
-            lst.add((CGMSValuesEntry)list_in.get(i));
+            lst.add((CGMSValuesSubEntry)list_in.get(i));
         }
         
         return lst;
@@ -255,15 +255,15 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         pan_sub.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BLOOD_GLUCOSE_CALIB") + ":"));
 
         pan_sub.add(new JLabel(m_ic.getMessage("AVG_BG") + ":"));
-        pan_sub.add(avg_BG_1 = new JLabel());
+        pan_sub.add(avg_BG_2 = new JLabel());
         pan_sub.add(new JLabel(m_ic.getMessage("HIGHEST") + ":"));
-        pan_sub.add(high_BG_1 = new JLabel());
+        pan_sub.add(high_BG_2 = new JLabel());
         pan_sub.add(new JLabel(m_ic.getMessage("READINGS") + ":"));
-        pan_sub.add(readings_1 = new JLabel());
+        pan_sub.add(readings_2 = new JLabel());
         pan_sub.add(new JLabel(m_ic.getMessage("STD_DEV") + ":"));
-        pan_sub.add(std_dev_1 = new JLabel());
+        pan_sub.add(std_dev_2 = new JLabel());
         pan_sub.add(new JLabel(m_ic.getMessage("LOWEST") + ":"));
-        pan_sub.add(low_BG_1 = new JLabel());
+        pan_sub.add(low_BG_2 = new JLabel());
         
         
         dayStats.add(pan_sub);
@@ -497,6 +497,37 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         if (dayData == null)
             return;
 
+
+//        JLabel avg_BG_1, high_BG_1, readings_1, std_dev_1, low_BG_1;
+//        JLabel avg_BG_2, high_BG_2, readings_2, std_dev_2, low_BG_2;
+        
+        this.readings_1.setText(this.stats.getItemStatisticValueAsStringInt(CGMSValuesSubEntry.STAT_COUNT_BG1));
+        this.readings_2.setText(this.stats.getItemStatisticValueAsStringInt(CGMSValuesSubEntry.STAT_COUNT_BG2));
+        
+        
+        
+        int dec_pls = 1;
+        
+        if (this.m_da.getBGMeasurmentType()==DataAccessCGMS.BG_MGDL)
+            dec_pls = 0;
+        
+        
+//      JLabel avg_BG_1, high_BG_1, readings_1, std_dev_1, low_BG_1;
+//      JLabel avg_BG_2, high_BG_2, readings_2, std_dev_2, low_BG_2;
+        
+        
+        
+        avg_BG_1.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_AVG_BG1, dec_pls));
+        std_dev_1.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_STD_DEV_BG1, dec_pls));
+        high_BG_1.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_MAX_BG1, dec_pls));
+        low_BG_1.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_MIN_BG1, dec_pls));
+
+        avg_BG_2.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_AVG_BG2, dec_pls));
+        std_dev_2.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_STD_DEV_BG2, dec_pls));
+        high_BG_2.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_MAX_BG2, dec_pls));
+        low_BG_2.setText(this.stats.getItemStatisticValueAsStringFloat(CGMSValuesSubEntry.STAT_MIN_BG2, dec_pls));
+        
+        
 /*        
         sumIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_BOLUS, 1)); //df.format(dayData.getSumIns1()));
         sumIns2.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_BASAL, 1)); //df.format(dayData.getSumIns2()));
