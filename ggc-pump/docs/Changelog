@@ -2,6 +2,13 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.0.5 [16.02.2010]
+    * I18n is now partitially in PlugInBase
+    * Minor device changes
+    * Started work on SmartPix under Linux (we have some major problems here, I hope to get 
+      them fixed soon
+
+
 1.0.4
     * PluginBase changed
     * I18n Changed

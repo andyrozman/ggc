@@ -66,7 +66,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.0.4";
+    public static final String PLUGIN_VERSION = "1.0.5";
 
     private static DataAccessPump s_da = null; // This is handle to unique 
 
@@ -634,26 +634,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void createPlugInDataRetrievalContext()
     {
-        
-        if (DataAccessPlugInBase.yes_no_option==null)
-        {
-            //I18nControl ic = I18nControl.getInstance();
-            //System.out.println("Ic: " + ic);
-            yes_no_option = new String[2];
-            yes_no_option[0] = m_i18n.getMessage("NO");
-            yes_no_option[1] = m_i18n.getMessage("YES");
-            
-            //System.out.println("Yes: " + m_i18n.getMessage("YES"));
-            
-        }
+        loadBasePluginTranslations();
         
         m_entry_type = new PumpValuesEntry(true);
-        
-        entry_statuses = new String[4];
-        entry_statuses[0] = m_i18n.getMessage("UNKNOWN");
-        entry_statuses[1] = m_i18n.getMessage("NEW");
-        entry_statuses[2] = m_i18n.getMessage("CHANGED");
-        entry_statuses[3] = m_i18n.getMessage("OLD");
         
         this.data_download_screen_wide = true;
         

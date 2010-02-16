@@ -771,7 +771,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE + DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE;
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE;
     }
     
     

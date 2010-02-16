@@ -4,6 +4,7 @@ import ggc.core.util.DataAccess;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
+import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
@@ -541,12 +542,12 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         }
         else if (command.equals("pumps_read"))
         {
-            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA);
+            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceDataHandler.TRANSFER_READ_DATA);
             this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("pumps_read_config"))
         {
-            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceInstructionsDialog.CONTINUING_TYPE_READ_CONFIGURATION);
+            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
         }
         else if ((command.equals("pumps_manual_entry")) ||
                  (command.equals("pumps_additional_data")))
