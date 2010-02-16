@@ -139,7 +139,8 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     public PrintingDialog(JFrame frame, int type, int master_type) // throws
                                                                    // Exception
     {
-        super(DataAccess.getInstance(), "printing_dialog");
+        super(DataAccess.getInstance(), "printing");
+        //super(frame, type, DastaAccess.getInstance(), false);
         // super(frame, "", true);
         /*
          * Rectangle rec = frame.getBounds(); int x = rec.x + (rec.width / 2);
@@ -253,8 +254,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     }
 
     
-    @SuppressWarnings("unused")
-    private void initRange() // throws Exception
+    protected void initRange() // throws Exception
     {
 
         setSize(350, 420);
@@ -419,13 +419,18 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
                 {
                     PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
                     
-                    displayPDF(psm.getNameWithPath());
+                    System.out.println("PSM: " + psm.getRelativeNameWithPath());
+                    
+                    displayPDF(psm.getRelativeNameWithPath());
 
                 }
                 else
                 {
                     PrintExtendedMonthlyReport psm = new PrintExtendedMonthlyReport(mv);
-                    displayPDF(psm.getNameWithPath());
+                    System.out.println("PESM: " + psm.getRelativeNameWithPath());
+
+                    
+                    displayPDF(psm.getRelativeNameWithPath());
                 }
             }
             /*else
@@ -468,7 +473,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
      * @param name name must be full path to file name (not just name as it was in previous versions)
      * @throws Exception
      */
-    public void displayPDF(String name) throws Exception
+ /*   public void displayPDF(String name) throws Exception
     {
         //Thread.sleep(2000);
         
@@ -521,7 +526,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
             Runtime.getRuntime().exec(
                 acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\""); */
             //System.out.println(pdf_viewer + " " + file_path + File.separator + name);
-            System.out.println(pdf_viewer + " " + file.getAbsolutePath());
+   /*         System.out.println(pdf_viewer + " " + file.getAbsolutePath());
         }
         catch (RuntimeException ex)
         {
@@ -537,13 +542,13 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
         }
     }
-
+*/
     /**
      * Display PDF External (static method)
      * 
      * @param name
      */
-    public static void displayPDFExternal(String name)
+  /*  public static void displayPDFExternal(String name)
     {
         I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
 
@@ -588,7 +593,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
 
         }
     }
-
+*/
     
     /**
      * Was Action Successful
@@ -658,4 +663,125 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
         return this;
     }
 
+
+    
+    /**
+     * Display PDF
+     * 
+     * @param name name must be full path to file name (not just name as it was in previous versions)
+     * @throws Exception
+     */
+    public void displayPDF(String name) throws Exception
+    {
+        
+        
+        System.out.println("Name: " + name);
+        
+        //File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
+        //File file = new File(name);
+
+        String pdf_viewer = this.getPdfViewer(); 
+        //m_da.getSettings().getPdfVieverPath().replace('\\', '/');
+        //String file_path = fl.getAbsolutePath().replace('\\', '/');
+
+        this.setErrorMessages(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"), m_ic
+                .getMessage("PRINTING_SETTINGS_NOT_SET_SOL"));
+
+        if (pdf_viewer.equals(""))
+        {
+            throw new Exception(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
+        }
+
+        
+        File acr = new File(pdf_viewer);
+
+        if (!acr.exists())
+        {
+            throw new Exception(m_ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
+        }
+
+        try
+        {
+            String exec_path = "";
+            String par = this.getPdfViewerParameters().trim();
+            
+            if (par.length()>0)
+            {
+                if (par.contains("%PDF_FILE%"))
+                {
+                    exec_path = acr.getAbsoluteFile() + " " + par.replace("%PDF_FILE%", name);
+                }
+                else
+                {
+                    exec_path = acr.getAbsoluteFile() + " " + par + " " + name;
+                }
+                
+            }
+            else
+            {
+                exec_path = acr.getAbsoluteFile() + " " + name;
+            }
+            
+            
+            
+            
+            
+            /*
+            if (System.getProperty("os.name").toUpperCase().contains("WIN"))
+            {
+                //System.out.println("Windows found");
+                //exec_path = acr.getAbsoluteFile() + " \"" + file.getAbsolutePath() + "\""; 
+                exec_path = acr.getAbsoluteFile() + " " + name;
+            }
+            else
+            {
+//                System.out.println("Non-Windows found");
+                exec_path = acr.getAbsoluteFile() + " " + name;
+                //exec_path = acr.getAbsoluteFile() + name; //" '" + file.getCanonicalPath() + "'";
+            }*/
+
+            Runtime.getRuntime().exec(exec_path);
+            
+            System.out.println("Exec path: " + exec_path);  //pdf_viewer + " \"" + file.getAbsolutePath() + "\"");
+            
+        }
+        catch (RuntimeException ex)
+        {
+            this.setErrorMessages(m_ic.getMessage("PDF_VIEVER_RUN_ERROR"), null);
+            System.out.println("RE running AcrobatReader: " + ex);
+            throw ex;
+        }
+        catch (Exception ex)
+        {
+            this.setErrorMessages(m_ic.getMessage("PDF_VIEVER_RUN_ERROR"), null);
+            System.out.println("Error running AcrobatReader: " + ex);
+            throw ex;
+
+        }
+    }
+    
+    
+    
+    /**
+     * Get Pdf Viewer (path to software)
+     * 
+     * @return
+     */
+    public String getPdfViewer()
+    {
+        return DataAccess.getInstance().getSettings().getPdfVieverPath().replace('\\', '/');
+    }
+
+    
+
+
+    public String getPdfViewerParameters()
+    {
+        return DataAccess.getInstance().getSettings().getPdfVieverParameters();
+    }
+    
+    
+    
+    
+    
 }

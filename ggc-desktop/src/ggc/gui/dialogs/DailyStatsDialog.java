@@ -170,6 +170,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         return model;
     }
 
+    @SuppressWarnings("unused")
     private DailyStatsDialog getThisParent()
     {
         return this;
@@ -195,18 +196,18 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         JPanel InsPanel = new JPanel(new GridLayout(3, 6));
         InsPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN") + ":"));
 
-        InsPanel.add(new JLabel(m_da.getSettings().getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("BOLUS_INSULIN_SHORT") + ":"));
         InsPanel.add(sumIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + m_da.getSettings().getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVERAGE") +  ":"));
         InsPanel.add(avgIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE") + " " + m_da.getSettings().getIns1Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSES") + ":"));
         InsPanel.add(doseIns1 = new JLabel());
 
-        InsPanel.add(new JLabel(m_da.getSettings().getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("BASAL_INSULIN_SHORT") + ":"));
         InsPanel.add(sumIns2 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + m_da.getSettings().getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVERAGE") + ":"));
         InsPanel.add(avgIns2 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE") + " " + m_da.getSettings().getIns2Abbr() + ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("DOSES") + ":"));
         InsPanel.add(doseIns2 = new JLabel());
 
         InsPanel.add(new JLabel(m_ic.getMessage("TOTAL") + ":"));
@@ -312,6 +313,10 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             {
                 if ((SwingUtilities.isLeftMouseButton(e)) && (e.getClickCount() == 2))
                 {
+                    editRow();
+                    
+/*                    
+                    
                     // System.out.println("mouse 2x clicked");
 
                     DailyValuesRow dvr = dayData.getRow(table.getSelectedRow());
@@ -415,7 +420,21 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             return;
 
         DecimalFormat df = new DecimalFormat("#0.0");
-        sumIns1.setText(df.format(dayData.getSumIns1()));
+
+        sumIns1.setText(df.format(dayData.getSumBolus()));
+        sumIns2.setText(df.format(dayData.getSumBasal()));
+        sumIns.setText(df.format(dayData.getSumBasalBolus()));
+        
+        avgIns1.setText(df.format(dayData.getAvgBolus()));
+        avgIns2.setText(df.format(dayData.getAvgBasal()));
+        avgIns.setText(df.format(dayData.getAvgBasalBolus()));
+        
+        doseIns1.setText(dayData.getBolusCount() + "");
+        doseIns2.setText(dayData.getBasalCount() + "");
+        doseIns.setText(dayData.getBasalBolusCount() + "");
+        
+        /*
+        sumIns1.setText(df.format(dayData.get.getSumIns1()));
         sumIns2.setText(df.format(dayData.getSumIns2()));
         sumIns.setText(df.format(dayData.getSumIns()));
 
@@ -426,7 +445,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         doseIns1.setText(dayData.getIns1Count() + "");
         doseIns2.setText(dayData.getIns2Count() + "");
         doseIns.setText(dayData.getInsCount() + "");
-
+*/
         sumBE.setText(df.format(dayData.getSumCH()));
         avgBE.setText(df.format(dayData.getAvgCH()));
         meals.setText(dayData.getCHCount() + "");
@@ -479,29 +498,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         }
         else if (command.equals("edit_row"))
         {
-            // SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-            // EditRowFrame eRF = EditRowFrame.getInstance(model, dayData,
-            // sf.format(calPane.getSelectedDate()));
-            // aRF.show();
-
-            if (table.getSelectedRow() == -1)
-            {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"),
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            DailyValuesRow dvr = dayData.getRow(table.getSelectedRow());
-
-            DailyRowDialog aRF = new DailyRowDialog(dvr, this);
-
-            if (aRF.actionSuccessful())
-            {
-                m_db.saveDayStats(dayData);
-                dayData.sort();
-                this.model.fireTableChanged(null);
-            }
-
+            editRow();
         }
         else if (command.equals("delete_row"))
         {
@@ -552,6 +549,42 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
     }
 
+    
+    private void editRow()
+    {
+
+        if (table.getSelectedRow() == -1)
+        {
+            JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"),
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+//        System.out.println("edit");
+        
+        DailyValuesRow dvr = dayData.getRow(table.getSelectedRow());
+        
+//        System.out.println("DialyRowDialog starting");
+
+        DailyRowDialog aRF = new DailyRowDialog(dvr, this);
+
+//        System.out.println("DialyRowDialog exit");
+        
+        
+        if (aRF.actionSuccessful())
+        {
+//            System.out.println("DialyRowDialog action done");
+            
+            m_db.saveDayStats(dayData);
+            dayData.sort();
+            this.model.fireTableChanged(null);
+        }
+//        else
+//            System.out.println("DialyRowDialog NO Action! ");
+        
+    }
+    
+    
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************

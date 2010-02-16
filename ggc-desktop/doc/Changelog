@@ -5,6 +5,12 @@ Changelog file for GGC Desktop (GNU Gluco Control)
 Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
+
+0.4.9 [15.2.2010]
+    * Added support for Insulin 3
+    * Changed panels: General (Insulins, Pump Mode), Statistics for Pen Mode fixed
+    * Configuration: Pump insulin, Insulin modes
+
 0.4.8.1 [11.12.2009]
     * Work on GUIListDialog, which will be used for base for Stocks, Doctors and Appointments
 

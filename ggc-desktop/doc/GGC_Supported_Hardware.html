@@ -11,16 +11,33 @@ unusable). In August 2007 we finished most of our Meter Tool and added first dev
 <br><br>
 At end of 2008 we started to work on Pump Tool, mainly on Manual adding of data, and later in next year we added our first pump
 device to our support list (we had it on testing from company). Work now continues on adding more and more devices. 
+<br><br>
+At end of 2009 we started support for CGMS devices, though CGMS Tool. Tool is planned to be released in 1Q or 2Q of 2010 (most of 
+work was done at time of writing of this page (9th February 2010), but there is still some missing functionality). 
 
-<br><br><br><br>
+<br><br><br>
+Legend:<br>
+<font color="green">Implementation finished</font><br>
+<font color="orange">Work in progress</font><br>
+<font color="red">Not done</font><br>
+<font color="magenta">Work will start soon</font><br>
+
+
+
+<br><br>
 
 
 <h2>A. Meter Tool</h2>
 
+<br>
+List of supported devices (21), work in progress (3).
+
+<br>
+
 <font size="6">
 
 <table border="1" width="800"> 
-<tr>
+<tr bgcolor="gray">
 	<td width="15%">Company</td>
 	<td width="15%">Device</td>
 	<td width="10%">Support Level*</td>
@@ -29,16 +46,7 @@ device to our support list (we had it on testing from company). Work now continu
 	<td>Comment</td>
 </tr>
 
-<tr>
-	<td>Ascensia/Bayer</td>
-	<td>Contour</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
-
-<tr>
+<tr bgcolor="green">
 	<td>Ascensia/Bayer</td>
 	<td>Contour Link</td>
 	<td>Level 2</td>
@@ -47,7 +55,25 @@ device to our support list (we had it on testing from company). Work now continu
 	<td></td>
 </tr>
 
-<tr>
+<tr bgcolor="green">
+	<td>Ascensia/Bayer</td>
+	<td>Contour</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td>Andy</td>
+	<td></td>
+</tr>
+
+<tr bgcolor="green">
+	<td>Ascensia/Bayer</td>
+	<td>Contour Link</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td>Andy</td>
+	<td></td>
+</tr>
+
+<tr bgcolor="green">
 	<td>Ascensia/Bayer</td>
 	<td>Dex2</td>
 	<td>Level 2</td>
@@ -56,7 +82,7 @@ device to our support list (we had it on testing from company). Work now continu
 	<td></td>
 </tr>
 
-<tr>
+<tr bgcolor="green">
 	<td>Ascensia/Bayer</td>
 	<td>Breeze</td>
 	<td>Level 2</td>
@@ -64,7 +90,7 @@ device to our support list (we had it on testing from company). Work now continu
 	<td>Andy</td>
 	<td></td>
 </tr>
-<tr>
+<tr bgcolor="green">
 	<td>Ascensia/Bayer</td>
 	<td>Elite XL</td>
 	<td>Level 2</td>
@@ -73,7 +99,173 @@ device to our support list (we had it on testing from company). Work now continu
 	<td></td>
 </tr>
 
+<tr bgcolor="green">
+	<td>Menarini</td>
+	<td>Glucofix Mio</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td>Andy</td>
+	<td></td>
+</tr>
 
+<tr bgcolor="green">
+	<td>Lifescan</td>
+	<td>OneTouch Ultra</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td>Andy</td>
+	<td></td>
+</tr>
+
+<tr bgcolor="green">
+	<td>Lifescan</td>
+	<td>OneTouch Ultra Easy/Mini</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td>Andy</td>
+	<td></td>
+</tr>
+
+<tr bgcolor="orange">
+	<td>Lifescan</td>
+	<td>OneTouch Smart</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td>Alex Balaban</td>
+	<td>This is partitially done (reading of BGs for now)</td>
+</tr>
+
+
+<tr bgcolor="green">
+	<td>Lifescan</td>
+	<td>OneTouch Select</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td>Andy</td>
+	<td></td>
+</tr>
+
+
+<tr bgcolor="orange">
+	<td>Abbott</td>
+	<td>Precission Xtra</td>
+	<td>Level 2</td>
+	<td>Waiting</td>
+	<td></td>
+	<td>Data retrieval works, but Meter Tool needs to be changed, to fully support whole potential of this meter.</td>
+</tr>
+
+
+<tr bgcolor="orange">
+	<td>Abbott</td>
+	<td>Optium Xceed</td>
+	<td>Level 2</td>
+	<td>Waiting</td>
+	<td></td>
+	<td>See: Precission Xtra</td>
+</tr>
+
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Active</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Advantage</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Aviva</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Comfort</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Compact</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Compact Plus</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Go</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Integra</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Performa</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Sensor</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v2.1)</td>
+</tr>
+<tr bgcolor="green">
+	<td>Accu-Chek/Roche</td>
+	<td>Nano</td>
+	<td>Level 2</td>
+	<td>Done</td>
+	<td></td>
+	<td>Through SmartPix (v3.0)</td>
+</tr>
 
 </table>
 
@@ -82,10 +274,15 @@ device to our support list (we had it on testing from company). Work now continu
 
 
 
-<br><br><br><br>
+<br><br>
 
 
 <h2>B. Pump Tool</h2>
+
+<br>
+List of supported devices (1), work in progress (9), not supported (6).
+
+<br><br>
 
 <font size="6">
 
@@ -100,17 +297,19 @@ device to our support list (we had it on testing from company). Work now continu
 	<td>Comment</td>
 </tr>
 
-<tr>
+<tr bgcolor="green">
 	<td>Sooil</td>
 	<td>Dana Diabcare C/III</td>
 	<td>Level 2</td>
 	<td>Done</td>
 	<td>-</td>
 	<td>Andy</td>
-	<td>&nbsp;</td>
+	<td>Uses BlueTooth technology. We had some problem with communication, so we resorted to alternate solution, 
+    which only had drivers for Windows and Linux platforms. We are trying to find sollution to use Dana through
+    rxtx library (serial API), or even through BlueCove project (if found suitable).</td>
 </tr>
 
-<tr>
+<tr bgcolor="orange">
 	<td>Accu-Chek/Roche</td>
 	<td>D-Tron</td>
 	<td>Level 2.1</td>
@@ -120,7 +319,7 @@ device to our support list (we had it on testing from company). Work now continu
 	<td>We support through SmartPix device</td>
 </tr>
 
-<tr>
+<tr bgcolor="orange">
 	<td>Accu-Chek/Roche</td>
 	<td>Spirit</td>
 	<td>Level 2.1</td>
@@ -131,7 +330,7 @@ device to our support list (we had it on testing from company). Work now continu
 </tr>
 
 
-<tr>
+<tr bgcolor="orange">
 	<td>Accu-Chek/Roche</td>
 	<td>Combo</td>
 	<td>Level 2.1</td>
@@ -142,82 +341,82 @@ device to our support list (we had it on testing from company). Work now continu
 </tr>
 
 
-<tr>
+<tr bgcolor="red">
 	<td>Animas</td>
 	<td>IR 1200</td>
 	<td>Level 1</td>
-	<td>Planned</td>
+	<td>Not planned for now</td>
 	<td>??</td>
 	<td>&nbsp;</td>
 	<td>Support throgh EzDb</td>
 </tr>
 
 
-<tr>
+<tr bgcolor="red">
 	<td>Animas</td>
 	<td>IR 1250</td>
 	<td>Level 1</td>
-	<td>Planned</td>
+	<td>Not planned for now</td>
 	<td>??</td>
 	<td>&nbsp;</td>
 	<td>Support throgh EzDb</td>
 </tr>
 
-<tr>
+<tr bgcolor="red">
 	<td>Animas</td>
 	<td>IR 2020</td>
 	<td>Level 1</td>
-	<td>Planned</td>
+	<td>Not planned for now</td>
 	<td>??</td>
 	<td>&nbsp;</td>
 	<td>Support throgh EzDb</td>
 </tr>
 
-<tr>
+<tr bgcolor="red">
 	<td>Animas</td>
 	<td>Ping</td>
 	<td>Level 1</td>
-	<td>Planned</td>
+	<td>Not planned for now</td>
 	<td>??</td>
 	<td>&nbsp;</td>
 	<td>Support throgh EzDb</td>
 </tr>
 
 
-<tr>
+<tr bgcolor="orange">
 	<td>Insulet</td>
 	<td>OmniPod</td>
 	<td>?</td>
-	<td>Not Planned</td>
+	<td>Work in progress</td>
 	<td>??</td>
 	<td>&nbsp;</td>
-	<td>??</td>
+	<td>Unknown method for now.</td>
 </tr>
 
 
-<tr>
+<tr bgcolor="red">
 	<td>Deltec</td>
 	<td>Cosmo 1700</td>
 	<td>Level 1</td>
-	<td>Planned ???</td>
+	<td>Not planned for now</td>
 	<td>??</td>
 	<td>&nbsp;</td>
 	<td>Support through CoPilot export files</td>
 </tr>
 
 
-<tr>
+<tr bgcolor="red">
 	<td>Deltec</td>
 	<td>Cosmo 1800</td>
 	<td>Level 1</td>
-	<td>Planned ???</td>
+	<td>Not planned for now</td>
 	<td>??</td>
 	<td>&nbsp;</td>
 	<td>Support through CoPilot export files</td>
 </tr>
 
 
-<tr>
+<tr bgcolor="magenta">
 	<td>Minimed</td>
 	<td>508/508c</td>
 	<td>Level 1</td>
@@ -228,41 +427,129 @@ device to our support list (we had it on testing from company). Work now continu
 </tr>
 
 
-<tr>
+<tr bgcolor="magenta">
 	<td>Minimed</td>
 	<td>512/712</td>
 	<td>Level 1</td>
 	<td>Planned ???</td>
 	<td>3Q 2010</td>
 	<td>&nbsp;</td>
-	<td>Support can be made through: a.) Solution Pumps and Meters .mmp file<br>b.) Carelink file<br>At this time implementation type not decided</td>
+	<td>See: Minimed 508</td>
 </tr>
 
-<tr>
+<tr bgcolor="magenta">
 	<td>Minimed</td>
 	<td>512/712</td>
 	<td>Level 1</td>
 	<td>Planned ???</td>
 	<td>3Q 2010</td>
 	<td>&nbsp;</td>
-	<td>Support can be made through: a.) Solution Pumps and Meters .mmp file<br>b.) Carelink file<br>At this time implementation type not decided</td>
+	<td>See: Minimed 508</td>
 </tr>
 
 
-<tr>
+<tr bgcolor="magenta">
 	<td>Minimed</td>
 	<td>522/722</td>
 	<td>Level 1</td>
 	<td>Planned ???</td>
 	<td>3Q 2010</td>
 	<td>&nbsp;</td>
-	<td>Support can be made through: a.) Solution Pumps and Meters .mmp file<br>b.) Carelink file<br>At this time implementation type not decided</td>
+	<td>See: Minimed 508</td>
 </tr>
 
 
-<tr>
-	<td>Minimed</td>
-	<td>554/754</td>
+
+
+<tr bgcolor="red">
+	<td><a href="http://www.niprodiabetes.com/">Medingo</a></td>
+	<td>Solo Mini Pump</td>
+	<td>&nbsp;</td>
+	<td>Not planned for now</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td></td>
+</tr>
+
+
+
+<tr bgcolor="red">
+	<td><a href="http://www.niprodiabetes.com/">Nipro</a></td>
+	<td>Amigo</td>
+	<td>&nbsp;</td>
+	<td>Not planned for now</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td></td>
+</tr>
+
+
+<tr bgcolor="red">
+	<td><a href="http://www.rfornia.com/">Zhuhai Fornia</a></td>
+	<td>IP-101</td>
+	<td>&nbsp;</td>
+	<td>Not planned for now</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td></td>
+</tr>
+
+
+
+
+
+</table>
+
+</font>
+
+
+<br><br>
+
+
+<h2>C. CGMS Tool</h2>
+<br><br>
+
+List of supported devices (0), work in progress (2), planned (4).
+
+<font size="6">
+
+<table border="1" width="800"> 
+<tr bgcolor="gray">
+	<td width="15%">Company</td>
+	<td width="15%">Device</td>
+	<td width="10%">Support Level*</td>
+	<td width="10%">Support in GGC</td>
+	<td width="10%">Planned Support</td>
+	<td width="10%">Developer</td>
+	<td>Comment</td>
+</tr>
+
+<tr bgcolor="orange">
+	<td>Dexcom</td>
+	<td>Dexcom 3</td>
+	<td>Level 1</td>
+	<td>Planned</td>
+	<td>1Q 2010</td>
+	<td>Andy</td>
+	<td>Support through Dexcom DM3 export files</td>
+</tr>
+
+
+<tr bgcolor="orange">
+	<td>Dexcom</td>
+	<td>Dexcom 7/Plus</td>
+	<td>Level 1</td>
+	<td>Planned</td>
+	<td>1Q 2010</td>
+	<td>Andy</td>
+	<td>Support through Dexcom DM3 export files</td>
+</tr>
+
+
+
+<tr bgcolor="magenta">
+	<td>Guardian</td>
+	<td>RealTime</td>
 	<td>Level 1</td>
 	<td>Planned ???</td>
 	<td>3Q 2010</td>
@@ -270,110 +557,84 @@ device to our support list (we had it on testing from company). Work now continu
 	<td>Support can be made through: a.) Solution Pumps and Meters .mmp file<br>b.) Carelink file<br>At this time implementation type not decided</td>
 </tr>
 
+<tr bgcolor="magenta">
+	<td>Minimed</td>
+	<td>CGMS Gold</td>
+	<td>Level 1</td>
+	<td>Planned ???</td>
+	<td>3Q 2010</td>
+	<td>&nbsp;</td>
+	<td>See: Guardian RealTime</td>
+</tr>
+
+<tr bgcolor="magenta">
+	<td>Minimed</td>
+	<td>RealTime</td>
+	<td>Level 1</td>
+	<td>Planned ???</td>
+	<td>3Q 2010</td>
+	<td>&nbsp;</td>
+	<td>See: Guardian RealTime</td>
+</tr>
+
+
+<tr bgcolor="red">
+	<td>Abbott</td>
+	<td>Freestyle Navigator</td>
+	<td>Level 1</td>
+	<td>?</td>
+	<td>?</td>
+	<td>&nbsp;</td>
+	<td>Support through export file from CoPilot</td>
+</tr>
+
 
 </table>
 
-
 </font>
 
+<br><br>
 
+<h2>Some comments that will be usable to users</h2>
+<br>
 
-
-
-<pre>
-Here is listed planned and implemented software. If you wish to help let us know, if you wish to have
-certian hardware contact us and we will se what can be done.
-
-
-
-A.) METERS
-B.) PUMPS
-C.) CGMS
-
-
-A.) METERS
-===========
-
- Name of company  |               Plans                    | Supported devices                           | Developer
----------------------------------------------------------------------------------------------------------------------------------
-Bayer/Ascensia    | Done                                   | Dex2, Contour, Breeze, EliteXl, ContourLink | Andy
-Roche             | Done                                   | All supported through Pix device            | Andy
-LifeScan          | Done                                   | OT Ultra, OT Profile, OT Easy/Mini          | Andy
-LifeScan          | Planned                                | OT Ultra 2                                  | Andy
-LifeScan          | Partitally done                        | OT UltraSmart                               | Alex Balaban
-Abbott            | ?                                      | ?                                           | ?
-Abbott/Medisense  | Done                                   | Precission Xtra, Optium Xceed               | Andy
-Menarini          | Done                                   | Glucofix Mio                                | Andy
-
-
-B.) PUMPS
-===========
-
- Name of company  |               Plans                   | Supported devices                          | Developer 
-----------------------------------------------------------------------------------------------------------------------
-Roche             | Done partitaly                        | Spirit, Combo (through SmartPix)           | Andy
-Minimed           | Planned -> 2Q 2009                    | Support with import of CareLink export     | Andy
-Animas            | Planned  ???                          | Through EZM db                             | Nate, ? 
-Dana              | 2009                                  | Dana Diabecare III/R (Win/Linux only)*     | Andy
-
-
-* Dana uses BlueTooth technology. We had some problem with communication, so we resorted to alternate solution, 
-    which only had drivers for Windows and Linux platforms. We are trying to find sollution to use Dana through
-    rxtx library (serial API), but this might take some time.
-
-
-C.) CGMS
-==========
-
- Name of company  |               Plans                    | Supported devices                         | Developer 
-----------------------------------------------------------------------------------------------------------------------
-Minimed           | Planned, ?                             | Support with import of CareLink export    | Andy
-
-
-
-
-Appendix A: Drivers needed for cables for different hardware
-==============================================================
+<h3>Appendix A: Drivers needed for cables for different hardware</h3>
 
 In most cases we need special drivers for cables (not diabetes devices). Drivers usually come on CD, but 
 not always, so here is little help. For some stuff, there can be more than one type of drivers, and cables
-can also come in several varieties (USB, Serial, ...). 
-
-Serial2USB (this can be used in case that we have cable with serial port and need to attach it to USB):
-   - FTDI
-
+can also come in several varieties (USB, Serial, ...). <br>
+<br>
+Serial2USB (this can be used in case that we have cable with serial port and need to attach it to USB):<br>
+   - FTDI<br>
+<br>
 Roche - Smart Pix is Mass Storage Device (it should work without drivers anywhere)
-
+<br>
 Lifescan - PL2303
+<br><br>
 
 
-
-
-Appendix B: Special considerations with some OSes
-==================================================
-
-1.) MAC
-
+<br>
+<h3>Appendix B: Special considerations with some OSes</h3>
+<br>
+1.) MAC<br>
+<br>
 For using hardware on Mac you will need to do following:
-
+<br><br>
 Login as root (you need to have root account enabled)
-
-mkdir /var/spool/uucp 
-chmod 755 /var/spool/uucp 
-mkdir /var/lock 
-chmod 777 /var/lock 
-
+<br><br>
+mkdir /var/spool/uucp<br> 
+chmod 755 /var/spool/uucp<br> 
+mkdir /var/lock <br>
+chmod 777 /var/lock <br>
+<br><br>
 Rxtx library uses different locks that are used on Mac, so this steps are necessary. In later version
 of Rxtx this is reported to be fixed (since there was no offical release so far, we will have to 
-wait and use upper work-around).
-
+wait and use upper work-around).<br>
+<br>
 If you get your binary file for Rxtx from some other source than from ours, there might be some 
 problems. You need to have librxtxSerial.jnilib and librxtxSerial.dylib present (they are both
-the same, if you have one, you can just make another copy of same file or link) 
-
-
-</pre>
-
+the same, if you have one, you can just make another copy of same file or link)<br> 
+<br>
 
 
 </body>

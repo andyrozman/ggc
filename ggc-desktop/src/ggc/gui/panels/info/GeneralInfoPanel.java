@@ -1,10 +1,15 @@
 package ggc.gui.panels.info;
 
 import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
 
 import java.awt.GridLayout;
+import java.util.Hashtable;
 
 import javax.swing.JLabel;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,12 +46,24 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private JLabel lblIns2 = new JLabel();
     private JLabel lblUnit = new JLabel();
     private JLabel lblTarget = new JLabel();
+    private JLabel lbl_pump_insulin = new JLabel();
     //private JLabel lblNutri = new JLabel();
     //private JLabel lblMeter = new JLabel();
     //private JLabel lblPumps = new JLabel();
     //private JLabel lblCGMS = new JLabel();
+    private int current_mode = -1;
+    private Hashtable<String, JLabel> list_elems;
+    private static Log log = LogFactory.getLog(GeneralInfoPanel.class);
 
 
+    String[] pen_mode = { "name", "name_value", "bolus", "bolus_value", "basal", "basal_value",
+                          "bg_unit", "bg_unit_value", "bg_target", "bg_target_value" };
+    
+    String[] pump_mode = { "name", "name_value", "pump_insulin", "pump_insulin_value",
+                           "bg_unit", "bg_unit_value", "bg_target", "bg_target_value"  };
+    
+    
+    
     /**
      * Constructor
      */
@@ -60,17 +77,21 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private void init()
     {
         setLayout(new GridLayout(0, 2));
-
-        add(new JLabel(m_ic.getMessage("YOUR_NAME")+":"));
-        add(lblName);
-        add(new JLabel(m_ic.getMessage("BOLUS_INSULIN")+":"));
-        add(lblIns1);
-        add(new JLabel(m_ic.getMessage("BASAL_INSULIN")+":"));
-        add(lblIns2);
-        add(new JLabel(m_ic.getMessage("BG_UNIT")+":"));
-        add(lblUnit);
-        add(new JLabel(m_ic.getMessage("BG_TARGET")+":"));
-        add(lblTarget);
+        list_elems = new Hashtable<String, JLabel>();
+        
+        addToList("name", new JLabel(m_ic.getMessage("YOUR_NAME")+":"));
+        addToList("name_value", lblName);
+        addToList("bolus", new JLabel(m_ic.getMessage("BOLUS_INSULIN")+":"));
+        addToList("bolus_value", lblIns1);
+        addToList("basal", new JLabel(m_ic.getMessage("BASAL_INSULIN")+":"));
+        addToList("basal_value", lblIns2);
+        addToList("bg_unit", new JLabel(m_ic.getMessage("BG_UNIT")+":"));
+        addToList("bg_unit_value", lblUnit);
+        addToList("bg_target", new JLabel(m_ic.getMessage("BG_TARGET")+":"));
+        addToList("bg_target_value", lblTarget);
+        addToList("pump_insulin", new JLabel(m_ic.getMessage("PUMP_INSULIN")+":"));
+        addToList("pump_insulin_value", this.lbl_pump_insulin);
+        
         //add(new JLabel(m_ic.getMessage("NUTRITION_PLUGIN")+":"));
         //add(lblNutri);
 /*        add(new JLabel(m_ic.getMessage("METERS_PLUGIN")+":"));
@@ -83,8 +104,52 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         //add(new JLabel());
         //add(new JLabel());
 
+        changeMode(DataAccess.GGC_MODE_PEN_INJECTION);
+        
     }
 
+    
+    private void changeMode(int new_mode)
+    {
+        if (this.current_mode == new_mode)
+            return;
+        
+        this.removeAll();
+        this.current_mode = new_mode;
+
+        String[] sel_elements = null;
+        
+        if (new_mode == DataAccess.GGC_MODE_PEN_INJECTION)
+        {
+            sel_elements = this.pen_mode;
+        }
+        else if (new_mode == DataAccess.GGC_MODE_PUMP)
+        {
+            sel_elements = this.pump_mode;
+        }
+        else
+        {
+            log.warn("Error setting mode in General Panel: " + new_mode);
+            return;
+        }
+        
+        for(int i=0; i<sel_elements.length; i++)
+        {
+            this.add(this.list_elems.get(sel_elements[i]));
+        }
+        
+        
+    }
+    
+    
+    private void addToList(String keyword, JLabel item)
+    {
+        this.list_elems.put(keyword, item);
+    }
+    
+    
+    
+    
     /**
      * Refresh Information 
      */
@@ -95,8 +160,9 @@ public class GeneralInfoPanel extends AbstractInfoPanel
             return;
 
         lblName.setText(m_da.getSettings().getUserName());
-        lblIns1.setText(m_da.getSettings().getIns1Name() + "  (" + m_da.getSettings().getIns1Abbr() + ")");
-        lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
+        lblIns1.setText(getInsulins(DataAccess.INSULIN_DOSE_BOLUS));
+        lblIns2.setText(getInsulins(DataAccess.INSULIN_DOSE_BASAL));
+        //lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
         lblUnit.setText(m_da.getSettings().getBG_unitString());
         
         int unit = m_da.getSettings().getBG_unit();
@@ -123,14 +189,43 @@ public class GeneralInfoPanel extends AbstractInfoPanel
             DataAccess.Decimal1Format.format(max) + " [" + 
             DataAccess.Decimal1Format.format(avg) + "]");
             
+        this.lbl_pump_insulin.setText(m_da.getSettings().getPumpInsulin());
         
-//        m_da.getPlugIn(DataAccess.PLUGIN_METERS).getWhenWillBeImplemented();
-//        lblNutri.setText("N/A"); //m_da.getPlugIn(DataAccess.PLUGIN_METERS).getShortStatus());
-     /*   lblMeter.setText(m_da.getPlugIn(DataAccess.PLUGIN_METERS).getShortStatus());
-        lblPumps.setText(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).getShortStatus());
-        lblCGMS.setText(m_da.getPlugIn(DataAccess.PLUGIN_CGMS).getShortStatus()); */
+        changeMode(DataAccess.getInstance().getSoftwareMode());
+        
     }
 
+    
+    private String getInsulins(int type)
+    {
+        GGCProperties gp = DataAccess.getInstance().getSettings();
+        String values = "";
+        
+        if (gp.getIns1Type()==type)
+            values += gp.getIns1Name() + " [1]";
+        
+        if (gp.getIns2Type()==type)
+            values = addString(values, gp.getIns2Name() + " [2]");
+        
+        if (gp.getIns3Type()==type)
+            values = addString(values, gp.getIns3Name() + " [3]");
+        
+        return values;
+    }
+    
+    
+    
+    private String addString(String full, String entry)
+    {
+        if (full.length()>0)
+            full += ", ";
+            
+        full += entry;
+        
+        return full;
+    }
+    
+    
 
     /**
      * Get Tab Name

@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 import javax.swing.JButton;
@@ -115,8 +116,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     
     //ftf_ins1, ftf_ins2, 
     private JSpinner[] spinner_arr = null;
-    
-    
+    Hashtable<Integer,Integer> table_ins_pos;    
+    Hashtable<Integer,Integer> table_pos_ins;    
+    int insulin_count = 0;
 
     /**
      * Constructor
@@ -251,13 +253,28 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         float val = 0.0f;
         
+        if (this.table_ins_pos.containsKey(1))
+        {
+            val = this.m_dailyValuesRow.getIns1() + ((0.1f) * m_da.getFloatValueFromString(this.m_dailyValuesRow.getExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_INS1), 0.0f));
+            this.spinner_arr[this.table_ins_pos.get(1)].setValue(val);
+            //this.spinner_arr[0].setValue(val); //new Integer((int) this.m_dailyValuesRow.getIns1()));
+        }
+        
+        if (this.table_ins_pos.containsKey(2))
+        {
+            val = this.m_dailyValuesRow.getIns2() + ((0.1f) * m_da.getFloatValueFromString(this.m_dailyValuesRow.getExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_INS2), 0.0f));
+            this.spinner_arr[this.table_ins_pos.get(2)].setValue(val); //new Integer((int) this.m_dailyValuesRow.getIns2()));
+        }
+        
+        if (this.table_ins_pos.containsKey(3))
+        {
+            val = this.m_dailyValuesRow.getIns3();
+            this.spinner_arr[this.table_ins_pos.get(3)].setValue(val);
+        }
+    
+
         
         
-        
-        val = this.m_dailyValuesRow.getIns1() + ((0.1f) * m_da.getFloatValueFromString(this.m_dailyValuesRow.getExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_BOLUS), 0.0f));
-        this.spinner_arr[0].setValue(val); //new Integer((int) this.m_dailyValuesRow.getIns1()));
-        val = this.m_dailyValuesRow.getIns2() + ((0.1f) * m_da.getFloatValueFromString(this.m_dailyValuesRow.getExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_BASAL), 0.0f));
-        this.spinner_arr[1].setValue(val); //new Integer((int) this.m_dailyValuesRow.getIns2()));
         this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
 
         ActField.setText(this.m_dailyValuesRow.getActivity());
@@ -309,36 +326,114 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
 
+        
         addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
         addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
-        addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
-        //addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 198, panel);
-        addLabel(m_ic.getMessage("BOLUS_INSULIN") + ":", 198, panel);
-        //addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 228, panel);
-        addLabel(m_ic.getMessage("BASAL_INSULIN") + ":", 228, panel);
-        addLabel(m_ic.getMessage("CH_LONG") + ":", 258, panel);
-        addLabel(m_ic.getMessage("FOOD") + ":", 288, panel);
-        addLabel(m_ic.getMessage("URINE") + ":", 318, panel);
-        addLabel(m_ic.getMessage("ACTIVITY") + ":", 348, panel);
-        addLabel(m_ic.getMessage("COMMENT") + ":", 378, panel);
-
-        addLabel("mg/dL", 140, 138, panel);
-        addLabel("mmol/L", 140, 168, panel);
 
         this.dtc = new DateTimeComponent(this.m_da, DateTimeComponent.ALIGN_VERTICAL, 5);
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
-
-        this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 55, 25, panel);
-        this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25, panel);
-
-        spinner_arr = new JSpinner[2];
         
         
+        addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
+        //addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 198, panel);
+
+        addLabel("mg/dL", 140, 138, panel);
+        addLabel("mmol/L", 255, 138, panel);
+        
+        this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 45, 25, panel);
+        //this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25, panel);
+        this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 315, 138, 45, 25, panel);
+        this.ftf_bg1.addFocusListener(this);
+        this.ftf_bg2.addFocusListener(this);
+        
+
+        //int next_y = 168;
+        int next_y = 173;
+        insulin_count = 0;
+
+        
+        spinner_arr = new JSpinner[3];
+//        table = new Hashtable<Integer,Integer>();
+
+        
+        table_ins_pos = new Hashtable<Integer,Integer>();    
+        table_pos_ins = new Hashtable<Integer,Integer>();    
+        
+        
+        
+        int ins_type = 0;
+        
+        if (m_da.getSettings().getIns1Type()>0)
+        {
+            ins_type = m_da.getSettings().getIns1Type();
+            
+            addLabel(m_ic.getMessage("INSULIN_1") + ":", next_y, panel);
+
+            table_ins_pos.put(1, insulin_count);    
+            table_pos_ins.put(insulin_count, 1);    
+            
+            this.spinner_arr[insulin_count] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 
+                m_da.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
+                m_da.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 
+                140, next_y, 55, 25, panel); 
+            
+            next_y += 30;
+            insulin_count++;
+        }
+
+        
+        
+        if (m_da.getSettings().getIns2Type()>0)
+        {
+            ins_type = m_da.getSettings().getIns2Type();
+            
+            addLabel(m_ic.getMessage("INSULIN_2") + ":", next_y, panel);
+            //table.put(insulin_count, 2);
+            table_ins_pos.put(2, insulin_count);    
+            table_pos_ins.put(insulin_count, 2);    
+
+            this.spinner_arr[insulin_count] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 
+                m_da.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
+                m_da.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 
+                140, next_y, 55, 25, panel); 
+            
+            next_y += 30;
+            insulin_count++;
+        }
+        
+        
+        if (m_da.getSettings().getIns3Type()>0)
+        {
+            ins_type = m_da.getSettings().getIns3Type();
+            
+            addLabel(m_ic.getMessage("INSULIN_3") + ":", next_y, panel);
+//            table.put(insulin_count, 3);
+            table_ins_pos.put(3, insulin_count);    
+            table_pos_ins.put(insulin_count, 3);    
+
+            this.spinner_arr[insulin_count] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 
+                m_da.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
+                m_da.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 
+                140, next_y, 55, 25, panel); 
+            
+            next_y += 30;
+            insulin_count++;
+        }
+        
+        
+        
+        //addLabel(m_ic.getMessage("INSULIN_1") + ":", 168, panel);
+        //addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 228, panel);
+        //addLabel(m_ic.getMessage("INSULIN_2") + ":", 198, panel);
+
+        
+        
+        /*
         this.spinner_arr[0] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 
             m_da.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, DataAccess.INSULIN_DOSE_BOLUS),
             m_da.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, DataAccess.INSULIN_DOSE_BOLUS), 
-            140, 198, 55, 25, panel); 
+            140, 168, 55, 25, panel); 
             
             //getTextField(2, 0, new Integer(0), 140, 198, 55, 25, panel);
         
@@ -347,57 +442,33 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         this.spinner_arr[1] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 
                     m_da.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, DataAccess.INSULIN_DOSE_BASAL),
                     m_da.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, DataAccess.INSULIN_DOSE_BASAL), 
-                    140, 228, 55, 25, panel); 
+                    140, 198, 55, 25, panel); 
             //getTextField(2, 0, new Integer(0), 140, 228, 55, 25, panel);
         
-        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, 258, 55, 25, panel);
-
-        this.ftf_bg1.addFocusListener(this);
-        this.ftf_bg2.addFocusListener(this);
-
-        // this.ftf_bg1.addKeyListener(this);
-        // this.ftf_bg2.addKeyListener(this);
-        /*
-                this.ftf_bg2.addKeyListener(new KeyListener()
-                {
-
-                    public void keyPressed(KeyEvent arg0)
-                    {
-                    }
-
-                    public void keyTyped(KeyEvent arg0)
-                    {
-                    }
-
-                    public void keyReleased(KeyEvent ke)
-                    {
-                        if (ke.getKeyCode() == KeyEvent.VK_PERIOD)
-                        {
-                            JFormattedTextField tf = (JFormattedTextField) ke
-                                    .getSource();
-                            String s = tf.getText();
-                            s = s.replace('.', ',');
-                            tf.setText(s);
-                        }
-                    }
-
-                });
         */
-        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 90, 290, 130, panel);
-        addComponent(UrineField = new JTextField(), 120, 318, 240, panel);
-        addComponent(ActField = new JTextField(), 120, 348, 240, panel);
-        addComponent(CommentField = new JTextField(), 120, 378, 240, panel);
+        
+        
+        //int next_y = 168;
+        
+        //int insulin_count = 2;
+        
+        
 
+        //next_y += insulin_count * 30;
+        
+        addLabel(m_ic.getMessage("CH_LONG") + ":", next_y, panel);
+        addLabel(m_ic.getMessage("FOOD") + ":", next_y + 30, panel);
+        
+        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, next_y, 55, 25, panel);
+        
+        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 90, next_y + 32, 130, panel);
         cb_food_set.setMultiClickThreshhold(500);
-
-        // cb_food_set.setEnabled(false);
         cb_food_set.addChangeListener(new ChangeListener()
         {
             /**
              * Invoked when the target of the listener has changed its state.
              * 
-             * @param e
-             *            a ChangeEvent object
+             * @param e ChangeEvent object
              */
             public void stateChanged(ChangeEvent e)
             {
@@ -405,11 +476,38 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                     return;
 
                 in_process = true;
-                // System.out.println("State: " + cb_food_set.isSelected());
                 cb_food_set.setSelected(isMealSet());
                 in_process = false;
             }
         });
+
+        
+        
+        // bottom entries
+        
+        int next_bottom_y = 0;
+        
+        if (insulin_count==3)
+            next_bottom_y = 327;
+        else
+            next_bottom_y = 297;
+        
+        addLabel(m_ic.getMessage("URINE") + ":", next_bottom_y, panel);
+        addLabel(m_ic.getMessage("ACTIVITY") + ":", next_bottom_y + 30, panel);
+        addLabel(m_ic.getMessage("COMMENT") + ":", next_bottom_y + 60, panel);
+        
+        
+        addComponent(UrineField = new JTextField(), 120, next_bottom_y, 240, panel);
+        addComponent(ActField = new JTextField(), 120, next_bottom_y + 30, 240, panel);
+        addComponent(CommentField = new JTextField(), 120, next_bottom_y + 60, 240, panel);
+        
+        
+        
+
+
+        
+
+
 
         String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"), 
                                     "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), 
@@ -422,12 +520,12 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         String button_icon[] = { null, null, null, "ok.png", "cancel.png", null };
 
-        int button_coord[] = { 220, 198, 140, 1, 
-                               220, 228, 140, 1, 
-                               220, 258, 140, 1, 
-                               30, 420, 110, 1, 
-                               145, 420, 110, 1,
-                               220, 288, 140, 1
+        int button_coord[] = { 220, 173, 140, 1, 
+                               220, 203, 140, 1, 
+                               220, 233, 140, 1, 
+                               30, next_bottom_y + 102, 110, 1, 
+                               145, next_bottom_y + 102, 110, 1,
+                               220, 263, 140, 1
                                
         // 250, 390, 80, 0
         };
@@ -458,38 +556,28 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         }
 
-        help_button = m_da.createHelpButtonByBounds(260, 420, 110, 25, this);
-
+        help_button = m_da.createHelpButtonByBounds(260, next_bottom_y + 102, 110, 25, this);
         panel.add(help_button);
-
         m_da.enableHelp(this);
         
-        //this.updateMealsSet();
-
+        this.setBounds(x, y, width, next_bottom_y + 175);
+        
     }
 
     private boolean isMealSet()
     {
         return this.m_dailyValuesRow.areMealsSet();
-        /*
-        if ((this.m_dailyValuesRow.meals == null) || (this.m_dailyValuesRow.meals.trim().length() == 0)) ||
-            
-            return false;
-        else
-            return true; */
     }
 
+    
     private JFormattedTextField getTextField(int columns, int decimal_places, Object value, int x, int y, int width, int height, Container cont)
-
     {
         JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
         tf.setBounds(x, y, width, height);
         tf.addKeyListener(this);
-
         cont.add(tf);
 
         return tf;
-
     }
 
 
@@ -499,27 +587,24 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         label.setBounds(30, posY, 100, 25);
         label.setFont(f_bold);
         parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
-        // SwingConstants.RIGHT));
-
     }
 
+    
     private void addLabel(String text, int posX, int posY, JPanel parent)
     {
         JLabel label = new JLabel(text);
         label.setBounds(posX, posY, 100, 25);
         label.setFont(f_bold);
         parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
-        // SwingConstants.RIGHT));
-
     }
 
+    
     private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
     {
         addComponent(comp, posX, posY, width, 23, true, parent);
     }
 
+    
     private void addComponent(JComponent comp, int posX, int posY, int width, int height, boolean change_font, JPanel parent)
     {
         comp.setBounds(posX, posY, width, height);
@@ -588,8 +673,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         {
             if (this.isMealSet())
             {
-                // FIXME
-                
                 if (m_da.isValueSet(this.m_dailyValuesRow.getMealsIds()))
                 {
 
@@ -606,27 +689,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                         }
                     }
 
-                  /*                    
-                    PanelMealSelector pms = new PanelMealSelector(this, null, this.m_dailyValuesRow.getMealsIds());
-                    
-                    updateMealsSet();
-                    setCh(pms.getCHSumString());
-                    */
-                    
-                    /*
-                    String s = pms.getCHSumString();
-                    s = s.replace(DataAccess.false_decimal, DataAccess.real_decimal);
-                    this.ftf_ch.setValue(m_da.getFloatValue(s)); */
                 }
                 else if (m_da.isValueSet(this.m_dailyValuesRow.getFoodDescriptionCH()))
                 {
                     updateMealsSet();
                     setCh(this.m_dailyValuesRow.getFoodDescriptionCH());
-                    
-                    /*String s = this.m_dailyValuesRow.getFoodDescriptionCH();
-                    s = s.replace(DataAccess.false_decimal, DataAccess.real_decimal);
-
-                    this.ftf_ch.setValue(m_da.getFloatValue(s)); */
                 }
             }
         }
@@ -683,17 +750,43 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     }
     
     
-    /*
-     * String button_command[] = { "update_ch",
-     * m_ic.getMessage("UPDATE_FROM_FOOD"), "edit_food",
-     * m_ic.getMessage("EDIT_FOOD"), "ok", m_ic.getMessage("OK"), "cancel",
-     * m_ic.getMessage("CANCEL"), // "help", m_ic.getMessage("HELP")
-     */
+  
 
     private void cmdOk()
     {
-        // to-do
+
+        this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
+
+        float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
+
+        if (f > 0.0)
+        {
+            this.m_dailyValuesRow.setBG(1, f);
+        }
+
+        setInsulinValues();
+        
+        this.m_dailyValuesRow.setCH(m_da.getJFormatedTextValueFloat(this.ftf_ch));
+        this.m_dailyValuesRow.setActivity(ActField.getText());
+        this.m_dailyValuesRow.setUrine(UrineField.getText());
+        this.m_dailyValuesRow.setComment(CommentField.getText());
+        this.m_dailyValuesRow.createExtended();
+
+        
         if (this.m_add_action)
+        {
+            dV.addRow(this.m_dailyValuesRow);
+        }
+        
+        this.m_actionDone = true;
+        
+        m_da.removeComponent(this);
+        this.dispose();
+        
+        
+        
+        // to-do
+/*        if (this.m_add_action)
         {
             // add
 
@@ -704,54 +797,22 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
             this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
 
-            // if (isFieldSet(BGField.getText()))
-
             float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
 
             if (f > 0.0)
             {
-                // this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
-                // )+1, f);
                 this.m_dailyValuesRow.setBG(1, f);
             }
 
-/*            
-            val = this.m_dailyValuesRow.getIns1() + m_da.getFloatValueFromString(this.m_dailyValuesRow.getExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_BOLUS), 0.0f);
-            this.ftf_ins1.setValue(val); //new Integer((int) this.m_dailyValuesRow.getIns1()));
-            val = this.m_dailyValuesRow.getIns2() + m_da.getFloatValueFromString(this.m_dailyValuesRow.getExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_BASAL), 0.0f);
-  */          
-            
             
             setInsulinValues();
             
-            /*
-            // FIXME
-            this.m_dailyValuesRow.setIns1(m_da.getJFormatedTextValueInt(this.ftf_ins1));
-            //this.m_dailyValuesRow.setIns2(m_da.getJFormatedTextValueInt(this.ftf_ins2));
-            // FIXME
-            this.m_dailyValuesRow.setIns2(m_da.getIntValue(this.ftf_ins2.getValue())); */
-            
-            // checkDecimalFields(Ins1Field.getText()));
-            // this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
-            // ()));
-            // this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
-            // ;
             this.m_dailyValuesRow.setCH(m_da.getJFormatedTextValueFloat(this.ftf_ch));
             this.m_dailyValuesRow.setActivity(ActField.getText());
             this.m_dailyValuesRow.setUrine(UrineField.getText());
             this.m_dailyValuesRow.setComment(CommentField.getText());
-            // this.m_dailyValuesRow.setMealIdsList(null);
 
             dV.addRow(this.m_dailyValuesRow);
-            /*
-             * dV.setNewRow(new DailyValuesRow(this.dtc.getDateTime(),
-             * checkDecimalFields(BGField.getText()),
-             * checkDecimalFields(Ins1Field.getText()),
-             * checkDecimalFields(Ins2Field.getText()),
-             * checkDecimalFields(BUField.getText()), ActField.getText(),
-             * UrineField.getText(), CommentField.getText(), null)); // List of
-             * ids //mod.fireTableChanged(null); //clearFields();
-             */
             this.m_actionDone = true;
         }
         else
@@ -764,52 +825,23 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
             if (f > 0.0)
             {
-                // this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
-                // )+1, f);
                 this.m_dailyValuesRow.setBG(1, f);
             }
 
-            /*
-             * float f = m_da.getJFormatedTextValueFloat(ftf_bg);
-             * 
-             * if (f>0.0)
-             * this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex
-             * ()+1, f);
-             */
-            // if (isFieldSet(BGField.getText()))
-            // this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1,
-            // checkDecimalFields(BGField.getText()));
             
             setInsulinValues();
-            /*
-            this.m_dailyValuesRow.setIns1(m_da.getJFormatedTextValueInt(this.ftf_ins1));
 
-            // FIXME
-            this.m_dailyValuesRow.setIns2(m_da.getIntValue(this.ftf_ins2.getValue()));
-            */
-            
-            //this.m_dailyValuesRow.setIns2(m_da.getJFormatedTextValueInt(this.ftf_ins2));
-
-            // this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText
-            // ()));
-            // this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
-            // ()));
             this.m_dailyValuesRow.setCH(m_da.getJFormatedTextValueFloat(this.ftf_ch));
-            // this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
-            // ;
             this.m_dailyValuesRow.setActivity(ActField.getText());
             this.m_dailyValuesRow.setUrine(UrineField.getText());
             this.m_dailyValuesRow.setComment(CommentField.getText());
-            // this.m_dailyValuesRow.setMealIdsList(null);
 
-            // mod.fireTableChanged(null);
-            // clearFields();
             this.m_actionDone = true;
         }
 
         m_da.removeComponent(this);
         this.dispose();
-        
+  */      
     }
 
     
@@ -817,7 +849,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     private void setInsulinValues()
     {
         
-        for(int i=0; i<this.spinner_arr.length; i++)
+        for(int i=0; i<this.insulin_count; i++)
         {
             JSpinner sp = this.spinner_arr[i];
 
@@ -826,18 +858,24 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
             int v_i = Integer.parseInt(vd.substring(0, vd.indexOf(".")));
             int v_d = Integer.parseInt(vd.substring(vd.indexOf(".")+1));
+
+            int ins_num = this.table_pos_ins.get(i);
             
-            if (i==0)
+            if (ins_num==1)
             {
                 this.m_dailyValuesRow.setIns1(v_i);
                 if (v_d>0)
-                    this.m_dailyValuesRow.setExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_BOLUS, "" + v_d);
+                    this.m_dailyValuesRow.setExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_INS1, "" + v_d);
             }
-            else
+            else if (ins_num==2)
             {
                 this.m_dailyValuesRow.setIns2(v_i);
                 if (v_d>0)
-                    this.m_dailyValuesRow.setExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_BASAL, "" + v_d);
+                    this.m_dailyValuesRow.setExtendedValue(DailyValuesRow.EXTENDED_DECIMAL_PART_INS2, "" + v_d);
+            }
+            else if (ins_num==3)
+            {
+                this.m_dailyValuesRow.setIns3(vd);
             }
             
         }

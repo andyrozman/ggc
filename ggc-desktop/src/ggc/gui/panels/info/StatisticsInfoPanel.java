@@ -1,6 +1,6 @@
 package ggc.gui.panels.info;
 
-import ggc.core.data.StatisticValues;
+import ggc.core.data.CollectionValues;
 import ggc.core.util.DataAccess;
 
 import java.awt.GridLayout;
@@ -120,11 +120,11 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
 
         PanelIns1 = new JPanel(new GridLayout(5, 2));
         PanelIns1.setOpaque(false);
-        PanelIns1.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN_1") + " " +m_ic.getMessage("STATISTICS") + ":"));
-        PanelIns1.add(lbl_sum_ins1_name = new JLabel(m_ic.getMessage("SUM") + " " + m_ic.getMessage("INS_1") + ":"));
+        PanelIns1.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BOLUS_INSULIN_SHORT") + " " +m_ic.getMessage("STATISTICS") + ":"));
+        PanelIns1.add(lbl_sum_ins1_name = new JLabel(m_ic.getMessage("SUM_INSULIN") + ":"));
         PanelIns1.add(lblSumIns1 = new JLabel());
         lblSumIns1.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns1.add(lbl_sum_ins1_day_name = new JLabel(m_ic.getMessage("INS_1") + " " + m_ic.getMessage("PER_DAY")+":"));
+        PanelIns1.add(lbl_sum_ins1_day_name = new JLabel(m_ic.getMessage("INS_PER_DAY") +":"));
         PanelIns1.add(lblIns1Day = new JLabel());
         lblIns1Day.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns1.add(new JLabel(m_ic.getMessage("DOSE")+":"));
@@ -139,11 +139,11 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
 
         PanelIns2 = new JPanel(new GridLayout(5, 2));
         PanelIns2.setOpaque(false);
-        PanelIns2.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN_2") + " " + m_ic.getMessage("STATISTICS")+":"));
-        PanelIns2.add(lbl_sum_ins2_name = new JLabel(m_ic.getMessage("SUM") + " " + m_ic.getMessage("INS_2") + ":"));
+        PanelIns2.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BASAL_INSULIN_SHORT") + " " + m_ic.getMessage("STATISTICS")+":"));
+        PanelIns2.add(lbl_sum_ins2_name = new JLabel(m_ic.getMessage("SUM_INSULIN") + ":"));
         PanelIns2.add(lblSumIns2 = new JLabel());
         lblSumIns2.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(lbl_sum_ins2_day_name = new JLabel(m_ic.getMessage("INS_2") + " " + m_ic.getMessage("PER_DAY")+":"));
+        PanelIns2.add(lbl_sum_ins2_day_name = new JLabel(m_ic.getMessage("INS_PER_DAY") + ":"));
         PanelIns2.add(lblIns2Day = new JLabel());
         lblIns2Day.setHorizontalAlignment(SwingConstants.CENTER);
         PanelIns2.add(new JLabel(m_ic.getMessage("DOSE")+":"));
@@ -185,45 +185,46 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         if (!m_da.isDatabaseInitialized()) 
             return;
 
-        StatisticValues sV = new StatisticValues(startDate, endDate);
+        //StatisticValues sV = new StatisticValues(startDate, endDate);
+        CollectionValues sV = new CollectionValues(startDate, endDate);
 
         DecimalFormat df = new DecimalFormat("#0.00");
 
         lblAvgBG.setText(df.format(sV.getAvgBG()));
-        lblBGReadings.setText(sV.getCountBG() + "");
-        lblBGReadingsDay.setText(DataAccess.Decimal2Format.format((sV.getCountBG()/7.0f)));
+        lblBGReadings.setText(sV.getBGCount() + "");
+        lblBGReadingsDay.setText(DataAccess.Decimal2Format.format((sV.getBGCount()/7.0f)));
 
-        lblSumBU.setText(df.format(sV.getSumBU()));
-        lblBUDay.setText(df.format(sV.getAvgBUPerDay()));
-        lblCountBU.setText(sV.getCountBU() + "");
-        lblAvgBU.setText(df.format(sV.getAvgBU()));
-        lblBUCountDay.setText(df.format(sV.getBUCountPerDay()));
+        lblSumBU.setText(df.format(sV.getSumCH()));
+        lblBUDay.setText(df.format(sV.getSumCHPerDay()));
+        lblCountBU.setText(sV.getCHCount() + "");
+        lblAvgBU.setText(df.format(sV.getAvgCH()));
+        lblBUCountDay.setText(df.format(sV.getCHCountPerDay()));
 
-        lblSumIns1.setText(df.format(sV.getSumIns1()));
-        lblIns1Day.setText(df.format(sV.getAvgIns1PerDay()));
-        lblCountIns1.setText(sV.getCountIns1() + "");
-        lblAvgIns1.setText(df.format(sV.getAvgIns1()));
-        lblIns1CountDay.setText(df.format(sV.getIns1CountPerDay()));
+        lblSumIns1.setText(df.format(sV.getSumBolus()));
+        lblIns1Day.setText(df.format(sV.getSumBolusPerDay()));
+        lblCountIns1.setText(sV.getBolusCount() + "");
+        lblAvgIns1.setText(df.format(sV.getAvgBolus()));
+        lblIns1CountDay.setText(df.format(sV.getBolusCountPerDay()));
 
-        lblSumIns2.setText(df.format(sV.getSumIns2()));
-        lblIns2Day.setText(df.format(sV.getAvgIns2PerDay()));
-        lblCountIns2.setText(sV.getCountIns2() + "");
-        lblAvgIns2.setText(df.format(sV.getAvgIns2()));
-        lblIns2CountDay.setText(df.format(sV.getIns2CountPerDay()));
+        lblSumIns2.setText(df.format(sV.getSumBasal()));
+        lblIns2Day.setText(df.format(sV.getSumBasalPerDay()));
+        lblCountIns2.setText(sV.getBasalCount() + "");
+        lblAvgIns2.setText(df.format(sV.getAvgBasal()));
+        lblIns2CountDay.setText(df.format(sV.getBasalCountPerDay()));
 
         
         if (first_refresh)
         {
-            PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
-            PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
-    
+            //PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
+            //PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
+    /*
             lbl_sum_ins1_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr() + ":");
             lbl_sum_ins1_day_name.setText(m_da.getSettings().getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
     
             lbl_sum_ins2_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns2Abbr() + ":");
             lbl_sum_ins2_day_name.setText(m_da.getSettings().getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
     
-            first_refresh = false;
+            first_refresh = false; */
         }
     }
     
