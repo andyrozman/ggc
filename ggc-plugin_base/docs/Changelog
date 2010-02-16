@@ -2,6 +2,11 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.4.5 [15.2.2010]
+    * Started adding File import support
+    * PluginBase now has it's own I18n, this releases some of translations in all other plugins
+    * Some changes to DeviceInterface
+
 0.4.4 [24.1.2010]
     * Added reading of configuration possibility. Added GUI classes, reading classes and special method in DeviceInterface
       which is for checking if device supports reading of configuration (most don't)

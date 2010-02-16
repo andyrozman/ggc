@@ -88,38 +88,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     JButton help_button;
     DeviceDataHandler m_ddh;
     
-    
-    /*
-    public String statuses[] =  
-    { 
-        m_ic.getMessage("STATUS_NONE"),
-        m_ic.getMessage("STATUS_READY"),
-        m_ic.getMessage("STATUS_DOWNLOADING"),
-        m_ic.getMessage("STATUS_STOPPED_DEVICE"),
-        m_ic.getMessage("STATUS_STOPPED_USER"),
-        m_ic.getMessage("STATUS_DOWNLOAD_FINISHED"),
-        m_ic.getMessage("STATUS_READER_ERROR"),
-    };*/ 
-    
-    
-    
-    
-    
-    
-    /*
-    public DeviceDisplayDataDialog(DataAccessPlugInBase da)
-    {
-        super();
-
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
-        //this.loadConfiguration();
-
-        this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
-
-        dialogPreInit();
-    }*/
-
 
     /**
      * Constructor
@@ -135,10 +103,8 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.m_ic = da.getI18nControlInstance();
         
         this.m_ddh = ddh;
-
-//        this.configured_meter = mce;
-
-        this.mrr = new DeviceReaderRunner(m_da, this.m_ddh.getConfiguredDevice(), this);
+        this.m_ddh.dialog_config = this;
+        this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);
 
         dialogPreInit();
     }
@@ -163,41 +129,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
         dialogPreInit();
     }
-    
-    
-    
-    /*
-    public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry mce)
-    {
-        super();
-        
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
-
-        this.configured_meter = mce;
-
-        this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
-
-        dialogPreInit();
-    }*/
-    
-/*
-    public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry mce, Hashtable<String,?> meter_data, DevicePlugInServer server)
-    {
-        super();
-
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
-        
-        this.configured_meter = mce;
-        this.meter_data = meter_data;
-
-        this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
-
-        this.server = server;
-        dialogPreInit();
-    }
-  */  
     
 
     private void dialogPreInit()

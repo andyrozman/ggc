@@ -5,6 +5,8 @@ import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.gui.file.ImportFileSelectorDialog;
+import ggc.plugin.gui.file.MultipleFileSelectorDialog;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -71,23 +73,24 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     JButton button_start, help_button;
     JLabel label_waiting;
     boolean reading_old_done = false;
+    //DeviceTransferData m_dtd = null;
     
     //Hashtable<String,?> device_data = null;
     //int x,y;
     //JFrame parentMy;
     //DbDataReaderAbstract reader;
     //DevicePlugInServer server;
-    int continuing_type = CONTINUING_TYPE_READ_DATA;
+    int continuing_type = DeviceDataHandler.TRANSFER_READ_DATA;
 
     /**
      * Continuing Type: Read Data
      */
-    public static final int CONTINUING_TYPE_READ_DATA = 1;
+    //public static final int CONTINUING_TYPE_READ_DATA = 1;
     
     /**
      * Continuing Type: Read Configuration
      */
-    public static final int CONTINUING_TYPE_READ_CONFIGURATION = 2;
+    //public static final int CONTINUING_TYPE_READ_CONFIGURATION = 2;
     
     
     /**
@@ -97,13 +100,17 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      * @param da 
      * @param continued_type 
      */
-    public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da, int continued_type)
+   /* public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da, int continued_type)
     {
         super();
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
         
+        //this.m_dtd = DeviceTransferData.getInstance();
+        
         this.m_ddh = m_da.getDeviceDataHandler();
+        this.m_ddh.setTransferType(continued_type);
+        //this.m_dtd.device_data_handler = this.m_ddh;
         this.checkReading(this.m_ddh.isOldDataReadingFinished());
         this.m_ddh.setReadingFinishedObject(this);
         
@@ -120,7 +127,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         this.setVisible(true);
         
     }
-
+*/
     
     /**
      * Constructor
@@ -151,7 +158,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         //if (this.m_ddh)
             
         this.continuing_type = _continued_type; 
-        
+        this.m_ddh.setTransferType(this.continuing_type);
+
         
         if (!loadConfiguration())
         {
@@ -159,41 +167,71 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
             return;
         }
 
+        this.m_da.listComponents();
+        int read_stats = this.device_interface.getDownloadSupportType();
         
-        int read_stats = 0;
-        
-        if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+        if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_DATA)
         {
-            read_stats = this.device_interface.getDownloadSupportType();
+            if (!DownloadSupportType.isOptionSet(read_stats, DownloadSupportType.DOWNLOAD_FROM_DEVICE))
+            {
+                boolean warned = showNoSupportDialog(read_stats);
+                
+                if (!warned)
+                {
+                    String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_DEVICE_DOWNLOAD_SUPPORT"), 
+                        this.configured_device.device_device,
+                        this.configured_device.device_company);
+                    this.showWarningDialog(msg);
+                }
+
+                return;
+            }
+        }
+        else if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_FILE)
+        {
+
+            if (!DownloadSupportType.isOptionSet(read_stats, DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE))
+            {
+                boolean warned = showNoSupportDialog(read_stats);
+                
+                if (!warned)
+                {
+                    String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_FILE_DOWNLOAD_SUPPORT"), 
+                        this.configured_device.device_device,
+                        this.configured_device.device_company);
+                    this.showWarningDialog(msg);
+                }
+
+                return;
+            }
+            
+        }
+        else if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_CONFIGURATION)
+        {
+
+            if (!DownloadSupportType.isOptionSet(read_stats, DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE))
+            {
+                boolean warned = showNoSupportDialog(read_stats);
+                
+                if (!warned)
+                {
+                    String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_CONFIG_DOWNLOAD_SUPPORT"), 
+                        this.configured_device.device_device,
+                        this.configured_device.device_company);
+                    this.showWarningDialog(msg);
+                }
+
+                return;
+            }
+            
         }
         else
         {
-            read_stats = this.device_interface.getDownloadSupportTypeConfiguration();
+            System.out.println("System error: This option is not supported!");
         }
+            
         
         
-        if (read_stats==DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE)
-        {
-            String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_DOWNLOAD_SUPPORT"), 
-                         this.configured_device.device_device,
-                         this.configured_device.device_company);
-            JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), msg, m_ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        else if (read_stats==DownloadSupportType.DOWNLOAD_SUPPORT_NO)
-        {
-            String msg = String.format(m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_BY_GGC"), 
-                this.configured_device.device_device,
-                this.configured_device.device_company);
-            JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), msg, m_ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        else if (read_stats==DownloadSupportType.DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE)
-        {
-            JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_GENERIC"), 
-                                          m_ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
-            return;
-        }
         //m_da.addContainer(server.)
         
         
@@ -205,6 +243,47 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         this.setResizable(false);
         this.setVisible(true);
     }
+
+    
+    private boolean showNoSupportDialog(int status)
+    {
+        
+        if (DownloadSupportType.isOptionSet(status, DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE))
+        {
+            String msg = String.format(m_ic.getMessage("DEVICE_HAS_NO_DOWNLOAD_SUPPORT"), 
+                         this.configured_device.device_device,
+                         this.configured_device.device_company);
+            showWarningDialog(msg);
+            return true;
+        }
+        else if (DownloadSupportType.isOptionSet(status, DownloadSupportType.DOWNLOAD_SUPPORT_NO))
+        {
+            String msg = String.format(m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_BY_GGC"), 
+                this.configured_device.device_device,
+                this.configured_device.device_company);
+            showWarningDialog(msg);
+            return true;
+        }
+        else if (DownloadSupportType.isOptionSet(status, DownloadSupportType.DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE)) 
+        {
+            showWarningDialog(m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_GENERIC"));
+            return true;
+        }
+        
+        return false;
+        
+    }
+    
+    
+    
+    private void showWarningDialog(String msg)
+    {
+        JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), msg, m_ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
+    }
+    
+    
+    
+    
     
     private void notConfigured()
     {
@@ -217,14 +296,22 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     {
         this.configured_device = this.m_da.getDeviceConfiguration().getSelectedDeviceInstance(); //mc.getDefaultMeter();
         
+        System.out.println("Configured device: " + this.configured_device);
+        
         if (this.configured_device==null)
             return false;
-
+        
+        //this.m_dtd.configured_device = configured_device;
         this.m_ddh.setConfiguredDevice(configured_device);
         
         DeviceInterface mi = m_da.getManager().getDevice(this.configured_device.device_company, this.configured_device.device_device);
+
+        System.out.println("Device Interface: " + mi);
         
         this.device_interface = mi;
+        
+        //this.m_dtd.device_interface = this.device_interface;
+        this.m_ddh.setDeviceInterface(this.device_interface);
         
         return (this.device_interface!=null);
         
@@ -499,16 +586,40 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                 tzu.setSummerTimeChange(this.configured_device.ds_summer_change);
             }
             
-            m_da.removeComponent(this);
             this.dispose();
          
-            if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+            if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_DATA)
             {
+                m_da.removeComponent(this);
                 new DeviceDisplayDataDialog(m_da, m_ddh);
             }
-            else
+            else if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_CONFIGURATION)
             {
+                m_da.removeComponent(this);
                 new DeviceDisplayConfigDialog(m_da, m_ddh);
+            }
+            else if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_FILE)
+            {
+                
+                System.out.println(this.device_interface.getFileDownloadTypes());
+                
+                if (this.device_interface.getFileDownloadTypes()==null)
+                {
+                    showWarningDialog(this.m_ic.getMessage("INTERNAL_CONFIGURATION_ERROR"));
+                    m_da.removeComponent(this);
+                }
+                else if (this.device_interface.getFileDownloadTypes().length == 1)
+                {
+                    m_ddh.selected_file_context = this.device_interface.getFileDownloadTypes()[0]; 
+                    m_da.removeComponent(this);
+                    new ImportFileSelectorDialog(m_da, this, m_ddh);
+                }
+                else
+                {
+                    m_da.removeComponent(this);
+                    new MultipleFileSelectorDialog(m_da, this, m_ddh);
+                }
+                //new DeviceDisplayConfigDialog(m_da, m_ddh);
             }
             
         }

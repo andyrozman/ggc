@@ -10,8 +10,10 @@ import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.manager.DeviceManager;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -1049,11 +1051,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public boolean checkUnsatisfiedLink(Exception ex1)
     {
         Throwable ex = ex1.getCause();
-        String ex_txt = ex.toString();
         
-        if (ex_txt.contains("java.lang.UnsatisfiedLinkError"))
+        if (ex!=null)
         {
-            return true;
+            String ex_txt = ex.toString();
+            
+            if (ex_txt.contains("java.lang.UnsatisfiedLinkError"))
+            {
+                return true;
+            }
         }
         
         return false;
@@ -1277,7 +1283,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
             return null;
         else
         {
-            return (DeviceInterface)this.getManager().getCompany(dce.device_company).getDevice(dce.device_device);
+            AbstractDeviceCompany adc = this.getManager().getCompany(dce.device_company);
+            
+            if (adc==null)
+                return null;
+                
+            
+            return (DeviceInterface)adc.getDevice(dce.device_device);
         }
     }
     
@@ -1429,6 +1441,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         
     }
     
+ 
+    public String pathResolver(String path)
+    {
+        return path.replace('\\', File.separatorChar);        
+    }
     
     
 

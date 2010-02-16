@@ -2,6 +2,9 @@ package ggc.plugin.data;
 
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.gui.DeviceDisplayConfigDialog;
+import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -14,6 +17,7 @@ import com.atech.db.DbDataReadingFinishedInterface;
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.StatusReporterInterface;
+import com.atech.utils.file.FileReaderContext;
 
 
 /**
@@ -55,6 +59,30 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     StatusReporterInterface export_dialog;
     DbDataReadingFinishedInterface m_reading_inst = null; 
     protected DeviceValuesTableModel m_model;
+    protected DeviceInterface device_interface;
+    
+    public DeviceDisplayConfigDialog dialog_config = null;
+    public DeviceDisplayDataDialog dialog_data = null;
+    protected int transfer_type = 0;
+    
+    public FileReaderContext selected_file_context = null;
+    public String selected_file = null;
+    
+    
+    /**
+     * Transfer Type: Read Data
+     */
+    public static final int TRANSFER_READ_DATA = 1;
+    
+    /**
+     * Transfer Type: Read Configuration
+     */
+    public static final int TRANSFER_READ_CONFIGURATION = 2;
+    
+    /**
+     * Transfer Type: Read File
+     */
+    public static final int TRANSFER_READ_FILE = 3;
     
     
     /**
@@ -235,6 +263,9 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     }
     
     
+    
+    
+    
     /**
      * Execute export to Other stuff
      */
@@ -327,6 +358,42 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     
     
     //public abstract 
+    
+    public void setDeviceInterface(DeviceInterface di)
+    {
+        this.device_interface = di;
+    }
+    
+    public DeviceInterface getDeviceInterface()
+    {
+        return this.device_interface;
+    }
+    
+    
+    public void setTransferType(int _type)
+    {
+        this.transfer_type = _type;
+    }
+    
+    public int getTransferType()
+    {
+        return this.transfer_type;
+    }
+
+    
+    
+    public boolean isDataTransfer()
+    {
+        return (this.transfer_type != DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
+    }
+    
+    public boolean isConfigTransfer()
+    {
+        return (this.transfer_type == DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
+    }
+    
+    
+    
     
     
 }	

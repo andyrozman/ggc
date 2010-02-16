@@ -76,6 +76,10 @@ public class DownloadSupportType
     
     
     
+    public static boolean isOptionSet(int current_status, int option)
+    {
+        return ((current_status & option) == option);
+    }
     
     
     

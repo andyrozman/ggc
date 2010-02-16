@@ -90,7 +90,7 @@ public abstract class DeviceManager
     public void addDeviceCompany(AbstractDeviceCompany company)
     {
         this.companies.add(company);
-        this.companies_ht.put(company.getName(), company);
+        this.companies_ht.put(company.getShortName(), company);
     }
     
     

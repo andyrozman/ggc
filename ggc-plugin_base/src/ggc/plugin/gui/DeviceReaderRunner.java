@@ -1,6 +1,7 @@
 package ggc.plugin.gui;
 
 import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.output.AbstractOutputWriter;
@@ -61,29 +62,20 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
 
 
     DeviceConfigEntry configured_device;
+    
     DeviceDisplayDataDialog dialog_data;
     DeviceDisplayConfigDialog dialog_config;
-    int continuing_type = 0;
+    
+    //int continuing_type = 0;
     
 
     boolean running = true;
     DataAccessPlugInBase m_da;
     boolean reading_started = false;
     
-    /**
-     * Constructor
-     * 
-     * @param da 
-     * @param _configured_device
-     * @param dialog
-     */
-    public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry _configured_device, DeviceDisplayDataDialog dialog)
-    {
-        this.m_da = da;
-        this.configured_device = _configured_device;
-        this.continuing_type = DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA;
-        this.dialog_data = dialog;
-    }
+    DeviceDataHandler m_ddh;
+    
+    
     
     /**
      * Constructor
@@ -92,13 +84,43 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      * @param _configured_device
      * @param dialog
      */
-    public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry _configured_device, DeviceDisplayConfigDialog dialog)
+    /*public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry _configured_device, DeviceDisplayDataDialog dialog)
     {
         this.m_da = da;
         this.configured_device = _configured_device;
-        this.continuing_type = DeviceInstructionsDialog.CONTINUING_TYPE_READ_CONFIGURATION;
+        this.continuing_type = DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA;
+        this.dialog_data = dialog;
+    }*/
+    
+    /**
+     * Constructor
+     * 
+     * @param da 
+     * @param _configured_device
+     * @param dialog
+     */
+   /* public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry _configured_device, DeviceDisplayConfigDialog dialog)
+    {
+        this.m_da = da;
+        this.configured_device = _configured_device;
+        this.continuing_type = DeviceDataHandler.TRANSFER_READ_DATA;
         this.dialog_config = dialog;
-    }
+    }*/
+    
+    
+    
+    public DeviceReaderRunner(DataAccessPlugInBase da, DeviceDataHandler _ddh)
+    {
+        this.m_da = da;
+        this.m_ddh = _ddh;
+        this.configured_device = this.m_ddh.getConfiguredDevice();
+        
+        if (this.m_ddh.isDataTransfer())
+            this.dialog_data = this.m_ddh.dialog_data;
+        else
+            this.dialog_config = this.m_ddh.dialog_config;
+    }    
+    
     
     
     /** 
@@ -107,9 +129,6 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     public void run()
     {
 
-        //while (running_started)
-        
-        
         while(running)
         {
             
@@ -130,7 +149,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
 
                 
                 
-                if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+                if (this.m_ddh.isDataTransfer())
                 {
                     lg = "Trying to reading old data from GGC...";
                     log.debug(lg);
@@ -195,13 +214,24 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 }
                 
 
-                if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+                //if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+                
+                if (this.m_ddh.isDataTransfer())
                 {
                     lg = "Start reading of data";
                     log.debug(lg);
                     writeLog(LogEntryType.DEBUG, lg);
                     
-                    this.m_mi.readDeviceDataFull();
+                    System.out.println("Transfer type: " + this.m_ddh.getTransferType()); 
+                    
+                    if (this.m_ddh.getTransferType()==DeviceDataHandler.TRANSFER_READ_DATA)
+                    {
+                        this.m_mi.readDeviceDataFull();
+                    }
+                    else
+                    {
+                        this.m_ddh.selected_file_context.readFile(m_ddh.selected_file);
+                    }
                     
                 }
                 else
@@ -280,7 +310,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public JDialog getDialog()
     {
-        if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+        if (this.m_ddh.isDataTransfer())
             return this.dialog_data;
         else
             return this.dialog_config;
@@ -305,7 +335,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
             //int i = (int)((count/500) * 100);
             //System.out.println("Progress: " + f + "  " + count + " max: " + this.dialog.output_util.getMaxMemoryRecords());
             
-            if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+            if (this.m_ddh.isDataTransfer())
                 this.dialog_data.progress.setValue((int)f);
             else
                 this.dialog_config.progress.setValue((int)f);
@@ -353,7 +383,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public DeviceIdentification getDeviceIdentification()
     {
-        if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+        if (this.m_ddh.isDataTransfer())
             return this.dialog_data.device_ident;
         else
             return this.dialog_config.device_ident;
@@ -401,7 +431,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void setDeviceComment(String com)
     {
-        if (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
+        if (this.m_ddh.isDataTransfer())
             this.dialog_data.setDeviceComment(com);
         else
             this.dialog_config.setDeviceComment(com);

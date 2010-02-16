@@ -138,10 +138,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         this.m_ic = da.getI18nControlInstance();
         
         this.m_ddh = ddh;
-
-//        this.configured_meter = mce;
-
-        this.mrr = new DeviceReaderRunner(m_da, this.m_ddh.getConfiguredDevice(), this);
+        this.m_ddh.dialog_data = this;
+        //this.m_ddh.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
+        this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);
 
         dialogPreInit();
     }
