@@ -7,6 +7,7 @@ Changes file for GGC Pump Tool
     * Minor device changes
     * Started work on SmartPix under Linux (we have some major problems here, I hope to get 
       them fixed soon
+    * PLUGIN_BASE: Required 0.4.5 
 
 
 1.0.4
