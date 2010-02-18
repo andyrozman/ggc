@@ -1,0 +1,69 @@
+<pre>
+
+HOW To GGC
+===========
+
+1. Purpose of this documnet
+
+Some time ago, I got message from fellow programer, stating that GGC is very hard to use. 
+If you would have seen image on my face, you would have started laughing and never stoped. 
+I was flbaergasted... GGC is really intuitive and easy to use... for me. But then I started 
+thinking from his side of view... GGC evolved from from the first version quite much. There 
+are lot of nifty features, only problem is that they aren't documented. GGC started from 
+simple software, now to software with many features and also many options. I will try to give
+you short overview of evrything in this documentation and most of this, will be later added 
+to help (where possible).
+
+
+2. What is Open Source
+
+You are wondering why I am starting with this. I want to make sure that you understand, why 
+open source software is different from software you buy. Open source means that application 
+is free, it also means that it depends on help of other people around. In most cases (as is 
+with GGC) people work on application in their free time. So after I finish with work and I get 
+to home where I work further to get GGC better. If you have programming experience (we work
+with java, but if you have any programming experience, you could help) or wish to help with
+translation (soon we will put out nice and shiny tool for translations), please contact us
+at ggc(at)atech-software.com.  
+
+ 
+3. Software mode
+
+GGC can now work in two modes. One is Pen/Injection mode, which is intended for Insulin therapy 
+without pump and of course Pump theraphy. This software is mainly intended for Type 1 diabetics
+(or all those that use insulin regualary), but it doesn't mean that you can't use it anyway. 
+Now if you use GGC in Pump mode, this doesn't mean that any option will be closed, but you get 
+different buttons in toolbar and also General info changes (in Pump mode we use only one insulin,
+while in Pen/Injection (in further text Pen) mode we use at least two insulins, GGC now supports 
+use of third insulin (by user request), but it must be enabled in configuration. Also Pump mode
+has different statistics displayed (not fully implemented yet).
+
+
+4. What are Tools/Plugins?
+
+GGC has several parts to it. Main part is called GGC Core, it contains all parts that communicate 
+with databases and handles any requests, actions and all commands. That part you see is called 
+GGC Desktop. This part displays and uses all other parts. After that we have several Tools, of
+which it's has it's own part to do. In first plan, Tools did communication with several types
+of diabetes hardware, so we now have Meter Tool, Pump Tool and now new one CGMS Tool. At first 
+it was inteded that this Tools, work only on communication with devices, but now each of Tools
+has more than this to do. For example Pump Tool doesn't just communicate with Pump devices, but it 
+also handles all pump action (Manual data input, Graphs, Printing and everything else).
+Now we also have one additional Tool which doesn-t communicate with any device, but just with 
+database. It's called Nutrition plugin and it handles all actions with Nutrition/Meals databases.
+
+
+5. Main user window
+
+Main user window displays several data windows, which show General settings, Plugin status, Devices 
+availability (configuration) and Statistics. In main user window we also have Menus, which are used
+to access all that GGC has to offer. There are also several buttons in toolbar, to get easier 
+access to main functions.
+
+
+6. Adding Daily data
+
+Main function of GGC is dialog for adding Daily data. Now we have different entry dialog, if 
+we are in Pen mode (Pen/Injection->  ) or in Pump mode    
+  
+</pre>
