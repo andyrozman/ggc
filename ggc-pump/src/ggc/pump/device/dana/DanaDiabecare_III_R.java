@@ -25,12 +25,11 @@ import ggc.pump.device.AbstractBlueToothPump;
 import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.manager.company.Sooil;
 import ggc.pump.util.DataAccessPump;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
 
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-
-import javax.comm.SerialPort;
-import javax.comm.SerialPortEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -754,8 +753,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     /** 
      * serialEvent
+     * 
+     * @param event 
      */
-    @Override
     public void serialEvent(SerialPortEvent event)
     {
         // not used

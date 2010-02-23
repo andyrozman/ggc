@@ -340,7 +340,7 @@ public abstract class InsuletPump extends AbstractPump
 
 
 
-
+/*
 
 * Title: Java Servlet Programming
 * Second Edition: April 2001
@@ -349,7 +349,7 @@ public abstract class InsuletPump extends AbstractPump
 // Copyright (C) 1999-2001 by Jason Hunter <jhunter_AT_acm_DOT_org>.
 // All rights reserved.  Use of this class is limited.
 // Please see the LICENSE for more information.
-
+/*
 package com.oreilly.servlet.multipart;
 
 import java.io.OutputStream;
@@ -362,7 +362,7 @@ import java.io.IOException;
  * 
  * @author Jason Hunter
  */
-private class MacBinaryDecoderOutputStream extends FilterOutputStream {
+/*private class MacBinaryDecoderOutputStream extends FilterOutputStream {
   private int bytesFiltered = 0;
   private int dataForkLength = 0;
 
@@ -408,4 +408,4 @@ private class MacBinaryDecoderOutputStream extends FilterOutputStream {
       }
     }
   }
-}
+}*/
