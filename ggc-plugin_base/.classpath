@@ -16,12 +16,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jna-3.0.9"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/IBMComm-Win"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/IBMComm">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/mnt/f/java/libs/IBMComm"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/mnt/f/java/libs/IBMComm/commLin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

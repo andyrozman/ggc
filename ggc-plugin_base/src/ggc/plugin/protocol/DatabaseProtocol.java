@@ -8,6 +8,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,6 +52,9 @@ public abstract class DatabaseProtocol
     
     protected String username = null;
     protected String password = null;
+    
+    private static Log log = LogFactory.getLog(DatabaseProtocol.class);
+    
     
     /**
      * Db Class: MDB Tools for Access databases
@@ -180,10 +186,18 @@ public abstract class DatabaseProtocol
      * @return
      * @throws Exception
      */
-    public ResultSet executeQuery(String sql) throws Exception
+    public ResultSet executeQuery(String sql)
     {
-        Statement st = getConnection().createStatement();
-        return st.executeQuery(sql);
+        try
+        {
+            Statement st = getConnection().createStatement();
+            return st.executeQuery(sql);
+        }
+        catch(Exception ex)
+        {
+            log.error("Error getting ResultSet for SQL:\nSql:" + sql + "\nException: " + ex, ex);
+            return null;
+        }
     }
     
     /**
