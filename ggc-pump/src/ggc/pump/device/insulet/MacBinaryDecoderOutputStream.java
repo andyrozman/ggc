@@ -24,12 +24,18 @@ public class MacBinaryDecoderOutputStream extends FilterOutputStream
   private int bytesFiltered = 0;
   private int dataForkLength = 0;
 
-  public MacBinaryDecoderOutputStream(OutputStream out) {
+  /**
+ * @param out
+ */
+public MacBinaryDecoderOutputStream(OutputStream out) {
     super(out);
   }
   
   
-  public int getBytesFiltered()
+  /**
+ * @return
+ */
+public int getBytesFiltered()
   {
       return this.bytesFiltered;
   }
@@ -75,7 +81,11 @@ public class MacBinaryDecoderOutputStream extends FilterOutputStream
     }
   }
   
-  public static void main(String[] args) throws Exception 
+  /**
+ * @param args
+ * @throws Exception
+ */
+public static void main(String[] args) throws Exception 
   {
       try
       {

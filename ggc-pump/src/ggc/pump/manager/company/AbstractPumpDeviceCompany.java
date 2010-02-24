@@ -29,6 +29,15 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
     }
     
     
+    /**
+     * Constructor 
+     * 
+     * @param company_id_
+     * @param company_name
+     * @param short_company_name
+     * @param company_desc
+     * @param implementation_status
+     */
     public AbstractPumpDeviceCompany(int company_id_, String company_name, String short_company_name, String company_desc, int implementation_status)
     {
         super(false, company_id_, company_name, short_company_name, company_desc, implementation_status);

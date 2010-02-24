@@ -4,10 +4,12 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.DatabaseProtocol;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpReport;
+import ggc.pump.util.DataAccessPump;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.filechooser.FileFilter;
@@ -23,6 +25,10 @@ import com.atech.utils.file.FileReaderContext;
 //
 //
 
+/**
+ * @author andy
+ *
+ */
 public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderContext 
 {
 
@@ -32,6 +38,11 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
     
     
+    /**
+     * Constructor
+     * 
+     * @param ow
+     */
     public FRC_EZManager_v2(OutputWriter ow)
     {
         super();
@@ -80,24 +91,28 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         // read
         // exact sqls
         
+        /*
+         *     activityDb
+         *     activityLog
+         *     basalprograms
+         * X   bgLog
+         * X   dailytotalslog
+         *     errorcodes
+         *     foodLog
+         *     insulinLog
+         *     insulinLog2
+         *     notesLog
+         * X   pumpbasallog
+         * 
+         */
 
-
-		ArrayList<PumpValuesEntry> entries = new ArrayList<PumpValuesEntry>();
+		//ArrayList<PumpValuesEntry> entries = new ArrayList<PumpValuesEntry>();
 
 		callBack(0);
 
 		
-		/*
-        OleDbConnection con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + m_localPref.FileName);
-        con.Open();
-		
-			
-	    OleDbCommand com = new OleDbCommand("select * from bgLog", con);                                    
-        OleDbDataReader reader = com.ExecuteReader();                 
-			*/		
-		
-		
-        ResultSet rs = this.executeQuery("select * from bgLog"); 
+		// Blood Glucose
+        ResultSet rs = this.executeQuery("select day, month, year, hours, minutes, bg, userid from bgLog"); 
         
         String type = "bgLog";
 
@@ -105,35 +120,31 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         {
             try
             {
-
+                
                 while(rs.next())
-                {					
-    			
-    			    
-    			    // day, month, year, hour, minute
-    			    ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
-    			    
-                    double bg = rs.getDouble(5);
-
+                {
                     
-                    PumpValuesEntry pve = new PumpValuesEntry();
-                    pve.setDateTimeObject(atd);
-                    
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
-                    pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_BG);
-                    
-                    
-                    /*
-    				GregorianCalendar dt = new GregorianCalendar(year,month,day,hour,min,0,0);
-    				
-    				GlucoseEntry entry = new GlucoseEntry();
-    				entry.Device = Device.Pump;
-    				entry.Time = dt;
-    				entry.Value = bg;
-    				*/
-    				
-                    // FIXME
-    				//entries.Add(entry);					
+                    try
+                    {
+        			    // day, month, year, hour, minute
+        			    ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
+        			    
+        			    // mg/dL
+                        int bg = rs.getInt("bg");
+                        
+                        PumpValuesEntry pve = new PumpValuesEntry();
+                        pve.setDateTimeObject(atd);
+                        
+                        pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
+                        pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_BG);
+                        pve.setValue("" + bg);
+                        
+                        this.output_writer.writeData(pve);
+                    }
+                    catch(Exception ex)
+                    {
+                        log.error("Error reading row [" + type + ":" + ex, ex);
+                    }       
                 }
 
                 rs.close();
@@ -141,15 +152,89 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 			}
 			catch(Exception ex)
 			{
-			    log.error("Error reading row [" + type + ":" + ex, ex);
-				//Console.WriteLine("Bad Row");
+			    log.error("Error reading [" + type + ":" + ex, ex);
 			}		
     
         }
 			
 
         callBack(15);
-			
+
+        
+        
+        
+        // Daily Totals
+        rs = this.executeQuery("select day, month, year, hours, minutes, btotal, dtotal, userid from dailytotalslog"); 
+        
+        type = "dailytotalslog";
+
+        if (rs!=null)
+        {
+            try
+            {
+                
+                while(rs.next())
+                {
+                    
+                    try
+                    {
+                        // day, month, year, hour, minute
+                        ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
+                        
+                        double basal = rs.getDouble("btotal");
+                        double total = rs.getDouble("dtotal");
+                        
+
+                        PumpValuesEntry pve = new PumpValuesEntry();
+                        pve.setDateTimeObject(atd);
+                        pve.setBaseType(PumpBaseType.PUMP_DATA_REPORT);
+                        pve.setSubType(PumpReport.PUMP_REPORT_BASAL_TOTAL_DAY);
+                        pve.setValue(DataAccessPump.Decimal3Format.format(basal));
+                        this.output_writer.writeData(pve);
+                        
+                        pve = new PumpValuesEntry();
+                        pve.setDateTimeObject(atd);
+                        pve.setBaseType(PumpBaseType.PUMP_DATA_REPORT);
+                        pve.setSubType(PumpReport.PUMP_REPORT_BOLUS_TOTAL_DAY);
+                        pve.setValue(DataAccessPump.Decimal3Format.format(total-basal));
+                        this.output_writer.writeData(pve);                        
+                        
+                        pve = new PumpValuesEntry();
+                        pve.setDateTimeObject(atd);
+                        pve.setBaseType(PumpBaseType.PUMP_DATA_REPORT);
+                        pve.setSubType(PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY);
+                        pve.setValue(DataAccessPump.Decimal3Format.format(total));
+                        this.output_writer.writeData(pve);                        
+                        
+                    }
+                    catch(Exception ex)
+                    {
+                        log.error("Error reading row [" + type + ":" + ex, ex);
+                    }       
+                }
+
+                rs.close();
+                
+            }
+            catch(Exception ex)
+            {
+                log.error("Error reading [" + type + ":" + ex, ex);
+            }       
+    
+        }
+            
+
+        callBack(15);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 		/*		    
 		OleDbCommand com = new OleDbCommand("select * from insulinLog", con);
         OleDbDataReader reader = com.ExecuteReader();
@@ -159,6 +244,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         
         type = "insulinLog";
 
+        if (rs!=null)
+        {
         
         try
         {
@@ -167,8 +254,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             {
 
                 // day, month, year, hour, minute
-                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
-
+//                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
                 int units1 = rs.getInt(5); //Integer.parseInt(reader.GetValue(5).ToString());
                 int units2 = rs.getInt(16); //Integer.parseInt(reader.GetValue(16).ToString());
                 
@@ -198,7 +285,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         {
             log.error("Error reading row [" + type + "]:" + ex, ex);
         }                   
-        
+        }
         
         callBack(30);
 			
@@ -207,11 +294,16 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         OleDbDataReader reader = com.ExecuteReader();
         */
         
-        rs = this.executeQuery("select * from notesLog"); 
+        
+        // Events, Basals, Alarams, Comments
+        
+        rs = this.executeQuery("select day, month, year, hours, minutes, note, pumpalarm, userid from notesLog"); 
 
         type = "notesLog";
 
-        
+        if (rs!=null)
+        {
+
         try
         {
         
@@ -219,7 +311,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             {
 
                 // day, month, year, hour, minute
-                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+//                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
 
                 String note = rs.getString(5); 
 
@@ -251,8 +344,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         {
             log.error("Error reading row [" + type + "]:" + ex, ex);
         }                   
-               
-			
+        }
+        
         callBack(45);
 			
         /*				
@@ -263,6 +356,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         rs = this.executeQuery("select * from foodLog"); 
         type = "foodLog";
 
+        if (rs!=null)
+        {
         
         try
         {
@@ -273,7 +368,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
 
                 // day, month, year, hour, minute
-                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(5), rs.getInt(6));
+//                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(5), rs.getInt(6));
+                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
                 
                 double multiplier = rs.getDouble(7); //double.Parse(reader.GetValue(7).ToString());
 
@@ -338,7 +434,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         catch (Exception ex)
         {
             log.error("Error reading row [" + type + "]:" + ex, ex);
-        }                   
+        }
+        }
 				
         callBack(60);
 			
@@ -350,6 +447,9 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         rs = this.executeQuery("select * from activityLog"); 
         type = "activityLog";
 
+        if (rs!=null)
+        {
+        
         try
         {
         
@@ -357,7 +457,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             {
 
                 // day, month, year, hour, minute
-                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+//                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
 
 
                 int duration = rs.getInt(5); //Integer.parseInt(reader.GetValue(5).ToString());
@@ -389,87 +490,52 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         {
             log.error("Error reading row [" + type + "]:" + ex, ex);
         }                   
-				
+        }				
 			
         callBack(75);			
 			
-        /*				
-		OleDbCommand com = new OleDbCommand("select * from pumpbasallog", con);
-        OleDbDataReader reader = com.ExecuteReader();
-        */
 
-        rs = this.executeQuery("select * from pumpbasallog"); 
+        // Pump Basal Rates
+        rs = this.executeQuery("select day, month, year, hours, minutes, rate, userid from pumpbasallog"); 
         type = "pumpbasallog";
 
-
-        try
+        if (rs!=null)
         {
-        
-            while(rs.next())
+
+            try
             {
-
-                try
-                {
-
-                // day, month, year, hour, minute
-                ATechDate atd = getAtechDate(rs.getInt(3), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
             
-                // FIXME
+                while(rs.next())
+                {
+                    try
+                    {
+                        // day, month, year, hour, minute
+                        ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
+                    
+                        PumpValuesEntry pve = new PumpValuesEntry();
+                        pve.setDateTimeObject(atd);
+                        
+                        pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
+                        pve.setSubType(PumpBasalSubType.PUMP_BASAL_VALUE);
+                        
+                        double rate = rs.getInt("rate") / 1000.0d; //units per hour
+                        
+                        pve.setValue(DataAccessPump.Decimal3Format.format(rate));
+                    }
+                    catch(Exception ex)
+                    {
+                        log.error("Error reading row [" + type + "]:" + ex, ex);
+                    }                   
+                    
+        		}
                 
-                PumpValuesEntry pve = new PumpValuesEntry();
-                pve.setDateTimeObject(atd);
-                
-                pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
-                
-                
-/*                
-                int year = Integer.parseInt(reader.GetValue(1).ToString());
-                int month = Integer.parseInt(reader.GetValue(2).ToString());
-                int day = Integer.parseInt(reader.GetValue(3).ToString());
-                int hour = Integer.parseInt(reader.GetValue(4).ToString());
-                int min = Integer.parseInt(reader.GetValue(5).ToString());
-
-                
-                int rate1 = Integer.parseInt(reader.GetValue(7).ToString());
-									
-				double rate = rate1 / 1000.0; //units per hour
-				
-				
-				
-				
-				
-	*/								
-				
-                
-                
-				//DateTime dt = new DateTime(year,month,day,hour,min,0,0);
-
-                // FIXME
-/*				
-				GradualInsulinEntry entry = new GradualInsulinEntry();
-				entry.Device = Device.Pump;
-				entry.Time = dt;
-				entry.Rate = rate;
-				entry.Insulin = Insulin.Unknown;	
-				
-				//we dont get the lenght but we can calculate it based
-				//on the time between it and the next basal entry
-				entry.Length = 0;
-									
-				entries.Add(entry); */
-			}
-			catch(Exception ex)
-			{
-                log.error("Error reading row [" + type + "]:" + ex, ex);
-			}					
-		}
-        rs.close();	
+                rs.close();	
+            }
+            catch(Exception ex)
+            {
+                log.error("Error reading [" + type + "]:" + ex, ex);
+            }                   
         }
-        catch(Exception ex)
-        {
-            log.error("Error reading row [" + type + "]:" + ex, ex);
-        }                   
-				
 
         //con.Close();
 

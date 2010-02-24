@@ -3,9 +3,16 @@ package ggc.pump.device.insulet;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+/**
+ * @author andy
+ *
+ */
 public class IRFReader
 {
     
+    /**
+     * @param filename
+     */
     public IRFReader(String filename)
     {
         
@@ -62,11 +69,11 @@ public class IRFReader
         
     }
     
-    
+    /*
     public static void main(String[] args)
     {
         new IRFReader("../test/20006422-2009-09-17-23-09-07.ibf");
-    }
+    }*/
     
 
 }
