@@ -37,13 +37,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -51,13 +52,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumnModel;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.components.DateTimeComponent;
+import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -86,56 +90,18 @@ import com.atech.i18n.I18nControlAbstract;
 
 // NOT IMPLEMENTED YET
 
-public class RatioExtendedDialog extends JDialog implements ActionListener, HelpCapable, FocusListener
+public class RatioExtendedDialog extends JDialog implements ActionListener, HelpCapable, FocusListener, KeyListener
 {
 
-    private static final long serialVersionUID = -1240982985415603758L;
+    private static final long serialVersionUID = -5442537763242639832L;
     JComboBox cb_time_range, cb_icarb_rule, cb_sens_rule;
     ArrayList<RatioEntry> list_ratios = new ArrayList<RatioEntry>(); 
     RatioEntryDisplay red = null;
     
-    /** 
-     * focusGained
-     */
-    public void focusGained(FocusEvent arg0)
-    {
-    }
-
+    
 
     boolean in_action = false;
     
-    /** 
-     * focusLost
-     */
-    public void focusLost(FocusEvent ev)
-    {
-	if (in_action)
-	    return;
-	
-	in_action = true;
-	
-	//JFormattedTextField targ = (JFormattedTextField)ev. 
-	
-	if (ev.getSource().equals(this.ftf_bg1))
-	{
-	    //System.out.println("focus lost: bg1");
-	    int val = m_da.getJFormatedTextValueInt(ftf_bg1);
-	    float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
-	    this.ftf_bg2.setValue(new Float(v_2));
-	}
-	else if (ev.getSource().equals(this.ftf_bg2))
-	{
-	    //System.out.println("focus lost: bg2");
-	    float val = m_da.getJFormatedTextValueFloat(ftf_bg2);
-	    int v_2 = (int)m_da.getBGValueDifferent(DataAccess.BG_MMOL, val);
-	    this.ftf_bg1.setValue(new Integer(v_2));
-	}
-	else
-	    System.out.println("focus lost: unknown");
-	    
-	
-	in_action = false;
-    }
 
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
@@ -154,7 +120,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
     JComboBox cob_bg_type; //= new JComboBox();
 
-    JFormattedTextField ftf_ins1, ftf_ins2, ftf_bg1, ftf_ch, ftf_bg2;
+    //JFormattedTextField ftf_ins1, ftf_ins2, ftf_bg1, ftf_ch, ftf_bg2;
     //JTextFieldFormatted 
     
 
@@ -163,6 +129,8 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     JCheckBox cb_food_set;
 
     DateTimeComponent dtc;
+    
+    float tdd;
 
     //JButton AddButton;
 
@@ -183,6 +151,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     JPanel main_panel = null;
 
 
+    JDecimalTextField dtf_ch_ins, dtf_ins_bg, dtf_bg_ch;
     
     //private boolean m_add_action = true;
     private Container m_parent = null;
@@ -201,10 +170,10 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         
         m_parent = dialog;
 
+        init();
+
         setTitle(m_ic.getMessage("RATIO_EXTENDED"));
         label_title.setText(m_ic.getMessage("RATIO_EXTENDED"));
-
-        init();
         
         this.setVisible(true);
 
@@ -257,6 +226,9 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
     private void init()
     {
+        
+        ATSwingUtils.initLibrary();
+        
         red = new RatioEntryDisplay(m_ic);
         
         this.setBounds(0, 0, 500, 500);
@@ -271,14 +243,85 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         
         this.getContentPane().add(panel);
 
+        label_title = ATSwingUtils.getTitleLabel("", 0, 15, 500, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
+        
+        /*
         label_title.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(JLabel.CENTER);
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
+        */
+        
+        // base panel
+        
+        JPanel p1 = ATSwingUtils.getPanel(30, 70, 300, 150, null, new TitledBorder("Base Ratio's (for reference only)"), panel);
+        
+        ATSwingUtils.getLabel(m_ic.getMessage("INSULIN_CARB_RATIO"), 20, 30, 150, 25, p1, ATSwingUtils.FONT_NORMAL_BOLD);
+        dtf_ch_ins = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 170, 30, 60, 25, p1);
+        dtf_ch_ins.addFocusListener(this);
+        dtf_ch_ins.addKeyListener(this);
+        
+        ATSwingUtils.getLabel(m_ic.getMessage("SENSITIVITY_FACTOR_LONG"), 20, 60, 150, 45, p1, ATSwingUtils.FONT_NORMAL_BOLD);
+        dtf_ins_bg = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 170, 70, 60, 25, p1);
+        dtf_ins_bg.addFocusListener(this);
+        dtf_ins_bg.addKeyListener(this);
 
-  
+        ATSwingUtils.getLabel(m_ic.getMessage("BG_OH_RATIO"), 20, 110, 150, 25, p1, ATSwingUtils.FONT_NORMAL_BOLD);
+        dtf_bg_ch = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 170, 110, 60, 25, p1);
+        dtf_bg_ch.addFocusListener(this);
+        dtf_bg_ch.addKeyListener(this);
+
+        ATSwingUtils.getButton("" , 
+            250, 30, 30, 30, p1, ATSwingUtils.FONT_NORMAL, 
+            "calculator.png", 
+            "calculator", this, m_da);
+
+        
+        // extended panel
+        
+        JPanel p2 = ATSwingUtils.getPanel(30, 230, 450, 230, null, new TitledBorder("Extended Ratio's"), panel);
+        
+        
+        ATSwingUtils.getButton("", 20, 20, 30, 30, 
+                               p2, ATSwingUtils.FONT_NORMAL, "table_add.png", "add_row", this, m_da);
+
+        ATSwingUtils.getButton("", 55, 20, 30, 30, 
+            p2, ATSwingUtils.FONT_NORMAL, "table_edit.png", "edit_row", this, m_da);
+
+        ATSwingUtils.getButton("", 90, 20, 30, 30, 
+            p2, ATSwingUtils.FONT_NORMAL, "table_delete.png", "delete_row", this, m_da);
         
 
+        ATSwingUtils.getButton("", 400, 20, 30, 30, 
+            p2, ATSwingUtils.FONT_NORMAL, "table_sql_check.png", "check_row", this, m_da);
+        
+        
+        /*
+        JButton addButton = new JButton("  " + m_ic.getMessage("ADD"));
+        addButton.setPreferredSize(dim);
+        addButton.setIcon(m_da.getImageIcon_22x22("table_add.png", this));
+        addButton.setActionCommand("add_row");
+        addButton.addActionListener(this);
+        EntryBox.add(addButton);
+
+        JButton editButton = new JButton("  " + m_ic.getMessage("EDIT"));
+        editButton.setPreferredSize(dim);
+        editButton.setIcon(m_da.getImageIcon_22x22("table_edit.png", this));
+        editButton.setActionCommand("edit_row");
+        editButton.addActionListener(this);
+        EntryBox.add(editButton);
+
+        JButton delButton = new JButton("  " + m_ic.getMessage("DELETE"));
+        delButton.setPreferredSize(dim);
+        delButton.setIcon(m_da.getImageIcon_22x22("table_delete.png", this));
+        delButton.setActionCommand("delete_row");
+        delButton.addActionListener(this);
+        EntryBox.add(delButton);
+        */
+        
+        
+        
+        
         
         JTable table_1 = new JTable();
 
@@ -289,197 +332,61 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         table_1.setDoubleBuffered(true);
 
         JScrollPane scroll_1 = new JScrollPane(table_1);
-        scroll_1.setBounds(30, 305, 460, 160);
-        panel.add(scroll_1, null); //, ZeroLayout.DYNAMIC);
-        //scroll_1.repaint();        
+        scroll_1.setBounds(10, 55, 430, 160); // 30, 305, 460, 160 
+        p2.add(scroll_1, null); 
         
         
-        //addLabel(m_ic.getMessage("SELECT_DATE") + ":", 78, panel);
-        //addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
-        //addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
-        //addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 198, panel);
-        //addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 228, panel);
-        //addLabel(m_ic.getMessage("CH_LONG") + ":", 258, panel);
-        //addLabel(m_ic.getMessage("FOOD") + ":", 288, panel);
-        //addLabel(m_ic.getMessage("URINE") + ":", 318, panel);
-        //addLabel(m_ic.getMessage("ACTIVITY") + ":", 348, panel);
-        //addLabel(m_ic.getMessage("COMMENT") + ":", 378, panel);
         
-//        addLabel("mg/dL", 140, 138, panel);
-//        addLabel("mmol/L", 140, 168, panel);
         
-        /*
-        this.dtc = new DateTimeComponent(this.m_ic, DateTimeComponent.ALIGN_VERTICAL, 5);
-        dtc.setBounds(140, 75, 100, 35);
-        panel.add(dtc);
-
-        this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 55, 25, panel);
-        this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25, panel);
         
-        this.ftf_ins1 = getTextField(2, 0, new Integer(0), 140, 198, 55, 25, panel);
-        this.ftf_ins2 = getTextField(2, 0, new Integer(0), 140, 228, 55, 25, panel);
-        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, 258, 55, 25, panel);
-
-        this.ftf_bg1.addFocusListener(this);
-        this.ftf_bg2.addFocusListener(this);
         
-        //this.ftf_bg1.addKeyListener(this);
-        //this.ftf_bg2.addKeyListener(this);
-
-
-        this.ftf_bg2.addKeyListener(new KeyListener()
-        {
-
-	    public void keyPressed(KeyEvent arg0) { }
-	    public void keyTyped(KeyEvent arg0) { }
-
-	    
-	    public void keyReleased(KeyEvent ke)
-	    {
-		if (ke.getKeyCode()==KeyEvent.VK_PERIOD)
-		{
-		    JFormattedTextField tf = (JFormattedTextField)ke.getSource();
-		    String s = tf.getText();
-		    s = s.replace('.', ',');
-		    tf.setText(s);
-		}
-	    }
-
-            
-        });
         
-
-        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 120, 290, 200, panel);
-        addComponent(UrineField = new JTextField(), 120, 318, 240, panel);
-        addComponent(ActField = new JTextField(), 120, 348, 240, panel);
-        addComponent(CommentField = new JTextField(), 120, 378, 240, panel);
-*/
-
-/*                
-        this.cob_bg_type.setSelectedIndex(props.getBG_unit()-1);
-        cob_bg_type.addItemListener(new ItemListener(){
-                /**
-                 * Invoked when an item has been selected or deselected by the user.
-                 * The code written for this method performs the operations
-                 * that need to occur when an item is selected (or deselected).
-                 */
-  /*              public void itemStateChanged(ItemEvent e)
-                {
-                    try
-                    {
-                        long now = System.currentTimeMillis();
-                        //System.out.println("last=" + last_change + ",now=" + now);
-
-                        if ((now - last_change) < 500) 
-                        {
-                            return;
-                        }
-
-                        last_change = now;
-
-                        int prev = 0;
-
-                        if (cob_bg_type.getSelectedIndex()==1)
-                        {
-                            prev = 1;
-                        }
-                        else
-                            prev = 2;
-
-                        String s = ftf_bg.getText();
-                        s = s.replace(',', '.');
-                        
-                        float v = 0.0f;
-                        
-                        if (!s.equals(""))
-                        {
-                            v = Float.parseFloat(s);
-                        }
-                        
-                        //float v = Float.parseFloat(s);
-                        	//BGField.getText());
-
-                        //System.out.println("Item state vhanged: value_old=" + v + ", value_new=" + m_da.getBGValueDifferent(prev, v));
-
-                        setBGTextField();
-                        //setBGElementSettings();
-                        
-                        if (prev==2)
-                        {
-                            //ftf_bg.setText("" + (int)m_da.getBGValueDifferent(prev, v));
-                            ftf_bg.setValue(new Integer((int)m_da.getBGValueDifferent(prev, v)));
-                            //BGField.setText("" + (int)m_da.getBGValueDifferent(prev, v));
-                        }
-                        else
-                            ftf_bg.setValue(new Float(m_da.getBGValueDifferent(prev, v)));
-                            //ftf_bg.setText("" + m_da.getBGValueDifferent(prev, v));
-//                            BGField.setText("" + m_da.getBGValueDifferent(prev, v));
-                        
-                        //fixDecimals();
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.println("Error with change of BG Value: " + ex);
-                    }
-                }
-                });
-*/
         
-
-/*
-        String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
-                                    "edit_food", m_ic.getMessage("EDIT_FOOD"),
-                                    "ok", m_ic.getMessage("OK"),
-                                    "cancel", m_ic.getMessage("CANCEL"),
-  //                                  "help", m_ic.getMessage("HELP")
-        };
-
-        String button_icon[] = {
-        	null,
-        	null,
-        	"ok.png",
-        	"cancel.png"
-        };
         
-        int button_coord[] = { 210, 228, 140, 1, 
-                               210, 258, 140, 1,
-                               30, 420, 110, 1,
-                               145, 420, 110, 1,
-//                               250, 390, 80, 0
-        }; */
-/*
-        JButton button;
-        //int j=0;
-        for (int i=0, j=0, k=0; i<button_coord.length; i+=4, j+=2, k++)
-        {
-            button = new JButton("   " + button_command[j+1]);
-            button.setActionCommand(button_command[j]);
-            //button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-            button.addActionListener(this);
-
-            if (button_icon[k]!=null)
-            {
-        	button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
-            }
-            
-            
-            if (button_coord[i+3]==0)
-            {
-                button.setEnabled(false);
-            }
-
-            if (k<=1)
-        	addComponent(button, button_coord[i], button_coord[i+1], button_coord[i+2], panel);
-            else
-        	addComponent(button, button_coord[i], button_coord[i+1], button_coord[i+2], 25, false, panel);
-            
-            
-        }
-  */      
         
-        help_button = m_da.createHelpButtonByBounds(260, 420, 110, 25, this);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // panel
+        
+        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 
+                               360, 80, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
+                               "ok.png", 
+                               "ok", this, m_da);
 
+        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 
+                               360, 115, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
+                               "cancel.png", 
+                               "cancel", this, m_da);
+        
+        
+        help_button = m_da.createHelpButtonByBounds(360, 150, 110, 25, this);
         panel.add(help_button);
+        
+        
+        
+
+        
+        
+
+//        panel.add(help_button);
 
         m_da.enableHelp(this);
         
@@ -506,11 +413,168 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     
     
     
+    private static final int RATIO_CH_INSULIN = 1;
+    private static final int RATIO_BG_INSULIN = 2;
+    private static final int RATIO_BG_CH = 3;
+
+    
+    private void calculateRatio(Object obj)
+    {
+        if (obj.equals(this.dtf_ch_ins))
+        {
+            calculateRatio(RATIO_CH_INSULIN);
+        }
+        else if (obj.equals(this.dtf_ins_bg))
+        {
+            calculateRatio(RATIO_BG_INSULIN);
+        }
+        else if (obj.equals(this.dtf_bg_ch))
+        {
+            calculateRatio(RATIO_BG_CH);
+        }
+    }
+    
+    
+    
+    private void calculateRatio(int type)
+    {
+        //System.out.println("calculate Ratio: " + type);
+        
+        float v1 = this.m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue());
+        float v2 = this.m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue());
+        float v3 = this.m_da.getFloatValue(this.dtf_bg_ch.getCurrentValue());
+
+        
+        if (type==RATIO_CH_INSULIN)
+        {
+            if (checkSet(v1,v2))
+            {
+                float v4 = v1/v2;
+//                System.out.println("calculate Ratio [type=" + type + ",check=1,2;value=" + v4);
+                this.dtf_bg_ch.setValue(new Float(v4));
+            }
+            else if (checkSet(v1,v3))
+            {
+                float v4 = v1/v3;
+//                System.out.println("calculate Ratio [type=" + type + ",check=1,3;value=" + v4);
+                this.dtf_ins_bg.setValue(new Float(v4));
+            }
+//            else
+//                System.out.println("calculate Ratio [type=" + type + ",check NO");
+
+        }
+        else if (type==RATIO_BG_INSULIN)
+        {
+            if (checkSet(v2,v1))
+            {
+                float v4 = v1/v2;
+                //System.out.println("calculate Ratio [type=" + type + ",check=2,1;value=" + v4);
+                this.dtf_bg_ch.setValue(new Float(v4));
+            }
+            else if (checkSet(v2,v3))
+            {
+                float v4 = v2*v3;
+                //System.out.println("calculate Ratio [type=" + type + ",check=2,3;value=" + v4);
+                this.dtf_ch_ins.setValue(new Float(v4));
+            }
+//            else
+//                System.out.println("calculate Ratio [type=" + type + ",check NO");
+        }
+        else
+        {
+            if (checkSet(v1,v2))
+            {
+                float v4 = v1/v2;
+                //System.out.println("calculate Ratio [type=" + type + ",check=3,1;value=" + v4);
+                this.dtf_bg_ch.setValue(v4);
+            }
+            else if (checkSet(v3,v2))
+            {
+                float v4 = v2*v3;
+                //System.out.println("calculate Ratio [type=" + type + ",check=3,2;value=" + v4);
+                this.dtf_ch_ins.setValue(new Float(v4));
+            }
+//            else
+//                System.out.println("calculate Ratio [type=" + type + ",check NO");
+        }
+        
+        
+//        JDecimalTextField dtf_ch_ins, dtf_ins_bg, dtf_bg_ch;
+
+    }
+    
+    private boolean checkSet(float v1, float v2)
+    {
+//        System.out.println("checkSet [v1=" + v1 + ",v2=" + v2 + "]");
+        if ((v1!=0.0f) && (v2!=0.0f))
+            return true;
+        else
+            return false;
+    }
 
     
     
+    /** 
+     * Focus Lost
+     */
+    public void focusLost(FocusEvent fe)
+    {
+        if (in_action)
+            return;
+
+        in_action = true;
+        calculateRatio(fe.getSource());
+        in_action = false;
+    }
    
 
+    public void focusGained(FocusEvent e)
+    {
+    }
+    
+    
+    /**
+     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+     */
+    public void keyTyped(KeyEvent e) {}
+    
+    /**
+     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     */
+    public void keyPressed(KeyEvent e) {}
+
+    /**
+     * Invoked when a key has been released.
+     * See the class description for {@link KeyEvent} for a definition of
+     * a key released event.
+     */
+    public void keyReleased(KeyEvent e)
+    {
+
+        //System.out.println("key released [" + in_action + "]");
+        
+        if (in_action)
+            return;
+    
+        in_action = true;
+        
+        //System.out.println("key released [" + in_action + "]");
+        calculateRatio(e.getSource());
+        
+        in_action = false;
+
+        //System.out.println("key released [" + in_action + "]");
+        
+        /*
+        if (e.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            cmdOk();
+        }*/
+
+    }
+    
+    
+    
 
     /**
      * Invoked when an action occurs.
@@ -527,6 +591,24 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         {
             cmdOk();
         }
+        else if (action.equals("calculator"))
+        {
+            RatioCalculatorDialog rcd = new RatioCalculatorDialog(this);
+
+            if (rcd.actionSuccesful())
+            {
+                float[] res = rcd.getResults();
+                
+                this.dtf_ch_ins.setValue(res[0]);
+                this.dtf_ins_bg.setValue(res[1]);
+                this.dtf_bg_ch.setValue(res[2]);
+                this.tdd = res[3];
+            }
+        }
+        else if (action.equals("add_row"))
+        {
+            new RatioEntryDialog(this, tdd, 100);
+        }
         else
             System.out.println("RatioDialog::unknown command: " + action);
 
@@ -540,6 +622,11 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 //                                  "help", m_ic.getMessage("HELP")
     
   */  
+    
+    
+    
+    
+    
     
     
     private void cmdOk()
@@ -668,6 +755,16 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     {
         return "GGC_Ratio_Extended";
     }
+
+
+
+
+
+
+
+
+
+
     
     
     

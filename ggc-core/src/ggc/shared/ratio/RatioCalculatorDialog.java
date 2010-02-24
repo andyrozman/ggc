@@ -77,6 +77,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
     float[] result = null;
     
+    private boolean calculate_only = false;
+    
 //    boolean in_action = false;
     
 
@@ -146,8 +148,40 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
 
 
+    /**
+     * Constructor
+     * 
+     * @param dialog
+     */
+    public RatioCalculatorDialog() 
+    {
+        super();
+        
+        //m_parent = dialog;
+
+        this.config_manager = m_da.getConfigurationManager();
+        
+        init();
+        
+        cb_type.setSelectedIndex(0);
+        calculate_only = true;
+//        this.setVisible(true);
+
+    }
 
 
+    
+    public float[] getRatios(float tdd, float procent)
+    {
+        float f = tdd * (procent/100.0f);
+        this.dtf_tdd.setValue(f);
+        
+        calculate();
+        
+        return this.result;
+    }
+    
+    
 
     private void init()
     {
@@ -406,7 +440,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
     private void calculate(float tdd)
     {
         
-        result = new float[3];
+        result = new float[4];
         
         float carb_r = carb_rule[cb_icarb_rule.getSelectedIndex()];
         
@@ -423,7 +457,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         
         result[1] = sens_r / tdd;
         result[2] = result[0] / result[1];
-
+        result[3] = tdd;
 
         lb_ins_carb.setText(String.format(m_ic.getMessage("INS_CH_RATIO_PROC"), DataAccess.getFloatAsString(result[0], 2)));
 
@@ -431,11 +465,14 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
         lb_ch_bg.setText(String.format(m_ic.getMessage("CH_BG_RATIO_PROC"), m_da.getBGMeasurmentTypeString(), DataAccess.getFloatAsString(result[2], 1))); 
         
-        this.config_manager.setFloatValue("LAST_TDD", tdd);
-        this.config_manager.setStringValue("INS_CARB_RULE", getBaseStringEntry(this.carb_rule_desc, (String)this.cb_icarb_rule.getSelectedItem(), "RULE_500"));
-        this.config_manager.setStringValue("SENSITIVITY_RULE", getBaseStringEntry(this.sens_rule_desc, (String)this.cb_sens_rule.getSelectedItem(), "RULE_1800"));
-        
-        this.config_manager.saveConfig();
+        if (!calculate_only)
+        {
+            this.config_manager.setFloatValue("LAST_TDD", tdd);
+            this.config_manager.setStringValue("INS_CARB_RULE", getBaseStringEntry(this.carb_rule_desc, (String)this.cb_icarb_rule.getSelectedItem(), "RULE_500"));
+            this.config_manager.setStringValue("SENSITIVITY_RULE", getBaseStringEntry(this.sens_rule_desc, (String)this.cb_sens_rule.getSelectedItem(), "RULE_1800"));
+            
+            this.config_manager.saveConfig();
+        }
     }
     
 

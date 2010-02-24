@@ -79,8 +79,8 @@ public class RatioEntryDisplay extends ATTableData
      */
     public void init()
     {
-        String[] col = { "FROM", "TO", "CH_INS_RATIO", "BG_INS_RATIO" };
-        float[] col_size = { 0.2f, 0.2f, 0.3f, 0.3f };
+        String[] col = { "FROM", "TO", "CH_INS_RATIO", "BG_INS_RATIO", "%" };
+        float[] col_size = { 0.2f, 0.2f, 0.2f, 0.2f, 0.2f };
 
         init(col, col_size);
     }
@@ -104,6 +104,9 @@ public class RatioEntryDisplay extends ATTableData
             return "" + this.ratio_entry.ch_insulin;
         case 3:
             return "" + this.ratio_entry.bg_insulin;
+            
+        case 4:
+            return "" + this.ratio_entry.procent;
 
         case 0:
         default:
