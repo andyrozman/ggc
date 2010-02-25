@@ -507,6 +507,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         {
             return m_da.getPumpEventTypes().getDescriptionForType(this.sub_type);
         }
+        else if (this.base_type==PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
+        {
+            return m_da.getAdditionalTypes().getTypeDescription(this.sub_type);
+        }
 	    else 
 	    {
 	        return "";

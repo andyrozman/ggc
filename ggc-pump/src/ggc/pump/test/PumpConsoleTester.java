@@ -7,6 +7,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
+import ggc.pump.device.animas.FRC_EZManager_v2;
 import ggc.pump.device.dana.DanaDiabecare_III_R;
 import ggc.pump.device.minimed.MinimedSPMPump;
 import ggc.pump.util.DataAccessPump;
@@ -72,7 +73,8 @@ public class PumpConsoleTester //extends JFrame
         
     	try
     	{
-    	    startRoche(portName);
+    	    //startRoche(portName);
+    	    startAnimas();
     	    //startDana(portName);
     	    //startMinimed("./dta/CareLink-Export-1213803114904.csv");
     	    test();
@@ -190,6 +192,38 @@ public class PumpConsoleTester //extends JFrame
         
         MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
         msp.readData();
+        
+    }
+    
+    public void startAnimas()
+    {
+        DataAccess da = DataAccess.getInstance();
+
+        
+        GGCDb db = new GGCDb(da);
+        db.initDb();
+        
+        da.setDb(db);
+        
+        
+        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+        
+        //DataAccessPump dap = DataAccessPump.getInstance();
+//        dap.setHelpContext(da.getHelpContext());
+        //dap.setPlugInServerInstance(this);
+        dap.createDb(da.getHibernateDb());
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+        //this.backup_restore_enabled = true;
+        
+        da.loadSpecialParameters();
+        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        
+        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        
+        
+        FRC_EZManager_v2 ezm = new FRC_EZManager_v2(new ConsoleOutputWriter());
+        ezm.readFile("/home/andy/workspace/EZMD.mdb");
         
     }
     

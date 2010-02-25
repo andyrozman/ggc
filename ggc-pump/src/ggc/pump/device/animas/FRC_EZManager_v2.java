@@ -47,6 +47,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     {
         super();
         output_writer = ow;
+        m_da = DataAccessPump.getInstance();
     }
     
 		
@@ -84,8 +85,9 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
     public void readFile(String filename)
     {
+        this.setJDBCConnection(DatabaseProtocol.DATABASE_MS_ACCESS_MDBTOOL, filename);
         
-        this.setJDBCConnection(DatabaseProtocol.DB_CLASS_MS_ACCESS_MDB_TOOLS, "");
+        //this.setJDBCConnection(DatabaseProtocol.DB_CLASS_MS_ACCESS_MDB_TOOLS, "");
         
         
         // read
@@ -127,32 +129,33 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     try
                     {
         			    // day, month, year, hour, minute
-        			    ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
+        			    ATechDate atd = getAtechDate(rs.getString("day"), rs.getString("month"), rs.getString("year"), rs.getString("hours"), rs.getString("minutes"));
         			    
         			    // mg/dL
-                        int bg = rs.getInt("bg");
+                        //int bg = getInt(rs.getString("bg"));
                         
                         PumpValuesEntry pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
                         
                         pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
                         pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_BG);
-                        pve.setValue("" + bg);
+                        pve.setValue(rs.getString("bg"));
                         
                         this.output_writer.writeData(pve);
                     }
                     catch(Exception ex)
                     {
                         log.error("Error reading row [" + type + ":" + ex, ex);
+                        return;
                     }       
                 }
 
                 rs.close();
-                
 			}
 			catch(Exception ex)
 			{
 			    log.error("Error reading [" + type + ":" + ex, ex);
+			    return;
 			}		
     
         }
@@ -164,7 +167,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         
         
         // Daily Totals
-        rs = this.executeQuery("select day, month, year, hours, minutes, btotal, dtotal, userid from dailytotalslog"); 
+        rs = this.executeQuery("select day, month, year, btotal, dtotal, userid from dailytotalslog"); 
         
         type = "dailytotalslog";
 
@@ -179,10 +182,10 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     try
                     {
                         // day, month, year, hour, minute
-                        ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
+                        ATechDate atd = getAtechDate(rs.getString("day"), rs.getString("month"), rs.getString("year"), "23", "59");
                         
-                        double basal = rs.getDouble("btotal");
-                        double total = rs.getDouble("dtotal");
+                        float basal = getFloat(rs.getString("btotal"));
+                        float total = getFloat(rs.getString("dtotal"));
                         
 
                         PumpValuesEntry pve = new PumpValuesEntry();
@@ -240,10 +243,12 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         OleDbDataReader reader = com.ExecuteReader();
         */
 
-        rs = this.executeQuery("select * from insulinLog"); 
+        //rs = this.executeQuery("select * from insulinLog"); 
+        rs = null;
         
         type = "insulinLog";
 
+        // FIXME
         if (rs!=null)
         {
         
@@ -255,7 +260,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
                 // day, month, year, hour, minute
 //                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
-                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
+                ATechDate atd = getAtechDate(rs.getString("day"), rs.getString("month"), rs.getString("year"), rs.getString("hours"), rs.getString("minutes"));
+//                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
                 int units1 = rs.getInt(5); //Integer.parseInt(reader.GetValue(5).ToString());
                 int units2 = rs.getInt(16); //Integer.parseInt(reader.GetValue(16).ToString());
                 
@@ -304,46 +310,75 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         if (rs!=null)
         {
 
-        try
-        {
-        
-            while(rs.next())
+            try
             {
-
-                // day, month, year, hour, minute
-//                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
-                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
-
-                String note = rs.getString(5); 
-
-                PumpValuesEntry pve = new PumpValuesEntry();
-                pve.setDateTimeObject(atd);
-                
-                pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
-                pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT);
-                pve.setValue(note);
-                
-                
-                // FIXME
-                /*                
-				DateTime dt = new DateTime(year,month,day,hour,min,0,0);
-				
-				OtherEntry entry = new OtherEntry();
-				entry.Device = Device.Pump;
-				entry.Time = dt;
-				entry.Text = note;					
-				
-				entries.Add(entry);
-				*/
-			}
             
-            rs.close();
-            
-		}
-        catch (Exception ex)
-        {
-            log.error("Error reading row [" + type + "]:" + ex, ex);
-        }                   
+                while(rs.next())
+                {
+    
+                    // day, month, year, hour, minute
+    //                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+                    ATechDate atd = getAtechDate(rs.getString("day"), rs.getString("month"), rs.getString("year"), rs.getString("hours"), rs.getString("minutes"));
+    //                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
+    
+                    String note = rs.getString("note");
+                    int error_code = getInt(rs.getString("pumpalarm"));
+    
+                    PumpValuesEntry pve = new PumpValuesEntry();
+                    pve.setDateTimeObject(atd);
+                    
+                    pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
+                    pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT);
+                    pve.setValue(note);
+                    
+                    
+                    if (error_code > 0)
+                    {
+                        
+                        
+                        
+                    }
+                    else
+                    {
+                        if (note.startsWith("Pump primed"))
+                        {
+                            
+                        }
+                        else if (note.startsWith("Cannula filled"))
+                        {
+                        }    
+                        else if (note.startsWith("Pump suspended.  Resume time:"))
+                        {
+                        }    
+                        else
+                            System.out.println("Note: " + note);
+                        
+                    }
+    
+                    
+                    
+                    // FIXME
+                    /*                
+    				DateTime dt = new DateTime(year,month,day,hour,min,0,0);
+    				
+    				OtherEntry entry = new OtherEntry();
+    				entry.Device = Device.Pump;
+    				entry.Time = dt;
+    				entry.Text = note;					
+    				
+    				entries.Add(entry);
+    				*/
+    			}
+                
+                rs.close();
+    
+                return;
+                
+    		}
+            catch (Exception ex)
+            {
+                log.error("Error reading row [" + type + "]:" + ex, ex);
+            }                   
         }
         
         callBack(45);
@@ -577,6 +612,18 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     }
 
 
+    private int getInt(String val)
+    {
+        return m_da.getIntValueFromString(val, 0);
+    }
+
+    
+    private float getFloat(String val)
+    {
+        return m_da.getFloatValueFromString(val, 0.0f);
+    }
+    
+    
     public ATechDate getAtechDate(int day, int month, int year, int hour, int minute)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S);
@@ -587,8 +634,22 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         atd.minute = minute;
         atd.second = 0;
         
-        return null;
+        return atd;
     }
+    
+    public ATechDate getAtechDate(String day, String month, String year, String hour, String minute)
+    {
+        ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S);
+        atd.day_of_month = getInt(day);
+        atd.month = getInt(month);
+        atd.year = getInt(year);
+        atd.hour_of_day = getInt(hour);
+        atd.minute = getInt(minute);
+        atd.second = 0;
+        
+        return atd;
+    }
+
     
     
 

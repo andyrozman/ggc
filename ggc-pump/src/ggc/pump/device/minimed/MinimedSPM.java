@@ -59,7 +59,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
         //    "jdbc:mdbtools:" + filename, null, "wolfGang");
 
         this.m_da = da;
-        String url = DatabaseProtocol.URL_MS_ACCESS_JDBC_ODBC_BRIDGE.replace("%FILENAME%", filename) + ";PWD=wolfGang";
+        String url = ""; //DatabaseProtocol.URL_MS_ACCESS_JDBC_ODBC_BRIDGE.replace("%FILENAME%", filename) + ";PWD=wolfGang";
         
         //String url = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=f:\\Rozman_A_Plus_20090423.mdb;PWD=wolfGang";
         System.out.println("Url: " + url);
@@ -69,8 +69,8 @@ public abstract class MinimedSPM extends DatabaseProtocol
         profile_names[1] = "Pattern A";
         profile_names[2] = "Pattern B";
         
-        this.setJDBCConnection(DatabaseProtocol.DB_CLASS_MS_ACCESS_JDBC_ODBC_BRIDGE,
-            url);
+        this.setJDBCConnection(DatabaseProtocol.DATABASE_MS_ACCESS_ODBC_BRIDGE, "path", null, null, ";PWD=wolfGang");
+            
             //DatabaseProtocol.URL_MS_ACCESS_JDBC_ODBC_BRIDGE.replace("%FILENAME", filename) + ";PWD=wolfGang", null, null);
         
         //DB_CLASS_MS_ACCESS_JDBC_ODBC_BRIDGE
