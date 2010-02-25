@@ -21,5 +21,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/mnt/f/java/libs/IBMComm"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.1"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

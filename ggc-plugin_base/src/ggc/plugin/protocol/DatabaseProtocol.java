@@ -46,37 +46,40 @@ public abstract class DatabaseProtocol
 {
 
     protected DataAccessPlugInBase m_da = null; 
-    protected String jdbc_url = null;
-    protected String db_class_name = null;
+    //protected String jdbc_url = null;
+    //protected String db_class_name = null;
     Connection m_connection = null;
     
     protected String username = null;
     protected String password = null;
+    protected String filename = null;
+    protected String additional = null;
     
     private static Log log = LogFactory.getLog(DatabaseProtocol.class);
     
-    
-    /**
-     * Db Class: MDB Tools for Access databases
-     */
-    public static final String DB_CLASS_MS_ACCESS_MDB_TOOLS = "mdbtools.jdbc.Driver";
-    
-
-    /**
-     * Db Class: Jdbc/ODBC Bridge Databases
-     */
-    public static final String DB_CLASS_MS_ACCESS_JDBC_ODBC_BRIDGE = "sun.jdbc.odbc.JdbcOdbcDriver";
+    private int selected_db_type = -1;
     
     
-    /**
-     * Db Jar: MDB Tools JAR URL
-     */
-    public static final String URL_MS_ACCESS_MDB_TOOLS = "mdbtools.jdbc.Driver";
     
-    /**
-     * Db Jar: Jdbc/ODBC Bridge JAR URL
-     */
-    public static final String URL_MS_ACCESS_JDBC_ODBC_BRIDGE = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=%FILENAME%";
+    public String[] db_classes = 
+    {
+         "mdbtools.jdbc.Driver",
+         "sun.jdbc.odbc.JdbcOdbcDriver"
+    };
+    
+    
+    public String[] db_urls = 
+    {
+         "jdbc:mdbtools:%FILENAME%",
+         "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=%FILENAME%"
+    };
+    
+    
+    public static final int DATABASE_MS_ACCESS_MDBTOOL = 0;
+    
+    public static final int DATABASE_MS_ACCESS_ODBC_BRIDGE = 1;
+    
+    
     
 
     
@@ -114,11 +117,11 @@ public abstract class DatabaseProtocol
      * @param db_class_name class name for database
      * @param _jdbc_url full jdbc url, if user and password used, they must be part of url
      */
-    public void setJDBCConnection(String db_class_name, String _jdbc_url)
+/*    public void setJDBCConnection(String db_class_name, String _jdbc_url)
     {
         this.db_class_name = db_class_name;
         this.jdbc_url = _jdbc_url;
-    }
+    }*/
 
     /**
      * Set JDBC Connection 
@@ -127,12 +130,65 @@ public abstract class DatabaseProtocol
      * @param user username
      * @param pass password
      */
-    public void setJDBCConnection(String db_class_name, String _jdbc_url, String user, String pass)
+    /*public void setJDBCConnection(String db_class_name, String _jdbc_url, String user, String pass)
     {
         this.db_class_name = db_class_name;
         this.jdbc_url = _jdbc_url;
         this.username = user;
         this.password = pass;
+    }*/
+    
+
+    
+    /**
+     * Set JDBC Connection 
+     */
+    public void setJDBCConnection(int db_type, String filename)
+    {
+        this.selected_db_type = db_type;
+        //this.db_class_name = this.db_classes[db_type];
+        //this.jdbc_url = this.db_urls[db_type];
+        this.filename = filename;
+        
+    }
+    
+    
+    /**
+     * Set JDBC Connection 
+     */
+    public void setJDBCConnection(int db_type, String filename, String user, String pass, String additional_)
+    {
+        this.selected_db_type = db_type;
+        //this.db_class_name = this.db_classes[db_type];
+        //this.jdbc_url = this.db_urls[db_type];
+        this.username = user;
+        this.password = pass;
+        this.filename = filename;
+        this.additional = additional_;
+    }
+    
+    
+    
+    
+    public String getJDBCConnectionUrl()
+    {
+        String tmp = this.db_urls[this.selected_db_type];
+        
+        if (this.username!=null)
+            tmp = tmp.replace("%USERNAME%", this.username);
+        
+        if (this.password!=null)
+            tmp = tmp.replace("%PASSWORD%", this.password);
+        
+        if (this.filename!=null)
+            tmp = tmp.replace("%FILENAME%", this.filename);
+       
+        if (this.additional!=null)
+            tmp += this.additional;
+        
+        System.out.println("Jdbc url: " + tmp);
+        
+        return tmp;
     }
     
     
@@ -140,12 +196,12 @@ public abstract class DatabaseProtocol
     {
         try
         {
-            Class.forName(this.db_class_name);
+            Class.forName(this.db_classes[this.selected_db_type]);
         
             if ((username==null) && (this.password==null))
-                this.m_connection = DriverManager.getConnection(this.jdbc_url);
+                this.m_connection = DriverManager.getConnection(this.getJDBCConnectionUrl());
             else
-                this.m_connection = DriverManager.getConnection(this.jdbc_url, this.username, this.password);
+                this.m_connection = DriverManager.getConnection(this.getJDBCConnectionUrl(), this.username, this.password);
         }
         catch(Exception ex)
         {
