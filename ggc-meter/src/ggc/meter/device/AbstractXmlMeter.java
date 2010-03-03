@@ -53,6 +53,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
 
     /**
      * Constructor
+     * @param ow 
      */
     public AbstractXmlMeter(OutputWriter ow)
     {
