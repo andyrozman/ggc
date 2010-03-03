@@ -171,6 +171,13 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
 
     
+    /**
+     * Get Ratios 
+     * 
+     * @param tdd
+     * @param procent
+     * @return
+     */
     public float[] getRatios(float tdd, float procent)
     {
         float f = tdd * (procent/100.0f);

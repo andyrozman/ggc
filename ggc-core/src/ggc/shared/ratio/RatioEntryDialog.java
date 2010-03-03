@@ -5,17 +5,15 @@ import ggc.core.util.DataAccess;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
@@ -51,8 +49,16 @@ import com.atech.utils.ATSwingUtils;
  */
 
 
-public class RatioEntryDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
+public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeListener, ActionListener
 {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4693097199373180587L;
+
+
+
 
     JDecimalTextField dtf_ch_ins, dtf_ins_bg, dtf_bg_ch;
     
@@ -73,14 +79,17 @@ public class RatioEntryDialog extends JDialog implements ActionListener, KeyList
     boolean in_process;
     boolean debug = true;
     JButton help_button = null;
-    JPanel main_panel = null;
+    //JPanel main_panel = null;
     RatioEntry ratio_entry = null;
+    JSpinner procents = null;    
+    RatioEntryPanel rep = null;
     
-
     /**
      * Constructor
      * 
      * @param dialog
+     * @param tdd 
+     * @param proc 
      */
     public RatioEntryDialog(JDialog dialog, float tdd, float proc) 
     {
@@ -126,9 +135,12 @@ public class RatioEntryDialog extends JDialog implements ActionListener, KeyList
      */
     private void load()
     {
+        // FIXME
+        /*
         this.dtf_ch_ins.setValue(this.m_da.getSettings().getRatio_CH_Insulin());
         this.dtf_ins_bg.setValue(this.m_da.getSettings().getRatio_BG_Insulin());
         calculateRatio(RATIO_BG_CH);
+        */
     }
 
     
@@ -160,169 +172,71 @@ public class RatioEntryDialog extends JDialog implements ActionListener, KeyList
         x = (bnd.width/2) + bnd.x - (width/2);
         y = (bnd.height/2) + bnd.y - (height/2);*/
         
-        this.setBounds(0, 0, 300, 340);
+        this.setBounds(0, 0, 350, 400);
         
         m_da.centerJDialog(this);
 
         JPanel panel = new JPanel();
-        panel.setBounds(0, 0, 300, 400);
+        panel.setBounds(0, 0, 350, 400);
         panel.setLayout(null);
 
-        main_panel = panel;
+        //main_panel = panel;
         
         this.getContentPane().add(panel);
 
         
-        label_title = ATSwingUtils.getTitleLabel("", 0, 15, 300, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
         
-        setTitle(m_ic.getMessage("RATIO_BASE"));
-        label_title.setText(m_ic.getMessage("RATIO_BASE"));
+        
+        
+        
+        
+        label_title = ATSwingUtils.getTitleLabel("", 0, 25, 350, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
+        
+        setTitle(m_ic.getMessage("RATIO_ENTRY"));
+        label_title.setText(m_ic.getMessage("RATIO_ENTRY"));
 
-        RatioEntryPanel rep = new RatioEntryPanel(m_da);
-        rep.setPosition(30, 80);
         
         
+        SpinnerNumberModel listDaysModel = new SpinnerNumberModel(100, 0, 1000, 1);
+        procents = new JSpinner(listDaysModel);
+        procents.addChangeListener(this);
+        procents.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
+        procents.setBounds(210, 85, 80, 25);
+        panel.add(procents);
+        
+        
+        
+        rep = new RatioEntryPanel(m_da);
+        rep.setBounds(30, 55, 350, 210);
+        rep.setEditable(false);
+        panel.add(rep);
+
         /*
-        ATSwingUtils.getLabel(m_ic.getMessage("INSULIN_CARB_RATIO"), 30, 80, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-        dtf_ch_ins = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, 80, 80, 25, panel);
-        dtf_ch_ins.addFocusListener(this);
-        dtf_ch_ins.addKeyListener(this);
-        
-        ATSwingUtils.getLabel(m_ic.getMessage("SENSITIVITY_FACTOR_LONG"), 30, 120, 150, 45, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-        dtf_ins_bg = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, 130, 80, 25, panel);
-        dtf_ins_bg.addFocusListener(this);
-        dtf_ins_bg.addKeyListener(this);
-
-        ATSwingUtils.getLabel(m_ic.getMessage("BG_OH_RATIO"), 30, 180, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-        dtf_bg_ch = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, 180, 80, 25, panel);
-        dtf_bg_ch.addFocusListener(this);
-        dtf_bg_ch.addKeyListener(this);
-        */
-
         ATSwingUtils.getButton("" , 
-            30, 220, 30, 30, panel, ATSwingUtils.FONT_NORMAL, 
+            60, 260, 30, 30, panel, ATSwingUtils.FONT_NORMAL, 
             "calculator.png", 
             "calculator", this, m_da);
+        */
         
         ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 
-                               30, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
+                               60, 320, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
                                "ok.png", 
                                "ok", this, m_da);
 
         ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 
-                               150, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
+                               180, 320, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
                                "cancel.png", 
                                "cancel", this, m_da);
         
         
-        help_button = m_da.createHelpButtonByBounds(150, 230, 110, 25, this);
+        help_button = m_da.createHelpButtonByBounds(180, 290, 110, 25, this);
 
         panel.add(help_button);
 
         m_da.enableHelp(this);
         
+        rep.calculateRatio(65, m_da.getIntValue(this.procents.getValue()) );
     }
-
-    private static final int RATIO_CH_INSULIN = 1;
-    private static final int RATIO_BG_INSULIN = 2;
-    private static final int RATIO_BG_CH = 3;
-
-    
-    private void calculateRatio(Object obj)
-    {
-        if (obj.equals(this.dtf_ch_ins))
-        {
-            calculateRatio(RATIO_CH_INSULIN);
-        }
-        else if (obj.equals(this.dtf_ins_bg))
-        {
-            calculateRatio(RATIO_BG_INSULIN);
-        }
-        else if (obj.equals(this.dtf_bg_ch))
-        {
-            calculateRatio(RATIO_BG_CH);
-        }
-    }
-    
-    
-    private void calculateRatio(int type)
-    {
-        //System.out.println("calculate Ratio: " + type);
-        
-        float v1 = this.m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue());
-        float v2 = this.m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue());
-        float v3 = this.m_da.getFloatValue(this.dtf_bg_ch.getCurrentValue());
-
-        
-        if (type==RATIO_CH_INSULIN)
-        {
-            if (checkSet(v1,v2))
-            {
-                float v4 = v1/v2;
-//                System.out.println("calculate Ratio [type=" + type + ",check=1,2;value=" + v4);
-                this.dtf_bg_ch.setValue(new Float(v4));
-            }
-            else if (checkSet(v1,v3))
-            {
-                float v4 = v1/v3;
-//                System.out.println("calculate Ratio [type=" + type + ",check=1,3;value=" + v4);
-                this.dtf_ins_bg.setValue(new Float(v4));
-            }
-//            else
-//                System.out.println("calculate Ratio [type=" + type + ",check NO");
-
-        }
-        else if (type==RATIO_BG_INSULIN)
-        {
-            if (checkSet(v2,v1))
-            {
-                float v4 = v1/v2;
-                //System.out.println("calculate Ratio [type=" + type + ",check=2,1;value=" + v4);
-                this.dtf_bg_ch.setValue(new Float(v4));
-            }
-            else if (checkSet(v2,v3))
-            {
-                float v4 = v2*v3;
-                //System.out.println("calculate Ratio [type=" + type + ",check=2,3;value=" + v4);
-                this.dtf_ch_ins.setValue(new Float(v4));
-            }
-//            else
-//                System.out.println("calculate Ratio [type=" + type + ",check NO");
-        }
-        else
-        {
-            if (checkSet(v1,v2))
-            {
-                float v4 = v1/v2;
-                //System.out.println("calculate Ratio [type=" + type + ",check=3,1;value=" + v4);
-                this.dtf_bg_ch.setValue(v4);
-            }
-            else if (checkSet(v3,v2))
-            {
-                float v4 = v2*v3;
-                //System.out.println("calculate Ratio [type=" + type + ",check=3,2;value=" + v4);
-                this.dtf_ch_ins.setValue(new Float(v4));
-            }
-//            else
-//                System.out.println("calculate Ratio [type=" + type + ",check NO");
-        }
-        
-        
-//        JDecimalTextField dtf_ch_ins, dtf_ins_bg, dtf_bg_ch;
-
-    }
-    
-    private boolean checkSet(float v1, float v2)
-    {
-//        System.out.println("checkSet [v1=" + v1 + ",v2=" + v2 + "]");
-        if ((v1!=0.0f) && (v2!=0.0f))
-            return true;
-        else
-            return false;
-    }
-    
-
-    
 
 
     /**
@@ -339,20 +253,6 @@ public class RatioEntryDialog extends JDialog implements ActionListener, KeyList
         }
         else if (action.equals("ok"))
         {
-            float v1 = this.m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue());
-            float v2 = this.m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue());
-
-            if (this.checkSet(v1, v2))
-            {
-                m_da.removeComponent(this);
-                cmdOk();
-                this.dispose();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage("FILL_RATIO_ENTRIES"), 
-                    m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
-            }
             
         }
         else if (action.equals("calculator"))
@@ -383,6 +283,7 @@ public class RatioEntryDialog extends JDialog implements ActionListener, KeyList
   */  
     
     
+    @SuppressWarnings("unused")
     private void cmdOk()
     {
         this.save();
@@ -408,68 +309,6 @@ public class RatioEntryDialog extends JDialog implements ActionListener, KeyList
     }
 
 
-    /**
-     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-     */
-    public void keyTyped(KeyEvent e) {}
-    
-    /**
-     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-     */
-    public void keyPressed(KeyEvent e) {}
-
-    /**
-     * Invoked when a key has been released.
-     * See the class description for {@link KeyEvent} for a definition of
-     * a key released event.
-     */
-    public void keyReleased(KeyEvent e)
-    {
-
-        //System.out.println("key released [" + in_action + "]");
-        
-        if (in_action)
-            return;
-    
-        in_action = true;
-        
-        //System.out.println("key released [" + in_action + "]");
-        calculateRatio(e.getSource());
-        
-        in_action = false;
-
-        //System.out.println("key released [" + in_action + "]");
-        
-        /*
-        if (e.getKeyCode() == KeyEvent.VK_ENTER)
-        {
-            cmdOk();
-        }*/
-
-    }
-
-
-    /** 
-     * Focus Lost
-     */
-    public void focusLost(FocusEvent fe)
-    {
-        if (in_action)
-            return;
-
-        in_action = true;
-        calculateRatio(fe.getSource());
-        in_action = false;
-    }
-
-    
-    /** 
-     * Focus Gained
-     */
-    public void focusGained(FocusEvent fe)
-    {
-    }
-    
     
     
     
@@ -499,6 +338,13 @@ public class RatioEntryDialog extends JDialog implements ActionListener, KeyList
     public String getHelpId()
     {
         return "GGC_Ratio_Base";
+    }
+
+
+    public void stateChanged(ChangeEvent e)
+    {
+        //this.procents.getValue()
+        rep.calculateRatio(65, m_da.getIntValue(this.procents.getValue()) );
     }
     
     

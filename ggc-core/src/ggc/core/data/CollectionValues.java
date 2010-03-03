@@ -74,6 +74,9 @@ public class CollectionValues extends DailyValues
 
     /**
      * Constructor
+     * 
+     * @param sDay 
+     * @param eDay 
      */
     public CollectionValues(GregorianCalendar sDay, GregorianCalendar eDay)
     {
@@ -295,8 +298,11 @@ public class CollectionValues extends DailyValues
     }
 
 
-
-    
+    /**
+     * Get Sum CH Per Day
+     * 
+     * @return
+     */
     public float getSumCHPerDay()
     {
         if (this.day_count.size()==0)
@@ -306,6 +312,11 @@ public class CollectionValues extends DailyValues
     }
     
     
+    /**
+     * Get CH Count Per Day
+     * 
+     * @return
+     */
     public float getCHCountPerDay()
     {
         if (this.day_count.size()==0)
@@ -314,6 +325,12 @@ public class CollectionValues extends DailyValues
         return this.getCHCount()/this.day_count.size();
     }
 
+    
+    /**
+     * Get Sum Bolus Per Day
+     * 
+     * @return
+     */
     public float getSumBolusPerDay()
     {
         if (this.day_count.size()==0)
@@ -323,6 +340,11 @@ public class CollectionValues extends DailyValues
     }
     
 
+    /**
+     * Get Bolus Count Per Day
+     * 
+     * @return
+     */
     public float getBolusCountPerDay()
     {
         if (this.day_count.size()==0)
@@ -332,6 +354,11 @@ public class CollectionValues extends DailyValues
     }
     
     
+    /**
+     * Get Sum Basal Per Day
+     * 
+     * @return
+     */
     public float getSumBasalPerDay()
     {
         if (this.day_count.size()==0)
@@ -341,6 +368,11 @@ public class CollectionValues extends DailyValues
     }
 
     
+    /**
+     * Get Basal Count Per Day
+     * 
+     * @return
+     */
     public float getBasalCountPerDay()
     {
         if (this.day_count.size()==0)

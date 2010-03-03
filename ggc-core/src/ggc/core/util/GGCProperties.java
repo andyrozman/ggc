@@ -578,7 +578,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     /**
      * Set Insulin 1 Type
      * 
-     * @return
+     * @param ins 
      */
     public void setIns1Type(int ins)
     {
@@ -644,7 +644,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     /**
      * Set Insulin 2 Type
      * 
-     * @return
+     * @param ins 
      */
     public void setIns2Type(int ins)
     {
@@ -710,7 +710,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     /**
      * Set Insulin 3 Type
      * 
-     * @return
+     * @param ins 
      */
     public void setIns3Type(int ins)
     {

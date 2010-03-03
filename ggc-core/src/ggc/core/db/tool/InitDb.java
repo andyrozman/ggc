@@ -408,6 +408,12 @@ public class InitDb
     }
 
 
+    /**
+     * Get Food Description
+     * 
+     * @param _id
+     * @return
+     */
     public FoodDescriptionH getFoodDescription(long _id)
     {
         return this.lst_food_desc.get(_id);

@@ -9,7 +9,14 @@ import com.atech.misc.converter.ATechConverter;
 public class Converter_mgdL_mmolL extends ATechConverter
 {
     
+    /**
+     * Unit: mg/dL
+     */
     public static final int UNIT_mg_dL = 1;
+    
+    /**
+     * Unit: mmol/L
+     */
     public static final int UNIT_mmol_L = 2;
     
 

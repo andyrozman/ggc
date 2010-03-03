@@ -75,7 +75,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     /**
      * Constructor
      * 
-     * @param dialog
+     * @param da 
      */
     public RatioEntryPanel(DataAccess da) 
     {
@@ -90,7 +90,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     /**
      * Constructor
      * 
-     * @param dialog
+     * @param da 
      * @param re 
      */
     public RatioEntryPanel(DataAccess da, RatioEntry re) 
@@ -101,8 +101,27 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     }
     
     
+    /**
+     * Set Editable
+     * 
+     * @param can_edit
+     */
+    public void setEditable(boolean can_edit)
+    {
+        this.dtf_bg_ch.setEditable(can_edit);
+        this.dtf_ch_ins.setEditable(can_edit);
+        this.dtf_ins_bg.setEditable(can_edit);
+    }
     
     
+    
+    /**
+     * Set Ratio's
+     * 
+     * @param ch_ins
+     * @param bg_ins
+     * @param bg_ch
+     */
     public void setRatios(float ch_ins, float bg_ins, float bg_ch)
     {
         this.dtf_ch_ins.setValue(ch_ins);
@@ -111,6 +130,11 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     }
     
     
+    /**
+     * Get Ratio's
+     * 
+     * @return
+     */
     public float[] getRatios()
     {
         float[] f = new float[2];
@@ -121,14 +145,28 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         return f;
     }
     
+    /**
+     * Calculate Ratio
+     * 
+     * @param daily
+     * @param procent
+     */
     public void calculateRatio(float daily, float procent)
     {
         RatioCalculatorDialog rcd = new RatioCalculatorDialog();
+        //float[] res = rcd.getRatios(daily, procent);
         float[] res = rcd.getRatios(daily, procent);
         setRatios(res[0], res[1], 0.0f);
+        //setRatios((float)(res[0]*(procent/100.0)), (float)(res[1]*(procent/100.0)), 0.0f);
     }
     
     
+    /**
+     * Set Position
+     * 
+     * @param x
+     * @param y
+     */
     public void setPosition(int x, int y)
     {
         this.setBounds(x, y, 300, 400);
@@ -149,6 +187,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     /**
      * Save data
      */
+    @SuppressWarnings("unused")
     private void save()
     {
         this.m_da.getSettings().setRatio_CH_Insulin(m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue()));
@@ -323,6 +362,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
      */
     public void actionPerformed(ActionEvent e)
     {
+        @SuppressWarnings("unused")
         String action = e.getActionCommand();
 
         /*
@@ -374,17 +414,32 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     
     
     
+    /**
+     * Set Ratio CH/Ins
+     * 
+     * @param val
+     */
     public void setRatioChIns(float val)
     {
         this.dtf_ch_ins.setValue(val);
     }
     
+    /**
+     * Set Ratio BG/Ins
+     * 
+     * @param val
+     */
     public void setRatioInsBg(float val)
     {
         this.dtf_ins_bg.setValue(val);
     }
     
     
+    /**
+     * Set Ratio CH/BG
+     * 
+     * @param val
+     */
     public void setRatioBgCh(float val)
     {
         this.dtf_bg_ch.setValue(val);

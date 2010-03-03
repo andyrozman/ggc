@@ -1222,6 +1222,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>
     }
 
 
+    /**
+     * Set Extended
+     * 
+     * @param ext
+     */
     public void setExtended(String ext)
     {
         if (!this.extended.equals(ext))
