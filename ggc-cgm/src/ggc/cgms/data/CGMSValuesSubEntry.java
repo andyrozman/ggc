@@ -13,28 +13,97 @@ import com.atech.misc.statistics.StatisticsItem;
 import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.ATechDate;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     CGMValuesEntry.java
+ *  Description:  Collection of CGMValuesEntry, which contains all daily values.
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+
 public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsItem
 {
     
+    /**
+     * Sub Entry Type: CGMS BG Reading 
+     */
     public static final int CGMS_BG_READING = 1;
+
+    /**
+     * Sub Entry Type: Meter Calibration Reading 
+     */
     public static final int METER_CALIBRATION_READING = 2;
     
     
+    /**
+     * DateTime
+     */
     public long datetime = 0L;
 
+    /**
+     * Date
+     */
     public int date = 0;
+    
+    /**
+     * Time
+     */
     public int time = 0;
+    
+    /**
+     * Value 
+     */
     public int value = 0;
+    
+    /**
+     * Type 
+     */
     public int type = 0;
+    
+    /**
+     * Source
+     */
     public String source;
+    
+    /**
+     * Time only 
+     */
     public boolean time_only = false;
     
     
+    /**
+     * Constructor
+     */
     public CGMSValuesSubEntry()
     {
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param entry
+     * @param type
+     */
     public CGMSValuesSubEntry(String entry, int type)
     {
         //115329=147
@@ -50,11 +119,22 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     
     
     
+    /**
+     * Get Sub Entry Value
+     * 
+     * @return
+     */
     public String getSubEntryValue()
     {
         return this.time + "=" + this.value;
     }
     
+    
+    /**
+     * Set Date Time
+     * 
+     * @param dt
+     */
     public void setDateTime(long dt)
     {
         this.datetime = dt;

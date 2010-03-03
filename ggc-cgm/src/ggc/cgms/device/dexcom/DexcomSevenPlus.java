@@ -8,7 +8,7 @@ import ggc.plugin.output.OutputWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -155,6 +155,8 @@ public class DexcomSevenPlus extends DexcomCGMS
 
     /** 
      * Get Max Memory Records
+     * 
+     * @return 
      */
     public int getMaxMemoryRecords()
     {

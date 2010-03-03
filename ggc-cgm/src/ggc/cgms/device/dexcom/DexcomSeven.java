@@ -155,6 +155,8 @@ public class DexcomSeven extends DexcomCGMS
 
     /** 
      * Get Max Memory Records
+     * 
+     * @return 
      */
     public int getMaxMemoryRecords()
     {

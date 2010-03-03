@@ -62,7 +62,15 @@ public class DataAccessCGMS extends DataAccessPlugInBase
 
     private CGMSManager m_cgms_manager = null;
 
+    /**
+     * Value Types
+     */
     public static String[] value_types = null;
+
+    
+    /**
+     * Value Type
+     */
     public static String[] value_type = null;
 
     

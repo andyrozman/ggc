@@ -153,6 +153,8 @@ public class MiniMedCGMSGold extends MiniMedCGMS
 
     /** 
      * Get Max Memory Records
+     * 
+     * @return 
      */
     public int getMaxMemoryRecords()
     {

@@ -59,34 +59,8 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
 
     }
 
-    /**
-     * Get Column Count
-     * 
-     * @see ggc.plugin.data.DeviceValuesTableModel#getColumnCount()
-     */
-    /*public int getColumnCount()
-    {
-        return 5;
-    }*/
-
-    /**
-     * Is Boolean
-     * 
-     * @param column column index
-     * @return true if column type is boolean
-     */
-/*    public boolean isBoolean(int column)
-    {
-        if (column == this.getCheckableColumn())
-            return true;
-        else
-            return false;
-    }
-*/
-    
-    
-    // protected ArrayList<DeviceValuesEntryInterface> dl_data;
-
+  
+  
     Hashtable<String, CGMSValuesEntry> htable = null;
     String old_key = null;
     CGMSValuesEntry current_main = null;
@@ -189,6 +163,9 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     }
 
 
+    /**
+     * Finish Reading
+     */
     public void finishReading()
     {
         processDeviceValueEntry(this.current_main);

@@ -154,6 +154,8 @@ public class GuardianRealTime extends MiniMedCGMS
 
     /** 
      * Get Max Memory Records
+     * 
+     * @return 
      */
     public int getMaxMemoryRecords()
     {

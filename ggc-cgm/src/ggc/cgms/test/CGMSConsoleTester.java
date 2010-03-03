@@ -140,6 +140,9 @@ public class CGMSConsoleTester //extends JFrame
     }
     
     
+    /**
+     * Start File Selector
+     */
     public void startFileSelector()
     {
         DataAccessCGMS dap = DataAccessCGMS.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();

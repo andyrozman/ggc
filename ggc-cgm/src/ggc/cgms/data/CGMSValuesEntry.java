@@ -84,6 +84,8 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Constructor
+     * 
+     * @param pdh 
      */
     public CGMSValuesEntry(CGMSDataH pdh)
     {
@@ -100,6 +102,11 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	
 	
 	
+	/**
+	 * Set Date 
+	 * 
+	 * @param dt
+	 */
 	public void setDate(long dt)
 	{
 	    this.date = dt;
@@ -132,12 +139,22 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	
 	
     
+    /**
+     * Add Sub Entry
+     * 
+     * @param subentry
+     */
     public void addSubEntry(CGMSValuesSubEntry subentry)
     {
         this.list.add(subentry);
     }
     
     
+    /**
+     * Get Sub Entry List
+     * 
+     * @return
+     */
     public ArrayList<CGMSValuesSubEntry> getSubEntryList()
     {
         return this.list;
@@ -145,12 +162,22 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     
     
     
+	/**
+	 * Set Empty
+	 * 
+	 * @param empty_
+	 */
 	public void setEmpty(boolean empty_)
 	{
 	    this.empty = empty_;
 	}
 	
 	
+	/**
+	 * Is Empty
+	 * 
+	 * @return
+	 */
 	public boolean isEmpty()
 	{
 	    return this.empty;
@@ -232,12 +259,22 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	}
 	
 	
+	/**
+	 * Set Type 
+	 * 
+	 * @param type_
+	 */
 	public void setType(int type_)
 	{
 	    this.type = type_;
 	}
 	
 	
+    /**
+     * Get Type
+     * 
+     * @return
+     */
     public int getType()
     {
         return this.type;

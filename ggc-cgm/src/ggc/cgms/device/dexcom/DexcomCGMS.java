@@ -259,6 +259,12 @@ public abstract class DexcomCGMS extends AbstractCGMS
     
     
     
+    /**
+     * Get DateTime From String
+     * 
+     * @param val
+     * @return
+     */
     public static long getDateTimeFromString(String val)
     {
         //2007-03-23 13:13:29.010
@@ -274,6 +280,12 @@ public abstract class DexcomCGMS extends AbstractCGMS
     }
     
     
+    /**
+     * Get Time From String
+     * 
+     * @param val
+     * @return
+     */
     public static int getTimeFromString(String val)
     {
         val = val.substring(val.indexOf(" ") + 1, val.indexOf("."));

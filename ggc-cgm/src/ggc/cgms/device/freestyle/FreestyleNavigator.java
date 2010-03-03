@@ -154,6 +154,8 @@ public class FreestyleNavigator extends FreestyleCGMS
 
     /** 
      * Get Max Memory Records
+     * 
+     * @return 
      */
     public int getMaxMemoryRecords()
     {
