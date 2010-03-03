@@ -115,6 +115,11 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      * 
      * @param ic
      * @param empty
+     * @param company_id_ 
+     * @param company_name 
+     * @param short_company_name 
+     * @param company_desc 
+     * @param implementation_status 
      */
     public AbstractDeviceCompany(boolean empty, int company_id_, String company_name, String short_company_name, String company_desc, int implementation_status)
     {

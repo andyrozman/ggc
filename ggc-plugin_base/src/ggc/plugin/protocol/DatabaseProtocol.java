@@ -61,6 +61,9 @@ public abstract class DatabaseProtocol
     
     
     
+    /**
+     * Db: Classes
+     */
     public String[] db_classes = 
     {
          "mdbtools.jdbc.Driver",
@@ -68,6 +71,9 @@ public abstract class DatabaseProtocol
     };
     
     
+    /**
+     * Db: Urls
+     */
     public String[] db_urls = 
     {
          "jdbc:mdbtools:%FILENAME%",
@@ -75,8 +81,14 @@ public abstract class DatabaseProtocol
     };
     
     
+    /**
+     * Database: Ms Access - MDBTools
+     */
     public static final int DATABASE_MS_ACCESS_MDBTOOL = 0;
     
+    /**
+     * Database: Ms Access - Odbc Bridge
+     */
     public static final int DATABASE_MS_ACCESS_ODBC_BRIDGE = 1;
     
     
@@ -142,6 +154,9 @@ public abstract class DatabaseProtocol
     
     /**
      * Set JDBC Connection 
+     * 
+     * @param db_type 
+     * @param filename 
      */
     public void setJDBCConnection(int db_type, String filename)
     {
@@ -155,6 +170,12 @@ public abstract class DatabaseProtocol
     
     /**
      * Set JDBC Connection 
+     * 
+     * @param db_type 
+     * @param filename 
+     * @param user 
+     * @param pass 
+     * @param additional_ 
      */
     public void setJDBCConnection(int db_type, String filename, String user, String pass, String additional_)
     {
@@ -170,6 +191,11 @@ public abstract class DatabaseProtocol
     
     
     
+    /**
+     * Get JDBC Connection Url
+     * 
+     * @return
+     */
     public String getJDBCConnectionUrl()
     {
         String tmp = this.db_urls[this.selected_db_type];

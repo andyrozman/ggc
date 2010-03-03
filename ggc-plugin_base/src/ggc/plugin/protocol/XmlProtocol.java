@@ -55,6 +55,8 @@ public abstract class XmlProtocol
 
     /**
      * Constructor
+     * 
+     * @param da 
      */
     public XmlProtocol(DataAccessPlugInBase da)
     {

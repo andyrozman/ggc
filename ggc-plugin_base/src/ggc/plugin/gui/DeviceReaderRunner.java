@@ -23,7 +23,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Base PlugIn 
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -66,8 +66,6 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     DeviceDisplayDataDialog dialog_data;
     DeviceDisplayConfigDialog dialog_config;
     
-    //int continuing_type = 0;
-    
 
     boolean running = true;
     DataAccessPlugInBase m_da;
@@ -81,34 +79,8 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      * Constructor
      * 
      * @param da 
-     * @param _configured_device
-     * @param dialog
+     * @param _ddh 
      */
-    /*public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry _configured_device, DeviceDisplayDataDialog dialog)
-    {
-        this.m_da = da;
-        this.configured_device = _configured_device;
-        this.continuing_type = DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA;
-        this.dialog_data = dialog;
-    }*/
-    
-    /**
-     * Constructor
-     * 
-     * @param da 
-     * @param _configured_device
-     * @param dialog
-     */
-   /* public DeviceReaderRunner(DataAccessPlugInBase da, DeviceConfigEntry _configured_device, DeviceDisplayConfigDialog dialog)
-    {
-        this.m_da = da;
-        this.configured_device = _configured_device;
-        this.continuing_type = DeviceDataHandler.TRANSFER_READ_DATA;
-        this.dialog_config = dialog;
-    }*/
-    
-    
-    
     public DeviceReaderRunner(DataAccessPlugInBase da, DeviceDataHandler _ddh)
     {
         this.m_da = da;

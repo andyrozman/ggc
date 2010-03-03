@@ -76,6 +76,13 @@ public class DownloadSupportType
     
     
     
+    /**
+     * Is Option Set - checks if bit option is set 
+     * 
+     * @param current_status
+     * @param option
+     * @return
+     */
     public static boolean isOptionSet(int current_status, int option)
     {
         return ((current_status & option) == option);

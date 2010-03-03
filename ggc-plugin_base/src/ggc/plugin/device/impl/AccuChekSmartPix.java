@@ -15,7 +15,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Meter Tool (support for Meter devices)
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -33,8 +33,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     AccuChekSmartPix  
- *  Description:  Super class for all AccuChek devices supported through SmartPix device
+ *  Filename:     ----  
+ *  Description:  ----
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -60,8 +60,12 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     /**
      * Constructor
      * 
+     * @param params 
+     * 
      * @param drive_letter
      * @param writer
+     * @param da 
+     * @param max_records 
      */
     public AccuChekSmartPix(String params, OutputWriter writer, DataAccessPlugInBase da, int max_records)
     {
@@ -142,6 +146,7 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
 
     /** 
      * readDeviceDataFull
+     * @throws PlugInBaseException 
      */
     public void readDeviceDataFull() throws PlugInBaseException
     {
@@ -356,6 +361,8 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
+     * 
+     * @throws PlugInBaseException 
      */
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
@@ -617,6 +624,8 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     
     /** 
      * Get Connection Protocol
+     * 
+     * @return 
      */
     public int getConnectionProtocol()
     {

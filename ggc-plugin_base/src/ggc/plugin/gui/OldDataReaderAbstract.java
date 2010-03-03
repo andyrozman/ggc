@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Base PlugIn 
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
  * 

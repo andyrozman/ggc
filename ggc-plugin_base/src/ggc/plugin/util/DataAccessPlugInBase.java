@@ -1354,6 +1354,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * Set Parent I18nControl Instance. This will be used where translation will be taken 
      * from parent (Core). For example in printing.
      * 
+     * @param ic 
+     * 
      */
     public void setParentI18nControlInstance(I18nControlAbstract ic)
     {
@@ -1361,6 +1363,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
     
     
+    /**
+     * Get PlugIn Device Util
+     * 
+     * @return
+     */
     public PlugInDeviceUtil getPluginDeviceUtil()
     {
         if (plugin_device_util==null)
@@ -1381,6 +1388,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
     
  
+    /**
+     * Load Base PlugIn Translations
+     */
     public void loadBasePluginTranslations()
     {
         
@@ -1442,6 +1452,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
     
  
+    /**
+     * Path Resolver
+     * 
+     * @param path
+     * @return
+     */
     public String pathResolver(String path)
     {
         return path.replace('\\', File.separatorChar);        

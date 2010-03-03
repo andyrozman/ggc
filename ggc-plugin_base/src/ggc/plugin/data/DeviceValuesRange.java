@@ -9,7 +9,7 @@ import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
  * 

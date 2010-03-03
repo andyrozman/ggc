@@ -24,7 +24,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Meter Tool (support for Meter devices)
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
  * 

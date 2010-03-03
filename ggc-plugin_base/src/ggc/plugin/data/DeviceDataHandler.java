@@ -22,7 +22,7 @@ import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -61,11 +61,25 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     protected DeviceValuesTableModel m_model;
     protected DeviceInterface device_interface;
     
+    /**
+     * Dialog: Config
+     */
     public DeviceDisplayConfigDialog dialog_config = null;
+
+    /**
+     * Dialog: Data
+     */
     public DeviceDisplayDataDialog dialog_data = null;
     protected int transfer_type = 0;
     
+    /**
+     * Selected File Context
+     */
     public FileReaderContext selected_file_context = null;
+
+    /**
+     * Selected File
+     */
     public String selected_file = null;
     
     
@@ -359,22 +373,42 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     
     //public abstract 
     
+    /**
+     * Set Device Interface 
+     * 
+     * @param di
+     */
     public void setDeviceInterface(DeviceInterface di)
     {
         this.device_interface = di;
     }
     
+    /**
+     * Get Device Interface
+     * 
+     * @return
+     */
     public DeviceInterface getDeviceInterface()
     {
         return this.device_interface;
     }
     
     
+    /**
+     * Set Transfer Type
+     * 
+     * @param _type
+     */
     public void setTransferType(int _type)
     {
         this.transfer_type = _type;
     }
     
+    /**
+     * Get Transfer Type
+     * 
+     * @return
+     */
     public int getTransferType()
     {
         return this.transfer_type;
@@ -382,16 +416,36 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
 
     
     
+    /**
+     * Is Data Transfer
+     * 
+     * @return
+     */
     public boolean isDataTransfer()
     {
         return (this.transfer_type != DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
     }
     
+    /**
+     * Is Config Transfer
+     * 
+     * @return
+     */
     public boolean isConfigTransfer()
     {
         return (this.transfer_type == DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
     }
     
+    
+    /*
+    public void setCustomDialog(int type, JDialog dialog)
+    {
+        if ((type==DeviceDataHandler.TRANSFER_READ_DATA) || 
+            (type==DeviceDataHandler.TRANSFER_READ_FILE))
+            this.dialog_data = (DeviceDisplayDataDialog)dialog;
+        else
+            this.dialog_config = (DeviceDisplayConfigDialog)dialog;
+    }*/
     
     
     

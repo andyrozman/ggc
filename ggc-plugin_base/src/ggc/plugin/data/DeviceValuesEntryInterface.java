@@ -13,7 +13,7 @@ import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
  * 
