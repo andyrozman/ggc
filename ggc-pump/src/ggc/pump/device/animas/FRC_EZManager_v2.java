@@ -131,9 +131,6 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         			    // day, month, year, hour, minute
         			    ATechDate atd = getAtechDate(rs.getString("day"), rs.getString("month"), rs.getString("year"), rs.getString("hours"), rs.getString("minutes"));
         			    
-        			    // mg/dL
-                        //int bg = getInt(rs.getString("bg"));
-                        
                         PumpValuesEntry pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
                         
@@ -260,6 +257,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
                 // day, month, year, hour, minute
 //                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+                @SuppressWarnings("unused")
                 ATechDate atd = getAtechDate(rs.getString("day"), rs.getString("month"), rs.getString("year"), rs.getString("hours"), rs.getString("minutes"));
 //                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
                 int units1 = rs.getInt(5); //Integer.parseInt(reader.GetValue(5).ToString());
@@ -417,6 +415,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 				fiber = fiber / multiplier;
 
 
+                @SuppressWarnings("unused")
                 double calories = rs.getDouble(10);
                 //double.TryParse(reader.GetValue(10).ToString(), out calories);	
 				//calories = calories / multiplier;
@@ -431,6 +430,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 				fat = fat / multiplier;
 
 
+                @SuppressWarnings("unused")
                 String name = rs.getString(13); //reader.GetValue(13).ToString();
 				
                 
@@ -496,8 +496,10 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                 ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
 
 
+                @SuppressWarnings("unused")
                 int duration = rs.getInt(5); //Integer.parseInt(reader.GetValue(5).ToString());
 
+                @SuppressWarnings("unused")
                 String name = rs.getString(13); //)reader.GetValue(13).ToString();
 
                 
@@ -624,6 +626,16 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     }
     
     
+    /**
+     * Get ATech Date from int's 
+     * 
+     * @param day
+     * @param month
+     * @param year
+     * @param hour
+     * @param minute
+     * @return
+     */
     public ATechDate getAtechDate(int day, int month, int year, int hour, int minute)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S);
@@ -636,7 +648,18 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         
         return atd;
     }
+
     
+    /**
+     * Get ATech Date from int's 
+     * 
+     * @param day
+     * @param month
+     * @param year
+     * @param hour
+     * @param minute
+     * @return
+     */
     public ATechDate getAtechDate(String day, String month, String year, String hour, String minute)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S);

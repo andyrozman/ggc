@@ -63,6 +63,8 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     /**
      * Constructor
+     * 
+     * @param ow 
      */
     public AbstractXmlPump(OutputWriter ow)
     {

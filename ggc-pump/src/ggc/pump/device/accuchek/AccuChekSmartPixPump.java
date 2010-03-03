@@ -1224,6 +1224,11 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
 
     
+    /**
+     * Get Date from AtechDate long format
+     * @param inp
+     * @return
+     */
     public long getDateFromDT(long inp)
     {
         return (long)(inp/1000000);

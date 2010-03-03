@@ -4,6 +4,7 @@ import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.impl.CoPilot;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
@@ -74,7 +75,8 @@ public class PumpConsoleTester //extends JFrame
     	try
     	{
     	    //startRoche(portName);
-    	    startAnimas();
+    	    //startAnimas();
+    	    startCosmo();
     	    //startDana(portName);
     	    //startMinimed("./dta/CareLink-Export-1213803114904.csv");
     	    test();
@@ -88,6 +90,9 @@ public class PumpConsoleTester //extends JFrame
     }
 
     
+    /**
+     * Test
+     */
     public void test()
     {
         int num = 56;
@@ -195,6 +200,10 @@ public class PumpConsoleTester //extends JFrame
         
     }
     
+    
+    /**
+     * Start Animas
+     */
     public void startAnimas()
     {
         DataAccess da = DataAccess.getInstance();
@@ -226,6 +235,58 @@ public class PumpConsoleTester //extends JFrame
         ezm.readFile("/home/andy/workspace/EZMD.mdb");
         
     }
+    
+    
+    
+    
+    /**
+     * Start Cosmo
+     */
+    public void startCosmo()
+    {
+        //DataAccess da = DataAccess.getInstance();
+
+/*        
+        GGCDb db = new GGCDb(da);
+        db.initDb();
+        
+        da.setDb(db);
+  */      
+        
+        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+        
+        //DataAccessPump dap = DataAccessPump.getInstance();
+//        dap.setHelpContext(da.getHelpContext());
+        //dap.setPlugInServerInstance(this);
+/*        dap.createDb(da.getHibernateDb());
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+        //this.backup_restore_enabled = true;
+        
+        da.loadSpecialParameters();
+        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        
+        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        
+        
+        //FRC_EZManager_v2 ezm = new FRC_EZManager_v2(new ConsoleOutputWriter());
+        //ezm.readFile("/home/andy/workspace/EZMD.mdb");
+        
+        //CoPilot cp = new CoPilot(dap);
+  */       
+        
+        
+        CoPilot cp = new CoPilot(dap);
+        cp.readFile("/home/andy/workspace/GGC Desktop/test/CoPilot_Arch.XML");
+        
+        
+        
+    }
+    
+    
+    
+    
+    
     
     
     /**
