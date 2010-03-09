@@ -865,7 +865,16 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
     
     
-    
+    public void sleepMs(long ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(Exception ex)
+        {
+        }
+    }
     
     
     

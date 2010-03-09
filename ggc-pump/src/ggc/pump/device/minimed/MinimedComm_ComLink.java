@@ -1,6 +1,7 @@
 package ggc.pump.device.minimed;
 
 import ggc.core.db.GGCDb;
+import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPortEvent;
 
 import org.apache.commons.logging.Log;
@@ -24,13 +25,13 @@ public class MinimedComm_ComLink extends MinimedComm_Base
     
     HexUtils hex_util = new HexUtils();
     
-    public int[] encode(byte[] input)
+    public int[] encode(int[] input)
     {
         int ai1[] = new int[input.length * 3];
         //t i = 0;
         int cnt = 0;
         
-        //MedicalDevice.logInfo(this, "encodeDC: about to encode bytes = <" + MedicalDevice.Util.getHexCompact(ai) + ">");
+        //log.info( "encodeDC: about to encode bytes = <" + MedicalDevice.Util.getHexCompact(ai) + ">");
         for(int i = 0; i < input.length; i++)
         {
             //int l = input[j];
@@ -54,9 +55,9 @@ public class MinimedComm_ComLink extends MinimedComm_Base
         {
             //int l1;
             if(i < ai1.length - 1)
-            	ai2[cnt++] = this.hex_util.getByteFromIntsAsInt(ai1[i], ai1[i + 1]);
+            	ai2[cnt++] = this.hex_util.getByteAsInt(ai1[i], ai1[i + 1]);
             else
-            	ai2[cnt++] = this.hex_util.getByteFromIntsAsInt(ai1[i], 5);
+            	ai2[cnt++] = this.hex_util.getByteAsInt(ai1[i], 5);
             //Contract.post(l1 >= 0 && l1 <= 255, "value of " + l1 + " at index " + j2 + " is out of expected range 0.." + 255);
             //ai2[cnt++] = l1;
         }
@@ -64,7 +65,7 @@ public class MinimedComm_ComLink extends MinimedComm_Base
         return ai2;
     }
     
-    public int[] decode(byte[] input)
+    public int[] decode(int[] input)
     {
         int i = 0;
         int j = 0;
@@ -87,7 +88,7 @@ public class MinimedComm_ComLink extends MinimedComm_Base
                 } else
                 {
                     int i1 = decode(k);
-                    int k2 = this.hex_util.getByteFromIntsAsInt(l, i1);
+                    int k2 = this.hex_util.getByteAsInt(l, i1);
                     ai1[j1++] = k2;
                     j = 0;
                 }
@@ -97,7 +98,7 @@ public class MinimedComm_ComLink extends MinimedComm_Base
 
         }
 
-        //MedicalDevice.logInfo(this, "decodeDC: decoded bytes = <" + MedicalDevice.Util.getHexCompact(ai1) + ">");
+        //log.info( "decodeDC: decoded bytes = <" + MedicalDevice.Util.getHexCompact(ai1) + ">");
         return ai1;
     
         //return null;
@@ -153,6 +154,14 @@ public class MinimedComm_ComLink extends MinimedComm_Base
     {
         // TODO Auto-generated method stub
         
+    }
+
+
+    @Override
+    public SerialProtocol getCommunicationPort()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
     
     
