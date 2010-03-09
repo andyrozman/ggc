@@ -602,6 +602,21 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     	return portInputStream.read(b);
     }
     
+
+    public int read(int[] b) throws IOException
+    {
+        int len = portInputStream.available();
+        b = new int[len];
+        for(int i=0; i<len; i++)
+        {
+            b[i] = portInputStream.read();
+        }
+        
+        return len;
+        //return portInputStream.read(b);
+    }
+    
+    
     
     /**
      * Read
@@ -708,6 +723,19 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     	portOutputStream.write(b);
     }
 
+    
+    /**
+     * Write (int[]) 
+     * 
+     * @param b
+     * @throws IOException
+     */
+    public void write(int[] b) throws IOException
+    {
+        for(int i=0; i<b.length; i++)
+            portOutputStream.write(b[i]);
+    }
+    
     
     /**
      * Write (int)
@@ -1034,6 +1062,15 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     }
     
     
+    public void dumpSerialStatus() throws IOException
+    {
+        // FIXME
+//        Contract.pre(this.m_serialPort != null, "m_serialPortLocal is null.");
+        //long l = System.currentTimeMillis() - m_startTimeMS;
+        //log.info("dumpSerialStatus(): Rx ready count: " + this.portInputStream.available() + "   Tx buffer count: XX, DTR: " + this.m_serialPort.isDTR() + /*this.portOutputStream.m_serialPortLocal.txBufCount() +*/ "   CD:  " + this.m_serialPort.isCD() + "   CTS: " + this.m_serialPort.isCTS() + "   DSR: " + this.m_serialPort.isDSR());
+    }
+    
+    
     
     /**
      * Get All Available Ports as vector of CommPortIdentifier
@@ -1076,4 +1113,18 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
 
 
+    public int getReceiveTimeout()
+    {
+        return this.serialPort.getReceiveTimeout();
+    }
+    
+    
+    public void setReceiveTimeout(int timeout) throws Exception
+    {
+        this.serialPort.enableReceiveTimeout(timeout);
+    }
+    
+    
+    
+    
 }

@@ -108,7 +108,13 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     {
         this.started = true;
         this.bt_close.setEnabled(false);
-        this.m_ddh.executeExport(this);
+        
+        // Andy [6.3.2010] - we do this in thread now
+        //this.m_ddh.executeExport(this);
+        
+        DeviceWriterRunner dwr = new DeviceWriterRunner(this, this.m_ddh);
+        dwr.start();
+        
         //this.server.setReturnData(this.meter_data, this);
         this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_EXPORTING"));
 /*        

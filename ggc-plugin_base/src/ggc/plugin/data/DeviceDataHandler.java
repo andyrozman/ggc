@@ -56,7 +56,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     protected DeviceConfigEntry configured_device;
     protected DbDataReaderAbstract m_reader;
     protected Hashtable<String,?> old_data;
-    StatusReporterInterface export_dialog;
+    protected StatusReporterInterface export_dialog;
     DbDataReadingFinishedInterface m_reading_inst = null; 
     protected DeviceValuesTableModel m_model;
     protected DeviceInterface device_interface;

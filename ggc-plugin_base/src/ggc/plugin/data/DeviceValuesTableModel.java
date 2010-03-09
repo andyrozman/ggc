@@ -538,6 +538,44 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         return table;
     }
 
+
+    
+    /**
+     * Get Checked DeviceValuesEntries [V2]
+     * 
+     * @return Hashtable<String,ArrayList<?>>
+     */
+    public Hashtable<String,ArrayList<DeviceValuesEntry>> getCheckedDVE()
+    {
+        
+        Hashtable<String,ArrayList<DeviceValuesEntry>> ht = new Hashtable<String,ArrayList<DeviceValuesEntry>>();
+        
+        ht.put("ADD", new ArrayList<DeviceValuesEntry>());
+        ht.put("EDIT", new ArrayList<DeviceValuesEntry>());
+        
+        for(int i=0; i<this.dl_data.size(); i++)
+        {
+            DeviceValuesEntry dve = (DeviceValuesEntry)this.dl_data.get(i);
+            
+            if (!dve.getChecked())
+                continue;
+            
+            dve.prepareEntry();
+            
+            if (dve.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW)
+            {
+                ht.get("ADD").add(dve); 
+            }
+            else if (dve.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_EDIT)
+            {
+                ht.get("EDIT").add(dve); 
+            }
+        }
+        
+        return ht;
+    }
+    
+    
     
     
     /** 
