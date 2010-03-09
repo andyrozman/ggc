@@ -27,36 +27,38 @@ public class MinimedComm_ComLink extends MinimedComm_Base
     public int[] encode(byte[] input)
     {
         int ai1[] = new int[input.length * 3];
-        int i = 0;
+        //t i = 0;
+        int cnt = 0;
         
         //MedicalDevice.logInfo(this, "encodeDC: about to encode bytes = <" + MedicalDevice.Util.getHexCompact(ai) + ">");
-        for(int j = 0; j < input.length; j++)
+        for(int i = 0; i < input.length; i++)
         {
-            int l = input[j];
+            //int l = input[j];
             //Contract.pre(l >= 0 && l <= 255, "value of " + l + " at index " + j + " is out of expected range 0.." + 255);
-            int j1 = l >> 4 & 0xf;
-            int k1 = l & 0xf;
-            int i2 = MinimedComm_ComLink.COMLINK_ENCODING_PROTOCOL[j1];
-            int k2 = MinimedComm_ComLink.COMLINK_ENCODING_PROTOCOL[k1];
-            ai1[i++] = i2 >> 2;
-            int l2 = i2 & 3;
-            int i3 = k2 >> 4 & 3;
-            ai1[i++] = l2 << 2 | i3;
-            ai1[i++] = k2 & 0xf;
+//            int j1 = input[j] >> 4 & 0xf;
+//            int k1 = input[j] & 0xf;
+            int p1 = MinimedComm_ComLink.COMLINK_ENCODING_PROTOCOL[(input[i] >> 4 & 0xf)];
+            int p2 = MinimedComm_ComLink.COMLINK_ENCODING_PROTOCOL[(input[i] & 0xf)];
+            ai1[cnt++] = p1 >> 2;
+            //int l2 = p1 & 3;
+            //int i3 = p2 >> 4 & 3;
+            ai1[cnt++] = (p1 & 3) << 2 | (p2 >> 4 & 3);
+            ai1[cnt++] = p2 & 0xf;
         }
 
-        int k = 0;
-        int i1 = (int)Math.ceil(((double)input.length * 6D) / 4D);
-        int ai2[] = new int[i1];
-        for(int j2 = 0; j2 < ai1.length; j2 += 2)
+        //int k = 0;
+        cnt = 0;
+        //int i1 = (int)Math.ceil(((double)input.length * 6.0d) / 4.0d);
+        int ai2[] = new int[(int)Math.ceil(((double)input.length * 6.0d) / 4.0d)];
+        for(int i = 0; i < ai1.length; i += 2)
         {
-            int l1;
-            if(j2 < ai1.length - 1)
-                l1 = this.hex_util.getByteFromIntsAsInt(ai1[j2], ai1[j2 + 1]);
+            //int l1;
+            if(i < ai1.length - 1)
+            	ai2[cnt++] = this.hex_util.getByteFromIntsAsInt(ai1[i], ai1[i + 1]);
             else
-                l1 = this.hex_util.getByteFromIntsAsInt(ai1[j2], 5);
+            	ai2[cnt++] = this.hex_util.getByteFromIntsAsInt(ai1[i], 5);
             //Contract.post(l1 >= 0 && l1 <= 255, "value of " + l1 + " at index " + j2 + " is out of expected range 0.." + 255);
-            ai2[k++] = l1;
+            //ai2[cnt++] = l1;
         }
 
         return ai2;
