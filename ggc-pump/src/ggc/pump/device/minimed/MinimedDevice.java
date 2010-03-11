@@ -8,6 +8,27 @@ import ggc.pump.device.AbstractSerialPump;
 public abstract class MinimedDevice extends AbstractSerialPump
 {
 
+    // package received:
+    //   1- 167 
+    //   2,3,4 - Serial1 Serial2 Serial3 (BCD packed)
+    //   5 - CMD1
+    //   6 - CMD2
+    //   
+    
+    
+    // package sent:
+    //   Header
+    //   1 - 10 (isUseMultiXmitMode), 5 (ParameterCount=0), 4 (ParameterCount<>0)
+    //   2 - Element count (bytes)
+    
+    //   Message
+    //   1 - 167 
+    //   2-4 - Serial1 Serial2 Serial3 (BCD packed)
+    //   5 - CMD1
+    //   6 - CMD2
+    //   7 - CRC8 of this package
+    //   encoded
+    
     
     private void establishCommunication()
     {

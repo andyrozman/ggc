@@ -52,6 +52,12 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         this.serial_number_bcd = hex_utils.makePackedBCD(getDeviceSerialNumber());
     }
     
+    public int[] getPackedSerialNumber()
+    {
+        return this.serial_number_bcd;
+    }
+    
+    
     
     
     String m_lastCommandDescription;
@@ -77,8 +83,12 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         return m_deviceCommand.toString();
     }
 
+    
+    
+    // 1 level
     private void execute() throws PlugInBaseException, Exception
     {
+        // FIXME
         if(m_deviceCommand.m_commandParameterCount > 0)
         {
             MinimedDeviceCommand devicecommand = makeCommandPacket();
@@ -92,11 +102,29 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
     
     
     
+    private void execute(MinimedDeviceCommand mdc)
+    {
+        if(mdc.m_commandParameterCount > 0)
+        {
+            MinimedDeviceCommand devicecommand = makeCommandPacket();
+            devicecommand.execute();
+        }
+        
+        m_lastCommandDescription = m_deviceCommand.m_description;
+        allocateRawData();
+        sendAndRead();        
+        
+        
+    }
+    
+    
+    
     
 
     private void sendAndRead() throws PlugInBaseException, IOException, Exception
-        
     {
+        // FIXME
+
         if(getState() != 7)
             setState(4);
         sendCommand();
@@ -129,6 +157,8 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
 
     private void sendCommand() throws PlugInBaseException, Exception, IOException
     {
+        // FIXME
+        
 //        Contract.pre(this.getCommunicationPort() != null, "serial port is null.");
 //        Contract.pre(this.getCommunicationPort().isOpen(), "serial port is not open.");
 //        log.info( "sendCommand: SENDING CMD " + m_deviceCommand + "for pump #" + getDeviceSerialNumber());
@@ -140,8 +170,7 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
             int ai1[] = new int[2];
             if(m_deviceCommand.isUseMultiXmitMode())
                 ai1[0] = 10;
-            else
-            if(m_deviceCommand.m_commandParameterCount == 0)
+            else if(m_deviceCommand.m_commandParameterCount == 0)
                 ai1[0] = 5;
             else
                 ai1[0] = 4;
@@ -150,13 +179,15 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
             getCommunicationPort().write(ai);
             log.info( "sendCommand: reading link device ACK & (optional) RDY byte.");
             readAckByte();
+            
             if(m_deviceCommand.m_commandCode == 93 && m_deviceCommand.m_commandParameterCount == 0 && m_deviceCommand.m_commandParameters[0] == 1)
             {
                 int i = getCommunicationPort().getReceiveTimeout();
                 getCommunicationPort().setReceiveTimeout(17000);
                 readReadyByte(ai1[0] == 4);
                 getCommunicationPort().setReceiveTimeout(i);
-            } else
+            } 
+            else
             {
                 readReadyByte(ai1[0] == 4);
             }
@@ -169,20 +200,32 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         }
     }
 
-    private void checkHeaderAndCRC(int ai[]) throws PlugInBaseException
+
+    
+    
+    
+    /**
+     * Check Header and CRC data
+     */
+    private boolean checkHeaderAndCRC(int arr_in[]) throws PlugInBaseException
     {
-        int i = ai.length - 1;
-        int j = ai[i];
-        int k = hex_utils.computeCRC8(ai, 0, i) & 0xff;
-        if(j != k)
-            throw new PlugInBaseException("checkHeaderAndCRC: cmd " + hex_utils.getHex(m_deviceCommand.m_commandCode) + " (" + m_deviceCommand.m_description + ")" + " resulted in bad CRC value of " + j + " (expected " + k + ") " + "(byte data = " + "<" + hex_utils.getHex(ai) + ">)");
-        if(ai[0] != 167)
-            throw new PlugInBaseException("checkHeaderAndCRC: cmd " + hex_utils.getHex(m_deviceCommand.m_commandCode) + " (" + m_deviceCommand.m_description + ")" + " resulted in bad Type Code value of " + hex_utils.getHex(ai[0]));
-        int ai1[] = packSerialNumber();
-        if(ai1[0] != ai[1] || ai1[1] != ai[2] || ai1[2] != ai[3])
-            throw new PlugInBaseException("checkHeaderAndCRC: cmd " + hex_utils.getHex(m_deviceCommand.m_commandCode) + " (" + m_deviceCommand.m_description + ")" + " resulted in bad serial number value of <" + hex_utils.getHex(ai[1]) + " " + hex_utils.getHex(ai[2]) + " " + hex_utils.getHex(ai[3]) + ">");
+        int crc_rec = arr_in[arr_in.length - 1];
+        int crc_calc = hex_utils.computeCRC8(arr_in, 0, (arr_in.length - 1)) & 0xff;
+        
+        if(crc_rec != crc_calc)
+        {
+            log.debug("checkHeaderAndCRC: cmd " + hex_utils.getHex(m_deviceCommand.m_commandCode) + " (" + m_deviceCommand.m_description + ")" + " resulted in bad CRC value of " + crc_rec + " (expected " + crc_calc + ") " + "(byte data = " + "<" + hex_utils.getHex(arr_in) + ">)");
+//            throw new PlugInBaseException("checkHeaderAndCRC: cmd " + hex_utils.getHex(m_deviceCommand.m_commandCode) + " (" + m_deviceCommand.m_description + ")" + " resulted in bad CRC value of " + crc_rec + " (expected " + crc_calc + ") " + "(byte data = " + "<" + hex_utils.getHex(arr_in) + ">)");
+        }
+        
+        if(arr_in[0] != 167)
+            throw new PlugInBaseException("checkHeaderAndCRC: cmd " + hex_utils.getHex(m_deviceCommand.m_commandCode) + " (" + m_deviceCommand.m_description + ")" + " resulted in bad Type Code value of " + hex_utils.getHex(arr_in[0]));
+        
+        //int ai1[] = packSerialNumber();
+        if(this.serial_number_bcd[0] != arr_in[1] || this.serial_number_bcd[1] != arr_in[2] || this.serial_number_bcd[2] != arr_in[3])
+            throw new PlugInBaseException("checkHeaderAndCRC: cmd " + hex_utils.getHex(m_deviceCommand.m_commandCode) + " (" + m_deviceCommand.m_description + ")" + " resulted in bad serial number value of <" + hex_utils.getHex(arr_in[1]) + " " + hex_utils.getHex(arr_in[2]) + " " + hex_utils.getHex(arr_in[3]) + ">");
         else
-            return;
+            return true;
     }
 
     private void allocateRawData()
@@ -192,6 +235,7 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
 
     private void checkAck() throws PlugInBaseException, IOException, Exception
     {
+        // FIXME
 //        Contract.pre(this.getCommunicationPort() != null, "serial port is null.");
 //        Contract.pre(this.getCommunicationPort().isOpen(), "serial port is not open.");
         log.info( "checkAck: retrieving pump ACK packet...");
@@ -220,14 +264,15 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
 //        Contract.pre(this.getCommunicationPort().isOpen(), "serial port is not open.");
         log.info( "sendAck: sending cmd " + hex_utils.getHex((byte)6));
         int ai[] = new int[7];
-        ai[i++] = 167;
-        int ai1[] = packSerialNumber();
-        ai[i++] = ai1[0];
-        ai[i++] = ai1[1];
-        ai[i++] = ai1[2];
-        ai[i++] = 6;
-        ai[i++] = 0;
-        ai[i++] = hex_utils.computeCRC8(ai, 0, i - 1);
+        ai[0] = 167;
+        int ai1[] = getPackedSerialNumber();
+        ai[1] = ai1[0];
+        ai[2] = ai1[1];
+        ai[3] = ai1[2];
+        ai[4] = 6;
+        ai[5] = 0;
+        ai[6] = hex_utils.computeCRC8(ai, 0, 7);
+        
         ai = encode(ai);
         int ai2[] = new int[2];
         ai2[0] = 5;
@@ -348,6 +393,7 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         ai[i++] = ai1[1];
         ai[i++] = ai1[2];
         ai[i++] = m_deviceCommand.m_commandCode;
+        
         if(m_deviceCommand.m_commandParameterCount == 0)
         {
             ai[i++] = 0;
@@ -387,100 +433,35 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         return command;
     }
 
+    
+    // MinimedDeviceCommand mdc
+    
+
+    private MinimedDeviceCommand makeCommandPacket(MinimedDeviceCommand mdc)
+    {
+        MinimedDeviceCommand command = (MinimedDeviceCommand)mdc.clone();
+        command.m_description = m_deviceCommand.m_description + "-command packet";
+        command.m_bytesPerRecord = 0;
+        command.m_maxRecords = 0;
+        command.m_commandType = 0;
+        command.m_commandParameterCount = 0;
+        if(mdc..m_deviceCommand.m_commandCode == 93 && m_deviceCommand.m_commandParameters[0] == 1)
+            command.setUseMultiXmitMode(true);
+        return command;
+    }
+    
+    
+    
+    
+    
+    /*
     private int[] packSerialNumber()
     {
 //        Contract.pre(getDeviceSerialNumber() != null, "serial number is null");
 //        Contract.pre(getDeviceSerialNumber().length() == 6, "serial number must be 6 characters");
         return this.serial_number_bcd;
-    }
-
-    /*
-    private int[] encodeDC(int ai[])
-    {
-        int ai1[] = new int[ai.length * 3];
-        int i = 0;
-        log.info( "encodeDC: about to encode bytes = <" + MedicalDevice.Util.getHexCompact(ai) + ">");
-        for(int j = 0; j < ai.length; j++)
-        {
-            int l = ai[j];
-            Contract.pre(l >= 0 && l <= 255, "value of " + l + " at index " + j + " is out of expected range 0.." + 255);
-            int j1 = l >> 4 & 0xf;
-            int k1 = l & 0xf;
-            int i2 = ComLink1.DC_ENCODE_TABLE[j1];
-            int k2 = ComLink1.DC_ENCODE_TABLE[k1];
-            ai1[i++] = i2 >> 2;
-            int l2 = i2 & 3;
-            int i3 = k2 >> 4 & 3;
-            ai1[i++] = l2 << 2 | i3;
-            ai1[i++] = k2 & 0xf;
-        }
-
-        int k = 0;
-        int i1 = (int)Math.ceil(((double)ai.length * 6D) / 4D);
-        int ai2[] = new int[i1];
-        for(int j2 = 0; j2 < ai1.length; j2 += 2)
-        {
-            int l1;
-            if(j2 < ai1.length - 1)
-                l1 = MedicalDevice.Util.makeByte(ai1[j2], ai1[j2 + 1]);
-            else
-                l1 = MedicalDevice.Util.makeByte(ai1[j2], 5);
-            Contract.post(l1 >= 0 && l1 <= 255, "value of " + l1 + " at index " + j2 + " is out of expected range 0.." + 255);
-            ai2[k++] = l1;
-        }
-
-        return ai2;
-    }
-
-    private int[] decodeDC(int ai[])
-        throws BadDeviceCommException
-    {
-        int i = 0;
-        int j = 0;
-        int k = 0;
-        int l = 0;
-        int j1 = 0;
-        int k1 = (int)Math.floor(((double)ai.length * 4D) / 6D);
-        int ai1[] = new int[k1];
-        for(int l1 = 0; l1 < ai.length; l1++)
-        {
-            for(int i2 = 7; i2 >= 0; i2--)
-            {
-                int j2 = ai[l1] >> i2 & 1;
-                k = k << 1 | j2;
-                if(++i != 6)
-                    continue;
-                if(++j == 1)
-                {
-                    l = decodeDC(k);
-                } else
-                {
-                    int i1 = decodeDC(k);
-                    int k2 = MedicalDevice.Util.makeByte(l, i1);
-                    ai1[j1++] = k2;
-                    j = 0;
-                }
-                k = 0;
-                i = 0;
-            }
-
-        }
-
-        log.info( "decodeDC: decoded bytes = <" + MedicalDevice.Util.getHexCompact(ai1) + ">");
-        return ai1;
-    }
-
-    private int decodeDC(int i)
-        throws BadDeviceCommException
-    {
-        if(i < 0 || i > 63)
-            throw new BadDeviceCommException("decodeDC: value of " + i + " is out of expected range 0.." + 63);
-        for(int j = 0; j < ComLink1.DC_ENCODE_TABLE.length; j++)
-            if(ComLink1.DC_ENCODE_TABLE[j] == i)
-                return j;
-
-        throw new BadDeviceCommException("decodeDC: Can't find value of " + hex_utils.getHex(i) + " in table.");
     }*/
+
 
     private static final int TYPE_CODE = 167;
     private static final int CMD_PACKET_LENGTH = 7;
@@ -506,33 +487,31 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
     
     private void readAckByte() throws PlugInBaseException, IOException
     {
-        int i = 0;
-        boolean flag = false;
-        boolean flag1 = false;
-        for(int j = 0; j <= 1 && !flag; j++)
+        
+        int[] rdata = new int[2];
+        rdata[0] = getCommunicationPort().read();
+        rdata[1] = getCommunicationPort().read();
+        
+        if (rdata[0] != 102) 
         {
-            i = getCommunicationPort().read();
-            flag = i == 85;
-            if(i == 102)
-                flag1 = true;
-        }
-    
-        if(!flag)
-        {
-            getCommunicationPort().dumpSerialStatus();
-            if(flag1)
-                throw new IOException("readAckByte: reply " + hex_utils.getHex((byte)102) + " (NAK) does not match expected ACK reply of " + hex_utils.getHex((byte)85));
-            else
-                throw new IOException("readAckByte: reply " + hex_utils.getHex(i) + " does not match expected ACK reply of " + hex_utils.getHex((byte)85));
-        } else
-        {
+            log.debug("No return reply. We received: <" + hex_utils.getHex(rdata) + ">" );
+            //throw Exception;
             return;
         }
+
+        
+        if (rdata[1] != 85)
+        {
+            log.debug("Incorrect ACK package. We expected " + hex_utils.getHex((byte)85) + " (we got " + hex_utils.getHex(rdata[1]) + ")" );
+            // throw Exception
+        }
+        
+        return;
     }
 
     private int readStatus() throws PlugInBaseException, IOException
     {
-        m_status = sendCommandGetReply((byte)2);
+        m_status = sendCommandGetReply(ASCII_STX);
         m_numDataBytes = getCommunicationPort().read();
         readAckByte();
         log.debug("readStatus: CS status follows: NumberReceivedDataBytes=" + m_numDataBytes + ", ReceivedData=" + isStatusReceivedData() + ", RS232Mode=" + isStatusRS232Mode() + ", FilterRepeat=" + isStatusFilterRepeat() + ", AutoSleep=" + isStatusAutoSleep() + ", StatusError=" + isStatusError() + ", SelfTestError=" + isStatusSelfTestError());
@@ -557,7 +536,8 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
             sendCommand((byte)7);
             m_da.sleepMs(m_paradigmLinkDelay);
             readAckByte();
-        } else
+        } 
+        else
         {
             m_da.sleepMs(m_paradigmLinkDelay);
         }

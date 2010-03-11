@@ -104,27 +104,27 @@ public abstract class MinimedDeviceCommand implements Cloneable
 
     }
     
-    MinimedDeviceCommand(int i, String s, int j, int k, int l)
+    MinimedDeviceCommand(int command_code, String s, int j, int k, int l)
     {
-        this(i, s, j, k, 0, 0, l);
+        this(command_code, s, j, k, 0, 0, l);
         m_dataOffset = 0;
         m_cmdLength = 2;
         setUseMultiXmitMode(false);
     }
 
-    MinimedDeviceCommand(Object obj, int i, String s, int j, int k, int l, int i1, int j1)
+    MinimedDeviceCommand(Object obj, int command_code, String s, int j, int k, int l, int i1, int j1)
     {
-        this(i, s, j, k, l, i1, j1);
+        this(command_code, s, j, k, l, i1, j1);
     }
     
     
-    MinimedDeviceCommand(int i, String s, int j, int k, int l, int i1, 
+    MinimedDeviceCommand(int command_code, String s, int j, int k, int l, int i1, 
             int j1)
     {
         
         m_numBytesRead = 0;
         m_extraObject = null;
-        m_commandCode = i;
+        m_commandCode = command_code;
         m_bytesPerRecord = j;
         m_maxRecords = k;
         allocateRawData();
