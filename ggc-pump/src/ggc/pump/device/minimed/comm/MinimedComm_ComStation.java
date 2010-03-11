@@ -1,4 +1,4 @@
-package ggc.pump.device.minimed;
+package ggc.pump.device.minimed.comm;
 
 import java.io.IOException;
 

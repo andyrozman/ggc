@@ -1,4 +1,4 @@
-package ggc.pump.device.minimed;
+package ggc.pump.device.minimed.comm;
 
 import ggc.core.db.GGCDb;
 import ggc.plugin.protocol.SerialProtocol;

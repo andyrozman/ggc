@@ -1,11 +1,11 @@
-package ggc.pump.device.minimed;
+package ggc.pump.device.minimed.cmd;
 
 import java.util.Date;
 
 import com.atech.utils.ByteUtils;
 import com.atech.utils.HexUtils;
 
-public abstract class MinimedDeviceCommand implements Cloneable
+public abstract class MinimedCommand implements Cloneable
 {
     static HexUtils hex_utils = new HexUtils();
     
@@ -17,10 +17,10 @@ public abstract class MinimedDeviceCommand implements Cloneable
 
     public Object clone()
     {
-        MinimedDeviceCommand command = null;
+        MinimedCommand command = null;
         try
         {
-            command = (MinimedDeviceCommand)super.clone();
+            command = (MinimedCommand)super.clone();
             command.m_packet = ByteUtils.cloneIntArray(m_packet);
             command.m_commandParameters = ByteUtils.cloneIntArray(m_commandParameters);
             command.m_rawData = ByteUtils.cloneIntArray(m_rawData);
@@ -49,7 +49,7 @@ public abstract class MinimedDeviceCommand implements Cloneable
         return stringbuffer.toString();
     }
 
-    abstract void execute() throws Exception;
+    abstract public void execute() throws Exception;
 
     void setBeginDate(Date date)
     {
@@ -61,7 +61,7 @@ public abstract class MinimedDeviceCommand implements Cloneable
         m_endDate = date;
     }
 
-    void setUseMultiXmitMode(boolean flag)
+    public void setUseMultiXmitMode(boolean flag)
     {
         m_useMultiXmitMode = flag;
     }
@@ -76,35 +76,35 @@ public abstract class MinimedDeviceCommand implements Cloneable
     static final byte REPLY_HELLO = 90;
     static final byte REPLY_TIMEOUT = -1;
     static final int SIO_DELAY_MS = 50;
-    int m_commandParameters[];
-    int m_commandParameterCount;
-    int m_dataCount;
-    int m_commandCode;
-    int m_rawData[];
-    int m_dataOffset;
-    int m_bytesPerRecord;
-    int m_maxRecords;
-    int m_address;
-    int m_dataPointer;
-    int m_cmdLength;
-    int m_addressLength;
-    int m_commandType;
-    int m_packet[];
-    int m_numBytesRead;
-    int m_maxRetries;
-    boolean m_useMultiXmitMode;
+    public int m_commandParameters[];
+    public int m_commandParameterCount;
+    public int m_dataCount;
+    public int m_commandCode;
+    public int m_rawData[];
+    public int m_dataOffset;
+    public int m_bytesPerRecord;
+    public int m_maxRecords;
+    public int m_address;
+    public int m_dataPointer;
+    public int m_cmdLength;
+    public int m_addressLength;
+    public int m_commandType;
+    public int m_packet[];
+    public int m_numBytesRead;
+    public int m_maxRetries;
+    public boolean m_useMultiXmitMode;
     Date m_beginDate;
     Date m_endDate;
     Object m_extraObject;
 
     
-    MinimedDeviceCommand(Object obj, int i, String s, int j, int k, int l)
+    MinimedCommand(Object obj, int i, String s, int j, int k, int l)
     {
         this(i, s, j, k, l);
 
     }
     
-    MinimedDeviceCommand(int command_code, String s, int j, int k, int l)
+    MinimedCommand(int command_code, String s, int j, int k, int l)
     {
         this(command_code, s, j, k, 0, 0, l);
         m_dataOffset = 0;
@@ -112,13 +112,13 @@ public abstract class MinimedDeviceCommand implements Cloneable
         setUseMultiXmitMode(false);
     }
 
-    MinimedDeviceCommand(Object obj, int command_code, String s, int j, int k, int l, int i1, int j1)
+    MinimedCommand(Object obj, int command_code, String s, int j, int k, int l, int i1, int j1)
     {
         this(command_code, s, j, k, l, i1, j1);
     }
     
     
-    MinimedDeviceCommand(int command_code, String s, int j, int k, int l, int i1, 
+    MinimedCommand(int command_code, String s, int j, int k, int l, int i1, 
             int j1)
     {
         
@@ -144,14 +144,14 @@ public abstract class MinimedDeviceCommand implements Cloneable
     }
     
     
-    MinimedDeviceCommand(String s)
+    MinimedCommand(String s)
     {
         m_description = s;
     }
 
     
     
-    String m_description;
+    public String m_description;
     
     
     

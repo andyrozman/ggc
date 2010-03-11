@@ -1,7 +1,8 @@
-package ggc.pump.device.minimed;
+package ggc.pump.device.minimed.comm;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.pump.device.minimed.cmd.MinimedCommand;
 import ggc.pump.util.DataAccessPump;
 import gnu.io.SerialPortEvent;
 
@@ -76,7 +77,7 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
     }
 
     
-    MinimedDeviceCommand m_deviceCommand; 
+    MinimedCommand m_deviceCommand; 
     
     public String toString()
     {
@@ -91,7 +92,7 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         // FIXME
         if(m_deviceCommand.m_commandParameterCount > 0)
         {
-            MinimedDeviceCommand devicecommand = makeCommandPacket();
+            MinimedCommand devicecommand = makeCommandPacket();
             devicecommand.execute();
         }
         
@@ -102,18 +103,19 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
     
     
     
-    private void execute(MinimedDeviceCommand mdc)
+    private void execute(MinimedCommand mdc)
     {
+        /*
         if(mdc.m_commandParameterCount > 0)
         {
-            MinimedDeviceCommand devicecommand = makeCommandPacket();
+            MinimedCommand devicecommand = makeCommandPacket();
             devicecommand.execute();
         }
         
         m_lastCommandDescription = m_deviceCommand.m_description;
         allocateRawData();
         sendAndRead();        
-        
+        */
         
     }
     
@@ -168,9 +170,10 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         {
             int ai[] = buildPacket();
             int ai1[] = new int[2];
-            if(m_deviceCommand.isUseMultiXmitMode())
-                ai1[0] = 10;
-            else if(m_deviceCommand.m_commandParameterCount == 0)
+//            if(m_deviceCommand.isUseMultiXmitMode())
+//                ai1[0] = 10;
+//            else 
+                if(m_deviceCommand.m_commandParameterCount == 0)
                 ai1[0] = 5;
             else
                 ai1[0] = 4;
@@ -388,7 +391,7 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         //Contract.pre(m_deviceCommand.m_cmdLength > 0, "m_cmdLength is < 1.");
         int ai[] = new int[7];
         ai[i++] = 167;
-        int ai1[] = packSerialNumber();
+        int ai1[] = this.getPackedSerialNumber();
         ai[i++] = ai1[0];
         ai[i++] = ai1[1];
         ai[i++] = ai1[2];
@@ -420,9 +423,9 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
         //return encodeDC(ai);
     }
 
-    private MinimedDeviceCommand makeCommandPacket()
+    private MinimedCommand makeCommandPacket()
     {
-        MinimedDeviceCommand command = (MinimedDeviceCommand)m_deviceCommand.clone();
+        MinimedCommand command = (MinimedCommand)m_deviceCommand.clone();
         command.m_description = m_deviceCommand.m_description + "-command packet";
         command.m_bytesPerRecord = 0;
         command.m_maxRecords = 0;
@@ -437,15 +440,15 @@ public abstract class MinimedComm_Base extends SerialProtocol implements Minimed
     // MinimedDeviceCommand mdc
     
 
-    private MinimedDeviceCommand makeCommandPacket(MinimedDeviceCommand mdc)
+    private MinimedCommand makeCommandPacket(MinimedCommand mdc)
     {
-        MinimedDeviceCommand command = (MinimedDeviceCommand)mdc.clone();
+        MinimedCommand command = (MinimedCommand)mdc.clone();
         command.m_description = m_deviceCommand.m_description + "-command packet";
         command.m_bytesPerRecord = 0;
         command.m_maxRecords = 0;
         command.m_commandType = 0;
         command.m_commandParameterCount = 0;
-        if(mdc..m_deviceCommand.m_commandCode == 93 && m_deviceCommand.m_commandParameters[0] == 1)
+        if(mdc.m_commandCode == 93 && m_deviceCommand.m_commandParameters[0] == 1)
             command.setUseMultiXmitMode(true);
         return command;
     }
