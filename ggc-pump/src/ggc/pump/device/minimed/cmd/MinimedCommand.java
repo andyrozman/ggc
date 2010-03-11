@@ -98,34 +98,33 @@ public abstract class MinimedCommand implements Cloneable
     Object m_extraObject;
 
     
-    MinimedCommand(Object obj, int i, String s, int j, int k, int l)
+    MinimedCommand(Object obj, int command_code, String description, int record_length, int k, int l)
     {
-        this(i, s, j, k, l);
+        this(command_code, description, record_length, k, l);
 
     }
     
-    MinimedCommand(int command_code, String s, int j, int k, int l)
+    MinimedCommand(int command_code, String description, int record_length, int k, int l)
     {
-        this(command_code, s, j, k, 0, 0, l);
+        this(command_code, description, record_length, k, 0, 0, l);
         m_dataOffset = 0;
         m_cmdLength = 2;
         setUseMultiXmitMode(false);
     }
 
-    MinimedCommand(Object obj, int command_code, String s, int j, int k, int l, int i1, int j1)
+    MinimedCommand(Object obj, int command_code, String description, int record_length, int k, int l, int i1, int j1)
     {
-        this(command_code, s, j, k, l, i1, j1);
+        this(command_code, description, record_length, k, l, i1, j1);
     }
     
     
-    MinimedCommand(int command_code, String s, int j, int k, int l, int i1, 
-            int j1)
+    MinimedCommand(int command_code, String description, int record_length, int k, int l, int i1, int j1)
     {
-        
+        this.m_description = description;
         m_numBytesRead = 0;
         m_extraObject = null;
         m_commandCode = command_code;
-        m_bytesPerRecord = j;
+        m_bytesPerRecord = record_length;
         m_maxRecords = k;
         allocateRawData();
         m_address = l;
