@@ -30,8 +30,18 @@ package ggc.plugin.device;
 public class PlugInBaseException extends Exception
 {
     
-	
     private static final long serialVersionUID = -3252275317251539876L;
+    
+    /**
+     * Error Code
+     */
+    public int error_code = 0;
+    
+    
+    /**
+     * Error Description
+     */
+    public String error_description = "";
 
     /**
      * Constructor for ImportException.
@@ -60,6 +70,20 @@ public class PlugInBaseException extends Exception
         super(message, cause);
     }
 
+
+    /**
+     * Constructor for PlugInBaseException.
+     * @param message
+     * @param cause
+     * @param error_code_ 
+     */
+    public PlugInBaseException(Throwable cause, int error_code_, String message)
+    {
+        super(message, cause);
+        this.error_code = error_code_;
+    }
+    
+    
     /**
      * Constructor for PlugInBaseException.
      * @param cause
@@ -69,4 +93,29 @@ public class PlugInBaseException extends Exception
         super(cause);
     }
 
+    
+    /**
+     * Constructor for PlugInBaseException.
+     * 
+     * @param error_code_ 
+     */
+    public PlugInBaseException(int error_code_)
+    {
+        super();
+        this.error_code = error_code_;
+    }
+    
+    /**
+     * Constructor for PlugInBaseException.
+     *
+     * @param error_msg 
+     * @param error_code_ 
+     */
+    public PlugInBaseException(String error_msg, int error_code_)
+    {
+        super(error_msg);
+        this.error_code = error_code_;
+    }
+    
+    
 }
