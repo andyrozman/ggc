@@ -1,4 +1,4 @@
-package ggc.plugin.device.impl;
+package ggc.plugin.device.impl.abbott;
 
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;

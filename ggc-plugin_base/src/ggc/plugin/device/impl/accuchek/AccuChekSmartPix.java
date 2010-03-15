@@ -1,5 +1,5 @@
 
-package ggc.plugin.device.impl;
+package ggc.plugin.device.impl.accuchek;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
