@@ -98,7 +98,7 @@ public class Minimed554_Veo extends MinimedPump
      */
     public int getDeviceId()
     {
-        return PumpDevicesIds.PUMP_MINIMED_554_754_VEO;
+        return PumpDevicesIds.PUMP_MINIMED_554;
     }
 
     

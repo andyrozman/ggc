@@ -98,7 +98,7 @@ public class Minimed512 extends MinimedPump
      */
     public int getDeviceId()
     {
-        return PumpDevicesIds.PUMP_MINIMED_512_712;
+        return PumpDevicesIds.PUMP_MINIMED_512;
     }
 
     
