@@ -4,7 +4,7 @@ import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.plugin.device.DownloadSupportType;
-import ggc.plugin.device.impl.CoPilot;
+import ggc.plugin.device.impl.abbott.CoPilot;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;

@@ -1,6 +1,6 @@
 package ggc.pump.device.cozmo;
 
-import ggc.plugin.device.impl.CoPilot;
+import ggc.plugin.device.impl.abbott.CoPilot;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.File;
