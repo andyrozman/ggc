@@ -563,8 +563,11 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     
     /**
+     * Close 
+     * 
+     * @throws PlugInBaseException 
      */
-    public void close()
+    public void close() throws PlugInBaseException
     {
         if (!isPortOpen)
             return;
@@ -603,6 +606,13 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     }
     
 
+    /**
+     * Read (int[])
+     * 
+     * @param b
+     * @return
+     * @throws IOException
+     */
     public int read(int[] b) throws IOException
     {
         int len = portInputStream.available();
@@ -1062,6 +1072,11 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     }
     
     
+    /**
+     * Dump Serial Status
+     * 
+     * @throws IOException
+     */
     public void dumpSerialStatus() throws IOException
     {
         // FIXME
@@ -1113,12 +1128,23 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
 
 
+    /**
+     * Get Receive Timeout
+     * 
+     * @return
+     */
     public int getReceiveTimeout()
     {
         return this.serialPort.getReceiveTimeout();
     }
     
     
+    /**
+     * Set Receive Timeout
+     * 
+     * @param timeout
+     * @throws Exception
+     */
     public void setReceiveTimeout(int timeout) throws Exception
     {
         this.serialPort.enableReceiveTimeout(timeout);
