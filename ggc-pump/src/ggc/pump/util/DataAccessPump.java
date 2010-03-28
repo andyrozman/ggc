@@ -29,7 +29,6 @@ import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.mgr.LanguageManager;
-import com.atech.misc.converter.DecimalHandler;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -114,7 +113,12 @@ public class DataAccessPump extends DataAccessPlugInBase
     //    GGCPumpDb m_db = null;
   
     
-    DecimalHandler dec_handler = new DecimalHandler(3);
+//    DecimalHandler dec_handler = new DecimalHandler(3);
+
+    
+//    Hashtable<String,String> sorters = new Hashtable<String,String>(); 
+    
+    
     
     /**
      * The selected_person_id.
@@ -159,7 +163,8 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.createDeviceConfiguration();
         this.createOldDataReader();
         loadWebLister();
-        
+        this.loadConverters();
+        this.loadSorters();
     }
     
     
@@ -828,7 +833,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     public String getFormatedBolusValue(float val)
     {
-        return this.dec_handler.getDecimalAsString(val, this.getBolusPrecision());
+        return this.getDecimalHandler().getDecimalAsString(val, this.getBolusPrecision());
     }
 
     /**
@@ -836,11 +841,11 @@ public class DataAccessPump extends DataAccessPlugInBase
      * 
      * @return
      */
-    public DecimalHandler getDecimalHandler()
+/*    public DecimalHandler getDecimalHandler()
     {
         return this.dec_handler;
     }
-    
+  */  
     
     /**
      * Get Parsed Values
@@ -881,6 +886,22 @@ public class DataAccessPump extends DataAccessPlugInBase
         }
     }
     
+    
+    public void loadSorters()
+    {
+        sorters.put("Profile", "DESC");
+    }
+    
+
+    /**
+     * Get Max Decimals that will be used by DecimalHandler
+     * 
+     * @return
+     */
+    public int getMaxDecimalsUsedByDecimalHandler()
+    {
+        return 3;
+    }
     
     
     
