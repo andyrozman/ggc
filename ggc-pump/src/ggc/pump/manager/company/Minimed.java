@@ -3,7 +3,6 @@ package ggc.pump.manager.company;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.minimed.Minimed508;
 import ggc.pump.device.minimed.Minimed512;
-import ggc.pump.device.minimed.Minimed522;
 import ggc.pump.device.minimed.Minimed554_Veo;
 import ggc.pump.manager.PumpDevicesIds;
 
@@ -50,7 +49,7 @@ public class Minimed extends AbstractPumpDeviceCompany
         
         this.addDevice(new Minimed508(this));
         this.addDevice(new Minimed512(this));
-        this.addDevice(new Minimed522(this));
+//        this.addDevice(new Minimed522(this));
         this.addDevice(new Minimed554_Veo(this));
     }
 
