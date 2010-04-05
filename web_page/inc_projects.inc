@@ -143,6 +143,10 @@ and development tools. Because of this, we created this sub-project, which will 
 version of GGC available, get little bit of priority. We plan to have working version by end of summer (somewhere in 
 September). <br>
 
+https://sourceforge.net/projects/ggc/files/Translation%20Tool/TranslationTool_1.2.zip/download
+https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Base_1.zip/download
+https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Lang_1.zip/download		
+
 
 <h3 class="header">Db Tool</h3>
 This is also one of separate tools, but this one is intended for all end users, who want to use GGC with database
