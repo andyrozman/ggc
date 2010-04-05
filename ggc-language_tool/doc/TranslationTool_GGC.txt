@@ -40,7 +40,7 @@ a.) copy your translation files to GGC_Root\data\tools\translation. You will nee
 b.) copy config\TranslationGGC.config file to GGC_Root\data\tools\translation and edit
     it. (You will need to do this only once).
     
-c.) In Preferences\General, you will amongs options also have option Translation Tool 
+c.) In Preferences\General, you will amongst options also have option Translation Tool 
     (or in future text you specified in configuration from step b) as LANGUAGE_NAME),
     which will then take correct files.
     
