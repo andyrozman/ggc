@@ -1,0 +1,51 @@
+
+Translation Tool - Instruction for GGC 
+=======================================
+
+
+HOW TO GET FILES
+=================
+
+There are two ways of getting the new files:
+
+A.) Wait for next language pack. 
+    New language pack will be released about month before release. This is preferred way of 
+    getting language updates. If you have already submitted your translation you will now
+    get it back, with this file.  
+     
+B.) Get it from svn.
+    If you have experience with SVN you can get correct files from GGC SVN. You will need 
+    to get correct files from each project (*_en.properies).
+
+
+
+HOW TO DEPLOY NEW TRANSLATION
+==============================
+
+After you are finished with translation, please send files to us (ggc@atech-software.com). 
+We will then either copy them whole (in case that you are the only translator) or copy 
+just entries that were changed. Please put Translation <your_language> in subject line. If 
+you send the files even week before release, they will be also put into release.
+
+
+HOW TO TEST
+============
+ 
+We are working on extending GGC so that you can test this files as you are translating it.
+This is still work in progress, but it will work so.
+
+a.) copy your translation files to GGC_Root\data\tools\translation. You will need to do
+    this after each translation.
+    
+b.) copy config\TranslationGGC.config file to GGC_Root\data\tools\translation and edit
+    it. (You will need to do this only once).
+    
+c.) In Preferences\General, you will amongs options also have option Translation Tool 
+    (or in future text you specified in configuration from step b) as LANGUAGE_NAME),
+    which will then take correct files.
+    
+NOTE: This functionality is not ready yet.  
+  
+    
+
+
