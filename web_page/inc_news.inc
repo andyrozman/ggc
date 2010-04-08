@@ -5,6 +5,22 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
+<td width="150">2010-04-08 21:45</td>
+<td>Translation Tool</td>
+</tr>
+<tr>
+<td colspan="2">
+After long wait, here is finally tool that will help translate our application into other languages.
+See section <a href="index.php?show=projects">Projects</a> for more info.
+</td>
+</tr>
+</table> 
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
 <td width="150">2009-11-08 21:45</td>
 <td>GGC Update 0.4.10.1</td>
 </tr>

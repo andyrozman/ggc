@@ -137,17 +137,26 @@ in which functionality will be available (it may become available sooner, but it
 
 <h3 class="header">Translation Tool</h3>
 This is separate project from GGC, but it will also be used for GGC. Since GGC has evolved into different sub-projects
-we now have several language files and almost impossible task to update them. Current instruction on how to do
-translation are not intended for normal (end) users, since they require quite extensive knowledge of source control 
-and development tools. Because of this, we created this sub-project, which will now, that we have somehow working 
-version of GGC available, get little bit of priority. We plan to have working version by end of summer (somewhere in 
-September). <br>
+we now have several language files and almost impossible task to update them. This tool will help with this translation.
+At first you need to install Java JRE 1.5 (or higher), and then you need to read following documentation:
+<ul>
+	<li><a href="docs/tt/Readme_v1.2.txt">Readme (for 1.2)</a>. Just read section 3.</li>
+	<li><a href="docs/tt/TranslationTool_GGC_v1.2.txt">GGC Readme (for 1.2)</a>
+</ul> 
+<br>
+You need to install following three packages and then you are ready to go (only latest versions are available here, if 
+you need older version you will need to visit our files section on sourceforge.net):
+<ul>
+	<li><a href="https://sourceforge.net/projects/ggc/files/Translation%20Tool/TranslationTool_1.2.zip/download">Translation Tool 1.2</a></li>
+	<li><a href="https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Base_1.zip/download">GGC Base Pack v1</a></li>
+	<li><a href="https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Lang_1.zip/download">GGC Lang Pack v1 (for GGC 0.4.17)</a></li>
+</ul> 
+<br>
+Currently supported languages: English (100%), German (~50%), Slovenian (95%), French (~10%).<br>
+If you are willing to translate GGC into your language, please contact us.
+<br>
 
-https://sourceforge.net/projects/ggc/files/Translation%20Tool/TranslationTool_1.2.zip/download
-https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Base_1.zip/download
-https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Lang_1.zip/download		
-
-
+ 
 <h3 class="header">Db Tool</h3>
 This is also one of separate tools, but this one is intended for all end users, who want to use GGC with database
 other than internal. This will help you setup GGC with your favorite database, with little problems (you will need
