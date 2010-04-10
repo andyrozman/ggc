@@ -31,6 +31,7 @@ package ggc.nutri.print;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
+import ggc.core.data.ExtendedDailyValue;
 import ggc.core.print.PrintAbstract;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
@@ -166,7 +167,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
                 DailyValuesRow rw = (DailyValuesRow) dv.getRow(i);
 
-                if ( (!m_da.isValueSet(rw.getMealsIds())) && (!m_da.isValueSet(rw.getExtendedValue(DailyValuesRow.EXTENDED_FOOD_DESCRIPTION))))
+                if ( (!m_da.isValueSet(rw.getMealsIds())) && (!m_da.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION))))
                     continue;
 
                 if (active_day_entry > 0)
@@ -193,7 +194,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
                     }
                 }
                 
-                if (m_da.isValueSet(rw.getExtendedValue(DailyValuesRow.EXTENDED_FOOD_DESCRIPTION)))
+                if (m_da.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
                 {
                     //System.out.println("writeFoodDescData: " + rw);
                     writeFoodDescData(datatable, rw);

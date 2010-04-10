@@ -32,6 +32,7 @@ package ggc.nutri.print;
 
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
+import ggc.core.data.ExtendedDailyValue;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 
 import com.lowagie.text.Phrase;
@@ -230,11 +231,11 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
      */
     public void writeFoodDescData(PdfPTable table, DailyValuesRow dvr) throws Exception
     {
-        table.addCell(new Phrase(dvr.getExtendedValue(DailyValuesRow.EXTENDED_FOOD_DESCRIPTION), this.text_normal));
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION), this.text_normal));
         table.addCell(new Phrase(ic.getMessage("DESCRIPTION"), this.text_normal));
         table.addCell(new Phrase("", this.text_normal));
 
-        table.addCell(new Phrase(dvr.getExtendedValue(DailyValuesRow.EXTENDED_FOOD_CH), this.text_italic));
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH), this.text_italic));
         table.addCell(new Phrase(dvr.getIns1AsString(), this.text_italic));
     }
     
