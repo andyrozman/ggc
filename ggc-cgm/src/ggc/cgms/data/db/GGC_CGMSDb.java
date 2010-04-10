@@ -21,6 +21,7 @@ import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
 
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.utils.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -83,8 +84,8 @@ public class GGC_CGMSDb extends PluginDb
         
         log.info("getCGMSDayStats()");
 
-        //long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
-        long dt = 20070323;
+        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
+        //long dt = 20070323;
         
         DeviceValuesDay dV = new DeviceValuesDay(m_da);
         dV.setDateTimeGC(gc);

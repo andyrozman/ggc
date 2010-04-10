@@ -2,6 +2,13 @@
 Changes file for GGC CGM Tool
 ==============================
 
+0.6 [10.4.2010]
+    * Import/Export
+    
+
+0.5 [2.3.2010]
+    * Viev data for CGMS - finalized 
+
 0.4.3
     * Dexcom mostly done
     * File import context testing

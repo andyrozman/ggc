@@ -109,17 +109,6 @@ public class DexcomSeven extends DexcomCGMS
 
     
     /**
-     * getInstructions - get instructions for device
-     * Should be implemented by meter class.
-     * 
-     * @return instructions for reading data 
-     */
-    public String getInstructions()
-    {
-        return "INSTRUCTIONS_NO_INFO";
-    }
-    
-    /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
@@ -171,7 +160,7 @@ public class DexcomSeven extends DexcomCGMS
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
     
     

@@ -3,7 +3,6 @@ package ggc.cgms.data.db;
 import ggc.cgms.data.CGMSValuesEntry;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.cgms.CGMSDataH;
-import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ import com.atech.i18n.I18nControlAbstract;
 public class CGMSData extends CGMSDataH implements BackupRestoreObject, DatabaseObjectHibernate
 {
 
-    private static final long serialVersionUID = -2783864807987398195L;
+    private static final long serialVersionUID = 8478138731218069624L;
     private boolean selected = false;
     I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
     
@@ -67,9 +66,8 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
      * 
      * @param ch
      */
-    public CGMSData(PumpDataH ch)
+    public CGMSData(CGMSDataH ch)
     {
-        // FIXME
         this.setId(ch.getId());
         this.setDt_info(ch.getDt_info());
         this.setBase_type(ch.getBase_type());
@@ -144,7 +142,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.pump.PumpDataH";
+        return "ggc.core.db.hibernate.cgms.CGMSDataH";
     }
     
 
@@ -214,7 +212,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpDataH ch = new PumpDataH();
+        CGMSDataH ch = new CGMSDataH();
 
         ch.setId(this.getId());
         ch.setDt_info(this.getDt_info());
@@ -245,7 +243,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
+        CGMSDataH ch = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.getId()));
 
         sess.delete(ch);
         tx.commit();
@@ -265,7 +263,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
+        CGMSDataH ch = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.getId()));
 
         ch.setId(this.getId());
         ch.setDt_info(this.getDt_info());
@@ -293,7 +291,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
      */
     public boolean DbGet(Session sess) throws Exception
     {
-        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
+        CGMSDataH ch = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.getId()));
 
         this.setId(ch.getId());
         this.setDt_info(ch.getDt_info());
@@ -466,7 +464,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
      */
     public String getBackupFile()
     {
-        return "PumpDataH";
+        return "CGMSDataH";
     }
     
     /**
@@ -476,7 +474,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
      */
     public String getBackupClassName()
     {
-        return "ggc.core.db.hibernate.pump.PumpDataH";
+        return "ggc.core.db.hibernate.cgms.CGMSDataH";
     }
     
     
@@ -485,7 +483,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
      */
     public String getObjectName()
     {
-        return "PumpData";
+        return "CGMSData";
     }
 
     /** 

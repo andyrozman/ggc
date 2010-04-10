@@ -100,7 +100,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
      */
     public int getImplementationStatus() 
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL;
     }
     
     
@@ -233,6 +233,18 @@ public abstract class DexcomCGMS extends AbstractCGMS
 
 
     /**
+     * getInstructions - get instructions for device
+     * Should be implemented by meter class.
+     * 
+     * @return instructions for reading data 
+     */
+    public String getInstructions()
+    {
+        return "INSTRUCTIONS_DEXCOM";
+    }
+    
+    
+    /**
      * Is Device Communicating
      * 
      * @return
@@ -255,9 +267,6 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return false;
     }
 
-    
-    
-    
     
     /**
      * Get DateTime From String

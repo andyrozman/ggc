@@ -1,5 +1,7 @@
 package ggc.cgms.plugin;
 
+import ggc.cgms.data.db.CGMSData;
+import ggc.cgms.data.db.CGMSDataExtended;
 import ggc.cgms.gui.viewer.CGMSDataDialog;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.DataAccess;
@@ -7,6 +9,7 @@ import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -17,10 +20,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.plugin.BackupRestorePlugin;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
 
@@ -56,7 +60,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
     //private String cgm_tool_version = "0.1.1";
     
-    I18nControlAbstract ic_local = null;
+    //I18nControlAbstract ic_local = null;
     
     /**
      *  Command: Read CGMS data 
@@ -106,6 +110,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
                                 "MN_CGMS_ABOUT_DESC"
     };
     
+    DataAccessCGMS da_local;
     
     
     /**
@@ -124,10 +129,12 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
      * @param selected_lang
      * @param da
      */
-    public CGMSPlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
+    public CGMSPlugInServer(Container cont, ATDataAccessLMAbstract da)
     {
-        super(cont, selected_lang, da);
-        DataAccessCGMS.getInstance().addComponent(cont);
+        super(cont, da);
+        
+        da_local = DataAccessCGMS.createInstance(da.getLanguageManager());
+        da_local.addComponent(cont);
     }
     
     
@@ -216,8 +223,14 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     {
         ic = m_da.getI18nControlInstance();
         //I18nControl.getInstance().setLanguage(this.selected_lang);
-        DataAccessCGMS da_local = DataAccessCGMS.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        
+        if (da_local==null)
+            da_local = DataAccessCGMS.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
        
+        
+        this.initPlugInServer((DataAccess)m_da, da_local);
+        
+        /*
         da_local.loadManager();
         
         ic_local = da_local.getI18nControlInstance();
@@ -240,7 +253,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         
         da_local.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
         da_local.setGraphConfigProperties(m_da.getGraphConfigProperties());
-        
+        */
     }
 
     /**
@@ -290,8 +303,12 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
-        // TODO Auto-generated method stub
-        return null;
+        I18nControlAbstract ic_pump = DataAccessCGMS.getInstance().getI18nControlInstance();
+        BackupRestoreCollection brc = new BackupRestoreCollection("CGMS_TOOL", ic_pump);
+        brc.addNodeChild(new CGMSData(ic_pump));
+        brc.addNodeChild(new CGMSDataExtended(ic_pump));
+
+        return brc;
     }
 
 
@@ -310,19 +327,32 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         
         JMenu menu_cgms = ATSwingUtils.createMenu("MN_CGMS", null, ic_local);
         
-        ATSwingUtils.createMenuItem(menu_cgms, 
+        JMenuItem menu = ATSwingUtils.createMenuItem(menu_cgms, 
             "MN_CGMS_READ", 
             "MN_CGMS_READ_DESC", 
             "cgms_read", 
             this, null, 
             ic_local, DataAccessCGMS.getInstance(), parent);
 
-        ATSwingUtils.createMenuItem(menu_cgms, 
+        
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+            menu.setEnabled(true);
+        else
+            menu.setEnabled(false);
+        
+        
+        
+        menu = ATSwingUtils.createMenuItem(menu_cgms, 
             "MN_CGMS_READ_FILE", 
             "MN_CGMS_READ_FILE_DESC", 
             "cgms_read_file", 
             this, null, 
             ic_local, DataAccessCGMS.getInstance(), parent);
+
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
+            menu.setEnabled(true);
+        else
+            menu.setEnabled(false);
         
         
         menu_cgms.addSeparator();
@@ -421,6 +451,19 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
             System.out.println("CGMSPluginServer::Unknown Command: " + command);
         
     }
+    
+    
+    
+    /**
+     * Get Backup Restore Handler
+     * 
+     * @return
+     */
+    public BackupRestorePlugin getBackupRestoreHandler()
+    {
+        return new BackupRestoreCGMSHandler();
+    }
+    
     
     
 }

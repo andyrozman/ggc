@@ -55,7 +55,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "0.4.3";
+    public static final String PLUGIN_VERSION = "0.6";
 
 
     private static DataAccessCGMS s_da = null; // This is handle to unique 
@@ -110,7 +110,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         this.createDeviceConfiguration();
         this.createOldDataReader();
         loadWebLister();
-        
+        this.loadConverters();
     }
     
     
@@ -575,6 +575,14 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         sz[1] = 203;
         
         return sz;
+    }
+
+
+    @Override
+    public void initAllObjects()
+    {
+        // TODO Auto-generated method stub
+        
     }    
     
     
