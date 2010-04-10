@@ -2,6 +2,9 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.4.6 [10.4.2010]
+    * Minor changes to code (DataAccessPlugIn)
+
 0.4.5 [15.2.2010]
     * Started adding File import support
     * PluginBase now has it's own I18n, this releases some of translations in all other plugins

@@ -1,9 +1,14 @@
 package ggc.plugin;
 
+import ggc.core.util.DataAccess;
+import ggc.plugin.util.DataAccessPlugInBase;
+
 import java.awt.Container;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATDataAccessLMAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,7 +40,8 @@ import com.atech.utils.ATDataAccessAbstract;
 public abstract class DevicePlugInServer extends PlugInServer
 {
     
-    
+    protected I18nControlAbstract ic_local = null;
+
     /**
      * Constructor
      */
@@ -57,7 +63,60 @@ public abstract class DevicePlugInServer extends PlugInServer
         super(cont, selected_lang, da);
     }
     
+    /**
+     * Constructor
+     * 
+     * @param cont
+     * @param selected_lang
+     * @param da
+     */
+    public DevicePlugInServer(Container cont, ATDataAccessLMAbstract da)
+    {
+        super(cont, da);
+    }
 
+    
+    
+    /**
+     * Init PlugIn Server
+     * 
+     * @param da_ggc_core
+     * @param da_plugin
+     */
+    public void initPlugInServer(DataAccess da_ggc_core, DataAccessPlugInBase da_plugin)
+    {
+        
+        da_plugin.loadManager();
+        
+        ic_local = da_plugin.getI18nControlInstance();
+        da_plugin.setParentI18nControlInstance(ic);
+        
+        
+        //System.out.println(da_local.getI18nControlInstance().toString());
+        
+        
+        da_plugin.addComponent(this.parent);
+        da_plugin.setHelpContext(this.m_da.getHelpContext());
+        da_plugin.setPlugInServerInstance(this);
+        da_plugin.createDb(m_da.getHibernateDb());
+        da_plugin.initAllObjects();
+        da_plugin.loadSpecialParameters();
+        da_plugin.setCurrentUserId(da_ggc_core.current_user_id);
+        da_plugin.setConfigurationManager(((DataAccess)m_da).getConfigurationManager());
+        this.backup_restore_enabled = true;
+        
+        da_ggc_core.loadSpecialParameters();
+        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        
+        da_plugin.setBGMeasurmentType(m_da.getIntValueFromString(da_ggc_core.getSpecialParameters().get("BG")));
+        da_plugin.setGraphConfigProperties(da_ggc_core.getGraphConfigProperties());
+        
+        
+        
+    }
+    
+    
+    
     
 }
 

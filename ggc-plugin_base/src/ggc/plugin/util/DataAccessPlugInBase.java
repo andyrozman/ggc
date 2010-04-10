@@ -1,5 +1,6 @@
 package ggc.plugin.util;
 
+import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfiguration;
@@ -1462,6 +1463,31 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return path.replace('\\', File.separatorChar);        
     }
+    
+ 
+    @Override
+    public void loadConverters()
+    {
+        this.converters.put("BG", new Converter_mgdL_mmolL());
+    }
+    
+    
+    /**
+     * Get BG Converter
+     * 
+     * @return
+     */
+    public Converter_mgdL_mmolL getBGConverter()
+    {
+        return (Converter_mgdL_mmolL)this.getConverter("BG");
+        
+    }
+ 
+    
+    /**
+     * Init all Objects
+     */
+    public abstract void initAllObjects();
     
     
 

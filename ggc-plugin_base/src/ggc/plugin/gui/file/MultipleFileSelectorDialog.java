@@ -83,7 +83,7 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
 		cb_contexts = ATSwingUtils.getComboBox(file_contexts, 50, 180, 300, 25, this, ATSwingUtils.FONT_NORMAL);
 	
         this.help_button = m_da.createHelpIconByBounds(50, 230, 60, 25, this);
-        this.add(help_button);
+        this.add(help_button); // 60, 25
        
         
         ATSwingUtils.getButton("" /*m_ic.getMessage("CANCEL")*/, 120, 230, 60, 25, this, 
