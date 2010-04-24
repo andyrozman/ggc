@@ -1,6 +1,7 @@
 package ggc.cgms.util;
 
 import ggc.cgms.data.CGMSDataHandler;
+import ggc.cgms.data.CGMSDataReader;
 import ggc.cgms.data.CGMSValuesEntry;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
@@ -55,7 +56,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "0.6";
+    public static final String PLUGIN_VERSION = "1.0.1";
 
 
     private static DataAccessCGMS s_da = null; // This is handle to unique 
@@ -303,7 +304,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void createConfigurationContext()
     {
-        // TODO Auto-generated method stub
         this.device_config_def = new CGMSConfigurationDefinition(); 
     }
 
@@ -366,18 +366,20 @@ public class DataAccessCGMS extends DataAccessPlugInBase
 
         
         FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
-        //fg.addFeaturesEntry(new FeaturesEntry("Base Pump Tools Framework"));
-        //fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
-        //fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
-        //fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
-        //fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
-        //fg.addFeaturesEntry(new FeaturesEntry("List of pumps"));
-        //fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+        fg.addFeaturesEntry(new FeaturesEntry("Base CGMS Tools Framework"));
+        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
+        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+        fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
+        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+        fg.addFeaturesEntry(new FeaturesEntry("List of CGMS"));
+        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
         
         lst_features.add(fg);
         
         
         fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+        fg.addFeaturesEntry(new FeaturesEntry("Dexcom (file import only)"));
+        
         //fg.addFeaturesEntry(new FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
         //fg.addFeaturesEntry(new FeaturesEntry("Dana (only works on Windows and Linux)"));
 //        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
@@ -387,13 +389,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         
         
         fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Base CGMS Tools Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
-        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
-        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
-        fg.addFeaturesEntry(new FeaturesEntry("List of CGMS"));
-        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
 
         
         //fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration) [Ready]"));
@@ -406,7 +401,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
         fg.addFeaturesEntry(new FeaturesEntry("Minimed RealTime (??)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Dexcom 7 (??)"));
         fg.addFeaturesEntry(new FeaturesEntry("Freestyle Navigator (??)"));
         //fg.addFeaturesEntry(new FeaturesEntry("Dana (in 2009/2010)"));
         
@@ -427,7 +421,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void createPlugInVersion()
     {
-        // TODO Auto-generated method stub
         this.plugin_version = DataAccessCGMS.PLUGIN_VERSION;
     }
 
@@ -548,7 +541,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
      */
     public void createOldDataReader()
     {
-        //this.m_old_data_reader = new CGMSDataReader(this);
+        // FIXME
+        this.m_old_data_reader = new CGMSDataReader(this);
     }
 
     
@@ -581,8 +575,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void initAllObjects()
     {
-        // TODO Auto-generated method stub
-        
     }    
     
     

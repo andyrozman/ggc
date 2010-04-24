@@ -111,6 +111,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     };
     
     DataAccessCGMS da_local;
+    private JMenuItem[] menus = new JMenuItem[3];
     
     
     /**
@@ -294,6 +295,21 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         
     }
 
+    
+    /**
+     * Get Return Object
+     * 
+     * @param ret_obj_id
+     * @param parameters
+     * @return
+     */
+    @Override
+    public Object getReturnObject(int ret_obj_id, Object[] parameters)
+    {
+        return null;
+    }
+    
+    
 
     /**
      * Get Backup Objects (if available)
@@ -326,6 +342,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     {
         
         JMenu menu_cgms = ATSwingUtils.createMenu("MN_CGMS", null, ic_local);
+
         
         JMenuItem menu = ATSwingUtils.createMenuItem(menu_cgms, 
             "MN_CGMS_READ", 
@@ -340,7 +357,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         else
             menu.setEnabled(false);
         
-        
+        menus[0] = menu;
         
         menu = ATSwingUtils.createMenuItem(menu_cgms, 
             "MN_CGMS_READ_FILE", 
@@ -353,6 +370,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
             menu.setEnabled(true);
         else
             menu.setEnabled(false);
+        menus[1] = menu;
         
         
         menu_cgms.addSeparator();
@@ -397,6 +415,22 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     }
 
     
+    private void refreshMenusAfterConfig()
+    {
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+            menus[0].setEnabled(true);
+        else
+            menus[0].setEnabled(false);
+        
+        
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
+            menus[1].setEnabled(true);
+        else
+            menus[1].setEnabled(false);
+    }
+    
+    
+    
     /**
      * Get PlugIn Print Menus 
      * 
@@ -437,6 +471,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         else if (command.equals("cgms_config"))
         {
             new DeviceConfigurationDialog((JFrame)this.parent, DataAccessCGMS.getInstance());
+            refreshMenusAfterConfig();
             this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_CONFIG);
         }
         else if (command.equals("cgms_about"))
@@ -463,8 +498,6 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     {
         return new BackupRestoreCGMSHandler();
     }
-    
-    
     
 }
 

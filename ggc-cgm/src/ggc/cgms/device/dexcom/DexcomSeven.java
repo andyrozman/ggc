@@ -178,12 +178,8 @@ public class DexcomSeven extends DexcomCGMS
     
     public void readDeviceDataFull() throws PlugInBaseException
     {
-        
-        FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(this.m_da);
-        dt1.readFile("../test/DexDM3SampleExport.xml");
-        
-        
-        
+        //FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(this.m_da);
+        //dt1.readFile("../test/DexDM3SampleExport.xml");
     }
  
     

@@ -202,26 +202,14 @@ public class GGC_CGMSDb extends PluginDb
      */
     public int getAllElementsCount()
     {
-        DataAccessCGMS.notImplemented("GGC_CGMSDb::getAllElementsCount()");
-        
         Integer in = null;
         int sum_all = 0;
-        
-        /*
-        CGMSInterface pe = (CGMSInterface)m_da.getSelectedDeviceInstance();
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.add(GregorianCalendar.MONTH, (-1) * pe.howManyMonthsOfDataStored());
-        
-        long dt_from = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY) * 10000;
-        */
         
         Criteria criteria = this.getSession().createCriteria(CGMSDataH.class);
         criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
         sum_all = in.intValue();
-
-        System.out.println("Pump Data : " + in.intValue());
 
         return sum_all;
     }

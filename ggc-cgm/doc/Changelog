@@ -2,12 +2,19 @@
 Changes file for GGC CGM Tool
 ==============================
 
+1.0.1 [23.4.2010]
+    * Dexcom finished
+    * Plugin base functionalities finished
+    * Plugin finished and tested with Dexcom import files
+    * Menus refresh fixed
+    
+
 0.6 [10.4.2010]
     * Import/Export
     
 
 0.5 [2.3.2010]
-    * Viev data for CGMS - finalized 
+    * View data for CGMS - finalized 
 
 0.4.3
     * Dexcom mostly done

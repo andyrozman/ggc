@@ -4,6 +4,7 @@ import ggc.cgms.device.dexcom.FRC_DexcomXml_DM3;
 import ggc.cgms.device.minimed.MinimedCareLink;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.plugin.output.ConsoleOutputWriter;
 
 import java.io.File;
 
@@ -111,7 +112,7 @@ public class CGMSConsoleTester //extends JFrame
         //FRC_DexcomTxt_DM3 dt = new FRC_DexcomTxt_DM3(dap);
         //dt.readFile("../test/DexDM3SampleExport.txt");
         
-        FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(dap);
+        FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(dap, new ConsoleOutputWriter());
         dt1.readFile("../test/DexDM3SampleExport.xml");
         
     }

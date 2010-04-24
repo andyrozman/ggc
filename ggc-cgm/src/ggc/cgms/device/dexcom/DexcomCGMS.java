@@ -1,13 +1,12 @@
 package ggc.cgms.device.dexcom;
 
 import ggc.cgms.device.AbstractCGMS;
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -76,11 +75,6 @@ public abstract class DexcomCGMS extends AbstractCGMS
     
     
     
-  
-
-
-    
-    
     /**
      * getComment - Get Comment for device 
      * 
@@ -88,7 +82,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
      */
     public String getComment()
     {
-        return null;
+        return "";
     }
     
     
@@ -167,13 +161,14 @@ public abstract class DexcomCGMS extends AbstractCGMS
     }
 
     
+    
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
      */
     public DeviceIdentification getDeviceInfo()
     {
-        return null;
+        return this.output_writer.getDeviceIdentification();
     }
   
 
@@ -216,7 +211,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
      */
     public String getDeviceSpecialComment()
     {
-        return null;
+        return "";
     }
 
 
@@ -312,9 +307,9 @@ public abstract class DexcomCGMS extends AbstractCGMS
     public void loadFileContexts()
     {
 //        System.out.println("loadFileContexts");
-        this.file_contexts = new FileReaderContext[2];
-        this.file_contexts[0] = new FRC_DexcomXml_DM3(m_da);
-        this.file_contexts[1] = new FRC_DexcomTxt_DM3(m_da);
+        this.file_contexts = new GGCPlugInFileReaderContext[2];
+        this.file_contexts[0] = new FRC_DexcomXml_DM3(m_da, this.m_output_writer);
+        this.file_contexts[1] = new FRC_DexcomTxt_DM3(m_da, this.m_output_writer);
     }
     
     

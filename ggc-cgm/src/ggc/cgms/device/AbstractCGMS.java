@@ -1,6 +1,7 @@
 package ggc.cgms.device;
 
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -9,7 +10,6 @@ import ggc.plugin.output.OutputWriter;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,7 +57,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     protected OutputWriter output_writer;
     protected String parameter;
     protected DataAccessCGMS m_da;
-    protected FileReaderContext[] file_contexts = null;
+    protected GGCPlugInFileReaderContext[] file_contexts = null;
     
     
     /**
@@ -545,7 +545,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
      * 
      * @return
      */
-    public FileReaderContext[] getFileDownloadTypes()
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
     {
         return this.file_contexts;
     }

@@ -2,6 +2,9 @@ package ggc.cgms.device.dexcom;
 
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
+import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -12,6 +15,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
@@ -20,8 +25,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,17 +53,20 @@ import com.atech.utils.file.FileReaderContext;
  */
 
 
-public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
+public class FRC_DexcomXml_DM3 extends XmlProtocol implements GGCPlugInFileReaderContext
 {
 
+    private static Log log = LogFactory.getLog(FRC_DexcomXml_DM3.class);
+    
     /**
      * Constructor
      * 
      * @param da
+     * @param ow 
      */
-    public FRC_DexcomXml_DM3(DataAccessPlugInBase da)
+    public FRC_DexcomXml_DM3(DataAccessPlugInBase da, OutputWriter ow)
     {
-        super(da);
+        super(da, ow);
     }
 
     public String getFileDescription() 
@@ -94,11 +100,23 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
         return false;
     }
 
+    
+    
+    
+    
     public void readFile(String filename)
     {
         try
         {
-            System.out.println("readFile");
+            DeviceIdentification di = this.output_writer.getDeviceIdentification();
+            di.is_file_import = true;
+            di.fi_file_name = new File(filename).getName();
+            di.company = this.m_da.getSelectedDeviceInstance().getDeviceCompany().getName();
+            di.device_selected = this.m_da.getSelectedDeviceInstance().getName();
+            
+            this.output_writer.setDeviceIdentification(di);
+            this.output_writer.writeDeviceIdentification();
+            
             
             XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 
@@ -108,14 +126,14 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
             xmlReader.setContentHandler(myCH);
             xmlReader.parse(filename);            
             
-            ArrayList<CGMSValuesSubEntry> d = myCH.getData();
+            //ArrayList<CGMSValuesSubEntry> d = myCH.getData();
             myCH.finishReading();
              
-            System.out.println("Readings: " + d.size());
+            //System.out.println("Readings: " + d.size());
         }
         catch(Exception ex)
         {
-            
+            log.error("Exception on readFile. Ex: " + ex, ex);
         }
 
     }
@@ -155,11 +173,11 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
         }
         
         
-        
+        /*
         public ArrayList<CGMSValuesSubEntry> getData()
         {
             return this.list_subs;
-        }
+        }*/
         
         
         public void addEntry(CGMSValuesSubEntry entry)
@@ -257,6 +275,11 @@ public class FRC_DexcomXml_DM3 extends XmlProtocol implements FileReaderContext
     
     public void goToNextDialog(JDialog currentDialog)
     {
+    }
+
+    public void setOutputWriter(OutputWriter ow)
+    {
+        this.output_writer = ow;
     }
     
     

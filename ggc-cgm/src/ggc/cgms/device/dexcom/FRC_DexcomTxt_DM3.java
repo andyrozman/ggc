@@ -2,6 +2,9 @@ package ggc.cgms.device.dexcom;
 
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
+import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -14,8 +17,6 @@ import java.util.StringTokenizer;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
-
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,7 +44,7 @@ import com.atech.utils.file.FileReaderContext;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
+public class FRC_DexcomTxt_DM3 extends XmlProtocol implements GGCPlugInFileReaderContext
 {
 
     ArrayList<CGMSValuesSubEntry> list = new ArrayList<CGMSValuesSubEntry>();
@@ -51,11 +52,14 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
     
     
     /**
+     * Constructor
+     * 
      * @param da
+     * @param ow 
      */
-    public FRC_DexcomTxt_DM3(DataAccessPlugInBase da)
+    public FRC_DexcomTxt_DM3(DataAccessPlugInBase da, OutputWriter ow)
     {
-        super(da);
+        super(da, ow);
     }
 
     public String getFileDescription()
@@ -93,6 +97,17 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
     {
         try
         {
+            
+            DeviceIdentification di = this.output_writer.getDeviceIdentification();
+            di.is_file_import = true;
+            di.fi_file_name = new File(filename).getName();
+            di.company = this.m_da.getSelectedDeviceInstance().getDeviceCompany().getName();
+            di.device_selected = this.m_da.getSelectedDeviceInstance().getName();
+            
+            this.output_writer.setDeviceIdentification(di);
+            this.output_writer.writeDeviceIdentification();
+            
+            
             cvtm = (CGMSValuesTableModel)m_da.getDeviceDataHandler().getDeviceValuesTableModel();
             
             BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -109,7 +124,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
         {
             ex.printStackTrace();
         }
-        System.out.println("i = " + i + " lisr: " + list.size());
+        //System.out.println("i = " + i + " lisr: " + list.size());
         
     }
     
@@ -241,6 +256,11 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements FileReaderContext
     public String toString()
     {
         return this.getFullFileDescription();
+    }
+
+    public void setOutputWriter(OutputWriter ow)
+    {
+        this.output_writer = ow;
     }
     
     

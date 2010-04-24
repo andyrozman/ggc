@@ -126,6 +126,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
      */
     public String getSubEntryValue()
     {
+        //return getColumnValue(0) + "=" + this.value;
         return this.time + "=" + this.value;
     }
     
@@ -149,7 +150,9 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         return datetime + " = " + value;
     }
 
-
+    // FIXME This is problem, when we will have other types of data
+    
+    
     @Override
     public Object getColumnValue(int index)
     {
@@ -201,13 +204,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         return null;
     }
 
-
-    @Override
-    public void prepareEntry()
-    {
-    }
-
-
+    
     @Override
     public void setDateTimeObject(ATechDate dt)
     {

@@ -69,6 +69,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	ArrayList<CGMSValuesSubEntry> list = null;
 	String extended = "";
 	int person_id = 0;
+	String item_data = null;
 	
 	
 	/**
@@ -229,34 +230,13 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 	}
 	
 	
-	/**
-	 * Prepare Entry [Framework v1]
-	 * 
-	 * @see ggc.plugin.data.DeviceValuesEntry#prepareEntry()
-	 */
-	public void prepareEntry()
-	{
-	    /*
-	    if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
-	        return;
-	    else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
-	    {
-	        this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setChanged(System.currentTimeMillis());
-	        this.entry_object.setComment(createComment());
-	    }
-	    else
-	    {
-	        this.entry_object = new DayValueH();
-	        this.entry_object.setIns1(0);
-            this.entry_object.setIns2(0);
-            this.entry_object.setCh(0.0f);
-            this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setDt_info(this.datetime);
-            this.entry_object.setChanged(System.currentTimeMillis());
-            this.entry_object.setComment(createComment());
-	    }*/
-	}
+    /**
+     * Prepare Entry [Framework v2]
+     */
+    public void prepareEntry_v2()
+    {
+        this.saveExtended();
+    }
 	
 	
 	/**
@@ -593,7 +573,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         CGMSDataH pdh = (CGMSDataH)sess.get(CGMSDataH.class, new Long(this.id));
         
         pdh.setId(this.id);
-        pdh.setDt_info(this.datetime); 
         pdh.setBase_type(this.type); 
         pdh.setExtended(this.extended = saveExtended()); 
         pdh.setPerson_id(this.person_id); 
@@ -667,7 +646,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getObjectName()
     {
-        return "CGMValuesEntry";
+        return "CGMSValuesEntry";
     }
 
 
@@ -707,7 +686,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getDVEName()
     {
-        return "CGMValuesEntry";
+        return "CGMSValuesEntry";
     }
 
 
@@ -718,7 +697,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getValue()
     {
-        return null;
+        return this.item_data;
     }
     
    
@@ -774,7 +753,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         Collections.sort(this.list);
         
-        StringBuffer sb = new StringBuffer("DATA=");
+        StringBuffer sb = new StringBuffer();
         
         for(int i=0; i<this.list.size(); i++)
         {
@@ -784,10 +763,16 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         
         sb.substring(0, sb.length()-1);
         
-        sb.append("#$#SOURCE=");
-        sb.append(this.list.get(0).getSource());
+        this.item_data = sb.toString();
+
+        StringBuffer sb1 = new StringBuffer("DATA=");
+        sb1.append(this.item_data);
         
-        return sb.toString();
+        
+        sb1.append("#$#SOURCE=");
+        sb1.append(this.list.get(0).getSource());
+        
+        return sb1.toString();
     }
     
     
@@ -805,6 +790,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
             {
                 tok = tok.substring(5);
                 
+                this.item_data = tok;
                 
                 StringTokenizer strtok2 = new StringTokenizer(tok, ";");
                 
@@ -820,7 +806,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
             else if (tok.startsWith("SOURCE="))
             {
                 tok = tok.substring(7);
-                System.out.println("tok src: " + tok);
+                //System.out.println("tok src: " + tok);
             }
             else
                 log.warn("Unknown token with extended data: " + tok);

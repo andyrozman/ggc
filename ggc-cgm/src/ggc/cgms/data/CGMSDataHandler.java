@@ -78,7 +78,7 @@ public class CGMSDataHandler extends DeviceDataHandler
      */
     public void createDeviceValuesTableModel()
     {
-        this.m_model = new CGMSValuesTableModel(this, "TestCGMS"); //m_da.getSourceDevice());
+        this.m_model = new CGMSValuesTableModel(this, m_da.getSourceDevice()); //m_da.getSourceDevice());
         //System.out.println("Model");
     }
 

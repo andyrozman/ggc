@@ -107,7 +107,7 @@ public class CGMSDataReader extends OldDataReaderAbstract
         
         int proc = this.getElementProcent(current_entry);
         
-        float proc_total = ((((proc* 1.0f) + db_reading) ) / 160.0f) * 100.0f;  
+        float proc_total = ((((proc* 1.0f) + db_reading) ) / 120.0f) * 100.0f;  
         int proc_total_i = (int)proc_total;
 
         this.m_drr.setOldDataReadingProgress(proc_total_i);
