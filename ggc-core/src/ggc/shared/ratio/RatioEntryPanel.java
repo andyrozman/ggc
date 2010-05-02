@@ -49,27 +49,16 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
 
     private static final long serialVersionUID = 4974215928928541220L;
 
-
-
-
     JDecimalTextField dtf_ch_ins, dtf_ins_bg, dtf_bg_ch;
     
-
-
 
     boolean in_action = false;
     
     private DataAccess m_da = null;
     private I18nControlAbstract m_ic = null;
 
-    //private boolean m_actionDone = false;
-    //JLabel label_title = new JLabel();
-
-    //boolean in_process;
-//    boolean debug = true;
-    //JButton help_button = null;
-    //JPanel main_panel = null;
     RatioEntry ratio_entry = null;
+    int left_position = 30;
     
 
     /**
@@ -77,11 +66,12 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
      * 
      * @param da 
      */
-    public RatioEntryPanel(DataAccess da) 
+    public RatioEntryPanel(DataAccess da, int left_pos) 
     {
         super();
         m_da = da;
         m_ic = da.getI18nControlInstance();
+        this.left_position = left_pos;
         
         init();
     }
@@ -95,10 +85,25 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
      */
     public RatioEntryPanel(DataAccess da, RatioEntry re) 
     {
-        this(da);
+        this(da, 30);
         ratio_entry = re;
         setRatios(re.ch_insulin, re.bg_insulin, 0.0f);
     }
+    
+
+    /**
+     * Constructor
+     * 
+     * @param da 
+     * @param re 
+     */
+    public RatioEntryPanel(DataAccess da, RatioEntry re, int left_pos) 
+    {
+        this(da, left_pos);
+        ratio_entry = re;
+        setRatios(re.ch_insulin, re.bg_insulin, 0.0f);
+    }
+    
     
     
     /**
@@ -202,56 +207,23 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         
         ATSwingUtils.initLibrary();
         
-        /*
-        int x = 0;
-        int y = 0;
-        int width = 400;
-        int height = 500;
-
-        Rectangle bnd = m_parent.getBounds();
-
-        x = (bnd.width/2) + bnd.x - (width/2);
-        y = (bnd.height/2) + bnd.y - (height/2);*/
-        
-        //this.setBounds(0, 0, 300, 340);
-        
-        //m_da.centerJDialog(this);
-
-        //JPanel panel = new JPanel();
         setBounds(0, 0, 300, 400);
         setLayout(null);
 
-        //main_panel = panel;
-        
-        //this.getContentPane().add(panel);
-
-        
-        //label_title = ATSwingUtils.getTitleLabel("", 0, 15, 300, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
-        
-        //setTitle(m_ic.getMessage("RATIO_BASE"));
-        //label_title.setText(m_ic.getMessage("RATIO_BASE"));
-
-        ATSwingUtils.getLabel(m_ic.getMessage("INSULIN_CARB_RATIO"), 30, 80, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(m_ic.getMessage("INSULIN_CARB_RATIO"), left_position, 80, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
         dtf_ch_ins = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, 80, 80, 25, this);
         dtf_ch_ins.addFocusListener(this);
         dtf_ch_ins.addKeyListener(this);
         
-        ATSwingUtils.getLabel(m_ic.getMessage("SENSITIVITY_FACTOR_LONG"), 30, 120, 150, 45, this, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(m_ic.getMessage("SENSITIVITY_FACTOR_LONG"), left_position, 120, 150, 45, this, ATSwingUtils.FONT_NORMAL_BOLD);
         dtf_ins_bg = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, 130, 80, 25, this);
         dtf_ins_bg.addFocusListener(this);
         dtf_ins_bg.addKeyListener(this);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("BG_OH_RATIO"), 30, 180, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(m_ic.getMessage("BG_OH_RATIO"), left_position, 180, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
         dtf_bg_ch = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, 180, 80, 25, this);
         dtf_bg_ch.addFocusListener(this);
         dtf_bg_ch.addKeyListener(this);
-
-/*
-        ATSwingUtils.getButton("" , 
-            30, 220, 30, 30, panel, ATSwingUtils.FONT_NORMAL, 
-            "calculator.png", 
-            "calculator", this, m_da);
-  */      
         
     }
 

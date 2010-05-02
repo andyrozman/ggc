@@ -1,6 +1,8 @@
 package ggc.core.util;
 
+import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.DailyValues;
+import ggc.core.data.ExtendedDailyValue;
 import ggc.core.data.HbA1cValues;
 import ggc.core.data.WeeklyValues;
 import ggc.core.data.cfg.ConfigurationManager;
@@ -19,9 +21,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
 import java.io.FileInputStream;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Enumeration;
@@ -77,13 +76,12 @@ import com.atech.utils.logs.RedirectScreen;
 
 
 public class DataAccess extends ATDataAccessLMAbstract 
-//ATDataAccessAbstract
 {
 
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.4.17";
+    public static String CORE_VERSION = "0.4.18";
     
     /**
      * Current Db Version
@@ -99,47 +97,14 @@ public class DataAccess extends ATDataAccessLMAbstract
     private static Log log = LogFactory.getLog(DataAccess.class);
 
     private Hashtable<String,EventSource> observables = null;
+
     
-    
-    // LF
-    // Hashtable<String,String> availableLF_full = null;
-    // Object[] availableLF = null;
-    // Object[] availableLang = null;
-    // private LanguageInfo m_lang_info = null;
-
-    // String selectedLF = null;
-    // String subSelectedLF = null;
-
-    // Config file
-    // Hashtable<String,String> config_db_values = null;
-    // public int selected_db = -1;
-    // public int selected_lang = 1;
-    // public String selected_LF_Class = null; // class
-    // public String selected_LF_Name = null; // name
-    // public String skinLFSelected = null;
-    // String allDbs[] = null;
-
-    //public static final String pathPrefix = ".";
-
-    // public I18nControl m_i18n = null;
-
-    private static DataAccess s_da = null; // This is handle to unique
-
-    // singelton instance
+    private static DataAccess s_da = null; // This is handle to unique singelton instance
 
     private GGCDb m_db = null;
 
-//    private MainFrame m_main = null;
-//    private GGCLittle m_main_little = null;
     private Component m_main = null;
 
-    // public GGCTreeRoot m_nutrition_treeroot = null;
-    // public GGCTreeRoot m_meals_treeroot = null;
-
-    /**
-     * Tree Roots
-     */
-    //public Hashtable<String, GGCTreeRoot> tree_roots = null;
 
     // daily and weekly data
     private GregorianCalendar m_date = null, m_dateStart = null;
@@ -178,12 +143,12 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
 //    public int m_BG_unit = BG_MGDL;
 
-    private String[] availableLanguages = { "English", "Deutsch", "Slovenski", "Fran\u00e7ais" };
+    private String[] availableLanguages = { "English", "Deutsch", "Slovenski", "Fran\u00e7ais", "Language Tool" };
   
     /**
      * Available Language Extensions (posfixes)
      */
-    public String[] avLangPostfix = { "en", "de", "si", "fr" };
+    public String[] avLangPostfix = { "en", "de", "si", "fr", "lt" };
 
     
     //public Locale[] realLocales = { Locale.ENGLISH, Locale.GERMANY, Locale.
@@ -241,6 +206,13 @@ public class DataAccess extends ATDataAccessLMAbstract
      * GGC Mode: Pump
      */
     public static final int GGC_MODE_PUMP = 1;
+
+    
+    /**
+     * Converter: BG     
+     */
+    public static final String CONVERTER_BG = "BG";
+    
     
     
     
@@ -309,12 +281,11 @@ public class DataAccess extends ATDataAccessLMAbstract
             new RedirectScreen();
         }
 
-        loadGraphConfigProperties();        
-        
-        startWebServer();
-        
+        this.loadGraphConfigProperties();        
+        this.startWebServer();
         this.loadSpecialParameters();
-      
+        this.loadConverters();
+        
         /*
         System.out.println(Locale.getAvailableLocales());
         
@@ -771,36 +742,17 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public void initPlugIns()
     {
-        log.debug("init Plugins");
-       
         log.debug("init Plugins: Meter Tool");
-        
         addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
-        // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
-
-        /*
-        PumpsPlugIn ppi = new PumpsPlugIn(this.m_main, this.m_i18n);
-        
-        ArrayList<TransferDialog> lst = new ArrayList<TransferDialog>();
-        lst.add(new DailyRowMealsDialog(this.m_main));
-        ppi.setTransferObjects(lst);
-        */
-        //addPlugIn(DataAccess.PLUGIN_PUMPS, ppi);
 
         log.debug("init Plugins: Pumps Tool");
-        
         addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this));
-        
-        // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
 
         log.debug("init Plugins: CGMS Tool");
-        
         addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
 
         log.debug("init Plugins: Nutrition Tool");
         addPlugIn(DataAccess.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
-        
-        // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
     }
     
     
@@ -1024,10 +976,11 @@ public class DataAccess extends ATDataAccessLMAbstract
         switch (this.getBGMeasurmentType())
         {
         case BG_MMOL:
+            return this.converters.get("BG").getValueDifferent(Converter_mgdL_mmolL.UNIT_mg_dL, dbValue);
             // this POS should return a float rounded to 3 decimal places,
             // if I understand the docu correctly
-            return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR, new MathContext(3, RoundingMode.HALF_UP))
-                    .floatValue());
+//            return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR, new MathContext(3, RoundingMode.HALF_UP))
+//                    .floatValue());
         case BG_MGDL:
         default:
             return dbValue;
@@ -1343,134 +1296,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ****** Dates and Times Handling *****
     // ********************************************************
 
-
-    
-   
-
  
-
-  
-
-  
-
-
-   /*
-
-    public Date getDateTimeAsDateObject(long dt)
-    {
-
-        // Date dt_obj = new Date();
-        GregorianCalendar gc = new GregorianCalendar();
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        gc.set(Calendar.DATE, d);
-        gc.set(Calendar.MONTH, m - 1);
-        gc.set(Calendar.YEAR, y);
-        gc.set(Calendar.HOUR_OF_DAY, h);
-        gc.set(Calendar.MINUTE, min);
-
-
-        return gc.getTime();
-
-    }
-
-    public long getDateTimeLong(long dt, int ret_type)
-    {
-
-        int y = (int) (dt / 100000000L);
-        dt -= y * 100000000L;
-
-        int m = (int) (dt / 1000000L);
-        dt -= m * 1000000L;
-
-        int d = (int) (dt / 10000L);
-        dt -= d * 10000L;
-
-        int h = (int) (dt / 100L);
-        dt -= h * 100L;
-
-        int min = (int) dt;
-
-        if (ret_type == DT_DATETIME)
-        {
-            return Integer.parseInt(y + getLeadingZero(m, 2) + getLeadingZero(d, 2) + getLeadingZero(h, 2)
-                    + getLeadingZero(min, 2));
-        }
-        else if (ret_type == DT_DATE)
-        {
-            return Integer.parseInt(getLeadingZero(d, 2) + getLeadingZero(m, 2) + y);
-        }
-        else
-            return Integer.parseInt(getLeadingZero(h, 2) + getLeadingZero(min, 2));
-
-    }
-
-    public long getDateTimeFromDateObject(Date dt)
-    {
-
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(dt);
-
-        String dx = "";
-
-        dx += "" + gc.get(Calendar.YEAR);
-        dx += "" + getLeadingZero(gc.get(Calendar.MONTH + 1), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
-        dx += "" + getLeadingZero(gc.get(Calendar.MINUTE), 2);
-
-        return Long.parseLong(dx);
-
-    }
-*/
-    // 1 = Db Date: yyyyMMdd
-    // 2 = Db Full: yyyyMMddHHMM (24h format)
-   /* public String getDateTimeStringFromGregorianCalendar(GregorianCalendar gc, int type)
-    {
-        String st = "";
-
-        if (gc.get(Calendar.YEAR) < 1000)
-        {
-            st += gc.get(Calendar.YEAR) + 1900;
-        }
-        else
-        {
-            st += gc.get(Calendar.YEAR);
-        }
-
-        st += getLeadingZero(gc.get(Calendar.MONTH) + 1, 2);
-        st += getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
-
-        if (type == 2)
-        {
-            st += getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2);
-            st += getLeadingZero(gc.get(Calendar.MINUTE), 2);
-        }
-
-        // System.out.println(st);
-
-        return st;
-    }
-
-    @Override
-    public String getDateTimeString(int date, int time)
-    {
-        return getDateString(date) + " " + getTimeString(time);
-    }
-*/
     /**
      * Get Start Year
      */
@@ -1480,11 +1306,6 @@ public class DataAccess extends ATDataAccessLMAbstract
         return 1800;
     }
 
-    /*
-     * public Date m_date = null; public HbA1cValues m_HbA1c = null; public
-     * DailyValues m_dvalues = null;
-     */
-    
     
     
     /**
@@ -2005,7 +1826,32 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public int getMaxDecimalsUsedByDecimalHandler()
     {
-        return 2;
+        return 3;
+    }
+
+    
+    public void loadExtendedHandlers()
+    {
+        this.extended_handlers.put("DailyValuesRow", new ExtendedDailyValue(this));
+    }
+    
+    
+    @Override
+    public void loadConverters()
+    {
+        this.converters.put("BG", new Converter_mgdL_mmolL());
+    }
+    
+    
+    /**
+     * Get BG Converter
+     * 
+     * @return
+     */
+    public Converter_mgdL_mmolL getBGConverter()
+    {
+        return (Converter_mgdL_mmolL)this.getConverter("BG");
+        
     }
     
 

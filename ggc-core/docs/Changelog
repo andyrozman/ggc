@@ -6,6 +6,20 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.4.19.2
+    * Work on Extended Ratio functionality
+    * added Extended handler for DailyValues class
+
+0.4.19.1 [23.4.2010]
+    * We have now statistics when in Pump mode
+    * More integration of Converter into DataAccess (we still need to rework this)
+    
+
+0.4.18 [8.4.2010]
+    * Added support for Language tool (fixed I18nControlAbstract and also added stuff to 
+      configuration)
+
+
 0.4.17 [14.2.2010]
     * Statistics fixed for Pen Mode (Bolus, Basal)
     * Changed configuration for insulins for Pens

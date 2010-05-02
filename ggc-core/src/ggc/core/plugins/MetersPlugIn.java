@@ -165,7 +165,8 @@ public class MetersPlugIn extends PlugInClient
         {
             if (this.isCommandImplemented(command))
             {
-                this.showMessage(String.format(ic.getMessage("PLUGIN_NOT_INSTALLED"), this.getName()));
+                //this.showMessage(String.format(ic.getMessage("PLUGIN_NOT_INSTALLED"), this.getName()));
+                this.showMessage(ic.getMessage("PLUGIN_NOT_INSTALLED"));
             }
             else
             {

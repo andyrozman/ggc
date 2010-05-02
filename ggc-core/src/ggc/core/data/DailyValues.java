@@ -141,7 +141,7 @@ public class DailyValues implements Serializable
         if (!this.day_count.contains(dVR.getDateDString()))
         {
             this.day_count.put(dVR.getDateDString(), "");
-            System.out.println(" Day count: " + this.day_count.size());
+            //System.out.println(" Day count: " + this.day_count.size());
         }
         
     	bOnlyInsert = false;
