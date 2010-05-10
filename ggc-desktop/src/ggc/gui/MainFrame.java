@@ -1116,16 +1116,11 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("view_course"))
             {
-                //new CourseGraphDialog(m_da);
-                
                 new GraphViewer(new GraphViewCourse(), m_da);
-                
-                
             }
             else if (command.equals("view_spread"))
             {
                 new GraphViewer(new GraphViewSpread(), m_da);
-                //new SpreadGraphDialog(m_da);
             }
             else if (command.equals("view_freq"))
             {

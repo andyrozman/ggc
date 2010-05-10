@@ -775,6 +775,11 @@ public class PrintingDialog extends ActionExceptionCatchDialog // extends
     
 
 
+    /**
+     * Get Pdf Viewer Parameters 
+     * 
+     * @return
+     */
     public String getPdfViewerParameters()
     {
         return DataAccess.getInstance().getSettings().getPdfVieverParameters();

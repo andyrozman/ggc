@@ -14,6 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.atech.misc.statistics.StatisticsCollection;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -43,12 +48,10 @@ import javax.swing.border.TitledBorder;
 
 public class StatisticsInfoPanel extends AbstractInfoPanel
 {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2075057980606217010L;
     GregorianCalendar endDate = null;
     GregorianCalendar startDate = null; //new Date(endDate.getTime() - (518400000L)); //now - 6 days in millisec
+    private static Log log = LogFactory.getLog(StatisticsInfoPanel.class);
 
     JLabel lblAvgBG, lblBGReadings, lblBGReadingsDay;
     JLabel lblSumBU, lblBUDay, lblCountBU, lblAvgBU, lblBUCountDay;
@@ -58,7 +61,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     JLabel lbl_sum_ins1_day_name, lbl_sum_ins1_name, lbl_sum_ins2_day_name, lbl_sum_ins2_name;
 
     JPanel PanelIns1, PanelIns2;
-
+    DecimalFormat dec_format;
 
 
 
@@ -74,8 +77,17 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         endDate = new GregorianCalendar();
         startDate = new GregorianCalendar();
         startDate.add(java.util.Calendar.DAY_OF_MONTH, -6);
+        
+        endDate.set(GregorianCalendar.HOUR_OF_DAY, 23);
+        endDate.set(GregorianCalendar.MINUTE, 59);
+        endDate.set(GregorianCalendar.SECOND, 59);
+        
+        startDate.set(GregorianCalendar.HOUR_OF_DAY, 0);
+        startDate.set(GregorianCalendar.MINUTE, 0);
+        startDate.set(GregorianCalendar.SECOND, 0);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        dec_format = new DecimalFormat("#0.00");
 
         ((TitledBorder)this.getBorder()).setTitle(m_ic.getMessage("STATISTICS_FOR_LAST_WEEK")+" (" + sdf.format(startDate.getTime()) + " - " + sdf.format(endDate.getTime()) + ")");
 
@@ -185,47 +197,89 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         if (!m_da.isDatabaseInitialized()) 
             return;
 
-        //StatisticValues sV = new StatisticValues(startDate, endDate);
-        CollectionValues sV = new CollectionValues(startDate, endDate);
-
-        DecimalFormat df = new DecimalFormat("#0.00");
-
-        lblAvgBG.setText(df.format(sV.getAvgBG()));
-        lblBGReadings.setText(sV.getBGCount() + "");
-        lblBGReadingsDay.setText(DataAccess.Decimal2Format.format((sV.getBGCount()/7.0f)));
-
-        lblSumBU.setText(df.format(sV.getSumCH()));
-        lblBUDay.setText(df.format(sV.getSumCHPerDay()));
-        lblCountBU.setText(sV.getCHCount() + "");
-        lblAvgBU.setText(df.format(sV.getAvgCH()));
-        lblBUCountDay.setText(df.format(sV.getCHCountPerDay()));
-
-        lblSumIns1.setText(df.format(sV.getSumBolus()));
-        lblIns1Day.setText(df.format(sV.getSumBolusPerDay()));
-        lblCountIns1.setText(sV.getBolusCount() + "");
-        lblAvgIns1.setText(df.format(sV.getAvgBolus()));
-        lblIns1CountDay.setText(df.format(sV.getBolusCountPerDay()));
-
-        lblSumIns2.setText(df.format(sV.getSumBasal()));
-        lblIns2Day.setText(df.format(sV.getSumBasalPerDay()));
-        lblCountIns2.setText(sV.getBasalCount() + "");
-        lblAvgIns2.setText(df.format(sV.getAvgBasal()));
-        lblIns2CountDay.setText(df.format(sV.getBasalCountPerDay()));
+        //System.out.println("Statictics::doRefresh()");
 
         
-        if (first_refresh)
+        if (m_da.getSoftwareMode()==DataAccess.GGC_MODE_PEN_INJECTION)
         {
-            //PanelIns1.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns1Name() + " " +m_ic.getMessage("STATISTICS") + ":"));
-            //PanelIns2.setBorder(BorderFactory.createTitledBorder(m_da.getSettings().getIns2Name() + " " + m_ic.getMessage("STATISTICS")+":"));
-    /*
-            lbl_sum_ins1_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns1Abbr() + ":");
-            lbl_sum_ins1_day_name.setText(m_da.getSettings().getIns1Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
+
+            log.debug("Statistics - Pen/Injection Mode");
+        
+            CollectionValues sV = new CollectionValues(startDate, endDate);
     
-            lbl_sum_ins2_name.setText(m_ic.getMessage("SUM") + " " + m_da.getSettings().getIns2Abbr() + ":");
-            lbl_sum_ins2_day_name.setText(m_da.getSettings().getIns2Abbr() + " " + m_ic.getMessage("PER_DAY")+":");
+            lblAvgBG.setText(dec_format.format(sV.getAvgBG()));
+            lblBGReadings.setText(sV.getBGCount() + "");
+            lblBGReadingsDay.setText(DataAccess.Decimal2Format.format((sV.getBGCount()/7.0f)));
     
-            first_refresh = false; */
+            lblSumBU.setText(dec_format.format(sV.getSumCH()));
+            lblBUDay.setText(dec_format.format(sV.getSumCHPerDay()));
+            lblCountBU.setText(sV.getCHCount() + "");
+            lblAvgBU.setText(dec_format.format(sV.getAvgCH()));
+            lblBUCountDay.setText(dec_format.format(sV.getCHCountPerDay()));
+    
+            lblSumIns1.setText(dec_format.format(sV.getSumBolus()));
+            lblIns1Day.setText(dec_format.format(sV.getSumBolusPerDay()));
+            lblCountIns1.setText(sV.getBolusCount() + "");
+            lblAvgIns1.setText(dec_format.format(sV.getAvgBolus()));
+            lblIns1CountDay.setText(dec_format.format(sV.getBolusCountPerDay()));
+    
+            lblSumIns2.setText(dec_format.format(sV.getSumBasal()));
+            lblIns2Day.setText(dec_format.format(sV.getSumBasalPerDay()));
+            lblCountIns2.setText(sV.getBasalCount() + "");
+            lblAvgIns2.setText(dec_format.format(sV.getAvgBasal()));
+            lblIns2CountDay.setText(dec_format.format(sV.getBasalCountPerDay()));
         }
+        else
+        {
+            log.debug("Statistics - Pump Mode");
+            
+            GregorianCalendar[] gcs = new GregorianCalendar[2];
+            gcs[0] = startDate;
+            gcs[1] = endDate;
+            
+            Object obj = m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).getReturnObject(100, gcs);
+            
+            if (obj!=null)
+            {
+                if (obj instanceof StatisticsCollection)
+                {
+                    StatisticsCollection sc = (StatisticsCollection)obj;
+                    
+                    lblAvgBG.setText(dec_format.format(m_da.getDisplayedBG(sc.getItemStatisticsValue(13)))) ; //sV.getAvgBG())); // 13
+                    lblBGReadings.setText(sc.getItemStatisticValueAsStringInt(16)); //sV.getBGCount() + "");  // 16
+                    lblBGReadingsDay.setText(DataAccess.Decimal2Format.format(sc.getItemStatisticsValue(16)/7.0d)); //(sV.getBGCount()/7.0f)));
+            
+            
+                    lblSumBU.setText(dec_format.format(sc.getItemStatisticsValue(10))); // CH_SUM=10 //sV.getSumCH())); 
+                    lblBUDay.setText(dec_format.format(sc.getItemStatisticsValue(10)/7.0d)); //sV.getSumCHPerDay()));
+                    lblCountBU.setText(sc.getItemStatisticValueAsStringInt(12)) ; // MEALS=12 // sV.getCHCount() + "");
+                    lblAvgBU.setText(dec_format.format(sc.getItemStatisticsValue(11))); // CH_AVG; 11 sV.getAvgCH()));
+                    lblBUCountDay.setText(dec_format.format(sc.getItemStatisticsValue(12)/7.0d)); //sV.getCHCountPerDay()));
+            
+                    lblSumIns1.setText(dec_format.format(sc.getItemStatisticsValue(1))); // INS_SUM_BOLUS; 1 //sV.getSumBolus()));
+                    lblIns1Day.setText(dec_format.format(sc.getItemStatisticsValue(1)/7.0d));  //sV.getSumBolusPerDay()));
+                    lblCountIns1.setText(sc.getItemStatisticValueAsStringInt(7)); // INS_DOSES_BOLUS; 7 //sV.getBolusCount() + "");
+                    lblAvgIns1.setText(dec_format.format(sc.getItemStatisticsValue(4))); //INS_AVG_BOLUS; // 4 //sV.getAvgBolus()));
+                    lblIns1CountDay.setText(dec_format.format(sc.getItemStatisticsValue(7)/7.0d)); // // INS_DOSES_BOLUS; 7 sV.getBolusCountPerDay()));
+            
+                    lblSumIns2.setText("N/A");
+                    lblIns2Day.setText("N/A");
+                    lblCountIns2.setText("N/A");
+                    lblAvgIns2.setText("N/A");
+                    lblIns2CountDay.setText("N/A");
+                }
+                else
+                {
+                    log.error("We got wrong type returned: " + obj);
+                }
+                
+            }
+            else
+                log.warn("  Nothing returned, error communicating with plugin");
+            
+        }
+        
+        
     }
     
     
