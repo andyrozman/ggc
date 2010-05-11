@@ -103,16 +103,12 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
 
         while(running)
         {
-            
-            //if (reading_started)
+
+            try
             {
-                
-            
-                try
-                {
                 Thread.sleep(2000);
-                }
-                catch(Exception ex) {}
+            }
+            catch(Exception ex) {}
                 
             
             String lg = "";
@@ -194,7 +190,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                     log.debug(lg);
                     writeLog(LogEntryType.DEBUG, lg);
                     
-                    System.out.println("Transfer type: " + this.m_ddh.getTransferType()); 
+//                    System.out.println("Transfer type: " + this.m_ddh.getTransferType()); 
                     
                     if (this.m_ddh.getTransferType()==DeviceDataHandler.TRANSFER_READ_DATA)
                     {
@@ -202,6 +198,9 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                     }
                     else
                     {
+//                        System.out.println("Selected file context: " + this.m_ddh.selected_file_context);
+//                        System.out.println("Selected file: " + m_ddh.selected_file);
+                        this.m_ddh.selected_file_context.setOutputWriter(this);
                         this.m_ddh.selected_file_context.readFile(m_ddh.selected_file);
                     }
                     
@@ -217,7 +216,17 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 
                 running = false;
                 
-                this.m_mi.dispose();
+                //this.getOutputWriter().endOutput();
+                //this.m_mi.dispose();
+
+                
+                this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
+                this.setSpecialProgress(100);
+
+                lg = "Reading finished";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
+                
                 
             }
             catch(Exception ex)
@@ -244,30 +253,17 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                         null);
                     
                 }
+
+
                 
             }
-            
-            this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
-
-            lg = "Reading finished";
-            log.debug(lg);
-            writeLog(LogEntryType.DEBUG, lg);
-            
-            
-            
-            }  // reading_started
-            /*else
+            finally
             {
-                // if we havent started reading we pause every second
-                try
-                {
-                Thread.sleep(1000);
-                }
-                catch(Exception ex) {}
-            }*/
+                if (this.m_mi!=null)
+                    this.m_mi.dispose();
+            }
             
-            
-        }  // while
+        } // while  
 
     }
 
@@ -356,9 +352,9 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     public DeviceIdentification getDeviceIdentification()
     {
         if (this.m_ddh.isDataTransfer())
-            return this.dialog_data.device_ident;
+            return this.dialog_data.getDeviceIdentification(); //.device_ident;
         else
-            return this.dialog_config.device_ident;
+            return this.dialog_config.getDeviceIdentification(); //.device_ident;
     }
 
 

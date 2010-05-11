@@ -2,6 +2,8 @@ package ggc.plugin.data;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
@@ -170,4 +172,24 @@ public class DeviceValuesRange
         return this.gc_to;
     }
 	
+    
+    /**
+     * Get All Entries (of type DeviceValuesEntry)
+     * @return
+     */
+    public ArrayList<DeviceValuesEntry> getAllEntries()
+    {
+        
+        ArrayList<DeviceValuesEntry> list = new ArrayList<DeviceValuesEntry>();
+        
+        for(Enumeration<DeviceValuesDay> en = this.hash_table.elements(); en.hasMoreElements();    )
+        {
+            DeviceValuesDay dvd = en.nextElement();
+            list.addAll(dvd.getList());
+        }
+        
+        return list;
+    }
+    
+    
 }	

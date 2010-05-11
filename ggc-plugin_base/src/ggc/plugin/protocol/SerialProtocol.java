@@ -1,7 +1,7 @@
 package ggc.plugin.protocol;
 
+import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -21,8 +21,6 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,7 +50,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public abstract class SerialProtocol implements SerialPortEventListener //implements MeterInterface, SerialPortEventListener //, Runnable
+public abstract class SerialProtocol extends DeviceAbstract implements SerialPortEventListener //implements MeterInterface, SerialPortEventListener //, Runnable
 {
     /**
      * How many ms do we pause after each character is sent
@@ -95,10 +93,8 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     private static Log log = LogFactory.getLog("ProtocolLog");
     
-    protected DataAccessPlugInBase m_da = null; //DataAccessMeter.getInstance();
+    //protected DataAccessPlugInBase m_da = null; //DataAccessMeter.getInstance();
 
-    protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
-    protected OutputWriter output_writer;
 
     protected boolean isPortOpen = false;
     protected SerialPort serialPort = null;
@@ -145,13 +141,6 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
     
     
 
-    /**
-     * Constructor 
-     */
-    public SerialProtocol()
-    {
-    	//super();
-    }
 
     
     
@@ -163,8 +152,7 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
      */
     public SerialProtocol(DataAccessPlugInBase da)
     {
-        this.m_da = da;
-        this.ic = da.getI18nControlInstance();
+        super(da);
     }
 
     
@@ -574,12 +562,26 @@ public abstract class SerialProtocol implements SerialPortEventListener //implem
 
         serialPort.removeEventListener();
         serialPort.close();
+        
         isPortOpen = false;
         //dataFromMeter = false;
-        System.out.println("close port : " + portIdentifier.getName());
+        //System.out.println("close port : " + portIdentifier.getName());
 //        fireImportChanged(new ImportEvent(this, ImportEvent.PORT_CLOSED, portIdentifier));
     }
 
+    
+    public void dispose() 
+    {
+        try
+        {
+            this.close();
+        }
+        catch(Exception ex)
+        {
+            log.debug("Error disposing serial port. Ex.: " + ex);
+        }
+    }
+    
     
     
     /**

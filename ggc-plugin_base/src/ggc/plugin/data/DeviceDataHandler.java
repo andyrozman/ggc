@@ -17,7 +17,6 @@ import com.atech.db.DbDataReadingFinishedInterface;
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.StatusReporterInterface;
-import com.atech.utils.file.FileReaderContext;
 
 
 /**
@@ -75,7 +74,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     /**
      * Selected File Context
      */
-    public FileReaderContext selected_file_context = null;
+    public GGCPlugInFileReaderContext selected_file_context = null;
 
     /**
      * Selected File
@@ -230,7 +229,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         full_count += ll.get("EDIT").size();
         
         
-        System.out.println("Full count: " + full_count);
+        //System.out.println("Full count: " + full_count);
         
         int count = 0;
         
@@ -263,7 +262,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
                 if (proc==100)
                     proc = 99;
                 
-                System.out.println("Procents: " + proc);
+                //System.out.println("Procents: " + proc);
         
                 this.setStatus(proc);
                 

@@ -1,5 +1,7 @@
 package ggc.plugin.device.impl.abbott;
 
+import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -52,7 +54,7 @@ import com.atech.utils.file.FileReaderContext;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class CoPilot extends XmlProtocol implements FileReaderContext 
+public abstract class CoPilot extends XmlProtocol implements FileReaderContext 
 {
 
     
@@ -475,6 +477,104 @@ public class CoPilot extends XmlProtocol implements FileReaderContext
 
         
 
+    }
+
+
+
+    public void dispose()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public String getConnectionPort()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getConnectionProtocol()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+
+    public int getDownloadSupportType()
+    {
+        return 0;
+    }
+
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
+    {
+        return null;
+    }
+
+
+    public boolean hasIndeterminateProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean hasSpecialProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean isDeviceCommunicating()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean isFileDownloadSupported()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean isReadableDevice()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public void readConfiguration() throws PlugInBaseException
+    {
+    }
+
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void readDeviceDataPartitial() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void readInfo() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void test()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public long getItemId()
+    {
+        // TODO Auto-generated method stub
+        return 0;
     }
     
 

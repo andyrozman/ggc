@@ -76,7 +76,8 @@ public class PlugInDeviceUtil
                 return di.getName();
                 
             case 3:
-                return this.m_ic_core.getMessage(ConnectionProtocols.connectionProtocolDescription[di.getConnectionProtocol()]);
+                return this.m_ic.getMessage(ConnectionProtocols.connectionProtocolDescription[di.getConnectionProtocol()]);
+                //return this.m_ic_core.getMessage(ConnectionProtocols.connectionProtocolDescription[di.getConnectionProtocol()]);
 
             case 4:
                 
@@ -86,17 +87,17 @@ public class PlugInDeviceUtil
                 
                 if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
                 {
-                    dd = appendToString(dd, this.m_ic_core.getMessage("DOWNLOAD_DEVICE"), "/");
+                    dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_DEVICE"), "/");
                 }
                 
                 if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
                 {
-                    dd = appendToString(dd, this.m_ic_core.getMessage("DOWNLOAD_FILE"), "/");
+                    dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_FILE"), "/");
                 }
 
                 if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE)
                 {
-                    dd = appendToString(dd, this.m_ic_core.getMessage("DOWNLOAD_CONFIG"), "/");
+                    dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_CONFIG"), "/");
                 }
                 
                 
@@ -105,11 +106,11 @@ public class PlugInDeviceUtil
 
                     if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_SUPPORT_NO) == DownloadSupportType.DOWNLOAD_SUPPORT_NO)
                     {
-                        dd = this.m_ic_core.getMessage("DOWNLOAD_NOT_SUPPORTED_GGC");
+                        dd = this.m_ic.getMessage("DOWNLOAD_NOT_SUPPORTED_GGC");
                     }
                     else if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE) == DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE)
                     {
-                        dd = this.m_ic_core.getMessage("DOWNLOAD_NOT_SUPPORTED_BY_DEVICE");
+                        dd = this.m_ic.getMessage("DOWNLOAD_NOT_SUPPORTED_BY_DEVICE");
                     }
                     else
                         dd= "";

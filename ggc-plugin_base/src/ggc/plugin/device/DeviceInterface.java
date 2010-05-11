@@ -1,9 +1,9 @@
 package ggc.plugin.device;
 
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.utils.file.FileReaderContext;
 
 
 /**
@@ -327,7 +327,7 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return
      */
-    public int getDownloadSupportTypeConfiguration();
+    //public int getDownloadSupportTypeConfiguration();
     
     
     /**
@@ -353,7 +353,7 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return
      */
-    public FileReaderContext[] getFileDownloadTypes();
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes();
     
     
     

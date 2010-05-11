@@ -206,9 +206,15 @@ public interface DeviceValuesEntryInterface extends OutputWriterData,    /*(Outp
     
 	
 	/**
-	 * Prepare Entry
+	 * Prepare Entry [Framework v1]
 	 */
 	public abstract void prepareEntry();
+	
+
+    /**
+     * Prepare Entry [Framework v2]
+     */
+    public abstract void prepareEntry_v2();
 	
 	
 	/**

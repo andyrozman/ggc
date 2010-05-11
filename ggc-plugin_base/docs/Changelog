@@ -2,6 +2,11 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.4.7 [23.4.2010]
+    * Extended DeviceValuesRange to get all elements now
+    * DeviceValuesEntry was extended to be StatisticsItem
+    * DeviceIdentification extended for info about - Import from files
+
 0.4.6 [10.4.2010]
     * Minor changes to code (DataAccessPlugIn)
 

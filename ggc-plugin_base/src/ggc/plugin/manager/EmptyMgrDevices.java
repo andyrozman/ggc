@@ -1,5 +1,6 @@
 package ggc.plugin.manager;
 
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
@@ -9,7 +10,6 @@ import javax.swing.ImageIcon;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -492,6 +492,8 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
 
     /** 
      * Get Download SupportType Configuration
+     * 
+     * @return 
      */
     public int getDownloadSupportTypeConfiguration()
     {
@@ -504,7 +506,7 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
      * 
      * @return
      */
-    public FileReaderContext[] getFileDownloadTypes()
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
     {
         return null;
     }

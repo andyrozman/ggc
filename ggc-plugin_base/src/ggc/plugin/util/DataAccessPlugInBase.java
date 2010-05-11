@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -248,6 +251,26 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * The plugin_server.
      */
     PlugInServer plugin_server;
+
+    
+    /**
+     * Entry Status Icons 
+     */
+    public static String entry_status_icons[] = 
+    {
+         "led_gray.gif",
+         "led_green.gif",
+         "led_yellow.gif",
+         "led_red.gif"
+    };
+
+    
+    
+    /**
+     * Icon images for each entry status
+     */
+    public static ImageIcon entry_status_iconimage[] = null;
+    
     
     /**
      * The m_ddh.
@@ -284,6 +307,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     	super(lm, icr); //I18nControl.getInstance());
 
     	this.i18n_plugin = new I18nControlPlugin(lm, icr);
+    	loadIcons();
         initSpecial();
     } 
 
@@ -1041,6 +1065,22 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
     
     
+ 
+    /**
+     * Sleep MS
+     * 
+     * @param ms
+     */
+    public void sleepMS(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(Exception ex)
+        {
+        }
+    }
     
     
     /**
@@ -1488,6 +1528,26 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * Init all Objects
      */
     public abstract void initAllObjects();
+    
+ 
+    
+    /**
+     * Load Icons
+     */
+    public void loadIcons()
+    {
+        if (entry_status_iconimage!=null)
+            return;
+        
+        entry_status_iconimage = new ImageIcon[4];
+        
+        JDialog d = new JDialog();
+        
+        for(int i=0; i< entry_status_icons.length; i++)
+        {
+            entry_status_iconimage[i] = getImageIcon(entry_status_icons[i], 8, 8, d); 
+        }
+    }
     
     
 

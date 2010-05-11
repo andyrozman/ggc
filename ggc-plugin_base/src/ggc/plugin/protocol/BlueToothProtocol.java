@@ -1,5 +1,6 @@
 package ggc.plugin.protocol;
 
+import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -52,7 +53,7 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public abstract class BlueToothProtocol implements SerialPortEventListener //implements MeterInterface, SerialPortEventListener //, Runnable
+public abstract class BlueToothProtocol extends DeviceAbstract implements SerialPortEventListener //implements MeterInterface, SerialPortEventListener //, Runnable
 {
     /**
      * How many ms do we pause after each character is sent
@@ -144,16 +145,6 @@ public abstract class BlueToothProtocol implements SerialPortEventListener //imp
     
     
 
-    /**
-     * Constructor 
-     */
-    public BlueToothProtocol()
-    {
-    	//super();
-    }
-
-    
-    
     
     /**
      * Constructor
@@ -162,8 +153,7 @@ public abstract class BlueToothProtocol implements SerialPortEventListener //imp
      */
     public BlueToothProtocol(DataAccessPlugInBase da)
     {
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
+        super(da);
     }
 
     

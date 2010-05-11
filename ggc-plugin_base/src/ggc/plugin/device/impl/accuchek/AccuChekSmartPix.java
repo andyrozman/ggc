@@ -1,17 +1,20 @@
 
 package ggc.plugin.device.impl.accuchek;
 
+import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FileReader;
 
-import com.atech.i18n.I18nControlAbstract;
+import com.atech.graphics.dialogs.selector.ColumnSorter;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,22 +43,77 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInterface
+public abstract class AccuChekSmartPix  extends XmlProtocol 
 {
     
-    protected OutputWriter output_writer = null;
+    //protected OutputWriter output_writer = null;
     protected String port_param;
-    DataAccessPlugInBase m_da;
-    int max_records = 0;
-    I18nControlAbstract m_ic = null;
+    //protected DataAccessPlugInBase m_da;
+    protected int max_records = 0;
+    //protected I18nControlAbstract m_ic = null;
+    protected AccuChekSmartPixReaderAbstract reader = null;
+    
+    protected AbstractDeviceCompany device_company = null;
+    protected boolean communication_established = false;
+    protected String device_source_name;
+    
+
+    /**
+     * Constructor
+     * 
+     * @param cmp 
+     * @param da 
+     */
+    public AccuChekSmartPix(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
+    {
+        super(da);
+        this.setDeviceCompany(cmp);
+    }
+    
+    
     
     /**
      * Constructor
+     * 
+     * @param params 
+     * 
+     * @param drive_letter
+     * @param writer
+     * @param da 
+     * @param max_records 
      */
-    /*public AccuChekSmartPix()
+    public AccuChekSmartPix(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
-    }*/
-
+        super(da, writer);
+        //super();
+        //this.setConnectionPort(drive_letter);
+        this.output_writer = writer;
+        this.port_param = params;
+        this.m_da = da;
+        //this.max_records = max_records;
+        this.ic = m_da.getI18nControlInstance();
+        
+        this.reader = new AccuChekSmartPixReaderV2(m_da, writer, this);
+        
+        
+//XV        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        
+        
+//        this.xml_processor = new AccuChekSmartPixProcessor(this.output_writer);
+        
+    //    this.setMeterType("Roche", this.getName());
+        
+        try
+        {
+    //        this.open();
+        }
+        catch(Exception ex)
+        {
+        }
+        
+    }
+    
+    
     
     /**
      * Constructor
@@ -69,13 +127,18 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
      */
     public AccuChekSmartPix(String params, OutputWriter writer, DataAccessPlugInBase da, int max_records)
     {
+        super(da, writer);
         //super();
         //this.setConnectionPort(drive_letter);
         this.output_writer = writer;
         this.port_param = params;
         this.m_da = da;
         this.max_records = max_records;
-        this.m_ic = m_da.getI18nControlInstance();
+        this.ic = m_da.getI18nControlInstance();
+        
+        this.reader = new AccuChekSmartPixReaderV2(m_da, writer, this);
+        
+        
 //XV        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
         
         
@@ -128,10 +191,12 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     //************************************************
 
 
-    
-    
-    
-    
+    /**
+     * Get Max Memory Records
+     * 
+     * @return 
+     */
+    public abstract int getMaxMemoryRecords();
     
     
     /**
@@ -151,6 +216,10 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     public void readDeviceDataFull() throws PlugInBaseException
     {
         System.out.println("readDeviceDataFull");
+        
+        reader.readDevice();
+        
+        
 /*        
         // write preliminary device identification, based on class
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
@@ -162,6 +231,8 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
 
         this.output_writer.writeDeviceIdentification();
   */      
+        
+        /*
         // start working
         String drv = this.port_param;
         String cmd = drv + "\\TRG\\";
@@ -268,7 +339,7 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
                 //System.out.println("Unrecoverable error - Aborting");
                 return;
             }*/
-            else if ((st>99) || (st==20))
+/*            else if ((st>99) || (st==20))
             {
                 if ((st==101) || (st==20))
                 {
@@ -316,11 +387,11 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
         
         this.setDeviceStopped();
         //this.output_writer.setSubStatus(null);
-        
+  */      
         //System.out.println("We got out !!!!");
     }
     
-    
+    /*
     private void writeToFile(File file)
     {
         try
@@ -336,7 +407,7 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
             System.out.println("Problem writing to file: " + ex);
         }
         
-    }
+    }*/
     
     
 
@@ -392,7 +463,12 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     
     
     
-    private boolean isDeviceStopped()
+    /**
+     * Is Device Stopped
+     * 
+     * @return
+     */
+    public boolean isDeviceStopped()
     {
         if (this.output_writer.isReadingStopped())
             return true;
@@ -402,7 +478,10 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     }
     
     
-    private void setDeviceStopped()
+    /**
+     * Set Device Stopped
+     */
+    public void setDeviceStopped()
     {
         this.output_writer.setSubStatus(null);
         this.output_writer.setSpecialProgress(100);
@@ -410,18 +489,29 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     }
     
     
-    private void writeStatus(String text_i18n)
+    /**
+     * Write Status
+     * 
+     * @param text_i18n
+     */
+    public void writeStatus(String text_i18n)
     {
         writeStatus(text_i18n, true);
     }
     
     
-    private void writeStatus(String text_i18n, boolean process)
+    /**
+     * Write Status
+     * 
+     * @param text_i18n
+     * @param process
+     */
+    public void writeStatus(String text_i18n, boolean process)
     {
         String tx = "";
         
         if (process)
-            tx = m_ic.getMessage(text_i18n);
+            tx = ic.getMessage(text_i18n);
         else
             tx = text_i18n;
         
@@ -441,162 +531,10 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     
     
     
-    private void sleep(int ms)
-    {
-        try
-        {
-            Thread.sleep(ms);
-        }
-        catch(Exception ex)
-        {
-            
-        }
-        
-    }
 
-    private boolean device_found = false;
     
     
-    // 0 = no status
-    // 1 = error_found
-    // 2 = finished
-    private int readStatusFromConfig(String drive)
-    {
-        try
-        {
-            //boolean error_found = false;
-            //boolean image_found = false;
-            
-            System.out.println("Scan path: " + m_da.pathResolver(drive + "\\REPORT\\SCAN.HTM"));
-            
-            BufferedReader br = new BufferedReader(new FileReader(new File(m_da.pathResolver(drive + "\\REPORT\\SCAN.HTM"))));
-            
-            String line = "";
-            
-            boolean reports[] = { false, false, false };
-            int rep_count = 0;
-            
-            
-            while ((line = br.readLine())!= null)
-            {
-                
-                if (line.contains("Error.htm"))
-                {
-                    return 1;
-                }
-                else if (line.contains("img/"))
-                {
-                    System.out.println("Image: " + line);
-                    if (line.contains("Scanning.gif"))
-                    {
-                        this.writeStatus("PIX_SCANNING");
-                        this.output_writer.setSpecialProgress(15);
-                        //System.out.println("Scanning for device");
-                        return 0;
-                    }
-                    else if (line.contains("CrReport.png"))
-                    {
-                        this.writeStatus("PIX_CREATING_REPORT");
-                        this.output_writer.setSpecialProgress(90);
-
-                        //System.out.println("Finished reading - Creating report");
-                    }
-                    else if (line.contains("rd_"))
-                    {
-                        device_found = true;
-                        //System.out.println("Reading from meter.");
-                        return 4;
-                    }
-                    else
-                    {
-                        System.out.println("Unknown image: " + line);
-                    }
-                    
-                    
-                    return 0;
-                }
-                else if (line.contains("ReportPresent "))
-                {
-                    System.out.println("L: " + line);
-                    
-                    if (line.contains("parent.BgReportPresent = "))
-                    {
-                        reports[0] = getBooleanStatus(line);
-                        rep_count++;
-                    }
-                    else if (line.contains("parent.IpReportPresent = "))
-                    {
-                        reports[1] = getBooleanStatus(line);
-                        rep_count++;
-                    }
-                    else if (line.contains("parent.MgReportPresent = "))
-                    {
-                        reports[2] = getBooleanStatus(line);
-                        rep_count++;
-                    }
-                    
-                    
-               
-                    
-                    if (rep_count==3)
-                    {
-                        int rs = 0;
-                        
-                        if (reports[0])
-                            rs += 1;
-                        else if (reports[1])
-                            rs += 2;
-                        else if (reports[2])
-                            rs += 4;
-
-                        //System.out.println("Rs: " + rs);
-                        
-                        if (this.device_found)
-                        {
-                            return (100 + rs);
-                        }
-                        else
-                            return 20;
-                    }
-                    
-                }
-                
-            }
-            
-            //return 2;
-            
-            return 0;    
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Exception: " + ex);
-            return 1;
-        }
-       
-        
-        
-        
-    }
     
-    
-    private boolean getBooleanStatus(String text)
-    {
-        String val = text.substring(text.indexOf("=")+2, text.indexOf(";"));
-        
-        try
-        {
-            //System.out.println("val: '" + val + "'");
-            boolean b = Boolean.parseBoolean(val);
-            //System.out.println("b: " + b);
-            return b;
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Error with status.\n" + text);
-            return false;
-        }
-        
-    }
     
     
     
@@ -631,6 +569,354 @@ public abstract class AccuChekSmartPix  //mlProtocol //implements SelectableInte
     {
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
     }
+    
+
+    
+    
+    
+    /**
+     * setDeviceCompany - set Company for device
+     * 
+     * @param company
+     */
+    public void setDeviceCompany(AbstractDeviceCompany company)
+    {
+        this.device_company = company;
+    }
+    
+    
+    
+    /**
+     * getDeviceCompany - get Company for device
+     * 
+     * @return 
+     */
+    public AbstractDeviceCompany getDeviceCompany()
+    {
+        return this.device_company;
+    }
+
+    
+    /**
+     * Is Device Readable (there are some devices that are not actual devices, but are used to get some
+     * sort of specific device data - in most cases we call them generics, and they don't have ability
+     * to read data)
+     * 
+     * @return
+     */
+    public boolean isReadableDevice()
+    {
+        return true;
+    }
+
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+    }
+    
+
+
+    /**
+     * Does this device support file download. Some devices have their native software, which offers export 
+     * into some files (usually CSV files or even XML). We sometimes add support to download from such
+     * files, and in some cases this is only download supported. 
+     *  
+     * @return
+     */
+    public boolean isFileDownloadSupported()
+    {
+        return true;
+    }
+    
+
+    /**
+     * Get Connection Port
+     * 
+     * @return
+     */
+    public String getConnectionPort()
+    {
+        return this.port_param;
+    }
+    
+    
+    
+    
+    
+    /**
+     * Get File Download Types as FileReaderContext. 
+     * 
+     * @return
+     */
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
+    {
+        // FIXME
+        return null;
+    }
+
+
+    // SELECTABLE INTERFACE
+    
+    /** 
+     * compareTo
+     */
+    public int compareTo(SelectableInterface o)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    
+    
+    /** 
+     * Get Column Count
+     */
+    public int getColumnCount()
+    {
+        return m_da.getPluginDeviceUtil().getColumnCount();
+    }
+    
+    
+    /** 
+     * getColumnName
+     */
+    public String getColumnName(int num)
+    {
+        return m_da.getPluginDeviceUtil().getColumnName(num);
+    }    
+    
+    
+    /** 
+     * Get Column Width
+     */
+    public int getColumnWidth(int num, int width)
+    {
+        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
+    }
+    
+    
+    /** 
+     * getColumnValue - get Value of column, for configuration
+     */
+    public String getColumnValue(int num)
+    {
+        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
+    }
+    
+    
+    /** 
+     * getColumnValueObject
+     */
+    public Object getColumnValueObject(int num)
+    {
+        return this.getColumnValue(num);
+    }
+
+
+    /** 
+     * getItemId
+     */
+    public long getItemId()
+    {
+        return 0;
+    }
+
+    /** 
+     * getShortDescription
+     */
+    public String getShortDescription()
+    {
+        return this.getName();
+    }
+
+    /** 
+     * isFound
+     */
+    public boolean isFound(int from, int till, int state)
+    {
+        return true;
+    }
+
+    /** 
+     * isFound
+     */
+    public boolean isFound(int value)
+    {
+        return true;
+    }
+
+    /** 
+     * isFound
+     */
+    public boolean isFound(String text)
+    {
+        return true;
+    }
+
+    /** 
+     * setColumnSorter
+     */
+    public void setColumnSorter(ColumnSorter cs)
+    {
+    }
+
+    /** 
+     * setSearchContext
+     */
+    public void setSearchContext()
+    {
+    }
+    
+    
+    
+    
+    /**
+     * Get Device Source Name
+     * 
+     * @return
+     */
+    public String getDeviceSourceName()
+    {
+        return device_source_name;
+    }
+    
+    // ALLOWED ACTION
+    
+    
+    boolean can_read_data = false;
+    boolean can_read_partitial_data = false;
+    boolean can_read_device_info = false;
+    boolean can_read_device_configuration = false;
+
+    /** 
+     * Set Device Allowed Actions
+     */
+    public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data, boolean can_read_device_info, boolean can_read_device_configuration)
+    {
+        this.can_read_data = can_read_data;
+        this.can_read_partitial_data = can_read_partitial_data;
+        this.can_read_device_info = can_read_device_info;
+        this.can_read_device_configuration = can_read_device_configuration;
+    }
+
+    
+    /**
+     * canReadData - Can Meter Class read data from device
+     * 
+     * @return true if action is allowed
+     */
+    public boolean canReadData()
+    {
+        return this.can_read_data;
+    }
+
+    /**
+     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
+     * 
+     * @return true if action is allowed
+     */
+    public boolean canReadPartitialData()
+    {
+        return this.can_read_partitial_data;
+    }
+
+    /**
+     * canReadDeviceInfo - tells if we can read info about device
+     * 
+     * @return true if action is allowed
+     */
+    public boolean canReadDeviceInfo()
+    {
+        return this.can_read_device_info;
+    }
+
+    /**
+     * canReadConfiguration - tells if we can read configuration from device
+     * 
+     * @return true if action is allowed
+     */
+    public boolean canReadConfiguration()
+    {
+        return this.can_read_device_configuration;
+    }
+
+    
+    
+    /**
+     * getDeviceInfo - get Device info (firmware and software revision)
+     */
+    public DeviceIdentification getDeviceInfo()
+    {
+        return this.output_writer.getDeviceIdentification();
+    }
+    
+    
+    /**
+     * Is Device Communicating
+     * 
+     * @return
+     */
+    public boolean isDeviceCommunicating()
+    {
+        return this.communication_established;
+    }
+    
+    
+    public boolean hasIndeterminateProgressStatus()
+    {
+        return false;
+    }
+    
+    
+    /** 
+     * Open
+     * 
+     * @return 
+     * @throws PlugInBaseException 
+     */
+    public boolean open() throws PlugInBaseException
+    {
+        File f = new File(this.getConnectionPort());
+        
+        if (f.exists())
+            communication_established = true;
+        else
+            communication_established = false;
+
+        return communication_established;
+    }
+    
+
+    
+    /**
+     * Close
+     * 
+     * @throws PlugInBaseException
+     */
+    public void close() throws PlugInBaseException
+    {
+    }
+
+
+
+
+   
+
+    public void dispose()
+    {
+    }
+
+
+    public String getDeviceSpecialComment()
+    {
+        return "";
+    }
+    
     
     
     

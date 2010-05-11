@@ -327,6 +327,11 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 
                 DeviceValuesEntryInterface dve_old = (DeviceValuesEntryInterface)this.m_ddh.getOldData().get(dve.getSpecialId());
                 
+                //System.out.println("Old: " + dve_old.getValue());
+                dve.prepareEntry_v2();
+                //System.out.println("New: " + dve.getValue());
+                
+                
                 if (dve_old.getValue().equals(dve.getValue()))
                 {
                     dve.setStatus(DeviceValuesEntryInterface.STATUS_OLD);

@@ -1,6 +1,7 @@
 package ggc.plugin.protocol;
 
 
+import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -12,8 +13,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,14 +44,17 @@ import com.atech.i18n.I18nControlAbstract;
 
 
 
-public abstract class XmlProtocol 
+public abstract class XmlProtocol extends DeviceAbstract 
 {
 
-    protected DataAccessPlugInBase m_da = null; 
-    protected OutputWriter output_writer = null;
-    protected I18nControlAbstract ic = null;
+    //protected DataAccessPlugInBase m_da = null; 
+    //protected OutputWriter output_writer = null;
+    //protected I18nControlAbstract ic = null;
 
 
+    
+    
+    
     /**
      * Constructor
      * 
@@ -60,8 +62,7 @@ public abstract class XmlProtocol
      */
     public XmlProtocol(DataAccessPlugInBase da)
     {
-        this(da, null);
-        ic = da.getI18nControlInstance();
+        super(da);
     }
 
     /**
@@ -72,8 +73,7 @@ public abstract class XmlProtocol
      */
     public XmlProtocol(DataAccessPlugInBase da, OutputWriter ow)
     {
-        this.m_da = da;
-        ic = da.getI18nControlInstance();
+        super(da);
         this.output_writer = ow;
     }
 

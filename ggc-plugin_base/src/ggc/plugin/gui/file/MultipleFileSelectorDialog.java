@@ -1,6 +1,7 @@
 package ggc.plugin.gui.file;
 
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Color;
@@ -13,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.atech.utils.ATSwingUtils;
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,7 +45,7 @@ import com.atech.utils.file.FileReaderContext;
 public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog 
 {
 	private static final long serialVersionUID = -876338378352653634L;
-	FileReaderContext[] file_contexts;
+	GGCPlugInFileReaderContext[] file_contexts;
 	JComboBox cb_contexts;
 	
 	/**

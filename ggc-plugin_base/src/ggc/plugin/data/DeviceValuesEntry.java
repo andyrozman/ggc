@@ -6,6 +6,7 @@ import ggc.plugin.util.DeviceValuesEntryUtil;
 
 import java.util.ArrayList;
 
+import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.ATechDate;
 
 
@@ -40,7 +41,7 @@ import com.atech.utils.ATechDate;
 //This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
 //class, with different type of data. Trying to find a way to use super class instead of this.
 
-public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, OutputWriterData  //extends OutputWriterData implements Comparator<DeviceValuesEntry>, Comparable<DeviceValuesEntry>, StatisticsItem
+public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, OutputWriterData, StatisticsItem  //extends OutputWriterData implements Comparator<DeviceValuesEntry>, Comparable<DeviceValuesEntry>, StatisticsItem
 {
 	protected boolean checked = false;
 	protected int status = 1; 
@@ -122,9 +123,19 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
 	
 
     /**
-     * Prepare Entry
+     * Prepare Entry [Framework v1]
      */
-    public abstract void prepareEntry();
+    public void prepareEntry()
+    {
+    }
+
+    
+    /**
+     * Prepare Entry [Framework v2]
+     */
+    public void prepareEntry_v2()
+    {
+    }
     
     
     /**

@@ -67,6 +67,27 @@ public class DeviceIdentification
      */
     public String device_serial_number = null;
     
+    
+    /**
+     * Is File Import
+     */
+    public boolean is_file_import = false;
+    
+    
+    /**
+     * File Import:  File Name
+     */
+    public String fi_file_name = "";
+    
+    /**
+     * File Import:  Additional Info
+     */
+    public String fi_additional_info = "";
+    
+    
+    
+    
+    
     //DataAccessPlugInBase da
     
     //I18nControlAbstract m_ic;
@@ -132,6 +153,11 @@ public class DeviceIdentification
      */
     public String getShortInformation()
     {
+        if (this.is_file_import)
+        {
+            return this.getShortInformationFile();
+        }
+        
         StringBuffer sb = new StringBuffer();
         I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
         
@@ -156,6 +182,26 @@ public class DeviceIdentification
         }
         return sb.toString();
     }
+    
+    
+    private String getShortInformationFile()
+    {
+        StringBuffer sb = new StringBuffer();
+        I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
+        
+        sb.append(this.company);
+        sb.append(" - " + this.device_selected);
+        sb.append("\n");
+        
+        appendParameter(this.fi_file_name, m_ic.getMessage("IMPORT_FILE"), sb);
+        sb.append("\n");
+
+        if (this.fi_additional_info!=null)
+            sb.append(this.fi_additional_info);
+        
+        return sb.toString();
+    }
+    
     
     
     private void appendParameter(String param, String text, StringBuffer sb)

@@ -511,7 +511,10 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         if (this.indeterminate)
         {
             this.progress.setIndeterminate(false);
+            this.progress.setStringPainted(true);
+            this.progress.setValue(50);
             this.progress.setValue(100);
+            this.progress.repaint();
         }
     }
 
@@ -522,6 +525,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public DeviceIdentification getDeviceIdentification()
     {
+        if (device_ident==null)
+            device_ident = new DeviceIdentification();
         return device_ident;
     }
 
@@ -707,6 +712,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
                 filter_combo.setEnabled(true);
                 sel_all.setEnabled(true);
                 unsel_all.setEnabled(true);
+                //this.progress.setIndeterminate(false);
+                
             }
             break;
 
