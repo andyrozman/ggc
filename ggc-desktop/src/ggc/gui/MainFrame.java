@@ -1487,11 +1487,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
         {
             String key = keys[j];
             
-            PlugInClient pic = m_da.getPlugIn(key);
-            
-            if (pic.getPlugInMainMenu()!=null)
+            if (m_da.isPluginAvailable(key))
             {
-                this.menuBar.add(pic.getPlugInMainMenu());
+                PlugInClient pic = m_da.getPlugIn(key);
+                
+                if (pic.getPlugInMainMenu()!=null)
+                {
+                    this.menuBar.add(pic.getPlugInMainMenu());
+                }
             }
         }
         
@@ -1515,8 +1518,13 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     private JMenu getPlugInMenu(String name)
     {
-        PlugInClient pic = m_da.getPlugIn(name);
-        return pic.getPlugInMainMenu();
+        if (m_da.isPluginAvailable(name))
+        {
+            PlugInClient pic = m_da.getPlugIn(name);
+            return pic.getPlugInMainMenu();
+        }
+        else
+            return null;
     }
     
     

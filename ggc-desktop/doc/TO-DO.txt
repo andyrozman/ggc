@@ -50,19 +50,40 @@ GGC Meter Tool
 GGC Pump Tool
 -------------
   See TO-DO.txt (in svn/trunk/ggc-pumps)
-  !!! Project not started yet. Planned for end of 2nd Q 2009 or maybe before
+  
 
 
 GGC CGMS Tool
 --------------
   See TO-DO.txt (in svn/trunk/ggc-cgms)
-  !!! Project not started yet. Planned for end of 4th Q 2009 or maybe before
+  
 
 
 
-II. SORTED BY VERSION  (Updated 5.12.2008)
+II. SORTED BY VERSION  (Updated 10.5.2010)
 ===========================================
 
+Version 0.4.20 [1.6.2010]
+--------------
+
+* Core:   
+    - Extended Ratio
+    - Help (10 pages)
+    
+* Meter Tool: 
+    - v2 data import
+    - Abbott support finalize
+    
+* Pump Tool:
+    - SmartPix v3.01
+    - SmartPix Base
+    - Roche Spirit
+    - Test Graphs
+
+* Plugin Base: 
+    - Meter through DeviceAbstract, test Serial
+    - Pump through DeviceAbstract, test Spirit
+    - CGMS through DeviceAbstract, test Dexcom
    
 
 Version 0.5

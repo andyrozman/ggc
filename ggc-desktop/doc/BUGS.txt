@@ -7,8 +7,6 @@ Know Bugs:
       a larger range was selected. (The problem lies in GlucoValues.getDayCount(), see FIXME-comment)
     - Setting a colour for one "color scheme" will change it for the rest, too.
     - GI/GL not implemented
-	- Printing - files should be generated with logical names not with current time in ms
-	- Printing - abstract class should be used
 	- Meal - Nutrient data should be saved (now its not saved, just generated when opened)
 	- Printing - Foodmenu extended III
 	- Backup/Restore - using one file (*.dbe) doesn't work
@@ -42,6 +40,12 @@ LONG LASTING BUGS:
 
 
 Bugs fixed in version X:
+
+
+0.4.0
+    - Printing - files should be generated with logical names not with current time in ms
+    - Printing - abstract class should be used
+
 
 
 0.3.10
