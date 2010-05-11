@@ -237,7 +237,8 @@ public class GGCDbLoader extends Thread
         
         // 5 - Load plugin data
         
-        m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommand(NutriPlugIn.COMMAND_LOAD_DATABASE);
+        if (m_da.isPluginAvailable(DataAccess.PLUGIN_NUTRITION))
+            m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommand(NutriPlugIn.COMMAND_LOAD_DATABASE);
         m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_PLUGINS);
         setDbStatus(RefreshInfo.DB_LOADED);
         

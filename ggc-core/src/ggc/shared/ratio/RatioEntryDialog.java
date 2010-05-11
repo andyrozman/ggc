@@ -87,6 +87,12 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     
     TimeComponent tc_from, tc_to;
     
+    public static final int ACTION_ADD = 1;
+    public static final int ACTION_EDIT = 2;
+    
+    
+    public int action = ACTION_ADD;
+    
     
     /**
      * Constructor
@@ -104,6 +110,9 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
 
         init();
         load();
+        
+        action = ACTION_ADD;
+        setTitle();
         
         this.setVisible(true);
 
@@ -159,6 +168,21 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         this.m_da.getSettings().save();
     }
 
+    
+    private void setTitle()
+    {
+        String key;
+        
+        if (action==ACTION_ADD)
+            key = m_ic.getMessage("RATIO_ENTRY_ADD");
+        else
+            key = m_ic.getMessage("RATIO_ENTRY_EDIT");
+
+        setTitle(key);
+        label_title.setText(key);
+        
+    }
+    
 
     private void init()
     {
@@ -177,19 +201,22 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         
         label_title = ATSwingUtils.getTitleLabel("", 0, 25, 350, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
         
-        setTitle(m_ic.getMessage("RATIO_ENTRY"));
-        label_title.setText(m_ic.getMessage("RATIO_ENTRY"));
+//        setTitle(m_ic.getMessage("RATIO_ENTRY"));
+//        label_title.setText(m_ic.getMessage("RATIO_ENTRY"));
 
         
-        ATSwingUtils.getLabel(m_ic.getMessage("TIME_FROM"), 40, 75, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(m_ic.getMessage("TIME") + ":", 40, 75, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        
         tc_from = new TimeComponent();
-        tc_from.setBounds(205, 75, 100, 25);
+        //tc_from.setBounds(205, 75, 100, 25);
+        tc_from.setBounds(90, 75, 70, 25);
         panel.add(tc_from);
 
         
-        ATSwingUtils.getLabel(m_ic.getMessage("TIME_TILL"), 40, 115, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        //ATSwingUtils.getLabel(m_ic.getMessage("TIME_TILL"), 40, 115, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(" -> ", 180, 115, 150, 25, panel, ATSwingUtils.FONT_NORMAL);
         tc_to = new TimeComponent();
-        tc_to.setBounds(205, 115, 100, 25);
+        tc_to.setBounds(205, 75, 100, 25);
         panel.add(tc_to);
         
         
@@ -202,7 +229,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         panel.add(procents);
         
         
-        rep = new RatioEntryPanel(m_da, 10);
+        rep = new RatioEntryPanel(m_da, 10, 20);
         rep.setBounds(30, 120, 350, 210);  // 55
         rep.setEditable(false);
         panel.add(rep);

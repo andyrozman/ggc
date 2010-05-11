@@ -59,6 +59,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
 
     RatioEntry ratio_entry = null;
     int left_position = 30;
+    int space_between_lines = 40;
     
 
     /**
@@ -66,12 +67,13 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
      * 
      * @param da 
      */
-    public RatioEntryPanel(DataAccess da, int left_pos) 
+    public RatioEntryPanel(DataAccess da, int left_pos, int space_elements) 
     {
         super();
         m_da = da;
         m_ic = da.getI18nControlInstance();
         this.left_position = left_pos;
+        this.space_between_lines = space_elements;
         
         init();
     }
@@ -85,7 +87,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
      */
     public RatioEntryPanel(DataAccess da, RatioEntry re) 
     {
-        this(da, 30);
+        this(da, 30, 40);
         ratio_entry = re;
         setRatios(re.ch_insulin, re.bg_insulin, 0.0f);
     }
@@ -97,9 +99,9 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
      * @param da 
      * @param re 
      */
-    public RatioEntryPanel(DataAccess da, RatioEntry re, int left_pos) 
+    public RatioEntryPanel(DataAccess da, RatioEntry re, int left_pos, int space_elements) 
     {
-        this(da, left_pos);
+        this(da, left_pos, space_elements);
         ratio_entry = re;
         setRatios(re.ch_insulin, re.bg_insulin, 0.0f);
     }
@@ -210,12 +212,17 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         setBounds(0, 0, 300, 400);
         setLayout(null);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("INSULIN_CARB_RATIO"), left_position, 80, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
-        dtf_ch_ins = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, 80, 80, 25, this);
+        int y_pos = 80;
+        
+        
+        ATSwingUtils.getLabel(m_ic.getMessage("INSULIN_CARB_RATIO"), left_position, y_pos, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
+        dtf_ch_ins = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, y_pos, 80, 25, this);
         dtf_ch_ins.addFocusListener(this);
         dtf_ch_ins.addKeyListener(this);
         
-        ATSwingUtils.getLabel(m_ic.getMessage("SENSITIVITY_FACTOR_LONG"), left_position, 120, 150, 45, this, ATSwingUtils.FONT_NORMAL_BOLD);
+        y_pos += this.space_between_lines;
+        
+        ATSwingUtils.getLabel(m_ic.getMessage("SENSITIVITY_FACTOR_LONG"), left_position, y_pos, 150, 45, this, ATSwingUtils.FONT_NORMAL_BOLD);
         dtf_ins_bg = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180, 130, 80, 25, this);
         dtf_ins_bg.addFocusListener(this);
         dtf_ins_bg.addKeyListener(this);
