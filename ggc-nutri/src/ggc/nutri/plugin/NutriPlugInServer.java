@@ -285,6 +285,20 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         return null;
     }
 
+    
+    /**
+     * Get Return Object
+     * 
+     * @param ret_obj_id
+     * @param parameters
+     * @return
+     */
+    @Override
+    public Object getReturnObject(int ret_obj_id, Object[] parameters)
+    {
+        return null;
+    }
+    
 
     /**
      * Get Backup Objects (if available)
