@@ -507,7 +507,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void endOutput()
     {
-        System.out.println("endOutput()");
+        //System.out.println("endOutput()");
         if (this.indeterminate)
         {
             this.progress.setIndeterminate(false);
