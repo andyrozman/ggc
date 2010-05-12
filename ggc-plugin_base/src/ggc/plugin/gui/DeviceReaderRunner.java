@@ -222,6 +222,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 
                 this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
                 this.setSpecialProgress(100);
+                this.endOutput();
 
                 lg = "Reading finished";
                 log.debug(lg);
@@ -343,6 +344,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
      */
     public void endOutput()
     {
+        getOutputWriter().endOutput();
     }
 
 

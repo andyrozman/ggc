@@ -143,6 +143,11 @@ public abstract class OldDataReaderAbstract
             log.warn("It seems that not all data was read (" + this.cur_entry + "/" + this.all_entries + ")");
             this.m_drr.setOldDataReadingProgress(100);
         }
+        else if (all_entries==0)
+        {
+            log.debug("Database was empty. Nothing was read.");
+            this.m_drr.setOldDataReadingProgress(100);
+        }
     }
     
     

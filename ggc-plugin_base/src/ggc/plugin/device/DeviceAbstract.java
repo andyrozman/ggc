@@ -49,7 +49,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected boolean can_read_device_configuration = false;
     protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
     protected OutputWriter output_writer;
-    
+    protected GGCPlugInFileReaderContext[] file_contexts;    
     
     /**
      * Constructor
@@ -60,6 +60,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         this.m_da = da;
         this.ic = da.getI18nControlInstance();
+        loadFileContexts();
     }
     
     /**
@@ -73,6 +74,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.m_da = da;
         this.ic = da.getI18nControlInstance();
         this.output_writer = output_writer_;
+        loadFileContexts();
     }
 
     
@@ -419,7 +421,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public GGCPlugInFileReaderContext[] getFileDownloadTypes()
     {
-        return null;
+        return this.file_contexts;
     }
     
 
@@ -433,6 +435,14 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return false;
     }
     
+    
+    /**
+     * Load File Contexts
+     */
+    public void loadFileContexts()
+    {
+        
+    }
     
     
 }
