@@ -1,15 +1,11 @@
 package ggc.cgms.device;
 
 import ggc.cgms.util.DataAccessCGMS;
-import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-
-import com.atech.graphics.dialogs.selector.ColumnSorter;
-import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,26 +34,26 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
+public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, SelectableInterface
 {
 
-    AbstractDeviceCompany cgms_company;
+    //AbstractDeviceCompany cgms_company;
 
-    protected int m_status = 0;
-    protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
+    //protected int m_status = 0;
+    //protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
 
     //protected String m_info = "";
     //protected int m_time_difference = 0;
     //protected ArrayList<CGMSValuesEntry> data = null;
     
-    protected OutputWriter m_output_writer = null;
+    //protected OutputWriter m_output_writer = null;
     
     //protected String[] profile_names = null;
     protected String device_name;
-    protected OutputWriter output_writer;
+    //protected OutputWriter output_writer;
     protected String parameter;
-    protected DataAccessCGMS m_da;
-    protected GGCPlugInFileReaderContext[] file_contexts = null;
+    //protected DataAccessCGMS m_da;
+    //protected GGCPlugInFileReaderContext[] file_contexts = null;
     
     
     /**
@@ -65,10 +61,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
      */
     public AbstractCGMS()
     {
-        super();
-        m_da = DataAccessCGMS.getInstance();
-        ic = m_da.getI18nControlInstance();
-        loadFileContexts();
+        super(DataAccessCGMS.getInstance());
     }
 
     
@@ -80,12 +73,8 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
      */
     public AbstractCGMS(String param, OutputWriter ow)
     {
-        super();
-        m_da = DataAccessCGMS.getInstance();
-        ic = m_da.getI18nControlInstance();
-        this.m_output_writer = ow;
+        super(DataAccessCGMS.getInstance(), ow);
         this.parameter = param;
-        loadFileContexts();
     }
     
     
@@ -96,11 +85,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
      */
     public AbstractCGMS(OutputWriter ow)
     {
-        super();
-        m_da = DataAccessCGMS.getInstance();
-        ic = m_da.getI18nControlInstance();
-        this.m_output_writer = ow;
-        loadFileContexts();
+        super(DataAccessCGMS.getInstance(), ow);
     }
 
 
@@ -111,12 +96,9 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
      */
     public AbstractCGMS(AbstractDeviceCompany cmp)
     {
-        super();
-        m_da = DataAccessCGMS.getInstance();
-        ic = m_da.getI18nControlInstance();
+        super(DataAccessCGMS.getInstance());
         this.setDeviceCompany(cmp);
         this.setCGMSType(cmp.getName(), getName());
-        loadFileContexts();
     }
     
     
@@ -146,64 +128,6 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     
     
     
-    boolean can_read_data = false; 
-    boolean can_read_partitial_data = false;
-    boolean can_clear_data = false;
-    boolean can_read_device_info = false;
-    boolean can_read_device_configuration = false;
-    
-    
-    
-    
-    
-    /** 
-     * Set Device Allowed Actions
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-                                        boolean can_read_partitial_data,
-                                        boolean can_read_device_info,
-                                        boolean can_read_device_configuration)
-    {
-        this.can_read_data = can_read_data; 
-        this.can_read_partitial_data = can_read_partitial_data;
-        this.can_read_device_info = can_read_device_info;
-        this.can_read_device_configuration = can_read_device_configuration;
-    }
-    
-    
-    
-    
-    
-    /*
-    public GenericMeter(int meter_type, String portName)
-    {
-
-	super(meter_type,
-	      9600, 
-	      SerialPort.DATABITS_8, 
-	      SerialPort.STOPBITS_1, 
-	      SerialPort.PARITY_NONE);
-
-	data = new ArrayList<DailyValuesRow>();
-
-	try
-	{
-	    this.setPort(portName);
-
-	    if (!this.open())
-	    {
-		this.m_status = 1;
-	    }
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("AscensiaMeter -> Error adding listener: " + ex);
-	    ex.printStackTrace();
-	}
-    }
-*/
-
-
 
 
     /**
@@ -216,273 +140,6 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
 
 
 
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
-
-    /** 
-     * test
-     */
-    public void test()
-    {
-    }
-
-
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-    
-    /**
-     * canReadData - Can Meter Class read data from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadData()
-    {
-        return this.can_read_data;
-    }
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadPartitialData()
-    {
-        return this.can_read_partitial_data;
-    }
-
-    /**
-     * canClearData - Can Meter class clear data from meter.
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canClearData()
-    {
-        return this.can_clear_data;
-    }
-
-    
-    /**
-     * canReadDeviceInfo - tells if we can read info about device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadDeviceInfo()
-    {
-        return this.can_read_device_info;
-    }
-    
-    
-    /**
-     * canReadConfiguration - tells if we can read configuration from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadConfiguration()
-    {
-        return this.can_read_device_configuration;
-    }
-
-
-    /** 
-     * compareTo
-     */
-    public int compareTo(SelectableInterface o)
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
-    
-    /** 
-     * Get Column Count
-     */
-    public int getColumnCount()
-    {
-        return m_da.getPluginDeviceUtil().getColumnCount();
-    }
-    
-    
-    /** 
-     * getColumnName
-     */
-    public String getColumnName(int num)
-    {
-        return m_da.getPluginDeviceUtil().getColumnName(num);
-    }    
-    
-    
-    /** 
-     * Get Column Width
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
-    }
-    
-    
-    
-
-
-    
-    
-    /** 
-     * getColumnValue - get Value of column, for configuration
-     */
-    public String getColumnValue(int num)
-    {
-        
-        try
-        {
-            return m_da.getPluginDeviceUtil().getColumnValue(num, this);
-        }
-        catch(Exception ex)
-        {
-            System.out.println("column: [name=" + this.getName() + ", id=" + num);
-            return "";
-            
-        }
-    }
-    
-    
-
-    /** 
-     * getColumnValue
-     */
-/*    public String getColumnValue(int num)
-    {
-        //System.out.println("Num: " + num);
-        switch(num)
-        {
-            case 1:
-                return this.getDeviceCompany().getName();
-
-            case 2:
-                return this.getName();
-                
-            case 3:
-                return this.getDeviceCompany().getConnectionSamples();
-
-            case 4:
-                if (this.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
-                    return DataAccessCGMS.getInstance().getYesNoOption(true);
-                else
-                    return DataAccessCGMS.getInstance().getYesNoOption(false);
-                
-            case 5:
-                //return "Bo/Ba/Tbr";
-                return DataAccessCGMS.getInstance().getYesNoOption(false);
-                
-                
-            default:                 
-                return "N/A: " + num;
-        }
-    }
-  */  
-    
-
-
-    /** 
-     * Get Column Value Object
-     */
-    public Object getColumnValueObject(int num)
-    {
-        return this.getColumnValue(num);
-    }
-
-
-    
-    
-
-
-    /** 
-     * Get Item Id
-     */
-    public long getItemId()
-    {
-        return 0;
-    }
-
-
-    /** 
-     * Get Short Description
-     */
-    public String getShortDescription()
-    {
-        return this.getName();
-    }
-
-
-    /** 
-     * Is Found
-     */
-    public boolean isFound(int from, int till, int state)
-    {
-        return true;
-    }
-
-
-    /** 
-     * Is Found
-     */
-    public boolean isFound(int value)
-    {
-        return true;
-    }
-
-
-    /** 
-     * Is Found
-     */
-    public boolean isFound(String text)
-    {
-        return true;
-    }
-
-
-    /** 
-     * Set Column Sorter
-     */
-    public void setColumnSorter(ColumnSorter cs)
-    {
-    }
-
-
-    /** 
-     * Set Search Context
-     */
-    public void setSearchContext()
-    {
-    }
-
-
-    /**
-     * setDeviceCompany - set Company for device
-     * 
-     * @param company
-     */
-    public void setDeviceCompany(AbstractDeviceCompany company)
-    {
-        this.cgms_company = company;
-    }
-    
-    
-    /**
-     * getDeviceCompany - get Company for device
-     */
-    public AbstractDeviceCompany getDeviceCompany()
-    {
-        return this.cgms_company;
-    }
-
-    
 
     
     /**
@@ -506,49 +163,8 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
         return 6;
     }
     
-    String device_source_name;
     
-    /**
-     * Get Device Source Name
-     * 
-     * @return
-     */
-    public String getDeviceSourceName()
-    {
-        return device_source_name;
-    }
-    
-    /** 
-     * Get Download SupportType Configuration
-     */
-    public int getDownloadSupportTypeConfiguration()
-    {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
-    }
-    
-
-    /**
-     * Does this device support file download. Some devices have their native software, which offers export 
-     * into some files (usually CSV files or even XML). We sometimes add support to download from such
-     * files, and in some cases this is only download supported. 
-     *  
-     * @return
-     */
-    public boolean isFileDownloadSupported()
-    {
-        return false;
-    }
-    
-    
-    /**
-     * Get File Download Types as FileReaderContext. 
-     * 
-     * @return
-     */
-    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
-    {
-        return this.file_contexts;
-    }
+ 
 
     
     /**
@@ -562,10 +178,7 @@ public abstract class AbstractCGMS implements CGMSInterface, SelectableInterface
     }
     
 
-    /**
-     * Load File Contexts - Load file contexts that device supports
-     */
-    public abstract void loadFileContexts();
+    
     
     
 }

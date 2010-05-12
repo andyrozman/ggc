@@ -5,7 +5,7 @@ import ggc.cgms.data.CGMSValuesTableModel;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.XmlProtocol;
+import ggc.plugin.protocol.XmlProtocolFile;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.BufferedReader;
@@ -44,7 +44,7 @@ import javax.swing.filechooser.FileFilter;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class FRC_DexcomTxt_DM3 extends XmlProtocol implements GGCPlugInFileReaderContext
+public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext
 {
 
     ArrayList<CGMSValuesSubEntry> list = new ArrayList<CGMSValuesSubEntry>();
@@ -262,8 +262,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocol implements GGCPlugInFileReade
     {
         this.output_writer = ow;
     }
-    
-    
+
     
     
     

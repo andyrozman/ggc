@@ -5,7 +5,7 @@ import ggc.cgms.data.CGMSValuesTableModel;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.XmlProtocol;
+import ggc.plugin.protocol.XmlProtocolFile;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.File;
@@ -53,7 +53,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 
 
-public class FRC_DexcomXml_DM3 extends XmlProtocol implements GGCPlugInFileReaderContext
+public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext
 {
 
     private static Log log = LogFactory.getLog(FRC_DexcomXml_DM3.class);

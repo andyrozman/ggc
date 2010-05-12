@@ -111,6 +111,9 @@ public abstract class MiniMedCGMS extends AbstractCGMS
 
     /**
      * Open
+     * 
+     * @return 
+     * @throws PlugInBaseException 
      */
     public boolean open() throws PlugInBaseException
     {
@@ -120,6 +123,8 @@ public abstract class MiniMedCGMS extends AbstractCGMS
 
     /**
      * Close
+     * 
+     * @throws PlugInBaseException 
      */
     public void close() throws PlugInBaseException
     {

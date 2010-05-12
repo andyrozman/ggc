@@ -74,7 +74,7 @@ public class CGMSManager extends DeviceManager
         addDeviceCompany(new Dexcom());
         addDeviceCompany(new Minimed());
         
-        System.out.println("!!! CGMS Companies: " + this.companies.size());
+        //System.out.println("!!! CGMS Companies: " + this.companies.size());
     }
     
     
@@ -88,7 +88,7 @@ public class CGMSManager extends DeviceManager
         this.supported_devices.addAll(new Dexcom().getDevices());
         this.supported_devices.addAll(new Minimed().getDevices());
 
-        System.out.println("!!! CGMS Devices: " + this.supported_devices.size());
+        //System.out.println("!!! CGMS Devices: " + this.supported_devices.size());
     }
     
 
