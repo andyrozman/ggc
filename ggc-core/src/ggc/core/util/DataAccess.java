@@ -743,7 +743,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     public void initPlugIns()
     {
         
-        /*
         log.debug("init Plugins: Meter Tool");
         addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
 
@@ -755,7 +754,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         log.debug("init Plugins: Nutrition Tool");
         addPlugIn(DataAccess.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
-        */
+        
     }
     
     
