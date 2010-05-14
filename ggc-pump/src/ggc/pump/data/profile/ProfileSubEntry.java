@@ -32,7 +32,7 @@ import com.atech.utils.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>   // Comparator<ProfileSubEntry>
+public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
 {
     
     /**
@@ -134,20 +134,27 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>   /
      */
     public int compare(ProfileSubEntry pse1, ProfileSubEntry pse2)
     {
+        //System.out.println("Same: " + pse1.time_start + ", " + pse2.time_start);
         if (pse1.time_start == pse2.time_start)
+        {
+            //System.out.println("Same: ");
             return (pse1.time_end - pse2.time_end);
+        }
         else
+        {
+            //System.out.println("Subn");
             return (pse1.time_start - pse2.time_start);
+        }
     }
 
     /** 
      * compareTo
      */
-    public int compareTo(ProfileSubEntry arg0)
+    public int compareTo(ProfileSubEntry pse)
     {
-        return compare(this, arg0);
+        return compare(this, pse);
     }
-    
+  
     
     
     /**

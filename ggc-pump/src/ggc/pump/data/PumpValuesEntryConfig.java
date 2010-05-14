@@ -847,5 +847,10 @@ public class PumpValuesEntryConfig extends PumpProfileH implements PumpValuesEnt
         return this.multiline_tooltip_type;
     }
 
+
+    public void prepareEntry_v2()
+    {
+    }
+
      
 }	

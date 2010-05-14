@@ -2,6 +2,9 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.1.1 [23.4.2010]
+    * Implemented statistics for GGC application (Pump Mode)
+
 1.0.5 [16.02.2010]
     * I18n is now partitially in PlugInBase
     * Minor device changes

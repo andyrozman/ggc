@@ -3,6 +3,7 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.output.OutputWriterType;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.util.DataAccessPump;
@@ -559,8 +560,35 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public String getDataAsString()
     {
-        // TODO Auto-generated method stub
-        return null;
+        switch(output_type)
+        {
+            case OutputWriterType.DUMMY:
+                return "";
+                
+            case OutputWriterType.CONSOLE:
+            case OutputWriterType.FILE:
+                return "Profile=" + this.getName() + ", From=" + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_from()) + ", Till=" + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_till());
+                
+            case OutputWriterType.GGC_FILE_EXPORT:
+            {
+                /*
+                PumpData pd = new PumpData(this);
+                try
+                {
+                    return pd.dbExport();
+                }
+                catch(Exception ex)
+                {
+                    log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
+                    return "Value could not be decoded for export!";
+                }*/
+            }
+                
+        
+            default:
+                return "Value is undefined";
+        
+        }
     }
     
 
@@ -867,6 +895,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     }
     
     
+    public void prepareEntry_v2()
+    {
+    }
     
     
      

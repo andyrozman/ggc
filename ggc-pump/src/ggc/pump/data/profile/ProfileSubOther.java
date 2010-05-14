@@ -1,5 +1,7 @@
 package ggc.pump.data.profile;
 
+import com.atech.utils.ATechDate;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -57,7 +59,40 @@ public class ProfileSubOther extends ProfileSubEntry
         return ProfileSubEntry.PROFILE_SUB_EVENT;
     }
     
+    
+    /**
+     * Get Change Info
+     * 
+     * @return
+     */
+    public String getChangeInfo()
+    {
+        return " Pattern " + this.profile_id + " changed at " + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.time_event); 
+    }
 
+    /**
+     * Compare.
+     * 
+     * @param pse1 the pse1
+     * @param pse2 the pse2
+     * 
+     * @return the int
+     */
+    public int compare(ProfileSubOther pse1, ProfileSubOther pse2)
+    {
+        return (int)(pse1.time_event - pse2.time_event);
+    }
+
+    /** 
+     * compareTo
+     * 
+     * @param psp
+     * @return 
+     */
+    public int compareTo(ProfileSubOther psp)
+    {
+        return compare(this, psp);
+    }
     
     
 }

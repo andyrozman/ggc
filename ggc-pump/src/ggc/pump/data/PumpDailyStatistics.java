@@ -70,7 +70,7 @@ public class PumpDailyStatistics extends StatisticsCollection
             setBGValue(PumpValuesEntry.BG_MIN);
             setBGValue(PumpValuesEntry.BG_MAX);
         }
-        
+        //int ijk = PumpValuesEntry.CH_AVG;
         
         setValue(PumpValuesEntry.BG_STD_DEV, getStandardDeviation()); 
         

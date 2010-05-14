@@ -440,7 +440,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public void setValue(String value) 
     {
-        if (!value.equals(this.getValue()))
+        if ((this.getValue()==null) || (!value.equals(this.getValue())))
         {
             super.setValue(value);
             changed = true;
@@ -856,5 +856,8 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     }
     
     
+    public void prepareEntry_v2()
+    {
+    }
     
 }	

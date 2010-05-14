@@ -573,14 +573,10 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     private void cmdOk()
     {
-        // TODO:
-
-        System.out.println("wizard_2 [ok]");
+        //System.out.println("wizard_2 [ok]");
 
         this.was_action = true;
 
-
-        
         if ((this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB) ||
             (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))
         {
@@ -636,7 +632,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
             else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
             {
-                System.out.println("val: " + this.num_1.getValue());
+                //System.out.println("val: " + this.num_1.getValue());
                 po.setValue(this.num_1.getValue().toString());
             }
             else
@@ -812,7 +808,12 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
             // System.out.println("focus lost: bg2");
             int val = m_da.getJFormatedTextValueInt(this.num_1);
-            float v_2 = m_da.getBGValueDifferent(DataAccessPump.BG_MGDL, val);
+            
+            //System.out.println("Bg Conv: ")
+            
+            
+            float v_2 = m_da.getBGConverter().getValueByType(DataAccessPump.BG_MGDL, DataAccessPump.BG_MMOL, val);
+            //float v_2 = m_da.getBGValueDifferent(DataAccessPump.BG_MGDL, val);
             this.num_2.setValue(new Float(v_2));
         }
         else if (src.equals(this.num_2))
@@ -827,7 +828,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
             // System.out.println("focus lost: bg2");
             float val = m_da.getJFormatedTextValueFloat(this.num_2);
-            int v_2 = (int) m_da.getBGValueDifferent(DataAccessPump.BG_MMOL, val);
+            int v_2 = (int)m_da.getBGConverter().getValueByType(DataAccessPump.BG_MMOL, DataAccessPump.BG_MGDL, val);
+//            int v_2 = (int) m_da.getBGValueDifferent(DataAccessPump.BG_MMOL, val);
             this.num_1.setValue(new Integer(v_2));
         }
         else

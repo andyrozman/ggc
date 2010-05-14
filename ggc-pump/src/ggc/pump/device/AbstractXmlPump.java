@@ -7,10 +7,6 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.pump.util.DataAccessPump;
 
-import com.atech.graphics.dialogs.selector.ColumnSorter;
-import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.utils.file.FileReaderContext;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -38,7 +34,7 @@ import com.atech.utils.file.FileReaderContext;
  */
 
 
-public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterface, SelectableInterface
+public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterface //, SelectableInterface
 {
 
     //protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
@@ -46,7 +42,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     protected String device_name = "Undefined";
     //protected OutputWriter output_writer;
     
-    AbstractDeviceCompany pump_company = null;
+    //AbstractDeviceCompany pump_company = null;
     
     String connection_port = "";
 
@@ -94,30 +90,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     
     
-    boolean can_read_data = false; 
-	boolean can_read_partitial_data = false;
-	boolean can_read_device_info = false;
-	boolean can_read_device_configuration = false;
-    
-    
-	
-	
-	
-    /** 
-     * Set Device Allowed Actions
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-    									boolean can_read_partitial_data,
-    									boolean can_read_device_info,
-    									boolean can_read_device_configuration)
-    {
-        this.can_read_data = can_read_data; 
-        this.can_read_partitial_data = can_read_partitial_data;
-        this.can_read_device_info = can_read_device_info;
-        this.can_read_device_configuration = can_read_device_configuration;
-    }
-
-    
     /**
      * Set Pump Type
      * 
@@ -140,36 +112,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         this.device_source_name = group + " " + device;
         
     }
-    
-    
-
-    /*
-    String meter_group = null;
-    String meter_device = null;
-    
-    PumpInterface device_instance = null;
-    
-    
-    public void setMeterType(String group, String device)
-    {
-        this.device_name = device;
-        
-        DeviceIdentification di = new DeviceIdentification(ic);
-        di.company = group;
-        di.device_selected = device;
-        
-        this.output_writer.setDeviceIdentification(di);
-        //this.output_writer.
-    	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-    }*/
-    
-    /*
-    public String getName()
-    {
-        return this.device_name;
-    }*/
-    
-    
     
     
     
@@ -204,40 +146,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     
     
-    
-    
-    /*
-    public GenericMeter(int meter_type, String portName)
-    {
-
-	super(meter_type,
-	      9600, 
-	      SerialPort.DATABITS_8, 
-	      SerialPort.STOPBITS_1, 
-	      SerialPort.PARITY_NONE);
-
-	data = new ArrayList<DailyValuesRow>();
-
-	try
-	{
-	    this.setPort(portName);
-
-	    if (!this.open())
-	    {
-		this.m_status = 1;
-	    }
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("AscensiaMeter -> Error adding listener: " + ex);
-	    ex.printStackTrace();
-	}
-    }
-*/
-
-
-
-    
     /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
      *    special comment about device (for example pix device, doesn't display anything till the end, which
@@ -262,17 +170,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
     }
     
-    /**
-     * getDeviceInfo - get Device info (firmware and software revision)
-     */
-    public DeviceIdentification getDeviceInfo()
-    {
-        return this.output_writer.getDeviceIdentification();
-    }
-    
-    
-    
-    
 
     /** 
      * Is Device Communicating
@@ -282,274 +179,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         return true;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-    
-    /**
-     * canReadData - Can Meter Class read data from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadData()
-    {
-    	return this.can_read_data;
-    }
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadPartitialData()
-    {
-    	return this.can_read_partitial_data;
-    }
-
-
-    
-    /**
-     * canReadDeviceInfo - tells if we can read info about device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadDeviceInfo()
-    {
-    	return this.can_read_device_info;
-    }
-    
-    
-    /**
-     * canReadConfiguration - tells if we can read configuration from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadConfiguration()
-    {
-    	return this.can_read_device_configuration;
-    }
-    
-    
-
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
-
-    /** 
-     * test
-     */
-    public void test()
-    {
-    }
-
-
-
-    
-    /** 
-     * Compare To
-     */
-    public int compareTo(SelectableInterface o)
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    
-    /** 
-     * Get Column Count
-     */
-    public int getColumnCount()
-    {
-        return m_da.getPluginDeviceUtil().getColumnCount();
-    }
-    
-    
-    /** 
-     * getColumnName
-     */
-    public String getColumnName(int num)
-    {
-        return m_da.getPluginDeviceUtil().getColumnName(num);
-    }    
-    
-    
-    /** 
-     * Get Column Width
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
-    }
-    
-    
-    
-
-    
-    /** 
-     * getColumnValue - get Value of column, for configuration
-     */
-    public String getColumnValue(int num)
-    {
-        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
-    }
-    
-
-    /** 
-     * getColumnValue
-     */
-/*    public String getColumnValue(int num)
-    {
-        //System.out.println("Num: " + num);
-        switch(num)
-        {
-            case 1:
-                return this.getDeviceCompany().getName();
-
-            case 2:
-                return this.getName();
-                
-            case 3:
-                return this.getDeviceCompany().getConnectionSamples();
-
-            case 4:
-                if (this.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
-                    return DataAccessPump.getInstance().getYesNoOption(true);
-                else
-                    return DataAccessPump.getInstance().getYesNoOption(false);
-                
-            case 5:
-                return DataAccessPump.getInstance().getYesNoOption(false);
-                
-                
-            default:                 
-                return "N/A: " + num;
-        }
-    }
-*/
-
-    /** 
-     * Get Column Value Object
-     */
-    public Object getColumnValueObject(int num)
-    {
-        return this.getColumnValue(num);
-    }
-
-
-
-
-    /** 
-     * Get Item Id
-     */
-    public long getItemId()
-    {
-        return 0;
-    }
-
-
-    /** 
-     * Get Short Description
-     */
-    public String getShortDescription()
-    {
-        return this.getName();
-    }
-
-
-    /** 
-     * Is Found
-     */
-    public boolean isFound(int from, int till, int state)
-    {
-        return true;
-    }
-
-
-    /** 
-     * Is Found
-     */
-    public boolean isFound(int value)
-    {
-        return true;
-    }
-
-
-    /** 
-     * Is Found
-     */
-    public boolean isFound(String text)
-    {
-        return true;
-    }
-
-
-    /** 
-     * Set Column Sorter
-     */
-    public void setColumnSorter(ColumnSorter cs)
-    {
-    }
-
-
-    /** 
-     * Set Search Context
-     */
-    public void setSearchContext()
-    {
-    }
-
-    
-    
-    
-
-    /**
-     * setDeviceCompany - set Company for device
-     * 
-     * @param company
-     */
-    public void setDeviceCompany(AbstractDeviceCompany company)
-    {
-        this.pump_company = company;
-    }
-    
-    
-    /**
-     * getDeviceCompany - get Company for device
-     */
-    public AbstractDeviceCompany getDeviceCompany()
-    {
-        return this.pump_company;
-    }
-
-
-    /**
-     * Is Device Readable (there are some devices that are not actual devices, but are used to get some
-     * sort of specific device data - in most cases we call them generics, and they don't have ability
-     * to read data)
-     * @return
-     */
-    public boolean isReadableDevice()
-    {
-        return true;
-    }
 
 
     /** 
@@ -572,63 +201,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         return "TYPE=Unit;STEP=0.1";
     }
-    
    
-    String device_source_name;
-    
-    /**
-     * Get Device Source Name
-     * 
-     * @return
-     */
-    public String getDeviceSourceName()
-    {
-        return device_source_name;
-    }
-    
-    
-    /** 
-     * Get Download SupportType Configuration
-     */
-    public int getDownloadSupportTypeConfiguration()
-    {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
-    }
-    
-
-    /**
-     * Does this device support file download. Some devices have their native software, which offers export 
-     * into some files (usually CSV files or even XML). We sometimes add support to download from such
-     * files, and in some cases this is only download supported. 
-     *  
-     * @return
-     */
-    public boolean isFileDownloadSupported()
-    {
-        return false;
-    }
-    
-    
-    /**
-     * Get File Download Types as FileReaderContext. 
-     * 
-     * @return
-     */
-    public FileReaderContext[] getFileDownloadTypes()
-    {
-        return null;
-    }
-
-    
-    /**
-     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
-     *     left to right side, without displaying progress.
-     * @return
-     */
-    public boolean hasIndeterminateProgressStatus()
-    {
-        return false;
-    }
-    
     
 }

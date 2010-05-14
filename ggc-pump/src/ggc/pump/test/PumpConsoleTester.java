@@ -4,7 +4,6 @@ import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.plugin.device.DownloadSupportType;
-import ggc.plugin.device.impl.abbott.CoPilot;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.accuchek.AccuChekSpirit;
@@ -74,9 +73,9 @@ public class PumpConsoleTester //extends JFrame
         
     	try
     	{
-    	    //startRoche(portName);
+    	    startRoche(portName);
     	    //startAnimas();
-    	    startCosmo();
+    	    //startCosmo();
     	    //startDana(portName);
     	    //startMinimed("./dta/CareLink-Export-1213803114904.csv");
     	    test();
@@ -147,10 +146,10 @@ public class PumpConsoleTester //extends JFrame
         
         AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
         //acs.processXml(new File("../test/I0014072.XML"));
-        acs.processXml(new File("../test/i0026117.xml"));
+        acs.processXml(new File("../test/I0026117_2303_2010.XML"));
             
         //"../test/I0026117.XML"));
-        acs.test();
+        //acs.test();
         
         //AccuChekSmartPixPump pp = (AccuChekSmartPixPump)acs;
         //pp.test();
@@ -253,7 +252,7 @@ public class PumpConsoleTester //extends JFrame
         da.setDb(db);
   */      
         
-        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+        //DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
         
         //DataAccessPump dap = DataAccessPump.getInstance();
 //        dap.setHelpContext(da.getHelpContext());
@@ -276,8 +275,8 @@ public class PumpConsoleTester //extends JFrame
   */       
         
         
-        CoPilot cp = new CoPilot(dap);
-        cp.readFile("/home/andy/workspace/GGC Desktop/test/CoPilot_Arch.XML");
+//        CoPilot cp = new CoPilot(dap);
+//        cp.readFile("/home/andy/workspace/GGC Desktop/test/CoPilot_Arch.XML");
         
         
         

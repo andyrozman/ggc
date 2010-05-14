@@ -158,6 +158,54 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
     {
         return this.getFullFileDescription();
     }
+
+    public String getComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getDeviceClassName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getDeviceId()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public String getDeviceSpecialComment()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getIconName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getImplementationStatus()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public String getInstructions()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
     
     

@@ -5,10 +5,12 @@ import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
+import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.db.PumpData;
 import ggc.pump.db.PumpDataExtended;
 import ggc.pump.db.PumpProfile;
@@ -20,6 +22,7 @@ import ggc.pump.util.DataAccessPump;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -27,6 +30,7 @@ import javax.swing.JMenuItem;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.misc.statistics.StatisticsCollection;
 import com.atech.plugin.BackupRestorePlugin;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
@@ -63,7 +67,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
 
     //String plugin_version = "0.1.7.1";
     
-    I18nControlAbstract ic_local = null;
+//    I18nControlAbstract ic_local = null;
     
     
     /**
@@ -114,6 +118,10 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     public static final int RETURN_ACTION_CONFIG = 2;
     
     
+    /**
+     * This is action that needs to be done, after config
+     */
+    public static final int RETURN_ACTION_STATISTICS = 100;
     
     /**
      * Return Object: Selected Device with parameters
@@ -133,6 +141,8 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
                                   "MN_PUMPS_ABOUT" };
     
     private DataAccessPump da_local = null;
+    private JMenuItem[] menus = new JMenuItem[3];
+    
     
     
     /**
@@ -141,7 +151,6 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     public PumpPlugInServer()
     {
         super();
-        //da_local = DataAccessPump.getInstance();
     }
     
     
@@ -152,13 +161,12 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
      * @param selected_lang
      * @param da
      */
-    public PumpPlugInServer(Container cont, String selected_lang, ATDataAccessLMAbstract da)
+    public PumpPlugInServer(Container cont, ATDataAccessLMAbstract da)
     {
-        super(cont, selected_lang, da);
+        super(cont, da);
+        
         da_local = DataAccessPump.createInstance(da.getLanguageManager());
         da_local.addComponent(cont);
-        //DataAccessPump.getInstance().setPlugInServerInstance(this);
-        //DataAccessPump.getInstance().m
     }
     
 
@@ -270,8 +278,15 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         //I18nControl.getInstance().setLanguage(this.selected_lang);
         
         //System.out.println("initPlugIn");
-        da_local = DataAccessPump.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        
+        if (da_local==null)
+            da_local = DataAccessPump.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
         //da_local = DataAccessPump.createInstance(da_parent..getL).getInstance();
+        
+        
+        this.initPlugInServer((DataAccess)m_da, da_local);
+        
+        /*
         
         da_local.loadManager();
         
@@ -279,7 +294,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         da_local.setParentI18nControlInstance(ic);
         
         
-        System.out.println(da_local.getI18nControlInstance().toString());
+        //System.out.println(da_local.getI18nControlInstance().toString());
         
         
         da_local.addComponent(this.parent);
@@ -297,6 +312,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         
         da_local.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
         da_local.setGraphConfigProperties(m_da.getGraphConfigProperties());
+        */
     }
     
     
@@ -341,7 +357,42 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     }
 
     
+    /**
+     * Get Return Object
+     * 
+     * @param ret_obj_id
+     * @param parameters
+     * @return
+     */
+    @Override
+    public Object getReturnObject(int ret_obj_id, Object[] parameters)
+    {
+ 
+        if (ret_obj_id == PumpPlugInServer.RETURN_ACTION_STATISTICS)
+        {
+            
+            GregorianCalendar gc_from = (GregorianCalendar)parameters[0];
+            GregorianCalendar gc_to = (GregorianCalendar)parameters[1];
+            
+            DataAccessPump da = DataAccessPump.getInstance();
+            DeviceValuesRange dvre = da.getDb().getRangePumpValues(gc_from , gc_to);
+            
+            StatisticsCollection sc = new StatisticsCollection(da, new PumpValuesEntry());
+            sc.processFullCollection(dvre.getAllEntries());
+            
+            return sc;
+            
+        }
+        else
+            return null;
+        
+    }
     
+    /*
+    private String getDT(GregorianCalendar gc)
+    {
+        return gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + gc.get(GregorianCalendar.MONTH) + "/" + gc.get(GregorianCalendar.YEAR) + " " + gc.get(GregorianCalendar.HOUR_OF_DAY) + ":" + gc.get(GregorianCalendar.MINUTE);
+    }*/
     
 
     /**
@@ -398,9 +449,8 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         else
             menu.setEnabled(false);
         
+        menus[0] = menu;
         
-        
-        ///if de==null || de.
         
         
         menu = ATSwingUtils.createMenuItem(menu_pump, 
@@ -415,6 +465,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         else
             menu.setEnabled(false);
         
+        menus[1] = menu;
         
         menu = ATSwingUtils.createMenuItem(menu_pump, 
             "MN_PUMPS_READ_FILE", 
@@ -427,6 +478,9 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             menu.setEnabled(true);
         else
             menu.setEnabled(false);
+        
+        menus[2] = menu;
+        
         
         // TODO remove when enabled
         menu.setEnabled(false);
@@ -486,6 +540,26 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         return menu_pump;
     }
 
+    
+    private void refreshMenusAfterConfig()
+    {
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+            menus[0].setEnabled(true);
+        else
+            menus[0].setEnabled(false);
+        
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE)
+            menus[1].setEnabled(true);
+        else
+            menus[1].setEnabled(false);
+        
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
+            menus[2].setEnabled(true);
+        else
+            menus[2].setEnabled(false);
+        
+    }
+    
     
     /**
      * Get PlugIn Print Menus 
@@ -566,6 +640,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         else if (command.equals("pumps_config"))
         {
             new DeviceConfigurationDialog((JFrame)this.parent, DataAccessPump.getInstance());
+            refreshMenusAfterConfig();
             this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_CONFIG);
         }
         else if (command.equals("pumps_about"))

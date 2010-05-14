@@ -9,11 +9,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/dom4j-1.6.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Xpp Xml Parser 3-1.1.4c"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.x"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate-3.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText-2.0.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/IBMComm"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.2"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

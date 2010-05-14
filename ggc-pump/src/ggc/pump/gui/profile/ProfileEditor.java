@@ -2,19 +2,14 @@ package ggc.pump.gui.profile;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.pump.data.graph.GraphViewBasalRateEstimator;
+import ggc.pump.data.graph.GraphViewProfileEditor;
 import ggc.pump.data.graph.bre.BREGraphsAbstract;
-import ggc.pump.data.graph.bre.GraphViewBasalRate;
-import ggc.pump.data.graph.bre.GraphViewBasals;
-import ggc.pump.data.graph.bre.GraphViewRatios;
 import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -37,7 +32,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.DateTimeComponent;
-import com.atech.graphics.graphs.GraphViewerPanel;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
@@ -92,6 +86,8 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     PumpProfileH m_profile;
     boolean m_action_done = false;
     JSpinner sp_base;
+    GraphViewProfileEditor graphview_pe;
+    
     
     /**
      * Constructor
@@ -153,6 +149,9 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         
         if ((this.m_profile.getComment()!=null) && (!this.m_profile.getComment().equals("null"))) 
             this.tf_com.setText(this.m_profile.getComment());
+        
+        graphview_pe.refreshData();
+        
     }
     
     private void loadSubEntries(String subs)
@@ -208,6 +207,16 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         }
         
         return sb.toString();
+    }
+    
+    
+    /**
+     * Get Profile Entries (as ArrayList)
+     * @return
+     */
+    public ArrayList<ProfileSubEntry> getProfileEntriesAL()
+    {
+        return this.list_data;
     }
     
 
@@ -272,14 +281,21 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         scr.setBounds(560, 250, 180, 210);
         panel.add(scr);
         
-        
+        /*
         JPanel panel_graph = new JPanel();
         panel_graph.setBounds(30, 220, 500, 280);
         panel_graph.setBackground(new Color(65, 105, 225));
         panel.add(panel_graph);
         
-        
+        */
 
+        graphview_pe = new GraphViewProfileEditor(this); 
+        
+        
+        JPanel panel_graph = graphview_pe.getChartPanel();
+        panel_graph.setBounds(20, 220, 510, 310);
+        //panel_graph.setBackground(new Color(65, 105, 225));
+        panel.add(panel_graph);
         
         JButton b = null;
         
@@ -351,108 +367,9 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         panel.add(this.help_button);
         
         m_da.enableHelp(this);
-
-        
-        //---
-        //--- Graphs
-        //---
-        
-        /*
-        this.m_graphs = new Hashtable<String, BREGraphsAbstract>();
-        
-        JTabbedPane tabbed_graphs = new JTabbedPane();
-        tabbed_graphs.setTabPlacement(JTabbedPane.BOTTOM);
-        tabbed_graphs.setBounds(300, 120, 560, 360);
-        panel.add(tabbed_graphs);
-        */
-        
-        
-        //tabbed_graphs.addTab("Both Basal Graphs", panel_graph);
-        
-        
-        
-        
-        /*
-        JPanel panel_graph = new JPanel();
-        panel_graph.setBounds(300, 120, 560, 360);
-        tabbed_graphs.addTab("Both Basal Graphs", panel_graph);
-        */
-
-        
-        
-        /*
-        JPanel panel_graph = new JPanel();
-        panel_graph.setBounds(300, 120, 560, 360);
-        
-        gv = new GraphViewBasalRateEstimator();
-        
-        GraphViewerPanel gvp = new GraphViewerPanel(gv);
-        gvp.setMinimumSize(new Dimension(550, 320)); // 450, 460
-        gvp.setPreferredSize(gvp.getMinimumSize());
-        panel_graph.add(gvp, BorderLayout.CENTER);
-        //panel.add(panel_graph); */
-        
-        /*
-        tabbed_graphs.addTab("Both Basal Graphs", this.createPanelGraph(BasalRateEstimator.GRAPH_BOTH_BASAL_RATES));
-
-        tabbed_graphs.addTab("Current Basal Graph", this.createPanelGraph(BasalRateEstimator.GRAPH_OLD_RATE));
-        
-        tabbed_graphs.addTab("Estimated Basal Graph", this.createPanelGraph(BasalRateEstimator.GRAPH_NEW_RATE));
-
-        tabbed_graphs.addTab("Ratio's", this.createPanelGraph(BasalRateEstimator.GRAPH_RATIO));
-        
-        tabbed_graphs.addTab("Basal Rates", this.createPanelGraph(BasalRateEstimator.GRAPH_BASALS));
-        */
-        
-        
-        
-        //ATSwingUtils.getLabel("Date of display: ", 350, 80, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-        //ATSwingUtils.getLabel("02/02/2009", 500, 80, 200, 25, panel, ATSwingUtils.FONT_NORMAL); 
-        //ATSwingUtils.getButton("Change Date", 670, 80, 190, 25, panel, ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
-        
-
-        //ATSwingUtils.getButton("Algorithm", 570, 250, 190, 25, panel, ATSwingUtils.FONT_NORMAL, null, "algorithm", this, m_da);
-        
-        //ATSwingUtils.getButton("Change Date", 500, 50, 150, 25, panel, ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
         
     }
 
-    
-    
-    
-    @SuppressWarnings("unused")
-    private JPanel createPanelGraph(int type)
-    {
-        
-        JPanel panel_graph = new JPanel();
-        //panel_graph.setBounds(300, 120, 560, 360);
-        BREGraphsAbstract gva = null;
-        
-        if ((type>=1) && (type <=3))
-        {
-            gva = new GraphViewBasalRate(type);
-        }
-        else if (type==4)
-        {
-            gva = new GraphViewRatios();
-        }
-        else
-        {
-            gva = new GraphViewBasals();
-            
-        }
-        
-        m_graphs.put("" + type, gva);
-        
-        GraphViewerPanel gvp = new GraphViewerPanel(gv);
-        gvp.setMinimumSize(new Dimension(550, 310)); // 450, 460
-        gvp.setPreferredSize(gvp.getMinimumSize());
-        panel_graph.add(gvp, BorderLayout.CENTER);
-        
-        return panel_graph;
-    }
-    
-    
     
     
     
@@ -469,32 +386,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         }
 
         this.lst_basals.setModel(listModel);
-        
-        /*
-        switch(type)
-        {
-            case BREData.BRE_DATA_BASAL_NEW:
-            {
-                this.lst_basals_new.setModel(listModel);
-            } break;
-            
-            case BREData.BRE_DATA_BASAL_OLD:
-            {
-                this.lst_basals_old.setModel(listModel);
-            } break;
-                
-            case BREData.BRE_DATA_BG:
-            {
-                this.lst_bgs.setModel(listModel);
-            } break;
-
-            case BREData.BRE_DATA_BASAL_RATIO:
-            {
-                this.lst_ratios.setModel(listModel);
-            } break;
-        }
-        */
-        
+        this.graphview_pe.refreshData();
     }
     
     
