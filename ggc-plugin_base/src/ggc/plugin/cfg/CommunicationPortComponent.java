@@ -78,13 +78,17 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
     }
     
     
+
+    
+    
+    
     /**
      * Init
      */
     public void init()
     {
         this.setLayout(null);
-        this.setBounds(25, 115, 370, 25);
+        this.setBounds(25, 25, 370, 25);
         
         label = ATSwingUtils.getLabel(m_ic.getMessage("COMMUNICATION_PORT") + ":", 0, 0, 150, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
         

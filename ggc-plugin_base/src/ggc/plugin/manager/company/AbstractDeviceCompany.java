@@ -30,6 +30,7 @@ package ggc.plugin.manager.company;
 
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.manager.EmptyMgrDevices;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.Hashtable;
 import java.util.Vector;
@@ -99,13 +100,13 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      * @param ic
      * @param empty
      */
-    public AbstractDeviceCompany(boolean empty)
+    public AbstractDeviceCompany(boolean empty, DataAccessPlugInBase da)
     {
         this();
         
         if (empty==true)
         {
-            this.devices_vector.add(new EmptyMgrDevices());
+            this.devices_vector.add(new EmptyMgrDevices(da));
         }
     }
 
@@ -121,9 +122,9 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      * @param company_desc 
      * @param implementation_status 
      */
-    public AbstractDeviceCompany(boolean empty, int company_id_, String company_name, String short_company_name, String company_desc, int implementation_status)
+    public AbstractDeviceCompany(boolean empty, int company_id_, String company_name, String short_company_name, String company_desc, int implementation_status,DataAccessPlugInBase da )
     {
-        this(empty);
+        this(empty, da);
         
         this.company_id = company_id_;
         this.company_name = company_name;

@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -75,7 +76,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     JTextField tf_name;
     JButton help_button;
     JLabel lbl_company, lbl_device;
-    CommunicationPortComponent comm_port_comp;
+//    CommunicationPortComponent comm_port_comp;
     
     //DeviceConfiguration dev_config = null;
 
@@ -86,7 +87,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     int current_index = 0;
     String current_index_object = "";
     String first_selected = "";
-
+    CommunicationSettingsPanel comm_settings;
+    
     /**
      * Constructor
      * 
@@ -167,8 +169,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     {
         this.current_device = null;
         showDevice();
+
+        // FIXME
+//        this.comm_port_comp.setCommunicationPort(m_ic.getMessage("NOT_SET"));
+        this.comm_settings.setParameters(null);
+
         
-        this.comm_port_comp.setCommunicationPort(m_ic.getMessage("NOT_SET"));
         
         
         if (!dcd.doesDeviceSupportTimeFix())
@@ -182,6 +188,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
         
     }
+    
     
     
     private Object[] getComboEntriesFromConfiguration()
@@ -237,7 +244,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         cb_entry.addItemListener(this);
 
         // device configuration
-        JPanel pan_meter = ATSwingUtils.getPanel(20, 140, 410, 150, 
+        JPanel pan_meter = ATSwingUtils.getPanel(20, 140, 410, 125, 
             null, 
             new TitledBorder(String.format(m_ic.getMessage("DEVICE_CONFIGURATION"), m_ic.getMessage("DEVICE_NAME_BIG"))), 
             main_panel);
@@ -254,16 +261,31 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         ATSwingUtils.getButton(m_ic.getMessage("SELECT"), 295, 55, 100, 55, 
             pan_meter, ATSwingUtils.FONT_NORMAL, null, "device_selector", this, m_da);
         
-        this.comm_port_comp = new CommunicationPortComponent(m_da, this);
-        pan_meter.add(this.comm_port_comp);
         
-        int start_y = 320;
+        comm_settings = new CommunicationSettingsPanel(20, 270, m_da, this);
+        main_panel.add(this.comm_settings);
+        
+        
+        /*
+        JPanel pan_comm_settings = ATSwingUtils.getPanel(20, 250, 410, 80, 
+            null, 
+            new TitledBorder(m_ic.getMessage("COMMUNICATION_SETTINGS")), 
+            main_panel);        
+        
+        this.comm_port_comp = new CommunicationPortComponent(m_da, this);
+        pan_comm_settings.add(this.comm_port_comp);
+*/
+        
+        
+        
+        
+        int start_y = 270 + 5 + comm_settings.getHeight();
         
         if (this.dcd.doesDeviceSupportTimeFix())
         {
         
             // timezone fix panel
-            JPanel pan_tzfix = ATSwingUtils.getPanel(20, 295, 410, 200, null, new TitledBorder(m_ic.getMessage("TIMEZONE_CONFIGURATION")), main_panel); 
+            JPanel pan_tzfix = ATSwingUtils.getPanel(20, start_y , 410, 200, null, new TitledBorder(m_ic.getMessage("TIMEZONE_CONFIGURATION")), main_panel); 
             
             ATSwingUtils.getLabel(m_ic.getMessage("SELECT_TIMEZONE_LIST") + ":", 25,25, 450, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
             
@@ -285,25 +307,27 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             this.cb_summer_fix = ATSwingUtils.getComboBox(changes, 240, 155, 80, 25, pan_tzfix, ATSwingUtils.FONT_NORMAL); 
             this.cb_summer_fix.setSelectedIndex(1);
             
-            start_y = 510;
+            //start_y = 510;
+            start_y += 210;
 
             enableDisableFix(false);
         }
         
         
-        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 50, start_y, 110, 25, 
+        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 50, start_y+10, 110, 25, 
                                 main_panel, ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
 
-        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, start_y, 110, 25, 
+        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, start_y+10, 110, 25, 
             main_panel, ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
         
-        help_button = m_da.createHelpButtonByBounds(290, start_y, 110, 25, this, ATSwingUtils.FONT_NORMAL); //ATDataAccessAbstract.FONT_NORMAL); 
+        help_button = m_da.createHelpButtonByBounds(290, start_y+10, 110, 25, this, ATSwingUtils.FONT_NORMAL); //ATDataAccessAbstract.FONT_NORMAL); 
         main_panel.add(help_button);
 
         
         //this.cb_entry.setSelectedItem(this.first_selected);
         
-        this.comm_port_comp.setProtocol(0);
+        this.comm_settings.setProtocol(0);
+        //comm_port_comp.setProtocol(0);
         current_index = this.cb_entry.getSelectedIndex();
         this.current_index_object = (String)this.cb_entry.getSelectedItem();
         this.loadItemData();
@@ -314,9 +338,11 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         }
 
         setSize(450, start_y + 90);
+        main_panel.setBounds(0, 0, 450, start_y + 90);
         getContentPane().add(main_panel, null);
     }
 
+    
 
     private void enableDisableFix(boolean enable)
     {
@@ -325,20 +351,43 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     }
     
 
+    public void refreshCommunicationSettings()
+    {
+        
+        /*
+        if (special_config==null)
+        {
+            //pan_comm_settings = ATSwingUtils.getPanel(440, 140, 410, 100,
+            //this.comm_port_comp
+        }
+        else
+        {
+            
+        }
+        */
+        
+        
+    }
+    
+    
+    
     private void showDevice()
     {
         if (this.current_device==null)
         {
             this.lbl_company.setText(m_ic.getMessage("NO_COMPANY_SELECTED")); 
             this.lbl_device.setText(m_ic.getMessage("NO_DEVICE_SELECTED"));
-            this.comm_port_comp.setProtocol(0);
+            //this.comm_port_comp.setProtocol(0);
         }
         else
         {
             this.lbl_company.setText(this.current_device.getColumnValue(1)); 
             this.lbl_device.setText(this.current_device.getColumnValue(2));
-            this.comm_port_comp.setProtocol(this.current_device.getConnectionProtocol());
+            //this.comm_port_comp.setProtocol(this.current_device.getConnectionProtocol());
         }
+        
+        this.comm_settings.setCurrentDevice(this.current_device);
+        
     }
     
 
@@ -370,6 +419,13 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
         if (action.equals("ok")) 
         {
+            
+            if ((this.current_device==null) || (!this.comm_settings.areParametersSet()))
+            {
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("CONFIG_ERROR_NO_DEVICE_OR_PARAMETERS"), m_ic.getMessage("WARNING"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             action_was = true;
             
             this.saveData();
@@ -559,7 +615,10 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         
         //if m_da.
         
-        this.comm_port_comp.setCommunicationPort(this.current_entry.communication_port);
+        //this.comm_port_comp.setCommunicationPort(this.current_entry.communication_port);
+        
+        this.comm_settings.setParameters(this.current_entry.communication_port);
+        
         
         
         if (!dcd.doesDeviceSupportTimeFix())
@@ -593,7 +652,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         dce.name = this.tf_name.getText();
         dce.device_company = this.lbl_company.getText();
         dce.device_device = this.lbl_device.getText();
-        dce.communication_port = this.comm_port_comp.getCommunicationPort();
+        dce.communication_port = this.comm_settings.getParameters(); //.comm_port_comp.getCommunicationPort();
       
         if (dcd.doesDeviceSupportTimeFix())
         {

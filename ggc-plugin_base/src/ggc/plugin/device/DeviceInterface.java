@@ -1,6 +1,7 @@
 package ggc.plugin.device;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -265,6 +266,11 @@ public interface DeviceInterface extends SelectableInterface
     void test();
 
 
+    //************************************************
+    //***        Connection type/parameters        ***
+    //************************************************
+    
+    
     /**
      * getConnectionProtocol - returns id of connection protocol
      * 
@@ -276,11 +282,52 @@ public interface DeviceInterface extends SelectableInterface
     
     /**
      * getConnectionPort - connection port data
-     * 
+     *
+     * @deprecated use getConnectionParamter instead
      * @return connection port as string
      */
     public String getConnectionPort();
     
+    
+    /**
+     * Get Connection Parameters
+     * 
+     * @return
+     */
+    public String getConnectionParameters();
+    
+    /**
+     * Set Connection Parameters
+     * 
+     * @param param 
+     */
+    public void setConnectionParameters(String param);
+    
+    
+    /**
+     * Are Connection Parameters Valid - validate
+     * 
+     * @return
+     */
+    public boolean areConnectionParametersValid();
+    
+
+    /**
+     * Are Connection Parameters Valid (String) - validate
+     * 
+     * @param param 
+     * @return
+     */
+    public boolean areConnectionParametersValid(String param);
+    
+    
+    /**
+     * Has No Connection Parameters - In rare cases we have no parameters for a device (for example if 
+     * we support just import from non-permanent location)
+     * 
+     * @return
+     */
+    public boolean hasNoConnectionParameters();
     
     
     //************************************************
@@ -303,6 +350,12 @@ public interface DeviceInterface extends SelectableInterface
      */
     public AbstractDeviceCompany getDeviceCompany();
 
+    
+    
+    //************************************************
+    //***             Download Support             ***
+    //************************************************
+    
     
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -356,9 +409,33 @@ public interface DeviceInterface extends SelectableInterface
     public GGCPlugInFileReaderContext[] getFileDownloadTypes();
     
     
+    //************************************************
+    //***              Special Config              ***
+    //************************************************
     
     
     
+    /**
+     * Has Special Config
+     * 
+     * @return
+     */
+    public boolean hasSpecialConfig();
+    
+    
+    /**
+     * Get Special Config Panel
+     * 
+     * @return
+     */
+    public DeviceSpecialConfigPanelInterface getSpecialConfigPanel();
+    
+    
+    
+    /**
+     * Initialize Special Config
+     */
+    public void initSpecialConfig();
     
     
 }

@@ -1,10 +1,11 @@
 package ggc.plugin.manager;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
-import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 import javax.swing.ImageIcon;
 
@@ -38,10 +39,17 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  */
 
 
-public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
+public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
 {
 
 
+
+
+    public EmptyMgrDevices(DataAccessPlugInBase da)
+    {
+        super(da);
+        // TODO Auto-generated constructor stub
+    }
 
 
     //************************************************
@@ -98,29 +106,7 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     }
 
     
-    /**
-     * getGlobalMeterId - Get Global Meter Id, within Meter Company class 
-     * Should be implemented by meter class.
-     * 
-     * @return global id of meter
-     */
-    public int getGlobalMeterId()
-    {
-        return 0;
-    }
-
-    
-    /**
-     * getCompanyId - Get Company Id 
-     * Should be implemented by meter class.
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return 0;
-    }
-    
+ 
     
     /**
      * getInstructions - get instructions for device
@@ -158,31 +144,6 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     }
 
 
-    /**
-     * @see ggc.plugin.device.DeviceInterface#canReadConfiguration()
-     */
-    public boolean canReadConfiguration()
-    {
-        return false;
-    }
-
-
-    /**
-     * @see ggc.plugin.device.DeviceInterface#canReadData()
-     */
-    public boolean canReadData()
-    {
-        return false;
-    }
-
-
-    /**
-     * @see ggc.plugin.device.DeviceInterface#canReadDeviceInfo()
-     */
-    public boolean canReadDeviceInfo()
-    {
-        return false;
-    }
 
 
     /**
@@ -217,13 +178,6 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     }
 
 
-    /**
-     * @see ggc.plugin.device.DeviceInterface#hasSpecialProgressStatus()
-     */
-    public boolean hasSpecialProgressStatus()
-    {
-        return false;
-    }
 
 
     /**
@@ -252,12 +206,6 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     }
 
 
-    /**
-     * @see ggc.plugin.device.DeviceInterface#readDeviceDataPartitial()
-     */
-    public void readDeviceDataPartitial() throws PlugInBaseException
-    {
-    }
 
 
     /**
@@ -268,136 +216,6 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     }
 
 
-    /**
-     * @see ggc.plugin.device.DeviceInterface#setDeviceAllowedActions(boolean, boolean, boolean, boolean)
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data,
-            boolean can_read_device_info, boolean can_read_device_configuration)
-    {
-    }
-
-
-    /**
-     * @see ggc.plugin.device.DeviceInterface#test()
-     */
-    public void test()
-    {
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#compareTo(com.atech.graphics.dialogs.selector.SelectableInterface)
-     */
-    public int compareTo(SelectableInterface o)
-    {
-        return 0;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnCount()
-     */
-    public int getColumnCount()
-    {
-        return 0;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnName(int)
-     */
-    public String getColumnName(int num)
-    {
-        return null;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnValue(int)
-     */
-    public String getColumnValue(int num)
-    {
-        return null;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnValueObject(int)
-     */
-    public Object getColumnValueObject(int num)
-    {
-        return null;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getColumnWidth(int, int)
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        return 0;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getItemId()
-     */
-    public long getItemId()
-    {
-        return 0;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#getShortDescription()
-     */
-    public String getShortDescription()
-    {
-        return null;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#isFound(java.lang.String)
-     */
-    public boolean isFound(String text)
-    {
-        return false;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#isFound(int)
-     */
-    public boolean isFound(int value)
-    {
-        return false;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#isFound(int, int, int)
-     */
-    public boolean isFound(int from, int till, int state)
-    {
-        return false;
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#setColumnSorter(com.atech.graphics.dialogs.selector.ColumnSorter)
-     */
-    public void setColumnSorter(ColumnSorter cs)
-    {
-    }
-
-
-    /**
-     * @see com.atech.graphics.dialogs.selector.SelectableInterface#setSearchContext()
-     */
-    public void setSearchContext()
-    {
-    }
 
 
     /**
@@ -408,22 +226,6 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
         return null;
     }
 
-
-    /**
-     * @see ggc.plugin.device.DeviceInterface#getDeviceCompany()
-     */
-    public AbstractDeviceCompany getDeviceCompany()
-    {
-        return null;
-    }
-
-
-    /**
-     * @see ggc.plugin.device.DeviceInterface#setDeviceCompany(ggc.plugin.manager.company.AbstractDeviceCompany)
-     */
-    public void setDeviceCompany(AbstractDeviceCompany company)
-    {
-    }
 
 
     /**
@@ -477,65 +279,12 @@ public class EmptyMgrDevices implements DeviceInterface //extends DummyDevice
     }
 
 
-    String device_source_name;
-    
-    /**
-     * Get Device Source Name
-     * 
-     * @return
-     */
-    public String getDeviceSourceName()
-    {
-        return device_source_name;
-    }
 
 
-    /** 
-     * Get Download SupportType Configuration
-     * 
-     * @return 
-     */
-    public int getDownloadSupportTypeConfiguration()
-    {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
-    }
 
 
-    /**
-     * Get File Download Types as FileReaderContext. 
-     * 
-     * @return
-     */
-    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
-    {
-        return null;
-    }
 
 
-    /**
-     * Does this device support file download. Some devices have their native software, which offers export 
-     * into some files (usually CSV files or even XML). We sometimes add support to download from such
-     * files, and in some cases this is only download supported. 
-     *  
-     * @return
-     */
-    public boolean isFileDownloadSupported()
-    {
-        return false;
-    }
-    
-    
-    /**
-     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
-     *     left to right side, without displaying progress.
-     * @return
-     */
-    public boolean hasIndeterminateProgressStatus()
-    {
-        return false;
-    }
-    
-    
     
     
     

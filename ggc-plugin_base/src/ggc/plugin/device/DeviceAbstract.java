@@ -1,6 +1,7 @@
 package ggc.plugin.device;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -42,6 +43,8 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected DataAccessPlugInBase m_da;
     protected AbstractDeviceCompany device_company;
     protected String device_source_name;
+    protected String connection_parameters = null;
+    protected DeviceSpecialConfigPanelInterface special_config = null;
     
     protected boolean can_read_data = false;
     protected boolean can_read_partitial_data = false;
@@ -50,6 +53,28 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
     protected OutputWriter output_writer;
     protected GGCPlugInFileReaderContext[] file_contexts;    
+    
+    /**
+     * Device Type: Meter
+     */
+    public static final int DEVICE_TYPE_METER = 1;
+
+    /**
+     * Device Type: Pump
+     */
+    public static final int DEVICE_TYPE_PUMP = 2;
+    
+    /**
+     * Device Type: CGMS
+     */
+    public static final int DEVICE_TYPE_CGMS = 3;
+    
+    /**
+     * Device Type: Other
+     */
+    public static final int DEVICE_TYPE_OTHER = 4;
+    
+    
     
     /**
      * Constructor
@@ -61,6 +86,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.m_da = da;
         this.ic = da.getI18nControlInstance();
         loadFileContexts();
+        this.initSpecialConfig();
     }
     
     /**
@@ -75,6 +101,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.ic = da.getI18nControlInstance();
         this.output_writer = output_writer_;
         loadFileContexts();
+        this.initSpecialConfig();
     }
 
     
@@ -441,8 +468,137 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void loadFileContexts()
     {
-        
+    }
+
+    
+    /**
+     * Device has special progress status (we use this functions mostly if we have progress,
+     * that is not tied just to entry readings)
+     */
+    public boolean hasSpecialProgressStatus()
+    {
+        return false;
     }
     
+    
+    /**
+     * Set Device Type
+     * 
+     * @param group
+     * @param device
+     * @param type type of device (1 = Meter, 2=Pump, 3=CGMS, 4=Other)
+     */
+    public void setDeviceType(String group, String device, int type)
+    {
+        DeviceIdentification di = new DeviceIdentification();
+        di.company = group;
+        di.device_selected = device;
+        
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
+        
+        this.device_source_name = group + " " + device;
+    }
+    
+    
+    
+    /**
+     * Get Connection Parameters
+     * 
+     * @return
+     */
+    public String getConnectionParameters()
+    {
+        return this.connection_parameters;
+    }
+    
+    /**
+     * Set Connection Parameters
+     * 
+     * @param param 
+     */
+    public void setConnectionParameters(String param)
+    {
+        this.connection_parameters = param;
+    }
+    
+    
+    /**
+     * Are Connection Parameters Valid - validate
+     * 
+     * @return
+     */
+    public boolean areConnectionParametersValid()
+    {
+        return this.areConnectionParametersValid(this.connection_parameters);
+    }
+    
+    
+    /**
+     * Are Connection Parameters Valid (String) - validate
+     * 
+     * @param param 
+     * @return
+     */
+    public boolean areConnectionParametersValid(String param)
+    {
+        if (this.hasNoConnectionParameters())
+            return true;
+        else
+        {
+            if (this.hasSpecialConfig())
+            {
+                this.special_config.loadConnectionParameters(param);
+                return this.getSpecialConfigPanel().areConnectionParametersValid();
+            }
+            else
+                return ((this.connection_parameters!=null) && (this.connection_parameters.length()>0));
+        }
+    }
+    
+    
+    
+    /**
+     * Has No Connection Parameters - In rare cases we have no parameters for a device (for example if 
+     * we support just import from non-permanent location)
+     * 
+     * @return
+     */
+    public boolean hasNoConnectionParameters()
+    {
+        return false;
+    }
+
+    
+    
+    
+    /**
+     * Has Special Config
+     * 
+     * @return
+     */
+    public boolean hasSpecialConfig()
+    {
+        return (this.special_config!=null);
+    }
+    
+    
+    /**
+     * Get Special Config Panel
+     * 
+     * @return
+     */
+    public DeviceSpecialConfigPanelInterface getSpecialConfigPanel()
+    {
+        return this.special_config;
+    }
+
+    
+    /**
+     * Initialize Special Config
+     */
+    public void initSpecialConfig()
+    {
+    }
     
 }
