@@ -18,7 +18,6 @@ import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.dialogs.defs.StockListDef;
 import ggc.gui.panels.info.InfoPanel;
 import ggc.shared.ratio.RatioBaseDialog;
-import ggc.shared.ratio.RatioCalculatorDialog;
 import ggc.shared.ratio.RatioExtendedDialog;
 
 import java.awt.BorderLayout;
@@ -1287,10 +1286,10 @@ public class MainFrame extends JFrame implements EventObserverInterface
                 */
                 
                 // ratio calculator
-                @SuppressWarnings("unused")
-                RatioCalculatorDialog rcd = new RatioCalculatorDialog(MainFrame.this);
+ //               @SuppressWarnings("unused")
+ //               RatioCalculatorDialog rcd = new RatioCalculatorDialog(MainFrame.this);
 
-                
+                //BasalRateEstimator bre = new BasalRateEstimator();             
                 
                 
              /*   
