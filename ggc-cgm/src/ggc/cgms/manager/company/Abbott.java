@@ -2,6 +2,7 @@ package ggc.cgms.manager.company;
 
 import ggc.cgms.device.freestyle.FreestyleNavigator;
 import ggc.cgms.manager.CGMSDevicesIds;
+import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -46,7 +47,8 @@ public class Abbott extends AbstractDeviceCompany
             "Abbott",                           // company name (full)
             "Abbott",                           // short company name
             "ABBOTT_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_PLANNED);  // implementation status
+            DeviceImplementationStatus.IMPLEMENTATION_PLANNED,
+            DataAccessCGMS.getInstance());  // implementation status
         
         this.addDevice(new FreestyleNavigator(this));
     }
