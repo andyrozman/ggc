@@ -44,7 +44,8 @@ c.) In Preferences\General, you will amongst options also have option Translatio
     (or in future text you specified in configuration from step b) as LANGUAGE_NAME),
     which will then take correct files.
     
-NOTE: This functionality is not ready yet.  
+NOTE: This functionality is implemented, and will be available after you update GGC to 0.4.20
+    update (planned release June 2010).  
   
     
 
