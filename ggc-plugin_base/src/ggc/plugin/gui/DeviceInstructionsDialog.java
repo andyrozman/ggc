@@ -306,7 +306,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         
         DeviceInterface mi = m_da.getManager().getDevice(this.configured_device.device_company, this.configured_device.device_device);
 
-        System.out.println("Device Interface: " + mi);
+        //System.out.println("Device Interface: " + mi);
         
         this.device_interface = mi;
         
@@ -497,8 +497,9 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
             panel);
         
         label = ATSwingUtils.getLabel(m_ic.getMessage(this.device_interface.getInstructions()), 
-            40, 0, 280, 180, panel_instruct, ATSwingUtils.FONT_NORMAL);
-        label.setVerticalAlignment(JLabel.TOP);
+            5, 0, 280, 180, panel_instruct, ATSwingUtils.FONT_NORMAL_SMALLER);
+        label.setVerticalAlignment(SwingConstants.TOP);
+        label.setHorizontalAlignment(SwingConstants.LEFT);
         
         
         // bottom 

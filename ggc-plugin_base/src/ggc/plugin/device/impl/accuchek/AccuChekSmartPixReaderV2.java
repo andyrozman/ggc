@@ -5,7 +5,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileReader;
 
 /**
@@ -50,11 +49,15 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
     public AccuChekSmartPixReaderV2(DataAccessPlugInBase da, OutputWriter ow, AccuChekSmartPix par)
     {
         super(da, ow, par);
+        System.out.println("Constructor [Smart Pix Reader v3] !");
     }
     
     
     public void readDevice()
     {
+        
+        System.out.println("Read Device [Smart Pix Reader v2] !");
+        
         // start working
         String drv = this.parent.getConnectionPort();
         String cmd = drv + "\\TRG\\";
@@ -64,11 +67,8 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
         System.out.println("Cmd: " + cmd);
         
         
-        this.parent.writeStatus("PIX_ABORT_AUTOSCAN");
+        this.setStatus(5, "PIX_ABORT_AUTOSCAN");
         
-        //System.out.println("Abort auto scan");
-        
-        this.output_writer.setSpecialProgress(5);
         
         // abort auto scan
         File f = new File(cmd + "TRG09.PNG");
@@ -134,21 +134,11 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
             else if (st==4)
             {
                 count_el += this.parent.getNrOfElementsFor1s();
-                //System.out.println("Reading elements: " + count_el);
-                
                 
                 float procs_x = (count_el*(1.0f))/this.parent.getMaxMemoryRecords();
                 
-                //int procs = (int)(procs_x * 100.0f);
-                
-                //System.out.println("Procents full: " + procs);
-                //float procs_calc = 0.007f * procs;
-                
                 int pro_calc = (int)((0.2f + (0.007f * (procs_x * 100.0f)))*100.0f);
-                
-                //System.out.println("Procents: " + pro_calc);
-                
-                //this.writeStatus(String.format("PIX_READING_ELEMENT", pro_calc + " %"));
+ 
                 this.parent.writeStatus("PIX_READING_ELEMENT"); //, pro_calc + " %"));
                 this.output_writer.setSpecialProgress(pro_calc);
 
@@ -165,6 +155,10 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
             {
                 if ((st==101) || (st==20))
                 {
+                    
+                    this.parent.readXmlFileFromDevice();
+                    
+/*                    
                     this.parent.writeStatus("PIX_FINISHED_REPORT_READY");
                     //System.out.println("Finished reading. Report ready." );
                     this.output_writer.setSpecialProgress(95);
@@ -188,7 +182,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
 
                     this.output_writer.setSpecialProgress(100);
                     this.output_writer.setSubStatus(null);
-                    
+  */                  
                     return;
                     
                 }
@@ -365,6 +359,12 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
             return false;
         }
         
+    }
+    
+
+    
+    public void preInitDevice()
+    {
     }
     
     

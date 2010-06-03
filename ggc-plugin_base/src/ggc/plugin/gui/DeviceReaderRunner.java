@@ -169,7 +169,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 }
                 
                 // check if device online (open succesful)
-                if (!this.m_mi.isDeviceCommunicating())
+                if ((this.m_ddh.getTransferType()!=DeviceDataHandler.TRANSFER_READ_FILE) && (!this.m_mi.isDeviceCommunicating()))
                 {
                     this.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
                     

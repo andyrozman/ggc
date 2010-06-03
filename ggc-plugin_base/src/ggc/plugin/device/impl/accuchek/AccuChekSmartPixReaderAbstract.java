@@ -35,6 +35,8 @@ public abstract class AccuChekSmartPixReaderAbstract
     protected OutputWriter output_writer;
     protected AccuChekSmartPix parent;
     protected DataAccessPlugInBase m_da;
+    protected String drive_path = "/media/SMART_PIX/";
+
     
     /**
      * Constructor
@@ -48,6 +50,7 @@ public abstract class AccuChekSmartPixReaderAbstract
         this.m_da = da;
         this.output_writer = ow;
         this.parent = par;
+        this.drive_path = par.getRootDrive();
     }
     
     
@@ -65,4 +68,26 @@ public abstract class AccuChekSmartPixReaderAbstract
     public abstract void readDevice();
     
 
+    
+    protected void setStatus(int st_proc, String stat_msg)
+    {
+        if (stat_msg!=null)
+            this.parent.writeStatus(stat_msg);
+        
+        if (st_proc>-1)
+            this.output_writer.setSpecialProgress(st_proc);
+    }
+    
+    
+    
+    /**
+     * Pre Init Device - Does preinit
+     * 
+     * @see hasPreInit
+     */
+    public abstract void preInitDevice();
+    
+    
+    
+    
 }

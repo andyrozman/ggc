@@ -127,6 +127,27 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     
 
     /** 
+     * This is method for reading configuration, in case that dump doesn't give this information.
+     * 
+     * @throws PlugInBaseException
+     */
+    public void readConfiguration() throws PlugInBaseException
+    {
+    }
+
+    
+    /**
+     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
+     * information (most dumps do).
+     *  
+     * @throws PlugInBaseException
+     */
+    public void readInfo() throws PlugInBaseException
+    {
+    }
+    
+    
+    /** 
      * Set Device Allowed Actions
      */
     public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data, boolean can_read_device_info, boolean can_read_device_configuration)
@@ -600,5 +621,41 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public void initSpecialConfig()
     {
     }
+
+    
+    /**
+     * Has Pre Init - Some devices when started are in unusal state, this methods
+     *    help us to put them in state we need. Example is AccuChek SmartPix, which is
+     *    in autodetect state when we attach it, now if we put a meter/pump before it,
+     *    it starts to automatically read, but GGC needs some time to do preliminary 
+     *    stuff, so we need to have SmartPix in NO AutoScan mode). 
+     * @return
+     */
+    public boolean hasPreInit()
+    {
+        return false;
+    }
+    
+    
+    /**
+     * Pre Init Device - Does preinit
+     * 
+     * @see hasPreInit
+     */
+    public void preInitDevice()
+    {
+    }
+    
+    
+    /**
+     * Set Output Writer
+     * 
+     * @param ow
+     */
+    public void setOutputWriter(OutputWriter ow)
+    {
+        this.output_writer = ow;
+    }
+    
     
 }

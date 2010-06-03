@@ -4,6 +4,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -37,6 +41,9 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     protected Hashtable<String,String> parameters = null;
     protected String default_parameter = null;
     protected String packed_conn_parameters = null;
+    private static Log log = LogFactory.getLog(DeviceSpecialConfigPanelAbstract.class);
+    protected String conn_delimiter = "#;#";
+    protected String param_delimiter = "!=";
     
     
     /**
@@ -61,7 +68,15 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
         
         this.initParameters();
         
-        StringTokenizer strtok = new StringTokenizer(param, ";");
+        if (!param.contains(conn_delimiter))
+        {
+            this.default_parameter = param;
+            log.warn("Simple parameter found, while expecting extended one [param=" + param + "]");
+            return;
+        }
+        
+        
+        StringTokenizer strtok = new StringTokenizer(param, conn_delimiter);
         
         //int count = 0;
         
@@ -70,10 +85,21 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
             
             String tok = strtok.nextToken();
             
-            if (tok.contains("!="))
+            if (tok.contains(param_delimiter))
             {
-                String key = tok.substring(0, tok.indexOf("!="));
-                String val = tok.substring(tok.indexOf("!=") + 2);
+                String key = tok.substring(0, tok.indexOf(param_delimiter));
+                String val = tok.substring(tok.indexOf(param_delimiter) + param_delimiter.length());
+                
+                if (this.parameters.containsKey(key))
+                {
+                    this.parameters.remove(key);
+                    this.parameters.put(key, val);
+                }
+                else
+                {
+                    log.warn("Parameter not defined in our Config class: " + key);
+                }
+                
                 
                 this.parameters.put(key, val);
             }
@@ -101,18 +127,29 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     
     public String saveConnectionParameters()
     {
+        boolean first = false;
         readParametersFromGUI();
         
         StringBuffer sb = new StringBuffer();
-        sb.append(this.default_parameter);
+        
+        if (this.hasDefaultParameter())
+        {
+            sb.append(this.default_parameter);
+            first = true;
+        }
 //        sb.append(";");
         
         for(Enumeration<String> en=this.parameters.keys(); en.hasMoreElements(); )
         {
             String key = en.nextElement();
-            sb.append(";");
+            
+            if (first)
+                sb.append(this.conn_delimiter);
+            else
+                first = true;
+            
             sb.append(key);
-            sb.append("!=");
+            sb.append(this.param_delimiter);
             sb.append(this.parameters.get(key));
         }
         
@@ -149,6 +186,21 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
         
     }
 
+    /**
+     * Get Parameter
+     * 
+     * @param key
+     * @return
+     */
+    public String getParameter(String key)
+    {
+        if (this.parameters.containsKey(key))
+            return this.parameters.get(key);
+        else
+            return "";
+    }
+    
+    
     
     
 

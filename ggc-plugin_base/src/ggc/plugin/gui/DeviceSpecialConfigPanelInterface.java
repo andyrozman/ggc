@@ -110,6 +110,13 @@ public interface DeviceSpecialConfigPanelInterface
     public void setDefaultParameter(String par);
     
     
+    /**
+     * Get Parameter
+     * 
+     * @param key
+     * @return
+     */
+    public String getParameter(String key);
     
     
 }

@@ -409,10 +409,10 @@ public interface DeviceInterface extends SelectableInterface
     public GGCPlugInFileReaderContext[] getFileDownloadTypes();
     
     
+    
     //************************************************
     //***              Special Config              ***
     //************************************************
-    
     
     
     /**
@@ -436,6 +436,31 @@ public interface DeviceInterface extends SelectableInterface
      * Initialize Special Config
      */
     public void initSpecialConfig();
+    
+
+    //************************************************
+    //***                 Pre-init                 ***
+    //************************************************
+    
+    /**
+     * Has Pre Init - Some devices when started are in unusal state, this methods
+     *    help us to put them in state we need. Example is AccuChek SmartPix, which is
+     *    in autodetect state when we attach it, now if we put a meter/pump before it,
+     *    it starts to automatically read, but GGC needs some time to do preliminary 
+     *    stuff, so we need to have SmartPix in NO AutoScan mode). 
+     * @return
+     */
+    public boolean hasPreInit();
+    
+    
+    /**
+     * Pre Init Device - Does preinit
+     * 
+     * @see hasPreInit
+     */
+    public void preInitDevice();
+    
+    
     
     
 }

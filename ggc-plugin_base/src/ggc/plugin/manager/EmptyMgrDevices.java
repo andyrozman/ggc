@@ -1,16 +1,11 @@
 package ggc.plugin.manager;
 
-import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import javax.swing.ImageIcon;
-
-import com.atech.graphics.dialogs.selector.ColumnSorter;
-import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,10 +40,14 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
 
 
 
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
     public EmptyMgrDevices(DataAccessPlugInBase da)
     {
         super(da);
-        // TODO Auto-generated constructor stub
     }
 
 
