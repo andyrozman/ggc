@@ -68,9 +68,10 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
      */
     public AbstractBlueToothPump(AbstractDeviceCompany cmp)
     {
-        super(DataAccessPump.getInstance());
+        super(cmp, DataAccessPump.getInstance());
+//        super(cmp);
 
-        this.setDeviceCompany(cmp);
+        //this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
     

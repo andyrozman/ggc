@@ -94,8 +94,9 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
      */
     public AbstractPump(AbstractDeviceCompany cmp)
     {
-        super(DataAccessPump.getInstance());
-        this.setDeviceCompany(cmp);
+        super(cmp, DataAccessPump.getInstance());
+        //super(DataAccessPump.getInstance());
+        //this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
     
