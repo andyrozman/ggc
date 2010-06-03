@@ -96,8 +96,9 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
      */
     public AbstractCGMS(AbstractDeviceCompany cmp)
     {
-        super(DataAccessCGMS.getInstance());
-        this.setDeviceCompany(cmp);
+        //super(DataAccessCGMS.getInstance());
+        super(cmp, DataAccessCGMS.getInstance());
+        //this.setDeviceCompany(cmp);
         this.setCGMSType(cmp.getName(), getName());
     }
     
