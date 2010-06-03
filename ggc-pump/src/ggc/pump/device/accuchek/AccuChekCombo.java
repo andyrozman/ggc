@@ -104,7 +104,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ACCUCHEK_COMBO";
+        return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
     
     /**
@@ -137,7 +137,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public int getMaxMemoryRecords()
     {
-        return 100;
+        return 2000;
     }
     
     
@@ -147,7 +147,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public int getNrOfElementsFor1s()
     {
-        return 10;
+        return 85;
     }
     
     

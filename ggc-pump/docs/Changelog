@@ -2,6 +2,10 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.2.0 [4.6.2010]
+    * Finalizing work on Spirit pump download
+    * Added support for reading files 
+
 1.1.1 [23.4.2010]
     * Implemented statistics for GGC application (Pump Mode)
 

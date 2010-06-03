@@ -37,24 +37,7 @@ import ggc.pump.util.DataAccessPump;
 public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterface //, SelectableInterface
 {
 
-    //protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
-
-    protected String device_name = "Undefined";
-    //protected OutputWriter output_writer;
-    
-    //AbstractDeviceCompany pump_company = null;
-    
     String connection_port = "";
-
-    /**
-     * Constructor
-     */
-    /*public AbstractXmlPump()
-    {
-        super(DataAccessPump.getInstance());
-        ic = DataAccessPump.getInstance().getI18nControlInstance();
-    }*/
-
     
     
     /**
@@ -65,7 +48,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     public AbstractXmlPump(OutputWriter ow)
     {
         super(DataAccessPump.getInstance(), ow);
-        //ic = m_da.getI18nControlInstance();
     }
     
     
@@ -77,13 +59,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     public AbstractXmlPump(AbstractDeviceCompany cmp)
     {
         super(DataAccessPump.getInstance());        
-        //ic = m_da.getI18nControlInstance();
-        
-        //System.out.println("Da: " + DataAccessPump.getInstance());
-        //System.out.println("Ic: " + DataAccessPump.getInstance().getI18nControlInstance());
-        
-        
-        //ic = DataAccessPump.getInstance().getI18nControlInstance();
         this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
@@ -98,7 +73,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
      */
     public void setPumpType(String group, String device)
     {
-        this.device_name = device;
+        //this.device_name = device;
         
         DeviceIdentification di = new DeviceIdentification();
         di.company = group;
@@ -163,12 +138,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     //************************************************
     
 
-    /** 
-     * clearDeviceData - Clear data from device 
-     */
-    public void clearDeviceData()
-    {
-    }
+    
     
 
     /** 

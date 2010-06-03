@@ -103,7 +103,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ACCUCHEK_DTRON";
+        return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
     
     /**

@@ -483,7 +483,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         
         
         // TODO remove when enabled
-        menu.setEnabled(false);
+        //menu.setEnabled(false);
         
         menu_pump.addSeparator();
         
@@ -642,6 +642,11 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             new DeviceConfigurationDialog((JFrame)this.parent, DataAccessPump.getInstance());
             refreshMenusAfterConfig();
             this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_CONFIG);
+        }
+        else if (command.equals("pumps_read_file"))
+        {
+            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceDataHandler.TRANSFER_READ_FILE);
+            this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("pumps_about"))
         {

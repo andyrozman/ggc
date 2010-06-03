@@ -1,7 +1,9 @@
 package ggc.pump.device.accuchek;
 
+import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.impl.accuchek.AccuChekSmartPix;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
@@ -18,6 +20,7 @@ import ggc.pump.data.profile.Profile;
 import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.data.profile.ProfileSubOther;
 import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.device.PumpInterface;
 import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.DataAccessPump;
 
@@ -64,18 +67,10 @@ import com.atech.utils.ATechDate;
  */
 
 
-public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
+public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements PumpInterface //extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
 {
     
-    //DataAccessMeter m_da = DataAccessMeter.getInstance();
-    //OutputWriter output_writer = null;
     private static Log log = LogFactory.getLog(AccuChekSmartPixPump.class);
-
-    
-    
-
-    
-    //private int bg_unit = OutputUtil.BG_MGDL;
     
     private Hashtable<String,Integer> alarm_mappings = null;
     private Hashtable<String,Integer> event_mappings = null;
@@ -85,20 +80,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     private Hashtable<String,Integer> basal_mappings = null;
    
     
-    
-    
-
-    
-    /**
-     * Constructor
-     */
-   /* public AccuChekSmartPixPump()
-    {
-        super();
-        loadPumpSpecificValues();
-    }*/
-
-    
     /**
      * Constructor
      * 
@@ -106,31 +87,32 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
      */
     public AccuChekSmartPixPump(AbstractDeviceCompany cmp)
     {
-        super(cmp);
+        super(cmp, DataAccessPump.getInstance());
+        this.loadPumpSpecificValues();
+        this.setDeviceType(cmp.getName(), getName(), DeviceAbstract.DEVICE_TYPE_PUMP);
     }
     
     
     /**
      * Constructor
      * 
-     * @param drive_letter
+     * @param conn_parameter
      * @param writer
      */
-    public AccuChekSmartPixPump(String drive_letter, OutputWriter writer)
+    public AccuChekSmartPixPump(String conn_parameter, OutputWriter writer)
     {
-        super(drive_letter, writer); 
+        super(conn_parameter, writer, DataAccessPump.getInstance()); 
         loadPumpSpecificValues();
-        m_da = DataAccessPump.getInstance();
-        this.setPumpType("Accu-Chek/Roche", this.getName());
+        this.setDeviceType("Accu-Chek/Roche", getName(), DeviceAbstract.DEVICE_TYPE_PUMP);
     }
     
     
     
     
     /**
-     * getDeviceId - Get Meter Id, within Meter Company class 
+     * getDeviceId - Get Device Id 
      * 
-     * @return id of device within company
+     * @return id of device
      */
     public int getDeviceId()
     {
@@ -165,18 +147,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         try
         {
             this.openXmlFile(file);
-            //openXmlFile()
-            //parse(file);
-/*            
-            getPixDeviceInfo();
-            System.out.println();
-
-            getPumpDeviceInfo();
-            System.out.println();
-            
-            this.output_writer.writeDeviceIdentification();
-  */          
-            //readData();
 
             getPixDeviceInfo();
             getPumpDeviceInfo();
@@ -184,10 +154,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             this.output_writer.writeDeviceIdentification();
             
             readPumpData();
-            //this.readPumpDataTest();
-            
-            System.out.println("Reading done");
-            
         }
         catch(Exception ex)
         {
@@ -200,18 +166,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     
     
     
-    
-    
-    /*
-    private Document parse(File file) throws DocumentException {
-        SAXReader reader = new SAXReader();
-        
-        
-        //Document 
-        document = reader.read(file);
-        return document;
-    }
-    */
+ 
 
     
     /**
@@ -234,7 +189,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
         Node nd = getNode("IMPORT/ACSPIX");
-        //System.out.println(nd);
         
         StringBuffer sb = new StringBuffer();
         
@@ -255,11 +209,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         
         sb.append(di.device_selected);
         
-        
-        //System.out.println(sb.toString());
-        //List nodes = getNodes("ACSPIX");
-        //System.out.println(nodes);
-        
     }
 
     
@@ -268,28 +217,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
 
         Element el = getElement("IMPORT/IP");
-        //System.out.println(nd);
 
         StringBuffer sb = new StringBuffer();
         
-// extend        
-        
         sb.append("Pump Device: Accu-Chek " + el.attributeValue("Name"));
         sb.append("\nS/N=" + el.attributeValue("SN")); // + ", BG Unit: ");
-        //sb.append(el.attributeValue("BGUnit"));
         sb.append(", Time on device: " + el.attributeValue("Tm") + " " + el.attributeValue("Dt"));
 
         di.device_identified = sb.toString();
         
-        //System.out.println(sb.toString());
-        /*
-        if (el.attributeValue("BGUnit").equals("mmol/L"))
-        {
-            this.bg_unit = OutputUtil.BG_MMOL;
-        }*/
-        
-//        <DEVICE  Name="Performa" SN="50003006" 
-        //Dt="2008-05-13" Tm="10:12" BGUnit="mmol/L"/>
     }
 
     
@@ -299,22 +235,22 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
 
-        log.info(" -- Basals --");
+        //log.info(" -- Basals --");
         list.addAll(getBasals());
         //System.out.println("Basals: " + list.size());
         
-        log.info(" -- Boluses --");
+        //log.info(" -- Boluses --");
         list.addAll(getBoluses());
         //System.out.println("Boluses: " + list.size());
 
-        log.info(" -- Events --");
+        //log.info(" -- Events --");
         list.addAll(getEvents());
         //System.out.println("Events: " + list.size());
 
-        log.info(" -- Profiles --");
+        //log.info(" -- Profiles --");
         //list.addAll(this.getPumpProfiles());
         ArrayList<PumpValuesEntryProfile> list_profiles = this.getPumpProfiles();
-        
+      
         /*
         System.out.println(" -- Basals (run 2) --");
         list.addAll(getSpecificElements2("BASAL"));
@@ -328,6 +264,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         {
             this.output_writer.writeData(list.get(i));
         }
+        
         
         for(int i=0; i<list_profiles.size(); i++)
         {
@@ -346,6 +283,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         List<Node> nodelist;
         
         //boolean was_broken = true;
+        log.info("Profile processing - START");
         
         Element id = (Element)this.getNode("IMPORT/IP");
 //        System.out.println("" + id.attributeValue("Dt") + id.attributeValue("Tm"));
@@ -404,7 +342,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             
             ProfileSubEntry pse = this.resolveBasalProfilePatterns(el);
 
-            if (pse==null)
+            if ((pse==null) || (pse.profile_id==null))
                 continue;
             
             long dt_current = this.getDateFromDT(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")).getATDateTimeAsLong()); 
@@ -442,6 +380,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             
             if (profile.isCompleteProfile())
             {
+                System.out.println("Profile id: " + profile.profile_id);
                 if (profiles_sorted.containsKey(profile.profile_id))
                 {
                     profiles_sorted.get(profile.profile_id).add(profile);
@@ -458,7 +397,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         
         
         // 4 - Create changes list
-        System.out.println("readPumpProfiles() - STEP 4 - Create changes list");
+        log.info("STEP 4 - Create changes list");
 
         Hashtable<Long,ArrayList<ProfileSubOther>> profile_changes_v2 = new Hashtable<Long,ArrayList<ProfileSubOther>>();
         
@@ -588,6 +527,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             pvep.add(active_profiles.get(i).createDbObject());
         }
        
+        log.info("Profile processing - END");
+
+        
         return pvep;
         
     }
@@ -657,12 +599,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     public static final int TAG_EVENT = 3;
     
     
+    String[] type_desc = { "", "Basal", "Bolus", "Events" };
     
     private ArrayList<PumpValuesEntry> getSpecificElements(String element, int type)
     {
         List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/" + element);
         ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
         boolean add = false;
+        
+        log.info("Process " + type_desc[type] + " data - START");
         
         for(int i=0; i<lst.size(); i++)
         {
@@ -690,11 +635,13 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
             if (add)
             {
                 // testing only
-                this.output_writer.writeData(pve);
+                //this.output_writer.writeData(pve);
 
                 lst_out.add(pve);
             }
         }
+
+        log.info("Process " + type_desc[type] + " data - END");
         
         return lst_out;
         
@@ -777,7 +724,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
         String cbrf = el.attributeValue("cbrf");
         String profile = el.attributeValue("profile");
         
-        System.out.println(el);
+        //System.out.println(el);
         
         if ((isSet(tbrdec)) || (isSet(tbrinc)))
         {
@@ -1036,7 +983,13 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
     
 
-    
+    /**
+     * Resolve Bolus Data
+     * 
+     * @param pve
+     * @param el
+     * @return
+     */
     private boolean resolveBolus(PumpValuesEntry pve, Element el)
     {
         String type = el.attributeValue("type");
@@ -1115,7 +1068,13 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }    
     
     
-    
+    /**
+     * Resolve Events
+     * 
+     * @param pve
+     * @param el
+     * @return
+     */
     private boolean resolveEvent(PumpValuesEntry pve, Element el)
     {
         String info = el.attributeValue("shortinfo");
@@ -1185,6 +1144,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix //extends Ab
     }
     
 
+    
     private boolean isSet(String str)
     {
         if ((str==null) || (str.trim().length()==0))

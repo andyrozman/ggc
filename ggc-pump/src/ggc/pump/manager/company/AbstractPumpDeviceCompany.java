@@ -1,6 +1,7 @@
 package ggc.pump.manager.company;
 
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.util.DataAccessPump;
 
 
 // TODO: Auto-generated Javadoc
@@ -24,7 +25,8 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
      */
     public AbstractPumpDeviceCompany(boolean value)
     {
-        super(value);
+        super(value,
+            DataAccessPump.getInstance());
         this.initProfileNames();
     }
     
@@ -40,7 +42,7 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
      */
     public AbstractPumpDeviceCompany(int company_id_, String company_name, String short_company_name, String company_desc, int implementation_status)
     {
-        super(false, company_id_, company_name, short_company_name, company_desc, implementation_status);
+        super(false, company_id_, company_name, short_company_name, company_desc, implementation_status, DataAccessPump.getInstance());
         this.initProfileNames();
     }
     

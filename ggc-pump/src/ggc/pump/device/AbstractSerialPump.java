@@ -42,7 +42,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 
     //protected String m_info = "";
     //protected int m_time_difference = 0;
-    protected String device_name = "Undefined";
+    //protected String device_name = "Undefined";
     //protected OutputWriter output_writer;
     
     //AbstractDeviceCompany pump_company = null;
@@ -99,7 +99,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
      */
     public void setPumpType(String group, String device)
     {
-        this.device_name = device;
+        //this.device_name = device;
         
         DeviceIdentification di = new DeviceIdentification();
         di.company = group;
@@ -280,7 +280,6 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    //@Override
     public void close()
     {
         if (this.serialPort==null)

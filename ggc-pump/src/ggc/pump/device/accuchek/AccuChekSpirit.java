@@ -140,7 +140,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public int getMaxMemoryRecords()
     {
-        return 100;
+        return 2000;
     }
     
     
@@ -150,7 +150,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
      */
     public int getNrOfElementsFor1s()
     {
-        return 10;
+        return 85;
     }
     
     
@@ -168,10 +168,10 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     /**
      * Open
      */
-    public boolean open() throws PlugInBaseException
+    /*public boolean open() throws PlugInBaseException
     {
         return true;
-    }
+    }*/
     
 
     /**

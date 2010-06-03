@@ -65,7 +65,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.1.1";
+    public static final String PLUGIN_VERSION = "1.2.0";
 
     private static DataAccessPump s_da = null; // This is handle to unique 
 
@@ -172,10 +172,10 @@ public class DataAccessPump extends DataAccessPlugInBase
     //  Author:       Andy
     /**
      *
-     *  This method returns reference to OmniI18nControl object created, or if no 
+     *  This method returns reference to DataAccessPump object created, or if no 
      *  object was created yet, it creates one.<br><br>
      *
-     *  @return Reference to OmniI18nControl object
+     *  @return Reference to DataAccessPump object
      * 
      */
     public static DataAccessPump getInstance()

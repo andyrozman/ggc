@@ -109,7 +109,7 @@ public class DisetronicDTron extends AccuChekSmartPixPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_DISETRONIC_DTRON";
+        return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
     
     /**
@@ -136,23 +136,23 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     
     
     /**
-     * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
+     * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory (not verified for this pump)
      * 
      * @return number
      */
     public int getMaxMemoryRecords()
     {
-        return 100;
+        return 2000;
     }
     
     
     /**
-     * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
+     * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time) (not verified for this pump)
      * @return number of elements
      */
     public int getNrOfElementsFor1s()
     {
-        return 10;
+        return 85;
     }
     
     
