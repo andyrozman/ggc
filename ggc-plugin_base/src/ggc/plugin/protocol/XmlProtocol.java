@@ -2,6 +2,7 @@ package ggc.plugin.protocol;
 
 
 import ggc.plugin.device.DeviceAbstract;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -77,6 +78,19 @@ public abstract class XmlProtocol extends DeviceAbstract
         this.output_writer = ow;
     }
 
+
+    /**
+     * Constructor
+     * 
+     * @param cmp
+     */
+    public XmlProtocol(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
+    {
+        super(cmp, da);
+        //this.output_writer = ow;
+    }
+    
+    
     
     protected Document document;
 

@@ -49,18 +49,9 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     
     private static Log log = LogFactory.getLog(AccuChekSmartPix.class);
     
-    //protected OutputWriter output_writer = null;
-    protected String port_param;
-    //protected DataAccessPlugInBase m_da;
     protected int max_records = 0;
-    //protected I18nControlAbstract m_ic = null;
     protected AccuChekSmartPixReaderAbstract reader = null;
-    
-    //protected AbstractDeviceCompany device_company = null;
     protected boolean communication_established = false;
-    //protected String device_source_name;
-    
-    protected String root_drive = null;
 
     /**
      * Constructor
@@ -70,10 +61,10 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public AccuChekSmartPix(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(da);
-        this.setDeviceCompany(cmp);
+        super(cmp, da);
+        //this.setDeviceCompany(cmp);
+        //this.setDeviceType(group, device, type)
     }
-    
     
     
     /**
@@ -92,7 +83,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         //super();
         //this.setConnectionPort(drive_letter);
         this.output_writer = writer;
-        this.port_param = params;
+//        this.setConnectionParameters(params);
         this.m_da = da;
         //this.max_records = max_records;
         this.ic = m_da.getI18nControlInstance();
@@ -102,30 +93,22 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         
         //this.special_config.loadConnectionParameters(params);
         
-        this.special_config.loadConnectionParameters("/media/SMART_PIX/#;#SMARTPIX_VERSION!=3.x");
-        this.setConnectionParameters(this.special_config.getDefaultParameter());
+        //this.special_config.loadConnectionParameters("/media/SMART_PIX/#;#SMARTPIX_VERSION!=3.x");
+        
+        this.setConnectionParameters("/media/SMART_PIX/#;#SMARTPIX_VERSION!=3.x");
+        
+        //this.setConnectionParameters(this.special_config.getDefaultParameter());
         initReader();
         
         
-        /*
-        this.root_drive = this.special_config.getDefaultParameter();
         
-        if (this.special_config.getParameter("SMARTPIX_VERSION").equals(AccuChekSmartPixSpecialConfig.SMARTPIX_V2))
-            this.reader = new AccuChekSmartPixReaderV2(m_da, writer, this);
-        else
-            this.reader = new AccuChekSmartPixReaderV3(m_da, writer, this);
-        */
     }
     
     
     private void initReader()
     {
-        //System.out.println("Init Reader !");
-        
-        
         //this.root_drive = this.special_config.getDefaultParameter();
-        this.root_drive = "/media/SMART_PIX/";
-        
+        //this.root_drive = "/media/SMART_PIX/";
         
         if (this.special_config.getParameter("SMARTPIX_VERSION").equals(AccuChekSmartPixSpecialConfig.SMARTPIX_V2))
             this.reader = new AccuChekSmartPixReaderV2(m_da, this.output_writer, this);
@@ -140,11 +123,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         {
             log.error("Error checking if device present. Ex.: " + ex, ex);
         }
-        //checkIfDevicePresent();
-        
     }
-    
-    
     
     
     /**
@@ -161,19 +140,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     {
         this(params, writer, da);
         this.max_records = max_records_;
-        /*
-        super(da, writer);
-        //super();
-        //this.setConnectionPort(drive_letter);
-        this.output_writer = writer;
-        this.port_param = params;
-        this.m_da = da;
-        this.max_records = max_records;
-        this.ic = m_da.getI18nControlInstance();
-
-        this.special_config.loadConnectionParameters(params);
-        initReader();
-        */
     }
 
     
@@ -184,46 +150,9 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public String getRootDrive()
     {
-        return this.root_drive;
+        return this.getMainConnectionParameter();
     }
     
-    
-    
-    
-    
-    /**
-     * Constructor
-     * 
-     * @param cmp 
-     */
-/*    public AccuChekSmartPix(AbstractDeviceCompany cmp)
-    {
-        super(cmp);
-    }
-  */  
-    
-    
-    /** 
-     * open
-     */
-/*    public boolean open() throws PlugInBaseException
-    {
-        File f = new File(this.getConnectionPort());
-        
-        if (f.exists())
-            communication_established = true;
-        else
-            communication_established = false;
-
-        return communication_established;
-    }
-  */  
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
 
     /**
      * Get Max Memory Records
@@ -240,195 +169,14 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     public abstract void processXml(File file);    
     
 
-
-
-
     /** 
      * readDeviceDataFull
      * @throws PlugInBaseException 
      */
     public void readDeviceDataFull() throws PlugInBaseException
     {
-        //System.out.println("readDeviceDataFull");
-        
         reader.readDevice();
-        
-        
-/*        
-        // write preliminary device identification, based on class
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
-        
-        di.company = "Accu-Chek";
-        di.device_selected = "SmartPix Device Reader";
-        
-        di.device_identified = "Accu-Chek " + this.getName() + " [not identified]";
-
-        this.output_writer.writeDeviceIdentification();
-  */      
-        
-        /*
-        // start working
-        String drv = this.port_param;
-        String cmd = drv + "\\TRG\\";
-        
-        cmd = m_da.pathResolver(cmd);
-
-        System.out.println("Cmd: " + cmd);
-        
-        
-        this.writeStatus("PIX_ABORT_AUTOSCAN");
-        
-        //System.out.println("Abort auto scan");
-        
-        this.output_writer.setSpecialProgress(5);
-        
-        // abort auto scan
-        File f = new File(cmd + "TRG09.PNG");
-        System.out.println("TRG09: " +  f.exists());
-        
-//        f.setLastModified(System.currentTimeMillis());
-        writeToFile(f);
-        
-        
-        f = new File(cmd + "TRG03.PNG");
-        writeToFile(f);
-//        f.setLastModified(System.currentTimeMillis());
-        
-
-        //this.writeStatus("PIX_READING");
-        this.output_writer.setSpecialProgress(10);
-        
-        // read device  
-        f = new File(cmd + "TRG09.PNG");
-        writeToFile(f);
-//      f.setLastModified(System.currentTimeMillis());
-        
-        f = new File(cmd + "TRG00.PNG");
-        writeToFile(f);
-//      f.setLastModified(System.currentTimeMillis());
-        
-        boolean found = false;
-        sleep(2000);
-        
-        int count_el = 0;
-        
-        
-        do
-        {
-
-            if (this.isDeviceStopped())
-            {
-                this.setDeviceStopped();
-                found = true;
-            }
-            
-            int st = readStatusFromConfig(drv);
-            
-            System.out.println("Status: " + st);
-            
-            if (st==1)
-            {
-                this.writeStatus("PIX_UNRECOVERABLE_ERROR");
-                this.output_writer.setSpecialProgress(100);
-
-                //System.out.println("Unrecoverable error - Aborting");
-                return;
-            }
-            else if (st==2)
-            {
-                
-                this.writeStatus("PIX_FINISHED_READING");
-                this.output_writer.setSpecialProgress(90);
-
-                //System.out.println("Finished reading");
-                return;
-            }
-            else if (st==4)
-            {
-                count_el += this.getNrOfElementsFor1s();
-                //System.out.println("Reading elements: " + count_el);
-                
-                
-                float procs_x = (count_el*(1.0f))/this.max_records;
-                
-                //int procs = (int)(procs_x * 100.0f);
-                
-                //System.out.println("Procents full: " + procs);
-                //float procs_calc = 0.007f * procs;
-                
-                int pro_calc = (int)((0.2f + (0.007f * (procs_x * 100.0f)))*100.0f);
-                
-                //System.out.println("Procents: " + pro_calc);
-                
-                //this.writeStatus(String.format("PIX_READING_ELEMENT", pro_calc + " %"));
-                this.writeStatus("PIX_READING_ELEMENT"); //, pro_calc + " %"));
-                this.output_writer.setSpecialProgress(pro_calc);
-
-            }
-            /*else if (st==20)
-            {
-                this.writeStatus("PIX_DEVICE_NOT_FOUND");
-                this.output_writer.setSpecialProgress(100);
-
-                //System.out.println("Unrecoverable error - Aborting");
-                return;
-            }*/
-/*            else if ((st>99) || (st==20))
-            {
-                if ((st==101) || (st==20))
-                {
-                    this.writeStatus("PIX_FINISHED_REPORT_READY");
-                    //System.out.println("Finished reading. Report ready." );
-                    this.output_writer.setSpecialProgress(95);
-
-                    
-                    File f1 = new File(m_da.pathResolver(drv + "\\REPORT\\XML"));
-                    
-                    File[] fls = f1.listFiles(new FileFilter()
-                    {
-
-                        public boolean accept(File file)
-                        {
-                            return ((file.getName().toUpperCase().contains(".XML")) &&
-                                    (file.getName().startsWith(getFirstLetterForReport())));
-                        }}
-                    );
-                    
-                    
-                    //processXml(fls[0]);
-                    processXml(fls[0]);
-
-                    this.output_writer.setSpecialProgress(100);
-                    this.output_writer.setSubStatus(null);
-                    
-                    return;
-                    
-                }
-                else
-                {
-                    this.writeStatus("PIX_FINISHED_REPORT_READY");
-                    this.output_writer.setSpecialProgress(95);
-
-                    return;
-                }
-            }
-                
-            
-            sleep(1000);
-            
-            
-        } while(found!=true);
-        
-        this.setDeviceStopped();
-        //this.output_writer.setSubStatus(null);
-  */      
-        //System.out.println("We got out !!!!");
     }
-    
-  
-    
-
-  
     
     
     /**
@@ -437,7 +185,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      * @return
      */
     public abstract String getFirstLetterForReport();
-    
     
     
     /**
@@ -451,10 +198,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     }
 
 
-   
-    
-
-    
     protected void readXmlFileFromDevice()
     {
         
@@ -462,7 +205,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         this.output_writer.setSpecialProgress(95);
 
         
-        File f1 = new File(m_da.pathResolver(this.root_drive + "\\REPORT\\XML"));
+        File f1 = new File(m_da.pathResolver(this.getMainConnectionParameter() + "\\REPORT\\XML"));
         
         File[] fls = f1.listFiles(new FileFilter()
         {
@@ -474,14 +217,11 @@ public abstract class AccuChekSmartPix extends XmlProtocol
             }}
         );
         
-        
         //processXml(fls[0]);
         this.processXml(fls[0]);
 
         this.output_writer.setSpecialProgress(100);
         this.output_writer.setSubStatus(null);
-        
-        
     }
     
     
@@ -551,20 +291,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     public abstract int getNrOfElementsFor1s();
 
     
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
@@ -574,12 +300,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     {
         return true;
     }
-    
-    
-    
-    
-    
-    
     
     
     /** 
@@ -592,11 +312,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
     }
     
-
-    
-    
-    
-
     
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -622,7 +337,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     }
     
 
-
     /**
      * Does this device support file download. Some devices have their native software, which offers export 
      * into some files (usually CSV files or even XML). We sometimes add support to download from such
@@ -634,31 +348,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     {
         return true;
     }
-    
-
-    /**
-     * Get Connection Port
-     * 
-     * @return
-     */
-    public String getConnectionPort()
-    {
-        return this.root_drive;
-    }
-    
-    
-    
-    
-    
-
-
-    // SELECTABLE INTERFACE
-    
-    
-    
-    
-    
-    // ALLOWED ACTION
     
     
     /**
@@ -686,16 +375,14 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public boolean open() throws PlugInBaseException
     {
-        
-        File f = new File(m_da.pathResolver(this.root_drive));
+        System.out.println("m_da: " + m_da);
+        File f = new File(m_da.pathResolver(this.getMainConnectionParameter()));
         
         if (f.exists())
             communication_established = true;
         else
             communication_established = false;
 
-        //System.out.println("Open something: " + this.communication_established);
-        
         return communication_established;
     }
     
@@ -711,10 +398,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     }
 
 
-
-
-   
-
     public void dispose()
     {
     }
@@ -726,7 +409,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     }
     
     
-    
     /**
      * Initialize Special Config
      */
@@ -734,7 +416,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     {
         this.special_config = new AccuChekSmartPixSpecialConfig();
     }
-    
     
     
     /**
@@ -758,9 +439,11 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public void preInitDevice()
     {
+        if (this.reader==null)
+            this.initReader();
+        
         this.reader.preInitDevice();
     }
-    
     
     
     /**
@@ -771,8 +454,11 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         this.file_contexts = new GGCPlugInFileReaderContext[1];
         this.file_contexts[0] = new FRC_AccuChekSmartPixXml(m_da, this.output_writer, this);
     }
+
     
-    
-    
+    public String getConnectionPort()
+    {
+        return this.getMainConnectionParameter();
+    }
     
 }

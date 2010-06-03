@@ -179,7 +179,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 		    {
 		        this.dispose();
 		        m_da.removeComponent(this);
-                new DeviceDisplayDataDialog(m_da, m_ddh);		        
+                new DeviceDisplayDataDialog(m_da.getMainParent(), m_da, m_ddh);		        
 		    }
         }
 		else if (action.equals("prev"))

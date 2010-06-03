@@ -349,7 +349,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         BufferedReader br=null;
         try
         {
-            br = new BufferedReader(new FileReader(m_da.pathResolver(this.drive_path + "/Misc/STATUS.TXT")));
+            br = new BufferedReader(new FileReader(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")));
             
             while((line=br.readLine())!=null)
             {
@@ -387,7 +387,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         BufferedReader br=null;
         try
         {
-            br = new BufferedReader(new FileReader(m_da.pathResolver(this.drive_path + "/Misc/STATUS.TXT")));
+            br = new BufferedReader(new FileReader(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")));
             
             while((line=br.readLine())!=null)
             {

@@ -2,6 +2,7 @@ package ggc.plugin.device.impl.abbott;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -69,9 +70,9 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
     /**
      * @param da
      */
-    public CoPilot()
+    public CoPilot(AbstractDeviceCompany adc, DataAccessPlugInBase da)
     {
-        super(null);
+        super(adc, da);
         //super(da);
     }    
     

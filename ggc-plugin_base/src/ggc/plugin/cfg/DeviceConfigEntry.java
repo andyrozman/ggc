@@ -1,5 +1,8 @@
 package ggc.plugin.cfg;
 
+import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
+import ggc.plugin.util.DataAccessPlugInBase;
+
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
@@ -60,6 +63,11 @@ public class DeviceConfigEntry
      * Communication Port
      */
     public String communication_port;
+
+    /**
+     * Communication Port
+     */
+    public String communication_port_raw;
     
     /**
      * DS Fix 
@@ -87,17 +95,20 @@ public class DeviceConfigEntry
     public int ds_summer_change = 0;
     boolean valid = true;
     DeviceConfigurationDefinition dcd;
+    DataAccessPlugInBase m_da;
     
     /**
      * Constructor
      * 
      * @param dcd
      * @param ic
+     * @param da 
      */
-    public DeviceConfigEntry(DeviceConfigurationDefinition dcd, I18nControlAbstract ic)
+    public DeviceConfigEntry(DeviceConfigurationDefinition dcd, I18nControlAbstract ic, DataAccessPlugInBase da)
     {
         this.ic = ic;
         this.dcd = dcd;
+        this.m_da = da;
     }
 
     /**
@@ -125,6 +136,7 @@ public class DeviceConfigEntry
         dce.name = name;
         dce.device_company = device_company;
         dce.device_device = device_device;
+        dce.communication_port_raw = communication_port_raw; 
         dce.communication_port = communication_port;
         dce.ds_fix = ds_fix;
         dce.ds_area = ds_area;
@@ -145,6 +157,25 @@ public class DeviceConfigEntry
     {
         this.dcd = dcd;
     }
+
+    
+    private void processCommunicationSettings()
+    {
+        this.communication_port = DeviceSpecialConfigPanelAbstract.findDefaultParameter(this.communication_port_raw);
+        
+        /*
+        DeviceAbstract di = (DeviceAbstract)m_da.getManager().getDevice(this.device_company, this.device_device);
+        
+        if (di==null)
+        {
+            this.communication_port = this.communication_port_raw;
+            return;
+        }
+        
+        di.setConnectionParameters(this.communication_port_raw);
+        this.communication_port = di.getMainConnectionParameter();*/
+    }
+    
     
     /**
      * Set Id (int)
@@ -219,7 +250,9 @@ public class DeviceConfigEntry
         this.name = getParameter("NAME", selected, cfg, true);
         this.device_company = getParameter("COMPANY", selected, cfg, true);
         this.device_device = getParameter("DEVICE", selected, cfg, true);
-        this.communication_port = getParameter("CONNECTION_PARAMETER", selected, cfg, true);
+        this.communication_port_raw = getParameter("CONNECTION_PARAMETER", selected, cfg, true);
+        
+        this.processCommunicationSettings();
 
         if (!dcd.doesDeviceSupportTimeFix())
             return;
@@ -287,7 +320,7 @@ public class DeviceConfigEntry
         sb.append(prefix + "COMPANY=" + this.device_company + "\n");
         sb.append(prefix + "DEVICE=" + this.device_device + "\n");
 
-        sb.append(prefix + "CONNECTION_PARAMETER=" + this.communication_port + "\n");
+        sb.append(prefix + "CONNECTION_PARAMETER=" + this.communication_port_raw + "\n");
         
         if (this.dcd.doesDeviceSupportTimeFix())
         {

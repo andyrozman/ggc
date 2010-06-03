@@ -44,6 +44,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected AbstractDeviceCompany device_company;
     protected String device_source_name;
     protected String connection_parameters = null;
+    protected String connection_parameters_raw = null;
     protected DeviceSpecialConfigPanelInterface special_config = null;
     
     protected boolean can_read_data = false;
@@ -52,7 +53,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected boolean can_read_device_configuration = false;
     protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
     protected OutputWriter output_writer;
-    protected GGCPlugInFileReaderContext[] file_contexts;    
+    protected GGCPlugInFileReaderContext[] file_contexts;
     
     /**
      * Device Type: Meter
@@ -83,11 +84,31 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public DeviceAbstract(DataAccessPlugInBase da)
     {
+        //System.out.println("DeviceAbstract: " + da);
         this.m_da = da;
         this.ic = da.getI18nControlInstance();
         loadFileContexts();
         this.initSpecialConfig();
     }
+
+    
+    /**
+     * Constructor
+     * @param adc 
+     * 
+     * @param da
+     */
+    public DeviceAbstract(AbstractDeviceCompany adc, DataAccessPlugInBase da)
+    {
+        this(da);
+        this.setDeviceCompany(adc);
+/*        this.m_da = da;
+        this.ic = da.getI18nControlInstance();
+        loadFileContexts();*/
+        this.initSpecialConfig();
+    }
+    
+    
     
     /**
      * Constructor
@@ -239,6 +260,19 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return device_source_name;
     }
+    
+    
+    /**
+     * Set DataAccess Instance
+     * @param da
+     */
+    public void setDataAccessInstance(DataAccessPlugInBase da)
+    {
+        this.m_da = da;
+        this.ic = da.getI18nControlInstance();
+    }
+
+    
     
     
     
@@ -521,6 +555,17 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.device_source_name = group + " " + device;
     }
     
+
+    /**
+     * Get Connection Parameters
+     * 
+     * @return
+     */
+    public String getMainConnectionParameter()
+    {
+        return this.connection_parameters;
+    }
+    
     
     
     /**
@@ -540,7 +585,21 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void setConnectionParameters(String param)
     {
-        this.connection_parameters = param;
+        this.connection_parameters_raw = param;
+        
+        if (this.hasNoConnectionParameters())
+            this.connection_parameters = "";
+        else
+        {
+            if (this.hasSpecialConfig())
+            {
+                this.special_config.loadConnectionParameters(param);
+                this.connection_parameters = this.special_config.getDefaultParameter();
+            }
+            else
+                this.connection_parameters = this.connection_parameters_raw;
+        }
+
     }
     
     

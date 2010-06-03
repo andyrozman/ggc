@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -87,21 +88,22 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     JTextArea logText = null;
     JButton help_button;
     DeviceDataHandler m_ddh;
-    
+    JFrame m_parent = null; 
 
     /**
      * Constructor
-     *  
+     * 
+     * @param parent 
      * @param da 
      * @param ddh 
      */
-    public DeviceDisplayConfigDialog(DataAccessPlugInBase da, DeviceDataHandler ddh)
+    public DeviceDisplayConfigDialog(JFrame parent, DataAccessPlugInBase da, DeviceDataHandler ddh)
     {
-        super();
+        super(parent, "", true);
         
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
-        
+        this.m_parent = parent;
         this.m_ddh = ddh;
         this.m_ddh.dialog_config = this;
         this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);

@@ -108,30 +108,18 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public int m_BG_unit = BG_MMOL;
 
     
-    private PlugInDeviceUtil plugin_device_util = null;
     
     
     /**
      * The hdb.
      */
     protected HibernateDb hdb;
+
     
-    
+    private PlugInDeviceUtil plugin_device_util = null;
     protected ConfigurationManager config_manager;
-    
     private static Log log = LogFactory.getLog(DataAccessPlugInBase.class);
     
-    //public String[] availableLanguages = { "English", "Deutsch", "Slovenski", };
-
-    //public String[] avLangPostfix = { "en", "de", "si", };
-
-    //public String[] bg_units = { "mg/dl", "mmol/l" };
-
-    //public Hashtable<String,String> timeZones;
-
-    //public Vector<String> time_zones_vector;
-    
-    //JFrame m_main = null;        
         
     /**
      * Yes/No Option

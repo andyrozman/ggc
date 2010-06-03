@@ -119,7 +119,7 @@ public class DeviceConfiguration
                 {
                     if (cfg.containsKey(dev_prefix + "_" + i + "_DEVICE"))
                     {
-                        DeviceConfigEntry mce = new DeviceConfigEntry(dcd, ic);
+                        DeviceConfigEntry mce = new DeviceConfigEntry(dcd, ic, m_da);
                         mce.readConfiguration(cfg, i);
                         
                         this.device_entries.put("" + i, mce);

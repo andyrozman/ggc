@@ -2,6 +2,7 @@ package ggc.plugin.protocol;
 
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.IOException;
@@ -156,6 +157,18 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
         super(da);
     }
 
+
+    /**
+     * Constructor
+     * 
+     * @param adc 
+     */
+    public BlueToothProtocol(AbstractDeviceCompany adc, DataAccessPlugInBase da)
+    {
+        super(adc, da);
+    }
+    
+    
     
     /**
      * Set Communication Settings

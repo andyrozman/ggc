@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -69,7 +70,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     DeviceInterface device_interface;
     DeviceConfigEntry configured_device;
     DeviceDataHandler m_ddh;
-    
+    JFrame m_parent = null;
     JButton button_start, help_button;
     JLabel label_waiting;
     boolean reading_old_done = false;
@@ -139,12 +140,11 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      */
     public DeviceInstructionsDialog(Container parent, DataAccessPlugInBase da, DevicePlugInServer server, int _continued_type)
     {
-        super();
+        super((JFrame)parent, "", true);
 
         this.m_da = da;
-        //System.out.println("m_da: " + m_da);
-        
         this.m_ic = da.getI18nControlInstance();
+        this.m_parent = (JFrame)parent;
         
         this.m_ddh = m_da.getDeviceDataHandler();
         this.m_ddh.setDevicePlugInServer(server);
@@ -153,10 +153,6 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         this.m_ddh.setReadingFinishedObject(this);
         m_da.addComponent(this);
         
-        //this.reading_old_done = this.m_ddh.isOldDataReadingFinished();
-        //this.checkReading(status)
-        //if (this.m_ddh)
-            
         this.continuing_type = _continued_type; 
         this.m_ddh.setTransferType(this.continuing_type);
 
@@ -167,7 +163,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
             return;
         }
 
-        this.m_da.listComponents();
+        //this.m_da.listComponents();
         int read_stats = this.device_interface.getDownloadSupportType();
         
         if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_DATA)
@@ -189,7 +185,6 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         }
         else if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_FILE)
         {
-
             if (!DownloadSupportType.isOptionSet(read_stats, DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE))
             {
                 boolean warned = showNoSupportDialog(read_stats);
@@ -208,7 +203,6 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         }
         else if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_CONFIGURATION)
         {
-
             if (!DownloadSupportType.isOptionSet(read_stats, DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE))
             {
                 boolean warned = showNoSupportDialog(read_stats);
@@ -230,11 +224,6 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
             System.out.println("System error: This option is not supported!");
         }
             
-        
-        
-        //m_da.addContainer(server.)
-        
-        
         //this.reader = reader;
         //this.server = server;
         init();
@@ -296,8 +285,6 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     {
         this.configured_device = this.m_da.getDeviceConfiguration().getSelectedDeviceInstance(); //mc.getDefaultMeter();
         
-        System.out.println("Configured device: " + this.configured_device);
-        
         if (this.configured_device==null)
             return false;
         
@@ -306,16 +293,22 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         
         DeviceInterface mi = m_da.getManager().getDevice(this.configured_device.device_company, this.configured_device.device_device);
 
-        //System.out.println("Device Interface: " + mi);
-        
         this.device_interface = mi;
+        this.device_interface.setConnectionParameters(this.configured_device.communication_port_raw);
         
-        //this.m_dtd.device_interface = this.device_interface;
+        
         this.m_ddh.setDeviceInterface(this.device_interface);
         
-        return (this.device_interface!=null);
+        /*
+        if (mi.hasPreInit())
+        {
+            DeviceAbstract dva = (DeviceAbstract)mi;
+            dva.setDataAccessInstance(m_da);
+            dva.setOutputWriter(new ConsoleOutputWriter());
+            dva.preInitDevice();
+        }*/
         
-        //return true;
+        return (this.device_interface!=null);
     }
     
     
@@ -341,15 +334,15 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     }
     
     
-    private static final int METER_INTERFACE_PARAM_CONNECTION_TYPE = 1;
-    private static final int METER_INTERFACE_PARAM_STATUS = 2;
+    private static final int DEVICE_INTERFACE_PARAM_CONNECTION_TYPE = 1;
+    private static final int DEVICE_INTERFACE_PARAM_STATUS = 2;
     
     
     private String getMeterInterfaceParameter(int param)
     {
         switch(param)
         {
-            case DeviceInstructionsDialog.METER_INTERFACE_PARAM_CONNECTION_TYPE:
+            case DeviceInstructionsDialog.DEVICE_INTERFACE_PARAM_CONNECTION_TYPE:
             {
                 if (this.device_interface==null)
                 {
@@ -361,7 +354,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                 }
             } 
 
-            case DeviceInstructionsDialog.METER_INTERFACE_PARAM_STATUS:
+            case DeviceInstructionsDialog.DEVICE_INTERFACE_PARAM_STATUS:
             {
                 if (this.device_interface==null)
                 {
@@ -445,7 +438,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         ATSwingUtils.getLabel(m_ic.getMessage("CONNECTION_TYPE") + ":", 
             15, 80, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        ATSwingUtils.getLabel(this.getMeterInterfaceParameter(METER_INTERFACE_PARAM_CONNECTION_TYPE), 
+        ATSwingUtils.getLabel(this.getMeterInterfaceParameter(DEVICE_INTERFACE_PARAM_CONNECTION_TYPE), 
             130, 80, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL);
 
 
@@ -486,7 +479,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         ATSwingUtils.getLabel(m_ic.getMessage("STATUS") + ":", 
             15, 140, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        label = ATSwingUtils.getLabel(this.getMeterInterfaceParameter(METER_INTERFACE_PARAM_STATUS), 
+        label = ATSwingUtils.getLabel(this.getMeterInterfaceParameter(DEVICE_INTERFACE_PARAM_STATUS), 
             130, 140, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL);
         
         
@@ -592,17 +585,17 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
             if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_DATA)
             {
                 m_da.removeComponent(this);
-                new DeviceDisplayDataDialog(m_da, m_ddh);
+                new DeviceDisplayDataDialog(m_parent, m_da, m_ddh);
             }
             else if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_CONFIGURATION)
             {
                 m_da.removeComponent(this);
-                new DeviceDisplayConfigDialog(m_da, m_ddh);
+                new DeviceDisplayConfigDialog(m_parent, m_da, m_ddh);
             }
             else if (this.continuing_type==DeviceDataHandler.TRANSFER_READ_FILE)
             {
                 
-                System.out.println(this.device_interface.getFileDownloadTypes());
+                //System.out.println(this.device_interface.getFileDownloadTypes());
                 
                 if (this.device_interface.getFileDownloadTypes()==null)
                 {

@@ -42,8 +42,16 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     protected String default_parameter = null;
     protected String packed_conn_parameters = null;
     private static Log log = LogFactory.getLog(DeviceSpecialConfigPanelAbstract.class);
-    protected String conn_delimiter = "#;#";
-    protected String param_delimiter = "!=";
+    
+    /**
+     * Delimiter for connection parameters parts
+     */
+    public static final String connection_part_delimiter = "#;#";
+    
+    /**
+     * Delimiter for parameter 
+     */
+    public static final String parameter_delimiter = "!=";
     
     
     /**
@@ -63,12 +71,38 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     }
 
 
+    /**
+     * Find Default Parameter
+     * 
+     * @param params
+     * @return
+     */
+    public static String findDefaultParameter(String params)
+    {
+
+        if (!params.contains(connection_part_delimiter))
+            return params;
+        
+        StringTokenizer strtok = new StringTokenizer(params, connection_part_delimiter);
+        
+        while(strtok.hasMoreTokens())
+        {
+            String tok = strtok.nextToken();
+            
+            if (!tok.contains(parameter_delimiter))
+                return tok;
+        }
+        
+        return "";
+    }
+    
+    
     public void loadConnectionParameters(String param)
     {
         
         this.initParameters();
         
-        if (!param.contains(conn_delimiter))
+        if (!param.contains(connection_part_delimiter))
         {
             this.default_parameter = param;
             log.warn("Simple parameter found, while expecting extended one [param=" + param + "]");
@@ -76,7 +110,7 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
         }
         
         
-        StringTokenizer strtok = new StringTokenizer(param, conn_delimiter);
+        StringTokenizer strtok = new StringTokenizer(param, connection_part_delimiter);
         
         //int count = 0;
         
@@ -85,10 +119,10 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
             
             String tok = strtok.nextToken();
             
-            if (tok.contains(param_delimiter))
+            if (tok.contains(parameter_delimiter))
             {
-                String key = tok.substring(0, tok.indexOf(param_delimiter));
-                String val = tok.substring(tok.indexOf(param_delimiter) + param_delimiter.length());
+                String key = tok.substring(0, tok.indexOf(parameter_delimiter));
+                String val = tok.substring(tok.indexOf(parameter_delimiter) + parameter_delimiter.length());
                 
                 if (this.parameters.containsKey(key))
                 {
@@ -144,12 +178,12 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
             String key = en.nextElement();
             
             if (first)
-                sb.append(this.conn_delimiter);
+                sb.append(connection_part_delimiter);
             else
                 first = true;
             
             sb.append(key);
-            sb.append(this.param_delimiter);
+            sb.append(parameter_delimiter);
             sb.append(this.parameters.get(key));
         }
         

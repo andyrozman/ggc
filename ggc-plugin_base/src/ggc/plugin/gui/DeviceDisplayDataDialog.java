@@ -23,6 +23,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -88,7 +89,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     JTextArea logText = null;
     JButton help_button;
     DeviceDataHandler m_ddh;
-
+    JFrame m_parent = null;
+    JDialog m_parent_d = null;
+    
     boolean indeterminate = false;
 
     /*
@@ -114,15 +117,17 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     /**
      * Constructor
      * 
+     * @param parent 
      * @param da
      * @param ddh
      */
-    public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceDataHandler ddh)
+    public DeviceDisplayDataDialog(JFrame parent, DataAccessPlugInBase da, DeviceDataHandler ddh)
     {
-        super();
+        super(parent, "", true);
 
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
+        this.m_parent = parent;
 
         this.m_ddh = ddh;
         this.m_ddh.dialog_data = this;
@@ -132,6 +137,31 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         dialogPreInit();
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param parent 
+     * @param da
+     * @param ddh
+     */
+   /* public DeviceDisplayDataDialog(JDialog parent, DataAccessPlugInBase da, DeviceDataHandler ddh)
+    {
+        super(parent, "", true);
+
+        this.m_da = da;
+        this.m_ic = da.getI18nControlInstance();
+        //this.m_parent_d = parent;
+
+        this.m_ddh = ddh;
+        this.m_ddh.dialog_data = this;
+        // this.m_ddh.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
+        this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);
+
+        dialogPreInit();
+    }
+    */
+    
     /**
      * Constructor (for testing GUI)
      * 
