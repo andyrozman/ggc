@@ -179,7 +179,10 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
     }
     
 
-    
+    public boolean hasDefaultParameter()
+    {
+        return false;
+    }
     
     
 }
