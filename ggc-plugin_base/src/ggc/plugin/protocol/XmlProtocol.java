@@ -83,6 +83,7 @@ public abstract class XmlProtocol extends DeviceAbstract
      * Constructor
      * 
      * @param cmp
+     * @param da 
      */
     public XmlProtocol(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {

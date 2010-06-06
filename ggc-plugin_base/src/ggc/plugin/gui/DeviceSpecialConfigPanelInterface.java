@@ -1,5 +1,7 @@
 package ggc.plugin.gui;
 
+import javax.swing.JPanel;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -34,6 +36,14 @@ public interface DeviceSpecialConfigPanelInterface
      * Init Panel
      */
     public void initPanel();
+    
+    
+    /**
+     * Get Panel
+     * 
+     * @return
+     */
+    public JPanel getPanel();
     
     
     /**

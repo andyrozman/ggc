@@ -68,6 +68,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
     }
 
     /**
+     * @param adc 
      * @param da
      */
     public CoPilot(AbstractDeviceCompany adc, DataAccessPlugInBase da)

@@ -717,4 +717,11 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     }
     
     
+    
+    public boolean hasDefaultParameter()
+    {
+        return true;
+    }
+    
+    
 }

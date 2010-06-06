@@ -49,6 +49,14 @@ public class CommunicationSettingsPanel extends JPanel
     DeviceSpecialConfigPanelInterface special_config = null;
     int element_size = 65;
     
+    /**
+     * Constructor
+     * 
+     * @param x
+     * @param y
+     * @param da
+     * @param parent_
+     */
     public CommunicationSettingsPanel(int x, int y, DataAccessPlugInBase da, JDialog parent_)
     {
         super();
@@ -67,14 +75,21 @@ public class CommunicationSettingsPanel extends JPanel
     }
     
     
+    /**
+     * Init
+     */
     public void init()
     {
         
         this.comm_port_comp = new CommunicationPortComponent(m_da, this.parent);
-        this.add(this.comm_port_comp);        
-        
+        this.add(this.comm_port_comp); 
     }
     
+    /**
+     * Set Current Device
+     * 
+     * @param dev_interface
+     */
     public void setCurrentDevice(DeviceInterface dev_interface)
     {
         this.current_device = dev_interface;
@@ -94,50 +109,131 @@ public class CommunicationSettingsPanel extends JPanel
     }
     
     
+    /**
+     * Reset Layout
+     */
     public void resetLayout()
     {
         this.special_config = null;
 
-        if (this.current_device!=null)
+        if ((this.current_device!=null) && (this.current_device.hasSpecialConfig()))
         {
-            if (this.current_device.hasSpecialConfig())
+            this.special_config = this.current_device.getSpecialConfigPanel();
+        }
+        
+        this.removeAll();
+        
+        this.add(this.comm_port_comp);
+        
+        if (this.special_config!=null)
+        {
+            JPanel panel = this.special_config.getPanel();
+            
+            if (panel!=null)
             {
-                this.special_config = this.current_device.getSpecialConfigPanel();
+                this.special_config.initPanel();
+                panel.setBounds(5, 55, 400, 35);
+                panel.setEnabled(true);
+                this.add(panel);
+                //panel.setBounds(40, 40, 400, 35);
+                
             }
         }
         
-        
-        // FIXME reset layout
-        
+        this.setBounds(x_pos, y_pos, 410, this.getHeight());
+        this.repaint();
     }
     
     
+    /**
+     * Set Protocol
+     * 
+     * @param protocol
+     */
     public void setProtocol(int protocol)
     {
         this.comm_port_comp.setProtocol(protocol);
     }
     
 
+    /**
+     * Set Parameters
+     * 
+     * @param param
+     */
     public void setParameters(String param)
     {
         if (param==null)
         {
             this.comm_port_comp.setCommunicationPort(m_ic.getMessage("NOT_SET"));   
         }
+        else
+        {
+            if (this.special_config==null)
+            {
+                this.comm_port_comp.setCommunicationPort(param);
+            }
+            else
+            {
+                this.special_config.loadConnectionParameters(param);
+                this.comm_port_comp.setCommunicationPort(this.special_config.getDefaultParameter());
+                
+                //System.out.println("Def parameter: " + this.special_config.getDefaultParameter());
+                
+            }
+        }
         
         //this.comm_port_comp
     }
     
+    /**
+     * Get Parameters
+     * 
+     * @return
+     */
     public String getParameters()
     {
-        return null;
+        if (this.special_config==null)
+        {
+            return this.comm_port_comp.getCommunicationPort();
+        }
+        else
+        {
+            this.special_config.setDefaultParameter(this.comm_port_comp.getCommunicationPort());
+            return this.special_config.saveConnectionParameters();
+        }
     }
     
     
+    /**
+     * Are parameters set
+     * 
+     * @return
+     */
     public boolean areParametersSet()
     {
-        // FIXME
-        return true;
+        if (this.special_config==null)
+        {
+            if (this.current_device.hasDefaultParameter())
+            {
+                if (m_ic.getMessage("NOT_SET").equals(this.comm_port_comp.getCommunicationPort()))
+                    return false;
+                
+                if (this.comm_port_comp.getCommunicationPort().trim().length()==0)
+                    return false;
+                else
+                    return true;
+            }
+            else
+                return true;
+        }
+        else
+        {
+            this.special_config.setDefaultParameter(this.comm_port_comp.getCommunicationPort());
+            return this.special_config.areConnectionParametersValid();
+        }
+        
+     
     }
     
     

@@ -1,11 +1,18 @@
 package ggc.plugin.gui;
 
+import ggc.plugin.device.DeviceAbstract;
+import ggc.plugin.util.DataAccessPlugInBase;
+
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+import javax.swing.JPanel;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.atech.i18n.I18nControlAbstract;
 
 
 /**
@@ -38,10 +45,14 @@ import org.apache.commons.logging.LogFactory;
 public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialConfigPanelInterface
 {
 
+    protected JPanel config_panel = null;
     protected Hashtable<String,String> parameters = null;
     protected String default_parameter = null;
     protected String packed_conn_parameters = null;
     private static Log log = LogFactory.getLog(DeviceSpecialConfigPanelAbstract.class);
+    protected DataAccessPlugInBase m_da;
+    protected I18nControlAbstract m_ic;
+    protected DeviceAbstract dev_interface = null;
     
     /**
      * Delimiter for connection parameters parts
@@ -56,9 +67,15 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     
     /**
      * Constructor
+     * 
+     * @param da 
+     * @param di 
      */
-    public DeviceSpecialConfigPanelAbstract()
+    public DeviceSpecialConfigPanelAbstract(DataAccessPlugInBase da, DeviceAbstract di)
     {
+        this.m_da = da;
+        this.m_ic = da.getI18nControlInstance();
+        this.dev_interface = di;
         this.parameters = new Hashtable<String,String>();
         this.initParameters();
         this.initPanel();
@@ -194,7 +211,7 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     
     public boolean hasDefaultParameter()
     {
-        return true;
+        return this.dev_interface.hasDefaultParameter();
     }
     
     
@@ -207,6 +224,8 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
             if ((this.default_parameter==null) || (this.default_parameter.length()==0))
                 not_found = true;
         }
+        
+        this.readParametersFromGUI();
         
         for(Enumeration<String> en=this.parameters.keys(); en.hasMoreElements(); )
         {
@@ -236,6 +255,11 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     
     
     
+    public JPanel getPanel()
+    {
+        return this.config_panel;
+    }
+
     
 
 }

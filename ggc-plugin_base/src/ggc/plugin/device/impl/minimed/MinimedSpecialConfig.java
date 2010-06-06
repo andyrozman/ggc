@@ -1,6 +1,8 @@
 package ggc.plugin.device.impl.minimed;
 
+import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -32,6 +34,18 @@ import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract
 {
 
+    
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param di 
+     */
+    public MinimedSpecialConfig(DataAccessPlugInBase da, DeviceAbstract di)
+    {
+        super(da, di);
+    }
+
     public int getHeight()
     {
         // TODO Auto-generated method stub
@@ -55,5 +69,6 @@ public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract
         // TODO Auto-generated method stub
         
     }
+
 
 }

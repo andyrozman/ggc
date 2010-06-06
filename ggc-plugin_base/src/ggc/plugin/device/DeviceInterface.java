@@ -437,6 +437,15 @@ public interface DeviceInterface extends SelectableInterface
      */
     public void initSpecialConfig();
     
+    
+    
+    /**
+     * Has Default Parameter (if device has default parameter)
+     * 
+     * @return
+     */
+    public boolean hasDefaultParameter();
+    
 
     //************************************************
     //***                 Pre-init                 ***

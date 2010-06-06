@@ -414,7 +414,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public void initSpecialConfig()
     {
-        this.special_config = new AccuChekSmartPixSpecialConfig();
+        this.special_config = new AccuChekSmartPixSpecialConfig(m_da, this);
     }
     
     

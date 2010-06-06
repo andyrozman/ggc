@@ -15,11 +15,19 @@ import javax.swing.border.TitledBorder;
 
 import com.atech.utils.ATSwingUtils;
 
+/**
+ * 
+ * @author andy
+ *
+ */
 public class TestDeviceInstructions implements ActionListener
 {
     JTextArea ta_html;
     JLabel label_ins;
     
+    /**
+     * Constructor
+     */
     public TestDeviceInstructions()
     {
         JFrame mainFrame = new JFrame("HTML");
@@ -34,16 +42,18 @@ public class TestDeviceInstructions implements ActionListener
         mainFrame.add(ta_html, null);
 
         JButton button1 = new JButton("<html><font color='#FF0000'>JButton Text</font></html>");
-        JLabel label1 = new JLabel("<html><font color='#FF0000'>Red Text</font>"
+        /*JLabel label1 = new JLabel("<html><font color='#FF0000'>Red Text</font>"
                 + "<br /><font color='#00FF00'>Blue Text</font>" + "<br /><font color='#0000FF'>Green Text</font>"
                 + "<br /><font color='#000000'>Black Text</font>"
-                + "<br /><font color='#FFFFFF'>Blue Text</font></html>");
+                + "<br /><font color='#FFFFFF'>Blue Text</font></html>");*/
         button1.setBounds(20,320,100, 25);
         button1.addActionListener(this);
         
         mainFrame.add(button1, null);
         
-        JPanel panel_instruct = ATSwingUtils.getPanel(300, 190, 330, 200, 
+        // ATSwingUtils.getPanel(300, 190, 330, 200, (plugin instructions)
+        
+        JPanel panel_instruct = ATSwingUtils.getPanel(200, 190, 470, 200, 
             new FlowLayout(), 
             new TitledBorder("INSTRUCTIONS"), 
             mainFrame.getContentPane());
@@ -58,11 +68,14 @@ public class TestDeviceInstructions implements ActionListener
         //mainFrame.add(button1);
         mainFrame.add(panel_instruct);
 
-        mainFrame.setDefaultCloseOperation(mainFrame.EXIT_ON_CLOSE);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         //mainFrame.pack();
     }
 
+    /**
+     * @param args
+     */
     public static void main(String[] args)
     {
         new TestDeviceInstructions();
@@ -70,8 +83,6 @@ public class TestDeviceInstructions implements ActionListener
 
     public void actionPerformed(ActionEvent e)
     {
-        // TODO Auto-generated method stub
         this.label_ins.setText(ta_html.getText());
-        
     }
 }

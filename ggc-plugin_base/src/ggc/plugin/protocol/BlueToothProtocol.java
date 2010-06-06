@@ -162,6 +162,7 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
      * Constructor
      * 
      * @param adc 
+     * @param da 
      */
     public BlueToothProtocol(AbstractDeviceCompany adc, DataAccessPlugInBase da)
     {

@@ -159,21 +159,15 @@ public class DeviceConfigEntry
     }
 
     
-    private void processCommunicationSettings()
+    /**
+     * Process Communication Settings
+     */
+    public void processCommunicationSettings()
     {
         this.communication_port = DeviceSpecialConfigPanelAbstract.findDefaultParameter(this.communication_port_raw);
         
-        /*
-        DeviceAbstract di = (DeviceAbstract)m_da.getManager().getDevice(this.device_company, this.device_device);
-        
-        if (di==null)
-        {
-            this.communication_port = this.communication_port_raw;
-            return;
-        }
-        
-        di.setConnectionParameters(this.communication_port_raw);
-        this.communication_port = di.getMainConnectionParameter();*/
+        if ((this.communication_port==null) || (this.communication_port.equals("null")))
+            this.communication_port = "";
     }
     
     

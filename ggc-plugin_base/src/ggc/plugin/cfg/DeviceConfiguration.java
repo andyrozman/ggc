@@ -115,7 +115,7 @@ public class DeviceConfiguration
                     this.default_device = "" + sel;
                 }
                 
-                for(int i=1; i<21; i++)
+                for(int i=1; i<255; i++)
                 {
                     if (cfg.containsKey(dev_prefix + "_" + i + "_DEVICE"))
                     {
