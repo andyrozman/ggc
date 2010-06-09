@@ -1,6 +1,7 @@
 package ggc.meter.manager.company; 
 
 import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -44,7 +45,8 @@ public class HomeDiagnostic extends AbstractDeviceCompany
             "Home Diagnostic",                           // company name (full)
             "Home Diagnostic",                           // short company name
             "HOMEDIAGNOSTIC_DESC",                       // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED);  // implementation status
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
+            DataAccessMeter.getInstance());  // implementation status
     }
 
     

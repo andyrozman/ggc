@@ -41,10 +41,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
 {
 
     private static final long serialVersionUID = 7198690314603156531L;
-    //private I18nControl m_ic = I18nControl.getInstance();
-
-//    private String[] column_names = { m_ic.getMessage("DATETIME"), m_ic.getMessage("BG_MMOLL"),
-//                                     m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
+    //private static Log log = LogFactory.getLog(MeterValuesTableModel.class);
 
     
     /**
@@ -190,7 +187,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
 */
 
     
-
+    boolean ddee = false;
     
     /**
      * Process Device Value Entry
@@ -203,13 +200,27 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
         
         if (this.m_ddh.hasOldData())
         {
+            
+            /*if (!ddee)
+            {
+                //System.out.println("Old data: " + this.m_ddh.getOldData());
+                log.debug("Old data: " + this.m_ddh.getOldData());
+                ddee = true;
+            }*/
+            
+            
+            //System.out.println("Old data found !  Size: " + this.m_ddh.getOldData().size());
+            //System.out.println("MVE: " + mve.getSpecialId());
+            
             if (!this.m_ddh.getOldData().containsKey("" + mve.getSpecialId()))
             {
+                //System.out.println("Old data NOT found !!! New: " + mve.getDateTimeObject().getDateTimeString());
                 mve.setStatus(DeviceValuesEntry.STATUS_NEW);
                 mve.setObjectStatus(MeterValuesEntry.OBJECT_STATUS_NEW);
             }
             else
             {
+                //System.out.println("Old found !!! Old: " + mve.getDateTimeObject().getDateTimeString());
                 MeterValuesEntry mve2 = (MeterValuesEntry)mve; 
 
                 MeterValuesEntry mve_old = (MeterValuesEntry)this.m_ddh.getOldData().get(mve.getSpecialId());

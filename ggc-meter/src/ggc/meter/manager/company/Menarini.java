@@ -2,6 +2,7 @@ package ggc.meter.manager.company;
 
 import ggc.meter.device.menarini.GlucofixMio;
 import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -45,7 +46,8 @@ public class Menarini extends AbstractDeviceCompany
             "Menarini",                         // company name (full)
             "Menarini",                         // short company name
             "MENARINI_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_TESTING);  // implementation status
+            DeviceImplementationStatus.IMPLEMENTATION_TESTING,
+            DataAccessMeter.getInstance());  // implementation status
         
         this.addDevice(new GlucofixMio(this));
     }

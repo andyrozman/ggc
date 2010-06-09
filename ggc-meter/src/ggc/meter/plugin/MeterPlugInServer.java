@@ -6,6 +6,7 @@ import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -16,6 +17,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessLMAbstract;
@@ -92,6 +94,9 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
+
+    
+    private JMenuItem[] menus = new JMenuItem[2];
     
     
     /*
@@ -230,7 +235,9 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     {
         //I18nControl.getInstance().setLanguage(this.selected_lang);
         
-        da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        if (da_local==null)
+            da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        
         ic = da_local.getI18nControlInstance();
         
         da_local.setParentI18nControlInstance(m_da.getI18nControlInstance());
@@ -285,6 +292,20 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
             return null;
     }
 
+    
+    /**
+     * Get Return Object
+     * 
+     * @param ret_obj_id
+     * @param parameters
+     * @return
+     */
+    @Override
+    public Object getReturnObject(int ret_obj_id, Object[] parameters)
+    {
+        return null;
+    }
+    
 
     /**
      * Get Backup Objects (if available) [PlugIn Framework v2]
@@ -314,12 +335,41 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
         JMenu menu_meter = ATSwingUtils.createMenu("MN_METERS", null, ic);
         
-        ATSwingUtils.createMenuItem(menu_meter, 
+        JMenuItem mi = ATSwingUtils.createMenuItem(menu_meter, 
             "MN_METERS_READ", 
             "MN_METERS_READ_DESC", 
             "meters_read", 
             this, null, 
             ic, DataAccessMeter.getInstance(), parent);
+        
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+            mi.setEnabled(true);
+        else
+            mi.setEnabled(false);
+        
+        menus[0] = mi;
+        
+        
+        mi = ATSwingUtils.createMenuItem(menu_meter, 
+            "MN_METERS_READ_FILE", 
+            "MN_METERS_READ_FILE_DESC", 
+            "meters_read_file", 
+            this, null, 
+            ic, DataAccessMeter.getInstance(), parent);
+
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
+            mi.setEnabled(true);
+        else
+            mi.setEnabled(false);
+        
+        menus[1] = mi;
+        
+        
+        // TODO remove when enabled
+        //mi.setEnabled(false);
+        
+        
+        
         
         menu_meter.addSeparator();
         
@@ -354,6 +404,22 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         return menu_meter;
     }
 
+    
+    private void refreshMenusAfterConfig()
+    {
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+            menus[0].setEnabled(true);
+        else
+            menus[0].setEnabled(false);
+        
+        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
+            menus[1].setEnabled(true);
+        else
+            menus[1].setEnabled(false);
+        
+    }
+    
+    
     
     /**
      * Get PlugIn Print Menus [PlugIn Framework v2] 
@@ -392,9 +458,16 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         {
             new AboutBaseDialog((JFrame)parent, da_local);
         }
+        else if (command.equals("meters_read_file"))
+        {
+            System.out.println("Meters read file");
+            new DeviceInstructionsDialog(this.parent, DataAccessMeter.getInstance(), this, DeviceDataHandler.TRANSFER_READ_FILE);
+            this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_READ_DATA);
+        }
         else if (command.equals("meters_config"))
         {
             new DeviceConfigurationDialog((JFrame)parent, da_local);
+            refreshMenusAfterConfig();
             this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_CONFIG);
         }
         else

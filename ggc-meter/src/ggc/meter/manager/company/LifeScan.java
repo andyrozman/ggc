@@ -7,6 +7,7 @@ import ggc.meter.device.onetouch.OneTouchUltraEasy;
 import ggc.meter.device.onetouch.OneTouchUltraMini;
 import ggc.meter.device.onetouch.OneTouchUltraSmart;
 import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -49,7 +50,8 @@ public class LifeScan extends AbstractDeviceCompany
             "LifeScan/One Touch/J&J",           // company name (full)
             "LifeScan",                         // short company name
             "LIFESCAN_DESC",                    // company description
-            DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL);  // implementation status
+            DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL,
+            DataAccessMeter.getInstance());  // implementation status
         
         this.addDevice(new OneTouchUltra(this));
         this.addDevice(new OneTouchProfile(this));

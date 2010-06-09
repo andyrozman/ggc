@@ -11,7 +11,10 @@ import ggc.plugin.output.OutputWriterType;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATechDate;
@@ -51,6 +54,9 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	private ATechDate datetime;
 	private String bg_str;
 	private int bg_unit;
+	
+    private static Log log = LogFactory.getLog(MeterValuesEntry.class);
+	
 	//public boolean checked = false;
 	//public
 	private Hashtable<String,String> params;
@@ -292,51 +298,6 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	}
 
 	
-	/**
-	 * Special Entry: Urine - Ketones (mmol/L)
-	 */
-	public static final int SPECIAL_ENTRY_URINE_MMOLL = 1;
-
-    /**
-     * Special Entry: Urine - Ketones (mmol/L)
-     */
-	public static final int SPECIAL_ENTRY_URINE_MGDL = 2;
-	
-	
-	/**
-	 * Set Special Entry
-	 * 
-	 * @param type
-	 * @param value
-	 */
-	public void setSpecialEntry(int type, String value)
-	{
-	    this.special_entry = true;
-	    this.special_entry_id = type;
-	    this.special_entry_value = value;
-	}
-	
-	
-	String special_entry_tags[] = { "", "URINE", "URINE" };
-    String special_entry_units[] = { "", " mmol/L", " mg/dL" };  // this are not required, if your special 
-                                                                 // entry has no unit, leave this empty
-	
-	/**
-	 * Get Special Entry DbEntry
-	 * @return
-	 */
-	public String getSpecialEntryDbEntry()
-	{
-	    StringBuffer sb = new StringBuffer();
-	    
-	    
-	    sb.append(this.special_entry_tags[this.special_entry_id]);
-	    sb.append("=");
-	    sb.append(this.special_entry_value);
-        sb.append(this.special_entry_units[this.special_entry_id]);
-	    
-	    return sb.toString();
-	}
 	
 	
 	
@@ -739,7 +700,9 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
      */
     public String DbAdd(Session sess) throws Exception
     {
-        return "";
+        processEntry(sess, "Add");
+        
+        return "" + this.getId();
     }
 
 
@@ -752,7 +715,8 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
      */
     public boolean DbEdit(Session sess) throws Exception
     {
-        return false;
+        processEntry(sess, "Edit");
+        return true;
     }
 
 
@@ -769,6 +733,78 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     }
 
 
+    private void processEntry(Session sess, String act)
+    {
+        if (this.object_status == MeterValuesEntry.OBJECT_STATUS_OLD)
+        {
+            log.debug("Exiting. Status was old. Action was: " + act);
+            return;
+        }
+        else if (this.object_status == MeterValuesEntry.OBJECT_STATUS_EDIT)
+        {
+            Transaction tx = sess.beginTransaction();
+            
+            if (this.special_entry)
+                this.entry_object.setExtended(this.getSpecialEntryDbEntry());
+            else
+                this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+            
+            this.entry_object.setChanged(System.currentTimeMillis());
+            this.entry_object.setComment(createComment());
+            this.entry_object.setPerson_id((int)DataAccessMeter.getInstance().getCurrentUserId());
+            log.debug("Updated. Status was Edit. Action was: " + act);
+            
+            sess.update(this.entry_object);
+        
+            tx.commit();
+        }
+        else
+        {
+            Transaction tx = sess.beginTransaction();
+            
+            this.entry_object = new DayValueH();
+            this.entry_object.setIns1(0);
+            this.entry_object.setIns2(0);
+            this.entry_object.setCh(0.0f);
+            this.entry_object.setPerson_id((int)DataAccessMeter.getInstance().getCurrentUserId());
+            
+            if (this.special_entry)
+                this.entry_object.setExtended(this.getSpecialEntryDbEntry()+";" + "SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+            else
+            {
+                this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+                this.entry_object.setExtended("SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+            }
+            
+            
+            
+            //this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+            this.entry_object.setDt_info(this.getDateTime());
+            this.entry_object.setChanged(System.currentTimeMillis());
+            //this.entry_object.setExtended("SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+            this.entry_object.setComment(createComment());
+            
+            log.debug("Added. Status was Add. Action was: " + act);
+            Long id = (Long) sess.save(this.entry_object);
+
+            System.out.println("Dt: " + this.getDateTimeObject().getDateTimeString() + this.getBgValue());
+            
+            System.out.println("Add: Id=" + id.longValue());
+            
+            tx.commit();
+
+            this.setId(id.longValue());
+            
+            //return "" + id.longValue();
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      * 
@@ -905,6 +941,78 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         return this.source;
     }
      
+
+    //---
+    //--- Special entries
+    //---
+    
+    
+    /**
+     * Special Entry: Urine - Ketones (mmol/L)
+     */
+    public static final int SPECIAL_ENTRY_URINE_MMOLL = 1;
+
+    /**
+     * Special Entry: Urine - Ketones (mmol/L)
+     */
+    public static final int SPECIAL_ENTRY_URINE_MGDL = 2;
+    
+    
+    /**
+     * Set Special Entry
+     * 
+     * @param type
+     * @param value
+     */
+    public void setSpecialEntry(int type, String value)
+    {
+        this.special_entry = true;
+        this.special_entry_id = type;
+        this.special_entry_value = value;
+    }
+    
+    
+    String special_entry_tags[] = { "", "URINE", "URINE" };
+    String special_entry_units[] = { "", " mmol/L", " mg/dL" };  // this are not required, if your special 
+                                                                 // entry has no unit, leave this empty (have at least one space as unit), so that code will work
+    
+    int special_entry_pump_map[] = { -1, 4, 4 };
+    
+    /**
+     * Get Special Entry DbEntry
+     * @return
+     */
+    public String getSpecialEntryDbEntry()
+    {
+        StringBuffer sb = new StringBuffer();
+        
+        
+        sb.append(this.special_entry_tags[this.special_entry_id]);
+        sb.append("=");
+        sb.append(this.special_entry_value);
+        sb.append(this.special_entry_units[this.special_entry_id]);
+        
+        return sb.toString();
+    }
+    
+    
+    
+    /**
+     * Get Special Entry Value
+     * 
+     * @return
+     */
+    public String getSpecialEntryValue()
+    {
+        StringBuffer sb = new StringBuffer();
+        
+        sb.append(this.special_entry_value);
+        sb.append(this.special_entry_units[this.special_entry_id]);
+        
+        return sb.toString();
+    }
+    
+    
     
     /**
      * Get Extended Type Description (if we use extended interface, this is type description)
@@ -927,10 +1035,64 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     public String getExtendedTypeValue()
     {
         if (this.special_entry)
-            return this.special_entry_value + " " + this.special_entry_units[this.special_entry_id];
+            return this.special_entry_value + this.special_entry_units[this.special_entry_id];
         else
             return this.bg_mgdL + " mg/dL (" + DataAccessMeter.Decimal1Format.format(this.bg_mmolL) + " mmol/L)";
     }
+    
+
+    /**
+     * Is Special Entry
+     * 
+     * @return
+     */
+    public boolean isSpecialEntry()
+    {
+        return this.special_entry;
+    }
+    
+    
+    /**
+     * Get Pump Mapped Type
+     * 
+     * @return
+     */
+    public int getPumpMappedType()
+    {
+        if (this.special_entry)
+        {
+            return special_entry_pump_map[this.special_entry_id];
+        }
+        else
+        {
+            return 3;
+        }
+    }
+    
+    /**
+     * Get Allowed Pump Mapped Types
+     * 
+     * @return
+     */
+    public Hashtable<String,String> getAllowedPumpMappedTypes()
+    {
+        Hashtable<String,String> ht = new Hashtable<String,String>();
+        
+        for(int i=0; i<this.special_entry_pump_map.length; i++)
+        {
+            if (this.special_entry_pump_map[i]!=-1)
+            {
+                if (!ht.containsKey(""+this.special_entry_pump_map[i]))
+                {
+                    ht.put(""+this.special_entry_pump_map[i], "");
+                }
+            }
+            
+        }
+        
+        return ht;
+    }
+    
     
     
     

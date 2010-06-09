@@ -4,11 +4,6 @@ package ggc.meter.device;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.OutputWriter;
-
-import com.atech.graphics.dialogs.selector.ColumnSorter;
-import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,20 +32,11 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements MeterInterface, SelectableInterface
+public abstract class AbstractOtherMeter extends AbstractMeter /**extends XmlProtocol*/ //implements MeterInterface, SelectableInterface
 {
 
-
     protected String device_name = "Undefined";
-    protected OutputWriter output_writer;
-    
-    AbstractDeviceCompany meter_company = null;
-    
     String connection_port = "";
-    String device_source_name;
-    
-    protected DataAccessMeter m_da = null;
-    protected I18nControlAbstract ic = null;
     
 
     /**
@@ -79,35 +65,11 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     
 
     
-    boolean can_read_data = false; 
-	boolean can_read_partitial_data = false;
-	boolean can_read_device_info = false;
-	boolean can_read_device_configuration = false;
-    
-    
-	
-	
-	
-    /** 
-     * Set Device Allowed Actions
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-    									boolean can_read_partitial_data,
-    									boolean can_read_device_info,
-    									boolean can_read_device_configuration)
-    {
-        this.can_read_data = can_read_data; 
-        this.can_read_partitial_data = can_read_partitial_data;
-        this.can_read_device_info = can_read_device_info;
-        this.can_read_device_configuration = can_read_device_configuration;
-    }
-    
 
     
     String meter_group = null;
     String meter_device = null;
     
-    //MeterDevice device_instance = null;
     
     
     /**
@@ -131,14 +93,6 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
         
         this.device_source_name = group + " " + device;
     }
-    
-    /**
-    public String getName()
-    {
-        return this.device_name;
-    }*/
-    
-    
     
     
     
@@ -165,41 +119,6 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     
     
     
-    
-    
-    
-    /**
-    public GenericMeter(int meter_type, String portName)
-    {
-
-	super(meter_type,
-	      9600, 
-	      SerialPort.DATABITS_8, 
-	      SerialPort.STOPBITS_1, 
-	      SerialPort.PARITY_NONE);
-
-	data = new ArrayList<DailyValuesRow>();
-
-	try
-	{
-	    this.setPort(portName);
-
-	    if (!this.open())
-	    {
-		this.m_status = 1;
-	    }
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("AscensiaMeter -> Error adding listener: " + ex);
-	    ex.printStackTrace();
-	}
-    }
-*/
-
-
-
-    
     /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
      *    special comment about device (for example pix device, doesn't display anything till the end, which
@@ -211,238 +130,6 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
     }
     
     
-    
-    //************************************************
-    //***       Device Implemented methods         ***
-    //************************************************
-    
-
-    /** 
-     * clearDeviceData - Clear data from device 
-     */
-    public void clearDeviceData()
-    {
-    }
-    
-    /**
-     * getDeviceInfo - get Device info (firmware and software revision)
-     */
-    public DeviceIdentification getDeviceInfo()
-    {
-        return this.output_writer.getDeviceIdentification();
-    }
-    
-    
-
-    
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-    
-    /**
-     * canReadData - Can Meter Class read data from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadData()
-    {
-    	return this.can_read_data;
-    }
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadPartitialData()
-    {
-    	return this.can_read_partitial_data;
-    }
-
-
-    
-    /**
-     * canReadDeviceInfo - tells if we can read info about device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadDeviceInfo()
-    {
-    	return this.can_read_device_info;
-    }
-    
-    
-    /**
-     * canReadConfiguration - tells if we can read configuration from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadConfiguration()
-    {
-    	return this.can_read_device_configuration;
-    }
-    
-    
-
-
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
-
-    /** 
-     * test
-     */
-    public void test()
-    {
-    }
-
-
-
-    
-    /** 
-     * compareTo
-     */
-    public int compareTo(SelectableInterface o)
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    
-    
-    /** 
-     * Get Column Count
-     */
-    public int getColumnCount()
-    {
-        return m_da.getPluginDeviceUtil().getColumnCount();
-    }
-    
-    
-    /** 
-     * getColumnName
-     */
-    public String getColumnName(int num)
-    {
-        return m_da.getPluginDeviceUtil().getColumnName(num);
-    }    
-    
-    
-    /** 
-     * Get Column Width
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
-    }
-    
-    
-    /** 
-     * getColumnValue - get Value of column, for configuration
-     */
-    public String getColumnValue(int num)
-    {
-        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
-    }
-    
-    
-    
-
-
-    /** 
-     * getColumnValueObject
-     */
-    public Object getColumnValueObject(int num)
-    {
-        return this.getColumnValue(num);
-    }
-
-
-    /** 
-     * getItemId
-     */
-    public long getItemId()
-    {
-        return 0;
-    }
-
-
-    /** 
-     * getShortDescription
-     */
-    public String getShortDescription()
-    {
-        return this.getName();
-    }
-
-
-    /** 
-     * isFound
-     */
-    public boolean isFound(int from, int till, int state)
-    {
-        return true;
-    }
-
-
-    /** 
-     * isFound
-     */
-    public boolean isFound(int value)
-    {
-        return true;
-    }
-
-
-    /** 
-     * isFound
-     */
-    public boolean isFound(String text)
-    {
-        return true;
-    }
-
-
-    /** 
-     * setColumnSorter
-     */
-    public void setColumnSorter(ColumnSorter cs)
-    {
-    }
-
-
-    /** 
-     * setSearchContext
-     */
-    public void setSearchContext()
-    {
-    }
-
-    
-    
-    
-    /**
-     * setDeviceCompany - set Company for device
-     * 
-     * @param company
-     */
-    public void setDeviceCompany(AbstractDeviceCompany company)
-    {
-        this.meter_company = company;
-    }
-    
-    
-    /**
-     * getDeviceCompany - get Company for device
-     */
-    public AbstractDeviceCompany getDeviceCompany()
-    {
-        return this.meter_company;
-    }
 
 
     /**
@@ -464,7 +151,7 @@ public abstract class AbstractOtherMeter /**extends XmlProtocol*/ implements Met
      */
     public boolean hasIndeterminateProgressStatus()
     {
-        return false;
+        return true;
     }
     
     

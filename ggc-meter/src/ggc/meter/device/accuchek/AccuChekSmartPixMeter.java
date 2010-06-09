@@ -2,9 +2,12 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.impl.accuchek.AccuChekSmartPix;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -48,7 +51,7 @@ import com.atech.utils.TimeZoneUtil;
  */
 
 
-public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
+public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements MeterInterface //extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
 {
     
     //DataAccessMeter m_da = DataAccessMeter.getInstance();
@@ -69,19 +72,20 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
      */
     public AccuChekSmartPixMeter(AbstractDeviceCompany cmp)
     {
-        super(cmp);
+        super(cmp, DataAccessMeter.getInstance());
+        this.setMeterType(cmp.getName(), getName());
     }
     
     
     /**
      * Constructor
      * 
-     * @param drive_letter
+     * @param conn_parameter
      * @param writer
      */
-    public AccuChekSmartPixMeter(String drive_letter, OutputWriter writer)
+    public AccuChekSmartPixMeter(String conn_parameter, OutputWriter writer)
     {
-        super(drive_letter, writer); 
+        super(conn_parameter, writer, DataAccessMeter.getInstance()); 
     }
     
     
@@ -242,7 +246,17 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
         //ATechDate at = null;
         mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")))));
         mve.setBgUnit(this.bg_unit);
-        mve.setBgValue(el.attributeValue("Val"));
+        
+        if (el.attributeValue("Val").toUpperCase().startsWith("HI"))
+        {
+            mve.setBgValue(""+600);
+        }
+        else if (el.attributeValue("Val").toUpperCase().startsWith("LO"))
+        {
+            mve.setBgValue(""+10);
+        }
+        else
+            mve.setBgValue(el.attributeValue("Val"));
         
         // <BG Val="5.1" Dt="2005-06-07" Tm="18:01" D="1"/>
 
@@ -294,6 +308,43 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix //extends A
     {
         return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
+    
+    /**
+     * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
+     *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
+     *    ... - OT Smart, etc), this devices require more extended data display. 
+     * @return
+     */
+    public int getInterfaceTypeForMeter()
+    {
+        return MeterInterface.METER_INTERFACE_SIMPLE;
+    }    
+    
+    
+    
+    
+    /**
+     * Set Meter type
+     * 
+     * @param group
+     * @param device
+     */
+    public void setMeterType(String group, String device)
+    {
+        //this.device_name = device;
+        
+        DeviceIdentification di = new DeviceIdentification();
+        di.company = group;
+        di.device_selected = device;
+        
+        if (this.output_writer!=null)
+            this.output_writer.setDeviceIdentification(di);
+        //this.output_writer.
+        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
+        
+        this.device_source_name = group + " " + device;
+    }
+    
     
     
     

@@ -1,6 +1,7 @@
 package ggc.meter.manager.company; 
 
 import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -43,7 +44,8 @@ public class Prodigy extends AbstractDeviceCompany
             "Prodigy",                           // company name (full)
             "Prodigy",                           // short company name
             "PRODIGY_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED);  // implementation status
+            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
+            DataAccessMeter.getInstance());  // implementation status
     }
     
 }

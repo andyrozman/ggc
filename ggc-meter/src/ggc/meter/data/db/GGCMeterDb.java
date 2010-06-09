@@ -1,12 +1,14 @@
 package ggc.meter.data.db;
 
 import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.db.PluginDb;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -122,9 +124,9 @@ public class GGCMeterDb extends PluginDb
             log.debug("getMeterValues() - Process");
 
             Query q = this.getSession().createQuery(
-                "SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + 
-                "WHERE (dv.bg>0) and person_id=" + m_da.getCurrentUserId() + 
-                " ORDER BY dv.dt_info");
+                " SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + 
+                " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%')) AND person_id=" + m_da.getCurrentUserId() + 
+                " ORDER BY dv.dt_info ASC");
 
             //System.out.println("Found elements: " + q.list().size());
             
@@ -141,7 +143,10 @@ public class GGCMeterDb extends PluginDb
                 
                 MeterValuesEntry mve = new MeterValuesEntry((DayValueH)it.next());
                 
-                ht.put("" + mve.getSpecialId(), mve);
+                if (!ht.containsKey(mve.getSpecialId()))
+                {
+                    ht.put("" + mve.getSpecialId(), mve);
+                }
                 mdr.writeStatus(counter);
             }
 
@@ -155,5 +160,85 @@ public class GGCMeterDb extends PluginDb
         return ht;
     }
 
+    
+    /**
+     * Get Pump Data
+     * 
+     * @param time_marks
+     * @return
+     */
+    public Hashtable<String, PumpDataExtendedH> getPumpData(Hashtable<Long,String> time_marks)
+    {
+        /*
+        StringBuffer sb = new StringBuffer();
+        sb.append(" (");
+        
+        for(Enumeration<Long> en = time_marks.keys(); en.hasMoreElements(); )
+        {
+            sb.append(en.nextElement() + ", ");
+        }
+        sb.append(")");
+        */
+
+        Hashtable<String, PumpDataExtendedH> pump_data = new Hashtable<String, PumpDataExtendedH>();
+        
+        MeterValuesEntry mve = new MeterValuesEntry();
+        
+        //getAllowedPumpMappedTypes
+
+        if (time_marks.size()==0)
+            return pump_data;
+        
+        
+        try
+        {
+            log.debug("getPumpData() - Process");
+    
+            Query q = this.getSession().createQuery(
+                " SELECT dv FROM ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + 
+                " WHERE dv.person_id=" + m_da.getCurrentUserId() + " AND dv.dt_info IN " + getDataListForSQL(time_marks) +
+                " AND dv.type IN " + getDataListForSQL(mve.getAllowedPumpMappedTypes()) +
+                " ORDER BY dv.dt_info");
+            
+            Iterator<?> it = q.list().iterator();
+            
+            while(it.hasNext())
+            {
+                PumpDataExtendedH pde = (PumpDataExtendedH)it.next();
+                
+                int time = (int)(pde.getDt_info() / 100);
+                pump_data.put(time + "_" + pde.getType(), pde);
+            }
+            
+            
+        }
+        catch(Exception ex)
+        {
+            log.error("Error getting pump data: " + ex, ex);
+        }
+        
+        
+        return pump_data;
+        
+    }
+
+
+    
+    private String getDataListForSQL(Hashtable<?,?> ht)
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append(" (");
+        
+        for(Enumeration<?> en = ht.keys(); en.hasMoreElements(); )
+        {
+            sb.append(en.nextElement() + ", ");
+        }
+        
+        //sb.append(")");
+        
+        return sb.substring(0, sb.length()-2) + ")";
+    }
+    
+    
     
 }

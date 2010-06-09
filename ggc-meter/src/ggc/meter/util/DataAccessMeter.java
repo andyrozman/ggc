@@ -106,6 +106,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         createPlugInDataRetrievalContext();
         loadWebLister();
         createOldDataReader();
+        this.loadConverters();
     }
     
     
@@ -508,6 +509,14 @@ public class DataAccessMeter extends DataAccessPlugInBase
             return false;
         else
             return true;
+    }
+
+
+    @Override
+    public void initAllObjects()
+    {
+        // TODO Auto-generated method stub
+        
     }    
     
     

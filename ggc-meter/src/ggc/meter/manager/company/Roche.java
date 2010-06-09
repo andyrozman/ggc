@@ -12,6 +12,7 @@ import ggc.meter.device.accuchek.AccuChekNano;
 import ggc.meter.device.accuchek.AccuChekPerforma;
 import ggc.meter.device.accuchek.AccuChekSensor;
 import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
@@ -55,7 +56,8 @@ public class Roche extends AbstractDeviceCompany
             "Accu-Chek/Roche",                  // company name (full)
             "Roche",                            // short company name
             "ROCHE_DESC",                       // company description
-            DeviceImplementationStatus.IMPLEMENTATION_DONE);  // implementation status
+            DeviceImplementationStatus.IMPLEMENTATION_DONE,
+            DataAccessMeter.getInstance());  // implementation status
         
         //this.addDevice(new AccuChekSmartPix());
         this.addDevice(new AccuChekActive(this));

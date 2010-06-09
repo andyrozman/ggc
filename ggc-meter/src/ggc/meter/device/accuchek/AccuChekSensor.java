@@ -164,5 +164,12 @@ public class AccuChekSensor extends AccuChekSmartPixMeter
     {
         return "ggc.meter.device.accuchek.AccuChekSensor";
     }
+
+
+
+
+
+
+    
     
 }

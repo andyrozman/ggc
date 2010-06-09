@@ -9,9 +9,7 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPortEvent;
 
-import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,7 +43,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
     //protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
     //protected OutputWriter output_writer;
-    AbstractDeviceCompany device_company = null;
+    //AbstractDeviceCompany device_company = null;
     protected int m_status = 0;
     protected boolean communication_established = false;
     
@@ -55,9 +53,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
      */
     public AbstractSerialMeter()
     {
-        super();
-        m_da = DataAccessMeter.getInstance();
-        ic = m_da.getI18nControlInstance();
+        super(DataAccessMeter.getInstance());
     }
 
     
@@ -67,9 +63,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
      */
     public AbstractSerialMeter(AbstractDeviceCompany cmp)
     {
-        super();
-        m_da = DataAccessMeter.getInstance();
-        ic = m_da.getI18nControlInstance();
+        super(DataAccessMeter.getInstance());
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
@@ -83,8 +77,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     public AbstractSerialMeter(DataAccessMeter da)
     {
         super(da);
-        m_da = DataAccessMeter.getInstance();
-        ic = m_da.getI18nControlInstance();
     }
 
 
@@ -96,21 +88,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
     }
 
-    boolean can_read_data = false;
-    boolean can_read_partitial_data = false;
-    boolean can_read_device_info = false;
-    boolean can_read_device_configuration = false;
-
-    /** 
-     * Set Device Allowed Actions
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data, boolean can_read_device_info, boolean can_read_device_configuration)
-    {
-        this.can_read_data = can_read_data;
-        this.can_read_partitial_data = can_read_partitial_data;
-        this.can_read_device_info = can_read_device_info;
-        this.can_read_device_configuration = can_read_device_configuration;
-    }
 
     /** 
      * Set Communication Settings
@@ -120,8 +97,8 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
     }
 
-    String meter_group = null;
-    String meter_device = null;
+    //String meter_group = null;
+    //String meter_device = null;
 
     /**
      * Dispose this instance
@@ -246,21 +223,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     // *** Device Implemented methods ***
     // ************************************************
 
-    /** 
-     * clearDeviceData - Clear data from device 
-     */
-    public void clearDeviceData()
-    {
 
-    }
-
-    /**
-     * getDeviceInfo - get Device info (firmware and software revision)
-     */
-    public DeviceIdentification getDeviceInfo()
-    {
-        return this.output_writer.getDeviceIdentification();
-    }
 
 
 
@@ -273,202 +236,8 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         this.output_writer.endOutput();
     }
     
-    
-
-    // ************************************************
-    // *** Process Meter Data ***
-    // ************************************************
-
-    /**
-     * canReadData - Can Meter Class read data from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadData()
-    {
-        return this.can_read_data;
-    }
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadPartitialData()
-    {
-        return this.can_read_partitial_data;
-    }
-
-    /**
-     * canReadDeviceInfo - tells if we can read info about device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadDeviceInfo()
-    {
-        return this.can_read_device_info;
-    }
-
-    /**
-     * canReadConfiguration - tells if we can read configuration from device
-     * 
-     * @return true if action is allowed
-     */
-    public boolean canReadConfiguration()
-    {
-        return this.can_read_device_configuration;
-    }
-
-
-    // ************************************************
-    // *** Test ***
-    // ************************************************
-
-    /**
-     * test
-     */
-    public void test()
-    {
-    }
-
-    /** 
-     * compareTo
-     */
-    public int compareTo(SelectableInterface o)
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
 
     
-    /** 
-     * Get Column Count
-     */
-    public int getColumnCount()
-    {
-        return m_da.getPluginDeviceUtil().getColumnCount();
-    }
-    
-    
-    /** 
-     * getColumnName
-     */
-    public String getColumnName(int num)
-    {
-        return m_da.getPluginDeviceUtil().getColumnName(num);
-    }    
-    
-    
-    /** 
-     * Get Column Width
-     */
-    public int getColumnWidth(int num, int width)
-    {
-        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
-    }
-    
-    
-    /** 
-     * getColumnValue - get Value of column, for configuration
-     */
-    public String getColumnValue(int num)
-    {
-        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
-    }
-    
-    
-    /** 
-     * getColumnValueObject
-     */
-    public Object getColumnValueObject(int num)
-    {
-        return this.getColumnValue(num);
-    }
-
-
-    /** 
-     * getItemId
-     */
-    public long getItemId()
-    {
-        return 0;
-    }
-
-    /** 
-     * getShortDescription
-     */
-    public String getShortDescription()
-    {
-        return this.getName();
-    }
-
-    /** 
-     * isFound
-     */
-    public boolean isFound(int from, int till, int state)
-    {
-        return true;
-    }
-
-    /** 
-     * isFound
-     */
-    public boolean isFound(int value)
-    {
-        return true;
-    }
-
-    /** 
-     * isFound
-     */
-    public boolean isFound(String text)
-    {
-        return true;
-    }
-
-    /** 
-     * setColumnSorter
-     */
-    public void setColumnSorter(ColumnSorter cs)
-    {
-    }
-
-    /** 
-     * setSearchContext
-     */
-    public void setSearchContext()
-    {
-    }
-
-    /**
-     * setDeviceCompany - set Company for device
-     * 
-     * @param company
-     */
-    public void setDeviceCompany(AbstractDeviceCompany company)
-    {
-        this.device_company = company;
-    }
-
-    /**
-     * getDeviceCompany - get Company for device
-     */
-    public AbstractDeviceCompany getDeviceCompany()
-    {
-        return this.device_company;
-    }
-
-    
-    /**
-     * Is Device Readable (there are some devices that are not actual devices, but are used to get some
-     * sort of specific device data - in most cases we call them generics, and they don't have ability
-     * to read data)
-     * @return
-     */
-    public boolean isReadableDevice()
-    {
-        return true;
-    }
 
     
     /**
@@ -481,26 +250,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
     }
     
-    String device_source_name;
-    
-    /**
-     * Get Device Source Name
-     * 
-     * @return
-     */
-    public String getDeviceSourceName()
-    {
-        return device_source_name;
-    }
-    
-    
-    /** 
-     * Get Download SupportType Configuration
-     */
-    public int getDownloadSupportTypeConfiguration()
-    {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
-    }
     
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
@@ -513,39 +262,6 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return MeterInterface.METER_INTERFACE_SIMPLE;
     }
 
-    /**
-     * Does this device support file download. Some devices have their native software, which offers export 
-     * into some files (usually CSV files or even XML). We sometimes add support to download from such
-     * files, and in some cases this is only download supported. 
-     *  
-     * @return
-     */
-    public boolean isFileDownloadSupported()
-    {
-        return false;
-    }
-    
-    
-    /**
-     * Get File Download Types as FileReaderContext. 
-     * 
-     * @return
-     */
-    public FileReaderContext[] getFileDownloadTypes()
-    {
-        return null;
-    }
-    
 
-    /**
-     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
-     *     left to right side, without displaying progress.
-     * @return
-     */
-    public boolean hasIndeterminateProgressStatus()
-    {
-        return false;
-    }
-    
     
 }

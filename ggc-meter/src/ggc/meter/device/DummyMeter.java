@@ -1,12 +1,7 @@
 package ggc.meter.device;
 
-import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.protocol.ConnectionProtocols;
-
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,8 +32,18 @@ import com.atech.i18n.I18nControlAbstract;
 public class DummyMeter extends AbstractMeter //implements MeterInterface
 {
 
-    DataAccessMeter m_da = DataAccessMeter.getInstance();
-    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
+    /**
+     * Constructor
+     */
+    public DummyMeter()
+    {
+        setDeviceAllowedActions(false, false, false, false);
+    }
+    
+    
+    
+    //DataAccessMeter m_da = DataAccessMeter.getInstance();
+    //I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     
     /**
@@ -107,31 +112,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     //************************************************
 
 
-    /**
-     * canReadData - Can Meter Class read data from device
-     */
-    public boolean canReadData()
-    {
-        return false;
-    }
-
-    /**
-     * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
-     */
-    public boolean canReadPartitialData()
-    {
-        return false;
-    }
-
-    /**
-     * canClearData - Can Meter class clear data from meter.
-     */
-    public boolean canClearData()
-    {
-        return false;
-    }
-
-
 
     //************************************************
     //***                    Test                  ***
@@ -173,17 +153,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
     
 
-    /**
-     * getMeterId - Get Meter Id, within Meter Company class 
-     * 
-     * @return id of meter within company
-     */
-    public int getMeterId()
-    {
-        return 0;
-    }
-
-    
     /**
      * getCompanyId - Get Company Id 
      * 
@@ -244,21 +213,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     //************************************************
     
 
-    /** 
-     * clearDeviceData - Clear data from device 
-     * @throws PlugInBaseException 
-     */
-    public void clearDeviceData() throws PlugInBaseException
-    {
-    }
-    
-    /**
-     * getDeviceInfo - get Device info (firmware and software revision)
-     */
-    public DeviceIdentification getDeviceInfo() //throws MeterException
-    {
-        return null;
-    }
     
     
     
@@ -282,6 +236,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     
     /** 
      * Get Max Memory Records
+     * @return 
      */
     public int getMaxMemoryRecords()
     {
@@ -319,21 +274,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     }
     
     
-    /**
-     * setDeviceAllowedActions - sets actions which are allowed by implementation
-     *   of MeterInterface (actually of GenericMeterXXXXX classes)
-     *   
-     * @param can_read_data
-     * @param can_read_partitial_data
-     * @param can_read_device_info
-     * @param can_read_device_configuration
-     */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-                                        boolean can_read_partitial_data,
-                                        boolean can_read_device_info,
-                                        boolean can_read_device_configuration)
-    {
-    }
 
 
     /** 
@@ -368,15 +308,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return false;
     }
-    
-    
-    /** 
-     * Get Download SupportType Configuration
-     */
-    public int getDownloadSupportTypeConfiguration()
-    {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
-    }
-    
+
     
 }
