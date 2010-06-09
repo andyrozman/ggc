@@ -14,32 +14,31 @@ of time). Project was taken over by developer Andy (Aleksander) Rozman in year 2
 thing were changed (internationlization, database support, food database support, etc.), and also most
 of visual part were changed, but main look stayed the same (except we now support several more Look &amp; 
 Feels). Later we were joined by Reinhold Rumberger, who took over testing and also support for German 
-language. Now we finally had first public release (0.3) and now we have several new devlopers, who will
-help with development. If you feel like it, you can help us too, either with development, translation or
-just testing of new features. All help is apreciated.<br>
+language. 
+<br>
+We are now at 0.4.20 version, we are still "running low on developers", so any help is 
+appreciated. If you feel like it, you can help us too, either with development, translation 
+or just testing of new features. <br>
 <br>
 <h2>Plugins</h2>
-In 2008 we started thing about support for different hardware (glucose meters, pumps and other) and we
+In 2008 we started think about support for different hardware (glucose meters, pumps and other) and we
 came to conclusion, that it would be better to make support for different hardware through so called 
 plugins. Plugins were planned to have possibility to be run by themselves, but most of functionality 
 can be achived only by working together with GGC. First plugin Meter Tool was created so that it could 
 be used as seperate application, but all other plugins, lack this functionality (for now). Main idea of
 plugin is that it can be developed separately from main GGC application, and with this making less 
-problem for new developers.
+problem for new developers. To first plugin we now added Pump Tool and CGMS Tool. 
 
 <h2>Program mode</h2>
-<strike>
-With additional of next plugin (Pump plugin), we came across another problem. Meter data can be either 
-written to main database (used for pen/injection) users or into database for pump users. So now user 
-must select in which mode software works (by defualt it's Pen/Injection mode). All other functions that
-are available in Pen context are also available under Pump context (graphs (different for both types) and 
-ratio calcultation).
-</strike>
+We can now run GGC on two modes. First is Pen/Injection mode and second mode is Pump mode. Software 
+will run the same in both modes, only change is in Toolbar and in Statistics (on main page).
+
  
 <h2>About help</h2>
 This help is <b>still work in progress</b>, meaning that a lot of help is still missing. We plan to have 
 full help by next major release (0.5). For translation of help you will have to wait though. It could take
-translators some time to translate help (and software).
+translators some time to translate help (and software). We created Translation Tool (in 2010) so that
+translation progress can now be much faster
 
 <h2>Support</h2>
 As we told before, this is open source software, so support is offered through several channels. You can 
@@ -109,7 +108,7 @@ viewer, any that can start files over commandline will work.
 <li>Pump About - about this plugin.</li>
 </ul> 
 
-<b>CGMS</b> - this is CGMS plugin context. It is used for communication with CGMS. (Not available yet). 
+<b>CGMS</b> - this is CGMS plugin context. It is used for communication with CGMS. 
 <br><br>
  
 <b>Tools</b> -contains Settings and Database maintainance. 

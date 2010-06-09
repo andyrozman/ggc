@@ -66,6 +66,8 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
      * Constructor
      * 
      * @param da 
+     * @param left_pos 
+     * @param space_elements 
      */
     public RatioEntryPanel(DataAccess da, int left_pos, int space_elements) 
     {
@@ -98,6 +100,8 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
      * 
      * @param da 
      * @param re 
+     * @param left_pos 
+     * @param space_elements 
      */
     public RatioEntryPanel(DataAccess da, RatioEntry re, int left_pos, int space_elements) 
     {

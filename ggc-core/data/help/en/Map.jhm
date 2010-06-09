@@ -75,7 +75,7 @@
 <mapID target="GGC_Tools_Restore_File_Selector" url="pages/GGC_Tools_Restore_File_Selector.html"/>
 <mapID target="GGC_Tools_BolusHelper" url="pages/GGC_Tools_BolusHelper.html"/>
 <mapID target="GGC_Tools_FoodDescription" url="pages/GGC_Tools_FoodDescription.html"/>
-
+               
 <mapID target="MeterTool_Read_Instruction" url="pages/MeterTool_Read_Instruction.html"/>
 <mapID target="MeterTool_Reading_View" url="pages/MeterTool_Reading_View.html"/>
 <mapID target="MeterTool_Export_Data" url="pages/MeterTool_Export_Data.html"/>
@@ -108,6 +108,9 @@
 <mapID target="CGMSTool_Configuration" url="pages/CGMSTool_Configuration.html"/>
 <mapID target="CGMSTool_Configuration_PortSelector" url="pages/CGMSTool_Configuration_PortSelector.html"/>
 <mapID target="CGMSTool_List" url="pages/CGMSTool_List.html"/>
+
+
+
 
 
 <mapID target="images.popup" url="images/popup.gif"/>

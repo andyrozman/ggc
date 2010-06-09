@@ -15,7 +15,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.components.TimeComponent;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
@@ -87,10 +86,20 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     
     TimeComponent tc_from, tc_to;
     
+    /**
+     * Action: Add
+     */
     public static final int ACTION_ADD = 1;
+
+    /**
+     * Action: Edit
+     */
     public static final int ACTION_EDIT = 2;
     
     
+    /**
+     * Action
+     */
     public int action = ACTION_ADD;
     
     
