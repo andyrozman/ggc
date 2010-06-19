@@ -125,11 +125,6 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
     }
 
 
-    public String getDeviceSpecialComment()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 
     public String getIconName()

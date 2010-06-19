@@ -6,6 +6,7 @@ import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -102,6 +103,12 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
         this.setCGMSType(cmp.getName(), getName());
     }
     
+    
+    
+    public AbstractCGMS(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
+    }
     
     
     /**

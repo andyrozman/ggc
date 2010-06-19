@@ -6,6 +6,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.Hashtable;
 
@@ -61,6 +62,12 @@ public abstract class FreestyleCGMS extends AbstractCGMS
     public FreestyleCGMS(String params, OutputWriter writer)
     {
         super(params, writer);
+    }
+    
+    
+    public FreestyleCGMS(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
     }
     
     
@@ -279,28 +286,6 @@ public abstract class FreestyleCGMS extends AbstractCGMS
     }
 
 
-    /**
-     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
-     *    special comment about device (for example pix device, doesn't display anything till the end, which
-     *    would be nice if user knew. 
-     * @return 
-     */
-    public String getDeviceSpecialComment()
-    {
-        return null;
-    }
-
-
-    /**
-     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
-     *    normal progress status, but with some special devices we calculate progress through other means.
-     *    
-     * @return true is progress status is special
-     */
-    public boolean hasSpecialProgressStatus()
-    {
-        return false;
-    }
 
 
     /**
