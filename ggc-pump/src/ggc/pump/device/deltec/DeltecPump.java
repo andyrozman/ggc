@@ -66,6 +66,13 @@ public abstract class DeltecPump extends AbstractPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public DeltecPump(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

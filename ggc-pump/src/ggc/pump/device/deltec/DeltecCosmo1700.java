@@ -57,6 +57,13 @@ public class DeltecCosmo1700 extends DeltecPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public DeltecCosmo1700(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

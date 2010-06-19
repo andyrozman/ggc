@@ -66,6 +66,13 @@ public abstract class InsuletPump extends AbstractPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public InsuletPump(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

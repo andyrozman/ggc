@@ -48,18 +48,25 @@ public class AnimasPing extends AnimasPump
     /**
      * Constructor 
      * 
-     * @param drive_letter 
+     * @param conn_parameter 
      * @param writer 
      */
-    public AnimasPing(String drive_letter, OutputWriter writer)
+    public AnimasPing(String conn_parameter, OutputWriter writer)
     {
-        super(drive_letter, writer);
+        super(conn_parameter, writer);
     }
     
     
-    public AnimasPing(String params, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param conn_parameter
+     * @param writer
+     * @param da 
+     */
+    public AnimasPing(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(params, writer, da);
+        super(conn_parameter, writer, da);
     }
     
     

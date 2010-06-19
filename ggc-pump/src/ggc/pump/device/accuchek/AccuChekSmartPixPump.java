@@ -95,6 +95,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param conn_parameter
+     * @param writer
+     */
     public AccuChekSmartPixPump(String conn_parameter, OutputWriter writer)
     {
         this(conn_parameter, writer, DataAccessPump.getInstance());
@@ -106,6 +112,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @param conn_parameter
      * @param writer
+     * @param da 
      */
     public AccuChekSmartPixPump(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
     {

@@ -50,9 +50,16 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     }
     
     
-    public AccuChekSpirit(String params, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param conn_parameter
+     * @param writer
+     * @param da 
+     */
+    public AccuChekSpirit(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(params, writer, da);
+        super(conn_parameter, writer, da);
     }
     
     

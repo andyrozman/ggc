@@ -77,9 +77,16 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     }
     
     
-    public AbstractPump(String params, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
+    public AbstractPump(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(params, writer, da);
+        super(comm_parameters, writer, da);
     }
     
     
@@ -119,7 +126,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
         

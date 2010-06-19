@@ -61,6 +61,13 @@ public class DanaDiabecare_II extends DanaPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public DanaDiabecare_II(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

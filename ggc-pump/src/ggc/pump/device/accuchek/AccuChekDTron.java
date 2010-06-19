@@ -50,6 +50,13 @@ public class AccuChekDTron extends AccuChekSmartPixPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public AccuChekDTron(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

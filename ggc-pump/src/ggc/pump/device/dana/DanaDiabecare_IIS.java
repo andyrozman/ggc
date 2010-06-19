@@ -62,6 +62,13 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public DanaDiabecare_IIS(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

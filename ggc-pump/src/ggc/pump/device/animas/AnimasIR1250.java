@@ -51,18 +51,25 @@ public class AnimasIR1250 extends AnimasPump
     /**
      * Constructor 
      * 
-     * @param params 
+     * @param conn_parameter 
      * @param writer 
      */
-    public AnimasIR1250(String params, OutputWriter writer)
+    public AnimasIR1250(String conn_parameter, OutputWriter writer)
     {
-        super(params, writer);
+        super(conn_parameter, writer);
     }
     
     
-    public AnimasIR1250(String params, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param conn_parameter
+     * @param writer
+     * @param da 
+     */
+    public AnimasIR1250(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(params, writer, da);
+        super(conn_parameter, writer, da);
     }
 
     

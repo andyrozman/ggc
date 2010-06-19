@@ -65,6 +65,13 @@ public abstract class DanaPump extends AbstractPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public DanaPump(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

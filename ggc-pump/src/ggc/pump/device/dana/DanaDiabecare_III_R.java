@@ -238,7 +238,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     /**
      * Constructor
      * 
-     * @param portName the port name
+     * @param params 
      * @param writer 
      */
     public DanaDiabecare_III_R(String params, OutputWriter writer)
@@ -249,6 +249,13 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public DanaDiabecare_III_R(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

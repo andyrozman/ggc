@@ -57,6 +57,13 @@ public class Minimed554_Veo extends MinimedPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public Minimed554_Veo(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

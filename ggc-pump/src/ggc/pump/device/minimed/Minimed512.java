@@ -57,6 +57,13 @@ public class Minimed512 extends MinimedPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public Minimed512(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

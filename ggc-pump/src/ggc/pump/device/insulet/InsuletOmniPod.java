@@ -57,6 +57,13 @@ public class InsuletOmniPod extends InsuletPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public InsuletOmniPod(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

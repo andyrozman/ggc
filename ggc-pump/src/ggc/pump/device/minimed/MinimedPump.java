@@ -66,6 +66,13 @@ public abstract class MinimedPump extends AbstractPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public MinimedPump(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

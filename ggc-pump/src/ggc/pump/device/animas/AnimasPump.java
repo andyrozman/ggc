@@ -57,18 +57,25 @@ public abstract class AnimasPump extends AbstractPump
     /**
      * Constructor
      *  
-     * @param params 
+     * @param conn_parameter 
      * @param writer 
      */
-    public AnimasPump(String params, OutputWriter writer)
+    public AnimasPump(String conn_parameter, OutputWriter writer)
     {
-        super(); //params, writer);
+        super(conn_parameter, writer);
     }
     
     
-    public AnimasPump(String params, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param conn_parameter
+     * @param writer
+     * @param da 
+     */
+    public AnimasPump(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(params, writer, da);
+        super(conn_parameter, writer, da);
     }
     
     

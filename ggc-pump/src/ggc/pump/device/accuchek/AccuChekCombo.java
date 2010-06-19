@@ -52,6 +52,13 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da 
+     */
     public AccuChekCombo(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);
