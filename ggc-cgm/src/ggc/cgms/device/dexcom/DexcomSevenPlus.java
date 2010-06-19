@@ -57,6 +57,13 @@ public class DexcomSevenPlus extends DexcomCGMS
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public DexcomSevenPlus(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

@@ -65,6 +65,13 @@ public abstract class FreestyleCGMS extends AbstractCGMS
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public FreestyleCGMS(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

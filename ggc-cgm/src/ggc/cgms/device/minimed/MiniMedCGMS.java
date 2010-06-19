@@ -65,6 +65,13 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public MiniMedCGMS(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

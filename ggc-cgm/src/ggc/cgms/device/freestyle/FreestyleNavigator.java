@@ -57,6 +57,13 @@ public class FreestyleNavigator extends FreestyleCGMS
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public FreestyleNavigator(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

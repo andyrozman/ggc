@@ -56,6 +56,13 @@ public class MiniMedCGMSGold extends MiniMedCGMS
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public MiniMedCGMSGold(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

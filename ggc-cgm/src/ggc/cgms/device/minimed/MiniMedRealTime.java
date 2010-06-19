@@ -57,6 +57,13 @@ public class MiniMedRealTime extends MiniMedCGMS
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public MiniMedRealTime(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

@@ -105,6 +105,13 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
     
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public AbstractCGMS(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);
@@ -121,7 +128,7 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
         

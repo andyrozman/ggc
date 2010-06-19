@@ -57,6 +57,13 @@ public class GuardianRealTime extends MiniMedCGMS
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public GuardianRealTime(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);

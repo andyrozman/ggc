@@ -64,6 +64,13 @@ public abstract class DexcomCGMS extends AbstractCGMS
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
     public DexcomCGMS(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);
